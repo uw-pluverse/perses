@@ -1,0 +1,8 @@
+
+
+
+
+
+interface ObjectIncompatibleInterface {
+    int clone();
+}

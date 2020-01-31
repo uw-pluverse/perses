@@ -1,0 +1,30 @@
+package(default_visibility = ["//visibility:public"])
+
+java_library(
+    name = "pnf",
+    srcs = glob(
+        ["*.java"],
+        exclude = ["Main.java"],
+    ),
+    deps = [
+        "//antlropt/org/perses/antlr:enum_rule_type",
+        "//antlropt/org/perses/antlr/ast",
+        "@maven//:com_google_flogger_flogger",
+        "@maven//:com_google_guava_guava",
+        "@maven//:org_jgrapht_jgrapht_core",
+        "@maven//:org_jgrapht_jgrapht_io",
+    ],
+)
+
+java_binary(
+    name = "pnf_main",
+    srcs = ["Main.java"],
+    main_class = "org.perses.antlr.pnf.Main",
+    deps = [
+        ":pnf",
+        "//antlropt/org/perses/antlr/ast",
+        "@maven//:com_beust_jcommander",
+        "@maven//:com_google_flogger_flogger_system_backend",
+        "@maven//:com_google_guava_guava",
+    ],
+)

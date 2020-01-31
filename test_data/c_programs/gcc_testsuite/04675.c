@@ -1,0 +1,8 @@
+
+
+
+
+
+static void bar() {}
+
+

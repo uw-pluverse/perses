@@ -1,0 +1,8 @@
+out*.txt
+*.o
+a.out
+t
+exp-*
+perses_*reduced*
+statistics-*.txt
+testscript-statistics-*.txt

@@ -1,0 +1,2 @@
+int si_a[1024] __attribute__((__aligned__(32))); int si_b[1024] __attribute__((__aligned__(32))); void si_ctz (void) { unsigned long i; for (i = 0; i < 1024; i++) si_a[i] = __builtin_ctz (si_b[i]); }
+unsigned int ui_a[1024] __attribute__((__aligned__(32))); unsigned int ui_b[1024] __attribute__((__aligned__(32))); void ui_ctz (void) { unsigned long i; for (i = 0; i < 1024; i++) ui_a[i] = __builtin_ctz (ui_b[i]); }

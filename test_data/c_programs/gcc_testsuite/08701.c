@@ -1,0 +1,24 @@
+
+
+
+int **x;
+
+static int __attribute__((noinline,noclone))
+foo (int **q)
+{
+  int a = 1;
+  **q = 0;
+  *x = &a;
+  return **q;
+}
+
+extern void abort (void);
+int main()
+{
+  int b;
+  int *p = &b;
+  x = &p;
+  if (foo (&p) != 1)
+    abort ();
+  return 0;
+}

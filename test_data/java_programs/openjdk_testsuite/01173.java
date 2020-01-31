@@ -1,0 +1,5 @@
+
+
+
+
+class CyclicInheritance extends CyclicInheritance { }

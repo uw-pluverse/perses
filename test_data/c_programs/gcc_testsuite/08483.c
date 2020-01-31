@@ -1,0 +1,8 @@
+
+
+
+
+
+
+extern int a;
+

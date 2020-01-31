@@ -1,0 +1,23 @@
+translationUnit {id=1}
+|___(+) {id=2,slot_type=kleene_plus__externalDeclaration}
+    |___declaration {id=35,slot_type=externalDeclaration}
+    |   |___(+) {id=36,slot_type=kleene_plus__declarationSpecifiers}
+    |   |   |___Token:int {id=44,slot_type=declarationSpecifier}
+    |   |   |___Token:a {id=42,slot_type=declarationSpecifier}
+    |   |___Token:; {id=37,slot_type=Semi}
+    |___declaration {id=25,slot_type=externalDeclaration}
+    |   |___(+) {id=26,slot_type=kleene_plus__declarationSpecifiers}
+    |   |   |___Token:int {id=34,slot_type=declarationSpecifier}
+    |   |   |___Token:b {id=32,slot_type=declarationSpecifier}
+    |   |___Token:; {id=27,slot_type=Semi}
+    |___declaration {id=6,slot_type=externalDeclaration}
+        |___(+) {id=7,slot_type=kleene_plus__declarationSpecifiers}
+        |   |___Token:int {id=24,slot_type=declarationSpecifier}
+        |___(?) {id=8,slot_type=optional__initDeclaratorList}
+        |   |___initDeclaratorList {id=10,slot_type=initDeclaratorList}
+        |       |___Token:a {id=21,slot_type=initDeclarator}
+        |       |___(*) {id=12,slot_type=kleene_star__initDeclaratorListPart}
+        |           |___initDeclaratorListPart {id=13,slot_type=initDeclaratorListPart}
+        |               |___Token:, {id=14,slot_type=Comma}
+        |               |___Token:b {id=18,slot_type=initDeclarator}
+        |___Token:; {id=9,slot_type=Semi}

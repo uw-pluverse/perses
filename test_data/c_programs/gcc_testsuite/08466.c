@@ -1,0 +1,6 @@
+
+
+
+
+
+int __srget (char *);

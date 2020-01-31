@@ -1,0 +1,56 @@
+package(default_visibility = ["//test/org/perses:__subpackages__"])
+
+load("//test/org/perses:test.bzl", "golden_test")
+
+java_library(
+    name = "test_util",
+    srcs = ["TestUtility.java"],
+    data = [
+        "//test_data/c_programs:clang_testsuite",
+        "//test_data/c_programs:gcc_testsuite",
+        "//test_data/java_programs:openjdk_testsuite",
+    ],
+    deps = [
+        ":truth",
+        "//src/org/perses:language_kind",
+        "//src/org/perses/antlr:parse_tree_with_parser",
+        "//src/org/perses/grammar:grammar_facade",
+        "//src/org/perses/grammar/c:c_parser_facade",
+        "//src/org/perses/grammar/java:java_parser_facade",
+        "//src/org/perses/program",
+        "//src/org/perses/reduction:partition_reduction_policy",
+        "//src/org/perses/tree/spar",
+        "@maven//:com_google_flogger_flogger_system_backend",
+        "@maven//:com_google_guava_guava",
+        "@maven//:org_antlr_antlr4",
+        "@maven//:org_antlr_antlr4_runtime",
+    ],
+)
+
+java_library(
+    name = "truth",
+    exports = [
+        "@maven//:com_google_truth_truth",
+        "@maven//:com_googlecode_java_diff_utils_diffutils",
+    ],
+)
+
+exports_files(["diff.sh"])
+
+genrule(
+    name = "gen_token_counter_file",
+    srcs = [
+        "//test_data/delta_1:t.c",
+    ],
+    outs = ["token_count.txt"],
+    cmd = "$(location //src/org/perses:token_counter) $(location //test_data/delta_1:t.c) | tail -n 1 > $(location token_count.txt)",
+    tools = [
+        "//src/org/perses:token_counter",
+    ],
+)
+
+golden_test(
+    name = "golden_token_counter_file",
+    golden_file = "golden_token_count_for_delta1.txt",
+    test_file = "token_count.txt",
+)

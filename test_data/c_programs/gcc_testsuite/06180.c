@@ -1,0 +1,39 @@
+
+
+
+
+
+
+void link_error (void);
+static int mem;
+static int e(void) __attribute__ ((noinline));
+static int q(void) __attribute__ ((noinline));
+static int t(void) __attribute__ ((noinline));
+int
+main()
+{
+ return t();
+}
+static int t()
+{
+ int r,e;
+ if (mem)
+  t();
+ e=mem;
+ r=q();
+ if (e!=mem)
+  link_error();
+ return r;
+}
+static int e()
+{
+ return 0;
+}
+static int q()
+{
+ int t=mem,r;
+ r=e();
+ if (t!=mem)
+  link_error();
+ return r;
+}

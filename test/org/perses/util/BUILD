@@ -1,0 +1,40 @@
+java_test(
+    name = "UtilTest",
+    srcs = ["UtilTest.java"],
+    test_class = "org.perses.util.UtilTest",
+    deps = [
+        "//src/org/perses/util",
+        "//test/org/perses:truth",
+    ],
+)
+
+java_test(
+    name = "AutoDeletableFolderTest",
+    srcs = ["AutoDeletableFolderTest.java"],
+    test_class = "org.perses.util.AutoDeletableFolderTest",
+    deps = [
+        "//src/org/perses/util",
+        "//test/org/perses:truth",
+        "@maven//:com_google_guava_guava",
+    ],
+)
+
+java_test(
+    name = "TimeSpanTest",
+    srcs = ["TimeSpanTest.java"],
+    test_class = "org.perses.util.TimeSpanTest",
+    deps = [
+        "//src/org/perses/util",
+        "//test/org/perses:truth",
+    ],
+)
+
+java_test(
+    name = "FastStringBuilderTest",
+    srcs = ["FastStringBuilderTest.java"],
+    test_class = "org.perses.util.FastStringBuilderTest",
+    deps = [
+        "//src/org/perses/util",
+        "//test/org/perses:truth",
+    ],
+)

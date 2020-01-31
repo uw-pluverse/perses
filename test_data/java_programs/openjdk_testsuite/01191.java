@@ -1,0 +1,12 @@
+
+
+
+
+
+
+
+
+
+class KindnameClass {
+    NotFound x;
+}

@@ -1,0 +1,6 @@
+
+
+
+
+int vari , varj ;
+

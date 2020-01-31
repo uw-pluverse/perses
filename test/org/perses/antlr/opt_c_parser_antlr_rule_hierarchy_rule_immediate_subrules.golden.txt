@@ -1,0 +1,291 @@
+primaryExpression
+    Constant
+    Identifier
+    genericSelection
+    kleene_plus__StringLiteral
+
+kleene_plus__StringLiteral
+    StringLiteral
+
+genericAssocList
+    genericAssociation
+
+kleene_star__genericAssociationPart
+    genericAssocListPart
+
+postfixExpression
+    primaryExpression
+
+optional__argumentExpressionList
+    argumentExpressionList
+
+kleene_star__argumentExpressionListPart
+    argumentExpressionListPart
+
+argumentExpressionList
+    assignmentExpression
+
+unaryExpression
+    postfixExpression
+
+castExpression
+    unaryExpression
+
+kleene_star__nonAssignmentBinaryExpressionPart
+    nonAssignmentBinaryExpressionPart
+
+nonAssignmentBinaryExpression
+    castExpression
+
+optional__conditionalExpressionPart
+    conditionalExpressionPart
+
+conditionalExpression
+    nonAssignmentBinaryExpression
+
+assignmentExpression
+    conditionalExpression
+
+kleene_star__expressionPart
+    expressionPart
+
+optional__expression
+    expression
+
+expression
+    assignmentExpression
+
+constantExpression
+    conditionalExpression
+
+declaration
+    staticAssertDeclaration
+
+kleene_star__declarationSpecifiers
+    declarationSpecifier
+
+kleene_plus__declarationSpecifiers
+    declarationSpecifier
+
+declarationSpecifier
+    alignmentSpecifier
+    functionSpecifier
+    storageClassSpecifier
+    typeQualifier
+    typeSpecifier
+
+kleene_star__initDeclaratorListPart
+    initDeclaratorListPart
+
+optional__initDeclaratorList
+    initDeclaratorList
+
+initDeclaratorList
+    initDeclarator
+
+optional__initDeclaratorPart
+    initDeclaratorPart
+
+initDeclarator
+    declarator
+
+typeSpecifier
+    atomicTypeSpecifier
+    enumSpecifier
+    structOrUnionSpecifier
+    typedefName
+
+optional__identifier
+    Identifier
+
+kleene_plus__structDeclarationList
+    structDeclaration
+
+structDeclaration
+    staticAssertDeclaration
+
+specifierQualifierListPart
+    typeQualifier
+    typeSpecifier
+
+kleene_plus__specifierQualifierList
+    specifierQualifierListPart
+
+kleene_star__structDeclaratorList
+    structDeclaratorListPart
+
+structDeclaratorList
+    structDeclarator
+
+optional__structDeclaratorList
+    structDeclaratorList
+
+structDeclarator
+    declarator
+
+optional__declarator
+    declarator
+
+kleene_star__enumeratorListPart
+    enumeratorListPart
+
+enumeratorList
+    enumerator
+
+optional__enumeratorPart
+    enumeratorPart
+
+enumerator
+    Identifier
+
+functionSpecifier
+    gccAttributeSpecifier
+
+kleene_star__gccDeclaratorExtension
+    gccDeclaratorExtension
+
+declarator
+    directDeclarator
+
+optional__assignmentExpression
+    assignmentExpression
+
+kleene_star__directDeclaratorPart
+    directDeclaratorPart
+
+directDeclarator
+    Identifier
+
+gccDeclaratorExtension
+    gccAttributeSpecifier
+
+kleene_star__gccAttributeListPart
+    gccAttributeListPart
+
+optional__gccAttributeList
+    gccAttributeList
+
+gccAttributeList
+    gccAttribute
+
+optional__gccAttributePart
+    gccAttributePart
+
+kleene_star__nestedParenthesesBlockPart
+    nestedParenthesesBlockPart
+
+nestedParenthesesBlock
+    kleene_star__nestedParenthesesBlockPart
+
+kleene_plus__pointerPart
+    pointerPart
+
+kleene_star__pointerPart
+    pointerPart
+
+kleene_star__typeQualifierList
+    typeQualifier
+
+kleene_plus__typeQualifierList
+    typeQualifier
+
+optional__parameterTypeListPart
+    parameterTypeListPart
+
+optional__parameterTypeList
+    parameterTypeList
+
+parameterTypeList
+    parameterList
+
+kleene_star__parameterListPart
+    parameterListPart
+
+parameterList
+    parameterDeclaration
+
+parameterDeclaration
+    kleene_plus__declarationSpecifiers
+
+kleene_star__identifierListPart
+    identifierListPart
+
+identifierList
+    Identifier
+
+optional__identifierList
+    identifierList
+
+typeName
+    kleene_plus__specifierQualifierList
+
+optional__abstractDeclarator
+    abstractDeclarator
+
+abstractDeclarator
+    directAbstractDeclarator
+    kleene_plus__pointerPart
+
+typedefName
+    Identifier
+
+initializer
+    assignmentExpression
+
+kleene_star__initializerListPart
+    initializerListPart
+
+initializerList
+    initializer
+
+optional__designation
+    designation
+
+kleene_plus__designatorList
+    designator
+
+kleene_star__statementPartOne
+    statementPartOne
+
+statementPartTwo
+    nonAssignmentBinaryExpression
+
+optional__statementPartTwo
+    statementPartTwo
+
+kleene_star__statementPartThree
+    statementPartThree
+
+statement
+    compoundStatement
+    expressionStatement
+    iterationStatement
+    jumpStatement
+    labeledStatement
+    selectionStatement
+
+kleene_star__blockItem
+    blockItem
+
+blockItem
+    declaration
+    statement
+
+optional__selectionStatementPart
+    selectionStatementPart
+
+optional__translationUnit
+    translationUnit
+
+kleene_plus__externalDeclaration
+    externalDeclaration
+
+translationUnit
+    kleene_plus__externalDeclaration
+
+externalDeclaration
+    declaration
+    functionDefinition
+
+kleene_star__declaration
+    declaration

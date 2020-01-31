@@ -1,0 +1,5 @@
+
+
+
+
+char *foo = "string foobar";

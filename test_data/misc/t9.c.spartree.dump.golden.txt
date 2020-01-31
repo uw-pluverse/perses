@@ -1,0 +1,42 @@
+translationUnit {id=1}
+|___(+) {id=2,slot_type=kleene_plus__externalDeclaration}
+    |___functionDefinition {id=4,slot_type=externalDeclaration}
+        |___(*) {id=5,slot_type=kleene_star__declarationSpecifiers}
+        |   |___Token:const {id=77,slot_type=declarationSpecifier}
+        |   |___Token:char {id=75,slot_type=declarationSpecifier}
+        |___declarator {id=6,slot_type=declarator}
+        |   |___(*) {id=29,slot_type=kleene_star__pointerPart}
+        |   |   |___Token:* {id=71,slot_type=pointerPart}
+        |   |___directDeclarator {id=30,slot_type=directDeclarator}
+        |       |___Token:f {id=31,slot_type=Identifier}
+        |       |___(*) {id=32,slot_type=kleene_star__directDeclaratorPart}
+        |           |___directDeclaratorPart {id=33,slot_type=directDeclaratorPart}
+        |               |___Token:( {id=34,slot_type=LeftParen}
+        |               |___parameterList {id=37,slot_type=parameterTypeList}
+        |               |   |___(+) {id=62,slot_type=parameterDeclaration}
+        |               |   |   |___Token:int {id=69,slot_type=declarationSpecifier}
+        |               |   |   |___Token:a {id=67,slot_type=declarationSpecifier}
+        |               |   |___(*) {id=39,slot_type=kleene_star__parameterListPart}
+        |               |       |___parameterListPart {id=40,slot_type=parameterListPart}
+        |               |       |   |___Token:, {id=52,slot_type=Comma}
+        |               |       |   |___(+) {id=54,slot_type=parameterDeclaration}
+        |               |       |       |___Token:int {id=61,slot_type=declarationSpecifier}
+        |               |       |       |___Token:b {id=59,slot_type=declarationSpecifier}
+        |               |       |___parameterListPart {id=41,slot_type=parameterListPart}
+        |               |           |___Token:, {id=42,slot_type=Comma}
+        |               |           |___(+) {id=44,slot_type=parameterDeclaration}
+        |               |               |___Token:int {id=51,slot_type=declarationSpecifier}
+        |               |               |___Token:c {id=49,slot_type=declarationSpecifier}
+        |               |___Token:) {id=36,slot_type=RightParen}
+        |___compoundStatement {id=7,slot_type=compoundStatement}
+            |___Token:{ {id=8,slot_type=LeftBrace}
+            |___(*) {id=9,slot_type=kleene_star__blockItem}
+            |   |___jumpStatement {id=13,slot_type=blockItem}
+            |       |___Token:return {id=14,slot_type=Return}
+            |       |___(?) {id=15,slot_type=optional__expression}
+            |       |   |___(+) {id=25,slot_type=expression}
+            |       |       |___Token:"hello" {id=26,slot_type=StringLiteral}
+            |       |       |___Token:" " {id=27,slot_type=StringLiteral}
+            |       |       |___Token:"world" {id=28,slot_type=StringLiteral}
+            |       |___Token:; {id=16,slot_type=Semi}
+            |___Token:} {id=10,slot_type=RightBrace}

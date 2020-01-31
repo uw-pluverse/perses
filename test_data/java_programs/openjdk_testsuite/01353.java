@@ -1,0 +1,5 @@
+
+
+
+
+class InterfaceExpected implements String { }

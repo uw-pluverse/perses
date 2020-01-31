@@ -1,0 +1,9 @@
+
+
+
+
+
+class ImplicitSourceTest {
+    
+    int i;
+}

@@ -1,0 +1,17 @@
+
+
+@Gen(fileName="Generated",
+     content=
+"class Generated {\n" +
+"    @Check(classValue=String.class,\n" +
+"           intConstValue=false,\n" +
+"           enumValue=\"a\",\n" +
+"           incorrectAnnotationValue=@Deprecated,\n" +
+"           incorrectArrayValue={1, \"a\"},\n" +
+"           incorrectClassValue=get())\n" +
+"    public static Class<?> get() {\n" +
+"        return null;\n" +
+"    }\n" +
+"}\n")
+class Source {
+}

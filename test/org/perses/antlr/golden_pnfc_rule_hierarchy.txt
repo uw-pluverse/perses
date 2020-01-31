@@ -1,0 +1,1594 @@
+abstractDeclarator
+    epsilonable: false
+    immediate sub-rule names:
+        directAbstractDeclarator
+        pointer
+    transitive sub-rule names:
+        alternative__pointer_8
+        directAbstractDeclarator
+        directAbstractDeclarator_14
+        pointer
+additiveExpression
+    epsilonable: false
+    immediate sub-rule names:
+        multiplicativeExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        castExpression
+        genericSelection
+        kleene_plus__primaryExpression_2
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        unaryExpression
+alternative__alignmentSpecifier_1
+    epsilonable: false
+    immediate sub-rule names:
+        constantExpression
+        typeName
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        alternative__specifierQualifierList_3
+        andExpression
+        atomicTypeSpecifier
+        castExpression
+        conditionalExpression
+        constantExpression
+        enumSpecifier
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_2
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        specifierQualifierList
+        structOrUnionSpecifier
+        typeName
+        typeQualifier
+        typeSpecifier
+        typedefName
+        unaryExpression
+alternative__directAbstractDeclarator_17
+    epsilonable: true
+    immediate sub-rule names:
+        optional__directDeclarator_5
+        optional__pointer_1
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        assignmentExpression
+        castExpression
+        conditionalExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_2
+        kleene_plus__typeQualifierList_3
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        optional__directDeclarator_5
+        optional__pointer_1
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        typeQualifier
+        typeQualifierList
+        typeQualifierList_2
+        unaryExpression
+alternative__directAbstractDeclarator_23
+    epsilonable: true
+    immediate sub-rule names:
+        abstractDeclarator
+        optional__directAbstractDeclarator_2
+    transitive sub-rule names:
+        Identifier
+        abstractDeclarator
+        alignmentSpecifier
+        alternative__pointer_8
+        atomicTypeSpecifier
+        declarationSpecifier
+        declarationSpecifiers
+        directAbstractDeclarator
+        directAbstractDeclarator_14
+        enumSpecifier
+        gccAttributeSpecifier
+        kleene_plus__declarationSpecifiers_1
+        optional__directAbstractDeclarator_2
+        parameterDeclaration
+        parameterList
+        parameterTypeList
+        pointer
+        structOrUnionSpecifier
+        typeQualifier
+        typeSpecifier
+        typedefName
+alternative__directDeclarator_12
+    epsilonable: true
+    immediate sub-rule names:
+        alternative__directDeclarator_14
+        optional__pointer_1
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        alternative__directDeclarator_14
+        andExpression
+        assignmentExpression
+        castExpression
+        conditionalExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_2
+        kleene_plus__typeQualifierList_3
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        optional__directDeclarator_5
+        optional__pointer_1
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        typeQualifier
+        typeQualifierList
+        typeQualifierList_2
+        unaryExpression
+alternative__directDeclarator_14
+    epsilonable: true
+    immediate sub-rule names:
+        optional__directDeclarator_5
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        assignmentExpression
+        castExpression
+        conditionalExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_2
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        optional__directDeclarator_5
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        unaryExpression
+alternative__directDeclarator_9
+    epsilonable: true
+    immediate sub-rule names:
+        optional__directDeclarator_1
+        parameterTypeList
+    transitive sub-rule names:
+        Identifier
+        alignmentSpecifier
+        atomicTypeSpecifier
+        declarationSpecifier
+        declarationSpecifiers
+        enumSpecifier
+        gccAttributeSpecifier
+        identifierList
+        kleene_plus__declarationSpecifiers_1
+        optional__directDeclarator_1
+        parameterDeclaration
+        parameterList
+        parameterTypeList
+        structOrUnionSpecifier
+        typeQualifier
+        typeSpecifier
+        typedefName
+alternative__enumSpecifier_4
+    epsilonable: false
+    immediate sub-rule names:
+        Identifier
+    transitive sub-rule names:
+        Identifier
+alternative__genericAssociation_1
+    epsilonable: false
+    immediate sub-rule names:
+        typeName
+    transitive sub-rule names:
+        Identifier
+        alternative__specifierQualifierList_3
+        atomicTypeSpecifier
+        enumSpecifier
+        specifierQualifierList
+        structOrUnionSpecifier
+        typeName
+        typeQualifier
+        typeSpecifier
+        typedefName
+alternative__iterationStatement_8
+    epsilonable: false
+    immediate sub-rule names:
+        declaration
+    transitive sub-rule names:
+        declaration
+        staticAssertDeclaration
+alternative__jumpStatement_3
+    epsilonable: false
+    immediate sub-rule names:
+        Identifier
+        unaryExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        genericSelection
+        kleene_plus__primaryExpression_2
+        postfixExpression
+        postfixExpression_4
+        unaryExpression
+alternative__labeledStatement_2
+    epsilonable: false
+    immediate sub-rule names:
+        Identifier
+    transitive sub-rule names:
+        Identifier
+alternative__parameterDeclaration_2
+    epsilonable: true
+    immediate sub-rule names:
+        declarator
+        optional__typeName_1
+    transitive sub-rule names:
+        Identifier
+        abstractDeclarator
+        alternative__pointer_8
+        declarator
+        directAbstractDeclarator
+        directAbstractDeclarator_14
+        directDeclarator
+        directDeclarator_8
+        optional__typeName_1
+        pointer
+alternative__pointer_5
+    epsilonable: true
+    immediate sub-rule names:
+        optional__declarator_1
+        optional__pointer_1
+    transitive sub-rule names:
+        alternative__pointer_8
+        kleene_plus__typeQualifierList_3
+        optional__declarator_1
+        optional__pointer_1
+        pointer
+        typeQualifier
+        typeQualifierList
+        typeQualifierList_2
+alternative__specifierQualifierList_3
+    epsilonable: false
+    immediate sub-rule names:
+        typeQualifier
+        typeSpecifier
+    transitive sub-rule names:
+        Identifier
+        atomicTypeSpecifier
+        enumSpecifier
+        structOrUnionSpecifier
+        typeQualifier
+        typeSpecifier
+        typedefName
+alternative__structOrUnionSpecifier_2
+    epsilonable: false
+    immediate sub-rule names:
+        Identifier
+    transitive sub-rule names:
+        Identifier
+andExpression
+    epsilonable: false
+    immediate sub-rule names:
+        equalityExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        castExpression
+        equalityExpression
+        genericSelection
+        kleene_plus__primaryExpression_2
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        unaryExpression
+assignmentExpression
+    epsilonable: false
+    immediate sub-rule names:
+        conditionalExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        castExpression
+        conditionalExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_2
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        unaryExpression
+blockItem
+    epsilonable: false
+    immediate sub-rule names:
+        declaration
+        statement
+    transitive sub-rule names:
+        compoundStatement
+        declaration
+        expressionStatement
+        jumpStatement
+        labeledStatement
+        statement
+        staticAssertDeclaration
+blockItemList
+    epsilonable: false
+    immediate sub-rule names:
+        kleene_plus__blockItemList_3
+    transitive sub-rule names:
+        blockItem
+        blockItemList_2
+        compoundStatement
+        declaration
+        expressionStatement
+        jumpStatement
+        kleene_plus__blockItemList_3
+        labeledStatement
+        statement
+        staticAssertDeclaration
+blockItemList_2
+    epsilonable: false
+    immediate sub-rule names:
+        blockItem
+    transitive sub-rule names:
+        blockItem
+        compoundStatement
+        declaration
+        expressionStatement
+        jumpStatement
+        labeledStatement
+        statement
+        staticAssertDeclaration
+castExpression
+    epsilonable: false
+    immediate sub-rule names:
+        unaryExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        genericSelection
+        kleene_plus__primaryExpression_2
+        postfixExpression
+        postfixExpression_4
+        unaryExpression
+conditionalExpression
+    epsilonable: false
+    immediate sub-rule names:
+        logicalOrExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        castExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_2
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        unaryExpression
+constantExpression
+    epsilonable: false
+    immediate sub-rule names:
+        conditionalExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        castExpression
+        conditionalExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_2
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        unaryExpression
+declaration
+    epsilonable: false
+    immediate sub-rule names:
+        staticAssertDeclaration
+    transitive sub-rule names:
+        staticAssertDeclaration
+declarationList
+    epsilonable: false
+    immediate sub-rule names:
+        kleene_plus__declarationList_3
+    transitive sub-rule names:
+        declaration
+        declarationList_2
+        kleene_plus__declarationList_3
+        staticAssertDeclaration
+declarationList_2
+    epsilonable: false
+    immediate sub-rule names:
+        declaration
+    transitive sub-rule names:
+        declaration
+        staticAssertDeclaration
+declarationSpecifier
+    epsilonable: false
+    immediate sub-rule names:
+        alignmentSpecifier
+        gccAttributeSpecifier
+        typeQualifier
+        typeSpecifier
+    transitive sub-rule names:
+        Identifier
+        alignmentSpecifier
+        atomicTypeSpecifier
+        enumSpecifier
+        gccAttributeSpecifier
+        structOrUnionSpecifier
+        typeQualifier
+        typeSpecifier
+        typedefName
+declarationSpecifiers
+    epsilonable: false
+    immediate sub-rule names:
+        kleene_plus__declarationSpecifiers_1
+    transitive sub-rule names:
+        Identifier
+        alignmentSpecifier
+        atomicTypeSpecifier
+        declarationSpecifier
+        enumSpecifier
+        gccAttributeSpecifier
+        kleene_plus__declarationSpecifiers_1
+        structOrUnionSpecifier
+        typeQualifier
+        typeSpecifier
+        typedefName
+declarator
+    epsilonable: false
+    immediate sub-rule names:
+        directDeclarator
+    transitive sub-rule names:
+        Identifier
+        directDeclarator
+        directDeclarator_8
+designatorList
+    epsilonable: false
+    immediate sub-rule names:
+        kleene_plus__designatorList_3
+    transitive sub-rule names:
+        designator
+        designatorList_2
+        kleene_plus__designatorList_3
+designatorList_2
+    epsilonable: false
+    immediate sub-rule names:
+        designator
+    transitive sub-rule names:
+        designator
+directAbstractDeclarator
+    epsilonable: false
+    immediate sub-rule names:
+        directAbstractDeclarator_14
+    transitive sub-rule names:
+        directAbstractDeclarator_14
+directDeclarator
+    epsilonable: false
+    immediate sub-rule names:
+        directDeclarator_8
+    transitive sub-rule names:
+        Identifier
+        directDeclarator_8
+directDeclarator_8
+    epsilonable: false
+    immediate sub-rule names:
+        Identifier
+    transitive sub-rule names:
+        Identifier
+enumerator
+    epsilonable: false
+    immediate sub-rule names:
+        typedefName
+    transitive sub-rule names:
+        Identifier
+        typedefName
+enumeratorList
+    epsilonable: false
+    immediate sub-rule names:
+        enumerator
+    transitive sub-rule names:
+        Identifier
+        enumerator
+        typedefName
+equalityExpression
+    epsilonable: false
+    immediate sub-rule names:
+        relationalExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        castExpression
+        genericSelection
+        kleene_plus__primaryExpression_2
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        unaryExpression
+exclusiveOrExpression
+    epsilonable: false
+    immediate sub-rule names:
+        andExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        castExpression
+        equalityExpression
+        genericSelection
+        kleene_plus__primaryExpression_2
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        unaryExpression
+expression
+    epsilonable: false
+    immediate sub-rule names:
+        assignmentExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        assignmentExpression
+        castExpression
+        conditionalExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_2
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        unaryExpression
+externalDeclaration
+    epsilonable: false
+    immediate sub-rule names:
+        declaration
+        functionDefinition
+    transitive sub-rule names:
+        declaration
+        functionDefinition
+        staticAssertDeclaration
+gccDeclaratorExtension
+    epsilonable: false
+    immediate sub-rule names:
+        gccAttributeSpecifier
+    transitive sub-rule names:
+        gccAttributeSpecifier
+genericAssocList
+    epsilonable: false
+    immediate sub-rule names:
+        genericAssociation
+    transitive sub-rule names:
+        genericAssociation
+identifierList
+    epsilonable: false
+    immediate sub-rule names:
+        Identifier
+    transitive sub-rule names:
+        Identifier
+inclusiveOrExpression
+    epsilonable: false
+    immediate sub-rule names:
+        exclusiveOrExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        castExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        kleene_plus__primaryExpression_2
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        unaryExpression
+initDeclarator
+    epsilonable: false
+    immediate sub-rule names:
+        declarator
+    transitive sub-rule names:
+        Identifier
+        declarator
+        directDeclarator
+        directDeclarator_8
+initDeclaratorList
+    epsilonable: false
+    immediate sub-rule names:
+        initDeclarator
+    transitive sub-rule names:
+        Identifier
+        declarator
+        directDeclarator
+        directDeclarator_8
+        initDeclarator
+initializer
+    epsilonable: false
+    immediate sub-rule names:
+        assignmentExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        assignmentExpression
+        castExpression
+        conditionalExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_2
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        unaryExpression
+initializerList
+    epsilonable: false
+    immediate sub-rule names:
+        initializer
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        assignmentExpression
+        castExpression
+        conditionalExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        initializer
+        kleene_plus__primaryExpression_2
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        unaryExpression
+kleene_plus__blockItemList_3
+    epsilonable: false
+    immediate sub-rule names:
+        blockItemList_2
+    transitive sub-rule names:
+        blockItem
+        blockItemList_2
+        compoundStatement
+        declaration
+        expressionStatement
+        jumpStatement
+        labeledStatement
+        statement
+        staticAssertDeclaration
+kleene_plus__declarationList_3
+    epsilonable: false
+    immediate sub-rule names:
+        declarationList_2
+    transitive sub-rule names:
+        declaration
+        declarationList_2
+        staticAssertDeclaration
+kleene_plus__declarationSpecifiers_1
+    epsilonable: false
+    immediate sub-rule names:
+        declarationSpecifier
+    transitive sub-rule names:
+        Identifier
+        alignmentSpecifier
+        atomicTypeSpecifier
+        declarationSpecifier
+        enumSpecifier
+        gccAttributeSpecifier
+        structOrUnionSpecifier
+        typeQualifier
+        typeSpecifier
+        typedefName
+kleene_plus__designatorList_3
+    epsilonable: false
+    immediate sub-rule names:
+        designatorList_2
+    transitive sub-rule names:
+        designator
+        designatorList_2
+kleene_plus__primaryExpression_2
+    epsilonable: false
+    immediate sub-rule names:
+        StringLiteral
+    transitive sub-rule names:
+        StringLiteral
+kleene_plus__structDeclarationList_3
+    epsilonable: false
+    immediate sub-rule names:
+        structDeclarationList_2
+    transitive sub-rule names:
+        staticAssertDeclaration
+        structDeclaration
+        structDeclarationList_2
+kleene_plus__translationUnit_3
+    epsilonable: false
+    immediate sub-rule names:
+        translationUnit_2
+    transitive sub-rule names:
+        declaration
+        externalDeclaration
+        functionDefinition
+        staticAssertDeclaration
+        translationUnit_2
+kleene_plus__typeQualifierList_3
+    epsilonable: false
+    immediate sub-rule names:
+        typeQualifierList_2
+    transitive sub-rule names:
+        typeQualifier
+        typeQualifierList_2
+kleene_star__additiveExpression_1
+    epsilonable: true
+    immediate sub-rule names:
+        additiveExpression_2
+    transitive sub-rule names:
+        additiveExpression_2
+kleene_star__andExpression_1
+    epsilonable: true
+    immediate sub-rule names:
+        andExpression_2
+    transitive sub-rule names:
+        andExpression_2
+kleene_star__declarator_2
+    epsilonable: true
+    immediate sub-rule names:
+        gccDeclaratorExtension
+    transitive sub-rule names:
+        gccAttributeSpecifier
+        gccDeclaratorExtension
+kleene_star__directAbstractDeclarator_12
+    epsilonable: true
+    immediate sub-rule names:
+        directAbstractDeclarator_13
+    transitive sub-rule names:
+        directAbstractDeclarator_13
+kleene_star__directDeclarator_6
+    epsilonable: true
+    immediate sub-rule names:
+        directDeclarator_7
+    transitive sub-rule names:
+        directDeclarator_7
+kleene_star__enumeratorList_1
+    epsilonable: true
+    immediate sub-rule names:
+        enumeratorList_2
+    transitive sub-rule names:
+        enumeratorList_2
+kleene_star__equalityExpression_1
+    epsilonable: true
+    immediate sub-rule names:
+        equalityExpression_2
+    transitive sub-rule names:
+        equalityExpression_2
+kleene_star__exclusiveOrExpression_1
+    epsilonable: true
+    immediate sub-rule names:
+        exclusiveOrExpression_2
+    transitive sub-rule names:
+        exclusiveOrExpression_2
+kleene_star__expression_1
+    epsilonable: true
+    immediate sub-rule names:
+        expression_2
+    transitive sub-rule names:
+        expression_2
+kleene_star__gccAttributeList_2
+    epsilonable: true
+    immediate sub-rule names:
+        gccAttributeList_1
+    transitive sub-rule names:
+        gccAttributeList_1
+kleene_star__genericAssocList_1
+    epsilonable: true
+    immediate sub-rule names:
+        genericAssocList_2
+    transitive sub-rule names:
+        genericAssocList_2
+kleene_star__identifierList_1
+    epsilonable: true
+    immediate sub-rule names:
+        identifierList_2
+    transitive sub-rule names:
+        identifierList_2
+kleene_star__inclusiveOrExpression_1
+    epsilonable: true
+    immediate sub-rule names:
+        inclusiveOrExpression_2
+    transitive sub-rule names:
+        inclusiveOrExpression_2
+kleene_star__initDeclaratorList_1
+    epsilonable: true
+    immediate sub-rule names:
+        initDeclaratorList_2
+    transitive sub-rule names:
+        initDeclaratorList_2
+kleene_star__initializerList_3
+    epsilonable: true
+    immediate sub-rule names:
+        initializerList_4
+    transitive sub-rule names:
+        initializerList_4
+kleene_star__logicalAndExpression_1
+    epsilonable: true
+    immediate sub-rule names:
+        logicalAndExpression_2
+    transitive sub-rule names:
+        logicalAndExpression_2
+kleene_star__logicalOrExpression_1
+    epsilonable: true
+    immediate sub-rule names:
+        logicalOrExpression_2
+    transitive sub-rule names:
+        logicalOrExpression_2
+kleene_star__multiplicativeExpression_1
+    epsilonable: true
+    immediate sub-rule names:
+        multiplicativeExpression_2
+    transitive sub-rule names:
+        multiplicativeExpression_2
+kleene_star__parameterList_1
+    epsilonable: true
+    immediate sub-rule names:
+        parameterList_2
+    transitive sub-rule names:
+        parameterList_2
+kleene_star__postfixExpression_2
+    epsilonable: true
+    immediate sub-rule names:
+        postfixExpression_3
+    transitive sub-rule names:
+        postfixExpression_3
+kleene_star__relationalExpression_1
+    epsilonable: true
+    immediate sub-rule names:
+        relationalExpression_2
+    transitive sub-rule names:
+        relationalExpression_2
+kleene_star__shiftExpression_1
+    epsilonable: true
+    immediate sub-rule names:
+        shiftExpression_2
+    transitive sub-rule names:
+        shiftExpression_2
+kleene_star__statement_10
+    epsilonable: true
+    immediate sub-rule names:
+        statement_9
+    transitive sub-rule names:
+        statement_9
+kleene_star__statement_2
+    epsilonable: true
+    immediate sub-rule names:
+        statement_1
+    transitive sub-rule names:
+        statement_1
+kleene_star__structDeclaratorList_1
+    epsilonable: true
+    immediate sub-rule names:
+        structDeclaratorList_2
+    transitive sub-rule names:
+        structDeclaratorList_2
+logicalAndExpression
+    epsilonable: false
+    immediate sub-rule names:
+        inclusiveOrExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        castExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_2
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        unaryExpression
+logicalOrExpression
+    epsilonable: false
+    immediate sub-rule names:
+        logicalAndExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        castExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_2
+        logicalAndExpression
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        unaryExpression
+multiplicativeExpression
+    epsilonable: false
+    immediate sub-rule names:
+        castExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        castExpression
+        genericSelection
+        kleene_plus__primaryExpression_2
+        postfixExpression
+        postfixExpression_4
+        unaryExpression
+optional__compilationUnit_1
+    epsilonable: true
+    immediate sub-rule names:
+        translationUnit
+    transitive sub-rule names:
+        declaration
+        externalDeclaration
+        functionDefinition
+        kleene_plus__translationUnit_3
+        staticAssertDeclaration
+        translationUnit
+        translationUnit_2
+optional__compoundStatement_1
+    epsilonable: true
+    immediate sub-rule names:
+        blockItemList
+    transitive sub-rule names:
+        blockItem
+        blockItemList
+        blockItemList_2
+        compoundStatement
+        declaration
+        expressionStatement
+        jumpStatement
+        kleene_plus__blockItemList_3
+        labeledStatement
+        statement
+        staticAssertDeclaration
+optional__conditionalExpression_2
+    epsilonable: true
+    immediate sub-rule names:
+        conditionalExpression_1
+    transitive sub-rule names:
+        conditionalExpression_1
+optional__declaration_1
+    epsilonable: true
+    immediate sub-rule names:
+        initDeclaratorList
+    transitive sub-rule names:
+        Identifier
+        declarator
+        directDeclarator
+        directDeclarator_8
+        initDeclarator
+        initDeclaratorList
+optional__declarator_1
+    epsilonable: true
+    immediate sub-rule names:
+        pointer
+    transitive sub-rule names:
+        alternative__pointer_8
+        pointer
+optional__directAbstractDeclarator_2
+    epsilonable: true
+    immediate sub-rule names:
+        parameterTypeList
+    transitive sub-rule names:
+        Identifier
+        alignmentSpecifier
+        atomicTypeSpecifier
+        declarationSpecifier
+        declarationSpecifiers
+        enumSpecifier
+        gccAttributeSpecifier
+        kleene_plus__declarationSpecifiers_1
+        parameterDeclaration
+        parameterList
+        parameterTypeList
+        structOrUnionSpecifier
+        typeQualifier
+        typeSpecifier
+        typedefName
+optional__directDeclarator_1
+    epsilonable: true
+    immediate sub-rule names:
+        identifierList
+    transitive sub-rule names:
+        Identifier
+        identifierList
+optional__directDeclarator_5
+    epsilonable: true
+    immediate sub-rule names:
+        assignmentExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        assignmentExpression
+        castExpression
+        conditionalExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_2
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        unaryExpression
+optional__enumerator_2
+    epsilonable: true
+    immediate sub-rule names:
+        enumerator_1
+    transitive sub-rule names:
+        enumerator_1
+optional__functionDefinition_1
+    epsilonable: true
+    immediate sub-rule names:
+        declarationSpecifiers
+    transitive sub-rule names:
+        Identifier
+        alignmentSpecifier
+        atomicTypeSpecifier
+        declarationSpecifier
+        declarationSpecifiers
+        enumSpecifier
+        gccAttributeSpecifier
+        kleene_plus__declarationSpecifiers_1
+        structOrUnionSpecifier
+        typeQualifier
+        typeSpecifier
+        typedefName
+optional__functionDefinition_2
+    epsilonable: true
+    immediate sub-rule names:
+        declarationList
+    transitive sub-rule names:
+        declaration
+        declarationList
+        declarationList_2
+        kleene_plus__declarationList_3
+        staticAssertDeclaration
+optional__gccAttribute_3
+    epsilonable: true
+    immediate sub-rule names:
+        gccAttribute_2
+    transitive sub-rule names:
+        gccAttribute_2
+optional__initDeclarator_2
+    epsilonable: true
+    immediate sub-rule names:
+        initDeclarator_1
+    transitive sub-rule names:
+        initDeclarator_1
+optional__initializerList_1
+    epsilonable: true
+    immediate sub-rule names:
+        designation
+    transitive sub-rule names:
+        designation
+optional__parameterTypeList_2
+    epsilonable: true
+    immediate sub-rule names:
+        parameterTypeList_1
+    transitive sub-rule names:
+        parameterTypeList_1
+optional__pointer_1
+    epsilonable: true
+    immediate sub-rule names:
+        typeQualifierList
+    transitive sub-rule names:
+        kleene_plus__typeQualifierList_3
+        typeQualifier
+        typeQualifierList
+        typeQualifierList_2
+optional__postfixExpression_1
+    epsilonable: true
+    immediate sub-rule names:
+        expression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        assignmentExpression
+        castExpression
+        conditionalExpression
+        equalityExpression
+        exclusiveOrExpression
+        expression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_2
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        unaryExpression
+optional__selectionStatement_2
+    epsilonable: true
+    immediate sub-rule names:
+        selectionStatement_1
+    transitive sub-rule names:
+        selectionStatement_1
+optional__specifierQualifierList_1
+    epsilonable: true
+    immediate sub-rule names:
+        specifierQualifierList
+    transitive sub-rule names:
+        Identifier
+        alternative__specifierQualifierList_3
+        atomicTypeSpecifier
+        enumSpecifier
+        specifierQualifierList
+        structOrUnionSpecifier
+        typeQualifier
+        typeSpecifier
+        typedefName
+optional__statement_4
+    epsilonable: true
+    immediate sub-rule names:
+        statement_3
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        castExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_2
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        statement_3
+        unaryExpression
+optional__structDeclaration_1
+    epsilonable: true
+    immediate sub-rule names:
+        structDeclaratorList
+    transitive sub-rule names:
+        Identifier
+        declarator
+        directDeclarator
+        directDeclarator_8
+        structDeclarator
+        structDeclaratorList
+optional__structDeclarator_1
+    epsilonable: true
+    immediate sub-rule names:
+        declarator
+    transitive sub-rule names:
+        Identifier
+        declarator
+        directDeclarator
+        directDeclarator_8
+optional__structOrUnionSpecifier_1
+    epsilonable: true
+    immediate sub-rule names:
+        Identifier
+    transitive sub-rule names:
+        Identifier
+optional__typeName_1
+    epsilonable: true
+    immediate sub-rule names:
+        abstractDeclarator
+    transitive sub-rule names:
+        abstractDeclarator
+        alternative__pointer_8
+        directAbstractDeclarator
+        directAbstractDeclarator_14
+        pointer
+parameterDeclaration
+    epsilonable: false
+    immediate sub-rule names:
+        declarationSpecifiers
+    transitive sub-rule names:
+        Identifier
+        alignmentSpecifier
+        atomicTypeSpecifier
+        declarationSpecifier
+        declarationSpecifiers
+        enumSpecifier
+        gccAttributeSpecifier
+        kleene_plus__declarationSpecifiers_1
+        structOrUnionSpecifier
+        typeQualifier
+        typeSpecifier
+        typedefName
+parameterList
+    epsilonable: false
+    immediate sub-rule names:
+        parameterDeclaration
+    transitive sub-rule names:
+        Identifier
+        alignmentSpecifier
+        atomicTypeSpecifier
+        declarationSpecifier
+        declarationSpecifiers
+        enumSpecifier
+        gccAttributeSpecifier
+        kleene_plus__declarationSpecifiers_1
+        parameterDeclaration
+        structOrUnionSpecifier
+        typeQualifier
+        typeSpecifier
+        typedefName
+parameterTypeList
+    epsilonable: false
+    immediate sub-rule names:
+        parameterList
+    transitive sub-rule names:
+        Identifier
+        alignmentSpecifier
+        atomicTypeSpecifier
+        declarationSpecifier
+        declarationSpecifiers
+        enumSpecifier
+        gccAttributeSpecifier
+        kleene_plus__declarationSpecifiers_1
+        parameterDeclaration
+        parameterList
+        structOrUnionSpecifier
+        typeQualifier
+        typeSpecifier
+        typedefName
+pointer
+    epsilonable: false
+    immediate sub-rule names:
+        alternative__pointer_8
+    transitive sub-rule names:
+        alternative__pointer_8
+postfixExpression
+    epsilonable: false
+    immediate sub-rule names:
+        postfixExpression_4
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        genericSelection
+        kleene_plus__primaryExpression_2
+        postfixExpression_4
+postfixExpression_4
+    epsilonable: false
+    immediate sub-rule names:
+        Constant
+        Identifier
+        genericSelection
+        kleene_plus__primaryExpression_2
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        genericSelection
+        kleene_plus__primaryExpression_2
+relationalExpression
+    epsilonable: false
+    immediate sub-rule names:
+        shiftExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        castExpression
+        genericSelection
+        kleene_plus__primaryExpression_2
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        shiftExpression
+        unaryExpression
+shiftExpression
+    epsilonable: false
+    immediate sub-rule names:
+        additiveExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        castExpression
+        genericSelection
+        kleene_plus__primaryExpression_2
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        unaryExpression
+specifierQualifierList
+    epsilonable: false
+    immediate sub-rule names:
+        alternative__specifierQualifierList_3
+    transitive sub-rule names:
+        Identifier
+        alternative__specifierQualifierList_3
+        atomicTypeSpecifier
+        enumSpecifier
+        structOrUnionSpecifier
+        typeQualifier
+        typeSpecifier
+        typedefName
+statement
+    epsilonable: false
+    immediate sub-rule names:
+        compoundStatement
+        expressionStatement
+        jumpStatement
+        labeledStatement
+    transitive sub-rule names:
+        compoundStatement
+        expressionStatement
+        jumpStatement
+        labeledStatement
+statement_3
+    epsilonable: false
+    immediate sub-rule names:
+        logicalOrExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        castExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_2
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        unaryExpression
+structDeclaration
+    epsilonable: false
+    immediate sub-rule names:
+        staticAssertDeclaration
+    transitive sub-rule names:
+        staticAssertDeclaration
+structDeclarationList
+    epsilonable: false
+    immediate sub-rule names:
+        kleene_plus__structDeclarationList_3
+    transitive sub-rule names:
+        kleene_plus__structDeclarationList_3
+        staticAssertDeclaration
+        structDeclaration
+        structDeclarationList_2
+structDeclarationList_2
+    epsilonable: false
+    immediate sub-rule names:
+        structDeclaration
+    transitive sub-rule names:
+        staticAssertDeclaration
+        structDeclaration
+structDeclarator
+    epsilonable: false
+    immediate sub-rule names:
+        declarator
+    transitive sub-rule names:
+        Identifier
+        declarator
+        directDeclarator
+        directDeclarator_8
+structDeclaratorList
+    epsilonable: false
+    immediate sub-rule names:
+        structDeclarator
+    transitive sub-rule names:
+        Identifier
+        declarator
+        directDeclarator
+        directDeclarator_8
+        structDeclarator
+translationUnit
+    epsilonable: false
+    immediate sub-rule names:
+        kleene_plus__translationUnit_3
+    transitive sub-rule names:
+        declaration
+        externalDeclaration
+        functionDefinition
+        kleene_plus__translationUnit_3
+        staticAssertDeclaration
+        translationUnit_2
+translationUnit_2
+    epsilonable: false
+    immediate sub-rule names:
+        externalDeclaration
+    transitive sub-rule names:
+        declaration
+        externalDeclaration
+        functionDefinition
+        staticAssertDeclaration
+typeName
+    epsilonable: false
+    immediate sub-rule names:
+        specifierQualifierList
+    transitive sub-rule names:
+        Identifier
+        alternative__specifierQualifierList_3
+        atomicTypeSpecifier
+        enumSpecifier
+        specifierQualifierList
+        structOrUnionSpecifier
+        typeQualifier
+        typeSpecifier
+        typedefName
+typeQualifierList
+    epsilonable: false
+    immediate sub-rule names:
+        kleene_plus__typeQualifierList_3
+    transitive sub-rule names:
+        kleene_plus__typeQualifierList_3
+        typeQualifier
+        typeQualifierList_2
+typeQualifierList_2
+    epsilonable: false
+    immediate sub-rule names:
+        typeQualifier
+    transitive sub-rule names:
+        typeQualifier
+typeSpecifier
+    epsilonable: false
+    immediate sub-rule names:
+        atomicTypeSpecifier
+        enumSpecifier
+        structOrUnionSpecifier
+        typedefName
+    transitive sub-rule names:
+        Identifier
+        atomicTypeSpecifier
+        enumSpecifier
+        structOrUnionSpecifier
+        typedefName
+typedefName
+    epsilonable: false
+    immediate sub-rule names:
+        Identifier
+    transitive sub-rule names:
+        Identifier
+unaryExpression
+    epsilonable: false
+    immediate sub-rule names:
+        postfixExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        genericSelection
+        kleene_plus__primaryExpression_2
+        postfixExpression
+        postfixExpression_4

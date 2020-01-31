@@ -1,0 +1,4 @@
+
+
+double i;
+int j;

@@ -1,0 +1,7 @@
+struct test {
+  char a[3];
+  unsigned char b:1;
+};
+void f(struct test *t) {
+  t->b = 1;
+}

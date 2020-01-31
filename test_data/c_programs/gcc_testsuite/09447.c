@@ -1,0 +1,9 @@
+
+
+
+
+
+
+void foo();
+
+void foo() { }

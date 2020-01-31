@@ -1,0 +1,7 @@
+struct state_struct {
+  unsigned long long phys_frame: 50;
+  unsigned valid : 2;
+} s;
+int mem_access(struct state_struct *p) {
+  return p->valid;
+}

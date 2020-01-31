@@ -1,0 +1,5 @@
+
+
+class DeprecatedFileName {
+    DeprecatedClass d;
+}

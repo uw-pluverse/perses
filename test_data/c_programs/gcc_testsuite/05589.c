@@ -1,0 +1,21 @@
+
+
+
+extern void bar (unsigned int);
+
+int
+foo (void)
+{
+  char buf[1] = { 3 };
+  const char *p = buf;
+  const char **q = &p;
+  unsigned int ch;
+  switch (**q)
+    {
+    case 1: ch = 5; break;
+    default: ch = 0; break;
+    }
+
+  bar (ch);
+  return ch;
+}

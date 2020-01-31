@@ -1,0 +1,8 @@
+
+
+
+
+
+class DeprecatedPlural {
+    DeprecatedClass d;
+}

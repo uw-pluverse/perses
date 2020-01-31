@@ -1,0 +1,8 @@
+
+
+
+
+
+
+
+const char *p = "abc";

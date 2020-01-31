@@ -1,0 +1,10 @@
+
+
+typedef unsigned int size_t;
+void
+foo (const char *src, unsigned char *dst, size_t size)
+{
+  int ch;
+  while ((ch = *src++) != '\0') {
+  }
+}

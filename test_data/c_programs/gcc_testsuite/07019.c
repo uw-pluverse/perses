@@ -1,0 +1,20 @@
+
+
+
+
+
+void
+foo (int x)
+{
+  unsigned int a = 0;
+  int b = 3;
+  if (x)
+    b = 0;
+lab:
+  if (x)
+    goto lab;
+  a++;
+  if (b != 2)
+    __builtin_printf ("%u", a);
+  goto lab;
+}

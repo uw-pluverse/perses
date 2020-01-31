@@ -1,0 +1,7 @@
+
+
+
+@interface Test {
+    int value();
+}
+

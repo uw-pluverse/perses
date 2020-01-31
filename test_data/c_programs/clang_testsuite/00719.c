@@ -1,0 +1,12 @@
+double __attribute__((vector_size(16))) v1;
+double __attribute__((vector_size(32))) v2;
+double __attribute__((vector_size(64))) v3;
+double __attribute__((vector_size(1024))) v4;
+double __attribute__((vector_size(16), aligned(16))) v5;
+double __attribute__((vector_size(16), aligned(64))) v6;
+double __attribute__((vector_size(32), aligned(16))) v7;
+double __attribute__((vector_size(32), aligned(64))) v8;
+double __attribute__((vector_size(24))) v9;
+double __attribute__((vector_size(40))) v10;
+double __attribute__((vector_size(24), aligned(64))) v11;
+double __attribute__((vector_size(80), aligned(16))) v12;

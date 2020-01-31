@@ -1,0 +1,8 @@
+
+
+
+
+
+extern foo;
+
+bar (void) { }

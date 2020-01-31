@@ -1,0 +1,7 @@
+
+
+
+
+
+@Deprecated
+class AnnotationsNotSupported { }

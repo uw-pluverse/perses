@@ -1,0 +1,10 @@
+
+
+
+
+class AuthorTest {
+    
+    void standard() { }
+
+
+}

@@ -1,0 +1,136 @@
+translationUnit {id=1}
+|___(+) {id=2,slot_type=kleene_plus__externalDeclaration}
+    |___declaration {id=296,slot_type=externalDeclaration}
+    |   |___(+) {id=297,slot_type=kleene_plus__declarationSpecifiers}
+    |   |   |___Token:extern {id=314,slot_type=declarationSpecifier}
+    |   |   |___Token:int {id=312,slot_type=declarationSpecifier}
+    |   |___(?) {id=298,slot_type=optional__initDeclaratorList}
+    |   |   |___directDeclarator {id=303,slot_type=initDeclaratorList}
+    |   |       |___Token:A {id=304,slot_type=Identifier}
+    |   |       |___(*) {id=305,slot_type=kleene_star__directDeclaratorPart}
+    |   |           |___directDeclaratorPart {id=306,slot_type=directDeclaratorPart}
+    |   |               |___Token:[ {id=307,slot_type=LeftBracket}
+    |   |               |___Token:] {id=308,slot_type=RightBracket}
+    |   |___Token:; {id=299,slot_type=Semi}
+    |___declaration {id=277,slot_type=externalDeclaration}
+    |   |___(+) {id=278,slot_type=kleene_plus__declarationSpecifiers}
+    |   |   |___Token:extern {id=295,slot_type=declarationSpecifier}
+    |   |   |___Token:int {id=293,slot_type=declarationSpecifier}
+    |   |___(?) {id=279,slot_type=optional__initDeclaratorList}
+    |   |   |___directDeclarator {id=284,slot_type=initDeclaratorList}
+    |   |       |___Token:B {id=285,slot_type=Identifier}
+    |   |       |___(*) {id=286,slot_type=kleene_star__directDeclaratorPart}
+    |   |           |___directDeclaratorPart {id=287,slot_type=directDeclaratorPart}
+    |   |               |___Token:[ {id=288,slot_type=LeftBracket}
+    |   |               |___Token:] {id=289,slot_type=RightBracket}
+    |   |___Token:; {id=280,slot_type=Semi}
+    |___functionDefinition {id=6,slot_type=externalDeclaration}
+        |___(*) {id=7,slot_type=kleene_star__declarationSpecifiers}
+        |   |___Token:void {id=276,slot_type=declarationSpecifier}
+        |___directDeclarator {id=245,slot_type=declarator}
+        |   |___Token:foo {id=246,slot_type=Identifier}
+        |   |___(*) {id=247,slot_type=kleene_star__directDeclaratorPart}
+        |       |___directDeclaratorPart {id=248,slot_type=directDeclaratorPart}
+        |           |___Token:( {id=249,slot_type=LeftParen}
+        |           |___parameterList {id=252,slot_type=parameterTypeList}
+        |           |   |___(+) {id=266,slot_type=parameterDeclaration}
+        |           |   |   |___Token:int {id=273,slot_type=declarationSpecifier}
+        |           |   |   |___Token:j {id=271,slot_type=declarationSpecifier}
+        |           |   |___(*) {id=254,slot_type=kleene_star__parameterListPart}
+        |           |       |___parameterListPart {id=255,slot_type=parameterListPart}
+        |           |           |___Token:, {id=256,slot_type=Comma}
+        |           |           |___(+) {id=258,slot_type=parameterDeclaration}
+        |           |               |___Token:int {id=265,slot_type=declarationSpecifier}
+        |           |               |___Token:c {id=263,slot_type=declarationSpecifier}
+        |           |___Token:) {id=251,slot_type=RightParen}
+        |___compoundStatement {id=9,slot_type=compoundStatement}
+            |___Token:{ {id=10,slot_type=LeftBrace}
+            |___(*) {id=11,slot_type=kleene_star__blockItem}
+            |   |___declaration {id=235,slot_type=blockItem}
+            |   |   |___(+) {id=236,slot_type=kleene_plus__declarationSpecifiers}
+            |   |   |   |___Token:int {id=244,slot_type=declarationSpecifier}
+            |   |   |   |___Token:i {id=242,slot_type=declarationSpecifier}
+            |   |   |___Token:; {id=237,slot_type=Semi}
+            |   |___selectionStatement {id=116,slot_type=blockItem}
+            |   |   |___Token:if {id=117,slot_type=If}
+            |   |   |___Token:( {id=118,slot_type=LeftParen}
+            |   |   |___Token:c {id=234,slot_type=expression}
+            |   |   |___Token:) {id=120,slot_type=RightParen}
+            |   |   |___iterationStatement {id=122,slot_type=statement}
+            |   |       |___Token:for {id=123,slot_type=For}
+            |   |       |___Token:( {id=124,slot_type=LeftParen}
+            |   |       |___(?) {id=125,slot_type=optional__expression}
+            |   |       |   |___assignmentExpression {id=212,slot_type=expression}
+            |   |       |       |___Token:i {id=226,slot_type=unaryExpression}
+            |   |       |       |___Token:= {id=223,slot_type=assignmentOperator}
+            |   |       |       |___Token:0 {id=222,slot_type=assignmentExpression}
+            |   |       |___Token:; {id=126,slot_type=Semi}
+            |   |       |___(?) {id=127,slot_type=optional__expression}
+            |   |       |   |___nonAssignmentBinaryExpression {id=196,slot_type=expression}
+            |   |       |       |___Token:i {id=210,slot_type=castExpression}
+            |   |       |       |___(*) {id=198,slot_type=kleene_star__nonAssignmentBinaryExpressionPart}
+            |   |       |           |___nonAssignmentBinaryExpressionPart {id=199,slot_type=nonAssignmentBinaryExpressionPart}
+            |   |       |               |___Token:< {id=206,slot_type=binaryOperator}
+            |   |       |               |___Token:j {id=205,slot_type=castExpression}
+            |   |       |___Token:; {id=128,slot_type=Semi}
+            |   |       |___(?) {id=129,slot_type=optional__expression}
+            |   |       |   |___postfixExpression {id=188,slot_type=expression}
+            |   |       |       |___Token:i {id=192,slot_type=postfixExpression}
+            |   |       |       |___Token:++ {id=190,slot_type=PlusPlus}
+            |   |       |___Token:) {id=130,slot_type=RightParen}
+            |   |       |___expressionStatement {id=132,slot_type=statement}
+            |   |           |___(?) {id=133,slot_type=optional__expression}
+            |   |           |   |___assignmentExpression {id=136,slot_type=expression}
+            |   |           |       |___postfixExpression {id=167,slot_type=unaryExpression}
+            |   |           |       |   |___Token:A {id=181,slot_type=postfixExpression}
+            |   |           |       |   |___Token:[ {id=169,slot_type=LeftBracket}
+            |   |           |       |   |___Token:i {id=179,slot_type=expression}
+            |   |           |       |   |___Token:] {id=171,slot_type=RightBracket}
+            |   |           |       |___Token:= {id=166,slot_type=assignmentOperator}
+            |   |           |       |___assignmentExpression {id=139,slot_type=assignmentExpression}
+            |   |           |           |___postfixExpression {id=151,slot_type=unaryExpression}
+            |   |           |           |   |___Token:B {id=165,slot_type=postfixExpression}
+            |   |           |           |   |___Token:[ {id=153,slot_type=LeftBracket}
+            |   |           |           |   |___Token:i {id=163,slot_type=expression}
+            |   |           |           |   |___Token:] {id=155,slot_type=RightBracket}
+            |   |           |           |___Token:= {id=150,slot_type=assignmentOperator}
+            |   |           |           |___Token:0 {id=149,slot_type=assignmentExpression}
+            |   |           |___Token:; {id=134,slot_type=Semi}
+            |   |___iterationStatement {id=17,slot_type=blockItem}
+            |       |___Token:for {id=18,slot_type=For}
+            |       |___Token:( {id=19,slot_type=LeftParen}
+            |       |___(?) {id=20,slot_type=optional__expression}
+            |       |   |___assignmentExpression {id=100,slot_type=expression}
+            |       |       |___Token:i {id=114,slot_type=unaryExpression}
+            |       |       |___Token:= {id=111,slot_type=assignmentOperator}
+            |       |       |___Token:0 {id=110,slot_type=assignmentExpression}
+            |       |___Token:; {id=21,slot_type=Semi}
+            |       |___(?) {id=22,slot_type=optional__expression}
+            |       |   |___nonAssignmentBinaryExpression {id=84,slot_type=expression}
+            |       |       |___Token:i {id=98,slot_type=castExpression}
+            |       |       |___(*) {id=86,slot_type=kleene_star__nonAssignmentBinaryExpressionPart}
+            |       |           |___nonAssignmentBinaryExpressionPart {id=87,slot_type=nonAssignmentBinaryExpressionPart}
+            |       |               |___Token:< {id=94,slot_type=binaryOperator}
+            |       |               |___Token:j {id=93,slot_type=castExpression}
+            |       |___Token:; {id=23,slot_type=Semi}
+            |       |___(?) {id=24,slot_type=optional__expression}
+            |       |   |___postfixExpression {id=76,slot_type=expression}
+            |       |       |___Token:i {id=80,slot_type=postfixExpression}
+            |       |       |___Token:++ {id=78,slot_type=PlusPlus}
+            |       |___Token:) {id=25,slot_type=RightParen}
+            |       |___expressionStatement {id=27,slot_type=statement}
+            |           |___(?) {id=28,slot_type=optional__expression}
+            |           |   |___assignmentExpression {id=31,slot_type=expression}
+            |           |       |___postfixExpression {id=55,slot_type=unaryExpression}
+            |           |       |   |___Token:A {id=69,slot_type=postfixExpression}
+            |           |       |   |___Token:[ {id=57,slot_type=LeftBracket}
+            |           |       |   |___Token:i {id=67,slot_type=expression}
+            |           |       |   |___Token:] {id=59,slot_type=RightBracket}
+            |           |       |___Token:= {id=54,slot_type=assignmentOperator}
+            |           |       |___postfixExpression {id=39,slot_type=assignmentExpression}
+            |           |           |___Token:B {id=53,slot_type=postfixExpression}
+            |           |           |___Token:[ {id=41,slot_type=LeftBracket}
+            |           |           |___Token:i {id=51,slot_type=expression}
+            |           |           |___Token:] {id=43,slot_type=RightBracket}
+            |           |___Token:; {id=29,slot_type=Semi}
+            |___Token:} {id=12,slot_type=RightBrace}

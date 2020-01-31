@@ -1,0 +1,24 @@
+
+
+
+int foo(int* A, int* B, unsigned start, unsigned BS)
+{
+  int s = 0;
+  for (unsigned k = start; k < start + BS; k++)
+    {
+      s += A[k] * B[k];
+    }
+
+  return s;
+}
+
+int bar(int* A, int* B, unsigned BS)
+{
+  int s = 0;
+  for (unsigned k = 0; k < BS; k++)
+    {
+      s += A[k] * B[k];
+    }
+
+  return s;
+}

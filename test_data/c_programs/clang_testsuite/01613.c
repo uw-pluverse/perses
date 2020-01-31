@@ -1,0 +1,17 @@
+typedef int __attribute__((mode(byte))) __attribute__((vector_size(256))) vec_t1;
+typedef int __attribute__((mode(QI))) __attribute__((vector_size(256))) vec_t2;
+typedef int __attribute__((mode(SI))) __attribute__((vector_size(256))) vec_t3;
+typedef int __attribute__((mode(DI))) __attribute__((vector_size(256)))vec_t4;
+typedef float __attribute__((mode(SF))) __attribute__((vector_size(256))) vec_t5;
+typedef float __attribute__((mode(DF))) __attribute__((vector_size(256))) vec_t6;
+typedef float __attribute__((mode(XF))) __attribute__((vector_size(256))) vec_t7;
+typedef int v8qi __attribute__ ((mode(QI))) __attribute__ ((vector_size(8)));
+typedef int v8qi __attribute__ ((mode(V8QI)));
+typedef float v4sf __attribute__((mode(V4SF)));
+typedef float v4sf __attribute__((mode(SF))) __attribute__ ((vector_size(16)));
+typedef float __attribute__((mode(QC))) __attribute__((vector_size(256))) vec_t8;
+typedef _Complex float __attribute__((mode(HC))) __attribute__((vector_size(256))) vec_t9;
+typedef int __attribute__((mode(SC))) __attribute__((vector_size(256))) vec_t10;
+typedef float __attribute__((mode(DC))) __attribute__((vector_size(256))) vec_t11;
+typedef _Complex float __attribute__((mode(XC))) __attribute__((vector_size(256))) vec_t12;
+typedef int __attribute__((mode(V3QI))) v3qi;

@@ -1,0 +1,17 @@
+typedef int x;
+typedef int x;
+typedef int y;
+typedef int y;
+typedef int q;
+typedef int z;
+typedef int z;
+typedef int z1;
+typedef int z1;
+typedef int w;
+typedef int w;
+typedef int q;
+extern int array[10 == 10 ? 1:-1];
+extern int array_gnuline[20 == 20 ? 1:-1];
+extern char array2[42 == 42 ? 1: -1];
+extern char array2_gnuline[52 == 52 ? 1: -1];
+undefined t;

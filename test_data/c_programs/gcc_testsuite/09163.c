@@ -1,0 +1,9 @@
+
+
+
+
+
+
+
+
+static void foo (void) {}

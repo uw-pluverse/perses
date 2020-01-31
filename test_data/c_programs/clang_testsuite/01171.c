@@ -1,0 +1,2 @@
+ float intfloat;
+int baz ;

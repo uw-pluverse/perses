@@ -1,0 +1,6 @@
+
+
+
+
+
+const const int foo;

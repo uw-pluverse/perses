@@ -1,0 +1,1 @@
+int vari , varj ;

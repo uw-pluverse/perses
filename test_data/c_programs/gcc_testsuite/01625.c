@@ -1,0 +1,13 @@
+
+
+
+
+extern void abort(void);
+volatile int j = 30;
+
+int main(void)
+{
+  if (29 % j != 29) abort();
+  if (30 % j != 0) abort();
+  return 0;
+}

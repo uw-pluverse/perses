@@ -1,0 +1,12 @@
+#pragma pack(4)
+struct s0 {
+  long long a __attribute__((aligned(8)));
+  long long b __attribute__((aligned(8)));
+  unsigned int c __attribute__((aligned(8)));
+  int d[12];
+};
+struct s1 {
+  int a[15];
+  struct s0 b;
+};
+int arr0[((sizeof(struct s1) % 64) == 0) ? 1 : -1];

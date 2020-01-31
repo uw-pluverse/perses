@@ -1,0 +1,97 @@
+compilationUnit {id=1}
+|___(*) {id=2,slot_type=kleene_star__typeDeclaration}
+    |___normalClassDeclaration {id=5,slot_type=typeDeclaration}
+        |___(*) {id=6,slot_type=kleene_star__classModifier}
+        |   |___Token:public {id=235,slot_type=classModifier}
+        |___Token:class {id=7,slot_type=CLASS}
+        |___Token:t {id=8,slot_type=Identifier}
+        |___classBody {id=9,slot_type=classBody}
+            |___Token:{ {id=10,slot_type=LBRACE}
+            |___(*) {id=11,slot_type=kleene_star__classBodyDeclaration}
+            |   |___methodDeclaration {id=185,slot_type=classBodyDeclaration}
+            |   |   |___(*) {id=186,slot_type=kleene_star__methodModifier}
+            |   |   |   |___Token:private {id=233,slot_type=methodModifier}
+            |   |   |   |___Token:static {id=232,slot_type=methodModifier}
+            |   |   |___methodHeader {id=187,slot_type=methodHeader}
+            |   |   |   |___Token:int {id=229,slot_type=result}
+            |   |   |   |___methodDeclarator {id=221,slot_type=methodDeclarator}
+            |   |   |       |___Token:counter {id=222,slot_type=Identifier}
+            |   |   |       |___Token:( {id=223,slot_type=LPAREN}
+            |   |   |       |___Token:) {id=224,slot_type=RPAREN}
+            |   |   |___block {id=189,slot_type=methodBody}
+            |   |       |___Token:{ {id=190,slot_type=LBRACE}
+            |   |       |___(*) {id=191,slot_type=kleene_star__blockStatements}
+            |   |       |   |___returnStatement {id=196,slot_type=blockStatement}
+            |   |       |       |___Token:return {id=197,slot_type=RETURN}
+            |   |       |       |___(?) {id=198,slot_type=optional__expression}
+            |   |       |       |   |___Token:100 {id=219,slot_type=expression}
+            |   |       |       |___Token:; {id=199,slot_type=SEMI}
+            |   |       |___Token:} {id=192,slot_type=RBRACE}
+            |   |___methodDeclaration {id=16,slot_type=classBodyDeclaration}
+            |       |___(*) {id=17,slot_type=kleene_star__methodModifier}
+            |       |   |___Token:public {id=183,slot_type=methodModifier}
+            |       |   |___Token:static {id=182,slot_type=methodModifier}
+            |       |___methodHeader {id=18,slot_type=methodHeader}
+            |       |   |___Token:void {id=179,slot_type=result}
+            |       |   |___methodDeclarator {id=159,slot_type=methodDeclarator}
+            |       |       |___Token:main {id=160,slot_type=Identifier}
+            |       |       |___Token:( {id=161,slot_type=LPAREN}
+            |       |       |___(?) {id=162,slot_type=optional__formalParameterList}
+            |       |       |   |___formalParameter {id=166,slot_type=formalParameterList}
+            |       |       |       |___unannArrayType {id=171,slot_type=unannType}
+            |       |       |       |   |___Token:String {id=178,slot_type=unannClassOrInterfaceType}
+            |       |       |       |   |___(+) {id=173,slot_type=kleene_plus__dims_part}
+            |       |       |       |       |___dims_part {id=174,slot_type=dims_part}
+            |       |       |       |           |___Token:[ {id=175,slot_type=LBRACK}
+            |       |       |       |           |___Token:] {id=176,slot_type=RBRACK}
+            |       |       |       |___Token:args {id=169,slot_type=variableDeclaratorId}
+            |       |       |___Token:) {id=163,slot_type=RPAREN}
+            |       |___block {id=20,slot_type=methodBody}
+            |           |___Token:{ {id=21,slot_type=LBRACE}
+            |           |___(*) {id=22,slot_type=kleene_star__blockStatements}
+            |           |   |___basicForStatement {id=27,slot_type=blockStatement}
+            |           |       |___Token:for {id=28,slot_type=FOR}
+            |           |       |___Token:( {id=29,slot_type=LPAREN}
+            |           |       |___(?) {id=30,slot_type=optional__forInit}
+            |           |       |   |___localVariableDeclaration {id=124,slot_type=forInit}
+            |           |       |       |___Token:int {id=157,slot_type=unannType}
+            |           |       |       |___variableDeclarator {id=127,slot_type=variableDeclaratorList}
+            |           |       |           |___Token:i {id=153,slot_type=variableDeclaratorId}
+            |           |       |           |___(?) {id=129,slot_type=optional__variableDeclarator_part}
+            |           |       |               |___variableDeclarator_part {id=130,slot_type=variableDeclarator_part}
+            |           |       |                   |___Token:= {id=131,slot_type=ASSIGN}
+            |           |       |                   |___Token:0 {id=152,slot_type=variableInitializer}
+            |           |       |___Token:; {id=31,slot_type=SEMI}
+            |           |       |___(?) {id=32,slot_type=optional__expression}
+            |           |       |   |___relationalExpression {id=99,slot_type=expression}
+            |           |       |       |___Token:i {id=122,slot_type=relationalExpression}
+            |           |       |       |___Token:< {id=101,slot_type=LT}
+            |           |       |       |___methodInvocation_lfno_primary {id=110,slot_type=shiftExpression}
+            |           |       |           |___Token:counter {id=114,slot_type=methodName}
+            |           |       |           |___Token:( {id=112,slot_type=LPAREN}
+            |           |       |           |___Token:) {id=113,slot_type=RPAREN}
+            |           |       |___Token:; {id=33,slot_type=SEMI}
+            |           |       |___(?) {id=34,slot_type=optional__forUpdate}
+            |           |       |   |___preIncrementExpression {id=83,slot_type=forUpdate}
+            |           |       |       |___Token:++ {id=84,slot_type=INC}
+            |           |       |       |___Token:i {id=89,slot_type=unaryExpression}
+            |           |       |___Token:) {id=35,slot_type=RPAREN}
+            |           |       |___block {id=38,slot_type=statement}
+            |           |           |___Token:{ {id=39,slot_type=LBRACE}
+            |           |           |___(*) {id=40,slot_type=kleene_star__blockStatements}
+            |           |           |   |___expressionStatement {id=45,slot_type=blockStatement}
+            |           |           |       |___methodInvocation {id=48,slot_type=statementExpression}
+            |           |           |       |   |___typeName {id=49,slot_type=typeName}
+            |           |           |       |   |   |___Token:System {id=79,slot_type=packageOrTypeName}
+            |           |           |       |   |   |___Token:. {id=77,slot_type=DOT}
+            |           |           |       |   |   |___Token:out {id=78,slot_type=Identifier}
+            |           |           |       |   |___Token:. {id=50,slot_type=DOT}
+            |           |           |       |   |___Token:println {id=51,slot_type=Identifier}
+            |           |           |       |   |___Token:( {id=52,slot_type=LPAREN}
+            |           |           |       |   |___(?) {id=53,slot_type=optional__argumentList}
+            |           |           |       |   |   |___Token:"hello world" {id=75,slot_type=argumentList}
+            |           |           |       |   |___Token:) {id=54,slot_type=RPAREN}
+            |           |           |       |___Token:; {id=47,slot_type=SEMI}
+            |           |           |___Token:} {id=41,slot_type=RBRACE}
+            |           |___Token:} {id=23,slot_type=RBRACE}
+            |___Token:} {id=12,slot_type=RBRACE}

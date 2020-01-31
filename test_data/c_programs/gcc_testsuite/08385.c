@@ -1,0 +1,4 @@
+
+int othervar;
+
+int variable;

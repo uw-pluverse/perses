@@ -1,0 +1,7 @@
+
+
+
+
+@interface InvalidAnnoMemberType {
+    Object value();
+}

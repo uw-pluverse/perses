@@ -1,0 +1,55 @@
+translationUnit {id=1}
+|___(+) {id=2,slot_type=kleene_plus__externalDeclaration}
+    |___functionDefinition {id=4,slot_type=externalDeclaration}
+        |___(*) {id=5,slot_type=kleene_star__declarationSpecifiers}
+        |   |___Token:void {id=105,slot_type=declarationSpecifier}
+        |___directDeclarator {id=97,slot_type=declarator}
+        |   |___Token:f {id=98,slot_type=Identifier}
+        |   |___(*) {id=99,slot_type=kleene_star__directDeclaratorPart}
+        |       |___directDeclaratorPart {id=100,slot_type=directDeclaratorPart}
+        |           |___Token:( {id=101,slot_type=LeftParen}
+        |           |___Token:) {id=102,slot_type=RightParen}
+        |___compoundStatement {id=7,slot_type=compoundStatement}
+            |___Token:{ {id=8,slot_type=LeftBrace}
+            |___(*) {id=9,slot_type=kleene_star__blockItem}
+            |   |___declaration {id=73,slot_type=blockItem}
+            |   |   |___(+) {id=74,slot_type=kleene_plus__declarationSpecifiers}
+            |   |   |   |___Token:int {id=96,slot_type=declarationSpecifier}
+            |   |   |___(?) {id=75,slot_type=optional__initDeclaratorList}
+            |   |   |   |___initDeclarator {id=78,slot_type=initDeclaratorList}
+            |   |   |       |___Token:a {id=93,slot_type=declarator}
+            |   |   |       |___(?) {id=80,slot_type=optional__initDeclaratorPart}
+            |   |   |           |___initDeclaratorPart {id=81,slot_type=initDeclaratorPart}
+            |   |   |               |___Token:= {id=82,slot_type=Assign}
+            |   |   |               |___Token:0 {id=91,slot_type=initializer}
+            |   |   |___Token:; {id=76,slot_type=Semi}
+            |   |___declaration {id=49,slot_type=blockItem}
+            |   |   |___(+) {id=50,slot_type=kleene_plus__declarationSpecifiers}
+            |   |   |   |___Token:short {id=72,slot_type=declarationSpecifier}
+            |   |   |___(?) {id=51,slot_type=optional__initDeclaratorList}
+            |   |   |   |___initDeclarator {id=54,slot_type=initDeclaratorList}
+            |   |   |       |___Token:b {id=69,slot_type=declarator}
+            |   |   |       |___(?) {id=56,slot_type=optional__initDeclaratorPart}
+            |   |   |           |___initDeclaratorPart {id=57,slot_type=initDeclaratorPart}
+            |   |   |               |___Token:= {id=58,slot_type=Assign}
+            |   |   |               |___Token:0 {id=67,slot_type=initializer}
+            |   |   |___Token:; {id=52,slot_type=Semi}
+            |   |___declaration {id=32,slot_type=blockItem}
+            |   |   |___(+) {id=33,slot_type=kleene_plus__declarationSpecifiers}
+            |   |   |   |___Token:f {id=48,slot_type=declarationSpecifier}
+            |   |   |___(?) {id=34,slot_type=optional__initDeclaratorList}
+            |   |   |   |___directDeclarator {id=39,slot_type=initDeclaratorList}
+            |   |   |       |___Token:( {id=40,slot_type=LeftParen}
+            |   |   |       |___Token:b {id=44,slot_type=declarator}
+            |   |   |       |___Token:) {id=42,slot_type=RightParen}
+            |   |   |___Token:; {id=35,slot_type=Semi}
+            |   |___declaration {id=15,slot_type=blockItem}
+            |       |___(+) {id=16,slot_type=kleene_plus__declarationSpecifiers}
+            |       |   |___Token:f {id=31,slot_type=declarationSpecifier}
+            |       |___(?) {id=17,slot_type=optional__initDeclaratorList}
+            |       |   |___directDeclarator {id=22,slot_type=initDeclaratorList}
+            |       |       |___Token:( {id=23,slot_type=LeftParen}
+            |       |       |___Token:a {id=27,slot_type=declarator}
+            |       |       |___Token:) {id=25,slot_type=RightParen}
+            |       |___Token:; {id=18,slot_type=Semi}
+            |___Token:} {id=10,slot_type=RightBrace}

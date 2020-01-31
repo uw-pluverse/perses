@@ -1,0 +1,18 @@
+
+
+
+extern void Foo (void *);
+
+char *ary[] = {"a", "b", "c", "d", "e"};
+
+void Bar (void)
+{
+  int cnt = 0;
+
+  for (cnt = 0; cnt < 4; ++cnt)
+    {
+      char *ptr = ary[cnt];
+
+      Foo (&ptr);
+    }
+}

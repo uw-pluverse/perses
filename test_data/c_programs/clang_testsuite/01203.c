@@ -1,0 +1,30 @@
+int isalnum(int);
+int isalpha(int);
+int isblank(int);
+int iscntrl(int);
+int isdigit(int);
+int isgraph(int);
+int islower(int);
+int isprint(int);
+int ispunct(int);
+int isspace(int);
+int isupper(int);
+int isxdigit(int);
+int tolower(int);
+int toupper(int);
+void test(int x) {
+  (void)isalnum(x);
+  (void)isalpha(x);
+  (void)isblank(x);
+  (void)iscntrl(x);
+  (void)isdigit(x);
+  (void)isgraph(x);
+  (void)islower(x);
+  (void)isprint(x);
+  (void)ispunct(x);
+  (void)isspace(x);
+  (void)isupper(x);
+  (void)isxdigit(x);
+  (void)tolower(x);
+  (void)toupper(x);
+}

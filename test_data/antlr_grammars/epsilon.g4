@@ -1,0 +1,5 @@
+grammar epsilon;
+
+start
+    :
+    ;

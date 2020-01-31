@@ -1,0 +1,1 @@
+_Bool test = &test;

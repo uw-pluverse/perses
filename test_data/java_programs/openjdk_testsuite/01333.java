@@ -1,0 +1,7 @@
+
+
+
+
+
+@FunctionalInterface
+class BadFunctionalIntfAnno { }

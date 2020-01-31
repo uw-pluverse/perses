@@ -1,0 +1,11 @@
+
+
+
+
+
+
+
+double
+foo (void)
+{
+}

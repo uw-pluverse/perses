@@ -1,0 +1,11 @@
+int x __attribute__((constructor));
+int f() __attribute__((constructor));
+int f() __attribute__((constructor(1)));
+int f() __attribute__((constructor(1,2)));
+int f() __attribute__((constructor(1.0)));
+int f() __attribute__((constructor(0x100000000)));
+int x __attribute__((destructor));
+int f() __attribute__((destructor));
+int f() __attribute__((destructor(1)));
+int f() __attribute__((destructor(1,2)));
+int f() __attribute__((destructor(1.0)));

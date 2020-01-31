@@ -1,0 +1,12 @@
+extern int A __attribute__((weak_import));
+int A;
+extern int B __attribute__((weak_import));
+extern int B;
+int C;
+extern int C __attribute__((weak_import));
+extern int D __attribute__((weak_import));
+extern int D __attribute__((weak_import));
+int D;
+extern int E __attribute__((weak_import));
+int E;
+extern int E __attribute__((weak_import));

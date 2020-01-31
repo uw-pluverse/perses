@@ -1,0 +1,4 @@
+
+@interface Bridges {
+    Bridge[] value();
+}

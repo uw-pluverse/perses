@@ -1,0 +1,11 @@
+
+
+
+
+
+
+class UnnamedPackage {
+
+    class UnnamedPackage { }
+
+}

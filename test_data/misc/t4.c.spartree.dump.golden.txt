@@ -1,0 +1,29 @@
+translationUnit {id=1}
+|___(+) {id=2,slot_type=kleene_plus__externalDeclaration}
+    |___functionDefinition {id=4,slot_type=externalDeclaration}
+        |___(*) {id=5,slot_type=kleene_star__declarationSpecifiers}
+        |   |___Token:void {id=52,slot_type=declarationSpecifier}
+        |___directDeclarator {id=10,slot_type=declarator}
+        |   |___Token:f {id=11,slot_type=Identifier}
+        |   |___(*) {id=12,slot_type=kleene_star__directDeclaratorPart}
+        |       |___directDeclaratorPart {id=13,slot_type=directDeclaratorPart}
+        |           |___Token:( {id=14,slot_type=LeftParen}
+        |           |___parameterList {id=17,slot_type=parameterTypeList}
+        |           |   |___(+) {id=42,slot_type=parameterDeclaration}
+        |           |   |   |___Token:int {id=49,slot_type=declarationSpecifier}
+        |           |   |   |___Token:a {id=47,slot_type=declarationSpecifier}
+        |           |   |___(*) {id=19,slot_type=kleene_star__parameterListPart}
+        |           |       |___parameterListPart {id=20,slot_type=parameterListPart}
+        |           |       |   |___Token:, {id=32,slot_type=Comma}
+        |           |       |   |___(+) {id=34,slot_type=parameterDeclaration}
+        |           |       |       |___Token:int {id=41,slot_type=declarationSpecifier}
+        |           |       |       |___Token:b {id=39,slot_type=declarationSpecifier}
+        |           |       |___parameterListPart {id=21,slot_type=parameterListPart}
+        |           |           |___Token:, {id=22,slot_type=Comma}
+        |           |           |___(+) {id=24,slot_type=parameterDeclaration}
+        |           |               |___Token:int {id=31,slot_type=declarationSpecifier}
+        |           |               |___Token:c {id=29,slot_type=declarationSpecifier}
+        |           |___Token:) {id=16,slot_type=RightParen}
+        |___compoundStatement {id=7,slot_type=compoundStatement}
+            |___Token:{ {id=8,slot_type=LeftBrace}
+            |___Token:} {id=9,slot_type=RightBrace}

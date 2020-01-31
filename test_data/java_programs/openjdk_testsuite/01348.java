@@ -1,0 +1,8 @@
+
+
+
+
+class IllegalLineEndInCharLit {
+    char c = '
+';
+}

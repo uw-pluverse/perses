@@ -1,0 +1,3 @@
+int A() {
+  return X();
+}

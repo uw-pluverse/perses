@@ -1,0 +1,7 @@
+
+
+
+
+@interface X {
+    String toString();
+}

@@ -1,0 +1,6 @@
+
+
+enum TestEnum {
+    MIDTERM,
+    FINAL;
+}

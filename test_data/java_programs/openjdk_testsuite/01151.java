@@ -1,0 +1,8 @@
+
+
+class ClassWithAuxiliaryClass {
+}
+
+
+class AuxiliaryClass {
+}

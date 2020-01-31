@@ -1,0 +1,40 @@
+/*
+ * Copyright (C) 2003-2017 Chengnian Sun.
+ *
+ * This file is part of Perses.
+ *
+ * Perses is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3, or (at your option) any later version.
+ *
+ * Perses is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
+ */
+package org.perses.reduction.reducer;
+
+import org.antlr.runtime.RecognitionException;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+import org.perses.reduction.AbstractReducerFunctionalTest;
+
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+
+/** Test for the Java version of perses node reducer. */
+@RunWith(JUnit4.class)
+public class PersesNodeReducerJavaFunctionalTest extends AbstractReducerFunctionalTest {
+
+  @Test
+  public void testFunctionalTest()
+      throws InterruptedException, ExecutionException, RecognitionException, IOException {
+    runJavaTestSubject(
+        "test_data/java_helloworld",
+        PersesNodePrioritizedDfsReducer.META,
+        "class t { public static void main ( String [] args ) { System.out.println (\"helloworld\");}}");
+  }
+}

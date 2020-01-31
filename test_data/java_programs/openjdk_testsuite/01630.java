@@ -1,0 +1,6 @@
+
+
+
+@interface UnionTypeInfo {
+    String[] value();
+}
