@@ -1,4 +1,4 @@
-# Perses: Syntax-Directed Program Reduction#
+# Perses: Syntax-Directed Program Reduction
 
 Perses is a language-agnostic program reducer to minimize a program with 
 respect to a set of constraints. It takes as input a program to reduce,
