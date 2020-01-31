@@ -16,12 +16,19 @@
  */
 package org.perses.util;
 
+import com.google.common.io.Files;
+import com.google.common.io.MoreFiles;
+import com.google.common.io.RecursiveDeleteOption;
 import com.google.common.truth.Truth;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -260,5 +267,23 @@ public class UtilTest {
     LocalDateTime time =
         Util.converToLocalDateTime(epochMillis, ZoneId.of("America/Indiana/Indianapolis"));
     Truth.assertThat(time.toString()).isEqualTo("2019-09-23T21:04:34.745");
+  }
+
+  private File tempDir;
+
+  @Before
+  public void setup() {
+    tempDir = Files.createTempDir();
+  }
+
+  @After
+  public void teardown() throws IOException {
+    MoreFiles.deleteRecursively(tempDir.toPath(), RecursiveDeleteOption.ALLOW_INSECURE);
+  }
+  @Test
+  public void testIsEmptyDirectory() throws IOException {
+    Truth.assertThat(Util.isEmptyDirectory(tempDir.toPath())).isTrue();
+    Files.touch(new File(tempDir, "temp.txt"));
+    Truth.assertThat(Util.isEmptyDirectory(tempDir.toPath())).isFalse();
   }
 }

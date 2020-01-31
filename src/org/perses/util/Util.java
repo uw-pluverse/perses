@@ -20,6 +20,10 @@ package org.perses.util;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -114,5 +118,11 @@ public final class Util {
 
   public static <T> void removeNullFromList(ArrayList<T> list) {
     removeElementsFromList(list, Objects::isNull);
+  }
+
+  public static boolean isEmptyDirectory(Path path) throws IOException {
+    try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
+      return !stream.iterator().hasNext();
+    }
   }
 }
