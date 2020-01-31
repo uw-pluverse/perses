@@ -42,7 +42,7 @@ public class TestScriptExecutorService {
       File tempRootFolder,
       final int numOfThreads,
       SourceFile testScriptFile,
-      String sourceFileName) {
+      String sourceFileName) throws IOException {
     this.numOfThreads = numOfThreads;
     checkArgument(
         this.numOfThreads > 0, "The number of threads must be positive: %s", numOfThreads);
@@ -63,8 +63,9 @@ public class TestScriptExecutorService {
         new ReductionFolderManager(tempRootFolder, testScriptFile, sourceFileName);
   }
 
-  public void shutdown() {
+  public void shutdown() throws IOException {
     executorService.shutdown();
+    reductionFolderManager.deleteRootFolder();
   }
 
   /**

@@ -5,6 +5,8 @@ java_test(
     deps = [
         "//src/org/perses/util",
         "//test/org/perses:truth",
+                "@maven//:com_google_guava_guava",
+
     ],
 )
 

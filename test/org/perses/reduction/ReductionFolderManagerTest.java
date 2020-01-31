@@ -22,7 +22,7 @@ public class ReductionFolderManagerTest {
   private SourceFile testScript;
 
   @Before
-  public void setup() {
+  public void setup() throws IOException {
     folder = new AutoDeletableFolder(Files.createTempDir());
     testScript = SourceFile.createFromPath(new File("test_data/delta_1/r.sh"));
     manager = new ReductionFolderManager(folder.toFile(), testScript, "t.c");

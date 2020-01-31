@@ -296,7 +296,7 @@ public final class ReductionDriver implements Closeable {
   }
 
   @Override
-  public void close() {
+  public void close() throws IOException {
     executorService.shutdown();
   }
 

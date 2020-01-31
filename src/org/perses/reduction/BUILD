@@ -8,9 +8,9 @@ load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
 java_library(
     name = "test_script_execution_cache",
     srcs = [
-        "AbstractTestScriptExecutionCacheProfiler.java",
         "AbstractForwardAdjacencyMap.java",
         "AbstractTestScriptExecutionCache.java",
+        "AbstractTestScriptExecutionCacheProfiler.java",
         "NullTestScriptExecutionCache.java",
         "TestScriptExecutionCache.java",
         "TokenizedProgramEncoder.java",
@@ -18,9 +18,9 @@ java_library(
     deps = [
         ":test_script",
         "//src/org/perses/program",
+        "@maven//:com_google_errorprone_error_prone_annotations",
         "@maven//:com_google_guava_guava",
         "@maven//:it_unimi_dsi_fastutil",
-        "@maven//:com_google_errorprone_error_prone_annotations",
         "@maven//:me_lemire_integercompression_JavaFastPFOR",
     ],
 )
@@ -97,8 +97,8 @@ java_library(
         "ReductionState.java",
     ],
     deps = [
-        ":reduction_configuration",
         ":actionset_profiler",
+        ":reduction_configuration",
         ":test_script",
         ":test_script_execution_cache",
         ":test_script_executor_service",
@@ -122,6 +122,7 @@ java_library(
         ":test_script_execution_cache",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/program",
+        "//src/org/perses/util",
         "@maven//:com_google_guava_guava",
     ],
 )
@@ -152,8 +153,8 @@ java_library(
     name = "reduction_driver",
     srcs = ["ReductionDriver.java"],
     deps = [
-        ":actionset_profiler",
         ":abstract_reducer",
+        ":actionset_profiler",
         ":partition_reduction_policy",
         ":reducer_factory",
         ":reduction_configuration",
