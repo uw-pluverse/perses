@@ -93,7 +93,7 @@ public final class ReductionDriver implements Closeable {
     actionSetProfiler =
         Strings.isNullOrEmpty(cmd.actionSetProfiler)
             ? AbstractActionSetProfiler.NULL_PROFILER
-            : new ActionSetProfiler();
+            : new ActionSetProfiler(new File(cmd.actionSetProfiler));
   }
 
   public void reduce() throws IOException, ExecutionException, InterruptedException {

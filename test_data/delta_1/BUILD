@@ -12,26 +12,26 @@ filegroup(
 
 reduce(
     name = "reduce_delta_1_with_caching",
+    enable_edit_caching = True,
+    enable_query_caching = True,
     progress_dump_file = "progress_dump_t_with_cache.c",
     reduction_algorithm = "perses_node_with_dfs_delta",
     result_file = "reduced_t.c",
     source_file = "t.c",
     statistics_file = "stat_t.c",
     test_script = "r.sh",
-    enable_query_caching=True,
-    enable_edit_caching=True,
 )
 
 reduce(
     name = "reduce_delta_1_wo_caching",
+    enable_edit_caching = False,
+    enable_query_caching = False,
     progress_dump_file = "progress_dump_t_wo_cache.c",
     reduction_algorithm = "perses_node_with_dfs_delta",
     result_file = "reduced_t_wo_cache.c",
     source_file = "t.c",
     statistics_file = "stat_t_wo_cache.c",
     test_script = "r.sh",
-    enable_query_caching=False,
-    enable_edit_caching=False,
 )
 
 filegroup(

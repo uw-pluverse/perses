@@ -155,6 +155,7 @@ public abstract class AbstractPersesNodeReducer extends AbstractReducer {
 
     final ImmutableList<ChildHoistingAction> compatibleReplacements =
         TreeTransformations.replaceNodeWithNearestCompatibleChildren(regularRuleNode, 5);
+    actionSetProfiler.onReplaceNodeWithNearestCompatibleChildren(compatibleReplacements);
     final int remainingQuota = maxEditCount - editList.size();
     if (remainingQuota > 0) {
       compatibleReplacements.stream()

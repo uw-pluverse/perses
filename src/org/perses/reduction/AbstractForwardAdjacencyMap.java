@@ -6,8 +6,7 @@ import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 public abstract class AbstractForwardAdjacencyMap {
 
   public static final int NOT_FOUND = Integer.MIN_VALUE;
-  @VisibleForTesting
-  static final int NUM_INDIRECTIONS_THRESHOLD = 10;
+  @VisibleForTesting static final int NUM_INDIRECTIONS_THRESHOLD = 10;
 
   public static AbstractForwardAdjacencyMap EMPTY =
       new AbstractForwardAdjacencyMap() {
@@ -88,7 +87,8 @@ public abstract class AbstractForwardAdjacencyMap {
     private final int numberOfIndirections;
     private final int size;
 
-    private DelegatingForwardAdjacencyIndex(int lexemeId, int index, AbstractForwardAdjacencyMap delegate) {
+    private DelegatingForwardAdjacencyIndex(
+        int lexemeId, int index, AbstractForwardAdjacencyMap delegate) {
       this.lexemeId = lexemeId;
       this.index = index;
       this.delegate = delegate;

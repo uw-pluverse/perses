@@ -38,6 +38,7 @@ public interface IPartitionReductionPolicy {
     private final boolean replaceCurrentNodeAsAQualifiedNode;
     /** Delete the children of the current node. */
     private final boolean deleteChildrenOfCurrentNode;
+
     private SingleNodePartitionReductionPolicy(
         boolean delete,
         boolean deleteCurrentNodeAsAQualifiedNode,

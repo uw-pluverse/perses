@@ -121,7 +121,6 @@ public final class TreeTransformations {
   //    partition.forEach(actionSet::deleteNode);
   //    return tree.createNodeDeletionEdit(actionSet.build());
   //  }
-
   public static NodeDeletionActionSet createNodeDeletionActionSetFor(
       Partition partition, String actionsDescription) {
     final NodeDeletionActionSet.Builder actionSet =

@@ -67,7 +67,8 @@ public class PersesNodeBfsReducer extends AbstractPersesNodeReducer {
   }
 
   @Override
-  protected void performDelta(SparTree tree, String actionsDescription, Partition... startPartitions) {
+  protected void performDelta(
+      SparTree tree, String actionsDescription, Partition... startPartitions) {
     assert startPartitions.length > 0;
     deltaDebugger.reduce(tree, actionsDescription, startPartitions);
   }

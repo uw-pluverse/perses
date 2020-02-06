@@ -83,8 +83,8 @@ java_library(
     name = "actionset_profiler",
     srcs = ["AbstractActionSetProfiler.java"],
     deps = [
-                "@maven//:com_google_guava_guava",
-"//src/org/perses/tree/spar"
+        "//src/org/perses/tree/spar",
+        "@maven//:com_google_guava_guava",
     ],
 )
 

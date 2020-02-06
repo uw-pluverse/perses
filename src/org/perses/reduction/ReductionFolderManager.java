@@ -23,12 +23,14 @@ public final class ReductionFolderManager {
 
   private final AtomicInteger sequenceGenerator = new AtomicInteger();
 
-  public ReductionFolderManager(File rootFolder, SourceFile testScript, String sourceFileName) throws IOException {
+  public ReductionFolderManager(File rootFolder, SourceFile testScript, String sourceFileName)
+      throws IOException {
+    checkArgument(rootFolder.exists(), "The root folder does not exist: %s", rootFolder);
+    checkArgument(rootFolder.isDirectory(), "The root folder is not a directory: %s", rootFolder);
     checkArgument(
-        rootFolder.exists(), "The root folder does not exist: %s", rootFolder);
-    checkArgument(
-        rootFolder.isDirectory(), "The root folder is not a directory: %s", rootFolder);
-    checkArgument(Util.isEmptyDirectory(rootFolder.toPath()), "The root folder should be empty. :%s", rootFolder);
+        Util.isEmptyDirectory(rootFolder.toPath()),
+        "The root folder should be empty. :%s",
+        rootFolder);
     this.rootFolder = rootFolder;
     this.testScript = testScript;
     this.sourceFileName = sourceFileName;

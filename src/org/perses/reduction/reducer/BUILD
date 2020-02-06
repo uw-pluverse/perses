@@ -66,10 +66,10 @@ java_library(
 java_library(
     name = "delta_debugging",
     srcs = [
-        "DeltaDebugger.java",
-        "AbstractSpecialDeltaDebugger.java",
         "AbstractDeltaDebugger.java",
+        "AbstractSpecialDeltaDebugger.java",
         "BfsDeltaDebugger.java",
+        "DeltaDebugger.java",
         "DfsDeltaDebugger.java",
     ],
     deps = [
