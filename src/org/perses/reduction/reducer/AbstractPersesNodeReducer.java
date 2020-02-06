@@ -143,6 +143,7 @@ public abstract class AbstractPersesNodeReducer extends AbstractReducer {
     final ImmutableList<ChildHoistingAction> kleeneReplacements =
         TreeTransformations.replaceKleeneQualifiedNodeWithKleeneQualifiedChildren(
             regularRuleNode, 3);
+    actionSetProfiler.onReplaceKleeneQualifiedNodeWithKleeneQualifiedChildren(kleeneReplacements);
 
     for (ChildHoistingAction action : kleeneReplacements) {
       addEditToEditListAndLog(
