@@ -45,7 +45,8 @@ public abstract class AbstractActionSetProfiler {
         writer
             .append("onReplaceKleeneQualifiedNodeWithKleeneQualifiedChildren: size=")
             .append(String.valueOf(kleeneReplacements.size()))
-            .append('\n');
+            .append('\n')
+            .flush();
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
@@ -58,7 +59,8 @@ public abstract class AbstractActionSetProfiler {
         writer
             .append("onReplaceNodeWithNearestCompatibleChildren: size=")
             .append(String.valueOf(replacements.size()))
-            .append('\n');
+            .append('\n')
+            .flush();
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
