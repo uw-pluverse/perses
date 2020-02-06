@@ -39,3 +39,13 @@ java_test(
         "//test/org/perses:truth",
     ],
 )
+
+java_test(
+    name = "PercentageTest",
+    srcs = ["PercentageTest.java"],
+    test_class = "org.perses.util.PercentageTest",
+    deps = [
+        "//src/org/perses/util:percentage",
+        "//test/org/perses:truth",
+    ],
+)

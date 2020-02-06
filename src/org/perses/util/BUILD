@@ -3,6 +3,8 @@ package(default_visibility = [
     "//test/org/perses:__subpackages__",
 ])
 
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
+
 java_library(
     name = "util",
     srcs = glob(
@@ -20,4 +22,10 @@ java_library(
 sh_binary(
     name = "migrate_from_maven_jar",
     srcs = [":migrate_from_maven_jar.sh"],
+)
+
+kt_jvm_library(
+    name = "percentage",
+    srcs = ["Percentage.kt"],
+    deps = [],
 )
