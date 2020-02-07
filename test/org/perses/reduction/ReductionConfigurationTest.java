@@ -69,7 +69,6 @@ public class ReductionConfigurationTest {
             true,
             true,
             false,
-            false,
             maxReductionLevel,
             numOfReductionThreads,
             TestUtility.PURE_PERSES_MULTI_NODE_PARTITION_REDUCTION_POLICY,

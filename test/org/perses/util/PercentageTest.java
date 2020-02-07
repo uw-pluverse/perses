@@ -10,22 +10,29 @@ public class PercentageTest {
 
   @Test
   public void test_one() {
-    Percentage p = new Percentage(1);
+    Fraction p = new Fraction(1, 100);
     Truth.assertThat(p.getNumerator()).isEqualTo(1);
     Truth.assertThat(p.multiply(1000)).isEqualTo(10);
   }
 
   @Test
   public void test_zero() {
-    Percentage p = new Percentage(0);
+    Fraction p = new Fraction(0, 100);
     Truth.assertThat(p.getNumerator()).isEqualTo(0);
     Truth.assertThat(p.multiply(100)).isEqualTo(0);
   }
 
   @Test
   public void test_100() {
-    Percentage p = new Percentage(100);
+    Fraction p = new Fraction(100, 100);
     Truth.assertThat(p.getNumerator()).isEqualTo(100);
     Truth.assertThat(p.multiply(100)).isEqualTo(100);
+  }
+
+  @Test
+  public void test_parsePercentage() {
+    Fraction p = Fraction.parse("1 / 100");
+    Truth.assertThat(p.getNumerator()).isEqualTo(1);
+    Truth.assertThat(p.getDenominator()).isEqualTo(100);
   }
 }

@@ -93,7 +93,6 @@ public class TestScriptExecutorServiceTest {
         true,
         true,
         false,
-        false,
         100,
         threadCount,
         TestUtility.PURE_PERSES_MULTI_NODE_PARTITION_REDUCTION_POLICY,

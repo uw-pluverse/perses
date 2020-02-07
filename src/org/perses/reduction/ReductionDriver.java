@@ -86,7 +86,8 @@ public final class ReductionDriver implements Closeable {
                 new File(cmd.profileTestExecutionCache));
     queryCache =
         configuration.isEnableTestScriptExecutionCaching()
-            ? new TestScriptExecutionCache(tree.getProgramSnapshot(), cacheProfiler, false)
+            ? new TestScriptExecutionCache(
+                tree.getProgramSnapshot(), cacheProfiler, cmd.getQueryCacheRefreshThreshold())
             : new NullTestScriptExecutionCache();
     nodeActionSetCache =
         cmd.nodeActionSetCaching ? new NodeActionSetCache() : new NullNodeActionSetCache();
@@ -206,7 +207,6 @@ public final class ReductionDriver implements Closeable {
         cmd.fixpoint,
         cmd.queryCaching,
         cmd.useRealDeltaDebugger,
-        cmd.refreshQueryCache,
         cmd.getMaxReductionLevel(),
         cmd.numOfThreads,
         getMultiNodePartitionReductionPolicy(cmd),

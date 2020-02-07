@@ -1,8 +1,11 @@
 package org.perses.reduction;
 
+import com.google.common.collect.ImmutableList;
+import org.perses.program.PersesToken;
 import org.perses.program.TokenizedProgram;
 import org.perses.reduction.TestScript.TestResult;
 import org.perses.reduction.TokenizedProgramEncoder.CompactProgramEncoding;
+import org.perses.util.Fraction;
 
 import java.util.*;
 
@@ -13,16 +16,16 @@ public final class TestScriptExecutionCache extends AbstractTestScriptExecutionC
   private final HashMap<CompactProgramEncoding, TestResult> cache = new HashMap<>();
   private TokenizedProgramEncoder encoder;
   private final AbstractTestScriptExecutionCacheProfiler profiler;
-  private final boolean refreshCache;
+  private final int refreshStep;
 
   public TestScriptExecutionCache(
       TokenizedProgram currentBestProgram,
       AbstractTestScriptExecutionCacheProfiler profiler,
-      boolean refreshCache) {
+      Fraction refreshStepFraction) {
     // Record the time to create an encoder, to
     encoder = new TokenizedProgramEncoder(currentBestProgram.getTokens(), profiler);
     this.profiler = profiler;
-    this.refreshCache = refreshCache;
+    this.refreshStep = refreshStepFraction.multiply(currentBestProgram.tokenCount());
   }
 
   @Override
@@ -52,13 +55,16 @@ public final class TestScriptExecutionCache extends AbstractTestScriptExecutionC
     return result;
   }
 
-  private final boolean needsHeavyWeightCleanup() {
-    return refreshCache;
+  private final boolean needsHeavyWeightCleanup(
+      ImmutableList<PersesToken> programInEncoder, TokenizedProgram currentBestProgram) {
+    final int oldSize = programInEncoder.size();
+    final int newSize = currentBestProgram.tokenCount();
+    return oldSize - newSize >= refreshStep;
   }
 
   @Override
   public void evictEntriesLargerThan(TokenizedProgram best) {
-    if (needsHeavyWeightCleanup()) {
+    if (needsHeavyWeightCleanup(encoder.getTokensInOrigin(), best)) {
       heavyweightCleanup(best);
     } else {
       lightweightCleanup(best);

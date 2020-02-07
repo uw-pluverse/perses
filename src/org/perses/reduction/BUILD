@@ -18,6 +18,7 @@ java_library(
     deps = [
         ":test_script",
         "//src/org/perses/program",
+        "//src/org/perses/util:percentage",
         "@maven//:com_google_errorprone_error_prone_annotations",
         "@maven//:com_google_guava_guava",
         "@maven//:it_unimi_dsi_fastutil",

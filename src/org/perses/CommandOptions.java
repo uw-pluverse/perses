@@ -20,6 +20,7 @@ package org.perses;
 import com.beust.jcommander.Parameter;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import org.perses.util.Fraction;
 
 import java.io.File;
 
@@ -157,8 +158,7 @@ public class CommandOptions {
 
   @Parameter(
       names = "--profile-actionset",
-      description = "The file to save information of all the created edit action sets."
-  )
+      description = "The file to save information of all the created edit action sets.")
   public String actionSetProfiler = null;
 
   @Parameter(
@@ -167,8 +167,15 @@ public class CommandOptions {
       arity = 1)
   public boolean useRealDeltaDebugger = false;
 
-  @Parameter(names = "--refresh-query-cache", description = "Whether to refresh query cache.")
-  public boolean refreshQueryCache = false;
+  @Parameter(
+      names = "--query-cache-refresh-threshold",
+      description =
+          "When to trigger a refresh of the query cache. "
+              + "The value is is a fraction in the format x/y. "
+              + "Assume the original token count is t. "
+              + "Since last refresh where the best program has t' tokens, if the latest best program has b tokens, "
+              + "and (t' - b) >= t *x/y, then a refresh is triggered.")
+  public String queryCacheRefreshThreshold = "100/1";
 
   public CommandOptions(String defaultReductionAlgorithm) {
     this.defaultReductionAlgorithm = defaultReductionAlgorithm;
@@ -183,6 +190,10 @@ public class CommandOptions {
       reductionAlgorithm = defaultReductionAlgorithm;
     }
     return this.reductionAlgorithm;
+  }
+
+  public Fraction getQueryCacheRefreshThreshold() {
+    return Fraction.parse(queryCacheRefreshThreshold);
   }
 
   public void setReductionAlgorithm(String reductionAlgorithm) {
@@ -225,6 +236,9 @@ public class CommandOptions {
       checkState(
           outputFile == null || outputFile.trim().isEmpty(),
           "--in-place and --output-file cannot be specified together.");
+    }
+    if (queryCacheRefreshThreshold != null) {
+      Fraction.parse(queryCacheRefreshThreshold); // Should not throw exceptions.
     }
   }
 

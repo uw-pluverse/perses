@@ -52,7 +52,6 @@ public final class ReductionConfiguration {
   private final boolean fixpointReduction;
   private final boolean enableTestScriptExecutionCaching;
   private final boolean useRealDeltaDebugger;
-  private final boolean refreshQueryCache;
   private final int maxReductionLevel;
   /** This file is used to store the best result of reduction. */
   private final File bestResultFile;
@@ -78,7 +77,6 @@ public final class ReductionConfiguration {
       final boolean fixpointReduction,
       final boolean enableTestScriptExecutionCaching,
       final boolean useRealDeltaDebugger,
-      final boolean refreshQueryCache,
       final int maxReductionLevel,
       final int numOfReductionThreads,
       IPartitionReductionPolicy.MultiNodePartitionReductionPolicy multiNodePartitionReductionPolicy,
@@ -97,7 +95,6 @@ public final class ReductionConfiguration {
     this.fixpointReduction = fixpointReduction;
     this.enableTestScriptExecutionCaching = enableTestScriptExecutionCaching;
     this.useRealDeltaDebugger = useRealDeltaDebugger;
-    this.refreshQueryCache = refreshQueryCache;
 
     this.maxReductionLevel = maxReductionLevel;
     this.multiNodePartitionReductionPolicy = checkNotNull(multiNodePartitionReductionPolicy);
@@ -199,9 +196,6 @@ public final class ReductionConfiguration {
     return bestResultFile;
   }
 
-  public boolean isRefreshQueryCache() {
-    return refreshQueryCache;
-  }
 
   public String dumpConfiguration() {
     final StringBuilder builder = new StringBuilder();

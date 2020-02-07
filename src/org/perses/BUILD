@@ -12,6 +12,7 @@ java_library(
     srcs = ["CommandOptions.java"],
     deps = [
         ":perses_exception",
+        "//src/org/perses/util:percentage",
         "@maven//:com_beust_jcommander",
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",

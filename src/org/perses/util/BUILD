@@ -26,6 +26,6 @@ sh_binary(
 
 kt_jvm_library(
     name = "percentage",
-    srcs = ["Percentage.kt"],
+    srcs = ["Fraction.kt"],
     deps = [],
 )
