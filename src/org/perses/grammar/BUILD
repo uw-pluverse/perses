@@ -45,3 +45,15 @@ java_binary(
     visibility = ["//visibility:public"],
     runtime_deps = ["@maven//:org_antlr_antlr4"],
 )
+
+sh_library(
+    name = "antlr_merge_grammar_sed_scripts",
+    data = ["antlr_remove_grammar.sed", "antlr_remove_options.sed", "antlr_merge_options.sed"]
+)
+
+sh_binary(
+    name = "antlr_merge_grammar",
+    srcs = ["antlr_merge_grammar.sh"],
+    data = [":antlr_merge_grammar_sed_scripts"],
+    deps = ["@bazel_tools//tools/bash/runfiles"],
+)

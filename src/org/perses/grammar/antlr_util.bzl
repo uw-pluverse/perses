@@ -8,6 +8,25 @@ def extract_grammar_name(grammar_file):
     else:
         fail("The grammar file must be in the current package.")
 
+def antlr_merge_grammar(name, lexer_grammar, parser_grammar, target_grammar):
+    mergerule_name = "%s_merge" % name
+    grammar_name = extract_grammar_name(target_grammar)
+
+    commands = [
+       "echo 'grammar %s;' > $@" % (grammar_name,),
+       "$(location //src/org/perses/grammar:antlr_merge_grammar) $(location %s) $(location %s) >> $@" % \
+         (parser_grammar, lexer_grammar)
+    ]
+  
+
+    native.genrule(
+        name = mergerule_name,
+        outs = [target_grammar],
+        srcs = [lexer_grammar, parser_grammar], # "//src/org/perses/grammar:antlr_remove_grammer.sed", "//src/org/perses/grammar:antlr_remove_options.sed"],
+        cmd = " ; \\\n".join(commands),
+        tools = ["//src/org/perses/grammar:antlr_merge_grammar"],
+    )
+
 def antlr_codegen(name, grammar_file, java_pkg_name):
     genrule_name = "%s_gen" % name
     grammar_name = extract_grammar_name(grammar_file)
