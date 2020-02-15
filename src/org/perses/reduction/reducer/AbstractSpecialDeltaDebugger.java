@@ -1,7 +1,7 @@
 package org.perses.reduction.reducer;
 
 import org.perses.reduction.ReductionListenerManager;
-import org.perses.reduction.TreeEditWithItsProgram;
+import org.perses.reduction.TreeEditWithItsResult;
 import org.perses.reduction.partition.Partition;
 import org.perses.tree.spar.*;
 
@@ -14,7 +14,7 @@ public abstract class AbstractSpecialDeltaDebugger extends AbstractDeltaDebugger
   protected AbstractSpecialDeltaDebugger(
       ReductionListenerManager listenerManager,
       AbstractNodeActionSetCache nodeActionSetCache,
-      Function<AbstractSparTreeEdit, Optional<TreeEditWithItsProgram>> treeEditTester) {
+      Function<AbstractSparTreeEdit, Optional<TreeEditWithItsResult>> treeEditTester) {
     super(listenerManager, nodeActionSetCache, treeEditTester);
   }
 
@@ -34,12 +34,12 @@ public abstract class AbstractSpecialDeltaDebugger extends AbstractDeltaDebugger
         continue;
       }
       NodeDeletionTreeEdit edit = tree.createNodeDeletionEdit(actionSet);
-      final Optional<TreeEditWithItsProgram> best = treeEditTester.apply(edit);
+      final Optional<TreeEditWithItsResult> best = treeEditTester.apply(edit);
       if (!best.isPresent()) {
         addToWorklist(worklist, partition.split());
         continue;
       }
-      final TreeEditWithItsProgram bestEditWithItsProgram = best.get();
+      final TreeEditWithItsResult bestEditWithItsProgram = best.get();
       tree.applyEdit(bestEditWithItsProgram.getEdit());
     }
   }

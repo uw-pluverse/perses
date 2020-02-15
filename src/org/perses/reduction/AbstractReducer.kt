@@ -56,7 +56,7 @@ abstract class AbstractReducer protected constructor(val redcucerAnnotation: Red
   }
 
   protected fun testAllTreeEditsAndReturnTheBest(
-      editList: List<AbstractSparTreeEdit>): Optional<TreeEditWithItsProgram> {
+      editList: List<AbstractSparTreeEdit>): Optional<TreeEditWithItsResult> {
     if (editList.isEmpty()) {
       return Optional.empty()
     }
@@ -64,7 +64,7 @@ abstract class AbstractReducer protected constructor(val redcucerAnnotation: Red
     val best = analyzeResultsAndGetBest(futureList)
     assert(!best.isPresent
         || configuration.parserFacade.isSourceCodeParsable(best.get().edit.program))
-    return best.map { b: FutureExecutionResultInfo -> TreeEditWithItsProgram(b.edit, b.result) }
+    return best.map { b: FutureExecutionResultInfo -> TreeEditWithItsResult(b.edit, b.result) }
   }
 
   private fun isFutureListSortedFromLeastProgramSizeToGreatest(

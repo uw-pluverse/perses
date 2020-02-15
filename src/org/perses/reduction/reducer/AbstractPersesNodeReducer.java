@@ -22,7 +22,7 @@ import org.perses.antlr.RuleType;
 import org.perses.reduction.AbstractReducer;
 import org.perses.reduction.ReducerAnnotation;
 import org.perses.reduction.ReducerContext;
-import org.perses.reduction.TreeEditWithItsProgram;
+import org.perses.reduction.TreeEditWithItsResult;
 import org.perses.reduction.partition.Partition;
 import org.perses.tree.spar.*;
 
@@ -100,7 +100,7 @@ public abstract class AbstractPersesNodeReducer extends AbstractReducer {
     }
   }
 
-  protected Optional<TreeEditWithItsProgram> testSparTreeEdit(AbstractSparTreeEdit edit) {
+  protected Optional<TreeEditWithItsResult> testSparTreeEdit(AbstractSparTreeEdit edit) {
     try {
       return testAllTreeEditsAndReturnTheBest(ImmutableList.of(edit));
     } catch (Exception e) {
@@ -112,11 +112,11 @@ public abstract class AbstractPersesNodeReducer extends AbstractReducer {
       SparTree tree, AbstractSparTreeNode regularRuleNode) {
     final List<AbstractSparTreeEdit> editList =
         createEditListForRegularRuleNode(tree, regularRuleNode);
-    Optional<TreeEditWithItsProgram> best = testAllTreeEditsAndReturnTheBest(editList);
+    Optional<TreeEditWithItsResult> best = testAllTreeEditsAndReturnTheBest(editList);
     if (!best.isPresent()) {
       return ImmutableList.copyOf(regularRuleNode.getImmutableChildView());
     }
-    final TreeEditWithItsProgram bestEditWithItsProgram = best.get();
+    final TreeEditWithItsResult bestEditWithItsProgram = best.get();
     tree.applyEdit(bestEditWithItsProgram.getEdit());
     return computePendingNodes(tree, regularRuleNode, bestEditWithItsProgram.getEdit());
   }
@@ -255,9 +255,9 @@ public abstract class AbstractPersesNodeReducer extends AbstractReducer {
           editList,
           tree);
     }
-    final Optional<TreeEditWithItsProgram> best = testAllTreeEditsAndReturnTheBest(editList);
+    final Optional<TreeEditWithItsResult> best = testAllTreeEditsAndReturnTheBest(editList);
     if (best.isPresent()) {
-      final TreeEditWithItsProgram bestEditWithItsProgram = best.get();
+      final TreeEditWithItsResult bestEditWithItsProgram = best.get();
       tree.applyEdit(bestEditWithItsProgram.getEdit());
       return computePendingNodes(tree, kleenePlus, bestEditWithItsProgram.getEdit());
     }

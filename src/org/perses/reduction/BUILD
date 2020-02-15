@@ -28,7 +28,7 @@ java_library(
 
 kt_jvm_library(
     name = "tree_edit_with_its_program",
-    srcs = ["TreeEditWithItsProgram.kt"],
+    srcs = ["TreeEditWithItsResult.kt"],
     deps = [
         ":test_script",
         "//src/org/perses/program",

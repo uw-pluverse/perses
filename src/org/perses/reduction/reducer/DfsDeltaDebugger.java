@@ -1,7 +1,7 @@
 package org.perses.reduction.reducer;
 
 import org.perses.reduction.ReductionListenerManager;
-import org.perses.reduction.TreeEditWithItsProgram;
+import org.perses.reduction.TreeEditWithItsResult;
 import org.perses.reduction.partition.Partition;
 import org.perses.tree.spar.AbstractNodeActionSetCache;
 import org.perses.tree.spar.AbstractSparTreeEdit;
@@ -15,7 +15,7 @@ public final class DfsDeltaDebugger extends AbstractSpecialDeltaDebugger {
   public DfsDeltaDebugger(
       ReductionListenerManager listenerManager,
       AbstractNodeActionSetCache nodeActionSetCache,
-      Function<AbstractSparTreeEdit, Optional<TreeEditWithItsProgram>> treeEditTester) {
+      Function<AbstractSparTreeEdit, Optional<TreeEditWithItsResult>> treeEditTester) {
     super(listenerManager, nodeActionSetCache, treeEditTester);
   }
 

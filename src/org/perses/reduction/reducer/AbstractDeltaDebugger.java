@@ -1,7 +1,7 @@
 package org.perses.reduction.reducer;
 
 import org.perses.reduction.ReductionListenerManager;
-import org.perses.reduction.TreeEditWithItsProgram;
+import org.perses.reduction.TreeEditWithItsResult;
 import org.perses.reduction.partition.Partition;
 import org.perses.tree.spar.AbstractNodeActionSetCache;
 import org.perses.tree.spar.AbstractSparTreeEdit;
@@ -14,12 +14,12 @@ public abstract class AbstractDeltaDebugger {
 
   protected final ReductionListenerManager listenerManager;
   protected final AbstractNodeActionSetCache nodeActionSetCache;
-  protected final Function<AbstractSparTreeEdit, Optional<TreeEditWithItsProgram>> treeEditTester;
+  protected final Function<AbstractSparTreeEdit, Optional<TreeEditWithItsResult>> treeEditTester;
 
   protected AbstractDeltaDebugger(
       ReductionListenerManager listenerManager,
       AbstractNodeActionSetCache nodeActionSetCache,
-      Function<AbstractSparTreeEdit, Optional<TreeEditWithItsProgram>> treeEditTester) {
+      Function<AbstractSparTreeEdit, Optional<TreeEditWithItsResult>> treeEditTester) {
     this.listenerManager = listenerManager;
     this.nodeActionSetCache = nodeActionSetCache;
     this.treeEditTester = treeEditTester;
