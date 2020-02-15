@@ -153,9 +153,9 @@ java_library(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "reduction_driver",
-    srcs = ["ReductionDriver.java"],
+    srcs = ["ReductionDriver.kt"],
     deps = [
         ":abstract_reducer",
         ":actionset_profiler",
