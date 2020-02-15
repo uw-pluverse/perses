@@ -83,7 +83,7 @@ class ReductionConfigurationTest {
       Truth.assertThat(tempRootFolder.parentFile).isEqualTo(workingDirectory)
       Truth.assertThat(tempRootFolder.name).startsWith("PersesTempRoot_t.c_r.sh_")
     }
-    Truth.assertThat(configuration.isFixpointReduction).isTrue()
+    Truth.assertThat(configuration.fixpointReduction).isTrue()
   }
 
   @Test

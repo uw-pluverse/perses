@@ -18,7 +18,6 @@ package org.perses.reduction
 
 import com.google.common.annotations.VisibleForTesting
 import com.google.common.base.Joiner
-import com.google.common.base.Preconditions
 import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.ParserFacadeFactory
 import org.perses.program.SourceFile
@@ -40,15 +39,15 @@ class ReductionConfiguration(
     val workingFolder: File,
     testScriptFile: File,
     fileToReduce: File,
-    bestResultFile: File,
-    statisticsFile: File?,
-    progressDumpFile: File?,
-    keepOriginalCodeFormat: Boolean,
-    fixpointReduction: Boolean,
-    enableTestScriptExecutionCaching: Boolean,
-    useRealDeltaDebugger: Boolean,
-    maxReductionLevel: Int,
-    numOfReductionThreads: Int,
+    val bestResultFile: File,
+    private val statisticsFile: File?,
+    private val progressDumpFile: File?,
+    val keepOriginalCodeFormat: Boolean,
+    val fixpointReduction: Boolean,
+    val enableTestScriptExecutionCaching: Boolean,
+    val useRealDeltaDebugger: Boolean,
+    val maxReductionLevel: Int,
+    val numOfReductionThreads: Int,
     val multiNodePartitionReductionPolicy: MultiNodePartitionReductionPolicy,
     val singleNodePartitionReductionPolicy: SingleNodePartitionReductionPolicy) {
   /** The test script for reduction  */
@@ -57,27 +56,8 @@ class ReductionConfiguration(
   val fileToReduce: SourceFile
   /** The parser facade.  */
   val parserFacade: AbstractParserFacade
-  val isKeepOriginalCodeFormat: Boolean
-  val isFixpointReduction: Boolean
-  val isEnableTestScriptExecutionCaching: Boolean
-  val isUseRealDeltaDebugger: Boolean
-  val maxReductionLevel: Int
   /** This file is used to store the best result of reduction.  */
-  val bestResultFile: File
   val tempRootFolder: File
-  private val statisticsFile: File?
-  private val progressDumpFile: File?
-  val numOfReductionThreads: Int
-
-  fun validateConfiguration() {
-    Preconditions.checkState(workingFolder.exists(), "The working directory %s does not exist.", workingFolder)
-    Preconditions.checkState(
-        workingFolder.isDirectory, "The working directory %s is not a directory", workingFolder)
-    Preconditions.checkState(
-        maxReductionLevel > 0, "The max reduction level should be positive: %s", maxReductionLevel)
-    Preconditions.checkNotNull(multiNodePartitionReductionPolicy)
-    Preconditions.checkNotNull(singleNodePartitionReductionPolicy)
-  }
 
   fun getStatisticsFile(): Optional<File> {
     return Optional.ofNullable(statisticsFile)
@@ -127,27 +107,27 @@ class ReductionConfiguration(
   }
 
   init {
+    require(workingFolder.exists()) {
+      "The working folder does not exist: $workingFolder"
+    }
+    require(workingFolder.isDirectory) {
+      "The working folder is not a directory: $workingFolder"
+    }
+    require(maxReductionLevel > 0) {
+      "The max reduction level should be positive: $maxReductionLevel"
+    }
+    require(numOfReductionThreads > 0) {
+      "The number of reduction threads should be positive: $numOfReductionThreads"
+    }
     testScript = SourceFile.createFromPath(testScriptFile)
     this.fileToReduce = SourceFile.createFromPath(fileToReduce)
     parserFacade = ParserFacadeFactory.SINGLETON.createParserFacade(this.fileToReduce.languageKind)
-    this.bestResultFile = bestResultFile
-    this.statisticsFile = statisticsFile
-    isKeepOriginalCodeFormat = keepOriginalCodeFormat
-    isFixpointReduction = fixpointReduction
-    isEnableTestScriptExecutionCaching = enableTestScriptExecutionCaching
-    isUseRealDeltaDebugger = useRealDeltaDebugger
-    this.maxReductionLevel = maxReductionLevel
-    Preconditions.checkArgument(
-        workingFolder.isDirectory,
-        "The working folder is not a directory: %s.",
-        workingFolder)
-    Preconditions.checkArgument(numOfReductionThreads > 0, "The number of reduction threads must be positive.")
-    this.numOfReductionThreads = numOfReductionThreads
+
     tempRootFolder = File(
         workingFolder,
         getTempRootFolderName(
             fileToReduce.name, testScriptFile.name, LocalDateTime.now()))
-    this.progressDumpFile = progressDumpFile
-    validateConfiguration()
   }
+
+
 }

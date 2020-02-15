@@ -37,7 +37,7 @@ abstract class AbstractReducer protected constructor(val redcucerAnnotation: Red
   protected val actionSetProfiler: AbstractActionSetProfiler
 
   protected fun testProgramAsynchronously(program: TokenizedProgram?): FutureTestScriptExecutionTask {
-    return executorService.testProgram(program, configuration.isKeepOriginalCodeFormat)
+    return executorService.testProgram(program, configuration.keepOriginalCodeFormat)
   }
 
   private class FutureExecutionResultInfo(

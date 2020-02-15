@@ -112,9 +112,9 @@ class ReductionDriver(private val cmd: CommandOptions, vararg extraListeners: Ab
             "Saved result after fixpoint %s to %s",
             currentFixpointIteration, fixpointIterationResultFile)
         programAfterIteration.writeToFile(
-            fixpointIterationResultFile, configuration.isKeepOriginalCodeFormat)
+            fixpointIterationResultFile, configuration.keepOriginalCodeFormat)
       }
-      if (!configuration.isFixpointReduction || preSize <= postSize) {
+      if (!configuration.fixpointReduction || preSize <= postSize) {
         break
       }
       ++fixpointIteration
@@ -134,7 +134,7 @@ class ReductionDriver(private val cmd: CommandOptions, vararg extraListeners: Ab
 //  (1) use the original source program and test scrip. This ensures the test script is correct.
 //  (2) use the spar-tree. This ensures the Antlr parser works correctly.
     val program = tree.programSnapshot
-    val future = executorService.testProgram(program, configuration.isKeepOriginalCodeFormat)
+    val future = executorService.testProgram(program, configuration.keepOriginalCodeFormat)
     Preconditions.checkState(
         future.get().isPass,
         "The initial sanity check failed. Folder: ",
@@ -194,7 +194,7 @@ class ReductionDriver(private val cmd: CommandOptions, vararg extraListeners: Ab
               event
                   .program
                   .writeToFile(
-                      configuration.bestResultFile, configuration.isKeepOriginalCodeFormat)
+                      configuration.bestResultFile, configuration.keepOriginalCodeFormat)
             } catch (e: IOException) {
               throw RuntimeException(e)
             }
@@ -355,7 +355,7 @@ class ReductionDriver(private val cmd: CommandOptions, vararg extraListeners: Ab
     tree = createSparTree(configuration.fileToReduce)
     val cacheProfiler = if (Strings.isNullOrEmpty(cmd.profileTestExecutionCache)) AbstractTestScriptExecutionCacheProfiler.NULL_PROFILER else TestScriptExecutionCacheProfiler(
         File(cmd.profileTestExecutionCache))
-    queryCache = if (configuration.isEnableTestScriptExecutionCaching) TestScriptExecutionCache(
+    queryCache = if (configuration.enableTestScriptExecutionCaching) TestScriptExecutionCache(
         tree.programSnapshot, cacheProfiler, cmd.getQueryCacheRefreshThreshold()) else NullTestScriptExecutionCache()
     nodeActionSetCache = if (cmd.nodeActionSetCaching) NodeActionSetCache() else NullNodeActionSetCache()
     actionSetProfiler = if (Strings.isNullOrEmpty(cmd.actionSetProfiler)) AbstractActionSetProfiler.NULL_PROFILER else ActionSetProfiler(File(cmd.actionSetProfiler))
