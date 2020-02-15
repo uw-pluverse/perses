@@ -49,8 +49,8 @@ class ReductionConfiguration(
     useRealDeltaDebugger: Boolean,
     maxReductionLevel: Int,
     numOfReductionThreads: Int,
-    multiNodePartitionReductionPolicy: MultiNodePartitionReductionPolicy,
-    singleNodePartitionReductionPolicy: SingleNodePartitionReductionPolicy) {
+    val multiNodePartitionReductionPolicy: MultiNodePartitionReductionPolicy,
+    val singleNodePartitionReductionPolicy: SingleNodePartitionReductionPolicy) {
   /** The test script for reduction  */
   val testScript: SourceFile
   /** The file to reduce  */
@@ -68,8 +68,7 @@ class ReductionConfiguration(
   private val statisticsFile: File?
   private val progressDumpFile: File?
   val numOfReductionThreads: Int
-  val multiNodePartitionReductionPolicy: MultiNodePartitionReductionPolicy
-  val singleNodePartitionReductionPolicy: SingleNodePartitionReductionPolicy
+
   fun validateConfiguration() {
     Preconditions.checkState(workingFolder.exists(), "The working directory %s does not exist.", workingFolder)
     Preconditions.checkState(
@@ -138,8 +137,6 @@ class ReductionConfiguration(
     isEnableTestScriptExecutionCaching = enableTestScriptExecutionCaching
     isUseRealDeltaDebugger = useRealDeltaDebugger
     this.maxReductionLevel = maxReductionLevel
-    this.multiNodePartitionReductionPolicy = Preconditions.checkNotNull(multiNodePartitionReductionPolicy)
-    this.singleNodePartitionReductionPolicy = Preconditions.checkNotNull(singleNodePartitionReductionPolicy)
     Preconditions.checkArgument(
         workingFolder.isDirectory,
         "The working folder is not a directory: %s.",
