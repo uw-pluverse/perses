@@ -91,9 +91,7 @@ class TestScriptExecutorServiceTest {
         enableTestScriptExecutionCaching = true,
         useRealDeltaDebugger = false,
         maxReductionLevel = 100,
-        numOfReductionThreads = threadCount,
-        multiNodePartitionReductionPolicy = TestUtility.PURE_PERSES_MULTI_NODE_PARTITION_REDUCTION_POLICY,
-        singleNodePartitionReductionPolicy = TestUtility.PURE_PERSES_SINGLE_NODE_PARTITION_REDUCTION_POLICY)
+        numOfReductionThreads = threadCount)
   }
 
   @Throws(IOException::class)

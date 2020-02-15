@@ -30,8 +30,6 @@ import org.perses.program.SourceFile
 import org.perses.program.TokenizedProgramFactory
 import org.perses.reduction.AbstractActionSetProfiler.ActionSetProfiler
 import org.perses.reduction.AbstractTestScriptExecutionCacheProfiler.TestScriptExecutionCacheProfiler
-import org.perses.reduction.IPartitionReductionPolicy.MultiNodePartitionReductionPolicy
-import org.perses.reduction.IPartitionReductionPolicy.SingleNodePartitionReductionPolicy
 import org.perses.tree.spar.*
 import org.perses.util.Shell
 import org.perses.util.TimeSpan
@@ -275,25 +273,7 @@ class ReductionDriver(private val cmd: CommandOptions, vararg extraListeners: Ab
           enableTestScriptExecutionCaching = cmd.queryCaching,
           useRealDeltaDebugger = cmd.useRealDeltaDebugger,
           maxReductionLevel = cmd.getMaxReductionLevel(),
-          numOfReductionThreads = cmd.numOfThreads,
-          multiNodePartitionReductionPolicy = getMultiNodePartitionReductionPolicy(cmd),
-          singleNodePartitionReductionPolicy = getSingleNodePartitionReductionPolicy(cmd))
-    }
-
-    fun getSingleNodePartitionReductionPolicy(cmd: CommandOptions): SingleNodePartitionReductionPolicy {
-      return SingleNodePartitionReductionPolicy.Builder()
-          .delete(cmd.singleNodePartitionPolicyDelete)
-          .deleteChildrenOfCurrentNode(cmd.singleNodePartitionPolicyDeleteChildrenOfNode)
-          .deleteCurrentNodeAsAQualifiedNode(cmd.singleNodePartitionPolicyDeleteNodeAsQualifiedNode)
-          .replaceCurrentNodeAsAQualifiedNode(cmd.singleNodePartitionPolicyReplaceNodeAsQualifiedNode)
-          .build()
-    }
-
-    fun getMultiNodePartitionReductionPolicy(cmd: CommandOptions): MultiNodePartitionReductionPolicy {
-      return MultiNodePartitionReductionPolicy.Builder()
-          .delete(cmd.multiNodePartitionPolicyDelete)
-          .sparDeletion(cmd.multiNodePartitionPolicySparDelete)
-          .build()
+          numOfReductionThreads = cmd.numOfThreads)
     }
 
     private fun createTokenizedProgramFactory(originalTree: ParseTree): TokenizedProgramFactory {

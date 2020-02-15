@@ -30,7 +30,6 @@ import org.perses.grammar.java.JavaParserFacade;
 import org.perses.program.SourceFile;
 import org.perses.program.TokenizedProgram;
 import org.perses.program.TokenizedProgramFactory;
-import org.perses.reduction.IPartitionReductionPolicy;
 import org.perses.tree.spar.AbstractSparTreeNode;
 import org.perses.tree.spar.SparTree;
 import org.perses.tree.spar.SparTreeBuilder;
@@ -50,22 +49,6 @@ import static com.google.common.truth.Truth.assertThat;
 
 /** Utility class for testing. */
 public final class TestUtility {
-
-  public static final IPartitionReductionPolicy.MultiNodePartitionReductionPolicy
-      PURE_PERSES_MULTI_NODE_PARTITION_REDUCTION_POLICY =
-          new IPartitionReductionPolicy.MultiNodePartitionReductionPolicy.Builder()
-              .delete(false)
-              .sparDeletion(true)
-              .build();
-
-  public static final IPartitionReductionPolicy.SingleNodePartitionReductionPolicy
-      PURE_PERSES_SINGLE_NODE_PARTITION_REDUCTION_POLICY =
-          new IPartitionReductionPolicy.SingleNodePartitionReductionPolicy.Builder()
-              .delete(false)
-              .replaceCurrentNodeAsAQualifiedNode(true)
-              .deleteCurrentNodeAsAQualifiedNode(true)
-              .deleteChildrenOfCurrentNode(true)
-              .build();
 
   public static final ImmutableList<String> OPT_C_PARSER_RULE_NAMES =
       ImmutableList.<String>builder()

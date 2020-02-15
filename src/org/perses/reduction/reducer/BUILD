@@ -14,7 +14,6 @@ java_library(
         "//antlropt/org/perses/antlr:enum_rule_type",
         "//src/org/perses/antlr:antlr_hierarchy",
         "//src/org/perses/reduction:abstract_reducer",
-        "//src/org/perses/reduction:partition_reduction_policy",
         "//src/org/perses/reduction:reduction_configuration",
         "//src/org/perses/reduction:reduction_level",
         "//src/org/perses/reduction:test_script_executor_service",

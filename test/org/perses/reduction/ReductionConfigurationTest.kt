@@ -68,9 +68,7 @@ class ReductionConfigurationTest {
         enableTestScriptExecutionCaching = true,
         useRealDeltaDebugger = false,
         maxReductionLevel = maxReductionLevel,
-        numOfReductionThreads = numOfReductionThreads,
-        multiNodePartitionReductionPolicy = TestUtility.PURE_PERSES_MULTI_NODE_PARTITION_REDUCTION_POLICY,
-        singleNodePartitionReductionPolicy = TestUtility.PURE_PERSES_SINGLE_NODE_PARTITION_REDUCTION_POLICY)
+        numOfReductionThreads = numOfReductionThreads)
     Truth.assertThat(configuration.bestResultFile).isEqualTo(bestFile)
     Truth.assertThat(configuration.fileToReduce.file).isEqualTo(sourceFile)
     Truth.assertThat(configuration.fileToReduce.fileContent)

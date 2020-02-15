@@ -56,19 +56,11 @@ java_library(
     ],
 )
 
-java_library(
-    name = "partition_reduction_policy",
-    srcs = ["IPartitionReductionPolicy.java"],
-    deps = [
-        "@maven//:com_google_guava_guava",
-    ],
-)
 
 kt_jvm_library(
     name = "reduction_configuration",
     srcs = ["ReductionConfiguration.kt"],
     deps = [
-        ":partition_reduction_policy",
         "//src/org/perses:language_kind",
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/grammar:facade_factory",
@@ -159,7 +151,6 @@ kt_jvm_library(
     deps = [
         ":abstract_reducer",
         ":actionset_profiler",
-        ":partition_reduction_policy",
         ":reducer_factory",
         ":reduction_configuration",
         ":test_script_execution_cache",

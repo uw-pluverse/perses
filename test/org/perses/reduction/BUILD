@@ -49,15 +49,6 @@ java_test(
     deps = ["//src/org/perses/listener:profile_event_interface"],
 )
 
-java_test(
-    name = "PersesTransformationPolicyTest",
-    srcs = ["PersesTransformationPolicyTest.java"],
-    test_class = "org.perses.reduction.PersesTransformationPolicyTest",
-    deps = [
-        "//src/org/perses/reduction:partition_reduction_policy",
-        "//test/org/perses:truth",
-    ],
-)
 
 java_test(
     name = "ReducerFactoryTest",

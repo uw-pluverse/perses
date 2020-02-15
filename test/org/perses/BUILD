@@ -18,7 +18,6 @@ java_library(
         "//src/org/perses/grammar/c:c_parser_facade",
         "//src/org/perses/grammar/java:java_parser_facade",
         "//src/org/perses/program",
-        "//src/org/perses/reduction:partition_reduction_policy",
         "//src/org/perses/tree/spar",
         "@maven//:com_google_flogger_flogger_system_backend",
         "@maven//:com_google_guava_guava",

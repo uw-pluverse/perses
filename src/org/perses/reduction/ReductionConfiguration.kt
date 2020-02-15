@@ -21,8 +21,6 @@ import com.google.common.base.Joiner
 import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.ParserFacadeFactory
 import org.perses.program.SourceFile
-import org.perses.reduction.IPartitionReductionPolicy.MultiNodePartitionReductionPolicy
-import org.perses.reduction.IPartitionReductionPolicy.SingleNodePartitionReductionPolicy
 import org.perses.util.Util
 import java.io.File
 import java.time.LocalDateTime
@@ -47,9 +45,7 @@ class ReductionConfiguration(
     val enableTestScriptExecutionCaching: Boolean,
     val useRealDeltaDebugger: Boolean,
     val maxReductionLevel: Int,
-    val numOfReductionThreads: Int,
-    val multiNodePartitionReductionPolicy: MultiNodePartitionReductionPolicy,
-    val singleNodePartitionReductionPolicy: SingleNodePartitionReductionPolicy) {
+    val numOfReductionThreads: Int) {
   /** The test script for reduction  */
   val testScript: SourceFile
   /** The file to reduce  */
