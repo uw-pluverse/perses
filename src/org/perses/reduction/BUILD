@@ -64,9 +64,9 @@ java_library(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "reduction_configuration",
-    srcs = ["ReductionConfiguration.java"],
+    srcs = ["ReductionConfiguration.kt"],
     deps = [
         ":partition_reduction_policy",
         "//src/org/perses:language_kind",
