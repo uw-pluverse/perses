@@ -1,5 +1,7 @@
 package(default_visibility = ["//test/org/perses:__subpackages__"])
 
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_test")
+
 java_library(
     name = "reducer_functional_test_base",
     srcs = ["AbstractReducerFunctionalTest.java"],
@@ -71,9 +73,9 @@ java_test(
     ],
 )
 
-java_test(
+kt_jvm_test(
     name = "ReductionConfigurationTest",
-    srcs = ["ReductionConfigurationTest.java"],
+    srcs = ["ReductionConfigurationTest.kt"],
     data = [
         "//test_data/delta_1",
     ],
