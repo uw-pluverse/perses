@@ -54,14 +54,14 @@ public class PersesNodeDfsReducer extends AbstractPersesNodeReducer {
       ReducerAnnotation reducerAnnotation, ReducerContext reducerContext) {
     super(reducerAnnotation, reducerContext);
     deltaDebugger =
-        reducerContext.configuration.isUseRealDeltaDebugger()
+        reducerContext.getConfiguration().isUseRealDeltaDebugger()
             ? new DeltaDebugger(
-                reducerContext.listenerManager,
-                reducerContext.nodeActionSetCache,
+                reducerContext.getListenerManager(),
+                reducerContext.getNodeActionSetCache(),
                 this::testSparTreeEdit)
             : new DfsDeltaDebugger(
-                reducerContext.listenerManager,
-                reducerContext.nodeActionSetCache,
+                reducerContext.getListenerManager(),
+                reducerContext.getNodeActionSetCache(),
                 this::testSparTreeEdit);
   }
 

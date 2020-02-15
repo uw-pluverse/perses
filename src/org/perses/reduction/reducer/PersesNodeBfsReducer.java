@@ -56,8 +56,8 @@ public class PersesNodeBfsReducer extends AbstractPersesNodeReducer {
     super(reducerAnnotation, reducerContext);
     deltaDebugger =
         new BfsDeltaDebugger(
-            reducerContext.listenerManager,
-            reducerContext.nodeActionSetCache,
+            reducerContext.getListenerManager(),
+            reducerContext.getNodeActionSetCache(),
             this::testSparTreeEdit);
   }
 

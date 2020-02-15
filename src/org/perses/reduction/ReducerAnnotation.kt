@@ -14,16 +14,15 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.reduction;
+package org.perses.reduction
 
-/** Annotation for a reducer. */
-public abstract class ReducerAnnotation {
+/** Annotation for a reducer.  */
+abstract class ReducerAnnotation {
+  /** The short name of the reducer.  */
+  abstract fun shortName(): String?
 
-  /** The short name of the reducer. */
-  public abstract String shortName();
+  /** The description fo the reducer.  */
+  abstract fun description(): String?
 
-  /** The description fo the reducer. */
-  public abstract String description();
-
-  public abstract AbstractReducer create(ReducerContext reducerContext);
+  abstract fun create(reducerContext: ReducerContext?): AbstractReducer?
 }

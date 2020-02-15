@@ -89,16 +89,16 @@ java_library(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "abstract_reducer",
     srcs = [
-        "AbstractReducer.java",
-        "AbstractReductionEvent.java",
-        "AbstractReductionListener.java",
-        "ReducerAnnotation.java",
-        "ReducerContext.java",
-        "ReductionListenerManager.java",
-        "ReductionState.java",
+        "AbstractReducer.kt",
+        "AbstractReductionEvent.kt",
+        "AbstractReductionListener.kt",
+        "ReducerAnnotation.kt",
+        "ReducerContext.kt",
+        "ReductionListenerManager.kt",
+        "ReductionState.kt",
     ],
     deps = [
         ":actionset_profiler",

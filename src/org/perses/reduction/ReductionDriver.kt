@@ -233,7 +233,7 @@ class ReductionDriver(private val cmd: CommandOptions, vararg extraListeners: Ab
                 listenerManager,
                 queryCache,
                 nodeActionSetCache,
-                actionSetProfiler))
+                actionSetProfiler))!!
   }
 
   @Throws(IOException::class)
