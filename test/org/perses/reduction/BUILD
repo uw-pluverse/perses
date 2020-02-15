@@ -164,9 +164,9 @@ java_test(
     ],
 )
 
-java_test(
+kt_jvm_test(
     name = "TestScriptExecutorServiceTest",
-    srcs = ["TestScriptExecutorServiceTest.java"],
+    srcs = ["TestScriptExecutorServiceTest.kt"],
     data = [
         "//test_data/delta_1",
         "//test_data/misc",
