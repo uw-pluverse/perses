@@ -42,8 +42,8 @@ maven_install(
     ],
 )
 
-rules_kotlin_version = "legacy-1.3.0-rc3"
-rules_kotlin_sha = "54678552125753d9fc0a37736d140f1d2e69778d3e52cf454df41a913b964ede"
+rules_kotlin_version = "legacy-1.3.0"
+rules_kotlin_sha = "4fd769fb0db5d3c6240df8a9500515775101964eebdf85a3f9f0511130885fde"
 http_archive(
     name = "io_bazel_rules_kotlin",
     urls = ["https://github.com/bazelbuild/rules_kotlin/archive/%s.zip" % rules_kotlin_version],

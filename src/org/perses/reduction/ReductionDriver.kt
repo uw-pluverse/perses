@@ -44,14 +44,27 @@ import java.util.concurrent.ExecutionException
  * This is the main entry to invoke Perses reducer. It does not have a main, but is the main entry
  * as a reduction library.
  */
-class ReductionDriver(private val cmd: CommandOptions, vararg extraListeners: AbstractReductionListener) : Closeable {
-  val configuration: ReductionConfiguration
-  private val executorService: TestScriptExecutorService
-  private val listenerManager: ReductionListenerManager
-  private var tree: SparTree
-  private val queryCache: AbstractTestScriptExecutionCache
-  private val nodeActionSetCache: AbstractNodeActionSetCache
-  private val actionSetProfiler: AbstractActionSetProfiler
+class ReductionDriver(
+    private val cmd: CommandOptions,
+    vararg extraListeners: AbstractReductionListener) : Closeable {
+  val configuration = createConfiguration(cmd)
+  private val executorService = TestScriptExecutorService(
+      configuration.tempRootFolder,
+      configuration.numOfReductionThreads,
+      configuration.testScript,
+      configuration.fileToReduce.baseName)
+  private val listenerManager = ReductionListenerManager(
+      createListeners(cmd.isProfiling, configuration, extraListeners))
+  private var tree = createSparTree(configuration.fileToReduce)
+  val cacheProfiler = if (Strings.isNullOrEmpty(cmd.profileTestExecutionCache))
+    AbstractTestScriptExecutionCacheProfiler.NULL_PROFILER
+  else TestScriptExecutionCacheProfiler(
+      File(cmd.profileTestExecutionCache))
+  val queryCache = if (configuration.enableTestScriptExecutionCaching) TestScriptExecutionCache(
+      tree.programSnapshot, cacheProfiler, cmd.getQueryCacheRefreshThreshold()) else NullTestScriptExecutionCache()
+  val nodeActionSetCache = if (cmd.nodeActionSetCaching) NodeActionSetCache() else NullNodeActionSetCache()
+  val actionSetProfiler = if (Strings.isNullOrEmpty(cmd.actionSetProfiler)) AbstractActionSetProfiler.NULL_PROFILER else ActionSetProfiler(File(cmd.actionSetProfiler))
+
   @Throws(IOException::class, ExecutionException::class, InterruptedException::class)
   fun reduce() {
     logger.atInfo().log(
@@ -325,23 +338,5 @@ class ReductionDriver(private val cmd: CommandOptions, vararg extraListeners: Ab
         File(cmd.outputFile)
       }
     }
-  }
-
-  init {
-    configuration = createConfiguration(cmd)
-    listenerManager = ReductionListenerManager(
-        createListeners(cmd.isProfiling, configuration, extraListeners))
-    executorService = TestScriptExecutorService(
-        configuration.tempRootFolder,
-        configuration.numOfReductionThreads,
-        configuration.testScript,
-        configuration.fileToReduce.baseName)
-    tree = createSparTree(configuration.fileToReduce)
-    val cacheProfiler = if (Strings.isNullOrEmpty(cmd.profileTestExecutionCache)) AbstractTestScriptExecutionCacheProfiler.NULL_PROFILER else TestScriptExecutionCacheProfiler(
-        File(cmd.profileTestExecutionCache))
-    queryCache = if (configuration.enableTestScriptExecutionCaching) TestScriptExecutionCache(
-        tree.programSnapshot, cacheProfiler, cmd.getQueryCacheRefreshThreshold()) else NullTestScriptExecutionCache()
-    nodeActionSetCache = if (cmd.nodeActionSetCaching) NodeActionSetCache() else NullNodeActionSetCache()
-    actionSetProfiler = if (Strings.isNullOrEmpty(cmd.actionSetProfiler)) AbstractActionSetProfiler.NULL_PROFILER else ActionSetProfiler(File(cmd.actionSetProfiler))
   }
 }
