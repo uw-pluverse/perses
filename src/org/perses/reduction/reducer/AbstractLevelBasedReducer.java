@@ -158,6 +158,8 @@ public abstract class AbstractLevelBasedReducer extends AbstractReducer {
             } catch (IOException e) {
               throw new AssertionError(e);
             }
+            // Should return Unit.INSTANCE, but just here just return null to avoid depending on kotlin stdlib.
+            return null;
           });
     }
   }

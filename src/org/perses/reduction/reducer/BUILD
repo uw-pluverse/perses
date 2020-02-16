@@ -3,6 +3,8 @@ package(default_visibility = [
     "//test/org/perses:__subpackages__",
 ])
 
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
+
 java_library(
     name = "level_based_reducers",
     srcs = [
@@ -25,9 +27,9 @@ java_library(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "tree_transforms",
-    srcs = ["TreeTransformations.java"],
+    srcs = ["TreeTransformations.kt"],
     deps = [
         "//src/org/perses/antlr:antlr_hierarchy",
         "//src/org/perses/reduction/partition",
