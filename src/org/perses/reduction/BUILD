@@ -36,9 +36,9 @@ kt_jvm_library(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "test_script",
-    srcs = ["TestScript.java"],
+    srcs = ["TestScript.kt"],
     deps = [
         "//src/org/perses/util",
         "@maven//:com_google_flogger_flogger",
