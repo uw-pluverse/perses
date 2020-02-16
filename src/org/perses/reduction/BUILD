@@ -106,12 +106,12 @@ kt_jvm_library(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "test_script_executor_service",
     srcs = [
-        "ReductionFolder.java",
-        "ReductionFolderManager.java",
-        "TestScriptExecutorService.java",
+        "ReductionFolder.kt",
+        "ReductionFolderManager.kt",
+        "TestScriptExecutorService.kt",
     ],
     deps = [
         ":test_script",

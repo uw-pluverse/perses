@@ -108,7 +108,7 @@ class TestScriptExecutorServiceTest {
     run {
       val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
       for (i in 0..49) {
-        futureList.add(service.testProgram(program, true))
+        futureList.add(service.testProgram(program!!, true))
       }
       futureList.forEach(
           Consumer { future: Future<TestScript.TestResult> ->

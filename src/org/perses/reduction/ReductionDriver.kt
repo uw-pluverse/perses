@@ -87,12 +87,16 @@ class ReductionDriver(private val cmd: CommandOptions, vararg extraListeners: Ab
           tree = reparseAndCreateSparTree(tree)
           tree.registerSparTreeEditListeners(sparTreeEditListeners)
         }
-        assert(tree.tokenizedProgramFactory == tokenizedProgramFactory) { "The tokenized program factory should be unchanged during a reduction process." }
-        assert(tree.tokenizedProgramFactory.tokenFactory == persesTokenFactory) { "The perses token factory should be unchanged duing a reduction process." }
+        assert(tree.tokenizedProgramFactory == tokenizedProgramFactory) {
+          "The tokenized program factory should be unchanged during a reduction process."
+        }
+        assert(tree.tokenizedProgramFactory.tokenFactory == persesTokenFactory) {
+          "The perses token factory should be unchanged duing a reduction process."
+        }
       }
       tree.updateLeafTokenCount()
       val preSize = tree.tokenCount
-      val currentCountOfTestScriptExecutions = executorService.executionCounter
+      val currentCountOfTestScriptExecutions = executorService.scriptExecutionCount
       listenerManager.onFixpointIterationStart(
           currentFixpointIteration, preSize, worker.redcucerAnnotation)
       val reductionState = ReductionState(tree)
@@ -100,7 +104,7 @@ class ReductionDriver(private val cmd: CommandOptions, vararg extraListeners: Ab
       worker.reduce(reductionState)
       val programAfterIteration = tree.programSnapshot
       val postSize = programAfterIteration.tokenCount()
-      val countOfTestScriptExecutionsInThisIteration = executorService.executionCounter - currentCountOfTestScriptExecutions
+      val countOfTestScriptExecutionsInThisIteration = executorService.scriptExecutionCount - currentCountOfTestScriptExecutions
       listenerManager.onFixpointIterationEnd(
           currentFixpointIteration, postSize, countOfTestScriptExecutionsInThisIteration)
       run {
@@ -118,7 +122,7 @@ class ReductionDriver(private val cmd: CommandOptions, vararg extraListeners: Ab
       ++fixpointIteration
     }
     run {
-      val countOfTestScriptExecutions = executorService.executionCounter
+      val countOfTestScriptExecutions = executorService.scriptExecutionCount
       val finalTokenCount = tree.tokenCount
       listenerManager.onReductionEnd(finalTokenCount, countOfTestScriptExecutions)
     }

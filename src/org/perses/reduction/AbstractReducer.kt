@@ -24,7 +24,9 @@ import java.util.*
 import java.util.concurrent.ExecutionException
 
 /** The base class for reducer. Both hdd and perses algorithms extend this class.  */
-abstract class AbstractReducer protected constructor(val redcucerAnnotation: ReducerAnnotation, reducerContext: ReducerContext) {
+abstract class AbstractReducer protected constructor(
+    val redcucerAnnotation: ReducerAnnotation,
+    reducerContext: ReducerContext) {
   @JvmField
   protected val configuration: ReductionConfiguration
   protected val executorService: TestScriptExecutorService
@@ -36,7 +38,7 @@ abstract class AbstractReducer protected constructor(val redcucerAnnotation: Red
   @JvmField
   protected val actionSetProfiler: AbstractActionSetProfiler
 
-  protected fun testProgramAsynchronously(program: TokenizedProgram?): FutureTestScriptExecutionTask {
+  protected fun testProgramAsynchronously(program: TokenizedProgram): FutureTestScriptExecutionTask {
     return executorService.testProgram(program, configuration.keepOriginalCodeFormat)
   }
 
