@@ -2,13 +2,11 @@ package org.perses.util
 
 data class Fraction(val numerator: Int, val denominator: Int) {
   init {
-    assert(
-      numerator >= 0
-    ) { "The numerator should be within [0,100]. $numerator" }
-    assert(denominator > 0
-    ) { "The denominator should be positive $denominator" }
-    assert(numerator <= denominator
-    ) { "The numerator cannot be greater than denominator: $numerator/$denominator" }
+    assert(numerator >= 0) { "The numerator should be within [0,100]. $numerator" }
+    assert(denominator > 0) { "The denominator should be positive $denominator" }
+    assert(numerator <= denominator) {
+      "The numerator cannot be greater than denominator: $numerator/$denominator"
+    }
   }
 
   fun multiply(value: Int) = value * numerator / denominator
