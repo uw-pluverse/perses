@@ -25,5 +25,4 @@ class ReductionState(val sparTree: SparTree) {
   override fun toString(): String {
     return MoreObjects.toStringHelper(this).add("tree-id", sparTree.treeId).toString()
   }
-
 }

@@ -16,42 +16,48 @@
  */
 package org.perses.reduction
 
-import org.perses.reduction.AbstractReductionEvent.*
-
 /** The listener to access the internal reduction state.  */
 abstract class AbstractReductionListener {
   /** Called on the start of the reduction.  */
-  abstract fun onReductionStart(event: ReductionStartEvent?)
+  abstract fun onReductionStart(event: AbstractReductionEvent.ReductionStartEvent?)
 
   /** Called on the end of the reduction.  */
-  abstract fun onReductionEnd(event: ReductionEndEvent?)
+  abstract fun onReductionEnd(event: AbstractReductionEvent.ReductionEndEvent?)
 
   /** Called on the start of a fixpoint iteration.  */
-  abstract fun onFixpointIterationStart(event: FixpointIterationStartEvent?)
+  abstract fun onFixpointIterationStart(event: AbstractReductionEvent.FixpointIterationStartEvent?)
 
   /** Called on the end of a fixpoint iteration  */
   abstract fun onFixpointIterationEnd(
-      event: FixpointIterationEndEvent?)
+    event: AbstractReductionEvent.FixpointIterationEndEvent?
+  )
 
-  abstract fun onLevelReductionStart(event: LevelReductionStartEvent?)
-  abstract fun onLevelReductionEnd(event: LevelReductionEndEvent?)
+  abstract fun onLevelReductionStart(event: AbstractReductionEvent.LevelReductionStartEvent?)
+  abstract fun onLevelReductionEnd(event: AbstractReductionEvent.LevelReductionEndEvent?)
   abstract fun onLevelGranularityReductionStart(
-      event: LevelGranularityReductionStartEvent?)
+    event: AbstractReductionEvent.LevelGranularityReductionStartEvent?
+  )
 
   abstract fun onLevelGranularityReductionEnd(
-      event: LevelGranularityReductionEndEvent?)
+    event: AbstractReductionEvent.LevelGranularityReductionEndEvent?
+  )
 
-  abstract fun onNodeReductionStart(event: NodeReductionStartEvent?)
-  abstract fun onNodeReductionEnd(event: NodeReductionEndEvent?)
+  abstract fun onNodeReductionStart(event: AbstractReductionEvent.NodeReductionStartEvent?)
+  abstract fun onNodeReductionEnd(event: AbstractReductionEvent.NodeReductionEndEvent?)
   abstract fun onTestScriptExecutionCacheEntryEviction(
-      event: TestScriptExecutionCacheEntryEvictionEvent?)
+    event: AbstractReductionEvent.TestScriptExecutionCacheEntryEvictionEvent?
+  )
 
-  abstract fun onNodeActionSetCacheClearance(event: NodeEditActionSetCacheClearanceEvent?)
-  abstract fun onTestScriptExecution(event: TestScriptExecutionEvent?)
-  abstract fun onTestResultCacheHit(event: TestResultCacheHitEvent?)
+  abstract fun onNodeActionSetCacheClearance(
+    event: AbstractReductionEvent.NodeEditActionSetCacheClearanceEvent?
+  )
+  abstract fun onTestScriptExecution(event: AbstractReductionEvent.TestScriptExecutionEvent?)
+  abstract fun onTestResultCacheHit(event: AbstractReductionEvent.TestResultCacheHitEvent?)
   abstract fun onNodeEditActionSetCacheHit(
-      event: NodeEditActionSetCacheHitEvent?)
+    event: AbstractReductionEvent.NodeEditActionSetCacheHitEvent?
+  )
 
   abstract fun onTestScriptExecutionCancelled(
-      event: TestScriptExecutionCanceledEvent?)
+    event: AbstractReductionEvent.TestScriptExecutionCanceledEvent?
+  )
 }

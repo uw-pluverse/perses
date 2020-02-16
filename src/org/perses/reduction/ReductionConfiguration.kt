@@ -18,13 +18,13 @@ package org.perses.reduction
 
 import com.google.common.annotations.VisibleForTesting
 import com.google.common.base.Joiner
+import java.io.File
+import java.time.LocalDateTime
+import java.util.Optional
 import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.ParserFacadeFactory
 import org.perses.program.SourceFile
 import org.perses.util.Util
-import java.io.File
-import java.time.LocalDateTime
-import java.util.*
 
 /**
  * This is the internal configuration for Perses reducer.
@@ -33,19 +33,20 @@ import java.util.*
  * TODO: refactor this to a AutoValue class, or use the BUILDER pattern.
  */
 class ReductionConfiguration(
-    /** The working directory of the reduction.  */
-    val workingFolder: File,
-    testScriptFile: File,
-    fileToReduce: File,
-    val bestResultFile: File,
-    private val statisticsFile: File?,
-    private val progressDumpFile: File?,
-    val keepOriginalCodeFormat: Boolean,
-    val fixpointReduction: Boolean,
-    val enableTestScriptExecutionCaching: Boolean,
-    val useRealDeltaDebugger: Boolean,
-    val maxReductionLevel: Int,
-    val numOfReductionThreads: Int) {
+  /** The working directory of the reduction.  */
+  val workingFolder: File,
+  testScriptFile: File,
+  fileToReduce: File,
+  val bestResultFile: File,
+  private val statisticsFile: File?,
+  private val progressDumpFile: File?,
+  val keepOriginalCodeFormat: Boolean,
+  val fixpointReduction: Boolean,
+  val enableTestScriptExecutionCaching: Boolean,
+  val useRealDeltaDebugger: Boolean,
+  val maxReductionLevel: Int,
+  val numOfReductionThreads: Int
+) {
   /** The test script for reduction  */
   val testScript: SourceFile
   /** The file to reduce  */
@@ -92,7 +93,10 @@ class ReductionConfiguration(
     @JvmStatic
     @VisibleForTesting
     fun getTempRootFolderName(
-        fileNameForReduction: String?, testScriptName: String?, time: LocalDateTime?): String {
+      fileNameForReduction: String?,
+      testScriptName: String?,
+      time: LocalDateTime?
+    ): String {
       return Joiner.on('_')
           .join(
               PERSES_TEMP_ROOT_PREFIX,
@@ -124,6 +128,4 @@ class ReductionConfiguration(
         getTempRootFolderName(
             fileToReduce.name, testScriptFile.name, LocalDateTime.now()))
   }
-
-
 }

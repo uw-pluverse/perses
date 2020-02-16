@@ -16,17 +16,23 @@
  */
 package org.perses.reduction
 
+import java.io.IOException
+import java.util.LinkedList
+import java.util.Optional
+import java.util.concurrent.ExecutionException
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.TestScriptExecutorService.FutureTestScriptExecutionTask
-import org.perses.tree.spar.*
-import java.io.IOException
-import java.util.*
-import java.util.concurrent.ExecutionException
+import org.perses.tree.spar.AbstractNodeActionSetCache
+import org.perses.tree.spar.AbstractSparTreeEdit
+import org.perses.tree.spar.AbstractSparTreeNode
+import org.perses.tree.spar.SparTree
+import org.perses.tree.spar.SparTreeSimplifier
 
 /** The base class for reducer. Both hdd and perses algorithms extend this class.  */
 abstract class AbstractReducer protected constructor(
-    val redcucerAnnotation: ReducerAnnotation,
-    reducerContext: ReducerContext) {
+  val redcucerAnnotation: ReducerAnnotation,
+  reducerContext: ReducerContext
+) {
   @JvmField
   protected val configuration: ReductionConfiguration
   protected val executorService: TestScriptExecutorService
@@ -38,12 +44,14 @@ abstract class AbstractReducer protected constructor(
   @JvmField
   protected val actionSetProfiler: AbstractActionSetProfiler
 
-  protected fun testProgramAsynchronously(program: TokenizedProgram): FutureTestScriptExecutionTask {
-    return executorService.testProgram(program, configuration.keepOriginalCodeFormat)
-  }
+  protected fun testProgramAsynchronously(program: TokenizedProgram) =
+    executorService.testProgram(program, configuration.keepOriginalCodeFormat)
 
   private class FutureExecutionResultInfo(
-      val edit: AbstractSparTreeEdit, val program: TokenizedProgram, val future: FutureTestScriptExecutionTask) {
+    val edit: AbstractSparTreeEdit,
+    val program: TokenizedProgram,
+    val future: FutureTestScriptExecutionTask
+  ) {
     val result: TestScript.TestResult
       get() = try {
         future.get()
@@ -54,23 +62,24 @@ abstract class AbstractReducer protected constructor(
     fun cancel() {
       future.cancel(true)
     }
-
   }
 
   protected fun testAllTreeEditsAndReturnTheBest(
-      editList: List<AbstractSparTreeEdit>): Optional<TreeEditWithItsResult> {
+    editList: List<AbstractSparTreeEdit>
+  ): Optional<TreeEditWithItsResult> {
     if (editList.isEmpty()) {
       return Optional.empty()
     }
     val futureList = asyncApplyEditsInOrderOfProgramSizeFromLeast(editList)
     val best = analyzeResultsAndGetBest(futureList)
-    assert(!best.isPresent
-        || configuration.parserFacade.isSourceCodeParsable(best.get().edit.program))
+    assert(!best.isPresent ||
+      configuration.parserFacade.isSourceCodeParsable(best.get().edit.program))
     return best.map { b: FutureExecutionResultInfo -> TreeEditWithItsResult(b.edit, b.result) }
   }
 
   private fun isFutureListSortedFromLeastProgramSizeToGreatest(
-      futureList: ArrayList<FutureExecutionResultInfo>): Boolean {
+    futureList: ArrayList<FutureExecutionResultInfo>
+  ): Boolean {
     val size = futureList.size
     if (size < 2) {
       return true
@@ -86,11 +95,13 @@ abstract class AbstractReducer protected constructor(
   }
 
   private fun analyzeResultsAndGetBest(
-      futureList: ArrayList<FutureExecutionResultInfo>): Optional<FutureExecutionResultInfo> {
+    futureList: ArrayList<FutureExecutionResultInfo>
+  ): Optional<FutureExecutionResultInfo> {
     assert(isFutureListSortedFromLeastProgramSizeToGreatest(futureList)) { futureList }
     var best: FutureExecutionResultInfo? = null
     for (executionResultInfo in futureList) {
-      if (best != null) { // The best is already found, then it is safe to cancel all the remaining testing tasks, as
+      if (best != null) {
+// The best is already found, then it is safe to cancel all the remaining testing tasks, as
 // none of these tasks will beat the current best one. Moreover, the tasks are not useful
 // for future cache testing, as all future programs will be smaller than the programs
 // represented by these tasks.
@@ -98,13 +109,13 @@ abstract class AbstractReducer protected constructor(
         executionResultInfo.cancel()
         val duration = (System.currentTimeMillis() - start).toInt()
         listenerManager.onTestScriptExecutionCancelled(
-            executionResultInfo.program, executionResultInfo.edit, duration)
+          executionResultInfo.program, executionResultInfo.edit, duration)
         continue
       }
       val testResult = executionResultInfo.result
       queryCache.addResult(executionResultInfo.program, executionResultInfo.result)
       listenerManager.onTestScriptExecution(
-          testResult, executionResultInfo.program, executionResultInfo.edit)
+        testResult, executionResultInfo.program, executionResultInfo.edit)
       if (testResult.isPass) {
         best = executionResultInfo
       }
@@ -113,28 +124,29 @@ abstract class AbstractReducer protected constructor(
   }
 
   private fun asyncApplyEditsInOrderOfProgramSizeFromLeast(
-      editList: List<AbstractSparTreeEdit>): ArrayList<FutureExecutionResultInfo> {
+    editList: List<AbstractSparTreeEdit>
+  ): ArrayList<FutureExecutionResultInfo> {
     val futureList = ArrayList<FutureExecutionResultInfo>(editList.size)
     editList.stream()
-        .sorted()
-        .filter { edit: AbstractSparTreeEdit ->
-          assert(!edit.isEmpty) { "Edit cannot be empty." }
-          val program = edit.program
-          val cachedResult = queryCache.getCachedResult(program)
-          if (cachedResult.isPresent) {
-            assert(!cachedResult.get().isPass) { "It should be failure all the time." }
-            listenerManager.onTestResultCacheHit(cachedResult.get(), program, edit)
-            return@filter false
-          } else {
-            return@filter true
-          }
+      .sorted()
+      .filter { edit: AbstractSparTreeEdit ->
+        assert(!edit.isEmpty) { "Edit cannot be empty." }
+        val program = edit.program
+        val cachedResult = queryCache.getCachedResult(program)
+        if (cachedResult.isPresent) {
+          assert(!cachedResult.get().isPass) { "It should be failure all the time." }
+          listenerManager.onTestResultCacheHit(cachedResult.get(), program, edit)
+          return@filter false
+        } else {
+          return@filter true
         }
-        .forEach { edit: AbstractSparTreeEdit ->
-          assert(!edit.isEmpty) { "Edit cannot be empty." }
-          val program = edit.program
-          val future = testProgramAsynchronously(program)
-          futureList.add(FutureExecutionResultInfo(edit, program, future))
-        }
+      }
+      .forEach { edit: AbstractSparTreeEdit ->
+        assert(!edit.isEmpty) { "Edit cannot be empty." }
+        val program = edit.program
+        val future = testProgramAsynchronously(program)
+        futureList.add(FutureExecutionResultInfo(edit, program, future))
+      }
     return futureList
   }
 

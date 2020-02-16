@@ -4,16 +4,17 @@ import com.google.common.base.Preconditions
 import com.google.common.base.Strings
 import com.google.common.io.MoreFiles
 import com.google.common.io.RecursiveDeleteOption
-import org.perses.program.SourceFile
-import org.perses.util.Util
 import java.io.File
 import java.io.IOException
 import java.util.concurrent.atomic.AtomicInteger
+import org.perses.program.SourceFile
+import org.perses.util.Util
 
 class ReductionFolderManager(
-    val rootFolder: File,
-    val testScript: SourceFile,
-    val sourceFileName: String) {
+  val rootFolder: File,
+  val testScript: SourceFile,
+  val sourceFileName: String
+) {
   private val sequenceGenerator = AtomicInteger()
 
   @Throws(IOException::class)

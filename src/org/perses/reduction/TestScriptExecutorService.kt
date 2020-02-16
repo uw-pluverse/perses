@@ -16,9 +16,6 @@
  */
 package org.perses.reduction
 
-import com.google.common.base.Preconditions
-import org.perses.program.SourceFile
-import org.perses.program.TokenizedProgram
 import java.io.File
 import java.io.IOException
 import java.util.concurrent.Callable
@@ -26,10 +23,16 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.FutureTask
 import java.util.concurrent.atomic.AtomicInteger
+import org.perses.program.SourceFile
+import org.perses.program.TokenizedProgram
 
 /** An execution service for test script runs.  */
 class TestScriptExecutorService(
-    tempRootFolder: File, private val numOfThreads: Int, testScriptFile: SourceFile?, sourceFileName: String) {
+  tempRootFolder: File,
+  private val numOfThreads: Int,
+  testScriptFile: SourceFile?,
+  sourceFileName: String
+) {
   private val executionCounter = AtomicInteger()
   private val executorService: ExecutorService
   private val reductionFolderManager: ReductionFolderManager
@@ -45,12 +48,14 @@ class TestScriptExecutorService(
    * test script and source file for debugging.
    */
   fun testProgram(
-      program: TokenizedProgram, keepOrigCodeFormat: Boolean): FutureTestScriptExecutionTask {
+    program: TokenizedProgram,
+    keepOrigCodeFormat: Boolean
+  ): FutureTestScriptExecutionTask {
     executionCounter.incrementAndGet()
     return try {
       val workingFolder = reductionFolderManager.createNextFolder()
       val result = FutureTestScriptExecutionTask(
-          ReductionTestScriptExecutorCallback(workingFolder, program, keepOrigCodeFormat))
+        ReductionTestScriptExecutorCallback(workingFolder, program, keepOrigCodeFormat))
       executorService.submit(result)
       result
     } catch (e: IOException) {
@@ -62,22 +67,23 @@ class TestScriptExecutorService(
     get() = executionCounter.get()
 
   class FutureTestScriptExecutionTask(
-      private val callable: ReductionTestScriptExecutorCallback)
-    : FutureTask<TestScript.TestResult>(callable) {
+    private val callable: ReductionTestScriptExecutorCallback
+  ) :
+    FutureTask<TestScript.TestResult>(callable) {
     val workingDirectory: File
       get() = callable.workingDirectory.folder
 
     val program: TokenizedProgram
       get() = callable.program
-
   }
 
   /** The test script runner for future.  */
   class ReductionTestScriptExecutorCallback(
-      val workingDirectory: ReductionFolder,
-      val program: TokenizedProgram,
-      private val keepOrigCodeFormat: Boolean)
-    : Callable<TestScript.TestResult> {
+    val workingDirectory: ReductionFolder,
+    val program: TokenizedProgram,
+    private val keepOrigCodeFormat: Boolean
+  ) :
+    Callable<TestScript.TestResult> {
 
     @Throws(Exception::class)
     override fun call(): TestScript.TestResult {
@@ -86,23 +92,27 @@ class TestScriptExecutorService(
       workingDirectory.deleteAllOtherFiles()
       return result
     }
-
   }
 
   init {
-    Preconditions.checkArgument(
-        numOfThreads > 0, "The number of threads must be positive: %s", numOfThreads)
-    Preconditions.checkState(
-        sourceFileName.indexOf('/') < 0 || sourceFileName.indexOf('\\') < 0,
-        "Invalid source file name. It should be the name only: %s",
-        sourceFileName)
-    if (!tempRootFolder.exists()) {
-      Preconditions.checkState(tempRootFolder.mkdir(), "Failed to create folder %s", tempRootFolder)
+    require(numOfThreads > 0) {
+      "The number of threads must be positive: $numOfThreads"
     }
-    assert(tempRootFolder.isDirectory) { "The temp root folder is not a directory: $tempRootFolder" }
+    require(sourceFileName.indexOf('/') < 0 || sourceFileName.indexOf('\\') < 0) {
+      "Invalid source file name. It should be the name only: $sourceFileName"
+    }
+    if (!tempRootFolder.exists()) {
+      check(tempRootFolder.mkdir()) { "Failed to create folder $tempRootFolder" }
+    }
+    assert(tempRootFolder.isDirectory) {
+      "The temp root folder is not a directory: $tempRootFolder"
+    }
     // TODO: create the executor outside, and pass it in as a parameter, so that others can use the
 //       executor.
     executorService = Executors.newFixedThreadPool(numOfThreads)
-    reductionFolderManager = ReductionFolderManager(tempRootFolder, testScriptFile!!, sourceFileName)
+    reductionFolderManager = ReductionFolderManager(
+      tempRootFolder,
+      testScriptFile!!,
+      sourceFileName)
   }
 }

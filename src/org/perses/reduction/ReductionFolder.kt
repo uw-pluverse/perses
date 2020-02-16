@@ -9,9 +9,10 @@ import java.io.IOException
 
 // TODO: save the test result in the folder.
 class ReductionFolder internal constructor(
-    val folder: File,
-    testScriptName: String,
-    sourceFileName: String) {
+  val folder: File,
+  testScriptName: String,
+  sourceFileName: String
+) {
   val testScript: TestScript = TestScript(File(folder, testScriptName))
   val sourceFilePath: File = File(folder, sourceFileName)
 
