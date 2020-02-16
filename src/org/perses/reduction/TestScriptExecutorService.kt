@@ -19,7 +19,6 @@ package org.perses.reduction
 import java.io.File
 import java.io.IOException
 import java.util.concurrent.Callable
-import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.FutureTask
 import java.util.concurrent.atomic.AtomicInteger
@@ -30,12 +29,34 @@ import org.perses.program.TokenizedProgram
 class TestScriptExecutorService(
   tempRootFolder: File,
   private val numOfThreads: Int,
-  testScriptFile: SourceFile?,
+  testScriptFile: SourceFile,
   sourceFileName: String
 ) {
   private val executionCounter = AtomicInteger()
-  private val executorService: ExecutorService
+  // TODO: create the executor outside, and pass it in as a parameter, so that others can use the
+  //       executor.
+  private val executorService = Executors.newFixedThreadPool(numOfThreads)
   private val reductionFolderManager: ReductionFolderManager
+
+  init {
+    require(numOfThreads > 0) {
+      "The number of threads must be positive: $numOfThreads"
+    }
+    require(sourceFileName.indexOf('/') < 0 || sourceFileName.indexOf('\\') < 0) {
+      "Invalid source file name. It should be the name only: $sourceFileName"
+    }
+    if (!tempRootFolder.exists()) {
+      check(tempRootFolder.mkdir()) { "Failed to create folder $tempRootFolder" }
+    }
+    assert(tempRootFolder.isDirectory) {
+      "The temp root folder is not a directory: $tempRootFolder"
+    }
+
+    reductionFolderManager = ReductionFolderManager(
+      tempRootFolder,
+      testScriptFile,
+      sourceFileName)
+  }
 
   @Throws(IOException::class)
   fun shutdown() {
@@ -92,27 +113,5 @@ class TestScriptExecutorService(
       workingDirectory.deleteAllOtherFiles()
       return result
     }
-  }
-
-  init {
-    require(numOfThreads > 0) {
-      "The number of threads must be positive: $numOfThreads"
-    }
-    require(sourceFileName.indexOf('/') < 0 || sourceFileName.indexOf('\\') < 0) {
-      "Invalid source file name. It should be the name only: $sourceFileName"
-    }
-    if (!tempRootFolder.exists()) {
-      check(tempRootFolder.mkdir()) { "Failed to create folder $tempRootFolder" }
-    }
-    assert(tempRootFolder.isDirectory) {
-      "The temp root folder is not a directory: $tempRootFolder"
-    }
-    // TODO: create the executor outside, and pass it in as a parameter, so that others can use the
-//       executor.
-    executorService = Executors.newFixedThreadPool(numOfThreads)
-    reductionFolderManager = ReductionFolderManager(
-      tempRootFolder,
-      testScriptFile!!,
-      sourceFileName)
   }
 }
