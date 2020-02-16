@@ -3,9 +3,11 @@ package(default_visibility = [
     "//test/org/perses:__subpackages__",
 ])
 
-java_library(
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
+
+kt_jvm_library(
     name = "partition",
-    srcs = ["Partition.java"],
+    srcs = ["Partition.kt"],
     deps = [
         "//src/org/perses/tree/spar",
         "//src/org/perses/util",

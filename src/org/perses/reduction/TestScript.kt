@@ -17,9 +17,9 @@
 package org.perses.reduction
 
 import com.google.common.flogger.FluentLogger
+import java.io.File
 import org.perses.util.Shell
 import org.perses.util.TimeSpan
-import java.io.File
 
 /** Represents a test script, that specifies the property to preserve during reduction.  */
 class TestScript(val scriptFile: File) {
@@ -40,7 +40,6 @@ class TestScript(val scriptFile: File) {
 
     val isPass: Boolean
       get() = exitCode == 0
-
   }
 
   companion object {
