@@ -17,7 +17,6 @@
 package org.perses.reduction
 
 import com.google.common.annotations.VisibleForTesting
-import com.google.common.base.Preconditions
 import com.google.common.base.Strings
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
@@ -171,10 +170,9 @@ class ReductionDriver(
 //  (2) use the spar-tree. This ensures the Antlr parser works correctly.
     val program = tree.programSnapshot
     val future = executorService.testProgram(program, configuration.keepOriginalCodeFormat)
-    Preconditions.checkState(
-      future.get().isPass,
-      "The initial sanity check failed. Folder: ",
-      future.workingDirectory)
+    check(future.get().isPass) {
+      "The initial sanity check failed. Folder: ${future.workingDirectory}"
+    }
   }
 
   private fun formatBestFile(formatCmd: String, bestFile: File) {

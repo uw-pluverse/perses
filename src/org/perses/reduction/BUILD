@@ -72,9 +72,9 @@ kt_jvm_library(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "actionset_profiler",
-    srcs = ["AbstractActionSetProfiler.java"],
+    srcs = ["AbstractActionSetProfiler.kt"],
     deps = [
         "//src/org/perses/tree/spar",
         "@maven//:com_google_guava_guava",
