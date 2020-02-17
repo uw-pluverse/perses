@@ -27,7 +27,7 @@ import org.perses.tree.spar.AbstractSparTreeNode
 import org.perses.tree.spar.SparTree
 
 /** Perses node reducer, with dfs delta debugging  */
-open class PersesNodeDfsReducer protected constructor(
+open class PersesNodeDfsReducer constructor(
   reducerAnnotation: ReducerAnnotation,
   reducerContext: ReducerContext
 ) : AbstractPersesNodeReducer(reducerAnnotation, reducerContext) {

@@ -64,14 +64,14 @@ kt_jvm_library(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "delta_debugging",
     srcs = [
-        "AbstractDeltaDebugger.java",
-        "AbstractSpecialDeltaDebugger.java",
-        "BfsDeltaDebugger.java",
-        "DeltaDebugger.java",
-        "DfsDeltaDebugger.java",
+        "AbstractDeltaDebugger.kt",
+        "AbstractSpecialDeltaDebugger.kt",
+        "BfsDeltaDebugger.kt",
+        "DeltaDebugger.kt",
+        "DfsDeltaDebugger.kt",
     ],
     deps = [
         ":tree_transforms",
