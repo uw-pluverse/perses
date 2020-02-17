@@ -123,9 +123,9 @@ kt_jvm_library(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "reducer_factory",
-    srcs = ["ReducerFactory.java"],
+    srcs = ["ReducerFactory.kt"],
     deps = [
         ":abstract_reducer",
         ":reduction_configuration",
