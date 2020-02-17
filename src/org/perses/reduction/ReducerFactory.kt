@@ -17,7 +17,6 @@
 package org.perses.reduction
 
 import com.google.common.base.Functions
-import com.google.common.base.Preconditions
 import com.google.common.collect.ImmutableCollection
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
@@ -73,7 +72,9 @@ object ReducerFactory {
   @JvmStatic
   fun getReductionAlgorithm(reducerShortName: String): ReducerAnnotation {
     val annotation = getAnnotationWithName(reducerShortName)
-    Preconditions.checkState(annotation.isPresent, "Cannot find annotation for the name %s", reducerShortName)
+    check(annotation.isPresent) {
+      "Cannot find annotation for the name $reducerShortName"
+    }
     return annotation.get()
   }
 
