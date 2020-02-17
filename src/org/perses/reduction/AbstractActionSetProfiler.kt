@@ -10,17 +10,17 @@ import org.perses.tree.spar.ChildHoistingAction
 
 abstract class AbstractActionSetProfiler {
   abstract fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedChildren(
-    kleeneReplacements: ImmutableList<ChildHoistingAction?>
+    kleeneReplacements: ImmutableList<ChildHoistingAction>
   )
 
   abstract fun onReplaceNodeWithNearestCompatibleChildren(
-    replacements: ImmutableList<ChildHoistingAction?>
+    replacements: ImmutableList<ChildHoistingAction>
   )
 
   class ActionSetProfiler(file: File) : AbstractActionSetProfiler(), AutoCloseable {
     private var writer: BufferedWriter?
     override fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedChildren(
-      kleeneReplacements: ImmutableList<ChildHoistingAction?>
+      kleeneReplacements: ImmutableList<ChildHoistingAction>
     ) {
       try {
         writer!!
@@ -34,7 +34,7 @@ abstract class AbstractActionSetProfiler {
     }
 
     override fun onReplaceNodeWithNearestCompatibleChildren(
-      replacements: ImmutableList<ChildHoistingAction?>
+      replacements: ImmutableList<ChildHoistingAction>
     ) {
       try {
         writer!!
@@ -66,12 +66,12 @@ abstract class AbstractActionSetProfiler {
   companion object {
     val NULL_PROFILER: AbstractActionSetProfiler = object : AbstractActionSetProfiler() {
       override fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedChildren(
-        kleeneReplacements: ImmutableList<ChildHoistingAction?>
+        kleeneReplacements: ImmutableList<ChildHoistingAction>
       ) {
       }
 
       override fun onReplaceNodeWithNearestCompatibleChildren(
-        replacements: ImmutableList<ChildHoistingAction?>
+        replacements: ImmutableList<ChildHoistingAction>
       ) {
       }
     }

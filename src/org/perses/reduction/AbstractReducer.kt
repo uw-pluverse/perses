@@ -158,7 +158,7 @@ abstract class AbstractReducer protected constructor(
   }
 
   @Throws(IOException::class, ExecutionException::class, InterruptedException::class)
-  protected abstract fun internalReduce(tree: SparTree?)
+  protected abstract fun internalReduce(tree: SparTree)
 
   companion object {
     private fun removePermanentlyDeletedNodes(partition: LinkedList<AbstractSparTreeNode>) {

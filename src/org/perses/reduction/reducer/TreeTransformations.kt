@@ -21,7 +21,6 @@ import org.perses.reduction.partition.Partition
 import org.perses.tree.spar.AbstractSparTreeNode
 import org.perses.tree.spar.ChildHoistingAction
 import org.perses.tree.spar.NodeDeletionActionSet
-import java.util.function.Consumer
 
 /** Various tree transformations.  */
 object TreeTransformations {

@@ -19,10 +19,10 @@ package org.perses.reduction
 /** Annotation for a reducer.  */
 abstract class ReducerAnnotation {
   /** The short name of the reducer.  */
-  abstract fun shortName(): String?
+  abstract fun shortName(): String
 
   /** The description fo the reducer.  */
-  abstract fun description(): String?
+  abstract fun description(): String
 
-  abstract fun create(reducerContext: ReducerContext?): AbstractReducer?
+  abstract fun create(reducerContext: ReducerContext): AbstractReducer
 }

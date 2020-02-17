@@ -270,7 +270,7 @@ class ReductionDriver(
           listenerManager,
           queryCache,
           nodeActionSetCache,
-          actionSetProfiler))!!
+          actionSetProfiler))
   }
 
   @Throws(IOException::class)

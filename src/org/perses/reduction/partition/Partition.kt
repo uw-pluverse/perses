@@ -17,9 +17,9 @@
 package org.perses.reduction.partition
 
 import com.google.common.base.MoreObjects
+import java.util.stream.Stream
 import org.perses.tree.spar.AbstractSparTreeNode
 import org.perses.util.Util
-import java.util.stream.Stream
 
 /**
  * A partition contains a set of SparTreeNodes, and this set should be reduced together. A level in

@@ -68,7 +68,7 @@ public abstract class AbstractLevelBasedReducer extends AbstractReducer {
   }
 
   protected void reduceOneLevel(SparTree tree, ReductionLevel level)
-      throws IOException, ExecutionException, InterruptedException {
+      throws IOException {
     int maxNodesPerPartition = getInitialMaxNodesPerPartition(level);
     while (maxNodesPerPartition > 0) {
       partitionLevelAndReduce(tree, level, maxNodesPerPartition);
@@ -164,8 +164,7 @@ public abstract class AbstractLevelBasedReducer extends AbstractReducer {
     }
   }
 
-  protected final void internalReduce(SparTree tree)
-      throws IOException, ExecutionException, InterruptedException {
+  protected final void internalReduce(SparTree tree) {
     Optional<ReductionLevel> currentLevel = getInitialRegion(tree);
     checkState(currentLevel.isPresent(), "No qualified initial level for the tree");
 
@@ -176,7 +175,11 @@ public abstract class AbstractLevelBasedReducer extends AbstractReducer {
       final int preSize = tree.getTokenCount();
       listenerManager.onLevelReductionStart(level.getLevel(), level.getNodeCount(), preSize);
       assert (!ReductionLevel.isNullOrEmpty(level));
-      reduceOneLevel(tree, level);
+      try {
+        reduceOneLevel(tree, level);
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
       final int postSize = tree.getTokenCount();
       listenerManager.onLevelReductionEnd(level.getLevel(), postSize);
 

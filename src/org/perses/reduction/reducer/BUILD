@@ -38,14 +38,14 @@ kt_jvm_library(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "node_based_reducer",
     srcs = [
-        "AbstractPersesNodeReducer.java",
-        "PersesNodeBfsReducer.java",
-        "PersesNodeDfsReducer.java",
-        "PersesNodePrioritizedBfsReducer.java",
-        "PersesNodePrioritizedDfsReducer.java",
+        "AbstractPersesNodeReducer.kt",
+        "PersesNodeBfsReducer.kt",
+        "PersesNodeDfsReducer.kt",
+        "PersesNodePrioritizedBfsReducer.kt",
+        "PersesNodePrioritizedDfsReducer.kt",
     ],
     deps = [
         ":delta_debugging",
