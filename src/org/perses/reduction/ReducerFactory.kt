@@ -64,7 +64,7 @@ object ReducerFactory {
   fun isValidReducerName(shortName: String) = REDUCTION_ALGs.containsKey(shortName)
 
   @JvmStatic
-  val allReducerAlgorithms: ImmutableCollection<ReducerAnnotation?>
+  val allReducerAlgorithms: ImmutableCollection<ReducerAnnotation>
     get() = REDUCTION_ALGs.values
 
   @JvmStatic
