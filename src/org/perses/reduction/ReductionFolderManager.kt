@@ -1,6 +1,5 @@
 package org.perses.reduction
 
-import com.google.common.base.Preconditions
 import com.google.common.base.Strings
 import com.google.common.io.MoreFiles
 import com.google.common.io.RecursiveDeleteOption
@@ -11,19 +10,19 @@ import org.perses.program.SourceFile
 import org.perses.util.Util
 
 class ReductionFolderManager(
-  val rootFolder: File,
+  private val rootFolder: File,
   val testScript: SourceFile,
-  val sourceFileName: String
+  private val sourceFileName: String
 ) {
   private val sequenceGenerator = AtomicInteger()
 
   @Throws(IOException::class)
   fun createNextFolder(): ReductionFolder {
     val folderId = sequenceGenerator.getAndIncrement()
-    val folderName = Strings.padStart(Integer.toString(folderId), FOLDER_NAME_MIN_LENGTH, '0')
+    val folderName = Strings.padStart(folderId.toString(), FOLDER_NAME_MIN_LENGTH, '0')
     val folder = File(rootFolder, folderName)
     assert(!folder.exists()) { "The folder already exists. $folder" }
-    Preconditions.checkState(folder.mkdir(), "Failed to create folder %s", folder)
+    check(folder.mkdir()) { "Failed to create folder $folder" }
     val scriptFileName = testScript.baseName
     testScript.writeTo(File(folder, scriptFileName))
     return ReductionFolder(folder, scriptFileName, sourceFileName)

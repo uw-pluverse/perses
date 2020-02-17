@@ -27,10 +27,10 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
   fun onFixpointIterationStart(
     iteration: Int,
     programSize: Int,
-    reducerClass: ReducerAnnotation?
+    reducerClass: ReducerAnnotation
   ) {
     val event = AbstractReductionEvent.FixpointIterationStartEvent(
-      System.currentTimeMillis(), programSize, iteration, reducerClass!!)
+      System.currentTimeMillis(), programSize, iteration, reducerClass)
     for (listener in listeners) {
       listener.onFixpointIterationStart(event)
     }
@@ -81,69 +81,69 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
   }
 
   fun onNodeReductionStart(
-    tree: AbstractUnmodifiableSparTree?,
-    node: AbstractSparTreeNode?,
+    tree: AbstractUnmodifiableSparTree,
+    node: AbstractSparTreeNode,
     programSize: Int
   ) {
     val event = AbstractReductionEvent.NodeReductionStartEvent(
-        System.currentTimeMillis(), programSize, tree!!, node!!)
+        System.currentTimeMillis(), programSize, tree, node)
     for (listener in listeners) {
       listener.onNodeReductionStart(event)
     }
   }
 
   fun onNodeReductionEnd(
-    tree: AbstractUnmodifiableSparTree?,
-    node: AbstractSparTreeNode?,
+    tree: AbstractUnmodifiableSparTree,
+    node: AbstractSparTreeNode,
     remainingQueueSize: Int,
     programSize: Int
   ) {
     val event = AbstractReductionEvent.NodeReductionEndEvent(
-        System.currentTimeMillis(), programSize, tree!!, node!!, remainingQueueSize)
+        System.currentTimeMillis(), programSize, tree, node, remainingQueueSize)
     for (listener in listeners) {
       listener.onNodeReductionEnd(event)
     }
   }
 
   fun onTestScriptExecution(
-    result: TestScript.TestResult?,
-    program: TokenizedProgram?,
-    edit: AbstractSparTreeEdit?
+    result: TestScript.TestResult,
+    program: TokenizedProgram,
+    edit: AbstractSparTreeEdit
   ) {
     val event = AbstractReductionEvent.TestScriptExecutionEvent(
-        System.currentTimeMillis(), result!!, program!!, edit!!)
+        System.currentTimeMillis(), result, program, edit)
     for (listener in listeners) {
       listener.onTestScriptExecution(event)
     }
   }
 
   fun onTestScriptExecutionCancelled(
-    program: TokenizedProgram?,
-    edit: AbstractSparTreeEdit?,
+    program: TokenizedProgram,
+    edit: AbstractSparTreeEdit,
     millisToCancelTheTask: Int
   ) {
     val event = AbstractReductionEvent.TestScriptExecutionCanceledEvent(
-        System.currentTimeMillis(), millisToCancelTheTask, program!!, edit!!)
+        System.currentTimeMillis(), millisToCancelTheTask, program, edit)
     for (listener in listeners) {
       listener.onTestScriptExecutionCancelled(event)
     }
   }
 
   fun onTestResultCacheHit(
-    result: TestScript.TestResult?,
-    program: TokenizedProgram?,
-    edit: AbstractSparTreeEdit?
+    result: TestScript.TestResult,
+    program: TokenizedProgram,
+    edit: AbstractSparTreeEdit
   ) {
     val event = AbstractReductionEvent.TestResultCacheHitEvent(
-        System.currentTimeMillis(), result!!, program!!, edit!!)
+        System.currentTimeMillis(), result, program, edit)
     for (listener in listeners) {
       listener.onTestResultCacheHit(event)
     }
   }
 
-  fun onNodeEditActionSetCacheHit(query: AbstractActionSet<*>?) {
+  fun onNodeEditActionSetCacheHit(query: AbstractActionSet<*>) {
     val event = AbstractReductionEvent.NodeEditActionSetCacheHitEvent(
-        System.currentTimeMillis(), query!!)
+        System.currentTimeMillis(), query)
     for (listener in listeners) {
       listener.onNodeEditActionSetCacheHit(event)
     }
