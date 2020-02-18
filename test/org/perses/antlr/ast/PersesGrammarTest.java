@@ -114,10 +114,15 @@ public class PersesGrammarTest {
     createAndTest("GoLexer.g4");
   }
 
-//  @Test
-//  public void testGoParser() {
-//    createAndTest("GoParser.g4");
-//  }
+  @Test
+  public void testGoParser() {
+    createAndTest("GoParser.g4");
+  }
+
+  @Test
+  public void testSemanticPredicates() {
+    createAndTest("semantic_predicate.g4");
+  }
 
   @Test
   public void testNestedAlternativesAreFlattened() {

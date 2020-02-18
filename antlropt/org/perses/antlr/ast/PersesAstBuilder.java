@@ -315,7 +315,8 @@ public final class PersesAstBuilder {
       return convertAlternativeBlock((BlockAST) ast, symbolTable);
     }
     if (ast instanceof ActionAST) {
-      return PersesActionAst.INSTANCE;
+      final ActionAST action = (ActionAST) ast;
+      return new PersesActionAst(action.getText());
     }
     if (isTerminalSetAst(ast)) {
       return convertTerminalSetAst(ast);

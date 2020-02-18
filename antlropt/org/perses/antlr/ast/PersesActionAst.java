@@ -4,13 +4,16 @@ import java.io.PrintStream;
 import java.util.List;
 
 public class PersesActionAst extends AbstractPersesRuleElement {
-  public static final PersesActionAst INSTANCE = new PersesActionAst();
 
-  private PersesActionAst() {}
+  private final String body;
+
+  PersesActionAst(String body) {
+    this.body = body;
+  }
 
   @Override
   public void toSourceCode(PrintStream stream, int indent, boolean multiLineMode) {
-    stream.print("/*Action Deleted.*/");
+    stream.print(body);
   }
 
   @Deprecated
@@ -32,6 +35,12 @@ public class PersesActionAst extends AbstractPersesRuleElement {
   @Override
   public AbstractPersesRuleElement createWithNewChildren(
       List<AbstractPersesRuleElement> newChildren) {
-    return INSTANCE;
+    return new PersesActionAst(body);
+  }
+
+  @Override
+  protected boolean extraEquivalenceTest(AbstractPersesRuleElement other) {
+    final PersesActionAst otherAction = (PersesActionAst) other;
+    return body.equals(otherAction.body);
   }
 }
