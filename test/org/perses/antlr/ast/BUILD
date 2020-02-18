@@ -14,7 +14,9 @@ DEFAULT_DEPS = [
 java_test(
     name = "PersesGrammarTest",
     srcs = ["PersesGrammarTest.java"],
-    data = ["//test_data/antlr_grammars"],
+    data = [
+        "//test_data/antlr_grammars",
+    ],
     test_class = "org.perses.antlr.ast.PersesGrammarTest",
     deps = DEFAULT_DEPS,
 )

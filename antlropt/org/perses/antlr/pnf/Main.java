@@ -2,10 +2,10 @@ package org.perses.antlr.pnf;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
-import com.google.common.base.Preconditions;
 import com.google.common.io.Files;
 import org.perses.antlr.ast.PersesAstBuilder;
 import org.perses.antlr.ast.PersesGrammar;
+import org.perses.antlr.util.Util;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,18 +56,11 @@ public class Main {
 
     final PersesGrammar origGrammar =
         PersesAstBuilder.loadGrammarFromString(sourceAntlrFileContent)
-            .copyWithNewName(extractGrammarNameFrom(cmd.outputFile));
+            .copyWithNewName(Util.extractGrammarNameFromGrammarFileName(cmd.outputFile));
 
     PnfPassManager passes = new PnfPassManager();
     PersesGrammar processedGrammar = passes.process(origGrammar, cmd.startRuleName);
     final String output = processedGrammar.getSourceCode();
     Files.asCharSink(new File(cmd.outputFile), StandardCharsets.UTF_8).write(output);
-  }
-
-  private static String extractGrammarNameFrom(String fileName) {
-    Preconditions.checkState(fileName.endsWith(".g4"));
-    final File file = new File(fileName);
-    final String name = file.getName();
-    return name.substring(0, name.lastIndexOf(".g4"));
   }
 }

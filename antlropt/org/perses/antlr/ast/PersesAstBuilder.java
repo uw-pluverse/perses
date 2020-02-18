@@ -29,19 +29,38 @@ public final class PersesAstBuilder {
   }
 
   public PersesGrammar buildFromAntlrRootAst(GrammarRootAST root) {
-    checkArgument(root.getChildCount() == 2);
+    final int childCount = root.getChildCount();
+    checkArgument(childCount == 2 || childCount == 3, "Invalid child count: %s", childCount);
 
-    final Tree firstChild = root.getChild(0);
-    checkArgument(firstChild instanceof GrammarAST);
-    final String grammarName = ((GrammarAST) firstChild).getToken().getText();
+    final GrammarAST firstChild = (GrammarAST) root.getChild(0);
+    final String grammarName = firstChild.getToken().getText();
 
-    final Tree secondChild = root.getChild(1);
-    checkArgument(secondChild instanceof GrammarAST);
-    final GrammarAST rulesAst = (GrammarAST) root.getChild(1);
+    final GrammarAST secondChild = (GrammarAST) root.getChild(1);
+    final GrammarAST rulesAst;
+
+    if (childCount == 2) {
+      checkState(isRulesNode(secondChild));
+      rulesAst = secondChild;
+    } else if (childCount == 3) {
+      checkState(isOptionsNode(secondChild));
+      final GrammarAST thirdChild = (GrammarAST) root.getChild(2);
+      checkState(isRulesNode(thirdChild));
+      rulesAst = thirdChild;
+    } else {
+      throw new RuntimeException("Illegal child count. " + childCount);
+    }
 
     final ImmutableList<AbstractPersesRuleDefAst> rules =
         convertRuleDefinitions(rulesAst, symbolTable);
     return new PersesGrammar(grammarName, rules, symbolTable);
+  }
+
+  private static boolean isOptionsNode(GrammarAST ast) {
+    return ast.getText().equals("OPTIONS");
+  }
+
+  private static boolean isRulesNode(GrammarAST ast) {
+    return ast.getText().equals("RULES");
   }
 
   private static ImmutableList<AbstractPersesRuleDefAst> convertRuleDefinitions(
@@ -96,7 +115,7 @@ public final class PersesAstBuilder {
       checkState(firstChild instanceof AltAST);
       AbstractPersesRuleElement body = convertSingleAlternative((AltAST) firstChild, symbolTable);
       GrammarAST secondChild = (GrammarAST) lexerAltAction.getChild(1);
-      checkState(secondChild.getText().equals("skip"));
+      checkState(secondChild.getText().equals("skip"), secondChild.getText());
       return createRuleDef(ruleNameHandle, new PersesLexerSkipCommandAst(body));
     } else {
       AbstractPersesRuleElement body = convertAlternativeBlock(ruleBody, symbolTable);

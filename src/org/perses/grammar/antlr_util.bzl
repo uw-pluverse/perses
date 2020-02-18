@@ -9,22 +9,21 @@ def extract_grammar_name(grammar_file):
         fail("The grammar file must be in the current package.")
 
 def antlr_merge_grammar(name, lexer_grammar, parser_grammar, target_grammar):
-    mergerule_name = "%s_merge" % name
     grammar_name = extract_grammar_name(target_grammar)
-
-    commands = [
-       "echo 'grammar %s;' > $@" % (grammar_name,),
-       "$(location //src/org/perses/grammar:antlr_merge_grammar) $(location %s) $(location %s) >> $@" % \
-         (parser_grammar, lexer_grammar)
+    combiner = "//antlropt/org/perses/antlr/util:combine_lexer_parser_bin"
+    args = [
+        "$(location %s)" % combiner,
+        "--lexer-grammar $(location %s)" % lexer_grammar,
+        "--parser-grammar $(location %s)" % parser_grammar,
+        "--target-grammar $(location %s)" % target_grammar,
     ]
-  
 
     native.genrule(
-        name = mergerule_name,
+        name = name,
         outs = [target_grammar],
-        srcs = [lexer_grammar, parser_grammar], # "//src/org/perses/grammar:antlr_remove_grammer.sed", "//src/org/perses/grammar:antlr_remove_options.sed"],
-        cmd = " ; \\\n".join(commands),
-        tools = ["//src/org/perses/grammar:antlr_merge_grammar"],
+        srcs = [lexer_grammar, parser_grammar],
+        cmd = " ".join(args),
+        tools = [combiner],
     )
 
 def antlr_codegen(name, grammar_file, java_pkg_name):

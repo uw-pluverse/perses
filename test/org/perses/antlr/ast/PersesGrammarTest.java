@@ -105,6 +105,11 @@ public class PersesGrammarTest {
   }
 
   @Test
+  public void testGoLexer() {
+    createAndTest("GoLexer.g4");
+  }
+
+  @Test
   public void testNestedAlternativesAreFlattened() {
     createAndTest("nested_alternatives.g4");
   }

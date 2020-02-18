@@ -10,7 +10,7 @@ antlr_merge_grammar(
     name = "merge_go_lexer_and_parser",
     lexer_grammar = "GoLexer.g4",
     parser_grammar = "GoParser.g4",
-    target_grammar = "OrigGo.g4"
+    target_grammar = "OrigGo.g4",
 )
 
 antlr_codegen(

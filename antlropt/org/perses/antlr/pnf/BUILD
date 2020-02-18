@@ -23,6 +23,7 @@ java_binary(
     deps = [
         ":pnf",
         "//antlropt/org/perses/antlr/ast",
+        "//antlropt/org/perses/antlr/util",
         "@maven//:com_beust_jcommander",
         "@maven//:com_google_flogger_flogger_system_backend",
         "@maven//:com_google_guava_guava",
