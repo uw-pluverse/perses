@@ -10,6 +10,7 @@ public enum Precedence {
   SEQUENCE(50),
 
   SKIP(30),
+  CHANNEL(30),
 
   ALTERNATIVE(10),
 

@@ -115,8 +115,17 @@ public final class PersesAstBuilder {
       checkState(firstChild instanceof AltAST);
       AbstractPersesRuleElement body = convertSingleAlternative((AltAST) firstChild, symbolTable);
       GrammarAST secondChild = (GrammarAST) lexerAltAction.getChild(1);
-      checkState(secondChild.getText().equals("skip"), secondChild.getText());
-      return createRuleDef(ruleNameHandle, new PersesLexerSkipCommandAst(body));
+      switch (secondChild.getText()) {
+        case "skip":
+          return createRuleDef(ruleNameHandle, new PersesLexerSkipCommandAst(body));
+        case "LEXER_ACTION_CALL":
+          checkState(secondChild.getChildCount() == 2);
+          checkState(secondChild.getChild(0).getText().equals("channel"));
+          final String channelName = secondChild.getChild(1).getText();
+          return createRuleDef(ruleNameHandle, new PersesLexerChannelCommandAst(channelName, body));
+        default:
+          throw new RuntimeException("Unhandled: " + secondChild.getText());
+      }
     } else {
       AbstractPersesRuleElement body = convertAlternativeBlock(ruleBody, symbolTable);
       return createRuleDef(ruleNameHandle, body);

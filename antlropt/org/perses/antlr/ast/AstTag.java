@@ -8,6 +8,7 @@ public enum AstTag {
   LEXER_FRAGMENT_DEFINITION(Precedence.RULE),
 
   LEXER_SKIP_COMMAND(Precedence.SKIP),
+  LEXER_CHANNEL_COMMAND(Precedence.CHANNEL),
 
   ALTERNATIVE_BLOCK(Precedence.ALTERNATIVE),
 

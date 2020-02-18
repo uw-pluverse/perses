@@ -105,9 +105,19 @@ public class PersesGrammarTest {
   }
 
   @Test
+  public void testHiddenChannel() {
+    createAndTest("lexer_hidden_channel.g4");
+  }
+
+  @Test
   public void testGoLexer() {
     createAndTest("GoLexer.g4");
   }
+
+//  @Test
+//  public void testGoParser() {
+//    createAndTest("GoParser.g4");
+//  }
 
   @Test
   public void testNestedAlternativesAreFlattened() {

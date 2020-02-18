@@ -23,6 +23,17 @@ public class PersesAlternativeBlockAst extends AbstractPersesRuleElement {
       final AbstractPersesRuleElement prev = alternatives.get(i);
       for (int j = i + 1; j < size; ++j) {
         final AbstractPersesRuleElement current = alternatives.get(j);
+        if (prev.isEquivalent(current)) {
+          final StringBuilder builder = new StringBuilder();
+          builder.append("Duplicate alternatives are found. \n");
+          builder.append("prev=" + prev.getSourceCode()).append("\n");
+          builder.append("current=" + current.getSourceCode()).append("\n");
+          builder.append("All alternatives: \n");
+          for (AbstractPersesRuleElement alt : alternatives) {
+            builder.append("  " + alt.getSourceCode()).append("\n");
+          }
+          throw new RuntimeException(builder.toString());
+        }
         Preconditions.checkArgument(!prev.isEquivalent(current));
       }
     }
