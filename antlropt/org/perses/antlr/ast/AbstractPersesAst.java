@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 /** The Perses ASTs are IMMUTABLE. */
 public abstract class AbstractPersesAst implements Comparable<AbstractPersesAst> {
 
+  protected final static int INDENT_INCREAMENT = 4;
   @MonotonicNonNull private String sourceCode;
 
   public final synchronized String getSourceCode() {

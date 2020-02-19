@@ -9,15 +9,20 @@ import java.util.function.Function;
 
 public final class PersesGrammar extends AbstractPersesAst {
   private final String grammarName;
+  private final PersesGrammarOptionsAst options;
   private final ImmutableList<AbstractPersesRuleDefAst> rules;
   private final SymbolTable symbolTable;
   private final ImmutableMap<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleDefAst>
       ruleNameToRuleMap;
 
   public PersesGrammar(
-      String grammarName, ImmutableList<AbstractPersesRuleDefAst> rules, SymbolTable symbolTable) {
+      String grammarName,
+      PersesGrammarOptionsAst options,
+      ImmutableList<AbstractPersesRuleDefAst> rules,
+      SymbolTable symbolTable) {
     this(
         grammarName,
+        options,
         rules,
         symbolTable,
         rules.stream()
@@ -28,17 +33,23 @@ public final class PersesGrammar extends AbstractPersesAst {
 
   private PersesGrammar(
       String grammarName,
+      PersesGrammarOptionsAst options,
       ImmutableList<AbstractPersesRuleDefAst> rules,
       SymbolTable symbolTable,
       ImmutableMap<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleDefAst> ruleNameToRuleMap) {
     this.grammarName = grammarName;
+    this.options = options;
     this.rules = rules;
     this.symbolTable = symbolTable;
     this.ruleNameToRuleMap = ruleNameToRuleMap;
   }
 
   public PersesGrammar copyWithNewName(String newGrammarName) {
-    return new PersesGrammar(newGrammarName, rules, symbolTable, ruleNameToRuleMap);
+    return new PersesGrammar(newGrammarName, options, rules, symbolTable, ruleNameToRuleMap);
+  }
+
+  public PersesGrammarOptionsAst getOptions() {
+    return options;
   }
 
   public String getGrammarName() {
@@ -75,6 +86,8 @@ public final class PersesGrammar extends AbstractPersesAst {
 
     stream.printf("grammar %s;\n", grammarName);
     stream.println();
+
+    options.toSourceCode(stream, /*indent=*/0, /*multiLineMode=*/false);
 
     for (AbstractPersesRuleDefAst rule : rules) {
       rule.toSourceCode(stream, 0, true);

@@ -37,12 +37,16 @@ public final class PersesAstBuilder {
 
     final GrammarAST secondChild = (GrammarAST) root.getChild(1);
     final GrammarAST rulesAst;
+    final PersesGrammarOptionsAst options;
 
     if (childCount == 2) {
       checkState(isRulesNode(secondChild));
       rulesAst = secondChild;
+      options = PersesGrammarOptionsAst.EMPTY;
     } else if (childCount == 3) {
-      checkState(isOptionsNode(secondChild));
+      checkState(isOptionsNode(secondChild), secondChild.getText());
+      options = convertOptions(secondChild);
+
       final GrammarAST thirdChild = (GrammarAST) root.getChild(2);
       checkState(isRulesNode(thirdChild));
       rulesAst = thirdChild;
@@ -52,7 +56,21 @@ public final class PersesAstBuilder {
 
     final ImmutableList<AbstractPersesRuleDefAst> rules =
         convertRuleDefinitions(rulesAst, symbolTable);
-    return new PersesGrammar(grammarName, rules, symbolTable);
+    return new PersesGrammar(grammarName, options, rules, symbolTable);
+  }
+
+  private PersesGrammarOptionsAst convertOptions(GrammarAST secondChild) {
+    final ImmutableList.Builder<PersesGrammarOptionsAst.Option> builder = ImmutableList.builder();
+    final int childCount = secondChild.getChildCount();
+    for (int i = 0; i < childCount; ++i) {
+      final GrammarAST child = (GrammarAST) secondChild.getChild(i);
+      checkState(child.getText().equals("="));
+      checkState(child.getChildCount() == 2);
+      builder.add(
+          new PersesGrammarOptionsAst.Option(
+              child.getChild(0).getText(), child.getChild(1).getText()));
+    }
+    return new PersesGrammarOptionsAst(builder.build());
   }
 
   private static boolean isOptionsNode(GrammarAST ast) {

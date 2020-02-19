@@ -39,7 +39,7 @@ public abstract class AbstractPersesRuleDefAst extends AbstractPersesAst {
   @Override
   public void toSourceCode(PrintStream stream, /*not used*/ int indent, boolean multiLineMode) {
     stream.println(ruleNameHandle.get());
-    final int newIndent = 4;
+    final int newIndent = INDENT_INCREAMENT;
     printIndent(stream, newIndent).append(": ");
     body.toSourceCode(stream, newIndent, true);
     stream.println();

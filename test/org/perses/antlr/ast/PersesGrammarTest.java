@@ -120,6 +120,16 @@ public class PersesGrammarTest {
   }
 
   @Test
+  public void testOptions() {
+    final PersesGrammar grammar = createAndTest("options.g4");
+    final String sourceCode = grammar.getSourceCode();
+    assertThat(sourceCode).contains("GoLexer");
+    assertThat(sourceCode).contains("GoParserBase");
+    assertThat(sourceCode).contains("tokenVocab");
+    assertThat(sourceCode).contains("superClass");
+  }
+
+  @Test
   public void testSemanticPredicates() {
     createAndTest("semantic_predicate.g4");
   }
