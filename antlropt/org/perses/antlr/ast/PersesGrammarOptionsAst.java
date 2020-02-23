@@ -32,8 +32,8 @@ public final class PersesGrammarOptionsAst extends AbstractPersesAst {
     }
     stream.print("options {\n");
     final int newIndent = indent + INDENT_INCREAMENT;
-    printIndent(stream, newIndent);
     for (Option option : options) {
+      printIndent(stream, newIndent);
       stream.printf("%s=%s;\n", option.name, option.value);
     }
     printIndent(stream, indent);
