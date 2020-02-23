@@ -1,6 +1,5 @@
 package(default_visibility = [
-    "//src/org/perses/grammar:__pkg__",
-    "//test/org/perses:__subpackages__",
+    "//visibility:public"
 ])
 
 load("//antlropt/org/perses/antlr/pnf:pnf.bzl", "pnf_convert")

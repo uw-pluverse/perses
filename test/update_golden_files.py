@@ -51,6 +51,10 @@ targets = [
         target_name="//test/org/perses:gen_token_counter_file",
         output_file="bazel-bin/test/org/perses/token_count.txt",
         golden_file="test/org/perses/golden_token_count_for_delta1.txt"),
+    Target(
+        target_name="//test/org/perses/grammar/go:cp_pnf_go_grammar",
+        output_file="bazel-bin/test/org/perses/grammar/go/pnf_go_grammar.g4",
+        golden_file="test/org/perses/grammar/go/golden_pnf_go.g4"),
 ]
 
 for target in targets:
