@@ -8,13 +8,17 @@ load("//src/org/perses/grammar:antlr_util.bzl", "antlr_codegen")
 
 antlr_codegen(
     name = "opt_c_grammar",
-    grammar_file = "OptC.g4",
+    parser_grammar_file = "OptC.g4",
+    parser_java_file_name = "OptCParser.java",
+    lexer_java_file_name = "OptCLexer.java",
     java_pkg_name = "org.perses.grammar.c",
 )
 
 antlr_codegen(
     name = "orig_c_grammar",
-    grammar_file = "OrigC.g4",
+    parser_grammar_file = "OrigC.g4",
+    parser_java_file_name = "OrigCParser.java",
+    lexer_java_file_name = "OrigCLexer.java",
     java_pkg_name = "org.perses.grammar.c",
 )
 
@@ -40,7 +44,9 @@ pnf_convert(
 
 antlr_codegen(
     name = "pnf_c_grammar",
-    grammar_file = "PnfC.g4",
+    parser_grammar_file = "PnfC.g4",
+    parser_java_file_name = "PnfCParser.java",
+    lexer_java_file_name = "PnfCLexer.java",
     java_pkg_name = "org.perses.grammar.c",
 )
 

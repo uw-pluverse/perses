@@ -12,9 +12,13 @@ pnf_convert(
     out = "PnfGoParser.g4",
     start_rule_name = "sourceFile",
 )
-#
-#antlr_codegen(
-#    name = "pnf_go_grammar",
-#    grammar_file = "PnfGo.g4",
-#    java_pkg_name = "org.perses.grammar.go",
-#)
+
+antlr_codegen(
+    name = "pnf_go_grammar",
+    parser_grammar_file = "PnfGoParser.g4",
+    parser_java_file_name = "PnfGoParser.java",
+    lexer_grammar_file = "GoLexer.g4",
+    lexer_java_file_name = "GoLexer.java",
+    aux_java_files = ["GoParserBase.java"],
+    java_pkg_name = "org.perses.grammar.go",
+)
