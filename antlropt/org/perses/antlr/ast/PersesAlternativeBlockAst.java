@@ -81,4 +81,9 @@ public class PersesAlternativeBlockAst extends AbstractPersesRuleElement {
       List<AbstractPersesRuleElement> newChildren) {
     return new PersesAlternativeBlockAst(ImmutableList.copyOf(newChildren));
   }
+
+  @Override
+  public String toString() {
+    return getSourceCode();
+  }
 }
