@@ -3,15 +3,9 @@ package org.perses.antlr.pnf;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
-import org.perses.antlr.ast.AbstractPersesRuleElement;
-import org.perses.antlr.ast.PersesRuleReferenceAst;
-import org.perses.antlr.ast.PersesSequenceAst;
-import org.perses.antlr.ast.RuleNameRegistry;
+import org.perses.antlr.ast.*;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class AbstractPnfPass {
@@ -39,6 +33,7 @@ public abstract class AbstractPnfPass {
 
   protected static List<AbstractPersesRuleElement> constructAlternativeBlocksIfNecessary(
       Collection<AbstractPersesRuleElement> alternatives) {
+    alternatives = flatternAltBlocks(alternatives);
     final int size = alternatives.size();
     Preconditions.checkArgument(size > 0);
     if (size == 1) {
@@ -49,6 +44,33 @@ public abstract class AbstractPnfPass {
     return map.entrySet().stream()
         .map(Map.Entry::getValue)
         .collect(ImmutableList.toImmutableList());
+  }
+
+  protected static void inPlaceFlatternAltBlocks(List<AbstractPersesRuleElement> alternatives) {
+    final ArrayList<AbstractPersesRuleElement> result = flatternAltBlocks(alternatives);
+    alternatives.clear();
+    alternatives.addAll(result);
+  }
+
+  protected static ArrayList<AbstractPersesRuleElement> flatternAltBlocks(
+      Collection<AbstractPersesRuleElement> alternatives) {
+    final ArrayList<AbstractPersesRuleElement> result = new ArrayList<>();
+    for (AbstractPersesRuleElement alternative : alternatives) {
+      flattern(alternative, result);
+    }
+    return result;
+  }
+
+  private static void flattern(
+      AbstractPersesRuleElement element, ArrayList<AbstractPersesRuleElement> result) {
+    if (element instanceof PersesAlternativeBlockAst) {
+      final PersesAlternativeBlockAst block = (PersesAlternativeBlockAst) element;
+      for (AbstractPersesRuleElement blockAlternative : block.getAlternatives()) {
+        flattern(blockAlternative, result);
+      }
+    } else {
+      result.add(element);
+    }
   }
 
   protected static int countRulesThatCallsRuleOfName(

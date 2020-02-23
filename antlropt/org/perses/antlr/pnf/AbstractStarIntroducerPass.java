@@ -1,14 +1,17 @@
 package org.perses.antlr.pnf;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import org.perses.antlr.RuleType;
 import org.perses.antlr.ast.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.google.common.base.Preconditions.checkState;
 
 public abstract class AbstractStarIntroducerPass extends AbstractPnfPass {
 
@@ -22,11 +25,16 @@ public abstract class AbstractStarIntroducerPass extends AbstractPnfPass {
     final Iterable<AbstractPersesRuleElement> definitions = rules.get(ruleName);
     classifyDefsAndExtractNonrecursiveParts(
         ruleName, definitions, nonRecursivePartsInRecursiveDef, nonRecursiveDefs);
+    inPlaceFlatternAltBlocks(nonRecursivePartsInRecursiveDef);
+    for (AbstractPersesRuleElement nonRecursivePart : nonRecursivePartsInRecursiveDef) {
+      checkState(!(nonRecursivePart instanceof PersesAlternativeBlockAst), nonRecursivePart);
+    }
 
     if (nonRecursivePartsInRecursiveDef.isEmpty()) {
       return;
     }
-    Preconditions.checkState(nonRecursiveDefs.size() > 0);
+
+    checkState(nonRecursiveDefs.size() > 0);
     rules.removeAll(ruleName);
 
     final RuleNameRegistry.RuleNameHandle starRuleName =
@@ -69,8 +77,8 @@ public abstract class AbstractStarIntroducerPass extends AbstractPnfPass {
       HashSet<AbstractPersesRuleElement> nonRecursiveDefs) {
     for (AbstractPersesRuleElement def : definitions) {
       final AstTag tag = def.getTag();
-      Preconditions.checkState(tag != AstTag.ALTERNATIVE_BLOCK, tag);
-      Preconditions.checkState(
+      checkState(tag != AstTag.ALTERNATIVE_BLOCK, tag);
+      checkState(
           tag != AstTag.RULE_REF
               || !ruleName.get().equals(((PersesRuleReferenceAst) def).getRuleNameHandle().get()));
       if (tag == AstTag.SEQUENCE) {
@@ -102,6 +110,4 @@ public abstract class AbstractStarIntroducerPass extends AbstractPnfPass {
     }
     return grammar.createWithParserDefs(mutable);
   }
-
-
 }

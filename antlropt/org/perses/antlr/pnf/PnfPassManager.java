@@ -2,11 +2,16 @@ package org.perses.antlr.pnf;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.flogger.FluentLogger;
+import org.perses.antlr.ast.AbstractPersesRuleElement;
 import org.perses.antlr.ast.PersesGrammar;
+import org.perses.antlr.ast.RuleNameRegistry;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 public final class PnfPassManager {
 
@@ -30,6 +35,7 @@ public final class PnfPassManager {
           listener.beforePass(after, pass.getClass(), i);
         }
         after = pass.process(after);
+        validateIntermediateGrammar(after, pass);
         for (Listener listener : allListeners) {
           listener.afterPass(after, pass.getClass(), i);
         }
@@ -41,6 +47,43 @@ public final class PnfPassManager {
       }
     }
     return before.getPersesGrammar();
+  }
+
+  private static void validateIntermediateGrammar(
+      ImmutableRuleDefMap grammar, AbstractPnfPass pass) {
+    try {
+      checkNoDuplicateDefs(grammar);
+    } catch (Exception e) {
+      throw new RuntimeException("Validation fails after pass " + pass.getClass(), e);
+    }
+  }
+
+  private static void checkNoDuplicateDefs(ImmutableRuleDefMap gramamr) {
+    final ImmutableSet<RuleNameRegistry.RuleNameHandle> parserRuleNames =
+        gramamr.getParserRuleNames();
+    for (RuleNameRegistry.RuleNameHandle ruleName : parserRuleNames) {
+      final ImmutableList<AbstractPersesRuleElement> alternatives =
+          ImmutableList.copyOf(gramamr.getRuleDefinition(ruleName));
+      final int size = alternatives.size();
+      for (int i = 0; i < size - 1; ++i) {
+        final AbstractPersesRuleElement prev = alternatives.get(i);
+        for (int j = i + 1; j < size; ++j) {
+          final AbstractPersesRuleElement current = alternatives.get(j);
+          if (prev.isEquivalent(current)) {
+            final StringBuilder builder = new StringBuilder();
+            builder.append("Duplicate alternatives are found. \n");
+            builder.append("prev=" + prev.getSourceCode()).append("\n");
+            builder.append("current=" + current.getSourceCode()).append("\n");
+            builder.append("All alternatives: \n");
+            for (AbstractPersesRuleElement alt : alternatives) {
+              builder.append("  " + alt.getSourceCode()).append("\n");
+            }
+            throw new RuntimeException(builder.toString());
+          }
+          checkArgument(!prev.isEquivalent(current));
+        }
+      }
+    }
   }
 
   private ArrayList<AbstractPnfPass> createPasses(String startRuleName) {

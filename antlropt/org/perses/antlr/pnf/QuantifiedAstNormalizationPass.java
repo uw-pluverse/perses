@@ -1,7 +1,6 @@
 package org.perses.antlr.pnf;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Preconditions;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
 import org.perses.antlr.RuleType;
@@ -10,6 +9,8 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle;
 
 import java.util.Map;
 import java.util.Optional;
+
+import static com.google.common.base.Preconditions.checkState;
 
 public class QuantifiedAstNormalizationPass extends AbstractPnfPass {
   @Override
@@ -28,7 +29,7 @@ public class QuantifiedAstNormalizationPass extends AbstractPnfPass {
         toAdd.put(ruleName, newDef.get());
         factorEdit.newRules.entries().forEach(entry -> toAdd.put(entry.getKey(), entry.getValue()));
       } else {
-        Preconditions.checkState(factorEdit.newRules.isEmpty(), factorEdit.newRules);
+        checkState(factorEdit.newRules.isEmpty(), factorEdit.newRules);
       }
     }
     toRemove.entries().forEach(entry -> mutable.remove(entry.getKey(), entry.getValue()));
@@ -59,13 +60,13 @@ public class QuantifiedAstNormalizationPass extends AbstractPnfPass {
         case PLUS:
         case STAR:
         case OPTIONAL:
-          Preconditions.checkState(element.getChildCount() == 1);
+          checkState(element.getChildCount() == 1);
           final AbstractPersesRuleElement child = element.getChild(0);
           AbstractPersesRuleElement newBody;
           if (isTerminalOrRuleRef(child)) {
             newBody = element;
           } else {
-            Preconditions.checkState(!(child instanceof AbstractPersesQuantifiedAst));
+            checkState(!(child instanceof AbstractPersesQuantifiedAst));
             RuleNameHandle childRuleName =
                 currentRuleName.createAuxiliaryRuleName(RuleType.OTHER_RULE);
             newRules.putAndAutoDecomposeAltBlock(childRuleName, child);
@@ -77,7 +78,7 @@ public class QuantifiedAstNormalizationPass extends AbstractPnfPass {
             // No need to change.
             return newBody == element ? Optional.empty() : Optional.of(newBody);
           }
-          Preconditions.checkState(
+          checkState(
               currentRuleName.getType() == RuleType.OTHER_RULE,
               "The rule [%s] has type %s",
               currentRuleName,
