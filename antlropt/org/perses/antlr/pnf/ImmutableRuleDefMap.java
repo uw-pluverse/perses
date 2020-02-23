@@ -134,6 +134,7 @@ public final class ImmutableRuleDefMap {
     }
     builder.addAll(lexerRules);
     return new PersesGrammar(
+        originalGrammar.getGrammarType(),
         originalGrammar.getGrammarName(),
         originalGrammar.getOptions(),
         builder.build(),

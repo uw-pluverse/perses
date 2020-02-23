@@ -56,7 +56,20 @@ public final class PersesAstBuilder {
 
     final ImmutableList<AbstractPersesRuleDefAst> rules =
         convertRuleDefinitions(rulesAst, symbolTable);
-    return new PersesGrammar(grammarName, options, rules, symbolTable);
+    return new PersesGrammar(identifyGrammarType(root), grammarName, options, rules, symbolTable);
+  }
+
+  private static PersesGrammar.GrammarType identifyGrammarType(GrammarRootAST root) {
+    switch (root.getText()) {
+      case "COMBINED_GRAMMAR":
+        return PersesGrammar.GrammarType.COMBINED;
+      case "PARSER_GRAMMAR":
+        return PersesGrammar.GrammarType.PARSER;
+      case "LEXER_GRAMMAR":
+        return PersesGrammar.GrammarType.LEXER;
+      default:
+        throw new RuntimeException("Unsupported grammar type: " + root.getText());
+    }
   }
 
   private PersesGrammarOptionsAst convertOptions(GrammarAST secondChild) {

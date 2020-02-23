@@ -111,12 +111,15 @@ public class PersesGrammarTest {
 
   @Test
   public void testGoLexer() {
-    createAndTest("GoLexer.g4");
+    final PersesGrammar grammar = createAndTest("GoLexer.g4");
+    final String sourceCode = grammar.getSourceCode();
+    assertThat(sourceCode).contains("lexer grammar");
   }
 
   @Test
   public void testGoParser() {
-    createAndTest("GoParser.g4");
+    final PersesGrammar grammar = createAndTest("GoParser.g4");
+    assertThat(grammar.getSourceCode()).contains("parser grammar");
   }
 
   @Test
