@@ -95,121 +95,121 @@ public class SparTreeNodeTest {
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_0() {
+  public void testSparTreeCanReconstructOriginalGccPrograms_0() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 0)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_1() {
+  public void testSparTreeCanReconstructOriginalGccPrograms_1() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 1)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_2() {
+  public void testSparTreeCanReconstructOriginalGccPrograms_2() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 2)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_3() {
+  public void testSparTreeCanReconstructOriginalGccPrograms_3() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 3)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_4() {
+  public void testSparTreeCanReconstructOriginalGccPrograms_4() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 4)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_5() {
+  public void testSparTreeCanReconstructOriginalGccPrograms_5() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 5)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_6() {
+  public void testSparTreeCanReconstructOriginalGccPrograms_6() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 6)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_7() {
+  public void testSparTreeCanReconstructOriginalGccPrograms_7() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 7)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_8() {
+  public void testSparTreeCanReconstructOriginalGccPrograms_8() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 8)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_9() {
+  public void testSparTreeCanReconstructOriginalGccPrograms_9() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 9)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_0() {
+  public void testSparTreeCanReconstructOriginalClangPrograms_0() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 0)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_1() {
+  public void testSparTreeCanReconstructOriginalClangPrograms_1() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 1)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_2() {
+  public void testSparTreeCanReconstructOriginalClangPrograms_2() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 2)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_3() {
+  public void testSparTreeCanReconstructOriginalClangPrograms_3() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 3)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_4() {
+  public void testSparTreeCanReconstructOriginalClangPrograms_4() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 4)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_5() {
+  public void testSparTreeCanReconstructOriginalClangPrograms_5() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 5)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_6() {
+  public void testSparTreeCanReconstructOriginalClangPrograms_6() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 6)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_7() {
+  public void testSparTreeCanReconstructOriginalClangPrograms_7() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 7)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_8() {
+  public void testSparTreeCanReconstructOriginalClangPrograms_8() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 8)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_9() {
+  public void testSparTreeCanReconstructOriginalClangPrograms_9() throws IOException {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 9)
         .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
   }

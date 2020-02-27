@@ -398,11 +398,16 @@ public class OptJavaParserTest {
     final AtomicInteger counter = new AtomicInteger();
     final ImmutableList<ArrayList<File>> shards =
         ImmutableList.of(shard1, shard2, shard3, shard4, shard5, shard6);
-    TestUtility.getOpenJdkJavaFiles()
-        .forEach(
-            file -> {
-              shards.get(counter.getAndIncrement() % shards.size()).add(file);
-            });
+    try {
+      TestUtility.getOpenJdkJavaFiles()
+          .forEach(
+              file -> {
+                shards.get(counter.getAndIncrement() % shards.size()).add(file);
+              });
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
   }
 
   private static void testOptimizedJavaParserWithOriginalJavaParser(ArrayList<File> shard) {

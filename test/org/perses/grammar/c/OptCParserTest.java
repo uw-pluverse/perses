@@ -75,7 +75,7 @@ public class OptCParserTest {
   }
 
   @Test
-  public void testNumOfGccTestFiles() {
+  public void testNumOfGccTestFiles() throws IOException {
     Truth.assertThat(TestUtility.getGccTestFiles().size()).isEqualTo(10850);
     Truth.assertThat(TestUtility.getClangTestFiles().size()).isEqualTo(1807);
   }
