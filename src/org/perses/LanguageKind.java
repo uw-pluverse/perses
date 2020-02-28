@@ -26,6 +26,7 @@ import java.io.File;
 public enum LanguageKind {
   C(ImmutableList.of("c")),
   SCALA(ImmutableList.of("scala", "sc")),
+  GO(ImmutableList.of("go")),
   JAVA(ImmutableList.of("java")),
   UNKNOWN(ImmutableList.of());
 
