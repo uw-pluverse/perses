@@ -64,7 +64,7 @@ abstract class AbstractActionSetProfiler {
   }
 
   companion object {
-    val NULL_PROFILER: AbstractActionSetProfiler = object : AbstractActionSetProfiler() {
+    val NULL_PROFILER = object : AbstractActionSetProfiler() {
       override fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedChildren(
         kleeneReplacements: ImmutableList<ChildHoistingAction>
       ) {
