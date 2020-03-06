@@ -21,3 +21,15 @@ antlr_codegen(
     aux_java_files = ["GoParserBase.java"],
     java_pkg_name = "org.perses.grammar.go",
 )
+
+java_library(
+    name = "pnfgo_parser_facade",
+    srcs = ["PnfGoParserFacade.java"],
+    deps = [
+        ":pnf_go_grammar",
+        "//src/org/perses/antlr:parse_tree_with_parser",
+        "//src/org/perses/grammar:grammar_facade",
+        "@maven//:com_google_flogger_flogger",
+        "@maven//:org_antlr_antlr4_runtime",
+    ],
+)

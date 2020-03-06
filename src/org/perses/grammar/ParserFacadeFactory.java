@@ -19,6 +19,7 @@ package org.perses.grammar;
 import com.google.common.collect.ImmutableMap;
 import org.perses.LanguageKind;
 import org.perses.grammar.c.PnfCParserFacade;
+import org.perses.grammar.go.PnfGoParserFacade;
 import org.perses.grammar.java.JavaParserFacade;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -31,6 +32,7 @@ public enum ParserFacadeFactory {
       ImmutableMap.<LanguageKind, Class<? extends AbstractParserFacade>>builder()
           .put(LanguageKind.C, PnfCParserFacade.class)
           .put(LanguageKind.JAVA, JavaParserFacade.class)
+          .put(LanguageKind.GO, PnfGoParserFacade.class)
           .build();
 
   public AbstractParserFacade createParserFacade(LanguageKind languageKind) {
