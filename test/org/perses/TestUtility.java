@@ -37,7 +37,10 @@ import org.perses.tree.spar.SparTreeBuilder;
 import java.io.File;
 import java.io.IOError;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -283,11 +286,22 @@ public final class TestUtility {
     return getFilesWithExtension(folder, ".java");
   }
 
+  private static final ImmutableList<File> getGolangFiles(File folder) {
+    return getFilesWithExtension(folder, ".go");
+  }
+
   private static final ImmutableList<File> getFilesWithExtension(
       File folder, final String fileExtension) {
-    return Arrays.stream(folder.listFiles(file -> file.getName().endsWith(fileExtension)))
-        .sorted()
-        .collect(ImmutableList.toImmutableList());
+    try {
+      return Files.walk(folder.toPath())
+              .filter(Files::isRegularFile)
+              .filter(path -> path.toString().endsWith(fileExtension))
+              .map(Path::toFile)
+              .sorted()
+              .collect(ImmutableList.toImmutableList());
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
+    }
   }
 
   public static ArrayList<String> extractTokens(ParseTree tree) {
