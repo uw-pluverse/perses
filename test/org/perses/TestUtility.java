@@ -37,6 +37,7 @@ import org.perses.tree.spar.SparTreeBuilder;
 import java.io.File;
 import java.io.IOError;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -204,7 +205,7 @@ public final class TestUtility {
 
   private TestUtility() {}
 
-  public static ImmutableList<File> getGccTestFiles() throws IOException {
+  public static ImmutableList<File> getGccTestFiles() {
     return getCFiles(GCC_C_PROGRAM_FOLDER);
   }
 
@@ -220,11 +221,11 @@ public final class TestUtility {
     return new File(GCC_C_PROGRAM_FOLDER, fileName);
   }
 
-  public static ImmutableList<File> getClangTestFiles() throws IOException {
+  public static ImmutableList<File> getClangTestFiles() {
     return getCFiles(CLANG_C_PROGRAM_FOLDER);
   }
 
-  public static final ImmutableList<File> getOpenJdkJavaFiles() throws IOException {
+  public static final ImmutableList<File> getOpenJdkJavaFiles() {
     return getJavaFiles(
         new File(THIRD_PARTY_TEST_PROGRAMS_ROOT, "java_programs/openjdk_testsuite"));
   }
@@ -277,26 +278,30 @@ public final class TestUtility {
     return tree;
   }
 
-  private static final ImmutableList<File> getCFiles(File folder) throws IOException {
+  private static final ImmutableList<File> getCFiles(File folder) {
     return getFilesWithExtension(folder, ".c");
   }
 
-  private static final ImmutableList<File> getJavaFiles(File folder) throws IOException {
+  private static final ImmutableList<File> getJavaFiles(File folder) {
     return getFilesWithExtension(folder, ".java");
   }
 
-  private static final ImmutableList<File> getGolangFiles(File folder) throws IOException {
+  private static final ImmutableList<File> getGolangFiles(File folder) {
     return getFilesWithExtension(folder, ".go");
   }
 
   private static final ImmutableList<File> getFilesWithExtension(
-      File folder, final String fileExtension) throws IOException {
-    return Files.walk(folder.toPath())
-            .filter(Files::isRegularFile)
-            .filter(path -> path.toString().endsWith(fileExtension))
-            .map(Path::toFile)
-            .sorted()
-            .collect(ImmutableList.toImmutableList());
+      File folder, final String fileExtension) {
+    try {
+      return Files.walk(folder.toPath())
+              .filter(Files::isRegularFile)
+              .filter(path -> path.toString().endsWith(fileExtension))
+              .map(Path::toFile)
+              .sorted()
+              .collect(ImmutableList.toImmutableList());
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
+    }
   }
 
   public static ArrayList<String> extractTokens(ParseTree tree) {
