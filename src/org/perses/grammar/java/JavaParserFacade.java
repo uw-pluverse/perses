@@ -31,7 +31,7 @@ import java.io.IOException;
 public class JavaParserFacade extends AbstractDefaultParserFacade<OptJava8Lexer, OptJava8Parser> {
 
   public JavaParserFacade() {
-    super("OptJava8.g4");
+    super(createCombinedAntlrGrammar("OptJava8.g4", JavaParserFacade.class));
   }
 
   @Override

@@ -8,7 +8,8 @@ def reduce(
         result_file = None,
         statistics_file = None,
         progress_dump_file = None,
-        thread_count = None):
+        thread_count = None,
+        keep_orig_format = None):
     if "/" in source_file:
         fail("The source file should be in the current folder.")
     if "/" in test_script:
@@ -30,13 +31,14 @@ def reduce(
         "--alg %s" % reduction_algorithm,
         "--threads %s" % thread_count,
         "--fixpoint true",
-        "--keep-orig-format true",
         "--output-file $(location %s)" % result_file,
         "--stat-dump-file $(location %s)" % statistics_file,
         "--progress-dump-file $(location %s)" % progress_dump_file,
         "--query-caching %s" % ("true" if enable_query_caching else "false"),
         "--edit-caching %s" % ("true" if enable_edit_caching else "false")
     ]
+    if (keep_orig_format):
+        args.append("--keep-orig-format %s" % ("true" if keep_orig_format else "false"))
     native.genrule(
         name = name,
         outs = [result_file, statistics_file, progress_dump_file],

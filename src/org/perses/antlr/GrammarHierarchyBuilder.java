@@ -12,18 +12,19 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public final class GrammarHierarchyBuilder {
 
-  private final PersesGrammar grammar;
+  private final AbstractAntlrGrammar grammar;
   private final EpsilonInfo epsilonInfo;
   private final ImmutableList<RuleHierarchyInfo> indexToRuleMap;
   private final ImmutableMap<String, RuleHierarchyInfo> nameToRuleMap;
   private final ImmutableList<Optional<RuleHierarchyInfo>> indexToTokenMap;
 
   public GrammarHierarchyBuilder(
-      PersesGrammar grammar, ImmutableMap<Integer, String> typeToTokenNameMap) {
+      AbstractAntlrGrammar grammar, ImmutableMap<Integer, String> typeToTokenNameMap) {
     this.grammar = grammar;
-    epsilonInfo = RuleEpsilonComputer.computeEpsilonableRules(grammar);
+    final ImmutableList<AbstractPersesRuleDefAst> combinedRules = grammar.getCombinedRules();
+    epsilonInfo = RuleEpsilonComputer.computeEpsilonableRules(combinedRules);
     indexToRuleMap =
-        grammar.getRules().stream()
+        combinedRules.stream()
             .map(this::extractRuleHierarchyInfo)
             .collect(ImmutableList.toImmutableList());
     nameToRuleMap = buildNameToRuleMap(indexToRuleMap);
@@ -150,7 +151,8 @@ public final class GrammarHierarchyBuilder {
           graph.addNode(node); // This is necessary, as it can have no immediate subrules.
           for (String subruleName : node.getImmediateSubRuleNames()) {
             final RuleHierarchyInfo subrule = nameToRuleMap.get(subruleName);
-            checkNotNull(subrule, "No subrule for node %s. Node=%s", subruleName, node.getRuleName());
+            checkNotNull(
+                subrule, "No subrule for node %s. Node=%s", subruleName, node.getRuleName());
             graph.putEdge(node, subrule);
           }
         });

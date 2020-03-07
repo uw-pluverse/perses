@@ -72,7 +72,7 @@ public class RuleEpsilonComputerTest {
   private List<String> getEpsilonableRuleNames(String... lines) {
     PersesGrammar grammar = GrammarTestingUtility.createPersesGrammarFromString(lines);
     ImmutableSet<AbstractPersesRuleDefAst> rules =
-        RuleEpsilonComputer.computeEpsilonableRules(grammar).getEpsilonableRules();
+        RuleEpsilonComputer.computeEpsilonableRules(grammar.getRules()).getEpsilonableRules();
     List<String> ruleNames =
         rules.stream()
             .map(AbstractPersesRuleDefAst::getRuleNameHandle)

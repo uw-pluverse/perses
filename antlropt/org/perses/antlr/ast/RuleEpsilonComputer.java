@@ -1,5 +1,7 @@
 package org.perses.antlr.ast;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 
 import java.util.HashSet;
@@ -9,11 +11,11 @@ import java.util.stream.Collectors;
 public class RuleEpsilonComputer {
 
   public static EpsilonInfo computeEpsilonableRules(
-      PersesGrammar grammar) {
+      ImmutableList<AbstractPersesRuleDefAst> grammar) {
     RuleEpsilonComputer computer = new RuleEpsilonComputer(grammar);
     computer.compute();
     ImmutableSet.Builder<AbstractPersesRuleDefAst> builder = ImmutableSet.builder();
-    for (AbstractPersesRuleDefAst rule : grammar.getRules()) {
+    for (AbstractPersesRuleDefAst rule : grammar) {
       if (computer.containsEpsilon(rule)) {
         builder.add(rule);
       }
@@ -22,10 +24,14 @@ public class RuleEpsilonComputer {
   }
 
   private final HashSet<AbstractPersesRuleElement> epsilonable = new HashSet<>();
-  private final PersesGrammar grammar;
+  private final ImmutableMap<String, AbstractPersesRuleDefAst> nameToRuleMap;
 
-  private RuleEpsilonComputer(PersesGrammar grammar) {
-    this.grammar = grammar;
+  private RuleEpsilonComputer(ImmutableList<AbstractPersesRuleDefAst> grammar) {
+    final ImmutableMap.Builder<String, AbstractPersesRuleDefAst> builder = ImmutableMap.builder();
+    for (AbstractPersesRuleDefAst ruleDefAst : grammar) {
+      builder.put(ruleDefAst.getRuleNameHandle().get(), ruleDefAst);
+    }
+    nameToRuleMap = builder.build();
   }
 
   public boolean containsEpsilon(AbstractPersesRuleDefAst rule) {
@@ -43,7 +49,7 @@ public class RuleEpsilonComputer {
     do {
       prevSize = epsilonable.size();
       List<AbstractPersesRuleDefAst> rules =
-          grammar.getRules().stream()
+          nameToRuleMap.values().stream()
               .filter(def -> !epsilonable.contains(def.getBody()))
               .collect(Collectors.toList());
       for (AbstractPersesRuleDefAst rule : rules) {
@@ -91,6 +97,13 @@ public class RuleEpsilonComputer {
     }
 
     @Override
+    protected void visit(PersesLexerChannelCommandAst ast) {
+      if (epsilonable.contains(ast.getBody())) {
+        epsilonable.add(ast);
+      }
+    }
+
+    @Override
     protected void visit(PersesEpsilonAst ast) {
       epsilonable.add(ast);
     }
@@ -108,7 +121,7 @@ public class RuleEpsilonComputer {
 
     @Override
     protected void visit(PersesRuleReferenceAst ast) {
-      AbstractPersesRuleDefAst def = grammar.getRuleDefinition(ast.getRuleNameHandle()).get();
+      AbstractPersesRuleDefAst def = nameToRuleMap.get(ast.getRuleNameHandle().get());
       if (epsilonable.contains(def.getBody())) {
         epsilonable.add(ast);
       }

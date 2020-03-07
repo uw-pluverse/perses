@@ -84,7 +84,7 @@ public class CommandOptions {
       names = "--keep-orig-format",
       description = "keep the original code format during reduction. May slow down if enabled.",
       arity = 1)
-  public boolean keepOrigFormat = false;
+  public boolean keepOrigFormat = true;
 
   @Parameter(
       names = "--profile",

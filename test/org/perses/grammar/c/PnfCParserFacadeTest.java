@@ -16,7 +16,7 @@ public class PnfCParserFacadeTest {
   @Test
   public void testGoldenPnfCGrammar() throws IOException {
     PnfCParserFacade facade = new PnfCParserFacade();
-    String content = facade.getPersesGrammar().getSourceCode();
+    String content = facade.getAntlrGrammar().asCombined().getGrammar().getSourceCode();
     String golden =
         Files.asCharSource(
                 new File("test/org/perses/grammar/c/golden_pnf_c.g4"), StandardCharsets.UTF_8)

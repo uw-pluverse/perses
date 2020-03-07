@@ -17,7 +17,8 @@ public class DumpPnfPassManagerLog {
     final String output = args[0];
 
     CParserFacade facade = new CParserFacade();
-    final String antlrGrammarContent = facade.readAntlrGrammarContent("OrigC.g4");
+    final String antlrGrammarContent =
+        facade.readAntlrGrammarContent("OrigC.g4", CParserFacade.class);
     PersesGrammar grammar = GrammarTestingUtility.loadGrammarFromString(antlrGrammarContent);
     PnfPassManager manager = new PnfPassManager();
     try (PassListener listener = new PassListener(output)) {

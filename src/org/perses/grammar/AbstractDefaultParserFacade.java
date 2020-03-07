@@ -21,6 +21,7 @@ import org.antlr.v4.runtime.atn.LexerATNSimulator;
 import org.antlr.v4.runtime.atn.ParserATNSimulator;
 import org.antlr.v4.runtime.atn.PredictionContextCache;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.perses.antlr.AbstractAntlrGrammar;
 import org.perses.antlr.ParseTreeWithParser;
 import org.perses.program.TokenizedProgram;
 
@@ -35,8 +36,8 @@ public abstract class AbstractDefaultParserFacade<LEXER extends Lexer, PARSER ex
   private static final boolean DISABLE_GLOBAL_CACHING_FOR_BETTER_MEMORY_THO_AFFECT_EFFICIENCY =
       true;
 
-  protected AbstractDefaultParserFacade(String antlrGrammarFileName) {
-    super(antlrGrammarFileName);
+  protected AbstractDefaultParserFacade(AbstractAntlrGrammar grammar) {
+    super(grammar);
   }
 
   protected abstract LEXER createLexer(ANTLRInputStream inputStream);

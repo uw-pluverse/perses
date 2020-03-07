@@ -82,7 +82,7 @@ public class OptCParserTest {
 
   @Test
   public void testIntegrityOfOptimizedCParser() {
-    final PersesGrammar persesGrammar = C_PARSER_FACADE.getPersesGrammar();
+    final PersesGrammar persesGrammar = C_PARSER_FACADE.getAntlrGrammar().asCombined().getGrammar();
 
     final ImmutableList<String> ruleNames =
         persesGrammar.getRules().stream()

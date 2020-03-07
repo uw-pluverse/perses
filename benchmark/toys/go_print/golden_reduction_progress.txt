@@ -1,0 +1,1616 @@
+======================Reduction starts======================
+
+The spar tree is the following.
+sourceFile {id=1}
+|___packageClause {id=2,slot_type=packageClause}
+|   |___Token:package {id=243,slot_type=PACKAGE}
+|   |___Token:main {id=244,slot_type=IDENTIFIER}
+|___(*) {id=3,slot_type=kleene_star__sourceFile_2}
+|   |___importDecl {id=237,slot_type=sourceFile_1}
+|       |___Token:import {id=238,slot_type=IMPORT}
+|       |___Token:"fmt" {id=242,slot_type=importSpec}
+|___(*) {id=4,slot_type=kleene_star__sourceFile_4}
+    |___functionDecl {id=6,slot_type=sourceFile_3}
+        |___Token:func {id=8,slot_type=FUNC}
+        |___Token:main {id=9,slot_type=IDENTIFIER}
+        |___parameters {id=233,slot_type=signature}
+        |   |___Token:( {id=234,slot_type=L_PAREN}
+        |   |___Token:) {id=235,slot_type=R_PAREN}
+        |___(?) {id=11,slot_type=optional__functionDecl_1}
+            |___block {id=12,slot_type=block}
+                |___Token:{ {id=13,slot_type=L_CURLY}
+                |___(?) {id=14,slot_type=optional__block_1}
+                |   |___(+) {id=17,slot_type=statementList}
+                |       |___conversion {id=208,slot_type=statementList_1}
+                |       |   |___qualifiedIdent {id=229,slot_type=type_}
+                |       |   |   |___Token:fmt {id=230,slot_type=IDENTIFIER}
+                |       |   |   |___Token:. {id=231,slot_type=DOT}
+                |       |   |   |___Token:Println {id=232,slot_type=IDENTIFIER}
+                |       |   |___Token:( {id=210,slot_type=L_PAREN}
+                |       |   |___expression {id=211,slot_type=expression}
+                |       |   |   |___Token:"go" {id=227,slot_type=expression_3}
+                |       |   |   |___(*) {id=214,slot_type=kleene_star__expression_1}
+                |       |   |       |___expression_2 {id=215,slot_type=expression_2}
+                |       |   |           |___Token:+ {id=223,slot_type=alternative__expression_7}
+                |       |   |           |___Token:"lang" {id=222,slot_type=expression}
+                |       |   |___Token:) {id=212,slot_type=R_PAREN}
+                |       |___primaryExpr {id=162,slot_type=statementList_1}
+                |       |   |___methodExpr {id=195,slot_type=primaryExpr_3}
+                |       |   |   |___Token:fmt {id=200,slot_type=receiverType}
+                |       |   |   |___Token:. {id=197,slot_type=DOT}
+                |       |   |   |___Token:Println {id=198,slot_type=IDENTIFIER}
+                |       |   |___(*) {id=164,slot_type=kleene_star__primaryExpr_1}
+                |       |       |___arguments {id=166,slot_type=primaryExpr_2}
+                |       |           |___Token:( {id=167,slot_type=L_PAREN}
+                |       |           |___(?) {id=168,slot_type=optional__arguments_6}
+                |       |           |   |___expressionList {id=171,slot_type=arguments_5}
+                |       |           |       |___Token:"1+1 =" {id=194,slot_type=expression}
+                |       |           |       |___(*) {id=173,slot_type=kleene_star__expressionList_2}
+                |       |           |           |___expressionList_1 {id=174,slot_type=expressionList_1}
+                |       |           |               |___Token:, {id=175,slot_type=COMMA}
+                |       |           |               |___expression {id=176,slot_type=expression}
+                |       |           |                   |___Token:1 {id=189,slot_type=expression_3}
+                |       |           |                   |___(*) {id=178,slot_type=kleene_star__expression_1}
+                |       |           |                       |___expression_2 {id=179,slot_type=expression_2}
+                |       |           |                           |___Token:+ {id=186,slot_type=alternative__expression_7}
+                |       |           |                           |___Token:1 {id=185,slot_type=expression}
+                |       |           |___Token:) {id=169,slot_type=R_PAREN}
+                |       |___primaryExpr {id=118,slot_type=statementList_1}
+                |       |   |___methodExpr {id=151,slot_type=primaryExpr_3}
+                |       |   |   |___Token:fmt {id=156,slot_type=receiverType}
+                |       |   |   |___Token:. {id=153,slot_type=DOT}
+                |       |   |   |___Token:Println {id=154,slot_type=IDENTIFIER}
+                |       |   |___(*) {id=120,slot_type=kleene_star__primaryExpr_1}
+                |       |       |___arguments {id=122,slot_type=primaryExpr_2}
+                |       |           |___Token:( {id=123,slot_type=L_PAREN}
+                |       |           |___(?) {id=124,slot_type=optional__arguments_6}
+                |       |           |   |___expressionList {id=127,slot_type=arguments_5}
+                |       |           |       |___Token:"7.0/3.0 =" {id=150,slot_type=expression}
+                |       |           |       |___(*) {id=129,slot_type=kleene_star__expressionList_2}
+                |       |           |           |___expressionList_1 {id=130,slot_type=expressionList_1}
+                |       |           |               |___Token:, {id=131,slot_type=COMMA}
+                |       |           |               |___expression {id=132,slot_type=expression}
+                |       |           |                   |___Token:7.0 {id=145,slot_type=expression_3}
+                |       |           |                   |___(*) {id=134,slot_type=kleene_star__expression_1}
+                |       |           |                       |___expression_2 {id=135,slot_type=expression_2}
+                |       |           |                           |___Token:/ {id=142,slot_type=alternative__expression_7}
+                |       |           |                           |___Token:3.0 {id=141,slot_type=expression}
+                |       |           |___Token:) {id=125,slot_type=R_PAREN}
+                |       |___conversion {id=88,slot_type=statementList_1}
+                |       |   |___qualifiedIdent {id=109,slot_type=type_}
+                |       |   |   |___Token:fmt {id=110,slot_type=IDENTIFIER}
+                |       |   |   |___Token:. {id=111,slot_type=DOT}
+                |       |   |   |___Token:Println {id=112,slot_type=IDENTIFIER}
+                |       |   |___Token:( {id=90,slot_type=L_PAREN}
+                |       |   |___expression {id=91,slot_type=expression}
+                |       |   |   |___Token:true {id=107,slot_type=expression_3}
+                |       |   |   |___(*) {id=94,slot_type=kleene_star__expression_1}
+                |       |   |       |___expression_2 {id=95,slot_type=expression_2}
+                |       |   |           |___Token:&& {id=103,slot_type=alternative__expression_7}
+                |       |   |           |___Token:false {id=102,slot_type=expression}
+                |       |   |___Token:) {id=92,slot_type=R_PAREN}
+                |       |___conversion {id=56,slot_type=statementList_1}
+                |       |   |___qualifiedIdent {id=77,slot_type=type_}
+                |       |   |   |___Token:fmt {id=78,slot_type=IDENTIFIER}
+                |       |   |   |___Token:. {id=79,slot_type=DOT}
+                |       |   |   |___Token:Println {id=80,slot_type=IDENTIFIER}
+                |       |   |___Token:( {id=58,slot_type=L_PAREN}
+                |       |   |___expression {id=59,slot_type=expression}
+                |       |   |   |___Token:true {id=75,slot_type=expression_3}
+                |       |   |   |___(*) {id=62,slot_type=kleene_star__expression_1}
+                |       |   |       |___expression_2 {id=63,slot_type=expression_2}
+                |       |   |           |___Token:|| {id=71,slot_type=alternative__expression_7}
+                |       |   |           |___Token:false {id=70,slot_type=expression}
+                |       |   |___Token:) {id=60,slot_type=R_PAREN}
+                |       |___conversion {id=31,slot_type=statementList_1}
+                |           |___qualifiedIdent {id=45,slot_type=type_}
+                |           |   |___Token:fmt {id=46,slot_type=IDENTIFIER}
+                |           |   |___Token:. {id=47,slot_type=DOT}
+                |           |   |___Token:Println {id=48,slot_type=IDENTIFIER}
+                |           |___Token:( {id=33,slot_type=L_PAREN}
+                |           |___expression_3 {id=36,slot_type=expression}
+                |           |   |___Token:! {id=37,slot_type=EXCLAMATION}
+                |           |   |___Token:true {id=43,slot_type=expression}
+                |           |___Token:) {id=35,slot_type=R_PAREN}
+                |___Token:} {id=15,slot_type=R_CURLY}
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=61==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+        fmt.Println("1+1 =", 1+1)
+        fmt.Println("7.0/3.0 =", 7.0/3.0)
+        fmt.Println(true && false)
+        fmt.Println(true || false)
+        fmt.Println(!true)
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main
+    import "fmt"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 4
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=61==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+        fmt.Println("1+1 =", 1+1)
+        fmt.Println("7.0/3.0 =", 7.0/3.0)
+        fmt.Println(true && false)
+        fmt.Println(true || false)
+        fmt.Println(!true)
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=6}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 6
+------------------------------------------------------------
+
+
+=================Reducing node 11, size=61==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+        fmt.Println("1+1 =", 1+1)
+        fmt.Println("7.0/3.0 =", 7.0/3.0)
+        fmt.Println(true && false)
+        fmt.Println(true || false)
+        fmt.Println(!true)
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main
+    import "fmt"
+    func main()
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+=================Reducing node 12, size=61==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+        fmt.Println("1+1 =", 1+1)
+        fmt.Println("7.0/3.0 =", 7.0/3.0)
+        fmt.Println(true && false)
+        fmt.Println(true || false)
+        fmt.Println(!true)
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=12}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 12
+------------------------------------------------------------
+
+
+=================Reducing node 14, size=61==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+        fmt.Println("1+1 =", 1+1)
+        fmt.Println("7.0/3.0 =", 7.0/3.0)
+        fmt.Println(true && false)
+        fmt.Println(true || false)
+        fmt.Println(!true)
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main
+    import "fmt"
+    func main() {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 14
+------------------------------------------------------------
+
+
+=================Reducing node 17, size=61==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+        fmt.Println("1+1 =", 1+1)
+        fmt.Println("7.0/3.0 =", 7.0/3.0)
+        fmt.Println(true && false)
+        fmt.Println(true || false)
+        fmt.Println(!true)
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=17}
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_plus]remove whole except first
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 4 --> 3.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 4
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 17 from 61 to 18
+------------------------------------------------------------
+
+
+=================Reducing node 208, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main
+    import "fmt"
+    func main() {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 208
+------------------------------------------------------------
+
+
+=================Reducing node 229, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main
+    import "fmt"
+    func main() {
+        fmt        ("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main
+    import "fmt"
+    func main() {
+            Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 229
+------------------------------------------------------------
+
+
+=================Reducing node 211, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go"         )
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println(       "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 211
+------------------------------------------------------------
+
+
+=================Reducing node 233, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 233
+------------------------------------------------------------
+
+
+=================Reducing node 214, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go"         )
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 214
+------------------------------------------------------------
+
+
+=================Reducing node 215, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=215}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 215
+------------------------------------------------------------
+
+
+==================Reducing node 3, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 3
+------------------------------------------------------------
+
+
+=================Reducing node 237, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=237}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 237
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+=================Reducing node 244, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 244
+------------------------------------------------------------
+
+
+=================Reducing node 243, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 243
+------------------------------------------------------------
+
+
+=================Reducing node 242, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 242
+------------------------------------------------------------
+
+
+=================Reducing node 238, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 238
+------------------------------------------------------------
+
+
+=================Reducing node 235, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 235
+------------------------------------------------------------
+
+
+=================Reducing node 234, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 234
+------------------------------------------------------------
+
+
+=================Reducing node 232, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 232
+------------------------------------------------------------
+
+
+=================Reducing node 231, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 231
+------------------------------------------------------------
+
+
+=================Reducing node 230, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 230
+------------------------------------------------------------
+
+
+=================Reducing node 227, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 227
+------------------------------------------------------------
+
+
+=================Reducing node 223, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 223
+------------------------------------------------------------
+
+
+=================Reducing node 222, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 222
+------------------------------------------------------------
+
+
+=================Reducing node 212, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 212
+------------------------------------------------------------
+
+
+=================Reducing node 210, size=18=================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 210
+------------------------------------------------------------
+
+
+=================Reducing node 15, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+=================Reducing node 13, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 13
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main
+    import "fmt"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 4
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=6}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 6
+------------------------------------------------------------
+
+
+=================Reducing node 11, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main
+    import "fmt"
+    func main()
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+=================Reducing node 12, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=12}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 12
+------------------------------------------------------------
+
+
+=================Reducing node 14, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main
+    import "fmt"
+    func main() {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 14
+------------------------------------------------------------
+
+
+=================Reducing node 17, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=17}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 17
+------------------------------------------------------------
+
+
+=================Reducing node 26, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main
+    import "fmt"
+    func main() {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 26
+------------------------------------------------------------
+
+
+=================Reducing node 47, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main
+    import "fmt"
+    func main() {
+        fmt        ("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main
+    import "fmt"
+    func main() {
+            Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 47
+------------------------------------------------------------
+
+
+=================Reducing node 29, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go"         )
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println(       "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 29
+------------------------------------------------------------
+
+
+=================Reducing node 51, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 51
+------------------------------------------------------------
+
+
+=================Reducing node 32, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go"         )
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 32
+------------------------------------------------------------
+
+
+=================Reducing node 33, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=33}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 33
+------------------------------------------------------------
+
+
+==================Reducing node 3, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 3
+------------------------------------------------------------
+
+
+=================Reducing node 55, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=55}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 55
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+=================Reducing node 62, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 62
+------------------------------------------------------------
+
+
+=================Reducing node 61, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 61
+------------------------------------------------------------
+
+
+=================Reducing node 60, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 60
+------------------------------------------------------------
+
+
+=================Reducing node 56, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 56
+------------------------------------------------------------
+
+
+=================Reducing node 53, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 53
+------------------------------------------------------------
+
+
+=================Reducing node 52, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 52
+------------------------------------------------------------
+
+
+=================Reducing node 50, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 50
+------------------------------------------------------------
+
+
+=================Reducing node 49, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 49
+------------------------------------------------------------
+
+
+=================Reducing node 48, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 48
+------------------------------------------------------------
+
+
+=================Reducing node 45, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 45
+------------------------------------------------------------
+
+
+=================Reducing node 41, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 41
+------------------------------------------------------------
+
+
+=================Reducing node 40, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 40
+------------------------------------------------------------
+
+
+=================Reducing node 30, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 30
+------------------------------------------------------------
+
+
+=================Reducing node 28, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 28
+------------------------------------------------------------
+
+
+=================Reducing node 15, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+=================Reducing node 13, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 13
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=18==================
+
+The current best program is the following
+
+    package main
+    import "fmt"
+    func main() {
+        fmt.Println("go" + "lang")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+#test success = 1
+#test failure = 8
+#test result cache hits = 12
+#test execution cancelled = 0
+#node edit action set cache hits = 10

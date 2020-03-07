@@ -28,6 +28,10 @@ public class PersesLexerChannelCommandAst extends AbstractPersesRuleElement {
     stream.printf(" -> channel(%s)\n", channelName);
   }
 
+  public AbstractPersesRuleElement getBody() {
+    return body;
+  }
+
   @Override
   public int getChildCount() {
     return 1;

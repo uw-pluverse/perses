@@ -455,7 +455,7 @@ public class OptJavaParserTest {
 
   @Test
   public void testIntegrityOfOptimizedJava8Parser() throws IOException, RecognitionException {
-    final PersesGrammar persesGrammar = JAVA_PARSER_FACADE.getPersesGrammar();
+    final PersesGrammar persesGrammar = JAVA_PARSER_FACADE.getAntlrGrammar().asCombined().getGrammar();
     ImmutableList<String> ruleNames =
         persesGrammar.getRules().stream()
             .map(AbstractPersesRuleDefAst::getRuleNameHandle)

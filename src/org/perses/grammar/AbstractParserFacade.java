@@ -23,6 +23,9 @@ import com.google.common.io.ByteStreams;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import org.perses.antlr.AbstractAntlrGrammar;
+import org.perses.antlr.AbstractAntlrGrammar.CombinedAntlrGrammar;
+import org.perses.antlr.AbstractAntlrGrammar.SeparateAntlrGrammar;
 import org.perses.antlr.GrammarHierarchy;
 import org.perses.antlr.ParseTreeWithParser;
 import org.perses.antlr.ast.PersesAstBuilder;
@@ -36,28 +39,16 @@ import java.util.ArrayDeque;
 /** The base class for parser faceds */
 public abstract class AbstractParserFacade {
 
-  private final String antlrGrammarContent;
-  private final PersesGrammar persesGrammar;
+  private final AbstractAntlrGrammar grammar;
   private final GrammarHierarchy hierarchy;
 
-  protected AbstractParserFacade(String antlrGrammarFileName) {
-    try {
-      antlrGrammarContent = readAntlrGrammarContent(antlrGrammarFileName);
-      persesGrammar = PersesAstBuilder.loadGrammarFromString(antlrGrammarContent);
-      hierarchy = GrammarHierarchy.createFromPersesGrammar(persesGrammar);
-    } catch (IOException e) {
-      logger.atSevere().withCause(e).log(
-          "Cannot create facade for grammar %s", antlrGrammarFileName);
-      throw new AssertionError(e);
-    }
+  protected AbstractParserFacade(AbstractAntlrGrammar grammar) {
+    this.grammar = grammar;
+    hierarchy = GrammarHierarchy.createFromAntlrGrammar(grammar);
   }
 
-  public final PersesGrammar getPersesGrammar() {
-    return persesGrammar;
-  }
-
-  public String getAntlrGrammarContent() {
-    return antlrGrammarContent;
+  public final AbstractAntlrGrammar getAntlrGrammar() {
+    return grammar;
   }
 
   /** Parse the given file into a ParseTree. */
@@ -126,8 +117,10 @@ public abstract class AbstractParserFacade {
 
   public abstract ParseTreeWithParser parseTokenizedProgram(TokenizedProgram program);
 
-  public String readAntlrGrammarContent(String antlrGrammarFileName) throws IOException {
-    try (InputStream stream = openStreamOfParserAntlrGrammar(antlrGrammarFileName)) {
+  public static String readAntlrGrammarContent(
+      String antlrGrammarFileName, Class<?> classUnderSamePkg) throws IOException {
+    try (InputStream stream =
+        openStreamOfParserAntlrGrammar(antlrGrammarFileName, classUnderSamePkg)) {
       return new String(ByteStreams.toByteArray(stream), StandardCharsets.UTF_8);
     }
   }
@@ -141,12 +134,44 @@ public abstract class AbstractParserFacade {
    * <p>Note that this method has to be an instance method, as we need the concrete parser facade
    * class to open the stream.
    */
-  protected final InputStream openStreamOfParserAntlrGrammar(String antlrGrammarFileName) {
-    final Class<?> klass = getClass();
+  protected static InputStream openStreamOfParserAntlrGrammar(
+      String antlrGrammarFileName, Class<?> classUnderSamePkg) {
     final String grammarFileName =
-        '/' + klass.getPackage().getName().replace('.', '/') + '/' + antlrGrammarFileName;
-    InputStream result = klass.getResourceAsStream(grammarFileName);
+        '/'
+            + classUnderSamePkg.getPackage().getName().replace('.', '/')
+            + '/'
+            + antlrGrammarFileName;
+    InputStream result = classUnderSamePkg.getResourceAsStream(grammarFileName);
     return Preconditions.checkNotNull(result, "Failed to open stream to %s", grammarFileName);
+  }
+
+  protected static SeparateAntlrGrammar createSeparateAntlrGrammar(
+      String antlrParserGrammarFileName,
+      String antlrLexerGrammarFileName,
+      Class<?> classUnderSamePkg) {
+    try {
+      final PersesGrammar persesGrammar =
+          PersesAstBuilder.loadGrammarFromString(
+              readAntlrGrammarContent(antlrParserGrammarFileName, classUnderSamePkg));
+      final PersesGrammar lexerGrammar =
+          PersesAstBuilder.loadGrammarFromString(
+              readAntlrGrammarContent(antlrLexerGrammarFileName, classUnderSamePkg));
+
+      return new SeparateAntlrGrammar(persesGrammar, lexerGrammar);
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
+    }
+  }
+
+  protected static CombinedAntlrGrammar createCombinedAntlrGrammar(
+      String antlrGrammarFileName, Class<?> classUnderSamePkg) {
+    try {
+      final String content = readAntlrGrammarContent(antlrGrammarFileName, classUnderSamePkg);
+      final PersesGrammar persesGrammar = PersesAstBuilder.loadGrammarFromString(content);
+      return new CombinedAntlrGrammar(persesGrammar);
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
+    }
   }
 
   protected abstract ParseTreeWithParser parseReader(String fileName, Reader reader)

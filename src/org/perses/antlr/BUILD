@@ -43,6 +43,7 @@ java_library(
         "RuleHierarchyInfo.java",
     ],
     deps = [
+        ":antlr_grammar_info",
         ":antlr_grammar_util",
         "//antlropt/org/perses/antlr:enum_rule_type",
         "//antlropt/org/perses/antlr/ast",
@@ -59,5 +60,13 @@ kt_jvm_library(
     srcs = ["ParseTreeWithParser.kt"],
     deps = [
         "@maven//:org_antlr_antlr4_runtime",
+    ],
+)
+
+kt_jvm_library(
+    name = "antlr_grammar_info",
+    srcs = ["AbstractAntlrGrammar.kt"],
+    deps = [
+        "//antlropt/org/perses/antlr/pnf",
     ],
 )

@@ -1,8 +1,5 @@
 package org.perses.antlr.ast;
 
-import java.util.Collection;
-import java.util.Map;
-
 public class DefaultAstVisitor extends AbstractAstVisitor {
 
   @Override
@@ -28,6 +25,9 @@ public class DefaultAstVisitor extends AbstractAstVisitor {
 
   @Override
   protected void visit(PersesLexerSkipCommandAst ast) {}
+
+  @Override
+  protected void visit(PersesLexerChannelCommandAst ast) {}
 
   @Override
   protected void visit(PersesLexerCharSet ast) {}

@@ -34,7 +34,7 @@ public final class CParserFacade extends AbstractDefaultParserFacade<OptCLexer, 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   public CParserFacade() {
-    super("OptC.g4");
+    super(createCombinedAntlrGrammar("OptC.g4", CParserFacade.class));
   }
 
   @Override

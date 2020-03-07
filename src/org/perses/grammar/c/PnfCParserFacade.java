@@ -8,7 +8,7 @@ import org.perses.grammar.AbstractDefaultParserFacade;
 public final class PnfCParserFacade extends AbstractDefaultParserFacade<PnfCLexer, PnfCParser> {
 
   public PnfCParserFacade() {
-    super("PnfC.g4");
+    super(createCombinedAntlrGrammar("PnfC.g4", PnfCParserFacade.class));
   }
 
   @Override

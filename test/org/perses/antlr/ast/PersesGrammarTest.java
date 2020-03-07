@@ -21,7 +21,7 @@ public class PersesGrammarTest {
 
   @Test
   public void test_getGrammarName() throws IOException, RecognitionException {
-    PersesGrammar cGrammar = new CParserFacade().getPersesGrammar();
+    PersesGrammar cGrammar = new CParserFacade().getAntlrGrammar().asCombined().getGrammar();
     assertThat(cGrammar.getGrammarName()).isEqualTo("OptC");
     ImmutableList<String> ruleNames =
         cGrammar.getRules().stream()
@@ -31,13 +31,13 @@ public class PersesGrammarTest {
             .collect(ImmutableList.toImmutableList());
     assertThat(ruleNames).containsExactlyElementsIn(TestUtility.OPT_C_PARSER_RULE_NAMES);
 
-    PersesGrammar javaGrammar = new JavaParserFacade().getPersesGrammar();
+    PersesGrammar javaGrammar = new JavaParserFacade().getAntlrGrammar().asCombined().getGrammar();
     assertThat(javaGrammar.getGrammarName()).isEqualTo("OptJava8");
   }
 
   @Test
   public void test_toSourceCode_c_grammar() throws IOException, RecognitionException {
-    PersesGrammar cGrammar = new CParserFacade().getPersesGrammar();
+    PersesGrammar cGrammar = new CParserFacade().getAntlrGrammar().asCombined().getGrammar();
     PersesGrammar grammarRoundback =
         PersesAstBuilder.loadGrammarFromString(cGrammar.getSourceCode());
     testGrammar(grammarRoundback);

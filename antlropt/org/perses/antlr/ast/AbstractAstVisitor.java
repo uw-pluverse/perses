@@ -53,6 +53,9 @@ public abstract class AbstractAstVisitor {
       case LEXER_SKIP_COMMAND:
         visit((PersesLexerSkipCommandAst) ast);
         break;
+      case LEXER_CHANNEL_COMMAND:
+        visit((PersesLexerChannelCommandAst)ast);
+        break;
       case NOT:
         visit((PersesNotAst) ast);
         break;
@@ -94,6 +97,8 @@ public abstract class AbstractAstVisitor {
   protected abstract void visit(PersesNotAst ast);
 
   protected abstract void visit(PersesLexerSkipCommandAst ast);
+
+  protected abstract void visit(PersesLexerChannelCommandAst ast);
 
   protected abstract void visit(PersesLexerCharSet ast);
 

@@ -8,7 +8,7 @@ import org.perses.grammar.AbstractDefaultParserFacade;
 public final class PnfGoParserFacade extends AbstractDefaultParserFacade<GoLexer, PnfGoParser> {
 
   public PnfGoParserFacade() {
-    super("PnfGoParser.g4");
+    super(createSeparateAntlrGrammar("PnfGoParser.g4", "GoLexer.g4", PnfGoParserFacade.class));
   }
 
   @Override

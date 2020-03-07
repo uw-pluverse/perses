@@ -36,13 +36,36 @@ public final class GrammarHierarchy {
   public static GrammarHierarchy createFromString(String content) throws RecognitionException {
     final GrammarRootAST rawAst = AntlrGrammarParser.parseRawGrammarASTFromString(content);
     final PersesGrammar persesGrammar = new PersesAstBuilder().buildFromAntlrRootAst(rawAst);
-    return createFromPersesGrammar(persesGrammar);
+    return createFromCombinedAntlrGrammar(
+        new AbstractAntlrGrammar.CombinedAntlrGrammar(persesGrammar));
   }
 
-  public static GrammarHierarchy createFromPersesGrammar(PersesGrammar persesGrammar) {
-    final String antlrGrammarContent = persesGrammar.getSourceCode();
-    final Grammar grammar = AntlrGrammarParser.loadAntlrGrammarFromString(antlrGrammarContent);
-    return new GrammarHierarchyBuilder(persesGrammar, computeTypeToTokenNameMap(grammar)).build();
+  public static GrammarHierarchy createFromAntlrGrammar(AbstractAntlrGrammar grammar) {
+    if (grammar.isCombined()) {
+      return createFromCombinedAntlrGrammar(grammar.asCombined());
+    } else {
+      return createFromSeparateAntlrGrammar(grammar.asSeparate());
+    }
+  }
+
+  private static GrammarHierarchy createFromCombinedAntlrGrammar(
+      AbstractAntlrGrammar.CombinedAntlrGrammar grammar) {
+    final PersesGrammar lexerGrammar = grammar.getGrammar();
+    final String antlrGrammarContent = lexerGrammar.getSourceCode();
+    final Grammar antlrToolGrammar =
+        AntlrGrammarParser.loadAntlrGrammarFromString(antlrGrammarContent);
+    return new GrammarHierarchyBuilder(grammar, computeTypeToTokenNameMap(antlrToolGrammar))
+        .build();
+  }
+
+  private static GrammarHierarchy createFromSeparateAntlrGrammar(
+      AbstractAntlrGrammar.SeparateAntlrGrammar grammar) {
+    final PersesGrammar lexerGrammar = grammar.getLexerGrammar();
+    final String antlrGrammarContent = lexerGrammar.getSourceCode();
+    final Grammar antlrToolGrammar =
+        AntlrGrammarParser.loadAntlrGrammarFromString(antlrGrammarContent);
+    return new GrammarHierarchyBuilder(grammar, computeTypeToTokenNameMap(antlrToolGrammar))
+        .build();
   }
 
   private static ImmutableMap<Integer, String> computeTypeToTokenNameMap(Grammar grammar) {

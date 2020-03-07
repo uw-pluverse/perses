@@ -17,6 +17,8 @@ maven_install(
     name = "maven",
     artifacts = [
         "com.beust:jcommander:1.78",
+        "com.fasterxml.jackson.core:jackson-core:2.10.3",
+        "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.10.3",
         "com.google.errorprone:error_prone_annotations:2.3.4",
         "com.google.flogger:flogger-system-backend:0.4",
         "com.google.flogger:flogger:0.4",

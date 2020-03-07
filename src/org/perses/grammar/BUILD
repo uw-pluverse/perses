@@ -13,6 +13,7 @@ java_library(
     ],
     deps = [
         "//antlropt/org/perses/antlr/ast",
+        "//src/org/perses/antlr:antlr_grammar_info",
         "//src/org/perses/antlr:antlr_grammar_parser",
         "//src/org/perses/antlr:antlr_grammar_util",
         "//src/org/perses/antlr:antlr_hierarchy",
@@ -33,8 +34,8 @@ java_library(
         "//src/org/perses:language_kind",
         "//src/org/perses/grammar/c:c_parser_facade",
         "//src/org/perses/grammar/c:pnfc_parser_facade",
-        "//src/org/perses/grammar/java:java_parser_facade",
         "//src/org/perses/grammar/go:pnfgo_parser_facade",
+        "//src/org/perses/grammar/java:java_parser_facade",
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",
     ],
@@ -49,7 +50,11 @@ java_binary(
 
 sh_library(
     name = "antlr_merge_grammar_sed_scripts",
-    data = ["antlr_remove_grammar.sed", "antlr_remove_options.sed", "antlr_merge_options.sed"]
+    data = [
+        "antlr_merge_options.sed",
+        "antlr_remove_grammar.sed",
+        "antlr_remove_options.sed",
+    ],
 )
 
 sh_binary(

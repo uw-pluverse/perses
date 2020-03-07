@@ -20,12 +20,8 @@ import com.google.common.annotations.VisibleForTesting
 import com.google.common.base.Strings
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
+import com.google.common.io.Files
 import com.google.common.io.MoreFiles
-import java.io.Closeable
-import java.io.File
-import java.io.IOException
-import java.nio.charset.StandardCharsets
-import java.util.concurrent.ExecutionException
 import org.antlr.v4.runtime.tree.ParseTree
 import org.perses.CommandOptions
 import org.perses.grammar.AbstractParserFacade
@@ -46,6 +42,11 @@ import org.perses.tree.spar.SparTreeBuilder
 import org.perses.util.Shell
 import org.perses.util.TimeSpan
 import org.perses.util.Util
+import java.io.Closeable
+import java.io.File
+import java.io.IOException
+import java.nio.charset.StandardCharsets
+import java.util.concurrent.ExecutionException
 
 /**
  * This is the main entry to invoke Perses reducer. It does not have a main, but is the main entry
@@ -170,6 +171,17 @@ class ReductionDriver(
 //  (2) use the spar-tree. This ensures the Antlr parser works correctly.
     val program = tree.programSnapshot
     val future = executorService.testProgram(program, configuration.keepOriginalCodeFormat)
+    if (!future.get().isPass) {
+      logger.atSevere().log("The initial sanity check failed. Folder: ${future.workingDirectory}")
+      val tempDir = Files.createTempDir()
+      for (file in future.workingDirectory.listFiles()) {
+        if (file.isFile) {
+          Files.copy(file, File(tempDir, file.name))
+        }
+      }
+      logger.atSevere().log("The files have been saved to $tempDir")
+      throw IllegalStateException()
+    }
     check(future.get().isPass) {
       "The initial sanity check failed. Folder: ${future.workingDirectory}"
     }
@@ -189,11 +201,17 @@ class ReductionDriver(
 
   fun reparseAndCreateSparTree(originalTree: SparTree): SparTree {
     val program = originalTree.programSnapshot
-    val parserFacade = configuration.parserFacade
-    val parseTree = parserFacade.parseTokenizedProgram(program).tree
-    return SparTreeBuilder(
-      parserFacade.ruleHierarchy, originalTree.tokenizedProgramFactory)
-      .build(parseTree)
+    try {
+      val parserFacade = configuration.parserFacade
+      val parseTree = parserFacade.parseString(program.sourceCodeInOrigFormat).tree
+      return SparTreeBuilder(
+        parserFacade.ruleHierarchy, originalTree.tokenizedProgramFactory)
+        .build(parseTree)
+    } catch (e: Exception) {
+      System.err.println("Fail to parse the following program.")
+      System.err.println(program.sourceCodeInOrigFormat)
+      throw e
+    }
   }
 
   @Throws(IOException::class)
