@@ -150,7 +150,7 @@ public final class GrammarHierarchyBuilder {
           graph.addNode(node); // This is necessary, as it can have no immediate subrules.
           for (String subruleName : node.getImmediateSubRuleNames()) {
             final RuleHierarchyInfo subrule = nameToRuleMap.get(subruleName);
-            checkNotNull(subrule, "No subrule for node %s", subruleName);
+            checkNotNull(subrule, "No subrule for node %s. Node=%s", subruleName, node.getRuleName());
             graph.putEdge(node, subrule);
           }
         });
