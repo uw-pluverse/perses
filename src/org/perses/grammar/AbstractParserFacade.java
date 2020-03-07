@@ -20,12 +20,9 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.flogger.FluentLogger;
 import com.google.common.io.ByteStreams;
-import org.antlr.runtime.RecognitionException;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import org.antlr.v4.tool.ast.GrammarRootAST;
-import org.perses.antlr.AntlrGrammarParser;
 import org.perses.antlr.GrammarHierarchy;
 import org.perses.antlr.ParseTreeWithParser;
 import org.perses.antlr.ast.PersesAstBuilder;
@@ -46,9 +43,9 @@ public abstract class AbstractParserFacade {
   protected AbstractParserFacade(String antlrGrammarFileName) {
     try {
       antlrGrammarContent = readAntlrGrammarContent(antlrGrammarFileName);
-      persesGrammar = createPersesGrammar(antlrGrammarContent);
+      persesGrammar = PersesAstBuilder.loadGrammarFromString(antlrGrammarContent);
       hierarchy = GrammarHierarchy.createFromPersesGrammar(persesGrammar);
-    } catch (IOException | RecognitionException e) {
+    } catch (IOException e) {
       logger.atSevere().withCause(e).log(
           "Cannot create facade for grammar %s", antlrGrammarFileName);
       throw new AssertionError(e);
@@ -61,13 +58,6 @@ public abstract class AbstractParserFacade {
 
   public String getAntlrGrammarContent() {
     return antlrGrammarContent;
-  }
-
-  private static PersesGrammar createPersesGrammar(String antlrGrammarContent)
-      throws RecognitionException {
-    GrammarRootAST grammarRootAST =
-        AntlrGrammarParser.parseRawGrammarASTFromString(antlrGrammarContent);
-    return new PersesAstBuilder().buildFromAntlrRootAst(grammarRootAST);
   }
 
   /** Parse the given file into a ParseTree. */
