@@ -42,7 +42,7 @@ java -jar perses_deploy.jar  --help
 
 ### For Developers ###
 
-Perses is written in Java 8, and built with [Bazel](https://bazel.build/). 
+Perses is written in combination of Java 8 and Kotlin, and built with [Bazel](https://bazel.build/). 
 
 To build, run
 
