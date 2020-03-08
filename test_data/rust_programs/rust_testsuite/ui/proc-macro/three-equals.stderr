@@ -1,0 +1,60 @@
+error: found 2 equal signs, need exactly 3
+  --> $DIR/auxiliary/three-equals.rs:42:1
+   |
+LL | / pub fn three_equals(input: TokenStream) -> TokenStream {
+LL | |     if let Err(diag) = parse(input) {
+LL | |         diag.emit();
+LL | |         return TokenStream::new();
+...  |
+LL | |     "3".parse().unwrap()
+LL | | }
+   | |_^
+   | 
+  ::: $DIR/three-equals.rs:15:5
+   |
+LL |       three_equals!(==);
+   |       ------------------ in this macro invocation
+   |
+   = help: input must be: `===`
+   = note: this error originates in a macro (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: expected EOF, found `=`.
+  --> $DIR/three-equals.rs:18:21
+   |
+LL |     three_equals!(=====);
+   |                     ^^
+   |
+note: last good input was here
+  --> $DIR/three-equals.rs:18:21
+   |
+LL |     three_equals!(=====);
+   |                     ^^
+   = help: input must be: `===`
+
+error: expected `=`, found `abc`.
+  --> $DIR/three-equals.rs:21:19
+   |
+LL |     three_equals!(abc);
+   |                   ^^^
+
+error: expected `=`, found `!`.
+  --> $DIR/three-equals.rs:24:19
+   |
+LL |     three_equals!(!!);
+   |                   ^
+
+error: expected EOF, found `a`.
+  --> $DIR/three-equals.rs:27:22
+   |
+LL |     three_equals!(===a);
+   |                      ^
+   |
+note: last good input was here
+  --> $DIR/three-equals.rs:27:21
+   |
+LL |     three_equals!(===a);
+   |                     ^
+   = help: input must be: `===`
+
+error: aborting due to 5 previous errors
+

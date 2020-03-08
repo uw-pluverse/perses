@@ -1,0 +1,35 @@
+error[E0658]: attributes starting with `rustc` are reserved for use by the `rustc` compiler
+  --> $DIR/attribute-typos.rs:11:3
+   |
+LL | #[rustc_err]
+   |   ^^^^^^^^^
+   |
+   = note: see issue #29642 <https://github.com/rust-lang/rust/issues/29642> for more information
+   = help: add `#![feature(rustc_attrs)]` to the crate attributes to enable
+
+error: cannot find attribute `rustc_err` in this scope
+  --> $DIR/attribute-typos.rs:11:3
+   |
+LL | #[rustc_err]
+   |   ^^^^^^^^^ help: a built-in attribute with a similar name exists: `rustc_error`
+
+error: cannot find attribute `tests` in this scope
+  --> $DIR/attribute-typos.rs:8:3
+   |
+LL | #[tests]
+   |   ^^^^^ help: an attribute macro with a similar name exists: `test`
+   | 
+  ::: $SRC_DIR/libcore/macros/mod.rs:LL:COL
+   |
+LL |     pub macro test($item:item) {
+   |     -------------------------- similarly named attribute macro `test` defined here
+
+error: cannot find attribute `deprcated` in this scope
+  --> $DIR/attribute-typos.rs:5:3
+   |
+LL | #[deprcated]
+   |   ^^^^^^^^^ help: a built-in attribute with a similar name exists: `deprecated`
+
+error: aborting due to 4 previous errors
+
+For more information about this error, try `rustc --explain E0658`.

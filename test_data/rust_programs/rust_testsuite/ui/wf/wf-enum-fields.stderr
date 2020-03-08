@@ -1,0 +1,18 @@
+error[E0277]: the trait bound `A: std::marker::Copy` is not satisfied
+  --> $DIR/wf-enum-fields.rs:12:17
+   |
+LL | struct IsCopy<T:Copy> {
+   | --------------------- required by `IsCopy`
+...
+LL |     SomeVariant(IsCopy<A>)
+   |                 ^^^^^^^^^ the trait `std::marker::Copy` is not implemented for `A`
+   |
+help: consider restricting this type parameter with `A: std::marker::Copy`
+  --> $DIR/wf-enum-fields.rs:11:15
+   |
+LL | enum SomeEnum<A> {
+   |               ^
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0277`.

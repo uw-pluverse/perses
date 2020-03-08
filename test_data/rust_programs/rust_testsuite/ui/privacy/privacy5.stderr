@@ -1,0 +1,771 @@
+error[E0603]: tuple struct constructor `A` is private
+  --> $DIR/privacy5.rs:51:16
+   |
+LL |     pub struct A(());
+   |                  -- a constructor is private if any of the fields is private
+...
+LL |     let a = a::A(());
+   |                ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `A` is defined here
+  --> $DIR/privacy5.rs:6:5
+   |
+LL |     pub struct A(());
+   |     ^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `B` is private
+  --> $DIR/privacy5.rs:52:16
+   |
+LL |     pub struct B(isize);
+   |                  ----- a constructor is private if any of the fields is private
+...
+LL |     let b = a::B(2);
+   |                ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `B` is defined here
+  --> $DIR/privacy5.rs:7:5
+   |
+LL |     pub struct B(isize);
+   |     ^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:53:16
+   |
+LL |     pub struct C(pub isize, isize);
+   |                  ---------------- a constructor is private if any of the fields is private
+...
+LL |     let c = a::C(2, 3);
+   |                ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/privacy5.rs:8:5
+   |
+LL |     pub struct C(pub isize, isize);
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `A` is private
+  --> $DIR/privacy5.rs:56:12
+   |
+LL |     pub struct A(());
+   |                  -- a constructor is private if any of the fields is private
+...
+LL |     let a::A(()) = a;
+   |            ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `A` is defined here
+  --> $DIR/privacy5.rs:6:5
+   |
+LL |     pub struct A(());
+   |     ^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `A` is private
+  --> $DIR/privacy5.rs:57:12
+   |
+LL |     pub struct A(());
+   |                  -- a constructor is private if any of the fields is private
+...
+LL |     let a::A(_) = a;
+   |            ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `A` is defined here
+  --> $DIR/privacy5.rs:6:5
+   |
+LL |     pub struct A(());
+   |     ^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `A` is private
+  --> $DIR/privacy5.rs:58:18
+   |
+LL |     pub struct A(());
+   |                  -- a constructor is private if any of the fields is private
+...
+LL |     match a { a::A(()) => {} }
+   |                  ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `A` is defined here
+  --> $DIR/privacy5.rs:6:5
+   |
+LL |     pub struct A(());
+   |     ^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `A` is private
+  --> $DIR/privacy5.rs:59:18
+   |
+LL |     pub struct A(());
+   |                  -- a constructor is private if any of the fields is private
+...
+LL |     match a { a::A(_) => {} }
+   |                  ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `A` is defined here
+  --> $DIR/privacy5.rs:6:5
+   |
+LL |     pub struct A(());
+   |     ^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `B` is private
+  --> $DIR/privacy5.rs:61:12
+   |
+LL |     pub struct B(isize);
+   |                  ----- a constructor is private if any of the fields is private
+...
+LL |     let a::B(_) = b;
+   |            ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `B` is defined here
+  --> $DIR/privacy5.rs:7:5
+   |
+LL |     pub struct B(isize);
+   |     ^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `B` is private
+  --> $DIR/privacy5.rs:62:12
+   |
+LL |     pub struct B(isize);
+   |                  ----- a constructor is private if any of the fields is private
+...
+LL |     let a::B(_b) = b;
+   |            ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `B` is defined here
+  --> $DIR/privacy5.rs:7:5
+   |
+LL |     pub struct B(isize);
+   |     ^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `B` is private
+  --> $DIR/privacy5.rs:63:18
+   |
+LL |     pub struct B(isize);
+   |                  ----- a constructor is private if any of the fields is private
+...
+LL |     match b { a::B(_) => {} }
+   |                  ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `B` is defined here
+  --> $DIR/privacy5.rs:7:5
+   |
+LL |     pub struct B(isize);
+   |     ^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `B` is private
+  --> $DIR/privacy5.rs:64:18
+   |
+LL |     pub struct B(isize);
+   |                  ----- a constructor is private if any of the fields is private
+...
+LL |     match b { a::B(_b) => {} }
+   |                  ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `B` is defined here
+  --> $DIR/privacy5.rs:7:5
+   |
+LL |     pub struct B(isize);
+   |     ^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `B` is private
+  --> $DIR/privacy5.rs:65:18
+   |
+LL |     pub struct B(isize);
+   |                  ----- a constructor is private if any of the fields is private
+...
+LL |     match b { a::B(1) => {} a::B(_) => {} }
+   |                  ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `B` is defined here
+  --> $DIR/privacy5.rs:7:5
+   |
+LL |     pub struct B(isize);
+   |     ^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `B` is private
+  --> $DIR/privacy5.rs:65:32
+   |
+LL |     pub struct B(isize);
+   |                  ----- a constructor is private if any of the fields is private
+...
+LL |     match b { a::B(1) => {} a::B(_) => {} }
+   |                                ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `B` is defined here
+  --> $DIR/privacy5.rs:7:5
+   |
+LL |     pub struct B(isize);
+   |     ^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:68:12
+   |
+LL |     pub struct C(pub isize, isize);
+   |                  ---------------- a constructor is private if any of the fields is private
+...
+LL |     let a::C(_, _) = c;
+   |            ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/privacy5.rs:8:5
+   |
+LL |     pub struct C(pub isize, isize);
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:69:12
+   |
+LL |     pub struct C(pub isize, isize);
+   |                  ---------------- a constructor is private if any of the fields is private
+...
+LL |     let a::C(_a, _) = c;
+   |            ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/privacy5.rs:8:5
+   |
+LL |     pub struct C(pub isize, isize);
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:70:12
+   |
+LL |     pub struct C(pub isize, isize);
+   |                  ---------------- a constructor is private if any of the fields is private
+...
+LL |     let a::C(_, _b) = c;
+   |            ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/privacy5.rs:8:5
+   |
+LL |     pub struct C(pub isize, isize);
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:71:12
+   |
+LL |     pub struct C(pub isize, isize);
+   |                  ---------------- a constructor is private if any of the fields is private
+...
+LL |     let a::C(_a, _b) = c;
+   |            ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/privacy5.rs:8:5
+   |
+LL |     pub struct C(pub isize, isize);
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:72:18
+   |
+LL |     pub struct C(pub isize, isize);
+   |                  ---------------- a constructor is private if any of the fields is private
+...
+LL |     match c { a::C(_, _) => {} }
+   |                  ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/privacy5.rs:8:5
+   |
+LL |     pub struct C(pub isize, isize);
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:73:18
+   |
+LL |     pub struct C(pub isize, isize);
+   |                  ---------------- a constructor is private if any of the fields is private
+...
+LL |     match c { a::C(_a, _) => {} }
+   |                  ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/privacy5.rs:8:5
+   |
+LL |     pub struct C(pub isize, isize);
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:74:18
+   |
+LL |     pub struct C(pub isize, isize);
+   |                  ---------------- a constructor is private if any of the fields is private
+...
+LL |     match c { a::C(_, _b) => {} }
+   |                  ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/privacy5.rs:8:5
+   |
+LL |     pub struct C(pub isize, isize);
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:75:18
+   |
+LL |     pub struct C(pub isize, isize);
+   |                  ---------------- a constructor is private if any of the fields is private
+...
+LL |     match c { a::C(_a, _b) => {} }
+   |                  ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/privacy5.rs:8:5
+   |
+LL |     pub struct C(pub isize, isize);
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `A` is private
+  --> $DIR/privacy5.rs:83:17
+   |
+LL |     pub struct A(());
+   |                  -- a constructor is private if any of the fields is private
+...
+LL |     let a2 = a::A;
+   |                 ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `A` is defined here
+  --> $DIR/privacy5.rs:6:5
+   |
+LL |     pub struct A(());
+   |     ^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `B` is private
+  --> $DIR/privacy5.rs:84:17
+   |
+LL |     pub struct B(isize);
+   |                  ----- a constructor is private if any of the fields is private
+...
+LL |     let b2 = a::B;
+   |                 ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `B` is defined here
+  --> $DIR/privacy5.rs:7:5
+   |
+LL |     pub struct B(isize);
+   |     ^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:85:17
+   |
+LL |     pub struct C(pub isize, isize);
+   |                  ---------------- a constructor is private if any of the fields is private
+...
+LL |     let c2 = a::C;
+   |                 ^ this tuple struct constructor is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/privacy5.rs:8:5
+   |
+LL |     pub struct C(pub isize, isize);
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `A` is private
+  --> $DIR/privacy5.rs:90:20
+   |
+LL |     let a = other::A(());
+   |                    ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:1:14
+   |
+LL | pub struct A(());
+   |              -- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `A` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:1:1
+   |
+LL | pub struct A(());
+   | ^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `B` is private
+  --> $DIR/privacy5.rs:91:20
+   |
+LL |     let b = other::B(2);
+   |                    ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:2:14
+   |
+LL | pub struct B(isize);
+   |              ----- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `B` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:2:1
+   |
+LL | pub struct B(isize);
+   | ^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:92:20
+   |
+LL |     let c = other::C(2, 3);
+   |                    ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:3:14
+   |
+LL | pub struct C(pub isize, isize);
+   |              ---------------- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:3:1
+   |
+LL | pub struct C(pub isize, isize);
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `A` is private
+  --> $DIR/privacy5.rs:95:16
+   |
+LL |     let other::A(()) = a;
+   |                ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:1:14
+   |
+LL | pub struct A(());
+   |              -- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `A` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:1:1
+   |
+LL | pub struct A(());
+   | ^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `A` is private
+  --> $DIR/privacy5.rs:96:16
+   |
+LL |     let other::A(_) = a;
+   |                ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:1:14
+   |
+LL | pub struct A(());
+   |              -- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `A` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:1:1
+   |
+LL | pub struct A(());
+   | ^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `A` is private
+  --> $DIR/privacy5.rs:97:22
+   |
+LL |     match a { other::A(()) => {} }
+   |                      ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:1:14
+   |
+LL | pub struct A(());
+   |              -- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `A` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:1:1
+   |
+LL | pub struct A(());
+   | ^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `A` is private
+  --> $DIR/privacy5.rs:98:22
+   |
+LL |     match a { other::A(_) => {} }
+   |                      ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:1:14
+   |
+LL | pub struct A(());
+   |              -- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `A` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:1:1
+   |
+LL | pub struct A(());
+   | ^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `B` is private
+  --> $DIR/privacy5.rs:100:16
+   |
+LL |     let other::B(_) = b;
+   |                ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:2:14
+   |
+LL | pub struct B(isize);
+   |              ----- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `B` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:2:1
+   |
+LL | pub struct B(isize);
+   | ^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `B` is private
+  --> $DIR/privacy5.rs:101:16
+   |
+LL |     let other::B(_b) = b;
+   |                ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:2:14
+   |
+LL | pub struct B(isize);
+   |              ----- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `B` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:2:1
+   |
+LL | pub struct B(isize);
+   | ^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `B` is private
+  --> $DIR/privacy5.rs:102:22
+   |
+LL |     match b { other::B(_) => {} }
+   |                      ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:2:14
+   |
+LL | pub struct B(isize);
+   |              ----- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `B` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:2:1
+   |
+LL | pub struct B(isize);
+   | ^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `B` is private
+  --> $DIR/privacy5.rs:103:22
+   |
+LL |     match b { other::B(_b) => {} }
+   |                      ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:2:14
+   |
+LL | pub struct B(isize);
+   |              ----- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `B` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:2:1
+   |
+LL | pub struct B(isize);
+   | ^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `B` is private
+  --> $DIR/privacy5.rs:104:22
+   |
+LL |     match b { other::B(1) => {}
+   |                      ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:2:14
+   |
+LL | pub struct B(isize);
+   |              ----- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `B` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:2:1
+   |
+LL | pub struct B(isize);
+   | ^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `B` is private
+  --> $DIR/privacy5.rs:105:16
+   |
+LL |         other::B(_) => {} }
+   |                ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:2:14
+   |
+LL | pub struct B(isize);
+   |              ----- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `B` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:2:1
+   |
+LL | pub struct B(isize);
+   | ^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:107:16
+   |
+LL |     let other::C(_, _) = c;
+   |                ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:3:14
+   |
+LL | pub struct C(pub isize, isize);
+   |              ---------------- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:3:1
+   |
+LL | pub struct C(pub isize, isize);
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:108:16
+   |
+LL |     let other::C(_a, _) = c;
+   |                ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:3:14
+   |
+LL | pub struct C(pub isize, isize);
+   |              ---------------- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:3:1
+   |
+LL | pub struct C(pub isize, isize);
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:109:16
+   |
+LL |     let other::C(_, _b) = c;
+   |                ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:3:14
+   |
+LL | pub struct C(pub isize, isize);
+   |              ---------------- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:3:1
+   |
+LL | pub struct C(pub isize, isize);
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:110:16
+   |
+LL |     let other::C(_a, _b) = c;
+   |                ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:3:14
+   |
+LL | pub struct C(pub isize, isize);
+   |              ---------------- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:3:1
+   |
+LL | pub struct C(pub isize, isize);
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:111:22
+   |
+LL |     match c { other::C(_, _) => {} }
+   |                      ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:3:14
+   |
+LL | pub struct C(pub isize, isize);
+   |              ---------------- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:3:1
+   |
+LL | pub struct C(pub isize, isize);
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:112:22
+   |
+LL |     match c { other::C(_a, _) => {} }
+   |                      ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:3:14
+   |
+LL | pub struct C(pub isize, isize);
+   |              ---------------- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:3:1
+   |
+LL | pub struct C(pub isize, isize);
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:113:22
+   |
+LL |     match c { other::C(_, _b) => {} }
+   |                      ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:3:14
+   |
+LL | pub struct C(pub isize, isize);
+   |              ---------------- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:3:1
+   |
+LL | pub struct C(pub isize, isize);
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:114:22
+   |
+LL |     match c { other::C(_a, _b) => {} }
+   |                      ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:3:14
+   |
+LL | pub struct C(pub isize, isize);
+   |              ---------------- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:3:1
+   |
+LL | pub struct C(pub isize, isize);
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `A` is private
+  --> $DIR/privacy5.rs:122:21
+   |
+LL |     let a2 = other::A;
+   |                     ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:1:14
+   |
+LL | pub struct A(());
+   |              -- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `A` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:1:1
+   |
+LL | pub struct A(());
+   | ^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `B` is private
+  --> $DIR/privacy5.rs:123:21
+   |
+LL |     let b2 = other::B;
+   |                     ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:2:14
+   |
+LL | pub struct B(isize);
+   |              ----- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `B` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:2:1
+   |
+LL | pub struct B(isize);
+   | ^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: tuple struct constructor `C` is private
+  --> $DIR/privacy5.rs:124:21
+   |
+LL |     let c2 = other::C;
+   |                     ^ this tuple struct constructor is private
+   | 
+  ::: $DIR/auxiliary/privacy_tuple_struct.rs:3:14
+   |
+LL | pub struct C(pub isize, isize);
+   |              ---------------- a constructor is private if any of the fields is private
+   |
+note: the tuple struct constructor `C` is defined here
+  --> $DIR/auxiliary/privacy_tuple_struct.rs:3:1
+   |
+LL | pub struct C(pub isize, isize);
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: aborting due to 48 previous errors
+
+For more information about this error, try `rustc --explain E0603`.
