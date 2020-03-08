@@ -1,0 +1,24 @@
+error[E0432]: unresolved import `bar::foo`
+  --> $DIR/privacy2.rs:17:9
+   |
+LL |     use bar::foo;
+   |         ^^^^^^^^ no `foo` in `bar`
+
+error[E0603]: function import `foo` is private
+  --> $DIR/privacy2.rs:23:20
+   |
+LL |     use bar::glob::foo;
+   |                    ^^^ this function import is private
+   |
+note: the function import `foo` is defined here
+  --> $DIR/privacy2.rs:10:13
+   |
+LL |         use foo;
+   |             ^^^
+
+error: requires `sized` lang_item
+
+error: aborting due to 3 previous errors
+
+Some errors have detailed explanations: E0432, E0603.
+For more information about an error, try `rustc --explain E0432`.

@@ -1,0 +1,18 @@
+error[E0277]: the trait bound `U: std::marker::Copy` is not satisfied
+  --> $DIR/wf-enum-bound.rs:10:14
+   |
+LL | trait ExtraCopy<T:Copy> { }
+   | ----------------------- required by `ExtraCopy`
+...
+LL |     where T: ExtraCopy<U>
+   |              ^^^^^^^^^^^^ the trait `std::marker::Copy` is not implemented for `U`
+   |
+help: consider restricting this type parameter with `where U: std::marker::Copy`
+  --> $DIR/wf-enum-bound.rs:9:17
+   |
+LL | enum SomeEnum<T,U>
+   |                 ^
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0277`.

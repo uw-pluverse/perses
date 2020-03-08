@@ -1,0 +1,28 @@
+error: parenthesized lifetime bounds are not supported
+  --> $DIR/trait-object-lifetime-parens.rs:5:21
+   |
+LL | fn f<'a, T: Trait + ('a)>() {}
+   |                     ^^^^ help: remove the parentheses
+
+error: parenthesized lifetime bounds are not supported
+  --> $DIR/trait-object-lifetime-parens.rs:8:24
+   |
+LL |     let _: Box<Trait + ('a)>;
+   |                        ^^^^ help: remove the parentheses
+
+error: expected `:`, found `)`
+  --> $DIR/trait-object-lifetime-parens.rs:9:19
+   |
+LL |     let _: Box<('a) + Trait>;
+   |                   ^ expected `:`
+
+error: expected type, found `'a`
+  --> $DIR/trait-object-lifetime-parens.rs:9:17
+   |
+LL |     let _: Box<('a) + Trait>;
+   |         -       ^^ expected type
+   |         |
+   |         while parsing the type for `_`
+
+error: aborting due to 4 previous errors
+
