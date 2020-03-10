@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
+@Deprecated
+// Not being used.
 public final class LexerParserCombiner {
 
   public static String combineLexerAndParser(
