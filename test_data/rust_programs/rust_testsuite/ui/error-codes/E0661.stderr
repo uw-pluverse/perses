@@ -1,0 +1,16 @@
+error[E0661]: output operand constraint lacks '=' or '+'
+  --> $DIR/E0661.rs:7:18
+   |
+LL |     asm!("nop" : "r"(a));
+   |                  ^^^
+
+error[E0282]: type annotations needed
+  --> $DIR/E0661.rs:6:9
+   |
+LL |     let a;
+   |         ^ consider giving `a` a type
+
+error: aborting due to 2 previous errors
+
+Some errors have detailed explanations: E0282, E0661.
+For more information about an error, try `rustc --explain E0282`.

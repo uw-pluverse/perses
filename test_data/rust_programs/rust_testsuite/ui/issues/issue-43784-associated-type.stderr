@@ -1,0 +1,20 @@
+error[E0277]: the trait bound `T: std::marker::Copy` is not satisfied
+  --> $DIR/issue-43784-associated-type.rs:14:5
+   |
+LL |     type Assoc: Partial<Self>;
+   |          ----- associated type defined here
+...
+LL | impl<T> Complete for T {
+   | ---------------------- in this `impl` item
+LL |     type Assoc = T;
+   |     ^^^^^^^^^^^^^^^ the trait `std::marker::Copy` is not implemented for `T`
+   |
+help: consider restricting this type parameter with `T: std::marker::Copy`
+  --> $DIR/issue-43784-associated-type.rs:13:6
+   |
+LL | impl<T> Complete for T {
+   |      ^
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0277`.

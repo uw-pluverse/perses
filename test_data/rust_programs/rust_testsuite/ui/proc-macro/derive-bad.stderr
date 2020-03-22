@@ -1,0 +1,16 @@
+error: expected `:`, found `}`
+  --> $DIR/derive-bad.rs:7:5
+   |
+LL |     A
+   |     ^ expected `:`
+   |
+   = note: this error originates in a derive macro (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: proc-macro derive produced unparseable tokens
+  --> $DIR/derive-bad.rs:7:5
+   |
+LL |     A
+   |     ^
+
+error: aborting due to 2 previous errors
+
