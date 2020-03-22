@@ -35,6 +35,9 @@ class SourceFile(val file: File) {
   val baseName: String
     get() = file.name
 
+  val parentFile: File
+    get() = file.parentFile
+
   @Throws(IOException::class)
   fun writeTo(path: File) =
     MoreFiles.asCharSink(path.toPath(), StandardCharsets.UTF_8).write(fileContent)

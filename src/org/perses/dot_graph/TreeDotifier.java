@@ -22,8 +22,8 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.perses.PersesRuntimeException;
 import org.perses.antlr.ParseTreeWithParser;
-import org.perses.program.SourceFile;
 import org.perses.grammar.ParserFacadeFactory;
+import org.perses.program.SourceFile;
 import org.perses.tree.spar.AbstractSparTreeNode;
 
 import java.io.File;
@@ -72,12 +72,13 @@ public class TreeDotifier {
 
   public static void dotifyAntlrParseTree(File sourceFile, File pdfFile) {
     try {
-      final SourceFile source = SourceFile.createFromPath(sourceFile);
+      final SourceFile source = new SourceFile(sourceFile);
       final ParseTreeWithParser root =
           ParserFacadeFactory.SINGLETON
               .createParserFacade(source.getLanguageKind())
               .parseFile(sourceFile);
-      convertTreeToDotGraph(root.getTree()).dotify(pdfFile, DEFAULT_ANTLR_PARSE_TREE_LABEL_PROVIDER);
+      convertTreeToDotGraph(root.getTree())
+          .dotify(pdfFile, DEFAULT_ANTLR_PARSE_TREE_LABEL_PROVIDER);
     } catch (Exception e) {
       throw new PersesRuntimeException(e);
     }

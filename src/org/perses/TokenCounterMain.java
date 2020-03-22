@@ -19,11 +19,11 @@ public class TokenCounterMain {
     final File file = new File(args[0]);
     checkArgument(file.exists(), "The source file does not exist. %s", file);
     checkArgument(file.isFile(), "The source file is not a regular file. %s", file);
-    final SourceFile sourceFile = SourceFile.createFromPath(file);
+    final SourceFile sourceFile = new SourceFile(file);
     final AbstractParserFacade parserFacade =
         ParserFacadeFactory.SINGLETON.createParserFacade(sourceFile.getLanguageKind());
     final ParseTreeWithParser parseTreeWithParser =
-        parserFacade.parseString(sourceFile.fileContent);
+        parserFacade.parseString(sourceFile.getFileContent());
     final ImmutableList<Token> tokens =
         AbstractParserFacade.getTokens(parseTreeWithParser.getTree());
     System.out.println();

@@ -18,13 +18,13 @@ package org.perses.reduction
 
 import com.google.common.annotations.VisibleForTesting
 import com.google.common.base.Joiner
-import java.io.File
-import java.time.LocalDateTime
-import java.util.Optional
 import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.ParserFacadeFactory
 import org.perses.program.SourceFile
 import org.perses.util.Util
+import java.io.File
+import java.time.LocalDateTime
+import java.util.Optional
 
 /**
  * This is the internal configuration for Perses reducer.
@@ -35,8 +35,8 @@ import org.perses.util.Util
 class ReductionConfiguration(
   /** The working directory of the reduction.  */
   val workingFolder: File,
-  testScriptFile: File,
-  fileToReduce: File,
+  val testScript: SourceFile,
+  val fileToReduce: SourceFile,
   val bestResultFile: File,
   private val statisticsFile: File?,
   private val progressDumpFile: File?,
@@ -47,10 +47,6 @@ class ReductionConfiguration(
   val maxReductionLevel: Int,
   val numOfReductionThreads: Int
 ) {
-  /** The test script for reduction  */
-  val testScript: SourceFile
-  /** The file to reduce  */
-  val fileToReduce: SourceFile
   /** The parser facade.  */
   val parserFacade: AbstractParserFacade
   /** This file is used to store the best result of reduction.  */
@@ -68,12 +64,12 @@ class ReductionConfiguration(
     get() = if (statisticsFile == null) {
       Optional.empty()
     } else Optional.of(
-        File(statisticsFile.parentFile, "testscript-" + statisticsFile.name))
+      File(statisticsFile.parentFile, "testscript-" + statisticsFile.name))
 
   fun getFixpointIterationResultFile(fixpointIteration: Int): File {
     val bestResultFile = bestResultFile
     return File(
-        tempRootFolder, bestResultFile.name + "_fixpoint_iteration_" + fixpointIteration)
+      tempRootFolder, bestResultFile.name + "_fixpoint_iteration_" + fixpointIteration)
   }
 
   fun dumpConfiguration(): String {
@@ -98,11 +94,11 @@ class ReductionConfiguration(
       time: LocalDateTime?
     ): String {
       return Joiner.on('_')
-          .join(
-              PERSES_TEMP_ROOT_PREFIX,
-              fileNameForReduction,
-              testScriptName,
-              Util.formatDateForFileName(time))
+        .join(
+          PERSES_TEMP_ROOT_PREFIX,
+          fileNameForReduction,
+          testScriptName,
+          Util.formatDateForFileName(time))
     }
   }
 
@@ -119,13 +115,11 @@ class ReductionConfiguration(
     require(numOfReductionThreads > 0) {
       "The number of reduction threads should be positive: $numOfReductionThreads"
     }
-    testScript = SourceFile.createFromPath(testScriptFile)
-    this.fileToReduce = SourceFile.createFromPath(fileToReduce)
     parserFacade = ParserFacadeFactory.SINGLETON.createParserFacade(this.fileToReduce.languageKind)
 
     tempRootFolder = File(
-        workingFolder,
-        getTempRootFolderName(
-            fileToReduce.name, testScriptFile.name, LocalDateTime.now()))
+      workingFolder,
+      getTempRootFolderName(
+        fileToReduce.file.name, testScript.file.name, LocalDateTime.now()))
   }
 }

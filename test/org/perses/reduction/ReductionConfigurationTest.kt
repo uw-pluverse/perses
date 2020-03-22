@@ -20,11 +20,11 @@ import com.google.common.io.MoreFiles
 import com.google.common.io.RecursiveDeleteOption
 import com.google.common.truth.Truth
 import org.junit.After
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
+import org.perses.program.SourceFile
 import org.perses.reduction.ReductionConfiguration.Companion.getTempRootFolderName
 import java.io.File
 import java.io.IOException
@@ -34,14 +34,9 @@ import java.time.LocalDateTime
 /** Test for [ReductionConfiguration]  */
 @RunWith(JUnit4::class)
 class ReductionConfigurationTest {
-  private val testScript = File(FOLDER + "r.sh")
-  private var workingDirectory: File? = null
-  private val sourceFile = File(FOLDER + "t.c")
-  @Before
-  @Throws(IOException::class)
-  fun setup() {
-    workingDirectory = TestUtility.createCleanWorkingDirectory(ReductionConfigurationTest::class.java)
-  }
+  private val testScript = SourceFile(File(FOLDER + "r.sh"))
+  private val workingDirectory = TestUtility.createCleanWorkingDirectory(ReductionConfigurationTest::class.java)
+  private val sourceFile = SourceFile(File(FOLDER + "t.c"))
 
   @After
   @Throws(IOException::class)
@@ -52,27 +47,27 @@ class ReductionConfigurationTest {
   @Test
   @Throws(IOException::class)
   fun testConfiguration() {
-    Truth.assertThat(workingDirectory!!.isDirectory).isTrue()
-    val bestFile = sourceFile
+    Truth.assertThat(workingDirectory.isDirectory).isTrue()
+    val bestFile = sourceFile.file
     val numOfReductionThreads = 2
     val maxReductionLevel = 100
     val configuration = ReductionConfiguration(
-        workingFolder = workingDirectory!!,
-        testScriptFile = testScript,
-        fileToReduce = sourceFile,
-        bestResultFile = bestFile,
-        statisticsFile = null,
-        progressDumpFile = null,
-        keepOriginalCodeFormat = true,
-        fixpointReduction = true,
-        enableTestScriptExecutionCaching = true,
-        useRealDeltaDebugger = false,
-        maxReductionLevel = maxReductionLevel,
-        numOfReductionThreads = numOfReductionThreads)
+      workingFolder = workingDirectory,
+      testScript = testScript,
+      fileToReduce = sourceFile,
+      bestResultFile = bestFile,
+      statisticsFile = null,
+      progressDumpFile = null,
+      keepOriginalCodeFormat = true,
+      fixpointReduction = true,
+      enableTestScriptExecutionCaching = true,
+      useRealDeltaDebugger = false,
+      maxReductionLevel = maxReductionLevel,
+      numOfReductionThreads = numOfReductionThreads)
     Truth.assertThat(configuration.bestResultFile).isEqualTo(bestFile)
-    Truth.assertThat(configuration.fileToReduce.file).isEqualTo(sourceFile)
+    Truth.assertThat(configuration.fileToReduce.file).isEqualTo(sourceFile.file)
     Truth.assertThat(configuration.fileToReduce.fileContent)
-        .isEqualTo(MoreFiles.asCharSource(sourceFile.toPath(), StandardCharsets.UTF_8).read())
+      .isEqualTo(MoreFiles.asCharSource(sourceFile.file.toPath(), StandardCharsets.UTF_8).read())
     Truth.assertThat(configuration.maxReductionLevel).isEqualTo(maxReductionLevel)
     Truth.assertThat(configuration.numOfReductionThreads).isEqualTo(numOfReductionThreads)
     Truth.assertThat(configuration.workingFolder).isEqualTo(workingDirectory)
@@ -88,7 +83,7 @@ class ReductionConfigurationTest {
   fun testGetTempRootFolderName() {
     val time = LocalDateTime.of(2000, 1, 21, 1, 2, 3)
     Truth.assertThat(getTempRootFolderName("t.c", "r.sh", time))
-        .isEqualTo("PersesTempRoot_t.c_r.sh_20000121_010203")
+      .isEqualTo("PersesTempRoot_t.c_r.sh_20000121_010203")
   }
 
   companion object {
