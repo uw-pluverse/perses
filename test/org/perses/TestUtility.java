@@ -40,9 +40,7 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -246,7 +244,7 @@ public final class TestUtility {
   }
 
   public static ParseTreeWithParser parseFile(File file) throws IOException {
-    final SourceFile sourceFile = SourceFile.createFromPath(file);
+    final SourceFile sourceFile = new SourceFile(file);
     final AbstractParserFacade facade = getFacade(sourceFile.getLanguageKind());
     return facade.parseFile(file);
   }
@@ -271,7 +269,7 @@ public final class TestUtility {
 
   public static SparTree createSparTreeFromFile(File file, TokenizedProgramFactory factory)
       throws IOException {
-    final SourceFile sourceFile = SourceFile.createFromPath(file);
+    final SourceFile sourceFile = new SourceFile(file);
     final AbstractParserFacade facade = getFacade(sourceFile.getLanguageKind());
     final ParseTree parseTree = facade.parseFile(file).getTree();
     final SparTree tree = new SparTreeBuilder(facade.getRuleHierarchy(), factory).build(parseTree);
@@ -294,11 +292,11 @@ public final class TestUtility {
       File folder, final String fileExtension) {
     try {
       return Files.walk(folder.toPath())
-              .filter(Files::isRegularFile)
-              .filter(path -> path.toString().endsWith(fileExtension))
-              .map(Path::toFile)
-              .sorted()
-              .collect(ImmutableList.toImmutableList());
+          .filter(Files::isRegularFile)
+          .filter(path -> path.toString().endsWith(fileExtension))
+          .map(Path::toFile)
+          .sorted()
+          .collect(ImmutableList.toImmutableList());
     } catch (IOException e) {
       throw new UncheckedIOException(e);
     }

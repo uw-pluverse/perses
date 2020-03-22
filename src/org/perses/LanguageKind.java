@@ -24,11 +24,11 @@ import java.io.File;
 
 /** Infer the programming language for a source file based on its file extension. */
 public enum LanguageKind {
-  C(ImmutableList.of("c")),
-  SCALA(ImmutableList.of("scala", "sc")),
-  GO(ImmutableList.of("go")),
-  JAVA(ImmutableList.of("java")),
-  UNKNOWN(ImmutableList.of());
+  C(ImmutableList.of("c"), FormatSensitivity.INSENSITIVE),
+  SCALA(ImmutableList.of("scala", "sc"), FormatSensitivity.SENSITIVE),
+  GO(ImmutableList.of("go"), FormatSensitivity.SENSITIVE),
+  JAVA(ImmutableList.of("java"), FormatSensitivity.INSENSITIVE),
+  UNKNOWN(ImmutableList.of(), FormatSensitivity.SENSITIVE);
 
   private static ImmutableMap<String, LanguageKind> EXTENSION_MAP;
 
@@ -41,14 +41,25 @@ public enum LanguageKind {
   }
 
   private final ImmutableList<String> extensions;
+  private final boolean formatSensitive;
 
-  LanguageKind(ImmutableList<String> extensions) {
+  LanguageKind(ImmutableList<String> extensions, boolean formatSensitive) {
     this.extensions = extensions;
+    this.formatSensitive = formatSensitive;
+  }
+
+  public boolean isFormatSensitive() {
+    return formatSensitive;
   }
 
   public static LanguageKind computeLanguageKind(File file) {
     final String ext = Files.getFileExtension(file.getName());
     final LanguageKind kind = EXTENSION_MAP.get(ext);
     return kind == null ? UNKNOWN : kind;
+  }
+
+  private static class FormatSensitivity {
+    private static final boolean SENSITIVE = true;
+    private static final boolean INSENSITIVE = false;
   }
 }

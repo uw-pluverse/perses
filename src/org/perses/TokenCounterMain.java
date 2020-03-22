@@ -23,7 +23,7 @@ public class TokenCounterMain {
     final AbstractParserFacade parserFacade =
         ParserFacadeFactory.SINGLETON.createParserFacade(sourceFile.getLanguageKind());
     final ParseTreeWithParser parseTreeWithParser =
-        parserFacade.parseString(sourceFile.getFileContent());
+        parserFacade.parseString(sourceFile.fileContent);
     final ImmutableList<Token> tokens =
         AbstractParserFacade.getTokens(parseTreeWithParser.getTree());
     System.out.println();

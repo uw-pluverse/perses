@@ -14,75 +14,41 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.program;
+package org.perses.program
 
-import com.google.common.base.MoreObjects;
-import com.google.common.flogger.FluentLogger;
-import com.google.common.io.MoreFiles;
-import org.perses.LanguageKind;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-
-import static com.google.common.base.Preconditions.checkState;
+import com.google.common.base.MoreObjects
+import com.google.common.io.MoreFiles
+import org.perses.LanguageKind
+import java.io.File
+import java.io.IOException
+import java.nio.charset.StandardCharsets
 
 /**
  * Abstraction for a source file. It encapsulates the details of a source file. Note that this class
  * loads the content of the passed-in file. So when you create an object of this class, the file
  * must already exist.
  */
-public class SourceFile {
+class SourceFile(val file: File) {
+  val fileContent: String
+  val languageKind: LanguageKind
 
-  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
+  val baseName: String
+    get() = file.name
 
-  public static SourceFile createFromPath(File file) {
-    final LanguageKind kind = LanguageKind.computeLanguageKind(file);
-    logger.atInfo().log("The source file %s is identified as %s", file, kind);
-    return new SourceFile(file, kind);
+  @Throws(IOException::class)
+  fun writeTo(path: File) =
+    MoreFiles.asCharSink(path.toPath(), StandardCharsets.UTF_8).write(fileContent)
+
+
+  override fun toString(): String {
+    return MoreObjects.toStringHelper(this).add("file", file).add("lang", languageKind).toString()
   }
 
-  private final File file;
-  private final LanguageKind kind;
-  private final String fileContent;
-
-  private SourceFile(File file, LanguageKind languageKind) {
-    checkState(file.isFile(), "The file should be a file: %s", file);
-    this.file = file;
-    this.kind = languageKind;
-    try {
-      this.fileContent = MoreFiles.asCharSource(file.toPath(), StandardCharsets.UTF_8).read();
-    } catch (IOException e) {
-      throw new RuntimeException("Error in reading file " + file, e);
+  init {
+    require(file.isFile) {
+      "The file should be a regular file $file"
     }
-  }
-
-  public LanguageKind getLanguageKind() {
-    return kind;
-  }
-
-  public String getBaseName() {
-    return file.getName();
-  }
-
-  public File getFile() {
-    return file;
-  }
-
-  public String getFileContent() {
-    return fileContent;
-  }
-
-  public void writeTo(File path) throws IOException {
-    try (BufferedWriter writer =
-        java.nio.file.Files.newBufferedWriter(path.toPath(), StandardCharsets.UTF_8)) {
-      writer.write(fileContent);
-    }
-  }
-
-  @Override
-  public String toString() {
-    return MoreObjects.toStringHelper(this).add("file", file).add("lang", kind).toString();
+    languageKind = LanguageKind.computeLanguageKind(file)
+    fileContent = MoreFiles.asCharSource(file.toPath(), StandardCharsets.UTF_8).read()
   }
 }

@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.perses.LanguageKind;
-import org.perses.program.SourceFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +18,7 @@ public class SourceFileTest {
   @Test
   public void testSourceFile() throws IOException {
     String pathname = "test_data/delta_1/t.c";
-    SourceFile source = SourceFile.createFromPath(new File(pathname));
+    SourceFile source = new SourceFile(new File(pathname));
     Truth.assertThat(source.getBaseName()).isEqualTo("t.c");
     Truth.assertThat(source.getFileContent())
         .isEqualTo(MoreFiles.asCharSource(Paths.get(pathname), StandardCharsets.UTF_8).read());
