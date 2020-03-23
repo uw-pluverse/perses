@@ -320,6 +320,7 @@ class ReductionDriver(
         if (Strings.isNullOrEmpty(cmd.statDumpFile)) null else File(cmd.statDumpFile)
       val progressDumpFile =
         if (Strings.isNullOrEmpty(cmd.progressDumpFile)) null else File(cmd.progressDumpFile)
+      val keepOriginalFormat = cmd.keepOrigFormat || sourceFile.languageKind.isFormatSensitive
       return ReductionConfiguration(
         workingFolder = workingDirectory,
         testScript = testScript,
@@ -327,7 +328,7 @@ class ReductionDriver(
         bestResultFile = bestFile,
         statisticsFile = statisticsFile,
         progressDumpFile = progressDumpFile,
-        keepOriginalCodeFormat = cmd.keepOrigFormat,
+        keepOriginalCodeFormat = keepOriginalFormat,
         fixpointReduction = cmd.fixpoint,
         enableTestScriptExecutionCaching = cmd.queryCaching,
         useRealDeltaDebugger = cmd.useRealDeltaDebugger,

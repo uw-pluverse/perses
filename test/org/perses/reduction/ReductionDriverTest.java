@@ -16,7 +16,7 @@ public class ReductionDriverTest {
     cmd.setTestScript("r.sh");
     try {
       ReductionDriver.createConfiguration(cmd);
-    } catch (IllegalArgumentException e) {
+    } catch (RuntimeException e) {
       // Keep this. This is just capture a bug when only "t.c" and "r.sh" were given without parent
       // folders.
       Truth.assertThat(e.getMessage()).contains("The file should be a regular file");
