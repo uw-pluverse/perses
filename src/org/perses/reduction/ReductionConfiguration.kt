@@ -115,6 +115,10 @@ class ReductionConfiguration(
     require(numOfReductionThreads > 0) {
       "The number of reduction threads should be positive: $numOfReductionThreads"
     }
+    require(!fileToReduce.languageKind.isFormatSensitive || keepOriginalCodeFormat) {
+      "The language ${fileToReduce.languageKind} requires format sensitivity, " +
+        "but the reducer is not told to keep its original format. $keepOriginalCodeFormat"
+    }
     parserFacade = ParserFacadeFactory.SINGLETON.createParserFacade(this.fileToReduce.languageKind)
 
     tempRootFolder = File(
