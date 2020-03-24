@@ -45,7 +45,8 @@ class ReductionConfiguration(
   val enableTestScriptExecutionCaching: Boolean,
   val useRealDeltaDebugger: Boolean,
   val maxReductionLevel: Int,
-  val numOfReductionThreads: Int
+  val numOfReductionThreads: Int,
+  useOptCParser: Boolean = false
 ) {
   /** The parser facade.  */
   val parserFacade: AbstractParserFacade
@@ -119,7 +120,9 @@ class ReductionConfiguration(
       "The language ${fileToReduce.languageKind} requires format sensitivity, " +
         "but the reducer is not told to keep its original format. $keepOriginalCodeFormat"
     }
-    parserFacade = ParserFacadeFactory.SINGLETON.createParserFacade(this.fileToReduce.languageKind)
+    val factory = if (useOptCParser)
+      ParserFacadeFactory.createForOptC() else ParserFacadeFactory.createForPnfC()
+    parserFacade = factory.createParserFacade(this.fileToReduce.languageKind)
 
     tempRootFolder = File(
       workingFolder,

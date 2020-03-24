@@ -21,7 +21,7 @@ public class TokenCounterMain {
     checkArgument(file.isFile(), "The source file is not a regular file. %s", file);
     final SourceFile sourceFile = new SourceFile(file);
     final AbstractParserFacade parserFacade =
-        ParserFacadeFactory.SINGLETON.createParserFacade(sourceFile.getLanguageKind());
+        ParserFacadeFactory.createForPnfC().createParserFacade(sourceFile.getLanguageKind());
     final ParseTreeWithParser parseTreeWithParser =
         parserFacade.parseString(sourceFile.getFileContent());
     final ImmutableList<Token> tokens =

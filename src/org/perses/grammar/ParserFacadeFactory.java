@@ -16,36 +16,39 @@
  */
 package org.perses.grammar;
 
-import com.google.common.collect.ImmutableMap;
 import org.perses.LanguageKind;
+import org.perses.grammar.c.CParserFacade;
 import org.perses.grammar.c.PnfCParserFacade;
 import org.perses.grammar.go.PnfGoParserFacade;
 import org.perses.grammar.java.JavaParserFacade;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 /** Creates a parser facade, based on the type of language kind. */
-public enum ParserFacadeFactory {
-  SINGLETON;
+public final class ParserFacadeFactory {
 
-  private static final ImmutableMap<LanguageKind, Class<? extends AbstractParserFacade>> MAPPING =
-      ImmutableMap.<LanguageKind, Class<? extends AbstractParserFacade>>builder()
-          .put(LanguageKind.C, PnfCParserFacade.class)
-          .put(LanguageKind.JAVA, JavaParserFacade.class)
-          .put(LanguageKind.GO, PnfGoParserFacade.class)
-          .build();
+  public static ParserFacadeFactory createForPnfC() {
+    return new ParserFacadeFactory(false);
+  }
+
+  public static ParserFacadeFactory createForOptC() {
+    return new ParserFacadeFactory(true);
+  }
+
+  private final boolean useOptCParser;
+
+  private ParserFacadeFactory(boolean useOptCParser) {
+    this.useOptCParser = useOptCParser;
+  }
 
   public AbstractParserFacade createParserFacade(LanguageKind languageKind) {
-    checkArgument(
-        MAPPING.containsKey(languageKind),
-        "The language %s is not supported: %s",
-        languageKind,
-        MAPPING);
-    final Class<? extends AbstractParserFacade> klass = MAPPING.get(languageKind);
-    try {
-      return klass.newInstance();
-    } catch (InstantiationException | IllegalAccessException e) {
-      throw new AssertionError("Cannot create instance of class " + klass, e);
+    switch (languageKind) {
+      case C:
+        return useOptCParser ? new CParserFacade() : new PnfCParserFacade();
+      case JAVA:
+        return new JavaParserFacade();
+      case GO:
+        return new PnfGoParserFacade();
+      default:
+        throw new RuntimeException("The language " + languageKind + " is not supported.");
     }
   }
 }

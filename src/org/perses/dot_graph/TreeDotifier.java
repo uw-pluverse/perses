@@ -74,7 +74,7 @@ public class TreeDotifier {
     try {
       final SourceFile source = new SourceFile(sourceFile);
       final ParseTreeWithParser root =
-          ParserFacadeFactory.SINGLETON
+          ParserFacadeFactory.createForPnfC()
               .createParserFacade(source.getLanguageKind())
               .parseFile(sourceFile);
       convertTreeToDotGraph(root.getTree())
