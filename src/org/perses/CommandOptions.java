@@ -177,6 +177,11 @@ public class CommandOptions {
               + "and (t' - b) >= t *x/y, then a refresh is triggered.")
   public String queryCacheRefreshThreshold = "100/1";
 
+  @Parameter(
+      names = "--use-optc-parser",
+      description = "Use the OptC parser to construct the spar-tree.")
+  public boolean useOptCParser = false;
+
   public CommandOptions(String defaultReductionAlgorithm) {
     this.defaultReductionAlgorithm = defaultReductionAlgorithm;
   }

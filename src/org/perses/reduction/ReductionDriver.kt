@@ -333,7 +333,8 @@ class ReductionDriver(
         enableTestScriptExecutionCaching = cmd.queryCaching,
         useRealDeltaDebugger = cmd.useRealDeltaDebugger,
         maxReductionLevel = cmd.getMaxReductionLevel(),
-        numOfReductionThreads = cmd.numOfThreads)
+        numOfReductionThreads = cmd.numOfThreads,
+        useOptCParser = cmd.useOptCParser)
     }
 
     private fun createTokenizedProgramFactory(originalTree: ParseTree): TokenizedProgramFactory {
