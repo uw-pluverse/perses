@@ -20,7 +20,11 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.LexerATNSimulator;
 import org.antlr.v4.runtime.atn.ParserATNSimulator;
 import org.antlr.v4.runtime.atn.PredictionContextCache;
+import org.antlr.v4.runtime.atn.PredictionMode;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.misc.IntervalSet;
+
+
 import org.perses.antlr.AbstractAntlrGrammar;
 import org.perses.antlr.ParseTreeWithParser;
 import org.perses.program.TokenizedProgram;
@@ -29,6 +33,31 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.function.Function;
 
+/** taken from stackoverflow: https://stackoverflow.com/questions/18132078/handling-errors-in-antlr4 */
+class ExceptionErrorStrategy extends DefaultErrorStrategy {
+    @Override
+    public void recover(Parser recognizer, RecognitionException e) {
+        throw e;
+    }
+
+    @Override
+    public void reportInputMismatch(Parser recognizer, InputMismatchException e) throws RecognitionException {
+        String msg = "mismatched input " + getTokenErrorDisplay(e.getOffendingToken());
+        msg += " expecting one of "+e.getExpectedTokens().toString(recognizer.getTokenNames());
+        RecognitionException ex = new RecognitionException(msg, recognizer, recognizer.getInputStream(), recognizer.getContext());
+        ex.initCause(e);
+        throw ex;
+    }
+
+    @Override
+    public void reportMissingToken(Parser recognizer) {
+        beginErrorCondition(recognizer);
+        Token t = recognizer.getCurrentToken();
+        IntervalSet expecting = getExpectedTokens(recognizer);
+        String msg = "missing "+expecting.toString(recognizer.getTokenNames()) + " at " + getTokenErrorDisplay(t);
+        throw new RecognitionException(msg, recognizer, recognizer.getInputStream(), recognizer.getContext());
+    }
+}
 /** */
 public abstract class AbstractDefaultParserFacade<LEXER extends Lexer, PARSER extends Parser>
     extends AbstractParserFacade {
@@ -68,6 +97,7 @@ public abstract class AbstractDefaultParserFacade<LEXER extends Lexer, PARSER ex
               parser.getATN(),
               parser.getInterpreter().decisionToDFA,
               new PredictionContextCache()));
+       parser.getInterpreter().setPredictionMode(PredictionMode.LL);
     }
     return parser;
   }
@@ -88,7 +118,7 @@ public abstract class AbstractDefaultParserFacade<LEXER extends Lexer, PARSER ex
     final CommonTokenStream tokens = new CommonTokenStream(program.createTokenSource());
     final PARSER parser = createParserWithoutCache(tokens);
     parser.removeErrorListeners();
-    parser.setErrorHandler(new BailErrorStrategy());
+    parser.setErrorHandler(new ExceptionErrorStrategy());
     parser.addErrorListener(new FailOnErrorAntlrErrorListener("<from tokenized program>"));
     final ParseTree tree = startParsing(parser);
 
@@ -120,7 +150,7 @@ public abstract class AbstractDefaultParserFacade<LEXER extends Lexer, PARSER ex
               new PredictionContextCache()));
     }
     parser.removeErrorListeners();
-    parser.setErrorHandler(new BailErrorStrategy());
+    parser.setErrorHandler(new DefaultErrorStrategy());
     parser.addErrorListener(listener);
     final ParseTree tree = parseFunction.apply(parser);
 

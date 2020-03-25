@@ -35,6 +35,68 @@
 
 lexer grammar GoLexer;
 
+@members {
+    Token previousToken = null;
+    Token continueToken = null;
+
+    public Token nextToken() {
+        Token result = null;
+
+        if (continueToken != null) {
+            result = continueToken;
+            continueToken = null;
+            previousToken = null;
+        } else {
+            result = super.nextToken();
+
+            if (result.getChannel() == Token.DEFAULT_CHANNEL) {
+                previousToken = result;
+            } else if (previousToken != null) {
+                // Test if newline, and if previousToken matches,
+                // return a semicolon and shelve the newline.
+                // Note that line-comments and general comments containing newlines
+                // act as newlines.
+                if (result.getType() == TERMINATOR ||
+                    result.getType() == LINE_COMMENT ||
+                    result.getType() == COMMENT && result.getText().contains("\n")) {
+                    switch (previousToken.getType()) {
+                        case IDENTIFIER:
+                        case NIL_LIT:
+                        case DECIMAL_LIT:
+                        case FLOAT_LIT:
+                        case OCTAL_LIT:
+                        case HEX_LIT:
+                        case IMAGINARY_LIT:
+                        case RUNE_LIT:
+                        case RAW_STRING_LIT:
+                        case INTERPRETED_STRING_LIT:
+                        case BREAK:
+                        case CONTINUE:
+                        case FALLTHROUGH:
+                        case RETURN:
+                        case PLUS_PLUS:
+                        case MINUS_MINUS:
+                        case R_CURLY:
+                        case R_BRACKET:
+                        case R_PAREN:
+                            continueToken = result;
+                            result = _factory.create(new Pair(null, null), SEMI, ";",
+                                                     Token.DEFAULT_CHANNEL, result.getStartIndex(),
+                                                     result.getStopIndex(), result.getLine(),
+                                                     result.getCharPositionInLine());
+                            previousToken = null;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+}
+
 // Keywords
 
 BREAK                  : 'break';
@@ -123,9 +185,9 @@ RECEIVE                : '<-';
 
 // Number literals
 
-DECIMAL_LIT            : [1-9] [0-9]*;
-OCTAL_LIT              : '0' OCTAL_DIGIT*;
-HEX_LIT                : '0' [xX] HEX_DIGIT+;
+DECIMAL_LIT            : [1-9] ([0-9] | '_')*;
+OCTAL_LIT              : '0' (OCTAL_DIGIT | '_')*;
+HEX_LIT                : '0' [xX] (HEX_DIGIT | '_')+;
 
 FLOAT_LIT              : DECIMALS ('.' DECIMALS? EXPONENT? | EXPONENT)
                        | '.' DECIMALS EXPONENT?

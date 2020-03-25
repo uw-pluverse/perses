@@ -53,7 +53,7 @@ public abstract class AbstractParserFacade {
 
   /** Parse the given file into a ParseTree. */
   public final ParseTreeWithParser parseFile(File file) throws IOException {
-    try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"))) {
       return parseReader(file.getPath(), reader);
     }
   }
