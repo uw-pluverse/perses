@@ -200,6 +200,8 @@ public final class TestUtility {
       new File(THIRD_PARTY_TEST_PROGRAMS_ROOT, "c_programs/gcc_testsuite");
   private static final File CLANG_C_PROGRAM_FOLDER =
       new File(THIRD_PARTY_TEST_PROGRAMS_ROOT, "c_programs/clang_testsuite");
+  private static final File GO_PROGRAM_FOLDER =
+      new File(THIRD_PARTY_TEST_PROGRAMS_ROOT, "go_programs/go_testsuite");
 
   private TestUtility() {}
 
@@ -213,6 +215,10 @@ public final class TestUtility {
     return list.stream()
         .filter(n -> counter.getAndIncrement() % numOfPartitions == ith)
         .collect(ImmutableList.toImmutableList());
+  }
+
+  public static ImmutableList<File> getGolangTestFiles() {
+    return getGolangFiles(GO_PROGRAM_FOLDER);
   }
 
   public static File getOneGccTestFile(String fileName) {

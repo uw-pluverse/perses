@@ -9,6 +9,7 @@ java_library(
         "//test_data/c_programs:clang_testsuite",
         "//test_data/c_programs:gcc_testsuite",
         "//test_data/java_programs:openjdk_testsuite",
+        "//test_data/go_programs:go_testsuite",
     ],
     deps = [
         ":truth",

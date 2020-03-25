@@ -17,14 +17,15 @@ golden_test(
 
 kt_jvm_test(
     name = "PnfGoParserFacadeTest",
-    size = "large",  # This is a slow test.
+    size = "enormous",  # This is a slow test.
     srcs = ["PnfGoParserFacadeTest.kt"],
     data = [],
-    shard_count = 1,
+    shard_count = 7,
     test_class = "org.perses.grammar.go.PnfGoParserFacadeTest",
     deps = [
         "//src/org/perses/antlr:antlr_grammar_util",
         "//src/org/perses/grammar/go:pnfgo_parser_facade",
+        "//src/org/perses/grammar/go/orig:go_parser_facade",
         "//test/org/perses:test_util",
         "//test/org/perses:truth",
         "@maven//:com_google_flogger_flogger",
