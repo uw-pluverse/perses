@@ -3,7 +3,7 @@ package(default_visibility = [
 ])
 
 load("//antlropt/org/perses/antlr/pnf:pnf.bzl", "pnf_convert")
-load("//src/org/perses/grammar:antlr_util.bzl", "antlr_codegen", "antlr_merge_grammar")
+load("//src/org/perses/grammar:antlr_util.bzl", "antlr_codegen")
 
 pnf_convert(
     name = "normalize_go_to_pnf",

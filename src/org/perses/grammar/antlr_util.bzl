@@ -1,31 +1,3 @@
-def extract_grammar_name(grammar_file):
-    if not grammar_file.endswith(".g4"):
-        fail("The grammar file name has to end with '.g4'.")
-    grammar_file = grammar_file[:-3]
-    last_index = grammar_file.rfind("/")
-    if last_index == -1:
-        return grammar_file
-    else:
-        fail("The grammar file must be in the current package.")
-
-def antlr_merge_grammar(name, lexer_grammar, parser_grammar, target_grammar):
-    grammar_name = extract_grammar_name(target_grammar)
-    combiner = "//antlropt/org/perses/antlr/util:combine_lexer_parser_bin"
-    args = [
-        "$(location %s)" % combiner,
-        "--lexer-grammar $(location %s)" % lexer_grammar,
-        "--parser-grammar $(location %s)" % parser_grammar,
-        "--target-grammar $(location %s)" % target_grammar,
-    ]
-
-    native.genrule(
-        name = name,
-        outs = [target_grammar],
-        srcs = [lexer_grammar, parser_grammar],
-        cmd = " ".join(args),
-        tools = [combiner],
-    )
-
 def antlr_codegen(
         name,
         parser_grammar_file,
