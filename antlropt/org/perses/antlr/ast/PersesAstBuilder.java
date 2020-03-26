@@ -5,7 +5,19 @@ import com.google.common.collect.ImmutableList;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.Tree;
 import org.antlr.v4.parse.ANTLRParser;
-import org.antlr.v4.tool.ast.*;
+import org.antlr.v4.tool.ast.ActionAST;
+import org.antlr.v4.tool.ast.AltAST;
+import org.antlr.v4.tool.ast.BlockAST;
+import org.antlr.v4.tool.ast.GrammarAST;
+import org.antlr.v4.tool.ast.GrammarRootAST;
+import org.antlr.v4.tool.ast.NotAST;
+import org.antlr.v4.tool.ast.OptionalBlockAST;
+import org.antlr.v4.tool.ast.PlusBlockAST;
+import org.antlr.v4.tool.ast.RuleAST;
+import org.antlr.v4.tool.ast.RuleRefAST;
+import org.antlr.v4.tool.ast.SetAST;
+import org.antlr.v4.tool.ast.StarBlockAST;
+import org.antlr.v4.tool.ast.TerminalAST;
 import org.perses.antlr.AntlrGrammarParser;
 
 import java.util.ArrayList;
@@ -13,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 public final class PersesAstBuilder {
@@ -30,33 +43,38 @@ public final class PersesAstBuilder {
 
   public PersesGrammar buildFromAntlrRootAst(GrammarRootAST root) {
     final int childCount = root.getChildCount();
-    checkArgument(childCount == 2 || childCount == 3, "Invalid child count: %s", childCount);
+    checkArgument(childCount >= 2, "Invalid child count: %s", childCount);
 
     final GrammarAST firstChild = (GrammarAST) root.getChild(0);
     final String grammarName = firstChild.getToken().getText();
 
-    final GrammarAST secondChild = (GrammarAST) root.getChild(1);
-    final GrammarAST rulesAst;
-    final PersesGrammarOptionsAst options;
+    ImmutableList<AbstractPersesRuleDefAst> rules = null;
+    PersesGrammarOptionsAst options = PersesGrammarOptionsAst.EMPTY;
+    ImmutableList.Builder<PersesNamedAction> namedActions = ImmutableList.builder();
 
-    if (childCount == 2) {
-      checkState(isRulesNode(secondChild));
-      rulesAst = secondChild;
-      options = PersesGrammarOptionsAst.EMPTY;
-    } else if (childCount == 3) {
-      checkState(isOptionsNode(secondChild), secondChild.getText());
-      options = convertOptions(secondChild);
-
-      final GrammarAST thirdChild = (GrammarAST) root.getChild(2);
-      checkState(isRulesNode(thirdChild));
-      rulesAst = thirdChild;
-    } else {
-      throw new RuntimeException("Illegal child count. " + childCount);
+    for (int i = 1; i < childCount; ++i) {
+      final GrammarAST child = (GrammarAST) root.getChild(i);
+      if (isOptionsNode(child)) {
+        checkState(options == PersesGrammarOptionsAst.EMPTY, "duplicate options node: %s", options);
+        options = convertOptions(child);
+      } else if (isRulesNode(child)) {
+        checkState(rules == null, "duplicate rules node: %s", rules);
+        rules = convertRuleDefinitions(child, symbolTable);
+      } else if (isNamedActionNode(child)) {
+        checkState(child.getChildCount() == 2);
+        final String name = child.getChild(0).getText();
+        checkState(child.getChild(1) instanceof ActionAST);
+        final ActionAST action = (ActionAST) child.getChild(1);
+        final String body = action.getText();
+        namedActions.add(new PersesNamedAction(name, body));
+      } else {
+        throw new RuntimeException("Unhandled child: " + child);
+      }
     }
-
-    final ImmutableList<AbstractPersesRuleDefAst> rules =
-        convertRuleDefinitions(rulesAst, symbolTable);
-    return new PersesGrammar(identifyGrammarType(root), grammarName, options, rules, symbolTable);
+    checkNotNull(rules, "No rules found in %s", root);
+    final PersesGrammar.GrammarType grammarType = identifyGrammarType(root);
+    return new PersesGrammar(
+        grammarType, grammarName, options, namedActions.build(), rules, symbolTable);
   }
 
   private static PersesGrammar.GrammarType identifyGrammarType(GrammarRootAST root) {
@@ -92,6 +110,10 @@ public final class PersesAstBuilder {
 
   private static boolean isRulesNode(GrammarAST ast) {
     return ast.getText().equals("RULES");
+  }
+
+  private static boolean isNamedActionNode(GrammarAST ast) {
+    return ast.getText().equals("@");
   }
 
   private static ImmutableList<AbstractPersesRuleDefAst> convertRuleDefinitions(

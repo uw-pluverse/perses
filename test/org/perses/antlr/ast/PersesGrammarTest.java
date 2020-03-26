@@ -50,6 +50,16 @@ public class PersesGrammarTest {
   }
 
   @Test
+  public void testMembersInGrammar() {
+    PersesGrammar grammar = createAndTest("lexer_with_member.g4");
+    final String code = grammar.getSourceCode();
+    assertThat(code).contains("@members");
+    assertThat(code).contains("@header");
+    assertThat(code).contains("package foo;");
+    assertThat(code).contains("private String here;");
+  }
+
+  @Test
   public void test_PersesEpsilonAst() {
     createAndTest("epsilon.g4");
   }

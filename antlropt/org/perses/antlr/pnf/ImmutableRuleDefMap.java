@@ -137,6 +137,7 @@ public final class ImmutableRuleDefMap {
         originalGrammar.getGrammarType(),
         originalGrammar.getGrammarName(),
         originalGrammar.getOptions(),
+        originalGrammar.getNamedActions(),
         builder.build(),
         originalGrammar.getSymbolTable());
   }
