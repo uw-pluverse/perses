@@ -3,8 +3,8 @@ def reduce(
         reduction_algorithm,
         source_file,
         test_script,
-        enable_query_caching=None,
-        enable_edit_caching=None,
+        enable_query_caching = None,
+        enable_edit_caching = None,
         result_file = None,
         statistics_file = None,
         progress_dump_file = None,
@@ -35,7 +35,7 @@ def reduce(
         "--stat-dump-file $(location %s)" % statistics_file,
         "--progress-dump-file $(location %s)" % progress_dump_file,
         "--query-caching %s" % ("true" if enable_query_caching else "false"),
-        "--edit-caching %s" % ("true" if enable_edit_caching else "false")
+        "--edit-caching %s" % ("true" if enable_edit_caching else "false"),
     ]
     if (keep_orig_format):
         args.append("--keep-orig-format %s" % ("true" if keep_orig_format else "false"))

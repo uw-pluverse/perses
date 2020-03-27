@@ -1,5 +1,4 @@
 load("//antlropt/org/perses/antlr/pnf:pnf.bzl", "pnf_convert")
-load("//src/org/perses/grammar:antlr_util.bzl", "antlr_codegen")
 load("//test/org/perses:test.bzl", "golden_test")
 
 DEFAULT_DEPS = [

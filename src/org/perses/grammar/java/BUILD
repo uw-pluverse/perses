@@ -3,21 +3,21 @@ package(default_visibility = [
     "//test/org/perses:__subpackages__",
 ])
 
-load("//src/org/perses/grammar:antlr_util.bzl", "antlr_codegen")
+load("//src/org/perses/grammar:antlr_util.bzl", "antlr_codegen_combined")
 
-antlr_codegen(
+antlr_codegen_combined(
     name = "opt_java_grammar",
     java_pkg_name = "org.perses.grammar.java",
     lexer_java_file_name = "OptJava8Lexer.java",
-    parser_grammar_file = "OptJava8.g4",
+    grammar_file = "OptJava8.g4",
     parser_java_file_name = "OptJava8Parser.java",
 )
 
-antlr_codegen(
+antlr_codegen_combined(
     name = "orig_java_grammar",
     java_pkg_name = "org.perses.grammar.java",
     lexer_java_file_name = "OrigJava8Lexer.java",
-    parser_grammar_file = "OrigJava8.g4",
+    grammar_file = "OrigJava8.g4",
     parser_java_file_name = "OrigJava8Parser.java",
 )
 
