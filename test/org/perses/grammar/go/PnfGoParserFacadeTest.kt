@@ -1,8 +1,10 @@
 package org.perses.grammar.go
 
+import com.google.common.truth.Truth
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.TestUtility
 
 @RunWith(JUnit4::class)
 class PnfGoParserFacadeTest {
@@ -20,7 +22,13 @@ class PnfGoParserFacadeTest {
       |    
       |}
     """.trimMargin()
-    facade.parseString(program)
-    //    facade.parseString()
+
+    val parseTreeWithPnfParser = facade.parseString(program)
+    val tokensByPnfParser = TestUtility.extractTokens(parseTreeWithPnfParser.tree)
+
+    val parseTreeFromOrigParser = facade.parseWithOrigGoParser(program)
+    val tokensByOrigParser = TestUtility.extractTokens(parseTreeFromOrigParser.tree)
+
+    Truth.assertThat(tokensByPnfParser).containsExactlyElementsIn(tokensByOrigParser).inOrder()
   }
 }

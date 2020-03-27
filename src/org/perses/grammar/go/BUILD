@@ -71,6 +71,7 @@ java_library(
     srcs = ["PnfGoParserFacade.java"],
     deps = [
         ":pnf_go_parser",
+        ":orig_go_parser",
         ":go_lexer",
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/grammar:grammar_facade",
