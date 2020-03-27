@@ -3,10 +3,12 @@ package org.perses.antlr.pnf;
 import org.jgrapht.Graph;
 import org.jgrapht.alg.connectivity.KosarajuStrongConnectivityInspector;
 import org.jgrapht.graph.DirectedMultigraph;
-import org.jgrapht.io.DOTExporter;
-import org.perses.antlr.ast.*;
+import org.perses.antlr.ast.AbstractPersesRuleElement;
+import org.perses.antlr.ast.PersesAlternativeBlockAst;
+import org.perses.antlr.ast.PersesRuleReferenceAst;
+import org.perses.antlr.ast.PersesSequenceAst;
+import org.perses.antlr.ast.RuleNameRegistry;
 
-import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,7 +27,8 @@ public class RuleTransitionGraph {
   }
 
   private static RuleTransitionGraph create(
-      ImmutableRuleDefMap grammar, Function<PersesSequenceAst, AbstractPersesRuleElement> childSelector) {
+      ImmutableRuleDefMap grammar,
+      Function<PersesSequenceAst, AbstractPersesRuleElement> childSelector) {
     DirectedMultigraph<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement> graph =
         createGraph();
     for (RuleNameRegistry.RuleNameHandle rule : grammar.getParserRuleNames()) {
@@ -106,17 +109,6 @@ public class RuleTransitionGraph {
   private RuleTransitionGraph(
       Graph<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement> graph) {
     this.graph = graph;
-  }
-
-  public String dottify() {
-    DOTExporter<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement> exporter =
-        new DOTExporter<>(
-            (RuleNameRegistry.RuleNameHandle v) -> Integer.toString(v.getId()),
-            (RuleNameRegistry.RuleNameHandle v) -> v.get(),
-            (AbstractPersesRuleElement e) -> e.getSourceCode());
-    StringWriter writer = new StringWriter();
-    exporter.exportGraph(graph, writer);
-    return writer.toString();
   }
 
   public Graph<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement> getGraph() {

@@ -12,7 +12,6 @@ java_library(
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",
         "@maven//:org_jgrapht_jgrapht_core",
-        "@maven//:org_jgrapht_jgrapht_io",
     ],
 )
 
