@@ -10,7 +10,7 @@ MODE=-m64
 #BADCC3=() # wrong results
 #MODE=-m64
 
-GOODCC=("gcc-4.8.0 -O0")
+GOODCC=("clang-7.1.0 -O0")
 TIMEOUTCC=10
 TIMEOUTEXE=2
 TIMEOUTCCOMP=10
@@ -117,7 +117,7 @@ for cc in "${GOODCC[@]}"; do
   fi
 
   # execute
-  (timeout -s 9 $TIMEOUTEXE ./t >out1.txt 2>&1) >&/dev/null
+  timeout -s 9 $TIMEOUTEXE ./t >out1.txt 2>&1
   ret=$?
   if [ $ret != 0 ]; then
     exit 1
