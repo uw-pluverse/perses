@@ -32,42 +32,6 @@ public class CommandOptions {
 
   private final String defaultReductionAlgorithm;
 
-  @Parameter(
-      names = "--single-node-partition-policy-delete",
-      description = "Single-node partition reduction policy: delete",
-      arity = 1)
-  public boolean singleNodePartitionPolicyDelete = true;
-
-  @Parameter(
-      names = "--single-node-partition-policy-delete-node-as-qualified-node",
-      description = "Single-node partition reduction policy: delete node as qualified node",
-      arity = 1)
-  public boolean singleNodePartitionPolicyDeleteNodeAsQualifiedNode = true;
-
-  @Parameter(
-      names = "--single-node-partition-policy-replace-node-as-qualified-node",
-      description = "Single-node partition reduction policy: replace node as qualified node",
-      arity = 1)
-  public boolean singleNodePartitionPolicyReplaceNodeAsQualifiedNode = true;
-
-  @Parameter(
-      names = "--single-node-partition-policy--delete-children-of-node",
-      description = "Single-node partition reduction policy: delete children of the node",
-      arity = 1)
-  public boolean singleNodePartitionPolicyDeleteChildrenOfNode = true;
-
-  @Parameter(
-      names = "--multi-node-partition-policy-delete",
-      description = "Multi-node partition reduction policy: delete",
-      arity = 1)
-  public boolean multiNodePartitionPolicyDelete = true;
-
-  @Parameter(
-      names = "--multi-node-partition-policy-spar-delete",
-      description = "Multi-node partition reduction policy: syntax-guided deletion.",
-      arity = 1)
-  public boolean multiNodePartitionPolicySparDelete = true;
-
   @Parameter(names = "--in-place", description = "perform in-place reduction", arity = 1)
   public boolean inPlaceReduction = false;
 
@@ -265,13 +229,5 @@ public class CommandOptions {
 
   public void setFixpoint(boolean fixpoint) {
     this.fixpoint = fixpoint;
-  }
-
-  public void setMultiNodePartitionPolicyDelete(boolean multiNodePartitionPolicyDelete) {
-    this.multiNodePartitionPolicyDelete = multiNodePartitionPolicyDelete;
-  }
-
-  public void setSingleNodePartitionPolicyDelete(boolean singleNodePartitionPolicyDelete) {
-    this.singleNodePartitionPolicyDelete = singleNodePartitionPolicyDelete;
   }
 }

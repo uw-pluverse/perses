@@ -50,9 +50,6 @@ public abstract class AbstractReducerFunctionalTest {
       cmd.setReductionAlgorithm(algorithmType.shortName());
       cmd.setInPlaceReduction(false);
 
-      cmd.setSingleNodePartitionPolicyDelete(false);
-      cmd.setMultiNodePartitionPolicyDelete(false);
-
       ProgressMonitorForNodeReducer progressMonitor =
           ProgressMonitorForNodeReducer.createForSystemOut();
       try (ReductionDriver driver = new ReductionDriver(cmd, progressMonitor)) {
