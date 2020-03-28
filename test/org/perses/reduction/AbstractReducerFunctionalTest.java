@@ -43,8 +43,8 @@ public abstract class AbstractReducerFunctionalTest {
       Files.copy(new File(reductionFolder, sourceFile), tempSourceFile);
       File tempTestScript = new File(folder.toFile(), testScript);
       Files.copy(new File(reductionFolder, testScript), tempTestScript);
-      cmd.setSourceFile(tempSourceFile.getAbsolutePath());
-      cmd.setTestScript(tempTestScript.getAbsolutePath());
+      cmd.compulsoryFlags.inputFile = tempSourceFile.getAbsolutePath();
+      cmd.compulsoryFlags.testScript = tempTestScript.getAbsolutePath();
       cmd.fixpoint = true;
       cmd.setDebugGranularity(true);
       cmd.reductionAlgorithm = algorithmType.shortName();

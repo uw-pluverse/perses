@@ -1,0 +1,73 @@
+Usage: org.perses.Main [options]
+  Options:
+  * --test-script
+      The test script to specify the property the reducer needs to preserve.
+  * --input-file
+      The input file to reduce
+    --alg
+      reduction algorithm: use --list-algs to list all available algorithms
+    --count-tokens
+      Count tokens in the input file
+      Default: false
+    --debug-granularity
+      debug granularity
+      Default: false
+    --edit-caching
+      Enable caching for edits performed between two successful reductions.
+      Default: true
+    --fixpoint
+      iterative reduction till fixpoint
+      Default: false
+    --format-cmd
+      the command to format the reduced source file
+      Default: <empty string>
+    --help
+      print help message
+    --in-place
+      perform in-place reduction
+      Default: false
+    --keep-orig-format
+      keep the original code format during reduction. May slow down if 
+      enabled. 
+      Default: true
+    --list-algs
+      list all the reduction algorithms.
+    --max-level
+      the max levels in the tree for reduction
+      Default: 2147483647
+    --output-file
+      The output file to save the reduced result.
+    --profile
+      profile the reduction process for analysis
+      Default: false
+    --profile-actionset
+      The file to save information of all the created edit action sets.
+    --profile-query-cache
+      The file to save the profiling data of the query cache.
+    --progress-dump-file
+      The file to record the reduction process. The dump file can be large..
+    --query-cache-refresh-threshold
+      When to trigger a refresh of the query cache. The value is is a fraction 
+      in the format x/y. Assume the original token count is t. Since last 
+      refresh where the best program has t' tokens, if the latest best program 
+      has b tokens, and (t' - b) >= t *x/y, then a refresh is triggered.
+      Default: 100/1
+    --query-caching
+      Enable query caching for test script executions.
+      Default: false
+    --reparse-each-iteration
+      Reparse the program before the start of each fixpoint iteration.
+      Default: true
+    --stat-dump-file
+      The file to save the statistics collected during reduction.
+    --threads
+      Number of reduction threads.
+      Default: 8
+    --use-optc-parser
+      Use the OptC parser to construct the spar-tree.
+      Default: false
+    --use-real-ddmin
+      Whether to use the real delta debugging algorithm to reduce kleene 
+      nodes. 
+      Default: false
+

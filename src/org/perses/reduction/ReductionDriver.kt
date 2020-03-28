@@ -309,8 +309,8 @@ class ReductionDriver(
     @JvmStatic
     @VisibleForTesting
     fun createConfiguration(cmd: CommandOptions): ReductionConfiguration {
-      val sourceFile = SourceFile(cmd.sourceFile.absoluteFile)
-      val testScript = SourceFile(cmd.getTestScript().absoluteFile)
+      val sourceFile = SourceFile(cmd.compulsoryFlags.sourceFile.absoluteFile)
+      val testScript = SourceFile(cmd.compulsoryFlags.getTestScript().absoluteFile)
 
       require(sourceFile.parentFile.absolutePath == testScript.parentFile.absolutePath) {
         "The source file and the test script should reside in the same folder. " +
@@ -373,7 +373,7 @@ class ReductionDriver(
     }
 
     private fun getOutputFile(cmd: CommandOptions): File {
-      val sourceFile = cmd.sourceFile
+      val sourceFile = cmd.compulsoryFlags.sourceFile
       if (cmd.inPlaceReduction) {
         return sourceFile
       }

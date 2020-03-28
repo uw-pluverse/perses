@@ -53,3 +53,19 @@ golden_test(
     golden_file = "golden_token_count_for_delta1.txt",
     test_file = "token_count.txt",
 )
+
+genrule(
+    name = "get_perses_cmd_usage",
+    srcs = [],
+    outs = ["perses_cmd_usage.txt"],
+    cmd = "$(location //src/org/perses:perses) --help > \"$@\"",
+    tools = [
+        "//src/org/perses",
+    ],
+)
+
+golden_test(
+    name = "golden_perses_cmd_usage",
+    golden_file = "golden_perses_cmd_usage.txt",
+    test_file = "perses_cmd_usage.txt",
+)

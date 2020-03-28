@@ -17,6 +17,7 @@
 
 package org.perses;
 
+import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -31,6 +32,7 @@ import static com.google.common.base.Preconditions.checkState;
 public class CommandOptions {
 
   private final String defaultReductionAlgorithm;
+  public final CompulsoryFlags compulsoryFlags = new CompulsoryFlags();
 
   @Parameter(names = "--in-place", description = "perform in-place reduction", arity = 1)
   public boolean inPlaceReduction = false;
@@ -88,15 +90,6 @@ public class CommandOptions {
       arity = 1)
   public boolean nodeActionSetCaching = true;
 
-  @Parameter(
-      names = "--test-script",
-      required = true,
-      description = "The test script to specify the property the reducer needs to preserve.")
-  public String testScript;
-
-  @Parameter(names = "--input-file", required = true, description = "The input file to reduce")
-  public String inputFile;
-
   @Parameter(names = "--output-file", description = "The output file to save the reduced result.")
   public String outputFile;
 
@@ -144,7 +137,7 @@ public class CommandOptions {
   @Parameter(
       names = "--use-optc-parser",
       description = "Use the OptC parser to construct the spar-tree.",
-  arity = 1)
+      arity = 1)
   public boolean useOptCParser = false;
 
   public CommandOptions(String defaultReductionAlgorithm) {
@@ -166,17 +159,12 @@ public class CommandOptions {
     return Fraction.parse(queryCacheRefreshThreshold);
   }
 
-
   public int getMaxReductionLevel() {
     return maxReductionLevel;
   }
 
   public void setDebugGranularity(boolean debugGranularity) {
     this.debugGranularity = debugGranularity;
-  }
-
-  public boolean isHelp() {
-    return help;
   }
 
   public boolean isProfiling() {
@@ -187,14 +175,18 @@ public class CommandOptions {
     return listAllReductionAlgorithms;
   }
 
+  public JCommander createCommander(Class<?> mainClass) {
+    final JCommander commander =
+        JCommander.newBuilder()
+            .programName(mainClass.getCanonicalName())
+            .addObject(this)
+            .addObject(compulsoryFlags)
+            .build();
+    return commander;
+  }
+
   public void validate() {
-    final File testScript = this.getTestScript();
-    checkState(testScript.isFile(), "The test script %s is not a file.", testScript);
-    checkState(testScript.canExecute(), "The test script %s is not executable.", testScript);
-
-    final File sourceFile = this.getSourceFile();
-    checkState(sourceFile.isFile(), "The source program %s is not a file.", sourceFile);
-
+    compulsoryFlags.validate();
     if (inPlaceReduction) {
       checkState(
           outputFile == null || outputFile.trim().isEmpty(),
@@ -205,20 +197,41 @@ public class CommandOptions {
     }
   }
 
-  public File getTestScript() {
-    return new File(checkNotNull(testScript));
+  public static final class CompulsoryFlags {
+
+    @Parameter(
+        names = "--test-script",
+        required = true,
+        description = "The test script to specify the property the reducer needs to preserve.",
+        order = FlagOrder.COMPULSORY)
+    public String testScript;
+
+    @Parameter(
+        names = "--input-file",
+        required = true,
+        description = "The input file to reduce",
+        order = FlagOrder.COMPULSORY)
+    public String inputFile;
+
+    public File getTestScript() {
+      return new File(checkNotNull(testScript));
+    }
+
+    public File getSourceFile() {
+      return new File(Preconditions.checkNotNull(inputFile));
+    }
+
+    public void validate() {
+      final File testScript = this.getTestScript();
+      checkState(testScript.isFile(), "The test script %s is not a file.", testScript);
+      checkState(testScript.canExecute(), "The test script %s is not executable.", testScript);
+
+      final File sourceFile = this.getSourceFile();
+      checkState(sourceFile.isFile(), "The source program %s is not a file.", sourceFile);
+    }
   }
 
-  public void setTestScript(String path) {
-    this.testScript = path;
+  private static class FlagOrder {
+    public static final int COMPULSORY = 0;
   }
-
-  public File getSourceFile() {
-    return new File(Preconditions.checkNotNull(inputFile));
-  }
-
-  public void setSourceFile(String path) {
-    this.inputFile = path;
-  }
-
 }

@@ -12,8 +12,8 @@ public class ReductionDriverTest {
   @Test
   public void testCreateConfiguration() {
     CommandOptions cmd = new CommandOptions(ReducerFactory.getDefaultReductionAlgName());
-    cmd.setSourceFile("t.c");
-    cmd.setTestScript("r.sh");
+    cmd.compulsoryFlags.inputFile = "t.c";
+    cmd.compulsoryFlags.testScript = "r.sh";
     try {
       ReductionDriver.createConfiguration(cmd);
     } catch (RuntimeException e) {

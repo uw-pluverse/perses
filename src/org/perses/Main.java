@@ -40,11 +40,11 @@ public class Main {
   }
 
   public static void main(String[] args)
-      throws IOException, RecognitionException, ExecutionException, InterruptedException {
+      throws IOException, ExecutionException, InterruptedException {
     final CommandOptions cmd = new CommandOptions(ReducerFactory.getDefaultReductionAlgName());
-    JCommander commander = new JCommander(cmd, args);
-
-    if (cmd.isHelp()) {
+    final JCommander commander = cmd.createCommander(Main.class);
+    commander.parse(args);
+    if (cmd.help) {
       commander.usage();
       return;
     }
