@@ -62,7 +62,7 @@ public class CommandOptions {
   @Parameter(
       names = "--alg",
       description = "reduction algorithm: use --list-algs to list all available algorithms")
-  private String reductionAlgorithm = null;
+  public String reductionAlgorithm = null;
 
   @Parameter(names = "--list-algs", description = "list all the reduction algorithms.", help = true)
   public boolean listAllReductionAlgorithms;
@@ -143,7 +143,8 @@ public class CommandOptions {
 
   @Parameter(
       names = "--use-optc-parser",
-      description = "Use the OptC parser to construct the spar-tree.")
+      description = "Use the OptC parser to construct the spar-tree.",
+  arity = 1)
   public boolean useOptCParser = false;
 
   public CommandOptions(String defaultReductionAlgorithm) {
@@ -165,13 +166,6 @@ public class CommandOptions {
     return Fraction.parse(queryCacheRefreshThreshold);
   }
 
-  public void setReductionAlgorithm(String reductionAlgorithm) {
-    this.reductionAlgorithm = reductionAlgorithm;
-  }
-
-  public void setInPlaceReduction(boolean inPlaceReduction) {
-    this.inPlaceReduction = inPlaceReduction;
-  }
 
   public int getMaxReductionLevel() {
     return maxReductionLevel;
@@ -227,7 +221,4 @@ public class CommandOptions {
     this.inputFile = path;
   }
 
-  public void setFixpoint(boolean fixpoint) {
-    this.fixpoint = fixpoint;
-  }
 }
