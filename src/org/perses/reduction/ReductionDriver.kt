@@ -277,11 +277,8 @@ class ReductionDriver(
   }
 
   fun createReducer(): AbstractReducer {
-    val reductionAlgorithm = ReducerFactory.getReductionAlgorithm(cmd.reductionAlgorithmName)
-    logger.atInfo().log(
-      "Reduction algorithm is %s",
-      reductionAlgorithm.javaClass.simpleName)
-    return reductionAlgorithm
+    val algorithmMeta = ReducerFactory.getReductionAlgorithm(cmd.reductionAlgorithmName)
+    val algorithm = algorithmMeta
       .create(
         ReducerContext(
           configuration,
@@ -290,6 +287,10 @@ class ReductionDriver(
           queryCache,
           nodeActionSetCache,
           actionSetProfiler))
+    logger.atInfo().log(
+      "Reduction algorithm is %s",
+      algorithm.javaClass.canonicalName)
+    return algorithm
   }
 
   @Throws(IOException::class)
