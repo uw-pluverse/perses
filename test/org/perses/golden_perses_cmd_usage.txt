@@ -28,37 +28,37 @@ Usage: org.perses.Main [options]
       reduction algorithm: use --list-algs to list all available algorithms
     --list-algs
       list all the reduction algorithms.
+    --reparse-each-iteration
+      Reparse the program before the start of each fixpoint iteration.
+      Default: true
+    --use-real-ddmin
+      Whether to use the real delta debugging algorithm to reduce kleene 
+      nodes. 
+      Default: false
+    --use-optc-parser
+      Use the OptC parser to construct the spar-tree.
+      Default: false
+    --query-caching
+      Enable query caching for test script executions.
+      Default: false
     --edit-caching
       Enable caching for edits performed between two successful reductions.
       Default: true
-    --profile
-      profile the reduction process for analysis
-      Default: false
-    --profile-actionset
-      The file to save information of all the created edit action sets.
-    --profile-query-cache
-      The file to save the profiling data of the query cache.
-    --progress-dump-file
-      The file to record the reduction process. The dump file can be large..
     --query-cache-refresh-threshold
       When to trigger a refresh of the query cache. The value is is a fraction 
       in the format x/y. Assume the original token count is t. Since last 
       refresh where the best program has t' tokens, if the latest best program 
       has b tokens, and (t' - b) >= t *x/y, then a refresh is triggered.
       Default: 100/1
-    --query-caching
-      Enable query caching for test script executions.
-      Default: false
-    --reparse-each-iteration
-      Reparse the program before the start of each fixpoint iteration.
-      Default: true
+    --progress-dump-file
+      The file to record the reduction process. The dump file can be large..
     --stat-dump-file
       The file to save the statistics collected during reduction.
-    --use-optc-parser
-      Use the OptC parser to construct the spar-tree.
-      Default: false
-    --use-real-ddmin
-      Whether to use the real delta debugging algorithm to reduce kleene 
-      nodes. 
+    --profile-query-cache
+      The file to save the profiling data of the query cache.
+    --profile-actionset
+      The file to save information of all the created edit action sets.
+    --profile
+      profile the reduction process for analysis
       Default: false
 

@@ -63,25 +63,25 @@ class ReductionDriver(
     configuration.testScript,
     configuration.fileToReduce.baseName)
   private val listenerManager = ReductionListenerManager(
-    createListeners(cmd.profile, configuration, extraListeners))
+    createListeners(cmd.profilingFlags.profile, configuration, extraListeners))
   private var tree = createSparTree(configuration.fileToReduce)
-  private val cacheProfiler = if (Strings.isNullOrEmpty(cmd.profileTestExecutionCache))
+  private val cacheProfiler = if (Strings.isNullOrEmpty(cmd.profilingFlags.profileTestExecutionCache))
     AbstractTestScriptExecutionCacheProfiler.NULL_PROFILER
   else TestScriptExecutionCacheProfiler(
-    File(cmd.profileTestExecutionCache))
+    File(cmd.profilingFlags.profileTestExecutionCache))
   val queryCache =
     if (configuration.enableTestScriptExecutionCaching)
       TestScriptExecutionCache(
         tree.programSnapshot,
         cacheProfiler,
-        cmd.getQueryCacheRefreshThreshold())
+        cmd.cacheControlFlags.getQueryCacheRefreshThreshold())
     else NullTestScriptExecutionCache()
   val nodeActionSetCache =
-    if (cmd.nodeActionSetCaching) NodeActionSetCache() else NullNodeActionSetCache()
+    if (cmd.cacheControlFlags.nodeActionSetCaching) NodeActionSetCache() else NullNodeActionSetCache()
   val actionSetProfiler =
-    if (Strings.isNullOrEmpty(cmd.actionSetProfiler))
+    if (Strings.isNullOrEmpty(cmd.profilingFlags.actionSetProfiler))
       AbstractActionSetProfiler.NULL_PROFILER
-    else ActionSetProfiler(File(cmd.actionSetProfiler))
+    else ActionSetProfiler(File(cmd.profilingFlags.actionSetProfiler))
 
   @Throws(IOException::class, ExecutionException::class, InterruptedException::class)
   fun reduce() {
@@ -113,7 +113,7 @@ class ReductionDriver(
       if (currentFixpointIteration > 1) {
         logger.atInfo().log(
           "The fixpoint mode is enabled. This is iteration %s", fixpointIteration)
-        if (cmd.rebuildParseTreeEachIteration) {
+        if (cmd.algorithmControlFlags.rebuildParseTreeEachIteration) {
           logger.atInfo().log("Rebuilding spar-tree.")
           // Rebuilding is necessary, to hop over different production rules.
           tree = reparseAndCreateSparTree(tree)
@@ -320,10 +320,14 @@ class ReductionDriver(
       val workingDirectory = sourceFile.parentFile
       val bestFile = getOutputFile(cmd)
       val statisticsFile =
-        if (Strings.isNullOrEmpty(cmd.statDumpFile)) null else File(cmd.statDumpFile)
+        if (Strings.isNullOrEmpty(cmd.profilingFlags.statDumpFile)) null
+        else File(cmd.profilingFlags.statDumpFile)
       val progressDumpFile =
-        if (Strings.isNullOrEmpty(cmd.progressDumpFile)) null else File(cmd.progressDumpFile)
-      val keepOriginalFormat = cmd.reductionControlFlags.keepOrigFormat || sourceFile.languageKind.isFormatSensitive
+        if (Strings.isNullOrEmpty(cmd.profilingFlags.progressDumpFile)) null
+        else File(cmd.profilingFlags.progressDumpFile)
+      val keepOriginalFormat =
+        cmd.reductionControlFlags.keepOrigFormat
+          || sourceFile.languageKind.isFormatSensitive
       return ReductionConfiguration(
         workingFolder = workingDirectory,
         testScript = testScript,
@@ -333,10 +337,10 @@ class ReductionDriver(
         progressDumpFile = progressDumpFile,
         keepOriginalCodeFormat = keepOriginalFormat,
         fixpointReduction = cmd.reductionControlFlags.fixpoint,
-        enableTestScriptExecutionCaching = cmd.queryCaching,
-        useRealDeltaDebugger = cmd.useRealDeltaDebugger,
+        enableTestScriptExecutionCaching = cmd.cacheControlFlags.queryCaching,
+        useRealDeltaDebugger = cmd.algorithmControlFlags.useRealDeltaDebugger,
         numOfReductionThreads = cmd.reductionControlFlags.numOfThreads,
-        useOptCParser = cmd.useOptCParser)
+        useOptCParser = cmd.algorithmControlFlags.useOptCParser)
     }
 
     private fun createTokenizedProgramFactory(originalTree: ParseTree): TokenizedProgramFactory {

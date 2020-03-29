@@ -38,6 +38,8 @@ public class CommandOptions {
   public final OutputRefiningFlags outputRefiningFlags = new OutputRefiningFlags();
   public final ReductionAlgorithmControlFlags algorithmControlFlags =
       new ReductionAlgorithmControlFlags();
+  public final CacheControlFlags cacheControlFlags = new CacheControlFlags();
+  public final ProfilingFlags profilingFlags = new ProfilingFlags();
 
   @Parameter(
       names = "--help",
@@ -46,77 +48,8 @@ public class CommandOptions {
       order = FlagOrder.HELP)
   public boolean help;
 
-  @Parameter(
-      names = "--profile",
-      description = "profile the reduction process for analysis",
-      arity = 1)
-  public boolean profile = false;
-
-  @Parameter(
-      names = "--query-caching",
-      description = "Enable query caching for test script executions.",
-      arity = 1)
-  public boolean queryCaching = false;
-
-  @Parameter(
-      names = "--edit-caching",
-      description = "Enable caching for edits performed between two successful reductions.",
-      arity = 1)
-  public boolean nodeActionSetCaching = true;
-
-  @Parameter(
-      names = "--progress-dump-file",
-      description = "The file to record the reduction process. The dump file can be large..")
-  public String progressDumpFile;
-
-  @Parameter(
-      names = "--stat-dump-file",
-      description = "The file to save the statistics collected during reduction.")
-  public String statDumpFile;
-
-  @Parameter(
-      names = "--reparse-each-iteration",
-      description = "Reparse the program before the start of each fixpoint iteration.")
-  public boolean rebuildParseTreeEachIteration = true;
-
-  @Parameter(
-      names = "--profile-query-cache",
-      description = "The file to save the profiling data of the query cache.")
-  public String profileTestExecutionCache = null;
-
-  @Parameter(
-      names = "--profile-actionset",
-      description = "The file to save information of all the created edit action sets.")
-  public String actionSetProfiler = null;
-
-  @Parameter(
-      names = "--use-real-ddmin",
-      description = "Whether to use the real delta debugging algorithm to reduce kleene nodes.",
-      arity = 1)
-  public boolean useRealDeltaDebugger = false;
-
-  @Parameter(
-      names = "--query-cache-refresh-threshold",
-      description =
-          "When to trigger a refresh of the query cache. "
-              + "The value is is a fraction in the format x/y. "
-              + "Assume the original token count is t. "
-              + "Since last refresh where the best program has t' tokens, if the latest best program has b tokens, "
-              + "and (t' - b) >= t *x/y, then a refresh is triggered.")
-  public String queryCacheRefreshThreshold = "100/1";
-
-  @Parameter(
-      names = "--use-optc-parser",
-      description = "Use the OptC parser to construct the spar-tree.",
-      arity = 1)
-  public boolean useOptCParser = false;
-
   public CommandOptions(String defaultReductionAlgorithm) {
     this.defaultReductionAlgorithm = defaultReductionAlgorithm;
-  }
-
-  public Fraction getQueryCacheRefreshThreshold() {
-    return Fraction.parse(queryCacheRefreshThreshold);
   }
 
   public JCommander createJCommander(Class<?> mainClass) {
@@ -129,6 +62,8 @@ public class CommandOptions {
             .addObject(reductionControlFlags)
             .addObject(outputRefiningFlags)
             .addObject(algorithmControlFlags)
+            .addObject(cacheControlFlags)
+            .addObject(profilingFlags)
             .build();
     return commander;
   }
@@ -139,9 +74,8 @@ public class CommandOptions {
     reductionControlFlags.validate();
     outputRefiningFlags.validate();
     algorithmControlFlags.validate();
-    if (queryCacheRefreshThreshold != null) {
-      Fraction.parse(queryCacheRefreshThreshold); // Should not throw exceptions.
-    }
+    cacheControlFlags.validate();
+    profilingFlags.validate();
   }
 
   public static final class CompulsoryFlags {
@@ -260,12 +194,107 @@ public class CommandOptions {
         order = FlagOrder.ALG_CONTROL + 1)
     public boolean listAllReductionAlgorithms;
 
+    @Parameter(
+        names = "--reparse-each-iteration",
+        description = "Reparse the program before the start of each fixpoint iteration.",
+        arity = 1,
+        order = FlagOrder.ALG_CONTROL + 2)
+    public boolean rebuildParseTreeEachIteration = true;
+
+    @Parameter(
+        names = "--use-real-ddmin",
+        description = "Whether to use the real delta debugging algorithm to reduce kleene nodes.",
+        arity = 1,
+        order = FlagOrder.ALG_CONTROL + 3)
+    public boolean useRealDeltaDebugger = false;
+
+    @Parameter(
+        names = "--use-optc-parser",
+        description = "Use the OptC parser to construct the spar-tree.",
+        arity = 1,
+        order = FlagOrder.ALG_CONTROL + 4)
+    public boolean useOptCParser = false;
+
     public String getReductionAlgorithmName() {
       if (Strings.isNullOrEmpty(reductionAlgorithm)) {
         reductionAlgorithm = defaultReductionAlgorithm;
       }
       return this.reductionAlgorithm;
     }
+
+    public void validate() {}
+  }
+
+  public final class CacheControlFlags {
+
+    @Parameter(
+        names = "--query-caching",
+        description = "Enable query caching for test script executions.",
+        arity = 1,
+        order = FlagOrder.CACHE_CONTROL + 0)
+    public boolean queryCaching = false;
+
+    @Parameter(
+        names = "--edit-caching",
+        description = "Enable caching for edits performed between two successful reductions.",
+        arity = 1,
+        order = FlagOrder.CACHE_CONTROL + 1)
+    public boolean nodeActionSetCaching = true;
+
+    @Parameter(
+        names = "--query-cache-refresh-threshold",
+        description =
+            "When to trigger a refresh of the query cache. "
+                + "The value is is a fraction in the format x/y. "
+                + "Assume the original token count is t. "
+                + "Since last refresh where the best program has t' tokens, if the latest best program has b tokens, "
+                + "and (t' - b) >= t *x/y, then a refresh is triggered.",
+        order = FlagOrder.CACHE_CONTROL + 2)
+    public String queryCacheRefreshThreshold = "100/1";
+
+    public Fraction getQueryCacheRefreshThreshold() {
+      return Fraction.parse(queryCacheRefreshThreshold);
+    }
+
+    public void validate() {
+      if (queryCacheRefreshThreshold != null) {
+        Fraction.parse(queryCacheRefreshThreshold); // Should not throw exceptions.
+      }
+    }
+  }
+
+  public static final class ProfilingFlags {
+
+    @Parameter(
+        names = "--progress-dump-file",
+        description = "The file to record the reduction process. The dump file can be large..",
+        order = FlagOrder.PROFILING_CONTROL + 0)
+    public String progressDumpFile;
+
+    @Parameter(
+        names = "--stat-dump-file",
+        description = "The file to save the statistics collected during reduction.",
+        order = FlagOrder.PROFILING_CONTROL + 1)
+    public String statDumpFile;
+
+    @Parameter(
+        names = "--profile-query-cache",
+        description = "The file to save the profiling data of the query cache.",
+        order = FlagOrder.PROFILING_CONTROL + 2)
+    public String profileTestExecutionCache = null;
+
+    @Parameter(
+        names = "--profile-actionset",
+        description = "The file to save information of all the created edit action sets.",
+        order = FlagOrder.PROFILING_CONTROL + 3)
+    public String actionSetProfiler = null;
+
+    @Parameter(
+        names = "--profile",
+        description = "profile the reduction process for analysis",
+        arity = 1,
+        order = FlagOrder.PROFILING_CONTROL + 4)
+    public boolean profile = false;
 
     public void validate() {}
   }
@@ -277,6 +306,7 @@ public class CommandOptions {
     public static final int OUTPUT_REFINING = 3000;
     public static final int HELP = 4000;
     public static final int ALG_CONTROL = 5000;
-    public static final int PROFILING_CONTROL = 6000;
+    public static final int CACHE_CONTROL = 6000;
+    public static final int PROFILING_CONTROL = 10000;
   }
 }
