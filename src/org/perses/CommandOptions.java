@@ -167,10 +167,6 @@ public class CommandOptions {
     this.debugGranularity = debugGranularity;
   }
 
-  public boolean isProfiling() {
-    return profile;
-  }
-
   public boolean isListAllReductionAlgorithms() {
     return listAllReductionAlgorithms;
   }

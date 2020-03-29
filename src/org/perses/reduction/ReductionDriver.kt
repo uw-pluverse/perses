@@ -63,7 +63,7 @@ class ReductionDriver(
     configuration.testScript,
     configuration.fileToReduce.baseName)
   private val listenerManager = ReductionListenerManager(
-    createListeners(cmd.isProfiling, configuration, extraListeners))
+    createListeners(cmd.profile, configuration, extraListeners))
   private var tree = createSparTree(configuration.fileToReduce)
   val cacheProfiler = if (Strings.isNullOrEmpty(cmd.profileTestExecutionCache))
     AbstractTestScriptExecutionCacheProfiler.NULL_PROFILER
