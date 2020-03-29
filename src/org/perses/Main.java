@@ -48,7 +48,7 @@ public class Main {
       return;
     }
 
-    if (cmd.listAllReductionAlgorithms) {
+    if (cmd.algorithmControlFlags.listAllReductionAlgorithms) {
       System.out.println("All available reduction algorithms: ");
       System.out.println(ReducerFactory.printAllReductionAlgorithms());
       return;
@@ -57,9 +57,9 @@ public class Main {
     cmd.validate();
 
     Preconditions.checkState(
-        ReducerFactory.isValidReducerName(cmd.getReductionAlgorithmName()),
+        ReducerFactory.isValidReducerName(cmd.algorithmControlFlags.getReductionAlgorithmName()),
         "Invalid reduction algorithm %s",
-        cmd.getReductionAlgorithmName());
+        cmd.algorithmControlFlags.getReductionAlgorithmName());
 
     try (ReductionDriver driver = new ReductionDriver(cmd)) {
       driver.reduce();

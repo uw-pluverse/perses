@@ -36,8 +36,14 @@ public class CommandOptions {
   public final ResultOutputFlags resultOutputFlags = new ResultOutputFlags();
   public final ReductionControlFlags reductionControlFlags = new ReductionControlFlags();
   public final OutputRefiningFlags outputRefiningFlags = new OutputRefiningFlags();
+  public final ReductionAlgorithmControlFlags algorithmControlFlags =
+      new ReductionAlgorithmControlFlags();
 
-  @Parameter(names = "--help", description = "print help message", help = true)
+  @Parameter(
+      names = "--help",
+      description = "print help message",
+      help = true,
+      order = FlagOrder.HELP)
   public boolean help;
 
   @Parameter(
@@ -45,14 +51,6 @@ public class CommandOptions {
       description = "profile the reduction process for analysis",
       arity = 1)
   public boolean profile = false;
-
-  @Parameter(
-      names = "--alg",
-      description = "reduction algorithm: use --list-algs to list all available algorithms")
-  public String reductionAlgorithm = null;
-
-  @Parameter(names = "--list-algs", description = "list all the reduction algorithms.", help = true)
-  public boolean listAllReductionAlgorithms;
 
   @Parameter(
       names = "--query-caching",
@@ -117,13 +115,6 @@ public class CommandOptions {
     this.defaultReductionAlgorithm = defaultReductionAlgorithm;
   }
 
-  public String getReductionAlgorithmName() {
-    if (Strings.isNullOrEmpty(reductionAlgorithm)) {
-      reductionAlgorithm = defaultReductionAlgorithm;
-    }
-    return this.reductionAlgorithm;
-  }
-
   public Fraction getQueryCacheRefreshThreshold() {
     return Fraction.parse(queryCacheRefreshThreshold);
   }
@@ -137,6 +128,7 @@ public class CommandOptions {
             .addObject(resultOutputFlags)
             .addObject(reductionControlFlags)
             .addObject(outputRefiningFlags)
+            .addObject(algorithmControlFlags)
             .build();
     return commander;
   }
@@ -146,6 +138,7 @@ public class CommandOptions {
     resultOutputFlags.validate();
     reductionControlFlags.validate();
     outputRefiningFlags.validate();
+    algorithmControlFlags.validate();
     if (queryCacheRefreshThreshold != null) {
       Fraction.parse(queryCacheRefreshThreshold); // Should not throw exceptions.
     }
@@ -253,11 +246,37 @@ public class CommandOptions {
     public void validate() {}
   }
 
+  public final class ReductionAlgorithmControlFlags {
+    @Parameter(
+        names = "--alg",
+        description = "reduction algorithm: use --list-algs to list all available algorithms",
+        order = FlagOrder.ALG_CONTROL + 0)
+    public String reductionAlgorithm = null;
+
+    @Parameter(
+        names = "--list-algs",
+        description = "list all the reduction algorithms.",
+        help = true,
+        order = FlagOrder.ALG_CONTROL + 1)
+    public boolean listAllReductionAlgorithms;
+
+    public String getReductionAlgorithmName() {
+      if (Strings.isNullOrEmpty(reductionAlgorithm)) {
+        reductionAlgorithm = defaultReductionAlgorithm;
+      }
+      return this.reductionAlgorithm;
+    }
+
+    public void validate() {}
+  }
+
   private static class FlagOrder {
     public static final int COMPULSORY = 0;
     public static final int RESULT_OUTPUT = 1000;
     public static final int REDUCTION_CONTROL = 2000;
     public static final int OUTPUT_REFINING = 3000;
-    public static final int PROFILING_CONTROL = 4000;
+    public static final int HELP = 4000;
+    public static final int ALG_CONTROL = 5000;
+    public static final int PROFILING_CONTROL = 6000;
   }
 }

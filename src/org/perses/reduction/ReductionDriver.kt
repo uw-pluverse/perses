@@ -277,7 +277,8 @@ class ReductionDriver(
   }
 
   fun createReducer(): AbstractReducer {
-    val algorithmMeta = ReducerFactory.getReductionAlgorithm(cmd.reductionAlgorithmName)
+    val algorithmMeta = ReducerFactory.getReductionAlgorithm(
+      cmd.algorithmControlFlags.reductionAlgorithmName)
     val algorithm = algorithmMeta
       .create(
         ReducerContext(
@@ -377,7 +378,7 @@ class ReductionDriver(
         return sourceFile
       }
       return if (Strings.isNullOrEmpty(cmd.resultOutputFlags.outputFile)) {
-        val reductionAlgorithm = cmd.reductionAlgorithmName
+        val reductionAlgorithm = cmd.algorithmControlFlags.reductionAlgorithmName
         File(
           sourceFile.parent, reductionAlgorithm + "_reduced_" + sourceFile.name)
       } else {
