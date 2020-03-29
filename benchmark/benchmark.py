@@ -158,15 +158,15 @@ def main():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-            description = "This program benchmarks and get results")
+            description = "Runs the benchmark and output results in JSON")
     # benchmark all or subset. default subset
-    parser.add_argument("--benchmark-subset", "-bs", action="store_true")
-    parser.add_argument("--benchmark-all", "-ba", action="store_true")
-    parser.add_argument("--silent", "-s", action="store_true")
-    parser.add_argument("--silent-subprocess", "-ss", action="store_true")
-    parser.add_argument("--output", "-o", action="store")
-    parser.add_argument("--start", action="store")
-    parser.add_argument("--length", action="store")
+    parser.add_argument("--benchmark-subset", "-bs", action="store_true", help="Benchmark with toys")
+    parser.add_argument("--benchmark-all", "-ba", action="store_true", help="Benchmark with clang and gcc")
+    parser.add_argument("--silent", "-s", action="store_true", help="Writes nothing to stdout")
+    parser.add_argument("--silent-subprocess", "-ss", action="store_true", help="Do not pipe the stdout and stderr from the reducers to the benchmark script. Useful if you only want results")
+    parser.add_argument("--output", "-o", action="store", help="File where results from the benchmarks are dumped")
+    parser.add_argument("--start", action="store", help="Starting index from the list of benchmarks where the benchmark process begins")
+    parser.add_argument("--length", action="store", help="Number of benchmarks from the list to run")
     parsed = parser.parse_args()
     if parsed.benchmark_subset:
         benchmark_target = BENCHMARK_SMALL
