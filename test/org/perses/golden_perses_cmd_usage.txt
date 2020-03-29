@@ -4,26 +4,23 @@ Usage: org.perses.Main [options]
       The test script to specify the property the reducer needs to preserve.
   * --input-file
       The input file to reduce
-    --output-file
-      The output file to save the reduced result.
     --in-place
       perform in-place reduction
       Default: false
-    --keep-orig-format
-      keep the original code format during reduction. May slow down if 
-      enabled. 
-      Default: true
+    --output-file
+      The output file to save the reduced result.
     --fixpoint
       iterative reduction till fixpoint
       Default: true
     --threads
       Number of reduction threads: a positive integer, or 'auto'.
       Default: auto
+    --keep-orig-format
+      keep the original code format during reduction. May slow down if 
+      enabled. 
+      Default: true
     --alg
       reduction algorithm: use --list-algs to list all available algorithms
-    --count-tokens
-      Count tokens in the input file
-      Default: false
     --debug-granularity
       debug granularity
       Default: false

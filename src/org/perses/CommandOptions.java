@@ -39,9 +39,6 @@ public class CommandOptions {
   @Parameter(names = "--help", description = "print help message", help = true)
   public boolean help;
 
-  @Parameter(names = "--count-tokens", description = "Count tokens in the input file")
-  public boolean countTokens;
-
   @Parameter(
       names = "--profile",
       description = "profile the reduction process for analysis",
@@ -172,78 +169,20 @@ public class CommandOptions {
     }
   }
 
-  public static final class ResultOutputFlags {
-    @Parameter(
-        names = "--in-place",
-        description = "perform in-place reduction",
-        arity = 1,
-        order = FlagOrder.RESULT_OUTPUT)
-    public boolean inPlaceReduction = false;
-
-    @Parameter(
-        names = "--output-file",
-        description = "The output file to save the reduced result.",
-        order = FlagOrder.RESULT_OUTPUT)
-    public String outputFile;
-
-    public void validate() {
-      if (inPlaceReduction) {
-        checkState(
-            outputFile == null || outputFile.trim().isEmpty(),
-            "--in-place and --output-file cannot be specified together.");
-      }
-    }
-  }
-
-  public static final class ReductionControlFlags {
-    @Parameter(
-        names = "--fixpoint",
-        description = "iterative reduction till fixpoint",
-        arity = 1,
-        order = FlagOrder.REDUCTION_CONTROL)
-    public boolean fixpoint = true;
-
-    @Parameter(
-        names = "--keep-orig-format",
-        description = "keep the original code format during reduction. May slow down if enabled.",
-        arity = 1,
-        order = FlagOrder.REDUCTION_CONTROL)
-    public boolean keepOrigFormat = true;
-
-    @Parameter(
-        names = "--threads",
-        description = "Number of reduction threads: a positive integer, or 'auto'.",
-        order = FlagOrder.REDUCTION_CONTROL)
-    private String numOfThreads = "auto";
-
-    public void validate() {
-      if (!"auto".equals(numOfThreads)) {
-        checkState(Integer.parseInt(numOfThreads) > 0, numOfThreads);
-      }
-    }
-
-    public int getNumOfThreads() {
-      if ("auto".equals(numOfThreads)) {
-        return Runtime.getRuntime().availableProcessors();
-      }
-      return Integer.parseInt(numOfThreads);
-    }
-  }
-
   public static final class CompulsoryFlags {
 
     @Parameter(
         names = "--test-script",
         required = true,
         description = "The test script to specify the property the reducer needs to preserve.",
-        order = FlagOrder.COMPULSORY)
+        order = FlagOrder.COMPULSORY + 0)
     public String testScript;
 
     @Parameter(
         names = "--input-file",
         required = true,
         description = "The input file to reduce",
-        order = FlagOrder.COMPULSORY)
+        order = FlagOrder.COMPULSORY + 1)
     public String inputFile;
 
     public File getTestScript() {
@@ -264,9 +203,67 @@ public class CommandOptions {
     }
   }
 
+  public static final class ResultOutputFlags {
+    @Parameter(
+        names = "--in-place",
+        description = "perform in-place reduction",
+        arity = 1,
+        order = FlagOrder.RESULT_OUTPUT + 0)
+    public boolean inPlaceReduction = false;
+
+    @Parameter(
+        names = "--output-file",
+        description = "The output file to save the reduced result.",
+        order = FlagOrder.RESULT_OUTPUT + 1)
+    public String outputFile;
+
+    public void validate() {
+      if (inPlaceReduction) {
+        checkState(
+            outputFile == null || outputFile.trim().isEmpty(),
+            "--in-place and --output-file cannot be specified together.");
+      }
+    }
+  }
+
+  public static final class ReductionControlFlags {
+    @Parameter(
+        names = "--fixpoint",
+        description = "iterative reduction till fixpoint",
+        arity = 1,
+        order = FlagOrder.REDUCTION_CONTROL + 0)
+    public boolean fixpoint = true;
+
+    @Parameter(
+        names = "--threads",
+        description = "Number of reduction threads: a positive integer, or 'auto'.",
+        order = FlagOrder.REDUCTION_CONTROL + 1)
+    private String numOfThreads = "auto";
+
+    @Parameter(
+        names = "--keep-orig-format",
+        description = "keep the original code format during reduction. May slow down if enabled.",
+        arity = 1,
+        order = FlagOrder.REDUCTION_CONTROL + 2)
+    public boolean keepOrigFormat = true;
+
+    public void validate() {
+      if (!"auto".equals(numOfThreads)) {
+        checkState(Integer.parseInt(numOfThreads) > 0, numOfThreads);
+      }
+    }
+
+    public int getNumOfThreads() {
+      if ("auto".equals(numOfThreads)) {
+        return Runtime.getRuntime().availableProcessors();
+      }
+      return Integer.parseInt(numOfThreads);
+    }
+  }
+
   private static class FlagOrder {
     public static final int COMPULSORY = 0;
-    public static final int RESULT_OUTPUT = 100;
-    public static final int REDUCTION_CONTROL = 200;
+    public static final int RESULT_OUTPUT = 1000;
+    public static final int REDUCTION_CONTROL = 2000;
   }
 }

@@ -54,11 +54,6 @@ public class Main {
       return;
     }
 
-    if (cmd.countTokens) {
-
-      return;
-    }
-
     cmd.validate();
 
     Preconditions.checkState(
