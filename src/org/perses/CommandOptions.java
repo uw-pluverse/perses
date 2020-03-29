@@ -35,6 +35,7 @@ public class CommandOptions {
   public final CompulsoryFlags compulsoryFlags = new CompulsoryFlags();
   public final ResultOutputFlags resultOutputFlags = new ResultOutputFlags();
   public final ReductionControlFlags reductionControlFlags = new ReductionControlFlags();
+  public final OutputRefiningFlags outputRefiningFlags = new OutputRefiningFlags();
 
   @Parameter(names = "--help", description = "print help message", help = true)
   public boolean help;
@@ -52,9 +53,6 @@ public class CommandOptions {
 
   @Parameter(names = "--list-algs", description = "list all the reduction algorithms.", help = true)
   public boolean listAllReductionAlgorithms;
-
-  @Parameter(names = "--format-cmd", description = "the command to format the reduced source file")
-  public String formatCmd = "";
 
   @Parameter(
       names = "--query-caching",
@@ -119,10 +117,6 @@ public class CommandOptions {
     this.defaultReductionAlgorithm = defaultReductionAlgorithm;
   }
 
-  public String getFormatCmd() {
-    return formatCmd;
-  }
-
   public String getReductionAlgorithmName() {
     if (Strings.isNullOrEmpty(reductionAlgorithm)) {
       reductionAlgorithm = defaultReductionAlgorithm;
@@ -142,6 +136,7 @@ public class CommandOptions {
             .addObject(compulsoryFlags)
             .addObject(resultOutputFlags)
             .addObject(reductionControlFlags)
+            .addObject(outputRefiningFlags)
             .build();
     return commander;
   }
@@ -150,6 +145,7 @@ public class CommandOptions {
     compulsoryFlags.validate();
     resultOutputFlags.validate();
     reductionControlFlags.validate();
+    outputRefiningFlags.validate();
     if (queryCacheRefreshThreshold != null) {
       Fraction.parse(queryCacheRefreshThreshold); // Should not throw exceptions.
     }
@@ -247,9 +243,21 @@ public class CommandOptions {
     }
   }
 
+  public static final class OutputRefiningFlags {
+    @Parameter(
+        names = "--format-cmd",
+        description = "the command to format the reduced source file",
+        order = FlagOrder.OUTPUT_REFINING + 0)
+    public String formatCmd = "";
+
+    public void validate() {}
+  }
+
   private static class FlagOrder {
     public static final int COMPULSORY = 0;
     public static final int RESULT_OUTPUT = 1000;
     public static final int REDUCTION_CONTROL = 2000;
+    public static final int OUTPUT_REFINING = 3000;
+    public static final int PROFILING_CONTROL = 4000;
   }
 }

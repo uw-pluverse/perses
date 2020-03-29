@@ -160,7 +160,7 @@ class ReductionDriver(
       val finalTokenCount = tree.tokenCount
       listenerManager.onReductionEnd(finalTokenCount, countOfTestScriptExecutions)
     }
-    formatBestFile(cmd.getFormatCmd(), configuration.bestResultFile)
+    formatBestFile(cmd.outputRefiningFlags.formatCmd, configuration.bestResultFile)
   }
 
   @Throws(InterruptedException::class, ExecutionException::class)
