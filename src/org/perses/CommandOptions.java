@@ -59,9 +59,6 @@ public class CommandOptions {
   @Parameter(names = "--format-cmd", description = "the command to format the reduced source file")
   public String formatCmd = "";
 
-  @Parameter(names = "--max-level", description = "the max levels in the tree for reduction")
-  public int maxReductionLevel = Integer.MAX_VALUE;
-
   @Parameter(
       names = "--query-caching",
       description = "Enable query caching for test script executions.",
@@ -138,10 +135,6 @@ public class CommandOptions {
 
   public Fraction getQueryCacheRefreshThreshold() {
     return Fraction.parse(queryCacheRefreshThreshold);
-  }
-
-  public int getMaxReductionLevel() {
-    return maxReductionLevel;
   }
 
   public void setDebugGranularity(boolean debugGranularity) {

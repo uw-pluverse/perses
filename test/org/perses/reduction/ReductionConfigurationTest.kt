@@ -50,7 +50,6 @@ class ReductionConfigurationTest {
     Truth.assertThat(workingDirectory.isDirectory).isTrue()
     val bestFile = sourceFile.file
     val numOfReductionThreads = 2
-    val maxReductionLevel = 100
     val configuration = ReductionConfiguration(
       workingFolder = workingDirectory,
       testScript = testScript,
@@ -62,13 +61,11 @@ class ReductionConfigurationTest {
       fixpointReduction = true,
       enableTestScriptExecutionCaching = true,
       useRealDeltaDebugger = false,
-      maxReductionLevel = maxReductionLevel,
       numOfReductionThreads = numOfReductionThreads)
     Truth.assertThat(configuration.bestResultFile).isEqualTo(bestFile)
     Truth.assertThat(configuration.fileToReduce.file).isEqualTo(sourceFile.file)
     Truth.assertThat(configuration.fileToReduce.fileContent)
       .isEqualTo(MoreFiles.asCharSource(sourceFile.file.toPath(), StandardCharsets.UTF_8).read())
-    Truth.assertThat(configuration.maxReductionLevel).isEqualTo(maxReductionLevel)
     Truth.assertThat(configuration.numOfReductionThreads).isEqualTo(numOfReductionThreads)
     Truth.assertThat(configuration.workingFolder).isEqualTo(workingDirectory)
     run {

@@ -44,7 +44,6 @@ class ReductionConfiguration(
   val fixpointReduction: Boolean,
   val enableTestScriptExecutionCaching: Boolean,
   val useRealDeltaDebugger: Boolean,
-  val maxReductionLevel: Int,
   val numOfReductionThreads: Int,
   useOptCParser: Boolean = false
 ) {
@@ -109,9 +108,6 @@ class ReductionConfiguration(
     }
     require(workingFolder.isDirectory) {
       "The working folder is not a directory: $workingFolder"
-    }
-    require(maxReductionLevel > 0) {
-      "The max reduction level should be positive: $maxReductionLevel"
     }
     require(numOfReductionThreads > 0) {
       "The number of reduction threads should be positive: $numOfReductionThreads"

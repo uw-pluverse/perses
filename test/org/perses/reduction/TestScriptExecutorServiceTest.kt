@@ -81,7 +81,6 @@ class TestScriptExecutorServiceTest {
       fixpointReduction = true,
       enableTestScriptExecutionCaching = true,
       useRealDeltaDebugger = false,
-      maxReductionLevel = 100,
       numOfReductionThreads = threadCount)
   }
 

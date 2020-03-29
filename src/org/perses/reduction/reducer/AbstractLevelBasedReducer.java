@@ -67,8 +67,7 @@ public abstract class AbstractLevelBasedReducer extends AbstractReducer {
     return next.isEmpty() ? Optional.empty() : Optional.of(next);
   }
 
-  protected void reduceOneLevel(SparTree tree, ReductionLevel level)
-      throws IOException {
+  protected void reduceOneLevel(SparTree tree, ReductionLevel level) throws IOException {
     int maxNodesPerPartition = getInitialMaxNodesPerPartition(level);
     while (maxNodesPerPartition > 0) {
       partitionLevelAndReduce(tree, level, maxNodesPerPartition);
@@ -158,7 +157,8 @@ public abstract class AbstractLevelBasedReducer extends AbstractReducer {
             } catch (IOException e) {
               throw new AssertionError(e);
             }
-            // Should return Unit.INSTANCE, but just here just return null to avoid depending on kotlin stdlib.
+            // Should return Unit.INSTANCE, but just here just return null to avoid depending on
+            // kotlin stdlib.
             return null;
           });
     }
@@ -182,10 +182,6 @@ public abstract class AbstractLevelBasedReducer extends AbstractReducer {
       }
       final int postSize = tree.getTokenCount();
       listenerManager.onLevelReductionEnd(level.getLevel(), postSize);
-
-      if (level.getLevel() >= configuration.getMaxReductionLevel()) {
-        continue; // has reached the maximum level, thus skipping the next levels.
-      }
 
       currentLevel = moveToNextLevel(tree, level);
       assert !currentLevel.isPresent() || !ReductionLevel.isNullOrEmpty(currentLevel.get());

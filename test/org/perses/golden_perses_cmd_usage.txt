@@ -34,9 +34,6 @@ Usage: org.perses.Main [options]
       print help message
     --list-algs
       list all the reduction algorithms.
-    --max-level
-      the max levels in the tree for reduction
-      Default: 2147483647
     --profile
       profile the reduction process for analysis
       Default: false

@@ -334,7 +334,6 @@ class ReductionDriver(
         fixpointReduction = cmd.reductionControlFlags.fixpoint,
         enableTestScriptExecutionCaching = cmd.queryCaching,
         useRealDeltaDebugger = cmd.useRealDeltaDebugger,
-        maxReductionLevel = cmd.getMaxReductionLevel(),
         numOfReductionThreads = cmd.reductionControlFlags.numOfThreads,
         useOptCParser = cmd.useOptCParser)
     }
