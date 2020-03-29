@@ -151,11 +151,7 @@ public class CommandOptions {
     this.debugGranularity = debugGranularity;
   }
 
-  public boolean isListAllReductionAlgorithms() {
-    return listAllReductionAlgorithms;
-  }
-
-  public JCommander createCommander(Class<?> mainClass) {
+  public JCommander createJCommander(Class<?> mainClass) {
     final JCommander commander =
         JCommander.newBuilder()
             .programName(mainClass.getCanonicalName())

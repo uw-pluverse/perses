@@ -19,7 +19,6 @@ package org.perses;
 
 import com.beust.jcommander.JCommander;
 import com.google.common.base.Preconditions;
-import org.antlr.runtime.RecognitionException;
 import org.perses.reduction.ReducerFactory;
 import org.perses.reduction.ReductionDriver;
 
@@ -42,14 +41,14 @@ public class Main {
   public static void main(String[] args)
       throws IOException, ExecutionException, InterruptedException {
     final CommandOptions cmd = new CommandOptions(ReducerFactory.getDefaultReductionAlgName());
-    final JCommander commander = cmd.createCommander(Main.class);
+    final JCommander commander = cmd.createJCommander(Main.class);
     commander.parse(args);
     if (cmd.help) {
       commander.usage();
       return;
     }
 
-    if (cmd.isListAllReductionAlgorithms()) {
+    if (cmd.listAllReductionAlgorithms) {
       System.out.println("All available reduction algorithms: ");
       System.out.println(ReducerFactory.printAllReductionAlgorithms());
       return;
