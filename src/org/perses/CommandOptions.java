@@ -45,9 +45,6 @@ public class CommandOptions {
       arity = 1)
   public boolean profile = false;
 
-  @Parameter(names = "--debug-granularity", description = "debug granularity", arity = 1)
-  public boolean debugGranularity = false;
-
   @Parameter(
       names = "--alg",
       description = "reduction algorithm: use --list-algs to list all available algorithms")
@@ -135,10 +132,6 @@ public class CommandOptions {
 
   public Fraction getQueryCacheRefreshThreshold() {
     return Fraction.parse(queryCacheRefreshThreshold);
-  }
-
-  public void setDebugGranularity(boolean debugGranularity) {
-    this.debugGranularity = debugGranularity;
   }
 
   public JCommander createJCommander(Class<?> mainClass) {

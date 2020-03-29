@@ -21,9 +21,6 @@ Usage: org.perses.Main [options]
       Default: true
     --alg
       reduction algorithm: use --list-algs to list all available algorithms
-    --debug-granularity
-      debug granularity
-      Default: false
     --edit-caching
       Enable caching for edits performed between two successful reductions.
       Default: true
