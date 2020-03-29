@@ -33,24 +33,14 @@ public class CommandOptions {
 
   private final String defaultReductionAlgorithm;
   public final CompulsoryFlags compulsoryFlags = new CompulsoryFlags();
-
-  @Parameter(names = "--in-place", description = "perform in-place reduction", arity = 1)
-  public boolean inPlaceReduction = false;
+  public final ResultOutputFlags resultOutputFlags = new ResultOutputFlags();
+  public final ReductionControlFlags reductionControlFlags = new ReductionControlFlags();
 
   @Parameter(names = "--help", description = "print help message", help = true)
   public boolean help;
 
   @Parameter(names = "--count-tokens", description = "Count tokens in the input file")
   public boolean countTokens;
-
-  @Parameter(names = "--fixpoint", description = "iterative reduction till fixpoint", arity = 1)
-  public boolean fixpoint = false;
-
-  @Parameter(
-      names = "--keep-orig-format",
-      description = "keep the original code format during reduction. May slow down if enabled.",
-      arity = 1)
-  public boolean keepOrigFormat = true;
 
   @Parameter(
       names = "--profile",
@@ -75,9 +65,6 @@ public class CommandOptions {
   @Parameter(names = "--max-level", description = "the max levels in the tree for reduction")
   public int maxReductionLevel = Integer.MAX_VALUE;
 
-  @Parameter(names = "--threads", description = "Number of reduction threads.")
-  public int numOfThreads = Runtime.getRuntime().availableProcessors();
-
   @Parameter(
       names = "--query-caching",
       description = "Enable query caching for test script executions.",
@@ -89,9 +76,6 @@ public class CommandOptions {
       description = "Enable caching for edits performed between two successful reductions.",
       arity = 1)
   public boolean nodeActionSetCaching = true;
-
-  @Parameter(names = "--output-file", description = "The output file to save the reduced result.")
-  public String outputFile;
 
   @Parameter(
       names = "--progress-dump-file",
@@ -177,19 +161,76 @@ public class CommandOptions {
             .programName(mainClass.getCanonicalName())
             .addObject(this)
             .addObject(compulsoryFlags)
+            .addObject(resultOutputFlags)
+            .addObject(reductionControlFlags)
             .build();
     return commander;
   }
 
   public void validate() {
     compulsoryFlags.validate();
-    if (inPlaceReduction) {
-      checkState(
-          outputFile == null || outputFile.trim().isEmpty(),
-          "--in-place and --output-file cannot be specified together.");
-    }
+    resultOutputFlags.validate();
+    reductionControlFlags.validate();
     if (queryCacheRefreshThreshold != null) {
       Fraction.parse(queryCacheRefreshThreshold); // Should not throw exceptions.
+    }
+  }
+
+  public static final class ResultOutputFlags {
+    @Parameter(
+        names = "--in-place",
+        description = "perform in-place reduction",
+        arity = 1,
+        order = FlagOrder.RESULT_OUTPUT)
+    public boolean inPlaceReduction = false;
+
+    @Parameter(
+        names = "--output-file",
+        description = "The output file to save the reduced result.",
+        order = FlagOrder.RESULT_OUTPUT)
+    public String outputFile;
+
+    public void validate() {
+      if (inPlaceReduction) {
+        checkState(
+            outputFile == null || outputFile.trim().isEmpty(),
+            "--in-place and --output-file cannot be specified together.");
+      }
+    }
+  }
+
+  public static final class ReductionControlFlags {
+    @Parameter(
+        names = "--fixpoint",
+        description = "iterative reduction till fixpoint",
+        arity = 1,
+        order = FlagOrder.REDUCTION_CONTROL)
+    public boolean fixpoint = true;
+
+    @Parameter(
+        names = "--keep-orig-format",
+        description = "keep the original code format during reduction. May slow down if enabled.",
+        arity = 1,
+        order = FlagOrder.REDUCTION_CONTROL)
+    public boolean keepOrigFormat = true;
+
+    @Parameter(
+        names = "--threads",
+        description = "Number of reduction threads: a positive integer, or 'auto'.",
+        order = FlagOrder.REDUCTION_CONTROL)
+    private String numOfThreads = "auto";
+
+    public void validate() {
+      if (!"auto".equals(numOfThreads)) {
+        checkState(Integer.parseInt(numOfThreads) > 0, numOfThreads);
+      }
+    }
+
+    public int getNumOfThreads() {
+      if ("auto".equals(numOfThreads)) {
+        return Runtime.getRuntime().availableProcessors();
+      }
+      return Integer.parseInt(numOfThreads);
     }
   }
 
@@ -229,5 +270,7 @@ public class CommandOptions {
 
   private static class FlagOrder {
     public static final int COMPULSORY = 0;
+    public static final int RESULT_OUTPUT = 100;
+    public static final int REDUCTION_CONTROL = 200;
   }
 }

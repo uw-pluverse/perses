@@ -65,7 +65,7 @@ class ReductionDriver(
   private val listenerManager = ReductionListenerManager(
     createListeners(cmd.profile, configuration, extraListeners))
   private var tree = createSparTree(configuration.fileToReduce)
-  val cacheProfiler = if (Strings.isNullOrEmpty(cmd.profileTestExecutionCache))
+  private val cacheProfiler = if (Strings.isNullOrEmpty(cmd.profileTestExecutionCache))
     AbstractTestScriptExecutionCacheProfiler.NULL_PROFILER
   else TestScriptExecutionCacheProfiler(
     File(cmd.profileTestExecutionCache))
@@ -322,7 +322,7 @@ class ReductionDriver(
         if (Strings.isNullOrEmpty(cmd.statDumpFile)) null else File(cmd.statDumpFile)
       val progressDumpFile =
         if (Strings.isNullOrEmpty(cmd.progressDumpFile)) null else File(cmd.progressDumpFile)
-      val keepOriginalFormat = cmd.keepOrigFormat || sourceFile.languageKind.isFormatSensitive
+      val keepOriginalFormat = cmd.reductionControlFlags.keepOrigFormat || sourceFile.languageKind.isFormatSensitive
       return ReductionConfiguration(
         workingFolder = workingDirectory,
         testScript = testScript,
@@ -331,11 +331,11 @@ class ReductionDriver(
         statisticsFile = statisticsFile,
         progressDumpFile = progressDumpFile,
         keepOriginalCodeFormat = keepOriginalFormat,
-        fixpointReduction = cmd.fixpoint,
+        fixpointReduction = cmd.reductionControlFlags.fixpoint,
         enableTestScriptExecutionCaching = cmd.queryCaching,
         useRealDeltaDebugger = cmd.useRealDeltaDebugger,
         maxReductionLevel = cmd.getMaxReductionLevel(),
-        numOfReductionThreads = cmd.numOfThreads,
+        numOfReductionThreads = cmd.reductionControlFlags.numOfThreads,
         useOptCParser = cmd.useOptCParser)
     }
 
@@ -374,15 +374,15 @@ class ReductionDriver(
 
     private fun getOutputFile(cmd: CommandOptions): File {
       val sourceFile = cmd.compulsoryFlags.sourceFile
-      if (cmd.inPlaceReduction) {
+      if (cmd.resultOutputFlags.inPlaceReduction) {
         return sourceFile
       }
-      return if (Strings.isNullOrEmpty(cmd.outputFile)) {
+      return if (Strings.isNullOrEmpty(cmd.resultOutputFlags.outputFile)) {
         val reductionAlgorithm = cmd.reductionAlgorithmName
         File(
           sourceFile.parent, reductionAlgorithm + "_reduced_" + sourceFile.name)
       } else {
-        File(cmd.outputFile)
+        File(cmd.resultOutputFlags.outputFile)
       }
     }
   }

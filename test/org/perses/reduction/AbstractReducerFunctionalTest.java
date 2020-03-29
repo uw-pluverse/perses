@@ -45,10 +45,10 @@ public abstract class AbstractReducerFunctionalTest {
       Files.copy(new File(reductionFolder, testScript), tempTestScript);
       cmd.compulsoryFlags.inputFile = tempSourceFile.getAbsolutePath();
       cmd.compulsoryFlags.testScript = tempTestScript.getAbsolutePath();
-      cmd.fixpoint = true;
+      cmd.reductionControlFlags.fixpoint = true;
       cmd.setDebugGranularity(true);
       cmd.reductionAlgorithm = algorithmType.shortName();
-      cmd.inPlaceReduction = false;
+      cmd.resultOutputFlags.inPlaceReduction = false;
 
       ProgressMonitorForNodeReducer progressMonitor =
           ProgressMonitorForNodeReducer.createForSystemOut();
