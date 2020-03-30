@@ -29,6 +29,9 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 
+import java.nio.file.Files;
+import java.nio.charset.StandardCharsets;
+
 /** This is the facade for C parsers. TODO: clean up this class. */
 public final class CParserFacade extends AbstractDefaultParserFacade<OptCLexer, OptCParser> {
 
@@ -55,7 +58,7 @@ public final class CParserFacade extends AbstractDefaultParserFacade<OptCLexer, 
 
   public ParseTreeWithParser parseWithOrigCParser(File file) throws IOException {
     logger.atFine().log("Parsing file with %s", OrigCParser.class);
-    try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"))) {
+    try (BufferedReader reader = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8)) {
       return parseReader(
           file.getPath(),
           reader,

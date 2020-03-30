@@ -119,7 +119,7 @@ block
 
 /** This is to deal with the EmptyStatement production.
 
-    The way this is set up, a empty statement must always be followed by an inserted
+    The way this is set up, an empty statement must always be followed by an inserted
     semicolon so this should pose no real problems. 
     
     We cannot directly have (statement eos)+ as statement eos can match the empty string.*/

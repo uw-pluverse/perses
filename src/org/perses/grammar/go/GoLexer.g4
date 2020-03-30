@@ -39,6 +39,7 @@ lexer grammar GoLexer;
     Token previousToken = null;
     Token continueToken = null;
 
+    @Override
     public Token nextToken() {
         Token result = null;
 

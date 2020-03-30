@@ -3,8 +3,6 @@ package org.perses.grammar.go
 import com.google.common.truth.Truth
 import org.antlr.v4.runtime.misc.ParseCancellationException
 
-import org.perses.grammar.go.orig.GoParserFacade
-
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -15,8 +13,7 @@ import java.io.File
 
 @RunWith(JUnit4::class)
 class PnfGoParserFacadeTest {
-  val facade = GoParserFacade()
-  val cleanFacade = GoParserFacade()
+  val facade = PnfGoParserFacade()
 
   // Collection for keeping track of the shards of tests we need to run
   private companion object testData {
@@ -38,6 +35,16 @@ class PnfGoParserFacadeTest {
     }
   }
 
+  fun testString(program : String) {
+    val parseTreeWithPnfParser = facade.parseString(program)
+    val tokensByPnfParser = TestUtility.extractTokens(parseTreeWithPnfParser.tree)
+
+    val parseTreeFromOrigParser = facade.parseWithOrigGoParser(program)
+    val tokensByOrigParser = TestUtility.extractTokens(parseTreeFromOrigParser.tree)
+
+    Truth.assertThat(tokensByPnfParser).containsExactlyElementsIn(tokensByOrigParser).inOrder()
+  }
+
   fun testSingleFile(file : File) {
     try {
 
@@ -56,7 +63,8 @@ class PnfGoParserFacadeTest {
       if (file.getAbsolutePath().contains("literal2.go")) {
         return
       }
-      facade.parseFile(file)
+
+      testString(check)
     } catch (err : java.io.FileNotFoundException) {
       // Suppress missing files (there's some strangeness with java and Unicode file names).
     }
@@ -120,12 +128,6 @@ class PnfGoParserFacadeTest {
       |}
     """.trimMargin()
 
-    val parseTreeWithPnfParser = facade.parseString(program)
-    val tokensByPnfParser = TestUtility.extractTokens(parseTreeWithPnfParser.tree)
-
-    val parseTreeFromOrigParser = facade.parseWithOrigGoParser(program)
-    val tokensByOrigParser = TestUtility.extractTokens(parseTreeFromOrigParser.tree)
-
-    Truth.assertThat(tokensByPnfParser).containsExactlyElementsIn(tokensByOrigParser).inOrder()
+    testString(program)
   }
 }

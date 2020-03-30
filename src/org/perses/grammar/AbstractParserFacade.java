@@ -34,6 +34,7 @@ import org.perses.program.TokenizedProgram;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayDeque;
 
 /** The base class for parser faceds */
@@ -53,7 +54,7 @@ public abstract class AbstractParserFacade {
 
   /** Parse the given file into a ParseTree. */
   public final ParseTreeWithParser parseFile(File file) throws IOException {
-    try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"))) {
+    try (BufferedReader reader = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8)) {
       return parseReader(file.getPath(), reader);
     }
   }

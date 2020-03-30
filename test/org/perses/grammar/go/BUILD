@@ -25,7 +25,6 @@ kt_jvm_test(
     deps = [
         "//src/org/perses/antlr:antlr_grammar_util",
         "//src/org/perses/grammar/go:pnfgo_parser_facade",
-        "//src/org/perses/grammar/go/orig:go_parser_facade",
         "//test/org/perses:test_util",
         "//test/org/perses:truth",
         "@maven//:com_google_flogger_flogger",

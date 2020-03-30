@@ -35,7 +35,6 @@ java_library(
         "//src/org/perses/grammar/c:c_parser_facade",
         "//src/org/perses/grammar/c:pnfc_parser_facade",
         "//src/org/perses/grammar/go:pnfgo_parser_facade",
-        "//src/org/perses/grammar/go/orig:go_parser_facade",
         "//src/org/perses/grammar/java:java_parser_facade",
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",

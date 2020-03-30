@@ -1,1 +1,0 @@
-../GoParser.g4
