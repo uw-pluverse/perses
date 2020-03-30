@@ -27,7 +27,6 @@ class PnfGoParserFacadeTest {
     init {
       var counter = 0
       val files = listOf(shard1, shard2, shard3, shard4, shard5, shard6)
-
       for (file in TestUtility.getGolangTestFiles()) {
         files.get(counter % files.size).add(file)
         counter += 1
@@ -117,6 +116,11 @@ class PnfGoParserFacadeTest {
     val program = """
       |package main
       |import "fmt"
+      |type Uint64 struct {
+      |   hi	uint32
+      |   lo	uint32
+      |}
+      |
       |
       |func main() {
       |    fmt.Println("go" + "lang")
