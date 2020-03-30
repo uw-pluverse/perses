@@ -82,8 +82,17 @@ public abstract class AbstractParserFacade {
    * <p>TODO: parse with the given token list of the tokenized program.
    */
   public final ParseTreeWithParser parseString(String string) throws IOException {
+    return parseString(string, "<in memory>");
+  }
+
+  /**
+   * Parse the given string into a ParseTree
+   *
+   * <p>TODO: parse with the given token list of the tokenized program.
+   */
+  public final ParseTreeWithParser parseString(String string, String filename) throws IOException {
     final StringReader reader = new StringReader(string);
-    return parseReader("<in memory>", reader);
+    return parseReader(filename, reader);
   }
 
   /** Return the Antlr rule hierarchy. */

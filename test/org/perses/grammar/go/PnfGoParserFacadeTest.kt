@@ -35,11 +35,11 @@ class PnfGoParserFacadeTest {
     }
   }
 
-  fun testString(program : String) {
-    val parseTreeWithPnfParser = facade.parseString(program)
+  fun testString(program : String, name : String) {
+    val parseTreeWithPnfParser = facade.parseString(program, name)
     val tokensByPnfParser = TestUtility.extractTokens(parseTreeWithPnfParser.tree)
 
-    val parseTreeFromOrigParser = facade.parseWithOrigGoParser(program)
+    val parseTreeFromOrigParser = facade.parseWithOrigGoParser(program, name)
     val tokensByOrigParser = TestUtility.extractTokens(parseTreeFromOrigParser.tree)
 
     Truth.assertThat(tokensByPnfParser).containsExactlyElementsIn(tokensByOrigParser).inOrder()
@@ -64,7 +64,7 @@ class PnfGoParserFacadeTest {
         return
       }
 
-      testString(check)
+      testString(check, file.toString())
     } catch (err : java.io.FileNotFoundException) {
       // Suppress missing files (there's some strangeness with java and Unicode file names).
     }
@@ -128,6 +128,6 @@ class PnfGoParserFacadeTest {
       |}
     """.trimMargin()
 
-    testString(program)
+    testString(program, "<in memory>")
   }
 }
