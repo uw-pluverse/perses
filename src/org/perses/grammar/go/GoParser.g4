@@ -42,6 +42,7 @@ options {
 
 sourceFile
     : packageClause eos (importDecl eos)* ((functionDecl | methodDecl | declaration) eos)*
+    | EOF
     ;
 
 packageClause
@@ -116,14 +117,28 @@ block
     : '{' statementList? '}'
     ;
 
+/** This is to deal with the EmptyStatement production.
+
+    The way this is set up, an empty statement must always be followed by an inserted
+    semicolon so this should pose no real problems. 
+    
+    We cannot directly have (statement eos)+ as statement eos can match the empty string.*/
 statementList
-    : (statement eos)+
+    : ( realStatement eos | ';' )+
     ;
 
 statement
+    : ( realStatement )?
+    ;
+
+simpleStmt
+    : ( realSimpleStmt )?
+    ;
+
+realStatement
     : declaration
     | labeledStmt
-    | simpleStmt
+    | realSimpleStmt
     | goStmt
     | returnStmt
     | breakStmt
@@ -138,13 +153,12 @@ statement
     | deferStmt
     ;
 
-simpleStmt
+realSimpleStmt
     : sendStmt
     | expressionStmt
     | incDecStmt
     | assignment
     | shortVarDecl
-    | emptyStmt
     ;
 
 expressionStmt
@@ -169,10 +183,6 @@ assign_op
 
 shortVarDecl
     : identifierList ':=' expressionList
-    ;
-
-emptyStmt
-    : ';'
     ;
 
 labeledStmt
@@ -335,7 +345,7 @@ channelType
     ;
 
 methodSpec
-    : {noTerminatorAfterParams(2)}? IDENTIFIER parameters result
+    : IDENTIFIER parameters result
     | typeName
     | IDENTIFIER parameters
     ;
@@ -345,7 +355,7 @@ functionType
     ;
 
 signature
-    : {noTerminatorAfterParams(1)}? parameters result
+    : parameters result
     | parameters
     ;
 
@@ -363,13 +373,13 @@ parameterDecl
     ;
 
 expression
-    : primaryExpr
-    | unaryExpr
+    : unaryExpr
     | expression ('*' | '/' | '%' | '<<' | '>>' | '&' | '&^') expression
     | expression ('+' | '-' | '|' | '^') expression
     | expression ('==' | '!=' | '<' | '<=' | '>' | '>=') expression
     | expression '&&' expression
     | expression '||' expression
+    | expression assign_op expression // ugly: needed to work around the conditional in unaryExpr
     ;
 
 primaryExpr
@@ -384,7 +394,9 @@ primaryExpr
 
 unaryExpr
     : primaryExpr
-    | ('+' | '-' | '!' | '^' | '*' | '&' | '<-') expression
+    | ('+' | '-'  | '!' | '^' | '*' | '&' | '<-') unaryExpr ( ('(' expression ')') | {_input.LA(1) != L_PAREN}? )
+        // ugly: needed to work around ambiguities in casting and taking a pointer.
+        // isn't ANTLR4 supposed to do this for us??
     ;
 
 conversion
@@ -471,7 +483,7 @@ structType
     ;
 
 fieldDecl
-    : ({noTerminatorBetween(2)}? identifierList type_ | anonymousField) string_?
+    : (identifierList type_ | anonymousField) string_?
     ;
 
 string_
@@ -508,14 +520,13 @@ methodExpr
     ;
 
 receiverType
-    : typeName
-    | '(' ('*' typeName | receiverType) ')'
+    : type_
     ;
 
 eos
     : ';'
     | EOF
-    | {lineTerminatorAhead()}?
-    | {checkPreviousTokenText("}")}?
+    | {$start.getType() != SEMI && checkPreviousTokenText("}")}?
+    | {$start.getType() != SEMI && checkPreviousTokenText(")")}?
     ;
 
