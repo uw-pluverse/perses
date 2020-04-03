@@ -43,8 +43,4 @@ jobs:
     - name: Test
       run: |
         "${GITHUB_WORKSPACE}/bin/bazel" test //test/...
-        
-    - name: shellcheck
-      uses: ludeeus/action-shellcheck@0.1.0        
-        
 
