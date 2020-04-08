@@ -35,11 +35,11 @@ class PnfGoParserFacadeTest {
   }
 
   fun testString(program : String, name : String) {
-    val parseTreeWithPnfParser = facade.parseString(program, name)
-    val tokensByPnfParser = TestUtility.extractTokens(parseTreeWithPnfParser.tree)
-
     val parseTreeFromOrigParser = facade.parseWithOrigGoParser(program, name)
     val tokensByOrigParser = TestUtility.extractTokens(parseTreeFromOrigParser.tree)
+
+    val parseTreeWithPnfParser = facade.parseString(program, name)
+    val tokensByPnfParser = TestUtility.extractTokens(parseTreeWithPnfParser.tree)
 
     Truth.assertThat(tokensByPnfParser).containsExactlyElementsIn(tokensByOrigParser).inOrder()
   }
