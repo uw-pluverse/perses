@@ -1,11 +1,11 @@
-package main
-import "fmt"
+package main;
+import "fmt";
 
 func main() {
-    fmt.Println("go" + "lang")
+    fmt.Println("go" + "lang");
 
 
 
 
 
-}
+};

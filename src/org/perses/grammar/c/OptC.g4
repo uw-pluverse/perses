@@ -191,6 +191,7 @@ constantExpression
 declaration
     :   kleene_plus__declarationSpecifiers optional__initDeclaratorList ';'
     |   staticAssertDeclaration
+    |   asmStatement // https://en.cppreference.com/w/cpp/language/asm
     ;
 
 kleene_star__declarationSpecifiers
@@ -425,8 +426,12 @@ directDeclarator
 //    ;
 
 gccDeclaratorExtension
-    :   '__asm' '(' kleene_plus__StringLiteral ')'
+    :   asmKeyword '(' kleene_plus__StringLiteral ')'
     |   gccAttributeSpecifier
+    ;
+
+asmKeyword
+    :   'asm' | '__asm__' | '__asm'
     ;
 
 gccAttributeSpecifier
@@ -656,11 +661,18 @@ statement
     |   selectionStatement
     |   iterationStatement
     |   jumpStatement
-    |   ('__asm' | '__asm__') ('volatile' | '__volatile__')
+    |   asmStatement
+    ;
+
+// https://en.cppreference.com/w/cpp/language/asm
+// GCC Assembler syntax: https://www.felixcloutier.com/documents/gcc-asm.html
+asmStatement
+    :   asmKeyword
+        ('volatile' | '__volatile__')?
         '('
-           optional__statementPartTwo
-           kleene_star__statementPartThree
-         ')' ';'
+            optional__statementPartTwo
+            kleene_star__statementPartThree
+        ')' ';'
     ;
 
 labeledStatement
@@ -1102,7 +1114,8 @@ ComplexDefine
     }
  */
 AsmBlock
-    :   'asm' ~['{']* '{' ~['}']* '}'
+    :   'asm' // ~['{']*
+        '{' ~['}']* '}'
 	-> skip
     ;
 	

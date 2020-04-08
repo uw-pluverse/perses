@@ -345,7 +345,8 @@ constantExpression
     ;
 
 declaration
-    : declarationSpecifiers optional__declaration_1 ';'
+    : asmStatement
+    | declarationSpecifiers optional__declaration_1 ';'
     | staticAssertDeclaration
     ;
 
@@ -375,6 +376,43 @@ initDeclaratorList_2
 
 staticAssertDeclaration
     : '_Static_assert' '(' constantExpression ',' kleene_plus__primaryExpression_2 ')' ';'
+    ;
+
+asmStatement
+    : asmKeyword optional__asmStatement_2 '(' optional__asmStatement_6 kleene_star__asmStatement_12 ')' ';'
+    ;
+
+asmStatement_1
+    : '__volatile__'
+    | 'volatile'
+    ;
+
+optional__asmStatement_2
+    : asmStatement_1?
+    ;
+
+asmStatement_3
+    : ',' logicalOrExpression
+    ;
+
+kleene_star__asmStatement_4
+    : asmStatement_3*
+    ;
+
+asmStatement_5
+    : logicalOrExpression kleene_star__asmStatement_4
+    ;
+
+optional__asmStatement_6
+    : asmStatement_5?
+    ;
+
+asmStatement_11
+    : ':' optional__asmStatement_6
+    ;
+
+kleene_star__asmStatement_12
+    : asmStatement_11*
     ;
 
 declarationSpecifier
@@ -649,7 +687,7 @@ alternative__directDeclarator_14
     ;
 
 gccDeclaratorExtension
-    : '__asm' '(' kleene_plus__primaryExpression_2 ')'
+    : asmKeyword '(' kleene_plus__primaryExpression_2 ')'
     | gccAttributeSpecifier
     ;
 
@@ -687,6 +725,12 @@ kleene_star__identifierList_1
 
 identifierList_2
     : ',' Identifier
+    ;
+
+asmKeyword
+    : '__asm'
+    | '__asm__'
+    | 'asm'
     ;
 
 gccAttributeList
@@ -800,50 +844,22 @@ designator
     ;
 
 statement
-    : 'if' '(' expression ')' statement optional__selectionStatement_2
-    | alternative__statement_11 ')' ';'
-    | alternative__statement_12 ')' statement
+    : 'do' statement 'while' '(' expression ')' ';'
+    | 'if' '(' expression ')' statement optional__selectionStatement_2
+    | alternative__statement_1 ')' statement
+    | asmStatement
     | compoundStatement
     | expressionStatement
     | jumpStatement
     | labeledStatement
     ;
 
-statement_1
-    : ',' logicalOrExpression
-    ;
-
-kleene_star__statement_2
-    : statement_1*
-    ;
-
-statement_3
-    : logicalOrExpression kleene_star__statement_2
-    ;
-
-optional__statement_4
-    : statement_3?
-    ;
-
-statement_9
-    : ':' optional__statement_4
-    ;
-
-kleene_star__statement_10
-    : statement_9*
-    ;
-
-alternative__statement_11
-    : 'do' statement 'while' '(' expression
-    | ('__asm' | '__asm__') ('__volatile__' | 'volatile') '(' optional__statement_4 kleene_star__statement_10
-    ;
-
-alternative__statement_12
+alternative__statement_1
     : 'for' '(' alternative__iterationStatement_6
-    | alternative__statement_13 '(' expression
+    | alternative__statement_2 '(' expression
     ;
 
-alternative__statement_13
+alternative__statement_2
     : 'switch'
     | 'while'
     ;
@@ -1572,7 +1588,7 @@ ComplexDefine
     ;
 
 AsmBlock
-    : 'asm' (~['{'])* '{' (~['}'])* '}' -> skip
+    : 'asm' '{' (~['}'])* '}' -> skip
 
     ;
 

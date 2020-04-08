@@ -1,7 +1,7 @@
 load("//test/org/perses:test.bzl", "golden_test")
 
 java_test(
-    name = "AntlrGrammarHierarchyTest",
+    name = "GrammarHierarchyTest",
     srcs = ["GrammarHierarchyTest.java"],
     data = [
         "opt_c_parser_antlr_rule_hierarchy_rule_immediate_subrules.golden.txt",

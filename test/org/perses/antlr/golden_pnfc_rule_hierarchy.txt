@@ -229,6 +229,7 @@ alternative__iterationStatement_8
     immediate sub-rule names:
         declaration
     transitive sub-rule names:
+        asmStatement
         declaration
         staticAssertDeclaration
 alternative__jumpStatement_3
@@ -319,6 +320,30 @@ andExpression
         relationalExpression
         shiftExpression
         unaryExpression
+asmStatement_5
+    epsilonable: false
+    immediate sub-rule names:
+        logicalOrExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        castExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_2
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        unaryExpression
 assignmentExpression
     epsilonable: false
     immediate sub-rule names:
@@ -350,6 +375,7 @@ blockItem
         declaration
         statement
     transitive sub-rule names:
+        asmStatement
         compoundStatement
         declaration
         expressionStatement
@@ -362,6 +388,7 @@ blockItemList
     immediate sub-rule names:
         kleene_plus__blockItemList_3
     transitive sub-rule names:
+        asmStatement
         blockItem
         blockItemList_2
         compoundStatement
@@ -377,6 +404,7 @@ blockItemList_2
     immediate sub-rule names:
         blockItem
     transitive sub-rule names:
+        asmStatement
         blockItem
         compoundStatement
         declaration
@@ -450,14 +478,17 @@ constantExpression
 declaration
     epsilonable: false
     immediate sub-rule names:
+        asmStatement
         staticAssertDeclaration
     transitive sub-rule names:
+        asmStatement
         staticAssertDeclaration
 declarationList
     epsilonable: false
     immediate sub-rule names:
         kleene_plus__declarationList_3
     transitive sub-rule names:
+        asmStatement
         declaration
         declarationList_2
         kleene_plus__declarationList_3
@@ -467,6 +498,7 @@ declarationList_2
     immediate sub-rule names:
         declaration
     transitive sub-rule names:
+        asmStatement
         declaration
         staticAssertDeclaration
 declarationSpecifier
@@ -628,6 +660,7 @@ externalDeclaration
         declaration
         functionDefinition
     transitive sub-rule names:
+        asmStatement
         declaration
         functionDefinition
         staticAssertDeclaration
@@ -747,6 +780,7 @@ kleene_plus__blockItemList_3
     immediate sub-rule names:
         blockItemList_2
     transitive sub-rule names:
+        asmStatement
         blockItem
         blockItemList_2
         compoundStatement
@@ -761,6 +795,7 @@ kleene_plus__declarationList_3
     immediate sub-rule names:
         declarationList_2
     transitive sub-rule names:
+        asmStatement
         declaration
         declarationList_2
         staticAssertDeclaration
@@ -805,6 +840,7 @@ kleene_plus__translationUnit_3
     immediate sub-rule names:
         translationUnit_2
     transitive sub-rule names:
+        asmStatement
         declaration
         externalDeclaration
         functionDefinition
@@ -829,6 +865,18 @@ kleene_star__andExpression_1
         andExpression_2
     transitive sub-rule names:
         andExpression_2
+kleene_star__asmStatement_12
+    epsilonable: true
+    immediate sub-rule names:
+        asmStatement_11
+    transitive sub-rule names:
+        asmStatement_11
+kleene_star__asmStatement_4
+    epsilonable: true
+    immediate sub-rule names:
+        asmStatement_3
+    transitive sub-rule names:
+        asmStatement_3
 kleene_star__declarator_2
     epsilonable: true
     immediate sub-rule names:
@@ -950,18 +998,6 @@ kleene_star__shiftExpression_1
         shiftExpression_2
     transitive sub-rule names:
         shiftExpression_2
-kleene_star__statement_10
-    epsilonable: true
-    immediate sub-rule names:
-        statement_9
-    transitive sub-rule names:
-        statement_9
-kleene_star__statement_2
-    epsilonable: true
-    immediate sub-rule names:
-        statement_1
-    transitive sub-rule names:
-        statement_1
 kleene_star__structDeclaratorList_1
     epsilonable: true
     immediate sub-rule names:
@@ -1027,11 +1063,43 @@ multiplicativeExpression
         postfixExpression
         postfixExpression_4
         unaryExpression
+optional__asmStatement_2
+    epsilonable: true
+    immediate sub-rule names:
+        asmStatement_1
+    transitive sub-rule names:
+        asmStatement_1
+optional__asmStatement_6
+    epsilonable: true
+    immediate sub-rule names:
+        asmStatement_5
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        asmStatement_5
+        castExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_2
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
+        unaryExpression
 optional__compilationUnit_1
     epsilonable: true
     immediate sub-rule names:
         translationUnit
     transitive sub-rule names:
+        asmStatement
         declaration
         externalDeclaration
         functionDefinition
@@ -1044,6 +1112,7 @@ optional__compoundStatement_1
     immediate sub-rule names:
         blockItemList
     transitive sub-rule names:
+        asmStatement
         blockItem
         blockItemList
         blockItemList_2
@@ -1160,6 +1229,7 @@ optional__functionDefinition_2
     immediate sub-rule names:
         declarationList
     transitive sub-rule names:
+        asmStatement
         declaration
         declarationList
         declarationList_2
@@ -1245,31 +1315,6 @@ optional__specifierQualifierList_1
         typeQualifier
         typeSpecifier
         typedefName
-optional__statement_4
-    epsilonable: true
-    immediate sub-rule names:
-        statement_3
-    transitive sub-rule names:
-        Constant
-        Identifier
-        StringLiteral
-        additiveExpression
-        andExpression
-        castExpression
-        equalityExpression
-        exclusiveOrExpression
-        genericSelection
-        inclusiveOrExpression
-        kleene_plus__primaryExpression_2
-        logicalAndExpression
-        logicalOrExpression
-        multiplicativeExpression
-        postfixExpression
-        postfixExpression_4
-        relationalExpression
-        shiftExpression
-        statement_3
-        unaryExpression
 optional__structDeclaration_1
     epsilonable: true
     immediate sub-rule names:
@@ -1439,39 +1484,17 @@ specifierQualifierList
 statement
     epsilonable: false
     immediate sub-rule names:
+        asmStatement
         compoundStatement
         expressionStatement
         jumpStatement
         labeledStatement
     transitive sub-rule names:
+        asmStatement
         compoundStatement
         expressionStatement
         jumpStatement
         labeledStatement
-statement_3
-    epsilonable: false
-    immediate sub-rule names:
-        logicalOrExpression
-    transitive sub-rule names:
-        Constant
-        Identifier
-        StringLiteral
-        additiveExpression
-        andExpression
-        castExpression
-        equalityExpression
-        exclusiveOrExpression
-        genericSelection
-        inclusiveOrExpression
-        kleene_plus__primaryExpression_2
-        logicalAndExpression
-        logicalOrExpression
-        multiplicativeExpression
-        postfixExpression
-        postfixExpression_4
-        relationalExpression
-        shiftExpression
-        unaryExpression
 structDeclaration
     epsilonable: false
     immediate sub-rule names:
@@ -1518,6 +1541,7 @@ translationUnit
     immediate sub-rule names:
         kleene_plus__translationUnit_3
     transitive sub-rule names:
+        asmStatement
         declaration
         externalDeclaration
         functionDefinition
@@ -1529,6 +1553,7 @@ translationUnit_2
     immediate sub-rule names:
         externalDeclaration
     transitive sub-rule names:
+        asmStatement
         declaration
         externalDeclaration
         functionDefinition

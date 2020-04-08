@@ -21,6 +21,7 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.Files;
 import org.antlr.v4.tool.Grammar;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -168,6 +169,8 @@ public class GrammarHierarchyTest {
         .inOrder();
   }
 
+
+  @Ignore("Obsolete. OptC will not be maintained.")
   @Test
   public void testRuleListOfAntlrHierarchyOfOptCParser() throws IOException {
     final GrammarHierarchy hierarchy = new CParserFacade().getRuleHierarchy();
@@ -180,6 +183,7 @@ public class GrammarHierarchyTest {
     assertThat(ruleNames).containsExactly((Object[]) goldenRuleNames).inOrder();
   }
 
+  @Ignore("Obsolete. OptC will not be maintained.")
   @Test
   public void testImmediateSubrulesOfAntlrGrammarHierarchyOfOptCParser() throws IOException {
     final GrammarHierarchy hierarchy = new CParserFacade().getRuleHierarchy();
@@ -193,6 +197,7 @@ public class GrammarHierarchyTest {
     assertThat(actual).isEqualTo(expected);
   }
 
+  @Ignore("Obsolete. OptC will not be maintained.")
   @Test
   public void testTransitiveSubrulesOfAntlrGrammarHierarchyOfOptCParser() throws IOException {
     final GrammarHierarchy hierarchy = new CParserFacade().getRuleHierarchy();

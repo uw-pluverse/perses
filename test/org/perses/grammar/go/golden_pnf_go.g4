@@ -7,7 +7,8 @@ options {
     superClass=GoParserBase;
 }
 sourceFile
-    : packageClause eos kleene_star__sourceFile_2 kleene_star__sourceFile_4
+    : EOF
+    | packageClause eos kleene_star__sourceFile_2 kleene_star__sourceFile_4
     ;
 
 sourceFile_1
@@ -33,8 +34,8 @@ packageClause
 eos
     : ';'
     | EOF
-    | {checkPreviousTokenText("}")}?
-    | {lineTerminatorAhead()}?
+    | {$start.getType() != SEMI && checkPreviousTokenText(")")}?
+    | {$start.getType() != SEMI && checkPreviousTokenText("}")}?
     ;
 
 importDecl
@@ -179,7 +180,7 @@ kleene_star__expressionList_2
     ;
 
 expression
-    : expression_3 kleene_star__expression_1
+    : unaryExpr kleene_star__expression_1
     ;
 
 kleene_star__expression_1
@@ -188,11 +189,6 @@ kleene_star__expression_1
 
 expression_2
     : alternative__expression_7 expression
-    ;
-
-expression_3
-    : ('!' | '&' | '*' | '+' | '-' | '<-' | '^') expression
-    | primaryExpr
     ;
 
 alternative__expression_7
@@ -215,6 +211,7 @@ alternative__expression_7
     | '^'
     | '|'
     | '||'
+    | assign_op
     ;
 
 typeSpec
@@ -226,8 +223,11 @@ optional__typeSpec_1
     ;
 
 signature
-    : parameters
-    | {noTerminatorAfterParams(1)}? parameters result
+    : parameters optional__signature_1
+    ;
+
+optional__signature_1
+    : result?
     ;
 
 block
@@ -283,14 +283,15 @@ statementList
     ;
 
 statementList_1
-    : statement eos
+    : ';'
+    | realStatement eos
     ;
 
 kleene_plus__statementList_2
     : statementList_1+
     ;
 
-statement
+realStatement
     : block
     | breakStmt
     | continueStmt
@@ -303,23 +304,38 @@ statement
     | gotoStmt
     | ifStmt
     | labeledStmt
+    | realSimpleStmt
     | returnStmt
     | selectStmt
-    | simpleStmt
     | typeSwitchStmt
     ;
 
-labeledStmt
-    : IDENTIFIER ':' statement
+statement
+    : optional__statement_1
+    ;
+
+optional__statement_1
+    : realStatement?
     ;
 
 simpleStmt
+    : optional__simpleStmt_1
+    ;
+
+optional__simpleStmt_1
+    : realSimpleStmt?
+    ;
+
+realSimpleStmt
     : assignment
-    | emptyStmt
     | expressionStmt
     | incDecStmt
     | sendStmt
     | shortVarDecl
+    ;
+
+labeledStmt
+    : IDENTIFIER ':' statement
     ;
 
 goStmt
@@ -418,10 +434,6 @@ assignment
 
 shortVarDecl
     : identifierList ':=' expressionList
-    ;
-
-emptyStmt
-    : ';'
     ;
 
 assign_op
@@ -637,9 +649,8 @@ elementType
     ;
 
 methodSpec
-    : IDENTIFIER parameters
+    : IDENTIFIER parameters optional__signature_1
     | typeName
-    | {noTerminatorAfterParams(2)}? IDENTIFIER parameters result
     ;
 
 result
@@ -657,6 +668,11 @@ optional__parameterDecl_1
 
 optional__parameterDecl_2
     : '...'?
+    ;
+
+unaryExpr
+    : ('!' | '&' | '*' | '+' | '-' | '<-' | '^') unaryExpr ('(' expression ')' | {_input.LA(1) != L_PAREN}?)
+    | primaryExpr
     ;
 
 conversion
@@ -700,7 +716,7 @@ optional__arguments_6
     ;
 
 methodExpr
-    : receiverType DOT IDENTIFIER
+    : elementType DOT IDENTIFIER
     ;
 
 compositeLit
@@ -768,7 +784,7 @@ element
     ;
 
 fieldDecl
-    : (anonymousField | {noTerminatorBetween(2)}? identifierList type_) optional__fieldDecl_1
+    : (anonymousField | identifierList type_) optional__fieldDecl_1
     ;
 
 optional__fieldDecl_1
@@ -781,10 +797,5 @@ anonymousField
 
 optional__anonymousField_1
     : '*'?
-    ;
-
-receiverType
-    : '(' ('*' typeName | receiverType) ')'
-    | typeName
     ;
 

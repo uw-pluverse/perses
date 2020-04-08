@@ -1,8 +1,8 @@
 int main() {
-  (void)'é';
-  (void)u'é';
-  (void)U'é';
-  (void)L'é';
-  static_assert((unsigned char)'é' == 0xE9, "");
-  static_assert('éé' == 0xE9E9, "");
+  (void)'Ã©';
+  (void)u'Ã©';
+  (void)U'Ã©';
+  (void)L'Ã©';
+  static_assert((unsigned char)'Ã©' == 0xE9, "");
+  static_assert('Ã©Ã©' == 0xE9E9, "");
 }

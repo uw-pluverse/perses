@@ -16,8 +16,6 @@ if ! command -v "go" ; then
 fi
 go run "${SRC}" &> "${OUTPUT}"
 
-cat "${OUTPUT}"
-
 if [[ "${?}" != 0 ]] ; then
   exit 1
 fi

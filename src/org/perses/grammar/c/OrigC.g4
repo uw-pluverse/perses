@@ -177,6 +177,7 @@ constantExpression
 declaration
     :   declarationSpecifiers initDeclaratorList? ';'
     |   staticAssertDeclaration
+    |   asmStatement // https://en.cppreference.com/w/cpp/language/asm
     ;
 
 declarationSpecifiers
@@ -333,8 +334,12 @@ directDeclarator
     ;
 
 gccDeclaratorExtension
-    :   '__asm' '(' StringLiteral+ ')'
+    :   asmKeyword '(' StringLiteral+ ')'
     |   gccAttributeSpecifier
+    ;
+
+asmKeyword
+    :   'asm' | '__asm__' | '__asm'
     ;
 
 gccAttributeSpecifier
@@ -453,7 +458,18 @@ statement
     |   selectionStatement
     |   iterationStatement
     |   jumpStatement
-    |   ('__asm' | '__asm__') ('volatile' | '__volatile__') '(' (logicalOrExpression (',' logicalOrExpression)*)? (':' (logicalOrExpression (',' logicalOrExpression)*)?)* ')' ';'
+    |   asmStatement
+    ;
+
+// https://en.cppreference.com/w/cpp/language/asm
+// GCC Assembler syntax: https://www.felixcloutier.com/documents/gcc-asm.html
+asmStatement
+    :   asmKeyword
+        ('volatile' | '__volatile__')?
+        '('
+            (logicalOrExpression (',' logicalOrExpression)*)?
+            (':' (logicalOrExpression (',' logicalOrExpression)*)?)*
+        ')' ';'
     ;
 
 labeledStatement
@@ -882,7 +898,8 @@ ComplexDefine
     }
  */
 AsmBlock
-    :   'asm' ~['{']* '{' ~['}']* '}'
+    :   'asm' // ~['{']*
+        '{' ~['}']* '}'
 	-> skip
     ;
 	

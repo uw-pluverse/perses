@@ -240,6 +240,12 @@ public class SparTreeNodeTest {
     testOriginalSparTreeConstruction("10852.c");
   }
 
+  @Test
+  public void testClang00052IsUTF8() {
+    testSparTreeCanReconstructOriginalPrograms(
+        new File("test_data/c_programs/clang_testsuite/00052.c"));
+  }
+
   private static void testSparTreeCanReconstructOriginalPrograms(File file) {
     try {
       CParserFacade cParserFacade = new CParserFacade();
@@ -264,7 +270,7 @@ public class SparTreeNodeTest {
           .inOrder();
     } catch (IOException e) {
       e.printStackTrace();
-      Assert.fail();
+      Assert.fail(file.toString());
     }
   }
 

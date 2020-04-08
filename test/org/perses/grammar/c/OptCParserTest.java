@@ -65,6 +65,24 @@ public class OptCParserTest {
   }
 
   @Test
+  public void testAsmStmt_Issue16() throws IOException {
+    final File file = new File("test_data/c_programs/gcc_testsuite/06002.c");
+    C_PARSER_FACADE.parseFile(file);
+    PNF_C_PARSER_FACADE.parseFile(file);
+  }
+
+  /**
+   * https://gcc.gnu.org/onlinedocs/gcc/Local-Register-Variables.html#Local-Register-Variables
+   */
+  @Test
+  public void testRegisterVariableWithAsm() throws IOException {
+    final File file = new File("test_data/c_programs/clang_testsuite/00374.c");
+    PNF_C_PARSER_FACADE.parseFile(file);
+    C_PARSER_FACADE.parseWithOrigCParser(file);
+    C_PARSER_FACADE.parseFile(file);
+  }
+
+  @Test
   public void testOptimizedCParserWithOriginalCParserOnClang() throws IOException {
     TestUtility.getGccTestFiles().forEach(OptCParserTest::testOneCFile);
   }
@@ -77,7 +95,7 @@ public class OptCParserTest {
   @Test
   public void testNumOfGccTestFiles() {
     Truth.assertThat(TestUtility.getGccTestFiles().size()).isEqualTo(10850);
-    Truth.assertThat(TestUtility.getClangTestFiles().size()).isEqualTo(1807);
+    Truth.assertThat(TestUtility.getClangTestFiles().size()).isEqualTo(1799);
   }
 
   @Test
