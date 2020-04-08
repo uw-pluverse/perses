@@ -32,9 +32,6 @@ java_test(
 java_test(
     name = "TokenizedProgramFactoryTest",
     srcs = ["TokenizedProgramFactoryTest.java"],
-    data = [
-        "clang-27747.c",
-    ],
     test_class = "org.perses.program.TokenizedProgramFactoryTest",
     deps = DEFAULT_DEPS + [
         "@maven//:org_antlr_antlr4_runtime",
