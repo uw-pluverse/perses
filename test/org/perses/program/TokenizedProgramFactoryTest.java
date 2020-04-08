@@ -1,15 +1,14 @@
 package org.perses.program;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.truth.Truth;
 import org.antlr.v4.runtime.CommonToken;
 import org.antlr.v4.runtime.Token;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.perses.TestUtility;
 
-import java.io.IOException;
 import java.util.List;
 
 @RunWith(JUnit4.class)
@@ -24,9 +23,13 @@ public class TokenizedProgramFactoryTest {
   }
 
   @Test
-  public void testOnClang27747() throws IOException {
-    TestUtility.createSparTreeFromFile("test/org/perses/program/clang-27747.c")
-        .getProgramSnapshot();
+  public void test() {
+    ImmutableList<Token> tokens = createAntlrTokens(ImmutableList.of("b", "e"));
+    final TokenizedProgram program = factory.create(tokens);
+    final ImmutableList<PersesToken> persesTokens = program.getTokens();
+    Truth.assertThat(persesTokens).hasSize(2);
+    Truth.assertThat(persesTokens.get(0).getPersesLexemeId()).isEqualTo(1);
+    Truth.assertThat(persesTokens.get(1).getPersesLexemeId()).isEqualTo(4);
   }
 
   private ImmutableList<Token> createAntlrTokens(List<String> lexemes) {
