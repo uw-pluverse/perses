@@ -32,7 +32,7 @@ java_test(
 java_test(
     name = "TokenizedProgramFactoryTest",
     srcs = ["TokenizedProgramFactoryTest.java"],
-    size = "medium",
+    size = "large",
     data = [
         "clang-27747.c",
     ],
