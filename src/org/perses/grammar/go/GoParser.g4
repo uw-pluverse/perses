@@ -482,20 +482,9 @@ structType
     : 'struct' '{' (fieldDecl eos)* '}'
     ;
 
-// To avoid ambiguity in the pnf form.
-//fieldDecl
-//    : (identifierList type_ | anonymousField) string_?
-//    ;
 fieldDecl
-    :   ('*' typeName
-        |IDENTIFIER
-         ('.' IDENTIFIER
-         | (',' IDENTIFIER)* type_
-         )
-        )
-        string_?
+    : (identifierList type_ | anonymousField) string_?
     ;
-
 
 string_
     : RAW_STRING_LIT
