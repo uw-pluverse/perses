@@ -411,8 +411,8 @@ asmStatement
     ;
 
 asmStatement_1
-    : '__volatile__'
-    | 'volatile'
+    : 'volatile'
+    | '__volatile__'
     ;
 
 optional__asmStatement_2

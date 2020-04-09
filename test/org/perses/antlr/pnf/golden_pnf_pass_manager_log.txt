@@ -1655,10 +1655,10 @@ gccAttributeSpecifier
     ;
 
 pointer
-    : '^' optional__pointer_4 pointer
+    : '*' optional__pointer_1
     | '*' optional__pointer_2 pointer
     | '^' optional__pointer_3
-    | '*' optional__pointer_1
+    | '^' optional__pointer_4 pointer
     ;
 
 optional__pointer_1
@@ -1682,10 +1682,10 @@ directDeclarator
     | '(' declarator ')'
     | directDeclarator '[' typeQualifierList 'static' assignmentExpression ']'
     | directDeclarator '(' parameterTypeList ')'
-    | directDeclarator '[' optional__directDeclarator_4 '*' ']'
-    | directDeclarator '[' 'static' optional__directDeclarator_3 assignmentExpression ']'
-    | directDeclarator '(' optional__directDeclarator_5 ')'
     | directDeclarator '[' optional__directDeclarator_1 optional__directDeclarator_2 ']'
+    | directDeclarator '[' 'static' optional__directDeclarator_3 assignmentExpression ']'
+    | directDeclarator '[' optional__directDeclarator_4 '*' ']'
+    | directDeclarator '(' optional__directDeclarator_5 ')'
     ;
 
 optional__directDeclarator_1
@@ -1813,13 +1813,13 @@ directAbstractDeclarator
     | '[' '*' ']'
     | directAbstractDeclarator '[' typeQualifierList 'static' assignmentExpression ']'
     | directAbstractDeclarator '[' '*' ']'
-    | directAbstractDeclarator '(' optional__directAbstractDeclarator_10 ')' kleene_star__directAbstractDeclarator_11
-    | '(' optional__directAbstractDeclarator_5 ')' kleene_star__directAbstractDeclarator_6
-    | directAbstractDeclarator '[' 'static' optional__directAbstractDeclarator_9 assignmentExpression ']'
-    | '[' optional__directAbstractDeclarator_2 optional__directAbstractDeclarator_3 ']'
-    | directAbstractDeclarator '[' optional__directAbstractDeclarator_7 optional__directAbstractDeclarator_8 ']'
     | '(' abstractDeclarator ')' kleene_star__directAbstractDeclarator_1
+    | '[' optional__directAbstractDeclarator_2 optional__directAbstractDeclarator_3 ']'
     | '[' 'static' optional__directAbstractDeclarator_4 assignmentExpression ']'
+    | '(' optional__directAbstractDeclarator_5 ')' kleene_star__directAbstractDeclarator_6
+    | directAbstractDeclarator '[' optional__directAbstractDeclarator_7 optional__directAbstractDeclarator_8 ']'
+    | directAbstractDeclarator '[' 'static' optional__directAbstractDeclarator_9 assignmentExpression ']'
+    | directAbstractDeclarator '(' optional__directAbstractDeclarator_10 ')' kleene_star__directAbstractDeclarator_11
     ;
 
 kleene_star__directAbstractDeclarator_1
@@ -3137,10 +3137,10 @@ gccAttributeSpecifier
     ;
 
 pointer
-    : '^' optional__pointer_4 pointer
+    : '*' optional__pointer_1
     | '*' optional__pointer_2 pointer
     | '^' optional__pointer_3
-    | '*' optional__pointer_1
+    | '^' optional__pointer_4 pointer
     ;
 
 optional__pointer_1
@@ -3164,10 +3164,10 @@ directDeclarator
     | '(' declarator ')'
     | directDeclarator '[' typeQualifierList 'static' assignmentExpression ']'
     | directDeclarator '(' parameterTypeList ')'
-    | directDeclarator '[' optional__directDeclarator_4 '*' ']'
-    | directDeclarator '[' 'static' optional__directDeclarator_3 assignmentExpression ']'
-    | directDeclarator '(' optional__directDeclarator_5 ')'
     | directDeclarator '[' optional__directDeclarator_1 optional__directDeclarator_2 ']'
+    | directDeclarator '[' 'static' optional__directDeclarator_3 assignmentExpression ']'
+    | directDeclarator '[' optional__directDeclarator_4 '*' ']'
+    | directDeclarator '(' optional__directDeclarator_5 ')'
     ;
 
 optional__directDeclarator_1
@@ -3295,13 +3295,13 @@ directAbstractDeclarator
     | '[' '*' ']'
     | directAbstractDeclarator '[' typeQualifierList 'static' assignmentExpression ']'
     | directAbstractDeclarator '[' '*' ']'
-    | directAbstractDeclarator '(' optional__directAbstractDeclarator_10 ')' kleene_star__directAbstractDeclarator_11
-    | '(' optional__directAbstractDeclarator_5 ')' kleene_star__directAbstractDeclarator_6
-    | directAbstractDeclarator '[' 'static' optional__directAbstractDeclarator_9 assignmentExpression ']'
-    | '[' optional__directAbstractDeclarator_2 optional__directAbstractDeclarator_3 ']'
-    | directAbstractDeclarator '[' optional__directAbstractDeclarator_7 optional__directAbstractDeclarator_8 ']'
     | '(' abstractDeclarator ')' kleene_star__directAbstractDeclarator_1
+    | '[' optional__directAbstractDeclarator_2 optional__directAbstractDeclarator_3 ']'
     | '[' 'static' optional__directAbstractDeclarator_4 assignmentExpression ']'
+    | '(' optional__directAbstractDeclarator_5 ')' kleene_star__directAbstractDeclarator_6
+    | directAbstractDeclarator '[' optional__directAbstractDeclarator_7 optional__directAbstractDeclarator_8 ']'
+    | directAbstractDeclarator '[' 'static' optional__directAbstractDeclarator_9 assignmentExpression ']'
+    | directAbstractDeclarator '(' optional__directAbstractDeclarator_10 ')' kleene_star__directAbstractDeclarator_11
     ;
 
 kleene_star__directAbstractDeclarator_1
@@ -4756,10 +4756,10 @@ gccAttributeSpecifier
     ;
 
 pointer
-    : '^' optional__pointer_4 pointer
+    : '*' optional__pointer_1
     | '*' optional__pointer_2 pointer
     | '^' optional__pointer_3
-    | '*' optional__pointer_1
+    | '^' optional__pointer_4 pointer
     ;
 
 optional__pointer_1
@@ -4809,10 +4809,10 @@ kleene_star__directDeclarator_6
 directDeclarator_7
     : '[' typeQualifierList 'static' assignmentExpression ']'
     | '(' parameterTypeList ')'
-    | '[' optional__directDeclarator_4 '*' ']'
-    | '[' 'static' optional__directDeclarator_3 assignmentExpression ']'
-    | '(' optional__directDeclarator_5 ')'
     | '[' optional__directDeclarator_1 optional__directDeclarator_2 ']'
+    | '[' 'static' optional__directDeclarator_3 assignmentExpression ']'
+    | '[' optional__directDeclarator_4 '*' ']'
+    | '(' optional__directDeclarator_5 ')'
     ;
 
 directDeclarator_8
@@ -4996,18 +4996,18 @@ kleene_star__directAbstractDeclarator_12
 directAbstractDeclarator_13
     : '[' typeQualifierList 'static' assignmentExpression ']'
     | '[' '*' ']'
-    | '(' optional__directAbstractDeclarator_10 ')' kleene_star__directAbstractDeclarator_11
-    | '[' 'static' optional__directAbstractDeclarator_9 assignmentExpression ']'
     | '[' optional__directAbstractDeclarator_7 optional__directAbstractDeclarator_8 ']'
+    | '[' 'static' optional__directAbstractDeclarator_9 assignmentExpression ']'
+    | '(' optional__directAbstractDeclarator_10 ')' kleene_star__directAbstractDeclarator_11
     ;
 
 directAbstractDeclarator_14
     : '[' typeQualifierList 'static' assignmentExpression ']'
     | '[' '*' ']'
-    | '(' optional__directAbstractDeclarator_5 ')' kleene_star__directAbstractDeclarator_6
-    | '[' optional__directAbstractDeclarator_2 optional__directAbstractDeclarator_3 ']'
     | '(' abstractDeclarator ')' kleene_star__directAbstractDeclarator_1
+    | '[' optional__directAbstractDeclarator_2 optional__directAbstractDeclarator_3 ']'
     | '[' 'static' optional__directAbstractDeclarator_4 assignmentExpression ']'
+    | '(' optional__directAbstractDeclarator_5 ')' kleene_star__directAbstractDeclarator_6
     ;
 
 designation
@@ -6450,10 +6450,10 @@ gccAttributeSpecifier
     ;
 
 pointer
-    : '^' optional__pointer_4 pointer
+    : '*' optional__pointer_1
     | '*' optional__pointer_2 pointer
     | '^' optional__pointer_3
-    | '*' optional__pointer_1
+    | '^' optional__pointer_4 pointer
     ;
 
 optional__pointer_1
@@ -6503,10 +6503,10 @@ kleene_star__directDeclarator_6
 directDeclarator_7
     : '[' typeQualifierList 'static' assignmentExpression ']'
     | '(' parameterTypeList ')'
-    | '[' optional__directDeclarator_4 '*' ']'
-    | '[' 'static' optional__directDeclarator_3 assignmentExpression ']'
-    | '(' optional__directDeclarator_5 ')'
     | '[' optional__directDeclarator_1 optional__directDeclarator_2 ']'
+    | '[' 'static' optional__directDeclarator_3 assignmentExpression ']'
+    | '[' optional__directDeclarator_4 '*' ']'
+    | '(' optional__directDeclarator_5 ')'
     ;
 
 directDeclarator_8
@@ -6694,18 +6694,18 @@ kleene_star__directAbstractDeclarator_12
 directAbstractDeclarator_13
     : '[' typeQualifierList 'static' assignmentExpression ']'
     | '[' '*' ']'
-    | '(' optional__directAbstractDeclarator_10 ')' kleene_star__directAbstractDeclarator_11
-    | '[' 'static' optional__directAbstractDeclarator_9 assignmentExpression ']'
     | '[' optional__directAbstractDeclarator_7 optional__directAbstractDeclarator_8 ']'
+    | '[' 'static' optional__directAbstractDeclarator_9 assignmentExpression ']'
+    | '(' optional__directAbstractDeclarator_10 ')' kleene_star__directAbstractDeclarator_11
     ;
 
 directAbstractDeclarator_14
     : '[' typeQualifierList 'static' assignmentExpression ']'
     | '[' '*' ']'
-    | '(' optional__directAbstractDeclarator_5 ')' kleene_star__directAbstractDeclarator_6
-    | '[' optional__directAbstractDeclarator_2 optional__directAbstractDeclarator_3 ']'
     | '(' abstractDeclarator ')' kleene_star__directAbstractDeclarator_1
+    | '[' optional__directAbstractDeclarator_2 optional__directAbstractDeclarator_3 ']'
     | '[' 'static' optional__directAbstractDeclarator_4 assignmentExpression ']'
+    | '(' optional__directAbstractDeclarator_5 ')' kleene_star__directAbstractDeclarator_6
     ;
 
 designation
@@ -8190,10 +8190,10 @@ gccAttributeSpecifier
     ;
 
 pointer
-    : '^' optional__pointer_4 pointer
+    : '*' optional__pointer_1
     | '*' optional__pointer_2 pointer
     | '^' optional__pointer_3
-    | '*' optional__pointer_1
+    | '^' optional__pointer_4 pointer
     ;
 
 optional__pointer_1
@@ -8243,10 +8243,10 @@ kleene_star__directDeclarator_6
 directDeclarator_7
     : '[' typeQualifierList 'static' assignmentExpression ']'
     | '(' parameterTypeList ')'
-    | '[' optional__directDeclarator_4 '*' ']'
-    | '[' 'static' optional__directDeclarator_3 assignmentExpression ']'
-    | '(' optional__directDeclarator_5 ')'
     | '[' optional__directDeclarator_1 optional__directDeclarator_2 ']'
+    | '[' 'static' optional__directDeclarator_3 assignmentExpression ']'
+    | '[' optional__directDeclarator_4 '*' ']'
+    | '(' optional__directDeclarator_5 ')'
     ;
 
 directDeclarator_8
@@ -8441,18 +8441,18 @@ kleene_star__directAbstractDeclarator_12
 directAbstractDeclarator_13
     : '[' typeQualifierList 'static' assignmentExpression ']'
     | '[' '*' ']'
-    | '(' optional__directAbstractDeclarator_10 ')' kleene_star__directAbstractDeclarator_11
-    | '[' 'static' optional__directAbstractDeclarator_9 assignmentExpression ']'
     | '[' optional__directAbstractDeclarator_7 optional__directAbstractDeclarator_8 ']'
+    | '[' 'static' optional__directAbstractDeclarator_9 assignmentExpression ']'
+    | '(' optional__directAbstractDeclarator_10 ')' kleene_star__directAbstractDeclarator_11
     ;
 
 directAbstractDeclarator_14
     : '[' typeQualifierList 'static' assignmentExpression ']'
     | '[' '*' ']'
-    | '(' optional__directAbstractDeclarator_5 ')' kleene_star__directAbstractDeclarator_6
-    | '[' optional__directAbstractDeclarator_2 optional__directAbstractDeclarator_3 ']'
     | '(' abstractDeclarator ')' kleene_star__directAbstractDeclarator_1
+    | '[' optional__directAbstractDeclarator_2 optional__directAbstractDeclarator_3 ']'
     | '[' 'static' optional__directAbstractDeclarator_4 assignmentExpression ']'
+    | '(' optional__directAbstractDeclarator_5 ')' kleene_star__directAbstractDeclarator_6
     ;
 
 designation

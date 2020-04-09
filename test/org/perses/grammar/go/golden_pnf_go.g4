@@ -411,9 +411,9 @@ forStmt
     ;
 
 forStmt_1
-    : rangeClause
-    | expression
+    : expression
     | forClause
+    | rangeClause
     ;
 
 optional__forStmt_2
@@ -449,17 +449,17 @@ assign_op
     ;
 
 assign_op_1
-    : '&^'
+    : '+'
     | '-'
-    | '&'
-    | '<<'
-    | '^'
-    | '%'
-    | '+'
     | '|'
-    | '>>'
+    | '^'
     | '*'
     | '/'
+    | '%'
+    | '<<'
+    | '>>'
+    | '&'
+    | '&^'
     ;
 
 optional__assign_op_2

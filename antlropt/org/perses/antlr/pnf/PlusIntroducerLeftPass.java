@@ -1,11 +1,9 @@
 package org.perses.antlr.pnf;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.LinkedHashMultimap;
 import org.perses.antlr.RuleType;
 import org.perses.antlr.ast.AbstractPersesRuleElement;
 import org.perses.antlr.ast.AstEdit;
@@ -50,7 +48,8 @@ public class PlusIntroducerLeftPass extends AbstractPnfPass {
     private final ImmutableRuleDefMap defMap;
 
     @VisibleForTesting
-    final HashMultimap<RuleNameHandle, AbstractPersesRuleElement> toAdd = HashMultimap.create();
+    final LinkedHashMultimap<RuleNameHandle, AbstractPersesRuleElement> toAdd =
+        LinkedHashMultimap.create();
 
     PlusIntroducerEdit(ImmutableRuleDefMap defMap) {
       this.defMap = defMap;

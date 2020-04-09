@@ -1,6 +1,5 @@
 package org.perses.antlr.pnf;
 
-import com.google.common.collect.HashMultimap;
 import org.perses.antlr.ast.AbstractPersesRuleElement;
 import org.perses.antlr.ast.DefaultAstVisitor;
 import org.perses.antlr.ast.PersesRuleReferenceAst;

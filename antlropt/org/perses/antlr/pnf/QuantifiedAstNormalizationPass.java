@@ -1,10 +1,14 @@
 package org.perses.antlr.pnf;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.LinkedHashMultimap;
 import org.perses.antlr.RuleType;
-import org.perses.antlr.ast.*;
+import org.perses.antlr.ast.AbstractPersesQuantifiedAst;
+import org.perses.antlr.ast.AbstractPersesRuleElement;
+import org.perses.antlr.ast.AstEdit;
+import org.perses.antlr.ast.AstTag;
+import org.perses.antlr.ast.PersesRuleReferenceAst;
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle;
 
 import java.util.Map;
@@ -16,8 +20,10 @@ public class QuantifiedAstNormalizationPass extends AbstractPnfPass {
   @Override
   public ImmutableRuleDefMap process(ImmutableRuleDefMap grammar) {
     MutableRuleDefMap mutable = grammar.createMutable();
-    HashMultimap<RuleNameHandle, AbstractPersesRuleElement> toRemove = HashMultimap.create();
-    HashMultimap<RuleNameHandle, AbstractPersesRuleElement> toAdd = HashMultimap.create();
+    LinkedHashMultimap<RuleNameHandle, AbstractPersesRuleElement> toRemove =
+        LinkedHashMultimap.create();
+    LinkedHashMultimap<RuleNameHandle, AbstractPersesRuleElement> toAdd =
+        LinkedHashMultimap.create();
 
     for (Map.Entry<RuleNameHandle, AbstractPersesRuleElement> rule : mutable.entries()) {
       final RuleNameHandle ruleName = rule.getKey();

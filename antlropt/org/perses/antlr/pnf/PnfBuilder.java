@@ -1,12 +1,15 @@
 package org.perses.antlr.pnf;
 
-import org.perses.antlr.ast.*;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.HashMultimap;
+import com.google.common.collect.LinkedHashMultimap;
+import org.perses.antlr.ast.AbstractPersesRuleElement;
+import org.perses.antlr.ast.AstTag;
+import org.perses.antlr.ast.PersesGrammar;
+import org.perses.antlr.ast.PersesSequenceAst;
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle;
 
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class PnfBuilder {
@@ -47,7 +50,7 @@ public class PnfBuilder {
 
   @VisibleForTesting
   static void introducePlusLeft(
-      HashMultimap<RuleNameHandle, AbstractPersesRuleElement> ruleDefMap, RuleNameHandle ruleName) {
+      LinkedHashMultimap<RuleNameHandle, AbstractPersesRuleElement> ruleDefMap, RuleNameHandle ruleName) {
     for (AbstractPersesRuleElement def : ruleDefMap.get(ruleName)) {
       final AstTag tag = def.getTag();
       Preconditions.checkState(tag != AstTag.ALTERNATIVE_BLOCK);

@@ -27,7 +27,7 @@ maven_install(
         "me.lemire.integercompression:JavaFastPFOR:0.1.9",
         "org.antlr:antlr4-runtime:4.8-1",
         "org.antlr:antlr4:4.8-1",
-        "org.antlr:antlr-runtime:3.5.2",
+#        "org.antlr:antlr-runtime:3.5.2",
         "org.apache.commons:commons-exec:1.3",
         "org.apache.commons:commons-lang3:3.9",
         "org.checkerframework:checker-qual:2.11.0",

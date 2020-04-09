@@ -1,9 +1,8 @@
 package org.perses.antlr.pnf;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.HashMultimap;
+import com.google.common.collect.LinkedHashMultimap;
 import org.perses.antlr.ast.AbstractPersesRuleDefAst;
-import org.perses.antlr.ast.AstTag;
 import org.perses.antlr.ast.PersesGrammar;
 import org.perses.antlr.ast.RuleNameRegistry;
 
@@ -67,7 +66,7 @@ public class DuplicateRuleEliminationPass extends AbstractPnfPass {
 
   private static List<Set<AbstractPersesRuleDefAst>> searchForCandidates(
       PersesGrammar persesGrammar) {
-    HashMultimap<String, AbstractPersesRuleDefAst> map = HashMultimap.create();
+    LinkedHashMultimap<String, AbstractPersesRuleDefAst> map = LinkedHashMultimap.create();
     persesGrammar.getRules().stream()
         .filter(AbstractPersesRuleDefAst::isParserRule) // Not a fragment.
         .forEach(rule -> map.put(rule.getBody().getSourceCode(), rule));
