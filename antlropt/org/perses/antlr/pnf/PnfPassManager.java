@@ -96,7 +96,7 @@ public final class PnfPassManager {
     result.add(new PlusIntroducerLeftPass());
     result.add(new OptionalIntroducerPass());
     result.add(new AlternativeBlockOutliningPass());
-    result.add(new InlineSingleUseAltRulePass());
+    // result.add(new InlineSingleUseAltRulePass()); -- messes with rule ordering / disambiguation in ANTLR4
 
     // TODO: need to study why right recursion is hard to eliminate. Currently this is toooo slow.
     //    result.add(new IndirectRightRecursionEliminationPass());

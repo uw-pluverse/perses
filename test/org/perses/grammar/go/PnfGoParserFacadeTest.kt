@@ -46,7 +46,7 @@ class PnfGoParserFacadeTest {
 
   fun testSingleFile(file : File) {
     try {
-
+      System.err.println("Testing file ${file.getAbsolutePath()}")
       val check = file.readText()
       // Skip files that contain ERROR in them, as they may not parse properly.
       if (check.contains("ERROR") || check.contains("ignored")) {
