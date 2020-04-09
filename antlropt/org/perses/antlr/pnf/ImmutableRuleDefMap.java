@@ -1,13 +1,23 @@
 package org.perses.antlr.pnf;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Iterables;
-import org.perses.antlr.ast.*;
+import org.perses.antlr.ast.AbstractPersesRuleDefAst;
+import org.perses.antlr.ast.AbstractPersesRuleElement;
+import org.perses.antlr.ast.PersesAlternativeBlockAst;
+import org.perses.antlr.ast.PersesAstBuilder;
+import org.perses.antlr.ast.PersesGrammar;
+import org.perses.antlr.ast.RuleNameRegistry;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -15,8 +25,8 @@ public final class ImmutableRuleDefMap {
 
   public static ImmutableRuleDefMap create(PersesGrammar originalGrammar) {
     ImmutableList<AbstractPersesRuleDefAst> rules = originalGrammar.getRules();
-    ImmutableSetMultimap.Builder<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement>
-        parserRules = ImmutableSetMultimap.builder();
+    ImmutableListMultimap.Builder<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement>
+        parserRules = ImmutableListMultimap.builder();
     ArrayList<AbstractPersesRuleDefAst> lexerRules = new ArrayList();
     for (AbstractPersesRuleDefAst rule : rules) {
       if (rule.isLexerRule()) {
@@ -46,13 +56,13 @@ public final class ImmutableRuleDefMap {
 
   private final PersesGrammar originalGrammar;
   private final ImmutableList<AbstractPersesRuleDefAst> lexerRules;
-  private final ImmutableSetMultimap<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement>
+  private final ImmutableListMultimap<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement>
       parserRules;
 
   private ImmutableRuleDefMap(
       PersesGrammar originalGrammar,
       ImmutableList<AbstractPersesRuleDefAst> lexerRules,
-      ImmutableSetMultimap<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement>
+      ImmutableListMultimap<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement>
           parserRules) {
     this.originalGrammar = originalGrammar;
     this.lexerRules = lexerRules;
@@ -73,11 +83,11 @@ public final class ImmutableRuleDefMap {
   }
 
   public ImmutableRuleDefMap project(final Set<RuleNameRegistry.RuleNameHandle> rulesToKeep) {
-    ImmutableSetMultimap<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement> projectedMap =
+    ImmutableListMultimap<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement> projectedMap =
         rulesToKeep.stream()
             .filter(parserRules::containsKey)
             .collect(
-                ImmutableSetMultimap.flatteningToImmutableSetMultimap(
+                ImmutableListMultimap.flatteningToImmutableListMultimap(
                     name -> name, name -> parserRules.get(name).stream()));
     return new ImmutableRuleDefMap(originalGrammar, lexerRules, projectedMap);
   }
@@ -86,17 +96,17 @@ public final class ImmutableRuleDefMap {
     return parserRules.keySet();
   }
 
-  public ImmutableSet<Map.Entry<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement>>
+  public ImmutableCollection<Map.Entry<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement>>
       getRuleDefinitions() {
     return parserRules.entries();
   }
 
-  public ImmutableSet<AbstractPersesRuleElement> getRuleDefinition(
+  public ImmutableList<AbstractPersesRuleElement> getRuleDefinition(
       RuleNameRegistry.RuleNameHandle name) {
     return parserRules.get(name);
   }
 
-  public ImmutableSet<AbstractPersesRuleElement> getRuleDefinition(String name) {
+  public ImmutableList<AbstractPersesRuleElement> getRuleDefinition(String name) {
     final RuleNameRegistry.RuleNameHandle handle =
         originalGrammar.getSymbolTable().getRuleNameRegistry().getOrThrow(name);
     return getRuleDefinition(handle);

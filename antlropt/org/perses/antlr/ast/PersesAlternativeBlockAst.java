@@ -9,11 +9,13 @@ import java.util.List;
 public class PersesAlternativeBlockAst extends AbstractPersesRuleElement {
 
   private final ImmutableList<AbstractPersesRuleElement> alternatives;
+  private final ImmutableList<AbstractPersesRuleElement> sortedAlternatives;
 
   public PersesAlternativeBlockAst(ImmutableList<AbstractPersesRuleElement> alternatives) {
     final int size = alternatives.size();
     Preconditions.checkArgument(size > 1, alternatives);
-    this.alternatives = alternatives.stream().sorted().collect(ImmutableList.toImmutableList());
+    this.alternatives = alternatives;
+    sortedAlternatives = alternatives.stream().sorted().collect(ImmutableList.toImmutableList());
     checkNoDuplicates();
   }
 
@@ -37,6 +39,11 @@ public class PersesAlternativeBlockAst extends AbstractPersesRuleElement {
         Preconditions.checkArgument(!prev.isEquivalent(current));
       }
     }
+  }
+
+  @Override
+  protected AbstractPersesRuleElement getChildForEquivalenceChecking(int index) {
+    return sortedAlternatives.get(index);
   }
 
   public ImmutableList<AbstractPersesRuleElement> getAlternatives() {

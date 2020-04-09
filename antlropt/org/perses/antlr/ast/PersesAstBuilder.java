@@ -21,7 +21,7 @@ import org.antlr.v4.tool.ast.TerminalAST;
 import org.perses.antlr.AntlrGrammarParser;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -203,7 +203,7 @@ public final class PersesAstBuilder {
 
   private static AbstractPersesRuleElement convertAlternativeBlock(
       BlockAST block, SymbolTable symbolTable) {
-    final HashSet<Class<?>> childNodeClasses = collectChildNodeClasses(block);
+    final LinkedHashSet<Class<?>> childNodeClasses = collectChildNodeClasses(block);
     checkArgument(childNodeClasses.size() == 1, childNodeClasses);
     checkArgument(childNodeClasses.iterator().next().equals(AltAST.class));
 
@@ -396,8 +396,8 @@ public final class PersesAstBuilder {
     return false;
   }
 
-  private static HashSet<Class<?>> collectChildNodeClasses(BlockAST ast) {
-    HashSet<Class<?>> childNodeClasses = new HashSet<>();
+  private static LinkedHashSet<Class<?>> collectChildNodeClasses(BlockAST ast) {
+    LinkedHashSet<Class<?>> childNodeClasses = new LinkedHashSet<>();
     final int childCount = ast.getChildCount();
     for (int i = 0; i < childCount; ++i) {
       childNodeClasses.add(ast.getChild(i).getClass());

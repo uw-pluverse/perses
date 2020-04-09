@@ -12,7 +12,7 @@ import static com.google.common.truth.Truth.assertThat;
 public class PersesAstTest {
 
   @Test
-  public void testChildrenOfAltBlockAreSorted() {
+  public void testChildrenOfAltBlockAreKeptInInitOrder() {
     ImmutableList<AbstractPersesRuleElement> childrenA =
         GrammarTestingUtility.createTerminalList("a", "b");
     PersesAlternativeBlockAst a = new PersesAlternativeBlockAst(childrenA);
@@ -20,13 +20,13 @@ public class PersesAstTest {
         GrammarTestingUtility.createTerminalList("b", "a");
     PersesAlternativeBlockAst b = new PersesAlternativeBlockAst(childrenB);
 
-    assertThat(a.getChild(0).getSourceCode()).isEqualTo(b.getChild(0).getSourceCode());
-    assertThat(a.getChild(1).getSourceCode()).isEqualTo(b.getChild(1).getSourceCode());
+    assertThat(a.getChild(0).getSourceCode()).isEqualTo(b.getChild(1).getSourceCode());
+    assertThat(a.getChild(1).getSourceCode()).isEqualTo(b.getChild(0).getSourceCode());
     assertThat(a.isEquivalent(b)).isTrue();
   }
 
   @Test
-  public void testChildrenOfTokenSetAreSorted() {
+  public void testChildrenOfTokenSetKeptInInitOrder() {
     ImmutableList<AbstractPersesTerminalAst> childrenA =
         GrammarTestingUtility.createTerminalList("A", "B").stream()
             .map(a -> (AbstractPersesTerminalAst) a)
@@ -38,8 +38,8 @@ public class PersesAstTest {
             .collect(ImmutableList.toImmutableList());
     PersesTokenSetAst b = new PersesTokenSetAst(childrenB);
 
-    assertThat(a.getChild(0).getSourceCode()).isEqualTo(b.getChild(0).getSourceCode());
-    assertThat(a.getChild(1).getSourceCode()).isEqualTo(b.getChild(1).getSourceCode());
+    assertThat(a.getChild(0).getSourceCode()).isEqualTo(b.getChild(1).getSourceCode());
+    assertThat(a.getChild(1).getSourceCode()).isEqualTo(b.getChild(0).getSourceCode());
     assertThat(a.isEquivalent(b)).isTrue();
   }
 

@@ -1,6 +1,6 @@
 package org.perses.antlr.pnf;
 
-import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +30,7 @@ public class AltRulesInlinePassTest {
         GrammarTestingUtility.createPersesGrammarFromString("a : b | c;", "b : d | e;");
     ImmutableRuleDefMap defMap = ImmutableRuleDefMap.create(grammar);
     ImmutableRuleDefMap processed = pass.process(defMap);
-    ImmutableSet<AbstractPersesRuleElement> a = processed.getRuleDefinition("a");
+    ImmutableList<AbstractPersesRuleElement> a = processed.getRuleDefinition("a");
     assertThat(a).hasSize(3);
     assertThat(a.stream().map(AbstractPersesAst::getSourceCode).collect(Collectors.toList()))
         .containsExactly("d", "e", "c");

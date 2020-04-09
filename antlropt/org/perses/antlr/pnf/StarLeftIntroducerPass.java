@@ -8,7 +8,7 @@ import org.perses.antlr.ast.PersesSequenceAst;
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 public class StarLeftIntroducerPass extends AbstractStarIntroducerPass {
 
@@ -16,7 +16,7 @@ public class StarLeftIntroducerPass extends AbstractStarIntroducerPass {
       RuleNameHandle ruleName,
       PersesSequenceAst sequenceDef,
       final ArrayList<AbstractPersesRuleElement> nonRecursivePartsInRecursiveDef,
-      final HashSet<AbstractPersesRuleElement> nonRecursiveDefs) {
+      final LinkedHashSet<AbstractPersesRuleElement> nonRecursiveDefs) {
     final AbstractPersesRuleElement first = sequenceDef.getFirstChild();
     final AbstractPersesRuleElement rest = sequenceDef.subsequence(1);
     if (first.getTag() == AstTag.RULE_REF

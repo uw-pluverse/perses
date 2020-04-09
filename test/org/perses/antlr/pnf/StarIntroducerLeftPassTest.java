@@ -56,8 +56,8 @@ public class StarIntroducerLeftPassTest extends PnfLeftTestGrammar {
     AbstractPersesRuleElement b_3 = persesGrammar.getRuleDefinition("b_3").get().getBody();
     assertThat(b_3.getChildCount()).isEqualTo(3);
     assertThat(b_3.getChild(0).getSourceCode()).isEqualTo("c d");
-    assertThat(b_3.getChild(1).getSourceCode()).isEqualTo("d");
-    assertThat(b_3.getChild(2).getSourceCode()).isEqualTo("d d");
+    assertThat(b_3.getChild(1).getSourceCode()).isEqualTo("d d");
+    assertThat(b_3.getChild(2).getSourceCode()).isEqualTo("d");
   }
 
   @Test
@@ -111,14 +111,14 @@ public class StarIntroducerLeftPassTest extends PnfLeftTestGrammar {
         findRuleName(ruleNames, "kleene_star__start_1");
 
     {
-      ImmutableSet<AbstractPersesRuleElement> def = newMap.getRuleDefinition(name_id);
+      ImmutableList<AbstractPersesRuleElement> def = newMap.getRuleDefinition(name_id);
       assertThat(def).hasSize(1);
       String code = def.iterator().next().getSourceCode();
       assertThat(code).contains("hello");
       assertThat(code).contains("world");
     }
     {
-      ImmutableSet<AbstractPersesRuleElement> defs =
+      ImmutableList<AbstractPersesRuleElement> defs =
           newMap.getRuleDefinition(name_kleene_star__start_1);
       assertThat(defs).hasSize(1);
       AbstractPersesRuleElement def = defs.asList().get(0);
@@ -129,7 +129,7 @@ public class StarIntroducerLeftPassTest extends PnfLeftTestGrammar {
       assertThat(child.getSourceCode()).isEqualTo("start_2");
     }
     {
-      ImmutableSet<AbstractPersesRuleElement> defs = newMap.getRuleDefinition(name_start_2);
+      ImmutableList<AbstractPersesRuleElement> defs = newMap.getRuleDefinition(name_start_2);
       assertThat(defs.stream().map(AbstractPersesAst::getSourceCode).collect(Collectors.toList()))
           .containsExactly("'()'", "'++'", "'--'", "'->' id", "'.' id", "'[]'");
     }

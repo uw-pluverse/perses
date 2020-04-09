@@ -7,7 +7,7 @@ import org.perses.antlr.ast.PersesRuleReferenceAst;
 import org.perses.antlr.ast.RuleNameRegistry;
 
 import java.util.ArrayDeque;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,8 +21,8 @@ public class EliminateUnreachableRulePass extends AbstractPnfPass {
 
   @Override
   public ImmutableRuleDefMap process(ImmutableRuleDefMap grammar) {
-    HashSet<RuleNameRegistry.RuleNameHandle> usedRules = new HashSet<>();
-    final HashSet<RuleNameRegistry.RuleNameHandle> visited = new HashSet<>();
+    LinkedHashSet<RuleNameRegistry.RuleNameHandle> usedRules = new LinkedHashSet<>();
+    final LinkedHashSet<RuleNameRegistry.RuleNameHandle> visited = new LinkedHashSet<>();
     final ArrayDeque<RuleNameRegistry.RuleNameHandle> worklist = new ArrayDeque<>();
     RuleNameRegistry.RuleNameHandle rootRuleName =
         grammar
@@ -62,7 +62,7 @@ public class EliminateUnreachableRulePass extends AbstractPnfPass {
   }
 
   private static class RuleNameCollector extends DefaultAstVisitor {
-    final HashSet<RuleNameRegistry.RuleNameHandle> usedRules = new HashSet<>();
+    final LinkedHashSet<RuleNameRegistry.RuleNameHandle> usedRules = new LinkedHashSet<>();
 
     @Override
     protected void visit(PersesRuleReferenceAst ast) {

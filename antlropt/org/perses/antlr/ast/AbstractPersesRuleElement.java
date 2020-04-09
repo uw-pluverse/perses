@@ -34,11 +34,16 @@ public abstract class AbstractPersesRuleElement extends AbstractPersesAst {
     }
     // Note that all Perses ASTs should normalize to a single form.
     for (int i = 0; i < size; ++i) {
-      if (!getChild(i).isEquivalent(other.getChild(i))) {
+      if (!getChildForEquivalenceChecking(i)
+          .isEquivalent(other.getChildForEquivalenceChecking(i))) {
         return false;
       }
     }
     return true;
+  }
+
+  protected AbstractPersesRuleElement getChildForEquivalenceChecking(int index) {
+    return getChild(index);
   }
 
   protected boolean extraEquivalenceTest(AbstractPersesRuleElement other) {

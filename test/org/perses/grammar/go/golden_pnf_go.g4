@@ -20,7 +20,7 @@ kleene_star__sourceFile_2
     ;
 
 sourceFile_3
-    : (declaration | functionDecl | methodDecl) eos
+    : (functionDecl | methodDecl | declaration) eos
     ;
 
 kleene_star__sourceFile_4
@@ -34,12 +34,12 @@ packageClause
 eos
     : ';'
     | EOF
-    | {$start.getType() != SEMI && checkPreviousTokenText(")")}?
     | {$start.getType() != SEMI && checkPreviousTokenText("}")}?
+    | {$start.getType() != SEMI && checkPreviousTokenText(")")}?
     ;
 
 importDecl
-    : 'import' ('(' kleene_star__importDecl_2 ')' | importSpec)
+    : 'import' (importSpec | '(' kleene_star__importDecl_2 ')')
     ;
 
 importDecl_1
@@ -86,12 +86,12 @@ importPath
     ;
 
 string_
-    : INTERPRETED_STRING_LIT
-    | RAW_STRING_LIT
+    : RAW_STRING_LIT
+    | INTERPRETED_STRING_LIT
     ;
 
 constDecl
-    : 'const' ('(' kleene_star__constDecl_2 ')' | constSpec)
+    : 'const' (constSpec | '(' kleene_star__constDecl_2 ')')
     ;
 
 constDecl_1
@@ -103,7 +103,7 @@ kleene_star__constDecl_2
     ;
 
 typeDecl
-    : 'type' ('(' kleene_star__typeDecl_2 ')' | typeSpec)
+    : 'type' (typeSpec | '(' kleene_star__typeDecl_2 ')')
     ;
 
 typeDecl_1
@@ -115,7 +115,7 @@ kleene_star__typeDecl_2
     ;
 
 varDecl
-    : 'var' ('(' kleene_star__varDecl_2 ')' | varSpec)
+    : 'var' (varSpec | '(' kleene_star__varDecl_2 ')')
     ;
 
 varDecl_1
@@ -155,16 +155,16 @@ kleene_star__identifierList_2
     ;
 
 type_
-    : '(' type_ ')'
+    : typeName
     | arrayType
-    | channelType
+    | structType
+    | pointerType
     | functionType
     | interfaceType
-    | mapType
-    | pointerType
     | sliceType
-    | structType
-    | typeName
+    | mapType
+    | channelType
+    | '(' type_ ')'
     ;
 
 expressionList
@@ -192,26 +192,26 @@ expression_2
     ;
 
 alternative__expression_7
-    : '!='
+    : assign_op
+    | '*'
+    | '/'
     | '%'
-    | '&&'
+    | '<<'
+    | '>>'
     | '&'
     | '&^'
-    | '*'
     | '+'
     | '-'
-    | '/'
-    | '<'
-    | '<<'
-    | '<='
+    | '|'
+    | '^'
     | '=='
+    | '!='
+    | '<'
+    | '<='
     | '>'
     | '>='
-    | '>>'
-    | '^'
-    | '|'
+    | '&&'
     | '||'
-    | assign_op
     ;
 
 typeSpec
@@ -267,7 +267,7 @@ optional__parameters_5
     ;
 
 varSpec
-    : identifierList ('=' expressionList | type_ optional__varSpec_2)
+    : identifierList (type_ optional__varSpec_2 | '=' expressionList)
     ;
 
 varSpec_1
@@ -292,21 +292,21 @@ kleene_plus__statementList_2
     ;
 
 realStatement
-    : block
-    | breakStmt
-    | continueStmt
-    | declaration
-    | deferStmt
-    | exprSwitchStmt
-    | fallthroughStmt
-    | forStmt
-    | goStmt
-    | gotoStmt
-    | ifStmt
+    : declaration
     | labeledStmt
     | realSimpleStmt
+    | goStmt
     | returnStmt
+    | breakStmt
+    | continueStmt
+    | gotoStmt
+    | fallthroughStmt
+    | block
+    | ifStmt
     | selectStmt
+    | forStmt
+    | deferStmt
+    | exprSwitchStmt
     | typeSwitchStmt
     ;
 
@@ -327,10 +327,10 @@ optional__simpleStmt_1
     ;
 
 realSimpleStmt
-    : assignment
+    : sendStmt
     | expressionStmt
     | incDecStmt
-    | sendStmt
+    | assignment
     | shortVarDecl
     ;
 
@@ -383,7 +383,7 @@ optional__ifStmt_2
     ;
 
 ifStmt_3
-    : 'else' (block | ifStmt)
+    : 'else' (ifStmt | block)
     ;
 
 optional__ifStmt_4
@@ -403,8 +403,8 @@ forStmt
     ;
 
 forStmt_1
-    : expression
-    | forClause
+    : forClause
+    | expression
     | rangeClause
     ;
 
@@ -425,7 +425,7 @@ expressionStmt
     ;
 
 incDecStmt
-    : expression (MINUS_MINUS | PLUS_PLUS)
+    : expression (PLUS_PLUS | MINUS_MINUS)
     ;
 
 assignment
@@ -441,17 +441,17 @@ assign_op
     ;
 
 assign_op_1
-    : '%'
-    | '&'
+    : '/'
+    | '|'
     | '&^'
+    | '^'
+    | '&'
     | '*'
+    | '<<'
     | '+'
     | '-'
-    | '/'
-    | '<<'
+    | '%'
     | '>>'
-    | '^'
-    | '|'
     ;
 
 optional__assign_op_2
@@ -483,8 +483,8 @@ exprCaseClause
     ;
 
 exprSwitchCase
-    : 'case' expressionList
-    | 'default'
+    : 'default'
+    | 'case' expressionList
     ;
 
 typeSwitchGuard
@@ -512,41 +512,41 @@ kleene_star__primaryExpr_1
     ;
 
 primaryExpr_2
-    : DOT IDENTIFIER
-    | arguments
-    | index
+    : index
     | slice
     | typeAssertion
+    | arguments
+    | DOT IDENTIFIER
     ;
 
 primaryExpr_3
-    : '(' expression ')'
-    | DECIMAL_LIT
-    | FLOAT_LIT
-    | HEX_LIT
-    | IMAGINARY_LIT
-    | NIL_LIT
-    | OCTAL_LIT
-    | RUNE_LIT
-    | compositeLit
-    | conversion
-    | functionLit
+    : conversion
     | methodExpr
-    | string_
     | typeName
+    | compositeLit
+    | functionLit
+    | NIL_LIT
+    | string_
+    | FLOAT_LIT
+    | IMAGINARY_LIT
+    | RUNE_LIT
+    | '(' expression ')'
+    | DECIMAL_LIT
+    | OCTAL_LIT
+    | HEX_LIT
     ;
 
 typeSwitchCase
-    : 'case' typeList
-    | 'default'
+    : 'default'
+    | 'case' typeList
     ;
 
 typeList
-    : (NIL_LIT | type_) kleene_star__typeList_2
+    : (type_ | NIL_LIT) kleene_star__typeList_2
     ;
 
 typeList_1
-    : ',' (NIL_LIT | type_)
+    : ',' (type_ | NIL_LIT)
     ;
 
 kleene_star__typeList_2
@@ -558,8 +558,8 @@ commClause
     ;
 
 commCase
-    : 'case' (recvStmt | sendStmt)
-    | 'default'
+    : 'default'
+    | 'case' (sendStmt | recvStmt)
     ;
 
 recvStmt
@@ -567,8 +567,8 @@ recvStmt
     ;
 
 recvStmt_1
-    : expressionList '='
-    | identifierList ':='
+    : identifierList ':='
+    | expressionList '='
     ;
 
 optional__recvStmt_2
@@ -584,7 +584,16 @@ optional__forClause_1
     ;
 
 rangeClause
-    : optional__recvStmt_2 'range' expression
+    : optional__rangeClause_2 'range' expression
+    ;
+
+rangeClause_1
+    : expressionList '='
+    | identifierList ':='
+    ;
+
+optional__rangeClause_2
+    : rangeClause_1?
     ;
 
 typeName
@@ -641,7 +650,7 @@ mapType
     ;
 
 channelType
-    : ('<-' 'chan' | 'chan' | 'chan' '<-') elementType
+    : ('chan' | 'chan' '<-' | '<-' 'chan') elementType
     ;
 
 elementType
@@ -649,8 +658,8 @@ elementType
     ;
 
 methodSpec
-    : IDENTIFIER parameters optional__signature_1
-    | typeName
+    : typeName
+    | IDENTIFIER parameters optional__signature_1
     ;
 
 result
@@ -671,8 +680,8 @@ optional__parameterDecl_2
     ;
 
 unaryExpr
-    : ('!' | '&' | '*' | '+' | '-' | '<-' | '^') unaryExpr ('(' expression ')' | {_input.LA(1) != L_PAREN}?)
-    | primaryExpr
+    : primaryExpr
+    | ('+' | '-' | '!' | '^' | '*' | '&' | '<-') unaryExpr ('(' expression ')' | {_input.LA(1) != L_PAREN}?)
     ;
 
 conversion
@@ -688,7 +697,7 @@ index
     ;
 
 slice
-    : '[' (optional__exprSwitchStmt_3 ':' expression ':' expression | optional__exprSwitchStmt_3 ':' optional__exprSwitchStmt_3) ']'
+    : '[' (optional__exprSwitchStmt_3 ':' optional__exprSwitchStmt_3 | optional__exprSwitchStmt_3 ':' expression ':' expression) ']'
     ;
 
 typeAssertion
@@ -728,12 +737,12 @@ functionLit
     ;
 
 literalType
-    : '[' '...' ']' elementType
+    : structType
     | arrayType
-    | mapType
     | sliceType
-    | structType
+    | mapType
     | typeName
+    | '[' '...' ']' elementType
     ;
 
 literalValue
@@ -784,7 +793,7 @@ element
     ;
 
 fieldDecl
-    : (anonymousField | identifierList type_) optional__fieldDecl_1
+    : (identifierList type_ | anonymousField) optional__fieldDecl_1
     ;
 
 optional__fieldDecl_1

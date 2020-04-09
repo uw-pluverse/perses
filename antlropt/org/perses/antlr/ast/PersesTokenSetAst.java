@@ -11,10 +11,12 @@ import static com.google.common.base.Preconditions.checkState;
 public class PersesTokenSetAst extends AbstractPersesRuleElement {
 
   private final ImmutableList<AbstractPersesTerminalAst> terminals;
+  private final ImmutableList<AbstractPersesTerminalAst> sortedTerminals;
 
   public PersesTokenSetAst(ImmutableList<AbstractPersesTerminalAst> terminals) {
     checkArgument(terminals.size() > 1);
-    this.terminals = terminals.stream().sorted().collect(ImmutableList.toImmutableList());
+    this.terminals = terminals;
+    sortedTerminals = terminals.stream().sorted().collect(ImmutableList.toImmutableList());
   }
 
   @Override
@@ -35,6 +37,11 @@ public class PersesTokenSetAst extends AbstractPersesRuleElement {
   @Override
   public AbstractPersesRuleElement getChild(int index) {
     return terminals.get(index);
+  }
+
+  @Override
+  protected AbstractPersesRuleElement getChildForEquivalenceChecking(int index) {
+    return sortedTerminals.get(index);
   }
 
   @Override

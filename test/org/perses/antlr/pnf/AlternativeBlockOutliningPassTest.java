@@ -35,11 +35,11 @@ public class AlternativeBlockOutliningPassTest {
   @Test
   public void testAlternativeBlockOutliningPass() {
     ImmutableRuleDefMap processed = process("a: a c d | a b d;");
-    ImmutableSet<AbstractPersesRuleElement> a = processed.getRuleDefinition("a");
+    ImmutableList<AbstractPersesRuleElement> a = processed.getRuleDefinition("a");
     assertThat(a).hasSize(1);
     assertThat(Iterables.getOnlyElement(a).getSourceCode()).isEqualTo("a alternative__a_1 d");
 
-    ImmutableSet<AbstractPersesRuleElement> alternative__a_1 =
+    ImmutableList<AbstractPersesRuleElement> alternative__a_1 =
         processed.getRuleDefinition("alternative__a_1");
     assertThat(alternative__a_1).hasSize(2);
     assertThat(

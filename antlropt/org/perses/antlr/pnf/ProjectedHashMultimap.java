@@ -5,17 +5,17 @@ import org.perses.antlr.ast.AbstractPersesRuleElement;
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle;
 
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class ProjectedHashMultimap {
 
   private final MutableRuleDefMap map;
-  private final HashSet<RuleNameHandle> projectedKeySet;
+  private final LinkedHashSet<RuleNameHandle> projectedKeySet;
 
   public ProjectedHashMultimap(MutableRuleDefMap map, Collection<RuleNameHandle> projectedKeySet) {
     this.map = map;
-    this.projectedKeySet = new HashSet<>(projectedKeySet);
+    this.projectedKeySet = new LinkedHashSet<>(projectedKeySet);
   }
 
   public Set<RuleNameHandle> ketSet() {

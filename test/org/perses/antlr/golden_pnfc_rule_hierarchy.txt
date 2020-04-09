@@ -18,7 +18,7 @@ additiveExpression
         StringLiteral
         castExpression
         genericSelection
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
@@ -44,7 +44,7 @@ alternative__alignmentSpecifier_1
         exclusiveOrExpression
         genericSelection
         inclusiveOrExpression
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         logicalAndExpression
         logicalOrExpression
         multiplicativeExpression
@@ -62,7 +62,7 @@ alternative__alignmentSpecifier_1
 alternative__directAbstractDeclarator_17
     epsilonable: true
     immediate sub-rule names:
-        optional__directDeclarator_5
+        optional__directDeclarator_2
         optional__pointer_1
     transitive sub-rule names:
         Constant
@@ -77,12 +77,12 @@ alternative__directAbstractDeclarator_17
         exclusiveOrExpression
         genericSelection
         inclusiveOrExpression
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         kleene_plus__typeQualifierList_3
         logicalAndExpression
         logicalOrExpression
         multiplicativeExpression
-        optional__directDeclarator_5
+        optional__directDeclarator_2
         optional__pointer_1
         postfixExpression
         postfixExpression_4
@@ -96,7 +96,7 @@ alternative__directAbstractDeclarator_23
     epsilonable: true
     immediate sub-rule names:
         abstractDeclarator
-        optional__directAbstractDeclarator_2
+        optional__directAbstractDeclarator_5
     transitive sub-rule names:
         Identifier
         abstractDeclarator
@@ -110,7 +110,7 @@ alternative__directAbstractDeclarator_23
         enumSpecifier
         gccAttributeSpecifier
         kleene_plus__declarationSpecifiers_1
-        optional__directAbstractDeclarator_2
+        optional__directAbstractDeclarator_5
         parameterDeclaration
         parameterList
         parameterTypeList
@@ -138,12 +138,12 @@ alternative__directDeclarator_12
         exclusiveOrExpression
         genericSelection
         inclusiveOrExpression
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         kleene_plus__typeQualifierList_3
         logicalAndExpression
         logicalOrExpression
         multiplicativeExpression
-        optional__directDeclarator_5
+        optional__directDeclarator_2
         optional__pointer_1
         postfixExpression
         postfixExpression_4
@@ -156,7 +156,7 @@ alternative__directDeclarator_12
 alternative__directDeclarator_14
     epsilonable: true
     immediate sub-rule names:
-        optional__directDeclarator_5
+        optional__directDeclarator_2
     transitive sub-rule names:
         Constant
         Identifier
@@ -170,11 +170,11 @@ alternative__directDeclarator_14
         exclusiveOrExpression
         genericSelection
         inclusiveOrExpression
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         logicalAndExpression
         logicalOrExpression
         multiplicativeExpression
-        optional__directDeclarator_5
+        optional__directDeclarator_2
         postfixExpression
         postfixExpression_4
         relationalExpression
@@ -183,7 +183,7 @@ alternative__directDeclarator_14
 alternative__directDeclarator_9
     epsilonable: true
     immediate sub-rule names:
-        optional__directDeclarator_1
+        optional__directDeclarator_5
         parameterTypeList
     transitive sub-rule names:
         Identifier
@@ -195,7 +195,7 @@ alternative__directDeclarator_9
         gccAttributeSpecifier
         identifierList
         kleene_plus__declarationSpecifiers_1
-        optional__directDeclarator_1
+        optional__directDeclarator_5
         parameterDeclaration
         parameterList
         parameterTypeList
@@ -242,7 +242,7 @@ alternative__jumpStatement_3
         Identifier
         StringLiteral
         genericSelection
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         postfixExpression
         postfixExpression_4
         unaryExpression
@@ -313,7 +313,7 @@ andExpression
         castExpression
         equalityExpression
         genericSelection
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
@@ -335,7 +335,7 @@ asmStatement_5
         exclusiveOrExpression
         genericSelection
         inclusiveOrExpression
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         logicalAndExpression
         logicalOrExpression
         multiplicativeExpression
@@ -360,7 +360,7 @@ assignmentExpression
         exclusiveOrExpression
         genericSelection
         inclusiveOrExpression
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         logicalAndExpression
         logicalOrExpression
         multiplicativeExpression
@@ -422,7 +422,7 @@ castExpression
         Identifier
         StringLiteral
         genericSelection
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         postfixExpression
         postfixExpression_4
         unaryExpression
@@ -441,7 +441,7 @@ conditionalExpression
         exclusiveOrExpression
         genericSelection
         inclusiveOrExpression
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         logicalAndExpression
         logicalOrExpression
         multiplicativeExpression
@@ -466,7 +466,7 @@ constantExpression
         exclusiveOrExpression
         genericSelection
         inclusiveOrExpression
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         logicalAndExpression
         logicalOrExpression
         multiplicativeExpression
@@ -601,7 +601,7 @@ equalityExpression
         additiveExpression
         castExpression
         genericSelection
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
@@ -621,7 +621,7 @@ exclusiveOrExpression
         castExpression
         equalityExpression
         genericSelection
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
@@ -645,7 +645,7 @@ expression
         exclusiveOrExpression
         genericSelection
         inclusiveOrExpression
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         logicalAndExpression
         logicalOrExpression
         multiplicativeExpression
@@ -696,7 +696,7 @@ inclusiveOrExpression
         equalityExpression
         exclusiveOrExpression
         genericSelection
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
@@ -739,7 +739,7 @@ initializer
         exclusiveOrExpression
         genericSelection
         inclusiveOrExpression
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         logicalAndExpression
         logicalOrExpression
         multiplicativeExpression
@@ -766,7 +766,7 @@ initializerList
         genericSelection
         inclusiveOrExpression
         initializer
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         logicalAndExpression
         logicalOrExpression
         multiplicativeExpression
@@ -821,7 +821,7 @@ kleene_plus__designatorList_3
     transitive sub-rule names:
         designator
         designatorList_2
-kleene_plus__primaryExpression_2
+kleene_plus__primaryExpression_1
     epsilonable: false
     immediate sub-rule names:
         StringLiteral
@@ -1019,7 +1019,7 @@ logicalAndExpression
         exclusiveOrExpression
         genericSelection
         inclusiveOrExpression
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
@@ -1041,7 +1041,7 @@ logicalOrExpression
         exclusiveOrExpression
         genericSelection
         inclusiveOrExpression
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         logicalAndExpression
         multiplicativeExpression
         postfixExpression
@@ -1059,7 +1059,7 @@ multiplicativeExpression
         StringLiteral
         castExpression
         genericSelection
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         postfixExpression
         postfixExpression_4
         unaryExpression
@@ -1085,7 +1085,7 @@ optional__asmStatement_6
         exclusiveOrExpression
         genericSelection
         inclusiveOrExpression
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         logicalAndExpression
         logicalOrExpression
         multiplicativeExpression
@@ -1148,7 +1148,7 @@ optional__declarator_1
     transitive sub-rule names:
         alternative__pointer_8
         pointer
-optional__directAbstractDeclarator_2
+optional__directAbstractDeclarator_5
     epsilonable: true
     immediate sub-rule names:
         parameterTypeList
@@ -1168,14 +1168,7 @@ optional__directAbstractDeclarator_2
         typeQualifier
         typeSpecifier
         typedefName
-optional__directDeclarator_1
-    epsilonable: true
-    immediate sub-rule names:
-        identifierList
-    transitive sub-rule names:
-        Identifier
-        identifierList
-optional__directDeclarator_5
+optional__directDeclarator_2
     epsilonable: true
     immediate sub-rule names:
         assignmentExpression
@@ -1192,7 +1185,7 @@ optional__directDeclarator_5
         exclusiveOrExpression
         genericSelection
         inclusiveOrExpression
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         logicalAndExpression
         logicalOrExpression
         multiplicativeExpression
@@ -1201,6 +1194,13 @@ optional__directDeclarator_5
         relationalExpression
         shiftExpression
         unaryExpression
+optional__directDeclarator_5
+    epsilonable: true
+    immediate sub-rule names:
+        identifierList
+    transitive sub-rule names:
+        Identifier
+        identifierList
 optional__enumerator_2
     epsilonable: true
     immediate sub-rule names:
@@ -1286,7 +1286,7 @@ optional__postfixExpression_1
         expression
         genericSelection
         inclusiveOrExpression
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         logicalAndExpression
         logicalOrExpression
         multiplicativeExpression
@@ -1420,7 +1420,7 @@ postfixExpression
         Identifier
         StringLiteral
         genericSelection
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         postfixExpression_4
 postfixExpression_4
     epsilonable: false
@@ -1428,13 +1428,13 @@ postfixExpression_4
         Constant
         Identifier
         genericSelection
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
     transitive sub-rule names:
         Constant
         Identifier
         StringLiteral
         genericSelection
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
 relationalExpression
     epsilonable: false
     immediate sub-rule names:
@@ -1446,7 +1446,7 @@ relationalExpression
         additiveExpression
         castExpression
         genericSelection
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
@@ -1463,7 +1463,7 @@ shiftExpression
         additiveExpression
         castExpression
         genericSelection
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
@@ -1614,6 +1614,6 @@ unaryExpression
         Identifier
         StringLiteral
         genericSelection
-        kleene_plus__primaryExpression_2
+        kleene_plus__primaryExpression_1
         postfixExpression
         postfixExpression_4

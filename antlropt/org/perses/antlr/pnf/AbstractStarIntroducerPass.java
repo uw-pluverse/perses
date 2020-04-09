@@ -7,7 +7,7 @@ import org.perses.antlr.RuleType;
 import org.perses.antlr.ast.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +20,7 @@ public abstract class AbstractStarIntroducerPass extends AbstractPnfPass {
       MutableRuleDefMap rules, RuleNameRegistry.RuleNameHandle ruleName) {
 
     final ArrayList<AbstractPersesRuleElement> nonRecursivePartsInRecursiveDef = new ArrayList<>();
-    final HashSet<AbstractPersesRuleElement> nonRecursiveDefs = new HashSet<>();
+    final LinkedHashSet<AbstractPersesRuleElement> nonRecursiveDefs = new LinkedHashSet<>();
 
     final Iterable<AbstractPersesRuleElement> definitions = rules.get(ruleName);
     classifyDefsAndExtractNonrecursiveParts(
@@ -74,7 +74,7 @@ public abstract class AbstractStarIntroducerPass extends AbstractPnfPass {
       RuleNameRegistry.RuleNameHandle ruleName,
       Iterable<AbstractPersesRuleElement> definitions,
       ArrayList<AbstractPersesRuleElement> nonRecursivePartsInRecursiveDef,
-      HashSet<AbstractPersesRuleElement> nonRecursiveDefs) {
+      LinkedHashSet<AbstractPersesRuleElement> nonRecursiveDefs) {
     for (AbstractPersesRuleElement def : definitions) {
       final AstTag tag = def.getTag();
       checkState(tag != AstTag.ALTERNATIVE_BLOCK, tag);
@@ -98,7 +98,7 @@ public abstract class AbstractStarIntroducerPass extends AbstractPnfPass {
       RuleNameRegistry.RuleNameHandle ruleName,
       PersesSequenceAst sequenceDef,
       final ArrayList<AbstractPersesRuleElement> nonRecursivePartsInRecursiveDef,
-      final HashSet<AbstractPersesRuleElement> nonRecursiveDefs);
+      final LinkedHashSet<AbstractPersesRuleElement> nonRecursiveDefs);
 
   @Override
   public final ImmutableRuleDefMap process(ImmutableRuleDefMap grammar) {

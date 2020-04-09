@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +23,7 @@ public class RuleEpsilonComputer {
     return new EpsilonInfo(builder.build(), computer.getEpsilonableElements());
   }
 
-  private final HashSet<AbstractPersesRuleElement> epsilonable = new HashSet<>();
+  private final LinkedHashSet<AbstractPersesRuleElement> epsilonable = new LinkedHashSet<>();
   private final ImmutableMap<String, AbstractPersesRuleDefAst> nameToRuleMap;
 
   private RuleEpsilonComputer(ImmutableList<AbstractPersesRuleDefAst> grammar) {

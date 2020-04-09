@@ -2,19 +2,19 @@
 // DO NOT MODIFY.
 grammar PnfC;
 
-optional__primaryExpression_1
-    : '__extension__'?
-    ;
-
-kleene_plus__primaryExpression_2
+kleene_plus__primaryExpression_1
     : StringLiteral+
     ;
 
+optional__primaryExpression_2
+    : '__extension__'?
+    ;
+
 alternative__primaryExpression_5
-    : '(' expression
-    | '__builtin_offsetof' '(' typeName ',' unaryExpression
+    : optional__primaryExpression_2 '(' compoundStatement
     | '__builtin_va_arg' '(' unaryExpression ',' typeName
-    | optional__primaryExpression_1 '(' compoundStatement
+    | '(' expression
+    | '__builtin_offsetof' '(' typeName ',' unaryExpression
     ;
 
 expression
@@ -42,11 +42,11 @@ optional__compoundStatement_1
     ;
 
 unaryExpression
-    : '&&' Identifier
+    : postfixExpression
+    | unaryOperator castExpression
+    | '&&' Identifier
     | alternative__unaryExpression_2 '(' typeName ')'
     | alternative__unaryExpression_3 unaryExpression
-    | postfixExpression
-    | unaryOperator castExpression
     ;
 
 alternative__unaryExpression_2
@@ -55,9 +55,9 @@ alternative__unaryExpression_2
     ;
 
 alternative__unaryExpression_3
-    : '++'
+    : 'sizeof'
+    | '++'
     | '--'
-    | 'sizeof'
     ;
 
 typeName
@@ -107,20 +107,20 @@ kleene_star__postfixExpression_2
     ;
 
 postfixExpression_3
-    : '(' optional__postfixExpression_1 ')'
-    | '++'
+    : '++'
     | '--'
     | '[' expression ']'
+    | '(' optional__postfixExpression_1 ')'
     | alternative__postfixExpression_7 Identifier
     ;
 
 postfixExpression_4
-    : Constant
-    | Identifier
+    : Identifier
+    | Constant
+    | genericSelection
+    | kleene_plus__primaryExpression_1
     | alternative__postfixExpression_8 '}'
     | alternative__primaryExpression_5 ')'
-    | genericSelection
-    | kleene_plus__primaryExpression_2
     ;
 
 optional__postfixExpression_5
@@ -133,7 +133,7 @@ alternative__postfixExpression_7
     ;
 
 alternative__postfixExpression_8
-    : optional__primaryExpression_1 '(' typeName ')' '{' initializerList optional__postfixExpression_5
+    : optional__primaryExpression_2 '(' typeName ')' '{' initializerList optional__postfixExpression_5
     ;
 
 initializerList
@@ -153,17 +153,17 @@ initializerList_4
     ;
 
 unaryOperator
-    : '!'
-    | '&'
+    : '&'
     | '*'
     | '+'
     | '-'
     | '~'
+    | '!'
     ;
 
 castExpression
-    : optional__primaryExpression_1 '(' typeName ')' castExpression
-    | unaryExpression
+    : unaryExpression
+    | optional__primaryExpression_2 '(' typeName ')' castExpression
     ;
 
 multiplicativeExpression
@@ -179,9 +179,9 @@ multiplicativeExpression_2
     ;
 
 alternative__multiplicativeExpression_4
-    : '%'
+    : '/'
+    | '%'
     | '*'
-    | '/'
     ;
 
 additiveExpression
@@ -327,15 +327,15 @@ optional__conditionalExpression_2
     ;
 
 assignmentOperator
-    : '%='
-    | '&='
+    : '='
     | '*='
+    | '/='
+    | '%='
     | '+='
     | '-='
-    | '/='
     | '<<='
-    | '='
     | '>>='
+    | '&='
     | '^='
     | '|='
     ;
@@ -345,9 +345,9 @@ constantExpression
     ;
 
 declaration
-    : asmStatement
+    : staticAssertDeclaration
+    | asmStatement
     | declarationSpecifiers optional__declaration_1 ';'
-    | staticAssertDeclaration
     ;
 
 optional__declaration_1
@@ -375,7 +375,7 @@ initDeclaratorList_2
     ;
 
 staticAssertDeclaration
-    : '_Static_assert' '(' constantExpression ',' kleene_plus__primaryExpression_2 ')' ';'
+    : '_Static_assert' '(' constantExpression ',' kleene_plus__primaryExpression_1 ')' ';'
     ;
 
 asmStatement
@@ -383,8 +383,8 @@ asmStatement
     ;
 
 asmStatement_1
-    : '__volatile__'
-    | 'volatile'
+    : 'volatile'
+    | '__volatile__'
     ;
 
 optional__asmStatement_2
@@ -416,43 +416,43 @@ kleene_star__asmStatement_12
     ;
 
 declarationSpecifier
-    : '_Noreturn'
+    : typeSpecifier
+    | typeQualifier
+    | alignmentSpecifier
+    | 'typedef'
+    | 'extern'
+    | 'static'
     | '_Thread_local'
-    | '__declspec' '(' Identifier ')'
+    | 'auto'
+    | 'register'
+    | 'inline'
+    | '_Noreturn'
     | '__inline__'
     | '__stdcall'
-    | 'auto'
-    | 'extern'
-    | 'inline'
-    | 'register'
-    | 'static'
-    | 'typedef'
-    | alignmentSpecifier
     | gccAttributeSpecifier
-    | typeQualifier
-    | typeSpecifier
+    | '__declspec' '(' Identifier ')'
     ;
 
 typeSpecifier
-    : '_Bool'
+    : 'void'
+    | 'char'
+    | 'short'
+    | 'int'
+    | 'long'
+    | 'float'
+    | 'double'
+    | 'signed'
+    | 'unsigned'
+    | '_Bool'
     | '_Complex'
     | '__m128'
     | '__m128d'
     | '__m128i'
-    | 'char'
-    | 'double'
-    | 'float'
-    | 'int'
-    | 'long'
-    | 'short'
-    | 'signed'
-    | 'unsigned'
-    | 'void'
-    | alternative__typeSpecifier_1 ')'
     | atomicTypeSpecifier
-    | enumSpecifier
     | structOrUnionSpecifier
+    | enumSpecifier
     | typedefName
+    | alternative__typeSpecifier_1 ')'
     ;
 
 alternative__typeSpecifier_1
@@ -461,10 +461,10 @@ alternative__typeSpecifier_1
     ;
 
 typeQualifier
-    : '_Atomic'
-    | 'const'
+    : 'const'
     | 'restrict'
     | 'volatile'
+    | '_Atomic'
     ;
 
 alignmentSpecifier
@@ -501,8 +501,8 @@ kleene_star__declarator_2
     ;
 
 initializer
-    : '{' initializerList optional__postfixExpression_5 '}'
-    | assignmentExpression
+    : assignmentExpression
+    | '{' initializerList optional__postfixExpression_5 '}'
     ;
 
 atomicTypeSpecifier
@@ -553,8 +553,8 @@ kleene_plus__structDeclarationList_3
     ;
 
 structDeclaration
-    : specifierQualifierList optional__structDeclaration_1 ';'
-    | staticAssertDeclaration
+    : staticAssertDeclaration
+    | specifierQualifierList optional__structDeclaration_1 ';'
     ;
 
 optional__structDeclaration_1
@@ -644,12 +644,12 @@ directDeclarator
     : directDeclarator_8 kleene_star__directDeclarator_6
     ;
 
-optional__directDeclarator_1
-    : identifierList?
+optional__directDeclarator_2
+    : assignmentExpression?
     ;
 
 optional__directDeclarator_5
-    : assignmentExpression?
+    : identifierList?
     ;
 
 kleene_star__directDeclarator_6
@@ -662,12 +662,12 @@ directDeclarator_7
     ;
 
 directDeclarator_8
-    : '(' declarator ')'
-    | Identifier
+    : Identifier
+    | '(' declarator ')'
     ;
 
 alternative__directDeclarator_9
-    : optional__directDeclarator_1
+    : optional__directDeclarator_5
     | parameterTypeList
     ;
 
@@ -683,12 +683,12 @@ alternative__directDeclarator_13
 
 alternative__directDeclarator_14
     : '*'
-    | optional__directDeclarator_5
+    | optional__directDeclarator_2
     ;
 
 gccDeclaratorExtension
-    : asmKeyword '(' kleene_plus__primaryExpression_2 ')'
-    | gccAttributeSpecifier
+    : gccAttributeSpecifier
+    | asmKeyword '(' kleene_plus__primaryExpression_1 ')'
     ;
 
 typeQualifierList
@@ -728,9 +728,9 @@ identifierList_2
     ;
 
 asmKeyword
-    : '__asm'
+    : 'asm'
     | '__asm__'
-    | 'asm'
+    | '__asm'
     ;
 
 gccAttributeList
@@ -748,7 +748,7 @@ kleene_star__gccAttributeList_2
 
 gccAttribute
     : /* Epsilon. */
-    | ~('(' | ')' | ',') optional__gccAttribute_3
+    | ~(',' | '(' | ')') optional__gccAttribute_3
     ;
 
 gccAttribute_2
@@ -781,15 +781,15 @@ alternative__parameterDeclaration_2
     ;
 
 abstractDeclarator
-    : optional__declarator_1 directAbstractDeclarator kleene_star__declarator_2
-    | pointer
+    : pointer
+    | optional__declarator_1 directAbstractDeclarator kleene_star__declarator_2
     ;
 
 directAbstractDeclarator
     : directAbstractDeclarator_14 kleene_star__directAbstractDeclarator_12
     ;
 
-optional__directAbstractDeclarator_2
+optional__directAbstractDeclarator_5
     : parameterTypeList?
     ;
 
@@ -798,8 +798,8 @@ kleene_star__directAbstractDeclarator_12
     ;
 
 directAbstractDeclarator_13
-    : '(' optional__directAbstractDeclarator_2 ')' kleene_star__declarator_2
-    | '[' alternative__directAbstractDeclarator_17 ']'
+    : '[' alternative__directAbstractDeclarator_17 ']'
+    | '(' optional__directAbstractDeclarator_5 ')' kleene_star__declarator_2
     ;
 
 directAbstractDeclarator_14
@@ -809,8 +809,8 @@ directAbstractDeclarator_14
 
 alternative__directAbstractDeclarator_17
     : '*'
+    | optional__pointer_1 optional__directDeclarator_2
     | alternative__directDeclarator_13 assignmentExpression
-    | optional__pointer_1 optional__directDeclarator_5
     ;
 
 alternative__directAbstractDeclarator_18
@@ -819,7 +819,7 @@ alternative__directAbstractDeclarator_18
 
 alternative__directAbstractDeclarator_23
     : abstractDeclarator
-    | optional__directAbstractDeclarator_2
+    | optional__directAbstractDeclarator_5
     ;
 
 designation
@@ -839,19 +839,19 @@ kleene_plus__designatorList_3
     ;
 
 designator
-    : '.' Identifier
-    | '[' constantExpression ']'
+    : '[' constantExpression ']'
+    | '.' Identifier
     ;
 
 statement
-    : 'do' statement 'while' '(' expression ')' ';'
-    | 'if' '(' expression ')' statement optional__selectionStatement_2
-    | alternative__statement_1 ')' statement
-    | asmStatement
+    : labeledStatement
     | compoundStatement
     | expressionStatement
     | jumpStatement
-    | labeledStatement
+    | asmStatement
+    | 'if' '(' expression ')' statement optional__selectionStatement_2
+    | 'do' statement 'while' '(' expression ')' ';'
+    | alternative__statement_1 ')' statement
     ;
 
 alternative__statement_1
@@ -869,9 +869,9 @@ labeledStatement
     ;
 
 alternative__labeledStatement_2
-    : 'case' constantExpression
+    : Identifier
     | 'default'
-    | Identifier
+    | 'case' constantExpression
     ;
 
 expressionStatement
@@ -949,9 +949,9 @@ kleene_plus__translationUnit_3
     ;
 
 externalDeclaration
-    : ';'
+    : functionDefinition
     | declaration
-    | functionDefinition
+    | ';'
     ;
 
 functionDefinition
@@ -1339,7 +1339,7 @@ Ellipsis
     ;
 
 Identifier
-    : IdentifierNondigit (Digit | IdentifierNondigit)*
+    : IdentifierNondigit (IdentifierNondigit | Digit)*
     ;
 
 fragment
@@ -1360,8 +1360,8 @@ Digit
 
 fragment
 UniversalCharacterName
-    : '\\U' HexQuad HexQuad
-    | '\\u' HexQuad
+    : '\\u' HexQuad
+    | '\\U' HexQuad HexQuad
     ;
 
 fragment
@@ -1370,17 +1370,17 @@ HexQuad
     ;
 
 Constant
-    : CharacterConstant
+    : IntegerConstant
     | FloatingConstant
-    | IntegerConstant
+    | CharacterConstant
     ;
 
 fragment
 IntegerConstant
-    : BinaryConstant
-    | DecimalConstant IntegerSuffix?
-    | HexadecimalConstant IntegerSuffix?
+    : DecimalConstant IntegerSuffix?
     | OctalConstant IntegerSuffix?
+    | HexadecimalConstant IntegerSuffix?
+    | BinaryConstant
     ;
 
 fragment
@@ -1425,10 +1425,10 @@ HexadecimalDigit
 
 fragment
 IntegerSuffix
-    : LongLongSuffix UnsignedSuffix?
-    | LongSuffix UnsignedSuffix?
+    : UnsignedSuffix LongSuffix?
     | UnsignedSuffix LongLongSuffix
-    | UnsignedSuffix LongSuffix?
+    | LongSuffix UnsignedSuffix?
+    | LongLongSuffix UnsignedSuffix?
     ;
 
 fragment
@@ -1443,8 +1443,8 @@ LongSuffix
 
 fragment
 LongLongSuffix
-    : 'LL'
-    | 'll'
+    : 'll'
+    | 'LL'
     ;
 
 fragment
@@ -1455,26 +1455,26 @@ FloatingConstant
 
 fragment
 DecimalFloatingConstant
-    : DigitSequence ExponentPart FloatingSuffix?
-    | FractionalConstant ExponentPart? FloatingSuffix?
+    : FractionalConstant ExponentPart? FloatingSuffix?
+    | DigitSequence ExponentPart FloatingSuffix?
     ;
 
 fragment
 HexadecimalFloatingConstant
-    : HexadecimalPrefix HexadecimalDigitSequence BinaryExponentPart FloatingSuffix?
-    | HexadecimalPrefix HexadecimalFractionalConstant BinaryExponentPart FloatingSuffix?
+    : HexadecimalPrefix HexadecimalFractionalConstant BinaryExponentPart FloatingSuffix?
+    | HexadecimalPrefix HexadecimalDigitSequence BinaryExponentPart FloatingSuffix?
     ;
 
 fragment
 FractionalConstant
-    : DigitSequence '.'
-    | DigitSequence? '.' DigitSequence
+    : DigitSequence? '.' DigitSequence
+    | DigitSequence '.'
     ;
 
 fragment
 ExponentPart
-    : 'E' Sign? DigitSequence
-    | 'e' Sign? DigitSequence
+    : 'e' Sign? DigitSequence
+    | 'E' Sign? DigitSequence
     ;
 
 fragment
@@ -1490,14 +1490,14 @@ DigitSequence
 
 fragment
 HexadecimalFractionalConstant
-    : HexadecimalDigitSequence '.'
-    | HexadecimalDigitSequence? '.' HexadecimalDigitSequence
+    : HexadecimalDigitSequence? '.' HexadecimalDigitSequence
+    | HexadecimalDigitSequence '.'
     ;
 
 fragment
 BinaryExponentPart
-    : 'P' Sign? DigitSequence
-    | 'p' Sign? DigitSequence
+    : 'p' Sign? DigitSequence
+    | 'P' Sign? DigitSequence
     ;
 
 fragment
@@ -1507,18 +1507,18 @@ HexadecimalDigitSequence
 
 fragment
 FloatingSuffix
-    : 'F'
-    | 'L'
-    | 'f'
+    : 'f'
     | 'l'
+    | 'F'
+    | 'L'
     ;
 
 fragment
 CharacterConstant
-    : 'L\'' CCharSequence '\''
-    | 'U\'' CCharSequence '\''
-    | '\'' CCharSequence '\''
+    : '\'' CCharSequence '\''
+    | 'L\'' CCharSequence '\''
     | 'u\'' CCharSequence '\''
+    | 'U\'' CCharSequence '\''
     ;
 
 fragment
@@ -1528,15 +1528,15 @@ CCharSequence
 
 fragment
 CChar
-    : EscapeSequence
-    | ~['\\\r\n]
+    : ~['\\\r\n]
+    | EscapeSequence
     ;
 
 fragment
 EscapeSequence
-    : HexadecimalEscapeSequence
+    : SimpleEscapeSequence
     | OctalEscapeSequence
-    | SimpleEscapeSequence
+    | HexadecimalEscapeSequence
     | UniversalCharacterName
     ;
 
@@ -1563,10 +1563,10 @@ StringLiteral
 
 fragment
 EncodingPrefix
-    : 'L'
-    | 'U'
+    : 'u8'
     | 'u'
-    | 'u8'
+    | 'U'
+    | 'L'
     ;
 
 fragment
@@ -1576,10 +1576,10 @@ SCharSequence
 
 fragment
 SChar
-    : '\\\n'
-    | '\\\r\n'
+    : ~["\\\r\n]
     | EscapeSequence
-    | ~["\\\r\n]
+    | '\\\n'
+    | '\\\r\n'
     ;
 
 ComplexDefine
@@ -1613,8 +1613,8 @@ Whitespace
     ;
 
 Newline
-    : ('\n'
-    | '\r' '\n'?)
+    : ('\r' '\n'?
+    | '\n')
  -> skip
 
     ;

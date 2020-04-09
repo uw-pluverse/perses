@@ -39,7 +39,7 @@ public abstract class AbstractPnfPass {
     if (size == 1) {
       return ImmutableList.of(Iterables.getOnlyElement(alternatives));
     }
-    final HashMap<String, AbstractPersesRuleElement> map = new HashMap<>();
+    final LinkedHashMap<String, AbstractPersesRuleElement> map = new LinkedHashMap<>();
     alternatives.forEach(alt -> map.put(alt.getSourceCode(), alt));
     return map.entrySet().stream()
         .map(Map.Entry::getValue)

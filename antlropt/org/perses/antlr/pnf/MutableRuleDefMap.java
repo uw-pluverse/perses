@@ -1,13 +1,12 @@
 package org.perses.antlr.pnf;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.LinkedHashMultimap;
 import org.perses.antlr.ast.AbstractPersesRuleElement;
 import org.perses.antlr.ast.AstTag;
 import org.perses.antlr.ast.PersesAlternativeBlockAst;
-import org.perses.antlr.ast.RuleNameRegistry;
+import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle;
 
 import java.util.Collection;
 import java.util.Map;
@@ -17,10 +16,10 @@ import java.util.function.BiConsumer;
 import static com.google.common.base.Preconditions.checkArgument;
 
 public final class MutableRuleDefMap {
-  private final LinkedHashMultimap<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement> defMap;
+  private final LinkedHashMultimap<RuleNameHandle, AbstractPersesRuleElement> defMap;
 
   public MutableRuleDefMap(
-      ImmutableSetMultimap<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement> defMap) {
+      ImmutableListMultimap<RuleNameHandle, AbstractPersesRuleElement> defMap) {
     this.defMap = LinkedHashMultimap.create(defMap);
   }
 
@@ -29,8 +28,7 @@ public final class MutableRuleDefMap {
   }
 
   public void validate() {
-    for (Map.Entry<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement> entry :
-        defMap.entries()) {
+    for (Map.Entry<RuleNameHandle, AbstractPersesRuleElement> entry : defMap.entries()) {
       Preconditions.checkState(
           entry.getValue().getTag() != AstTag.ALTERNATIVE_BLOCK,
           "key=%s, value=%s",
@@ -39,16 +37,15 @@ public final class MutableRuleDefMap {
     }
   }
 
-  public ImmutableSetMultimap<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement>
-      toImmutable() {
-    return ImmutableSetMultimap.copyOf(defMap);
+  public ImmutableListMultimap<RuleNameHandle, AbstractPersesRuleElement> toImmutable() {
+    return ImmutableListMultimap.copyOf(defMap);
   }
 
-  public Set<AbstractPersesRuleElement> get(RuleNameRegistry.RuleNameHandle key) {
+  public Set<AbstractPersesRuleElement> get(RuleNameHandle key) {
     return defMap.get(key);
   }
 
-  public Set<Map.Entry<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement>> entries() {
+  public Set<Map.Entry<RuleNameHandle, AbstractPersesRuleElement>> entries() {
     return defMap.entries();
   }
 
@@ -56,13 +53,12 @@ public final class MutableRuleDefMap {
     return defMap.removeAll(key);
   }
 
-  public boolean put(RuleNameRegistry.RuleNameHandle key, AbstractPersesRuleElement value) {
+  public boolean put(RuleNameHandle key, AbstractPersesRuleElement value) {
     checkArgument(!(value instanceof PersesAlternativeBlockAst), "key=%s, value=%s", key, value);
     return defMap.put(key, value);
   }
 
-  public boolean putAndAutoDecomposeAltBlock(
-      RuleNameRegistry.RuleNameHandle key, AbstractPersesRuleElement value) {
+  public boolean putAndAutoDecomposeAltBlock(RuleNameHandle key, AbstractPersesRuleElement value) {
     if (value.getTag() == AstTag.ALTERNATIVE_BLOCK) {
       boolean result = false;
       for (int i = 0, size = value.getChildCount(); i < size; ++i) {
@@ -89,8 +85,7 @@ public final class MutableRuleDefMap {
   }
 
   public void forEach(
-      BiConsumer<? super RuleNameRegistry.RuleNameHandle, ? super AbstractPersesRuleElement>
-          action) {
+      BiConsumer<? super RuleNameHandle, ? super AbstractPersesRuleElement> action) {
     defMap.forEach(action);
   }
 
@@ -98,8 +93,7 @@ public final class MutableRuleDefMap {
     return defMap.isEmpty();
   }
 
-  public boolean putAll(
-      RuleNameRegistry.RuleNameHandle key, Iterable<? extends AbstractPersesRuleElement> values) {
+  public boolean putAll(RuleNameHandle key, Iterable<? extends AbstractPersesRuleElement> values) {
     for (AbstractPersesRuleElement v : values) {
       checkArgument(!(v instanceof PersesAlternativeBlockAst), "key=%s, value=%s", key, v);
     }
@@ -110,7 +104,7 @@ public final class MutableRuleDefMap {
     return defMap.remove(key, value);
   }
 
-  public Set<RuleNameRegistry.RuleNameHandle> keySet() {
+  public Set<RuleNameHandle> keySet() {
     return defMap.keySet();
   }
 }

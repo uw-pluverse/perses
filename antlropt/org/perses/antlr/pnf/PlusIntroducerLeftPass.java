@@ -2,11 +2,18 @@ package org.perses.antlr.pnf;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import org.perses.antlr.RuleType;
-import org.perses.antlr.ast.*;
+import org.perses.antlr.ast.AbstractPersesRuleElement;
+import org.perses.antlr.ast.AstEdit;
+import org.perses.antlr.ast.AstTag;
+import org.perses.antlr.ast.PersesPlusAst;
+import org.perses.antlr.ast.PersesRuleReferenceAst;
+import org.perses.antlr.ast.PersesSequenceAst;
+import org.perses.antlr.ast.PersesStarAst;
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle;
 
 import java.util.ArrayList;
@@ -118,7 +125,7 @@ public class PlusIntroducerLeftPass extends AbstractPnfPass {
         return currentIndexOfStar + bodySequence.size();
       }
       if (bodyToMatch.getTag() == AstTag.RULE_REF) {
-        ImmutableSet<AbstractPersesRuleElement> defs =
+        ImmutableList<AbstractPersesRuleElement> defs =
             defMap.getRuleDefinition(((PersesRuleReferenceAst) bodyToMatch).getRuleNameHandle());
         if (defs.size() != 1) {
           return currentIndexOfStar;
@@ -175,7 +182,7 @@ public class PlusIntroducerLeftPass extends AbstractPnfPass {
 
     @VisibleForTesting
     Optional<PersesStarAst> getStarIfIsKleeneStarRule(RuleNameHandle ruleName) {
-      ImmutableSet<AbstractPersesRuleElement> defs = defMap.getRuleDefinition(ruleName);
+      ImmutableList<AbstractPersesRuleElement> defs = defMap.getRuleDefinition(ruleName);
       if (defs.size() != 1) {
         return Optional.empty();
       }
