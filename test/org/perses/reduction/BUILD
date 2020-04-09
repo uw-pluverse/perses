@@ -14,6 +14,7 @@ java_library(
         "//test/org/perses:truth",
         "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",
+        "@maven//:org_antlr_antlr_runtime",
     ],
 )
 
@@ -219,5 +220,6 @@ java_test(
         "//test/org/perses:truth",
         "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4_runtime",
+        "@maven//:org_antlr_antlr_runtime",
     ],
 )

@@ -9,6 +9,7 @@ DEFAULT_DEPS = [
     "@maven//:com_google_guava_guava",
     "@maven//:com_google_truth_truth",
     "@maven//:org_antlr_antlr4",
+    "@maven//:org_antlr_antlr_runtime",
 ]
 
 java_test(
