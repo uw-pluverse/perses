@@ -155,9 +155,9 @@ realStatement
 
 realSimpleStmt
     : sendStmt
+    | assignment
     | expressionStmt
     | incDecStmt
-    | assignment
     | shortVarDecl
     ;
 
@@ -379,7 +379,7 @@ expression
     | expression ('==' | '!=' | '<' | '<=' | '>' | '>=') expression
     | expression '&&' expression
     | expression '||' expression
-    | expression assign_op expression // ugly: needed to work around the conditional in unaryExpr
+    // | expression assign_op expression // ugly: needed to work around the conditional in unaryExpr
     ;
 
 primaryExpr
@@ -394,7 +394,7 @@ primaryExpr
 
 unaryExpr
     : primaryExpr
-    | ('+' | '-'  | '!' | '^' | '*' | '&' | '<-') unaryExpr ( ('(' expression ')') | {_input.LA(1) != L_PAREN}? )
+    | ('+' | '-'  | '!' | '^' | '*' | '&' | '<-') unaryExpr // ( ('(' expression ')') | {_input.LA(1) != L_PAREN}? )
         // ugly: needed to work around ambiguities in casting and taking a pointer.
         // isn't ANTLR4 supposed to do this for us??
     ;

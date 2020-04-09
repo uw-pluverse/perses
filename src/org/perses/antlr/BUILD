@@ -32,6 +32,7 @@ java_library(
     deps = [
         "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",
+        "@maven//:org_antlr_antlr_runtime",
     ],
 )
 
@@ -52,6 +53,7 @@ java_library(
         "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",
         "@maven//:org_antlr_antlr4_runtime",
+        "@maven//:org_antlr_antlr_runtime",
     ],
 )
 

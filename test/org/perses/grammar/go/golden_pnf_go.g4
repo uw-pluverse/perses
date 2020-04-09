@@ -156,14 +156,7 @@ kleene_star__identifierList_2
 
 type_
     : typeName
-    | arrayType
-    | structType
-    | pointerType
-    | functionType
-    | interfaceType
-    | sliceType
-    | mapType
-    | channelType
+    | typeLit
     | '(' type_ ')'
     ;
 
@@ -188,12 +181,16 @@ kleene_star__expression_1
     ;
 
 expression_2
-    : alternative__expression_7 expression
+    : alternative__expression_6 expression
     ;
 
-alternative__expression_7
-    : assign_op
-    | '*'
+alternative__expression_3
+    : '&&'
+    | '||'
+    ;
+
+alternative__expression_4
+    : '*'
     | '/'
     | '%'
     | '<<'
@@ -204,14 +201,21 @@ alternative__expression_7
     | '-'
     | '|'
     | '^'
-    | '=='
+    ;
+
+alternative__expression_5
+    : '=='
     | '!='
     | '<'
     | '<='
     | '>'
     | '>='
-    | '&&'
-    | '||'
+    | alternative__expression_3
+    ;
+
+alternative__expression_6
+    : alternative__expression_4
+    | alternative__expression_5
     ;
 
 typeSpec
@@ -303,11 +307,10 @@ realStatement
     | fallthroughStmt
     | block
     | ifStmt
+    | switchStmt
     | selectStmt
     | forStmt
     | deferStmt
-    | exprSwitchStmt
-    | typeSwitchStmt
     ;
 
 statement
@@ -328,9 +331,9 @@ optional__simpleStmt_1
 
 realSimpleStmt
     : sendStmt
+    | assignment
     | expressionStmt
     | incDecStmt
-    | assignment
     | shortVarDecl
     ;
 
@@ -390,6 +393,11 @@ optional__ifStmt_4
     : ifStmt_3?
     ;
 
+switchStmt
+    : exprSwitchStmt
+    | typeSwitchStmt
+    ;
+
 selectStmt
     : 'select' '{' kleene_star__selectStmt_1 '}'
     ;
@@ -403,9 +411,9 @@ forStmt
     ;
 
 forStmt_1
-    : forClause
+    : rangeClause
     | expression
-    | rangeClause
+    | forClause
     ;
 
 optional__forStmt_2
@@ -420,16 +428,16 @@ sendStmt
     : expression '<-' expression
     ;
 
+assignment
+    : expressionList assign_op expressionList
+    ;
+
 expressionStmt
     : expression
     ;
 
 incDecStmt
     : expression (PLUS_PLUS | MINUS_MINUS)
-    ;
-
-assignment
-    : expressionList assign_op expressionList
     ;
 
 shortVarDecl
@@ -441,17 +449,17 @@ assign_op
     ;
 
 assign_op_1
-    : '/'
-    | '|'
-    | '&^'
-    | '^'
-    | '&'
-    | '*'
-    | '<<'
-    | '+'
+    : '&^'
     | '-'
+    | '&'
+    | '<<'
+    | '^'
     | '%'
+    | '+'
+    | '|'
     | '>>'
+    | '*'
+    | '/'
     ;
 
 optional__assign_op_2
@@ -520,20 +528,8 @@ primaryExpr_2
     ;
 
 primaryExpr_3
-    : conversion
-    | methodExpr
-    | typeName
-    | compositeLit
-    | functionLit
-    | NIL_LIT
-    | string_
-    | FLOAT_LIT
-    | IMAGINARY_LIT
-    | RUNE_LIT
-    | '(' expression ')'
-    | DECIMAL_LIT
-    | OCTAL_LIT
-    | HEX_LIT
+    : operand
+    | conversion
     ;
 
 typeSwitchCase
@@ -567,8 +563,8 @@ recvStmt
     ;
 
 recvStmt_1
-    : identifierList ':='
-    | expressionList '='
+    : expressionList '='
+    | identifierList ':='
     ;
 
 optional__recvStmt_2
@@ -584,21 +580,23 @@ optional__forClause_1
     ;
 
 rangeClause
-    : optional__rangeClause_2 'range' expression
-    ;
-
-rangeClause_1
-    : expressionList '='
-    | identifierList ':='
-    ;
-
-optional__rangeClause_2
-    : rangeClause_1?
+    : optional__recvStmt_2 'range' expression
     ;
 
 typeName
     : IDENTIFIER
     | qualifiedIdent
+    ;
+
+typeLit
+    : arrayType
+    | structType
+    | pointerType
+    | functionType
+    | interfaceType
+    | sliceType
+    | mapType
+    | channelType
     ;
 
 qualifiedIdent
@@ -681,7 +679,14 @@ optional__parameterDecl_2
 
 unaryExpr
     : primaryExpr
-    | ('+' | '-' | '!' | '^' | '*' | '&' | '<-') unaryExpr ('(' expression ')' | {_input.LA(1) != L_PAREN}?)
+    | ('+' | '-' | '!' | '^' | '*' | '&' | '<-') unaryExpr
+    ;
+
+operand
+    : literal
+    | methodExpr
+    | '(' expression ')'
+    | typeName
     ;
 
 conversion
@@ -724,8 +729,23 @@ optional__arguments_6
     : arguments_5?
     ;
 
+literal
+    : basicLit
+    | compositeLit
+    | functionLit
+    ;
+
 methodExpr
     : elementType DOT IDENTIFIER
+    ;
+
+basicLit
+    : NIL_LIT
+    | integer
+    | string_
+    | FLOAT_LIT
+    | IMAGINARY_LIT
+    | RUNE_LIT
     ;
 
 compositeLit
@@ -734,6 +754,14 @@ compositeLit
 
 functionLit
     : 'func' signature block
+    ;
+
+integer
+    : DECIMAL_LIT
+    | OCTAL_LIT
+    | HEX_LIT
+    | IMAGINARY_LIT
+    | RUNE_LIT
     ;
 
 literalType
