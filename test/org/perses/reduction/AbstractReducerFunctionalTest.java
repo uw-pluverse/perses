@@ -19,14 +19,11 @@ package org.perses.reduction;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.google.common.truth.Truth;
-import org.antlr.runtime.RecognitionException;
 import org.perses.CommandOptions;
 import org.perses.listener.ProgressMonitorForNodeReducer;
 import org.perses.util.AutoDeletableFolder;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 /** The base class for testing the functionality of reducers. */
 public abstract class AbstractReducerFunctionalTest {
@@ -69,8 +66,7 @@ public abstract class AbstractReducerFunctionalTest {
   }
 
   protected void runBenchmarkSubject(
-      String reductionFolder, ReducerAnnotation algorithmType, String expected)
-      throws InterruptedException, ExecutionException, RecognitionException, IOException {
+      String reductionFolder, ReducerAnnotation algorithmType, String expected) {
     test(reductionFolder, "r.sh", "small.c", algorithmType, expected);
   }
 
@@ -80,8 +76,7 @@ public abstract class AbstractReducerFunctionalTest {
   }
 
   protected void runJavaTestSubject(
-      String reductionFolder, ReducerAnnotation algorithmType, String expected)
-      throws IOException, RecognitionException, ExecutionException, InterruptedException {
+      String reductionFolder, ReducerAnnotation algorithmType, String expected) {
     test(reductionFolder, "r.sh", "t.java", algorithmType, expected);
   }
 }

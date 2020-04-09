@@ -16,22 +16,17 @@
  */
 package org.perses.reduction.reducer;
 
-import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.perses.reduction.AbstractReducerFunctionalTest;
-
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 /** Test for the Java version of perses node reducer. */
 @RunWith(JUnit4.class)
 public class PersesNodeReducerJavaFunctionalTest extends AbstractReducerFunctionalTest {
 
   @Test
-  public void testFunctionalTest()
-      throws InterruptedException, ExecutionException, RecognitionException, IOException {
+  public void testFunctionalTest() {
     runJavaTestSubject(
         "test_data/java_helloworld",
         PersesNodePrioritizedDfsReducer.META,

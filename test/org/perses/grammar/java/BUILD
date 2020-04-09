@@ -14,6 +14,5 @@ java_test(
         "@maven//:com_google_truth_truth",
         "@maven//:org_antlr_antlr4",
         "@maven//:org_antlr_antlr4_runtime",
-        "@maven//:org_antlr_antlr_runtime",
     ],
 )

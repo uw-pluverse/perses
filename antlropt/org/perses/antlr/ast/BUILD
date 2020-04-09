@@ -9,7 +9,6 @@ java_library(
         "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",
         "@maven//:org_antlr_antlr4_runtime",
-        "@maven//:org_antlr_antlr_runtime",
         "@maven//:org_checkerframework_checker_qual",
     ],
 )

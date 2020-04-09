@@ -21,7 +21,6 @@ java_test(
         "//test/org/perses/reduction:reducer_functional_test_base",
         "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",
-        "@maven//:org_antlr_antlr_runtime",
     ],
 )
 
@@ -46,7 +45,6 @@ java_test(
         "//test/org/perses/reduction:reducer_functional_test_base",
         "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",
-        "@maven//:org_antlr_antlr_runtime",
     ],
 )
 
@@ -71,7 +69,6 @@ java_test(
         "//test/org/perses/reduction:reducer_functional_test_base",
         "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",
-        "@maven//:org_antlr_antlr_runtime",
     ],
 )
 
@@ -95,7 +92,6 @@ java_test(
         "//test/org/perses/reduction:reducer_functional_test_base",
         "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",
-        "@maven//:org_antlr_antlr_runtime",
     ],
 )
 

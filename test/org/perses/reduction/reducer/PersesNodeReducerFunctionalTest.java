@@ -16,14 +16,10 @@
  */
 package org.perses.reduction.reducer;
 
-import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.perses.reduction.AbstractReducerFunctionalTest;
-
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 /** The functional test for {@link AbstractPersesNodeReducer} */
 @RunWith(JUnit4.class)
@@ -34,8 +30,7 @@ public class PersesNodeReducerFunctionalTest extends AbstractReducerFunctionalTe
     test("delta_1", "int main(){printf(\"world\\n\");}");
   }
 
-  public void debug()
-      throws InterruptedException, ExecutionException, RecognitionException, IOException {
+  public void debug() {
     runBenchmarkSubject(
         "benchmark/gcc-71626",
         PersesNodePrioritizedDfsReducer.META,

@@ -2,8 +2,6 @@ package org.perses.antlr.ast;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
-import org.antlr.runtime.RecognitionException;
-import org.antlr.runtime.tree.Tree;
 import org.antlr.v4.parse.ANTLRParser;
 import org.antlr.v4.tool.ast.ActionAST;
 import org.antlr.v4.tool.ast.AltAST;
@@ -33,12 +31,8 @@ public final class PersesAstBuilder {
   private final SymbolTable symbolTable = new SymbolTable();
 
   public static PersesGrammar loadGrammarFromString(String grammarContent) {
-    try {
-      return new PersesAstBuilder()
-          .buildFromAntlrRootAst(AntlrGrammarParser.parseRawGrammarASTFromString(grammarContent));
-    } catch (RecognitionException e) {
-      throw new AssertionError(e);
-    }
+    return new PersesAstBuilder()
+        .buildFromAntlrRootAst(AntlrGrammarParser.parseRawGrammarASTFromString(grammarContent));
   }
 
   public PersesGrammar buildFromAntlrRootAst(GrammarRootAST root) {
@@ -122,7 +116,7 @@ public final class PersesAstBuilder {
     final ImmutableList.Builder<AbstractPersesRuleDefAst> builder = ImmutableList.builder();
     final int childCount = rulesAst.getChildCount();
     for (int i = 0; i < childCount; ++i) {
-      final Tree childTree = rulesAst.getChild(i);
+      final GrammarAST childTree = (GrammarAST) rulesAst.getChild(i);
       checkState(childTree instanceof RuleAST, "The actual type is %s", childTree.getClass());
       final RuleAST ast = (RuleAST) childTree;
       checkState("RULE".equals(ast.getToken().getText()));
@@ -164,7 +158,7 @@ public final class PersesAstBuilder {
             == ANTLRParser.LEXER_ALT_ACTION) {
       AltAST lexerAltAction = (AltAST) ruleBody.getChild(0);
       checkState(lexerAltAction.getChildCount() == 2);
-      Tree firstChild = lexerAltAction.getChild(0);
+      GrammarAST firstChild = (GrammarAST) lexerAltAction.getChild(0);
       checkState(firstChild instanceof AltAST);
       AbstractPersesRuleElement body = convertSingleAlternative((AltAST) firstChild, symbolTable);
       GrammarAST secondChild = (GrammarAST) lexerAltAction.getChild(1);
@@ -237,7 +231,7 @@ public final class PersesAstBuilder {
     checkArgument(astTokenType == ANTLRParser.LEXER_ALT_ACTION || astTokenType == ANTLRParser.ALT);
     if (astTokenType == ANTLRParser.LEXER_ALT_ACTION) {
       checkArgument(ast.getChildCount() == 2);
-      Tree child = ast.getChild(0);
+      GrammarAST child = (GrammarAST) ast.getChild(0);
       checkArgument(
           child instanceof AltAST && ((AltAST) child).getToken().getType() == ANTLRParser.ALT);
       ast = (AltAST) child;
@@ -338,7 +332,7 @@ public final class PersesAstBuilder {
 
   private static PersesNotAst convertNotAst(NotAST notAST, SymbolTable symbolTable) {
     checkArgument(notAST.getChildCount() == 1);
-    Tree child = notAST.getChild(0);
+    GrammarAST child = (GrammarAST) notAST.getChild(0);
     checkArgument(child instanceof GrammarAST);
     GrammarAST childAst = (GrammarAST) child;
     checkArgument(isTerminalSetAst(childAst));

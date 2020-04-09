@@ -18,7 +18,6 @@ package org.perses.grammar.java;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.flogger.FluentLogger;
-import org.antlr.runtime.RecognitionException;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -412,7 +411,8 @@ public class OptJavaParserTest {
   private static void testOneJavaFile(File testFile) {
     try {
       logger.atInfo().log("Testing %s", testFile);
-      final ParseTree treeByOrig = JAVA_PARSER_FACADE.parseFileWithOrigJavaParser(testFile).getTree();
+      final ParseTree treeByOrig =
+          JAVA_PARSER_FACADE.parseFileWithOrigJavaParser(testFile).getTree();
       final ParseTree treeByOpt = JAVA_PARSER_FACADE.parseFile(testFile).getTree();
       assertThat(TestUtility.extractTokens(treeByOrig))
           .containsExactlyElementsIn(TestUtility.extractTokens(treeByOpt))
@@ -454,8 +454,9 @@ public class OptJavaParserTest {
   }
 
   @Test
-  public void testIntegrityOfOptimizedJava8Parser() throws IOException, RecognitionException {
-    final PersesGrammar persesGrammar = JAVA_PARSER_FACADE.getAntlrGrammar().asCombined().getGrammar();
+  public void testIntegrityOfOptimizedJava8Parser() {
+    final PersesGrammar persesGrammar =
+        JAVA_PARSER_FACADE.getAntlrGrammar().asCombined().getGrammar();
     ImmutableList<String> ruleNames =
         persesGrammar.getRules().stream()
             .map(AbstractPersesRuleDefAst::getRuleNameHandle)

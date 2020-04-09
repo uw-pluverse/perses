@@ -20,7 +20,10 @@ package org.perses.antlr;
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import com.google.common.io.CharStreams;
-import org.antlr.runtime.*;
+import org.antlr.runtime.ANTLRStringStream;
+import org.antlr.runtime.CharStream;
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.ParserRuleReturnScope;
 import org.antlr.v4.Tool;
 import org.antlr.v4.parse.ANTLRLexer;
 import org.antlr.v4.parse.ANTLRParser;
@@ -50,26 +53,29 @@ public class AntlrGrammarParser extends Tool {
     return new AntlrGrammarParser().loadGrammarFromString(content);
   }
 
-  public static GrammarRootAST parseRawGrammarASTFromString(String grammar)
-      throws RecognitionException {
+  public static GrammarRootAST parseRawGrammarASTFromString(String grammar) {
     return parseRawGrammarAST(new ANTLRStringStream(grammar));
   }
 
-  public static GrammarRootAST parseRawGrammarAST(InputStream grammar)
-      throws IOException, RecognitionException {
+  public static GrammarRootAST parseRawGrammarAST(InputStream grammar) throws IOException {
     return parseRawGrammarAST(
         new ANTLRStringStream(
             CharStreams.toString(new InputStreamReader(grammar, Charsets.UTF_8))));
   }
 
-  public static GrammarRootAST parseRawGrammarAST(CharStream in) throws RecognitionException {
+  public static GrammarRootAST parseRawGrammarAST(CharStream in) {
     GrammarASTAdaptor adaptor = new GrammarASTAdaptor(in);
     ANTLRLexer lexer = new ANTLRLexer(in);
     CommonTokenStream tokens = new CommonTokenStream(lexer);
     lexer.tokens = tokens;
     ANTLRParser p = new ANTLRParser(tokens);
     p.setTreeAdaptor(adaptor);
-    ParserRuleReturnScope r = p.grammarSpec();
+    ParserRuleReturnScope r;
+    try {
+      r = p.grammarSpec();
+    } catch (Exception e) {
+      throw new RuntimeException("Fail to parse the char stream.", e);
+    }
     GrammarAST root = (GrammarAST) r.getTree();
     if (root instanceof GrammarRootAST) {
       GrammarRootAST grammarRootAST = (GrammarRootAST) root;

@@ -1,7 +1,6 @@
 package org.perses.antlr.ast;
 
 import com.google.common.collect.ImmutableList;
-import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -10,7 +9,6 @@ import org.perses.antlr.GrammarTestingUtility;
 import org.perses.grammar.c.CParserFacade;
 import org.perses.grammar.java.JavaParserFacade;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +18,7 @@ import static com.google.common.truth.Truth.assertThat;
 public class PersesGrammarTest {
 
   @Test
-  public void test_getGrammarName() throws IOException, RecognitionException {
+  public void test_getGrammarName() {
     PersesGrammar cGrammar = new CParserFacade().getAntlrGrammar().asCombined().getGrammar();
     assertThat(cGrammar.getGrammarName()).isEqualTo("OptC");
     ImmutableList<String> ruleNames =
@@ -36,7 +34,7 @@ public class PersesGrammarTest {
   }
 
   @Test
-  public void test_toSourceCode_c_grammar() throws IOException, RecognitionException {
+  public void test_toSourceCode_c_grammar() {
     PersesGrammar cGrammar = new CParserFacade().getAntlrGrammar().asCombined().getGrammar();
     PersesGrammar grammarRoundback =
         PersesAstBuilder.loadGrammarFromString(cGrammar.getSourceCode());
