@@ -53,6 +53,15 @@ java_test(
 )
 
 java_test(
+    name = "InlineSingleUseAltRulePassTest",
+    srcs = ["InlineSingleUseAltRulePassTest.java"],
+    data = ["//test_data/antlr_grammars"],
+    test_class = "org.perses.antlr.pnf.InlineSingleUseAltRulePassTest",
+    deps = DEFAULT_TEST_DEPS,
+)
+
+
+java_test(
     name = "OptionalIntroducerPassTest",
     srcs = ["OptionalIntroducerPassTest.java"],
     data = ["//test_data/antlr_grammars"],

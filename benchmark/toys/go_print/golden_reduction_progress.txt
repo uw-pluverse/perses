@@ -3,141 +3,141 @@
 The spar tree is the following.
 sourceFile {id=1}
 |___packageClause {id=2,slot_type=packageClause}
-|   |___Token:package {id=329,slot_type=PACKAGE}
-|   |___Token:main {id=330,slot_type=IDENTIFIER}
-|___Token:; {id=328,slot_type=eos}
+|   |___Token:package {id=285,slot_type=PACKAGE}
+|   |___Token:main {id=286,slot_type=IDENTIFIER}
+|___Token:; {id=284,slot_type=eos}
 |___(*) {id=4,slot_type=kleene_star__sourceFile_2}
-|   |___sourceFile_1 {id=319,slot_type=sourceFile_1}
-|       |___importDecl {id=320,slot_type=importDecl}
-|       |   |___Token:import {id=323,slot_type=IMPORT}
-|       |   |___Token:"fmt" {id=327,slot_type=importSpec}
-|       |___Token:; {id=322,slot_type=eos}
+|   |___sourceFile_1 {id=275,slot_type=sourceFile_1}
+|       |___importDecl {id=276,slot_type=importDecl}
+|       |   |___Token:import {id=279,slot_type=IMPORT}
+|       |   |___Token:"fmt" {id=283,slot_type=importSpec}
+|       |___Token:; {id=278,slot_type=eos}
 |___(*) {id=5,slot_type=kleene_star__sourceFile_4}
     |___sourceFile_3 {id=6,slot_type=sourceFile_3}
         |___functionDecl {id=7,slot_type=functionDecl}
         |   |___Token:func {id=10,slot_type=FUNC}
         |   |___Token:main {id=11,slot_type=IDENTIFIER}
-        |   |___parameters {id=316,slot_type=signature}
-        |   |   |___Token:( {id=317,slot_type=L_PAREN}
-        |   |   |___Token:) {id=318,slot_type=R_PAREN}
+        |   |___parameters {id=272,slot_type=signature}
+        |   |   |___Token:( {id=273,slot_type=L_PAREN}
+        |   |   |___Token:) {id=274,slot_type=R_PAREN}
         |   |___(?) {id=13,slot_type=optional__functionDecl_1}
         |       |___block {id=14,slot_type=block}
         |           |___Token:{ {id=15,slot_type=L_CURLY}
         |           |___(?) {id=16,slot_type=optional__block_1}
         |           |   |___(+) {id=19,slot_type=statementList}
         |           |       |___statementList_1 {id=20,slot_type=statementList_1}
-        |           |       |   |___primaryExpr {id=275,slot_type=realStatement}
-        |           |       |   |   |___methodExpr {id=309,slot_type=primaryExpr_3}
-        |           |       |   |   |   |___Token:fmt {id=315,slot_type=elementType}
-        |           |       |   |   |   |___Token:. {id=311,slot_type=DOT}
-        |           |       |   |   |   |___Token:Println {id=312,slot_type=IDENTIFIER}
-        |           |       |   |   |___(*) {id=277,slot_type=kleene_star__primaryExpr_1}
-        |           |       |   |       |___arguments {id=279,slot_type=primaryExpr_2}
-        |           |       |   |           |___Token:( {id=280,slot_type=L_PAREN}
-        |           |       |   |           |___(?) {id=281,slot_type=optional__arguments_6}
-        |           |       |   |           |   |___expression {id=285,slot_type=arguments_5}
-        |           |       |   |           |       |___Token:"go" {id=307,slot_type=unaryExpr}
-        |           |       |   |           |       |___(*) {id=287,slot_type=kleene_star__expression_1}
-        |           |       |   |           |           |___expression_2 {id=288,slot_type=expression_2}
-        |           |       |   |           |               |___Token:+ {id=300,slot_type=alternative__expression_6}
-        |           |       |   |           |               |___Token:"lang" {id=298,slot_type=expression}
-        |           |       |   |           |___Token:) {id=282,slot_type=R_PAREN}
-        |           |       |   |___Token:; {id=270,slot_type=eos}
+        |           |       |   |___primaryExpr {id=239,slot_type=realStatement}
+        |           |       |   |   |___methodExpr {id=265,slot_type=primaryExpr_3}
+        |           |       |   |   |   |___Token:fmt {id=271,slot_type=elementType}
+        |           |       |   |   |   |___Token:. {id=267,slot_type=DOT}
+        |           |       |   |   |   |___Token:Println {id=268,slot_type=IDENTIFIER}
+        |           |       |   |   |___(*) {id=241,slot_type=kleene_star__primaryExpr_1}
+        |           |       |   |       |___arguments {id=243,slot_type=primaryExpr_2}
+        |           |       |   |           |___Token:( {id=244,slot_type=L_PAREN}
+        |           |       |   |           |___(?) {id=245,slot_type=optional__arguments_6}
+        |           |       |   |           |   |___expression {id=249,slot_type=arguments_5}
+        |           |       |   |           |       |___Token:"go" {id=264,slot_type=unaryExpr}
+        |           |       |   |           |       |___(*) {id=251,slot_type=kleene_star__expression_1}
+        |           |       |   |           |           |___expression_2 {id=252,slot_type=expression_2}
+        |           |       |   |           |               |___Token:+ {id=260,slot_type=alternative__expression_6}
+        |           |       |   |           |               |___Token:"lang" {id=259,slot_type=expression}
+        |           |       |   |           |___Token:) {id=246,slot_type=R_PAREN}
+        |           |       |   |___Token:; {id=234,slot_type=eos}
         |           |       |___statementList_1 {id=21,slot_type=statementList_1}
-        |           |       |   |___primaryExpr {id=215,slot_type=realStatement}
-        |           |       |   |   |___methodExpr {id=261,slot_type=primaryExpr_3}
-        |           |       |   |   |   |___Token:fmt {id=267,slot_type=elementType}
-        |           |       |   |   |   |___Token:. {id=263,slot_type=DOT}
-        |           |       |   |   |   |___Token:Println {id=264,slot_type=IDENTIFIER}
-        |           |       |   |   |___(*) {id=217,slot_type=kleene_star__primaryExpr_1}
-        |           |       |   |       |___arguments {id=219,slot_type=primaryExpr_2}
-        |           |       |   |           |___Token:( {id=220,slot_type=L_PAREN}
-        |           |       |   |           |___(?) {id=221,slot_type=optional__arguments_6}
-        |           |       |   |           |   |___expressionList {id=224,slot_type=arguments_5}
-        |           |       |   |           |       |___Token:"1+1 =" {id=259,slot_type=expression}
-        |           |       |   |           |       |___(*) {id=226,slot_type=kleene_star__expressionList_2}
-        |           |       |   |           |           |___expressionList_1 {id=227,slot_type=expressionList_1}
-        |           |       |   |           |               |___Token:, {id=228,slot_type=COMMA}
-        |           |       |   |           |               |___expression {id=229,slot_type=expression}
-        |           |       |   |           |                   |___Token:1 {id=251,slot_type=unaryExpr}
-        |           |       |   |           |                   |___(*) {id=231,slot_type=kleene_star__expression_1}
-        |           |       |   |           |                       |___expression_2 {id=232,slot_type=expression_2}
-        |           |       |   |           |                           |___Token:+ {id=244,slot_type=alternative__expression_6}
-        |           |       |   |           |                           |___Token:1 {id=242,slot_type=expression}
-        |           |       |   |           |___Token:) {id=222,slot_type=R_PAREN}
-        |           |       |   |___Token:; {id=210,slot_type=eos}
+        |           |       |   |___primaryExpr {id=192,slot_type=realStatement}
+        |           |       |   |   |___methodExpr {id=225,slot_type=primaryExpr_3}
+        |           |       |   |   |   |___Token:fmt {id=231,slot_type=elementType}
+        |           |       |   |   |   |___Token:. {id=227,slot_type=DOT}
+        |           |       |   |   |   |___Token:Println {id=228,slot_type=IDENTIFIER}
+        |           |       |   |   |___(*) {id=194,slot_type=kleene_star__primaryExpr_1}
+        |           |       |   |       |___arguments {id=196,slot_type=primaryExpr_2}
+        |           |       |   |           |___Token:( {id=197,slot_type=L_PAREN}
+        |           |       |   |           |___(?) {id=198,slot_type=optional__arguments_6}
+        |           |       |   |           |   |___expressionList {id=201,slot_type=arguments_5}
+        |           |       |   |           |       |___Token:"1+1 =" {id=224,slot_type=expression}
+        |           |       |   |           |       |___(*) {id=203,slot_type=kleene_star__expressionList_2}
+        |           |       |   |           |           |___expressionList_1 {id=204,slot_type=expressionList_1}
+        |           |       |   |           |               |___Token:, {id=205,slot_type=COMMA}
+        |           |       |   |           |               |___expression {id=206,slot_type=expression}
+        |           |       |   |           |                   |___Token:1 {id=219,slot_type=unaryExpr}
+        |           |       |   |           |                   |___(*) {id=208,slot_type=kleene_star__expression_1}
+        |           |       |   |           |                       |___expression_2 {id=209,slot_type=expression_2}
+        |           |       |   |           |                           |___Token:+ {id=216,slot_type=alternative__expression_6}
+        |           |       |   |           |                           |___Token:1 {id=215,slot_type=expression}
+        |           |       |   |           |___Token:) {id=199,slot_type=R_PAREN}
+        |           |       |   |___Token:; {id=187,slot_type=eos}
         |           |       |___statementList_1 {id=22,slot_type=statementList_1}
-        |           |       |   |___primaryExpr {id=157,slot_type=realStatement}
-        |           |       |   |   |___methodExpr {id=201,slot_type=primaryExpr_3}
-        |           |       |   |   |   |___Token:fmt {id=207,slot_type=elementType}
-        |           |       |   |   |   |___Token:. {id=203,slot_type=DOT}
-        |           |       |   |   |   |___Token:Println {id=204,slot_type=IDENTIFIER}
-        |           |       |   |   |___(*) {id=159,slot_type=kleene_star__primaryExpr_1}
-        |           |       |   |       |___arguments {id=161,slot_type=primaryExpr_2}
-        |           |       |   |           |___Token:( {id=162,slot_type=L_PAREN}
-        |           |       |   |           |___(?) {id=163,slot_type=optional__arguments_6}
-        |           |       |   |           |   |___expressionList {id=166,slot_type=arguments_5}
-        |           |       |   |           |       |___Token:"7.0/3.0 =" {id=199,slot_type=expression}
-        |           |       |   |           |       |___(*) {id=168,slot_type=kleene_star__expressionList_2}
-        |           |       |   |           |           |___expressionList_1 {id=169,slot_type=expressionList_1}
-        |           |       |   |           |               |___Token:, {id=170,slot_type=COMMA}
-        |           |       |   |           |               |___expression {id=171,slot_type=expression}
-        |           |       |   |           |                   |___Token:7.0 {id=191,slot_type=unaryExpr}
-        |           |       |   |           |                   |___(*) {id=173,slot_type=kleene_star__expression_1}
-        |           |       |   |           |                       |___expression_2 {id=174,slot_type=expression_2}
-        |           |       |   |           |                           |___Token:/ {id=185,slot_type=alternative__expression_6}
-        |           |       |   |           |                           |___Token:3.0 {id=183,slot_type=expression}
-        |           |       |   |           |___Token:) {id=164,slot_type=R_PAREN}
-        |           |       |   |___Token:; {id=152,slot_type=eos}
+        |           |       |   |___primaryExpr {id=145,slot_type=realStatement}
+        |           |       |   |   |___methodExpr {id=178,slot_type=primaryExpr_3}
+        |           |       |   |   |   |___Token:fmt {id=184,slot_type=elementType}
+        |           |       |   |   |   |___Token:. {id=180,slot_type=DOT}
+        |           |       |   |   |   |___Token:Println {id=181,slot_type=IDENTIFIER}
+        |           |       |   |   |___(*) {id=147,slot_type=kleene_star__primaryExpr_1}
+        |           |       |   |       |___arguments {id=149,slot_type=primaryExpr_2}
+        |           |       |   |           |___Token:( {id=150,slot_type=L_PAREN}
+        |           |       |   |           |___(?) {id=151,slot_type=optional__arguments_6}
+        |           |       |   |           |   |___expressionList {id=154,slot_type=arguments_5}
+        |           |       |   |           |       |___Token:"7.0/3.0 =" {id=177,slot_type=expression}
+        |           |       |   |           |       |___(*) {id=156,slot_type=kleene_star__expressionList_2}
+        |           |       |   |           |           |___expressionList_1 {id=157,slot_type=expressionList_1}
+        |           |       |   |           |               |___Token:, {id=158,slot_type=COMMA}
+        |           |       |   |           |               |___expression {id=159,slot_type=expression}
+        |           |       |   |           |                   |___Token:7.0 {id=172,slot_type=unaryExpr}
+        |           |       |   |           |                   |___(*) {id=161,slot_type=kleene_star__expression_1}
+        |           |       |   |           |                       |___expression_2 {id=162,slot_type=expression_2}
+        |           |       |   |           |                           |___Token:/ {id=169,slot_type=alternative__expression_6}
+        |           |       |   |           |                           |___Token:3.0 {id=168,slot_type=expression}
+        |           |       |   |           |___Token:) {id=152,slot_type=R_PAREN}
+        |           |       |   |___Token:; {id=140,slot_type=eos}
         |           |       |___statementList_1 {id=23,slot_type=statementList_1}
-        |           |       |   |___primaryExpr {id=112,slot_type=realStatement}
-        |           |       |   |   |___methodExpr {id=143,slot_type=primaryExpr_3}
-        |           |       |   |   |   |___Token:fmt {id=149,slot_type=elementType}
-        |           |       |   |   |   |___Token:. {id=145,slot_type=DOT}
-        |           |       |   |   |   |___Token:Println {id=146,slot_type=IDENTIFIER}
-        |           |       |   |   |___(*) {id=114,slot_type=kleene_star__primaryExpr_1}
-        |           |       |   |       |___arguments {id=116,slot_type=primaryExpr_2}
-        |           |       |   |           |___Token:( {id=117,slot_type=L_PAREN}
-        |           |       |   |           |___(?) {id=118,slot_type=optional__arguments_6}
-        |           |       |   |           |   |___expression {id=122,slot_type=arguments_5}
-        |           |       |   |           |       |___Token:true {id=141,slot_type=unaryExpr}
-        |           |       |   |           |       |___(*) {id=124,slot_type=kleene_star__expression_1}
-        |           |       |   |           |           |___expression_2 {id=125,slot_type=expression_2}
-        |           |       |   |           |               |___Token:&& {id=136,slot_type=alternative__expression_6}
-        |           |       |   |           |               |___Token:false {id=133,slot_type=expression}
-        |           |       |   |           |___Token:) {id=119,slot_type=R_PAREN}
-        |           |       |   |___Token:; {id=107,slot_type=eos}
+        |           |       |   |___primaryExpr {id=105,slot_type=realStatement}
+        |           |       |   |   |___methodExpr {id=131,slot_type=primaryExpr_3}
+        |           |       |   |   |   |___Token:fmt {id=137,slot_type=elementType}
+        |           |       |   |   |   |___Token:. {id=133,slot_type=DOT}
+        |           |       |   |   |   |___Token:Println {id=134,slot_type=IDENTIFIER}
+        |           |       |   |   |___(*) {id=107,slot_type=kleene_star__primaryExpr_1}
+        |           |       |   |       |___arguments {id=109,slot_type=primaryExpr_2}
+        |           |       |   |           |___Token:( {id=110,slot_type=L_PAREN}
+        |           |       |   |           |___(?) {id=111,slot_type=optional__arguments_6}
+        |           |       |   |           |   |___expression {id=115,slot_type=arguments_5}
+        |           |       |   |           |       |___Token:true {id=130,slot_type=unaryExpr}
+        |           |       |   |           |       |___(*) {id=117,slot_type=kleene_star__expression_1}
+        |           |       |   |           |           |___expression_2 {id=118,slot_type=expression_2}
+        |           |       |   |           |               |___Token:&& {id=126,slot_type=alternative__expression_6}
+        |           |       |   |           |               |___Token:false {id=125,slot_type=expression}
+        |           |       |   |           |___Token:) {id=112,slot_type=R_PAREN}
+        |           |       |   |___Token:; {id=100,slot_type=eos}
         |           |       |___statementList_1 {id=24,slot_type=statementList_1}
-        |           |       |   |___primaryExpr {id=67,slot_type=realStatement}
-        |           |       |   |   |___methodExpr {id=98,slot_type=primaryExpr_3}
-        |           |       |   |   |   |___Token:fmt {id=104,slot_type=elementType}
-        |           |       |   |   |   |___Token:. {id=100,slot_type=DOT}
-        |           |       |   |   |   |___Token:Println {id=101,slot_type=IDENTIFIER}
-        |           |       |   |   |___(*) {id=69,slot_type=kleene_star__primaryExpr_1}
-        |           |       |   |       |___arguments {id=71,slot_type=primaryExpr_2}
-        |           |       |   |           |___Token:( {id=72,slot_type=L_PAREN}
-        |           |       |   |           |___(?) {id=73,slot_type=optional__arguments_6}
-        |           |       |   |           |   |___expression {id=77,slot_type=arguments_5}
-        |           |       |   |           |       |___Token:true {id=96,slot_type=unaryExpr}
-        |           |       |   |           |       |___(*) {id=79,slot_type=kleene_star__expression_1}
-        |           |       |   |           |           |___expression_2 {id=80,slot_type=expression_2}
-        |           |       |   |           |               |___Token:|| {id=91,slot_type=alternative__expression_6}
-        |           |       |   |           |               |___Token:false {id=88,slot_type=expression}
-        |           |       |   |           |___Token:) {id=74,slot_type=R_PAREN}
-        |           |       |   |___Token:; {id=62,slot_type=eos}
+        |           |       |   |___primaryExpr {id=65,slot_type=realStatement}
+        |           |       |   |   |___methodExpr {id=91,slot_type=primaryExpr_3}
+        |           |       |   |   |   |___Token:fmt {id=97,slot_type=elementType}
+        |           |       |   |   |   |___Token:. {id=93,slot_type=DOT}
+        |           |       |   |   |   |___Token:Println {id=94,slot_type=IDENTIFIER}
+        |           |       |   |   |___(*) {id=67,slot_type=kleene_star__primaryExpr_1}
+        |           |       |   |       |___arguments {id=69,slot_type=primaryExpr_2}
+        |           |       |   |           |___Token:( {id=70,slot_type=L_PAREN}
+        |           |       |   |           |___(?) {id=71,slot_type=optional__arguments_6}
+        |           |       |   |           |   |___expression {id=75,slot_type=arguments_5}
+        |           |       |   |           |       |___Token:true {id=90,slot_type=unaryExpr}
+        |           |       |   |           |       |___(*) {id=77,slot_type=kleene_star__expression_1}
+        |           |       |   |           |           |___expression_2 {id=78,slot_type=expression_2}
+        |           |       |   |           |               |___Token:|| {id=86,slot_type=alternative__expression_6}
+        |           |       |   |           |               |___Token:false {id=85,slot_type=expression}
+        |           |       |   |           |___Token:) {id=72,slot_type=R_PAREN}
+        |           |       |   |___Token:; {id=60,slot_type=eos}
         |           |       |___statementList_1 {id=25,slot_type=statementList_1}
         |           |           |___primaryExpr {id=33,slot_type=realStatement}
-        |           |           |   |___methodExpr {id=53,slot_type=primaryExpr_3}
-        |           |           |   |   |___Token:fmt {id=59,slot_type=elementType}
-        |           |           |   |   |___Token:. {id=55,slot_type=DOT}
-        |           |           |   |   |___Token:Println {id=56,slot_type=IDENTIFIER}
+        |           |           |   |___methodExpr {id=51,slot_type=primaryExpr_3}
+        |           |           |   |   |___Token:fmt {id=57,slot_type=elementType}
+        |           |           |   |   |___Token:. {id=53,slot_type=DOT}
+        |           |           |   |   |___Token:Println {id=54,slot_type=IDENTIFIER}
         |           |           |   |___(*) {id=35,slot_type=kleene_star__primaryExpr_1}
         |           |           |       |___arguments {id=37,slot_type=primaryExpr_2}
         |           |           |           |___Token:( {id=38,slot_type=L_PAREN}
         |           |           |           |___(?) {id=39,slot_type=optional__arguments_6}
         |           |           |           |   |___unaryExpr {id=44,slot_type=arguments_5}
         |           |           |           |       |___Token:! {id=45,slot_type=EXCLAMATION}
-        |           |           |           |       |___Token:true {id=51,slot_type=unaryExpr}
+        |           |           |           |       |___Token:true {id=50,slot_type=unaryExpr}
         |           |           |           |___Token:) {id=40,slot_type=R_PAREN}
         |           |           |___Token:; {id=28,slot_type=eos}
         |           |___Token:} {id=17,slot_type=R_CURLY}
@@ -402,7 +402,7 @@ Failed to reduce node 20
 ------------------------------------------------------------
 
 
-=================Reducing node 275, size=22=================
+=================Reducing node 239, size=22=================
 
 The current best program is the following
 
@@ -438,11 +438,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 275
+Failed to reduce node 239
 ------------------------------------------------------------
 
 
-=================Reducing node 277, size=22=================
+=================Reducing node 241, size=22=================
 
 The current best program is the following
 
@@ -466,11 +466,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 277
+Failed to reduce node 241
 ------------------------------------------------------------
 
 
-=================Reducing node 279, size=22=================
+=================Reducing node 243, size=22=================
 
 The current best program is the following
 
@@ -484,17 +484,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=279}
+    NodeDeletionAction{target_node=243}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 279
+Failed to reduce node 243
 ------------------------------------------------------------
 
 
-=================Reducing node 309, size=22=================
+=================Reducing node 265, size=22=================
 
 The current best program is the following
 
@@ -530,11 +530,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 309
+Failed to reduce node 265
 ------------------------------------------------------------
 
 
-=================Reducing node 281, size=22=================
+=================Reducing node 245, size=22=================
 
 The current best program is the following
 
@@ -559,11 +559,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 281
+Failed to reduce node 245
 ------------------------------------------------------------
 
 
-=================Reducing node 285, size=22=================
+=================Reducing node 249, size=22=================
 
 The current best program is the following
 
@@ -577,7 +577,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=285}
+    NodeDeletionAction{target_node=249}
 ------------------------------------------------------------
 
 
@@ -605,7 +605,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 285
+Failed to reduce node 249
 ------------------------------------------------------------
 
 
@@ -637,7 +637,7 @@ Failed to reduce node 4
 ------------------------------------------------------------
 
 
-=================Reducing node 319, size=22=================
+=================Reducing node 275, size=22=================
 
 The current best program is the following
 
@@ -651,17 +651,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=319}
+    NodeDeletionAction{target_node=275}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 319
+Failed to reduce node 275
 ------------------------------------------------------------
 
 
-=================Reducing node 320, size=22=================
+=================Reducing node 276, size=22=================
 
 The current best program is the following
 
@@ -675,11 +675,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 320
+Failed to reduce node 276
 ------------------------------------------------------------
 
 
-=================Reducing node 316, size=22=================
+=================Reducing node 272, size=22=================
 
 The current best program is the following
 
@@ -693,11 +693,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 316
+Failed to reduce node 272
 ------------------------------------------------------------
 
 
-=================Reducing node 287, size=22=================
+=================Reducing node 251, size=22=================
 
 The current best program is the following
 
@@ -721,11 +721,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 287
+Failed to reduce node 251
 ------------------------------------------------------------
 
 
-=================Reducing node 288, size=22=================
+=================Reducing node 252, size=22=================
 
 The current best program is the following
 
@@ -739,13 +739,13 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=288}
+    NodeDeletionAction{target_node=252}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 288
+Failed to reduce node 252
 ------------------------------------------------------------
 
 
@@ -767,7 +767,7 @@ Failed to reduce node 2
 ------------------------------------------------------------
 
 
-=================Reducing node 330, size=22=================
+=================Reducing node 286, size=22=================
 
 The current best program is the following
 
@@ -781,11 +781,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 330
+Failed to reduce node 286
 ------------------------------------------------------------
 
 
-=================Reducing node 329, size=22=================
+=================Reducing node 285, size=22=================
 
 The current best program is the following
 
@@ -799,11 +799,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 329
+Failed to reduce node 285
 ------------------------------------------------------------
 
 
-=================Reducing node 328, size=22=================
+=================Reducing node 284, size=22=================
 
 The current best program is the following
 
@@ -817,11 +817,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 328
+Failed to reduce node 284
 ------------------------------------------------------------
 
 
-=================Reducing node 327, size=22=================
+=================Reducing node 283, size=22=================
 
 The current best program is the following
 
@@ -835,11 +835,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 327
+Failed to reduce node 283
 ------------------------------------------------------------
 
 
-=================Reducing node 323, size=22=================
+=================Reducing node 279, size=22=================
 
 The current best program is the following
 
@@ -853,11 +853,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 323
+Failed to reduce node 279
 ------------------------------------------------------------
 
 
-=================Reducing node 322, size=22=================
+=================Reducing node 278, size=22=================
 
 The current best program is the following
 
@@ -871,11 +871,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 322
+Failed to reduce node 278
 ------------------------------------------------------------
 
 
-=================Reducing node 318, size=22=================
+=================Reducing node 274, size=22=================
 
 The current best program is the following
 
@@ -889,11 +889,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 318
+Failed to reduce node 274
 ------------------------------------------------------------
 
 
-=================Reducing node 317, size=22=================
+=================Reducing node 273, size=22=================
 
 The current best program is the following
 
@@ -907,11 +907,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 317
+Failed to reduce node 273
 ------------------------------------------------------------
 
 
-=================Reducing node 315, size=22=================
+=================Reducing node 271, size=22=================
 
 The current best program is the following
 
@@ -925,11 +925,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 315
+Failed to reduce node 271
 ------------------------------------------------------------
 
 
-=================Reducing node 312, size=22=================
+=================Reducing node 268, size=22=================
 
 The current best program is the following
 
@@ -943,11 +943,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 312
+Failed to reduce node 268
 ------------------------------------------------------------
 
 
-=================Reducing node 311, size=22=================
+=================Reducing node 267, size=22=================
 
 The current best program is the following
 
@@ -961,11 +961,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 311
+Failed to reduce node 267
 ------------------------------------------------------------
 
 
-=================Reducing node 307, size=22=================
+=================Reducing node 264, size=22=================
 
 The current best program is the following
 
@@ -979,11 +979,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 307
+Failed to reduce node 264
 ------------------------------------------------------------
 
 
-=================Reducing node 300, size=22=================
+=================Reducing node 260, size=22=================
 
 The current best program is the following
 
@@ -997,11 +997,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 300
+Failed to reduce node 260
 ------------------------------------------------------------
 
 
-=================Reducing node 298, size=22=================
+=================Reducing node 259, size=22=================
 
 The current best program is the following
 
@@ -1015,11 +1015,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 298
+Failed to reduce node 259
 ------------------------------------------------------------
 
 
-=================Reducing node 282, size=22=================
+=================Reducing node 246, size=22=================
 
 The current best program is the following
 
@@ -1033,11 +1033,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 282
+Failed to reduce node 246
 ------------------------------------------------------------
 
 
-=================Reducing node 280, size=22=================
+=================Reducing node 244, size=22=================
 
 The current best program is the following
 
@@ -1051,11 +1051,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 280
+Failed to reduce node 244
 ------------------------------------------------------------
 
 
-=================Reducing node 270, size=22=================
+=================Reducing node 234, size=22=================
 
 The current best program is the following
 
@@ -1069,7 +1069,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 270
+Failed to reduce node 234
 ------------------------------------------------------------
 
 
@@ -1449,7 +1449,7 @@ Failed to reduce node 32
 ------------------------------------------------------------
 
 
-=================Reducing node 62, size=22==================
+=================Reducing node 54, size=22==================
 
 The current best program is the following
 
@@ -1483,7 +1483,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 62
+Failed to reduce node 54
 ------------------------------------------------------------
 
 
@@ -1586,7 +1586,7 @@ Failed to reduce node 4
 ------------------------------------------------------------
 
 
-=================Reducing node 72, size=22==================
+=================Reducing node 64, size=22==================
 
 The current best program is the following
 
@@ -1600,17 +1600,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=72}
+    NodeDeletionAction{target_node=64}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 72
+Failed to reduce node 64
 ------------------------------------------------------------
 
 
-=================Reducing node 73, size=22==================
+=================Reducing node 65, size=22==================
 
 The current best program is the following
 
@@ -1624,11 +1624,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 73
+Failed to reduce node 65
 ------------------------------------------------------------
 
 
-=================Reducing node 69, size=22==================
+=================Reducing node 61, size=22==================
 
 The current best program is the following
 
@@ -1642,7 +1642,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 69
+Failed to reduce node 61
 ------------------------------------------------------------
 
 
@@ -1716,96 +1716,6 @@ Failed to reduce node 2
 ------------------------------------------------------------
 
 
-=================Reducing node 83, size=22==================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 83
-------------------------------------------------------------
-
-
-=================Reducing node 82, size=22==================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 82
-------------------------------------------------------------
-
-
-=================Reducing node 81, size=22==================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 81
-------------------------------------------------------------
-
-
-=================Reducing node 80, size=22==================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 80
-------------------------------------------------------------
-
-
-=================Reducing node 76, size=22==================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 76
-------------------------------------------------------------
-
-
 =================Reducing node 75, size=22==================
 
 The current best program is the following
@@ -1824,7 +1734,7 @@ Failed to reduce node 75
 ------------------------------------------------------------
 
 
-=================Reducing node 71, size=22==================
+=================Reducing node 74, size=22==================
 
 The current best program is the following
 
@@ -1838,11 +1748,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 71
+Failed to reduce node 74
 ------------------------------------------------------------
 
 
-=================Reducing node 70, size=22==================
+=================Reducing node 73, size=22==================
 
 The current best program is the following
 
@@ -1856,7 +1766,25 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 70
+Failed to reduce node 73
+------------------------------------------------------------
+
+
+=================Reducing node 72, size=22==================
+
+The current best program is the following
+
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 72
 ------------------------------------------------------------
 
 
@@ -1878,7 +1806,7 @@ Failed to reduce node 68
 ------------------------------------------------------------
 
 
-=================Reducing node 65, size=22==================
+=================Reducing node 67, size=22==================
 
 The current best program is the following
 
@@ -1892,11 +1820,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 65
+Failed to reduce node 67
 ------------------------------------------------------------
 
 
-=================Reducing node 64, size=22==================
+=================Reducing node 63, size=22==================
 
 The current best program is the following
 
@@ -1910,7 +1838,25 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 64
+Failed to reduce node 63
+------------------------------------------------------------
+
+
+=================Reducing node 62, size=22==================
+
+The current best program is the following
+
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 62
 ------------------------------------------------------------
 
 
@@ -1932,6 +1878,42 @@ Failed to reduce node 60
 ------------------------------------------------------------
 
 
+=================Reducing node 57, size=22==================
+
+The current best program is the following
+
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 57
+------------------------------------------------------------
+
+
+=================Reducing node 56, size=22==================
+
+The current best program is the following
+
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 56
+------------------------------------------------------------
+
+
 =================Reducing node 53, size=22==================
 
 The current best program is the following
@@ -1950,7 +1932,7 @@ Failed to reduce node 53
 ------------------------------------------------------------
 
 
-=================Reducing node 51, size=22==================
+=================Reducing node 49, size=22==================
 
 The current best program is the following
 
@@ -1964,7 +1946,25 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 51
+Failed to reduce node 49
+------------------------------------------------------------
+
+
+=================Reducing node 48, size=22==================
+
+The current best program is the following
+
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 48
 ------------------------------------------------------------
 
 

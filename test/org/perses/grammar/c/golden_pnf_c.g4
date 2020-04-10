@@ -2,14 +2,6 @@
 // DO NOT MODIFY.
 grammar PnfC;
 
-primaryExpression
-    : Identifier
-    | Constant
-    | genericSelection
-    | kleene_plus__primaryExpression_1
-    | alternative__primaryExpression_5 ')'
-    ;
-
 kleene_plus__primaryExpression_1
     : StringLiteral+
     ;
@@ -18,18 +10,10 @@ optional__primaryExpression_2
     : '__extension__'?
     ;
 
-alternative__primaryExpression_3
-    : '(' expression
-    | '__builtin_offsetof' '(' typeName ',' unaryExpression
-    ;
-
-alternative__primaryExpression_4
-    : alternative__primaryExpression_3
-    | '__builtin_va_arg' '(' unaryExpression ',' typeName
-    ;
-
 alternative__primaryExpression_5
-    : alternative__primaryExpression_4
+    : '__builtin_va_arg' '(' unaryExpression ',' typeName
+    | '(' expression
+    | '__builtin_offsetof' '(' typeName ',' unaryExpression
     | optional__primaryExpression_2 '(' compoundStatement
     ;
 
@@ -65,11 +49,6 @@ unaryExpression
     | alternative__unaryExpression_3 unaryExpression
     ;
 
-alternative__unaryExpression_1
-    : '++'
-    | '--'
-    ;
-
 alternative__unaryExpression_2
     : '_Alignof'
     | 'sizeof'
@@ -77,7 +56,8 @@ alternative__unaryExpression_2
 
 alternative__unaryExpression_3
     : 'sizeof'
-    | alternative__unaryExpression_1
+    | '++'
+    | '--'
     ;
 
 typeName
@@ -135,7 +115,11 @@ postfixExpression_3
     ;
 
 postfixExpression_4
-    : primaryExpression
+    : Identifier
+    | Constant
+    | genericSelection
+    | kleene_plus__primaryExpression_1
+    | alternative__primaryExpression_5 ')'
     | alternative__postfixExpression_8 '}'
     ;
 
@@ -194,14 +178,10 @@ multiplicativeExpression_2
     : alternative__multiplicativeExpression_4 castExpression
     ;
 
-alternative__multiplicativeExpression_3
-    : '%'
-    | '*'
-    ;
-
 alternative__multiplicativeExpression_4
     : '/'
-    | alternative__multiplicativeExpression_3
+    | '%'
+    | '*'
     ;
 
 additiveExpression
@@ -250,19 +230,11 @@ relationalExpression_2
     : alternative__relationalExpression_5 shiftExpression
     ;
 
-alternative__relationalExpression_3
+alternative__relationalExpression_5
     : '<'
     | '<='
-    ;
-
-alternative__relationalExpression_4
-    : '>'
+    | '>'
     | '>='
-    ;
-
-alternative__relationalExpression_5
-    : alternative__relationalExpression_3
-    | alternative__relationalExpression_4
     ;
 
 equalityExpression
@@ -444,20 +416,21 @@ kleene_star__asmStatement_12
     ;
 
 declarationSpecifier
-    : storageClassSpecifier
-    | typeSpecifier
-    | typeQualifier
-    | functionSpecifier
-    | alignmentSpecifier
-    ;
-
-storageClassSpecifier
     : 'typedef'
     | 'extern'
     | 'static'
     | '_Thread_local'
     | 'auto'
     | 'register'
+    | typeSpecifier
+    | typeQualifier
+    | 'inline'
+    | '_Noreturn'
+    | '__inline__'
+    | '__stdcall'
+    | gccAttributeSpecifier
+    | alignmentSpecifier
+    | '__declspec' '(' Identifier ')'
     ;
 
 typeSpecifier
@@ -492,15 +465,6 @@ typeQualifier
     | 'restrict'
     | 'volatile'
     | '_Atomic'
-    ;
-
-functionSpecifier
-    : 'inline'
-    | '_Noreturn'
-    | '__inline__'
-    | '__stdcall'
-    | gccAttributeSpecifier
-    | '__declspec' '(' Identifier ')'
     ;
 
 alignmentSpecifier
@@ -562,14 +526,9 @@ enumSpecifier
     : 'enum' alternative__enumSpecifier_4
     ;
 
-alternative__enumSpecifier_3
-    : Identifier
-    | optional__structOrUnionSpecifier_1 '{' enumeratorList '}'
-    ;
-
 alternative__enumSpecifier_4
-    : alternative__enumSpecifier_3
-    | optional__structOrUnionSpecifier_1 '{' enumeratorList ',' '}'
+    : Identifier
+    | optional__structOrUnionSpecifier_1 '{' enumeratorList optional__postfixExpression_5 '}'
     ;
 
 typedefName
@@ -586,16 +545,12 @@ structDeclarationList
     ;
 
 structDeclarationList_2
-    : structDeclaration
+    : staticAssertDeclaration
+    | specifierQualifierList optional__structDeclaration_1 ';'
     ;
 
 kleene_plus__structDeclarationList_3
     : structDeclarationList_2+
-    ;
-
-structDeclaration
-    : staticAssertDeclaration
-    | specifierQualifierList optional__structDeclaration_1 ';'
     ;
 
 optional__structDeclaration_1
@@ -712,19 +667,19 @@ alternative__directDeclarator_9
     | parameterTypeList
     ;
 
-alternative__directDeclarator_10
-    : optional__pointer_1 optional__directDeclarator_2
-    | 'static' optional__pointer_1 assignmentExpression
-    ;
-
-alternative__directDeclarator_11
-    : alternative__directDeclarator_10
-    | optional__pointer_1 '*'
-    ;
-
 alternative__directDeclarator_12
-    : alternative__directDeclarator_11
-    | typeQualifierList 'static' assignmentExpression
+    : alternative__directDeclarator_13 assignmentExpression
+    | optional__pointer_1 alternative__directDeclarator_14
+    ;
+
+alternative__directDeclarator_13
+    : 'static' optional__pointer_1
+    | typeQualifierList 'static'
+    ;
+
+alternative__directDeclarator_14
+    : '*'
+    | optional__directDeclarator_2
     ;
 
 gccDeclaratorExtension
@@ -848,26 +803,17 @@ directAbstractDeclarator_14
     | '[' alternative__directAbstractDeclarator_17 ']'
     ;
 
-alternative__directAbstractDeclarator_15
-    : '*'
-    | 'static' optional__pointer_1 assignmentExpression
-    ;
-
-alternative__directAbstractDeclarator_16
-    : alternative__directAbstractDeclarator_15
-    | optional__pointer_1 optional__directDeclarator_2
-    ;
-
 alternative__directAbstractDeclarator_17
-    : alternative__directAbstractDeclarator_16
-    | typeQualifierList 'static' assignmentExpression
+    : '*'
+    | optional__pointer_1 optional__directDeclarator_2
+    | alternative__directDeclarator_13 assignmentExpression
     ;
 
 alternative__directAbstractDeclarator_18
-    : alternative__directAbstractDeclarator_22 ')' kleene_star__declarator_2
+    : alternative__directAbstractDeclarator_23 ')' kleene_star__declarator_2
     ;
 
-alternative__directAbstractDeclarator_22
+alternative__directAbstractDeclarator_23
     : abstractDeclarator
     | optional__directAbstractDeclarator_5
     ;
@@ -881,49 +827,47 @@ designatorList
     ;
 
 designatorList_2
-    : designator
+    : '[' constantExpression ']'
+    | '.' Identifier
     ;
 
 kleene_plus__designatorList_3
     : designatorList_2+
     ;
 
-designator
-    : '[' constantExpression ']'
-    | '.' Identifier
-    ;
-
 statement
     : labeledStatement
     | compoundStatement
     | expressionStatement
-    | selectionStatement
-    | iterationStatement
     | jumpStatement
     | asmStatement
+    | 'if' '(' expression ')' statement optional__selectionStatement_2
+    | 'do' statement 'while' '(' expression ')' ';'
+    | alternative__statement_1 ')' statement
+    ;
+
+alternative__statement_1
+    : 'for' '(' alternative__iterationStatement_6
+    | alternative__statement_2 '(' expression
+    ;
+
+alternative__statement_2
+    : 'switch'
+    | 'while'
     ;
 
 labeledStatement
     : alternative__labeledStatement_2 ':' statement
     ;
 
-alternative__labeledStatement_1
-    : 'default'
-    | 'case' constantExpression
-    ;
-
 alternative__labeledStatement_2
     : Identifier
-    | alternative__labeledStatement_1
+    | 'default'
+    | 'case' constantExpression
     ;
 
 expressionStatement
     : optional__postfixExpression_1 ';'
-    ;
-
-selectionStatement
-    : 'switch' '(' expression ')' statement
-    | 'if' '(' expression ')' statement optional__selectionStatement_2
     ;
 
 selectionStatement_1
@@ -934,18 +878,8 @@ optional__selectionStatement_2
     : selectionStatement_1?
     ;
 
-iterationStatement
-    : 'do' statement 'while' '(' expression ')' ';'
-    | alternative__iterationStatement_7 ')' statement
-    ;
-
 alternative__iterationStatement_6
     : alternative__iterationStatement_8 optional__postfixExpression_1 ';' optional__postfixExpression_1
-    ;
-
-alternative__iterationStatement_7
-    : 'for' '(' alternative__iterationStatement_6
-    | 'while' '(' expression
     ;
 
 alternative__iterationStatement_8
@@ -957,24 +891,16 @@ jumpStatement
     : alternative__jumpStatement_5 ';'
     ;
 
-alternative__jumpStatement_2
-    : 'break'
-    | 'continue'
-    ;
-
 alternative__jumpStatement_3
     : Identifier
     | unaryExpression
     ;
 
-alternative__jumpStatement_4
-    : 'goto' alternative__jumpStatement_3
-    | 'return' optional__postfixExpression_1
-    ;
-
 alternative__jumpStatement_5
-    : alternative__jumpStatement_2
-    | alternative__jumpStatement_4
+    : 'break'
+    | 'continue'
+    | 'goto' alternative__jumpStatement_3
+    | 'return' optional__postfixExpression_1
     ;
 
 blockItemList
@@ -982,16 +908,12 @@ blockItemList
     ;
 
 blockItemList_2
-    : blockItem
+    : declaration
+    | statement
     ;
 
 kleene_plus__blockItemList_3
     : blockItemList_2+
-    ;
-
-blockItem
-    : declaration
-    | statement
     ;
 
 compilationUnit
@@ -1007,17 +929,13 @@ translationUnit
     ;
 
 translationUnit_2
-    : externalDeclaration
+    : functionDefinition
+    | declaration
+    | ';'
     ;
 
 kleene_plus__translationUnit_3
     : translationUnit_2+
-    ;
-
-externalDeclaration
-    : functionDefinition
-    | declaration
-    | ';'
     ;
 
 functionDefinition
@@ -1654,7 +1572,7 @@ ComplexDefine
     ;
 
 AsmBlock
-    : 'asm' '{' (~['}'])* '}' -> skip
+    : 'asm' '{' (~[}])* '}' -> skip
 
     ;
 

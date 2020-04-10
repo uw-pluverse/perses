@@ -156,7 +156,14 @@ kleene_star__identifierList_2
 
 type_
     : typeName
-    | typeLit
+    | arrayType
+    | structType
+    | pointerType
+    | functionType
+    | interfaceType
+    | sliceType
+    | mapType
+    | channelType
     | '(' type_ ')'
     ;
 
@@ -184,12 +191,7 @@ expression_2
     : alternative__expression_6 expression
     ;
 
-alternative__expression_3
-    : '&&'
-    | '||'
-    ;
-
-alternative__expression_4
+alternative__expression_6
     : '*'
     | '/'
     | '%'
@@ -201,21 +203,14 @@ alternative__expression_4
     | '-'
     | '|'
     | '^'
-    ;
-
-alternative__expression_5
-    : '=='
+    | '=='
     | '!='
     | '<'
     | '<='
     | '>'
     | '>='
-    | alternative__expression_3
-    ;
-
-alternative__expression_6
-    : alternative__expression_4
-    | alternative__expression_5
+    | '&&'
+    | '||'
     ;
 
 typeSpec
@@ -307,7 +302,8 @@ realStatement
     | fallthroughStmt
     | block
     | ifStmt
-    | switchStmt
+    | exprSwitchStmt
+    | typeSwitchStmt
     | selectStmt
     | forStmt
     | deferStmt
@@ -391,11 +387,6 @@ ifStmt_3
 
 optional__ifStmt_4
     : ifStmt_3?
-    ;
-
-switchStmt
-    : exprSwitchStmt
-    | typeSwitchStmt
     ;
 
 selectStmt
@@ -528,8 +519,20 @@ primaryExpr_2
     ;
 
 primaryExpr_3
-    : operand
+    : NIL_LIT
+    | DECIMAL_LIT
+    | OCTAL_LIT
+    | HEX_LIT
+    | IMAGINARY_LIT
+    | RUNE_LIT
+    | string_
+    | FLOAT_LIT
+    | compositeLit
+    | functionLit
+    | methodExpr
     | conversion
+    | typeName
+    | '(' expression ')'
     ;
 
 typeSwitchCase
@@ -586,17 +589,6 @@ rangeClause
 typeName
     : IDENTIFIER
     | qualifiedIdent
-    ;
-
-typeLit
-    : arrayType
-    | structType
-    | pointerType
-    | functionType
-    | interfaceType
-    | sliceType
-    | mapType
-    | channelType
     ;
 
 qualifiedIdent
@@ -682,13 +674,6 @@ unaryExpr
     | ('+' | '-' | '!' | '^' | '*' | '&' | '<-') unaryExpr
     ;
 
-operand
-    : literal
-    | methodExpr
-    | '(' expression ')'
-    | typeName
-    ;
-
 conversion
     : type_ '(' expression optional__conversion_1 ')'
     ;
@@ -729,23 +714,8 @@ optional__arguments_6
     : arguments_5?
     ;
 
-literal
-    : basicLit
-    | compositeLit
-    | functionLit
-    ;
-
 methodExpr
     : elementType DOT IDENTIFIER
-    ;
-
-basicLit
-    : NIL_LIT
-    | integer
-    | string_
-    | FLOAT_LIT
-    | IMAGINARY_LIT
-    | RUNE_LIT
     ;
 
 compositeLit
@@ -754,14 +724,6 @@ compositeLit
 
 functionLit
     : 'func' signature block
-    ;
-
-integer
-    : DECIMAL_LIT
-    | OCTAL_LIT
-    | HEX_LIT
-    | IMAGINARY_LIT
-    | RUNE_LIT
     ;
 
 literalType

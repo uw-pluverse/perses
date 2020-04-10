@@ -899,7 +899,7 @@ ComplexDefine
  */
 AsmBlock
     :   'asm' // ~['{']*
-        '{' ~['}']* '}'
+        '{' ~[}]* '}'
 	-> skip
     ;
 	

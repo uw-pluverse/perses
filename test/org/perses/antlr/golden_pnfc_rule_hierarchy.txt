@@ -22,7 +22,6 @@ additiveExpression
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         unaryExpression
 alternative__alignmentSpecifier_1
     epsilonable: false
@@ -51,7 +50,6 @@ alternative__alignmentSpecifier_1
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         relationalExpression
         shiftExpression
         specifierQualifierList
@@ -61,53 +59,16 @@ alternative__alignmentSpecifier_1
         typeSpecifier
         typedefName
         unaryExpression
-alternative__directAbstractDeclarator_16
-    epsilonable: true
-    immediate sub-rule names:
-        alternative__directAbstractDeclarator_15
-        optional__directDeclarator_2
-        optional__pointer_1
-    transitive sub-rule names:
-        Constant
-        Identifier
-        StringLiteral
-        additiveExpression
-        alternative__directAbstractDeclarator_15
-        andExpression
-        assignmentExpression
-        castExpression
-        conditionalExpression
-        equalityExpression
-        exclusiveOrExpression
-        genericSelection
-        inclusiveOrExpression
-        kleene_plus__primaryExpression_1
-        kleene_plus__typeQualifierList_3
-        logicalAndExpression
-        logicalOrExpression
-        multiplicativeExpression
-        optional__directDeclarator_2
-        optional__pointer_1
-        postfixExpression
-        postfixExpression_4
-        primaryExpression
-        relationalExpression
-        shiftExpression
-        typeQualifier
-        typeQualifierList
-        typeQualifierList_2
-        unaryExpression
 alternative__directAbstractDeclarator_17
     epsilonable: true
     immediate sub-rule names:
-        alternative__directAbstractDeclarator_16
+        optional__directDeclarator_2
+        optional__pointer_1
     transitive sub-rule names:
         Constant
         Identifier
         StringLiteral
         additiveExpression
-        alternative__directAbstractDeclarator_15
-        alternative__directAbstractDeclarator_16
         andExpression
         assignmentExpression
         castExpression
@@ -125,14 +86,13 @@ alternative__directAbstractDeclarator_17
         optional__pointer_1
         postfixExpression
         postfixExpression_4
-        primaryExpression
         relationalExpression
         shiftExpression
         typeQualifier
         typeQualifierList
         typeQualifierList_2
         unaryExpression
-alternative__directAbstractDeclarator_22
+alternative__directAbstractDeclarator_23
     epsilonable: true
     immediate sub-rule names:
         abstractDeclarator
@@ -148,7 +108,6 @@ alternative__directAbstractDeclarator_22
         directAbstractDeclarator
         directAbstractDeclarator_14
         enumSpecifier
-        functionSpecifier
         gccAttributeSpecifier
         kleene_plus__declarationSpecifiers_1
         optional__directAbstractDeclarator_5
@@ -156,90 +115,21 @@ alternative__directAbstractDeclarator_22
         parameterList
         parameterTypeList
         pointer
-        storageClassSpecifier
         structOrUnionSpecifier
         typeQualifier
         typeSpecifier
         typedefName
-alternative__directDeclarator_10
-    epsilonable: true
-    immediate sub-rule names:
-        optional__directDeclarator_2
-        optional__pointer_1
-    transitive sub-rule names:
-        Constant
-        Identifier
-        StringLiteral
-        additiveExpression
-        andExpression
-        assignmentExpression
-        castExpression
-        conditionalExpression
-        equalityExpression
-        exclusiveOrExpression
-        genericSelection
-        inclusiveOrExpression
-        kleene_plus__primaryExpression_1
-        kleene_plus__typeQualifierList_3
-        logicalAndExpression
-        logicalOrExpression
-        multiplicativeExpression
-        optional__directDeclarator_2
-        optional__pointer_1
-        postfixExpression
-        postfixExpression_4
-        primaryExpression
-        relationalExpression
-        shiftExpression
-        typeQualifier
-        typeQualifierList
-        typeQualifierList_2
-        unaryExpression
-alternative__directDeclarator_11
-    epsilonable: true
-    immediate sub-rule names:
-        alternative__directDeclarator_10
-    transitive sub-rule names:
-        Constant
-        Identifier
-        StringLiteral
-        additiveExpression
-        alternative__directDeclarator_10
-        andExpression
-        assignmentExpression
-        castExpression
-        conditionalExpression
-        equalityExpression
-        exclusiveOrExpression
-        genericSelection
-        inclusiveOrExpression
-        kleene_plus__primaryExpression_1
-        kleene_plus__typeQualifierList_3
-        logicalAndExpression
-        logicalOrExpression
-        multiplicativeExpression
-        optional__directDeclarator_2
-        optional__pointer_1
-        postfixExpression
-        postfixExpression_4
-        primaryExpression
-        relationalExpression
-        shiftExpression
-        typeQualifier
-        typeQualifierList
-        typeQualifierList_2
-        unaryExpression
 alternative__directDeclarator_12
     epsilonable: true
     immediate sub-rule names:
-        alternative__directDeclarator_11
+        alternative__directDeclarator_14
+        optional__pointer_1
     transitive sub-rule names:
         Constant
         Identifier
         StringLiteral
         additiveExpression
-        alternative__directDeclarator_10
-        alternative__directDeclarator_11
+        alternative__directDeclarator_14
         andExpression
         assignmentExpression
         castExpression
@@ -257,12 +147,38 @@ alternative__directDeclarator_12
         optional__pointer_1
         postfixExpression
         postfixExpression_4
-        primaryExpression
         relationalExpression
         shiftExpression
         typeQualifier
         typeQualifierList
         typeQualifierList_2
+        unaryExpression
+alternative__directDeclarator_14
+    epsilonable: true
+    immediate sub-rule names:
+        optional__directDeclarator_2
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        assignmentExpression
+        castExpression
+        conditionalExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_1
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        optional__directDeclarator_2
+        postfixExpression
+        postfixExpression_4
+        relationalExpression
+        shiftExpression
         unaryExpression
 alternative__directDeclarator_9
     epsilonable: true
@@ -276,7 +192,6 @@ alternative__directDeclarator_9
         declarationSpecifier
         declarationSpecifiers
         enumSpecifier
-        functionSpecifier
         gccAttributeSpecifier
         identifierList
         kleene_plus__declarationSpecifiers_1
@@ -284,24 +199,16 @@ alternative__directDeclarator_9
         parameterDeclaration
         parameterList
         parameterTypeList
-        storageClassSpecifier
         structOrUnionSpecifier
         typeQualifier
         typeSpecifier
         typedefName
-alternative__enumSpecifier_3
-    epsilonable: false
-    immediate sub-rule names:
-        Identifier
-    transitive sub-rule names:
-        Identifier
 alternative__enumSpecifier_4
     epsilonable: false
     immediate sub-rule names:
-        alternative__enumSpecifier_3
+        Identifier
     transitive sub-rule names:
         Identifier
-        alternative__enumSpecifier_3
 alternative__genericAssociation_1
     epsilonable: false
     immediate sub-rule names:
@@ -338,30 +245,13 @@ alternative__jumpStatement_3
         kleene_plus__primaryExpression_1
         postfixExpression
         postfixExpression_4
-        primaryExpression
         unaryExpression
-alternative__jumpStatement_5
-    epsilonable: false
-    immediate sub-rule names:
-        alternative__jumpStatement_2
-        alternative__jumpStatement_4
-    transitive sub-rule names:
-        alternative__jumpStatement_2
-        alternative__jumpStatement_4
 alternative__labeledStatement_2
     epsilonable: false
     immediate sub-rule names:
         Identifier
-        alternative__labeledStatement_1
     transitive sub-rule names:
         Identifier
-        alternative__labeledStatement_1
-alternative__multiplicativeExpression_4
-    epsilonable: false
-    immediate sub-rule names:
-        alternative__multiplicativeExpression_3
-    transitive sub-rule names:
-        alternative__multiplicativeExpression_3
 alternative__parameterDeclaration_2
     epsilonable: true
     immediate sub-rule names:
@@ -392,27 +282,6 @@ alternative__pointer_5
         typeQualifier
         typeQualifierList
         typeQualifierList_2
-alternative__primaryExpression_4
-    epsilonable: false
-    immediate sub-rule names:
-        alternative__primaryExpression_3
-    transitive sub-rule names:
-        alternative__primaryExpression_3
-alternative__primaryExpression_5
-    epsilonable: false
-    immediate sub-rule names:
-        alternative__primaryExpression_4
-    transitive sub-rule names:
-        alternative__primaryExpression_3
-        alternative__primaryExpression_4
-alternative__relationalExpression_5
-    epsilonable: false
-    immediate sub-rule names:
-        alternative__relationalExpression_3
-        alternative__relationalExpression_4
-    transitive sub-rule names:
-        alternative__relationalExpression_3
-        alternative__relationalExpression_4
 alternative__specifierQualifierList_3
     epsilonable: false
     immediate sub-rule names:
@@ -432,12 +301,6 @@ alternative__structOrUnionSpecifier_2
         Identifier
     transitive sub-rule names:
         Identifier
-alternative__unaryExpression_3
-    epsilonable: false
-    immediate sub-rule names:
-        alternative__unaryExpression_1
-    transitive sub-rule names:
-        alternative__unaryExpression_1
 andExpression
     epsilonable: false
     immediate sub-rule names:
@@ -454,7 +317,6 @@ andExpression
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         relationalExpression
         shiftExpression
         unaryExpression
@@ -479,7 +341,6 @@ asmStatement_5
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         relationalExpression
         shiftExpression
         unaryExpression
@@ -505,58 +366,36 @@ assignmentExpression
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         relationalExpression
         shiftExpression
         unaryExpression
-blockItem
-    epsilonable: false
-    immediate sub-rule names:
-        declaration
-        statement
-    transitive sub-rule names:
-        asmStatement
-        compoundStatement
-        declaration
-        expressionStatement
-        iterationStatement
-        jumpStatement
-        labeledStatement
-        selectionStatement
-        statement
-        staticAssertDeclaration
 blockItemList
     epsilonable: false
     immediate sub-rule names:
         kleene_plus__blockItemList_3
     transitive sub-rule names:
         asmStatement
-        blockItem
         blockItemList_2
         compoundStatement
         declaration
         expressionStatement
-        iterationStatement
         jumpStatement
         kleene_plus__blockItemList_3
         labeledStatement
-        selectionStatement
         statement
         staticAssertDeclaration
 blockItemList_2
     epsilonable: false
     immediate sub-rule names:
-        blockItem
+        declaration
+        statement
     transitive sub-rule names:
         asmStatement
-        blockItem
         compoundStatement
         declaration
         expressionStatement
-        iterationStatement
         jumpStatement
         labeledStatement
-        selectionStatement
         statement
         staticAssertDeclaration
 castExpression
@@ -571,7 +410,6 @@ castExpression
         kleene_plus__primaryExpression_1
         postfixExpression
         postfixExpression_4
-        primaryExpression
         unaryExpression
 conditionalExpression
     epsilonable: false
@@ -594,7 +432,6 @@ conditionalExpression
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         relationalExpression
         shiftExpression
         unaryExpression
@@ -620,7 +457,6 @@ constantExpression
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         relationalExpression
         shiftExpression
         unaryExpression
@@ -654,8 +490,7 @@ declarationSpecifier
     epsilonable: false
     immediate sub-rule names:
         alignmentSpecifier
-        functionSpecifier
-        storageClassSpecifier
+        gccAttributeSpecifier
         typeQualifier
         typeSpecifier
     transitive sub-rule names:
@@ -663,9 +498,7 @@ declarationSpecifier
         alignmentSpecifier
         atomicTypeSpecifier
         enumSpecifier
-        functionSpecifier
         gccAttributeSpecifier
-        storageClassSpecifier
         structOrUnionSpecifier
         typeQualifier
         typeSpecifier
@@ -680,10 +513,8 @@ declarationSpecifiers
         atomicTypeSpecifier
         declarationSpecifier
         enumSpecifier
-        functionSpecifier
         gccAttributeSpecifier
         kleene_plus__declarationSpecifiers_1
-        storageClassSpecifier
         structOrUnionSpecifier
         typeQualifier
         typeSpecifier
@@ -701,15 +532,8 @@ designatorList
     immediate sub-rule names:
         kleene_plus__designatorList_3
     transitive sub-rule names:
-        designator
         designatorList_2
         kleene_plus__designatorList_3
-designatorList_2
-    epsilonable: false
-    immediate sub-rule names:
-        designator
-    transitive sub-rule names:
-        designator
 directAbstractDeclarator
     epsilonable: false
     immediate sub-rule names:
@@ -759,7 +583,6 @@ equalityExpression
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         relationalExpression
         shiftExpression
         unaryExpression
@@ -780,7 +603,6 @@ exclusiveOrExpression
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         relationalExpression
         shiftExpression
         unaryExpression
@@ -807,26 +629,9 @@ expression
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         relationalExpression
         shiftExpression
         unaryExpression
-externalDeclaration
-    epsilonable: false
-    immediate sub-rule names:
-        declaration
-        functionDefinition
-    transitive sub-rule names:
-        asmStatement
-        declaration
-        functionDefinition
-        staticAssertDeclaration
-functionSpecifier
-    epsilonable: false
-    immediate sub-rule names:
-        gccAttributeSpecifier
-    transitive sub-rule names:
-        gccAttributeSpecifier
 gccDeclaratorExtension
     epsilonable: false
     immediate sub-rule names:
@@ -863,7 +668,6 @@ inclusiveOrExpression
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         relationalExpression
         shiftExpression
         unaryExpression
@@ -909,7 +713,6 @@ initializer
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         relationalExpression
         shiftExpression
         unaryExpression
@@ -937,7 +740,6 @@ initializerList
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         relationalExpression
         shiftExpression
         unaryExpression
@@ -947,15 +749,12 @@ kleene_plus__blockItemList_3
         blockItemList_2
     transitive sub-rule names:
         asmStatement
-        blockItem
         blockItemList_2
         compoundStatement
         declaration
         expressionStatement
-        iterationStatement
         jumpStatement
         labeledStatement
-        selectionStatement
         statement
         staticAssertDeclaration
 kleene_plus__declarationList_3
@@ -977,9 +776,7 @@ kleene_plus__declarationSpecifiers_1
         atomicTypeSpecifier
         declarationSpecifier
         enumSpecifier
-        functionSpecifier
         gccAttributeSpecifier
-        storageClassSpecifier
         structOrUnionSpecifier
         typeQualifier
         typeSpecifier
@@ -989,7 +786,6 @@ kleene_plus__designatorList_3
     immediate sub-rule names:
         designatorList_2
     transitive sub-rule names:
-        designator
         designatorList_2
 kleene_plus__primaryExpression_1
     epsilonable: false
@@ -1003,7 +799,6 @@ kleene_plus__structDeclarationList_3
         structDeclarationList_2
     transitive sub-rule names:
         staticAssertDeclaration
-        structDeclaration
         structDeclarationList_2
 kleene_plus__translationUnit_3
     epsilonable: false
@@ -1012,7 +807,6 @@ kleene_plus__translationUnit_3
     transitive sub-rule names:
         asmStatement
         declaration
-        externalDeclaration
         functionDefinition
         staticAssertDeclaration
         translationUnit_2
@@ -1193,7 +987,6 @@ logicalAndExpression
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         relationalExpression
         shiftExpression
         unaryExpression
@@ -1217,7 +1010,6 @@ logicalOrExpression
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         relationalExpression
         shiftExpression
         unaryExpression
@@ -1234,7 +1026,6 @@ multiplicativeExpression
         kleene_plus__primaryExpression_1
         postfixExpression
         postfixExpression_4
-        primaryExpression
         unaryExpression
 optional__asmStatement_2
     epsilonable: true
@@ -1264,7 +1055,6 @@ optional__asmStatement_6
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         relationalExpression
         shiftExpression
         unaryExpression
@@ -1275,7 +1065,6 @@ optional__compilationUnit_1
     transitive sub-rule names:
         asmStatement
         declaration
-        externalDeclaration
         functionDefinition
         kleene_plus__translationUnit_3
         staticAssertDeclaration
@@ -1287,17 +1076,14 @@ optional__compoundStatement_1
         blockItemList
     transitive sub-rule names:
         asmStatement
-        blockItem
         blockItemList
         blockItemList_2
         compoundStatement
         declaration
         expressionStatement
-        iterationStatement
         jumpStatement
         kleene_plus__blockItemList_3
         labeledStatement
-        selectionStatement
         statement
         staticAssertDeclaration
 optional__conditionalExpression_2
@@ -1335,13 +1121,11 @@ optional__directAbstractDeclarator_5
         declarationSpecifier
         declarationSpecifiers
         enumSpecifier
-        functionSpecifier
         gccAttributeSpecifier
         kleene_plus__declarationSpecifiers_1
         parameterDeclaration
         parameterList
         parameterTypeList
-        storageClassSpecifier
         structOrUnionSpecifier
         typeQualifier
         typeSpecifier
@@ -1369,7 +1153,6 @@ optional__directDeclarator_2
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         relationalExpression
         shiftExpression
         unaryExpression
@@ -1397,10 +1180,8 @@ optional__functionDefinition_1
         declarationSpecifier
         declarationSpecifiers
         enumSpecifier
-        functionSpecifier
         gccAttributeSpecifier
         kleene_plus__declarationSpecifiers_1
-        storageClassSpecifier
         structOrUnionSpecifier
         typeQualifier
         typeSpecifier
@@ -1473,7 +1254,6 @@ optional__postfixExpression_1
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         relationalExpression
         shiftExpression
         unaryExpression
@@ -1544,10 +1324,8 @@ parameterDeclaration
         declarationSpecifier
         declarationSpecifiers
         enumSpecifier
-        functionSpecifier
         gccAttributeSpecifier
         kleene_plus__declarationSpecifiers_1
-        storageClassSpecifier
         structOrUnionSpecifier
         typeQualifier
         typeSpecifier
@@ -1563,11 +1341,9 @@ parameterList
         declarationSpecifier
         declarationSpecifiers
         enumSpecifier
-        functionSpecifier
         gccAttributeSpecifier
         kleene_plus__declarationSpecifiers_1
         parameterDeclaration
-        storageClassSpecifier
         structOrUnionSpecifier
         typeQualifier
         typeSpecifier
@@ -1583,12 +1359,10 @@ parameterTypeList
         declarationSpecifier
         declarationSpecifiers
         enumSpecifier
-        functionSpecifier
         gccAttributeSpecifier
         kleene_plus__declarationSpecifiers_1
         parameterDeclaration
         parameterList
-        storageClassSpecifier
         structOrUnionSpecifier
         typeQualifier
         typeSpecifier
@@ -1610,19 +1384,7 @@ postfixExpression
         genericSelection
         kleene_plus__primaryExpression_1
         postfixExpression_4
-        primaryExpression
 postfixExpression_4
-    epsilonable: false
-    immediate sub-rule names:
-        primaryExpression
-    transitive sub-rule names:
-        Constant
-        Identifier
-        StringLiteral
-        genericSelection
-        kleene_plus__primaryExpression_1
-        primaryExpression
-primaryExpression
     epsilonable: false
     immediate sub-rule names:
         Constant
@@ -1650,7 +1412,6 @@ relationalExpression
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         shiftExpression
         unaryExpression
 shiftExpression
@@ -1668,7 +1429,6 @@ shiftExpression
         multiplicativeExpression
         postfixExpression
         postfixExpression_4
-        primaryExpression
         unaryExpression
 specifierQualifierList
     epsilonable: false
@@ -1689,24 +1449,14 @@ statement
         asmStatement
         compoundStatement
         expressionStatement
-        iterationStatement
         jumpStatement
         labeledStatement
-        selectionStatement
     transitive sub-rule names:
         asmStatement
         compoundStatement
         expressionStatement
-        iterationStatement
         jumpStatement
         labeledStatement
-        selectionStatement
-structDeclaration
-    epsilonable: false
-    immediate sub-rule names:
-        staticAssertDeclaration
-    transitive sub-rule names:
-        staticAssertDeclaration
 structDeclarationList
     epsilonable: false
     immediate sub-rule names:
@@ -1714,15 +1464,13 @@ structDeclarationList
     transitive sub-rule names:
         kleene_plus__structDeclarationList_3
         staticAssertDeclaration
-        structDeclaration
         structDeclarationList_2
 structDeclarationList_2
     epsilonable: false
     immediate sub-rule names:
-        structDeclaration
+        staticAssertDeclaration
     transitive sub-rule names:
         staticAssertDeclaration
-        structDeclaration
 structDeclarator
     epsilonable: false
     immediate sub-rule names:
@@ -1749,7 +1497,6 @@ translationUnit
     transitive sub-rule names:
         asmStatement
         declaration
-        externalDeclaration
         functionDefinition
         kleene_plus__translationUnit_3
         staticAssertDeclaration
@@ -1757,11 +1504,11 @@ translationUnit
 translationUnit_2
     epsilonable: false
     immediate sub-rule names:
-        externalDeclaration
+        declaration
+        functionDefinition
     transitive sub-rule names:
         asmStatement
         declaration
-        externalDeclaration
         functionDefinition
         staticAssertDeclaration
 typeName
@@ -1823,4 +1570,3 @@ unaryExpression
         kleene_plus__primaryExpression_1
         postfixExpression
         postfixExpression_4
-        primaryExpression
