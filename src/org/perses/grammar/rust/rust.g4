@@ -1895,6 +1895,9 @@ LineComment:
 BlockComment:
     '/*' (~[*/] | '/'* BlockComment | '/'+ (~[*/]) | '*'+ ~[*/])* '*'+ '/' -> skip;
 
+Shebang:
+    '#!/' ~[\r\n]* -> skip;
+
 // BUG: only ascii identifiers are permitted
 // BUG: doc comments are ignored
 // BUG: associated constants are not supported
