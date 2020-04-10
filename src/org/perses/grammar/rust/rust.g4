@@ -1229,7 +1229,7 @@ simple_path_segment:
 // (forward references: rtype, ty_sum, ty_args)
 
 ty_path:
-    for_lifetime? ty_path_main;
+    for_lifetime? ('dyn' | 'impl')? ty_path_main;
 
 for_lifetime:
     'for' '<' lifetime_def_list? '>';
