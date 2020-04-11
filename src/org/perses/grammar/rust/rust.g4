@@ -1080,7 +1080,7 @@ enum_decl:
     'enum' ident ty_params? where_clause? '{' enum_variant_list? '}';
 
 enum_variant:
-    attr* enum_variant_main;
+    attr* visibility? enum_variant_main;
 
 enum_variant_list:
     enum_variant (',' enum_variant)* ','?;
