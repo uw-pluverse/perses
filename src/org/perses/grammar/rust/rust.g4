@@ -1421,8 +1421,12 @@ pat_elt:
 pat_elt_list:
     pat_elt (',' pat_elt)* ','?;
 
+pat_fields_left:
+    (ident | BareIntLit | FullIntLit);
+
 pat_fields:
     '..'
+    | pat_fields_left ':' pat_fields_left (',' pat_fields_left ':' pat_fields_left)*
     | pat_field (',' pat_field)* (',' '..' | ','?);
 
 pat_field:
