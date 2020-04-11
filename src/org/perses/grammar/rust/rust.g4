@@ -1368,6 +1368,7 @@ pat_no_mut:
     | pat_lit
     | pat_range_end '...' pat_range_end
     | pat_range_end '..' pat_range_end  // experimental `feature(exclusive_range_pattern)`
+    | pat_range_end '..=' pat_range_end
     | path macro_tail
     | 'ref'? ident ('@' pat)?
     | 'ref' 'mut' ident ('@' pat)?
@@ -1662,7 +1663,9 @@ or_expr:
 range_expr:
     or_expr
     | or_expr '..' or_expr?
-    | '..' or_expr?;
+    | or_expr '..=' or_expr?
+    | '..' or_expr?
+    | '..=' or_expr?;
 
 assign_expr:
     range_expr
@@ -1734,7 +1737,9 @@ or_expr_no_struct:
 range_expr_no_struct:
     or_expr_no_struct
     | or_expr_no_struct '..' or_expr_no_struct?
-    | '..' or_expr_no_struct?;
+    | or_expr_no_struct '..=' or_expr_no_struct?
+    | '..' or_expr_no_struct?
+    | '..=' or_expr_no_struct?;
 
 assign_expr_no_struct:
     range_expr_no_struct
