@@ -1279,7 +1279,10 @@ where_bound_list:
 
 where_bound:
     Lifetime ':' lifetime_bound
-    | for_lifetime? ty colon_bound;
+    | for_lifetime? ty empty_ok_colon_bound;
+
+empty_ok_colon_bound:
+    ':' bound?;
 
 colon_bound:
     ':' bound;
