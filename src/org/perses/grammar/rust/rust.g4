@@ -936,7 +936,7 @@ use_suffix:
     | rename;
 
 use_item:
-    any_ident rename?;
+    (any_ident | use_path | '*') rename?;
 
 use_item_list:
     use_item (',' use_item)* ','?;
