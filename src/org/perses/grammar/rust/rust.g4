@@ -977,6 +977,8 @@ static_decl:
 const_decl:
     'const' ident ':' ty_sum '=' expr ';';
 
+associated_const_decl:
+    'const' ident ':' ty_sum ';';
 
 // --- Functions
 
@@ -1146,7 +1148,7 @@ impl_item:
 impl_item_tail:
     'default'? method_decl
     | 'type' ident '=' ty_sum ';'
-    | const_decl  // experimental associated constants
+    | (const_decl | associated_const_decl)
     | item_macro_path '!' item_macro_tail;
 
 
