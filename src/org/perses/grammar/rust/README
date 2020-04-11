@@ -1,0 +1,4 @@
+The original Rust ANTLR4 grammar is from [1], dual-licensed under the MIT
+license and the Apache license.
+
+[1] https://github.com/jorendorff/rust-grammar
