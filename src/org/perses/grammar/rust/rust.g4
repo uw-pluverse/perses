@@ -1370,13 +1370,13 @@ pat_no_mut:
     | pat_range_end '..' pat_range_end  // experimental `feature(exclusive_range_pattern)`
     | pat_range_end '..=' pat_range_end
     | path macro_tail
-    | 'ref'? ident ('@' pat)?
+    | 'ref'? ident (',' ident)? ('@' pat)?
     | 'ref' 'mut' ident ('@' pat)?
     | path '(' pat_list_with_dots? ')'
     | path '{' pat_fields? '}'
     | path  // BUG: ambiguity with bare ident case (above)
     | '(' pat_list_with_dots? ')'
-    | '[' pat_elt_list? ']'  // experimental slice patterns
+    | '[' (ident (',' ident)? '@')? pat_elt_list? ']'
     | '&' pat_no_mut
     | '&' 'mut' pat
     | '&&' pat_no_mut   // `&& pat` means the same as `& & pat`
