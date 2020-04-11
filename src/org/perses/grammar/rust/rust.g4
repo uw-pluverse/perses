@@ -1363,6 +1363,9 @@ pat:
     pat_no_mut
     | 'mut' ident ('@' pat)?;
 
+pat_ident:
+    ('_' | 'ref' ident);
+
 // A `pat_no_mut` is a pattern that does not start with `mut`.
 // It is distinct from `pat` to rule out ambiguity in parsing the
 // pattern `&mut x`, which must parse like `&mut (x)`, not `&(mut x)`.
@@ -1373,13 +1376,13 @@ pat_no_mut:
     | pat_range_end '..' pat_range_end  // experimental `feature(exclusive_range_pattern)`
     | pat_range_end '..=' pat_range_end
     | path macro_tail
-    | ('ref'? ident ',')* 'ref'? ident ('@' pat)?
+    | (pat_ident ',')* pat_ident ('@' pat)?
     | 'ref' 'mut' ident ('@' pat)?
     | path '(' pat_list_with_dots? ')'
     | path '{' pat_fields? '}'
     | path  // BUG: ambiguity with bare ident case (above)
     | '(' pat_list_with_dots? ')'
-    | '[' (('ref'? ident ',')* 'ref'? ident '@')? pat_elt_list? ']'
+    | '[' ((pat_ident ',')* pat_ident '@')? pat_elt_list? ']'
     | '&' pat_no_mut
     | '&' 'mut' pat
     | '&&' pat_no_mut   // `&& pat` means the same as `& & pat`
