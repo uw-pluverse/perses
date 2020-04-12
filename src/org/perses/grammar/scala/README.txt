@@ -1,0 +1,1 @@
+Scala.g4 is downloaded from https://github.com/antlr/grammars-v4/blob/master/scala/Scala.g4.
