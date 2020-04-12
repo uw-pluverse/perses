@@ -46,19 +46,15 @@ public final class PnfGoParserFacade extends AbstractDefaultParserFacade<GoLexer
     }
   }
 
-  public ParseTreeWithParser parseWithOrigGoParser(String goProgram, String fileName) throws IOException {
+  public ParseTreeWithParser parseWithOrigGoParser(String goProgram, String fileName)
+      throws IOException {
     try (BufferedReader reader = new BufferedReader(new StringReader(goProgram))) {
-      return parseWithOrigGoParser(reader, "<in-memory>");
+      return parseWithOrigGoParser(reader, fileName);
     }
   }
 
   private static ParseTreeWithParser parseWithOrigGoParser(BufferedReader reader, String fileName)
       throws IOException {
-    return parseReader(
-        fileName,
-        reader,
-        antlrInputStream -> new GoLexer(antlrInputStream),
-        commonTokenStream -> new GoParser(commonTokenStream),
-        GoParser::sourceFile);
+    return parseReader(fileName, reader, GoLexer::new, GoParser::new, GoParser::sourceFile);
   }
 }
