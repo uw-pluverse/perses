@@ -33,6 +33,14 @@ targets = [
         output_file="bazel-bin/test/org/perses/antlr/pnfc_rule_hierarchy.txt",
         golden_file="test/org/perses/antlr/golden_pnfc_rule_hierarchy.txt"),
     Target(
+        target_name="//test/org/perses/antlr:dump_pnf_rule_hierarchy",
+        output_file="bazel-bin/test/org/perses/antlr/pnfgo_rule_hierarchy.txt",
+        golden_file="test/org/perses/antlr/golden_pnfgo_rule_hierarchy.txt"),
+    Target(
+        target_name="//test/org/perses/antlr:dump_pnf_rule_hierarchy",
+        output_file="bazel-bin/test/org/perses/antlr/pnfscala_rule_hierarchy.txt",
+        golden_file="test/org/perses/antlr/golden_pnfscala_rule_hierarchy.txt"),
+    Target(
         target_name="//benchmark/toys/delta_1:reduction_golden_test_reduction",
         output_file="bazel-bin/benchmark/toys/delta_1/result_reduction_golden_test_perses_node_priority_with_dfs_delta_t.c",
         golden_file="benchmark/toys/delta_1/golden_reduced_t.c"),

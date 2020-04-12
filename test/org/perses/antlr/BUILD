@@ -4,9 +4,6 @@ java_test(
     name = "GrammarHierarchyTest",
     srcs = ["GrammarHierarchyTest.java"],
     data = [
-        "opt_c_parser_antlr_rule_hierarchy_rule_immediate_subrules.golden.txt",
-        "opt_c_parser_antlr_rule_hierarchy_rule_list.golden.txt",
-        "opt_c_parser_antlr_rule_hierarchy_rule_transitive_subrules.golden.txt",
         "//test_data/antlr_grammars",
         "//test_data/antlr_grammars:c_grammar",
     ],
@@ -55,7 +52,10 @@ java_binary(
         "//src/org/perses/antlr:antlr_hierarchy",
         "//src/org/perses/grammar/c:c_parser_facade",
         "//src/org/perses/grammar/c:pnfc_parser_facade",
+        "//src/org/perses/grammar/go:pnfgo_parser_facade",
+        "//src/org/perses/grammar/scala:pnfscala_parser_facade",
         "//test/org/perses:test_util",
+        "@maven//:com_beust_jcommander",
         "@maven//:com_google_flogger_flogger_system_backend",
         "@maven//:com_google_guava_guava",
         "@maven//:com_google_truth_truth",
@@ -66,8 +66,15 @@ java_binary(
 genrule(
     name = "dump_pnf_rule_hierarchy",
     srcs = [],
-    outs = ["pnfc_rule_hierarchy.txt"],
-    cmd = "$(location :GrammarHierarchyDumpMain) $(location pnfc_rule_hierarchy.txt)",
+    outs = [
+        "pnfc_rule_hierarchy.txt",
+        "pnfgo_rule_hierarchy.txt",
+        "pnfscala_rule_hierarchy.txt",
+    ],
+    cmd = "$(location :GrammarHierarchyDumpMain) " +
+          " -c $(location pnfc_rule_hierarchy.txt)" +
+          " -go $(location pnfgo_rule_hierarchy.txt)" +
+          " -scala $(location pnfscala_rule_hierarchy.txt)",
     tools = [":GrammarHierarchyDumpMain"],
 )
 
@@ -75,4 +82,18 @@ golden_test(
     name = "golden_test_pnfc_rule_hierarchy",
     golden_file = "golden_pnfc_rule_hierarchy.txt",
     test_file = "pnfc_rule_hierarchy.txt",
+)
+
+
+golden_test(
+    name = "golden_test_pnfgo_rule_hierarchy",
+    golden_file = "golden_pnfgo_rule_hierarchy.txt",
+    test_file = "pnfgo_rule_hierarchy.txt",
+)
+
+
+golden_test(
+    name = "golden_test_pnfscala_rule_hierarchy",
+    golden_file = "golden_pnfscala_rule_hierarchy.txt",
+    test_file = "pnfscala_rule_hierarchy.txt",
 )

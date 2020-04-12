@@ -1,0 +1,1805 @@
+alternative__argumentExprs_5
+    epsilonable: true
+    immediate sub-rule names:
+        optional__simpleExpr1_1
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__literal_3
+        blockExpr
+        expr
+        expr1
+        exprs
+        infixExpr
+        literal
+        optional__simpleExpr1_1
+        postfixExpr
+        prefixExpr
+        simpleExpr
+        simpleExpr1
+        simpleExpr1_6
+        stableId
+        stableId_6
+alternative__ascription_3
+    epsilonable: false
+    immediate sub-rule names:
+        infixType
+        kleene_plus__ascription_1
+    transitive sub-rule names:
+        Id
+        annotType
+        annotation
+        compoundType
+        infixType
+        kleene_plus__ascription_1
+        refinement
+        simpleType
+        simpleType_5
+        stableId
+        stableId_6
+alternative__blockExpr_1
+    epsilonable: false
+    immediate sub-rule names:
+        block
+        caseClauses
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__blockStat_6
+        alternative__literal_3
+        alternative__tmplDef_3
+        block
+        blockExpr
+        blockStat
+        caseClause
+        caseClauses
+        def
+        expr1
+        import_
+        infixExpr
+        kleene_plus__block_1
+        kleene_plus__caseClauses_1
+        literal
+        patVarDef
+        postfixExpr
+        prefixExpr
+        simpleExpr
+        simpleExpr1
+        simpleExpr1_6
+        stableId
+        stableId_6
+        tmplDef
+alternative__blockStat_6
+    epsilonable: false
+    immediate sub-rule names:
+        def
+        tmplDef
+    transitive sub-rule names:
+        alternative__tmplDef_3
+        def
+        patVarDef
+        tmplDef
+alternative__expr1_19
+    epsilonable: true
+    immediate sub-rule names:
+        optional__expr1_14
+    transitive sub-rule names:
+        ascription
+        optional__expr1_14
+alternative__expr1_20
+    epsilonable: false
+    immediate sub-rule names:
+        Id
+    transitive sub-rule names:
+        Id
+alternative__literal_3
+    epsilonable: false
+    immediate sub-rule names:
+        FloatingPointLiteral
+        IntegerLiteral
+    transitive sub-rule names:
+        FloatingPointLiteral
+        IntegerLiteral
+alternative__selfType_3
+    epsilonable: false
+    immediate sub-rule names:
+        Id
+    transitive sub-rule names:
+        Id
+alternative__simpleExpr1_7
+    epsilonable: false
+    immediate sub-rule names:
+        typeArgs
+    transitive sub-rule names:
+        typeArgs
+alternative__templateStat_9
+    epsilonable: false
+    immediate sub-rule names:
+        dcl
+        def
+    transitive sub-rule names:
+        alternative__tmplDef_3
+        dcl
+        def
+        patVarDef
+        tmplDef
+annotType
+    epsilonable: false
+    immediate sub-rule names:
+        simpleType
+    transitive sub-rule names:
+        Id
+        simpleType
+        simpleType_5
+        stableId
+        stableId_6
+argumentExprs
+    epsilonable: false
+    immediate sub-rule names:
+        blockExpr
+    transitive sub-rule names:
+        blockExpr
+binding
+    epsilonable: false
+    immediate sub-rule names:
+        Id
+    transitive sub-rule names:
+        Id
+block
+    epsilonable: false
+    immediate sub-rule names:
+        kleene_plus__block_1
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__blockStat_6
+        alternative__literal_3
+        alternative__tmplDef_3
+        blockExpr
+        blockStat
+        def
+        expr1
+        import_
+        infixExpr
+        kleene_plus__block_1
+        literal
+        patVarDef
+        postfixExpr
+        prefixExpr
+        simpleExpr
+        simpleExpr1
+        simpleExpr1_6
+        stableId
+        stableId_6
+        tmplDef
+blockStat
+    epsilonable: false
+    immediate sub-rule names:
+        alternative__blockStat_6
+        expr1
+        import_
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__blockStat_6
+        alternative__literal_3
+        alternative__tmplDef_3
+        blockExpr
+        def
+        expr1
+        import_
+        infixExpr
+        literal
+        patVarDef
+        postfixExpr
+        prefixExpr
+        simpleExpr
+        simpleExpr1
+        simpleExpr1_6
+        stableId
+        stableId_6
+        tmplDef
+caseClauses
+    epsilonable: false
+    immediate sub-rule names:
+        kleene_plus__caseClauses_1
+    transitive sub-rule names:
+        caseClause
+        kleene_plus__caseClauses_1
+classDef
+    epsilonable: false
+    immediate sub-rule names:
+        Id
+    transitive sub-rule names:
+        Id
+classParamClauses
+    epsilonable: true
+    immediate sub-rule names:
+        kleene_star__classParamClauses_1
+        optional__classParamClauses_4
+    transitive sub-rule names:
+        classParamClause
+        classParamClauses_3
+        kleene_star__classParamClauses_1
+        optional__classParamClauses_4
+classParams
+    epsilonable: false
+    immediate sub-rule names:
+        classParam
+    transitive sub-rule names:
+        classParam
+classParents
+    epsilonable: false
+    immediate sub-rule names:
+        constr
+    transitive sub-rule names:
+        Id
+        annotType
+        constr
+        simpleType
+        simpleType_5
+        stableId
+        stableId_6
+classTemplate
+    epsilonable: false
+    immediate sub-rule names:
+        classParents
+    transitive sub-rule names:
+        Id
+        annotType
+        classParents
+        constr
+        simpleType
+        simpleType_5
+        stableId
+        stableId_6
+classTemplateOpt
+    epsilonable: true
+    immediate sub-rule names:
+        optional__classTemplateOpt_3
+    transitive sub-rule names:
+        classTemplateOpt_2
+        optional__classTemplateOpt_3
+        templateBody
+classTemplateOpt_2
+    epsilonable: false
+    immediate sub-rule names:
+        templateBody
+    transitive sub-rule names:
+        templateBody
+compilationUnit
+    epsilonable: false
+    immediate sub-rule names:
+        topStatSeq
+    transitive sub-rule names:
+        alternative__tmplDef_3
+        import_
+        kleene_plus__topStatSeq_1
+        packageObject
+        packaging
+        tmplDef
+        topStat
+        topStatSeq
+compoundType
+    epsilonable: false
+    immediate sub-rule names:
+        annotType
+        refinement
+    transitive sub-rule names:
+        Id
+        annotType
+        refinement
+        simpleType
+        simpleType_5
+        stableId
+        stableId_6
+constr
+    epsilonable: false
+    immediate sub-rule names:
+        annotType
+    transitive sub-rule names:
+        Id
+        annotType
+        simpleType
+        simpleType_5
+        stableId
+        stableId_6
+constrExpr
+    epsilonable: false
+    immediate sub-rule names:
+        constrBlock
+        selfInvocation
+    transitive sub-rule names:
+        constrBlock
+        selfInvocation
+def
+    epsilonable: false
+    immediate sub-rule names:
+        patVarDef
+        tmplDef
+    transitive sub-rule names:
+        alternative__tmplDef_3
+        patVarDef
+        tmplDef
+earlyDef
+    epsilonable: false
+    immediate sub-rule names:
+        patVarDef
+    transitive sub-rule names:
+        patVarDef
+enumerators
+    epsilonable: false
+    immediate sub-rule names:
+        kleene_plus__enumerators_1
+    transitive sub-rule names:
+        generator
+        kleene_plus__enumerators_1
+expr
+    epsilonable: false
+    immediate sub-rule names:
+        expr1
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__literal_3
+        blockExpr
+        expr1
+        infixExpr
+        literal
+        postfixExpr
+        prefixExpr
+        simpleExpr
+        simpleExpr1
+        simpleExpr1_6
+        stableId
+        stableId_6
+expr1
+    epsilonable: false
+    immediate sub-rule names:
+        postfixExpr
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__literal_3
+        blockExpr
+        infixExpr
+        literal
+        postfixExpr
+        prefixExpr
+        simpleExpr
+        simpleExpr1
+        simpleExpr1_6
+        stableId
+        stableId_6
+exprs
+    epsilonable: false
+    immediate sub-rule names:
+        expr
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__literal_3
+        blockExpr
+        expr
+        expr1
+        infixExpr
+        literal
+        postfixExpr
+        prefixExpr
+        simpleExpr
+        simpleExpr1
+        simpleExpr1_6
+        stableId
+        stableId_6
+funDcl
+    epsilonable: false
+    immediate sub-rule names:
+        funSig
+    transitive sub-rule names:
+        Id
+        funSig
+funSig
+    epsilonable: false
+    immediate sub-rule names:
+        Id
+    transitive sub-rule names:
+        Id
+functionArgTypes
+    epsilonable: false
+    immediate sub-rule names:
+        infixType
+    transitive sub-rule names:
+        Id
+        annotType
+        compoundType
+        infixType
+        refinement
+        simpleType
+        simpleType_5
+        stableId
+        stableId_6
+functionArgTypes_3
+    epsilonable: false
+    immediate sub-rule names:
+        paramType
+    transitive sub-rule names:
+        Id
+        annotType
+        compoundType
+        infixType
+        paramType
+        refinement
+        simpleType
+        simpleType_5
+        stableId
+        stableId_6
+        type_
+generator_1
+    epsilonable: false
+    immediate sub-rule names:
+        guard
+    transitive sub-rule names:
+        guard
+ids
+    epsilonable: false
+    immediate sub-rule names:
+        Id
+    transitive sub-rule names:
+        Id
+importExpr
+    epsilonable: false
+    immediate sub-rule names:
+        stableId
+    transitive sub-rule names:
+        Id
+        stableId
+        stableId_6
+importSelector
+    epsilonable: false
+    immediate sub-rule names:
+        Id
+    transitive sub-rule names:
+        Id
+infixExpr
+    epsilonable: false
+    immediate sub-rule names:
+        prefixExpr
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__literal_3
+        blockExpr
+        literal
+        prefixExpr
+        simpleExpr
+        simpleExpr1
+        simpleExpr1_6
+        stableId
+        stableId_6
+infixType
+    epsilonable: false
+    immediate sub-rule names:
+        compoundType
+    transitive sub-rule names:
+        Id
+        annotType
+        compoundType
+        refinement
+        simpleType
+        simpleType_5
+        stableId
+        stableId_6
+kleene_plus__ascription_1
+    epsilonable: false
+    immediate sub-rule names:
+        annotation
+    transitive sub-rule names:
+        annotation
+kleene_plus__block_1
+    epsilonable: false
+    immediate sub-rule names:
+        blockStat
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__blockStat_6
+        alternative__literal_3
+        alternative__tmplDef_3
+        blockExpr
+        blockStat
+        def
+        expr1
+        import_
+        infixExpr
+        literal
+        patVarDef
+        postfixExpr
+        prefixExpr
+        simpleExpr
+        simpleExpr1
+        simpleExpr1_6
+        stableId
+        stableId_6
+        tmplDef
+kleene_plus__caseClauses_1
+    epsilonable: false
+    immediate sub-rule names:
+        caseClause
+    transitive sub-rule names:
+        caseClause
+kleene_plus__earlyDefs_1
+    epsilonable: false
+    immediate sub-rule names:
+        earlyDef
+    transitive sub-rule names:
+        earlyDef
+        patVarDef
+kleene_plus__enumerators_1
+    epsilonable: false
+    immediate sub-rule names:
+        generator
+    transitive sub-rule names:
+        generator
+kleene_plus__existentialClause_1
+    epsilonable: false
+    immediate sub-rule names:
+        existentialDcl
+    transitive sub-rule names:
+        existentialDcl
+kleene_plus__refinement_2
+    epsilonable: false
+    immediate sub-rule names:
+        refineStat
+    transitive sub-rule names:
+        dcl
+        refineStat
+kleene_plus__selfInvocation_1
+    epsilonable: false
+    immediate sub-rule names:
+        argumentExprs
+    transitive sub-rule names:
+        argumentExprs
+        blockExpr
+kleene_plus__templateBody_3
+    epsilonable: false
+    immediate sub-rule names:
+        templateStat
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__literal_3
+        alternative__templateStat_9
+        alternative__tmplDef_3
+        blockExpr
+        dcl
+        def
+        expr
+        expr1
+        import_
+        infixExpr
+        literal
+        patVarDef
+        postfixExpr
+        prefixExpr
+        simpleExpr
+        simpleExpr1
+        simpleExpr1_6
+        stableId
+        stableId_6
+        templateStat
+        tmplDef
+kleene_plus__topStatSeq_1
+    epsilonable: false
+    immediate sub-rule names:
+        topStat
+    transitive sub-rule names:
+        alternative__tmplDef_3
+        import_
+        packageObject
+        packaging
+        tmplDef
+        topStat
+kleene_star__annotType_1
+    epsilonable: true
+    immediate sub-rule names:
+        annotation
+    transitive sub-rule names:
+        annotation
+kleene_star__annotation_1
+    epsilonable: true
+    immediate sub-rule names:
+        argumentExprs
+    transitive sub-rule names:
+        argumentExprs
+        blockExpr
+kleene_star__bindings_2
+    epsilonable: true
+    immediate sub-rule names:
+        bindings_1
+    transitive sub-rule names:
+        bindings_1
+kleene_star__blockStat_5
+    epsilonable: true
+    immediate sub-rule names:
+        localModifier
+    transitive sub-rule names:
+        localModifier
+kleene_star__classDef_2
+    epsilonable: true
+    immediate sub-rule names:
+        constrAnnotation
+    transitive sub-rule names:
+        constrAnnotation
+kleene_star__classParamClauses_1
+    epsilonable: true
+    immediate sub-rule names:
+        classParamClause
+    transitive sub-rule names:
+        classParamClause
+kleene_star__classParam_2
+    epsilonable: true
+    immediate sub-rule names:
+        modifier
+    transitive sub-rule names:
+        accessModifier
+        localModifier
+        modifier
+kleene_star__classParams_2
+    epsilonable: true
+    immediate sub-rule names:
+        classParams_1
+    transitive sub-rule names:
+        classParams_1
+kleene_star__compilationUnit_2
+    epsilonable: true
+    immediate sub-rule names:
+        compilationUnit_1
+    transitive sub-rule names:
+        compilationUnit_1
+kleene_star__compoundType_2
+    epsilonable: true
+    immediate sub-rule names:
+        compoundType_1
+    transitive sub-rule names:
+        compoundType_1
+kleene_star__constrBlock_1
+    epsilonable: true
+    immediate sub-rule names:
+        blockStat
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__blockStat_6
+        alternative__literal_3
+        alternative__tmplDef_3
+        blockExpr
+        blockStat
+        def
+        expr1
+        import_
+        infixExpr
+        literal
+        patVarDef
+        postfixExpr
+        prefixExpr
+        simpleExpr
+        simpleExpr1
+        simpleExpr1_6
+        stableId
+        stableId_6
+        tmplDef
+kleene_star__dcl_1
+    epsilonable: true
+    immediate sub-rule names:
+        NL
+    transitive sub-rule names:
+        NL
+kleene_star__exprs_2
+    epsilonable: true
+    immediate sub-rule names:
+        exprs_1
+    transitive sub-rule names:
+        exprs_1
+kleene_star__funTypeParamClause_2
+    epsilonable: true
+    immediate sub-rule names:
+        funTypeParamClause_1
+    transitive sub-rule names:
+        funTypeParamClause_1
+kleene_star__functionArgTypes_2
+    epsilonable: true
+    immediate sub-rule names:
+        functionArgTypes_1
+    transitive sub-rule names:
+        functionArgTypes_1
+kleene_star__generator_2
+    epsilonable: true
+    immediate sub-rule names:
+        generator_1
+    transitive sub-rule names:
+        generator_1
+        guard
+kleene_star__ids_2
+    epsilonable: true
+    immediate sub-rule names:
+        ids_1
+    transitive sub-rule names:
+        ids_1
+kleene_star__importSelectors_2
+    epsilonable: true
+    immediate sub-rule names:
+        importSelectors_1
+    transitive sub-rule names:
+        importSelectors_1
+kleene_star__import__2
+    epsilonable: true
+    immediate sub-rule names:
+        import__1
+    transitive sub-rule names:
+        import__1
+kleene_star__infixExpr_2
+    epsilonable: true
+    immediate sub-rule names:
+        infixExpr_3
+    transitive sub-rule names:
+        infixExpr_3
+kleene_star__infixType_2
+    epsilonable: true
+    immediate sub-rule names:
+        infixType_1
+    transitive sub-rule names:
+        infixType_1
+kleene_star__paramClauses_1
+    epsilonable: true
+    immediate sub-rule names:
+        paramClause
+    transitive sub-rule names:
+        paramClause
+kleene_star__params_2
+    epsilonable: true
+    immediate sub-rule names:
+        params_1
+    transitive sub-rule names:
+        params_1
+kleene_star__patDef_2
+    epsilonable: true
+    immediate sub-rule names:
+        patDef_1
+    transitive sub-rule names:
+        patDef_1
+kleene_star__pattern3_3
+    epsilonable: true
+    immediate sub-rule names:
+        pattern3_2
+    transitive sub-rule names:
+        pattern3_2
+kleene_star__pattern_2
+    epsilonable: true
+    immediate sub-rule names:
+        pattern_1
+    transitive sub-rule names:
+        pattern_1
+kleene_star__postfixExpr_3
+    epsilonable: true
+    immediate sub-rule names:
+        postfixExpr_2
+    transitive sub-rule names:
+        postfixExpr_2
+kleene_star__qualId_2
+    epsilonable: true
+    immediate sub-rule names:
+        qualId_1
+    transitive sub-rule names:
+        qualId_1
+kleene_star__simpleExpr1_4
+    epsilonable: true
+    immediate sub-rule names:
+        simpleExpr1_5
+    transitive sub-rule names:
+        alternative__simpleExpr1_7
+        argumentExprs
+        blockExpr
+        simpleExpr1_5
+        typeArgs
+kleene_star__simpleType_3
+    epsilonable: true
+    immediate sub-rule names:
+        simpleType_4
+    transitive sub-rule names:
+        simpleType_4
+        typeArgs
+kleene_star__templateStat_3
+    epsilonable: true
+    immediate sub-rule names:
+        templateStat_2
+    transitive sub-rule names:
+        annotation
+        templateStat_2
+kleene_star__typeParamClause_2
+    epsilonable: true
+    immediate sub-rule names:
+        typeParamClause_1
+    transitive sub-rule names:
+        typeParamClause_1
+kleene_star__typeParam_7
+    epsilonable: true
+    immediate sub-rule names:
+        typeParam_6
+    transitive sub-rule names:
+        typeParam_6
+kleene_star__typeParam_9
+    epsilonable: true
+    immediate sub-rule names:
+        typeParam_8
+    transitive sub-rule names:
+        typeParam_8
+kleene_star__types_2
+    epsilonable: true
+    immediate sub-rule names:
+        types_1
+    transitive sub-rule names:
+        types_1
+literal
+    epsilonable: false
+    immediate sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__literal_3
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__literal_3
+modifier
+    epsilonable: false
+    immediate sub-rule names:
+        accessModifier
+        localModifier
+    transitive sub-rule names:
+        accessModifier
+        localModifier
+objectDef
+    epsilonable: false
+    immediate sub-rule names:
+        Id
+    transitive sub-rule names:
+        Id
+optional__accessModifier_1
+    epsilonable: true
+    immediate sub-rule names:
+        accessQualifier
+    transitive sub-rule names:
+        accessQualifier
+optional__argumentExprs_3
+    epsilonable: true
+    immediate sub-rule names:
+        argumentExprs_2
+    transitive sub-rule names:
+        argumentExprs_2
+optional__binding_2
+    epsilonable: true
+    immediate sub-rule names:
+        typeParam_8
+    transitive sub-rule names:
+        typeParam_8
+optional__blockStat_3
+    epsilonable: true
+    immediate sub-rule names:
+        blockStat_2
+    transitive sub-rule names:
+        blockStat_2
+optional__block_2
+    epsilonable: true
+    immediate sub-rule names:
+        resultExpr
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__literal_3
+        blockExpr
+        expr1
+        infixExpr
+        literal
+        postfixExpr
+        prefixExpr
+        resultExpr
+        simpleExpr
+        simpleExpr1
+        simpleExpr1_6
+        stableId
+        stableId_6
+optional__caseClause_1
+    epsilonable: true
+    immediate sub-rule names:
+        guard
+    transitive sub-rule names:
+        guard
+optional__classDef_3
+    epsilonable: true
+    immediate sub-rule names:
+        accessModifier
+    transitive sub-rule names:
+        accessModifier
+optional__classParamClause_2
+    epsilonable: true
+    immediate sub-rule names:
+        classParams
+    transitive sub-rule names:
+        classParam
+        classParams
+optional__classParamClauses_4
+    epsilonable: true
+    immediate sub-rule names:
+        classParamClauses_3
+    transitive sub-rule names:
+        classParamClauses_3
+optional__classParam_4
+    epsilonable: true
+    immediate sub-rule names:
+        alternative__dcl_2
+    transitive sub-rule names:
+        alternative__dcl_2
+optional__classTemplateOpt_3
+    epsilonable: true
+    immediate sub-rule names:
+        classTemplateOpt_2
+    transitive sub-rule names:
+        classTemplateOpt_2
+        templateBody
+optional__classTemplate_1
+    epsilonable: true
+    immediate sub-rule names:
+        earlyDefs
+    transitive sub-rule names:
+        earlyDefs
+optional__classTemplate_2
+    epsilonable: true
+    immediate sub-rule names:
+        templateBody
+    transitive sub-rule names:
+        templateBody
+optional__compoundType_3
+    epsilonable: true
+    immediate sub-rule names:
+        refinement
+    transitive sub-rule names:
+        refinement
+optional__expr1_10
+    epsilonable: true
+    immediate sub-rule names:
+        expr
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__literal_3
+        blockExpr
+        expr
+        expr1
+        infixExpr
+        literal
+        postfixExpr
+        prefixExpr
+        simpleExpr
+        simpleExpr1
+        simpleExpr1_6
+        stableId
+        stableId_6
+optional__expr1_13
+    epsilonable: true
+    immediate sub-rule names:
+        expr1_12
+    transitive sub-rule names:
+        expr1_12
+optional__expr1_14
+    epsilonable: true
+    immediate sub-rule names:
+        ascription
+    transitive sub-rule names:
+        ascription
+optional__expr1_3
+    epsilonable: true
+    immediate sub-rule names:
+        expr1_2
+    transitive sub-rule names:
+        expr1_2
+optional__expr1_6
+    epsilonable: true
+    immediate sub-rule names:
+        expr1_5
+    transitive sub-rule names:
+        expr1_5
+optional__expr1_8
+    epsilonable: true
+    immediate sub-rule names:
+        expr1_7
+    transitive sub-rule names:
+        expr1_7
+optional__funSig_1
+    epsilonable: true
+    immediate sub-rule names:
+        funTypeParamClause
+    transitive sub-rule names:
+        funTypeParamClause
+optional__functionArgTypes_4
+    epsilonable: true
+    immediate sub-rule names:
+        functionArgTypes_3
+    transitive sub-rule names:
+        Id
+        annotType
+        compoundType
+        functionArgTypes_3
+        infixType
+        paramType
+        refinement
+        simpleType
+        simpleType_5
+        stableId
+        stableId_6
+        type_
+optional__importExpr_2
+    epsilonable: true
+    immediate sub-rule names:
+        importExpr_1
+    transitive sub-rule names:
+        importExpr_1
+optional__importSelector_2
+    epsilonable: true
+    immediate sub-rule names:
+        importSelector_1
+    transitive sub-rule names:
+        importSelector_1
+optional__paramClause_2
+    epsilonable: true
+    immediate sub-rule names:
+        params
+    transitive sub-rule names:
+        Id
+        param
+        params
+optional__paramClauses_4
+    epsilonable: true
+    immediate sub-rule names:
+        paramClauses_3
+    transitive sub-rule names:
+        paramClauses_3
+optional__param_3
+    epsilonable: true
+    immediate sub-rule names:
+        param_2
+    transitive sub-rule names:
+        param_2
+optional__param_5
+    epsilonable: true
+    immediate sub-rule names:
+        param_4
+    transitive sub-rule names:
+        param_4
+optional__pattern2_2
+    epsilonable: true
+    immediate sub-rule names:
+        pattern2_1
+    transitive sub-rule names:
+        pattern2_1
+optional__pattern3_4
+    epsilonable: true
+    immediate sub-rule names:
+        kleene_star__pattern3_3
+    transitive sub-rule names:
+        kleene_star__pattern3_3
+        pattern3_2
+optional__patterns_2
+    epsilonable: true
+    immediate sub-rule names:
+        patterns_1
+    transitive sub-rule names:
+        patterns_1
+optional__postfixExpr_1
+    epsilonable: true
+    immediate sub-rule names:
+        Id
+    transitive sub-rule names:
+        Id
+optional__prefixExpr_1
+    epsilonable: true
+    immediate sub-rule names:
+        prefixDef
+    transitive sub-rule names:
+        prefixDef
+optional__refinement_1
+    epsilonable: true
+    immediate sub-rule names:
+        NL
+    transitive sub-rule names:
+        NL
+optional__simpleExpr1_1
+    epsilonable: true
+    immediate sub-rule names:
+        exprs
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__literal_3
+        blockExpr
+        expr
+        expr1
+        exprs
+        infixExpr
+        literal
+        postfixExpr
+        prefixExpr
+        simpleExpr
+        simpleExpr1
+        simpleExpr1_6
+        stableId
+        stableId_6
+optional__simplePattern_1
+    epsilonable: true
+    immediate sub-rule names:
+        patterns
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        Varid
+        alternative__literal_3
+        literal
+        pattern
+        pattern1
+        pattern2
+        pattern3
+        patterns
+        simplePattern
+        stableId
+        stableId_6
+optional__simplePattern_3
+    epsilonable: true
+    immediate sub-rule names:
+        simplePattern_2
+    transitive sub-rule names:
+        simplePattern_2
+optional__simplePattern_5
+    epsilonable: true
+    immediate sub-rule names:
+        simplePattern_4
+    transitive sub-rule names:
+        simplePattern_4
+optional__simplePattern_7
+    epsilonable: true
+    immediate sub-rule names:
+        simplePattern_6
+    transitive sub-rule names:
+        simplePattern_6
+optional__simpleType_2
+    epsilonable: true
+    immediate sub-rule names:
+        simpleType_1
+    transitive sub-rule names:
+        simpleType_1
+optional__stableId_2
+    epsilonable: true
+    immediate sub-rule names:
+        stableId_1
+    transitive sub-rule names:
+        stableId_1
+optional__stableId_3
+    epsilonable: true
+    immediate sub-rule names:
+        classQualifier
+    transitive sub-rule names:
+        classQualifier
+optional__templateBody_2
+    epsilonable: true
+    immediate sub-rule names:
+        selfType
+    transitive sub-rule names:
+        selfType
+optional__typeDcl_1
+    epsilonable: true
+    immediate sub-rule names:
+        typeParamClause
+    transitive sub-rule names:
+        typeParamClause
+optional__typeDcl_3
+    epsilonable: true
+    immediate sub-rule names:
+        typeDcl_2
+    transitive sub-rule names:
+        typeDcl_2
+optional__typeDcl_5
+    epsilonable: true
+    immediate sub-rule names:
+        typeDcl_4
+    transitive sub-rule names:
+        typeDcl_4
+optional__type__1
+    epsilonable: true
+    immediate sub-rule names:
+        existentialClause
+    transitive sub-rule names:
+        existentialClause
+optional__variantTypeParam_3
+    epsilonable: true
+    immediate sub-rule names:
+        variantTypeParam_2
+    transitive sub-rule names:
+        variantTypeParam_2
+param
+    epsilonable: false
+    immediate sub-rule names:
+        Id
+    transitive sub-rule names:
+        Id
+paramClauses
+    epsilonable: true
+    immediate sub-rule names:
+        kleene_star__paramClauses_1
+        optional__paramClauses_4
+    transitive sub-rule names:
+        kleene_star__paramClauses_1
+        optional__paramClauses_4
+        paramClause
+        paramClauses_3
+paramType
+    epsilonable: false
+    immediate sub-rule names:
+        type_
+    transitive sub-rule names:
+        Id
+        annotType
+        compoundType
+        infixType
+        refinement
+        simpleType
+        simpleType_5
+        stableId
+        stableId_6
+        type_
+params
+    epsilonable: false
+    immediate sub-rule names:
+        param
+    transitive sub-rule names:
+        Id
+        param
+pattern
+    epsilonable: false
+    immediate sub-rule names:
+        pattern1
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        Varid
+        alternative__literal_3
+        literal
+        pattern1
+        pattern2
+        pattern3
+        simplePattern
+        stableId
+        stableId_6
+pattern1
+    epsilonable: false
+    immediate sub-rule names:
+        pattern2
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        Varid
+        alternative__literal_3
+        literal
+        pattern2
+        pattern3
+        simplePattern
+        stableId
+        stableId_6
+pattern2
+    epsilonable: false
+    immediate sub-rule names:
+        Id
+        pattern3
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        Varid
+        alternative__literal_3
+        literal
+        pattern3
+        simplePattern
+        stableId
+        stableId_6
+pattern3
+    epsilonable: false
+    immediate sub-rule names:
+        simplePattern
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        Varid
+        alternative__literal_3
+        literal
+        simplePattern
+        stableId
+        stableId_6
+patterns
+    epsilonable: false
+    immediate sub-rule names:
+        pattern
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        Varid
+        alternative__literal_3
+        literal
+        pattern
+        pattern1
+        pattern2
+        pattern3
+        simplePattern
+        stableId
+        stableId_6
+postfixExpr
+    epsilonable: false
+    immediate sub-rule names:
+        infixExpr
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__literal_3
+        blockExpr
+        infixExpr
+        literal
+        prefixExpr
+        simpleExpr
+        simpleExpr1
+        simpleExpr1_6
+        stableId
+        stableId_6
+prefixExpr
+    epsilonable: false
+    immediate sub-rule names:
+        simpleExpr
+        simpleExpr1
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__literal_3
+        blockExpr
+        literal
+        simpleExpr
+        simpleExpr1
+        simpleExpr1_6
+        stableId
+        stableId_6
+qualId
+    epsilonable: false
+    immediate sub-rule names:
+        Id
+    transitive sub-rule names:
+        Id
+refineStat
+    epsilonable: false
+    immediate sub-rule names:
+        dcl
+    transitive sub-rule names:
+        dcl
+resultExpr
+    epsilonable: false
+    immediate sub-rule names:
+        expr1
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__literal_3
+        blockExpr
+        expr1
+        infixExpr
+        literal
+        postfixExpr
+        prefixExpr
+        simpleExpr
+        simpleExpr1
+        simpleExpr1_6
+        stableId
+        stableId_6
+simpleExpr
+    epsilonable: false
+    immediate sub-rule names:
+        blockExpr
+    transitive sub-rule names:
+        blockExpr
+simpleExpr1
+    epsilonable: false
+    immediate sub-rule names:
+        simpleExpr1_6
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__literal_3
+        literal
+        simpleExpr1_6
+        stableId
+        stableId_6
+simpleExpr1_5
+    epsilonable: false
+    immediate sub-rule names:
+        alternative__simpleExpr1_7
+        argumentExprs
+    transitive sub-rule names:
+        alternative__simpleExpr1_7
+        argumentExprs
+        blockExpr
+        typeArgs
+simpleExpr1_6
+    epsilonable: false
+    immediate sub-rule names:
+        literal
+        stableId
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__literal_3
+        literal
+        stableId
+        stableId_6
+simplePattern
+    epsilonable: false
+    immediate sub-rule names:
+        Varid
+        literal
+        stableId
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        Varid
+        alternative__literal_3
+        literal
+        stableId
+        stableId_6
+simpleType
+    epsilonable: false
+    immediate sub-rule names:
+        simpleType_5
+    transitive sub-rule names:
+        Id
+        simpleType_5
+        stableId
+        stableId_6
+simpleType_4
+    epsilonable: false
+    immediate sub-rule names:
+        typeArgs
+    transitive sub-rule names:
+        typeArgs
+simpleType_5
+    epsilonable: false
+    immediate sub-rule names:
+        stableId
+    transitive sub-rule names:
+        Id
+        stableId
+        stableId_6
+stableId
+    epsilonable: false
+    immediate sub-rule names:
+        stableId_6
+    transitive sub-rule names:
+        Id
+        stableId_6
+stableId_6
+    epsilonable: false
+    immediate sub-rule names:
+        Id
+    transitive sub-rule names:
+        Id
+templateStat
+    epsilonable: false
+    immediate sub-rule names:
+        alternative__templateStat_9
+        expr
+        import_
+    transitive sub-rule names:
+        BooleanLiteral
+        CharacterLiteral
+        FloatingPointLiteral
+        Id
+        IntegerLiteral
+        StringLiteral
+        SymbolLiteral
+        alternative__literal_3
+        alternative__templateStat_9
+        alternative__tmplDef_3
+        blockExpr
+        dcl
+        def
+        expr
+        expr1
+        import_
+        infixExpr
+        literal
+        patVarDef
+        postfixExpr
+        prefixExpr
+        simpleExpr
+        simpleExpr1
+        simpleExpr1_6
+        stableId
+        stableId_6
+        tmplDef
+templateStat_2
+    epsilonable: false
+    immediate sub-rule names:
+        annotation
+    transitive sub-rule names:
+        annotation
+tmplDef
+    epsilonable: false
+    immediate sub-rule names:
+        alternative__tmplDef_3
+    transitive sub-rule names:
+        alternative__tmplDef_3
+topStat
+    epsilonable: false
+    immediate sub-rule names:
+        import_
+        packageObject
+        packaging
+        tmplDef
+    transitive sub-rule names:
+        alternative__tmplDef_3
+        import_
+        packageObject
+        packaging
+        tmplDef
+topStatSeq
+    epsilonable: false
+    immediate sub-rule names:
+        kleene_plus__topStatSeq_1
+    transitive sub-rule names:
+        alternative__tmplDef_3
+        import_
+        kleene_plus__topStatSeq_1
+        packageObject
+        packaging
+        tmplDef
+        topStat
+traitDef
+    epsilonable: false
+    immediate sub-rule names:
+        Id
+    transitive sub-rule names:
+        Id
+traitParents
+    epsilonable: false
+    immediate sub-rule names:
+        annotType
+    transitive sub-rule names:
+        Id
+        annotType
+        simpleType
+        simpleType_5
+        stableId
+        stableId_6
+traitTemplate
+    epsilonable: false
+    immediate sub-rule names:
+        traitParents
+    transitive sub-rule names:
+        Id
+        annotType
+        simpleType
+        simpleType_5
+        stableId
+        stableId_6
+        traitParents
+traitTemplateOpt
+    epsilonable: true
+    immediate sub-rule names:
+        optional__classTemplateOpt_3
+    transitive sub-rule names:
+        classTemplateOpt_2
+        optional__classTemplateOpt_3
+        templateBody
+typeDcl
+    epsilonable: false
+    immediate sub-rule names:
+        Id
+    transitive sub-rule names:
+        Id
+typeParam
+    epsilonable: false
+    immediate sub-rule names:
+        Id
+    transitive sub-rule names:
+        Id
+typePat
+    epsilonable: false
+    immediate sub-rule names:
+        type_
+    transitive sub-rule names:
+        Id
+        annotType
+        compoundType
+        infixType
+        refinement
+        simpleType
+        simpleType_5
+        stableId
+        stableId_6
+        type_
+type_
+    epsilonable: false
+    immediate sub-rule names:
+        infixType
+    transitive sub-rule names:
+        Id
+        annotType
+        compoundType
+        infixType
+        refinement
+        simpleType
+        simpleType_5
+        stableId
+        stableId_6
+types
+    epsilonable: false
+    immediate sub-rule names:
+        type_
+    transitive sub-rule names:
+        Id
+        annotType
+        compoundType
+        infixType
+        refinement
+        simpleType
+        simpleType_5
+        stableId
+        stableId_6
+        type_
+varDef
+    epsilonable: false
+    immediate sub-rule names:
+        patDef
+    transitive sub-rule names:
+        patDef
+variantTypeParam
+    epsilonable: false
+    immediate sub-rule names:
+        typeParam
+    transitive sub-rule names:
+        Id
+        typeParam

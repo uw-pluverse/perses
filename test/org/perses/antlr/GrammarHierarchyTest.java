@@ -17,11 +17,9 @@
 package org.perses.antlr;
 
 import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.Files;
 import org.antlr.v4.tool.Grammar;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -167,48 +165,6 @@ public class GrammarHierarchyTest {
     assertThat(grammar.rules.values().stream().map(r -> r.name).collect(Collectors.toList()))
         .containsExactlyElementsIn(RULE_NAMES_IN_ORIGINAL_C_PARSER)
         .inOrder();
-  }
-
-
-  @Ignore("Obsolete. OptC will not be maintained.")
-  @Test
-  public void testRuleListOfAntlrHierarchyOfOptCParser() throws IOException {
-    final GrammarHierarchy hierarchy = new CParserFacade().getRuleHierarchy();
-    final ImmutableList<RuleHierarchyInfo> rules = hierarchy.getRuleList();
-    final ImmutableList<String> ruleNames =
-        FluentIterable.from(rules).transform(RuleHierarchyInfo::getRuleName).toList();
-    final String goldenString =
-        readResourceFileToString("opt_c_parser_antlr_rule_hierarchy_rule_list.golden.txt");
-    final String[] goldenRuleNames = goldenString.split("\\s+");
-    assertThat(ruleNames).containsExactly((Object[]) goldenRuleNames).inOrder();
-  }
-
-  @Ignore("Obsolete. OptC will not be maintained.")
-  @Test
-  public void testImmediateSubrulesOfAntlrGrammarHierarchyOfOptCParser() throws IOException {
-    final GrammarHierarchy hierarchy = new CParserFacade().getRuleHierarchy();
-    final ImmutableList<RuleHierarchyInfo> ruleList = hierarchy.getRuleList();
-    String actual =
-        GrammarHierarchyTest.dumpRuleWithSubrules(
-            ruleList, RuleHierarchyInfo::getImmediateSubRuleNames, String::toString);
-    String expected =
-        readResourceFileToString(
-            "opt_c_parser_antlr_rule_hierarchy_rule_immediate_subrules.golden.txt");
-    assertThat(actual).isEqualTo(expected);
-  }
-
-  @Ignore("Obsolete. OptC will not be maintained.")
-  @Test
-  public void testTransitiveSubrulesOfAntlrGrammarHierarchyOfOptCParser() throws IOException {
-    final GrammarHierarchy hierarchy = new CParserFacade().getRuleHierarchy();
-    final ImmutableList<RuleHierarchyInfo> ruleList = hierarchy.getRuleList();
-    String actual =
-        GrammarHierarchyTest.dumpRuleWithSubrules(
-            ruleList, RuleHierarchyInfo::getTransitiveSubRules, RuleHierarchyInfo::getRuleName);
-    String expected =
-        readResourceFileToString(
-            "opt_c_parser_antlr_rule_hierarchy_rule_transitive_subrules.golden.txt");
-    assertThat(actual).isEqualTo(expected);
   }
 
   @Test

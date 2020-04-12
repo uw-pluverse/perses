@@ -1,8 +1,11 @@
 package org.perses.antlr;
 
-import com.google.common.base.Preconditions;
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
 import com.google.common.collect.ImmutableList;
 import org.perses.grammar.c.PnfCParserFacade;
+import org.perses.grammar.go.PnfGoParserFacade;
+import org.perses.grammar.scala.PnfScalaParserFacade;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -14,16 +17,36 @@ import java.util.Comparator;
 
 public class GrammarHierarchyDumpMain {
 
+  private static final class Options {
+    @Parameter(names = "-c", required = true)
+    public String c;
+
+    @Parameter(names = "-go", required = true)
+    public String go;
+
+    @Parameter(names = "-scala", required = true)
+    public String scala;
+  }
+
   public static void main(String[] args) throws IOException {
-    Preconditions.checkArgument(args.length == 1);
-    final GrammarHierarchy hierarchy = new PnfCParserFacade().getRuleHierarchy();
+    final Options cmd = new Options();
+    final JCommander commander = JCommander.newBuilder().addObject(cmd).build();
+    commander.parse(args);
+
+    dumpGrammarHierarchy(cmd.c, new PnfCParserFacade().getRuleHierarchy());
+    dumpGrammarHierarchy(cmd.go, new PnfGoParserFacade().getRuleHierarchy());
+    dumpGrammarHierarchy(cmd.scala, new PnfScalaParserFacade().getRuleHierarchy());
+  }
+
+  private static void dumpGrammarHierarchy(String outputPath, GrammarHierarchy hierarchy)
+      throws IOException {
     final ImmutableList<RuleHierarchyInfo> rules =
         hierarchy.getRuleList().stream()
             .sorted(Comparator.comparing(RuleHierarchyInfo::getRuleName))
             .collect(ImmutableList.toImmutableList());
     try (BufferedWriter writer =
         Files.newBufferedWriter(
-            Paths.get(args[0]), StandardCharsets.UTF_8, StandardOpenOption.CREATE)) {
+            Paths.get(outputPath), StandardCharsets.UTF_8, StandardOpenOption.CREATE)) {
       for (RuleHierarchyInfo rule : rules) {
         if (rule.getTransitiveSubRules().isEmpty()) {
           continue;
