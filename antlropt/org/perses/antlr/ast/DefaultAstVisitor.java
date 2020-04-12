@@ -1,9 +1,14 @@
 package org.perses.antlr.ast;
 
+// TODO: I should deprecate this class. This default visitor might makes subclass error-prone to
+//      miss some cases.
 public class DefaultAstVisitor extends AbstractAstVisitor {
 
   @Override
   protected void visit(PersesTokenSetAst ast) {}
+
+  @Override
+  protected void visit(PersesRangeAst ast) {}
 
   @Override
   protected void visit(PersesTerminalAst ast) {}

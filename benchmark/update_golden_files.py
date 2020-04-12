@@ -2,6 +2,7 @@
 
 import subprocess
 
+# TODO: deprecate this script, and delete it.
 
 class Target:
 

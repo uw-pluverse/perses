@@ -9,7 +9,6 @@ load(
     "antlr_codegen_combined",
 )
 
-
 antlr_codegen_combined(
     name = "orig_scala_grammar",
     grammar_file = "Scala.g4",
@@ -17,7 +16,6 @@ antlr_codegen_combined(
     lexer_java_file_name = "ScalaLexer.java",
     parser_java_file_name = "ScalaParser.java",
 )
-
 
 pnf_convert(
     name = "normalize_scala_to_pnf",
@@ -32,4 +30,17 @@ antlr_codegen_combined(
     java_pkg_name = "org.perses.grammar.scala",
     lexer_java_file_name = "PnfScalaLexer.java",
     parser_java_file_name = "PnfScalaParser.java",
+)
+
+java_library(
+    name = "pnfscala_parser_facade",
+    srcs = ["PnfScalaParserFacade.java"],
+    deps = [
+        ":orig_scala_grammar",
+        ":pnf_scala_grammar",
+        "//src/org/perses/antlr:parse_tree_with_parser",
+        "//src/org/perses/grammar:grammar_facade",
+        "@maven//:com_google_flogger_flogger",
+        "@maven//:org_antlr_antlr4_runtime",
+    ],
 )

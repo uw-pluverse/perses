@@ -57,6 +57,14 @@ targets = [
         output_file="bazel-bin/benchmark/toys/go_print/result_reduction_golden_test_perses_node_priority_with_dfs_delta_small.go",
         golden_file="benchmark/toys/go_print/golden_reduced_small.go"),
     Target(
+        target_name="//benchmark/toys/scala_print:reduction_golden_test_reduction",
+        output_file="bazel-bin/benchmark/toys/scala_print/reduction_progress.txt",
+        golden_file="benchmark/toys/scala_print/golden_reduction_progress.txt"),
+    Target(
+        target_name="//benchmark/toys/scala_print:reduction_golden_test_reduction",
+        output_file="bazel-bin/benchmark/toys/scala_print/result_reduction_golden_test_perses_node_priority_with_dfs_delta_Hello.sc",
+        golden_file="benchmark/toys/scala_print/golden_reduced_Hello.sc"),
+    Target(
         target_name="//test/org/perses:gen_token_counter_file",
         output_file="bazel-bin/test/org/perses/token_count.txt",
         golden_file="test/org/perses/golden_token_count_for_delta1.txt"),

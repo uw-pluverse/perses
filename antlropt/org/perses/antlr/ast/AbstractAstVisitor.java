@@ -54,7 +54,7 @@ public abstract class AbstractAstVisitor {
         visit((PersesLexerSkipCommandAst) ast);
         break;
       case LEXER_CHANNEL_COMMAND:
-        visit((PersesLexerChannelCommandAst)ast);
+        visit((PersesLexerChannelCommandAst) ast);
         break;
       case NOT:
         visit((PersesNotAst) ast);
@@ -76,6 +76,9 @@ public abstract class AbstractAstVisitor {
         break;
       case TOKEN_SET:
         visit((PersesTokenSetAst) ast);
+        break;
+      case LEXER_RANGE_OPERATOR:
+        visit((PersesRangeAst) ast);
         break;
       default:
         throw new RuntimeException("Unhandled type: " + ast);
@@ -117,4 +120,6 @@ public abstract class AbstractAstVisitor {
   protected abstract void visit(PersesRuleReferenceAst ast);
 
   protected abstract void visit(PersesGrammar ast);
+
+  protected abstract void visit(PersesRangeAst ast);
 }
