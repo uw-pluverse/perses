@@ -12,9 +12,10 @@ class Target:
 
 
 targets = [
-    Target(target_name="//src/org/perses/grammar/c:normalize_c_to_pnf",
-           output_file="bazel-bin/src/org/perses/grammar/c/PnfC.g4",
-           golden_file="test/org/perses/grammar/c/golden_pnf_c.g4"),
+    Target(
+        target_name="//src/org/perses/grammar/c:normalize_c_to_pnf",
+        output_file="bazel-bin/src/org/perses/grammar/c/PnfC.g4",
+        golden_file="test/org/perses/grammar/c/golden_pnf_c.g4"),
     Target(
         target_name="//test/org/perses/antlr/pnf:dump_pnf_pass_manager_log",
         output_file="bazel-bin/test/org/perses/antlr/pnf/pnf_pass_manager_log.txt",
@@ -68,6 +69,10 @@ targets = [
         target_name="//test/org/perses/grammar/go:cp_pnf_go_grammar",
         output_file="bazel-bin/test/org/perses/grammar/go/pnf_go_grammar.g4",
         golden_file="test/org/perses/grammar/go/golden_pnf_go.g4"),
+    Target(
+        target_name="//test/org/perses/grammar/scala:cp_pnf_scala_grammar",
+        output_file="bazel-bin/test/org/perses/grammar/scala/pnf_scala_grammar.g4",
+        golden_file="test/org/perses/grammar/scala/golden_pnf_scala.g4"),
 ]
 
 for target in targets:
