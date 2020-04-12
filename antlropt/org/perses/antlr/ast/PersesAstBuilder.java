@@ -1,6 +1,7 @@
 package org.perses.antlr.ast;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import org.antlr.v4.parse.ANTLRParser;
 import org.antlr.v4.tool.ast.ActionAST;
@@ -11,6 +12,7 @@ import org.antlr.v4.tool.ast.GrammarRootAST;
 import org.antlr.v4.tool.ast.NotAST;
 import org.antlr.v4.tool.ast.OptionalBlockAST;
 import org.antlr.v4.tool.ast.PlusBlockAST;
+import org.antlr.v4.tool.ast.RangeAST;
 import org.antlr.v4.tool.ast.RuleAST;
 import org.antlr.v4.tool.ast.RuleRefAST;
 import org.antlr.v4.tool.ast.SetAST;
@@ -314,7 +316,7 @@ public final class PersesAstBuilder {
       final GrammarAST child = (GrammarAST) ast.getChild(i);
       if (child instanceof TerminalAST) {
         TerminalAST terminal = (TerminalAST) child;
-        builder.add(new PersesTerminalAst(terminal.getText(), terminal.getToken().getType()));
+        builder.add(convertTerminalAst(terminal));
       } else if (PersesLexerCharSet.isLexerCharSet(child)) {
         builder.add(new PersesLexerCharSet(child.getText()));
       } else {
@@ -344,7 +346,7 @@ public final class PersesAstBuilder {
   static AbstractPersesRuleElement dispatchConversion(GrammarAST ast, SymbolTable symbolTable) {
     if (ast instanceof TerminalAST) {
       TerminalAST terminal = (TerminalAST) ast;
-      return new PersesTerminalAst(terminal.getText(), terminal.getToken().getType());
+      return convertTerminalAst(terminal);
     }
     if (ast instanceof RuleRefAST) {
       return convertRuleRefAst((RuleRefAST) ast, symbolTable);
@@ -360,6 +362,9 @@ public final class PersesAstBuilder {
     }
     if (ast instanceof BlockAST) {
       return convertAlternativeBlock((BlockAST) ast, symbolTable);
+    }
+    if (ast instanceof RangeAST) {
+      return convertRangeAST((RangeAST) ast);
     }
     if (ast instanceof ActionAST) {
       final ActionAST action = (ActionAST) ast;
@@ -378,6 +383,20 @@ public final class PersesAstBuilder {
       return new PersesLexerCharSet(ast.getText());
     }
     throw new RuntimeException("Unhandled ast: " + ast + ", " + ast.getClass());
+  }
+
+  private static PersesTerminalAst convertTerminalAst(TerminalAST terminal) {
+    return new PersesTerminalAst(terminal.getText(), terminal.getToken().getType());
+  }
+
+  private static AbstractPersesRuleElement convertRangeAST(RangeAST ast) {
+    Preconditions.checkArgument(ast.getChildCount() == 2);
+    final GrammarAST first = (GrammarAST) ast.getChild(0);
+    final GrammarAST second = (GrammarAST) ast.getChild(1);
+    Preconditions.checkState(first instanceof TerminalAST);
+    Preconditions.checkState(second instanceof TerminalAST);
+    return new PersesRangeAst(
+        convertTerminalAst((TerminalAST) first), convertTerminalAst((TerminalAST) second));
   }
 
   private static boolean isTerminalSetAst(GrammarAST ast) {

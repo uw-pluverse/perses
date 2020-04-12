@@ -27,6 +27,7 @@ public enum AstTag {
   TERMINAL(Precedence.UNIT),
   RULE_REF(Precedence.UNIT),
   LEXER_CHAR_SET(Precedence.UNIT),
+  LEXER_RANGE_OPERATOR(Precedence.UNIT),
 
   EPSILON(Precedence.NONE);
 

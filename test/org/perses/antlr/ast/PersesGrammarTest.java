@@ -118,6 +118,11 @@ public class PersesGrammarTest {
   }
 
   @Test
+  public void testRangeOperator() {
+    createAndTest("lexer_range_operator.g4");
+  }
+
+  @Test
   public void testGoLexer() {
     final PersesGrammar grammar = createAndTest("GoLexer.g4");
     final String sourceCode = grammar.getSourceCode();
