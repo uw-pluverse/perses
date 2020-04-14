@@ -22,6 +22,7 @@ import org.perses.grammar.c.PnfCParserFacade;
 import org.perses.grammar.go.PnfGoParserFacade;
 import org.perses.grammar.java.JavaParserFacade;
 import org.perses.grammar.scala.PnfScalaParserFacade;
+import org.perses.grammar.rust.PnfRustParserFacade;
 
 /** Creates a parser facade, based on the type of language kind. */
 public final class ParserFacadeFactory {
@@ -50,6 +51,8 @@ public final class ParserFacadeFactory {
         return new PnfGoParserFacade();
       case SCALA:
         return new PnfScalaParserFacade();
+      case RUST:
+        return new PnfRustParserFacade();
       default:
         throw new RuntimeException("The language " + languageKind + " is not supported.");
     }

@@ -28,6 +28,7 @@ public enum LanguageKind {
   SCALA(ImmutableList.of("scala", "sc"), FormatSensitivity.SENSITIVE),
   GO(ImmutableList.of("go"), FormatSensitivity.SENSITIVE),
   JAVA(ImmutableList.of("java"), FormatSensitivity.INSENSITIVE),
+  RUST(ImmutableList.of("rs"), FormatSensitivity.INSENSITIVE),
   UNKNOWN(ImmutableList.of(), FormatSensitivity.SENSITIVE);
 
   private static ImmutableMap<String, LanguageKind> EXTENSION_MAP;
