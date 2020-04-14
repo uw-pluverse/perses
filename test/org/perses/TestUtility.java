@@ -204,6 +204,8 @@ public final class TestUtility {
       new File(THIRD_PARTY_TEST_PROGRAMS_ROOT, "c_programs/clang_testsuite");
   private static final File GO_PROGRAM_FOLDER =
       new File(THIRD_PARTY_TEST_PROGRAMS_ROOT, "go_programs/go_testsuite");
+  private static final File RUST_PROGRAM_FOLDER =
+      new File(THIRD_PARTY_TEST_PROGRAMS_ROOT, "rust_programs/rust_testsuite");
 
   private TestUtility() {}
 
@@ -221,6 +223,10 @@ public final class TestUtility {
 
   public static ImmutableList<File> getGolangTestFiles() {
     return getGolangFiles(GO_PROGRAM_FOLDER);
+  }
+
+  public static ImmutableList<File> getRustTestFiles() {
+    return getGolangFiles(RUST_PROGRAM_FOLDER);
   }
 
   public static File getOneGccTestFile(String fileName) {
@@ -295,6 +301,11 @@ public final class TestUtility {
   private static final ImmutableList<File> getGolangFiles(File folder) {
     return getFilesWithExtension(folder, ".go");
   }
+
+  private static final ImmutableList<File> getRustFiles(File folder) {
+    return getFilesWithExtension(folder, ".rs");
+  }
+
 
   private static final ImmutableList<File> getFilesWithExtension(
       File folder, final String fileExtension) {

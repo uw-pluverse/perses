@@ -1,4 +1,4 @@
-grammar rust;
+grammar Rust;
 
 fragment XID_Start :
       '\u0041' .. '\u005a'
