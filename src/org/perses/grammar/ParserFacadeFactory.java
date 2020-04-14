@@ -52,7 +52,7 @@ public final class ParserFacadeFactory {
       case SCALA:
         return new PnfScalaParserFacade();
       case RUST:
-        return new PnfScalaParserFacade();
+        return new PnfRustParserFacade();
       default:
         throw new RuntimeException("The language " + languageKind + " is not supported.");
     }
