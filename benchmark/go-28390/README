@@ -1,0 +1,25 @@
+Issue #28390 [0] reported a internal compiler error with an attached Go program
+as a reproducer. The issue was fixed in CL [1] and merged into the tree as
+commit [2]. The parent commit [3] was the last known commit that could
+reproduce this issue.
+
+To reduce the attached 28390.go program, checkout revision [3] of the Go
+source code [4] and run the `make.bash` command to bootstrap and compile the
+compiler. To use this custom go compiler, set your PATH variable:
+
+$ export PATH=/path/to/cloned/go.googlesource.com/go/bin:$PATH
+
+And check that you have the right go version:
+
+$ go version
+go version devel +a361ef36af Sun Oct 28 18:17:46 2018 +0000 linux/amd64
+
+To run the bazel tests in this directory:
+
+$ bazel test //benchmark/go-28390/...
+
+[0] https://github.com/golang/go/issues/28390
+[1] https://go-review.googlesource.com/c/go/+/144598/
+[2] https://go.googlesource.com/go/+/15c45752935a13fcb9f8f9528ac062da3a9d6cdb
+[3] https://go.googlesource.com/go/+/a361ef36af4812815c02dd026c4672837442bf44
+[4] https://go.googlesource.com/go
