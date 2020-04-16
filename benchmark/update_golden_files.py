@@ -49,6 +49,10 @@ targets = [
         target_name="//benchmark/go-30606:reduction_golden_test",
         output_file="bazel-bin/benchmark/go-30606/result_reduction_golden_test_perses_node_priority_with_dfs_delta_30606.go",
         golden_file="benchmark/go-30606/golden_reduced_30606.go"),
+    Target(
+        target_name="//benchmark/go-28390:reduction_golden_test",
+        output_file="bazel-bin/benchmark/go-28390/result_reduction_golden_test_perses_node_priority_with_dfs_delta_28390.go",
+        golden_file="benchmark/go-28390/golden_reduced_28390.go"),
 ]
 
 for target in targets:
