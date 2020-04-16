@@ -1,0 +1,7256 @@
+======================Reduction starts======================
+
+The spar tree is the following.
+sourceFile {id=1}
+|___packageClause {id=2,slot_type=packageClause}
+|   |___Token:package {id=482,slot_type=PACKAGE}
+|   |___Token:main {id=483,slot_type=IDENTIFIER}
+|___Token:; {id=481,slot_type=eos}
+|___(*) {id=4,slot_type=kleene_star__sourceFile_4}
+    |___sourceFile_3 {id=5,slot_type=sourceFile_3}
+    |   |___functionDecl {id=291,slot_type=functionDecl}
+    |   |   |___Token:func {id=294,slot_type=FUNC}
+    |   |   |___Token:ascii {id=295,slot_type=IDENTIFIER}
+    |   |   |___signature {id=296,slot_type=signature}
+    |   |   |   |___parameters {id=464,slot_type=parameters}
+    |   |   |   |   |___Token:( {id=470,slot_type=L_PAREN}
+    |   |   |   |   |___(?) {id=471,slot_type=optional__parameters_5}
+    |   |   |   |   |   |___parameterDecl {id=474,slot_type=parameters_4}
+    |   |   |   |   |       |___(?) {id=475,slot_type=optional__parameterDecl_1}
+    |   |   |   |   |       |   |___Token:r {id=480,slot_type=identifierList}
+    |   |   |   |   |       |___Token:rune {id=478,slot_type=type_}
+    |   |   |   |   |___Token:) {id=472,slot_type=R_PAREN}
+    |   |   |   |___(?) {id=465,slot_type=optional__signature_1}
+    |   |   |       |___Token:rune {id=469,slot_type=result}
+    |   |   |___(?) {id=297,slot_type=optional__functionDecl_1}
+    |   |       |___block {id=298,slot_type=block}
+    |   |           |___Token:{ {id=299,slot_type=L_CURLY}
+    |   |           |___(?) {id=300,slot_type=optional__block_1}
+    |   |           |   |___(+) {id=303,slot_type=statementList}
+    |   |           |       |___statementList_1 {id=304,slot_type=statementList_1}
+    |   |           |           |___exprSwitchStmt {id=308,slot_type=realStatement}
+    |   |           |           |   |___Token:switch {id=309,slot_type=SWITCH}
+    |   |           |           |   |___Token:{ {id=310,slot_type=L_CURLY}
+    |   |           |           |   |___(*) {id=311,slot_type=kleene_star__exprSwitchStmt_4}
+    |   |           |           |   |   |___exprCaseClause {id=313,slot_type=exprCaseClause}
+    |   |           |           |   |   |   |___exprSwitchCase {id=400,slot_type=exprSwitchCase}
+    |   |           |           |   |   |   |   |___Token:case {id=428,slot_type=CASE}
+    |   |           |           |   |   |   |   |___expression {id=430,slot_type=expressionList}
+    |   |           |           |   |   |   |       |___Token:97 {id=463,slot_type=unaryExpr}
+    |   |           |           |   |   |   |       |___(*) {id=432,slot_type=kleene_star__expression_1}
+    |   |           |           |   |   |   |           |___expression_2 {id=433,slot_type=expression_2}
+    |   |           |           |   |   |   |               |___Token:<= {id=460,slot_type=alternative__expression_6}
+    |   |           |           |   |   |   |               |___expression {id=435,slot_type=expression}
+    |   |           |           |   |   |   |                   |___Token:r {id=459,slot_type=unaryExpr}
+    |   |           |           |   |   |   |                   |___(*) {id=437,slot_type=kleene_star__expression_1}
+    |   |           |           |   |   |   |                       |___expression_2 {id=438,slot_type=expression_2}
+    |   |           |           |   |   |   |                           |___Token:&& {id=455,slot_type=alternative__expression_6}
+    |   |           |           |   |   |   |                           |___expression {id=440,slot_type=expression}
+    |   |           |           |   |   |   |                               |___Token:r {id=454,slot_type=unaryExpr}
+    |   |           |           |   |   |   |                               |___(*) {id=442,slot_type=kleene_star__expression_1}
+    |   |           |           |   |   |   |                                   |___expression_2 {id=443,slot_type=expression_2}
+    |   |           |           |   |   |   |                                       |___Token:<= {id=450,slot_type=alternative__expression_6}
+    |   |           |           |   |   |   |                                       |___Token:122 {id=449,slot_type=expression}
+    |   |           |           |   |   |   |___Token:: {id=401,slot_type=COLON}
+    |   |           |           |   |   |   |___(?) {id=402,slot_type=optional__block_1}
+    |   |           |           |   |   |       |___(+) {id=404,slot_type=statementList}
+    |   |           |           |   |   |           |___statementList_1 {id=405,slot_type=statementList_1}
+    |   |           |           |   |   |               |___returnStmt {id=409,slot_type=realStatement}
+    |   |           |           |   |   |               |   |___Token:return {id=410,slot_type=RETURN}
+    |   |           |           |   |   |               |   |___(?) {id=411,slot_type=optional__returnStmt_1}
+    |   |           |           |   |   |               |       |___expression {id=413,slot_type=expressionList}
+    |   |           |           |   |   |               |           |___Token:r {id=427,slot_type=unaryExpr}
+    |   |           |           |   |   |               |           |___(*) {id=415,slot_type=kleene_star__expression_1}
+    |   |           |           |   |   |               |               |___expression_2 {id=416,slot_type=expression_2}
+    |   |           |           |   |   |               |                   |___Token:- {id=423,slot_type=alternative__expression_6}
+    |   |           |           |   |   |               |                   |___Token:32 {id=422,slot_type=expression}
+    |   |           |           |   |   |               |___Token:; {id=408,slot_type=eos}
+    |   |           |           |   |   |___exprCaseClause {id=314,slot_type=exprCaseClause}
+    |   |           |           |   |   |   |___exprSwitchCase {id=336,slot_type=exprSwitchCase}
+    |   |           |           |   |   |   |   |___Token:case {id=364,slot_type=CASE}
+    |   |           |           |   |   |   |   |___expression {id=366,slot_type=expressionList}
+    |   |           |           |   |   |   |       |___Token:65 {id=399,slot_type=unaryExpr}
+    |   |           |           |   |   |   |       |___(*) {id=368,slot_type=kleene_star__expression_1}
+    |   |           |           |   |   |   |           |___expression_2 {id=369,slot_type=expression_2}
+    |   |           |           |   |   |   |               |___Token:<= {id=396,slot_type=alternative__expression_6}
+    |   |           |           |   |   |   |               |___expression {id=371,slot_type=expression}
+    |   |           |           |   |   |   |                   |___Token:r {id=395,slot_type=unaryExpr}
+    |   |           |           |   |   |   |                   |___(*) {id=373,slot_type=kleene_star__expression_1}
+    |   |           |           |   |   |   |                       |___expression_2 {id=374,slot_type=expression_2}
+    |   |           |           |   |   |   |                           |___Token:&& {id=391,slot_type=alternative__expression_6}
+    |   |           |           |   |   |   |                           |___expression {id=376,slot_type=expression}
+    |   |           |           |   |   |   |                               |___Token:r {id=390,slot_type=unaryExpr}
+    |   |           |           |   |   |   |                               |___(*) {id=378,slot_type=kleene_star__expression_1}
+    |   |           |           |   |   |   |                                   |___expression_2 {id=379,slot_type=expression_2}
+    |   |           |           |   |   |   |                                       |___Token:<= {id=386,slot_type=alternative__expression_6}
+    |   |           |           |   |   |   |                                       |___Token:90 {id=385,slot_type=expression}
+    |   |           |           |   |   |   |___Token:: {id=337,slot_type=COLON}
+    |   |           |           |   |   |   |___(?) {id=338,slot_type=optional__block_1}
+    |   |           |           |   |   |       |___(+) {id=340,slot_type=statementList}
+    |   |           |           |   |   |           |___statementList_1 {id=341,slot_type=statementList_1}
+    |   |           |           |   |   |               |___returnStmt {id=345,slot_type=realStatement}
+    |   |           |           |   |   |               |   |___Token:return {id=346,slot_type=RETURN}
+    |   |           |           |   |   |               |   |___(?) {id=347,slot_type=optional__returnStmt_1}
+    |   |           |           |   |   |               |       |___expression {id=349,slot_type=expressionList}
+    |   |           |           |   |   |               |           |___Token:r {id=363,slot_type=unaryExpr}
+    |   |           |           |   |   |               |           |___(*) {id=351,slot_type=kleene_star__expression_1}
+    |   |           |           |   |   |               |               |___expression_2 {id=352,slot_type=expression_2}
+    |   |           |           |   |   |               |                   |___Token:+ {id=359,slot_type=alternative__expression_6}
+    |   |           |           |   |   |               |                   |___Token:32 {id=358,slot_type=expression}
+    |   |           |           |   |   |               |___Token:; {id=344,slot_type=eos}
+    |   |           |           |   |   |___exprCaseClause {id=315,slot_type=exprCaseClause}
+    |   |           |           |   |       |___Token:default {id=335,slot_type=exprSwitchCase}
+    |   |           |           |   |       |___Token:: {id=317,slot_type=COLON}
+    |   |           |           |   |       |___(?) {id=318,slot_type=optional__block_1}
+    |   |           |           |   |           |___(+) {id=320,slot_type=statementList}
+    |   |           |           |   |               |___statementList_1 {id=321,slot_type=statementList_1}
+    |   |           |           |   |                   |___returnStmt {id=325,slot_type=realStatement}
+    |   |           |           |   |                   |   |___Token:return {id=326,slot_type=RETURN}
+    |   |           |           |   |                   |   |___(?) {id=327,slot_type=optional__returnStmt_1}
+    |   |           |           |   |                   |       |___Token:r {id=334,slot_type=expressionList}
+    |   |           |           |   |                   |___Token:; {id=324,slot_type=eos}
+    |   |           |           |   |___Token:} {id=312,slot_type=R_CURLY}
+    |   |           |           |___Token:; {id=307,slot_type=eos}
+    |   |           |___Token:} {id=301,slot_type=R_CURLY}
+    |   |___Token:; {id=293,slot_type=eos}
+    |___sourceFile_3 {id=6,slot_type=sourceFile_3}
+        |___functionDecl {id=7,slot_type=functionDecl}
+        |   |___Token:func {id=10,slot_type=FUNC}
+        |   |___Token:main {id=11,slot_type=IDENTIFIER}
+        |   |___parameters {id=288,slot_type=signature}
+        |   |   |___Token:( {id=289,slot_type=L_PAREN}
+        |   |   |___Token:) {id=290,slot_type=R_PAREN}
+        |   |___(?) {id=13,slot_type=optional__functionDecl_1}
+        |       |___block {id=14,slot_type=block}
+        |           |___Token:{ {id=15,slot_type=L_CURLY}
+        |           |___(?) {id=16,slot_type=optional__block_1}
+        |           |   |___(+) {id=19,slot_type=statementList}
+        |           |       |___statementList_1 {id=20,slot_type=statementList_1}
+        |           |       |   |___shortVarDecl {id=277,slot_type=realStatement}
+        |           |       |   |   |___Token:nomeObjeto {id=287,slot_type=identifierList}
+        |           |       |   |   |___Token::= {id=279,slot_type=DECLARE_ASSIGN}
+        |           |       |   |   |___Token:"ABE1FK21" {id=286,slot_type=expressionList}
+        |           |       |   |___Token:; {id=275,slot_type=eos}
+        |           |       |___statementList_1 {id=21,slot_type=statementList_1}
+        |           |       |   |___conversion {id=233,slot_type=realStatement}
+        |           |       |   |   |___Token:println {id=272,slot_type=type_}
+        |           |       |   |   |___Token:( {id=235,slot_type=L_PAREN}
+        |           |       |   |   |___conversion {id=241,slot_type=expression}
+        |           |       |   |   |   |___Token:string {id=270,slot_type=type_}
+        |           |       |   |   |   |___Token:( {id=243,slot_type=L_PAREN}
+        |           |       |   |   |   |___primaryExpr {id=247,slot_type=expression}
+        |           |       |   |   |   |   |___Token:nomeObjeto {id=268,slot_type=primaryExpr_3}
+        |           |       |   |   |   |   |___(*) {id=249,slot_type=kleene_star__primaryExpr_1}
+        |           |       |   |   |   |       |___slice {id=251,slot_type=primaryExpr_2}
+        |           |       |   |   |   |           |___Token:[ {id=252,slot_type=L_BRACKET}
+        |           |       |   |   |   |           |___(?) {id=253,slot_type=optional__exprSwitchStmt_3}
+        |           |       |   |   |   |           |   |___Token:1 {id=266,slot_type=expression}
+        |           |       |   |   |   |           |___Token:: {id=254,slot_type=COLON}
+        |           |       |   |   |   |           |___(?) {id=255,slot_type=optional__exprSwitchStmt_3}
+        |           |       |   |   |   |           |   |___Token:4 {id=261,slot_type=expression}
+        |           |       |   |   |   |           |___Token:] {id=256,slot_type=R_BRACKET}
+        |           |       |   |   |   |___Token:) {id=245,slot_type=R_PAREN}
+        |           |       |   |   |___Token:) {id=237,slot_type=R_PAREN}
+        |           |       |   |___Token:; {id=226,slot_type=eos}
+        |           |       |___statementList_1 {id=22,slot_type=statementList_1}
+        |           |       |   |___conversion {id=124,slot_type=realStatement}
+        |           |       |   |   |___Token:println {id=223,slot_type=type_}
+        |           |       |   |   |___Token:( {id=126,slot_type=L_PAREN}
+        |           |       |   |   |___expression {id=127,slot_type=expression}
+        |           |       |   |   |   |___conversion {id=190,slot_type=unaryExpr}
+        |           |       |   |   |   |   |___Token:ascii {id=221,slot_type=type_}
+        |           |       |   |   |   |   |___Token:( {id=192,slot_type=L_PAREN}
+        |           |       |   |   |   |   |___conversion {id=198,slot_type=expression}
+        |           |       |   |   |   |   |   |___Token:rune {id=219,slot_type=type_}
+        |           |       |   |   |   |   |   |___Token:( {id=200,slot_type=L_PAREN}
+        |           |       |   |   |   |   |   |___primaryExpr {id=204,slot_type=expression}
+        |           |       |   |   |   |   |   |   |___Token:nomeObjeto {id=217,slot_type=primaryExpr_3}
+        |           |       |   |   |   |   |   |   |___(*) {id=206,slot_type=kleene_star__primaryExpr_1}
+        |           |       |   |   |   |   |   |       |___index {id=208,slot_type=primaryExpr_2}
+        |           |       |   |   |   |   |   |           |___Token:[ {id=209,slot_type=L_BRACKET}
+        |           |       |   |   |   |   |   |           |___Token:4 {id=215,slot_type=expression}
+        |           |       |   |   |   |   |   |           |___Token:] {id=211,slot_type=R_BRACKET}
+        |           |       |   |   |   |   |   |___Token:) {id=202,slot_type=R_PAREN}
+        |           |       |   |   |   |   |___Token:) {id=194,slot_type=R_PAREN}
+        |           |       |   |   |   |___(*) {id=130,slot_type=kleene_star__expression_1}
+        |           |       |   |   |       |___expression_2 {id=131,slot_type=expression_2}
+        |           |       |   |   |           |___Token:>= {id=187,slot_type=alternative__expression_6}
+        |           |       |   |   |           |___expression {id=133,slot_type=expression}
+        |           |       |   |   |               |___Token:48 {id=186,slot_type=unaryExpr}
+        |           |       |   |   |               |___(*) {id=135,slot_type=kleene_star__expression_1}
+        |           |       |   |   |                   |___expression_2 {id=136,slot_type=expression_2}
+        |           |       |   |   |                       |___Token:&& {id=183,slot_type=alternative__expression_6}
+        |           |       |   |   |                       |___expression {id=138,slot_type=expression}
+        |           |       |   |   |                           |___conversion {id=151,slot_type=unaryExpr}
+        |           |       |   |   |                           |   |___Token:ascii {id=182,slot_type=type_}
+        |           |       |   |   |                           |   |___Token:( {id=153,slot_type=L_PAREN}
+        |           |       |   |   |                           |   |___conversion {id=159,slot_type=expression}
+        |           |       |   |   |                           |   |   |___Token:rune {id=180,slot_type=type_}
+        |           |       |   |   |                           |   |   |___Token:( {id=161,slot_type=L_PAREN}
+        |           |       |   |   |                           |   |   |___primaryExpr {id=165,slot_type=expression}
+        |           |       |   |   |                           |   |   |   |___Token:nomeObjeto {id=178,slot_type=primaryExpr_3}
+        |           |       |   |   |                           |   |   |   |___(*) {id=167,slot_type=kleene_star__primaryExpr_1}
+        |           |       |   |   |                           |   |   |       |___index {id=169,slot_type=primaryExpr_2}
+        |           |       |   |   |                           |   |   |           |___Token:[ {id=170,slot_type=L_BRACKET}
+        |           |       |   |   |                           |   |   |           |___Token:4 {id=176,slot_type=expression}
+        |           |       |   |   |                           |   |   |           |___Token:] {id=172,slot_type=R_BRACKET}
+        |           |       |   |   |                           |   |   |___Token:) {id=163,slot_type=R_PAREN}
+        |           |       |   |   |                           |   |___Token:) {id=155,slot_type=R_PAREN}
+        |           |       |   |   |                           |___(*) {id=140,slot_type=kleene_star__expression_1}
+        |           |       |   |   |                               |___expression_2 {id=141,slot_type=expression_2}
+        |           |       |   |   |                                   |___Token:<= {id=148,slot_type=alternative__expression_6}
+        |           |       |   |   |                                   |___Token:57 {id=147,slot_type=expression}
+        |           |       |   |   |___Token:) {id=128,slot_type=R_PAREN}
+        |           |       |   |___Token:; {id=117,slot_type=eos}
+        |           |       |___statementList_1 {id=23,slot_type=statementList_1}
+        |           |       |   |___conversion {id=83,slot_type=realStatement}
+        |           |       |   |   |___Token:println {id=114,slot_type=type_}
+        |           |       |   |   |___Token:( {id=85,slot_type=L_PAREN}
+        |           |       |   |   |___conversion {id=91,slot_type=expression}
+        |           |       |   |   |   |___Token:string {id=112,slot_type=type_}
+        |           |       |   |   |   |___Token:( {id=93,slot_type=L_PAREN}
+        |           |       |   |   |   |___primaryExpr {id=97,slot_type=expression}
+        |           |       |   |   |   |   |___Token:nomeObjeto {id=110,slot_type=primaryExpr_3}
+        |           |       |   |   |   |   |___(*) {id=99,slot_type=kleene_star__primaryExpr_1}
+        |           |       |   |   |   |       |___index {id=101,slot_type=primaryExpr_2}
+        |           |       |   |   |   |           |___Token:[ {id=102,slot_type=L_BRACKET}
+        |           |       |   |   |   |           |___Token:5 {id=108,slot_type=expression}
+        |           |       |   |   |   |           |___Token:] {id=104,slot_type=R_BRACKET}
+        |           |       |   |   |   |___Token:) {id=95,slot_type=R_PAREN}
+        |           |       |   |   |___Token:) {id=87,slot_type=R_PAREN}
+        |           |       |   |___Token:; {id=76,slot_type=eos}
+        |           |       |___statementList_1 {id=24,slot_type=statementList_1}
+        |           |           |___conversion {id=34,slot_type=realStatement}
+        |           |           |   |___Token:println {id=73,slot_type=type_}
+        |           |           |   |___Token:( {id=36,slot_type=L_PAREN}
+        |           |           |   |___conversion {id=42,slot_type=expression}
+        |           |           |   |   |___Token:string {id=71,slot_type=type_}
+        |           |           |   |   |___Token:( {id=44,slot_type=L_PAREN}
+        |           |           |   |   |___primaryExpr {id=48,slot_type=expression}
+        |           |           |   |   |   |___Token:nomeObjeto {id=69,slot_type=primaryExpr_3}
+        |           |           |   |   |   |___(*) {id=50,slot_type=kleene_star__primaryExpr_1}
+        |           |           |   |   |       |___slice {id=52,slot_type=primaryExpr_2}
+        |           |           |   |   |           |___Token:[ {id=53,slot_type=L_BRACKET}
+        |           |           |   |   |           |___(?) {id=54,slot_type=optional__exprSwitchStmt_3}
+        |           |           |   |   |           |   |___Token:6 {id=67,slot_type=expression}
+        |           |           |   |   |           |___Token:: {id=55,slot_type=COLON}
+        |           |           |   |   |           |___(?) {id=56,slot_type=optional__exprSwitchStmt_3}
+        |           |           |   |   |           |   |___Token:10 {id=62,slot_type=expression}
+        |           |           |   |   |           |___Token:] {id=57,slot_type=R_BRACKET}
+        |           |           |   |   |___Token:) {id=46,slot_type=R_PAREN}
+        |           |           |   |___Token:) {id=38,slot_type=R_PAREN}
+        |           |           |___Token:; {id=27,slot_type=eos}
+        |           |___Token:} {id=17,slot_type=R_CURLY}
+        |___Token:; {id=9,slot_type=eos}
+------------------------------------------------------------
+
+
+=================Reducing node 4, size=127==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(string(nomeObjeto[1:4]));
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+     println(string(nomeObjeto[5]));
+     println(string(nomeObjeto[6:10]));
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@2
+    package main;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main;
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(string(nomeObjeto[1:4]));
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+     println(string(nomeObjeto[5]));
+     println(string(nomeObjeto[6:10]));
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 4
+------------------------------------------------------------
+
+
+=================Reducing node 6, size=127==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(string(nomeObjeto[1:4]));
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+     println(string(nomeObjeto[5]));
+     println(string(nomeObjeto[6:10]));
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=6}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 6
+------------------------------------------------------------
+
+
+=================Reducing node 7, size=127==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(string(nomeObjeto[1:4]));
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+     println(string(nomeObjeto[5]));
+     println(string(nomeObjeto[6:10]));
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 7
+------------------------------------------------------------
+
+
+=================Reducing node 13, size=127=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(string(nomeObjeto[1:4]));
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+     println(string(nomeObjeto[5]));
+     println(string(nomeObjeto[6:10]));
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main()
+     ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 13
+------------------------------------------------------------
+
+
+=================Reducing node 14, size=127=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(string(nomeObjeto[1:4]));
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+     println(string(nomeObjeto[5]));
+     println(string(nomeObjeto[6:10]));
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=14}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 14
+------------------------------------------------------------
+
+
+=================Reducing node 16, size=127=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(string(nomeObjeto[1:4]));
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+     println(string(nomeObjeto[5]));
+     println(string(nomeObjeto[6:10]));
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 16
+------------------------------------------------------------
+
+
+=================Reducing node 19, size=127=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(string(nomeObjeto[1:4]));
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+     println(string(nomeObjeto[5]));
+     println(string(nomeObjeto[6:10]));
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=19}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]remove whole except first
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_plus]dd@2
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(string(nomeObjeto[1:4]));
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 7 --> 6.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 7
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@1
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(string(nomeObjeto[1:4]));
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@2
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_plus]dd@1
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 9 --> 8.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 4
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 19 from 127 to 90
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=90==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    package main;
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+=================Reducing node 291, size=90=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 291
+------------------------------------------------------------
+
+
+=================Reducing node 297, size=90=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main;
+    func ascii(r rune) rune
+     ;
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 297
+------------------------------------------------------------
+
+
+=================Reducing node 298, size=90=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=298}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 298
+------------------------------------------------------------
+
+
+=================Reducing node 300, size=90=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main;
+    func ascii(r rune) rune {
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 300
+------------------------------------------------------------
+
+
+=================Reducing node 303, size=90=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=303}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 303
+------------------------------------------------------------
+
+
+=================Reducing node 304, size=90=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 304
+------------------------------------------------------------
+
+
+=================Reducing node 308, size=90=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+          97 <= r && r <= 122
+      ;
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+          65 <= r && r <= 90
+      ;
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 308
+------------------------------------------------------------
+
+
+=================Reducing node 311, size=90=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@3
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     case 97 <= r && r <= 122:
+      return r - 32;
+     case 65 <= r && r <= 90:
+      return r + 32;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_star]dd@2
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+5 entries are removed: 16 --> 11.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 10
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 311 from 90 to 62
+------------------------------------------------------------
+
+
+=================Reducing node 22, size=62==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 22
+------------------------------------------------------------
+
+
+=================Reducing node 124, size=62=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println                                                                      ;
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+             ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57 ;
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 124
+------------------------------------------------------------
+
+
+=================Reducing node 127, size=62=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4]))                                          );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                              48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 127
+------------------------------------------------------------
+
+
+=================Reducing node 130, size=62=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4]))                                          );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 130
+------------------------------------------------------------
+
+
+=================Reducing node 131, size=62=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=131}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]kleene replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4]))       && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4]))       && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 131
+------------------------------------------------------------
+
+
+=================Reducing node 133, size=62=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48                                    );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >=       ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 133
+------------------------------------------------------------
+
+
+=================Reducing node 135, size=62=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48                                    );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 135
+------------------------------------------------------------
+
+
+=================Reducing node 136, size=62=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=136}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]kleene replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48                               <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48                               <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 136
+------------------------------------------------------------
+
+
+=================Reducing node 138, size=62=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 &&                               57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4]))      );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 138
+------------------------------------------------------------
+
+
+=================Reducing node 190, size=62=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii(rune(nomeObjeto[4])) >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(ascii                      >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(      rune(nomeObjeto[4])  >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+8 entries are removed: 24 --> 16.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 17
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 190 from 62 to 59
+------------------------------------------------------------
+
+
+=================Reducing node 151, size=59=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(      rune(nomeObjeto[4])  >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(      rune(nomeObjeto[4])  >= 48 && ascii                      <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(      rune(nomeObjeto[4])  >= 48 &&       rune(nomeObjeto[4])  <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 151
+------------------------------------------------------------
+
+
+=================Reducing node 198, size=59=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(      rune(nomeObjeto[4])  >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(      rune                 >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(           nomeObjeto[4]   >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+4 entries are removed: 20 --> 16.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 4
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 198 from 59 to 56
+------------------------------------------------------------
+
+
+=================Reducing node 159, size=56=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(           nomeObjeto[4]   >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(           nomeObjeto[4]   >= 48 && ascii(rune               ) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(           nomeObjeto[4]   >= 48 && ascii(     nomeObjeto[4] ) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 159
+------------------------------------------------------------
+
+
+=================Reducing node 315, size=56=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(           nomeObjeto[4]   >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(           nomeObjeto[4]   >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 315
+------------------------------------------------------------
+
+
+=================Reducing node 296, size=56=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(           nomeObjeto[4]   >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune)      {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(           nomeObjeto[4]   >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 296
+------------------------------------------------------------
+
+
+=================Reducing node 464, size=56=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(           nomeObjeto[4]   >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 464
+------------------------------------------------------------
+
+
+=================Reducing node 204, size=56=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(           nomeObjeto[4]   >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(           nomeObjeto      >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+8 entries are removed: 22 --> 14.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 6
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 204 from 56 to 53
+------------------------------------------------------------
+
+
+=================Reducing node 165, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto   )) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(           4 )) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 165
+------------------------------------------------------------
+
+
+=================Reducing node 20, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 20
+------------------------------------------------------------
+
+
+=================Reducing node 318, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 318
+------------------------------------------------------------
+
+
+=================Reducing node 320, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=320}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 320
+------------------------------------------------------------
+
+
+=================Reducing node 321, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 321
+------------------------------------------------------------
+
+
+=================Reducing node 277, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto              ;
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+                   "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 277
+------------------------------------------------------------
+
+
+=================Reducing node 167, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto   )) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 167
+------------------------------------------------------------
+
+
+=================Reducing node 169, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=169}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 169
+------------------------------------------------------------
+
+
+=================Reducing node 471, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main;
+    func ascii(      ) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 471
+------------------------------------------------------------
+
+
+=================Reducing node 474, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=474}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(  rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r     ) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 474
+------------------------------------------------------------
+
+
+=================Reducing node 325, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+             r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 325
+------------------------------------------------------------
+
+
+=================Reducing node 288, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 288
+------------------------------------------------------------
+
+
+=================Reducing node 140, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4]))      );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 140
+------------------------------------------------------------
+
+
+=================Reducing node 141, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=141}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 141
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+=================Reducing node 483, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 483
+------------------------------------------------------------
+
+
+=================Reducing node 482, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 482
+------------------------------------------------------------
+
+
+=================Reducing node 481, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 481
+------------------------------------------------------------
+
+
+=================Reducing node 478, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 478
+------------------------------------------------------------
+
+
+=================Reducing node 475, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(  rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 475
+------------------------------------------------------------
+
+
+=================Reducing node 480, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 480
+------------------------------------------------------------
+
+
+=================Reducing node 472, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 472
+------------------------------------------------------------
+
+
+=================Reducing node 470, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 470
+------------------------------------------------------------
+
+
+=================Reducing node 465, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main;
+    func ascii(r rune)      {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 465
+------------------------------------------------------------
+
+
+=================Reducing node 469, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 469
+------------------------------------------------------------
+
+
+=================Reducing node 335, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 335
+------------------------------------------------------------
+
+
+=================Reducing node 327, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return  ;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 327
+------------------------------------------------------------
+
+
+=================Reducing node 334, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 334
+------------------------------------------------------------
+
+
+=================Reducing node 326, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 326
+------------------------------------------------------------
+
+
+=================Reducing node 324, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 324
+------------------------------------------------------------
+
+
+=================Reducing node 317, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 317
+------------------------------------------------------------
+
+
+=================Reducing node 312, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 312
+------------------------------------------------------------
+
+
+=================Reducing node 310, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 310
+------------------------------------------------------------
+
+
+=================Reducing node 309, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 309
+------------------------------------------------------------
+
+
+=================Reducing node 307, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 307
+------------------------------------------------------------
+
+
+=================Reducing node 301, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 301
+------------------------------------------------------------
+
+
+=================Reducing node 299, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 299
+------------------------------------------------------------
+
+
+=================Reducing node 295, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 295
+------------------------------------------------------------
+
+
+=================Reducing node 294, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 294
+------------------------------------------------------------
+
+
+=================Reducing node 293, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 293
+------------------------------------------------------------
+
+
+=================Reducing node 290, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 290
+------------------------------------------------------------
+
+
+=================Reducing node 289, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 289
+------------------------------------------------------------
+
+
+=================Reducing node 287, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 287
+------------------------------------------------------------
+
+
+=================Reducing node 286, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 286
+------------------------------------------------------------
+
+
+=================Reducing node 279, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 279
+------------------------------------------------------------
+
+
+=================Reducing node 275, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 275
+------------------------------------------------------------
+
+
+=================Reducing node 223, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 223
+------------------------------------------------------------
+
+
+=================Reducing node 215, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 215
+------------------------------------------------------------
+
+
+=================Reducing node 187, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 187
+------------------------------------------------------------
+
+
+=================Reducing node 186, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 186
+------------------------------------------------------------
+
+
+=================Reducing node 183, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 183
+------------------------------------------------------------
+
+
+=================Reducing node 182, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 182
+------------------------------------------------------------
+
+
+=================Reducing node 180, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 180
+------------------------------------------------------------
+
+
+=================Reducing node 178, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 178
+------------------------------------------------------------
+
+
+=================Reducing node 176, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 176
+------------------------------------------------------------
+
+
+=================Reducing node 172, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 172
+------------------------------------------------------------
+
+
+=================Reducing node 170, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 170
+------------------------------------------------------------
+
+
+=================Reducing node 163, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 163
+------------------------------------------------------------
+
+
+=================Reducing node 161, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 161
+------------------------------------------------------------
+
+
+=================Reducing node 155, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 155
+------------------------------------------------------------
+
+
+=================Reducing node 153, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 153
+------------------------------------------------------------
+
+
+=================Reducing node 148, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 148
+------------------------------------------------------------
+
+
+=================Reducing node 147, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 147
+------------------------------------------------------------
+
+
+=================Reducing node 128, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 128
+------------------------------------------------------------
+
+
+=================Reducing node 126, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 126
+------------------------------------------------------------
+
+
+=================Reducing node 117, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 117
+------------------------------------------------------------
+
+
+=================Reducing node 17, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 17
+------------------------------------------------------------
+
+
+=================Reducing node 15, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+=================Reducing node 11, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main;
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 4
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=6}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 6
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 7
+------------------------------------------------------------
+
+
+=================Reducing node 13, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main()
+     ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 13
+------------------------------------------------------------
+
+
+=================Reducing node 14, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=14}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 14
+------------------------------------------------------------
+
+
+=================Reducing node 16, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 16
+------------------------------------------------------------
+
+
+=================Reducing node 19, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=19}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=21}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 19
+------------------------------------------------------------
+
+
+=================Reducing node 21, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=21}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 21
+------------------------------------------------------------
+
+
+=================Reducing node 31, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println                                                                      ;
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+                                   4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57 ;
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 31
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=5}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+=================Reducing node 118, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 118
+------------------------------------------------------------
+
+
+=================Reducing node 34, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                              48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4                                             );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 34
+------------------------------------------------------------
+
+
+=================Reducing node 37, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4                                             );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 37
+------------------------------------------------------------
+
+
+=================Reducing node 38, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=38}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]kleene replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4          && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4          && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 38
+------------------------------------------------------------
+
+
+=================Reducing node 40, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48                                    );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >=       ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 40
+------------------------------------------------------------
+
+
+=================Reducing node 42, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48                                    );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 42
+------------------------------------------------------------
+
+
+=================Reducing node 43, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=43}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]kleene replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48                               <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48                               <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 43
+------------------------------------------------------------
+
+
+=================Reducing node 45, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4]))      );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 &&                               57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 45
+------------------------------------------------------------
+
+
+=================Reducing node 124, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main;
+    func ascii(r rune) rune
+     ;
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 124
+------------------------------------------------------------
+
+
+=================Reducing node 125, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=125}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 125
+------------------------------------------------------------
+
+
+=================Reducing node 58, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii                      <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 &&       rune(nomeObjeto[4])  <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 58
+------------------------------------------------------------
+
+
+=================Reducing node 127, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main;
+    func ascii(r rune) rune {
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 127
+------------------------------------------------------------
+
+
+=================Reducing node 130, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=130}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 130
+------------------------------------------------------------
+
+
+=================Reducing node 131, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 131
+------------------------------------------------------------
+
+
+=================Reducing node 135, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 135
+------------------------------------------------------------
+
+
+=================Reducing node 66, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune               ) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(     nomeObjeto[4] ) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 66
+------------------------------------------------------------
+
+
+=================Reducing node 138, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 138
+------------------------------------------------------------
+
+
+=================Reducing node 140, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=140}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 140
+------------------------------------------------------------
+
+
+=================Reducing node 123, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune)      {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 123
+------------------------------------------------------------
+
+
+=================Reducing node 161, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 161
+------------------------------------------------------------
+
+
+=================Reducing node 72, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto   )) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(           4 )) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 72
+------------------------------------------------------------
+
+
+=================Reducing node 20, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=20}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 20
+------------------------------------------------------------
+
+
+=================Reducing node 143, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 143
+------------------------------------------------------------
+
+
+=================Reducing node 145, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=145}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 145
+------------------------------------------------------------
+
+
+=================Reducing node 146, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 146
+------------------------------------------------------------
+
+
+=================Reducing node 104, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto              ;
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+                   "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 104
+------------------------------------------------------------
+
+
+=================Reducing node 74, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto   )) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 74
+------------------------------------------------------------
+
+
+=================Reducing node 76, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=76}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 76
+------------------------------------------------------------
+
+
+=================Reducing node 168, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(      ) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 168
+------------------------------------------------------------
+
+
+=================Reducing node 171, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=171}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(  rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r     ) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 171
+------------------------------------------------------------
+
+
+=================Reducing node 150, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+             r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 150
+------------------------------------------------------------
+
+
+=================Reducing node 115, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 115
+------------------------------------------------------------
+
+
+=================Reducing node 47, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4]))      );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 47
+------------------------------------------------------------
+
+
+=================Reducing node 48, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=48}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 48
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+=================Reducing node 180, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 180
+------------------------------------------------------------
+
+
+=================Reducing node 179, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 179
+------------------------------------------------------------
+
+
+=================Reducing node 178, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 178
+------------------------------------------------------------
+
+
+=================Reducing node 175, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 175
+------------------------------------------------------------
+
+
+=================Reducing node 172, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(  rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 172
+------------------------------------------------------------
+
+
+=================Reducing node 177, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 177
+------------------------------------------------------------
+
+
+=================Reducing node 169, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 169
+------------------------------------------------------------
+
+
+=================Reducing node 167, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 167
+------------------------------------------------------------
+
+
+=================Reducing node 162, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune)      {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 162
+------------------------------------------------------------
+
+
+=================Reducing node 166, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 166
+------------------------------------------------------------
+
+
+=================Reducing node 160, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 160
+------------------------------------------------------------
+
+
+=================Reducing node 152, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return  ;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 152
+------------------------------------------------------------
+
+
+=================Reducing node 159, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 159
+------------------------------------------------------------
+
+
+=================Reducing node 151, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 151
+------------------------------------------------------------
+
+
+=================Reducing node 149, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 149
+------------------------------------------------------------
+
+
+=================Reducing node 142, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 142
+------------------------------------------------------------
+
+
+=================Reducing node 139, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 139
+------------------------------------------------------------
+
+
+=================Reducing node 137, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 137
+------------------------------------------------------------
+
+
+=================Reducing node 136, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 136
+------------------------------------------------------------
+
+
+=================Reducing node 134, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 134
+------------------------------------------------------------
+
+
+=================Reducing node 128, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 128
+------------------------------------------------------------
+
+
+=================Reducing node 126, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 126
+------------------------------------------------------------
+
+
+=================Reducing node 122, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 122
+------------------------------------------------------------
+
+
+=================Reducing node 121, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 121
+------------------------------------------------------------
+
+
+=================Reducing node 120, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 120
+------------------------------------------------------------
+
+
+=================Reducing node 117, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 117
+------------------------------------------------------------
+
+
+=================Reducing node 116, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 116
+------------------------------------------------------------
+
+
+=================Reducing node 114, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 114
+------------------------------------------------------------
+
+
+=================Reducing node 113, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 113
+------------------------------------------------------------
+
+
+=================Reducing node 106, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 106
+------------------------------------------------------------
+
+
+=================Reducing node 102, size=53=================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 102
+------------------------------------------------------------
+
+
+=================Reducing node 99, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 99
+------------------------------------------------------------
+
+
+=================Reducing node 97, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 97
+------------------------------------------------------------
+
+
+=================Reducing node 94, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 94
+------------------------------------------------------------
+
+
+=================Reducing node 93, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 93
+------------------------------------------------------------
+
+
+=================Reducing node 90, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 90
+------------------------------------------------------------
+
+
+=================Reducing node 89, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 89
+------------------------------------------------------------
+
+
+=================Reducing node 87, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 87
+------------------------------------------------------------
+
+
+=================Reducing node 85, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 85
+------------------------------------------------------------
+
+
+=================Reducing node 83, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 83
+------------------------------------------------------------
+
+
+=================Reducing node 79, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 79
+------------------------------------------------------------
+
+
+=================Reducing node 77, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 77
+------------------------------------------------------------
+
+
+=================Reducing node 70, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 70
+------------------------------------------------------------
+
+
+=================Reducing node 68, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 68
+------------------------------------------------------------
+
+
+=================Reducing node 62, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 62
+------------------------------------------------------------
+
+
+=================Reducing node 60, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 60
+------------------------------------------------------------
+
+
+=================Reducing node 55, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 55
+------------------------------------------------------------
+
+
+=================Reducing node 54, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 54
+------------------------------------------------------------
+
+
+=================Reducing node 35, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 35
+------------------------------------------------------------
+
+
+=================Reducing node 33, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 33
+------------------------------------------------------------
+
+
+=================Reducing node 24, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 24
+------------------------------------------------------------
+
+
+=================Reducing node 17, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 17
+------------------------------------------------------------
+
+
+=================Reducing node 15, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+=================Reducing node 11, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=53==================
+
+The current best program is the following
+
+    package main;
+    func ascii(r rune) rune {
+     switch {
+     default:
+      return r;
+     };
+    };
+    func main() {
+     nomeObjeto := "ABE1FK21";
+     println(                      4    >= 48 && ascii(rune(nomeObjeto[4])) <= 57);
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+#test success = 6
+#test failure = 70
+#test result cache hits = 33
+#test execution cancelled = 0
+#node edit action set cache hits = 27
