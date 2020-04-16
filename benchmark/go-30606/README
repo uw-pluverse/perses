@@ -1,0 +1,26 @@
+Issue #30606 [0] reported a compiler bug with a runtime error with an attached
+Go program as a reproducer. The reproducer was quite long, which makes it a
+great test program for perses. The issue was fixed in CL [1] and merged into
+the tree as commit [2]. The parent commit [3] was the last known commit that
+could reproduce this issue.
+
+To reduce the attached 30606.go program, checkout revision e269f4c of the Go
+source code [4] and run the `make.bash` command to bootstrap and compile the
+compiler. To use this custom go compiler, set your PATH variable:
+
+$ export PATH=/path/to/cloned/go.googlesource.com/go/bin:$PATH
+
+And check that you have the right go version:
+
+$ go version
+go version devel +1650f1ba0b Wed Mar 6 20:05:44 2019 +0000 linux/amd64
+
+To run the bazel tests in this directory:
+
+$ bazel test //benchmark/go-30606/...
+
+[0] https://github.com/golang/go/issues/30606
+[1] https://go-review.googlesource.com/c/go/+/165857/
+[2] https://go.googlesource.com/go/+/05b3db24c1a48e995ac1f3103a2be9463fac0f96
+[3] https://go.googlesource.com/go/+/1650f1ba0b964a06a242c3318e85b3b46f010614
+[4] https://go.googlesource.com/go
