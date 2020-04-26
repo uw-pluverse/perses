@@ -21,15 +21,14 @@ import com.google.common.io.MoreFiles
 import com.google.common.io.RecursiveDeleteOption
 import com.google.common.truth.Truth
 import org.junit.After
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.program.SourceFile
 import java.io.File
-import java.io.IOException
 import java.util.ArrayList
-import java.util.concurrent.ExecutionException
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 import java.util.function.Consumer
@@ -42,31 +41,28 @@ class TestScriptExecutorServiceTest {
   private val testScript = SourceFile(File(FOLDER, "r.sh"))
   private val program = TestUtility.createSparTreeFromFile(sourceFile.file).programSnapshot
 
-  private val workingDirectory =
-    TestUtility.createCleanWorkingDirectory(TestScriptExecutorServiceTest::class.java)
+  private var workingDirectory: File? = null
+
+  @Before
+  fun setup() {
+    workingDirectory =
+      TestUtility.createCleanWorkingDirectory(TestScriptExecutorServiceTest::class.java)
+  }
 
   @After
-  @Throws(IOException::class)
   fun teardown() {
     MoreFiles.deleteRecursively(workingDirectory!!.toPath(), RecursiveDeleteOption.ALLOW_INSECURE)
+    workingDirectory = null
   }
 
   @Test
-  @Throws(InterruptedException::class, ExecutionException::class, IOException::class)
   fun testThreadCount_1() {
-    testTestScriptExecutor(1)
+    testTestScriptExecutor(threadCount = 1)
   }
 
   @Test
-  @Throws(InterruptedException::class, ExecutionException::class, IOException::class)
   fun testThreadCount_4() {
-    testTestScriptExecutor(4)
-  }
-
-  @Test
-  @Throws(InterruptedException::class, ExecutionException::class, IOException::class)
-  fun testThreadCount_10() {
-    testTestScriptExecutor(10)
+    testTestScriptExecutor(threadCount = 4)
   }
 
   private fun createConfiguration(threadCount: Int): ReductionConfiguration {
@@ -84,49 +80,50 @@ class TestScriptExecutorServiceTest {
       numOfReductionThreads = threadCount)
   }
 
-  @Throws(IOException::class)
   private fun testTestScriptExecutor(threadCount: Int) {
     val stopwatch = Stopwatch.createStarted()
     val configuration = createConfiguration(threadCount)
-    val service = TestScriptExecutorService(
+    Truth.assertThat(configuration.numOfReductionThreads).isEqualTo(threadCount)
+    TestScriptExecutorService(
       configuration.tempRootFolder,
       configuration.numOfReductionThreads,
       testScript,
-      sourceFile.file.name)
-    Truth.assertThat(configuration.numOfReductionThreads).isEqualTo(threadCount)
-    // TODO: refine this test.
-    run {
-      val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
-      for (i in 0..49) {
-        futureList.add(service.testProgram(program!!, true))
+      sourceFile.file.name).use {
+      // TODO: refine this test.
+      run {
+        val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
+        for (i in 0..49) {
+          futureList.add(it.testProgram(program!!, true))
+        }
+        futureList.forEach(
+          Consumer { future: Future<TestScript.TestResult> ->
+            try {
+              Truth.assertThat(future.get().isPass).isTrue()
+            } catch (e: Throwable) {
+              throw AssertionError(e)
+            }
+          })
       }
-      futureList.forEach(
-        Consumer { future: Future<TestScript.TestResult> ->
-          try {
-            Truth.assertThat(future.get().isPass).isTrue()
-          } catch (e: Throwable) {
-            throw AssertionError(e)
-          }
-        })
-    }
-    run {
-      val invalidProgram = TestUtility.createSparTreeFromFile(invalidSourceFile.file).programSnapshot
-      val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
-      for (i in 0..49) {
-        futureList.add(service.testProgram(invalidProgram, true))
+      run {
+        val invalidProgram = TestUtility.
+          createSparTreeFromFile(invalidSourceFile.file).programSnapshot
+        val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
+        for (i in 0..49) {
+          futureList.add(it.testProgram(invalidProgram, true))
+        }
+        futureList.forEach(
+          Consumer { future: Future<TestScript.TestResult> ->
+            try {
+              Truth.assertThat(future.get().isPass).isFalse()
+            } catch (e: Throwable) {
+              throw AssertionError(e)
+            }
+          })
       }
-      futureList.forEach(
-        Consumer { future: Future<TestScript.TestResult> ->
-          try {
-            Truth.assertThat(future.get().isPass).isFalse()
-          } catch (e: Throwable) {
-            throw AssertionError(e)
-          }
-        })
+      stopwatch.stop()
+      println(
+        "#threads=" + threadCount + ": time=" + stopwatch.elapsed(TimeUnit.SECONDS) + " seconds")
     }
-    stopwatch.stop()
-    println(
-      "#threads=" + threadCount + ": time=" + stopwatch.elapsed(TimeUnit.SECONDS) + " seconds")
   }
 
   companion object {

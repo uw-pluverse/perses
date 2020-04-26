@@ -16,14 +16,15 @@
  */
 package org.perses.reduction
 
+import org.perses.program.SourceFile
+import org.perses.program.TokenizedProgram
+import java.io.Closeable
 import java.io.File
 import java.io.IOException
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 import java.util.concurrent.FutureTask
 import java.util.concurrent.atomic.AtomicInteger
-import org.perses.program.SourceFile
-import org.perses.program.TokenizedProgram
 
 /** An execution service for test script runs.  */
 class TestScriptExecutorService(
@@ -31,12 +32,12 @@ class TestScriptExecutorService(
   private val numOfThreads: Int,
   testScriptFile: SourceFile,
   sourceFileName: String
-) {
+) : Closeable {
   private val executionCounter = AtomicInteger()
   // TODO: create the executor outside, and pass it in as a parameter, so that others can use the
   //       executor.
-  private val executorService = Executors.newFixedThreadPool(numOfThreads)
-  private val reductionFolderManager: ReductionFolderManager
+  private var executorService = Executors.newFixedThreadPool(numOfThreads)
+  private var reductionFolderManager: ReductionFolderManager?
 
   init {
     require(numOfThreads > 0) {
@@ -58,10 +59,19 @@ class TestScriptExecutorService(
       sourceFileName)
   }
 
-  @Throws(IOException::class)
-  fun shutdown() {
-    executorService.shutdown()
-    reductionFolderManager.deleteRootFolder()
+  @Override
+  override fun close() {
+    executorService?.shutdown()
+    reductionFolderManager?.deleteRootFolder()
+
+    executorService = null
+    reductionFolderManager = null
+  }
+
+  fun finalize() {
+    check(executorService == null && reductionFolderManager == null) {
+      "This $this has not been closed."
+    }
   }
 
   /**
@@ -74,7 +84,7 @@ class TestScriptExecutorService(
   ): FutureTestScriptExecutionTask {
     executionCounter.incrementAndGet()
     return try {
-      val workingFolder = reductionFolderManager.createNextFolder()
+      val workingFolder = reductionFolderManager!!.createNextFolder()
       val result = FutureTestScriptExecutionTask(
         ReductionTestScriptExecutorCallback(workingFolder, program, keepOrigCodeFormat))
       executorService.submit(result)

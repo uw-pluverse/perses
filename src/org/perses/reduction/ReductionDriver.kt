@@ -233,9 +233,8 @@ class ReductionDriver(
     return sparTree
   }
 
-  @Throws(IOException::class)
   override fun close() {
-    executorService.shutdown()
+    executorService.close()
   }
 
   private fun createSparTreeEditListeners(

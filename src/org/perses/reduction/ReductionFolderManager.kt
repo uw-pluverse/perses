@@ -3,11 +3,10 @@ package org.perses.reduction
 import com.google.common.base.Strings
 import com.google.common.io.MoreFiles
 import com.google.common.io.RecursiveDeleteOption
-import java.io.File
-import java.io.IOException
-import java.util.concurrent.atomic.AtomicInteger
 import org.perses.program.SourceFile
 import org.perses.util.Util
+import java.io.File
+import java.util.concurrent.atomic.AtomicInteger
 
 class ReductionFolderManager(
   private val rootFolder: File,
@@ -16,20 +15,24 @@ class ReductionFolderManager(
 ) {
   private val sequenceGenerator = AtomicInteger()
 
-  @Throws(IOException::class)
   fun createNextFolder(): ReductionFolder {
+    check(!isRootFolderDeleted()) { "The root folder has been deleted." }
     val folderId = sequenceGenerator.getAndIncrement()
     val folderName = Strings.padStart(folderId.toString(), FOLDER_NAME_MIN_LENGTH, '0')
     val folder = File(rootFolder, folderName)
-    assert(!folder.exists()) { "The folder already exists. $folder" }
+    check(!folder.exists()) { "The folder already exists. $folder" }
     check(folder.mkdir()) { "Failed to create folder $folder" }
     val scriptFileName = testScript.baseName
     testScript.writeTo(File(folder, scriptFileName))
     return ReductionFolder(folder, scriptFileName, sourceFileName)
   }
 
-  @Throws(IOException::class)
+  private fun isRootFolderDeleted() = !rootFolder.exists()
+
   fun deleteRootFolder() {
+    if (isRootFolderDeleted()) {
+      return
+    }
     MoreFiles.deleteRecursively(rootFolder.toPath(), RecursiveDeleteOption.ALLOW_INSECURE)
   }
 
