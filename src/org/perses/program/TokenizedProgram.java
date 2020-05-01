@@ -69,10 +69,15 @@ public final class TokenizedProgram {
   @MonotonicNonNull private String codeStringInOriginalFormatWithBlankLines;
 
   public synchronized String getSourceCodeInOrigFormat() {
-    if (codeStringInOriginalFormatWithBlankLines != null) {
-      return codeStringInOriginalFormatWithBlankLines;
+    if (codeStringInOriginalFormatWithBlankLines == null) {
+      codeStringInOriginalFormatWithBlankLines = computeSourceCodeInOrigFormat(tokens);
     }
-    final int tokenCount = tokenCount();
+    assert codeStringInOriginalFormatWithBlankLines != null;
+    return codeStringInOriginalFormatWithBlankLines;
+  }
+
+  private static String computeSourceCodeInOrigFormat(ImmutableList<PersesToken> tokens) {
+    final int tokenCount = tokens.size();
     final StringBuilder builder = new StringBuilder(tokenCount * 5);
     int lineNoCurrent = 1;
     int positionInLineCurrent = 0;
@@ -96,8 +101,7 @@ public final class TokenizedProgram {
       positionInLineCurrent += text.length();
     }
     builder.append('\n');
-    codeStringInOriginalFormatWithBlankLines = builder.toString();
-    return codeStringInOriginalFormatWithBlankLines;
+    return builder.toString();
   }
 
   public final int tokenCount() {
