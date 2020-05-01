@@ -19,7 +19,11 @@ package org.perses.program;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.UnmodifiableIterator;
-import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CommonToken;
+import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.TokenFactory;
+import org.antlr.v4.runtime.TokenSource;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.perses.util.FastStringBuilder;
 
@@ -62,11 +66,11 @@ public final class TokenizedProgram {
     return result;
   }
 
-  @MonotonicNonNull private String codeStringInOriginalFormat;
+  @MonotonicNonNull private String codeStringInOriginalFormatWithBlankLines;
 
   public synchronized String getSourceCodeInOrigFormat() {
-    if (codeStringInOriginalFormat != null) {
-      return codeStringInOriginalFormat;
+    if (codeStringInOriginalFormatWithBlankLines != null) {
+      return codeStringInOriginalFormatWithBlankLines;
     }
     final int tokenCount = tokenCount();
     final StringBuilder builder = new StringBuilder(tokenCount * 5);
@@ -92,8 +96,8 @@ public final class TokenizedProgram {
       positionInLineCurrent += text.length();
     }
     builder.append('\n');
-    codeStringInOriginalFormat = builder.toString();
-    return codeStringInOriginalFormat;
+    codeStringInOriginalFormatWithBlankLines = builder.toString();
+    return codeStringInOriginalFormatWithBlankLines;
   }
 
   public final int tokenCount() {
