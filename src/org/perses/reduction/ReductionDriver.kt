@@ -203,13 +203,13 @@ class ReductionDriver(
     val program = originalTree.programSnapshot
     try {
       val parserFacade = configuration.parserFacade
-      val parseTree = parserFacade.parseString(program.sourceCodeInOrigFormatWithBlankLines).tree
+      val parseTree = parserFacade.parseString(program.toSourceCodeInOrigFormatWithBlankLines()).tree
       return SparTreeBuilder(
         parserFacade.ruleHierarchy, originalTree.tokenizedProgramFactory)
         .build(parseTree)
     } catch (e: Exception) {
       System.err.println("Fail to parse the following program.")
-      System.err.println(program.sourceCodeInOrigFormatWithBlankLines)
+      System.err.println(program.toSourceCodeInOrigFormatWithBlankLines())
       throw e
     }
   }

@@ -24,17 +24,23 @@ import org.antlr.v4.runtime.CommonToken;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.TokenFactory;
 import org.antlr.v4.runtime.TokenSource;
-import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.perses.util.FastStringBuilder;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 /** A program represented by a list of tokens. */
 public final class TokenizedProgram {
+
+  public enum EnumFormatControl {
+    SINGLE_TOKEN_PER_LINE,
+    ORIG_FORMAT_WITH_BLANK_LINES,
+    ORIG_FORMAT_WITH_NO_BLANK_LINES
+  }
 
   private final ImmutableList<PersesToken> tokens;
 
@@ -46,39 +52,45 @@ public final class TokenizedProgram {
     return tokens;
   }
 
-  @MonotonicNonNull FastStringBuilder codeStringInLines;
+  private final AbstractLazySourceCode sourceCodeSingleLine =
+      new AbstractLazySourceCode() {
+        @Override
+        protected FastStringBuilder computeStringBuilder() {
+          final int tokenCount = tokenCount();
+          final FastStringBuilder result = new FastStringBuilder(tokenCount * 5);
 
-  public synchronized void writeSourceCodeInLines(BufferedWriter writer) throws IOException {
-    if (codeStringInLines == null) {
-      codeStringInLines = computeCodeStringInLines();
-    }
-    codeStringInLines.writeToWriter(writer);
+          for (int i = 0; i < tokenCount; ++i) {
+            final PersesToken token = tokens.get(i);
+            result.append(token.getText()).append('\n');
+          }
+          return result;
+        }
+      };
+
+  public void writeSourceCodeInLines(Writer writer) throws IOException {
+    sourceCodeSingleLine.writeTo(writer);
   }
 
-  FastStringBuilder computeCodeStringInLines() {
-    final int tokenCount = tokenCount();
-    final FastStringBuilder result = new FastStringBuilder(tokenCount * 5);
+  private final AbstractLazySourceCode sourceCodeInOrigFormatWithBlankLines =
+      new AbstractLazySourceCode() {
+        @Override
+        protected FastStringBuilder computeStringBuilder() {
+          return computeSourceCodeInOrigFormat(tokens);
+        }
+      };
 
-    for (int i = 0; i < tokenCount; ++i) {
-      final PersesToken token = tokens.get(i);
-      result.append(token.getText()).append('\n');
-    }
-    return result;
+  public void writeSourceCodeInOrigFormatWithBlankLines(Writer writer) throws IOException {
+    sourceCodeInOrigFormatWithBlankLines.writeTo(writer);
   }
 
-  @MonotonicNonNull private String codeStringInOriginalFormatWithBlankLines;
-
-  public synchronized String getSourceCodeInOrigFormatWithBlankLines() {
-    if (codeStringInOriginalFormatWithBlankLines == null) {
-      codeStringInOriginalFormatWithBlankLines = computeSourceCodeInOrigFormat(tokens);
-    }
-    assert codeStringInOriginalFormatWithBlankLines != null;
-    return codeStringInOriginalFormatWithBlankLines;
+  public String toSourceCodeInOrigFormatWithBlankLines() {
+    return sourceCodeInOrigFormatWithBlankLines.getSourceCode();
   }
 
-  private static String computeSourceCodeInOrigFormat(ImmutableList<PersesToken> tokens) {
+  private static FastStringBuilder computeSourceCodeInOrigFormat(
+      ImmutableList<PersesToken> tokens) {
     final int tokenCount = tokens.size();
-    final StringBuilder builder = new StringBuilder(tokenCount * 5);
+    final FastStringBuilder builder = new FastStringBuilder(tokenCount * 5);
     int lineNoCurrent = 1;
     int positionInLineCurrent = 0;
     for (int i = 0; i < tokenCount; ++i) {
@@ -101,7 +113,7 @@ public final class TokenizedProgram {
       positionInLineCurrent += text.length();
     }
     builder.append('\n');
-    return builder.toString();
+    return builder;
   }
 
   public final int tokenCount() {
@@ -116,7 +128,7 @@ public final class TokenizedProgram {
   public final void writeToFile(File file, boolean keepOriginalFormat) throws IOException {
     try (BufferedWriter writer = Files.newBufferedWriter(file.toPath(), StandardCharsets.UTF_8)) {
       if (keepOriginalFormat) {
-        writer.write(getSourceCodeInOrigFormatWithBlankLines());
+        writeSourceCodeInOrigFormatWithBlankLines(writer);
       } else {
         writeSourceCodeInLines(writer);
       }
