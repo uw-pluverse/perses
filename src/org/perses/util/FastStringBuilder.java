@@ -36,6 +36,14 @@ public final class FastStringBuilder {
     return size;
   }
 
+  public boolean isEmpty() {
+    return length() == 0;
+  }
+
+  public boolean isNotEmpty() {
+    return !isEmpty();
+  }
+
   public FastStringBuilder append(char c) {
     final int newSize = size + 1;
     ensureCapacity(newSize);
@@ -58,6 +66,10 @@ public final class FastStringBuilder {
       final int newCapacity = Math.max(data.length + data.length / 2, newLength);
       data = CharArrays.forceCapacity(data, newCapacity, data.length);
     }
+  }
+
+  public char lastChar() {
+    return data[length() - 1];
   }
 
   @VisibleForTesting

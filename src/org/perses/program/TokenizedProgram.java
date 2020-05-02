@@ -75,9 +75,20 @@ public final class TokenizedProgram {
       new AbstractLazySourceCode() {
         @Override
         protected FastStringBuilder computeStringBuilder() {
-          return computeSourceCodeInOrigFormat(tokens);
+          return computeSourceCodeInOrigFormat(tokens, /*keepBlankLines=*/ true);
         }
       };
+
+  private final AbstractLazySourceCode compactSourceCode = new AbstractLazySourceCode() {
+    @Override
+    protected FastStringBuilder computeStringBuilder() {
+      return computeSourceCodeInOrigFormat(tokens, /*keepBlankLines=*/false);
+    }
+  };
+
+  public String toCompactSourceCode() {
+    return compactSourceCode.getSourceCode();
+  }
 
   public void writeSourceCodeInOrigFormatWithBlankLines(Writer writer) throws IOException {
     sourceCodeInOrigFormatWithBlankLines.writeTo(writer);
@@ -88,7 +99,7 @@ public final class TokenizedProgram {
   }
 
   private static FastStringBuilder computeSourceCodeInOrigFormat(
-      ImmutableList<PersesToken> tokens) {
+      ImmutableList<PersesToken> tokens, boolean keepBlankLines) {
     final int tokenCount = tokens.size();
     final FastStringBuilder builder = new FastStringBuilder(tokenCount * 5);
     int lineNoCurrent = 1;
@@ -102,7 +113,11 @@ public final class TokenizedProgram {
       assert tokenPositionInLine >= 0;
       while (lineNoCurrent < lineNo) {
         ++lineNoCurrent;
-        builder.append('\n');
+        if (keepBlankLines) {
+          builder.append('\n');
+        } else if (builder.isNotEmpty() && builder.lastChar() != '\n'){
+          builder.append('\n');
+        }
         positionInLineCurrent = 0;
       }
       while (positionInLineCurrent < tokenPositionInLine) {

@@ -45,6 +45,10 @@ class TokenizedProgramTest {
     """.trimMargin()
     val program = TestUtility.createTokenizedProgramFromString(sourceCode, LanguageKind.C)
     Truth.assertThat(program.toSourceCodeInOrigFormatWithBlankLines().trim()).isEqualTo(sourceCode.trim())
+    Truth.assertThat(program.toCompactSourceCode().trim()).isEqualTo("""int a = 0;
+      |int b = 0;
+      |int c = 0;
+      """.trimMargin())
   }
 
   @Throws(IOException::class)
