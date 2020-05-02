@@ -76,7 +76,7 @@ public class SparTreeTest {
             ChildHoistingActionSet.createByReplacingSingleNode(node1, node2, "[test]replacement"));
 
     TokenizedProgram programByEdit = edit.getProgram();
-    assertThat(programByEdit.getSourceCodeInOrigFormat().replaceAll("\\s+", ""))
+    assertThat(programByEdit.getSourceCodeInOrigFormatWithBlankLines().replaceAll("\\s+", ""))
         .isEqualTo("intmain(){printf((\"helloworld\\n\"));}");
     tree.applyEdit(edit);
     TokenizedProgram programByTree = tree.getProgramSnapshot();

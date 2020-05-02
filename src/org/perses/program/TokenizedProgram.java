@@ -68,7 +68,7 @@ public final class TokenizedProgram {
 
   @MonotonicNonNull private String codeStringInOriginalFormatWithBlankLines;
 
-  public synchronized String getSourceCodeInOrigFormat() {
+  public synchronized String getSourceCodeInOrigFormatWithBlankLines() {
     if (codeStringInOriginalFormatWithBlankLines == null) {
       codeStringInOriginalFormatWithBlankLines = computeSourceCodeInOrigFormat(tokens);
     }
@@ -116,7 +116,7 @@ public final class TokenizedProgram {
   public final void writeToFile(File file, boolean keepOriginalFormat) throws IOException {
     try (BufferedWriter writer = Files.newBufferedWriter(file.toPath(), StandardCharsets.UTF_8)) {
       if (keepOriginalFormat) {
-        writer.write(getSourceCodeInOrigFormat());
+        writer.write(getSourceCodeInOrigFormatWithBlankLines());
       } else {
         writeSourceCodeInLines(writer);
       }

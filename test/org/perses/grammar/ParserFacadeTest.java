@@ -30,17 +30,17 @@ public class ParserFacadeTest {
   public void testIsParsable_true() throws IOException {
     final TokenizedProgram program =
         TestUtility.createSparTreeFromFile("test_data/misc/t1.c").getProgramSnapshot();
-    assertThat(facade.isSourceCodeParsable(program.getSourceCodeInOrigFormat())).isTrue();
+    assertThat(facade.isSourceCodeParsable(program.getSourceCodeInOrigFormatWithBlankLines())).isTrue();
     assertThat(facade.isSourceCodeParsable(program)).isTrue();
 
-    assertThat(pnfcFacade.isSourceCodeParsable(program.getSourceCodeInOrigFormat())).isTrue();
+    assertThat(pnfcFacade.isSourceCodeParsable(program.getSourceCodeInOrigFormatWithBlankLines())).isTrue();
     assertThat(pnfcFacade.isSourceCodeParsable(program)).isTrue();
 
     final TokenizedProgram invalidProgram = deriveInvalidProgram(program);
-    assertThat(facade.isSourceCodeParsable(invalidProgram.getSourceCodeInOrigFormat())).isFalse();
+    assertThat(facade.isSourceCodeParsable(invalidProgram.getSourceCodeInOrigFormatWithBlankLines())).isFalse();
     assertThat(facade.isSourceCodeParsable(invalidProgram)).isFalse();
 
-    assertThat(pnfcFacade.isSourceCodeParsable(invalidProgram.getSourceCodeInOrigFormat()))
+    assertThat(pnfcFacade.isSourceCodeParsable(invalidProgram.getSourceCodeInOrigFormatWithBlankLines()))
         .isFalse();
     assertThat(pnfcFacade.isSourceCodeParsable(invalidProgram)).isFalse();
   }

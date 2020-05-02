@@ -77,7 +77,7 @@ public class ProgressMonitorForNodeReducer extends DefaultReductionListener {
     final AbstractSparTreeEdit edit = event.getEdit();
     printBegin("Testing the following program: " + (result.isPass() ? "pass" : "fail"));
     stream.printf("// edit action set type: %s\n", event.getEdit().getActionSet().getActionsDescription());
-    printCode(edit.getProgram().getSourceCodeInOrigFormat().trim());
+    printCode(edit.getProgram().getSourceCodeInOrigFormatWithBlankLines().trim());
     printEnd();
 
     if (result.isPass()) {
@@ -112,7 +112,7 @@ public class ProgressMonitorForNodeReducer extends DefaultReductionListener {
   public void onTestResultCacheHit(AbstractReductionEvent.TestResultCacheHitEvent event) {
     final TestScript.TestResult result = event.getResult();
     printBegin("Cache hit for the following program: " + (result.isPass() ? "pass" : "fail"));
-    printCode(event.getEdit().getProgram().getSourceCodeInOrigFormat().trim());
+    printCode(event.getEdit().getProgram().getSourceCodeInOrigFormatWithBlankLines().trim());
     printEnd();
     ++testResultCacheHitCount;
   }
@@ -124,7 +124,7 @@ public class ProgressMonitorForNodeReducer extends DefaultReductionListener {
     stream.printf(
         "It took %s than 1 second to cancel the task.\n\n",
         (event.getMillisToCancelTheTask() <= 1000 ? "less" : "more"));
-    printCode(event.getProgram().getSourceCodeInOrigFormat().trim());
+    printCode(event.getProgram().getSourceCodeInOrigFormatWithBlankLines().trim());
     printEnd();
     ++testExcecutionCancelled;
   }
@@ -137,7 +137,7 @@ public class ProgressMonitorForNodeReducer extends DefaultReductionListener {
     printBegin(String.format("Reducing node %d, size=%d", node.getNodeId(), programSize));
     this.beforeSize = programSize;
     stream.println("The current best program is the following\n");
-    printCode(tree.getProgramSnapshot().getSourceCodeInOrigFormat().trim());
+    printCode(tree.getProgramSnapshot().getSourceCodeInOrigFormatWithBlankLines().trim());
     printEnd();
   }
 

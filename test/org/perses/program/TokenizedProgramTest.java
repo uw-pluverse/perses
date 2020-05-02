@@ -33,7 +33,7 @@ public class TokenizedProgramTest {
   public void testSourceCodeIsCached() throws IOException {
     final String filepath = "test_data/java_helloworld/t.java";
     TokenizedProgram p = TestUtility.createTokenizedProgramFrom(filepath);
-    assertThat(p.getSourceCodeInOrigFormat()).isSameInstanceAs(p.getSourceCodeInOrigFormat());
+    assertThat(p.getSourceCodeInOrigFormatWithBlankLines()).isSameInstanceAs(p.getSourceCodeInOrigFormatWithBlankLines());
   }
 
   private void testTokenEquivalence(String filepath) throws IOException {
@@ -53,7 +53,7 @@ public class TokenizedProgramTest {
 
   private void testCodeFormatRemains(String filepath) throws IOException {
     TokenizedProgram program = TestUtility.createTokenizedProgramFrom(filepath);
-    assertThat(program.getSourceCodeInOrigFormat().trim())
+    assertThat(program.getSourceCodeInOrigFormatWithBlankLines().trim())
         .isEqualTo(Files.asCharSource(new File(filepath), StandardCharsets.UTF_8).read().trim());
   }
 }
