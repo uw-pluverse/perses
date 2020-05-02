@@ -5,9 +5,11 @@ DEFAULT_DEPS = [
     "@maven//:com_google_guava_guava",
 ]
 
-java_test(
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_test")
+
+kt_jvm_test(
     name = "TokenizedProgramTest",
-    srcs = ["TokenizedProgramTest.java"],
+    srcs = ["TokenizedProgramTest.kt"],
     data = [
         "//test_data/delta_1",
         "//test_data/java_helloworld",

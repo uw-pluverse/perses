@@ -1,59 +1,56 @@
-package org.perses.program;
+package org.perses.program
 
-import com.google.common.base.Joiner;
-import com.google.common.io.Files;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.perses.TestUtility;
+import com.google.common.base.Joiner
+import com.google.common.io.Files
+import com.google.common.truth.Truth
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
+import org.perses.TestUtility
+import java.io.File
+import java.io.IOException
+import java.nio.charset.StandardCharsets
+import java.util.stream.Collectors
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.stream.Collectors;
-
-import static com.google.common.truth.Truth.assertThat;
-
-@RunWith(JUnit4.class)
-public class TokenizedProgramTest {
-
+@RunWith(JUnit4::class)
+class TokenizedProgramTest {
   @Test
-  public void testCodeFormatRemains() throws IOException {
-    testCodeFormatRemains("test_data/java_helloworld/t.java");
-    testCodeFormatRemains("test_data/parentheses/t.c");
+  fun testCodeFormatRemains() {
+    testCodeFormatRemains("test_data/java_helloworld/t.java")
+    testCodeFormatRemains("test_data/parentheses/t.c")
   }
 
   @Test
-  public void testPrintCodeInLines() throws IOException {
-    testTokenEquivalence("test_data/java_helloworld/t.java");
-    testTokenEquivalence("test_data/parentheses/t.c");
+  fun testPrintCodeInLines() {
+    testTokenEquivalence("test_data/java_helloworld/t.java")
+    testTokenEquivalence("test_data/parentheses/t.c")
   }
 
   @Test
-  public void testSourceCodeIsCached() throws IOException {
-    final String filepath = "test_data/java_helloworld/t.java";
-    TokenizedProgram p = TestUtility.createTokenizedProgramFrom(filepath);
-    assertThat(p.toSourceCodeInOrigFormatWithBlankLines()).isSameInstanceAs(p.toSourceCodeInOrigFormatWithBlankLines());
+  fun testSourceCodeIsCached() {
+    val filepath = "test_data/java_helloworld/t.java"
+    val p = TestUtility.createTokenizedProgramFrom(filepath)
+    Truth.assertThat(p.toSourceCodeInOrigFormatWithBlankLines()).isSameInstanceAs(p.toSourceCodeInOrigFormatWithBlankLines())
   }
 
-  private void testTokenEquivalence(String filepath) throws IOException {
-    final String program =
-        Joiner.on("")
-            .join(
-                TestUtility.createTokenizedProgramFrom(filepath).getTokens().stream()
-                    .map(PersesToken::getText)
-                    .map(s -> s.replaceAll("\\s|\n", ""))
-                    .collect(Collectors.toList()));
-    final String text =
-        Files.asCharSource(new File(filepath), StandardCharsets.UTF_8)
-            .read()
-            .replaceAll("\\s|\n", "");
-    assertThat(program).isEqualTo(text);
+  @Throws(IOException::class)
+  private fun testTokenEquivalence(filepath: String) {
+    val program = Joiner.on("")
+      .join(
+        TestUtility.createTokenizedProgramFrom(filepath).tokens.stream()
+          .map { obj: PersesToken -> obj.text }
+          .map { s: String -> s.replace("\\s|\n".toRegex(), "") }
+          .collect(Collectors.toList<String>()))
+    val text = Files.asCharSource(File(filepath), StandardCharsets.UTF_8)
+      .read()
+      .replace("\\s|\n".toRegex(), "")
+    Truth.assertThat(program).isEqualTo(text)
   }
 
-  private void testCodeFormatRemains(String filepath) throws IOException {
-    TokenizedProgram program = TestUtility.createTokenizedProgramFrom(filepath);
-    assertThat(program.toSourceCodeInOrigFormatWithBlankLines().trim())
-        .isEqualTo(Files.asCharSource(new File(filepath), StandardCharsets.UTF_8).read().trim());
+  @Throws(IOException::class)
+  private fun testCodeFormatRemains(filepath: String) {
+    val program = TestUtility.createTokenizedProgramFrom(filepath)
+    Truth.assertThat(program.toSourceCodeInOrigFormatWithBlankLines().trim { it <= ' ' })
+      .isEqualTo(Files.asCharSource(File(filepath), StandardCharsets.UTF_8).read().trim { it <= ' ' })
   }
 }
