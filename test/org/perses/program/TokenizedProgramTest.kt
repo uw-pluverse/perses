@@ -6,6 +6,7 @@ import com.google.common.truth.Truth
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.LanguageKind
 import org.perses.TestUtility
 import java.io.File
 import java.io.IOException
@@ -29,15 +30,28 @@ class TokenizedProgramTest {
   @Test
   fun testSourceCodeIsCached() {
     val filepath = "test_data/java_helloworld/t.java"
-    val p = TestUtility.createTokenizedProgramFrom(filepath)
-    Truth.assertThat(p.toSourceCodeInOrigFormatWithBlankLines()).isSameInstanceAs(p.toSourceCodeInOrigFormatWithBlankLines())
+    val p = TestUtility.createTokenizedProgramFromFile(filepath)
+    Truth.assertThat(p.toSourceCodeInOrigFormatWithBlankLines())
+      .isSameInstanceAs(p.toSourceCodeInOrigFormatWithBlankLines())
+  }
+
+  @Test
+  fun testCompactSourceCode() {
+    val sourceCode = """int a = 0;
+      |
+      |int b = 0;
+      |
+      |int c = 0;
+    """.trimMargin()
+    val program = TestUtility.createTokenizedProgramFromString(sourceCode, LanguageKind.C)
+    Truth.assertThat(program.toSourceCodeInOrigFormatWithBlankLines().trim()).isEqualTo(sourceCode.trim())
   }
 
   @Throws(IOException::class)
   private fun testTokenEquivalence(filepath: String) {
     val program = Joiner.on("")
       .join(
-        TestUtility.createTokenizedProgramFrom(filepath).tokens.stream()
+        TestUtility.createTokenizedProgramFromFile(filepath).tokens.stream()
           .map { obj: PersesToken -> obj.text }
           .map { s: String -> s.replace("\\s|\n".toRegex(), "") }
           .collect(Collectors.toList<String>()))
@@ -49,7 +63,7 @@ class TokenizedProgramTest {
 
   @Throws(IOException::class)
   private fun testCodeFormatRemains(filepath: String) {
-    val program = TestUtility.createTokenizedProgramFrom(filepath)
+    val program = TestUtility.createTokenizedProgramFromFile(filepath)
     Truth.assertThat(program.toSourceCodeInOrigFormatWithBlankLines().trim { it <= ' ' })
       .isEqualTo(Files.asCharSource(File(filepath), StandardCharsets.UTF_8).read().trim { it <= ' ' })
   }

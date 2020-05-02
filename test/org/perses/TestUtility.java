@@ -263,14 +263,37 @@ public final class TestUtility {
     return facade.parseFile(file);
   }
 
-  public static TokenizedProgram createTokenizedProgramFrom(String filepath) throws IOException {
+  public static ParseTreeWithParser parseString(String sourceCode, LanguageKind languageKind)
+      throws IOException {
+    final AbstractParserFacade facade = getFacade(languageKind);
+    return facade.parseString(sourceCode);
+  }
+
+  public static TokenizedProgram createTokenizedProgramFromFile(String filepath)
+      throws IOException {
     File file = new File(filepath);
     TokenizedProgram program = TestUtility.createSparTreeFromFile(file).getProgramSnapshot();
     return program;
   }
 
+  public static TokenizedProgram createTokenizedProgramFromString(
+      String sourceCode, LanguageKind languageKind) throws IOException {
+    return TestUtility.createSparTreeFromString(sourceCode, languageKind).getProgramSnapshot();
+  }
+
   public static SparTree createSparTreeFromFile(String file) throws IOException {
     return createSparTreeFromFile(new File(file));
+  }
+
+  public static SparTree createSparTreeFromString(String sourceCode, LanguageKind languageKind)
+      throws IOException {
+    final AbstractParserFacade facade = getFacade(languageKind);
+    final ParseTreeWithParser parseTreeWithParser = parseString(sourceCode, languageKind);
+    final TokenizedProgramFactory factory =
+        TokenizedProgramFactory.createFactory(
+            AbstractParserFacade.getTokens(parseTreeWithParser.getTree()));
+    return new SparTreeBuilder(facade.getRuleHierarchy(), factory)
+        .build(parseTreeWithParser.getTree());
   }
 
   public static SparTree createSparTreeFromFile(File file) throws IOException {
@@ -305,7 +328,6 @@ public final class TestUtility {
   private static final ImmutableList<File> getRustFiles(File folder) {
     return getFilesWithExtension(folder, ".rs");
   }
-
 
   private static final ImmutableList<File> getFilesWithExtension(
       File folder, final String fileExtension) {
