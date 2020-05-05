@@ -9,7 +9,6 @@ import org.junit.runners.JUnit4
 import org.perses.LanguageKind
 import org.perses.TestUtility
 import java.io.File
-import java.io.IOException
 import java.nio.charset.StandardCharsets
 import java.util.stream.Collectors
 
@@ -44,14 +43,14 @@ class TokenizedProgramTest {
       |int c = 0;
     """.trimMargin()
     val program = TestUtility.createTokenizedProgramFromString(sourceCode, LanguageKind.C)
-    Truth.assertThat(program.toSourceCodeInOrigFormatWithBlankLines().trim()).isEqualTo(sourceCode.trim())
+    Truth.assertThat(program.toSourceCodeInOrigFormatWithBlankLines().trim())
+      .isEqualTo(sourceCode.trim())
     Truth.assertThat(program.toCompactSourceCode().trim()).isEqualTo("""int a = 0;
       |int b = 0;
       |int c = 0;
       """.trimMargin())
   }
 
-  @Throws(IOException::class)
   private fun testTokenEquivalence(filepath: String) {
     val program = Joiner.on("")
       .join(
@@ -65,10 +64,9 @@ class TokenizedProgramTest {
     Truth.assertThat(program).isEqualTo(text)
   }
 
-  @Throws(IOException::class)
   private fun testCodeFormatRemains(filepath: String) {
     val program = TestUtility.createTokenizedProgramFromFile(filepath)
-    Truth.assertThat(program.toSourceCodeInOrigFormatWithBlankLines().trim { it <= ' ' })
-      .isEqualTo(Files.asCharSource(File(filepath), StandardCharsets.UTF_8).read().trim { it <= ' ' })
+    Truth.assertThat(program.toSourceCodeInOrigFormatWithBlankLines().trim())
+      .isEqualTo(Files.asCharSource(File(filepath), StandardCharsets.UTF_8).read().trim())
   }
 }
