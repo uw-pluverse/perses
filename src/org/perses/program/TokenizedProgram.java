@@ -66,7 +66,7 @@ public final class TokenizedProgram {
         }
       };
 
-  private final AbstractLazySourceCode sourceCodeInOrigFormatWithBlankLines =
+  private final AbstractLazySourceCode sourceCodeInOrigFormat =
       new AbstractLazySourceCode() {
         @Override
         protected FastStringBuilder computeStringBuilder() {
@@ -74,7 +74,7 @@ public final class TokenizedProgram {
         }
       };
 
-  private final AbstractLazySourceCode compactSourceCode =
+  private final AbstractLazySourceCode compactSourceCodeInOrigFormat =
       new AbstractLazySourceCode() {
         @Override
         protected FastStringBuilder computeStringBuilder() {
@@ -83,11 +83,11 @@ public final class TokenizedProgram {
       };
 
   public String toCompactSourceCode() {
-    return compactSourceCode.getSourceCode();
+    return compactSourceCodeInOrigFormat.getSourceCode();
   }
 
   public String toSourceCodeInOrigFormatWithBlankLines() {
-    return sourceCodeInOrigFormatWithBlankLines.getSourceCode();
+    return sourceCodeInOrigFormat.getSourceCode();
   }
 
   private static FastStringBuilder computeSourceCodeInOrigFormat(
@@ -136,13 +136,13 @@ public final class TokenizedProgram {
     try (BufferedWriter writer = Files.newBufferedWriter(file.toPath(), StandardCharsets.UTF_8)) {
       switch (formatControl) {
         case ORIG_FORMAT_WITH_BLANK_LINES:
-          sourceCodeInOrigFormatWithBlankLines.writeTo(writer);
+          sourceCodeInOrigFormat.writeTo(writer);
           break;
         case SINGLE_TOKEN_PER_LINE:
           sourceCodeSingleLine.writeTo(writer);
           break;
         case ORIG_FORMAT_WITH_NO_BLANK_LINES:
-          compactSourceCode.writeTo(writer);
+          compactSourceCodeInOrigFormat.writeTo(writer);
           break;
         default:
           throw new RuntimeException("Unhandled format control: " + formatControl);
