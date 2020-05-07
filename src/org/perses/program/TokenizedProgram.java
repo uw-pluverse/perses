@@ -29,7 +29,6 @@ import org.perses.util.FastStringBuilder;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
@@ -67,10 +66,6 @@ public final class TokenizedProgram {
         }
       };
 
-  public void writeSourceCodeInLines(Writer writer) throws IOException {
-    sourceCodeSingleLine.writeTo(writer);
-  }
-
   private final AbstractLazySourceCode sourceCodeInOrigFormatWithBlankLines =
       new AbstractLazySourceCode() {
         @Override
@@ -79,19 +74,16 @@ public final class TokenizedProgram {
         }
       };
 
-  private final AbstractLazySourceCode compactSourceCode = new AbstractLazySourceCode() {
-    @Override
-    protected FastStringBuilder computeStringBuilder() {
-      return computeSourceCodeInOrigFormat(tokens, /*keepBlankLines=*/false);
-    }
-  };
+  private final AbstractLazySourceCode compactSourceCode =
+      new AbstractLazySourceCode() {
+        @Override
+        protected FastStringBuilder computeStringBuilder() {
+          return computeSourceCodeInOrigFormat(tokens, /*keepBlankLines=*/ false);
+        }
+      };
 
   public String toCompactSourceCode() {
     return compactSourceCode.getSourceCode();
-  }
-
-  public void writeSourceCodeInOrigFormatWithBlankLines(Writer writer) throws IOException {
-    sourceCodeInOrigFormatWithBlankLines.writeTo(writer);
   }
 
   public String toSourceCodeInOrigFormatWithBlankLines() {
@@ -115,7 +107,7 @@ public final class TokenizedProgram {
         ++lineNoCurrent;
         if (keepBlankLines) {
           builder.append('\n');
-        } else if (builder.isNotEmpty() && builder.lastChar() != '\n'){
+        } else if (builder.isNotEmpty() && builder.lastChar() != '\n') {
           builder.append('\n');
         }
         positionInLineCurrent = 0;
@@ -140,12 +132,20 @@ public final class TokenizedProgram {
     return MoreObjects.toStringHelper(this).add("tokens", tokens).toString();
   }
 
-  public final void writeToFile(File file, boolean keepOriginalFormat) throws IOException {
+  public final void writeToFile(File file, EnumFormatControl formatControl) throws IOException {
     try (BufferedWriter writer = Files.newBufferedWriter(file.toPath(), StandardCharsets.UTF_8)) {
-      if (keepOriginalFormat) {
-        writeSourceCodeInOrigFormatWithBlankLines(writer);
-      } else {
-        writeSourceCodeInLines(writer);
+      switch (formatControl) {
+        case ORIG_FORMAT_WITH_BLANK_LINES:
+          sourceCodeInOrigFormatWithBlankLines.writeTo(writer);
+          break;
+        case SINGLE_TOKEN_PER_LINE:
+          sourceCodeSingleLine.writeTo(writer);
+          break;
+        case ORIG_FORMAT_WITH_NO_BLANK_LINES:
+          compactSourceCode.writeTo(writer);
+          break;
+        default:
+          throw new RuntimeException("Unhandled format control: " + formatControl);
       }
     }
   }

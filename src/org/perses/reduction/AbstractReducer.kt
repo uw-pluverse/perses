@@ -45,7 +45,7 @@ abstract class AbstractReducer protected constructor(
   protected val actionSetProfiler: AbstractActionSetProfiler
 
   protected fun testProgramAsynchronously(program: TokenizedProgram) =
-    executorService.testProgram(program, configuration.keepOriginalCodeFormat)
+    executorService.testProgram(program, configuration.programFormatControl)
 
   private class FutureExecutionResultInfo(
     val edit: AbstractSparTreeEdit,

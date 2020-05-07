@@ -31,6 +31,8 @@ import org.perses.listener.ReductionProfileListener
 import org.perses.listener.StatisticsListener
 import org.perses.listener.TestScriptExecutionListener
 import org.perses.program.SourceFile
+import org.perses.program.TokenizedProgram.EnumFormatControl.ORIG_FORMAT_WITH_BLANK_LINES
+import org.perses.program.TokenizedProgram.EnumFormatControl.SINGLE_TOKEN_PER_LINE
 import org.perses.program.TokenizedProgramFactory
 import org.perses.reduction.AbstractActionSetProfiler.ActionSetProfiler
 import org.perses.reduction.AbstractTestScriptExecutionCacheProfiler.TestScriptExecutionCacheProfiler
@@ -148,7 +150,7 @@ class ReductionDriver(
           "Saved result after fixpoint %s to %s",
           currentFixpointIteration, fixpointIterationResultFile)
         programAfterIteration.writeToFile(
-          fixpointIterationResultFile, configuration.keepOriginalCodeFormat)
+          fixpointIterationResultFile, configuration.programFormatControl)
       }
       if (!configuration.fixpointReduction || preSize <= postSize) {
         break
@@ -170,7 +172,7 @@ class ReductionDriver(
 //  (1) use the original source program and test scrip. This ensures the test script is correct.
 //  (2) use the spar-tree. This ensures the Antlr parser works correctly.
     val program = tree.programSnapshot
-    val future = executorService.testProgram(program, configuration.keepOriginalCodeFormat)
+    val future = executorService.testProgram(program, configuration.programFormatControl)
     if (!future.get().isPass) {
       logger.atSevere().log("The initial sanity check failed. Folder: ${future.workingDirectory}")
       val tempDir = Files.createTempDir()
@@ -248,7 +250,7 @@ class ReductionDriver(
             event
               .program
               .writeToFile(
-                configuration.bestResultFile, configuration.keepOriginalCodeFormat)
+                configuration.bestResultFile, configuration.programFormatControl)
           } catch (e: IOException) {
             throw RuntimeException(e)
           }
@@ -324,9 +326,13 @@ class ReductionDriver(
       val progressDumpFile =
         if (Strings.isNullOrEmpty(cmd.profilingFlags.progressDumpFile)) null
         else File(cmd.profilingFlags.progressDumpFile)
-      val keepOriginalFormat =
-        cmd.reductionControlFlags.keepOrigFormat
-          || sourceFile.languageKind.isFormatSensitive
+      val programFormatControl =
+        if (cmd.reductionControlFlags.keepOrigFormat
+          || sourceFile.languageKind.isFormatSensitive) {
+          ORIG_FORMAT_WITH_BLANK_LINES
+        } else {
+          SINGLE_TOKEN_PER_LINE
+        }
       return ReductionConfiguration(
         workingFolder = workingDirectory,
         testScript = testScript,
@@ -334,7 +340,7 @@ class ReductionDriver(
         bestResultFile = bestFile,
         statisticsFile = statisticsFile,
         progressDumpFile = progressDumpFile,
-        keepOriginalCodeFormat = keepOriginalFormat,
+        programFormatControl = programFormatControl,
         fixpointReduction = cmd.reductionControlFlags.fixpoint,
         enableTestScriptExecutionCaching = cmd.cacheControlFlags.queryCaching,
         useRealDeltaDebugger = cmd.algorithmControlFlags.useRealDeltaDebugger,

@@ -80,7 +80,7 @@ class TestScriptExecutorService(
    */
   fun testProgram(
     program: TokenizedProgram,
-    keepOrigCodeFormat: Boolean
+    keepOrigCodeFormat: TokenizedProgram.EnumFormatControl
   ): FutureTestScriptExecutionTask {
     executionCounter.incrementAndGet()
     return try {
@@ -112,7 +112,7 @@ class TestScriptExecutorService(
   class ReductionTestScriptExecutorCallback(
     val workingDirectory: ReductionFolder,
     val program: TokenizedProgram,
-    private val keepOrigCodeFormat: Boolean
+    private val keepOrigCodeFormat: TokenizedProgram.EnumFormatControl
   ) :
     Callable<TestScript.TestResult> {
 

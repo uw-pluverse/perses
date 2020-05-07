@@ -21,6 +21,8 @@ import com.google.common.base.Joiner
 import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.ParserFacadeFactory
 import org.perses.program.SourceFile
+import org.perses.program.TokenizedProgram
+import org.perses.program.TokenizedProgram.EnumFormatControl.ORIG_FORMAT_WITH_BLANK_LINES
 import org.perses.util.Util
 import java.io.File
 import java.time.LocalDateTime
@@ -40,7 +42,7 @@ class ReductionConfiguration(
   val bestResultFile: File,
   private val statisticsFile: File?,
   private val progressDumpFile: File?,
-  val keepOriginalCodeFormat: Boolean,
+  val programFormatControl: TokenizedProgram.EnumFormatControl,
   val fixpointReduction: Boolean,
   val enableTestScriptExecutionCaching: Boolean,
   val useRealDeltaDebugger: Boolean,
@@ -112,9 +114,11 @@ class ReductionConfiguration(
     require(numOfReductionThreads > 0) {
       "The number of reduction threads should be positive: $numOfReductionThreads"
     }
-    require(!fileToReduce.languageKind.isFormatSensitive || keepOriginalCodeFormat) {
+    require(!fileToReduce.languageKind.isFormatSensitive ||
+      (programFormatControl == ORIG_FORMAT_WITH_BLANK_LINES
+        || programFormatControl == ORIG_FORMAT_WITH_BLANK_LINES)) {
       "The language ${fileToReduce.languageKind} requires format sensitivity, " +
-        "but the reducer is not told to keep its original format. $keepOriginalCodeFormat"
+        "but the reducer is not told to keep its original format. $programFormatControl"
     }
     val factory = if (useOptCParser)
       ParserFacadeFactory.createForOptC() else ParserFacadeFactory.createForPnfC()
