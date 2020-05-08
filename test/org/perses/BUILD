@@ -14,7 +14,7 @@ java_library(
     ],
     deps = [
         ":truth",
-        "//src/org/perses:language_kind",
+        "//src/org/perses/program:language_kind",
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/grammar/c:c_parser_facade",

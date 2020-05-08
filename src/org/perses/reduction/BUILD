@@ -61,7 +61,7 @@ kt_jvm_library(
     name = "reduction_configuration",
     srcs = ["ReductionConfiguration.kt"],
     deps = [
-        "//src/org/perses:language_kind",
+        "//src/org/perses/program:language_kind",
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",

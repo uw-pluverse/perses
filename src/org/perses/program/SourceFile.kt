@@ -18,7 +18,6 @@ package org.perses.program
 
 import com.google.common.base.MoreObjects
 import com.google.common.io.MoreFiles
-import org.perses.LanguageKind
 import java.io.File
 import java.io.IOException
 import java.nio.charset.StandardCharsets

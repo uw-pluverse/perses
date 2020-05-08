@@ -6,7 +6,6 @@ import com.google.common.truth.Truth
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.LanguageKind
 import org.perses.TestUtility
 import java.io.File
 import java.nio.charset.StandardCharsets

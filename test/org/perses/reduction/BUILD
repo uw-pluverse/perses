@@ -49,7 +49,6 @@ java_test(
     deps = ["//src/org/perses/listener:profile_event_interface"],
 )
 
-
 java_test(
     name = "ReducerFactoryTest",
     srcs = ["ReducerFactoryTest.java"],
@@ -99,10 +98,10 @@ java_test(
     test_class = "org.perses.reduction.ReductionDriverTest",
     deps = [
         "//src/org/perses:command_options",
-        "//src/org/perses:language_kind",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/program",
+        "//src/org/perses/program:language_kind",
         "//src/org/perses/reduction:reducer_factory",
         "//src/org/perses/reduction:reduction_configuration",
         "//src/org/perses/reduction:reduction_driver",
@@ -125,10 +124,10 @@ java_test(
     ],
     test_class = "org.perses.reduction.TokenizedProgramEncoderTest",
     deps = [
-        "//src/org/perses:language_kind",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/program",
+        "//src/org/perses/program:language_kind",
         "//src/org/perses/reduction:reduction_configuration",
         "//src/org/perses/reduction:test_script",
         "//src/org/perses/reduction:test_script_execution_cache",
@@ -164,10 +163,10 @@ kt_jvm_test(
     ],
     test_class = "org.perses.reduction.TestScriptExecutorServiceTest",
     deps = [
-        "//src/org/perses:language_kind",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/program",
+        "//src/org/perses/program:language_kind",
         "//src/org/perses/reduction:reduction_configuration",
         "//src/org/perses/reduction:test_script",
         "//src/org/perses/reduction:test_script_executor_service",
@@ -183,10 +182,10 @@ java_test(
     data = ["//test_data/delta_1"],
     test_class = "org.perses.reduction.ReductionFolderManagerTest",
     deps = [
-        "//src/org/perses:language_kind",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/program",
+        "//src/org/perses/program:language_kind",
         "//src/org/perses/reduction:reduction_configuration",
         "//src/org/perses/reduction:test_script",
         "//src/org/perses/reduction:test_script_executor_service",
@@ -206,10 +205,10 @@ java_test(
     ],
     test_class = "org.perses.reduction.TokenizedProgramEncoderBenchmark",
     deps = [
-        "//src/org/perses:language_kind",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/program",
+        "//src/org/perses/program:language_kind",
         "//src/org/perses/reduction:reduction_configuration",
         "//src/org/perses/reduction:test_script",
         "//src/org/perses/reduction:test_script_execution_cache",

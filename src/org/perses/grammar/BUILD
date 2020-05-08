@@ -31,7 +31,7 @@ java_library(
     srcs = ["ParserFacadeFactory.java"],
     deps = [
         ":grammar_facade",
-        "//src/org/perses:language_kind",
+        "//src/org/perses/program:language_kind",
         "//src/org/perses/grammar/c:c_parser_facade",
         "//src/org/perses/grammar/c:pnfc_parser_facade",
         "//src/org/perses/grammar/go:pnfgo_parser_facade",

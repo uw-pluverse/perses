@@ -20,15 +20,6 @@ java_library(
     ],
 )
 
-java_library(
-    name = "language_kind",
-    srcs = ["LanguageKind.java"],
-    deps = [
-        "//src/org/perses/program:enum_format_control",
-        "@maven//:com_google_guava_guava",
-    ],
-)
-
 java_binary(
     name = "perses",
     srcs = ["Main.java"],

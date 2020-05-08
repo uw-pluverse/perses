@@ -39,14 +39,3 @@ reduction_golden_test(
     source_file = "Hello.sc",
     test_script = "r.sh",
 )
-
-
-
-filegroup(
-    name = "scala_print_reduced",
-    srcs = [
-        "progress_dump.txt",
-        "Hello_reduced.sc",
-        "statistics.txt",
-    ],
-)

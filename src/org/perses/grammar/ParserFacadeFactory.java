@@ -16,7 +16,7 @@
  */
 package org.perses.grammar;
 
-import org.perses.LanguageKind;
+import org.perses.program.LanguageKind;
 import org.perses.grammar.c.CParserFacade;
 import org.perses.grammar.c.PnfCParserFacade;
 import org.perses.grammar.go.PnfGoParserFacade;

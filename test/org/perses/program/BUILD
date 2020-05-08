@@ -27,7 +27,7 @@ java_test(
     ],
     test_class = "org.perses.program.SourceFileTest",
     deps = DEFAULT_DEPS + [
-        "//src/org/perses:language_kind",
+        "//src/org/perses/program:language_kind",
     ],
 )
 

@@ -1,5 +1,5 @@
 DEFAULT_DEPS = [
-    "//src/org/perses:language_kind",
+    "//src/org/perses/program:language_kind",
     "//src/org/perses/antlr:antlr_grammar_util",
     "//src/org/perses/antlr:antlr_hierarchy",
     "//src/org/perses/grammar:grammar_facade",

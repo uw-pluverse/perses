@@ -28,7 +28,7 @@ reduce(
     source_file = "small.go",
     statistics_file = "statistics.txt",
     test_script = "r.sh",
-    code_format = True
+    code_format = "COMPACT_ORIG_FORMAT"
 )
 
 reduction_golden_test(

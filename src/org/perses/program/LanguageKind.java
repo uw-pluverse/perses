@@ -14,13 +14,12 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses;
+package org.perses.program;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterators;
 import com.google.common.io.Files;
-import org.perses.program.EnumFormatControl;
 
 import java.io.File;
 import java.util.HashSet;

@@ -9,7 +9,16 @@ kt_jvm_library(
     name = "source_file",
     srcs = ["SourceFile.kt"],
     deps = [
-        "//src/org/perses:language_kind",
+        ":language_kind",
+        "@maven//:com_google_guava_guava",
+    ],
+)
+
+java_library(
+    name = "language_kind",
+    srcs = ["LanguageKind.java"],
+    deps = [
+        ":enum_format_control",
         "@maven//:com_google_guava_guava",
     ],
 )
@@ -21,17 +30,20 @@ java_library(
 
 java_library(
     name = "program",
-    srcs = glob(
-        ["*.java"],
-        exclude = ["EnumFormatControl.java"],
-    ),
+    srcs = [
+        "AbstractLazySourceCode.java",
+        "PersesToken.java",
+        "PersesTokenFactory.java",
+        "TokenizedProgram.java",
+        "TokenizedProgramFactory.java",
+    ],
     exports = [
         "enum_format_control",
         "source_file",
     ],
     deps = [
         ":enum_format_control",
-        "//src/org/perses:language_kind",
+        ":language_kind",
         "//src/org/perses/util",
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",
