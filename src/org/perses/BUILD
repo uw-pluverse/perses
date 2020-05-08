@@ -12,6 +12,7 @@ java_library(
     srcs = ["CommandOptions.java"],
     deps = [
         ":perses_exception",
+        "//src/org/perses/program:enum_format_control",
         "//src/org/perses/util:percentage",
         "@maven//:com_beust_jcommander",
         "@maven//:com_google_flogger_flogger",
@@ -22,7 +23,10 @@ java_library(
 java_library(
     name = "language_kind",
     srcs = ["LanguageKind.java"],
-    deps = ["@maven//:com_google_guava_guava"],
+    deps = [
+        "//src/org/perses/program:enum_format_control",
+        "@maven//:com_google_guava_guava",
+    ],
 )
 
 java_binary(

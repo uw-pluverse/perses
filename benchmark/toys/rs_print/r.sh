@@ -11,7 +11,7 @@ readonly EXE="./hello"
 # if rustc does not exist, this step will automatically fail
 rustc "${SRC}" -o "${EXE}"
 
-rm "${STDOUT}" -vrf
+rm "${STDOUT}" -vrf || true
 "${EXE}" 1>"${STDOUT}"
 if [[ "${?}" != 0 ]] ; then
   exit 1

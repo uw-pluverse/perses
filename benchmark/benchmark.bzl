@@ -47,6 +47,7 @@ def reduction_golden_test(
         result_file = result_file,
         statistics_file = statistics_file,
         progress_dump_file = progress_dump_file,
+        code_format = "COMPACT_ORIG_FORMAT"
     )
 
     golden_test(

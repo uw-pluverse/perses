@@ -27,7 +27,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.program.SourceFile
-import org.perses.program.TokenizedProgram.EnumFormatControl.ORIG_FORMAT_WITH_BLANK_LINES
+import org.perses.program.EnumFormatControl.ORIG_FORMAT
 import java.io.File
 import java.util.ArrayList
 import java.util.concurrent.Future
@@ -74,7 +74,7 @@ class TestScriptExecutorServiceTest {
       bestResultFile = sourceFile.file,
       statisticsFile = null,
       progressDumpFile = null,
-      programFormatControl = ORIG_FORMAT_WITH_BLANK_LINES,
+      programFormatControl = ORIG_FORMAT,
       fixpointReduction = true,
       enableTestScriptExecutionCaching = true,
       useRealDeltaDebugger = false,
@@ -95,7 +95,7 @@ class TestScriptExecutorServiceTest {
         val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
         for (i in 0..49) {
           futureList.add(it.testProgram(program!!,
-            ORIG_FORMAT_WITH_BLANK_LINES))
+            ORIG_FORMAT))
         }
         futureList.forEach(
           Consumer { future: Future<TestScript.TestResult> ->
@@ -112,7 +112,7 @@ class TestScriptExecutorServiceTest {
         val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
         for (i in 0..49) {
           futureList.add(it.testProgram(invalidProgram,
-            ORIG_FORMAT_WITH_BLANK_LINES))
+            ORIG_FORMAT))
         }
         futureList.forEach(
           Consumer { future: Future<TestScript.TestResult> ->

@@ -15,10 +15,22 @@ kt_jvm_library(
 )
 
 java_library(
+    name = "enum_format_control",
+    srcs = ["EnumFormatControl.java"],
+)
+
+java_library(
     name = "program",
-    srcs = glob(["*.java"]),
-    exports = ["source_file"],
+    srcs = glob(
+        ["*.java"],
+        exclude = ["EnumFormatControl.java"],
+    ),
+    exports = [
+        "enum_format_control",
+        "source_file",
+    ],
     deps = [
+        ":enum_format_control",
         "//src/org/perses:language_kind",
         "//src/org/perses/util",
         "@maven//:com_google_flogger_flogger",

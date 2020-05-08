@@ -28,7 +28,6 @@ reduce(
     source_file = "28390.go",
     statistics_file = "statistics.txt",
     test_script = "r.sh",
-    keep_orig_format = True
 )
 
 reduction_golden_test(

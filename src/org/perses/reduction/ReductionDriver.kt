@@ -31,8 +31,6 @@ import org.perses.listener.ReductionProfileListener
 import org.perses.listener.StatisticsListener
 import org.perses.listener.TestScriptExecutionListener
 import org.perses.program.SourceFile
-import org.perses.program.TokenizedProgram.EnumFormatControl.ORIG_FORMAT_WITH_BLANK_LINES
-import org.perses.program.TokenizedProgram.EnumFormatControl.SINGLE_TOKEN_PER_LINE
 import org.perses.program.TokenizedProgramFactory
 import org.perses.reduction.AbstractActionSetProfiler.ActionSetProfiler
 import org.perses.reduction.AbstractTestScriptExecutionCacheProfiler.TestScriptExecutionCacheProfiler
@@ -326,12 +324,16 @@ class ReductionDriver(
       val progressDumpFile =
         if (Strings.isNullOrEmpty(cmd.profilingFlags.progressDumpFile)) null
         else File(cmd.profilingFlags.progressDumpFile)
+
       val programFormatControl =
-        if (cmd.reductionControlFlags.keepOrigFormat
-          || sourceFile.languageKind.isFormatSensitive) {
-          ORIG_FORMAT_WITH_BLANK_LINES
+        if (cmd.reductionControlFlags.codeFormat != null) {
+          check(sourceFile.languageKind.isCodeFormatAllowed(cmd.reductionControlFlags.codeFormat)) {
+            cmd.reductionControlFlags.codeFormat.toString() +
+              " is not allowed for language " + sourceFile.languageKind
+          }
+          cmd.reductionControlFlags.codeFormat
         } else {
-          SINGLE_TOKEN_PER_LINE
+          sourceFile.languageKind.defaultCodeFormatControl
         }
       return ReductionConfiguration(
         workingFolder = workingDirectory,

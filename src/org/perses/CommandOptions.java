@@ -17,13 +17,20 @@
 
 package org.perses;
 
+import com.beust.jcommander.IParameterValidator;
+import com.beust.jcommander.IStringConverter;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import com.beust.jcommander.ParameterException;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import org.perses.program.EnumFormatControl;
 import org.perses.util.Fraction;
 
 import java.io.File;
+import java.util.Arrays;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
@@ -136,6 +143,9 @@ public class CommandOptions {
   }
 
   public static final class ReductionControlFlags {
+
+
+
     @Parameter(
         names = "--fixpoint",
         description = "iterative reduction till fixpoint",
@@ -150,11 +160,12 @@ public class CommandOptions {
     private String numOfThreads = "auto";
 
     @Parameter(
-        names = "--keep-orig-format",
-        description = "keep the original code format during reduction. May slow down if enabled.",
+        names = "--code-format",
+        description =
+            "The format of the reduced program.",
         arity = 1,
         order = FlagOrder.REDUCTION_CONTROL + 2)
-    public boolean keepOrigFormat = true;
+    public EnumFormatControl codeFormat;
 
     public void validate() {
       if (!"auto".equals(numOfThreads)) {

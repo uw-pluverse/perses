@@ -15,10 +15,9 @@ Usage: org.perses.Main [options]
     --threads
       Number of reduction threads: a positive integer, or 'auto'.
       Default: auto
-    --keep-orig-format
-      keep the original code format during reduction. May slow down if 
-      enabled. 
-      Default: true
+    --code-format
+      The format of the reduced program.
+      Possible Values: [SINGLE_TOKEN_PER_LINE, ORIG_FORMAT, COMPACT_ORIG_FORMAT]
     --format-cmd
       the command to format the reduced source file
       Default: <empty string>

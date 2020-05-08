@@ -35,12 +35,6 @@ import java.nio.file.Files;
 /** A program represented by a list of tokens. */
 public final class TokenizedProgram {
 
-  public enum EnumFormatControl {
-    SINGLE_TOKEN_PER_LINE,
-    ORIG_FORMAT_WITH_BLANK_LINES,
-    ORIG_FORMAT_WITH_NO_BLANK_LINES
-  }
-
   private final ImmutableList<PersesToken> tokens;
 
   public TokenizedProgram(ImmutableList<PersesToken> tokens) {
@@ -135,13 +129,13 @@ public final class TokenizedProgram {
   public final void writeToFile(File file, EnumFormatControl formatControl) throws IOException {
     try (BufferedWriter writer = Files.newBufferedWriter(file.toPath(), StandardCharsets.UTF_8)) {
       switch (formatControl) {
-        case ORIG_FORMAT_WITH_BLANK_LINES:
+        case ORIG_FORMAT:
           sourceCodeInOrigFormat.writeTo(writer);
           break;
         case SINGLE_TOKEN_PER_LINE:
           sourceCodeSingleLine.writeTo(writer);
           break;
-        case ORIG_FORMAT_WITH_NO_BLANK_LINES:
+        case COMPACT_ORIG_FORMAT:
           compactSourceCodeInOrigFormat.writeTo(writer);
           break;
         default:

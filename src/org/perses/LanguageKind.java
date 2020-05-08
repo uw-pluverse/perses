@@ -18,18 +18,35 @@ package org.perses;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Iterators;
 import com.google.common.io.Files;
+import org.perses.program.EnumFormatControl;
 
 import java.io.File;
+import java.util.HashSet;
+
+import static com.google.common.base.Preconditions.checkState;
 
 /** Infer the programming language for a source file based on its file extension. */
 public enum LanguageKind {
-  C(ImmutableList.of("c"), FormatSensitivity.INSENSITIVE),
-  SCALA(ImmutableList.of("scala", "sc"), FormatSensitivity.SENSITIVE),
-  GO(ImmutableList.of("go"), FormatSensitivity.SENSITIVE),
-  JAVA(ImmutableList.of("java"), FormatSensitivity.INSENSITIVE),
-  RUST(ImmutableList.of("rs"), FormatSensitivity.INSENSITIVE),
-  UNKNOWN(ImmutableList.of(), FormatSensitivity.SENSITIVE);
+  C(
+      ImmutableList.of("c"),
+      EnumFormatControl.SINGLE_TOKEN_PER_LINE,
+      EnumFormatControl.ORIG_FORMAT,
+      EnumFormatControl.COMPACT_ORIG_FORMAT),
+  SCALA(
+      ImmutableList.of("scala", "sc"),
+      EnumFormatControl.COMPACT_ORIG_FORMAT,
+      EnumFormatControl.ORIG_FORMAT),
+  GO(ImmutableList.of("go"), EnumFormatControl.COMPACT_ORIG_FORMAT, EnumFormatControl.ORIG_FORMAT),
+  JAVA(
+      ImmutableList.of("java"),
+      EnumFormatControl.SINGLE_TOKEN_PER_LINE,
+      EnumFormatControl.ORIG_FORMAT,
+      EnumFormatControl.COMPACT_ORIG_FORMAT),
+  RUST(
+      ImmutableList.of("rs"), EnumFormatControl.COMPACT_ORIG_FORMAT, EnumFormatControl.ORIG_FORMAT),
+  UNKNOWN(ImmutableList.of(), EnumFormatControl.ORIG_FORMAT);
 
   private static ImmutableMap<String, LanguageKind> EXTENSION_MAP;
 
@@ -42,25 +59,32 @@ public enum LanguageKind {
   }
 
   private final ImmutableList<String> extensions;
-  private final boolean formatSensitive;
+  private final ImmutableList<EnumFormatControl> allowedCodeFormats;
 
-  LanguageKind(ImmutableList<String> extensions, boolean formatSensitive) {
+  LanguageKind(
+      ImmutableList<String> extensions,
+      EnumFormatControl defaultFormat,
+      EnumFormatControl... otherFormats) {
     this.extensions = extensions;
-    this.formatSensitive = formatSensitive;
+    this.allowedCodeFormats =
+        ImmutableList.<EnumFormatControl>builder()
+            .add(defaultFormat)
+            .addAll(Iterators.forArray(otherFormats))
+            .build();
+    checkState(new HashSet<>(allowedCodeFormats).size() == allowedCodeFormats.size());
   }
 
-  public boolean isFormatSensitive() {
-    return formatSensitive;
+  public EnumFormatControl getDefaultCodeFormatControl() {
+    return allowedCodeFormats.get(0);
+  }
+
+  public boolean isCodeFormatAllowed(EnumFormatControl codeFormat) {
+    return allowedCodeFormats.contains(codeFormat);
   }
 
   public static LanguageKind computeLanguageKind(File file) {
     final String ext = Files.getFileExtension(file.getName());
     final LanguageKind kind = EXTENSION_MAP.get(ext);
     return kind == null ? UNKNOWN : kind;
-  }
-
-  private static class FormatSensitivity {
-    private static final boolean SENSITIVE = true;
-    private static final boolean INSENSITIVE = false;
   }
 }

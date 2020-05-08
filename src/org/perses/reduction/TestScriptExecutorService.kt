@@ -16,6 +16,7 @@
  */
 package org.perses.reduction
 
+import org.perses.program.EnumFormatControl
 import org.perses.program.SourceFile
 import org.perses.program.TokenizedProgram
 import java.io.Closeable
@@ -80,7 +81,7 @@ class TestScriptExecutorService(
    */
   fun testProgram(
     program: TokenizedProgram,
-    keepOrigCodeFormat: TokenizedProgram.EnumFormatControl
+    keepOrigCodeFormat: EnumFormatControl
   ): FutureTestScriptExecutionTask {
     executionCounter.incrementAndGet()
     return try {
@@ -112,7 +113,7 @@ class TestScriptExecutorService(
   class ReductionTestScriptExecutorCallback(
     val workingDirectory: ReductionFolder,
     val program: TokenizedProgram,
-    private val keepOrigCodeFormat: TokenizedProgram.EnumFormatControl
+    private val keepOrigCodeFormat: EnumFormatControl
   ) :
     Callable<TestScript.TestResult> {
 

@@ -25,8 +25,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.program.SourceFile
-import org.perses.program.TokenizedProgram
-import org.perses.program.TokenizedProgram.EnumFormatControl.ORIG_FORMAT_WITH_BLANK_LINES
+import org.perses.program.EnumFormatControl.ORIG_FORMAT
 import org.perses.reduction.ReductionConfiguration.Companion.getTempRootFolderName
 import java.io.File
 import java.io.IOException
@@ -59,7 +58,7 @@ class ReductionConfigurationTest {
       bestResultFile = bestFile,
       statisticsFile = null,
       progressDumpFile = null,
-      programFormatControl = ORIG_FORMAT_WITH_BLANK_LINES,
+      programFormatControl = ORIG_FORMAT,
       fixpointReduction = true,
       enableTestScriptExecutionCaching = true,
       useRealDeltaDebugger = false,
