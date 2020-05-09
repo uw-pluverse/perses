@@ -9,7 +9,6 @@ sanity_test(
     test_script = "r.sh",
 )
 
-
 filegroup(
     name = "go_print",
     srcs = [
@@ -20,6 +19,7 @@ filegroup(
 
 reduce(
     name = "reduce_go_print",
+    code_format = "COMPACT_ORIG_FORMAT",
     enable_edit_caching = True,
     enable_query_caching = True,
     progress_dump_file = "progress_dump.txt",
@@ -28,7 +28,6 @@ reduce(
     source_file = "small.go",
     statistics_file = "statistics.txt",
     test_script = "r.sh",
-    code_format = "COMPACT_ORIG_FORMAT"
 )
 
 reduction_golden_test(
@@ -40,8 +39,6 @@ reduction_golden_test(
     source_file = "small.go",
     test_script = "r.sh",
 )
-
-
 
 filegroup(
     name = "go_print_reduced",
