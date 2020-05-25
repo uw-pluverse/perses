@@ -3,7 +3,7 @@ package(default_visibility = ["//visibility:public"])
 java_binary(
     name = "perses_fuzzer",
     srcs = ["Main.java"],
-    main_class = "org.perses.Main",
+    main_class = "org.perses.fuzzer.Main",
     deps = [
         "//antlropt/org/perses/antlr/ast",
         "//src/org/perses/antlr:antlr_grammar_util",

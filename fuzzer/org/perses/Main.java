@@ -45,7 +45,7 @@ public class Main {
         CParserFacade C_PARSER_FACADE = new CParserFacade();
         final File testFile = new File("test_data/c_programs/gcc_testsuite/06002.c");
         ParseTree treeByOpt = C_PARSER_FACADE.parseFile(testFile).getTree();
-
-
+        System.out.println(treeByOpt.toStringTree());
+        System.out.println("finished");
     }
 }
