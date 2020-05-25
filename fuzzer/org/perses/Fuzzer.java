@@ -27,22 +27,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
 
-
-
 public class Fuzzer {
 
-    public static ParseTree generateTree(String pathname)
-            throws IOException {
-        CParserFacade CParser = new CParserFacade();
-        final File testFile = new File(pathname);
-        ParseTree treeByOpt = CParser.parseFile(testFile).getTree();
-        return treeByOpt;
-    }
+  public static ParseTree generateTree(String pathname) throws IOException {
+    CParserFacade CParser = new CParserFacade();
+    final File testFile = new File(pathname);
+    ParseTree treeByOpt = CParser.parseFile(testFile).getTree();
+    return treeByOpt;
+  }
 
-    public static void main(String[] args)
-            throws IOException {
-        final ParseTree treeByOpt = generateTree("test_data/c_programs/gcc_testsuite/06002.c");
-        System.out.println(treeByOpt.toStringTree());
-        System.out.println("finished");
-    }
+  public static void main(String[] args) throws IOException {
+    final ParseTree treeByOpt = generateTree("test_data/c_programs/gcc_testsuite/06002.c");
+    System.out.println(treeByOpt.toStringTree());
+    System.out.println("finished");
+  }
 }

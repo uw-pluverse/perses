@@ -1,6 +1,5 @@
 package org.perses.fuzzer;
 
-
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Assert;
 import org.junit.runner.RunWith;
@@ -19,23 +18,22 @@ import static com.google.common.truth.Truth.assertThat;
 @RunWith(JUnit4.class)
 public class FuzzerTest {
 
-    private static final CParserFacade C_PARSER_FACADE = new CParserFacade();
+  private static final CParserFacade C_PARSER_FACADE = new CParserFacade();
 
-    private void testOneCFile(String pathname) {
-        try{
-            final File testFile = new File(pathname);
-            final ArrayList<String> origTokens =
-                    TestUtility.extractTokens(C_PARSER_FACADE.parseWithOrigCParser(testFile).getTree());
+  private void testOneCFile(String pathname) {
+    try {
+      final File testFile = new File(pathname);
+      final ArrayList<String> origTokens =
+          TestUtility.extractTokens(C_PARSER_FACADE.parseWithOrigCParser(testFile).getTree());
 
-            final ParseTree treeByOpt = Fuzzer.generateTree(pathname);
-            assertThat(origTokens)
-                        .containsExactlyElementsIn(TestUtility.extractTokens(treeByOpt))
-                        .inOrder();
+      final ParseTree treeByOpt = Fuzzer.generateTree(pathname);
+      assertThat(origTokens)
+          .containsExactlyElementsIn(TestUtility.extractTokens(treeByOpt))
+          .inOrder();
 
-        } catch(Throwable e) {
-            e.printStackTrace();
-            Assert.fail();
-        }
+    } catch (Throwable e) {
+      e.printStackTrace();
+      Assert.fail();
     }
-
-    }
+  }
+}
