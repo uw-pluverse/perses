@@ -1,4 +1,5 @@
 package(default_visibility = [
+    "//fuzzer/org/perses:__pkg__",
     "//src/org/perses/grammar:__pkg__",
     "//test/org/perses:__subpackages__",
 ])

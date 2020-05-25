@@ -1,4 +1,7 @@
-package(default_visibility = ["//test/org/perses:__subpackages__"])
+package(default_visibility = [
+    "//fuzzer/org/perses:__pkg__",
+    "//test/org/perses:__subpackages__",
+])
 
 load("//test/org/perses:test.bzl", "golden_test")
 
@@ -8,18 +11,18 @@ java_library(
     data = [
         "//test_data/c_programs:clang_testsuite",
         "//test_data/c_programs:gcc_testsuite",
-        "//test_data/java_programs:openjdk_testsuite",
         "//test_data/go_programs:go_testsuite",
+        "//test_data/java_programs:openjdk_testsuite",
         "//test_data/rust_programs:rust_testsuite",
     ],
     deps = [
         ":truth",
-        "//src/org/perses/program:language_kind",
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/grammar/c:c_parser_facade",
         "//src/org/perses/grammar/java:java_parser_facade",
         "//src/org/perses/program",
+        "//src/org/perses/program:language_kind",
         "//src/org/perses/tree/spar",
         "@maven//:com_google_flogger_flogger_system_backend",
         "@maven//:com_google_guava_guava",
