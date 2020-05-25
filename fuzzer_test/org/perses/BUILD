@@ -1,7 +1,6 @@
 java_test(
     name = "fuzzer_test",
     srcs = ["FuzzerTest.java"],
-    shard_count = 1,
     test_class = "org.perses.fuzzer.FuzzerTest",
     deps = [
         "//antlropt/org/perses/antlr/ast",

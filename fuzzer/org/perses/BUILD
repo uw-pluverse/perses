@@ -1,9 +1,12 @@
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = [
+    "//fuzzer_test/org/perses:__pkg__",
+    "//src/org/perses/grammar:__pkg__",
+])
 
-java_binary(
+java_library(
     name = "perses_fuzzer",
-    srcs = ["Main.java"],
-    main_class = "org.perses.fuzzer.Main",
+    srcs = ["Fuzzer.java"],
+    #    main_class = "org.perses.fuzzer.Fuzzer",
     deps = [
         "//antlropt/org/perses/antlr/ast",
         "//src/org/perses/antlr:antlr_grammar_util",

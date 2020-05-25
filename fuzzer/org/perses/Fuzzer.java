@@ -19,11 +19,8 @@ package org.perses.fuzzer;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 
-
-
 import org.perses.grammar.c.CParserFacade;
 import org.perses.grammar.c.PnfCParserFacade;
-
 
 import java.io.File;
 import java.io.IOException;
@@ -32,14 +29,19 @@ import java.util.concurrent.ExecutionException;
 
 
 
-public class Main {
+public class Fuzzer {
+
+    public static ParseTree generateTree(String pathname)
+            throws IOException {
+        CParserFacade CParser = new CParserFacade();
+        final File testFile = new File(pathname);
+        ParseTree treeByOpt = CParser.parseFile(testFile).getTree();
+        return treeByOpt;
+    }
 
     public static void main(String[] args)
             throws IOException {
-
-        CParserFacade CParser = new CParserFacade();
-        final File testFile = new File("test_data/c_programs/gcc_testsuite/06002.c");
-        ParseTree treeByOpt = CParser.parseFile(testFile).getTree();
+        final ParseTree treeByOpt = generateTree("test_data/c_programs/gcc_testsuite/06002.c");
         System.out.println(treeByOpt.toStringTree());
         System.out.println("finished");
     }
