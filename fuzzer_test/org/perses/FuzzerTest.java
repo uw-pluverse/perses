@@ -2,6 +2,7 @@ package org.perses.fuzzer;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.perses.TestUtility;
@@ -10,6 +11,7 @@ import org.perses.grammar.c.CParserFacade;
 import org.perses.grammar.c.PnfCParserFacade;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -35,5 +37,10 @@ public class FuzzerTest {
       e.printStackTrace();
       Assert.fail();
     }
+  }
+
+  @Test
+  public void fuzzerBasicTest() {
+    testOneCFile("test_data/c_programs/gcc_testsuite/06002.c");
   }
 }

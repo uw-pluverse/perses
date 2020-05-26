@@ -4,6 +4,7 @@ java_test(
     test_class = "org.perses.fuzzer.FuzzerTest",
     deps = [
         "//antlropt/org/perses/antlr/ast",
+        "//fuzzer/org/perses:perses_fuzzer",
         "//src/org/perses/antlr:antlr_grammar_util",
         "//src/org/perses/grammar/c:c_parser_facade",
         "//src/org/perses/grammar/c:pnfc_parser_facade",

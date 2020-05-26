@@ -6,7 +6,6 @@ package(default_visibility = [
 java_library(
     name = "perses_fuzzer",
     srcs = ["Fuzzer.java"],
-    #    main_class = "org.perses.fuzzer.Fuzzer",
     deps = [
         "//antlropt/org/perses/antlr/ast",
         "//src/org/perses/antlr:antlr_grammar_util",
