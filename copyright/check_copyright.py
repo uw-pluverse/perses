@@ -1,58 +1,65 @@
 import unittest
 import os
 
-src_folder = "src"
+SRC_FOLDER = 'src'
 
-class test_copyright (unittest.TestCase):
+"""Get copyright info"""
+with open("copyright.txt") as file:
+    BUF_CPRT = file.read()
+BUF_CPRT = BUF_CPRT.replace(' ', '')
+
+
+
+class TestCopyright(unittest.TestCase):
+    """
+    Test if copyright info exist in files with specified extensions
+    """
 
     def testcopyright_java(self):
-        javafiles = getFiles(src_folder, "java")
+        """ Test Java files """
+        javafiles = get_files(SRC_FOLDER, "java")
         for javaf in javafiles:
-            self.assertTrue(check_copyright(javaf))
+            self.assertTrue(check_copyright(javaf), msg=javaf)
 
     def testcopyright_kt(self):
-        ktfiles = getFiles(src_folder, "kt")
+        """ Test Kotlin files """
+        ktfiles = get_files(SRC_FOLDER, "kt")
         for ktf in ktfiles:
-            self.assertTrue(check_copyright(ktf))
+            self.assertTrue(check_copyright(ktf), msg=ktf)
 
 
-def getFiles (directory: str, extension: str)->list:
+def get_files(directory: str, extension: str)->list:
     """
     This function takes a directory path and desired extension
-    then returns a list of path+files with a specified extension 
+    then returns a list of path+files with specified extension
     """
     file_list = list()
     for root, dirs, files in os.walk(directory):
-        for f in files:
-            if f.endswith('.'+extension):
-                file_list.append(os.path.join(root,f))
+        for file in files:
+            if file.endswith('.'+extension):
+                file_list.append(os.path.join(root, file))
     return file_list
 
 
-def check_copyright (sourcefile: str) -> bool:
+def check_copyright(sourcefile: str) -> bool:
     """
     This function takes a source file name and
     outputs true if the file has copyright infomation
     """
-    
-    
-    """Get copyright info"""
-    with open("copyright.txt") as file:
-        buf_cprt = file.read()
-        
-    """Extract comment block contents"""
     with open(sourcefile) as file:
         buf_srcfile = file.readline().rstrip('\n')
         if buf_srcfile.find("/*") == -1:
             return False
-        cmtblk=[]
+        cmtblk = list()
         buf_srcfile = file.readline()
         while buf_srcfile.find("*/") == -1:
             cmtblk.append(buf_srcfile.strip(" *"))
+
             buf_srcfile = file.readline()
 
-    """"Check - Compare"""
+
     buf_srcfile = ''.join(cmtblk)
-    if buf_srcfile.find(buf_cprt) == -1:
+    buf_srcfile = buf_srcfile.replace(' ', '')
+    if buf_srcfile.find(BUF_CPRT) == -1:
         return False
     return True
