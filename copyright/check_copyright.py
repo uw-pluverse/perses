@@ -1,7 +1,7 @@
 import unittest
 import os
 
-src_folder = "//src"
+src_folder = "src"
 
 class test_copyright (unittest.TestCase):
 
@@ -12,10 +12,7 @@ class test_copyright (unittest.TestCase):
 
     def testcopyright_kt(self):
         ktfiles = getFiles(src_folder, "kt")
-
         for ktf in ktfiles:
-            if check_copyright(ktf) != True:
-                print(ktf)
             self.assertTrue(check_copyright(ktf))
 
 
@@ -24,12 +21,12 @@ def getFiles (directory: str, extension: str)->list:
     This function takes a directory path and desired extension
     then returns a list of path+files with a specified extension 
     """
-    Filelist = list()
+    file_list = list()
     for root, dirs, files in os.walk(directory):
         for f in files:
             if f.endswith('.'+extension):
-                Filelist.append(os.path.join(root,f))
-    return Filelist
+                file_list.append(os.path.join(root,f))
+    return file_list
 
 
 def check_copyright (sourcefile: str) -> bool:
