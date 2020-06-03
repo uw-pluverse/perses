@@ -47,6 +47,6 @@ class TestScript(val scriptFile: File) {
   }
 
   init {
-    scriptFile.setExecutable(true)
+    check(scriptFile.setExecutable(true)) {"Fail to set executable bit for $scriptFile"}
   }
 }
