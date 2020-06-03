@@ -6,7 +6,7 @@ SRC_FOLDER = 'src'
 """Get copyright info"""
 with open("copyright.txt") as file:
     BUF_CPRT = file.read()
-BUF_CPRT = BUF_CPRT.replace(' ', '')
+BUF_CPRT = ''.join(BUF_CPRT.split())
 
 
 
@@ -59,7 +59,7 @@ def check_copyright(sourcefile: str) -> bool:
 
 
     buf_srcfile = ''.join(cmtblk)
-    buf_srcfile = buf_srcfile.replace(' ', '')
+    buf_srcfile = ''.join(buf_srcfile.split())
     if buf_srcfile.find(BUF_CPRT) == -1:
         return False
     return True
