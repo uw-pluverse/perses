@@ -4,7 +4,7 @@ import os
 SRC_FOLDER = 'src'
 
 """Get copyright info"""
-with open("copyright.txt") as file:
+with open("copyright/copyright.txt") as file:
     BUF_CPRT = file.read()
 BUF_CPRT = ''.join(BUF_CPRT.split())
 
