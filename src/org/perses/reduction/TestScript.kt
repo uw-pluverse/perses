@@ -17,18 +17,22 @@
 package org.perses.reduction
 
 import com.google.common.flogger.FluentLogger
+import org.perses.program.ScriptFile
 import java.io.File
 import org.perses.util.Shell
 import org.perses.util.TimeSpan
 
 /** Represents a test script, that specifies the property to preserve during reduction.  */
-class TestScript(val scriptFile: File) {
+class TestScript(val scriptFile: File, private val scriptTemplate: ScriptFile) {
 
   /** @return true if the test script passes.
    */
   fun test(): TestResult {
     val timeSpanBuilder = TimeSpan.Builder.start(System.currentTimeMillis())
-    val output = Shell.run("./" + scriptFile.name, scriptFile.parentFile, false)
+    val output = Shell.run(
+      "${scriptTemplate.shebang}  ${scriptFile.name}",
+      scriptFile.parentFile,
+      false)
     logger.atFine().log("test script stdout: %s", output.stdout)
     logger.atFine().log("test script stderr: %s", output.stderr)
     val timeSpan = timeSpanBuilder.end(System.currentTimeMillis())
@@ -47,6 +51,7 @@ class TestScript(val scriptFile: File) {
   }
 
   init {
-    check(scriptFile.setExecutable(true)) {"Fail to set executable bit for $scriptFile"}
+    scriptTemplate.writeTo(scriptFile)
+    check(scriptFile.setExecutable(true)) { "Fail to set executable bit for $scriptFile" }
   }
 }

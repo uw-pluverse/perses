@@ -40,6 +40,7 @@ kt_jvm_library(
     name = "test_script",
     srcs = ["TestScript.kt"],
     deps = [
+        "//src/org/perses/program:source_file",
         "//src/org/perses/util",
         "@maven//:com_google_flogger_flogger",
         "@maven//:org_apache_commons_commons_exec",
@@ -56,16 +57,15 @@ java_library(
     ],
 )
 
-
 kt_jvm_library(
     name = "reduction_configuration",
     srcs = ["ReductionConfiguration.kt"],
     deps = [
-        "//src/org/perses/program:language_kind",
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/program",
+        "//src/org/perses/program:language_kind",
         "//src/org/perses/util",
         "@maven//:com_google_guava_guava",
         "@maven//:org_checkerframework_checker_qual",
