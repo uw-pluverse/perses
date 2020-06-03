@@ -3,7 +3,7 @@ py_test(
     srcs = ["check_copyright.py"],
     data = [
         "//src:source_files"
-        "//copyright:copyright.txt"
+        "copyright.txt"
     ],
     deps = [    
 
