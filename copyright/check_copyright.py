@@ -1,33 +1,25 @@
 #!/usr/bin/env python3
 
-import unittest
 import os
+import argparse
+
 
 SRC_FOLDER = '../src'
 
-"""Get copyright info"""
-with open("copyright.txt") as file:
-    BUF_CPRT = file.read()
-BUF_CPRT = ''.join(BUF_CPRT.split())
 
-
-class TestCopyright(unittest.TestCase):
+def get_update_flag()->bool:
     """
-    Test if copyright info exist in files with specified extensions
+    Return true if copyright update option is required
     """
-
-    def test_copyright_java(self):
-        """ Test Java files """
-        javafiles = get_files(SRC_FOLDER, "java")
-        self.assertTrue(len(javafiles) > 0)
-        for javaf in javafiles:
-            self.assertTrue(check_copyright(javaf), msg=javaf)
-
-    def test_copyright_kt(self):
-        """ Test Kotlin files """
-        ktfiles = get_files(SRC_FOLDER, "kt")
-        for ktf in ktfiles:
-            self.assertTrue(check_copyright(ktf), msg=ktf)
+    parser = argparse.ArgumentParser(prog='check_copyright', usage='%(prog)s [option]',
+                                     description='check/update copyright information'
+                                     )
+    parser.add_argument('-u', '--update-copyright',
+                        action='store_true',
+                        default=False,
+                        help='update copyright (default: check copyright only)')
+    flag = parser.parse_args()
+    return flag.update_copyright
 
 
 def get_files(directory: str, extension: str) -> list:
@@ -49,6 +41,10 @@ def check_copyright(sourcefile: str) -> bool:
     This function takes a source file name and
     outputs true if the file has copyright infomation
     """
+    with open("copyright.txt") as file:
+        buf_cprt = file.read()
+    buf_cprt = ''.join(buf_cprt.split())
+
     with open(sourcefile) as file:
         buf_srcfile = file.readline().rstrip('\n')
         if buf_srcfile.find("/*") == -1:
@@ -57,14 +53,63 @@ def check_copyright(sourcefile: str) -> bool:
         buf_srcfile = file.readline()
         while buf_srcfile.find("*/") == -1:
             cmtblk.append(buf_srcfile.strip(" *"))
-
             buf_srcfile = file.readline()
 
     buf_srcfile = ''.join(cmtblk)
     buf_srcfile = ''.join(buf_srcfile.split())
-    if buf_srcfile.find(BUF_CPRT) == -1:
+
+    if buf_srcfile.find(buf_cprt) == -1:
         return False
     return True
 
+
+def check_files(folder: str, extension: str)->list:
+    """
+    Return a list of files missing copyright
+    """
+    missing_list = list()
+    javafiles = get_files(folder, extension)
+
+    for javaf in javafiles:
+        if not check_copyright(javaf):
+            missing_list.append(javaf)
+    return missing_list
+
+
+def comment_block_factory()->str:
+    """ Return a formatted comment block for appending """
+    with open("copyright.txt") as file:
+        buf_cprt = file.readlines()
+    for i, val in enumerate(buf_cprt):
+        buf_cprt[i] = " * " + val
+    buf_cprt.insert(0, "/*\n")
+    buf_cprt.append(" */\n")
+
+
+    return ''.join(buf_cprt)
+
+
+def update_files(files: list):
+    """ Updates give files with copyright info """
+    cmtblk = comment_block_factory()
+    for file in files:
+        with open(file, 'r+') as f:
+            content = f.read()
+            f.seek(0, 0)
+            f.write(cmtblk+content)
+
+
 if __name__ == '__main__':
-    unittest.main()
+
+    UPDATE_FLAG = get_update_flag()
+
+    java_missing_list = check_files(SRC_FOLDER, 'java')
+    kt_missing_list = check_files(SRC_FOLDER, 'kt')
+    print('Checking complete\n', '\n'.join(java_missing_list))
+
+    if UPDATE_FLAG:
+        print('Updating files above')
+        update_files(java_missing_list)
+        update_files(kt_missing_list)
+        print('All files now have copyright info')
+
