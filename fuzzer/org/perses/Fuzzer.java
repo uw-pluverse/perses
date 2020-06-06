@@ -29,6 +29,7 @@ import org.perses.grammar.c.PnfCParserFacade;
 import org.perses.program.LanguageKind;
 import org.perses.program.TokenizedProgramFactory;
 
+import org.perses.tree.spar.ISparTreeNodeVisitor;
 import org.perses.tree.spar.SparTree;
 import org.perses.tree.spar.SparTreeBuilder;
 
@@ -37,15 +38,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
 
-
-
 public class Fuzzer {
 
   public static ParseTree generateTree(String pathname) throws IOException {
     CParserFacade CParser = new CParserFacade();
     final File testFile = new File(pathname);
     ParseTree treeByOpt = CParser.parseFile(testFile).getTree();
-    ImmutableList<Token> tokens = AbstractParserFacade.getTokens(treeByOpt);
+    return treeByOpt;
+  }
+
+  public static SparTree generateSparTree(ParseTree parseTree) {
+    ImmutableList<Token> tokens = AbstractParserFacade.getTokens(parseTree);
 
     TokenizedProgramFactory tokenizedProgramFactory = TokenizedProgramFactory.createFactory(tokens);
 
@@ -53,14 +56,17 @@ public class Fuzzer {
 
     AbstractParserFacade parserFacade = factory.createParserFacade(LanguageKind.C);
 
-    SparTree sparTree = new SparTreeBuilder(parserFacade.getRuleHierarchy(), tokenizedProgramFactory).build(treeByOpt);
-    sparTree.printTreeStructure();
-    return treeByOpt;
+    SparTree sparTree =
+        new SparTreeBuilder(parserFacade.getRuleHierarchy(), tokenizedProgramFactory)
+            .build(parseTree);
+    return sparTree;
   }
 
   public static void main(String[] args) throws IOException {
     final ParseTree treeByOpt = generateTree("test_data/c_programs/gcc_testsuite/06002.c");
-    System.out.println(treeByOpt.toStringTree());
-    System.out.println("finished");
+    final SparTree sparTree = generateSparTree(treeByOpt);
+    //    System.out.println(sparTree.printTreeStructure());
+    //    System.out.println(treeByOpt.toStringTree());
+    //    System.out.println("finished");
   }
 }
