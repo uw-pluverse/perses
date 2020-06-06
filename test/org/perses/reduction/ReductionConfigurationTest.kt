@@ -26,6 +26,7 @@ import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.program.SourceFile
 import org.perses.program.EnumFormatControl.ORIG_FORMAT
+import org.perses.program.ScriptFile
 import org.perses.reduction.ReductionConfiguration.Companion.getTempRootFolderName
 import java.io.File
 import java.io.IOException
@@ -35,7 +36,7 @@ import java.time.LocalDateTime
 /** Test for [ReductionConfiguration]  */
 @RunWith(JUnit4::class)
 class ReductionConfigurationTest {
-  private val testScript = SourceFile(File(FOLDER + "r.sh"))
+  private val testScript = ScriptFile(File(FOLDER + "r.sh"))
   private val workingDirectory = TestUtility.createCleanWorkingDirectory(ReductionConfigurationTest::class.java)
   private val sourceFile = SourceFile(File(FOLDER + "t.c"))
 

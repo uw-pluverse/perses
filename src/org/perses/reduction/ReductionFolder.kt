@@ -4,16 +4,17 @@ import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
 import com.google.common.io.MoreFiles
 import com.google.common.io.RecursiveDeleteOption
+import org.perses.program.ScriptFile
 import java.io.File
 import java.io.IOException
 
 // TODO: save the test result in the folder.
 class ReductionFolder internal constructor(
   val folder: File,
-  testScriptName: String,
+  testScriptTemplate: ScriptFile,
   sourceFileName: String
 ) {
-  val testScript: TestScript = TestScript(File(folder, testScriptName))
+  val testScript: TestScript = TestScript(File(folder, testScriptTemplate.baseName), testScriptTemplate)
   val sourceFilePath: File = File(folder, sourceFileName)
 
   @Throws(IOException::class)

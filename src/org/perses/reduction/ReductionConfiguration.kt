@@ -23,6 +23,7 @@ import org.perses.grammar.ParserFacadeFactory
 import org.perses.program.EnumFormatControl
 import org.perses.program.SourceFile
 import org.perses.program.EnumFormatControl.ORIG_FORMAT
+import org.perses.program.ScriptFile
 import org.perses.util.Util
 import java.io.File
 import java.time.LocalDateTime
@@ -37,7 +38,7 @@ import java.util.Optional
 class ReductionConfiguration(
   /** The working directory of the reduction.  */
   val workingFolder: File,
-  val testScript: SourceFile,
+  val testScript: ScriptFile,
   val fileToReduce: SourceFile,
   val bestResultFile: File,
   private val statisticsFile: File?,

@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.perses.program.ScriptFile;
 import org.perses.program.SourceFile;
 import org.perses.util.AutoDeletableFolder;
 
@@ -19,12 +20,12 @@ public class ReductionFolderManagerTest {
 
   private AutoDeletableFolder folder;
   private ReductionFolderManager manager;
-  private SourceFile testScript;
+  private ScriptFile testScript;
 
   @Before
   public void setup() throws IOException {
     folder = new AutoDeletableFolder(Files.createTempDir());
-    testScript = new SourceFile(new File("test_data/delta_1/r.sh"));
+    testScript = new ScriptFile(new File("test_data/delta_1/r.sh"));
     manager = new ReductionFolderManager(folder.toFile(), testScript, "t.c");
   }
 

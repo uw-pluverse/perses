@@ -27,30 +27,15 @@ import java.nio.charset.StandardCharsets
  * loads the content of the passed-in file. So when you create an object of this class, the file
  * must already exist.
  */
-class SourceFile(val file: File) {
-  val fileContent: String
-  val languageKind: LanguageKind
+class SourceFile(file: File) : AbstractSourceFile(file) {
 
-  val baseName: String
-    get() = file.name
-
-  val parentFile: File
-    get() = file.parentFile
-
-  @Throws(IOException::class)
-  fun writeTo(path: File) =
-    MoreFiles.asCharSink(path.toPath(), StandardCharsets.UTF_8).write(fileContent)
-
+  val languageKind: LanguageKind = LanguageKind.computeLanguageKind(file)
 
   override fun toString(): String {
-    return MoreObjects.toStringHelper(this).add("file", file).add("lang", languageKind).toString()
+    return MoreObjects.toStringHelper(this)
+      .add("file", file)
+      .add("lang", languageKind)
+      .toString()
   }
 
-  init {
-    require(file.isFile) {
-      "The file should be a regular file $file"
-    }
-    languageKind = LanguageKind.computeLanguageKind(file)
-    fileContent = MoreFiles.asCharSource(file.toPath(), StandardCharsets.UTF_8).read()
-  }
 }
