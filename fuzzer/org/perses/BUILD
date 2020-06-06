@@ -3,14 +3,20 @@ package(default_visibility = [
     "//src/org/perses/grammar:__pkg__",
 ])
 
-java_library(
+java_binary(
     name = "perses_fuzzer",
     srcs = ["Fuzzer.java"],
+    main_class = "org.perses.fuzzer.Fuzzer",
     deps = [
         "//antlropt/org/perses/antlr/ast",
         "//src/org/perses/antlr:antlr_grammar_util",
+        "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/grammar/c:c_parser_facade",
         "//src/org/perses/grammar/c:pnfc_parser_facade",
+        "//src/org/perses/program",
+        "//src/org/perses/program:language_kind",
+        "//src/org/perses/tree/spar",
         "//test/org/perses:test_util",
         "//test/org/perses:truth",
         "@maven//:com_google_flogger_flogger",

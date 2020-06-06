@@ -17,15 +17,27 @@
 
 package org.perses.fuzzer;
 
+import com.google.common.collect.ImmutableList;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import org.perses.grammar.AbstractParserFacade;
+import org.perses.grammar.ParserFacadeFactory;
 import org.perses.grammar.c.CParserFacade;
 import org.perses.grammar.c.PnfCParserFacade;
+
+import org.perses.program.LanguageKind;
+import org.perses.program.TokenizedProgramFactory;
+
+import org.perses.tree.spar.SparTree;
+import org.perses.tree.spar.SparTreeBuilder;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
+
+
 
 public class Fuzzer {
 
@@ -33,6 +45,16 @@ public class Fuzzer {
     CParserFacade CParser = new CParserFacade();
     final File testFile = new File(pathname);
     ParseTree treeByOpt = CParser.parseFile(testFile).getTree();
+    ImmutableList<Token> tokens = AbstractParserFacade.getTokens(treeByOpt);
+
+    TokenizedProgramFactory tokenizedProgramFactory = TokenizedProgramFactory.createFactory(tokens);
+
+    ParserFacadeFactory factory = ParserFacadeFactory.createForOptC();
+
+    AbstractParserFacade parserFacade = factory.createParserFacade(LanguageKind.C);
+
+    SparTree sparTree = new SparTreeBuilder(parserFacade.getRuleHierarchy(), tokenizedProgramFactory).build(treeByOpt);
+    sparTree.printTreeStructure();
     return treeByOpt;
   }
 
