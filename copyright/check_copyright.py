@@ -2,27 +2,14 @@
 
 import os
 import argparse
-
+from typing import List
 
 SRC_FOLDER = '../src'
 
+with open("copyright.txt") as file:
+    BUF_CPRT = file.readlines()
 
-def get_update_flag()->bool:
-    """
-    Return true if copyright update option is required
-    """
-    parser = argparse.ArgumentParser(prog='check_copyright', usage='%(prog)s [option]',
-                                     description='check/update copyright information'
-                                     )
-    parser.add_argument('-u', '--update-copyright',
-                        action='store_true',
-                        default=False,
-                        help='update copyright (default: check copyright only)')
-    flag = parser.parse_args()
-    return flag.update_copyright
-
-
-def get_files(directory: str, extension: str) -> list:
+def get_files(directory: str, extension: str) -> List[str]:
     """
     This function takes a directory path and desired extension
     then returns a list of path+files with specified extension
@@ -41,8 +28,7 @@ def check_copyright(sourcefile: str) -> bool:
     This function takes a source file name and
     outputs true if the file has copyright infomation
     """
-    with open("copyright.txt") as file:
-        buf_cprt = file.read()
+    buf_cprt = ''.join(BUF_CPRT)
     buf_cprt = ''.join(buf_cprt.split())
 
     with open(sourcefile) as file:
@@ -63,27 +49,28 @@ def check_copyright(sourcefile: str) -> bool:
     return True
 
 
-def check_files(folder: str, extension: str)->list:
+def check_folder(folder: str, extension: str)->list:
     """
     Return a list of files missing copyright
     """
     missing_list = list()
-    javafiles = get_files(folder, extension)
+    files = get_files(folder, extension)
 
-    for javaf in javafiles:
-        if not check_copyright(javaf):
-            missing_list.append(javaf)
+    for file in files:
+        if not check_copyright(file):
+            missing_list.append(file)
     return missing_list
 
 
 def comment_block_factory()->str:
     """ Return a formatted comment block for appending """
-    with open("copyright.txt") as file:
-        buf_cprt = file.readlines()
+    buf_cprt = BUF_CPRT[:]
+
     for i, val in enumerate(buf_cprt):
         buf_cprt[i] = " * " + val
     buf_cprt.insert(0, "/*\n")
     buf_cprt.append(" */\n")
+
 
 
     return ''.join(buf_cprt)
@@ -101,15 +88,27 @@ def update_files(files: list):
 
 if __name__ == '__main__':
 
-    UPDATE_FLAG = get_update_flag()
+    parser = argparse.ArgumentParser(prog='check_copyright', usage='%(prog)s [option]',
+                                     description='check/update copyright information'
+                                     )
+    parser.add_argument('-u', '--update-copyright',
+                        action='store_true',
+                        default=False,
+                        help='update copyright (default: check copyright only)')
+    UPDATE_FLAG = parser.parse_args().update_copyright
 
-    java_missing_list = check_files(SRC_FOLDER, 'java')
-    kt_missing_list = check_files(SRC_FOLDER, 'kt')
-    print('Checking complete\n', '\n'.join(java_missing_list))
+    extensions = ['java', 'kt']
+    missing_list = list()
+    for ext in extensions:
+        missing_list += check_folder(SRC_FOLDER, ext)
 
-    if UPDATE_FLAG:
-        print('Updating files above')
-        update_files(java_missing_list)
-        update_files(kt_missing_list)
+    if not UPDATE_FLAG and missing_list != []:
+        raise Exception('\n'.join(missing_list))
+
+    elif UPDATE_FLAG:
+        print('Updating files ...')
+        update_files(missing_list)
         print('All files now have copyright info')
 
+    else:
+        print('Check complete.\nAll files OK')
