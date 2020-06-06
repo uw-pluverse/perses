@@ -32,6 +32,18 @@ java_test(
 )
 
 java_test(
+    name = "ScriptFileTest",
+    srcs = ["ScriptFileTest.java"],
+    data = [
+        "//test_data/delta_1",
+    ],
+    test_class = "org.perses.program.ScriptFileTest",
+    deps = DEFAULT_DEPS + [
+        "//src/org/perses/program:language_kind",
+    ],
+)
+
+java_test(
     name = "TokenizedProgramFactoryTest",
     srcs = ["TokenizedProgramFactoryTest.java"],
     test_class = "org.perses.program.TokenizedProgramFactoryTest",

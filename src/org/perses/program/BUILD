@@ -8,7 +8,11 @@ load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
 
 kt_jvm_library(
     name = "source_file",
-    srcs = ["SourceFile.kt"],
+    srcs = [
+        "AbstractSourceFile.kt",
+        "ScriptFile.kt",
+        "SourceFile.kt",
+    ],
     deps = [
         ":language_kind",
         "@maven//:com_google_guava_guava",

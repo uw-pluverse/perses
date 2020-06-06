@@ -3,14 +3,14 @@ package org.perses.reduction
 import com.google.common.base.Strings
 import com.google.common.io.MoreFiles
 import com.google.common.io.RecursiveDeleteOption
-import org.perses.program.SourceFile
+import org.perses.program.ScriptFile
 import org.perses.util.Util
 import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 
 class ReductionFolderManager(
   private val rootFolder: File,
-  val testScript: SourceFile,
+  val testScriptTemplate: ScriptFile,
   private val sourceFileName: String
 ) {
   private val sequenceGenerator = AtomicInteger()
@@ -22,9 +22,7 @@ class ReductionFolderManager(
     val folder = File(rootFolder, folderName)
     check(!folder.exists()) { "The folder already exists. $folder" }
     check(folder.mkdir()) { "Failed to create folder $folder" }
-    val scriptFileName = testScript.baseName
-    testScript.writeTo(File(folder, scriptFileName))
-    return ReductionFolder(folder, scriptFileName, sourceFileName)
+    return ReductionFolder(folder, testScriptTemplate, sourceFileName)
   }
 
   private fun isRootFolderDeleted() = !rootFolder.exists()

@@ -28,6 +28,7 @@ import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.program.SourceFile
 import org.perses.program.EnumFormatControl.ORIG_FORMAT
+import org.perses.program.ScriptFile
 import java.io.File
 import java.util.ArrayList
 import java.util.concurrent.Future
@@ -39,7 +40,7 @@ import java.util.function.Consumer
 class TestScriptExecutorServiceTest {
   private val sourceFile = SourceFile(File(FOLDER, "t.c"))
   private val invalidSourceFile = SourceFile(File("test_data/misc/t1.c"))
-  private val testScript = SourceFile(File(FOLDER, "r.sh"))
+  private val testScript = ScriptFile(File(FOLDER, "r.sh"))
   private val program = TestUtility.createSparTreeFromFile(sourceFile.file).programSnapshot
 
   private var workingDirectory: File? = null

@@ -30,6 +30,7 @@ import org.perses.listener.ProgressMonitorForNodeReducer
 import org.perses.listener.ReductionProfileListener
 import org.perses.listener.StatisticsListener
 import org.perses.listener.TestScriptExecutionListener
+import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
 import org.perses.program.TokenizedProgramFactory
 import org.perses.reduction.AbstractActionSetProfiler.ActionSetProfiler
@@ -310,7 +311,7 @@ class ReductionDriver(
     @VisibleForTesting
     fun createConfiguration(cmd: CommandOptions): ReductionConfiguration {
       val sourceFile = SourceFile(cmd.compulsoryFlags.sourceFile.absoluteFile)
-      val testScript = SourceFile(cmd.compulsoryFlags.getTestScript().absoluteFile)
+      val testScript = ScriptFile(cmd.compulsoryFlags.getTestScript().absoluteFile)
 
       require(sourceFile.parentFile.absolutePath == testScript.parentFile.absolutePath) {
         "The source file and the test script should reside in the same folder. " +

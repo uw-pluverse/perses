@@ -17,6 +17,7 @@
 package org.perses.reduction
 
 import org.perses.program.EnumFormatControl
+import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
 import org.perses.program.TokenizedProgram
 import java.io.Closeable
@@ -31,7 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger
 class TestScriptExecutorService(
   tempRootFolder: File,
   private val numOfThreads: Int,
-  testScriptFile: SourceFile,
+  testScriptFile: ScriptFile,
   sourceFileName: String
 ) : Closeable {
   private val executionCounter = AtomicInteger()
