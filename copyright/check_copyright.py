@@ -23,12 +23,12 @@ def get_files(directory: str, extension: str) -> List[str]:
     return file_list
 
 
-def check_copyright(sourcefile: str) -> bool:
+def check_copyright(sourcefile: str, rawtext: list) -> bool:
     """
     This function takes a source file name and
     outputs true if the file has copyright infomation
     """
-    buf_cprt = ''.join(BUF_CPRT)
+    buf_cprt = ''.join(rawtext)
     buf_cprt = ''.join(buf_cprt.split())
 
     with open(sourcefile) as file:
@@ -49,7 +49,7 @@ def check_copyright(sourcefile: str) -> bool:
     return True
 
 
-def check_folder(folder: str, extension: str)->list:
+def check_folder(folder: str, extension: str, rawtext: list)->list:
     """
     Return a list of files missing copyright
     """
@@ -57,28 +57,26 @@ def check_folder(folder: str, extension: str)->list:
     files = get_files(folder, extension)
 
     for file in files:
-        if not check_copyright(file):
+        if not check_copyright(file, rawtext):
             missing_list.append(file)
     return missing_list
 
 
-def comment_block_factory()->str:
+def comment_block_factory(rawtext: list)->str:
     """ Return a formatted comment block for appending """
-    buf_cprt = BUF_CPRT[:]
+    buf_cprt = rawtext[:]
 
     for i, val in enumerate(buf_cprt):
         buf_cprt[i] = " * " + val
     buf_cprt.insert(0, "/*\n")
     buf_cprt.append(" */\n")
 
-
-
     return ''.join(buf_cprt)
 
 
-def update_files(files: list):
+def update_files(files: list, rawtext: list):
     """ Updates give files with copyright info """
-    cmtblk = comment_block_factory()
+    cmtblk = comment_block_factory(rawtext)
     for file in files:
         with open(file, 'r+') as f:
             content = f.read()
@@ -100,14 +98,14 @@ if __name__ == '__main__':
     extensions = ['java', 'kt']
     missing_list = list()
     for ext in extensions:
-        missing_list += check_folder(SRC_FOLDER, ext)
+        missing_list += check_folder(SRC_FOLDER, ext, BUF_CPRT)
 
     if not UPDATE_FLAG and missing_list != []:
         raise Exception('\n'.join(missing_list))
 
     elif UPDATE_FLAG:
         print('Updating files ...')
-        update_files(missing_list)
+        update_files(missing_list, BUF_CPRT)
         print('All files now have copyright info')
 
     else:
