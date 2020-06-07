@@ -29,9 +29,7 @@ import org.perses.grammar.c.PnfCParserFacade;
 import org.perses.program.LanguageKind;
 import org.perses.program.TokenizedProgramFactory;
 
-import org.perses.tree.spar.ISparTreeNodeVisitor;
-import org.perses.tree.spar.SparTree;
-import org.perses.tree.spar.SparTreeBuilder;
+import org.perses.tree.spar.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,12 +45,14 @@ public class Fuzzer {
     return treeByOpt;
   }
 
+  // generate spar tree from parseTree
+
   public static SparTree generateSparTree(ParseTree parseTree) {
     ImmutableList<Token> tokens = AbstractParserFacade.getTokens(parseTree);
 
     TokenizedProgramFactory tokenizedProgramFactory = TokenizedProgramFactory.createFactory(tokens);
 
-    ParserFacadeFactory factory = ParserFacadeFactory.createForOptC();
+    ParserFacadeFactory factory = ParserFacadeFactory.createForPnfC();
 
     AbstractParserFacade parserFacade = factory.createParserFacade(LanguageKind.C);
 
@@ -62,11 +62,23 @@ public class Fuzzer {
     return sparTree;
   }
 
+  //
+  public static void treeMutation(SparTree sparTree){
+    NodeDeletionActionSet.Builder builder = new NodeDeletionActionSet.Builder("edit 1");
+    //hard-coded token id for testing
+    AbstractSparTreeNode node228 = sparTree.getNodeByTreeScanForId(228).get();
+    builder.deleteNode(node228);
+    NodeDeletionActionSet actionSet = builder.build();
+    NodeDeletionTreeEdit treeEdit = sparTree.createNodeDeletionEdit(actionSet);
+    //  debugging code, check if applyEdit working properly
+    System.out.println(sparTree.printTreeStructure());
+    sparTree.applyEdit(treeEdit);
+    System.out.println(sparTree.printTreeStructure());
+  }
+
   public static void main(String[] args) throws IOException {
     final ParseTree treeByOpt = generateTree("test_data/c_programs/gcc_testsuite/06002.c");
     final SparTree sparTree = generateSparTree(treeByOpt);
-    //    System.out.println(sparTree.printTreeStructure());
-    //    System.out.println(treeByOpt.toStringTree());
-    //    System.out.println("finished");
+    treeMutation(sparTree);
   }
 }
