@@ -22,23 +22,19 @@ class TestCheckCopyright(unittest.TestCase):
     
     def setUp(self):
         with tempfile.NamedTemporaryFile(suffix='.java', delete=False) as self.j1:
-            print(self.j1.name)
             self.j1.write(b"import java.util.*;")
         with tempfile.NamedTemporaryFile(suffix='.kt', delete=False) as self.k1:
-            print(self.k1.name)
             self.k1.write(b"import platform.posix.*;")
 
         self.j1_base = os.path.basename(self.j1.name)
         self.k1_base = os.path.basename(self.k1.name)
         
         self.folder = os.path.dirname(self.j1.name)
-        print(self.folder)
         
 
     def tearDown(self):
         os.unlink(self.j1.name)
         os.unlink(self.k1.name)
-        print(os.path.exists(self.j1.name))
 
         
     def test_get_files(self):
