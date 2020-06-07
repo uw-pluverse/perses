@@ -7,12 +7,12 @@ py_library(
 )
 
 py_test(
-    name = "check_copyright_up_to_date",
+    name = "check_copyright_test.py",
     srcs = ["check_copyright_test.py"],
     data = [
         "check_copyright"
     ],
     deps = [    
-    	"check_copyright.py"
+    	":check_copyright"
     ],
 )
