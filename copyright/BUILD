@@ -1,5 +1,5 @@
 py_library(
-	name = "check_copyright"
+	name = "check_copyright",
 	srcs = ["check_copyright.py"],
 	data = [
         "copyright.txt"
@@ -7,12 +7,12 @@ py_library(
 )
 
 py_test(
-    name = "check_copyright_test.py",
+    name = "check_copyright_test",
     srcs = ["check_copyright_test.py"],
     data = [
         "check_copyright"
     ],
-    deps = [    
+    deps = [
     	":check_copyright"
     ],
 )
