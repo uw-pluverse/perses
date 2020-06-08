@@ -26,6 +26,8 @@ class TestCheckCopyright(unittest.TestCase):
 
         
     def test_get_files(self):
+        l = check_copyright.get_files(self.folder, 'java')
+        self.assertEqual(l, [self.java_temp_file.name])
         l = check_copyright.get_files(self.folder, 'cpp')
         self.assertEqual(l, [])
 
