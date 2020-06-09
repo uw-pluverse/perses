@@ -1,5 +1,5 @@
 int printf(const char*, ...);
-
+// This is a comment.
 int main (int argc, char *argv[]) {
   int a = 1;
   int b = a + 1;

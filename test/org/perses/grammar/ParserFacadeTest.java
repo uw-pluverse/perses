@@ -16,6 +16,7 @@ import org.perses.program.TokenizedProgramFactory;
 import org.perses.tree.spar.SparTree;
 import org.perses.tree.spar.SparTreeBuilder;
 
+import java.io.File;
 import java.io.IOException;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -27,20 +28,35 @@ public class ParserFacadeTest {
   private PnfCParserFacade pnfcFacade = new PnfCParserFacade();
 
   @Test
+  public void testTokenize() throws IOException {
+    ImmutableList<Token> tokens = facade.parseIntoTokens(new File("test_data/misc/t1.c"));
+    ImmutableList<String> tokenTexts =
+        tokens.stream().map(Token::getText).collect(ImmutableList.toImmutableList());
+    assertThat(tokenTexts)
+        .containsExactly("int", "a", ";", "int", "b", ";", "int", "a", ",", "b", ";")
+        .inOrder();
+  }
+
+  @Test
   public void testIsParsable_true() throws IOException {
     final TokenizedProgram program =
         TestUtility.createSparTreeFromFile("test_data/misc/t1.c").getProgramSnapshot();
-    assertThat(facade.isSourceCodeParsable(program.toSourceCodeInOrigFormatWithBlankLines())).isTrue();
+    assertThat(facade.isSourceCodeParsable(program.toSourceCodeInOrigFormatWithBlankLines()))
+        .isTrue();
     assertThat(facade.isSourceCodeParsable(program)).isTrue();
 
-    assertThat(pnfcFacade.isSourceCodeParsable(program.toSourceCodeInOrigFormatWithBlankLines())).isTrue();
+    assertThat(pnfcFacade.isSourceCodeParsable(program.toSourceCodeInOrigFormatWithBlankLines()))
+        .isTrue();
     assertThat(pnfcFacade.isSourceCodeParsable(program)).isTrue();
 
     final TokenizedProgram invalidProgram = deriveInvalidProgram(program);
-    assertThat(facade.isSourceCodeParsable(invalidProgram.toSourceCodeInOrigFormatWithBlankLines())).isFalse();
+    assertThat(facade.isSourceCodeParsable(invalidProgram.toSourceCodeInOrigFormatWithBlankLines()))
+        .isFalse();
     assertThat(facade.isSourceCodeParsable(invalidProgram)).isFalse();
 
-    assertThat(pnfcFacade.isSourceCodeParsable(invalidProgram.toSourceCodeInOrigFormatWithBlankLines()))
+    assertThat(
+            pnfcFacade.isSourceCodeParsable(
+                invalidProgram.toSourceCodeInOrigFormatWithBlankLines()))
         .isFalse();
     assertThat(pnfcFacade.isSourceCodeParsable(invalidProgram)).isFalse();
   }

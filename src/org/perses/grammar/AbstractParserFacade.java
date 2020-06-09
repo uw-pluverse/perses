@@ -59,6 +59,12 @@ public abstract class AbstractParserFacade {
     }
   }
 
+  public final ImmutableList<Token> parseIntoTokens(File file) throws IOException {
+    try (BufferedReader reader = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8)) {
+      return tokenize(file.getPath(), reader);
+    }
+  }
+
   public static ImmutableList<Token> getTokens(ParseTree tree) {
     ImmutableList.Builder<Token> builder = ImmutableList.builderWithExpectedSize(500);
     final ArrayDeque<ParseTree> stack = new ArrayDeque<>();
@@ -185,6 +191,9 @@ public abstract class AbstractParserFacade {
   }
 
   protected abstract ParseTreeWithParser parseReader(String fileName, Reader reader)
+      throws IOException;
+
+  protected abstract ImmutableList<Token> tokenize(String fileName, Reader reader)
       throws IOException;
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();

@@ -16,6 +16,7 @@
  */
 package org.perses.grammar;
 
+import com.google.common.collect.ImmutableList;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.DefaultErrorStrategy;
@@ -127,6 +128,12 @@ public abstract class AbstractDefaultParserFacade<LEXER extends Lexer, PARSER ex
         this::createLexerWithoutCache,
         this::createParserWithoutCache,
         this::startParsing);
+  }
+
+  @Override
+  protected ImmutableList<Token> tokenize(String fileName, Reader reader) throws IOException {
+    final Lexer lexer = createLexerWithoutCache(new ANTLRInputStream(reader));
+    return ImmutableList.copyOf(lexer.getAllTokens());
   }
 
   public final ParseTreeWithParser parseTokenizedProgram(TokenizedProgram program) {

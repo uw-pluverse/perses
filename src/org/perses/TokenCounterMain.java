@@ -22,12 +22,15 @@ public class TokenCounterMain {
     final SourceFile sourceFile = new SourceFile(file);
     final AbstractParserFacade parserFacade =
         ParserFacadeFactory.createForPnfC().createParserFacade(sourceFile.getLanguageKind());
-    final ParseTreeWithParser parseTreeWithParser =
-        parserFacade.parseString(sourceFile.getFileContent());
-    final ImmutableList<Token> tokens =
-        AbstractParserFacade.getTokens(parseTreeWithParser.getTree());
+    final ImmutableList<Token> tokens = parserFacade.parseIntoTokens(sourceFile.getFile());
+    int count = 0;
+    for (Token token: tokens) {
+      if (token.getChannel() == Token.DEFAULT_CHANNEL) {
+        ++count;
+      }
+    }
     System.out.println();
     System.out.printf("The number of tokens in file '%s' is:\n", file);
-    System.out.println(tokens.size());
+    System.out.println(count);
   }
 }
