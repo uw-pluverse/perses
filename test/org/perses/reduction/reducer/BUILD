@@ -1,5 +1,7 @@
 load("//test/org/perses:test.bzl", "golden_test")
 load("//src/org/perses:reduction.bzl", "reduce")
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_test")
+
 
 java_test(
     name = "PersesNodeReducerFunctionalTest",
@@ -48,9 +50,9 @@ java_test(
     ],
 )
 
-java_test(
+kt_jvm_test(
     name = "HddReducerFunctionalTest",
-    srcs = ["HddReducerFunctionalTest.java"],
+    srcs = ["HddReducerFunctionalTest.kt"],
     data = ["//test_data/java_helloworld"],
     test_class = "org.perses.reduction.reducer.HddReducerFunctionalTest",
     deps = [
