@@ -41,6 +41,7 @@ import org.perses.tree.spar.SparTreeBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 public class Fuzzer {
@@ -70,9 +71,15 @@ public class Fuzzer {
   }
 
   //
-  public static void treeMutation(SparTree sparTree){
+  public static void treeMutation(SparTree sparTree,Long randomSeed){
     NodeDeletionActionSet.Builder builder = new NodeDeletionActionSet.Builder("edit 1");
     //hard-coded token id for testing
+    Random rnd = new Random();
+    rnd.setSeed(randomSeed);
+
+    System.out.println(sparTree.getOriginalTokenCount());
+    int randomInteger = rnd.nextInt(sparTree.getTreeId());
+
     AbstractSparTreeNode node228 = sparTree.getNodeByTreeScanForId(228).get();
     builder.deleteNode(node228);
     NodeDeletionActionSet actionSet = builder.build();
