@@ -17,10 +17,26 @@
 
 package org.perses.fuzzer;
 
+import com.google.common.collect.ImmutableList;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import org.perses.grammar.AbstractParserFacade;
+import org.perses.grammar.ParserFacadeFactory;
 import org.perses.grammar.c.CParserFacade;
 import org.perses.grammar.c.PnfCParserFacade;
+
+import org.perses.program.LanguageKind;
+import org.perses.program.TokenizedProgramFactory;
+
+import org.perses.tree.spar.AbstractSparTreeNode;
+import org.perses.tree.spar.NodeDeletionActionSet;
+import org.perses.tree.spar.NodeDeletionTreeEdit;
+
+
+
+import org.perses.tree.spar.SparTree;
+import org.perses.tree.spar.SparTreeBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,16 +45,43 @@ import java.util.concurrent.ExecutionException;
 
 public class Fuzzer {
 
-  public static ParseTree generateTree(String pathname) throws IOException {
+  public static ParseTree generateParseTree(String pathname) throws IOException {
     CParserFacade CParser = new CParserFacade();
     final File testFile = new File(pathname);
     ParseTree treeByOpt = CParser.parseFile(testFile).getTree();
     return treeByOpt;
   }
 
-  public static void main(String[] args) throws IOException {
-    final ParseTree treeByOpt = generateTree("test_data/c_programs/gcc_testsuite/06002.c");
-    System.out.println(treeByOpt.toStringTree());
-    System.out.println("finished");
+  // generate spar tree from parseTree
+
+  public static SparTree generateSparTree(ParseTree parseTree) {
+    ImmutableList<Token> tokens = AbstractParserFacade.getTokens(parseTree);
+
+    TokenizedProgramFactory tokenizedProgramFactory = TokenizedProgramFactory.createFactory(tokens);
+
+    ParserFacadeFactory factory = ParserFacadeFactory.createForPnfC();
+
+    AbstractParserFacade parserFacade = factory.createParserFacade(LanguageKind.C);
+
+    SparTree sparTree =
+        new SparTreeBuilder(parserFacade.getRuleHierarchy(), tokenizedProgramFactory)
+            .build(parseTree);
+    return sparTree;
   }
+
+  //
+  public static void treeMutation(SparTree sparTree){
+    NodeDeletionActionSet.Builder builder = new NodeDeletionActionSet.Builder("edit 1");
+    //hard-coded token id for testing
+    AbstractSparTreeNode node228 = sparTree.getNodeByTreeScanForId(228).get();
+    builder.deleteNode(node228);
+    NodeDeletionActionSet actionSet = builder.build();
+    NodeDeletionTreeEdit treeEdit = sparTree.createNodeDeletionEdit(actionSet);
+    //  debugging code, check if applyEdit working properly
+    System.out.println(sparTree.printTreeStructure());
+    sparTree.applyEdit(treeEdit);
+    System.out.println(sparTree.printTreeStructure());
+  }
+
+
 }

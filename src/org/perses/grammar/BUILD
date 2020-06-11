@@ -1,4 +1,5 @@
 package(default_visibility = [
+    "//fuzzer/org/perses:__pkg__",
     "//src/org/perses:__subpackages__",
     "//test/org/perses:__subpackages__",
 ])
@@ -31,13 +32,13 @@ java_library(
     srcs = ["ParserFacadeFactory.java"],
     deps = [
         ":grammar_facade",
-        "//src/org/perses/program:language_kind",
         "//src/org/perses/grammar/c:c_parser_facade",
         "//src/org/perses/grammar/c:pnfc_parser_facade",
         "//src/org/perses/grammar/go:pnfgo_parser_facade",
         "//src/org/perses/grammar/java:java_parser_facade",
-        "//src/org/perses/grammar/scala:pnfscala_parser_facade",
         "//src/org/perses/grammar/rust:pnfrust_parser_facade",
+        "//src/org/perses/grammar/scala:pnfscala_parser_facade",
+        "//src/org/perses/program:language_kind",
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",
     ],

@@ -28,7 +28,7 @@ public class FuzzerTest {
       final ArrayList<String> origTokens =
           TestUtility.extractTokens(C_PARSER_FACADE.parseWithOrigCParser(testFile).getTree());
 
-      final ParseTree treeByOpt = Fuzzer.generateTree(pathname);
+      final ParseTree treeByOpt = Fuzzer.generateParseTree(pathname);
       assertThat(origTokens)
           .containsExactlyElementsIn(TestUtility.extractTokens(treeByOpt))
           .inOrder();
