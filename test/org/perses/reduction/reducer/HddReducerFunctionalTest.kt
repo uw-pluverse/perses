@@ -14,34 +14,45 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.reduction.reducer;
+package org.perses.reduction.reducer
 
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.perses.reduction.AbstractReducerFunctionalTest;
+import org.junit.Ignore
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
+import org.perses.reduction.AbstractReducerFunctionalTest
 
-/** Functional test for {@link HDDReducer} */
-@RunWith(JUnit4.class)
-public class HddReducerFunctionalTest extends AbstractReducerFunctionalTest {
-
+/** Functional test for [HDDReducer]  */
+@RunWith(JUnit4::class)
+class HddReducerFunctionalTest : AbstractReducerFunctionalTest() {
   // Note that, since we remove --ensureAntlrValidity, we no longer check whether the reduced
   // program conforms to the grammar. Therefore, it is possible to reduce some invalid programs,
   // accepted by the compiler, but not the grammar used by Perses.
-  @Ignore
   @Test
-  public void testReduceDelta1() {
-    runCTestSubject("test_data/delta_1", HDDReducer.META, "int main(){printf(\"world\\n\");}");
+  fun testReduceDelta1() {
+    runCTestSubject("test_data/delta_1", HDDReducer.META,
+      """
+      |int main(){
+      |  printf("world\n");
+      |}""".trimMargin())
   }
 
   @Ignore
   @Test
-  public void testFunctionalTest() {
+  fun testFunctionalTest() {
     runJavaTestSubject(
-        "test_data/java_helloworld",
-        HDDReducer.META,
-        "classt{staticintcounter(){return100;}publicstaticvoidmain(String[]args)"
-            + "{for(inti=0;i<counter();++i){System.out.println(\"helloworld\");}}}");
+      "test_data/java_helloworld",
+      HDDReducer.META,
+      """
+      |class t {
+      |  static int counter() {
+      |    return 100;
+      |  }
+      |  public static void main(String[] args) {
+      |    for(int i = 0; i < counter(); ++i) {
+      |      System.out.println("hello world");
+      |    }
+      |  }
+      |}""".trimMargin())
   }
 }
