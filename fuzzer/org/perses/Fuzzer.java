@@ -29,7 +29,14 @@ import org.perses.grammar.c.PnfCParserFacade;
 import org.perses.program.LanguageKind;
 import org.perses.program.TokenizedProgramFactory;
 
-import org.perses.tree.spar.*;
+import org.perses.tree.spar.AbstractSparTreeNode;
+import org.perses.tree.spar.NodeDeletionActionSet;
+import org.perses.tree.spar.NodeDeletionTreeEdit;
+
+
+
+import org.perses.tree.spar.SparTree;
+import org.perses.tree.spar.SparTreeBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +45,7 @@ import java.util.concurrent.ExecutionException;
 
 public class Fuzzer {
 
-  public static ParseTree generateTree(String pathname) throws IOException {
+  public static ParseTree generateParseTree(String pathname) throws IOException {
     CParserFacade CParser = new CParserFacade();
     final File testFile = new File(pathname);
     ParseTree treeByOpt = CParser.parseFile(testFile).getTree();
@@ -76,9 +83,5 @@ public class Fuzzer {
     System.out.println(sparTree.printTreeStructure());
   }
 
-  public static void main(String[] args) throws IOException {
-    final ParseTree treeByOpt = generateTree("test_data/c_programs/gcc_testsuite/06002.c");
-    final SparTree sparTree = generateSparTree(treeByOpt);
-    treeMutation(sparTree);
-  }
+
 }
