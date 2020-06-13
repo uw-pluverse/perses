@@ -34,17 +34,20 @@ abstract class AbstractReducer protected constructor(
   reducerContext: ReducerContext
 ) {
   @JvmField
-  protected val configuration: ReductionConfiguration
-  protected val executorService: TestScriptExecutorService
-  protected val queryCache: AbstractTestScriptExecutionCache
-  @JvmField
-  protected val listenerManager: ReductionListenerManager
-  @JvmField
-  protected val nodeActionSetCache: AbstractNodeActionSetCache
-  @JvmField
-  protected val actionSetProfiler: AbstractActionSetProfiler
+  protected val configuration: ReductionConfiguration = reducerContext.configuration
+  protected val executorService: TestScriptExecutorService = reducerContext.executorService
+  protected val queryCache: AbstractTestScriptExecutionCache = reducerContext.queryCache
 
-  protected fun testProgramAsynchronously(program: TokenizedProgram) =
+  @JvmField
+  protected val listenerManager: ReductionListenerManager = reducerContext.listenerManager
+
+  @JvmField
+  protected val nodeActionSetCache: AbstractNodeActionSetCache = reducerContext.nodeActionSetCache
+
+  @JvmField
+  protected val actionSetProfiler: AbstractActionSetProfiler = reducerContext.actionSetProfiler
+
+  private fun testProgramAsynchronously(program: TokenizedProgram) =
     executorService.testProgram(program, configuration.programFormatControl)
 
   private class FutureExecutionResultInfo(
@@ -172,12 +175,4 @@ abstract class AbstractReducer protected constructor(
     }
   }
 
-  init {
-    configuration = reducerContext.configuration
-    executorService = reducerContext.executorService
-    queryCache = reducerContext.queryCache
-    listenerManager = reducerContext.listenerManager
-    nodeActionSetCache = reducerContext.nodeActionSetCache
-    actionSetProfiler = reducerContext.actionSetProfiler
-  }
 }
