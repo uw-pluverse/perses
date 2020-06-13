@@ -210,11 +210,11 @@ public class CommandOptions {
     public boolean rebuildParseTreeEachIteration = true;
 
     @Parameter(
-        names = "--enable-token-removal-alg",
-        description = "Enable token removal alg after syntax-guided reduction is done. Maybe slow.",
+        names = "--enable-token-slicer",
+        description = "Enable token slicer after syntax-guided reduction is done. Maybe slow.",
         arity = 1,
         order = FlagOrder.ALG_CONTROL + 3)
-    public boolean enableTokenRemover = false;
+    public boolean enableTokenSlicer = false;
 
     @Parameter(
         names = "--use-real-ddmin",
