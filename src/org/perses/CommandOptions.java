@@ -144,8 +144,6 @@ public class CommandOptions {
 
   public static final class ReductionControlFlags {
 
-
-
     @Parameter(
         names = "--fixpoint",
         description = "iterative reduction till fixpoint",
@@ -161,8 +159,7 @@ public class CommandOptions {
 
     @Parameter(
         names = "--code-format",
-        description =
-            "The format of the reduced program.",
+        description = "The format of the reduced program.",
         arity = 1,
         order = FlagOrder.REDUCTION_CONTROL + 2)
     public EnumFormatControl codeFormat;
@@ -213,17 +210,24 @@ public class CommandOptions {
     public boolean rebuildParseTreeEachIteration = true;
 
     @Parameter(
+        names = "--enable-token-removal-alg",
+        description = "Enable token removal alg after syntax-guided reduction is done. Maybe slow.",
+        arity = 1,
+        order = FlagOrder.ALG_CONTROL + 3)
+    public boolean enableTokenRemover = false;
+
+    @Parameter(
         names = "--use-real-ddmin",
         description = "Whether to use the real delta debugging algorithm to reduce kleene nodes.",
         arity = 1,
-        order = FlagOrder.ALG_CONTROL + 3)
+        order = FlagOrder.ALG_CONTROL + 4)
     public boolean useRealDeltaDebugger = false;
 
     @Parameter(
         names = "--use-optc-parser",
         description = "Use the OptC parser to construct the spar-tree.",
         arity = 1,
-        order = FlagOrder.ALG_CONTROL + 4)
+        order = FlagOrder.ALG_CONTROL + 5)
     public boolean useOptCParser = false;
 
     public String getReductionAlgorithmName() {
