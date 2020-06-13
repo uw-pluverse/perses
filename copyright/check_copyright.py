@@ -5,7 +5,7 @@ import argparse
 from typing import List
 
 
-##SRC_FOLDER = '../src'
+SRC_FOLDER = '../src'
 
 
 class Copyright:
