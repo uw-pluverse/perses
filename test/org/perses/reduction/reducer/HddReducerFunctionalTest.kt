@@ -37,9 +37,8 @@ class HddReducerFunctionalTest : AbstractReducerFunctionalTest() {
       |}""".trimMargin())
   }
 
-  @Ignore
   @Test
-  fun testFunctionalTest() {
+  fun testJavaFunctionalTest() {
     runJavaTestSubject(
       "test_data/java_helloworld",
       HDDReducer.META,
