@@ -14,7 +14,10 @@ class ReductionFolder internal constructor(
   testScriptTemplate: ScriptFile,
   sourceFileName: String
 ) {
-  val testScript: TestScript = TestScript(File(folder, testScriptTemplate.baseName), testScriptTemplate)
+  val testScript: TestScript = TestScript(
+    File(folder, testScriptTemplate.baseName),
+    testScriptTemplate
+  )
   val sourceFilePath: File = File(folder, sourceFileName)
 
   @Throws(IOException::class)

@@ -9,12 +9,11 @@ sanity_test(
     test_script = "r.sh",
 )
 
-
 filegroup(
     name = "go_29220",
     srcs = [
-        "r.sh",
         "29220.go",
+        "r.sh",
     ],
 )
 
@@ -40,13 +39,11 @@ reduction_golden_test(
     test_script = "r.sh",
 )
 
-
-
 filegroup(
     name = "go_29220_reduced",
     srcs = [
-        "progress_dump.txt",
         "29220_reduced.go",
+        "progress_dump.txt",
         "statistics.txt",
     ],
 )

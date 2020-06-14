@@ -10,7 +10,8 @@ import org.perses.tree.spar.AbstractUnmodifiableSparTree
 class ReductionListenerManager(private val listeners: ImmutableList<AbstractReductionListener>) {
   fun onReductionStart(tree: AbstractUnmodifiableSparTree, programSize: Int) {
     val event = AbstractReductionEvent.ReductionStartEvent(
-      System.currentTimeMillis(), tree, programSize)
+      System.currentTimeMillis(), tree, programSize
+    )
     for (listener in listeners) {
       listener.onReductionStart(event)
     }
@@ -18,7 +19,8 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
 
   fun onReductionEnd(programSize: Int, countOfTestScriptExecutions: Int) {
     val event = AbstractReductionEvent.ReductionEndEvent(
-      System.currentTimeMillis(), programSize, countOfTestScriptExecutions)
+      System.currentTimeMillis(), programSize, countOfTestScriptExecutions
+    )
     for (listener in listeners) {
       listener.onReductionEnd(event)
     }
@@ -30,7 +32,8 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
     reducerClass: ReducerAnnotation
   ) {
     val event = AbstractReductionEvent.FixpointIterationStartEvent(
-      System.currentTimeMillis(), programSize, iteration, reducerClass)
+      System.currentTimeMillis(), programSize, iteration, reducerClass
+    )
     for (listener in listeners) {
       listener.onFixpointIterationStart(event)
     }
@@ -42,7 +45,8 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
     countOfTestScriptExecutions: Int
   ) {
     val event = AbstractReductionEvent.FixpointIterationEndEvent(
-      System.currentTimeMillis(), programSize, iteration, countOfTestScriptExecutions)
+      System.currentTimeMillis(), programSize, iteration, countOfTestScriptExecutions
+    )
     for (listener in listeners) {
       listener.onFixpointIterationEnd(event)
     }
@@ -50,7 +54,8 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
 
   fun onLevelReductionStart(level: Int, nodeCountOnLevel: Int, programSize: Int) {
     val event = AbstractReductionEvent.LevelReductionStartEvent(
-      System.currentTimeMillis(), programSize, level, nodeCountOnLevel)
+      System.currentTimeMillis(), programSize, level, nodeCountOnLevel
+    )
     for (listener in listeners) {
       listener.onLevelReductionStart(event)
     }
@@ -58,7 +63,8 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
 
   fun onLevelReductionEnd(level: Int, programSize: Int) {
     val event = AbstractReductionEvent.LevelReductionEndEvent(
-      System.currentTimeMillis(), programSize, level)
+      System.currentTimeMillis(), programSize, level
+    )
     for (listener in listeners) {
       listener.onLevelReductionEnd(event)
     }
@@ -66,7 +72,8 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
 
   fun onLevelGranularityReductionStart(maxNumOfNodesPerPartition: Int, programSize: Int) {
     val event = AbstractReductionEvent.LevelGranularityReductionStartEvent(
-        System.currentTimeMillis(), programSize, maxNumOfNodesPerPartition)
+      System.currentTimeMillis(), programSize, maxNumOfNodesPerPartition
+    )
     for (listener in listeners) {
       listener.onLevelGranularityReductionStart(event)
     }
@@ -74,7 +81,8 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
 
   fun onLevelGranularityReductionEnd(maxNumOfNodesPerPartition: Int, programSize: Int) {
     val event = AbstractReductionEvent.LevelGranularityReductionEndEvent(
-        System.currentTimeMillis(), programSize, maxNumOfNodesPerPartition)
+      System.currentTimeMillis(), programSize, maxNumOfNodesPerPartition
+    )
     for (listener in listeners) {
       listener.onLevelGranularityReductionEnd(event)
     }
@@ -86,7 +94,8 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
     programSize: Int
   ) {
     val event = AbstractReductionEvent.NodeReductionStartEvent(
-        System.currentTimeMillis(), programSize, tree, node)
+      System.currentTimeMillis(), programSize, tree, node
+    )
     for (listener in listeners) {
       listener.onNodeReductionStart(event)
     }
@@ -99,7 +108,8 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
     programSize: Int
   ) {
     val event = AbstractReductionEvent.NodeReductionEndEvent(
-        System.currentTimeMillis(), programSize, tree, node, remainingQueueSize)
+      System.currentTimeMillis(), programSize, tree, node, remainingQueueSize
+    )
     for (listener in listeners) {
       listener.onNodeReductionEnd(event)
     }
@@ -111,7 +121,8 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
     edit: AbstractSparTreeEdit
   ) {
     val event = AbstractReductionEvent.TestScriptExecutionEvent(
-        System.currentTimeMillis(), result, program, edit)
+      System.currentTimeMillis(), result, program, edit
+    )
     for (listener in listeners) {
       listener.onTestScriptExecution(event)
     }
@@ -123,7 +134,8 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
     millisToCancelTheTask: Int
   ) {
     val event = AbstractReductionEvent.TestScriptExecutionCanceledEvent(
-        System.currentTimeMillis(), millisToCancelTheTask, program, edit)
+      System.currentTimeMillis(), millisToCancelTheTask, program, edit
+    )
     for (listener in listeners) {
       listener.onTestScriptExecutionCancelled(event)
     }
@@ -135,7 +147,8 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
     edit: AbstractSparTreeEdit
   ) {
     val event = AbstractReductionEvent.TestResultCacheHitEvent(
-        System.currentTimeMillis(), result, program, edit)
+      System.currentTimeMillis(), result, program, edit
+    )
     for (listener in listeners) {
       listener.onTestResultCacheHit(event)
     }
@@ -143,7 +156,8 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
 
   fun onNodeEditActionSetCacheHit(query: AbstractActionSet<*>) {
     val event = AbstractReductionEvent.NodeEditActionSetCacheHitEvent(
-        System.currentTimeMillis(), query)
+      System.currentTimeMillis(), query
+    )
     for (listener in listeners) {
       listener.onNodeEditActionSetCacheHit(event)
     }
@@ -151,7 +165,8 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
 
   fun onTestScriptExecutionCacheEntryEviction(sizeBefore: Int, sizeAfter: Int) {
     val event = AbstractReductionEvent.TestScriptExecutionCacheEntryEvictionEvent(
-        System.currentTimeMillis(), sizeBefore, sizeAfter)
+      System.currentTimeMillis(), sizeBefore, sizeAfter
+    )
     for (listener in listeners) {
       listener.onTestScriptExecutionCacheEntryEviction(event)
     }
@@ -159,7 +174,8 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
 
   fun onNodeActionSetClearance(cacheSizeBefore: Int) {
     val event = AbstractReductionEvent.NodeEditActionSetCacheClearanceEvent(
-      System.currentTimeMillis(), cacheSizeBefore)
+      System.currentTimeMillis(), cacheSizeBefore
+    )
     for (listener in listeners) {
       listener.onNodeActionSetCacheClearance(event)
     }

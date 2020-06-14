@@ -7,13 +7,12 @@ load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_test")
 #    srcs = ["//src/org/perses/grammar/go:normalize_go_to_pnf"],
 #    cmd = "cp \"$<\" \"$@\""
 # )
- 
+
 # golden_test(
 #    name = "test_pnf_go_grammar",
 #    test_file = "pnf_go_grammar.g4",
 #    golden_file = "golden_pnf_go.g4"
 # )
-
 
 kt_jvm_test(
     name = "PnfRustParserFacadeTest",

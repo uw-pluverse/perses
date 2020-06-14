@@ -1,12 +1,12 @@
 package org.perses.reduction
 
 import com.google.common.collect.ImmutableList
+import org.perses.tree.spar.ChildHoistingAction
 import java.io.BufferedWriter
 import java.io.File
 import java.io.IOException
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
-import org.perses.tree.spar.ChildHoistingAction
 
 abstract class AbstractActionSetProfiler {
   abstract fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedChildren(

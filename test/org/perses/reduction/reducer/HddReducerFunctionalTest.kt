@@ -16,7 +16,6 @@
  */
 package org.perses.reduction.reducer
 
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -30,11 +29,13 @@ class HddReducerFunctionalTest : AbstractReducerFunctionalTest() {
   // accepted by the compiler, but not the grammar used by Perses.
   @Test
   fun testReduceDelta1() {
-    runCTestSubject("test_data/delta_1", HDDReducer.META,
+    runCTestSubject(
+      "test_data/delta_1", HDDReducer.META,
       """
       |int main(){
       |  printf("world\n");
-      |}""".trimMargin())
+      |}""".trimMargin()
+    )
   }
 
   @Test
@@ -52,6 +53,7 @@ class HddReducerFunctionalTest : AbstractReducerFunctionalTest() {
       |      System.out.println("hello world");
       |    }
       |  }
-      |}""".trimMargin())
+      |}""".trimMargin()
+    )
   }
 }

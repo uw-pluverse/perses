@@ -18,7 +18,6 @@ package org.perses.reduction
 
 import org.perses.program.EnumFormatControl
 import org.perses.program.ScriptFile
-import org.perses.program.SourceFile
 import org.perses.program.TokenizedProgram
 import java.io.Closeable
 import java.io.File
@@ -58,7 +57,8 @@ class TestScriptExecutorService(
     reductionFolderManager = ReductionFolderManager(
       tempRootFolder,
       testScriptFile,
-      sourceFileName)
+      sourceFileName
+    )
   }
 
   @Override
@@ -88,7 +88,8 @@ class TestScriptExecutorService(
     return try {
       val workingFolder = reductionFolderManager!!.createNextFolder()
       val result = FutureTestScriptExecutionTask(
-        ReductionTestScriptExecutorCallback(workingFolder, program, keepOrigCodeFormat))
+        ReductionTestScriptExecutorCallback(workingFolder, program, keepOrigCodeFormat)
+      )
       executorService.submit(result)
       result
     } catch (e: IOException) {

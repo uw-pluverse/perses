@@ -16,10 +16,6 @@
  */
 package org.perses.reduction
 
-import java.io.IOException
-import java.util.LinkedList
-import java.util.Optional
-import java.util.concurrent.ExecutionException
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.TestScriptExecutorService.FutureTestScriptExecutionTask
 import org.perses.tree.spar.AbstractNodeActionSetCache
@@ -27,6 +23,10 @@ import org.perses.tree.spar.AbstractSparTreeEdit
 import org.perses.tree.spar.AbstractSparTreeNode
 import org.perses.tree.spar.SparTree
 import org.perses.tree.spar.SparTreeSimplifier
+import java.io.IOException
+import java.util.LinkedList
+import java.util.Optional
+import java.util.concurrent.ExecutionException
 
 /** The base class for reducer. Both hdd and perses algorithms extend this class.  */
 abstract class AbstractReducer protected constructor(
@@ -75,8 +75,10 @@ abstract class AbstractReducer protected constructor(
     }
     val futureList = asyncApplyEditsInOrderOfProgramSizeFromLeast(editList)
     val best = analyzeResultsAndGetBest(futureList)
-    assert(!best.isPresent ||
-      configuration.parserFacade.isSourceCodeParsable(best.get().edit.program))
+    assert(
+      !best.isPresent ||
+        configuration.parserFacade.isSourceCodeParsable(best.get().edit.program)
+    )
     return best.map { b: FutureExecutionResultInfo -> TreeEditWithItsResult(b.edit, b.result) }
   }
 
@@ -112,13 +114,15 @@ abstract class AbstractReducer protected constructor(
         executionResultInfo.cancel()
         val duration = (System.currentTimeMillis() - start).toInt()
         listenerManager.onTestScriptExecutionCancelled(
-          executionResultInfo.program, executionResultInfo.edit, duration)
+          executionResultInfo.program, executionResultInfo.edit, duration
+        )
         continue
       }
       val testResult = executionResultInfo.result
       queryCache.addResult(executionResultInfo.program, executionResultInfo.result)
       listenerManager.onTestScriptExecution(
-        testResult, executionResultInfo.program, executionResultInfo.edit)
+        testResult, executionResultInfo.program, executionResultInfo.edit
+      )
       if (testResult.isPass) {
         best = executionResultInfo
       }
@@ -174,5 +178,4 @@ abstract class AbstractReducer protected constructor(
       }
     }
   }
-
 }

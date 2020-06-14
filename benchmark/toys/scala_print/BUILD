@@ -9,12 +9,11 @@ sanity_test(
     test_script = "r.sh",
 )
 
-
 filegroup(
     name = "scala_print",
     srcs = [
-        "r.sh",
         "Hello.sc",
+        "r.sh",
     ],
 )
 

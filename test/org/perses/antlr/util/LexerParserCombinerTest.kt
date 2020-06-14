@@ -9,7 +9,8 @@ import org.junit.runners.JUnit4
 class LexerParserCombinerTest {
   @Test
   fun test() {
-    val lexerDef = """lexer grammar ToyLexer;
+    val lexerDef =
+      """lexer grammar ToyLexer;
       | BREAK: 'break';
       | NIL_LIT: 'nil';
       | fragment DECIMALS
@@ -17,7 +18,8 @@ class LexerParserCombinerTest {
       |  ;
     """.trimMargin()
 
-    val parserDef = """parser grammar ToyParser;
+    val parserDef =
+      """parser grammar ToyParser;
       | options {
       |     tokenVocab = ToyLexer;
       |     superClass = ToyParserBase;
@@ -26,15 +28,20 @@ class LexerParserCombinerTest {
       | start: BREAK NIL_LIT;
     """.trimMargin()
 
-    val combined = removeWhitespaces(LexerParserCombiner.combineLexerAndParser(lexerDef, parserDef, "Toy"))
+    val combined = removeWhitespaces(
+      LexerParserCombiner.combineLexerAndParser(lexerDef, parserDef, "Toy")
+    )
 
-    val expected = removeWhitespaces("""// Combined by org.perses.antlr.util.LexerParserCombiner
+    val expected = removeWhitespaces(
+      """// Combined by org.perses.antlr.util.LexerParserCombiner
       // DO NOT MODIFY.
       grammar Toy;
       BREAK : 'break' ;
       NIL_LIT : 'nil' ;
       fragment DECIMALS : [0-9]+;
-      start : BREAK NIL_LIT ;""".trimIndent())
+      start : BREAK NIL_LIT ;
+      """.trimIndent()
+    )
     Truth.assertThat(combined).isEqualTo(expected)
   }
 

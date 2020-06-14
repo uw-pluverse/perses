@@ -62,23 +62,29 @@ class ReductionDriver(
     configuration.tempRootFolder,
     configuration.numOfReductionThreads,
     configuration.testScript,
-    configuration.fileToReduce.baseName)
+    configuration.fileToReduce.baseName
+  )
   private val listenerManager = ReductionListenerManager(
-    createListeners(cmd.profilingFlags.profile, configuration, extraListeners))
+    createListeners(cmd.profilingFlags.profile, configuration, extraListeners)
+  )
   private var tree = createSparTree(configuration.fileToReduce)
-  private val cacheProfiler = if (Strings.isNullOrEmpty(cmd.profilingFlags.profileTestExecutionCache))
-    AbstractTestScriptExecutionCacheProfiler.NULL_PROFILER
-  else TestScriptExecutionCacheProfiler(
-    File(cmd.profilingFlags.profileTestExecutionCache))
+  private val cacheProfiler =
+    if (Strings.isNullOrEmpty(cmd.profilingFlags.profileTestExecutionCache))
+      AbstractTestScriptExecutionCacheProfiler.NULL_PROFILER
+    else TestScriptExecutionCacheProfiler(
+      File(cmd.profilingFlags.profileTestExecutionCache)
+    )
   val queryCache =
     if (configuration.enableTestScriptExecutionCaching)
       TestScriptExecutionCache(
         tree.programSnapshot,
         cacheProfiler,
-        cmd.cacheControlFlags.getQueryCacheRefreshThreshold())
+        cmd.cacheControlFlags.getQueryCacheRefreshThreshold()
+      )
     else NullTestScriptExecutionCache()
   val nodeActionSetCache =
-    if (cmd.cacheControlFlags.nodeActionSetCaching) NodeActionSetCache() else NullNodeActionSetCache()
+    if (cmd.cacheControlFlags.nodeActionSetCaching) NodeActionSetCache()
+    else NullNodeActionSetCache()
   val actionSetProfiler =
     if (Strings.isNullOrEmpty(cmd.profilingFlags.actionSetProfiler))
       AbstractActionSetProfiler.NULL_PROFILER
@@ -88,7 +94,8 @@ class ReductionDriver(
   fun reduce() {
     logger.atInfo().log(
       "The reduction process started at %s",
-      Util.formatDateForDisplay(System.currentTimeMillis()))
+      Util.formatDateForDisplay(System.currentTimeMillis())
+    )
     backupFile(configuration)
     val worker = createReducer()
     val sparTreeEditListeners = createSparTreeEditListeners(configuration)
@@ -98,7 +105,8 @@ class ReductionDriver(
     val persesTokenFactory = tokenizedProgramFactory.tokenFactory
     logger.atInfo().log(
       "The number of lexemes in the token factory is is %s",
-      persesTokenFactory.numOfLexemes())
+      persesTokenFactory.numOfLexemes()
+    )
     run {
       val fileToReduce = configuration.fileToReduce
       val bestFile = configuration.bestResultFile
@@ -113,7 +121,8 @@ class ReductionDriver(
       val currentFixpointIteration = fixpointIteration
       if (currentFixpointIteration > 1) {
         logger.atInfo().log(
-          "The fixpoint mode is enabled. This is iteration %s", fixpointIteration)
+          "The fixpoint mode is enabled. This is iteration %s", fixpointIteration
+        )
         if (cmd.algorithmControlFlags.rebuildParseTreeEachIteration) {
           logger.atInfo().log("Rebuilding spar-tree.")
           // Rebuilding is necessary, to hop over different production rules.
@@ -131,7 +140,8 @@ class ReductionDriver(
       val preSize = tree.tokenCount
       val currentCountOfTestScriptExecutions = executorService.scriptExecutionCount
       listenerManager.onFixpointIterationStart(
-        currentFixpointIteration, preSize, worker.redcucerAnnotation)
+        currentFixpointIteration, preSize, worker.redcucerAnnotation
+      )
       val reductionState = ReductionState(tree)
       assert(reductionState.sparTree == tree)
       worker.reduce(reductionState)
@@ -140,16 +150,19 @@ class ReductionDriver(
       val countOfTestScriptExecutionsInThisIteration =
         executorService.scriptExecutionCount - currentCountOfTestScriptExecutions
       listenerManager.onFixpointIterationEnd(
-        currentFixpointIteration, postSize, countOfTestScriptExecutionsInThisIteration)
+        currentFixpointIteration, postSize, countOfTestScriptExecutionsInThisIteration
+      )
       run {
         // Save the best result after a fixpoint iteration.
         val fixpointIterationResultFile =
           configuration.getFixpointIterationResultFile(currentFixpointIteration)
         logger.atFinest().log(
           "Saved result after fixpoint %s to %s",
-          currentFixpointIteration, fixpointIterationResultFile)
+          currentFixpointIteration, fixpointIterationResultFile
+        )
         programAfterIteration.writeToFile(
-          fixpointIterationResultFile, configuration.programFormatControl)
+          fixpointIterationResultFile, configuration.programFormatControl
+        )
       }
       if (!configuration.fixpointReduction || preSize <= postSize) {
         break
@@ -204,9 +217,12 @@ class ReductionDriver(
     val program = originalTree.programSnapshot
     try {
       val parserFacade = configuration.parserFacade
-      val parseTree = parserFacade.parseString(program.toSourceCodeInOrigFormatWithBlankLines()).tree
+      val parseTree = parserFacade.parseString(
+        program.toSourceCodeInOrigFormatWithBlankLines()
+      ).tree
       return SparTreeBuilder(
-        parserFacade.ruleHierarchy, originalTree.tokenizedProgramFactory)
+        parserFacade.ruleHierarchy, originalTree.tokenizedProgramFactory
+      )
         .build(parseTree)
     } catch (e: Exception) {
       System.err.println("Fail to parse the following program.")
@@ -220,7 +236,8 @@ class ReductionDriver(
     val timeSpanBuilder = TimeSpan.Builder.start(System.currentTimeMillis())
     logger.atInfo().log(
       "Tree Building: Start building spar-tree from input file %s",
-      fileToReduce)
+      fileToReduce
+    )
     val parserFacade = configuration.parserFacade
     val hierarchy = parserFacade.ruleHierarchy
     logger.atInfo().log("Tree Building: Step 1: Antlr parsing.")
@@ -249,7 +266,8 @@ class ReductionDriver(
             event
               .program
               .writeToFile(
-                configuration.bestResultFile, configuration.programFormatControl)
+                configuration.bestResultFile, configuration.programFormatControl
+              )
           } catch (e: IOException) {
             throw RuntimeException(e)
           }
@@ -278,7 +296,8 @@ class ReductionDriver(
 
   fun createReducer(): AbstractReducer {
     val algorithmMeta = ReducerFactory.getReductionAlgorithm(
-      cmd.algorithmControlFlags.reductionAlgorithmName)
+      cmd.algorithmControlFlags.reductionAlgorithmName
+    )
     val algorithm = algorithmMeta
       .create(
         ReducerContext(
@@ -287,10 +306,13 @@ class ReductionDriver(
           listenerManager,
           queryCache,
           nodeActionSetCache,
-          actionSetProfiler))
+          actionSetProfiler
+        )
+      )
     logger.atInfo().log(
       "Reduction algorithm is %s",
-      algorithm.javaClass.canonicalName)
+      algorithm.javaClass.canonicalName
+    )
     return algorithm
   }
 
@@ -301,7 +323,8 @@ class ReductionDriver(
     val fileContent = fileToReduce.fileContent
     val backupFile = File(
       configuration.workingFolder,
-      baseName + "." + Util.formatDateForFileName(System.currentTimeMillis()) + ".orig")
+      baseName + "." + Util.formatDateForFileName(System.currentTimeMillis()) + ".orig"
+    )
     MoreFiles.asCharSink(backupFile.toPath(), StandardCharsets.UTF_8).write(fileContent)
   }
 
@@ -348,7 +371,8 @@ class ReductionDriver(
         enableTestScriptExecutionCaching = cmd.cacheControlFlags.queryCaching,
         useRealDeltaDebugger = cmd.algorithmControlFlags.useRealDeltaDebugger,
         numOfReductionThreads = cmd.reductionControlFlags.numOfThreads,
-        useOptCParser = cmd.algorithmControlFlags.useOptCParser)
+        useOptCParser = cmd.algorithmControlFlags.useOptCParser
+      )
     }
 
     private fun createTokenizedProgramFactory(originalTree: ParseTree): TokenizedProgramFactory {
@@ -376,7 +400,8 @@ class ReductionDriver(
       if (enableProfiling) {
         val profileFile = File(
           configuration.workingFolder,
-          configuration.fileToReduce.baseName + ".profile.txt")
+          configuration.fileToReduce.baseName + ".profile.txt"
+        )
         val profile = ReductionProfileListener(profileFile)
         profile.addComment("reduction config", configuration.dumpConfiguration())
         builder.add(profile)
@@ -392,7 +417,8 @@ class ReductionDriver(
       return if (Strings.isNullOrEmpty(cmd.resultOutputFlags.outputFile)) {
         val reductionAlgorithm = cmd.algorithmControlFlags.reductionAlgorithmName
         File(
-          sourceFile.parent, reductionAlgorithm + "_reduced_" + sourceFile.name)
+          sourceFile.parent, reductionAlgorithm + "_reduced_" + sourceFile.name
+        )
       } else {
         File(cmd.resultOutputFlags.outputFile)
       }

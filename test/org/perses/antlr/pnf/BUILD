@@ -60,7 +60,6 @@ java_test(
     deps = DEFAULT_TEST_DEPS,
 )
 
-
 java_test(
     name = "OptionalIntroducerPassTest",
     srcs = ["OptionalIntroducerPassTest.java"],

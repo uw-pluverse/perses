@@ -7,17 +7,17 @@ load("//src/org/perses/grammar:antlr_util.bzl", "antlr_codegen_combined")
 
 antlr_codegen_combined(
     name = "opt_java_grammar",
+    grammar_file = "OptJava8.g4",
     java_pkg_name = "org.perses.grammar.java",
     lexer_java_file_name = "OptJava8Lexer.java",
-    grammar_file = "OptJava8.g4",
     parser_java_file_name = "OptJava8Parser.java",
 )
 
 antlr_codegen_combined(
     name = "orig_java_grammar",
+    grammar_file = "OrigJava8.g4",
     java_pkg_name = "org.perses.grammar.java",
     lexer_java_file_name = "OrigJava8Lexer.java",
-    grammar_file = "OrigJava8.g4",
     parser_java_file_name = "OrigJava8Parser.java",
 )
 

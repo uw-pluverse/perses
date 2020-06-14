@@ -21,9 +21,8 @@ import com.google.common.base.Joiner
 import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.ParserFacadeFactory
 import org.perses.program.EnumFormatControl
-import org.perses.program.SourceFile
-import org.perses.program.EnumFormatControl.ORIG_FORMAT
 import org.perses.program.ScriptFile
+import org.perses.program.SourceFile
 import org.perses.util.Util
 import java.io.File
 import java.time.LocalDateTime
@@ -67,12 +66,14 @@ class ReductionConfiguration(
     get() = if (statisticsFile == null) {
       Optional.empty()
     } else Optional.of(
-      File(statisticsFile.parentFile, "testscript-" + statisticsFile.name))
+      File(statisticsFile.parentFile, "testscript-" + statisticsFile.name)
+    )
 
   fun getFixpointIterationResultFile(fixpointIteration: Int): File {
     val bestResultFile = bestResultFile
     return File(
-      tempRootFolder, bestResultFile.name + "_fixpoint_iteration_" + fixpointIteration)
+      tempRootFolder, bestResultFile.name + "_fixpoint_iteration_" + fixpointIteration
+    )
   }
 
   fun dumpConfiguration(): String {
@@ -101,7 +102,8 @@ class ReductionConfiguration(
           PERSES_TEMP_ROOT_PREFIX,
           fileNameForReduction,
           testScriptName,
-          Util.formatDateForFileName(time))
+          Util.formatDateForFileName(time)
+        )
     }
   }
 
@@ -126,6 +128,8 @@ class ReductionConfiguration(
     tempRootFolder = File(
       workingFolder,
       getTempRootFolderName(
-        fileToReduce.file.name, testScript.file.name, LocalDateTime.now()))
+        fileToReduce.file.name, testScript.file.name, LocalDateTime.now()
+      )
+    )
   }
 }
