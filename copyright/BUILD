@@ -9,9 +9,6 @@ py_library(
 py_test(
     name = "check_copyright_test",
     srcs = ["check_copyright_test.py"],
-    data = [
-        "check_copyright",
-    ],
     deps = [
         ":check_copyright",
     ],
