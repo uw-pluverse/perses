@@ -14,13 +14,13 @@ class TestCheckCopyright(unittest.TestCase):
 
     java_temp_file = None
     folder = None
-    copyright_checker = check_copyright.Copyright(TINY_COPYRIGHT)
-    
+    copyright_checker = check_copyright.CopyrightChecker(TINY_COPYRIGHT)
+
     def setUp(self):
         with tempfile.NamedTemporaryFile(suffix='.java', delete=False) as self.java_temp_file:
             self.java_temp_file.write(b"import java.util.*;")
         self.folder = os.path.dirname(self.java_temp_file.name)
-        
+
 
     def tearDown(self):
         os.unlink(self.java_temp_file.name)
@@ -36,10 +36,10 @@ class TestCheckCopyright(unittest.TestCase):
 
 
     def test_check_folder(self):
-        l = self.copyright_checker.check_folder(self.folder, 'java')
-        self.assertEqual(l, [self.java_temp_file.name])
-        l = self.copyright_checker.check_folder(self.folder, 'cpp')
-        self.assertEqual(l,[])
+        missing_list = self.copyright_checker.check_folder(self.folder, 'java')
+        self.assertEqual(missing_list, [self.java_temp_file.name])
+        missing_list = self.copyright_checker.check_folder(self.folder, 'cpp')
+        self.assertEqual(missing_list, [])
 
 
     def test_update_files(self):
