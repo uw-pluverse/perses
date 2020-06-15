@@ -4,20 +4,20 @@ import com.google.common.annotations.VisibleForTesting
 import org.perses.reduction.AbstractReducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
+import org.perses.reduction.TestScript
 import org.perses.tree.spar.LexerRuleSparTreeNode
 import org.perses.tree.spar.NodeDeletionActionSet
 import org.perses.tree.spar.SparTree
 
 class TokenSlicer(
-  redcucerAnnotation: ReducerAnnotation,
   reducerContext: ReducerContext,
   val minTokenCount: Int,
   val maxTokenCount: Int
 ) :
-  AbstractReducer(redcucerAnnotation, reducerContext) {
+  AbstractReducer(META, reducerContext) {
 
   init {
-    require(minTokenCount > 0 && minTokenCount <= maxTokenCount) {
+    require(minTokenCount in 1..maxTokenCount) {
       "Expecting: 0 < minTokenCount($minTokenCount) <= maxTokneCount($maxTokenCount)."
     }
   }
@@ -25,51 +25,90 @@ class TokenSlicer(
   // TODO: This algorithm need to be parallelized.
   override fun internalReduce(tree: SparTree) {
     for (tokenCountToSlice in maxTokenCount downTo minTokenCount) {
-      var changed: Boolean
-      do {
-        changed = false
-        val tokens = extractLexerRuleNodes(tree)
-        for (startIndex in tokens.size - 1 downTo tokenCountToSlice - 1) {
-          val nodeDeletionActionSet = createNodeDeletionActionSetReverse(
-            tokens, startIndex, tokenCountToSlice
-          )
-          if (nodeActionSetCache.isCachedOrCacheIt(nodeDeletionActionSet)) {
-            listenerManager.onNodeEditActionSetCacheHit(nodeDeletionActionSet)
-            continue
-          }
-          val treeEdit = tree.createNodeDeletionEdit(nodeDeletionActionSet)
-          val cachedResult = queryCache.getCachedResult(treeEdit.program)
-          if (cachedResult.isPresent) {
-            assert(cachedResult.get().isFail) { "Only failed programs can be cached." }
-            listenerManager.onTestResultCacheHit(cachedResult.get(), treeEdit.program, treeEdit)
-            continue
-          }
-          val sourceCodeParsable = configuration.parserFacade.isSourceCodeParsable(treeEdit.program)
+      val tokens = extractLexerRuleNodes(tree)
+      for (startIndex in tokens.size - 1 downTo tokenCountToSlice - 1) {
+        if (tokens[startIndex].isPermanentlyDeleted) {
+          continue
         }
-      } while (changed)
+        val nodeDeletionActionSet = createNodeDeletionActionSetReverse(
+          tokens, startIndex, tokenCountToSlice
+        )
+        if (nodeActionSetCache.isCachedOrCacheIt(nodeDeletionActionSet)) {
+          listenerManager.onNodeEditActionSetCacheHit(nodeDeletionActionSet)
+          continue
+        }
+        val treeEdit = tree.createNodeDeletionEdit(nodeDeletionActionSet)
+        val cachedResult = queryCache.getCachedResult(treeEdit.program)
+        if (cachedResult.isPresent) {
+          assert(cachedResult.get().isFail) { "Only failed programs can be cached." }
+          listenerManager.onTestResultCacheHit(cachedResult.get(), treeEdit.program, treeEdit)
+          continue
+        }
+        if (!configuration.parserFacade.isSourceCodeParsable(treeEdit.program)) {
+          cacheTestResult(
+            treeEdit.program,
+            TestScript.TestResult(exitCode = INVALID_SYNTAX_EXIT_CODE, elapsedMilliseconds = -1)
+          )
+          continue
+        }
+        val futureTestScriptExecutionTask = testProgramAsynchronously(treeEdit.program)
+        val best = analyzeResultsAndGetBest(
+          listOf(
+            FutureExecutionResultInfo(
+              treeEdit,
+              treeEdit.program,
+              futureTestScriptExecutionTask
+            )
+          )
+        )
+        if (best.isPresent) {
+          tree.applyEdit(treeEdit)
+        }
+      }
     }
-    TODO("Not yet implemented")
   }
 
-  @VisibleForTesting
-  fun createNodeDeletionActionSetReverse(
-    tokenList: ArrayList<LexerRuleSparTreeNode>,
-    startIndex: Int,
-    tokenCountToSlice: Int
-  ): NodeDeletionActionSet {
-    val actionSetBuilder =
-      NodeDeletionActionSet.Builder("token slicer@$tokenCountToSlice")
-    val endIndex = startIndex - tokenCountToSlice + 1
-    for (i in startIndex downTo endIndex) {
-      actionSetBuilder.deleteNode(tokenList[i])
-    }
-    return actionSetBuilder.build()
-  }
+  companion object {
 
-  @VisibleForTesting
-  fun extractLexerRuleNodes(tree: SparTree): ArrayList<LexerRuleSparTreeNode> {
-    val tokens = ArrayList<LexerRuleSparTreeNode>()
-    tree.visitRemainingTokens({ tokens.add(it) })
-    return tokens
+    const val NAME = "token_sclier"
+
+    @JvmStatic
+    val META = object : ReducerAnnotation() {
+      override fun shortName() = NAME
+
+      override fun description() = ""
+
+      override fun create(reducerContext: ReducerContext) = TokenSlicer(
+        reducerContext,
+        minTokenCount = 2, maxTokenCount = 15
+      )
+    }
+
+    @VisibleForTesting
+    val INVALID_SYNTAX_EXIT_CODE = 99
+
+    @VisibleForTesting
+    fun extractLexerRuleNodes(tree: SparTree): ArrayList<LexerRuleSparTreeNode> {
+      val tokens = ArrayList<LexerRuleSparTreeNode>()
+      tree.visitRemainingTokens { tokens.add(it) }
+      return tokens
+    }
+
+    @VisibleForTesting
+    fun createNodeDeletionActionSetReverse(
+      tokenList: List<LexerRuleSparTreeNode>,
+      startIndex: Int,
+      tokenCountToSlice: Int
+    ): NodeDeletionActionSet {
+      val actionSetBuilder =
+        NodeDeletionActionSet.Builder("token slicer@$tokenCountToSlice")
+      val endIndex = startIndex - tokenCountToSlice + 1
+      check(endIndex >= 0) { endIndex }
+      for (i in startIndex downTo endIndex) {
+        assert(!tokenList[i].isPermanentlyDeleted) { tokenList[i] }
+        actionSetBuilder.deleteNode(tokenList[i])
+      }
+      return actionSetBuilder.build()
+    }
   }
 }

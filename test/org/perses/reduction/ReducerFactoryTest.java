@@ -53,6 +53,7 @@ public class ReducerFactoryTest {
             HDDReducer.NAME,
             //            KleeneLevelHDDReducer.NAME,
             //            PersesLevelReducer.NAME,
+            TokenSlicer.NAME,
             PersesNodeBfsReducer.NAME,
             PersesNodeDfsReducer.NAME,
             PersesNodePrioritizedBfsReducer.NAME,

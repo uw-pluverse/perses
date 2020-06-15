@@ -58,6 +58,7 @@ java_test(
         "//src/org/perses/reduction:reducer_factory",
         "//src/org/perses/reduction/reducer:level_based_reducers",
         "//src/org/perses/reduction/reducer:node_based_reducer",
+        "//src/org/perses/reduction/reducer:token_slicer",
         "//test/org/perses:truth",
         "@maven//:com_google_guava_guava",
     ],

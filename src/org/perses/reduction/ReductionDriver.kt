@@ -225,8 +225,10 @@ class ReductionDriver(
       )
         .build(parseTree)
     } catch (e: Exception) {
-      System.err.println("Fail to parse the following program.")
-      System.err.println(program.toSourceCodeInOrigFormatWithBlankLines())
+      logger.atSevere().log(
+        "Fail to parse the following program. \n%s",
+        program.toSourceCodeInOrigFormatWithBlankLines()
+      )
       throw e
     }
   }
@@ -330,6 +332,7 @@ class ReductionDriver(
 
   companion object {
     private val logger = FluentLogger.forEnclosingClass()
+
     @JvmStatic
     @VisibleForTesting
     fun createConfiguration(cmd: CommandOptions): ReductionConfiguration {
