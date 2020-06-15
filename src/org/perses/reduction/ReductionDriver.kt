@@ -97,7 +97,7 @@ class ReductionDriver(
       Util.formatDateForDisplay(System.currentTimeMillis())
     )
     backupFile(configuration)
-    val worker = createReducer()
+    val worker = createMainReducer()
     val sparTreeEditListeners = createSparTreeEditListeners(configuration)
     tree.registerSparTreeEditListeners(sparTreeEditListeners)
     sanityCheck(tree)
@@ -116,6 +116,20 @@ class ReductionDriver(
       }
     }
     listenerManager.onReductionStart(tree, tree.originalTokenCount)
+    reduce(sparTreeEditListeners, tokenizedProgramFactory, worker)
+    run {
+      val countOfTestScriptExecutions = executorService.scriptExecutionCount
+      val finalTokenCount = tree.tokenCount
+      listenerManager.onReductionEnd(finalTokenCount, countOfTestScriptExecutions)
+    }
+    formatBestFile(cmd.outputRefiningFlags.formatCmd, configuration.bestResultFile)
+  }
+
+  private fun reduce(
+    sparTreeEditListeners: ImmutableList<AbstractSparTreeEditListener>,
+    originalTokenizedProgramFactory: TokenizedProgramFactory,
+    mainReducer: AbstractReducer
+  ) {
     var fixpointIteration = 1
     while (true) {
       val currentFixpointIteration = fixpointIteration
@@ -129,52 +143,61 @@ class ReductionDriver(
           tree = reparseAndCreateSparTree(tree)
           tree.registerSparTreeEditListeners(sparTreeEditListeners)
         }
-        assert(tree.tokenizedProgramFactory == tokenizedProgramFactory) {
+        assert(tree.tokenizedProgramFactory == originalTokenizedProgramFactory) {
           "The tokenized program factory should be unchanged during a reduction process."
         }
-        assert(tree.tokenizedProgramFactory.tokenFactory == persesTokenFactory) {
+        assert(
+          tree.tokenizedProgramFactory.tokenFactory ==
+            originalTokenizedProgramFactory.tokenFactory
+        ) {
           "The perses token factory should be unchanged duing a reduction process."
         }
       }
-      tree.updateLeafTokenCount()
       val preSize = tree.tokenCount
-      val currentCountOfTestScriptExecutions = executorService.scriptExecutionCount
-      listenerManager.onFixpointIterationStart(
-        currentFixpointIteration, preSize, worker.redcucerAnnotation
-      )
-      val reductionState = ReductionState(tree)
-      assert(reductionState.sparTree == tree)
-      worker.reduce(reductionState)
-      val programAfterIteration = tree.programSnapshot
-      val postSize = programAfterIteration.tokenCount()
-      val countOfTestScriptExecutionsInThisIteration =
-        executorService.scriptExecutionCount - currentCountOfTestScriptExecutions
-      listenerManager.onFixpointIterationEnd(
-        currentFixpointIteration, postSize, countOfTestScriptExecutionsInThisIteration
-      )
-      run {
-        // Save the best result after a fixpoint iteration.
-        val fixpointIterationResultFile =
-          configuration.getFixpointIterationResultFile(currentFixpointIteration)
-        logger.atFinest().log(
-          "Saved result after fixpoint %s to %s",
-          currentFixpointIteration, fixpointIterationResultFile
-        )
-        programAfterIteration.writeToFile(
-          fixpointIterationResultFile, configuration.programFormatControl
-        )
-      }
-      if (!configuration.fixpointReduction || preSize <= postSize) {
+      reduceOneFixpointIteration(currentFixpointIteration, mainReducer)
+      if (configuration.fixpointReduction) {
+        assert(preSize >= tree.tokenCount)
+        if (preSize == tree.tokenCount) {
+          break
+        }
+      } else {
         break
       }
       ++fixpointIteration
     }
+  }
+
+  private fun reduceOneFixpointIteration(
+    currentFixpointIteration: Int,
+    mainReducer: AbstractReducer
+  ) {
+    tree.updateLeafTokenCount()
+    val preSize = tree.tokenCount
+    val currentCountOfTestScriptExecutions = executorService.scriptExecutionCount
+    listenerManager.onFixpointIterationStart(
+      currentFixpointIteration, preSize, mainReducer.redcucerAnnotation
+    )
+    val reductionState = ReductionState(tree)
+    assert(reductionState.sparTree == tree)
+    mainReducer.reduce(reductionState)
+    val countOfTestScriptExecutionsInThisIteration =
+      executorService.scriptExecutionCount - currentCountOfTestScriptExecutions
+    listenerManager.onFixpointIterationEnd(
+      currentFixpointIteration, tree.programSnapshot.tokenCount(),
+      countOfTestScriptExecutionsInThisIteration
+    )
     run {
-      val countOfTestScriptExecutions = executorService.scriptExecutionCount
-      val finalTokenCount = tree.tokenCount
-      listenerManager.onReductionEnd(finalTokenCount, countOfTestScriptExecutions)
+      // Save the best result after a fixpoint iteration.
+      val fixpointIterationResultFile =
+        configuration.getFixpointIterationResultFile(currentFixpointIteration)
+      logger.atFinest().log(
+        "Saved result after fixpoint %s to %s",
+        currentFixpointIteration, fixpointIterationResultFile
+      )
+      tree.programSnapshot.writeToFile(
+        fixpointIterationResultFile, configuration.programFormatControl
+      )
     }
-    formatBestFile(cmd.outputRefiningFlags.formatCmd, configuration.bestResultFile)
   }
 
   @Throws(InterruptedException::class, ExecutionException::class)
@@ -296,27 +319,29 @@ class ReductionDriver(
     return builder.build()
   }
 
-  fun createReducer(): AbstractReducer {
+  fun createMainReducer(): AbstractReducer {
     val algorithmMeta = ReducerFactory.getReductionAlgorithm(
       cmd.algorithmControlFlags.reductionAlgorithmName
     )
-    val algorithm = algorithmMeta
-      .create(
-        ReducerContext(
-          configuration,
-          executorService,
-          listenerManager,
-          queryCache,
-          nodeActionSetCache,
-          actionSetProfiler
-        )
-      )
+    val algorithm = createReducer(algorithmMeta)
     logger.atInfo().log(
       "Reduction algorithm is %s",
       algorithm.javaClass.canonicalName
     )
     return algorithm
   }
+
+  private fun createReducer(reducerAnnotation: ReducerAnnotation) =
+    reducerAnnotation.create(
+      ReducerContext(
+        configuration,
+        executorService,
+        listenerManager,
+        queryCache,
+        nodeActionSetCache,
+        actionSetProfiler
+      )
+    )
 
   @Throws(IOException::class)
   private fun backupFile(configuration: ReductionConfiguration) {
