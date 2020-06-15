@@ -47,10 +47,10 @@ abstract class AbstractReducer protected constructor(
   @JvmField
   protected val actionSetProfiler: AbstractActionSetProfiler = reducerContext.actionSetProfiler
 
-  private fun testProgramAsynchronously(program: TokenizedProgram) =
+  protected fun testProgramAsynchronously(program: TokenizedProgram) =
     executorService.testProgram(program, configuration.programFormatControl)
 
-  private class FutureExecutionResultInfo(
+  protected class FutureExecutionResultInfo(
     val edit: AbstractSparTreeEdit,
     val program: TokenizedProgram,
     val future: FutureTestScriptExecutionTask
@@ -79,11 +79,11 @@ abstract class AbstractReducer protected constructor(
       !best.isPresent ||
         configuration.parserFacade.isSourceCodeParsable(best.get().edit.program)
     )
-    return best.map { b: FutureExecutionResultInfo -> TreeEditWithItsResult(b.edit, b.result) }
+    return best.map { TreeEditWithItsResult(it.edit, it.result) }
   }
 
   private fun isFutureListSortedFromLeastProgramSizeToGreatest(
-    futureList: ArrayList<FutureExecutionResultInfo>
+    futureList: List<FutureExecutionResultInfo>
   ): Boolean {
     val size = futureList.size
     if (size < 2) {
@@ -99,8 +99,8 @@ abstract class AbstractReducer protected constructor(
     return true
   }
 
-  private fun analyzeResultsAndGetBest(
-    futureList: ArrayList<FutureExecutionResultInfo>
+  protected fun analyzeResultsAndGetBest(
+    futureList: List<FutureExecutionResultInfo>
   ): Optional<FutureExecutionResultInfo> {
     assert(isFutureListSortedFromLeastProgramSizeToGreatest(futureList)) { futureList }
     var best: FutureExecutionResultInfo? = null
@@ -119,7 +119,7 @@ abstract class AbstractReducer protected constructor(
         continue
       }
       val testResult = executionResultInfo.result
-      queryCache.addResult(executionResultInfo.program, executionResultInfo.result)
+      cacheTestResult(executionResultInfo.program, executionResultInfo.result)
       listenerManager.onTestScriptExecution(
         testResult, executionResultInfo.program, executionResultInfo.edit
       )
@@ -128,6 +128,10 @@ abstract class AbstractReducer protected constructor(
       }
     }
     return Optional.ofNullable(best)
+  }
+
+  protected fun cacheTestResult(program: TokenizedProgram?, result: TestScript.TestResult) {
+    queryCache.addResult(program, result)
   }
 
   private fun asyncApplyEditsInOrderOfProgramSizeFromLeast(
