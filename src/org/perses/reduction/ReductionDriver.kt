@@ -35,6 +35,7 @@ import org.perses.program.SourceFile
 import org.perses.program.TokenizedProgramFactory
 import org.perses.reduction.AbstractActionSetProfiler.ActionSetProfiler
 import org.perses.reduction.AbstractTestScriptExecutionCacheProfiler.TestScriptExecutionCacheProfiler
+import org.perses.reduction.reducer.TokenSlicer
 import org.perses.tree.spar.AbstractSparTreeEditListener
 import org.perses.tree.spar.NodeActionSetCache
 import org.perses.tree.spar.NullNodeActionSetCache
@@ -155,12 +156,30 @@ class ReductionDriver(
       }
       val preSize = tree.tokenCount
       reduceOneFixpointIteration(currentFixpointIteration, mainReducer)
-      if (configuration.fixpointReduction) {
-        assert(preSize >= tree.tokenCount)
-        if (preSize == tree.tokenCount) {
-          break
+      assert(preSize >= tree.tokenCount)
+      val needToRunTokenSlicer = cmd.algorithmControlFlags.enableTokenSlicer &&
+        if (configuration.fixpointReduction) {
+          preSize == tree.tokenCount
+        } else {
+          true
         }
-      } else {
+      if (needToRunTokenSlicer) {
+        val sizeBeforeTokenSclier = tree.tokenCount
+        if (logger.atInfo().isEnabled) {
+          logger.atInfo().log("TokenSlicer started at %s. #tokens=%s",
+            Util.formatDateForDisplay(System.currentTimeMillis()),
+            sizeBeforeTokenSclier
+          )
+        }
+        val tokenSlicer = createReducer(TokenSlicer.META)
+        tokenSlicer.reduce(ReductionState(tree))
+        if (logger.atInfo().isEnabled) {
+          logger.atInfo().log("TokenSlicer ended at %s. #old=%s, #new=",
+            Util.formatDateForDisplay(System.currentTimeMillis()),
+            sizeBeforeTokenSclier, tree.tokenCount)
+        }
+      }
+      if (!configuration.fixpointReduction || preSize == tree.tokenCount) {
         break
       }
       ++fixpointIteration
