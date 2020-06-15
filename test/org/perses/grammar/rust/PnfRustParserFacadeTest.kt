@@ -1,14 +1,10 @@
 package org.perses.grammar.rust
 
 import com.google.common.truth.Truth
-import org.antlr.v4.runtime.misc.ParseCancellationException
-
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
-
-import java.util.concurrent.atomic.AtomicInteger
 import java.io.File
 
 @RunWith(JUnit4::class)
@@ -34,7 +30,7 @@ class PnfRustParserFacadeTest {
     }
   }
 
-  fun testString(program : String, name : String) {
+  fun testString(program: String, name: String) {
     val parseTreeFromOrigParser = facade.parseWithOrigRustParser(program, name)
     val tokensByOrigParser = TestUtility.extractTokens(parseTreeFromOrigParser.tree)
 
@@ -44,7 +40,7 @@ class PnfRustParserFacadeTest {
     Truth.assertThat(tokensByPnfParser).containsExactlyElementsIn(tokensByOrigParser).inOrder()
   }
 
-  fun testSingleFile(file : File) {
+  fun testSingleFile(file: File) {
     /* 
     try {
       System.err.println("Testing file ${file.getAbsolutePath()}")
@@ -84,7 +80,7 @@ class PnfRustParserFacadeTest {
       testSingleFile(file)
     }
   }
-   
+
   @Test
   fun testShard5() {
     for (file in testData.shard5) {
@@ -97,12 +93,13 @@ class PnfRustParserFacadeTest {
     for (file in testData.shard6) {
       testSingleFile(file)
     }
-  } 
+  }
 
   @Test
   fun basicTest() {
 
-    val program = """
+    val program =
+      """
     |fn main() {
     |  // Statements here are executed when the compiled binary is called
     |
@@ -111,6 +108,6 @@ class PnfRustParserFacadeTest {
     |}
     """.trimMargin()
 
-    testString(program, "<in memory>") 
+    testString(program, "<in memory>")
   }
 }

@@ -15,7 +15,7 @@ kt_jvm_test(
     srcs = ["LexerParserCombinerTest.kt"],
     test_class = "org.perses.antlr.util.LexerParserCombinerTest",
     deps = [
+        "//antlropt/org/perses/antlr/util:lexer_parser_combiner",
         "@maven//:com_google_truth_truth",
-        "//antlropt/org/perses/antlr/util:lexer_parser_combiner"
     ],
 )

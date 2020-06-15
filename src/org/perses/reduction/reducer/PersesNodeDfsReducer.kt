@@ -16,15 +16,15 @@
  */
 package org.perses.reduction.reducer
 
-import java.util.ArrayDeque
-import java.util.Queue
-import java.util.function.Function
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.partition.Partition
 import org.perses.tree.spar.AbstractSparTreeEdit
 import org.perses.tree.spar.AbstractSparTreeNode
 import org.perses.tree.spar.SparTree
+import java.util.ArrayDeque
+import java.util.Queue
+import java.util.function.Function
 
 /** Perses node reducer, with dfs delta debugging  */
 open class PersesNodeDfsReducer constructor(

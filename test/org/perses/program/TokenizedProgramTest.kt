@@ -35,7 +35,8 @@ class TokenizedProgramTest {
 
   @Test
   fun testCompactSourceCode() {
-    val sourceCode = """int a = 0;
+    val sourceCode =
+      """int a = 0;
       |
       |int b = 0;
       |
@@ -44,10 +45,12 @@ class TokenizedProgramTest {
     val program = TestUtility.createTokenizedProgramFromString(sourceCode, LanguageKind.C)
     Truth.assertThat(program.toSourceCodeInOrigFormatWithBlankLines().trim())
       .isEqualTo(sourceCode.trim())
-    Truth.assertThat(program.toCompactSourceCode().trim()).isEqualTo("""int a = 0;
+    Truth.assertThat(program.toCompactSourceCode().trim()).isEqualTo(
+      """int a = 0;
       |int b = 0;
       |int c = 0;
-      """.trimMargin())
+      """.trimMargin()
+    )
   }
 
   private fun testTokenEquivalence(filepath: String) {
@@ -56,7 +59,8 @@ class TokenizedProgramTest {
         TestUtility.createTokenizedProgramFromFile(filepath).tokens.stream()
           .map { obj: PersesToken -> obj.text }
           .map { s: String -> s.replace("\\s|\n".toRegex(), "") }
-          .collect(Collectors.toList<String>()))
+          .collect(Collectors.toList<String>())
+      )
     val text = Files.asCharSource(File(filepath), StandardCharsets.UTF_8)
       .read()
       .replace("\\s|\n".toRegex(), "")

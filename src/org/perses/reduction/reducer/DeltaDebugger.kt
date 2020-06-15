@@ -1,8 +1,5 @@
 package org.perses.reduction.reducer
 
-import java.util.LinkedList
-import java.util.Optional
-import java.util.function.Function
 import org.perses.reduction.ReductionListenerManager
 import org.perses.reduction.TreeEditWithItsResult
 import org.perses.reduction.partition.Partition
@@ -10,6 +7,9 @@ import org.perses.reduction.reducer.TreeTransformations.createNodeDeletionAction
 import org.perses.tree.spar.AbstractNodeActionSetCache
 import org.perses.tree.spar.AbstractSparTreeEdit
 import org.perses.tree.spar.SparTree
+import java.util.LinkedList
+import java.util.Optional
+import java.util.function.Function
 
 class DeltaDebugger constructor(
   listenerManager: ReductionListenerManager,
@@ -36,7 +36,8 @@ class DeltaDebugger constructor(
         while (iterator.hasNext()) {
           val partition = iterator.next()
           val actionSet = createNodeDeletionActionSetFor(
-            partition, actionsDescription + "@" + partition.size())
+            partition, actionsDescription + "@" + partition.size()
+          )
           if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
             listenerManager.onNodeEditActionSetCacheHit(actionSet)
             continue

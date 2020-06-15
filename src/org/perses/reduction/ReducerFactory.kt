@@ -21,14 +21,14 @@ import com.google.common.collect.ImmutableCollection
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableSet
-import java.util.Comparator
-import java.util.Optional
-import java.util.function.Function
 import org.perses.reduction.reducer.HDDReducer
 import org.perses.reduction.reducer.PersesNodeBfsReducer
 import org.perses.reduction.reducer.PersesNodeDfsReducer
 import org.perses.reduction.reducer.PersesNodePrioritizedBfsReducer
 import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
+import java.util.Comparator
+import java.util.Optional
+import java.util.function.Function
 
 /** Factory to create various reducers.  */
 object ReducerFactory {
@@ -45,7 +45,9 @@ object ReducerFactory {
     .collect(
       ImmutableMap.toImmutableMap(
         Function { obj: ReducerAnnotation -> obj.shortName() },
-        Functions.identity<ReducerAnnotation>()))
+        Functions.identity<ReducerAnnotation>()
+      )
+    )
 
   @JvmStatic
   val defaultReductionAlgName: String

@@ -26,9 +26,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
-import org.perses.program.SourceFile
 import org.perses.program.EnumFormatControl.ORIG_FORMAT
 import org.perses.program.ScriptFile
+import org.perses.program.SourceFile
 import java.io.File
 import java.util.ArrayList
 import java.util.concurrent.Future
@@ -79,7 +79,8 @@ class TestScriptExecutorServiceTest {
       fixpointReduction = true,
       enableTestScriptExecutionCaching = true,
       useRealDeltaDebugger = false,
-      numOfReductionThreads = threadCount)
+      numOfReductionThreads = threadCount
+    )
   }
 
   private fun testTestScriptExecutor(threadCount: Int) {
@@ -90,13 +91,18 @@ class TestScriptExecutorServiceTest {
       configuration.tempRootFolder,
       configuration.numOfReductionThreads,
       testScript,
-      sourceFile.file.name).use {
+      sourceFile.file.name
+    ).use {
       // TODO: refine this test.
       run {
         val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
         for (i in 0..49) {
-          futureList.add(it.testProgram(program!!,
-            ORIG_FORMAT))
+          futureList.add(
+            it.testProgram(
+              program!!,
+              ORIG_FORMAT
+            )
+          )
         }
         futureList.forEach(
           Consumer { future: Future<TestScript.TestResult> ->
@@ -105,15 +111,20 @@ class TestScriptExecutorServiceTest {
             } catch (e: Throwable) {
               throw AssertionError(e)
             }
-          })
+          }
+        )
       }
       run {
         val invalidProgram = TestUtility.createSparTreeFromFile(invalidSourceFile.file)
           .programSnapshot
         val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
         for (i in 0..49) {
-          futureList.add(it.testProgram(invalidProgram,
-            ORIG_FORMAT))
+          futureList.add(
+            it.testProgram(
+              invalidProgram,
+              ORIG_FORMAT
+            )
+          )
         }
         futureList.forEach(
           Consumer { future: Future<TestScript.TestResult> ->
@@ -122,11 +133,13 @@ class TestScriptExecutorServiceTest {
             } catch (e: Throwable) {
               throw AssertionError(e)
             }
-          })
+          }
+        )
       }
       stopwatch.stop()
       println(
-        "#threads=" + threadCount + ": time=" + stopwatch.elapsed(TimeUnit.SECONDS) + " seconds")
+        "#threads=" + threadCount + ": time=" + stopwatch.elapsed(TimeUnit.SECONDS) + " seconds"
+      )
     }
   }
 

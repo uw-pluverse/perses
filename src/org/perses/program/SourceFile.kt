@@ -17,10 +17,7 @@
 package org.perses.program
 
 import com.google.common.base.MoreObjects
-import com.google.common.io.MoreFiles
 import java.io.File
-import java.io.IOException
-import java.nio.charset.StandardCharsets
 
 /**
  * Abstraction for a source file. It encapsulates the details of a source file. Note that this class
@@ -37,5 +34,4 @@ class SourceFile(file: File) : AbstractSourceFile(file) {
       .add("lang", languageKind)
       .toString()
   }
-
 }

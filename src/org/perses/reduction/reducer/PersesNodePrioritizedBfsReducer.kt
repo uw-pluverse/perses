@@ -16,11 +16,11 @@
  */
 package org.perses.reduction.reducer
 
-import java.util.PriorityQueue
-import java.util.Queue
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.tree.spar.AbstractSparTreeNode
+import java.util.PriorityQueue
+import java.util.Queue
 
 /** Perses node reducer, with bfs delta debugging  */
 class PersesNodePrioritizedBfsReducer
@@ -28,7 +28,8 @@ protected constructor(reducerContext: ReducerContext) :
   PersesNodeBfsReducer(META, reducerContext) {
   override fun createReductionQueue(): Queue<AbstractSparTreeNode> {
     return PriorityQueue(
-      DEFAULT_INITIAL_QUEUE_CAPACITY, TreeNodeComparatorInLeafTokenCount.SINGLETON)
+      DEFAULT_INITIAL_QUEUE_CAPACITY, TreeNodeComparatorInLeafTokenCount.SINGLETON
+    )
   }
 
   companion object {

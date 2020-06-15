@@ -99,7 +99,7 @@ def antlr_codegen_combined(
         name = lexer_rule,
         lexer_grammar_file = grammar_file,
         java_pkg_name = java_pkg_name,
-        lexer_java_file_name = lexer_java_file_name
+        lexer_java_file_name = lexer_java_file_name,
     )
 
     parser_rule = "%s_parser_" % name
@@ -107,12 +107,12 @@ def antlr_codegen_combined(
         name = parser_rule,
         parser_grammar_file = grammar_file,
         java_pkg_name = java_pkg_name,
-        parser_java_file_name = parser_java_file_name
+        parser_java_file_name = parser_java_file_name,
     )
     native.java_library(
         name = name,
         exports = [
             lexer_rule,
-            parser_rule
-        ]
+            parser_rule,
+        ],
     )

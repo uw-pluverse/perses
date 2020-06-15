@@ -1,14 +1,10 @@
 package org.perses.grammar.go
 
 import com.google.common.truth.Truth
-import org.antlr.v4.runtime.misc.ParseCancellationException
-
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
-
-import java.util.concurrent.atomic.AtomicInteger
 import java.io.File
 
 @RunWith(JUnit4::class)
@@ -34,7 +30,7 @@ class PnfGoParserFacadeTest {
     }
   }
 
-  fun testString(program : String, name : String) {
+  fun testString(program: String, name: String) {
     val parseTreeFromOrigParser = facade.parseWithOrigGoParser(program, name)
     val tokensByOrigParser = TestUtility.extractTokens(parseTreeFromOrigParser.tree)
 
@@ -44,7 +40,7 @@ class PnfGoParserFacadeTest {
     Truth.assertThat(tokensByPnfParser).containsExactlyElementsIn(tokensByOrigParser).inOrder()
   }
 
-  fun testSingleFile(file : File) {
+  fun testSingleFile(file: File) {
     try {
       System.err.println("Testing file ${file.getAbsolutePath()}")
       val check = file.readText()
@@ -55,7 +51,8 @@ class PnfGoParserFacadeTest {
       // Skip bad files (using nil as an identifier, which is technically allowed,
       //  but causes a lot of headaches for the grammar)
       if (file.getAbsolutePath().contains("issue4252.dir") ||
-          file.getAbsolutePath().contains("rename.go")) {
+        file.getAbsolutePath().contains("rename.go")
+      ) {
         return
       }
       // Skip fancy literals (for now) -- need to fix lexer for this.
@@ -64,7 +61,7 @@ class PnfGoParserFacadeTest {
       }
 
       testString(check, file.toString())
-    } catch (err : java.io.FileNotFoundException) {
+    } catch (err: java.io.FileNotFoundException) {
       // Suppress missing files (there's some strangeness with java and Unicode file names).
     }
   }
@@ -96,7 +93,7 @@ class PnfGoParserFacadeTest {
       testSingleFile(file)
     }
   }
-   
+
   @Test
   fun testShard5() {
     for (file in testData.shard5) {
@@ -109,11 +106,12 @@ class PnfGoParserFacadeTest {
     for (file in testData.shard6) {
       testSingleFile(file)
     }
-  } 
+  }
 
   @Test
   fun basicTest() {
-    val program = """
+    val program =
+      """
       |package main
       |import "fmt"
       |type Uint64 struct {

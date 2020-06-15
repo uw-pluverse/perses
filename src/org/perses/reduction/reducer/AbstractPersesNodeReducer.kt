@@ -18,12 +18,6 @@ package org.perses.reduction.reducer
 
 import com.google.common.annotations.VisibleForTesting
 import com.google.common.collect.ImmutableList
-import java.io.IOException
-import java.util.ArrayList
-import java.util.Comparator
-import java.util.Optional
-import java.util.Queue
-import java.util.concurrent.ExecutionException
 import org.perses.antlr.RuleType
 import org.perses.reduction.AbstractReducer
 import org.perses.reduction.ReducerAnnotation
@@ -42,6 +36,12 @@ import org.perses.tree.spar.NodeDeletionTreeEdit
 import org.perses.tree.spar.NodeReplacementTreeEdit
 import org.perses.tree.spar.SparTree
 import org.perses.tree.spar.SparTreeSimplifier
+import java.io.IOException
+import java.util.ArrayList
+import java.util.Comparator
+import java.util.Optional
+import java.util.Queue
+import java.util.concurrent.ExecutionException
 
 /** Perses reducer. The granularity is parse tree nodes, but not level-based.  */
 abstract class AbstractPersesNodeReducer protected constructor(
@@ -117,20 +117,26 @@ abstract class AbstractPersesNodeReducer protected constructor(
     if (canBeEpsilon(regularRuleNode)) {
       addDeletionEditToEditListAndLog(
         NodeDeletionActionSet.createByDeleteSingleNode(
-          regularRuleNode, "[regular_node]can be epsilon"),
+          regularRuleNode, "[regular_node]can be epsilon"
+        ),
         editList,
-        tree)
+        tree
+      )
     }
     val kleeneReplacements = replaceKleeneQualifiedNodeWithKleeneQualifiedChildren(
-      regularRuleNode, 3)
+      regularRuleNode, 3
+    )
     actionSetProfiler.onReplaceKleeneQualifiedNodeWithKleeneQualifiedChildren(
-      kleeneReplacements)
+      kleeneReplacements
+    )
     for (action in kleeneReplacements) {
       addEditToEditListAndLog(
         ChildHoistingActionSet.createByReplacingSingleNode(
-          action, "[regular_node]kleene replacement"),
+          action, "[regular_node]kleene replacement"
+        ),
         editList,
-        tree)
+        tree
+      )
     }
     val compatibleReplacements = replaceNodeWithNearestCompatibleChildren(regularRuleNode, 5)
     actionSetProfiler.onReplaceNodeWithNearestCompatibleChildren(compatibleReplacements)
@@ -141,9 +147,11 @@ abstract class AbstractPersesNodeReducer protected constructor(
         .forEach { action: ChildHoistingAction? ->
           addEditToEditListAndLog(
             ChildHoistingActionSet.createByReplacingSingleNode(
-              action, "[regular node]compatible replacement"),
+              action, "[regular node]compatible replacement"
+            ),
             editList,
-            tree)
+            tree
+          )
         }
     }
     return editList
@@ -172,7 +180,8 @@ abstract class AbstractPersesNodeReducer protected constructor(
         when (parentNodeType) {
           RuleType.KLEENE_PLUS, RuleType.KLEENE_STAR -> true
           RuleType.OPTIONAL -> throw RuntimeException(
-            "Optional should have a single child. " + node.printTreeStructure())
+            "Optional should have a single child. " + node.printTreeStructure()
+          )
           else -> false
         }
       } else {
@@ -222,15 +231,18 @@ abstract class AbstractPersesNodeReducer protected constructor(
       addDeletionEditToEditListAndLog(
         NodeDeletionActionSet.createByDeleteSingleNode(kleenePlus, "[kleene_plus]can be epsilon"),
         editList,
-        tree)
+        tree
+      )
     }
     if (childCount > 1) {
       val wholePartition = createPartition(kleenePlus, 1, childCount) // Skip the first.
       addDeletionEditToEditListAndLog(
         createNodeDeletionActionSetFor(
-          wholePartition, "[kleene_plus]remove whole except first"),
+          wholePartition, "[kleene_plus]remove whole except first"
+        ),
         editList,
-        tree)
+        tree
+      )
     }
     val best = testAllTreeEditsAndReturnTheBest(editList)
     if (best.isPresent) {
@@ -244,7 +256,8 @@ abstract class AbstractPersesNodeReducer protected constructor(
         tree,
         "[kleene_plus]dd",
         createPartition(kleenePlus, 0, halfIndex),
-        createPartition(kleenePlus, halfIndex, childCount))
+        createPartition(kleenePlus, halfIndex, childCount)
+      )
     }
     return ImmutableList.copyOf(kleenePlus.immutableChildView)
   }

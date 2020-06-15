@@ -84,13 +84,11 @@ golden_test(
     test_file = "pnfc_rule_hierarchy.txt",
 )
 
-
 golden_test(
     name = "golden_test_pnfgo_rule_hierarchy",
     golden_file = "golden_pnfgo_rule_hierarchy.txt",
     test_file = "pnfgo_rule_hierarchy.txt",
 )
-
 
 golden_test(
     name = "golden_test_pnfscala_rule_hierarchy",
