@@ -73,6 +73,20 @@ abstract class AbstractReductionEvent(val currentTimeMillis: Long) {
   ) :
     AbstractReductionEventWithProgramSize(currentTimeMillis, programSize)
 
+  class TokenSlicingStartEvent(
+    currentTimeMillis: Long,
+    programSize: Int,
+    val tokenSliceGranularity: Int
+  ) :
+    AbstractReductionEventWithProgramSize(currentTimeMillis, programSize)
+
+  class TokenSlicingEndEvent(
+    currentTimeMillis: Long,
+    programSize: Int,
+    val startEvent: TokenSlicingStartEvent
+  ) :
+    AbstractReductionEventWithProgramSize(currentTimeMillis, programSize)
+
   class NodeReductionStartEvent(
     currentTimeMillis: Long,
     programSize: Int,

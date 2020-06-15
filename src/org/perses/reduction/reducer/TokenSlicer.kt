@@ -2,6 +2,7 @@ package org.perses.reduction.reducer
 
 import com.google.common.annotations.VisibleForTesting
 import org.perses.reduction.AbstractReducer
+import org.perses.reduction.AbstractReductionEvent
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.TestScript
@@ -11,27 +12,31 @@ import org.perses.tree.spar.SparTree
 
 class TokenSlicer(
   reducerContext: ReducerContext,
-  val minTokenCount: Int,
-  val maxTokenCount: Int
+  val minSlicingGranularity: Int,
+  val maxSlicingGranularity: Int
 ) :
   AbstractReducer(META, reducerContext) {
 
   init {
-    require(minTokenCount in 1..maxTokenCount) {
-      "Expecting: 0 < minTokenCount($minTokenCount) <= maxTokneCount($maxTokenCount)."
+    require(minSlicingGranularity in 1..maxSlicingGranularity) {
+      "0 < minTokenCount($minSlicingGranularity) <= maxTokneCount($maxSlicingGranularity)."
     }
   }
 
   // TODO: This algorithm need to be parallelized.
   override fun internalReduce(tree: SparTree) {
-    for (tokenCountToSlice in maxTokenCount downTo minTokenCount) {
+    for (tokenSlicingGranularity in maxSlicingGranularity downTo minSlicingGranularity) {
       val tokens = extractLexerRuleNodes(tree)
-      for (startIndex in tokens.size - 1 downTo tokenCountToSlice - 1) {
+      val startEvent = AbstractReductionEvent.TokenSlicingStartEvent(
+        System.currentTimeMillis(), tree.programSnapshot.tokenCount(), tokenSlicingGranularity
+      )
+      listenerManager.onSlicingTokensStart(startEvent)
+      for (startIndex in tokens.size - 1 downTo tokenSlicingGranularity - 1) {
         if (tokens[startIndex].isPermanentlyDeleted) {
           continue
         }
         val nodeDeletionActionSet = createNodeDeletionActionSetReverse(
-          tokens, startIndex, tokenCountToSlice
+          tokens, startIndex, tokenSlicingGranularity
         )
         if (nodeActionSetCache.isCachedOrCacheIt(nodeDeletionActionSet)) {
           listenerManager.onNodeEditActionSetCacheHit(nodeDeletionActionSet)
@@ -65,6 +70,10 @@ class TokenSlicer(
           tree.applyEdit(treeEdit)
         }
       }
+      val endEvent = AbstractReductionEvent.TokenSlicingEndEvent(
+        System.currentTimeMillis(), tree.programSnapshot.tokenCount(), startEvent
+      )
+      listenerManager.onSlicingTokensEnd(endEvent)
     }
   }
 
@@ -80,7 +89,7 @@ class TokenSlicer(
 
       override fun create(reducerContext: ReducerContext) = TokenSlicer(
         reducerContext,
-        minTokenCount = 2, maxTokenCount = 15
+        minSlicingGranularity = 2, maxSlicingGranularity = 15
       )
     }
 

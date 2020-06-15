@@ -60,4 +60,7 @@ abstract class AbstractReductionListener {
   abstract fun onTestScriptExecutionCancelled(
     event: AbstractReductionEvent.TestScriptExecutionCanceledEvent?
   )
+
+  abstract fun onSlicingTokensStart(event: AbstractReductionEvent.TokenSlicingStartEvent)
+  abstract fun onSlicingTokensEnd(event: AbstractReductionEvent.TokenSlicingEndEvent)
 }

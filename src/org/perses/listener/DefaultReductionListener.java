@@ -50,6 +50,12 @@ public class DefaultReductionListener extends AbstractReductionListener {
       AbstractReductionEvent.LevelGranularityReductionEndEvent event) {}
 
   @Override
+  public void onSlicingTokensStart(AbstractReductionEvent.TokenSlicingStartEvent event) {}
+
+  @Override
+  public void onSlicingTokensEnd(AbstractReductionEvent.TokenSlicingEndEvent event) {}
+
+  @Override
   public void onNodeReductionStart(AbstractReductionEvent.NodeReductionStartEvent event) {}
 
   @Override

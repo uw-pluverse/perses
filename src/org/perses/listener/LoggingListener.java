@@ -25,7 +25,12 @@ import org.perses.util.Util;
 
 import static com.google.common.base.Preconditions.checkState;
 
-/** A logging listener to print the progress of reduction. */
+/**
+ * FIXME: the listeners need refactoring. The listeners now store states, which are not friendly to
+ * concurrency.
+ *
+ * <p>A logging listener to print the progress of reduction.
+ */
 public class LoggingListener extends DefaultReductionListener {
 
   private static final int UNINITIALIZED_VALUE = Integer.MIN_VALUE;
@@ -161,6 +166,31 @@ public class LoggingListener extends DefaultReductionListener {
   }
 
   @Override
+  public void onSlicingTokensStart(AbstractReductionEvent.TokenSlicingStartEvent event) {}
+
+  @Override
+  public void onSlicingTokensEnd(AbstractReductionEvent.TokenSlicingEndEvent event) {
+    if (!logger.atInfo().isEnabled()) {
+      return;
+    }
+    final StringBuilder builder = new StringBuilder(300);
+    printPrefix(builder);
+    final int initialProgramSize = event.getStartEvent().getProgramSize();
+    final int newProgramSize = event.getProgramSize();
+    builder
+        .append(": TokenSlicer@")
+        .append(event.getStartEvent().getTokenSliceGranularity())
+        .append(", ratio=")
+        .append(event.getProgramSize())
+        .append("/")
+        .append(initialProgramSize)
+        .append("=")
+        .append(Util.computePercentage(newProgramSize, initialProgramSize))
+        .append("tokens");
+    logger.atInfo().log("%s", builder);
+  }
+
+  @Override
   public void onNodeReductionStart(AbstractReductionEvent.NodeReductionStartEvent event) {
     nodeSize = event.getProgramSize();
     if (logger.atConfig().isEnabled()) {
@@ -170,26 +200,27 @@ public class LoggingListener extends DefaultReductionListener {
 
   @Override
   public void onNodeReductionEnd(AbstractReductionEvent.NodeReductionEndEvent event) {
-    if (logger.atInfo().isEnabled()) {
-      final int programSize = event.getProgramSize();
-
-      final StringBuilder builder = new StringBuilder(300);
-      printPrefix(builder);
-      builder
-          .append(": Delta node (#leaves=")
-          .append(event.getNode().getLeafTokenCount())
-          .append(")");
-      builder.append(": queue=").append(event.getRemainingQueueSize());
-      builder.append(", delete ").append(nodeSize - programSize).append(" tokens");
-      builder
-          .append(", ratio=")
-          .append(programSize)
-          .append("/")
-          .append(initialProgramSize)
-          .append("=")
-          .append(Util.computePercentage(programSize, initialProgramSize));
-      logger.atInfo().log(builder.toString());
+    if (!logger.atInfo().isEnabled()) {
+      return;
     }
+    final int programSize = event.getProgramSize();
+
+    final StringBuilder builder = new StringBuilder(300);
+    printPrefix(builder);
+    builder
+        .append(": Delta node (#leaves=")
+        .append(event.getNode().getLeafTokenCount())
+        .append(")");
+    builder.append(": queue=").append(event.getRemainingQueueSize());
+    builder.append(", delete ").append(nodeSize - programSize).append(" tokens");
+    builder
+        .append(", ratio=")
+        .append(programSize)
+        .append("/")
+        .append(initialProgramSize)
+        .append("=")
+        .append(Util.computePercentage(programSize, initialProgramSize));
+    logger.atInfo().log(builder.toString());
   }
 
   private StringBuilder printPrefix(StringBuilder builder) {

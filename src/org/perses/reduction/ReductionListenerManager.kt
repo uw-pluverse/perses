@@ -88,6 +88,18 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
     }
   }
 
+  fun onSlicingTokensStart(
+    event: AbstractReductionEvent.TokenSlicingStartEvent
+  ) {
+    listeners.forEach { it.onSlicingTokensStart(event) }
+  }
+
+  fun onSlicingTokensEnd(
+    event: AbstractReductionEvent.TokenSlicingEndEvent
+  ) {
+    listeners.forEach { it.onSlicingTokensEnd(event) }
+  }
+
   fun onNodeReductionStart(
     tree: AbstractUnmodifiableSparTree,
     node: AbstractSparTreeNode,
