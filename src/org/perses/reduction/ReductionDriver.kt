@@ -41,6 +41,7 @@ import org.perses.tree.spar.NodeActionSetCache
 import org.perses.tree.spar.NullNodeActionSetCache
 import org.perses.tree.spar.SparTree
 import org.perses.tree.spar.SparTreeBuilder
+import org.perses.tree.spar.SparTreeSimplifier
 import org.perses.util.Shell
 import org.perses.util.TimeSpan
 import org.perses.util.Util
@@ -143,6 +144,8 @@ class ReductionDriver(
           // Rebuilding is necessary, to hop over different production rules.
           tree = reparseAndCreateSparTree(tree)
           tree.registerSparTreeEditListeners(sparTreeEditListeners)
+        }  else {
+          SparTreeSimplifier.simplify(tree)
         }
         assert(tree.tokenizedProgramFactory == originalTokenizedProgramFactory) {
           "The tokenized program factory should be unchanged during a reduction process."
@@ -264,8 +267,7 @@ class ReductionDriver(
       ).tree
       return SparTreeBuilder(
         parserFacade.ruleHierarchy, originalTree.tokenizedProgramFactory
-      )
-        .build(parseTree)
+      ).build(parseTree)
     } catch (e: Exception) {
       logger.atSevere().log(
         "Fail to parse the following program. \n%s",
