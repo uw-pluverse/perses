@@ -36,19 +36,17 @@ import org.perses.tree.spar.NodeDeletionTreeEdit
 import org.perses.tree.spar.NodeReplacementTreeEdit
 import org.perses.tree.spar.SparTree
 import org.perses.tree.spar.SparTreeSimplifier
-import java.io.IOException
 import java.util.ArrayList
 import java.util.Comparator
 import java.util.Optional
 import java.util.Queue
-import java.util.concurrent.ExecutionException
 
 /** Perses reducer. The granularity is parse tree nodes, but not level-based.  */
 abstract class AbstractPersesNodeReducer protected constructor(
   reducerAnnotation: ReducerAnnotation,
   reducerContext: ReducerContext
 ) : AbstractReducer(reducerAnnotation, reducerContext) {
-  @Throws(IOException::class, ExecutionException::class, InterruptedException::class)
+
   override fun internalReduce(tree: SparTree) {
     val root = tree.root
     assert(SparTreeSimplifier.assertSingleEntrySingleExitPathProperty(root))
@@ -66,7 +64,7 @@ abstract class AbstractPersesNodeReducer protected constructor(
   }
 
   protected abstract fun createReductionQueue(): Queue<AbstractSparTreeNode>
-  @Throws(InterruptedException::class, ExecutionException::class, IOException::class)
+
   private fun reduceOneNode(
     tree: SparTree,
     node: AbstractSparTreeNode
@@ -192,7 +190,6 @@ abstract class AbstractPersesNodeReducer protected constructor(
   }
 
   /** Perform delta debugging.  */
-  @Throws(InterruptedException::class, ExecutionException::class, IOException::class)
   private fun reduceKleenStar(
     tree: SparTree,
     kleeneStar: AbstractSparTreeNode
@@ -210,14 +207,12 @@ abstract class AbstractPersesNodeReducer protected constructor(
     }
   }
 
-  @Throws(InterruptedException::class, ExecutionException::class, IOException::class)
   protected abstract fun performDelta(
     tree: SparTree,
     actionsDescription: String,
     vararg startPartitions: Partition
   )
 
-  @Throws(InterruptedException::class, ExecutionException::class, IOException::class)
   private fun reduceKleenePlus(
     tree: SparTree,
     kleenePlus: AbstractSparTreeNode
@@ -319,12 +314,12 @@ abstract class AbstractPersesNodeReducer protected constructor(
     SINGLETON;
 
     override fun compare(o1: AbstractSparTreeNode, o2: AbstractSparTreeNode): Int {
-      val tokenCountCmpResult = Integer.compare(o2.leafTokenCount, o1.leafTokenCount)
+      val tokenCountCmpResult = o2.leafTokenCount.compareTo(o1.leafTokenCount)
       if (tokenCountCmpResult != 0) {
         return tokenCountCmpResult
       }
       // For determinism.
-      val result = Integer.compare(o2.nodeId, o1.nodeId)
+      val result = o2.nodeId.compareTo(o1.nodeId)
       assert(result != 0) { "Cannot guarantee determinism." }
       return result
     }
@@ -332,6 +327,7 @@ abstract class AbstractPersesNodeReducer protected constructor(
 
   companion object {
     internal const val DEFAULT_INITIAL_QUEUE_CAPACITY = 600
+
     /**
      * Create a partition from the tree node, by including the children in the range [childIndexFrom,
      * childIndexTo)
