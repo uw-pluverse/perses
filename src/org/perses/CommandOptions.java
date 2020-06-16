@@ -17,20 +17,14 @@
 
 package org.perses;
 
-import com.beust.jcommander.IParameterValidator;
-import com.beust.jcommander.IStringConverter;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
-import com.beust.jcommander.ParameterException;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import org.perses.program.EnumFormatControl;
 import org.perses.util.Fraction;
 
 import java.io.File;
-import java.util.Arrays;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
@@ -111,11 +105,20 @@ public class CommandOptions {
 
     public void validate() {
       final File testScript = this.getTestScript();
-      checkState(testScript.isFile(), "The test script %s is not a file.", testScript);
+      final String workingDirectory = new File(".").getAbsolutePath();
+      checkState(
+          testScript.isFile(),
+          "The test script %s is not a file. The current directory is %s.",
+          testScript,
+          workingDirectory);
       checkState(testScript.canExecute(), "The test script %s is not executable.", testScript);
 
       final File sourceFile = this.getSourceFile();
-      checkState(sourceFile.isFile(), "The source program %s is not a file.", sourceFile);
+      checkState(
+          sourceFile.isFile(),
+          "The source program %s is not a file. The current directory is %s.",
+          sourceFile,
+          workingDirectory);
     }
   }
 
