@@ -97,6 +97,10 @@ targets = [
         target_name="//test/org/perses/grammar/scala:cp_pnf_scala_grammar",
         output_file="bazel-bin/test/org/perses/grammar/scala/pnf_scala_grammar.g4",
         golden_file="test/org/perses/grammar/scala/golden_pnf_scala.g4"),
+    Target(
+        target_name="//test/org/perses/grammar/rust:cp_pnf_rust_grammar",
+        output_file="bazel-bin/test/org/perses/grammar/rust/pnf_rust_grammar.g4",
+        golden_file="test/org/perses/grammar/rust/golden_pnf_rust.g4"),
 ]
 
 for target in targets:
