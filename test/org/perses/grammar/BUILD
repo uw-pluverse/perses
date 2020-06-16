@@ -1,7 +1,12 @@
-java_test(
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_test")
+
+kt_jvm_test(
     name = "ParserFacadeTest",
-    srcs = ["ParserFacadeTest.java"],
-    data = ["//test_data/misc"],
+    srcs = ["ParserFacadeTest.kt"],
+    data = [
+        "//test_data/misc",
+        "//test_data/scala_helloworld",
+    ],
     test_class = "org.perses.grammar.ParserFacadeTest",
     deps = [
         "//src/org/perses/antlr:parse_tree_with_parser",
