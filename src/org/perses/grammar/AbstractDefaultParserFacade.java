@@ -136,6 +136,7 @@ public abstract class AbstractDefaultParserFacade<LEXER extends Lexer, PARSER ex
     return ImmutableList.copyOf(lexer.getAllTokens());
   }
 
+  @Deprecated
   public final ParseTreeWithParser parseTokenizedProgram(TokenizedProgram program) {
     final CommonTokenStream tokens = new CommonTokenStream(program.createTokenSource());
     final PARSER parser = createParserWithoutCache(tokens);

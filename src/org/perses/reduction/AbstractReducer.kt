@@ -77,7 +77,8 @@ abstract class AbstractReducer protected constructor(
     val best = analyzeResultsAndGetBest(futureList)
     assert(
       !best.isPresent ||
-        configuration.parserFacade.isSourceCodeParsable(best.get().edit.program)
+        configuration.parserFacade.isSourceCodeParsable(
+          best.get().edit.program.toCompactSourceCode())
     )
     return best.map { TreeEditWithItsResult(it.edit, it.result) }
   }

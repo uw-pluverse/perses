@@ -12,6 +12,7 @@ kt_jvm_test(
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/grammar/c:c_parser_facade",
         "//src/org/perses/grammar/c:pnfc_parser_facade",
+        "//src/org/perses/grammar/scala:pnfscala_parser_facade",
         "//src/org/perses/program",
         "//src/org/perses/tree/spar",
         "//test/org/perses:test_util",

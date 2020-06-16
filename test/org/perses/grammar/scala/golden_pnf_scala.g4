@@ -1163,7 +1163,7 @@ packageObject
     ;
 
 compilationUnit
-    : kleene_star__compilationUnit_2 topStatSeq
+    : kleene_star__compilationUnit_2 topStatSeq EOF
     ;
 
 compilationUnit_1

@@ -144,7 +144,7 @@ class ReductionDriver(
           // Rebuilding is necessary, to hop over different production rules.
           tree = reparseAndCreateSparTree(tree)
           tree.registerSparTreeEditListeners(sparTreeEditListeners)
-        }  else {
+        } else {
           SparTreeSimplifier.simplify(tree)
         }
         assert(tree.tokenizedProgramFactory == originalTokenizedProgramFactory) {
@@ -169,7 +169,8 @@ class ReductionDriver(
       if (needToRunTokenSlicer) {
         val sizeBeforeTokenSclier = tree.tokenCount
         if (logger.atInfo().isEnabled) {
-          logger.atInfo().log("TokenSlicer started at %s. #tokens=%s",
+          logger.atInfo().log(
+            "TokenSlicer started at %s. #tokens=%s",
             Util.formatDateForDisplay(System.currentTimeMillis()),
             sizeBeforeTokenSclier
           )
@@ -177,9 +178,11 @@ class ReductionDriver(
         val tokenSlicer = createReducer(TokenSlicer.META)
         tokenSlicer.reduce(ReductionState(tree))
         if (logger.atInfo().isEnabled) {
-          logger.atInfo().log("TokenSlicer ended at %s. #old=%s, #new=",
+          logger.atInfo().log(
+            "TokenSlicer ended at %s. #old=%s, #new=",
             Util.formatDateForDisplay(System.currentTimeMillis()),
-            sizeBeforeTokenSclier, tree.tokenCount)
+            sizeBeforeTokenSclier, tree.tokenCount
+          )
         }
       }
       if (!configuration.fixpointReduction || preSize == tree.tokenCount) {

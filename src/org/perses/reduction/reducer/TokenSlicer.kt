@@ -49,7 +49,10 @@ class TokenSlicer(
           listenerManager.onTestResultCacheHit(cachedResult.get(), treeEdit.program, treeEdit)
           continue
         }
-        if (!configuration.parserFacade.isSourceCodeParsable(treeEdit.program)) {
+        if (!configuration.parserFacade.isSourceCodeParsable(
+          treeEdit.program.toCompactSourceCode()
+        )
+        ) {
           cacheTestResult(
             treeEdit.program,
             TestScript.TestResult(exitCode = INVALID_SYNTAX_EXIT_CODE, elapsedMilliseconds = -1)

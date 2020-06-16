@@ -52,7 +52,7 @@ java_test(
 kt_jvm_test(
     name = "HddReducerFunctionalTest",
     size = "medium",
-    timeout = "moderate",
+    timeout = "long",
     srcs = ["HddReducerFunctionalTest.kt"],
     data = ["//test_data/java_helloworld"],
     test_class = "org.perses.reduction.reducer.HddReducerFunctionalTest",

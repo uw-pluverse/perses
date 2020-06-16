@@ -121,8 +121,10 @@ public abstract class AbstractParserFacade {
     }
   }
 
+  @Deprecated
   public final boolean isSourceCodeParsable(TokenizedProgram program) {
     try {
+      // FIXME: bug here, as go program cannot use tokenized program for parsing.
       parseTokenizedProgram(program);
       return true;
     } catch (Exception e) {
@@ -131,6 +133,7 @@ public abstract class AbstractParserFacade {
     }
   }
 
+  @Deprecated
   public abstract ParseTreeWithParser parseTokenizedProgram(TokenizedProgram program);
 
   public static String readAntlrGrammarContent(
