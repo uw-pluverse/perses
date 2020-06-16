@@ -155,7 +155,7 @@ abstract class AbstractPersesNodeReducer protected constructor(
     return editList
   }
 
-  private fun canBeEpsilon(nodeForTest: AbstractSparTreeNode?): Boolean {
+  private fun canBeEpsilon(nodeForTest: AbstractSparTreeNode): Boolean {
     var node: AbstractSparTreeNode? = nodeForTest
     while (node != null) {
       if (node.antlrRule.get().canRuleBeEpsilon()) {
