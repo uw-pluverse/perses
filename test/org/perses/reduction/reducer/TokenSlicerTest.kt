@@ -92,4 +92,16 @@ class TokenSlicerTest : AbstractReducerFunctionalTest() {
       """.trimMargin()
     )
   }
+
+  @Test
+  fun testReduceScalaHelloWorld() {
+    runScalaTestSubject("test_data/scala_helloworld",
+    TokenSlicer.META,
+    """
+      |object Hello {
+      | def main(args: Array[String]) =
+      |   println("Hello, world")
+      |}
+    """.trimMargin())
+  }
 }

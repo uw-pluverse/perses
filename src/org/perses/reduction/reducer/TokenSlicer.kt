@@ -67,7 +67,7 @@ class TokenSlicer(
           )
         )
         if (best.isPresent) {
-          tree.applyEdit(treeEdit)
+          tree.applyEdit(best.get().edit)
         }
       }
       val endEvent = AbstractReductionEvent.TokenSlicingEndEvent(
@@ -89,7 +89,7 @@ class TokenSlicer(
 
       override fun create(reducerContext: ReducerContext) = TokenSlicer(
         reducerContext,
-        minSlicingGranularity = 2, maxSlicingGranularity = 15
+        minSlicingGranularity = 1, maxSlicingGranularity = 14
       )
     }
 

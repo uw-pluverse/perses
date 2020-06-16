@@ -78,7 +78,10 @@ kt_jvm_test(
 kt_jvm_test(
     name = "TokenSlicerTest",
     srcs = ["TokenSlicerTest.kt"],
-    data = ["//test_data/delta_1"],
+    data = [
+        "//test_data/delta_1",
+        "//test_data/scala_helloworld",
+    ],
     test_class = "org.perses.reduction.reducer.TokenSlicerTest",
     deps = [
         "//src/org/perses/program",
