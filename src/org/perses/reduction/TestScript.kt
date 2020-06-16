@@ -41,7 +41,7 @@ class TestScript(val scriptFile: File, private val scriptTemplate: ScriptFile) {
   }
 
   /** The result of a test, including runtime information, i.e., time, exit code.  */
-  class TestResult(private val exitCode: Int, val elapsedMilliseconds: Long) {
+  class TestResult(val exitCode: Int, val elapsedMilliseconds: Long) {
 
     val isPass: Boolean
       get() = exitCode == 0

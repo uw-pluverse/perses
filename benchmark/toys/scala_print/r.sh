@@ -13,25 +13,26 @@ rm "${OUTPUT}" || true
 
 if ! command -v "scalac" ; then
   echo "No scalac on the path"
-  exit 1
+  exit 2
 fi
 if ! command -v "scala" ; then
   echo "No scala on the path"
-  exit 1
+  exit 3
 fi
 
 if ! scalac "${SRC}" ; then
-  exit 1
+  exit 4
 fi
 
 scala "${EXE}" &> "${OUTPUT}"
 
+# shellcheck disable=SC2181
 if [[ "${?}" != 0 ]] ; then
-  exit 1
+  exit 5
 fi
 
 if ! grep "Hello, world" "${OUTPUT}" ; then
-  exit 1
+  exit 6
 fi
 
 exit 0

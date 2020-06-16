@@ -18,7 +18,7 @@ def reduce(
 
     result_file = result_file or "reduced_result_%s" % source_file
     statistics_file = statistics_file or "%s_statistics.txt" % name
-    progress_dump_file = progress_dump_file or "progress_%s.txt" % source_file
+    progress_dump_file = progress_dump_file or "%s_progress.txt" % name
     if enable_query_caching == None:
         enable_query_caching = True
     if enable_edit_caching == None:

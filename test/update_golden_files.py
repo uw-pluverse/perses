@@ -73,6 +73,14 @@ targets = [
         output_file="bazel-bin/benchmark/toys/scala_print/result_reduction_golden_test_perses_node_priority_with_dfs_delta_Hello.sc",
         golden_file="benchmark/toys/scala_print/golden_reduced_Hello.sc"),
     Target(
+        target_name="//benchmark/toys/scala_print:reduce_scala_print_with_token_slicer",
+        output_file="bazel-bin/benchmark/toys/scala_print/Hello_reduced_with_token_slicer.sc",
+        golden_file="benchmark/toys/scala_print/golden_reduced_hello_with_token_slicer.sc"),
+    Target(
+        target_name="//benchmark/toys/scala_print:reduce_scala_print_with_token_slicer",
+        output_file="bazel-bin/benchmark/toys/scala_print/reduce_scala_print_with_token_slicer_reduction_progress.txt",
+        golden_file="benchmark/toys/scala_print/gold_test_reduce_scala_print_with_token_slicer_progress.txt"),
+    Target(
         target_name="//benchmark/toys/rs_print:reduction_golden_test_reduction",
         output_file="bazel-bin/benchmark/toys/rs_print/reduction_progress.txt",
         golden_file="benchmark/toys/rs_print/golden_reduction_progress.txt"),
