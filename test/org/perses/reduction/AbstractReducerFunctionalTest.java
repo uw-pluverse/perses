@@ -79,4 +79,9 @@ public abstract class AbstractReducerFunctionalTest {
       String reductionFolder, ReducerAnnotation algorithmType, String expected) {
     test(reductionFolder, "r.sh", "t.java", algorithmType, expected);
   }
+
+  protected void runScalaTestSubject(
+          String reductionFolder, ReducerAnnotation algorithmType, String expected) {
+    test(reductionFolder, "r.sh", "t.sc", algorithmType, expected);
+  }
 }
