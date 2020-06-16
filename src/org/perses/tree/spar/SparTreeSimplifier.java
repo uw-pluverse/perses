@@ -29,6 +29,10 @@ import static com.google.common.base.Preconditions.*;
  */
 public class SparTreeSimplifier {
 
+  public static void simplify(SparTree tree) {
+    simplify(tree.getRoot());
+  }
+
   static void simplify(AbstractSparTreeNode root) {
     removeEmptyAndDeletedRuleNodes(root);
     simplifySingleEntrySingleExitPath(root);
