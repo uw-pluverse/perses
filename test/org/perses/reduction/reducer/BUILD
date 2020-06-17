@@ -77,6 +77,7 @@ kt_jvm_test(
 
 kt_jvm_test(
     name = "TokenSlicerTest",
+    timeout = "long",
     srcs = ["TokenSlicerTest.kt"],
     data = [
         "//test_data/delta_1",
@@ -105,6 +106,7 @@ kt_jvm_test(
 
 kt_jvm_test(
     name = "TreeSlicerTest",
+    timeout = "long",
     srcs = ["TreeSlicerTest.kt"],
     data = [
         "//test_data/delta_1",
