@@ -1,3 +1,5 @@
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_test")
+
 DEFAULT_DEPS = [
     "//src/org/perses/program:language_kind",
     "//src/org/perses/antlr:antlr_grammar_util",
@@ -45,10 +47,10 @@ java_test(
     deps = DEFAULT_DEPS,
 )
 
-java_test(
+kt_jvm_test(
     name = "SparTreeNodeTest",
     size = "large",
-    srcs = ["SparTreeNodeTest.java"],
+    srcs = ["SparTreeNodeTest.kt"],
     data = [
         "//test_data/misc",
     ],

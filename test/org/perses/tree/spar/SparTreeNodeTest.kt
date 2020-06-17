@@ -14,298 +14,290 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.tree.spar;
+package org.perses.tree.spar
 
-import com.google.common.base.Charsets;
-import com.google.common.collect.ImmutableList;
-import com.google.common.io.Files;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.perses.TestUtility;
-import org.perses.antlr.AntlrGrammarUtil;
-import org.perses.grammar.AbstractParserFacade;
-import org.perses.grammar.c.CParserFacade;
-import org.perses.program.PersesToken;
-import org.perses.program.TokenizedProgram;
-import org.perses.program.TokenizedProgramFactory;
+import com.google.common.base.Charsets
+import com.google.common.collect.ImmutableList
+import com.google.common.io.Files
+import com.google.common.truth.Truth
+import org.junit.Assert
+import org.junit.Ignore
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
+import org.perses.TestUtility
+import org.perses.antlr.AntlrGrammarUtil
+import org.perses.grammar.AbstractParserFacade
+import org.perses.grammar.c.CParserFacade
+import org.perses.program.PersesToken
+import org.perses.program.TokenizedProgramFactory
+import java.io.File
+import java.io.IOException
+import java.util.function.Consumer
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
-import static com.google.common.truth.Truth.assertThat;
-
-/** Test for {@link ParserRuleSparTreeNode} */
-@RunWith(JUnit4.class)
-public class SparTreeNodeTest {
+@RunWith(JUnit4::class)
+class SparTreeNodeTest {
 
   @Test
-  public void testExpectedAntlrRuleTypesOfChildren_enclosing_expression_1() throws IOException {
-    testExpectedAntlrRuleTypesOfChildren("enclosing-expression-1.c");
+  fun testExpectedAntlrRuleTypesOfChildren_enclosing_expression_1() {
+    testExpectedAntlrRuleTypesOfChildren("enclosing-expression-1.c")
   }
 
   @Test
-  public void testExpectedAntlrRuleTypesOfChildren_t1() throws IOException {
-    testExpectedAntlrRuleTypesOfChildren("t1.c");
+  fun testExpectedAntlrRuleTypesOfChildren_t1() {
+    testExpectedAntlrRuleTypesOfChildren("t1.c")
   }
 
   @Test
-  public void testExpectedAntlrRuleTypesOfChildren_t2() throws IOException {
-    testExpectedAntlrRuleTypesOfChildren("t2.c");
+  fun testExpectedAntlrRuleTypesOfChildren_t2() {
+    testExpectedAntlrRuleTypesOfChildren("t2.c")
   }
 
   @Test
-  public void testExpectedAntlrRuleTypesOfChildren_t3() throws IOException {
-    testExpectedAntlrRuleTypesOfChildren("t3.c");
+  fun testExpectedAntlrRuleTypesOfChildren_t3() {
+    testExpectedAntlrRuleTypesOfChildren("t3.c")
   }
 
   @Test
-  public void testExpectedAntlrRuleTypesOfChildren_t4() throws IOException {
-    testExpectedAntlrRuleTypesOfChildren("t4.c");
+  fun testExpectedAntlrRuleTypesOfChildren_t4() {
+    testExpectedAntlrRuleTypesOfChildren("t4.c")
   }
 
   @Test
-  public void testExpectedAntlrRuleTypesOfChildren_t5() throws IOException {
-    testExpectedAntlrRuleTypesOfChildren("t5.c");
+  fun testExpectedAntlrRuleTypesOfChildren_t5() {
+    testExpectedAntlrRuleTypesOfChildren("t5.c")
   }
 
   @Test
-  public void testExpectedAntlrRuleTypesOfChildren_t6() throws IOException {
-    testExpectedAntlrRuleTypesOfChildren("t6.c");
+  fun testExpectedAntlrRuleTypesOfChildren_t6() {
+    testExpectedAntlrRuleTypesOfChildren("t6.c")
   }
 
   @Test
-  public void testExpectedAntlrRuleTypesOfChildren_t9() throws IOException {
-    testExpectedAntlrRuleTypesOfChildren("t9.c");
+  fun testExpectedAntlrRuleTypesOfChildren_t9() {
+    testExpectedAntlrRuleTypesOfChildren("t9.c")
   }
 
   @Test
-  public void testExpectedAntlrRuleTypesOfChildren_t10() throws IOException {
-    testExpectedAntlrRuleTypesOfChildren("t10.c");
+  fun testExpectedAntlrRuleTypesOfChildren_t10() {
+    testExpectedAntlrRuleTypesOfChildren("t10.c")
   }
 
   @Test
-  public void testExpectedAntlrRuleTypesOfChildren_t8_long_expressions() throws IOException {
-    testExpectedAntlrRuleTypesOfChildren("t8-long-expressions.c");
+  fun testExpectedAntlrRuleTypesOfChildren_t8_long_expressions() {
+    testExpectedAntlrRuleTypesOfChildren("t8-long-expressions.c")
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_0() {
+  fun testSparTreeCanReconstructOriginalGccPrograms_0() {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 0)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_1() {
+  fun testSparTreeCanReconstructOriginalGccPrograms_1() {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 1)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_2() {
+  fun testSparTreeCanReconstructOriginalGccPrograms_2() {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 2)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_3() {
+  fun testSparTreeCanReconstructOriginalGccPrograms_3() {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 3)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_4() {
+  fun testSparTreeCanReconstructOriginalGccPrograms_4() {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 4)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_5() {
+  fun testSparTreeCanReconstructOriginalGccPrograms_5() {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 5)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_6() {
+  fun testSparTreeCanReconstructOriginalGccPrograms_6() {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 6)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_7() {
+  fun testSparTreeCanReconstructOriginalGccPrograms_7() {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 7)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_8() {
+  fun testSparTreeCanReconstructOriginalGccPrograms_8() {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 8)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalGccPrograms_9() {
+  fun testSparTreeCanReconstructOriginalGccPrograms_9() {
     TestUtility.partitionAndGet(TestUtility.getGccTestFiles(), 10, 9)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_0() {
+  fun testSparTreeCanReconstructOriginalClangPrograms_0() {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 0)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_1() {
+  fun testSparTreeCanReconstructOriginalClangPrograms_1() {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 1)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_2() {
+  fun testSparTreeCanReconstructOriginalClangPrograms_2() {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 2)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_3() {
+  fun testSparTreeCanReconstructOriginalClangPrograms_3() {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 3)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_4() {
+  fun testSparTreeCanReconstructOriginalClangPrograms_4() {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 4)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_5() {
+  fun testSparTreeCanReconstructOriginalClangPrograms_5() {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 5)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_6() {
+  fun testSparTreeCanReconstructOriginalClangPrograms_6() {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 6)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_7() {
+  fun testSparTreeCanReconstructOriginalClangPrograms_7() {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 7)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_8() {
+  fun testSparTreeCanReconstructOriginalClangPrograms_8() {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 8)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testSparTreeCanReconstructOriginalClangPrograms_9() {
+  fun testSparTreeCanReconstructOriginalClangPrograms_9() {
     TestUtility.partitionAndGet(TestUtility.getClangTestFiles(), 10, 9)
-        .forEach(SparTreeNodeTest::testSparTreeCanReconstructOriginalPrograms);
+      .forEach(Consumer { file: File -> testSparTreeCanReconstructOriginalPrograms(file) })
   }
 
   @Test
-  public void testOriginalSparTreeConstruction_00001() throws IOException {
-    testOriginalSparTreeConstruction("00001.c");
+  fun testOriginalSparTreeConstruction_00001() {
+    testOriginalSparTreeConstruction("00001.c")
   }
 
   @Ignore
   @Test
-  public void testOriginalSparTreeConstruction_00007() throws IOException {
-    testOriginalSparTreeConstruction("00007.c");
+  fun testOriginalSparTreeConstruction_00007() {
+    testOriginalSparTreeConstruction("00007.c")
   }
 
   @Test
-  public void testOriginalSparTreeConstruction_08946() throws IOException {
-    testOriginalSparTreeConstruction("08946.c");
+  fun testOriginalSparTreeConstruction_08946() {
+    testOriginalSparTreeConstruction("08946.c")
   }
 
   @Test
-  public void testOriginalSparTreeConstruction_08959() throws IOException {
-    testOriginalSparTreeConstruction("08959.c");
+  fun testOriginalSparTreeConstruction_08959() {
+    testOriginalSparTreeConstruction("08959.c")
   }
 
   @Test
-  public void testOriginalSparTreeConstruction_10852() throws IOException {
-    testOriginalSparTreeConstruction("10852.c");
+  fun testOriginalSparTreeConstruction_10852() {
+    testOriginalSparTreeConstruction("10852.c")
   }
 
   @Test
-  public void testClang00052IsUTF8() {
+  fun testClang00052IsUTF8() {
     testSparTreeCanReconstructOriginalPrograms(
-        new File("test_data/c_programs/clang_testsuite/00052.c"));
+      File("test_data/c_programs/clang_testsuite/00052.c")
+    )
   }
 
-  private static void testSparTreeCanReconstructOriginalPrograms(File file) {
-    try {
-      CParserFacade cParserFacade = new CParserFacade();
-      final ParseTree parseTree = cParserFacade.parseFile(file).getTree();
-      final ImmutableList<Token> tokens = AbstractParserFacade.getTokens(parseTree);
-      final TokenizedProgramFactory factory = TokenizedProgramFactory.createFactory(tokens);
-      final TokenizedProgram expected = AntlrGrammarUtil.convertParseTreeToProgram(parseTree);
+  private fun testOriginalSparTreeConstruction(filename: String) {
+    val sourceFile = TestUtility.getOneGccTestFile(filename)
+    val goldenFile = File("test_data/misc/$filename.tree_dump.original.golden.txt")
+    val cParserFacade = CParserFacade()
+    val parseTree = cParserFacade.parseFile(sourceFile).tree
+    val tokens = AbstractParserFacade.getTokens(parseTree)
+    val factory = TokenizedProgramFactory.createFactory(tokens)
+    val tree = SparTreeBuilder(cParserFacade.ruleHierarchy, factory).build(parseTree)
+    val treeStructure = tree.root.printTreeStructure()
+    val expectedTreeDump = Files.asCharSource(goldenFile, Charsets.UTF_8).read()
+    Truth.assertThat(treeStructure).isEqualTo(expectedTreeDump)
+    val program = tree.programSnapshot
+    val originalProgram = AntlrGrammarUtil.convertParseTreeToProgram(parseTree)
+    Truth.assertThat(toAntlrTokens(program.tokens))
+      .containsExactlyElementsIn(toAntlrTokens(originalProgram.tokens))
+    SparTreeSimplifier.simplifySingleEntrySingleExitPath(tree.root)
+    Truth.assertThat(SparTreeSimplifier.assertSingleEntrySingleExitPathProperty(tree.root)).isTrue()
+  }
 
-      final SparTree sparTree =
-          new SparTreeBuilder(cParserFacade.getRuleHierarchy(), factory).build(parseTree);
-      final TokenizedProgram real = sparTree.getProgramSnapshot();
-      assertThat(toAntlrTokens(real.getTokens()))
-          .containsExactlyElementsIn(toAntlrTokens(expected.getTokens()))
-          .inOrder();
-
-      SparTreeSimplifier.simplifySingleEntrySingleExitPath(sparTree.getRoot());
-      assertThat(SparTreeSimplifier.assertSingleEntrySingleExitPathProperty(sparTree.getRoot()))
-          .isTrue();
-      final TokenizedProgram afterSESESimplification = sparTree.getProgramSnapshot();
-      assertThat(toAntlrTokens(afterSESESimplification.getTokens()))
-          .containsExactlyElementsIn(toAntlrTokens(expected.getTokens()))
-          .inOrder();
-    } catch (IOException e) {
-      e.printStackTrace();
-      Assert.fail(file.toString());
+  companion object {
+    private fun testSparTreeCanReconstructOriginalPrograms(file: File) {
+      try {
+        val cParserFacade = CParserFacade()
+        val parseTree = cParserFacade.parseFile(file).tree
+        val tokens = AbstractParserFacade.getTokens(parseTree)
+        val factory = TokenizedProgramFactory.createFactory(tokens)
+        val expected = AntlrGrammarUtil.convertParseTreeToProgram(parseTree)
+        val sparTree = SparTreeBuilder(cParserFacade.ruleHierarchy, factory).build(parseTree)
+        val real = sparTree.programSnapshot
+        Truth.assertThat(toAntlrTokens(real.tokens))
+          .containsExactlyElementsIn(toAntlrTokens(expected.tokens))
+          .inOrder()
+        SparTreeSimplifier.simplifySingleEntrySingleExitPath(sparTree.root)
+        Truth.assertThat(SparTreeSimplifier.assertSingleEntrySingleExitPathProperty(sparTree.root))
+          .isTrue()
+        val afterSESESimplification = sparTree.programSnapshot
+        Truth.assertThat(toAntlrTokens(afterSESESimplification.tokens))
+          .containsExactlyElementsIn(toAntlrTokens(expected.tokens))
+          .inOrder()
+      } catch (e: IOException) {
+        e.printStackTrace()
+        Assert.fail(file.toString())
+      }
     }
-  }
 
-  private static void testExpectedAntlrRuleTypesOfChildren(String filename) throws IOException {
-    File sourceFile = new File("test_data/misc/" + filename);
-    File goldenFile = new File(sourceFile.getParent(), filename + ".spartree.dump.golden.txt");
-    final SparTree tree = TestUtility.createSparTreeFromFile(sourceFile);
-    SparTreeSimplifier.simplifySingleEntrySingleExitPath(tree);
-    final String real = tree.getRoot().printTreeStructure();
-    final String expected = Files.asCharSource(goldenFile, Charsets.UTF_8).read();
-    assertThat(real).isEqualTo(expected);
-  }
+    private fun testExpectedAntlrRuleTypesOfChildren(filename: String) {
+      val sourceFile = File("test_data/misc/$filename")
+      val goldenFile = File(sourceFile.parent, "$filename.spartree.dump.golden.txt")
+      val tree = TestUtility.createSparTreeFromFile(sourceFile)
+      SparTreeSimplifier.simplifySingleEntrySingleExitPath(tree)
+      val real = tree.root.printTreeStructure()
+      val expected = Files.asCharSource(goldenFile, Charsets.UTF_8).read()
+      Truth.assertThat(real).isEqualTo(expected)
+    }
 
-  private void testOriginalSparTreeConstruction(String filename) throws IOException {
-    File sourceFile = TestUtility.getOneGccTestFile(filename);
-    File goldenFile = new File("test_data/misc/" + filename + ".tree_dump.original.golden.txt");
-    CParserFacade cParserFacade = new CParserFacade();
-    final ParseTree parseTree = cParserFacade.parseFile(sourceFile).getTree();
-    final ImmutableList<Token> tokens = AbstractParserFacade.getTokens(parseTree);
-    final TokenizedProgramFactory factory = TokenizedProgramFactory.createFactory(tokens);
-    final SparTree tree =
-        new SparTreeBuilder(cParserFacade.getRuleHierarchy(), factory).build(parseTree);
-    final String treeStructure = tree.getRoot().printTreeStructure();
-    final String expectedTreeDump = Files.asCharSource(goldenFile, Charsets.UTF_8).read();
-    assertThat(treeStructure).isEqualTo(expectedTreeDump);
-
-    final TokenizedProgram program = tree.getProgramSnapshot();
-    final TokenizedProgram originalProgram = AntlrGrammarUtil.convertParseTreeToProgram(parseTree);
-    assertThat(toAntlrTokens(program.getTokens()))
-        .containsExactlyElementsIn(toAntlrTokens(originalProgram.getTokens()));
-    SparTreeSimplifier.simplifySingleEntrySingleExitPath(tree.getRoot());
-    assertThat(SparTreeSimplifier.assertSingleEntrySingleExitPathProperty(tree.getRoot())).isTrue();
-  }
-
-  private static ImmutableList<String> toAntlrTokens(List<PersesToken> tokens) {
-    return tokens.stream().map(Token::getText).collect(ImmutableList.toImmutableList());
+    private fun toAntlrTokens(tokens: List<PersesToken>): ImmutableList<String?> {
+      return tokens.stream().map { it.text }.collect(ImmutableList.toImmutableList())
+    }
   }
 }

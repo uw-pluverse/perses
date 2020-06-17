@@ -24,8 +24,8 @@ class TreeSlicer(
         return node.copyAndReverseChildren()
       }
       val treeEdit = tree.createNodeDeletionEdit(actionSet)
-      if (!configuration.parserFacade.isSourceCodeParsable(
-          treeEdit.program.toCompactSourceCode())) {
+      if (!configuration.parserFacade.isSourceCodeParsable(treeEdit.program.toCompactSourceCode())
+      ) {
         return node.copyAndReverseChildren()
       }
       val best = testAllTreeEditsAndReturnTheBest(ImmutableList.of(treeEdit))
