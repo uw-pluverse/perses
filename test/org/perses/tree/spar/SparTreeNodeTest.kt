@@ -19,7 +19,7 @@ package org.perses.tree.spar
 import com.google.common.base.Charsets
 import com.google.common.collect.ImmutableList
 import com.google.common.io.Files
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import org.junit.Assert
 import org.junit.Ignore
 import org.junit.Test
@@ -29,6 +29,7 @@ import org.perses.TestUtility
 import org.perses.antlr.AntlrGrammarUtil
 import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.c.CParserFacade
+import org.perses.program.LanguageKind
 import org.perses.program.PersesToken
 import org.perses.program.TokenizedProgramFactory
 import java.io.File
@@ -241,6 +242,27 @@ class SparTreeNodeTest {
     )
   }
 
+  @Test
+  fun testCopyChildren() {
+    val tree = TestUtility.createSparTreeFromString(
+      """
+      int a = 0;
+      int b = 0;
+      """.trimIndent(),
+      LanguageKind.C
+    )
+    val root = tree.root
+    assertThat(root.childCount).isEqualTo(1)
+    val child = root.getChild(0)
+    assertThat(child.childCount).isEqualTo(2)
+
+    val first = child.getChild(0)
+    val second = child.getChild(1)
+
+    assertThat(child.copyChildren()).containsExactly(first, second).inOrder()
+    assertThat(child.copyAndReverseChildren()).containsExactly(second, first).inOrder()
+  }
+
   private fun testOriginalSparTreeConstruction(filename: String) {
     val sourceFile = TestUtility.getOneGccTestFile(filename)
     val goldenFile = File("test_data/misc/$filename.tree_dump.original.golden.txt")
@@ -251,13 +273,13 @@ class SparTreeNodeTest {
     val tree = SparTreeBuilder(cParserFacade.ruleHierarchy, factory).build(parseTree)
     val treeStructure = tree.root.printTreeStructure()
     val expectedTreeDump = Files.asCharSource(goldenFile, Charsets.UTF_8).read()
-    Truth.assertThat(treeStructure).isEqualTo(expectedTreeDump)
+    assertThat(treeStructure).isEqualTo(expectedTreeDump)
     val program = tree.programSnapshot
     val originalProgram = AntlrGrammarUtil.convertParseTreeToProgram(parseTree)
-    Truth.assertThat(toAntlrTokens(program.tokens))
+    assertThat(toAntlrTokens(program.tokens))
       .containsExactlyElementsIn(toAntlrTokens(originalProgram.tokens))
     SparTreeSimplifier.simplifySingleEntrySingleExitPath(tree.root)
-    Truth.assertThat(SparTreeSimplifier.assertSingleEntrySingleExitPathProperty(tree.root)).isTrue()
+    assertThat(SparTreeSimplifier.assertSingleEntrySingleExitPathProperty(tree.root)).isTrue()
   }
 
   companion object {
@@ -270,14 +292,14 @@ class SparTreeNodeTest {
         val expected = AntlrGrammarUtil.convertParseTreeToProgram(parseTree)
         val sparTree = SparTreeBuilder(cParserFacade.ruleHierarchy, factory).build(parseTree)
         val real = sparTree.programSnapshot
-        Truth.assertThat(toAntlrTokens(real.tokens))
+        assertThat(toAntlrTokens(real.tokens))
           .containsExactlyElementsIn(toAntlrTokens(expected.tokens))
           .inOrder()
         SparTreeSimplifier.simplifySingleEntrySingleExitPath(sparTree.root)
-        Truth.assertThat(SparTreeSimplifier.assertSingleEntrySingleExitPathProperty(sparTree.root))
+        assertThat(SparTreeSimplifier.assertSingleEntrySingleExitPathProperty(sparTree.root))
           .isTrue()
         val afterSESESimplification = sparTree.programSnapshot
-        Truth.assertThat(toAntlrTokens(afterSESESimplification.tokens))
+        assertThat(toAntlrTokens(afterSESESimplification.tokens))
           .containsExactlyElementsIn(toAntlrTokens(expected.tokens))
           .inOrder()
       } catch (e: IOException) {
@@ -293,7 +315,7 @@ class SparTreeNodeTest {
       SparTreeSimplifier.simplifySingleEntrySingleExitPath(tree)
       val real = tree.root.printTreeStructure()
       val expected = Files.asCharSource(goldenFile, Charsets.UTF_8).read()
-      Truth.assertThat(real).isEqualTo(expected)
+      assertThat(real).isEqualTo(expected)
     }
 
     private fun toAntlrTokens(tokens: List<PersesToken>): ImmutableList<String?> {
