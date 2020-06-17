@@ -24,11 +24,12 @@ class ParserFacadeTest {
   private val pnfcFacade = PnfCParserFacade()
   private val scalaFacade = PnfScalaParserFacade()
 
-  private var scalaProgram:TokenizedProgram? = null
+  private var scalaProgram: TokenizedProgram? = null
 
   @Before
   fun setup() {
-    val scalaSourceCode = """
+    val scalaSourceCode =
+      """
       |object Hello {
       |    def main(args: Array[String]) =
       |        println
@@ -147,19 +148,22 @@ class ParserFacadeTest {
       return tokens.stream().map { it.text }.collect(ImmutableList.toImmutableList())
     }
 
-    private fun projectProgram(program:TokenizedProgram, vararg lexemes:String) :TokenizedProgram {
+    private fun projectProgram(
+      program: TokenizedProgram,
+      vararg lexemes: String
+    ): TokenizedProgram {
       val builder = ImmutableList.builder<PersesToken>()
       var index = 0
       val tokens = program.tokens
       for (lexeme in lexemes) {
-         while (index < tokens.size) {
-           val persesToken = tokens[index]
-           ++index
-           if (persesToken.text == lexeme) {
-             builder.add(persesToken)
-             break
-           }
-         }
+        while (index < tokens.size) {
+          val persesToken = tokens[index]
+          ++index
+          if (persesToken.text == lexeme) {
+            builder.add(persesToken)
+            break
+          }
+        }
       }
       return TokenizedProgram(builder.build())
     }

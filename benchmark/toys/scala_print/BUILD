@@ -43,7 +43,7 @@ reduction_golden_test(
 reduce(
     name = "reduce_scala_print_with_token_slicer",
     enable_edit_caching = True,
-    enable_query_caching = False, # Due to issue #65
+    enable_query_caching = False,  # Due to issue #65
     enable_token_slicer = True,
     progress_dump_file = "reduce_scala_print_with_token_slicer_reduction_progress.txt",
     reduction_algorithm = "perses_node_with_dfs_delta",
@@ -62,4 +62,28 @@ golden_test(
     name = "gold_test_reduce_scala_print_with_token_slicer_progress",
     golden_file = "gold_test_reduce_scala_print_with_token_slicer_progress.txt",
     test_file = "reduce_scala_print_with_token_slicer_reduction_progress.txt",
+)
+
+reduce(
+    name = "reduce_scala_print_with_tree_slicer",
+    enable_edit_caching = True,
+    enable_query_caching = False,  # Due to issue #65
+    enable_tree_slicer = True,
+    progress_dump_file = "reduce_scala_print_with_tree_slicer_reduction_progress.txt",
+    reduction_algorithm = "perses_node_with_dfs_delta",
+    result_file = "Hello_reduced_with_tree_slicer.sc",
+    source_file = "Hello.sc",
+    test_script = "r.sh",
+)
+
+golden_test(
+    name = "gold_test_reduce_scala_print_with_tree_slicer",
+    golden_file = "golden_reduced_hello_with_tree_slicer.sc",
+    test_file = "Hello_reduced_with_tree_slicer.sc",
+)
+
+golden_test(
+    name = "gold_test_reduce_scala_print_with_tree_slicer_progress",
+    golden_file = "gold_test_reduce_scala_print_with_tree_slicer_progress.txt",
+    test_file = "reduce_scala_print_with_tree_slicer_reduction_progress.txt",
 )

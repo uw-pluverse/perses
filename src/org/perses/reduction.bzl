@@ -10,6 +10,7 @@ def reduce(
         progress_dump_file = None,
         thread_count = None,
         enable_token_slicer = None,
+        enable_tree_slicer = None,
         code_format = None):
     if "/" in source_file:
         fail("The source file should be in the current folder.")
@@ -25,6 +26,8 @@ def reduce(
         enable_edit_caching = True
     if enable_token_slicer == None:
         enable_token_slicer = False
+    if enable_tree_slicer == None:
+        enable_tree_slicer = False
     thread_count = thread_count or 1  # for determinism
     perses_bin = "//src/org/perses:perses"
     args = [
@@ -40,6 +43,7 @@ def reduce(
         "--query-caching %s" % ("true" if enable_query_caching else "false"),
         "--edit-caching %s" % ("true" if enable_edit_caching else "false"),
         "--enable-token-slicer %s" % ("true" if enable_token_slicer else "false"),
+        "--enable-tree-slicer %s" % ("true" if enable_tree_slicer else "false"),
     ]
     if (code_format):
         args.append("--code-format %s" % code_format)

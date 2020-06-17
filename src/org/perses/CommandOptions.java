@@ -220,17 +220,25 @@ public class CommandOptions {
     public boolean enableTokenSlicer = false;
 
     @Parameter(
+            names = "--enable-tree-slicer",
+            description = "Enable tree slicer after syntax-guided reduction, and before token slicer",
+            arity = 1,
+            order = FlagOrder.ALG_CONTROL +4
+    )
+    public boolean enableTreeSlicer = false;
+
+    @Parameter(
         names = "--use-real-ddmin",
         description = "Whether to use the real delta debugging algorithm to reduce kleene nodes.",
         arity = 1,
-        order = FlagOrder.ALG_CONTROL + 4)
+        order = FlagOrder.ALG_CONTROL + 5)
     public boolean useRealDeltaDebugger = false;
 
     @Parameter(
         names = "--use-optc-parser",
         description = "Use the OptC parser to construct the spar-tree.",
         arity = 1,
-        order = FlagOrder.ALG_CONTROL + 5)
+        order = FlagOrder.ALG_CONTROL + 6)
     public boolean useOptCParser = false;
 
     public String getReductionAlgorithmName() {

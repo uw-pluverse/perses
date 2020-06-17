@@ -41,11 +41,13 @@ kt_jvm_library(
 kt_jvm_library(
     name = "node_based_reducer",
     srcs = [
+        "AbstractNodeReducer.kt",
         "AbstractPersesNodeReducer.kt",
         "PersesNodeBfsReducer.kt",
         "PersesNodeDfsReducer.kt",
         "PersesNodePrioritizedBfsReducer.kt",
         "PersesNodePrioritizedDfsReducer.kt",
+        "TreeSlicer.kt",
     ],
     deps = [
         ":delta_debugging",

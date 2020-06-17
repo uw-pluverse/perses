@@ -16,6 +16,7 @@
  */
 package org.perses.reduction
 
+import org.perses.antlr.RuleType
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.TestScriptExecutorService.FutureTestScriptExecutionTask
 import org.perses.tree.spar.AbstractNodeActionSetCache
@@ -78,7 +79,8 @@ abstract class AbstractReducer protected constructor(
     assert(
       !best.isPresent ||
         configuration.parserFacade.isSourceCodeParsable(
-          best.get().edit.program.toCompactSourceCode())
+          best.get().edit.program.toCompactSourceCode()
+        )
     )
     return best.map { TreeEditWithItsResult(it.edit, it.result) }
   }
@@ -171,6 +173,39 @@ abstract class AbstractReducer protected constructor(
 
   @Throws(IOException::class, ExecutionException::class, InterruptedException::class)
   protected abstract fun internalReduce(tree: SparTree)
+  protected fun canBeEpsilon(nodeForTest: AbstractSparTreeNode): Boolean {
+    var node: AbstractSparTreeNode? = nodeForTest
+    while (node != null) {
+      if (node.antlrRule.get().canRuleBeEpsilon()) {
+        // If the rule of the current node can be epsilon.
+        return true
+      }
+      val parent = node.parentInfo ?: return false
+      if (parent.antlrRuleForTheChild.get().canRuleBeEpsilon()) {
+        // If the EXPECTED rule of the current node can be epsilon.
+        return true
+      }
+      val parentNode: AbstractSparTreeNode = parent.node
+      val childCount = parentNode.childCount
+      return if (childCount == 1) {
+        // Only the current node, then check whether the parent node rule can be epsilon.
+        node = parentNode
+        continue
+      } else if (childCount > 1) {
+        val parentNodeType = parentNode.nodeType
+        when (parentNodeType) {
+          RuleType.KLEENE_PLUS, RuleType.KLEENE_STAR -> true
+          RuleType.OPTIONAL -> throw RuntimeException(
+            "Optional should have a single child. " + node.printTreeStructure()
+          )
+          else -> false
+        }
+      } else {
+        throw RuntimeException("Unreachable. " + node.printTreeStructure())
+      }
+    }
+    return false
+  }
 
   companion object {
     private fun removePermanentlyDeletedNodes(partition: LinkedList<AbstractSparTreeNode>) {

@@ -103,6 +103,34 @@ kt_jvm_test(
     ],
 )
 
+kt_jvm_test(
+    name = "TreeSlicerTest",
+    srcs = ["TreeSlicerTest.kt"],
+    data = [
+        "//test_data/delta_1",
+        "//test_data/scala_helloworld",
+    ],
+    test_class = "org.perses.reduction.reducer.TreeSlicerTest",
+    deps = [
+        "//src/org/perses/program",
+        "//src/org/perses/reduction:abstract_reducer",
+        "//src/org/perses/reduction:reduction_level",
+        "//src/org/perses/reduction/partition",
+        "//src/org/perses/reduction/partition:level_partition_policy",
+        "//src/org/perses/reduction/reducer:level_based_reducers",
+        "//src/org/perses/reduction/reducer:node_based_reducer",
+        "//src/org/perses/reduction/reducer:token_slicer",
+        "//src/org/perses/tree/spar",
+        "//src/org/perses/util",
+        "//test/org/perses:test_util",
+        "//test/org/perses:truth",
+        "//test/org/perses/reduction:AbstractPersesReducerTest",
+        "//test/org/perses/reduction:reducer_functional_test_base",
+        "@maven//:com_google_guava_guava",
+        "@maven//:org_antlr_antlr4",
+    ],
+)
+
 java_test(
     name = "PersesNodeReducerTest",
     srcs = ["PersesNodeReducerTest.java"],

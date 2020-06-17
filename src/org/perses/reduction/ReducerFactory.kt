@@ -27,6 +27,7 @@ import org.perses.reduction.reducer.PersesNodeDfsReducer
 import org.perses.reduction.reducer.PersesNodePrioritizedBfsReducer
 import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
 import org.perses.reduction.reducer.TokenSlicer
+import org.perses.reduction.reducer.TreeSlicer
 import java.util.Comparator
 import java.util.Optional
 import java.util.function.Function
@@ -38,6 +39,7 @@ object ReducerFactory {
   private val REDUCTION_ALGs = ImmutableSet.builder<ReducerAnnotation>()
     .add(HDDReducer.META)
     .add(TokenSlicer.META)
+    .add(TreeSlicer.META)
     .add(PersesNodeBfsReducer.META)
     .add(PersesNodePrioritizedBfsReducer.META)
     .add(PersesNodeDfsReducer.META)

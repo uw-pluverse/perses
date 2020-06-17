@@ -44,9 +44,8 @@ open class PersesNodeDfsReducer constructor(
       Function { edit: AbstractSparTreeEdit -> testSparTreeEdit(edit) }
     )
 
-  override fun createReductionQueue(): Queue<AbstractSparTreeNode> {
-    return ArrayDeque<AbstractSparTreeNode>(DEFAULT_INITIAL_QUEUE_CAPACITY)
-  }
+  override fun createReductionQueue(): Queue<AbstractSparTreeNode> =
+    ArrayDeque<AbstractSparTreeNode>(DEFAULT_INITIAL_QUEUE_CAPACITY)
 
   override fun performDelta(
     tree: SparTree,
@@ -59,6 +58,7 @@ open class PersesNodeDfsReducer constructor(
 
   companion object {
     const val NAME = "perses_node_with_dfs_delta"
+
     @JvmField
     val META: ReducerAnnotation = object : ReducerAnnotation() {
       override fun shortName(): String = NAME

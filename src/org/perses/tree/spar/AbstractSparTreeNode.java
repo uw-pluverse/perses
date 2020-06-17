@@ -1,6 +1,7 @@
 package org.perses.tree.spar;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.collect.ImmutableList;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.perses.antlr.RuleHierarchyInfo;
 import org.perses.antlr.RuleType;
@@ -344,10 +345,19 @@ public abstract class AbstractSparTreeNode implements Comparable<AbstractSparTre
     return result;
   }
 
-  /** @return an array containing all the children of this node. */
-  public final ArrayList<AbstractSparTreeNode> copyChildren() {
-    return new ArrayList<>(children);
+  public final ImmutableList<AbstractSparTreeNode> copyChildren() {
+    return ImmutableList.copyOf(children);
   }
+
+  public final ImmutableList<AbstractSparTreeNode> copyAndReverseChildren() {
+    final ImmutableList.Builder<AbstractSparTreeNode> builder = ImmutableList.builder();
+    final int length = children.size();
+    for (int i = length - 1; i >= 0; --i) {
+      builder.add(children.get(i));
+    }
+    return builder.build();
+  }
+
 
   /**
    * This method should be only called when a spar-tree is constructed from a Antlr parse tree. Add

@@ -51,9 +51,8 @@ public class ReducerFactoryTest {
     assertThat(names)
         .containsExactly(
             HDDReducer.NAME,
-            //            KleeneLevelHDDReducer.NAME,
-            //            PersesLevelReducer.NAME,
             TokenSlicer.NAME,
+            TreeSlicer.NAME,
             PersesNodeBfsReducer.NAME,
             PersesNodeDfsReducer.NAME,
             PersesNodePrioritizedBfsReducer.NAME,
