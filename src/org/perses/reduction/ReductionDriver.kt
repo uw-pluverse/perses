@@ -212,7 +212,7 @@ class ReductionDriver(
     tokenSlicer.reduce(ReductionState(tree))
     if (logger.atInfo().isEnabled) {
       logger.atInfo().log(
-        "%s ended at %s. #old=%s, #new=", reducerAnnotation.shortName(),
+        "%s ended at %s. #old=%s, #new=%s", reducerAnnotation.shortName(),
         Util.formatDateForDisplay(System.currentTimeMillis()),
         sizeBeforeTokenSclier, tree.tokenCount
       )
