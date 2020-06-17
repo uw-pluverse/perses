@@ -18,8 +18,9 @@ class TestCheckCopyright(unittest.TestCase):
 
     def setUp(self):
         self.temp_dir = tempfile.mkdtemp()
-        with tempfile.NamedTemporaryFile(suffix='.java', dir=self.temp_dir, delete=False) as self.java_temp_file:
-            self.java_temp_file.write(b"import java.util.*;")
+        full_path = os.path.join(self.temp_dir, "tmp_file.java")
+        with open (full_path, 'w+') as self.java_temp_file:
+            self.java_temp_file.write("import java.util.*;")
 
 
     def tearDown(self):
