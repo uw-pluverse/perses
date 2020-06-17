@@ -12,18 +12,19 @@ TINY_COPYRIGHT_CMTBLK = "/*\n" + " * This is a sample message.\n" *3 + ' */\n'
 
 class TestCheckCopyright(unittest.TestCase):
 
+    temp_dir = None
     java_temp_file = None
-    folder = None
     copyright_checker = check_copyright.CopyrightChecker(TINY_COPYRIGHT)
 
     def setUp(self):
-        with tempfile.NamedTemporaryFile(suffix='.java', delete=False) as self.java_temp_file:
+        self.temp_dir = tempfile.mkdtemp()
+        with tempfile.NamedTemporaryFile(suffix='.java', dir=self.temp_dir, delete=False) as self.java_temp_file:
             self.java_temp_file.write(b"import java.util.*;")
-        self.folder = os.path.dirname(self.java_temp_file.name)
 
 
     def tearDown(self):
         os.unlink(self.java_temp_file.name)
+        os.rmdir(self.temp_dir)
 
 
     def test_check_copyright(self):
@@ -36,9 +37,9 @@ class TestCheckCopyright(unittest.TestCase):
 
 
     def test_check_folder(self):
-        missing_list = self.copyright_checker.check_folder(self.folder, 'java')
+        missing_list = self.copyright_checker.check_folder(self.temp_dir, 'java')
         self.assertEqual(missing_list, [self.java_temp_file.name])
-        missing_list = self.copyright_checker.check_folder(self.folder, 'cpp')
+        missing_list = self.copyright_checker.check_folder(self.temp_dir, 'cpp')
         self.assertEqual(missing_list, [])
 
 
