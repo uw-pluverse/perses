@@ -21,7 +21,6 @@ import org.perses.program.ScriptFile
 import org.perses.program.TokenizedProgram
 import java.io.Closeable
 import java.io.File
-import java.io.IOException
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 import java.util.concurrent.FutureTask
@@ -35,6 +34,7 @@ class TestScriptExecutorService(
   sourceFileName: String
 ) : Closeable {
   private val executionCounter = AtomicInteger()
+
   // TODO: create the executor outside, and pass it in as a parameter, so that others can use the
   //       executor.
   private var executorService = Executors.newFixedThreadPool(numOfThreads)
@@ -77,24 +77,19 @@ class TestScriptExecutorService(
   }
 
   /**
-   * FIXME: make this method blocking if there is no available tasks. TODO: output the underlying
-   * test script and source file for debugging.
+   * FIXME: make this method blocking if there is no available tasks.
    */
   fun testProgram(
     program: TokenizedProgram,
     keepOrigCodeFormat: EnumFormatControl
   ): FutureTestScriptExecutionTask {
     executionCounter.incrementAndGet()
-    return try {
-      val workingFolder = reductionFolderManager!!.createNextFolder()
-      val result = FutureTestScriptExecutionTask(
-        ReductionTestScriptExecutorCallback(workingFolder, program, keepOrigCodeFormat)
-      )
-      executorService.submit(result)
-      result
-    } catch (e: IOException) {
-      throw RuntimeException(e)
-    }
+    val workingFolder = reductionFolderManager!!.createNextFolder()
+    val result = FutureTestScriptExecutionTask(
+      ReductionTestScriptExecutorCallback(workingFolder, program, keepOrigCodeFormat)
+    )
+    executorService.submit(result)
+    return result
   }
 
   val scriptExecutionCount: Int
