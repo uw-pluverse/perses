@@ -6,8 +6,8 @@ class DoubleLinkedList<T> {
     internal var next: Node<T>? = null
   }
 
-  private val head = Node<T>(value = null, list = this)
-  private val tail = Node<T>(value = null, list = this)
+  private val head = Node(value = null, list = this)
+  private val tail = Node(value = null, list = this)
 
   init {
     head.next = tail
