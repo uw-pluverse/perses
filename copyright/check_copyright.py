@@ -1,9 +1,6 @@
-#!/usr/bin/env python3
-
 import os
 import argparse
 from typing import List
-
 
 SRC_FOLDER = '../src'
 
@@ -20,7 +17,6 @@ class CopyrightChecker:
         """Inits CopyrightChecker with a list version of copyright text"""
         self.copyright_text = copyright_text
 
-
     def check_folder(self, folder: str, extension: str) -> List[str]:
         """
         Return a list of files missing copyright
@@ -36,7 +32,6 @@ class CopyrightChecker:
             if not self.check_copyright(file):
                 missing_list.append(file)
         return missing_list
-
 
     def check_copyright(self, sourcefile: str) -> bool:
         """
@@ -62,7 +57,6 @@ class CopyrightChecker:
             return False
         return True
 
-
     def update_files(self, files: list):
         """ Updates give files with copyright info """
         buf_copyright = self.copyright_text[:]
@@ -81,6 +75,7 @@ class CopyrightChecker:
                 target_file.write(comment_block + content)
 
 
+# noinspection PyInterpreter
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(prog='check_copyright', usage='%(prog)s [option]',
