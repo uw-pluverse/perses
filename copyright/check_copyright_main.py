@@ -1,7 +1,7 @@
 # /usr/bin/env python3
 
 import argparse
-
+import os
 import check_copyright
 
 # noinspection PyInterpreter
@@ -25,12 +25,14 @@ if __name__ == '__main__':
     missing_list = list()
     print('Checking files in folders %s' % flags.dirs)
     for folder in flags.dirs:
+        assert os.path.exists(folder), 'folder=%s, cwd=%s' % (folder, os.getcwd())
         for ext in extensions:
             missing_list += copyright_checker.check_folder(folder, ext)
 
     if not flags.update_copyright and missing_list != []:
-        raise Exception('The following files do not have up-to-date copyright.'
-                        '\n'.join(missing_list))
+        raise Exception(
+            'The following files do not have up-to-date copyright.\n%s' %
+            '\n'.join(missing_list))
 
     if flags.update_copyright and missing_list != []:
         copyright_checker.update_files(missing_list)
