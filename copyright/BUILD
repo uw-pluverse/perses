@@ -6,6 +6,13 @@ py_library(
     ],
 )
 
+py_binary(
+    name = "check_copyright_main",
+    srcs = ["check_copyright_main.py"],
+    data = ["copyright.txt"],
+    deps = [":check_copyright"],
+)
+
 py_test(
     name = "check_copyright_test",
     srcs = ["check_copyright_test.py"],

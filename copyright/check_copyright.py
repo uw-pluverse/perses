@@ -1,8 +1,5 @@
 import os
-import argparse
 from typing import List
-
-SRC_FOLDER = '../src'
 
 
 class CopyrightChecker:
@@ -73,36 +70,3 @@ class CopyrightChecker:
                 content = target_file.read()
                 target_file.seek(0, 0)
                 target_file.write(comment_block + content)
-
-
-# noinspection PyInterpreter
-if __name__ == '__main__':
-
-    parser = argparse.ArgumentParser(prog='check_copyright', usage='%(prog)s [option]',
-                                     description='check/update copyright information'
-                                     )
-    parser.add_argument('-u', '--update-copyright',
-                        action='store_true',
-                        default=False,
-                        help='update copyright (default: check copyright only)')
-    UPDATE_FLAG = parser.parse_args().update_copyright
-
-    with open("copyright.txt") as file:
-        copyright_text = file.readlines()
-    copyright_checker = CopyrightChecker(copyright_text)
-
-    extensions = ['java', 'kt']
-    missing_list = list()
-
-    for ext in extensions:
-        missing_list += copyright_checker.check_folder(SRC_FOLDER, ext)
-
-    if not UPDATE_FLAG and missing_list != []:
-        raise Exception('\n'.join(missing_list))
-
-    if UPDATE_FLAG and missing_list != []:
-        copyright_checker.update_files(missing_list)
-        print('All files now have copyright info')
-
-    else:
-        print('Check complete.\nAll files OK')
