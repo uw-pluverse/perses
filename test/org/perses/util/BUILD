@@ -1,3 +1,5 @@
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_test")
+
 java_test(
     name = "UtilTest",
     srcs = ["UtilTest.java"],
@@ -48,4 +50,14 @@ java_test(
         "//src/org/perses/util:percentage",
         "//test/org/perses:truth",
     ],
+)
+
+kt_jvm_test(
+    name = "DoubleLinkedListTest",
+    srcs = ["DoubleLinkedListTest.kt"],
+    test_class = "org.perses.util.DoubleLinkedListTest",
+    deps = [
+        "//src/org/perses/util:double_linked_list",
+        "//test/org/perses:truth"
+    ]
 )

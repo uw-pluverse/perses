@@ -29,3 +29,9 @@ kt_jvm_library(
     srcs = ["Fraction.kt"],
     deps = [],
 )
+
+kt_jvm_library(
+    name = "double_linked_list",
+    srcs = ["DoubleLinkedList.kt"],
+    deps = [],
+)
