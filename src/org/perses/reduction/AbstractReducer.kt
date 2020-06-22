@@ -18,6 +18,7 @@ package org.perses.reduction
 
 import org.perses.antlr.RuleType
 import org.perses.program.TokenizedProgram
+import org.perses.reduction.TestScript.TestResult
 import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
 import org.perses.reduction.TestScriptExecutorService.FutureTestScriptExecutionTask
 import org.perses.tree.spar.AbstractNodeActionSetCache
@@ -49,9 +50,12 @@ abstract class AbstractReducer protected constructor(
   @JvmField
   protected val actionSetProfiler: AbstractActionSetProfiler = reducerContext.actionSetProfiler
 
-  protected fun testProgramAsynchronously(program: TokenizedProgram) =
+  protected fun testProgramAsynchronously(
+    precheck: () -> TestResult,
+    program: TokenizedProgram
+  ) =
     executorService.testProgram(
-      ALWAYS_TRUE_PRECHECK,
+      precheck,
       program, configuration.programFormatControl
     )
 
@@ -60,7 +64,7 @@ abstract class AbstractReducer protected constructor(
     val program: TokenizedProgram,
     val future: FutureTestScriptExecutionTask
   ) {
-    val result: TestScript.TestResult
+    val result: TestResult
       get() = try {
         future.get()
       } catch (e: Exception) {
@@ -137,7 +141,7 @@ abstract class AbstractReducer protected constructor(
     return Optional.ofNullable(best)
   }
 
-  protected fun cacheTestResult(program: TokenizedProgram?, result: TestScript.TestResult) {
+  protected fun cacheTestResult(program: TokenizedProgram?, result: TestResult) {
     queryCache.addResult(program, result)
   }
 
@@ -162,7 +166,7 @@ abstract class AbstractReducer protected constructor(
       .forEach { edit: AbstractSparTreeEdit ->
         assert(!edit.isEmpty) { "Edit cannot be empty." }
         val program = edit.program
-        val future = testProgramAsynchronously(program)
+        val future = testProgramAsynchronously(ALWAYS_TRUE_PRECHECK, program)
         futureList.add(FutureExecutionResultInfo(edit, program, future))
       }
     return futureList

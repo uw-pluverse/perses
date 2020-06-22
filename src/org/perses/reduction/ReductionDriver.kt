@@ -122,7 +122,7 @@ class ReductionDriver(
     listenerManager.onReductionStart(tree, tree.originalTokenCount)
     reduce(sparTreeEditListeners, tokenizedProgramFactory, worker)
     run {
-      val countOfTestScriptExecutions = executorService.scriptExecutionCount
+      val countOfTestScriptExecutions = executorService.statistics.getScriptExecutionNumber()
       val finalTokenCount = tree.tokenCount
       listenerManager.onReductionEnd(finalTokenCount, countOfTestScriptExecutions)
     }
@@ -226,15 +226,16 @@ class ReductionDriver(
   ) {
     tree.updateLeafTokenCount()
     val preSize = tree.tokenCount
-    val currentCountOfTestScriptExecutions = executorService.scriptExecutionCount
+    val testScriptExecutionsBefore = executorService.statistics.getScriptExecutionNumber()
     listenerManager.onFixpointIterationStart(
       currentFixpointIteration, preSize, mainReducer.redcucerAnnotation
     )
     val reductionState = ReductionState(tree)
     assert(reductionState.sparTree == tree)
     mainReducer.reduce(reductionState)
+    val scriptExecutionNumberAfter = executorService.statistics.getScriptExecutionNumber()
     val countOfTestScriptExecutionsInThisIteration =
-      executorService.scriptExecutionCount - currentCountOfTestScriptExecutions
+      scriptExecutionNumberAfter - testScriptExecutionsBefore
     listenerManager.onFixpointIterationEnd(
       currentFixpointIteration, tree.programSnapshot.tokenCount(),
       countOfTestScriptExecutionsInThisIteration

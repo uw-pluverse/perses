@@ -38,7 +38,7 @@ class TestScriptExecutorService(
     val ALWAYS_TRUE_PRECHECK = { TestScript.TestResult(exitCode = 0, elapsedMilliseconds = 0) }
   }
 
-  private val executionCounter = AtomicInteger()
+  val statistics = Statistics()
 
   // TODO: create the executor outside, and pass it in as a parameter, so that others can use the
   //       executor.
@@ -89,17 +89,17 @@ class TestScriptExecutorService(
     program: TokenizedProgram,
     keepOrigCodeFormat: EnumFormatControl
   ): FutureTestScriptExecutionTask {
-    executionCounter.incrementAndGet()
+    statistics.onSubmitTest()
     val workingFolder = reductionFolderManager!!.createNextFolder()
     val result = FutureTestScriptExecutionTask(
-      ReductionTestScriptExecutorCallback(workingFolder, prechecker, program, keepOrigCodeFormat)
+      ReductionTestScriptExecutorCallback(
+        workingFolder, prechecker,
+        program, keepOrigCodeFormat, statistics
+      )
     )
     executorService.submit(result)
     return result
   }
-
-  val scriptExecutionCount: Int
-    get() = executionCounter.get()
 
   class FutureTestScriptExecutionTask(
     private val callable: ReductionTestScriptExecutorCallback
@@ -117,19 +117,44 @@ class TestScriptExecutorService(
     val workingDirectory: ReductionFolder,
     private val prechecker: () -> TestScript.TestResult,
     val program: TokenizedProgram,
-    private val keepOrigCodeFormat: EnumFormatControl
+    private val keepOrigCodeFormat: EnumFormatControl,
+    private val statistics: Statistics
   ) :
     Callable<TestScript.TestResult> {
 
     override fun call(): TestScript.TestResult {
+      statistics.onRunPrecheck()
       val precheckResult = prechecker.invoke()
       if (precheckResult.isFail) {
         return precheckResult
       }
+      statistics.onExecuteScript()
       program.writeToFile(workingDirectory.sourceFilePath, keepOrigCodeFormat)
       val result = workingDirectory.testScript.test()
       workingDirectory.deleteAllOtherFiles()
       return result
     }
+  }
+
+  class Statistics {
+    private val submittedTestCounter = AtomicInteger()
+    private val preCheckCounterCounter = AtomicInteger()
+    private val scriptExecutionCounter = AtomicInteger()
+
+    internal fun onSubmitTest() {
+      submittedTestCounter.incrementAndGet()
+    }
+
+    internal fun onRunPrecheck() {
+      preCheckCounterCounter.incrementAndGet()
+    }
+
+    internal fun onExecuteScript() {
+      scriptExecutionCounter.incrementAndGet()
+    }
+
+    fun getSubmittedTestNumber() = submittedTestCounter.get()
+    fun getPrecheckExecutionNumber() = preCheckCounterCounter.get()
+    fun getScriptExecutionNumber() = scriptExecutionCounter.get()
   }
 }

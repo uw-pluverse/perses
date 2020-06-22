@@ -5,7 +5,7 @@ import org.perses.reduction.AbstractReducer
 import org.perses.reduction.AbstractReductionEvent
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.reduction.TestScript
+import org.perses.reduction.TestScript.TestResult
 import org.perses.tree.spar.LexerRuleSparTreeNode
 import org.perses.tree.spar.NodeDeletionActionSet
 import org.perses.tree.spar.SparTree
@@ -43,28 +43,29 @@ class TokenSlicer(
           continue
         }
         val treeEdit = tree.createNodeDeletionEdit(nodeDeletionActionSet)
-        val cachedResult = queryCache.getCachedResult(treeEdit.program)
+        val testProgram = treeEdit.program
+        val cachedResult = queryCache.getCachedResult(testProgram)
         if (cachedResult.isPresent) {
           assert(cachedResult.get().isFail) { "Only failed programs can be cached." }
-          listenerManager.onTestResultCacheHit(cachedResult.get(), treeEdit.program, treeEdit)
+          listenerManager.onTestResultCacheHit(cachedResult.get(), testProgram, treeEdit)
           continue
         }
-        if (!configuration.parserFacade.isSourceCodeParsable(
-          treeEdit.program.toCompactSourceCode()
+        val parserFacade = configuration.parserFacade
+        val futureTestScriptExecutionTask = testProgramAsynchronously(
+          {
+            if (parserFacade.isSourceCodeParsable(testProgram.toCompactSourceCode())) {
+              TestResult(exitCode = 0, elapsedMilliseconds = -1)
+            } else {
+              TestResult(exitCode = INVALID_SYNTAX_EXIT_CODE, elapsedMilliseconds = -1)
+            }
+          },
+          testProgram
         )
-        ) {
-          cacheTestResult(
-            treeEdit.program,
-            TestScript.TestResult(exitCode = INVALID_SYNTAX_EXIT_CODE, elapsedMilliseconds = -1)
-          )
-          continue
-        }
-        val futureTestScriptExecutionTask = testProgramAsynchronously(treeEdit.program)
         val best = analyzeResultsAndGetBest(
           listOf(
             FutureExecutionResultInfo(
               treeEdit,
-              treeEdit.program,
+              testProgram,
               futureTestScriptExecutionTask
             )
           )

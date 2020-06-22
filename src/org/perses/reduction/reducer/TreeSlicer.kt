@@ -15,28 +15,31 @@ class TreeSlicer(
   override fun createReductionQueue() =
     ArrayDeque<AbstractSparTreeNode>(DEFAULT_INITIAL_QUEUE_CAPACITY)
 
-  override fun reduceOneNode(tree: SparTree, node: AbstractSparTreeNode):
-    ImmutableList<AbstractSparTreeNode> {
-      val actionSet = NodeDeletionActionSet.createByDeleteSingleNode(node, NAME)
+  override fun reduceOneNode(
+    tree: SparTree,
+    node: AbstractSparTreeNode
+  ): ImmutableList<AbstractSparTreeNode> {
+    val actionSet = NodeDeletionActionSet.createByDeleteSingleNode(node, NAME)
 
-      if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
-        listenerManager.onNodeEditActionSetCacheHit(actionSet)
-        return node.copyAndReverseChildren()
-      }
-      val treeEdit = tree.createNodeDeletionEdit(actionSet)
-      if (!configuration.parserFacade.isSourceCodeParsable(treeEdit.program.toCompactSourceCode())
-      ) {
-        return node.copyAndReverseChildren()
-      }
-      val best = testAllTreeEditsAndReturnTheBest(ImmutableList.of(treeEdit))
-      if (!best.isPresent) {
-        return node.copyAndReverseChildren()
-      } else {
-        val edit = best.get().edit
-        tree.applyEdit(edit)
-        return computePendingNodes(node, edit).reverse()
-      }
+    if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
+      listenerManager.onNodeEditActionSetCacheHit(actionSet)
+      return node.copyAndReverseChildren()
     }
+    val treeEdit = tree.createNodeDeletionEdit(actionSet)
+    val testProgram = treeEdit.program
+    val parserFacade = configuration.parserFacade
+    if (!parserFacade.isSourceCodeParsable(testProgram.toCompactSourceCode())) {
+      return node.copyAndReverseChildren()
+    }
+    val best = testAllTreeEditsAndReturnTheBest(ImmutableList.of(treeEdit))
+    if (!best.isPresent) {
+      return node.copyAndReverseChildren()
+    } else {
+      val edit = best.get().edit
+      tree.applyEdit(edit)
+      return computePendingNodes(node, edit).reverse()
+    }
+  }
 
   companion object {
     const val NAME = "tree_slicer"
