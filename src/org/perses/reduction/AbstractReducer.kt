@@ -18,6 +18,7 @@ package org.perses.reduction
 
 import org.perses.antlr.RuleType
 import org.perses.program.TokenizedProgram
+import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
 import org.perses.reduction.TestScriptExecutorService.FutureTestScriptExecutionTask
 import org.perses.tree.spar.AbstractNodeActionSetCache
 import org.perses.tree.spar.AbstractSparTreeEdit
@@ -49,7 +50,10 @@ abstract class AbstractReducer protected constructor(
   protected val actionSetProfiler: AbstractActionSetProfiler = reducerContext.actionSetProfiler
 
   protected fun testProgramAsynchronously(program: TokenizedProgram) =
-    executorService.testProgram(program, configuration.programFormatControl)
+    executorService.testProgram(
+      ALWAYS_TRUE_PRECHECK,
+      program, configuration.programFormatControl
+    )
 
   protected class FutureExecutionResultInfo(
     val edit: AbstractSparTreeEdit,

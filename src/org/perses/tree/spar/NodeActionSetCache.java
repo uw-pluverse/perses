@@ -1,11 +1,14 @@
 package org.perses.tree.spar;
 
-import java.util.HashSet;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentHashMap.KeySetView;
 
 public final class NodeActionSetCache extends AbstractNodeActionSetCache {
 
-  private final HashSet<NodeDeletionActionSet> delectionCache = new HashSet<>();
-  private final HashSet<ChildHoistingActionSet> replacementCache = new HashSet<>();
+  private final KeySetView<NodeDeletionActionSet, Boolean> delectionCache =
+      ConcurrentHashMap.newKeySet();
+  private final KeySetView<ChildHoistingActionSet, Boolean> replacementCache =
+      ConcurrentHashMap.newKeySet();
 
   @Override
   public boolean isCachedOrCacheIt(NodeDeletionActionSet actionSet) {

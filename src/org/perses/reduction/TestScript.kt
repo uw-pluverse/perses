@@ -48,6 +48,10 @@ class TestScript(val scriptFile: File, private val scriptTemplate: ScriptFile) {
 
     val isFail: Boolean
       get() = !isPass
+
+    companion object {
+      val TRUE_RESULT = TestResult(exitCode = 0, elapsedMilliseconds = 0)
+    }
   }
 
   companion object {

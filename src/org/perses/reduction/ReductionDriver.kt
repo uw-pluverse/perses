@@ -35,6 +35,7 @@ import org.perses.program.SourceFile
 import org.perses.program.TokenizedProgramFactory
 import org.perses.reduction.AbstractActionSetProfiler.ActionSetProfiler
 import org.perses.reduction.AbstractTestScriptExecutionCacheProfiler.TestScriptExecutionCacheProfiler
+import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
 import org.perses.reduction.reducer.TokenSlicer
 import org.perses.reduction.reducer.TreeSlicer
 import org.perses.tree.spar.AbstractSparTreeEditListener
@@ -259,7 +260,10 @@ class ReductionDriver(
 //  (1) use the original source program and test scrip. This ensures the test script is correct.
 //  (2) use the spar-tree. This ensures the Antlr parser works correctly.
     val program = tree.programSnapshot
-    val future = executorService.testProgram(program, configuration.programFormatControl)
+    val future = executorService.testProgram(
+      ALWAYS_TRUE_PRECHECK,
+      program, configuration.programFormatControl
+    )
     if (!future.get().isPass) {
       logger.atSevere().log("The initial sanity check failed. Folder: ${future.workingDirectory}")
       val tempDir = Files.createTempDir()

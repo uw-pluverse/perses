@@ -33,6 +33,11 @@ class TestScriptExecutorService(
   testScriptFile: ScriptFile,
   sourceFileName: String
 ) : Closeable {
+
+  companion object {
+    val ALWAYS_TRUE_PRECHECK = { TestScript.TestResult(exitCode = 0, elapsedMilliseconds = 0) }
+  }
+
   private val executionCounter = AtomicInteger()
 
   // TODO: create the executor outside, and pass it in as a parameter, so that others can use the
@@ -80,13 +85,14 @@ class TestScriptExecutorService(
    * FIXME: make this method blocking if there is no available tasks.
    */
   fun testProgram(
+    prechecker: () -> TestScript.TestResult,
     program: TokenizedProgram,
     keepOrigCodeFormat: EnumFormatControl
   ): FutureTestScriptExecutionTask {
     executionCounter.incrementAndGet()
     val workingFolder = reductionFolderManager!!.createNextFolder()
     val result = FutureTestScriptExecutionTask(
-      ReductionTestScriptExecutorCallback(workingFolder, program, keepOrigCodeFormat)
+      ReductionTestScriptExecutorCallback(workingFolder, prechecker, program, keepOrigCodeFormat)
     )
     executorService.submit(result)
     return result
@@ -109,13 +115,17 @@ class TestScriptExecutorService(
   /** The test script runner for future.  */
   class ReductionTestScriptExecutorCallback(
     val workingDirectory: ReductionFolder,
+    private val prechecker: () -> TestScript.TestResult,
     val program: TokenizedProgram,
     private val keepOrigCodeFormat: EnumFormatControl
   ) :
     Callable<TestScript.TestResult> {
 
-    @Throws(Exception::class)
     override fun call(): TestScript.TestResult {
+      val precheckResult = prechecker.invoke()
+      if (precheckResult.isFail) {
+        return precheckResult
+      }
       program.writeToFile(workingDirectory.sourceFilePath, keepOrigCodeFormat)
       val result = workingDirectory.testScript.test()
       workingDirectory.deleteAllOtherFiles()

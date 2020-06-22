@@ -58,6 +58,6 @@ kt_jvm_test(
     test_class = "org.perses.util.DoubleLinkedListTest",
     deps = [
         "//src/org/perses/util:double_linked_list",
-        "//test/org/perses:truth"
-    ]
+        "//test/org/perses:truth",
+    ],
 )
