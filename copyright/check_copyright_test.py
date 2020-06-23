@@ -19,7 +19,7 @@ class TestCheckCopyright(unittest.TestCase):
     def setUp(self):
         self.temp_dir = tempfile.mkdtemp()
         full_path = os.path.join(self.temp_dir, "tmp_file.java")
-        with open (full_path, 'w+') as self.java_temp_file:
+        with open(full_path, 'w+') as self.java_temp_file:
             self.java_temp_file.write("import java.util.*;")
 
 
@@ -47,6 +47,18 @@ class TestCheckCopyright(unittest.TestCase):
     def test_update_files(self):
         with open(self.java_temp_file.name) as java_file:
             old_content = java_file.read()
+        self.copyright_checker.update_files([self.java_temp_file.name])
+        with open(self.java_temp_file.name) as java_file:
+            new_content = java_file.read()
+        self.assertEqual(new_content, TINY_COPYRIGHT_CMTBLK + old_content)
+
+
+    def test_update_files_existingcopyright(self):
+        with open(self.java_temp_file.name, 'r+') as java_file:
+            old_content = java_file.read()
+            comment_block = "/* \n * Copyright (C)...\n */\n"
+            java_file.seek(0, 0)
+            java_file.write(comment_block + old_content)
         self.copyright_checker.update_files([self.java_temp_file.name])
         with open(self.java_temp_file.name) as java_file:
             new_content = java_file.read()
