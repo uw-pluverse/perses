@@ -68,5 +68,8 @@ class CopyrightChecker:
         for file in files:
             with open(file, 'r+') as target_file:
                 content = target_file.read()
+                if content.find('* Copyright') != -1:
+                    start_index = content.find('*/\n') + 3
+                    content = content[start_index:]
                 target_file.seek(0, 0)
                 target_file.write(comment_block + content)
