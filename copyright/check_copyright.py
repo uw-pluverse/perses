@@ -3,8 +3,9 @@ from typing import List
 
 
 class CopyrightChecker:
-    """CopyrightChecker class offers functions to check all files with
-    specified extension and update corresponding files
+    """CopyrightChecker class serves two purposes:
+    1. to check copyright for all files with specified extension.
+    2. to update copyright for all files in specified folders
 
     Attributes:
        copyright_text: A list read from copyright.txt
@@ -14,16 +15,21 @@ class CopyrightChecker:
         """Inits CopyrightChecker with a list version of copyright text"""
         self.copyright_text = copyright_text
 
-    def check_folder(self, folder: str, extension: str) -> List[str]:
+    def locate_files(self, folder: str, extension: str) -> List[str]:
         """
-        Return a list of files missing copyright
+        Return a list of files with a specific extension
         """
         file_list = list()
         for root, dirs, files in os.walk(folder):
             for file in files:
                 if file.endswith('.' + extension):
                     file_list.append(os.path.join(root, file))
+        return file_list
 
+    def check_files(self, file_list: List[str]) -> List[str]:
+        """
+        Return a list of files missing copyright
+        """
         missing_list = list()
         for file in file_list:
             if not self.check_copyright(file):
@@ -32,7 +38,7 @@ class CopyrightChecker:
 
     def check_copyright(self, sourcefile: str) -> bool:
         """
-        Return a boolean indicating if the file has copyright infomation
+        Return a True if the input file has copyright infomation
         """
         buf_copyright = ''.join(self.copyright_text)
         buf_copyright = ''.join(buf_copyright.split())
@@ -54,18 +60,21 @@ class CopyrightChecker:
             return False
         return True
 
-    def update_files(self, files: list):
-        """ Updates give files with copyright info """
+    def update_files(self, file_list: List[str]):
+        """ Updates given files with copyright info """
         buf_copyright = self.copyright_text[:]
 
         for i, val in enumerate(buf_copyright):
-            buf_copyright[i] = " * " + val
+            if val == '\n':
+                buf_copyright[i] = " *" + val
+            else:
+                buf_copyright[i] = " * " + val
         buf_copyright.insert(0, "/*\n")
         buf_copyright.append(" */\n")
 
         comment_block = ''.join(buf_copyright)
 
-        for file in files:
+        for file in file_list:
             with open(file, 'r+') as target_file:
                 content = target_file.read()
                 if content.find('* Copyright') != -1:

@@ -22,21 +22,21 @@ if __name__ == '__main__':
     copyright_checker = check_copyright.CopyrightChecker(copyright_text)
 
     extensions = ['java', 'kt']
-    missing_list = list()
-    print('Checking files in folders %s' % flags.dirs)
+    file_list = list()
+    print('Checking files in folders:\n%s\n' % '\n'.join(flags.dirs))
     for folder in flags.dirs:
         assert os.path.exists(folder), 'folder=%s, cwd=%s' % (folder, os.getcwd())
-        for ext in extensions:
-            missing_list += copyright_checker.check_folder(folder, ext)
+        for extension in extensions:
+            file_list += copyright_checker.locate_files(folder, extension)
 
-    if not flags.update_copyright and missing_list != []:
-        raise Exception(
-            'The following files do not have up-to-date copyright.\n%s' %
-            '\n'.join(missing_list))
-
-    if flags.update_copyright and missing_list != []:
-        copyright_checker.update_files(missing_list)
-        print('All files now have copyright info')
-
+    if flags.update_copyright:
+    	copyright_checker.update_files(file_list)
+    	print("%d files have been updated!" % len(file_list))
     else:
-        print('Check complete.\nAll files OK')
+        missing_list = copyright_checker.check_files(file_list)
+        if missing_list != []:
+            raise Exception(
+	    'Following %d files require copyright update:\n%s' %
+	    (len(missing_list), '\n'.join(missing_list)))
+        else:
+            print("All files are up to date")
