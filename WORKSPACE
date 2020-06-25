@@ -21,7 +21,7 @@ maven_install(
         "com.google.flogger:flogger-system-backend:0.4",
         "com.google.flogger:flogger:0.4",
         "com.google.guava:guava:28.1-jre",
-        "com.google.truth:truth:1.0",
+        "com.google.truth:truth:1.0.1",
         "com.googlecode.java-diff-utils:diffutils:1.3.0",
         "it.unimi.dsi:fastutil:8.3.0",
         "me.lemire.integercompression:JavaFastPFOR:0.1.9",
