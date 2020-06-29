@@ -31,7 +31,6 @@ import org.perses.util.Fraction;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.Random;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
@@ -48,7 +47,6 @@ public class CommandOptions {
       new ReductionAlgorithmControlFlags();
   public final CacheControlFlags cacheControlFlags = new CacheControlFlags();
   public final ProfilingFlags profilingFlags = new ProfilingFlags();
-  public final RandomMutationFlag randomMutationFlag = new RandomMutationFlag();
 
   @Parameter(
       names = "--help",
@@ -73,7 +71,6 @@ public class CommandOptions {
             .addObject(algorithmControlFlags)
             .addObject(cacheControlFlags)
             .addObject(profilingFlags)
-                .addObject(randomMutationFlag)
             .build();
     return commander;
   }
@@ -86,7 +83,6 @@ public class CommandOptions {
     algorithmControlFlags.validate();
     cacheControlFlags.validate();
     profilingFlags.validate();
-    randomMutationFlag.validate();
   }
 
   public static final class CompulsoryFlags {
@@ -314,22 +310,6 @@ public class CommandOptions {
     public void validate() {}
   }
 
-  public static final class RandomMutationFlag{
-    @Parameter(
-            names = "-random-seed",
-            description = "random seed for nondeterministic functions",
-            order = FlagOrder.PROFILING_CONTROL + 0)
-    public Long randomSeed = null;
-
-    @Parameter(
-            names = "--seed-file",
-            description = "",
-            order = FlagOrder.PROFILING_CONTROL + 1)
-    public String seedFile;
-
-    public void validate() {}
-
-  }
 
   private static class FlagOrder {
     public static final int COMPULSORY = 0;

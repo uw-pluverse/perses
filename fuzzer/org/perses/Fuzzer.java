@@ -77,17 +77,16 @@ public class Fuzzer {
     Random rnd = new Random();
     rnd.setSeed(randomSeed);
 
-    System.out.println(sparTree.getOriginalTokenCount());
-    int randomInteger = rnd.nextInt(sparTree.getTreeId());
-
-    AbstractSparTreeNode node228 = sparTree.getNodeByTreeScanForId(228).get();
-    builder.deleteNode(node228);
+//    System.out.println(sparTree.getOriginalTokenCount());
+    AbstractSparTreeNode node = sparTree.randomDeleteNode(rnd);
+    builder.deleteNode(node);
     NodeDeletionActionSet actionSet = builder.build();
     NodeDeletionTreeEdit treeEdit = sparTree.createNodeDeletionEdit(actionSet);
     //  debugging code, check if applyEdit working properly
-    System.out.println(sparTree.printTreeStructure());
+//    System.out.println(node.getNodeId());
+//    System.out.println(sparTree.printTreeStructure());
     sparTree.applyEdit(treeEdit);
-    System.out.println(sparTree.printTreeStructure());
+//    System.out.println(sparTree.printTreeStructure());
   }
 
 
