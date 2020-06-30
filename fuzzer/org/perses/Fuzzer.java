@@ -39,6 +39,7 @@ import org.perses.tree.spar.SparTreeBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
@@ -69,14 +70,15 @@ public class Fuzzer {
   }
 
   //
-  public static void treeMutation(SparTree sparTree, Long randomSeed) {
-    NodeDeletionActionSet.Builder builder = new NodeDeletionActionSet.Builder("edit 1");
-    // hard-coded token id for testing
-    Random rnd = new Random();
-    rnd.setSeed(randomSeed);
+  public static void treeMutation(SparTree sparTree, Random rnd) {
+    //convert spartree into a list
+    List<AbstractSparTreeNode> treeList = sparTree.flatSparTree(rnd);
+    //random pop element from treeList
+    int index = rnd.nextInt(treeList.size());
+    AbstractSparTreeNode nodeToBeDeleted = treeList.get(index);
+    treeList.remove(index);
 
-    //    System.out.println(sparTree.getOriginalTokenCount());
-    AbstractSparTreeNode nodeToBeDeleted = sparTree.randomDeleteNode(rnd);
+    NodeDeletionActionSet.Builder builder = new NodeDeletionActionSet.Builder("edit 1");
     builder.deleteNode(nodeToBeDeleted);
     NodeDeletionActionSet actionSet = builder.build();
     NodeDeletionTreeEdit treeEdit = sparTree.createNodeDeletionEdit(actionSet);

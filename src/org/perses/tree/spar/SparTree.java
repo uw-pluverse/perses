@@ -41,7 +41,6 @@ public final class SparTree extends AbstractUnmodifiableSparTree {
   private final LexerRuleSparTreeNode dummyTokenHead;
   private final LexerRuleSparTreeNode dummyTokenTail;
   private final TokenizedProgramFactory tokenizedProgramFactory;
-  private List<AbstractSparTreeNode> treeList = null;
 
   private TokenizedProgram program;
   private final ArrayList<AbstractSparTreeEditListener> editListeners;
@@ -366,15 +365,9 @@ public final class SparTree extends AbstractUnmodifiableSparTree {
     return currentList;
   }
 
-
-  public final AbstractSparTreeNode randomDeleteNode(Random rand){
-    if (treeList == null){
-      treeList = new ArrayList<>();
-      treeList = inorderTreeTraverse(root,treeList);
-    }
-    int index = rand.nextInt(treeList.size());
-    AbstractSparTreeNode node = treeList.get(index);
-    treeList.remove(index);
-    return node;
+  public final List<AbstractSparTreeNode> flatSparTree(Random rand){
+    List<AbstractSparTreeNode> treeList = new ArrayList<>();
+    treeList = inorderTreeTraverse(root,treeList);
+    return treeList;
   }
 }

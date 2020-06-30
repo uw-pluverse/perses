@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2017 Chengnian Sun.
+ * Copyright (C) 2018-2020 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,57 +20,49 @@ package org.perses.fuzzer;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 
-
 /** Parser for command line arguments. */
 public class CommandOptions {
 
+  public final RandomMutationFlag randomMutationFlag = new RandomMutationFlag();
 
+  @Parameter(
+      names = "--help",
+      description = "print help message",
+      help = true,
+      order = FlagOrder.HELP)
+  public boolean help;
 
-    public final RandomMutationFlag randomMutationFlag = new RandomMutationFlag();
+  public CommandOptions() {}
 
+  public JCommander createJCommander(Class<?> mainClass) {
+    final JCommander commander =
+        JCommander.newBuilder()
+            .programName(mainClass.getCanonicalName())
+            .addObject(this)
+            .addObject(randomMutationFlag)
+            .build();
+    return commander;
+  }
+
+  public void validate() {
+    randomMutationFlag.validate();
+  }
+
+  public static final class RandomMutationFlag {
     @Parameter(
-            names = "--help",
-            description = "print help message",
-            help = true,
-            order = FlagOrder.HELP)
-    public boolean help;
+        names = "--random-seed",
+        description = "random seed for nondeterministic functions",
+        order = FlagOrder.PROFILING_CONTROL)
+    public long randomSeed = System.currentTimeMillis();
 
-    public CommandOptions() {
+    @Parameter(names = "--seed-file", description = "", order = FlagOrder.PROFILING_CONTROL + 1)
+    public String seedFile;
 
-    }
+    public void validate() {}
+  }
 
-    public JCommander createJCommander(Class<?> mainClass) {
-        final JCommander commander =
-                JCommander.newBuilder()
-                        .programName(mainClass.getCanonicalName())
-                        .addObject(this)
-                        .addObject(randomMutationFlag)
-                        .build();
-        return commander;
-    }
-
-    public void validate() {
-        randomMutationFlag.validate();
-    }
-
-
-    public static final class RandomMutationFlag{
-        @Parameter(
-                names = "-random-seed",
-                description = "random seed for nondeterministic functions",
-                order = FlagOrder.PROFILING_CONTROL)
-        public Long randomSeed = null;
-
-        @Parameter(
-                names = "--seed-file",
-                description = "",
-                order = FlagOrder.PROFILING_CONTROL + 1)
-        public String seedFile;
-        public void validate() {}
-    }
-
-    private static class FlagOrder {
-        public static final int HELP = 4000;
-        public static final int PROFILING_CONTROL = 10000;
-    }
+  private static class FlagOrder {
+    public static final int HELP = 4000;
+    public static final int PROFILING_CONTROL = 10000;
+  }
 }

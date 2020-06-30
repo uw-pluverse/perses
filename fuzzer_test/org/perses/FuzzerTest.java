@@ -38,8 +38,8 @@ public class FuzzerTest {
 
   private static final CParserFacade C_PARSER_FACADE = new CParserFacade();
 
-  private void testOneCFile(String pathname) {
-    try {
+  private void testOneCFile(String pathname) throws IOException {
+
       final File testFile = new File(pathname);
       final ArrayList<String> origTokens =
           TestUtility.extractTokens(C_PARSER_FACADE.parseWithOrigCParser(testFile).getTree());
@@ -49,14 +49,11 @@ public class FuzzerTest {
           .containsExactlyElementsIn(TestUtility.extractTokens(treeByOpt))
           .inOrder();
 
-    } catch (Throwable e) {
-      e.printStackTrace();
-      Assert.fail();
-    }
+
   }
 
   @Test
-  public void fuzzerBasicTest() {
+  public void fuzzerBasicTest() throws IOException {
     testOneCFile("test_data/c_programs/gcc_testsuite/06002.c");
   }
 }

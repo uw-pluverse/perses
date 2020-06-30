@@ -40,7 +40,6 @@ java_binary(
     name = "perses_fuzzer_main",
     srcs = ["FuzzerMain.java"],
     main_class = "org.perses.fuzzer.FuzzerMain",
-    args = ["-random-seed","1"],
     deps = [
         "//antlropt/org/perses/antlr/ast",
         "//fuzzer/org/perses:perses_fuzzer",
