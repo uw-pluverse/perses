@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2018-2020 University of Waterloo.
+ *
+ * This file is part of Perses.
+ *
+ * Perses is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3, or (at your option) any later version.
+ *
+ * Perses is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
+ */
 package org.perses.program
 
 import com.google.common.base.Joiner
@@ -35,7 +51,8 @@ class TokenizedProgramTest {
 
   @Test
   fun testCompactSourceCode() {
-    val sourceCode = """int a = 0;
+    val sourceCode =
+      """int a = 0;
       |
       |int b = 0;
       |
@@ -44,10 +61,12 @@ class TokenizedProgramTest {
     val program = TestUtility.createTokenizedProgramFromString(sourceCode, LanguageKind.C)
     Truth.assertThat(program.toSourceCodeInOrigFormatWithBlankLines().trim())
       .isEqualTo(sourceCode.trim())
-    Truth.assertThat(program.toCompactSourceCode().trim()).isEqualTo("""int a = 0;
+    Truth.assertThat(program.toCompactSourceCode().trim()).isEqualTo(
+      """int a = 0;
       |int b = 0;
       |int c = 0;
-      """.trimMargin())
+      """.trimMargin()
+    )
   }
 
   private fun testTokenEquivalence(filepath: String) {
@@ -56,7 +75,8 @@ class TokenizedProgramTest {
         TestUtility.createTokenizedProgramFromFile(filepath).tokens.stream()
           .map { obj: PersesToken -> obj.text }
           .map { s: String -> s.replace("\\s|\n".toRegex(), "") }
-          .collect(Collectors.toList<String>()))
+          .collect(Collectors.toList<String>())
+      )
     val text = Files.asCharSource(File(filepath), StandardCharsets.UTF_8)
       .read()
       .replace("\\s|\n".toRegex(), "")

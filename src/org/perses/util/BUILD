@@ -27,5 +27,9 @@ sh_binary(
 kt_jvm_library(
     name = "percentage",
     srcs = ["Fraction.kt"],
-    deps = [],
+)
+
+kt_jvm_library(
+    name = "double_linked_list",
+    srcs = ["DoubleLinkedList.kt"],
 )

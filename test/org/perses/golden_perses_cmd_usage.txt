@@ -30,6 +30,13 @@ Usage: org.perses.Main [options]
     --reparse-each-iteration
       Reparse the program before the start of each fixpoint iteration.
       Default: true
+    --enable-token-slicer
+      Enable token slicer after syntax-guided reduction is done. Maybe slow.
+      Default: false
+    --enable-tree-slicer
+      Enable tree slicer after syntax-guided reduction, and before token 
+      slicer 
+      Default: false
     --use-real-ddmin
       Whether to use the real delta debugging algorithm to reduce kleene 
       nodes. 

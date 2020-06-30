@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2017 Chengnian Sun.
+ * Copyright (C) 2018-2020 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,9 +24,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
-import org.perses.program.SourceFile
 import org.perses.program.EnumFormatControl.ORIG_FORMAT
 import org.perses.program.ScriptFile
+import org.perses.program.SourceFile
 import org.perses.reduction.ReductionConfiguration.Companion.getTempRootFolderName
 import java.io.File
 import java.io.IOException
@@ -37,7 +37,8 @@ import java.time.LocalDateTime
 @RunWith(JUnit4::class)
 class ReductionConfigurationTest {
   private val testScript = ScriptFile(File(FOLDER + "r.sh"))
-  private val workingDirectory = TestUtility.createCleanWorkingDirectory(ReductionConfigurationTest::class.java)
+  private val workingDirectory =
+    TestUtility.createCleanWorkingDirectory(ReductionConfigurationTest::class.java)
   private val sourceFile = SourceFile(File(FOLDER + "t.c"))
 
   @After
@@ -63,7 +64,8 @@ class ReductionConfigurationTest {
       fixpointReduction = true,
       enableTestScriptExecutionCaching = true,
       useRealDeltaDebugger = false,
-      numOfReductionThreads = numOfReductionThreads)
+      numOfReductionThreads = numOfReductionThreads
+    )
     Truth.assertThat(configuration.bestResultFile).isEqualTo(bestFile)
     Truth.assertThat(configuration.fileToReduce.file).isEqualTo(sourceFile.file)
     Truth.assertThat(configuration.fileToReduce.fileContent)

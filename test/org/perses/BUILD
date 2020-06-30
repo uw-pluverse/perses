@@ -22,6 +22,7 @@ java_library(
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/grammar/c:c_parser_facade",
         "//src/org/perses/grammar/java:java_parser_facade",
+        "//src/org/perses/grammar/scala:pnfscala_parser_facade",
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
         "//src/org/perses/tree/spar",

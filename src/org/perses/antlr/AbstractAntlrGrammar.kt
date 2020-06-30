@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2018-2020 University of Waterloo.
+ *
+ * This file is part of Perses.
+ *
+ * Perses is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3, or (at your option) any later version.
+ *
+ * Perses is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
+ */
 package org.perses.antlr
 
 import com.google.common.collect.ImmutableList
@@ -20,8 +36,8 @@ abstract class AbstractAntlrGrammar {
     throw UnsupportedOperationException()
   }
 
-  class CombinedAntlrGrammar(val grammar: PersesGrammar)
-    : AbstractAntlrGrammar() {
+  class CombinedAntlrGrammar(val grammar: PersesGrammar) :
+    AbstractAntlrGrammar() {
 
     override val isCombined = true
 
@@ -29,13 +45,13 @@ abstract class AbstractAntlrGrammar {
       require(grammar.grammarType == PersesGrammar.GrammarType.COMBINED)
     }
 
-    override fun getCombinedRules() = grammar.rules;
+    override fun getCombinedRules() = grammar.rules
 
     override fun asCombined() = this
   }
 
-  class SeparateAntlrGrammar(val parserGrammar: PersesGrammar, val lexerGrammar: PersesGrammar)
-    : AbstractAntlrGrammar() {
+  class SeparateAntlrGrammar(val parserGrammar: PersesGrammar, val lexerGrammar: PersesGrammar) :
+    AbstractAntlrGrammar() {
 
     override val isCombined = false
 
@@ -46,7 +62,8 @@ abstract class AbstractAntlrGrammar {
 
     override fun getCombinedRules(): ImmutableList<AbstractPersesRuleDefAst> {
       val builder = ImmutableList.builderWithExpectedSize<AbstractPersesRuleDefAst>(
-        parserGrammar.rules.size + lexerGrammar.rules.size)
+        parserGrammar.rules.size + lexerGrammar.rules.size
+      )
       builder.addAll(parserGrammar.rules)
       builder.addAll(lexerGrammar.rules)
       return builder.build()
@@ -54,5 +71,4 @@ abstract class AbstractAntlrGrammar {
 
     override fun asSeparate() = this
   }
-
 }

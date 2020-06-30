@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2017 Chengnian Sun.
+ * Copyright (C) 2018-2020 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -60,4 +60,7 @@ abstract class AbstractReductionListener {
   abstract fun onTestScriptExecutionCancelled(
     event: AbstractReductionEvent.TestScriptExecutionCanceledEvent?
   )
+
+  abstract fun onSlicingTokensStart(event: AbstractReductionEvent.TokenSlicingStartEvent)
+  abstract fun onSlicingTokensEnd(event: AbstractReductionEvent.TokenSlicingEndEvent)
 }

@@ -41,11 +41,13 @@ kt_jvm_library(
 kt_jvm_library(
     name = "node_based_reducer",
     srcs = [
+        "AbstractNodeReducer.kt",
         "AbstractPersesNodeReducer.kt",
         "PersesNodeBfsReducer.kt",
         "PersesNodeDfsReducer.kt",
         "PersesNodePrioritizedBfsReducer.kt",
         "PersesNodePrioritizedDfsReducer.kt",
+        "TreeSlicer.kt",
     ],
     deps = [
         ":delta_debugging",
@@ -61,6 +63,19 @@ kt_jvm_library(
         "//src/org/perses/reduction/partition:level_partition_policy",
         "//src/org/perses/tree/spar",
         "@maven//:com_google_guava_guava",
+    ],
+)
+
+kt_jvm_library(
+    name = "token_slicer",
+    srcs = ["TokenSlicer.kt"],
+    deps = [
+        ":tree_transforms",
+        "//src/org/perses/reduction:abstract_reducer",
+        "//src/org/perses/reduction:tree_edit_with_its_program",
+        "//src/org/perses/reduction/partition",
+        "//src/org/perses/tree/spar",
+        "@maven//:org_checkerframework_checker_qual",
     ],
 )
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2017 Chengnian Sun.
+ * Copyright (C) 2018-2020 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -28,6 +28,10 @@ import static com.google.common.base.Preconditions.*;
  * single-entry-single-exit path
  */
 public class SparTreeSimplifier {
+
+  public static void simplify(SparTree tree) {
+    simplify(tree.getRoot());
+  }
 
   static void simplify(AbstractSparTreeNode root) {
     removeEmptyAndDeletedRuleNodes(root);

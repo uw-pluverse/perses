@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2017 Chengnian Sun.
+ * Copyright (C) 2018-2020 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -78,5 +78,10 @@ public abstract class AbstractReducerFunctionalTest {
   protected void runJavaTestSubject(
       String reductionFolder, ReducerAnnotation algorithmType, String expected) {
     test(reductionFolder, "r.sh", "t.java", algorithmType, expected);
+  }
+
+  protected void runScalaTestSubject(
+          String reductionFolder, ReducerAnnotation algorithmType, String expected) {
+    test(reductionFolder, "r.sh", "t.sc", algorithmType, expected);
   }
 }

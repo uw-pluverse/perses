@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2017 Chengnian Sun.
+ * Copyright (C) 2018-2020 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,17 +18,9 @@ package org.perses.reduction.reducer
 
 import com.google.common.annotations.VisibleForTesting
 import com.google.common.collect.ImmutableList
-import java.io.IOException
-import java.util.ArrayList
-import java.util.Comparator
-import java.util.Optional
-import java.util.Queue
-import java.util.concurrent.ExecutionException
 import org.perses.antlr.RuleType
-import org.perses.reduction.AbstractReducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.reduction.TreeEditWithItsResult
 import org.perses.reduction.partition.Partition
 import org.perses.reduction.reducer.TreeTransformations.createNodeDeletionActionSetFor
 import org.perses.reduction.reducer.TreeTransformations.replaceKleeneQualifiedNodeWithKleeneQualifiedChildren
@@ -38,36 +30,17 @@ import org.perses.tree.spar.AbstractSparTreeNode
 import org.perses.tree.spar.ChildHoistingAction
 import org.perses.tree.spar.ChildHoistingActionSet
 import org.perses.tree.spar.NodeDeletionActionSet
-import org.perses.tree.spar.NodeDeletionTreeEdit
-import org.perses.tree.spar.NodeReplacementTreeEdit
 import org.perses.tree.spar.SparTree
-import org.perses.tree.spar.SparTreeSimplifier
+import java.util.ArrayList
+import java.util.Comparator
 
 /** Perses reducer. The granularity is parse tree nodes, but not level-based.  */
 abstract class AbstractPersesNodeReducer protected constructor(
   reducerAnnotation: ReducerAnnotation,
   reducerContext: ReducerContext
-) : AbstractReducer(reducerAnnotation, reducerContext) {
-  @Throws(IOException::class, ExecutionException::class, InterruptedException::class)
-  override fun internalReduce(tree: SparTree) {
-    val root = tree.root
-    assert(SparTreeSimplifier.assertSingleEntrySingleExitPathProperty(root))
-    val queue = createReductionQueue()
-    queue.addAll(root.immutableChildView)
-    while (!queue.isEmpty()) {
-      val node = queue.poll()
-      val oldTokenCount = tree.tokenCount
-      listenerManager.onNodeReductionStart(tree, node, oldTokenCount)
-      val pendingNodes = reduceOneNode(tree, node)
-      val newTokenCount = tree.tokenCount
-      listenerManager.onNodeReductionEnd(tree, node, queue.size, newTokenCount)
-      queue.addAll(pendingNodes)
-    }
-  }
+) : AbstractNodeReducer(reducerAnnotation, reducerContext) {
 
-  protected abstract fun createReductionQueue(): Queue<AbstractSparTreeNode>
-  @Throws(InterruptedException::class, ExecutionException::class, IOException::class)
-  private fun reduceOneNode(
+  override fun reduceOneNode(
     tree: SparTree,
     node: AbstractSparTreeNode
   ): ImmutableList<AbstractSparTreeNode> {
@@ -81,14 +54,6 @@ abstract class AbstractPersesNodeReducer protected constructor(
     }
   }
 
-  protected fun testSparTreeEdit(edit: AbstractSparTreeEdit): Optional<TreeEditWithItsResult> {
-    return try {
-      testAllTreeEditsAndReturnTheBest(ImmutableList.of(edit))
-    } catch (e: Exception) {
-      throw AssertionError(e)
-    }
-  }
-
   private fun reduceRegularRule(
     tree: SparTree,
     regularRuleNode: AbstractSparTreeNode
@@ -98,7 +63,7 @@ abstract class AbstractPersesNodeReducer protected constructor(
     if (!best.isPresent) {
       return ImmutableList.copyOf(regularRuleNode.immutableChildView)
     }
-    val (edit) = best.get()
+    val edit = best.get().edit
     tree.applyEdit(edit)
     return computePendingNodes(regularRuleNode, edit)
   }
@@ -117,20 +82,26 @@ abstract class AbstractPersesNodeReducer protected constructor(
     if (canBeEpsilon(regularRuleNode)) {
       addDeletionEditToEditListAndLog(
         NodeDeletionActionSet.createByDeleteSingleNode(
-          regularRuleNode, "[regular_node]can be epsilon"),
+          regularRuleNode, "[regular_node]can be epsilon"
+        ),
         editList,
-        tree)
+        tree
+      )
     }
     val kleeneReplacements = replaceKleeneQualifiedNodeWithKleeneQualifiedChildren(
-      regularRuleNode, 3)
+      regularRuleNode, 3
+    )
     actionSetProfiler.onReplaceKleeneQualifiedNodeWithKleeneQualifiedChildren(
-      kleeneReplacements)
+      kleeneReplacements
+    )
     for (action in kleeneReplacements) {
       addEditToEditListAndLog(
         ChildHoistingActionSet.createByReplacingSingleNode(
-          action, "[regular_node]kleene replacement"),
+          action, "[regular_node]kleene replacement"
+        ),
         editList,
-        tree)
+        tree
+      )
     }
     val compatibleReplacements = replaceNodeWithNearestCompatibleChildren(regularRuleNode, 5)
     actionSetProfiler.onReplaceNodeWithNearestCompatibleChildren(compatibleReplacements)
@@ -141,49 +112,17 @@ abstract class AbstractPersesNodeReducer protected constructor(
         .forEach { action: ChildHoistingAction? ->
           addEditToEditListAndLog(
             ChildHoistingActionSet.createByReplacingSingleNode(
-              action, "[regular node]compatible replacement"),
+              action, "[regular node]compatible replacement"
+            ),
             editList,
-            tree)
+            tree
+          )
         }
     }
     return editList
   }
 
-  private fun canBeEpsilon(nodeForTest: AbstractSparTreeNode?): Boolean {
-    var node: AbstractSparTreeNode? = nodeForTest
-    while (node != null) {
-      if (node.antlrRule.get().canRuleBeEpsilon()) {
-        // If the rule of the current node can be epsilon.
-        return true
-      }
-      val parent = node.parentInfo ?: return false
-      if (parent.antlrRuleForTheChild.get().canRuleBeEpsilon()) {
-        // If the EXPECTED rule of the current node can be epsilon.
-        return true
-      }
-      val parentNode: AbstractSparTreeNode = parent.node
-      val childCount = parentNode.childCount
-      return if (childCount == 1) {
-        // Only the current node, then check whether the parent node rule can be epsilon.
-        node = parentNode
-        continue
-      } else if (childCount > 1) {
-        val parentNodeType = parentNode.nodeType
-        when (parentNodeType) {
-          RuleType.KLEENE_PLUS, RuleType.KLEENE_STAR -> true
-          RuleType.OPTIONAL -> throw RuntimeException(
-            "Optional should have a single child. " + node.printTreeStructure())
-          else -> false
-        }
-      } else {
-        throw RuntimeException("Unreachable. " + node.printTreeStructure())
-      }
-    }
-    return false
-  }
-
   /** Perform delta debugging.  */
-  @Throws(InterruptedException::class, ExecutionException::class, IOException::class)
   private fun reduceKleenStar(
     tree: SparTree,
     kleeneStar: AbstractSparTreeNode
@@ -201,14 +140,12 @@ abstract class AbstractPersesNodeReducer protected constructor(
     }
   }
 
-  @Throws(InterruptedException::class, ExecutionException::class, IOException::class)
   protected abstract fun performDelta(
     tree: SparTree,
     actionsDescription: String,
     vararg startPartitions: Partition
   )
 
-  @Throws(InterruptedException::class, ExecutionException::class, IOException::class)
   private fun reduceKleenePlus(
     tree: SparTree,
     kleenePlus: AbstractSparTreeNode
@@ -222,15 +159,18 @@ abstract class AbstractPersesNodeReducer protected constructor(
       addDeletionEditToEditListAndLog(
         NodeDeletionActionSet.createByDeleteSingleNode(kleenePlus, "[kleene_plus]can be epsilon"),
         editList,
-        tree)
+        tree
+      )
     }
     if (childCount > 1) {
       val wholePartition = createPartition(kleenePlus, 1, childCount) // Skip the first.
       addDeletionEditToEditListAndLog(
         createNodeDeletionActionSetFor(
-          wholePartition, "[kleene_plus]remove whole except first"),
+          wholePartition, "[kleene_plus]remove whole except first"
+        ),
         editList,
-        tree)
+        tree
+      )
     }
     val best = testAllTreeEditsAndReturnTheBest(editList)
     if (best.isPresent) {
@@ -244,81 +184,29 @@ abstract class AbstractPersesNodeReducer protected constructor(
         tree,
         "[kleene_plus]dd",
         createPartition(kleenePlus, 0, halfIndex),
-        createPartition(kleenePlus, halfIndex, childCount))
+        createPartition(kleenePlus, halfIndex, childCount)
+      )
     }
     return ImmutableList.copyOf(kleenePlus.immutableChildView)
-  }
-
-  private fun computePendingNodes(
-    currentNode: AbstractSparTreeNode,
-    bestEdit: AbstractSparTreeEdit
-  ): ImmutableList<AbstractSparTreeNode> {
-    if (!currentNode.isPermanentlyDeleted) { // Children are changed, so work on the children later.
-      return ImmutableList.copyOf(currentNode.immutableChildView)
-    }
-    return if (bestEdit is NodeDeletionTreeEdit) {
-      val nodeDeletionTreeEdit = bestEdit.asNodeDeleteEdit()
-      assert(nodeDeletionTreeEdit.isNodeATarget(currentNode))
-      assert(nodeDeletionTreeEdit.numberOfActions == 1)
-      ImmutableList.of()
-    } else if (bestEdit is NodeReplacementTreeEdit) {
-      val nodeReplacementTreeEdit = bestEdit.asNodeReplacementEdit()
-      if (nodeReplacementTreeEdit.isNodeATarget(currentNode)) {
-        assert(nodeReplacementTreeEdit.numberOfActions == 1)
-        val onlyReplacementNode = nodeReplacementTreeEdit.onlyReplacementNode
-        assert(!onlyReplacementNode.isPermanentlyDeleted) {
-          onlyReplacementNode.printTreeStructure()
-        }
-        ImmutableList.of(onlyReplacementNode)
-      } else {
-        ImmutableList.copyOf(currentNode.immutableChildView)
-      }
-    } else {
-      throw RuntimeException("Unreachable.")
-    }
-  }
-
-  private fun addDeletionEditToEditListAndLog(
-    actionSet: NodeDeletionActionSet,
-    editList: MutableList<in AbstractSparTreeEdit>,
-    tree: SparTree
-  ) {
-    if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
-      listenerManager.onNodeEditActionSetCacheHit(actionSet)
-    } else {
-      editList.add(tree.createNodeDeletionEdit(actionSet))
-    }
-  }
-
-  private fun addEditToEditListAndLog(
-    actionSet: ChildHoistingActionSet,
-    editList: MutableList<in AbstractSparTreeEdit>,
-    tree: SparTree
-  ) {
-    if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
-      listenerManager.onNodeEditActionSetCacheHit(actionSet)
-    } else {
-      editList.add(tree.createNodeReplacementEdit(actionSet))
-    }
   }
 
   protected enum class TreeNodeComparatorInLeafTokenCount : Comparator<AbstractSparTreeNode> {
     SINGLETON;
 
     override fun compare(o1: AbstractSparTreeNode, o2: AbstractSparTreeNode): Int {
-      val tokenCountCmpResult = Integer.compare(o2.leafTokenCount, o1.leafTokenCount)
+      val tokenCountCmpResult = o2.leafTokenCount.compareTo(o1.leafTokenCount)
       if (tokenCountCmpResult != 0) {
         return tokenCountCmpResult
       }
       // For determinism.
-      val result = Integer.compare(o2.nodeId, o1.nodeId)
+      val result = o2.nodeId.compareTo(o1.nodeId)
       assert(result != 0) { "Cannot guarantee determinism." }
       return result
     }
   }
 
   companion object {
-    internal const val DEFAULT_INITIAL_QUEUE_CAPACITY = 600
+
     /**
      * Create a partition from the tree node, by including the children in the range [childIndexFrom,
      * childIndexTo)

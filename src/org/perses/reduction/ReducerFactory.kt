@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2017 Chengnian Sun.
+ * Copyright (C) 2018-2020 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,14 +21,16 @@ import com.google.common.collect.ImmutableCollection
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableSet
-import java.util.Comparator
-import java.util.Optional
-import java.util.function.Function
 import org.perses.reduction.reducer.HDDReducer
 import org.perses.reduction.reducer.PersesNodeBfsReducer
 import org.perses.reduction.reducer.PersesNodeDfsReducer
 import org.perses.reduction.reducer.PersesNodePrioritizedBfsReducer
 import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
+import org.perses.reduction.reducer.TokenSlicer
+import org.perses.reduction.reducer.TreeSlicer
+import java.util.Comparator
+import java.util.Optional
+import java.util.function.Function
 
 /** Factory to create various reducers.  */
 object ReducerFactory {
@@ -36,6 +38,8 @@ object ReducerFactory {
 
   private val REDUCTION_ALGs = ImmutableSet.builder<ReducerAnnotation>()
     .add(HDDReducer.META)
+    .add(TokenSlicer.META)
+    .add(TreeSlicer.META)
     .add(PersesNodeBfsReducer.META)
     .add(PersesNodePrioritizedBfsReducer.META)
     .add(PersesNodeDfsReducer.META)
@@ -45,7 +49,9 @@ object ReducerFactory {
     .collect(
       ImmutableMap.toImmutableMap(
         Function { obj: ReducerAnnotation -> obj.shortName() },
-        Functions.identity<ReducerAnnotation>()))
+        Functions.identity<ReducerAnnotation>()
+      )
+    )
 
   @JvmStatic
   val defaultReductionAlgName: String

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2017 Chengnian Sun.
+ * Copyright (C) 2018-2020 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,16 +19,17 @@ package org.perses.reduction
 import com.google.common.base.Stopwatch
 import com.google.common.io.MoreFiles
 import com.google.common.io.RecursiveDeleteOption
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
-import org.perses.program.SourceFile
 import org.perses.program.EnumFormatControl.ORIG_FORMAT
 import org.perses.program.ScriptFile
+import org.perses.program.SourceFile
+import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
 import java.io.File
 import java.util.ArrayList
 import java.util.concurrent.Future
@@ -38,6 +39,10 @@ import java.util.function.Consumer
 /** Test for [TestScriptExecutorService]  */
 @RunWith(JUnit4::class)
 class TestScriptExecutorServiceTest {
+  companion object {
+    private const val FOLDER = "test_data/delta_1/"
+  }
+
   private val sourceFile = SourceFile(File(FOLDER, "t.c"))
   private val invalidSourceFile = SourceFile(File("test_data/misc/t1.c"))
   private val testScript = ScriptFile(File(FOLDER, "r.sh"))
@@ -79,58 +84,98 @@ class TestScriptExecutorServiceTest {
       fixpointReduction = true,
       enableTestScriptExecutionCaching = true,
       useRealDeltaDebugger = false,
-      numOfReductionThreads = threadCount)
+      numOfReductionThreads = threadCount
+    )
   }
 
   private fun testTestScriptExecutor(threadCount: Int) {
     val stopwatch = Stopwatch.createStarted()
     val configuration = createConfiguration(threadCount)
-    Truth.assertThat(configuration.numOfReductionThreads).isEqualTo(threadCount)
+    assertThat(configuration.numOfReductionThreads).isEqualTo(threadCount)
     TestScriptExecutorService(
       configuration.tempRootFolder,
       configuration.numOfReductionThreads,
       testScript,
-      sourceFile.file.name).use {
+      sourceFile.file.name
+    ).use {
       // TODO: refine this test.
-      run {
-        val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
-        for (i in 0..49) {
-          futureList.add(it.testProgram(program!!,
-            ORIG_FORMAT))
-        }
-        futureList.forEach(
-          Consumer { future: Future<TestScript.TestResult> ->
-            try {
-              Truth.assertThat(future.get().isPass).isTrue()
-            } catch (e: Throwable) {
-              throw AssertionError(e)
-            }
-          })
-      }
-      run {
-        val invalidProgram = TestUtility.createSparTreeFromFile(invalidSourceFile.file)
-          .programSnapshot
-        val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
-        for (i in 0..49) {
-          futureList.add(it.testProgram(invalidProgram,
-            ORIG_FORMAT))
-        }
-        futureList.forEach(
-          Consumer { future: Future<TestScript.TestResult> ->
-            try {
-              Truth.assertThat(future.get().isPass).isFalse()
-            } catch (e: Throwable) {
-              throw AssertionError(e)
-            }
-          })
-      }
+      testPassing(it)
+      testFailing(it)
+      testPrecheckFailing(it)
       stopwatch.stop()
       println(
-        "#threads=" + threadCount + ": time=" + stopwatch.elapsed(TimeUnit.SECONDS) + " seconds")
+        "#threads=" + threadCount + ": time=" + stopwatch.elapsed(TimeUnit.SECONDS) + " seconds"
+      )
     }
   }
 
-  companion object {
-    private const val FOLDER = "test_data/delta_1/"
+  private fun testPrecheckFailing(it: TestScriptExecutorService) {
+    val invalidProgram = TestUtility.createSparTreeFromFile(invalidSourceFile.file)
+      .programSnapshot
+    val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
+    for (i in 0..49) {
+      futureList.add(
+        it.testProgram(
+          { TestScript.TestResult(exitCode = 1, elapsedMilliseconds = 1) },
+          invalidProgram,
+          ORIG_FORMAT
+        )
+      )
+    }
+    futureList.forEach(
+      Consumer {
+        try {
+          assertThat(it.get().isPass).isFalse()
+        } catch (e: Throwable) {
+          throw AssertionError(e)
+        }
+      }
+    )
+  }
+
+  private fun testFailing(it: TestScriptExecutorService) {
+    val invalidProgram = TestUtility.createSparTreeFromFile(invalidSourceFile.file)
+      .programSnapshot
+    val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
+    for (i in 0..49) {
+      futureList.add(
+        it.testProgram(
+          ALWAYS_TRUE_PRECHECK,
+          invalidProgram,
+          ORIG_FORMAT
+        )
+      )
+    }
+    futureList.forEach(
+      Consumer {
+        try {
+          assertThat(it.get().isPass).isFalse()
+        } catch (e: Throwable) {
+          throw AssertionError(e)
+        }
+      }
+    )
+  }
+
+  private fun testPassing(service: TestScriptExecutorService) {
+    val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
+    for (i in 0..49) {
+      futureList.add(
+        service.testProgram(
+          ALWAYS_TRUE_PRECHECK,
+          program!!,
+          ORIG_FORMAT
+        )
+      )
+    }
+    futureList.forEach(
+      Consumer {
+        try {
+          assertThat(it.get().isPass).isTrue()
+        } catch (e: Throwable) {
+          throw AssertionError(e)
+        }
+      }
+    )
   }
 }

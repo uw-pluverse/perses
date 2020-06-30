@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2017 Chengnian Sun.
+ * Copyright (C) 2018-2020 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -136,6 +136,7 @@ public abstract class AbstractDefaultParserFacade<LEXER extends Lexer, PARSER ex
     return ImmutableList.copyOf(lexer.getAllTokens());
   }
 
+  @Deprecated
   public final ParseTreeWithParser parseTokenizedProgram(TokenizedProgram program) {
     final CommonTokenStream tokens = new CommonTokenStream(program.createTokenSource());
     final PARSER parser = createParserWithoutCache(tokens);

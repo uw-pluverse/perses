@@ -287,19 +287,6 @@ classTemplateOpt_2
         templateBody
     transitive sub-rule names:
         templateBody
-compilationUnit
-    epsilonable: false
-    immediate sub-rule names:
-        topStatSeq
-    transitive sub-rule names:
-        alternative__tmplDef_3
-        import_
-        kleene_plus__topStatSeq_1
-        packageObject
-        packaging
-        tmplDef
-        topStat
-        topStatSeq
 compoundType
     epsilonable: false
     immediate sub-rule names:

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2017 Chengnian Sun.
+ * Copyright (C) 2018-2020 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,9 +18,9 @@ package org.perses.reduction
 
 import com.google.common.flogger.FluentLogger
 import org.perses.program.ScriptFile
-import java.io.File
 import org.perses.util.Shell
 import org.perses.util.TimeSpan
+import java.io.File
 
 /** Represents a test script, that specifies the property to preserve during reduction.  */
 class TestScript(val scriptFile: File, private val scriptTemplate: ScriptFile) {
@@ -32,7 +32,8 @@ class TestScript(val scriptFile: File, private val scriptTemplate: ScriptFile) {
     val output = Shell.run(
       "${scriptTemplate.shebang}  ${scriptFile.name}",
       scriptFile.parentFile,
-      false)
+      false
+    )
     logger.atFine().log("test script stdout: %s", output.stdout)
     logger.atFine().log("test script stderr: %s", output.stderr)
     val timeSpan = timeSpanBuilder.end(System.currentTimeMillis())
@@ -40,10 +41,17 @@ class TestScript(val scriptFile: File, private val scriptTemplate: ScriptFile) {
   }
 
   /** The result of a test, including runtime information, i.e., time, exit code.  */
-  class TestResult(private val exitCode: Int, val elapsedMilliseconds: Long) {
+  class TestResult(val exitCode: Int, val elapsedMilliseconds: Long) {
 
     val isPass: Boolean
       get() = exitCode == 0
+
+    val isFail: Boolean
+      get() = !isPass
+
+    companion object {
+      val TRUE_RESULT = TestResult(exitCode = 0, elapsedMilliseconds = 0)
+    }
   }
 
   companion object {

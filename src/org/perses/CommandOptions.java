@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2017 Chengnian Sun.
+ * Copyright (C) 2018-2020 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,20 +17,14 @@
 
 package org.perses;
 
-import com.beust.jcommander.IParameterValidator;
-import com.beust.jcommander.IStringConverter;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
-import com.beust.jcommander.ParameterException;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import org.perses.program.EnumFormatControl;
 import org.perses.util.Fraction;
 
 import java.io.File;
-import java.util.Arrays;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
@@ -111,11 +105,20 @@ public class CommandOptions {
 
     public void validate() {
       final File testScript = this.getTestScript();
-      checkState(testScript.isFile(), "The test script %s is not a file.", testScript);
+      final String workingDirectory = new File(".").getAbsolutePath();
+      checkState(
+          testScript.isFile(),
+          "The test script %s is not a file. The current directory is %s.",
+          testScript,
+          workingDirectory);
       checkState(testScript.canExecute(), "The test script %s is not executable.", testScript);
 
       final File sourceFile = this.getSourceFile();
-      checkState(sourceFile.isFile(), "The source program %s is not a file.", sourceFile);
+      checkState(
+          sourceFile.isFile(),
+          "The source program %s is not a file. The current directory is %s.",
+          sourceFile,
+          workingDirectory);
     }
   }
 
@@ -144,8 +147,6 @@ public class CommandOptions {
 
   public static final class ReductionControlFlags {
 
-
-
     @Parameter(
         names = "--fixpoint",
         description = "iterative reduction till fixpoint",
@@ -161,8 +162,7 @@ public class CommandOptions {
 
     @Parameter(
         names = "--code-format",
-        description =
-            "The format of the reduced program.",
+        description = "The format of the reduced program.",
         arity = 1,
         order = FlagOrder.REDUCTION_CONTROL + 2)
     public EnumFormatControl codeFormat;
@@ -213,17 +213,32 @@ public class CommandOptions {
     public boolean rebuildParseTreeEachIteration = true;
 
     @Parameter(
+        names = "--enable-token-slicer",
+        description = "Enable token slicer after syntax-guided reduction is done. Maybe slow.",
+        arity = 1,
+        order = FlagOrder.ALG_CONTROL + 3)
+    public boolean enableTokenSlicer = false;
+
+    @Parameter(
+            names = "--enable-tree-slicer",
+            description = "Enable tree slicer after syntax-guided reduction, and before token slicer",
+            arity = 1,
+            order = FlagOrder.ALG_CONTROL +4
+    )
+    public boolean enableTreeSlicer = false;
+
+    @Parameter(
         names = "--use-real-ddmin",
         description = "Whether to use the real delta debugging algorithm to reduce kleene nodes.",
         arity = 1,
-        order = FlagOrder.ALG_CONTROL + 3)
+        order = FlagOrder.ALG_CONTROL + 5)
     public boolean useRealDeltaDebugger = false;
 
     @Parameter(
         names = "--use-optc-parser",
         description = "Use the OptC parser to construct the spar-tree.",
         arity = 1,
-        order = FlagOrder.ALG_CONTROL + 4)
+        order = FlagOrder.ALG_CONTROL + 6)
     public boolean useOptCParser = false;
 
     public String getReductionAlgorithmName() {

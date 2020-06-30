@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2017 Chengnian Sun.
+ * Copyright (C) 2018-2020 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -48,6 +48,12 @@ public class DefaultReductionListener extends AbstractReductionListener {
   @Override
   public void onLevelGranularityReductionEnd(
       AbstractReductionEvent.LevelGranularityReductionEndEvent event) {}
+
+  @Override
+  public void onSlicingTokensStart(AbstractReductionEvent.TokenSlicingStartEvent event) {}
+
+  @Override
+  public void onSlicingTokensEnd(AbstractReductionEvent.TokenSlicingEndEvent event) {}
 
   @Override
   public void onNodeReductionStart(AbstractReductionEvent.NodeReductionStartEvent event) {}

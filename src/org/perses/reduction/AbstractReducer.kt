@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2017 Chengnian Sun.
+ * Copyright (C) 2018-2020 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,17 +16,20 @@
  */
 package org.perses.reduction
 
-import java.io.IOException
-import java.util.LinkedList
-import java.util.Optional
-import java.util.concurrent.ExecutionException
+import org.perses.antlr.RuleType
 import org.perses.program.TokenizedProgram
+import org.perses.reduction.TestScript.TestResult
+import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
 import org.perses.reduction.TestScriptExecutorService.FutureTestScriptExecutionTask
 import org.perses.tree.spar.AbstractNodeActionSetCache
 import org.perses.tree.spar.AbstractSparTreeEdit
 import org.perses.tree.spar.AbstractSparTreeNode
 import org.perses.tree.spar.SparTree
 import org.perses.tree.spar.SparTreeSimplifier
+import java.io.IOException
+import java.util.LinkedList
+import java.util.Optional
+import java.util.concurrent.ExecutionException
 
 /** The base class for reducer. Both hdd and perses algorithms extend this class.  */
 abstract class AbstractReducer protected constructor(
@@ -34,25 +37,34 @@ abstract class AbstractReducer protected constructor(
   reducerContext: ReducerContext
 ) {
   @JvmField
-  protected val configuration: ReductionConfiguration
-  protected val executorService: TestScriptExecutorService
-  protected val queryCache: AbstractTestScriptExecutionCache
-  @JvmField
-  protected val listenerManager: ReductionListenerManager
-  @JvmField
-  protected val nodeActionSetCache: AbstractNodeActionSetCache
-  @JvmField
-  protected val actionSetProfiler: AbstractActionSetProfiler
+  protected val configuration: ReductionConfiguration = reducerContext.configuration
+  protected val executorService: TestScriptExecutorService = reducerContext.executorService
+  protected val queryCache: AbstractTestScriptExecutionCache = reducerContext.queryCache
 
-  protected fun testProgramAsynchronously(program: TokenizedProgram) =
-    executorService.testProgram(program, configuration.programFormatControl)
+  @JvmField
+  protected val listenerManager: ReductionListenerManager = reducerContext.listenerManager
 
-  private class FutureExecutionResultInfo(
+  @JvmField
+  protected val nodeActionSetCache: AbstractNodeActionSetCache = reducerContext.nodeActionSetCache
+
+  @JvmField
+  protected val actionSetProfiler: AbstractActionSetProfiler = reducerContext.actionSetProfiler
+
+  protected fun testProgramAsynchronously(
+    precheck: () -> TestResult,
+    program: TokenizedProgram
+  ) =
+    executorService.testProgram(
+      precheck,
+      program, configuration.programFormatControl
+    )
+
+  protected class FutureExecutionResultInfo(
     val edit: AbstractSparTreeEdit,
     val program: TokenizedProgram,
     val future: FutureTestScriptExecutionTask
   ) {
-    val result: TestScript.TestResult
+    val result: TestResult
       get() = try {
         future.get()
       } catch (e: Exception) {
@@ -72,13 +84,17 @@ abstract class AbstractReducer protected constructor(
     }
     val futureList = asyncApplyEditsInOrderOfProgramSizeFromLeast(editList)
     val best = analyzeResultsAndGetBest(futureList)
-    assert(!best.isPresent ||
-      configuration.parserFacade.isSourceCodeParsable(best.get().edit.program))
-    return best.map { b: FutureExecutionResultInfo -> TreeEditWithItsResult(b.edit, b.result) }
+    assert(
+      !best.isPresent ||
+        configuration.parserFacade.isSourceCodeParsable(
+          best.get().edit.program.toCompactSourceCode()
+        )
+    )
+    return best.map { TreeEditWithItsResult(it.edit, it.result) }
   }
 
   private fun isFutureListSortedFromLeastProgramSizeToGreatest(
-    futureList: ArrayList<FutureExecutionResultInfo>
+    futureList: List<FutureExecutionResultInfo>
   ): Boolean {
     val size = futureList.size
     if (size < 2) {
@@ -94,8 +110,8 @@ abstract class AbstractReducer protected constructor(
     return true
   }
 
-  private fun analyzeResultsAndGetBest(
-    futureList: ArrayList<FutureExecutionResultInfo>
+  protected fun analyzeResultsAndGetBest(
+    futureList: List<FutureExecutionResultInfo>
   ): Optional<FutureExecutionResultInfo> {
     assert(isFutureListSortedFromLeastProgramSizeToGreatest(futureList)) { futureList }
     var best: FutureExecutionResultInfo? = null
@@ -109,18 +125,24 @@ abstract class AbstractReducer protected constructor(
         executionResultInfo.cancel()
         val duration = (System.currentTimeMillis() - start).toInt()
         listenerManager.onTestScriptExecutionCancelled(
-          executionResultInfo.program, executionResultInfo.edit, duration)
+          executionResultInfo.program, executionResultInfo.edit, duration
+        )
         continue
       }
       val testResult = executionResultInfo.result
-      queryCache.addResult(executionResultInfo.program, executionResultInfo.result)
+      cacheTestResult(executionResultInfo.program, executionResultInfo.result)
       listenerManager.onTestScriptExecution(
-        testResult, executionResultInfo.program, executionResultInfo.edit)
+        testResult, executionResultInfo.program, executionResultInfo.edit
+      )
       if (testResult.isPass) {
         best = executionResultInfo
       }
     }
     return Optional.ofNullable(best)
+  }
+
+  protected fun cacheTestResult(program: TokenizedProgram?, result: TestResult) {
+    queryCache.addResult(program, result)
   }
 
   private fun asyncApplyEditsInOrderOfProgramSizeFromLeast(
@@ -144,7 +166,7 @@ abstract class AbstractReducer protected constructor(
       .forEach { edit: AbstractSparTreeEdit ->
         assert(!edit.isEmpty) { "Edit cannot be empty." }
         val program = edit.program
-        val future = testProgramAsynchronously(program)
+        val future = testProgramAsynchronously(ALWAYS_TRUE_PRECHECK, program)
         futureList.add(FutureExecutionResultInfo(edit, program, future))
       }
     return futureList
@@ -159,6 +181,39 @@ abstract class AbstractReducer protected constructor(
 
   @Throws(IOException::class, ExecutionException::class, InterruptedException::class)
   protected abstract fun internalReduce(tree: SparTree)
+  protected fun canBeEpsilon(nodeForTest: AbstractSparTreeNode): Boolean {
+    var node: AbstractSparTreeNode? = nodeForTest
+    while (node != null) {
+      if (node.antlrRule.get().canRuleBeEpsilon()) {
+        // If the rule of the current node can be epsilon.
+        return true
+      }
+      val parent = node.parentInfo ?: return false
+      if (parent.antlrRuleForTheChild.get().canRuleBeEpsilon()) {
+        // If the EXPECTED rule of the current node can be epsilon.
+        return true
+      }
+      val parentNode: AbstractSparTreeNode = parent.node
+      val childCount = parentNode.childCount
+      return if (childCount == 1) {
+        // Only the current node, then check whether the parent node rule can be epsilon.
+        node = parentNode
+        continue
+      } else if (childCount > 1) {
+        val parentNodeType = parentNode.nodeType
+        when (parentNodeType) {
+          RuleType.KLEENE_PLUS, RuleType.KLEENE_STAR -> true
+          RuleType.OPTIONAL -> throw RuntimeException(
+            "Optional should have a single child. " + node.printTreeStructure()
+          )
+          else -> false
+        }
+      } else {
+        throw RuntimeException("Unreachable. " + node.printTreeStructure())
+      }
+    }
+    return false
+  }
 
   companion object {
     private fun removePermanentlyDeletedNodes(partition: LinkedList<AbstractSparTreeNode>) {
@@ -170,14 +225,5 @@ abstract class AbstractReducer protected constructor(
         }
       }
     }
-  }
-
-  init {
-    configuration = reducerContext.configuration
-    executorService = reducerContext.executorService
-    queryCache = reducerContext.queryCache
-    listenerManager = reducerContext.listenerManager
-    nodeActionSetCache = reducerContext.nodeActionSetCache
-    actionSetProfiler = reducerContext.actionSetProfiler
   }
 }

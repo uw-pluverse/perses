@@ -537,7 +537,7 @@ packageObject
 
 
 compilationUnit
-   : ('package' qualId)* topStatSeq
+   : ('package' qualId)* topStatSeq EOF
    ;
 
 // Lexer

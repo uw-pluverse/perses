@@ -132,6 +132,7 @@ kt_jvm_library(
         ":test_script_executor_service",
         "//src/org/perses/reduction/reducer:level_based_reducers",
         "//src/org/perses/reduction/reducer:node_based_reducer",
+        "//src/org/perses/reduction/reducer:token_slicer",
         "@maven//:com_google_guava_guava",
     ],
 )

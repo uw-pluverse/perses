@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2017 Chengnian Sun.
+ * Copyright (C) 2018-2020 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -48,7 +48,8 @@ object TreeTransformations {
         }
         expectedSuperRuleType.isEqualToOrSuperOf(nodeRule.get())
       },
-      maxBfsDepth)
+      maxBfsDepth
+    )
     return replacements.stream()
       .map { node: AbstractSparTreeNode? -> ChildHoistingAction(currentNode, node) }
       .collect(ImmutableList.toImmutableList())
@@ -77,11 +78,13 @@ object TreeTransformations {
     }
     val kleeneElementRule = parent.kleeneElementRule
     assert(kleeneElementRule == currentNode.parentInfo!!.antlrRuleForTheChild.get()) {
-      (currentNode
-        .toString() + ": " +
-        kleeneElementRule +
-        " vs " +
-        currentNode.parentInfo!!.antlrRuleForTheChild)
+      (
+        currentNode
+          .toString() + ": " +
+          kleeneElementRule +
+          " vs " +
+          currentNode.parentInfo!!.antlrRuleForTheChild
+        )
     }
     val replacementList = currentNode.boundedBreadthFirstSearchForFirstQualifiedNodes(
       { node: AbstractSparTreeNode ->
@@ -91,7 +94,8 @@ object TreeTransformations {
         val childRule = node.kleeneElementRule
         kleeneElementRule.isEqualToOrSuperOf(childRule)
       },
-      maxBfsDepth)
+      maxBfsDepth
+    )
     return if (replacementList.isEmpty()) {
       ImmutableList.of()
     } else replacementList.stream()

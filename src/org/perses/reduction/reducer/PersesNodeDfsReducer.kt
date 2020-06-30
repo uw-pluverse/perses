@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2017 Chengnian Sun.
+ * Copyright (C) 2018-2020 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,15 +16,15 @@
  */
 package org.perses.reduction.reducer
 
-import java.util.ArrayDeque
-import java.util.Queue
-import java.util.function.Function
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.partition.Partition
 import org.perses.tree.spar.AbstractSparTreeEdit
 import org.perses.tree.spar.AbstractSparTreeNode
 import org.perses.tree.spar.SparTree
+import java.util.ArrayDeque
+import java.util.Queue
+import java.util.function.Function
 
 /** Perses node reducer, with dfs delta debugging  */
 open class PersesNodeDfsReducer constructor(
@@ -44,9 +44,8 @@ open class PersesNodeDfsReducer constructor(
       Function { edit: AbstractSparTreeEdit -> testSparTreeEdit(edit) }
     )
 
-  override fun createReductionQueue(): Queue<AbstractSparTreeNode> {
-    return ArrayDeque<AbstractSparTreeNode>(DEFAULT_INITIAL_QUEUE_CAPACITY)
-  }
+  override fun createReductionQueue(): Queue<AbstractSparTreeNode> =
+    ArrayDeque<AbstractSparTreeNode>(DEFAULT_INITIAL_QUEUE_CAPACITY)
 
   override fun performDelta(
     tree: SparTree,
@@ -59,6 +58,7 @@ open class PersesNodeDfsReducer constructor(
 
   companion object {
     const val NAME = "perses_node_with_dfs_delta"
+
     @JvmField
     val META: ReducerAnnotation = object : ReducerAnnotation() {
       override fun shortName(): String = NAME

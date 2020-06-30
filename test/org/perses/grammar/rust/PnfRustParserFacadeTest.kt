@@ -1,14 +1,26 @@
+/*
+ * Copyright (C) 2018-2020 University of Waterloo.
+ *
+ * This file is part of Perses.
+ *
+ * Perses is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3, or (at your option) any later version.
+ *
+ * Perses is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
+ */
 package org.perses.grammar.rust
 
 import com.google.common.truth.Truth
-import org.antlr.v4.runtime.misc.ParseCancellationException
-
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
-
-import java.util.concurrent.atomic.AtomicInteger
 import java.io.File
 
 @RunWith(JUnit4::class)
@@ -34,7 +46,7 @@ class PnfRustParserFacadeTest {
     }
   }
 
-  fun testString(program : String, name : String) {
+  fun testString(program: String, name: String) {
     val parseTreeFromOrigParser = facade.parseWithOrigRustParser(program, name)
     val tokensByOrigParser = TestUtility.extractTokens(parseTreeFromOrigParser.tree)
 
@@ -44,7 +56,7 @@ class PnfRustParserFacadeTest {
     Truth.assertThat(tokensByPnfParser).containsExactlyElementsIn(tokensByOrigParser).inOrder()
   }
 
-  fun testSingleFile(file : File) {
+  fun testSingleFile(file: File) {
     /* 
     try {
       System.err.println("Testing file ${file.getAbsolutePath()}")
@@ -84,7 +96,7 @@ class PnfRustParserFacadeTest {
       testSingleFile(file)
     }
   }
-   
+
   @Test
   fun testShard5() {
     for (file in testData.shard5) {
@@ -97,12 +109,13 @@ class PnfRustParserFacadeTest {
     for (file in testData.shard6) {
       testSingleFile(file)
     }
-  } 
+  }
 
   @Test
   fun basicTest() {
 
-    val program = """
+    val program =
+      """
     |fn main() {
     |  // Statements here are executed when the compiled binary is called
     |
@@ -111,6 +124,6 @@ class PnfRustParserFacadeTest {
     |}
     """.trimMargin()
 
-    testString(program, "<in memory>") 
+    testString(program, "<in memory>")
   }
 }

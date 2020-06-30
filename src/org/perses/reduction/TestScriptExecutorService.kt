@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2017 Chengnian Sun.
+ * Copyright (C) 2018-2020 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,11 +18,9 @@ package org.perses.reduction
 
 import org.perses.program.EnumFormatControl
 import org.perses.program.ScriptFile
-import org.perses.program.SourceFile
 import org.perses.program.TokenizedProgram
 import java.io.Closeable
 import java.io.File
-import java.io.IOException
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 import java.util.concurrent.FutureTask
@@ -35,7 +33,13 @@ class TestScriptExecutorService(
   testScriptFile: ScriptFile,
   sourceFileName: String
 ) : Closeable {
-  private val executionCounter = AtomicInteger()
+
+  companion object {
+    val ALWAYS_TRUE_PRECHECK = { TestScript.TestResult(exitCode = 0, elapsedMilliseconds = 0) }
+  }
+
+  val statistics = Statistics()
+
   // TODO: create the executor outside, and pass it in as a parameter, so that others can use the
   //       executor.
   private var executorService = Executors.newFixedThreadPool(numOfThreads)
@@ -58,7 +62,8 @@ class TestScriptExecutorService(
     reductionFolderManager = ReductionFolderManager(
       tempRootFolder,
       testScriptFile,
-      sourceFileName)
+      sourceFileName
+    )
   }
 
   @Override
@@ -77,27 +82,24 @@ class TestScriptExecutorService(
   }
 
   /**
-   * FIXME: make this method blocking if there is no available tasks. TODO: output the underlying
-   * test script and source file for debugging.
+   * FIXME: make this method blocking if there is no available tasks.
    */
   fun testProgram(
+    prechecker: () -> TestScript.TestResult,
     program: TokenizedProgram,
     keepOrigCodeFormat: EnumFormatControl
   ): FutureTestScriptExecutionTask {
-    executionCounter.incrementAndGet()
-    return try {
-      val workingFolder = reductionFolderManager!!.createNextFolder()
-      val result = FutureTestScriptExecutionTask(
-        ReductionTestScriptExecutorCallback(workingFolder, program, keepOrigCodeFormat))
-      executorService.submit(result)
-      result
-    } catch (e: IOException) {
-      throw RuntimeException(e)
-    }
+    statistics.onSubmitTest()
+    val workingFolder = reductionFolderManager!!.createNextFolder()
+    val result = FutureTestScriptExecutionTask(
+      ReductionTestScriptExecutorCallback(
+        workingFolder, prechecker,
+        program, keepOrigCodeFormat, statistics
+      )
+    )
+    executorService.submit(result)
+    return result
   }
-
-  val scriptExecutionCount: Int
-    get() = executionCounter.get()
 
   class FutureTestScriptExecutionTask(
     private val callable: ReductionTestScriptExecutorCallback
@@ -113,17 +115,46 @@ class TestScriptExecutorService(
   /** The test script runner for future.  */
   class ReductionTestScriptExecutorCallback(
     val workingDirectory: ReductionFolder,
+    private val prechecker: () -> TestScript.TestResult,
     val program: TokenizedProgram,
-    private val keepOrigCodeFormat: EnumFormatControl
+    private val keepOrigCodeFormat: EnumFormatControl,
+    private val statistics: Statistics
   ) :
     Callable<TestScript.TestResult> {
 
-    @Throws(Exception::class)
     override fun call(): TestScript.TestResult {
+      statistics.onRunPrecheck()
+      val precheckResult = prechecker.invoke()
+      if (precheckResult.isFail) {
+        return precheckResult
+      }
+      statistics.onExecuteScript()
       program.writeToFile(workingDirectory.sourceFilePath, keepOrigCodeFormat)
       val result = workingDirectory.testScript.test()
       workingDirectory.deleteAllOtherFiles()
       return result
     }
+  }
+
+  class Statistics {
+    private val submittedTestCounter = AtomicInteger()
+    private val preCheckCounterCounter = AtomicInteger()
+    private val scriptExecutionCounter = AtomicInteger()
+
+    internal fun onSubmitTest() {
+      submittedTestCounter.incrementAndGet()
+    }
+
+    internal fun onRunPrecheck() {
+      preCheckCounterCounter.incrementAndGet()
+    }
+
+    internal fun onExecuteScript() {
+      scriptExecutionCounter.incrementAndGet()
+    }
+
+    fun getSubmittedTestNumber() = submittedTestCounter.get()
+    fun getPrecheckExecutionNumber() = preCheckCounterCounter.get()
+    fun getScriptExecutionNumber() = scriptExecutionCounter.get()
   }
 }

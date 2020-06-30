@@ -20,10 +20,8 @@ java_library(
     ],
 )
 
-
-
 java_binary(
     name = "combine_lexer_parser_bin",
     main_class = "org.perses.antlr.util.LexerParserCombiner",
-    runtime_deps=[":lexer_parser_combiner"]
+    runtime_deps = [":lexer_parser_combiner"],
 )

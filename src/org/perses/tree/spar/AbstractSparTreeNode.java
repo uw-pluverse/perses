@@ -1,6 +1,23 @@
+/*
+ * Copyright (C) 2018-2020 University of Waterloo.
+ *
+ * This file is part of Perses.
+ *
+ * Perses is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3, or (at your option) any later version.
+ *
+ * Perses is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
+ */
 package org.perses.tree.spar;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.collect.ImmutableList;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.perses.antlr.RuleHierarchyInfo;
 import org.perses.antlr.RuleType;
@@ -344,10 +361,19 @@ public abstract class AbstractSparTreeNode implements Comparable<AbstractSparTre
     return result;
   }
 
-  /** @return an array containing all the children of this node. */
-  public final ArrayList<AbstractSparTreeNode> copyChildren() {
-    return new ArrayList<>(children);
+  public final ImmutableList<AbstractSparTreeNode> copyChildren() {
+    return ImmutableList.copyOf(children);
   }
+
+  public final ImmutableList<AbstractSparTreeNode> copyAndReverseChildren() {
+    final ImmutableList.Builder<AbstractSparTreeNode> builder = ImmutableList.builder();
+    final int length = children.size();
+    for (int i = length - 1; i >= 0; --i) {
+      builder.add(children.get(i));
+    }
+    return builder.build();
+  }
+
 
   /**
    * This method should be only called when a spar-tree is constructed from a Antlr parse tree. Add
