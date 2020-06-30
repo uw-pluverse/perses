@@ -33,8 +33,6 @@ import org.perses.tree.spar.AbstractSparTreeNode;
 import org.perses.tree.spar.NodeDeletionActionSet;
 import org.perses.tree.spar.NodeDeletionTreeEdit;
 
-
-
 import org.perses.tree.spar.SparTree;
 import org.perses.tree.spar.SparTreeBuilder;
 
@@ -71,23 +69,21 @@ public class Fuzzer {
   }
 
   //
-  public static void treeMutation(SparTree sparTree,Long randomSeed){
+  public static void treeMutation(SparTree sparTree, Long randomSeed) {
     NodeDeletionActionSet.Builder builder = new NodeDeletionActionSet.Builder("edit 1");
-    //hard-coded token id for testing
+    // hard-coded token id for testing
     Random rnd = new Random();
     rnd.setSeed(randomSeed);
 
-//    System.out.println(sparTree.getOriginalTokenCount());
-    AbstractSparTreeNode node = sparTree.randomDeleteNode(rnd);
-    builder.deleteNode(node);
+    //    System.out.println(sparTree.getOriginalTokenCount());
+    AbstractSparTreeNode nodeToBeDeleted = sparTree.randomDeleteNode(rnd);
+    builder.deleteNode(nodeToBeDeleted);
     NodeDeletionActionSet actionSet = builder.build();
     NodeDeletionTreeEdit treeEdit = sparTree.createNodeDeletionEdit(actionSet);
     //  debugging code, check if applyEdit working properly
-//    System.out.println(node.getNodeId());
-//    System.out.println(sparTree.printTreeStructure());
+    //    System.out.println(node.getNodeId());
+    System.out.println(sparTree.printTreeStructure());
     sparTree.applyEdit(treeEdit);
-//    System.out.println(sparTree.printTreeStructure());
+    System.out.println(sparTree.printTreeStructure());
   }
-
-
 }

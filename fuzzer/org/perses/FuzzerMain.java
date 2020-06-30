@@ -26,28 +26,29 @@ import java.util.Arrays;
 
 public class FuzzerMain {
 
-    public static void main(String[] args) throws IOException,Exception {
+  public static void main(String[] args) throws IOException, Exception {
 
-        final CommandOptions cmd = new CommandOptions();
-        final JCommander commander = cmd.createJCommander(FuzzerMain.class);
-        commander.parse(args);
-        if (cmd.help) {
-            commander.usage();
-            return;
-        }
-        Long randomSeed = 1L;
-        if (cmd.randomMutationFlag.randomSeed != null) {
-            randomSeed = cmd.randomMutationFlag.randomSeed;
-        }
-
-        if (cmd.randomMutationFlag.seedFile == null){
-//            throw new Exception("no target file");
-        }
-        // sample test with file "test_data/c_programs/gcc_testsuite/06002.c"
-//        final ParseTree treeByOpt = Fuzzer.generateParseTree(cmd.randomMutationFlag.seedFile);
-//        System.out.println(Arrays.toString(args));
-        final ParseTree treeByOpt = Fuzzer.generateParseTree("test_data/c_programs/gcc_testsuite/06002.c");
-        final SparTree sparTree = Fuzzer.generateSparTree(treeByOpt);
-        Fuzzer.treeMutation(sparTree, randomSeed);
+    final CommandOptions cmd = new CommandOptions();
+    final JCommander commander = cmd.createJCommander(FuzzerMain.class);
+    commander.parse(args);
+    if (cmd.help) {
+      commander.usage();
+      return;
     }
+    Long randomSeed = 1L;
+    if (cmd.randomMutationFlag.randomSeed != null) {
+      randomSeed = cmd.randomMutationFlag.randomSeed;
+    }
+
+    if (cmd.randomMutationFlag.seedFile == null) {
+      //            throw new Exception("no target file");
+    }
+    // sample test with file "test_data/c_programs/gcc_testsuite/06002.c"
+    //        final ParseTree treeByOpt = Fuzzer.generateParseTree(cmd.randomMutationFlag.seedFile);
+    //        System.out.println(Arrays.toString(args));
+    final ParseTree treeByOpt =
+        Fuzzer.generateParseTree("test_data/c_programs/gcc_testsuite/06002.c");
+    final SparTree sparTree = Fuzzer.generateSparTree(treeByOpt);
+    Fuzzer.treeMutation(sparTree, randomSeed);
+  }
 }
