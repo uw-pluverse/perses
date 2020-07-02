@@ -86,3 +86,17 @@ and then run/debug as usual. You can find more at [the official documentation](h
 
 ### License ###
 GNU General Public License 3.
+
+### Reference ###
+Perse was first published at *International Conference on Software Engineering 2018* as a [full research paper](https://dl.acm.org/doi/10.1145/3180155.3180236).
+```
+@inproceedings{perses,
+  author = {Sun, Chengnian and Li, Yuanbo and Zhang, Qirun and Gu, Tianxiao and Su, Zhendong},
+  title = {Perses: Syntax-Guided Program Reduction},
+  year = {2018},
+  publisher = {Association for Computing Machinery},
+  doi = {10.1145/3180155.3180236},
+  booktitle = {Proceedings of the 40th International Conference on Software Engineering},
+  pages = {361–371},
+}
+```
