@@ -43,7 +43,7 @@ java_binary(
     deps = [
         "//antlropt/org/perses/antlr/ast",
         "//fuzzer/org/perses:perses_fuzzer",
-        "//fuzzer/org/perses:command_options",
+        ":command_options",
         "//src/org/perses/antlr:antlr_grammar_util",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",

@@ -45,6 +45,6 @@ public class FuzzerMain {
     final SparTree sparTree = Fuzzer.generateSparTree(treeByOpt);
     Random rnd = new Random();
     rnd.setSeed(cmd.randomMutationFlag.randomSeed);
-    Fuzzer.treeMutation(sparTree, rnd );
+    Fuzzer.treeMutation(sparTree, rnd);
   }
 }

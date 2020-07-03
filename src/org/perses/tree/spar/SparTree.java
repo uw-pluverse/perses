@@ -351,23 +351,4 @@ public final class SparTree extends AbstractUnmodifiableSparTree {
         });
     return new TokenizedProgram(builder.build());
   }
-  private final List<AbstractSparTreeNode> inorderTreeTraverse(AbstractSparTreeNode currrentNode,
-                                                                 List<AbstractSparTreeNode> currentList){
-    currentList.add(currrentNode);
-
-    final int childCount = currrentNode.getChildCount();
-    if (childCount != 0) {
-      for (int i = 0; i < childCount; ++i) {
-        final AbstractSparTreeNode child = currrentNode.getChild(i);
-        inorderTreeTraverse(child,currentList);
-      }
-    }
-    return currentList;
-  }
-
-  public final List<AbstractSparTreeNode> flatSparTree(Random rand){
-    List<AbstractSparTreeNode> treeList = new ArrayList<>();
-    treeList = inorderTreeTraverse(root,treeList);
-    return treeList;
-  }
 }

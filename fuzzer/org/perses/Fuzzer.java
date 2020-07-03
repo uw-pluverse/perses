@@ -39,8 +39,10 @@ import org.perses.tree.spar.SparTreeBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Stack;
 import java.util.concurrent.ExecutionException;
 
 public class Fuzzer {
@@ -69,11 +71,38 @@ public class Fuzzer {
     return sparTree;
   }
 
+  private static List<AbstractSparTreeNode> inorderTreeTraverse(
+      AbstractSparTreeNode root, List<AbstractSparTreeNode> currentList) {
+    Stack<AbstractSparTreeNode> bufferStack = new Stack<AbstractSparTreeNode>();
+    AbstractSparTreeNode currentNode = root;
+    if (currentNode == null) {
+      System.out.println("!!!");
+      return currentList;
+    }
+    bufferStack.push(currentNode);
+    while (!bufferStack.empty()) {
+      currentNode = bufferStack.pop();
+      currentList.add(currentNode);
+      int childCount = currentNode.getChildCount();
+      for (int i = 0; i < childCount; ++i) {
+        bufferStack.push(currentNode.getChild(i));
+      }
+    }
+    return currentList;
+  }
+
+  private static List<AbstractSparTreeNode> flatSparTree(Random rand, SparTree tree) {
+    AbstractSparTreeNode root = tree.getRoot();
+    List<AbstractSparTreeNode> treeList = new ArrayList<>();
+    treeList = inorderTreeTraverse(root, treeList);
+    return treeList;
+  }
+
   //
-  public static void treeMutation(SparTree sparTree, Random rnd) {
-    //convert spartree into a list
-    List<AbstractSparTreeNode> treeList = sparTree.flatSparTree(rnd);
-    //random pop element from treeList
+  static void treeMutation(SparTree sparTree, Random rnd) {
+    // convert spartree into a list
+    List<AbstractSparTreeNode> treeList = flatSparTree(rnd, sparTree);
+    // random pop element from treeList
     int index = rnd.nextInt(treeList.size());
     AbstractSparTreeNode nodeToBeDeleted = treeList.get(index);
     treeList.remove(index);
@@ -83,9 +112,9 @@ public class Fuzzer {
     NodeDeletionActionSet actionSet = builder.build();
     NodeDeletionTreeEdit treeEdit = sparTree.createNodeDeletionEdit(actionSet);
     //  debugging code, check if applyEdit working properly
-    //    System.out.println(node.getNodeId());
-    System.out.println(sparTree.printTreeStructure());
+    //        System.out.println(nodeToBeDeleted.getNodeId());
+    //    System.out.println(sparTree.printTreeStructure());
     sparTree.applyEdit(treeEdit);
-    System.out.println(sparTree.printTreeStructure());
+    //    System.out.println(sparTree.printTreeStructure());
   }
 }
