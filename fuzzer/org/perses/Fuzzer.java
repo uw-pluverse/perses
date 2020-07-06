@@ -28,7 +28,12 @@ import org.perses.grammar.c.CParserFacade;
 import org.perses.program.LanguageKind;
 import org.perses.program.TokenizedProgramFactory;
 
-import org.perses.tree.spar.*;
+import org.perses.tree.spar.AbstractSparTreeEdit;
+import org.perses.tree.spar.AbstractSparTreeNode;
+import org.perses.tree.spar.NodeDeletionActionSet;
+import org.perses.tree.spar.NodeDeletionTreeEdit;
+import org.perses.tree.spar.SparTree;
+import org.perses.tree.spar.SparTreeBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,10 +71,9 @@ public class Fuzzer {
   private static ImmutableList<AbstractSparTreeNode> BFS(AbstractSparTreeNode root) {
     List<AbstractSparTreeNode> currentList = new ArrayList<>();
     Stack<AbstractSparTreeNode> bufferStack = new Stack<AbstractSparTreeNode>();
-    AbstractSparTreeNode currentNode = root;
-    bufferStack.push(currentNode);
+    bufferStack.push(root);
     while (!bufferStack.empty()) {
-      currentNode = bufferStack.pop();
+      AbstractSparTreeNode currentNode = bufferStack.pop();
       if (currentNode == null) {
         break;
       }
@@ -84,28 +88,21 @@ public class Fuzzer {
 
   private static ImmutableList<AbstractSparTreeNode> flatSparTree(SparTree tree) {
     AbstractSparTreeNode root = tree.getRoot();
-    ImmutableList<AbstractSparTreeNode> treeList = BFS(root);
-    return treeList;
+    return BFS(root);
   }
 
   //
-  static AbstractSparTreeEdit treeMutation(SparTree sparTree, Random rnd) {
+  static AbstractSparTreeEdit treeMutation(SparTree sparTree, Random random) {
     // convert spartree into a list
     ImmutableList<AbstractSparTreeNode> treeList = flatSparTree(sparTree);
     // random pop element from treeList
     // TODO: Use a hashSet mark deleted element to avoid deleting a node multiple times
-    int index = rnd.nextInt(treeList.size());
+    int index = random.nextInt(treeList.size());
     AbstractSparTreeNode nodeToBeDeleted = treeList.get(index);
 
     NodeDeletionActionSet.Builder builder = new NodeDeletionActionSet.Builder("edit 1");
     builder.deleteNode(nodeToBeDeleted);
     NodeDeletionActionSet actionSet = builder.build();
-    NodeDeletionTreeEdit treeEdit = sparTree.createNodeDeletionEdit(actionSet);
-    //  debugging code, check if applyEdit working properly
-    //            System.out.println(nodeToBeDeleted.getNodeId());
-    //        System.out.println(sparTree.printTreeStructure());
-    //        sparTree.applyEdit(treeEdit);
-    //        System.out.println(sparTree.printTreeStructure());
-    return treeEdit;
+    return sparTree.createNodeDeletionEdit(actionSet);
   }
 }

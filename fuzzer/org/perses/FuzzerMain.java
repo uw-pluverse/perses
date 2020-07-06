@@ -39,13 +39,10 @@ public class FuzzerMain {
       return;
     }
 
-    // sample test with file "test_data/c_programs/gcc_testsuite/06002.c"
-    //        final ParseTree treeByOpt = Fuzzer.generateParseTree(cmd.randomMutationFlag.seedFile);
-    //        System.out.println(Arrays.toString(args));
     final ParseTree treeByOpt =
         Fuzzer.generateParseTree("test_data/c_programs/gcc_testsuite/06002.c");
     final SparTree sparTree = Fuzzer.generateSparTree(treeByOpt);
-    Random rnd = new Random(cmd.randomMutationFlag.randomSeed);
-    AbstractSparTreeEdit RandomDeleteTreeEdit = Fuzzer.treeMutation(sparTree, rnd);
+    Random random = new Random(cmd.randomMutationFlag.randomSeed);
+    AbstractSparTreeEdit RandomDeleteTreeEdit = Fuzzer.treeMutation(sparTree, random);
   }
 }
