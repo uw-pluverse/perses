@@ -8,6 +8,8 @@ java_test(
         "//src/org/perses/antlr:antlr_grammar_util",
         "//src/org/perses/grammar/c:c_parser_facade",
         "//src/org/perses/grammar/c:pnfc_parser_facade",
+        "//src/org/perses/tree/spar",
+        "//src/org/perses/program",
         "//test/org/perses:test_util",
         "//test/org/perses:truth",
         "@maven//:com_google_flogger_flogger",

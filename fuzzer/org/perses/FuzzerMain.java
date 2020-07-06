@@ -16,15 +16,33 @@
  */
 package org.perses.fuzzer;
 
+import com.beust.jcommander.JCommander;
 import org.antlr.v4.runtime.tree.ParseTree;
+
+import org.perses.tree.spar.AbstractSparTreeEdit;
+import org.perses.tree.spar.AbstractTreeEditAction;
 import org.perses.tree.spar.SparTree;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Random;
 
 public class FuzzerMain {
-    public static void main(String[] args) throws IOException {
-        final ParseTree treeByOpt = Fuzzer.generateParseTree("test_data/c_programs/gcc_testsuite/06002.c");
-        final SparTree sparTree = Fuzzer.generateSparTree(treeByOpt);
-        Fuzzer.treeMutation(sparTree);
+
+  public static void main(String[] args) throws IOException {
+
+    final CommandOptions cmd = new CommandOptions();
+    final JCommander commander = cmd.createJCommander(FuzzerMain.class);
+    commander.parse(args);
+    if (cmd.help) {
+      commander.usage();
+      return;
     }
+
+    final ParseTree treeByOpt =
+        Fuzzer.generateParseTree("test_data/c_programs/gcc_testsuite/06002.c");
+    final SparTree sparTree = Fuzzer.generateSparTree(treeByOpt);
+    Random random = new Random(cmd.randomMutationFlag.randomSeed);
+    AbstractSparTreeEdit RandomDeleteTreeEdit = Fuzzer.treeMutation(sparTree, random);
+  }
 }
