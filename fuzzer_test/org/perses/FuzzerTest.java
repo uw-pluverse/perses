@@ -66,7 +66,7 @@ public class FuzzerTest {
     ParseTree treeByOpt = Fuzzer.generateParseTree(pathname);
     final SparTree sparTree = Fuzzer.generateSparTree(treeByOpt);
     // create random mutation edit
-    Random rnd = new Random(System.currentTimeMillis());
+    Random rnd = new Random(42);
     AbstractSparTreeEdit RandomDeleteTreeEdit = Fuzzer.treeMutation(sparTree, rnd);
     // load random mutated program into file
     final File mutatedFile = File.createTempFile("mutatedFile", ".temp");
