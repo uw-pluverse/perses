@@ -24,26 +24,18 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.perses.grammar.AbstractParserFacade;
 import org.perses.grammar.ParserFacadeFactory;
 import org.perses.grammar.c.CParserFacade;
-import org.perses.grammar.c.PnfCParserFacade;
 
 import org.perses.program.LanguageKind;
 import org.perses.program.TokenizedProgramFactory;
 
-import org.perses.tree.spar.AbstractSparTreeNode;
-import org.perses.tree.spar.NodeDeletionActionSet;
-import org.perses.tree.spar.NodeDeletionTreeEdit;
-
-import org.perses.tree.spar.SparTree;
-import org.perses.tree.spar.SparTreeBuilder;
+import org.perses.tree.spar.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Stack;
-import java.util.concurrent.ExecutionException;
 
 public class Fuzzer {
 
@@ -71,50 +63,49 @@ public class Fuzzer {
     return sparTree;
   }
 
-  private static List<AbstractSparTreeNode> inorderTreeTraverse(
-      AbstractSparTreeNode root, List<AbstractSparTreeNode> currentList) {
+  private static ImmutableList<AbstractSparTreeNode> BFS(AbstractSparTreeNode root) {
+    List<AbstractSparTreeNode> currentList = new ArrayList<>();
     Stack<AbstractSparTreeNode> bufferStack = new Stack<AbstractSparTreeNode>();
     AbstractSparTreeNode currentNode = root;
-    if (currentNode == null) {
-      System.out.println("!!!");
-      return currentList;
-    }
     bufferStack.push(currentNode);
     while (!bufferStack.empty()) {
       currentNode = bufferStack.pop();
+      if (currentNode == null) {
+        break;
+      }
       currentList.add(currentNode);
       int childCount = currentNode.getChildCount();
       for (int i = 0; i < childCount; ++i) {
         bufferStack.push(currentNode.getChild(i));
       }
     }
-    return currentList;
+    return ImmutableList.copyOf(currentList);
   }
 
-  private static List<AbstractSparTreeNode> flatSparTree(Random rand, SparTree tree) {
+  private static ImmutableList<AbstractSparTreeNode> flatSparTree(SparTree tree) {
     AbstractSparTreeNode root = tree.getRoot();
-    List<AbstractSparTreeNode> treeList = new ArrayList<>();
-    treeList = inorderTreeTraverse(root, treeList);
+    ImmutableList<AbstractSparTreeNode> treeList = BFS(root);
     return treeList;
   }
 
   //
-  static void treeMutation(SparTree sparTree, Random rnd) {
+  static AbstractSparTreeEdit treeMutation(SparTree sparTree, Random rnd) {
     // convert spartree into a list
-    List<AbstractSparTreeNode> treeList = flatSparTree(rnd, sparTree);
+    ImmutableList<AbstractSparTreeNode> treeList = flatSparTree(sparTree);
     // random pop element from treeList
+    // TODO: Use a hashSet mark deleted element to avoid deleting a node multiple times
     int index = rnd.nextInt(treeList.size());
     AbstractSparTreeNode nodeToBeDeleted = treeList.get(index);
-    treeList.remove(index);
 
     NodeDeletionActionSet.Builder builder = new NodeDeletionActionSet.Builder("edit 1");
     builder.deleteNode(nodeToBeDeleted);
     NodeDeletionActionSet actionSet = builder.build();
     NodeDeletionTreeEdit treeEdit = sparTree.createNodeDeletionEdit(actionSet);
     //  debugging code, check if applyEdit working properly
-    //        System.out.println(nodeToBeDeleted.getNodeId());
-    //    System.out.println(sparTree.printTreeStructure());
-    sparTree.applyEdit(treeEdit);
-    //    System.out.println(sparTree.printTreeStructure());
+    //            System.out.println(nodeToBeDeleted.getNodeId());
+    //        System.out.println(sparTree.printTreeStructure());
+    //        sparTree.applyEdit(treeEdit);
+    //        System.out.println(sparTree.printTreeStructure());
+    return treeEdit;
   }
 }

@@ -16,6 +16,7 @@
  */
 package org.perses.fuzzer;
 
+import com.google.common.io.Files;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Assert;
 import org.junit.Test;
@@ -25,10 +26,14 @@ import org.perses.TestUtility;
 
 import org.perses.grammar.c.CParserFacade;
 import org.perses.grammar.c.PnfCParserFacade;
+import org.perses.program.SourceFile;
+import org.perses.tree.spar.AbstractSparTreeEdit;
+import org.perses.tree.spar.SparTree;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -38,22 +43,46 @@ public class FuzzerTest {
 
   private static final CParserFacade C_PARSER_FACADE = new CParserFacade();
 
-  private void testOneCFile(String pathname) throws IOException {
+  @Test
+  public void testOneCFile() throws IOException {
 
-      final File testFile = new File(pathname);
-      final ArrayList<String> origTokens =
-          TestUtility.extractTokens(C_PARSER_FACADE.parseWithOrigCParser(testFile).getTree());
+    String pathname = "test_data/c_programs/gcc_testsuite/06002.c";
+    final File testFile = new File(pathname);
+    final ArrayList<String> origTokens =
+        TestUtility.extractTokens(C_PARSER_FACADE.parseWithOrigCParser(testFile).getTree());
 
-      final ParseTree treeByOpt = Fuzzer.generateParseTree(pathname);
-      assertThat(origTokens)
-          .containsExactlyElementsIn(TestUtility.extractTokens(treeByOpt))
-          .inOrder();
-
-
+    final ParseTree treeByOpt = Fuzzer.generateParseTree(pathname);
+    assertThat(origTokens)
+        .containsExactlyElementsIn(TestUtility.extractTokens(treeByOpt))
+        .inOrder();
   }
 
   @Test
-  public void fuzzerBasicTest() throws IOException {
-    testOneCFile("test_data/c_programs/gcc_testsuite/06002.c");
+  public void testRandomMutation() throws IOException {
+
+    String pathname = "test_data/c_programs/gcc_testsuite/06002.c";
+    final File testFile = new File(pathname);
+    // generate sparTree from program file
+    ParseTree treeByOpt = Fuzzer.generateParseTree(pathname);
+    final SparTree sparTree = Fuzzer.generateSparTree(treeByOpt);
+    // create random mutation edit
+    Random rnd = new Random(System.currentTimeMillis());
+    AbstractSparTreeEdit RandomDeleteTreeEdit = Fuzzer.treeMutation(sparTree, rnd);
+    // load random mutated program into file
+    final File mutatedFile = File.createTempFile("mutatedFile", ".temp");
+    SourceFile mutatedSourceFile = new SourceFile(mutatedFile);
+    RandomDeleteTreeEdit.getProgram()
+        .writeToFile(
+            mutatedFile, mutatedSourceFile.getLanguageKind().getDefaultCodeFormatControl());
+    // Compare mutatedFile and original file
+    assert (!Files.equal(testFile, mutatedFile));
+    // delete Temp file
+    mutatedFile.deleteOnExit();
+  }
+
+  @Test
+  public void fuzzerRunAllTests() throws IOException {
+    testOneCFile();
+    testRandomMutation();
   }
 }
