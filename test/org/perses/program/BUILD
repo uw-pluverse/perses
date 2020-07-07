@@ -31,9 +31,9 @@ java_test(
     ],
 )
 
-java_test(
+kt_jvm_test(
     name = "ScriptFileTest",
-    srcs = ["ScriptFileTest.java"],
+    srcs = ["ScriptFileTest.kt"],
     data = [
         "//test_data/delta_1",
     ],

@@ -32,6 +32,7 @@ maven_install(
         "org.checkerframework:checker-qual:2.11.0",
         "org.jfree:jfreechart:1.5.0",
         "org.jgrapht:jgrapht-core:1.3.0",
+        "junit:junit:4.13",
         # Do not include org.jgrapht:jgrapht-io. It depends on antlr4-runtime:4.7.1
     ],
     fetch_sources = True,
