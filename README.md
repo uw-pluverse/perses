@@ -13,7 +13,7 @@ search space by avoiding generating syntactically invalid programs.
 
 ### Build & Use ###
 
-```shell
+```
 git clone https://github.com/chengniansun/perses.git
 cd perses
 bazel build //src/org/perses:perses_deploy.jar
@@ -23,7 +23,7 @@ Bazel will generate a self-contained java file named *perses_deploy.jar*.
 This jar file includes all required class files, and can be directly run
 with the following command.
 
-```shell
+```
 java -jar perses_deploy.jar  [options]? --test-script <test-script.sh> --input-file <program file>
 ```
 
@@ -37,7 +37,7 @@ supports the following languages, C, Java. Note that we can easily support any o
 
 Check all available command line arguments
 
-```shell
+```
 java -jar perses_deploy.jar  --help
 ```
 
