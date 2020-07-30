@@ -5,19 +5,20 @@ import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.UncheckedIOException
 import java.util.Properties
+import java.util.logging.Level
 import java.util.logging.LogManager
 
 object DefaultLoggingConfigurations {
 
   val ALLOWED_LOGGING_LEVELS = listOf(
-    "SEVERE",
-    "WARNING",
-    "INFO",
-    "CONFIG",
-    "FINE",
-    "FINER",
-    "FINEST"
-  )
+    Level.SEVERE,
+    Level.WARNING,
+    Level.INFO,
+    Level.CONFIG,
+    Level.FINE,
+    Level.FINER,
+    Level.FINEST
+  ).asSequence().map { it.name }.toList()
 
   @JvmStatic
   fun configureLogManager(loggingLevel: String) {
