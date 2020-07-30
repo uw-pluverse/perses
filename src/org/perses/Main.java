@@ -21,21 +21,15 @@ import com.beust.jcommander.JCommander;
 import com.google.common.base.Preconditions;
 import org.perses.reduction.ReducerFactory;
 import org.perses.reduction.ReductionDriver;
+import org.perses.util.DefaultLoggingConfigurations;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.LogManager;
 
 public class Main {
 
   static {
-    try (InputStream stream = Main.class.getResourceAsStream("/org/perses/logging.properties")) {
-      LogManager.getLogManager().readConfiguration(stream);
-    } catch (IOException e) {
-      System.err.println("fail to customize the logging message. " + e);
-      e.printStackTrace();
-    }
+    DefaultLoggingConfigurations.configureLogManager("INFO");
   }
 
   public static void main(String[] args)

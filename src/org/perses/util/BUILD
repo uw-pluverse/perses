@@ -33,3 +33,8 @@ kt_jvm_library(
     name = "double_linked_list",
     srcs = ["DoubleLinkedList.kt"],
 )
+
+kt_jvm_library(
+    name = "default_logging_configurations",
+    srcs = ["DefaultLoggingConfigurations.kt"],
+)

@@ -2,6 +2,8 @@ package(default_visibility = [
     "//visibility:public",
 ])
 
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
+
 java_library(
     name = "perses_exception",
     srcs = ["PersesRuntimeException.java"],
@@ -24,7 +26,6 @@ java_binary(
     name = "perses",
     srcs = ["Main.java"],
     main_class = "org.perses.Main",
-    resources = ["logging.properties"],
     runtime_deps = [
         "@maven//:com_google_flogger_flogger_system_backend",
     ],
@@ -32,6 +33,7 @@ java_binary(
         ":command_options",
         "//src/org/perses/reduction:reducer_factory",
         "//src/org/perses/reduction:reduction_driver",
+        "//src/org/perses/util:default_logging_configurations",
         "@maven//:com_beust_jcommander",
         "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",

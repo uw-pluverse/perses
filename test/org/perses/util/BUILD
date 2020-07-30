@@ -61,3 +61,12 @@ kt_jvm_test(
         "//test/org/perses:truth",
     ],
 )
+
+kt_jvm_test(
+    name = "DefaultLoggingConfigurationsTest",
+    srcs = ["DefaultLoggingConfigurationsTest.kt"],
+    deps = [
+        "//src/org/perses/util:default_logging_configurations",
+        "//test/org/perses:truth",
+    ],
+)

@@ -41,9 +41,9 @@ java_binary(
     srcs = ["FuzzerMain.java"],
     main_class = "org.perses.fuzzer.FuzzerMain",
     deps = [
+        ":command_options",
         "//antlropt/org/perses/antlr/ast",
         "//fuzzer/org/perses:perses_fuzzer",
-        ":command_options",
         "//src/org/perses/antlr:antlr_grammar_util",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
