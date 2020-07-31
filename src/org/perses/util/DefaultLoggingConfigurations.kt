@@ -10,6 +10,7 @@ import java.util.logging.LogManager
 
 object DefaultLoggingConfigurations {
 
+  @JvmStatic
   val ALLOWED_LOGGING_LEVELS = listOf(
     Level.SEVERE,
     Level.WARNING,

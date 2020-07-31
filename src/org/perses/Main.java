@@ -34,11 +34,23 @@ public class Main {
 
   public static void main(String[] args)
       throws IOException, ExecutionException, InterruptedException {
+
     final CommandOptions cmd = new CommandOptions(ReducerFactory.getDefaultReductionAlgName());
     final JCommander commander = cmd.createJCommander(Main.class);
     commander.parse(args);
+    // This method should be called as early as possible, to avoid triggering initialization of
+    // logger objects.
+    DefaultLoggingConfigurations.configureLogManager(cmd.verbosityFlags.verbosity.toUpperCase());
+
     if (cmd.help) {
       commander.usage();
+      return;
+    }
+    if (cmd.verbosityFlags.listVerbosity) {
+      System.out.println("Available verbosity levels are:");
+      for (String level : DefaultLoggingConfigurations.getALLOWED_LOGGING_LEVELS()) {
+        System.out.println("    " + level);
+      }
       return;
     }
 

@@ -65,7 +65,7 @@ Usage: org.perses.Main [options]
     --profile
       profile the reduction process for analysis
       Default: false
-    --versobity, -v
+    --versobity
       verbosity of logging
       Default: INFO
     --list-verbosity-levels

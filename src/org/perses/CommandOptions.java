@@ -328,7 +328,7 @@ public class CommandOptions {
 
   public static final class VerbosityFlags {
     @Parameter(
-        names = {"--versobity", "-v"},
+        names = {"--versobity"},
         description = "verbosity of logging",
         order = FlagOrder.VERBOSITY_CONTROL + 10)
     public String verbosity = "INFO";
