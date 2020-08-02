@@ -60,6 +60,7 @@ java_test(
         "//src/org/perses/reduction/reducer:node_based_reducer",
         "//src/org/perses/reduction/reducer:token_slicer",
         "//test/org/perses:truth",
+        "@maven//:com_google_flogger_flogger_system_backend",
         "@maven//:com_google_guava_guava",
     ],
 )

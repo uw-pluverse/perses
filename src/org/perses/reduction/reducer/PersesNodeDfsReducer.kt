@@ -16,6 +16,7 @@
  */
 package org.perses.reduction.reducer
 
+import com.google.common.flogger.FluentLogger
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.partition.Partition
@@ -44,6 +45,10 @@ open class PersesNodeDfsReducer constructor(
       Function { edit: AbstractSparTreeEdit -> testSparTreeEdit(edit) }
     )
 
+  init {
+    logger.atConfig().log("Delta Debugger is %s", deltaDebugger.javaClass)
+  }
+
   override fun createReductionQueue(): Queue<AbstractSparTreeNode> =
     ArrayDeque<AbstractSparTreeNode>(DEFAULT_INITIAL_QUEUE_CAPACITY)
 
@@ -68,5 +73,7 @@ open class PersesNodeDfsReducer constructor(
       override fun create(reducerContext: ReducerContext) =
         PersesNodeDfsReducer(this, reducerContext)
     }
+
+    internal val logger = FluentLogger.forEnclosingClass()
   }
 }

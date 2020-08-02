@@ -8,6 +8,7 @@ java_test(
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction/reducer:node_based_reducer",
         "//test/org/perses:truth",
+        "@maven//:com_google_flogger_flogger_system_backend",
         "@maven//:com_google_guava_guava",
     ],
 )

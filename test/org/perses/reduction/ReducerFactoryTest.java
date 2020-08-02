@@ -33,8 +33,6 @@ public class ReducerFactoryTest {
   @Test
   public void testGetAnnotationWithName() {
     testGetAnnotationWithName(HDDReducer.NAME);
-    //    testGetAnnotationWithName(KleeneLevelHDDReducer.NAME);
-    //    testGetAnnotationWithName(PersesLevelReducer.NAME); Will be removed soon.
     testGetAnnotationWithName(PersesNodeBfsReducer.NAME);
     testGetAnnotationWithName(PersesNodeDfsReducer.NAME);
     testGetAnnotationWithName(PersesNodePrioritizedBfsReducer.NAME);
