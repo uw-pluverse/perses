@@ -11,7 +11,9 @@ def reduce(
         thread_count = None,
         enable_token_slicer = None,
         enable_tree_slicer = None,
-        code_format = None):
+        code_format = None,
+        verbosity = None,
+        log_file = None):
     if "/" in source_file:
         fail("The source file should be in the current folder.")
     if "/" in test_script:
@@ -45,11 +47,17 @@ def reduce(
         "--enable-token-slicer %s" % ("true" if enable_token_slicer else "false"),
         "--enable-tree-slicer %s" % ("true" if enable_tree_slicer else "false"),
     ]
+    outs = [result_file, statistics_file, progress_dump_file]
     if (code_format):
         args.append("--code-format %s" % code_format)
+    if (verbosity):
+        args.append("--verbosity %s" % verbosity)
+    if (log_file):
+        args.append("&> $(location %s)" % log_file)
+        outs.append(log_file)
     native.genrule(
         name = name,
-        outs = [result_file, statistics_file, progress_dump_file],
+        outs = outs,
         srcs = [source_file, test_script],
         tools = [perses_bin],
         cmd = " ".join(args),

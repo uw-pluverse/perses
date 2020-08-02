@@ -76,3 +76,10 @@ golden_test(
     golden_file = "golden_perses_cmd_usage.txt",
     test_file = "perses_cmd_usage.txt",
 )
+
+sh_test(
+    name = "loging_level_should_be_configurable",
+    srcs = ["loging_level_should_be_configurable.sh"],
+    args = ["$(location //test_data/delta_1:log_with_level_below_INFO)"],
+    data = ["//test_data/delta_1:log_with_level_below_INFO"],
+)
