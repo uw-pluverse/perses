@@ -9,19 +9,31 @@ java_library(
     name = "util",
     srcs = glob(
         ["*.java"],
-        exclude = ["AntlrParseTreePdfier.java"],
+        exclude = [
+            "AntlrParseTreePdfier.java",
+            "Shell.java",
+        ],
     ),
     deps = [
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",
         "@maven//:it_unimi_dsi_fastutil",
-        "@maven//:org_apache_commons_commons_exec",
     ],
 )
 
 sh_binary(
     name = "migrate_from_maven_jar",
     srcs = [":migrate_from_maven_jar.sh"],
+)
+
+java_library(
+    name = "Shell",
+    srcs = ["Shell.java"],
+    deps = [
+        "@maven//:com_google_flogger_flogger",
+        "@maven//:com_google_guava_guava",
+        "@maven//:org_apache_commons_commons_exec",
+    ],
 )
 
 kt_jvm_library(

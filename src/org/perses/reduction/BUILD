@@ -41,6 +41,7 @@ kt_jvm_library(
     srcs = ["TestScript.kt"],
     deps = [
         "//src/org/perses/program:source_file",
+        "//src/org/perses/util:Shell",
         "//src/org/perses/util",
         "@maven//:com_google_flogger_flogger",
         "@maven//:org_apache_commons_commons_exec",

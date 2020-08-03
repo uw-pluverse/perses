@@ -70,3 +70,13 @@ kt_jvm_test(
         "//test/org/perses:truth",
     ],
 )
+
+kt_jvm_test(
+    name = "ShellTest",
+    srcs = ["ShellTest.kt"],
+    deps = [
+        "//src/org/perses/util:Shell",
+        "//test/org/perses:truth",
+        "@maven//:com_google_flogger_flogger_system_backend",
+    ],
+)
