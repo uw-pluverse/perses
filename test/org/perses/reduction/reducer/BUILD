@@ -25,9 +25,9 @@ java_test(
     ],
 )
 
-java_test(
+kt_jvm_test(
     name = "PersesNodeReducerJavaFunctionalTest",
-    srcs = ["PersesNodeReducerJavaFunctionalTest.java"],
+    srcs = ["PersesNodeReducerJavaFunctionalTest.kt"],
     data = ["//test_data/java_helloworld"],
     test_class = "org.perses.reduction.reducer.PersesNodeReducerJavaFunctionalTest",
     deps = [

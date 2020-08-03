@@ -14,22 +14,27 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.reduction.reducer;
+package org.perses.reduction.reducer
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.perses.reduction.AbstractReducerFunctionalTest;
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
+import org.perses.reduction.AbstractReducerFunctionalTest
 
-/** Test for the Java version of perses node reducer. */
-@RunWith(JUnit4.class)
-public class PersesNodeReducerJavaFunctionalTest extends AbstractReducerFunctionalTest {
+/** Test for the Java version of perses node reducer.  */
+@RunWith(JUnit4::class)
+class PersesNodeReducerJavaFunctionalTest : AbstractReducerFunctionalTest() {
 
   @Test
-  public void testFunctionalTest() {
+  fun testFunctionalTest() {
     runJavaTestSubject(
-        "test_data/java_helloworld",
-        PersesNodePrioritizedDfsReducer.META,
-        "class t { public static void main ( String [] args ) { System.out.println (\"helloworld\");}}");
+      "test_data/java_helloworld",
+      PersesNodePrioritizedDfsReducer.META,
+      """class t { 
+        |   public static void main (String[] args) { 
+        |       System.out.println ("helloworld");
+        |   }
+        |}
+        |""".trimMargin())
   }
 }
