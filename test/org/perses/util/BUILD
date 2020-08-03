@@ -74,6 +74,7 @@ kt_jvm_test(
 kt_jvm_test(
     name = "ShellTest",
     srcs = ["ShellTest.kt"],
+    data = ["fake_creduce.sh"],
     deps = [
         "//src/org/perses/util:shell",
         "//test/org/perses:truth",
