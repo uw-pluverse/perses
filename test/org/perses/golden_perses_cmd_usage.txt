@@ -21,6 +21,12 @@ Usage: org.perses.Main [options]
     --format-cmd
       the command to format the reduced source file
       Default: <empty string>
+    --call-creduce
+      call C-Reduce when Perses is done.
+      Default: false
+    --creduce-cmd
+      the C-Reduce command name or path
+      Default: creduce
     --alg
       reduction algorithm: use --list-algs to list all available algorithms
     --list-algs

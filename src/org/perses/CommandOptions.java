@@ -21,8 +21,10 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableList;
 import org.perses.program.EnumFormatControl;
 import org.perses.util.Fraction;
+import org.perses.util.Shell;
 
 import java.io.File;
 
@@ -32,7 +34,12 @@ import static com.google.common.base.Preconditions.checkState;
 /** Parser for command line arguments. */
 public class CommandOptions {
 
+  private interface IFlags {
+    void validate();
+  }
+
   private final String defaultReductionAlgorithm;
+
   public final CompulsoryFlags compulsoryFlags = new CompulsoryFlags();
   public final ResultOutputFlags resultOutputFlags = new ResultOutputFlags();
   public final ReductionControlFlags reductionControlFlags = new ReductionControlFlags();
@@ -42,6 +49,18 @@ public class CommandOptions {
   public final CacheControlFlags cacheControlFlags = new CacheControlFlags();
   public final ProfilingFlags profilingFlags = new ProfilingFlags();
   public final VerbosityFlags verbosityFlags = new VerbosityFlags();
+
+  private final ImmutableList<IFlags> allFlags =
+      ImmutableList.<IFlags>builder()
+          .add(compulsoryFlags)
+          .add(resultOutputFlags)
+          .add(reductionControlFlags)
+          .add(outputRefiningFlags)
+          .add(algorithmControlFlags)
+          .add(cacheControlFlags)
+          .add(profilingFlags)
+          .add(verbosityFlags)
+          .build();
 
   @Parameter(
       names = {"--help", "-h"},
@@ -55,20 +74,10 @@ public class CommandOptions {
   }
 
   public JCommander createJCommander(Class<?> mainClass) {
-    final JCommander commander =
-        JCommander.newBuilder()
-            .programName(mainClass.getCanonicalName())
-            .addObject(this)
-            .addObject(compulsoryFlags)
-            .addObject(resultOutputFlags)
-            .addObject(reductionControlFlags)
-            .addObject(outputRefiningFlags)
-            .addObject(algorithmControlFlags)
-            .addObject(cacheControlFlags)
-            .addObject(profilingFlags)
-            .addObject(verbosityFlags)
-            .build();
-    return commander;
+    JCommander.Builder builder =
+        JCommander.newBuilder().programName(mainClass.getCanonicalName()).addObject(this);
+    allFlags.forEach(builder::addObject);
+    return builder.build();
   }
 
   public void validate() {
@@ -81,7 +90,7 @@ public class CommandOptions {
     profilingFlags.validate();
   }
 
-  public static final class CompulsoryFlags {
+  public static final class CompulsoryFlags implements IFlags {
 
     @Parameter(
         names = "--test-script",
@@ -105,6 +114,7 @@ public class CommandOptions {
       return new File(Preconditions.checkNotNull(inputFile));
     }
 
+    @Override
     public void validate() {
       final File testScript = this.getTestScript();
       final String workingDirectory = new File(".").getAbsolutePath();
@@ -124,7 +134,7 @@ public class CommandOptions {
     }
   }
 
-  public static final class ResultOutputFlags {
+  public static final class ResultOutputFlags implements IFlags {
     @Parameter(
         names = "--in-place",
         description = "perform in-place reduction",
@@ -138,6 +148,7 @@ public class CommandOptions {
         order = FlagOrder.RESULT_OUTPUT + 1)
     public String outputFile;
 
+    @Override
     public void validate() {
       if (inPlaceReduction) {
         checkState(
@@ -147,7 +158,7 @@ public class CommandOptions {
     }
   }
 
-  public static final class ReductionControlFlags {
+  public static final class ReductionControlFlags implements IFlags {
 
     @Parameter(
         names = "--fixpoint",
@@ -169,6 +180,7 @@ public class CommandOptions {
         order = FlagOrder.REDUCTION_CONTROL + 2)
     public EnumFormatControl codeFormat;
 
+    @Override
     public void validate() {
       if (!"auto".equals(numOfThreads)) {
         checkState(Integer.parseInt(numOfThreads) > 0, numOfThreads);
@@ -183,17 +195,39 @@ public class CommandOptions {
     }
   }
 
-  public static final class OutputRefiningFlags {
+  public static final class OutputRefiningFlags implements IFlags {
     @Parameter(
         names = "--format-cmd",
         description = "the command to format the reduced source file",
         order = FlagOrder.OUTPUT_REFINING + 0)
     public String formatCmd = "";
 
-    public void validate() {}
+    @Parameter(
+        names = "--call-creduce",
+        description = "call C-Reduce when Perses is done.",
+        order = FlagOrder.OUTPUT_REFINING + 10)
+    public boolean callCReduce = false;
+
+    @Parameter(
+        names = "--creduce-cmd",
+        description = "the C-Reduce command name or path",
+        order = FlagOrder.OUTPUT_REFINING + 20)
+    private String creduceCmd = "creduce";
+
+    @Override
+    public void validate() {
+      if (callCReduce) {
+        Shell.normalizeAndCheckExecutability(creduceCmd);
+      }
+    }
+
+    public String getCreduceCmd() {
+      checkState(callCReduce);
+      return Shell.normalizeAndCheckExecutability(creduceCmd);
+    }
   }
 
-  public final class ReductionAlgorithmControlFlags {
+  public final class ReductionAlgorithmControlFlags implements IFlags {
     @Parameter(
         names = "--alg",
         description = "reduction algorithm: use --list-algs to list all available algorithms",
@@ -249,10 +283,11 @@ public class CommandOptions {
       return this.reductionAlgorithm;
     }
 
+    @Override
     public void validate() {}
   }
 
-  public final class CacheControlFlags {
+  public final class CacheControlFlags implements IFlags {
 
     @Parameter(
         names = "--query-caching",
@@ -283,6 +318,7 @@ public class CommandOptions {
       return Fraction.parse(queryCacheRefreshThreshold);
     }
 
+    @Override
     public void validate() {
       if (queryCacheRefreshThreshold != null) {
         Fraction.parse(queryCacheRefreshThreshold); // Should not throw exceptions.
@@ -290,7 +326,7 @@ public class CommandOptions {
     }
   }
 
-  public static final class ProfilingFlags {
+  public static final class ProfilingFlags implements IFlags {
 
     @Parameter(
         names = "--progress-dump-file",
@@ -323,10 +359,11 @@ public class CommandOptions {
         order = FlagOrder.PROFILING_CONTROL + 4)
     public boolean profile = false;
 
+    @Override
     public void validate() {}
   }
 
-  public static final class VerbosityFlags {
+  public static final class VerbosityFlags implements IFlags {
     @Parameter(
         names = {"--verbosity"},
         description = "verbosity of logging",
@@ -338,6 +375,9 @@ public class CommandOptions {
         description = "list all verbosity levels",
         order = FlagOrder.VERBOSITY_CONTROL + 20)
     public boolean listVerbosity;
+
+    @Override
+    public void validate() {}
   }
 
   private static class FlagOrder {
