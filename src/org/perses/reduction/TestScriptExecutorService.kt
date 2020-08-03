@@ -66,6 +66,9 @@ class TestScriptExecutorService(
     )
   }
 
+  fun createNamedReductionFolder(folderName: String) =
+    reductionFolderManager!!.createNamedFolder(folderName)
+
   @Override
   override fun close() {
     executorService?.shutdown()

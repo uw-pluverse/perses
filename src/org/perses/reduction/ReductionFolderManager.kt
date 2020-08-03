@@ -35,6 +35,10 @@ class ReductionFolderManager(
     check(!isRootFolderDeleted()) { "The root folder has been deleted." }
     val folderId = sequenceGenerator.getAndIncrement()
     val folderName = Strings.padStart(folderId.toString(), FOLDER_NAME_MIN_LENGTH, '0')
+    return createNamedFolder(folderName)
+  }
+
+  fun createNamedFolder(folderName: String): ReductionFolder {
     val folder = File(rootFolder, folderName)
     check(!folder.exists()) { "The folder already exists. $folder" }
     check(folder.mkdir()) { "Failed to create folder $folder" }

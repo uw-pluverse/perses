@@ -50,8 +50,8 @@ import org.perses.util.Util
 import java.io.Closeable
 import java.io.File
 import java.io.IOException
+import java.lang.StringBuilder
 import java.nio.charset.StandardCharsets
-import java.util.concurrent.ExecutionException
 
 /**
  * This is the main entry to invoke Perses reducer. It does not have a main, but is the main entry
@@ -94,7 +94,6 @@ class ReductionDriver(
       AbstractActionSetProfiler.NULL_PROFILER
     else ActionSetProfiler(File(cmd.profilingFlags.actionSetProfiler))
 
-  @Throws(IOException::class, ExecutionException::class, InterruptedException::class)
   fun reduce() {
     logger.atInfo().log(
       "The reduction process started at %s",
@@ -126,6 +125,7 @@ class ReductionDriver(
       val finalTokenCount = tree.tokenCount
       listenerManager.onReductionEnd(finalTokenCount, countOfTestScriptExecutions)
     }
+    callCreduceIfEnabled()
     formatBestFile(cmd.outputRefiningFlags.formatCmd, configuration.bestResultFile)
   }
 
@@ -172,6 +172,60 @@ class ReductionDriver(
       }
       ++fixpointIteration
     }
+  }
+
+  private fun callCreduceIfEnabled() {
+    if (!cmd.outputRefiningFlags.callCReduce) {
+      return
+    }
+    val program = tree.programSnapshot
+    val origTokenCount = program.tokenCount()
+    logger.atInfo().log(
+      "Calling C-Reduce to further refine the result. #tokens=%s",
+      origTokenCount
+    )
+    val creduceCmd = cmd.outputRefiningFlags.creduceCmd
+    val reductionFolderName = "creduce_at_the_end_" +
+      Util.formatDateForFileName(System.currentTimeMillis())
+    val reductionFolder = executorService.createNamedReductionFolder(reductionFolderName)
+    program.writeToFile(
+      reductionFolder.sourceFilePath, configuration.programFormatControl
+    )
+    val cmdOutput = Shell.run(
+      constructFullCreduceCommand(creduceCmd, reductionFolder),
+      reductionFolder.folder,
+      false
+    )
+    if (cmdOutput.exitCode != 0) {
+      val tempDir = copyFilesToTempDir(reductionFolder.folder)
+      logger.atSevere().log(
+        "C-Reduce failed to reduce the file. All files are copied to %s",
+        tempDir
+      )
+      return
+    } else {
+      Files.copy(reductionFolder.sourceFilePath, configuration.bestResultFile)
+      val tokenCount = configuration.parserFacade.parseIntoTokens(configuration.bestResultFile).size
+      logger.atInfo().log(
+        "C-Reduce reduced the file from %s to %s tokens",
+        origTokenCount, tokenCount
+      )
+      // FIXME: this may crash, as c-reduce can produce programs unparseable for Perses.
+      tree = createSparTree(SourceFile(configuration.bestResultFile))
+    }
+  }
+
+  private fun constructFullCreduceCommand(
+    creduceCmd: String,
+    reductionFolder: ReductionFolder
+  ): String {
+    return StringBuilder()
+      .append(creduceCmd)
+      .append(' ')
+      .append(reductionFolder.testScript.scriptFile.name)
+      .append(' ')
+      .append(reductionFolder.sourceFilePath.name)
+      .toString()
   }
 
   private fun shouldExitFixpointIteration(initialTokenCount: Int): Boolean {
@@ -254,7 +308,6 @@ class ReductionDriver(
     }
   }
 
-  @Throws(InterruptedException::class, ExecutionException::class)
   protected fun sanityCheck(tree: SparTree) {
     logger.atFinest().log("sanity checking...")
     // TODO: need two steps of sanity check:
@@ -267,12 +320,7 @@ class ReductionDriver(
     )
     if (!future.get().isPass) {
       logger.atSevere().log("The initial sanity check failed. Folder: ${future.workingDirectory}")
-      val tempDir = Files.createTempDir()
-      for (file in future.workingDirectory.listFiles()) {
-        if (file.isFile) {
-          Files.copy(file, File(tempDir, file.name))
-        }
-      }
+      val tempDir = copyFilesToTempDir(future.workingDirectory)
       logger.atSevere().log("The files have been saved to $tempDir")
       throw IllegalStateException()
     }
@@ -281,6 +329,17 @@ class ReductionDriver(
     }
   }
 
+  private fun copyFilesToTempDir(directory: File): File {
+    val tempDir = Files.createTempDir()
+    for (file in directory.listFiles()) {
+      if (file.isFile) {
+        Files.copy(file, File(tempDir, file.name))
+      }
+    }
+    return tempDir
+  }
+
+  // TODO: test this function.
   private fun formatBestFile(formatCmd: String, bestFile: File) {
     if (Strings.isNullOrEmpty(formatCmd)) {
       return
@@ -312,7 +371,6 @@ class ReductionDriver(
     }
   }
 
-  @Throws(IOException::class)
   fun createSparTree(fileToReduce: SourceFile): SparTree {
     val timeSpanBuilder = TimeSpan.Builder.start(System.currentTimeMillis())
     logger.atInfo().log(

@@ -5,6 +5,7 @@ load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_test")
 kt_jvm_test(
     name = "PersesNodeReducerFunctionalTest",
     srcs = ["PersesNodeReducerFunctionalTest.kt"],
+    data = ["//test_data/creduce_example"],
     test_class = "org.perses.reduction.reducer.PersesNodeReducerFunctionalTest",
     deps = [
         "//src/org/perses/program",

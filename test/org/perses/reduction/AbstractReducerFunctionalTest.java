@@ -24,6 +24,7 @@ import org.perses.listener.ProgressMonitorForNodeReducer;
 import org.perses.util.AutoDeletableFolder;
 
 import java.io.File;
+import java.util.function.Consumer;
 
 /** The base class for testing the functionality of reducers. */
 public abstract class AbstractReducerFunctionalTest {
@@ -33,6 +34,7 @@ public abstract class AbstractReducerFunctionalTest {
       String testScript,
       String sourceFile,
       ReducerAnnotation algorithmType,
+      Consumer<CommandOptions> cmdCustomizer,
       String expected) {
     try (AutoDeletableFolder folder = new AutoDeletableFolder(Files.createTempDir())) {
       CommandOptions cmd = new CommandOptions("");
@@ -46,6 +48,8 @@ public abstract class AbstractReducerFunctionalTest {
       cmd.algorithmControlFlags.reductionAlgorithm = algorithmType.shortName();
       cmd.resultOutputFlags.inPlaceReduction = false;
 
+      cmdCustomizer.accept(cmd);
+
       ProgressMonitorForNodeReducer progressMonitor =
           ProgressMonitorForNodeReducer.createForSystemOut();
       try (ReductionDriver driver = new ReductionDriver(cmd, progressMonitor)) {
@@ -58,30 +62,41 @@ public abstract class AbstractReducerFunctionalTest {
             .that(Files.asCharSource(bestFile, Charsets.UTF_8).read().replaceAll("\\s+", ""))
             .isEqualTo(expected.replaceAll("\\s+", ""));
       }
-    } catch (RuntimeException | Error e) {
-      throw e;
-    } catch (Exception e) {
+    } catch (Throwable e) {
       throw new RuntimeException(e);
     }
   }
 
   protected void runBenchmarkSubject(
-      String reductionFolder, ReducerAnnotation algorithmType, String expected) {
-    test(reductionFolder, "r.sh", "small.c", algorithmType, expected);
+      String reductionFolder,
+      ReducerAnnotation algorithmType,
+      Consumer<CommandOptions> cmdCustomizer,
+      String expected) {
+    test(reductionFolder, "r.sh", "small.c", algorithmType, cmdCustomizer, expected);
   }
 
   protected void runCTestSubject(
       String reductionFolder, ReducerAnnotation algorithmType, String expected) {
-    test(reductionFolder, "r.sh", "t.c", algorithmType, expected);
+    runCTestSubject(reductionFolder, algorithmType, t -> {}, expected);
+  }
+
+  protected void runCTestSubject(
+      String reductionFolder,
+      ReducerAnnotation algorithmType,
+      Consumer<CommandOptions> cmdCustomizer,
+      String expected) {
+    test(reductionFolder, "r.sh", "t.c", algorithmType, cmdCustomizer, expected);
   }
 
   protected void runJavaTestSubject(
       String reductionFolder, ReducerAnnotation algorithmType, String expected) {
-    test(reductionFolder, "r.sh", "t.java", algorithmType, expected);
+    test(reductionFolder, "r.sh", "t.java", algorithmType, t -> {}, expected);
   }
 
   protected void runScalaTestSubject(
-          String reductionFolder, ReducerAnnotation algorithmType, String expected) {
-    test(reductionFolder, "r.sh", "t.sc", algorithmType, expected);
+      String reductionFolder,
+      ReducerAnnotation algorithmType,
+      String expected) {
+    test(reductionFolder, "r.sh", "t.sc", algorithmType, t -> {}, expected);
   }
 }

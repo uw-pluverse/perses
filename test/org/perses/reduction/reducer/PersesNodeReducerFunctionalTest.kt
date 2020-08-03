@@ -23,18 +23,41 @@ import org.perses.reduction.AbstractReducerFunctionalTest
 
 @RunWith(JUnit4::class)
 class PersesNodeReducerFunctionalTest : AbstractReducerFunctionalTest() {
+
   @Test
   fun testFunctionalTest() {
-    test("delta_1", """int main(){ printf("world\n"); }""")
+    test(
+      "delta_1",
+      """int main() {
+        |    printf("world\n"); 
+        |}""".trimMargin()
+    )
+  }
+
+  @Test
+  fun testFunctionalTestOnCreduceExample() {
+    runCTestSubject(
+      "test_data/creduce_example",
+      PersesNodePrioritizedDfsReducer.META,
+      { cmd -> cmd.outputRefiningFlags.callCReduce = true },
+      """
+        | int printf(const char*, ...);
+        | int main() {
+        |     printf("world\n");
+        | }
+      """.trimMargin()
+    )
   }
 
   fun debug() {
     runBenchmarkSubject(
       "benchmark/gcc-71626",
       PersesNodePrioritizedDfsReducer.META,
-      "typedeflongllong;test1char8(c){}"
-        + "typedefllongvllong1__attribute__((__vector_size__(sizeof(llong))));"
-        + "vllong1test2llong1(p){llongc=test1char8;vllong1v={c};returnv;}main(){}")
+      {},
+      "typedeflongllong;test1char8(c){}" +
+        "typedefllongvllong1__attribute__((__vector_size__(sizeof(llong))));" +
+        "vllong1test2llong1(p){llongc=test1char8;vllong1v={c};returnv;}main(){}"
+    )
   }
 
   private fun test(folder: String, expected: String) {
