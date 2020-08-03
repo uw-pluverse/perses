@@ -17,6 +17,7 @@
 package org.perses.util;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Preconditions;
 import com.google.common.flogger.FluentLogger;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
@@ -24,6 +25,12 @@ import org.apache.commons.exec.ExecuteException;
 import org.apache.commons.exec.PumpStreamHandler;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+
+import static com.google.common.base.Preconditions.checkState;
 
 /** Shell to run external commands. */
 public final class Shell {
@@ -116,5 +123,30 @@ public final class Shell {
           .add("stderr", stderr)
           .toString();
     }
+  }
+
+  public static void ensureCommandExecutable(String cmdName, File currentDirectory) {
+    final Path cmdPath = Paths.get(cmdName);
+    if (cmdPath.isAbsolute()) {
+      checkState(Files.isRegularFile(cmdPath), "The command %s is not a regular file.", cmdName);
+      checkState(cmdPath.toFile().canExecute(), "The command %s is not executable.", cmdName);
+      return;
+    }
+    if (cmdPath.getNameCount() == 1) {
+      final String pathEnv = System.getenv("PATH");
+      final boolean foundOnPath =
+          Arrays.stream(pathEnv.split(File.pathSeparator))
+              .anyMatch(
+                  it -> {
+                    final Path fullPath = Paths.get(it).resolve(cmdName);
+                    return Files.isRegularFile(fullPath) && fullPath.toFile().canExecute();
+                  });
+      if (foundOnPath) {
+        return;
+      }
+    }
+    final File cmdFile = new File(currentDirectory, cmdName);
+    checkState(cmdFile.isFile(), "The command %s is not a regular file.", cmdFile);
+    checkState(cmdFile.canExecute(), "The command %s is not executable.", cmdFile);
   }
 }
