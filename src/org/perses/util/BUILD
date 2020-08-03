@@ -27,7 +27,7 @@ sh_binary(
 )
 
 java_library(
-    name = "Shell",
+    name = "shell",
     srcs = ["Shell.java"],
     deps = [
         "@maven//:com_google_flogger_flogger",

@@ -125,12 +125,12 @@ public final class Shell {
     }
   }
 
-  public static void ensureCommandExecutable(String cmdName, File currentDirectory) {
+  public static String normalizeAndCheckExecutability(String cmdName) {
     final Path cmdPath = Paths.get(cmdName);
     if (cmdPath.isAbsolute()) {
       checkState(Files.isRegularFile(cmdPath), "The command %s is not a regular file.", cmdName);
-      checkState(cmdPath.toFile().canExecute(), "The command %s is not executable.", cmdName);
-      return;
+      checkState(Files.isExecutable(cmdPath), "The command %s is not executable.", cmdName);
+      return cmdName;
     }
     if (cmdPath.getNameCount() == 1) {
       final String pathEnv = System.getenv("PATH");
@@ -142,11 +142,11 @@ public final class Shell {
                     return Files.isRegularFile(fullPath) && fullPath.toFile().canExecute();
                   });
       if (foundOnPath) {
-        return;
+        return cmdName;
       }
     }
-    final File cmdFile = new File(currentDirectory, cmdName);
-    checkState(cmdFile.isFile(), "The command %s is not a regular file.", cmdFile);
-    checkState(cmdFile.canExecute(), "The command %s is not executable.", cmdFile);
+    checkState(Files.isRegularFile(cmdPath), "The command %s is not a regular file.", cmdPath);
+    checkState(Files.isExecutable(cmdPath), "The command %s is not executable.", cmdPath);
+    return cmdPath.toAbsolutePath().toString();
   }
 }

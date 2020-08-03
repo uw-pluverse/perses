@@ -11,7 +11,7 @@ java_library(
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/program",
         "//src/org/perses/tree/spar",
-        "//src/org/perses/util:Shell",
+        "//src/org/perses/util:shell",
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4_runtime",
