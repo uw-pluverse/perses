@@ -68,12 +68,12 @@ public final class Shell {
     exec.setStreamHandler(streamHandler);
     int exitCode;
     try {
-      logger.atConfig().log("%s", commandline);
+      logger.atFine().log("%s", commandline);
       exitCode = exec.execute(commandline);
     } catch (ExecuteException e) {
-      logger.atConfig().log("error when running cmd %s", cmd);
-      logger.atConfig().log("cmd stdout: %s", stdout);
-      logger.atConfig().log("cmd stderr: %s", stderr);
+      logger.atFine().log("error when running cmd %s", cmd);
+      logger.atFine().log("cmd stdout: %s", stdout);
+      logger.atFine().log("cmd stderr: %s", stderr);
       exitCode = e.getExitValue();
     } catch (IOException e) {
       logger.atSevere().withCause(e).log(
