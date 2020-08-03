@@ -2,9 +2,9 @@ load("//test/org/perses:test.bzl", "golden_test")
 load("//src/org/perses:reduction.bzl", "reduce")
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_test")
 
-java_test(
+kt_jvm_test(
     name = "PersesNodeReducerFunctionalTest",
-    srcs = ["PersesNodeReducerFunctionalTest.java"],
+    srcs = ["PersesNodeReducerFunctionalTest.kt"],
     test_class = "org.perses.reduction.reducer.PersesNodeReducerFunctionalTest",
     deps = [
         "//src/org/perses/program",

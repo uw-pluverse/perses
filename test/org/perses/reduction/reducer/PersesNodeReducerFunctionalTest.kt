@@ -14,32 +14,30 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.reduction.reducer;
+package org.perses.reduction.reducer
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.perses.reduction.AbstractReducerFunctionalTest;
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
+import org.perses.reduction.AbstractReducerFunctionalTest
 
-/** The functional test for {@link AbstractPersesNodeReducer} */
-@RunWith(JUnit4.class)
-public class PersesNodeReducerFunctionalTest extends AbstractReducerFunctionalTest {
-
+@RunWith(JUnit4::class)
+class PersesNodeReducerFunctionalTest : AbstractReducerFunctionalTest() {
   @Test
-  public void testFunctionalTest() {
-    test("delta_1", "int main(){printf(\"world\\n\");}");
+  fun testFunctionalTest() {
+    test("delta_1", """int main(){ printf("world\n"); }""")
   }
 
-  public void debug() {
+  fun debug() {
     runBenchmarkSubject(
-        "benchmark/gcc-71626",
-        PersesNodePrioritizedDfsReducer.META,
-        "typedeflongllong;test1char8(c){}"
-            + "typedefllongvllong1__attribute__((__vector_size__(sizeof(llong))));"
-            + "vllong1test2llong1(p){llongc=test1char8;vllong1v={c};returnv;}main(){}");
+      "benchmark/gcc-71626",
+      PersesNodePrioritizedDfsReducer.META,
+      "typedeflongllong;test1char8(c){}"
+        + "typedefllongvllong1__attribute__((__vector_size__(sizeof(llong))));"
+        + "vllong1test2llong1(p){llongc=test1char8;vllong1v={c};returnv;}main(){}")
   }
 
-  private void test(String folder, String expected) {
-    runCTestSubject("test_data/" + folder, PersesNodeDfsReducer.META, expected);
+  private fun test(folder: String, expected: String) {
+    runCTestSubject("test_data/$folder", PersesNodeDfsReducer.META, expected)
   }
 }
