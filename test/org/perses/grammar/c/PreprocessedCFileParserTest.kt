@@ -20,11 +20,20 @@ class PreprocessedCFileParserTest {
     parseFile("clang_nullable_attribute.c")
   }
 
+  @Test
+  fun testParseClang_preprocessed() {
+    parseFile("clang_preprocessed.c")
+  }
+
+  @Test
+  fun testParseClang_function_attribute() {
+    parseFile("clang_attribute_availability_introduced_version.c")
+  }
+
   private fun parseFile(fileName: String) {
     facade.parseFile(getFile(fileName))
   }
 
   private fun getFile(fileName: String) =
     File("test_data/c_programs/preprocessed_files/$fileName")
-
 }

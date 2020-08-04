@@ -547,6 +547,10 @@ Break : 'break';
 Case : 'case';
 Char : 'char';
 Const : 'const';
+
+Nonnull : '_Nonnull'; // https://clang.llvm.org/docs/AttributeReference.html#nullability-attributes
+Nullable : '_Nullable'; // https://clang.llvm.org/docs/AttributeReference.html#nullability-attributes
+
 Continue : 'continue';
 Default : 'default';
 Do : 'do';

@@ -19,6 +19,7 @@ package org.perses.grammar
 import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -108,31 +109,37 @@ class ParserFacadeTest {
 //    assertThat(pnfcFacade.isSourceCodeParsable(invalidProgram)).isFalse()
   }
 
+  @Ignore
   @Test
   fun testParseTokenizedProgram_t1() {
     testParseTokenizedProgram("t1.c")
   }
 
+  @Ignore
   @Test
   fun testParseTokenizedProgram_t2() {
     testParseTokenizedProgram("t2.c")
   }
 
+  @Ignore
   @Test
   fun testParseTokenizedProgram_t3() {
     testParseTokenizedProgram("t3.c")
   }
 
+  @Ignore
   @Test
   fun testParseTokenizedProgram_t4() {
     testParseTokenizedProgram("t4.c")
   }
 
+  @Ignore
   @Test
   fun testParseTokenizedProgram_t5() {
     testParseTokenizedProgram("t5.c")
   }
 
+  @Ignore
   @Test
   fun testParseTokenizedProgram_t9() {
     testParseTokenizedProgram("t9.c")

@@ -465,6 +465,8 @@ typeQualifier
     | 'restrict'
     | 'volatile'
     | '_Atomic'
+    | '_Nonnull'
+    | '_Nullable'
     ;
 
 alignmentSpecifier
@@ -980,6 +982,14 @@ Char
 
 Const
     : 'const'
+    ;
+
+Nonnull
+    : '_Nonnull'
+    ;
+
+Nullable
+    : '_Nullable'
     ;
 
 Continue
