@@ -168,7 +168,11 @@ public final class GrammarHierarchyBuilder {
           for (String subruleName : node.getImmediateSubRuleNames()) {
             final RuleHierarchyInfo subrule = nameToRuleMap.get(subruleName);
             checkNotNull(
-                subrule, "No subrule for node %s. Node=%s", subruleName, node.getRuleName());
+                subrule,
+                "No subrule for node '%s'. Node='%s'. Check if there is a definition for '%s'",
+                subruleName,
+                node.getRuleName(),
+                subruleName);
             graph.putEdge(node, subrule);
           }
         });
