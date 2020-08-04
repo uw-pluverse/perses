@@ -302,6 +302,8 @@ typeQualifier
     |   'restrict'
     |   'volatile'
     |   '_Atomic'
+    |   '_Nonnull'  // https://clang.llvm.org/docs/AttributeReference.html#nullability-attributes
+    |   '_Nullable' // https://clang.llvm.org/docs/AttributeReference.html#nullability-attributes
     ;
 
 functionSpecifier

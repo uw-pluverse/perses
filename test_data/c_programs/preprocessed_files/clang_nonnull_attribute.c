@@ -1,0 +1,1 @@
+int fetch(int * _Nonnull ptr);
