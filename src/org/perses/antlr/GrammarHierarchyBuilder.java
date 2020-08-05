@@ -197,10 +197,10 @@ public final class GrammarHierarchyBuilder {
         }
       }
       for (EndpointPair<RuleHierarchyInfo> edge : newEdges) {
-        if (graph.hasEdgeConnecting(edge)) {
+        if (graph.hasEdgeConnecting(edge.source(), edge.target())) {
           continue;
         }
-        graph.putEdge(edge);
+        graph.putEdge(edge.source(), edge.target());
       }
       if (prevSize != graph.outDegree(workitem)) {
         graph.predecessors(workitem).forEach(worklist::addFirst);
