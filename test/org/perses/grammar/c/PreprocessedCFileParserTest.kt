@@ -21,6 +21,7 @@ class PreprocessedCFileParserTest {
     parseFile("clang_nullable_attribute.c")
   }
 
+  // FIXME: enable this when the C parse can parse clang-preprocessed code.
   @Ignore
   @Test
   fun testParseClang_preprocessed() {
