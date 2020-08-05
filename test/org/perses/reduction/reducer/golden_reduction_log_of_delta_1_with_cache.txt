@@ -6,7 +6,7 @@ translationUnit {id=1}
     |___declaration {id=333,slot_type=translationUnit_2}
     |   |___(+) {id=370,slot_type=declarationSpecifiers}
     |   |   |___Token:int {id=373,slot_type=declarationSpecifier}
-    |   |___(?) {id=335,slot_type=optional__declaration_1}
+    |   |___(?) {id=335,slot_type=optional__declaration_2}
     |   |   |___directDeclarator {id=340,slot_type=initDeclaratorList}
     |   |       |___Token:printf {id=369,slot_type=directDeclarator_8}
     |   |       |___(*) {id=342,slot_type=kleene_star__directDeclarator_6}
@@ -61,7 +61,7 @@ translationUnit {id=1}
             |       |___declaration {id=247,slot_type=blockItemList_2}
             |       |   |___(+) {id=278,slot_type=declarationSpecifiers}
             |       |   |   |___Token:int {id=281,slot_type=declarationSpecifier}
-            |       |   |___(?) {id=249,slot_type=optional__declaration_1}
+            |       |   |___(?) {id=249,slot_type=optional__declaration_2}
             |       |   |   |___initDeclarator {id=252,slot_type=initDeclaratorList}
             |       |   |       |___Token:a {id=277,slot_type=declarator}
             |       |   |       |___(?) {id=254,slot_type=optional__initDeclarator_2}
@@ -72,7 +72,7 @@ translationUnit {id=1}
             |       |___declaration {id=202,slot_type=blockItemList_2}
             |       |   |___(+) {id=243,slot_type=declarationSpecifiers}
             |       |   |   |___Token:int {id=246,slot_type=declarationSpecifier}
-            |       |   |___(?) {id=204,slot_type=optional__declaration_1}
+            |       |   |___(?) {id=204,slot_type=optional__declaration_2}
             |       |   |   |___initDeclarator {id=207,slot_type=initDeclaratorList}
             |       |   |       |___Token:b {id=242,slot_type=declarator}
             |       |   |       |___(?) {id=209,slot_type=optional__initDeclarator_2}

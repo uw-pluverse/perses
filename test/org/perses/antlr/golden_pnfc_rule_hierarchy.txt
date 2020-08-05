@@ -325,6 +325,19 @@ alternative__structOrUnionSpecifier_2
         Identifier
     transitive sub-rule names:
         Identifier
+alternative__unaryExpression_2
+    epsilonable: false
+    immediate sub-rule names:
+        unaryExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        genericSelection
+        kleene_plus__primaryExpression_1
+        postfixExpression
+        postfixExpression_4
+        unaryExpression
 andExpression
     epsilonable: false
     immediate sub-rule names:
@@ -1131,6 +1144,12 @@ optional__conditionalExpression_2
 optional__declaration_1
     epsilonable: true
     immediate sub-rule names:
+        Extension_gcc
+    transitive sub-rule names:
+        Extension_gcc
+optional__declaration_2
+    epsilonable: true
+    immediate sub-rule names:
         initDeclaratorList
     transitive sub-rule names:
         Identifier
@@ -1325,7 +1344,7 @@ optional__specifierQualifierList_1
         typeQualifier
         typeSpecifier
         typedefName
-optional__structDeclaration_1
+optional__structDeclaration_2
     epsilonable: true
     immediate sub-rule names:
         structDeclaratorList

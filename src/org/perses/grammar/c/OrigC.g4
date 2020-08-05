@@ -80,7 +80,7 @@ unaryExpression
     |   unaryOperator castExpression
     |   'sizeof' unaryExpression
     |   'sizeof' '(' typeName ')'
-    |   '_Alignof' '(' typeName ')'
+    |   (Alignof | Alignof_gcc) '(' (typeName | unaryExpression) ')'
     |   '&&' Identifier // GCC extension address of label
     ;
 
@@ -175,7 +175,7 @@ constantExpression
     ;
 
 declaration
-    :   declarationSpecifiers initDeclaratorList? ';'
+    :   Extension_gcc? declarationSpecifiers initDeclaratorList? ';'
     |   staticAssertDeclaration
     |   asmStatement // https://en.cppreference.com/w/cpp/language/asm
     ;
@@ -254,7 +254,7 @@ structDeclarationList
     ;
 
 structDeclaration
-    :   specifierQualifierList structDeclaratorList? ';'
+    :   Extension_gcc? specifierQualifierList structDeclaratorList? ';'
     |   staticAssertDeclaration
     ;
 
@@ -569,8 +569,12 @@ Int : 'int';
 Long : 'long';
 Register : 'register';
 Restrict : 'restrict';
+
 Restrict_gcc : '__restrict__';
 Restrict_gcc2 : '__restrict';
+
+Extension_gcc : '__extension__';
+
 Return : 'return';
 Short : 'short';
 Signed : 'signed';
@@ -587,6 +591,8 @@ While : 'while';
 
 Alignas : '_Alignas';
 Alignof : '_Alignof';
+Alignof_gcc : '__alignof__';
+
 Atomic : '_Atomic';
 Bool : '_Bool';
 Complex : '_Complex';

@@ -44,20 +44,20 @@ optional__compoundStatement_1
 unaryExpression
     : postfixExpression
     | unaryOperator castExpression
+    | (Alignof | Alignof_gcc) '(' (typeName | unaryExpression) ')'
     | '&&' Identifier
-    | alternative__unaryExpression_2 '(' typeName ')'
-    | alternative__unaryExpression_3 unaryExpression
+    | alternative__unaryExpression_1 unaryExpression
+    | 'sizeof' alternative__unaryExpression_2
+    ;
+
+alternative__unaryExpression_1
+    : '++'
+    | '--'
     ;
 
 alternative__unaryExpression_2
-    : '_Alignof'
-    | 'sizeof'
-    ;
-
-alternative__unaryExpression_3
-    : 'sizeof'
-    | '++'
-    | '--'
+    : unaryExpression
+    | '(' typeName ')'
     ;
 
 typeName
@@ -347,10 +347,14 @@ constantExpression
 declaration
     : staticAssertDeclaration
     | asmStatement
-    | declarationSpecifiers optional__declaration_1 ';'
+    | optional__declaration_1 declarationSpecifiers optional__declaration_2 ';'
     ;
 
 optional__declaration_1
+    : Extension_gcc?
+    ;
+
+optional__declaration_2
     : initDeclaratorList?
     ;
 
@@ -550,14 +554,14 @@ structDeclarationList
 
 structDeclarationList_2
     : staticAssertDeclaration
-    | specifierQualifierList optional__structDeclaration_1 ';'
+    | optional__declaration_1 specifierQualifierList optional__structDeclaration_2 ';'
     ;
 
 kleene_plus__structDeclarationList_3
     : structDeclarationList_2+
     ;
 
-optional__structDeclaration_1
+optional__structDeclaration_2
     : structDeclaratorList?
     ;
 
@@ -1066,6 +1070,10 @@ Restrict_gcc2
     : '__restrict'
     ;
 
+Extension_gcc
+    : '__extension__'
+    ;
+
 Return
     : 'return'
     ;
@@ -1124,6 +1132,10 @@ Alignas
 
 Alignof
     : '_Alignof'
+    ;
+
+Alignof_gcc
+    : '__alignof__'
     ;
 
 Atomic

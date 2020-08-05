@@ -34,6 +34,16 @@ class PreprocessedCFileParserTest {
   }
 
   @Test
+  fun testParse_gcc_extension_keyword() {
+    parseFile("gcc_extension_keyword.c")
+  }
+
+  @Test
+  fun testParse_gcc_alignof() {
+    parseFile("gcc_alignof.c")
+  }
+
+  @Test
   fun testParseGcc_restrict_keyword() {
     parseFile("gcc_restrict_keyword.c")
   }
