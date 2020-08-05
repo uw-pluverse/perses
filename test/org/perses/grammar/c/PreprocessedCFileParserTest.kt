@@ -1,5 +1,6 @@
 package org.perses.grammar.c
 
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -20,11 +21,13 @@ class PreprocessedCFileParserTest {
     parseFile("clang_nullable_attribute.c")
   }
 
+  @Ignore
   @Test
   fun testParseClang_preprocessed() {
     parseFile("clang_preprocessed.c")
   }
 
+  @Ignore
   @Test
   fun testParseClang_function_attribute() {
     parseFile("clang_attribute_availability_introduced_version.c")
