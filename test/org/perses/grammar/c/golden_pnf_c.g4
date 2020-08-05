@@ -947,14 +947,14 @@ kleene_plus__translationUnit_3
     ;
 
 functionDefinition
-    : optional__functionDefinition_1 declarator optional__functionDefinition_2 compoundStatement
-    ;
-
-optional__functionDefinition_1
-    : declarationSpecifiers?
+    : optional__declaration_1 optional__functionDefinition_2 declarator optional__functionDefinition_3 compoundStatement
     ;
 
 optional__functionDefinition_2
+    : declarationSpecifiers?
+    ;
+
+optional__functionDefinition_3
     : declarationList?
     ;
 

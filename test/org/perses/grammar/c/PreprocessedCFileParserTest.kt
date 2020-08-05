@@ -27,10 +27,14 @@ class PreprocessedCFileParserTest {
     parseFile("clang_preprocessed.c")
   }
 
-  @Ignore
   @Test
   fun testParseGcc_preprocessed() {
     parseFile("gcc_preprocessed.c")
+  }
+
+  @Test
+  fun testParse_gcc_inline_static_extension_example() {
+    parseFile("gcc_inline_static_extension_example.c")
   }
 
   @Test

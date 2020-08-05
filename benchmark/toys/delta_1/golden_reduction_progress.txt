@@ -26,7 +26,7 @@ translationUnit {id=1}
     |   |               |___Token:) {id=346,slot_type=RightParen}
     |   |___Token:; {id=336,slot_type=Semi}
     |___functionDefinition {id=5,slot_type=translationUnit_2}
-        |___(?) {id=6,slot_type=optional__functionDefinition_1}
+        |___(?) {id=6,slot_type=optional__functionDefinition_2}
         |   |___(+) {id=329,slot_type=declarationSpecifiers}
         |       |___Token:int {id=332,slot_type=declarationSpecifier}
         |___directDeclarator {id=282,slot_type=declarator}

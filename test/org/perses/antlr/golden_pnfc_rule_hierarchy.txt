@@ -1227,7 +1227,7 @@ optional__enumerator_2
         enumerator_1
     transitive sub-rule names:
         enumerator_1
-optional__functionDefinition_1
+optional__functionDefinition_2
     epsilonable: true
     immediate sub-rule names:
         declarationSpecifiers
@@ -1247,7 +1247,7 @@ optional__functionDefinition_1
         typeQualifier
         typeSpecifier
         typedefName
-optional__functionDefinition_2
+optional__functionDefinition_3
     epsilonable: true
     immediate sub-rule names:
         declarationList

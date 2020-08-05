@@ -312,6 +312,7 @@ functionSpecifier
     :   ('inline'
     |   '_Noreturn'
     |   '__inline__' // GCC extension
+//    |   '__inline' // GCC extension
     |   '__stdcall')
     |   gccAttributeSpecifier
     |   '__declspec' '(' Identifier ')'
@@ -536,7 +537,7 @@ externalDeclaration
     ;
 
 functionDefinition
-    :   declarationSpecifiers? declarator declarationList? compoundStatement
+    :   Extension_gcc? declarationSpecifiers? declarator declarationList? compoundStatement
     ;
 
 declarationList
