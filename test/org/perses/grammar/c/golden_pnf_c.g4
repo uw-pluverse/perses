@@ -462,7 +462,9 @@ alternative__typeSpecifier_1
 
 typeQualifier
     : 'const'
-    | 'restrict'
+    | Restrict
+    | Restrict_gcc
+    | Restrict_gcc2
     | 'volatile'
     | '_Atomic'
     | '_Nonnull'
@@ -1054,6 +1056,14 @@ Register
 
 Restrict
     : 'restrict'
+    ;
+
+Restrict_gcc
+    : '__restrict__'
+    ;
+
+Restrict_gcc2
+    : '__restrict'
     ;
 
 Return

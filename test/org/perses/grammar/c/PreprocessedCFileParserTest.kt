@@ -29,6 +29,17 @@ class PreprocessedCFileParserTest {
 
   @Ignore
   @Test
+  fun testParseGcc_preprocessed() {
+    parseFile("gcc_preprocessed.c")
+  }
+
+  @Test
+  fun testParseGcc_restrict_keyword() {
+    parseFile("gcc_restrict_keyword.c")
+  }
+
+  @Ignore
+  @Test
   fun testParseClang_function_attribute() {
     parseFile("clang_attribute_availability_introduced_version.c")
   }

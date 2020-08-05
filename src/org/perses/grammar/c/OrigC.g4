@@ -299,7 +299,9 @@ atomicTypeSpecifier
 
 typeQualifier
     :   'const'
-    |   'restrict'
+    |   Restrict
+    |   Restrict_gcc
+    |   Restrict_gcc2
     |   'volatile'
     |   '_Atomic'
     |   '_Nonnull'  // https://clang.llvm.org/docs/AttributeReference.html#nullability-attributes
@@ -567,6 +569,8 @@ Int : 'int';
 Long : 'long';
 Register : 'register';
 Restrict : 'restrict';
+Restrict_gcc : '__restrict__';
+Restrict_gcc2 : '__restrict';
 Return : 'return';
 Short : 'short';
 Signed : 'signed';

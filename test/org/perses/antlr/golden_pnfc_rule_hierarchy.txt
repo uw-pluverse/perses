@@ -31,6 +31,9 @@ alternative__alignmentSpecifier_1
     transitive sub-rule names:
         Constant
         Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         StringLiteral
         additiveExpression
         alternative__specifierQualifierList_3
@@ -67,6 +70,9 @@ alternative__directAbstractDeclarator_17
     transitive sub-rule names:
         Constant
         Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         StringLiteral
         additiveExpression
         andExpression
@@ -99,6 +105,9 @@ alternative__directAbstractDeclarator_23
         optional__directAbstractDeclarator_5
     transitive sub-rule names:
         Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         abstractDeclarator
         alignmentSpecifier
         alternative__pointer_8
@@ -127,6 +136,9 @@ alternative__directDeclarator_12
     transitive sub-rule names:
         Constant
         Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         StringLiteral
         additiveExpression
         alternative__directDeclarator_14
@@ -187,6 +199,9 @@ alternative__directDeclarator_9
         parameterTypeList
     transitive sub-rule names:
         Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         alignmentSpecifier
         atomicTypeSpecifier
         declarationSpecifier
@@ -215,6 +230,9 @@ alternative__genericAssociation_1
         typeName
     transitive sub-rule names:
         Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         alternative__specifierQualifierList_3
         atomicTypeSpecifier
         enumSpecifier
@@ -274,6 +292,9 @@ alternative__pointer_5
         optional__declarator_1
         optional__pointer_1
     transitive sub-rule names:
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         alternative__pointer_8
         kleene_plus__typeQualifierList_3
         optional__declarator_1
@@ -289,6 +310,9 @@ alternative__specifierQualifierList_3
         typeSpecifier
     transitive sub-rule names:
         Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         atomicTypeSpecifier
         enumSpecifier
         structOrUnionSpecifier
@@ -495,6 +519,9 @@ declarationSpecifier
         typeSpecifier
     transitive sub-rule names:
         Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         alignmentSpecifier
         atomicTypeSpecifier
         enumSpecifier
@@ -509,6 +536,9 @@ declarationSpecifiers
         kleene_plus__declarationSpecifiers_1
     transitive sub-rule names:
         Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         alignmentSpecifier
         atomicTypeSpecifier
         declarationSpecifier
@@ -772,6 +802,9 @@ kleene_plus__declarationSpecifiers_1
         declarationSpecifier
     transitive sub-rule names:
         Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         alignmentSpecifier
         atomicTypeSpecifier
         declarationSpecifier
@@ -815,6 +848,9 @@ kleene_plus__typeQualifierList_3
     immediate sub-rule names:
         typeQualifierList_2
     transitive sub-rule names:
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         typeQualifier
         typeQualifierList_2
 kleene_star__additiveExpression_1
@@ -1116,6 +1152,9 @@ optional__directAbstractDeclarator_5
         parameterTypeList
     transitive sub-rule names:
         Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         alignmentSpecifier
         atomicTypeSpecifier
         declarationSpecifier
@@ -1175,6 +1214,9 @@ optional__functionDefinition_1
         declarationSpecifiers
     transitive sub-rule names:
         Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         alignmentSpecifier
         atomicTypeSpecifier
         declarationSpecifier
@@ -1226,6 +1268,9 @@ optional__pointer_1
     immediate sub-rule names:
         typeQualifierList
     transitive sub-rule names:
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         kleene_plus__typeQualifierList_3
         typeQualifier
         typeQualifierList
@@ -1269,6 +1314,9 @@ optional__specifierQualifierList_1
         specifierQualifierList
     transitive sub-rule names:
         Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         alternative__specifierQualifierList_3
         atomicTypeSpecifier
         enumSpecifier
@@ -1319,6 +1367,9 @@ parameterDeclaration
         declarationSpecifiers
     transitive sub-rule names:
         Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         alignmentSpecifier
         atomicTypeSpecifier
         declarationSpecifier
@@ -1336,6 +1387,9 @@ parameterList
         parameterDeclaration
     transitive sub-rule names:
         Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         alignmentSpecifier
         atomicTypeSpecifier
         declarationSpecifier
@@ -1354,6 +1408,9 @@ parameterTypeList
         parameterList
     transitive sub-rule names:
         Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         alignmentSpecifier
         atomicTypeSpecifier
         declarationSpecifier
@@ -1436,6 +1493,9 @@ specifierQualifierList
         alternative__specifierQualifierList_3
     transitive sub-rule names:
         Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         alternative__specifierQualifierList_3
         atomicTypeSpecifier
         enumSpecifier
@@ -1517,6 +1577,9 @@ typeName
         specifierQualifierList
     transitive sub-rule names:
         Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         alternative__specifierQualifierList_3
         atomicTypeSpecifier
         enumSpecifier
@@ -1525,11 +1588,24 @@ typeName
         typeQualifier
         typeSpecifier
         typedefName
+typeQualifier
+    epsilonable: false
+    immediate sub-rule names:
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
+    transitive sub-rule names:
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
 typeQualifierList
     epsilonable: false
     immediate sub-rule names:
         kleene_plus__typeQualifierList_3
     transitive sub-rule names:
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         kleene_plus__typeQualifierList_3
         typeQualifier
         typeQualifierList_2
@@ -1538,6 +1614,9 @@ typeQualifierList_2
     immediate sub-rule names:
         typeQualifier
     transitive sub-rule names:
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         typeQualifier
 typeSpecifier
     epsilonable: false
