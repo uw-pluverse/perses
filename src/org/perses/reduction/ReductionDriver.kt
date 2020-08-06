@@ -407,6 +407,9 @@ class ReductionDriver(
               .writeToFile(
                 configuration.bestResultFile, configuration.programFormatControl
               )
+            logger.atFine().log(
+              "An edit is applied to the spar-tree. New #tokens=%s", event.program.tokenCount()
+            )
           } catch (e: IOException) {
             throw RuntimeException(e)
           }
