@@ -22,7 +22,7 @@ import org.perses.program.ScriptFile
 import org.perses.program.TokenizedProgram
 import org.perses.util.PerformanceMonitor
 import org.perses.util.PerformanceMonitor.IActionOnLongRunningTask
-import org.perses.util.Util
+import org.perses.util.TimeUtil
 import java.io.Closeable
 import java.io.File
 import java.util.concurrent.Callable
@@ -81,10 +81,10 @@ class TestScriptExecutorService(
             threshold: Int
           ) {
             if (logger.atWarning().isEnabled) {
-              Util.formatDateForDisplay(duration.toLong())
+              TimeUtil.formatDateForDisplay(duration.toLong())
               logger.atWarning().log(
                 "One script execution takes %s",
-                Util.formatDateForDisplay(duration.toLong())
+                TimeUtil.formatDateForDisplay(duration.toLong())
               )
             }
           }

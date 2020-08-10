@@ -68,6 +68,7 @@ kt_jvm_library(
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
         "//src/org/perses/util",
+        "//src/org/perses/util:timeutil",
         "@maven//:com_google_guava_guava",
         "@maven//:org_checkerframework_checker_qual",
     ],
@@ -121,6 +122,7 @@ kt_jvm_library(
         "//src/org/perses/program",
         "//src/org/perses/util",
         "//src/org/perses/util:performance_monitor",
+        "//src/org/perses/util:timeutil",
         "@maven//:com_google_guava_guava",
     ],
 )
@@ -165,6 +167,7 @@ kt_jvm_library(
         "//src/org/perses/program",
         "//src/org/perses/tree/spar",
         "//src/org/perses/util",
+        "//src/org/perses/util:timeutil",
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",

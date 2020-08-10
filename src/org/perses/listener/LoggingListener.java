@@ -21,6 +21,7 @@ import com.google.common.flogger.FluentLogger;
 import org.perses.reduction.AbstractReductionEvent;
 import org.perses.reduction.AbstractReductionEvent.ReductionStartEvent;
 import org.perses.util.TimeSpan;
+import org.perses.util.TimeUtil;
 import org.perses.util.Util;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -56,7 +57,7 @@ public class LoggingListener extends DefaultReductionListener {
 
     if (logger.atInfo().isEnabled()) {
       logger.atInfo().log(
-          "Reduction Started at %s", Util.formatDateForDisplay(timeSpanBuilder.getStartMillis()));
+          "Reduction Started at %s", TimeUtil.formatDateForDisplay(timeSpanBuilder.getStartMillis()));
     }
   }
 
@@ -69,7 +70,7 @@ public class LoggingListener extends DefaultReductionListener {
 
     if (logger.atInfo().isEnabled()) {
       logger.atInfo().log(
-          "Reduction ended at %s", Util.formatDateForDisplay(timeSpan.getEndTimeMillis()));
+          "Reduction ended at %s", TimeUtil.formatDateForDisplay(timeSpan.getEndTimeMillis()));
     }
     logger.atInfo().log("Elapsed time is %s", timeSpan.getFormattedElaspedTime());
     final int delta = this.initialProgramSize - this.finalProgramSize;

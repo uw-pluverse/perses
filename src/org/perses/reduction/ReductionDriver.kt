@@ -46,11 +46,10 @@ import org.perses.tree.spar.SparTreeBuilder
 import org.perses.tree.spar.SparTreeSimplifier
 import org.perses.util.Shell
 import org.perses.util.TimeSpan
-import org.perses.util.Util
+import org.perses.util.TimeUtil
 import java.io.Closeable
 import java.io.File
 import java.io.IOException
-import java.lang.StringBuilder
 import java.nio.charset.StandardCharsets
 
 /**
@@ -97,7 +96,7 @@ class ReductionDriver(
   fun reduce() {
     logger.atInfo().log(
       "The reduction process started at %s",
-      Util.formatDateForDisplay(System.currentTimeMillis())
+      TimeUtil.formatDateForDisplay(System.currentTimeMillis())
     )
     backupFile(configuration)
     val worker = createMainReducer()
@@ -186,7 +185,7 @@ class ReductionDriver(
     )
     val creduceCmd = cmd.outputRefiningFlags.creduceCmd
     val reductionFolderName = "creduce_at_the_end_" +
-      Util.formatDateForFileName(System.currentTimeMillis())
+      TimeUtil.formatDateForFileName(System.currentTimeMillis())
     val reductionFolder = executorService.createNamedReductionFolder(reductionFolderName)
     program.writeToFile(
       reductionFolder.sourceFilePath, configuration.programFormatControl
@@ -259,7 +258,7 @@ class ReductionDriver(
     if (logger.atInfo().isEnabled) {
       logger.atInfo().log(
         "%s started at %s. #tokens=%s", reducerAnnotation.shortName(),
-        Util.formatDateForDisplay(System.currentTimeMillis()),
+        TimeUtil.formatDateForDisplay(System.currentTimeMillis()),
         sizeBeforeTokenSclier
       )
     }
@@ -268,7 +267,7 @@ class ReductionDriver(
     if (logger.atInfo().isEnabled) {
       logger.atInfo().log(
         "%s ended at %s. #old=%s, #new=%s", reducerAnnotation.shortName(),
-        Util.formatDateForDisplay(System.currentTimeMillis()),
+        TimeUtil.formatDateForDisplay(System.currentTimeMillis()),
         sizeBeforeTokenSclier, tree.tokenCount
       )
     }
@@ -467,7 +466,7 @@ class ReductionDriver(
     val fileContent = fileToReduce.fileContent
     val backupFile = File(
       configuration.workingFolder,
-      baseName + "." + Util.formatDateForFileName(System.currentTimeMillis()) + ".orig"
+      baseName + "." + TimeUtil.formatDateForFileName(System.currentTimeMillis()) + ".orig"
     )
     MoreFiles.asCharSink(backupFile.toPath(), StandardCharsets.UTF_8).write(fileContent)
   }

@@ -69,7 +69,6 @@ class PerformanceMonitorTest {
     override fun onLongRunningTask(task: Any, duration: Int, threshold: Int) {
       longRunningTasks.add(TaskInfo(task, duration, threshold))
     }
-
   }
 
   companion object {

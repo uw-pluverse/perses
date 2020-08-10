@@ -23,7 +23,7 @@ import org.perses.grammar.ParserFacadeFactory
 import org.perses.program.EnumFormatControl
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
-import org.perses.util.Util
+import org.perses.util.TimeUtil
 import java.io.File
 import java.time.LocalDateTime
 import java.util.Optional
@@ -51,6 +51,7 @@ class ReductionConfiguration(
 ) {
   /** The parser facade.  */
   val parserFacade: AbstractParserFacade
+
   /** This file is used to store the best result of reduction.  */
   val tempRootFolder: File
 
@@ -90,19 +91,20 @@ class ReductionConfiguration(
 
   companion object {
     private const val PERSES_TEMP_ROOT_PREFIX = "PersesTempRoot"
+
     @JvmStatic
     @VisibleForTesting
     fun getTempRootFolderName(
-      fileNameForReduction: String?,
+      fileNameForReduction: String,
       testScriptName: String?,
-      time: LocalDateTime?
+      time: LocalDateTime
     ): String {
       return Joiner.on('_')
         .join(
           PERSES_TEMP_ROOT_PREFIX,
           fileNameForReduction,
           testScriptName,
-          Util.formatDateForFileName(time)
+          TimeUtil.formatDateForFileName(time)
         )
     }
   }
