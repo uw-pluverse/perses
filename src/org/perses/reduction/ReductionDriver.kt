@@ -61,12 +61,15 @@ class ReductionDriver(
   private val cmd: CommandOptions,
   vararg extraListeners: AbstractReductionListener
 ) : Closeable {
+
   val configuration = createConfiguration(cmd)
+
   private val executorService = TestScriptExecutorService(
     configuration.tempRootFolder,
     configuration.numOfReductionThreads,
     configuration.testScript,
-    configuration.fileToReduce.baseName
+    configuration.fileToReduce.baseName,
+    cmd.profilingFlags.testScriptExecutionPerformanceMonitorIntervalMillis
   )
   private val listenerManager = ReductionListenerManager(
     createListeners(cmd.profilingFlags.profile, configuration, extraListeners)

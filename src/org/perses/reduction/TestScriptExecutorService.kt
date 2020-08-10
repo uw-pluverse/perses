@@ -35,7 +35,8 @@ class TestScriptExecutorService(
   tempRootFolder: File,
   private val numOfThreads: Int,
   testScriptFile: ScriptFile,
-  sourceFileName: String
+  sourceFileName: String,
+  scriptExecutionMonitorIntervalMillis: Int
 ) : Closeable {
 
   companion object {
@@ -72,23 +73,23 @@ class TestScriptExecutorService(
       sourceFileName
     )
     scriptExecutionMonitor = PerformanceMonitor(
-      sleepIntervalMillis = 1000 * 60 * 5,
+      sleepIntervalMillis = scriptExecutionMonitorIntervalMillis,
       actionOnLongRunningTask =
-        object : IActionOnLongRunningTask<ReductionTestScriptExecutorCallback> {
-          override fun onLongRunningTask(
-            task: ReductionTestScriptExecutorCallback,
-            duration: Int,
-            threshold: Int
-          ) {
-            if (logger.atWarning().isEnabled) {
+      object : IActionOnLongRunningTask<ReductionTestScriptExecutorCallback> {
+        override fun onLongRunningTask(
+          task: ReductionTestScriptExecutorCallback,
+          duration: Int,
+          threshold: Int
+        ) {
+          if (logger.atWarning().isEnabled) {
+            Util.formatDateForDisplay(duration.toLong())
+            logger.atWarning().log(
+              "One script execution takes %s",
               Util.formatDateForDisplay(duration.toLong())
-              logger.atWarning().log(
-                "One script execution takes %s",
-                Util.formatDateForDisplay(duration.toLong())
-              )
-            }
+            )
           }
         }
+      }
     )
   }
 
@@ -154,7 +155,7 @@ class TestScriptExecutorService(
     private val keepOrigCodeFormat: EnumFormatControl,
     private val statistics: Statistics,
     private val runtimePerformanceMonitor:
-      PerformanceMonitor<ReductionTestScriptExecutorCallback>
+    PerformanceMonitor<ReductionTestScriptExecutorCallback>
   ) : Callable<TestScript.TestResult> {
 
     override fun call(): TestScript.TestResult {

@@ -359,8 +359,17 @@ public class CommandOptions {
         order = FlagOrder.PROFILING_CONTROL + 4)
     public boolean profile = false;
 
+    @Parameter(
+        names = "--script-monitoring-interval-millis",
+        description =
+            "the interval in milliseconds to monitor the performance of test script executions",
+        order = FlagOrder.PROFILING_CONTROL + 50)
+    public int testScriptExecutionPerformanceMonitorIntervalMillis = 1000 * 60 * 5;
+
     @Override
-    public void validate() {}
+    public void validate() {
+      checkState(testScriptExecutionPerformanceMonitorIntervalMillis > 0);
+    }
   }
 
   public static final class VerbosityFlags implements IFlags {

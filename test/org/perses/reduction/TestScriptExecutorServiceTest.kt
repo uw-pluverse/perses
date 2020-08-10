@@ -95,7 +95,8 @@ class TestScriptExecutorServiceTest {
       configuration.tempRootFolder,
       configuration.numOfReductionThreads,
       testScript,
-      sourceFile.file.name
+      sourceFile.file.name,
+      scriptExecutionMonitorIntervalMillis = 1000 * 60 * 1
     ).use {
       // TODO: refine this test.
       testPassing(it)

@@ -71,6 +71,10 @@ Usage: org.perses.Main [options]
     --profile
       profile the reduction process for analysis
       Default: false
+    --script-monitoring-interval-millis
+      the interval in milliseconds to monitor the performance of test script 
+      executions 
+      Default: 300000
     --verbosity
       verbosity of logging
       Default: INFO
