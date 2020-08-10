@@ -50,3 +50,12 @@ kt_jvm_library(
     name = "default_logging_configurations",
     srcs = ["DefaultLoggingConfigurations.kt"],
 )
+
+kt_jvm_library(
+    name = "performance_monitor",
+    srcs = ["PerformanceMonitor.kt"],
+    deps = [
+        "@maven//:com_google_guava_guava",
+        "@maven//:it_unimi_dsi_fastutil",
+    ],
+)

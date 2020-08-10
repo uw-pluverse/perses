@@ -120,6 +120,7 @@ kt_jvm_library(
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/program",
         "//src/org/perses/util",
+        "//src/org/perses/util:performance_monitor",
         "@maven//:com_google_guava_guava",
     ],
 )

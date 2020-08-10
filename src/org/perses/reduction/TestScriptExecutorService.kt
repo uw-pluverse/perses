@@ -16,9 +16,13 @@
  */
 package org.perses.reduction
 
+import com.google.common.flogger.FluentLogger
 import org.perses.program.EnumFormatControl
 import org.perses.program.ScriptFile
 import org.perses.program.TokenizedProgram
+import org.perses.util.PerformanceMonitor
+import org.perses.util.PerformanceMonitor.IActionOnLongRunningTask
+import org.perses.util.Util
 import java.io.Closeable
 import java.io.File
 import java.util.concurrent.Callable
@@ -36,6 +40,7 @@ class TestScriptExecutorService(
 
   companion object {
     val ALWAYS_TRUE_PRECHECK = { TestScript.TestResult(exitCode = 0, elapsedMilliseconds = 0) }
+    val logger = FluentLogger.forEnclosingClass()
   }
 
   val statistics = Statistics()
@@ -44,6 +49,8 @@ class TestScriptExecutorService(
   //       executor.
   private var executorService = Executors.newFixedThreadPool(numOfThreads)
   private var reductionFolderManager: ReductionFolderManager?
+  private var scriptExecutionMonitor:
+    PerformanceMonitor<ReductionTestScriptExecutorCallback>?
 
   init {
     require(numOfThreads > 0) {
@@ -64,6 +71,25 @@ class TestScriptExecutorService(
       testScriptFile,
       sourceFileName
     )
+    scriptExecutionMonitor = PerformanceMonitor(
+      sleepIntervalMillis = 1000 * 60 * 5,
+      actionOnLongRunningTask =
+        object : IActionOnLongRunningTask<ReductionTestScriptExecutorCallback> {
+          override fun onLongRunningTask(
+            task: ReductionTestScriptExecutorCallback,
+            duration: Int,
+            threshold: Int
+          ) {
+            if (logger.atWarning().isEnabled) {
+              Util.formatDateForDisplay(duration.toLong())
+              logger.atWarning().log(
+                "One script execution takes %s",
+                Util.formatDateForDisplay(duration.toLong())
+              )
+            }
+          }
+        }
+    )
   }
 
   fun createNamedReductionFolder(folderName: String) =
@@ -73,9 +99,11 @@ class TestScriptExecutorService(
   override fun close() {
     executorService?.shutdown()
     reductionFolderManager?.deleteRootFolder()
+    scriptExecutionMonitor!!.close()
 
     executorService = null
     reductionFolderManager = null
+    scriptExecutionMonitor = null
   }
 
   fun finalize() {
@@ -96,8 +124,12 @@ class TestScriptExecutorService(
     val workingFolder = reductionFolderManager!!.createNextFolder()
     val result = FutureTestScriptExecutionTask(
       ReductionTestScriptExecutorCallback(
-        workingFolder, prechecker,
-        program, keepOrigCodeFormat, statistics
+        workingFolder,
+        prechecker,
+        program,
+        keepOrigCodeFormat,
+        statistics,
+        scriptExecutionMonitor!!
       )
     )
     executorService.submit(result)
@@ -106,8 +138,7 @@ class TestScriptExecutorService(
 
   class FutureTestScriptExecutionTask(
     private val callable: ReductionTestScriptExecutorCallback
-  ) :
-    FutureTask<TestScript.TestResult>(callable) {
+  ) : FutureTask<TestScript.TestResult>(callable) {
     val workingDirectory: File
       get() = callable.workingDirectory.folder
 
@@ -121,9 +152,10 @@ class TestScriptExecutorService(
     private val prechecker: () -> TestScript.TestResult,
     val program: TokenizedProgram,
     private val keepOrigCodeFormat: EnumFormatControl,
-    private val statistics: Statistics
-  ) :
-    Callable<TestScript.TestResult> {
+    private val statistics: Statistics,
+    private val runtimePerformanceMonitor:
+      PerformanceMonitor<ReductionTestScriptExecutorCallback>
+  ) : Callable<TestScript.TestResult> {
 
     override fun call(): TestScript.TestResult {
       statistics.onRunPrecheck()
@@ -132,9 +164,11 @@ class TestScriptExecutorService(
         return precheckResult
       }
       statistics.onExecuteScript()
+      runtimePerformanceMonitor.onTaskStart(this)
       program.writeToFile(workingDirectory.sourceFilePath, keepOrigCodeFormat)
       val result = workingDirectory.testScript.test()
       workingDirectory.deleteAllOtherFiles()
+      runtimePerformanceMonitor.onTaskEnd(this)
       return result
     }
   }

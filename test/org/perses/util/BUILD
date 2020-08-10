@@ -81,3 +81,13 @@ kt_jvm_test(
         "@maven//:com_google_flogger_flogger_system_backend",
     ],
 )
+
+kt_jvm_test(
+    name = "PerformanceMonitorTest",
+    srcs = ["PerformanceMonitorTest.kt"],
+    deps = [
+        "//src/org/perses/util:performance_monitor",
+        "//test/org/perses:truth",
+        "@maven//:com_google_flogger_flogger_system_backend",
+    ],
+)

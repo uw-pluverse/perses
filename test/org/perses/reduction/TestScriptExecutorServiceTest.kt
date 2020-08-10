@@ -72,21 +72,20 @@ class TestScriptExecutorServiceTest {
     testTestScriptExecutor(threadCount = 4)
   }
 
-  private fun createConfiguration(threadCount: Int): ReductionConfiguration {
-    return ReductionConfiguration(
-      workingFolder = workingDirectory!!,
-      testScript = testScript,
-      fileToReduce = sourceFile,
-      bestResultFile = sourceFile.file,
-      statisticsFile = null,
-      progressDumpFile = null,
-      programFormatControl = ORIG_FORMAT,
-      fixpointReduction = true,
-      enableTestScriptExecutionCaching = true,
-      useRealDeltaDebugger = false,
-      numOfReductionThreads = threadCount
-    )
-  }
+  private fun createConfiguration(threadCount: Int) = ReductionConfiguration(
+    workingFolder = workingDirectory!!,
+    testScript = testScript,
+    fileToReduce = sourceFile,
+    bestResultFile = sourceFile.file,
+    statisticsFile = null,
+    progressDumpFile = null,
+    programFormatControl = ORIG_FORMAT,
+    fixpointReduction = true,
+    enableTestScriptExecutionCaching = true,
+    useRealDeltaDebugger = false,
+    numOfReductionThreads = threadCount
+  )
+
 
   private fun testTestScriptExecutor(threadCount: Int) {
     val stopwatch = Stopwatch.createStarted()
