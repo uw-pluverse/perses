@@ -1,6 +1,6 @@
 package org.perses.util
 
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -13,7 +13,7 @@ class TimeUtilTest {
   fun testFormatDateForFileName() {
     val epochMillis = 1569287074745L
     // BAZEL uses UTC as the system timezone.
-    Truth.assertThat(TimeUtil.formatDateForFileName(epochMillis))
+    assertThat(TimeUtil.formatDateForFileName(epochMillis))
       .isEqualTo("20190924_010434")
   }
 
@@ -21,7 +21,7 @@ class TimeUtilTest {
   fun testFormatDateForDisplay() {
     val epochMillis = 1569287074745L
     // BAZEL uses UTC as the system timezone.
-    Truth.assertThat(TimeUtil.formatDateForDisplay(epochMillis))
+    assertThat(TimeUtil.formatDateForDisplay(epochMillis))
       .isEqualTo("01:04:34 2019/09/24")
   }
 
@@ -32,6 +32,16 @@ class TimeUtilTest {
       epochMillis,
       ZoneId.of("America/Indiana/Indianapolis")
     )
-    Truth.assertThat(time.toString()).isEqualTo("2019-09-23T21:04:34.745")
+    assertThat(time.toString()).isEqualTo("2019-09-23T21:04:34.745")
+  }
+
+  @Test
+  fun test_toMillisFromSeconds() {
+    assertThat(TimeUtil.toMillisFromSeconds(2)).isEqualTo(2000)
+  }
+
+  @Test
+  fun test_toMillisFromMinutes() {
+    assertThat(TimeUtil.toMillisFromMinutes(2)).isEqualTo(120000)
   }
 }

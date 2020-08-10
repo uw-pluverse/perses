@@ -35,6 +35,18 @@ object TimeUtil {
     return DATE_FORMAT_FOR_DISPLAY.format(datetime)
   }
 
+  @JvmStatic
+  fun toMillisFromSeconds(seconds: Int): Int {
+    require(seconds >= 0)
+    return seconds * 1000
+  }
+
+  @JvmStatic
+  fun toMillisFromMinutes(minutes: Int): Int {
+    require(minutes >= 0)
+    return toMillisFromSeconds(60 * minutes)
+  }
+
   private val DATE_FORMAT_FOR_DISPLAY = DateTimeFormatter.ofPattern("HH:mm:ss yyyy/MM/dd")
   private val DATE_FORMAT_FOR_FILE_NAME = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")
 }
