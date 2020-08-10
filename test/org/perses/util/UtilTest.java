@@ -29,8 +29,6 @@ import org.junit.runners.JUnit4;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -247,28 +245,6 @@ public class UtilTest {
     Truth.assertThat(Util.computePercentage(2525, 10000)).isEqualTo("25.25%");
   }
 
-  @Test
-  public void testFormatDateForFileName() {
-    long epochMillis = 1569287074745l;
-    // BAZEL uses UTC as the system timezone.
-    Truth.assertThat(Util.formatDateForFileName(epochMillis)).isEqualTo("20190924_010434");
-  }
-
-  @Test
-  public void testFormatDateForDisplay() {
-    long epochMillis = 1569287074745l;
-    // BAZEL uses UTC as the system timezone.
-    Truth.assertThat(Util.formatDateForDisplay(epochMillis)).isEqualTo("01:04:34 2019/09/24");
-  }
-
-  @Test
-  public void testConvertToLocalDateTime() {
-    long epochMillis = 1569287074745l;
-    LocalDateTime time =
-        Util.converToLocalDateTime(epochMillis, ZoneId.of("America/Indiana/Indianapolis"));
-    Truth.assertThat(time.toString()).isEqualTo("2019-09-23T21:04:34.745");
-  }
-
   private File tempDir;
 
   @Before
@@ -280,6 +256,7 @@ public class UtilTest {
   public void teardown() throws IOException {
     MoreFiles.deleteRecursively(tempDir.toPath(), RecursiveDeleteOption.ALLOW_INSECURE);
   }
+
   @Test
   public void testIsEmptyDirectory() throws IOException {
     Truth.assertThat(Util.isEmptyDirectory(tempDir.toPath())).isTrue();

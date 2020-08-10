@@ -17,17 +17,12 @@
 
 package org.perses.util;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -36,36 +31,8 @@ import java.util.function.Predicate;
 
 public final class Util {
 
-  private static final DateTimeFormatter DATE_FORMAT_FOR_DISPLAY =
-      DateTimeFormatter.ofPattern("HH:mm:ss yyyy/MM/dd");
-  private static final DateTimeFormatter DATE_FORMAT_FOR_FILE_NAME =
-      DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
-
   public static String computePercentage(int numerator, int denominator) {
     return String.format("%.2f%%", numerator * 100.0 / denominator);
-  }
-
-  public static String formatDateForFileName(final LocalDateTime datetime) {
-    return DATE_FORMAT_FOR_FILE_NAME.format(datetime);
-  }
-
-  public static String formatDateForFileName(final long epochMillis) {
-    return formatDateForFileName(converToLocalDateTime(epochMillis, ZoneId.systemDefault()));
-  }
-
-  @VisibleForTesting
-  static LocalDateTime converToLocalDateTime(final long epochMillis, ZoneId zone) {
-    Instant instant = Instant.ofEpochMilli(epochMillis);
-    LocalDateTime datetime = instant.atZone(zone).toLocalDateTime();
-    return datetime;
-  }
-
-  public static String formatDateForDisplay(final long epochMillis) {
-    return formatDateForDisplay(converToLocalDateTime(epochMillis, ZoneId.systemDefault()));
-  }
-
-  public static String formatDateForDisplay(final LocalDateTime datetime) {
-    return DATE_FORMAT_FOR_DISPLAY.format(datetime);
   }
 
   public static <T> void removeElementsFromLinkedList(

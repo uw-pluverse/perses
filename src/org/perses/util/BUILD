@@ -59,3 +59,11 @@ kt_jvm_library(
         "@maven//:it_unimi_dsi_fastutil",
     ],
 )
+
+kt_jvm_library(
+    name = "timeutil",
+    srcs = ["TimeUtil.kt"],
+    deps = [
+        "@maven//:com_google_guava_guava",
+    ],
+)

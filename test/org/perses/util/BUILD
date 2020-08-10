@@ -11,6 +11,17 @@ java_test(
     ],
 )
 
+kt_jvm_test(
+    name = "TimeUtilTest",
+    srcs = ["TimeUtilTest.kt"],
+    test_class = "org.perses.util.TimeUtilTest",
+    deps = [
+        "//src/org/perses/util:timeutil",
+        "//test/org/perses:truth",
+        "@maven//:com_google_guava_guava",
+    ],
+)
+
 java_test(
     name = "AutoDeletableFolderTest",
     srcs = ["AutoDeletableFolderTest.java"],

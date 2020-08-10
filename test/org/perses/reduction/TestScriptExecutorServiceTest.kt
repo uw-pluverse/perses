@@ -86,7 +86,6 @@ class TestScriptExecutorServiceTest {
     numOfReductionThreads = threadCount
   )
 
-
   private fun testTestScriptExecutor(threadCount: Int) {
     val stopwatch = Stopwatch.createStarted()
     val configuration = createConfiguration(threadCount)

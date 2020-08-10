@@ -22,7 +22,7 @@ import org.perses.program.ScriptFile
 import org.perses.program.TokenizedProgram
 import org.perses.util.PerformanceMonitor
 import org.perses.util.PerformanceMonitor.IActionOnLongRunningTask
-import org.perses.util.Util
+import org.perses.util.TimeUtil
 import java.io.Closeable
 import java.io.File
 import java.util.concurrent.Callable
@@ -75,21 +75,21 @@ class TestScriptExecutorService(
     scriptExecutionMonitor = PerformanceMonitor(
       sleepIntervalMillis = scriptExecutionMonitorIntervalMillis,
       actionOnLongRunningTask =
-      object : IActionOnLongRunningTask<ReductionTestScriptExecutorCallback> {
-        override fun onLongRunningTask(
-          task: ReductionTestScriptExecutorCallback,
-          duration: Int,
-          threshold: Int
-        ) {
-          if (logger.atWarning().isEnabled) {
-            Util.formatDateForDisplay(duration.toLong())
-            logger.atWarning().log(
-              "One script execution takes %s",
-              Util.formatDateForDisplay(duration.toLong())
-            )
+        object : IActionOnLongRunningTask<ReductionTestScriptExecutorCallback> {
+          override fun onLongRunningTask(
+            task: ReductionTestScriptExecutorCallback,
+            duration: Int,
+            threshold: Int
+          ) {
+            if (logger.atWarning().isEnabled) {
+              TimeUtil.formatDateForDisplay(duration.toLong())
+              logger.atWarning().log(
+                "One script execution takes %s",
+                TimeUtil.formatDateForDisplay(duration.toLong())
+              )
+            }
           }
         }
-      }
     )
   }
 
@@ -155,7 +155,7 @@ class TestScriptExecutorService(
     private val keepOrigCodeFormat: EnumFormatControl,
     private val statistics: Statistics,
     private val runtimePerformanceMonitor:
-    PerformanceMonitor<ReductionTestScriptExecutorCallback>
+      PerformanceMonitor<ReductionTestScriptExecutorCallback>
   ) : Callable<TestScript.TestResult> {
 
     override fun call(): TestScript.TestResult {
