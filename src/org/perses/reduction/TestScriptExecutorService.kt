@@ -42,6 +42,7 @@ class TestScriptExecutorService(
   companion object {
     val ALWAYS_TRUE_PRECHECK = { TestScript.TestResult(exitCode = 0, elapsedMilliseconds = 0) }
     val logger = FluentLogger.forEnclosingClass()
+    val MSG_SCRAIPT_RUN_TOO_LONG = "One script execution took too much time"
   }
 
   val statistics = Statistics()
@@ -84,7 +85,8 @@ class TestScriptExecutorService(
             if (logger.atWarning().isEnabled) {
               TimeUtil.formatDateForDisplay(duration.toLong())
               logger.atWarning().log(
-                "One script execution takes %s",
+                "%s: %s",
+                MSG_SCRAIPT_RUN_TOO_LONG,
                 TimeUtil.formatDateForDisplay(duration.toLong())
               )
             }

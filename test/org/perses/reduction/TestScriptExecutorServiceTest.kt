@@ -30,7 +30,11 @@ import org.perses.program.EnumFormatControl.ORIG_FORMAT
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
 import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
+import org.perses.util.TimeUtil
+import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.PrintStream
+import java.nio.charset.StandardCharsets
 import java.util.ArrayList
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
@@ -46,6 +50,7 @@ class TestScriptExecutorServiceTest {
   private val sourceFile = SourceFile(File(FOLDER, "t.c"))
   private val invalidSourceFile = SourceFile(File("test_data/misc/t1.c"))
   private val testScript = ScriptFile(File(FOLDER, "r.sh"))
+  private val slowTestScript = ScriptFile(File(FOLDER, "slow_r.sh"))
   private val program = TestUtility.createSparTreeFromFile(sourceFile.file).programSnapshot
 
   private var workingDirectory: File? = null
@@ -58,7 +63,10 @@ class TestScriptExecutorServiceTest {
 
   @After
   fun teardown() {
-    MoreFiles.deleteRecursively(workingDirectory!!.toPath(), RecursiveDeleteOption.ALLOW_INSECURE)
+    if (workingDirectory!!.exists()) {
+      // Just to make sure to release the resources.
+      MoreFiles.deleteRecursively(workingDirectory!!.toPath(), RecursiveDeleteOption.ALLOW_INSECURE)
+    }
     workingDirectory = null
   }
 
@@ -72,30 +80,62 @@ class TestScriptExecutorServiceTest {
     testTestScriptExecutor(threadCount = 4)
   }
 
-  private fun createConfiguration(threadCount: Int) = ReductionConfiguration(
-    workingFolder = workingDirectory!!,
-    testScript = testScript,
-    fileToReduce = sourceFile,
-    bestResultFile = sourceFile.file,
-    statisticsFile = null,
-    progressDumpFile = null,
-    programFormatControl = ORIG_FORMAT,
-    fixpointReduction = true,
-    enableTestScriptExecutionCaching = true,
-    useRealDeltaDebugger = false,
-    numOfReductionThreads = threadCount
-  )
+  @Test
+  fun test_testScriptExecutionMonitor() {
+    val oldSysout = System.out
+    val oldSyserr = System.err
+    val byteArrayOutputStream = ByteArrayOutputStream()
+    val newOut = PrintStream(
+      byteArrayOutputStream,
+      /*auto_flush=*/true,
+      StandardCharsets.UTF_8
+    )
+    System.setOut(newOut)
+    System.setErr(newOut)
+    try {
+      TestScriptExecutorService(
+        workingDirectory!!,
+        1,
+        slowTestScript,
+        sourceFile.file.name,
+        scriptExecutionMonitorIntervalMillis = TimeUtil.toMillisFromSeconds(1)
+      ).use {
+        it.testProgram(ALWAYS_TRUE_PRECHECK, program!!, ORIG_FORMAT).get()
+      }
+      newOut.flush()
+      val stdout = byteArrayOutputStream.toString(StandardCharsets.UTF_8)
+      assertThat(stdout).contains(TestScriptExecutorService.MSG_SCRAIPT_RUN_TOO_LONG)
+    } finally {
+      System.setOut(oldSysout)
+      System.setErr(oldSyserr)
+    }
+  }
+
+//  private fun createConfiguration(
+//    threadCount: Int,
+//    testScript: ScriptFile = this.testScript
+//  ) = ReductionConfiguration(
+//    workingFolder = workingDirectory!!,
+//    testScript = testScript,
+//    fileToReduce = sourceFile,
+//    bestResultFile = sourceFile.file,
+//    statisticsFile = null,
+//    progressDumpFile = null,
+//    programFormatControl = ORIG_FORMAT,
+//    fixpointReduction = true,
+//    enableTestScriptExecutionCaching = true,
+//    useRealDeltaDebugger = false,
+//    numOfReductionThreads = threadCount
+//  )
 
   private fun testTestScriptExecutor(threadCount: Int) {
     val stopwatch = Stopwatch.createStarted()
-    val configuration = createConfiguration(threadCount)
-    assertThat(configuration.numOfReductionThreads).isEqualTo(threadCount)
     TestScriptExecutorService(
-      configuration.tempRootFolder,
-      configuration.numOfReductionThreads,
+      workingDirectory!!,
+      threadCount,
       testScript,
       sourceFile.file.name,
-      scriptExecutionMonitorIntervalMillis = 1000 * 60 * 1
+      scriptExecutionMonitorIntervalMillis = TimeUtil.toMillisFromMinutes(4)
     ).use {
       // TODO: refine this test.
       testPassing(it)

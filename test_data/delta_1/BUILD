@@ -6,6 +6,7 @@ filegroup(
     name = "delta_1",
     srcs = [
         "r.sh",
+        "slow_r.sh",
         "t.c",
     ],
 )
