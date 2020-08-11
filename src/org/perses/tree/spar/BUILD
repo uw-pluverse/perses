@@ -1,6 +1,6 @@
 package(default_visibility = [
-    "//fuzzer/org/perses:__pkg__",
-    "//fuzzer_test/org/perses:__pkg__",
+    "//fuzzer/org/perses:__subpackages__",
+    "//fuzzer_test/org/perses:__subpackages__",
     "//src/org/perses:__subpackages__",
     "//test/org/perses:__subpackages__",
 ])
