@@ -100,7 +100,7 @@ class TestScriptExecutorServiceTest {
         sourceFile.file.name,
         scriptExecutionMonitorIntervalMillis = TimeUtil.toMillisFromSeconds(1)
       ).use {
-        it.testProgram(ALWAYS_TRUE_PRECHECK, program!!, ORIG_FORMAT).get()
+        it.testProgramAsync(ALWAYS_TRUE_PRECHECK, program!!, ORIG_FORMAT).get()
       }
       newOut.flush()
       val stdout = byteArrayOutputStream.toString(StandardCharsets.UTF_8)
@@ -154,7 +154,7 @@ class TestScriptExecutorServiceTest {
     val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
     for (i in 0..49) {
       futureList.add(
-        it.testProgram(
+        it.testProgramAsync(
           { TestScript.TestResult(exitCode = 1, elapsedMilliseconds = 1) },
           invalidProgram,
           ORIG_FORMAT
@@ -178,7 +178,7 @@ class TestScriptExecutorServiceTest {
     val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
     for (i in 0..49) {
       futureList.add(
-        it.testProgram(
+        it.testProgramAsync(
           ALWAYS_TRUE_PRECHECK,
           invalidProgram,
           ORIG_FORMAT
@@ -200,7 +200,7 @@ class TestScriptExecutorServiceTest {
     val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
     for (i in 0..49) {
       futureList.add(
-        service.testProgram(
+        service.testProgramAsync(
           ALWAYS_TRUE_PRECHECK,
           program!!,
           ORIG_FORMAT

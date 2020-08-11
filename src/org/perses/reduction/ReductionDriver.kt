@@ -316,7 +316,7 @@ class ReductionDriver(
 //  (1) use the original source program and test scrip. This ensures the test script is correct.
 //  (2) use the spar-tree. This ensures the Antlr parser works correctly.
     val program = tree.programSnapshot
-    val future = executorService.testProgram(
+    val future = executorService.testProgramAsync(
       ALWAYS_TRUE_PRECHECK,
       program, configuration.programFormatControl
     )

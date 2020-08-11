@@ -118,7 +118,7 @@ class TestScriptExecutorService(
   /**
    * FIXME: make this method blocking if there is no available tasks.
    */
-  fun testProgram(
+  fun testProgramAsync(
     prechecker: () -> TestScript.TestResult,
     program: TokenizedProgram,
     keepOrigCodeFormat: EnumFormatControl

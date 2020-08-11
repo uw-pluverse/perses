@@ -54,7 +54,7 @@ abstract class AbstractReducer protected constructor(
     precheck: () -> TestResult,
     program: TokenizedProgram
   ) =
-    executorService.testProgram(
+    executorService.testProgramAsync(
       precheck,
       program, configuration.programFormatControl
     )
