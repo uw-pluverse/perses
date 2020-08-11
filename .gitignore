@@ -28,5 +28,5 @@ statistics-*.txt
 testscript-statistics-*.txt
 /.idea/*
 
-.DS_Store
+*DS_Store
 __pycache__
