@@ -88,7 +88,7 @@ class TestScriptExecutorServiceTest {
     val newOut = PrintStream(
       byteArrayOutputStream,
       /*auto_flush=*/true,
-      StandardCharsets.UTF_8
+      StandardCharsets.UTF_8.name()
     )
     System.setOut(newOut)
     System.setErr(newOut)
@@ -103,7 +103,7 @@ class TestScriptExecutorServiceTest {
         it.testProgramAsync(ALWAYS_TRUE_PRECHECK, program!!, ORIG_FORMAT).get()
       }
       newOut.flush()
-      val stdout = byteArrayOutputStream.toString(StandardCharsets.UTF_8)
+      val stdout = byteArrayOutputStream.toString(StandardCharsets.UTF_8.name())
       assertThat(stdout).contains(TestScriptExecutorService.MSG_SCRAIPT_RUN_TOO_LONG)
     } finally {
       System.setOut(oldSysout)
