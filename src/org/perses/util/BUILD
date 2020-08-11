@@ -67,3 +67,11 @@ kt_jvm_library(
         "@maven//:com_google_guava_guava",
     ],
 )
+
+kt_jvm_library(
+    name = "auto_deltable_folder",
+    srcs = ["AutoDeletableFolder.kt"],
+    deps = [
+        "@maven//:com_google_guava_guava",
+    ],
+)

@@ -14,36 +14,30 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.util;
+package org.perses.util
 
-import com.google.common.base.Preconditions;
-import com.google.common.io.MoreFiles;
-import com.google.common.io.RecursiveDeleteOption;
+import com.google.common.io.MoreFiles
+import com.google.common.io.RecursiveDeleteOption
+import java.io.Closeable
+import java.io.File
+import java.io.IOException
 
-import java.io.Closeable;
-import java.io.File;
-import java.io.IOException;
-
-public class AutoDeletableFolder implements Closeable {
-
-  private final File folder;
-
-  public AutoDeletableFolder(File folder) {
-    this.folder = folder;
-    if (!folder.exists()) {
-      folder.mkdirs();
-    }
-    Preconditions.checkArgument(folder.isDirectory());
+class AutoDeletableFolder(private val folder: File) : Closeable {
+  fun toFile(): File {
+    return folder
   }
 
-  public File toFile() {
-    return folder;
-  }
-
-  @Override
-  public void close() throws IOException {
+  @Throws(IOException::class)
+  override fun close() {
     if (folder.exists()) {
-      MoreFiles.deleteRecursively(folder.toPath(), RecursiveDeleteOption.ALLOW_INSECURE);
+      MoreFiles.deleteRecursively(folder.toPath(), RecursiveDeleteOption.ALLOW_INSECURE)
     }
+  }
+
+  init {
+    if (!folder.exists()) {
+      folder.mkdirs()
+    }
+    check(folder.isDirectory)
   }
 }

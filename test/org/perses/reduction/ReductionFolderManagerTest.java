@@ -23,7 +23,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.perses.program.ScriptFile;
-import org.perses.program.SourceFile;
 import org.perses.util.AutoDeletableFolder;
 
 import java.io.File;

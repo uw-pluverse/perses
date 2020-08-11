@@ -27,7 +27,7 @@ java_test(
     srcs = ["AutoDeletableFolderTest.java"],
     test_class = "org.perses.util.AutoDeletableFolderTest",
     deps = [
-        "//src/org/perses/util",
+        "//src/org/perses/util:auto_deltable_folder",
         "//test/org/perses:truth",
         "@maven//:com_google_guava_guava",
     ],
