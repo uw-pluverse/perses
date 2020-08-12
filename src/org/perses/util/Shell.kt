@@ -25,36 +25,17 @@ import org.apache.commons.exec.ExecuteException
 import org.apache.commons.exec.PumpStreamHandler
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.IOError
 import java.io.IOException
 import java.io.OutputStream
+import java.io.UncheckedIOException
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.Arrays
 
 /** Shell to run external commands.  */
 object Shell {
-  private val logger = FluentLogger.forEnclosingClass()
-  private val CURRENT_DIR = File(".")
-  private val EMPTY_OUTPUT_STREAM: OutputStream = object : OutputStream() {
-    override fun write(b: Int) {
-      // Discard all the input.
-    }
 
-    override fun write(b: ByteArray) {
-      // Discard all the input.
-    }
-
-    override fun write(b: ByteArray, off: Int, len: Int) {
-      // Discard all the input.
-    }
-
-    override fun toString(): String {
-      return "From a NullOutputStream."
-    }
-  }
-
-  fun run(cmd: String?, captureOutput: Boolean): CmdOutput {
+  fun run(cmd: String, captureOutput: Boolean): CmdOutput {
     return run(cmd, CURRENT_DIR, captureOutput)
   }
 
@@ -78,7 +59,7 @@ object Shell {
     } catch (e: IOException) {
       logger.atSevere().withCause(e).log(
         "Fail to run command in the working directory:'%s', dir='%s'.", cmd, workingDirectory)
-      throw IOError(e)
+      throw UncheckedIOException(e)
     }
     return CmdOutput(exitCode, stdout.toString(), stderr.toString())
   }
@@ -118,4 +99,27 @@ object Shell {
     }
 
   }
+
+  private val logger = FluentLogger.forEnclosingClass()
+
+  private val CURRENT_DIR = File(".")
+
+  private val EMPTY_OUTPUT_STREAM: OutputStream = object : OutputStream() {
+    override fun write(b: Int) {
+      // Discard all the input.
+    }
+
+    override fun write(b: ByteArray) {
+      // Discard all the input.
+    }
+
+    override fun write(b: ByteArray, off: Int, len: Int) {
+      // Discard all the input.
+    }
+
+    override fun toString(): String {
+      return "From a NullOutputStream."
+    }
+  }
+
 }
