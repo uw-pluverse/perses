@@ -25,9 +25,9 @@ sh_binary(
     srcs = [":migrate_from_maven_jar.sh"],
 )
 
-java_library(
+kt_jvm_library(
     name = "shell",
-    srcs = ["Shell.java"],
+    srcs = ["Shell.kt"],
     deps = [
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",

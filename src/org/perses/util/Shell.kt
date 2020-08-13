@@ -17,7 +17,6 @@
 package org.perses.util
 
 import com.google.common.base.MoreObjects
-import com.google.common.base.Preconditions
 import com.google.common.flogger.FluentLogger
 import org.apache.commons.exec.CommandLine
 import org.apache.commons.exec.DefaultExecutor
@@ -58,18 +57,23 @@ object Shell {
       e.exitValue
     } catch (e: IOException) {
       logger.atSevere().withCause(e).log(
-        "Fail to run command in the working directory:'%s', dir='%s'.", cmd, workingDirectory)
+        "Fail to run command in the working directory:'%s', dir='%s'.", cmd, workingDirectory
+      )
       throw UncheckedIOException(e)
     }
     return CmdOutput(exitCode, stdout.toString(), stderr.toString())
   }
 
   @JvmStatic
-  fun normalizeAndCheckExecutability(cmdName: String?): String? {
+  fun normalizeAndCheckExecutability(cmdName: String): String? {
     val cmdPath = Paths.get(cmdName)
     if (cmdPath.isAbsolute) {
-      Preconditions.checkState(Files.isRegularFile(cmdPath), "The command %s is not a regular file.", cmdName)
-      Preconditions.checkState(Files.isExecutable(cmdPath), "The command %s is not executable.", cmdName)
+      check(Files.isRegularFile(cmdPath)) {
+        "The command $cmdName is not a regular file."
+      }
+      check(Files.isExecutable(cmdPath)) {
+        "The command $cmdName is not executable."
+      }
       return cmdName
     }
     if (cmdPath.nameCount == 1) {
@@ -83,8 +87,12 @@ object Shell {
         return cmdName
       }
     }
-    Preconditions.checkState(Files.isRegularFile(cmdPath), "The command %s is not a regular file.", cmdPath)
-    Preconditions.checkState(Files.isExecutable(cmdPath), "The command %s is not executable.", cmdPath)
+    check(Files.isRegularFile(cmdPath)) {
+      "The command $cmdPath is not a regular file."
+    }
+    check(Files.isExecutable(cmdPath)) {
+      "The command $cmdPath is not executable."
+    }
     return cmdPath.toAbsolutePath().toString()
   }
 
@@ -97,7 +105,6 @@ object Shell {
         .add("stderr", stderr)
         .toString()
     }
-
   }
 
   private val logger = FluentLogger.forEnclosingClass()
@@ -117,9 +124,6 @@ object Shell {
       // Discard all the input.
     }
 
-    override fun toString(): String {
-      return "From a NullOutputStream."
-    }
+    override fun toString() = "From a NullOutputStream."
   }
-
 }
