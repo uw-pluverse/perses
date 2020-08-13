@@ -122,7 +122,7 @@ object Shell {
     return cmdPath.toAbsolutePath().toString()
   }
 
-  class CmdOutput internal constructor(
+  class CmdOutput constructor(
     val exitCode: Int,
     val stdout: ShellOutputLines,
     val stderr: ShellOutputLines
