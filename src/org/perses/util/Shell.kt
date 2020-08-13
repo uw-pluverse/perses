@@ -22,7 +22,6 @@ import org.apache.commons.exec.CommandLine
 import org.apache.commons.exec.DefaultExecutor
 import org.apache.commons.exec.ExecuteException
 import org.apache.commons.exec.PumpStreamHandler
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.io.OutputStream
@@ -40,10 +39,26 @@ object Shell {
 
   @JvmStatic
   fun run(cmd: String, workingDirectory: File, captureOutput: Boolean): CmdOutput {
-    val stdout = if (captureOutput) ByteArrayOutputStream() else EMPTY_OUTPUT_STREAM
-    val stderr = if (captureOutput) ByteArrayOutputStream() else EMPTY_OUTPUT_STREAM
-    val exitCode = runAndGetExitCode(cmd, workingDirectory, stdout, stderr)
-    return CmdOutput(exitCode, stdout.toString(), stderr.toString())
+    if (!captureOutput) {
+      return CmdOutput(
+        exitCode = runAndGetExitCode(
+          cmd,
+          workingDirectory,
+          EMPTY_OUTPUT_STREAM,
+          EMPTY_OUTPUT_STREAM
+        ),
+        stdout = ShellOutputLines.EMPTY,
+        stderr = ShellOutputLines.EMPTY
+      )
+    }
+    val stdout = ShellOutputStream()
+    val stderr = ShellOutputStream()
+    val exitCode = stdout.use {
+      stderr.use {
+        runAndGetExitCode(cmd, workingDirectory, stdout, stderr)
+      }
+    }
+    return CmdOutput(exitCode, stdout.toOutputStringList(), stderr.toOutputStringList())
   }
 
   private fun runAndGetExitCode(
@@ -107,13 +122,17 @@ object Shell {
     return cmdPath.toAbsolutePath().toString()
   }
 
-  class CmdOutput internal constructor(val exitCode: Int, val stdout: String, val stderr: String) {
+  class CmdOutput internal constructor(
+    val exitCode: Int,
+    val stdout: ShellOutputLines,
+    val stderr: ShellOutputLines
+  ) {
 
     override fun toString(): String {
       return MoreObjects.toStringHelper(this)
         .add("exitCode", exitCode)
-        .add("stdout", stdout)
-        .add("stderr", stderr)
+        .add("stdout", stdout.combineLines())
+        .add("stderr", stderr.combineLines())
         .toString()
     }
   }
