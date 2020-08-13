@@ -26,7 +26,6 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.io.OutputStream
-import java.io.UncheckedIOException
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.Arrays
@@ -34,21 +33,33 @@ import java.util.Arrays
 /** Shell to run external commands.  */
 object Shell {
 
+  @JvmStatic
   fun run(cmd: String, captureOutput: Boolean): CmdOutput {
     return run(cmd, CURRENT_DIR, captureOutput)
   }
 
-  fun run(cmd: String?, workingDirectory: File?, captureOutput: Boolean): CmdOutput {
+  @JvmStatic
+  fun run(cmd: String, workingDirectory: File, captureOutput: Boolean): CmdOutput {
     val stdout = if (captureOutput) ByteArrayOutputStream() else EMPTY_OUTPUT_STREAM
     val stderr = if (captureOutput) ByteArrayOutputStream() else EMPTY_OUTPUT_STREAM
+    val exitCode = runAndGetExitCode(cmd, workingDirectory, stdout, stderr)
+    return CmdOutput(exitCode, stdout.toString(), stderr.toString())
+  }
+
+  private fun runAndGetExitCode(
+    cmd: String,
+    workingDirectory: File,
+    stdout: OutputStream,
+    stderr: OutputStream): Int {
+
     val commandline = CommandLine.parse(cmd)
     val exec = DefaultExecutor()
     exec.workingDirectory = workingDirectory
     val streamHandler = PumpStreamHandler(stdout, stderr)
     exec.streamHandler = streamHandler
-    val exitCode: Int
-    exitCode = try {
-      logger.atFine().log("%s", commandline)
+    logger.atFine().log("%s", commandline)
+
+    return try {
       exec.execute(commandline)
     } catch (e: ExecuteException) {
       logger.atFine().log("error when running cmd %s", cmd)
@@ -59,9 +70,8 @@ object Shell {
       logger.atSevere().withCause(e).log(
         "Fail to run command in the working directory:'%s', dir='%s'.", cmd, workingDirectory
       )
-      throw UncheckedIOException(e)
+      throw e
     }
-    return CmdOutput(exitCode, stdout.toString(), stderr.toString())
   }
 
   @JvmStatic
