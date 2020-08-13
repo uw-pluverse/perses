@@ -1,20 +1,19 @@
 package org.perses.util
 
 import com.google.common.base.Preconditions
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import java.io.File
-import java.lang.IllegalStateException
 
 @RunWith(JUnit4::class)
 class ShellTest {
   @Test
   fun lsExists() {
     val normalized = Shell.normalizeAndCheckExecutability("ls")
-    Truth.assertThat(normalized).isEqualTo("ls")
+    assertThat(normalized).isEqualTo("ls")
   }
 
   @Test
@@ -31,13 +30,29 @@ class ShellTest {
     tempFile.deleteOnExit()
 
     val normalized = Shell.normalizeAndCheckExecutability(tempFile.toString())
-    Truth.assertThat(normalized).isEqualTo(tempFile.toString())
+    assertThat(normalized).isEqualTo(tempFile.toString())
   }
 
   @Test
   fun localRelativeScript() {
     val cmd = "test/org/perses/util/fake_creduce.sh"
     val normalized = Shell.normalizeAndCheckExecutability(cmd)
-    Truth.assertThat(normalized).contains(cmd)
+    assertThat(normalized).contains(cmd)
+  }
+
+  @Test
+  fun noCaptureOutput() {
+    val cmd = "echo 'hello'"
+    val cmdOutput = Shell.run(cmd, captureOutput = false)
+    assertThat(cmdOutput.stdout.hasLines()).isFalse()
+    assertThat(cmdOutput.stderr.hasLines()).isFalse()
+  }
+
+  @Test
+  fun captureOutput() {
+    val cmd = "echo 'hello'"
+    val cmdOutput = Shell.run(cmd, captureOutput = true)
+    assertThat(cmdOutput.stdout.hasLines()).isTrue()
+    assertThat(cmdOutput.stderr.hasLines()).isFalse()
   }
 }
