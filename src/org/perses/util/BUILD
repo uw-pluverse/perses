@@ -27,7 +27,11 @@ sh_binary(
 
 kt_jvm_library(
     name = "shell",
-    srcs = ["Shell.kt"],
+    srcs = [
+        "Shell.kt",
+        "ShellOutputLines.kt",
+        "ShellOutputStream.kt",
+    ],
     deps = [
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",

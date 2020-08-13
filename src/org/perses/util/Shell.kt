@@ -50,7 +50,8 @@ object Shell {
     cmd: String,
     workingDirectory: File,
     stdout: OutputStream,
-    stderr: OutputStream): Int {
+    stderr: OutputStream
+  ): Int {
 
     val commandline = CommandLine.parse(cmd)
     val exec = DefaultExecutor()

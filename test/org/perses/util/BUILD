@@ -94,6 +94,26 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
+    name = "ShellOutputStreamTest",
+    srcs = ["ShellOutputStreamTest.kt"],
+    deps = [
+        "//src/org/perses/util:shell",
+        "//test/org/perses:truth",
+        "@maven//:com_google_flogger_flogger_system_backend",
+    ],
+)
+
+kt_jvm_test(
+    name = "ShellOutputLinesTest",
+    srcs = ["ShellOutputLinesTest.kt"],
+    deps = [
+        "//src/org/perses/util:shell",
+        "//test/org/perses:truth",
+        "@maven//:com_google_flogger_flogger_system_backend",
+    ],
+)
+
+kt_jvm_test(
     name = "PerformanceMonitorTest",
     srcs = ["PerformanceMonitorTest.kt"],
     deps = [
