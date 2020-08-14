@@ -145,7 +145,6 @@ java_library(
     name = "reduction_level_sequence",
     srcs = ["IReductionLevelSequence.java"],
     deps = [
-        "//src/org/perses:perses_exception",
         "@maven//:com_google_guava_guava",
     ],
 )

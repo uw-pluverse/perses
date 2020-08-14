@@ -6,7 +6,6 @@ java_library(
         "LevelReductionSpeedAnalysis.java",
     ],
     deps = [
-        "//src/org/perses:perses_exception",
         "//src/org/perses/listener:profile_event_interface",
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",

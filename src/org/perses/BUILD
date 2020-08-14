@@ -8,7 +8,6 @@ java_library(
     name = "command_options",
     srcs = ["CommandOptions.java"],
     deps = [
-        ":perses_exception",
         "//src/org/perses/program:enum_format_control",
         "//src/org/perses/util:percentage",
         "//src/org/perses/util:shell",

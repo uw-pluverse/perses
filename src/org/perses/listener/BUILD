@@ -20,7 +20,6 @@ java_library(
     ],
     deps = [
         ":profile_event_interface",
-        "//src/org/perses:perses_exception",
         "//src/org/perses/program",
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction:test_script",
