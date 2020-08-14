@@ -4,6 +4,8 @@ import com.google.common.truth.Truth
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import java.io.File
+import java.nio.charset.StandardCharsets
 
 @RunWith(JUnit4::class)
 class ShellOutputLinesTest {
@@ -31,5 +33,13 @@ class ShellOutputLinesTest {
   @Test
   fun test_hasFourLines() {
     Truth.assertThat(list.content).hasSize(4)
+  }
+
+  @Test
+  fun test_writeToFile() {
+    val file = File.createTempFile("test_shell_output_lines_test", ".txt")
+    list.writeToFile(file)
+    val readText = file.readText(StandardCharsets.UTF_8)
+    Truth.assertThat(readText.trim()).isEqualTo(list.combineLines().trim())
   }
 }
