@@ -34,6 +34,6 @@ class ShellOutputStream : OutputStream() {
   }
 
   private fun dumpCurrentToList() {
-    builderList.add(current!!.toString(StandardCharsets.UTF_8))
+    builderList.add(current!!.toString(StandardCharsets.UTF_8.name()))
   }
 }
