@@ -85,4 +85,7 @@ kt_jvm_library(
         "AbstractCommandOptions.kt",
         "ICommandLineFlags.kt",
     ],
+    deps = [
+        "@maven//:com_beust_jcommander",
+    ],
 )

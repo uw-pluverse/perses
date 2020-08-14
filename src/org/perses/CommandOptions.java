@@ -17,7 +17,6 @@
 
 package org.perses;
 
-import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -70,13 +69,6 @@ public class CommandOptions extends AbstractCommandOptions {
 
   public CommandOptions(String defaultReductionAlgorithm) {
     this.defaultReductionAlgorithm = defaultReductionAlgorithm;
-  }
-
-  public JCommander createJCommander(Class<?> mainClass) {
-    JCommander.Builder builder =
-        JCommander.newBuilder().programName(mainClass.getCanonicalName()).addObject(this);
-    allFlags.forEach(builder::addObject);
-    return builder.build();
   }
 
   public static final class CompulsoryFlags implements ICommandLineFlags {
