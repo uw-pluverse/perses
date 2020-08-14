@@ -24,11 +24,11 @@ import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.perses.PersesRuntimeException;
 import org.perses.listener.IProfileEvent;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +62,7 @@ public class LevelReductionSpeedAnalysis extends AbstractHddPerformanceAnalysis 
       logger.atInfo().log("Exporting chart to %s", file);
       ChartUtils.saveChartAsJPEG(file, chart, 1920, 1080);
     } catch (IOException e) {
-      throw new PersesRuntimeException(e);
+      throw new UncheckedIOException(e);
     }
   }
 

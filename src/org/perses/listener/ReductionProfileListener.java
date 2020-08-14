@@ -17,12 +17,18 @@
 
 package org.perses.listener;
 
-import org.perses.PersesRuntimeException;
 import org.perses.reduction.AbstractReductionEvent;
 import org.perses.reduction.AbstractReductionEvent.ReductionStartEvent;
 import org.perses.util.TimeSpan;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.io.UncheckedIOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +54,7 @@ public class ReductionProfileListener extends DefaultReductionListener implement
               new FileOutputStream(
                   new File(textualFile.getParentFile(), textualFile.getName() + ".event")));
     } catch (IOException e) {
-      throw new PersesRuntimeException(e);
+      throw new UncheckedIOException(e);
     }
   }
 
@@ -87,7 +93,7 @@ public class ReductionProfileListener extends DefaultReductionListener implement
       this.textualWriter.close();
       this.eventStream.close();
     } catch (IOException e) {
-      throw new PersesRuntimeException(e);
+      throw new UncheckedIOException(e);
     }
   }
 
@@ -96,7 +102,7 @@ public class ReductionProfileListener extends DefaultReductionListener implement
       this.textualWriter.append(event.toString()).append('\n');
       this.eventStream.writeObject(event);
     } catch (IOException e) {
-      throw new PersesRuntimeException(e);
+      throw new UncheckedIOException(e);
     }
   }
 

@@ -18,10 +18,14 @@ package org.perses.analyzer;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.flogger.FluentLogger;
-import org.perses.PersesRuntimeException;
 import org.perses.listener.IProfileEvent;
 
-import java.io.*;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.UncheckedIOException;
 
 public abstract class AbstractHddPerformanceAnalysis {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
@@ -52,9 +56,9 @@ public abstract class AbstractHddPerformanceAnalysis {
       }
     } catch (EOFException e) {
     } catch (IOException e) {
-      throw new PersesRuntimeException(e);
+      throw new UncheckedIOException(e);
     } catch (ClassNotFoundException e) {
-      throw new PersesRuntimeException(e);
+      throw new RuntimeException(e);
     }
     return builder.build();
   }

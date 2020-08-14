@@ -5,11 +5,6 @@ package(default_visibility = [
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
 
 java_library(
-    name = "perses_exception",
-    srcs = ["PersesRuntimeException.java"],
-)
-
-java_library(
     name = "command_options",
     srcs = ["CommandOptions.java"],
     deps = [

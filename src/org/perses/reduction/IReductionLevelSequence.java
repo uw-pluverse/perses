@@ -19,7 +19,6 @@ package org.perses.reduction;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import org.perses.PersesRuntimeException;
 
 import java.util.Iterator;
 
@@ -84,7 +83,7 @@ public interface IReductionLevelSequence {
       }
       if (this.continuousAfterFinish) return ++this.current;
       else {
-        throw new PersesRuntimeException("No more levels.");
+        throw new RuntimeException("No more levels.");
       }
     }
   }

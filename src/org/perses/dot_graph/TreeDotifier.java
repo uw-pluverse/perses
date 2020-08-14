@@ -20,7 +20,6 @@ package org.perses.dot_graph;
 import com.google.common.flogger.FluentLogger;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import org.perses.PersesRuntimeException;
 import org.perses.antlr.ParseTreeWithParser;
 import org.perses.grammar.ParserFacadeFactory;
 import org.perses.program.SourceFile;
@@ -80,7 +79,7 @@ public class TreeDotifier {
       convertTreeToDotGraph(root.getTree())
           .dotify(pdfFile, DEFAULT_ANTLR_PARSE_TREE_LABEL_PROVIDER);
     } catch (Exception e) {
-      throw new PersesRuntimeException(e);
+      throw new RuntimeException(e);
     }
   }
 
@@ -89,7 +88,7 @@ public class TreeDotifier {
     try {
       convertTreeToDotGraph(root).dotify(pdfFile, labelProvider);
     } catch (Exception e) {
-      throw new PersesRuntimeException(e);
+      throw new RuntimeException(e);
     }
   }
 
@@ -99,7 +98,7 @@ public class TreeDotifier {
       dotGraph.dotify(pdfFile, DEFAULT_RUNTIME_TREE_LABEL_PROVIDER);
       logger.atInfo().log("save dot graph to %s", pdfFile);
     } catch (IOException e) {
-      throw new PersesRuntimeException(e);
+      throw new RuntimeException(e);
     }
   }
 
