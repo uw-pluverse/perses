@@ -78,3 +78,8 @@ kt_jvm_library(
         "@maven//:com_google_guava_guava",
     ],
 )
+
+kt_jvm_library(
+    name = "command_line_flags",
+    srcs = ["ICommandLineFlags.kt"],
+)

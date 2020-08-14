@@ -9,6 +9,7 @@ java_library(
     srcs = ["CommandOptions.java"],
     deps = [
         "//src/org/perses/program:enum_format_control",
+        "//src/org/perses/util:command_line_flags",
         "//src/org/perses/util:percentage",
         "//src/org/perses/util:shell",
         "@maven//:com_beust_jcommander",

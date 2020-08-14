@@ -24,6 +24,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import org.perses.program.EnumFormatControl;
 import org.perses.util.Fraction;
+import org.perses.util.ICommandLineFlags;
 import org.perses.util.Shell;
 
 import java.io.File;
@@ -33,10 +34,6 @@ import static com.google.common.base.Preconditions.checkState;
 
 /** Parser for command line arguments. */
 public class CommandOptions {
-
-  private interface IFlags {
-    void validate();
-  }
 
   private final String defaultReductionAlgorithm;
 
@@ -50,8 +47,8 @@ public class CommandOptions {
   public final ProfilingFlags profilingFlags = new ProfilingFlags();
   public final VerbosityFlags verbosityFlags = new VerbosityFlags();
 
-  private final ImmutableList<IFlags> allFlags =
-      ImmutableList.<IFlags>builder()
+  private final ImmutableList<ICommandLineFlags> allFlags =
+      ImmutableList.<ICommandLineFlags>builder()
           .add(compulsoryFlags)
           .add(resultOutputFlags)
           .add(reductionControlFlags)
@@ -90,7 +87,7 @@ public class CommandOptions {
     profilingFlags.validate();
   }
 
-  public static final class CompulsoryFlags implements IFlags {
+  public static final class CompulsoryFlags implements ICommandLineFlags {
 
     @Parameter(
         names = "--test-script",
@@ -134,7 +131,7 @@ public class CommandOptions {
     }
   }
 
-  public static final class ResultOutputFlags implements IFlags {
+  public static final class ResultOutputFlags implements ICommandLineFlags {
     @Parameter(
         names = "--in-place",
         description = "perform in-place reduction",
@@ -158,7 +155,7 @@ public class CommandOptions {
     }
   }
 
-  public static final class ReductionControlFlags implements IFlags {
+  public static final class ReductionControlFlags implements ICommandLineFlags {
 
     @Parameter(
         names = "--fixpoint",
@@ -195,7 +192,7 @@ public class CommandOptions {
     }
   }
 
-  public static final class OutputRefiningFlags implements IFlags {
+  public static final class OutputRefiningFlags implements ICommandLineFlags {
     @Parameter(
         names = "--format-cmd",
         description = "the command to format the reduced source file",
@@ -227,7 +224,7 @@ public class CommandOptions {
     }
   }
 
-  public final class ReductionAlgorithmControlFlags implements IFlags {
+  public final class ReductionAlgorithmControlFlags implements ICommandLineFlags {
     @Parameter(
         names = "--alg",
         description = "reduction algorithm: use --list-algs to list all available algorithms",
@@ -287,7 +284,7 @@ public class CommandOptions {
     public void validate() {}
   }
 
-  public final class CacheControlFlags implements IFlags {
+  public final class CacheControlFlags implements ICommandLineFlags {
 
     @Parameter(
         names = "--query-caching",
@@ -326,7 +323,7 @@ public class CommandOptions {
     }
   }
 
-  public static final class ProfilingFlags implements IFlags {
+  public static final class ProfilingFlags implements ICommandLineFlags {
 
     @Parameter(
         names = "--progress-dump-file",
@@ -372,7 +369,7 @@ public class CommandOptions {
     }
   }
 
-  public static final class VerbosityFlags implements IFlags {
+  public static final class VerbosityFlags implements ICommandLineFlags {
     @Parameter(
         names = {"--verbosity"},
         description = "verbosity of logging",
