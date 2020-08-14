@@ -43,10 +43,7 @@ public class Main {
       return;
     }
     if (cmd.verbosityFlags.listVerbosity) {
-      System.out.println("Available verbosity levels are:");
-      for (String level : DefaultLoggingConfigurations.getALLOWED_LOGGING_LEVELS()) {
-        System.out.println("    " + level);
-      }
+      DefaultLoggingConfigurations.printAllAllowedLoggingLevels();
       return;
     }
 

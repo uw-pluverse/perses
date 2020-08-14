@@ -50,4 +50,12 @@ object DefaultLoggingConfigurations {
     result["java.util.logging.SimpleFormatter.format"] = "[%1${'$'}tT] [%4\${'\$'}-7s] %5${'$'}s %n"
     return result
   }
+
+  @JvmStatic
+  fun printAllAllowedLoggingLevels() {
+    println("Available verbosity levels are:")
+    for (level in ALLOWED_LOGGING_LEVELS) {
+      println("    $level")
+    }
+  }
 }
