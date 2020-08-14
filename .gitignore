@@ -30,3 +30,6 @@ testscript-statistics-*.txt
 
 *DS_Store
 __pycache__
+
+/default_finding_folder*
+/default_temp_folder*

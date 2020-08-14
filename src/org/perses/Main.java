@@ -23,17 +23,13 @@ import org.perses.reduction.ReducerFactory;
 import org.perses.reduction.ReductionDriver;
 import org.perses.util.DefaultLoggingConfigurations;
 
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-
 public class Main {
 
   static {
     DefaultLoggingConfigurations.configureLogManager("INFO");
   }
 
-  public static void main(String[] args)
-      throws IOException, ExecutionException, InterruptedException {
+  public static void main(String[] args) {
 
     final CommandOptions cmd = new CommandOptions(ReducerFactory.getDefaultReductionAlgName());
     final JCommander commander = cmd.createJCommander(Main.class);
