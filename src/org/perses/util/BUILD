@@ -81,5 +81,8 @@ kt_jvm_library(
 
 kt_jvm_library(
     name = "command_line_flags",
-    srcs = ["ICommandLineFlags.kt"],
+    srcs = [
+        "AbstractCommandOptions.kt",
+        "ICommandLineFlags.kt",
+    ],
 )

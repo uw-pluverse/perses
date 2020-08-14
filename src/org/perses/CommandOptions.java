@@ -23,6 +23,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import org.perses.program.EnumFormatControl;
+import org.perses.util.AbstractCommandOptions;
 import org.perses.util.Fraction;
 import org.perses.util.ICommandLineFlags;
 import org.perses.util.Shell;
@@ -33,19 +34,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 /** Parser for command line arguments. */
-public class CommandOptions {
+public class CommandOptions extends AbstractCommandOptions {
 
   private final String defaultReductionAlgorithm;
 
-  public final CompulsoryFlags compulsoryFlags = new CompulsoryFlags();
-  public final ResultOutputFlags resultOutputFlags = new ResultOutputFlags();
-  public final ReductionControlFlags reductionControlFlags = new ReductionControlFlags();
-  public final OutputRefiningFlags outputRefiningFlags = new OutputRefiningFlags();
+  public final CompulsoryFlags compulsoryFlags = registerFlags(new CompulsoryFlags());
+  public final ResultOutputFlags resultOutputFlags = registerFlags(new ResultOutputFlags());
+  public final ReductionControlFlags reductionControlFlags =
+      registerFlags(new ReductionControlFlags());
+  public final OutputRefiningFlags outputRefiningFlags = registerFlags(new OutputRefiningFlags());
   public final ReductionAlgorithmControlFlags algorithmControlFlags =
-      new ReductionAlgorithmControlFlags();
-  public final CacheControlFlags cacheControlFlags = new CacheControlFlags();
-  public final ProfilingFlags profilingFlags = new ProfilingFlags();
-  public final VerbosityFlags verbosityFlags = new VerbosityFlags();
+      registerFlags(new ReductionAlgorithmControlFlags());
+  public final CacheControlFlags cacheControlFlags = registerFlags(new CacheControlFlags());
+  public final ProfilingFlags profilingFlags = registerFlags(new ProfilingFlags());
+  public final VerbosityFlags verbosityFlags = registerFlags(new VerbosityFlags());
 
   private final ImmutableList<ICommandLineFlags> allFlags =
       ImmutableList.<ICommandLineFlags>builder()
@@ -75,16 +77,6 @@ public class CommandOptions {
         JCommander.newBuilder().programName(mainClass.getCanonicalName()).addObject(this);
     allFlags.forEach(builder::addObject);
     return builder.build();
-  }
-
-  public void validate() {
-    compulsoryFlags.validate();
-    resultOutputFlags.validate();
-    reductionControlFlags.validate();
-    outputRefiningFlags.validate();
-    algorithmControlFlags.validate();
-    cacheControlFlags.validate();
-    profilingFlags.validate();
   }
 
   public static final class CompulsoryFlags implements ICommandLineFlags {
