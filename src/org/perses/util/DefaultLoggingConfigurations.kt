@@ -47,7 +47,7 @@ object DefaultLoggingConfigurations {
     val result = Properties()
     result["handlers"] = "java.util.logging.ConsoleHandler"
     result["java.util.logging.ConsoleHandler.formatter"] = "java.util.logging.SimpleFormatter"
-    result["java.util.logging.SimpleFormatter.format"] = "[%1${'$'}tT] [%4\${'\$'}-7s] %5${'$'}s %n"
+    result["java.util.logging.SimpleFormatter.format"] = "[%1${'$'}tT] [%4${'$'}-7s] %5${'$'}s %n"
     return result
   }
 

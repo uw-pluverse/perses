@@ -76,6 +76,7 @@ kt_jvm_test(
 kt_jvm_test(
     name = "DefaultLoggingConfigurationsTest",
     srcs = ["DefaultLoggingConfigurationsTest.kt"],
+    data = ["golden_SimpleFormatter.format.txt"],
     deps = [
         "//src/org/perses/util:default_logging_configurations",
         "//test/org/perses:truth",

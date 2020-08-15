@@ -5,7 +5,8 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import java.lang.IllegalArgumentException
+import java.io.File
+import java.nio.charset.StandardCharsets
 
 @RunWith(JUnit4::class)
 class DefaultLoggingConfigurationsTest {
@@ -19,7 +20,9 @@ class DefaultLoggingConfigurationsTest {
     assertThat(p["java.util.logging.ConsoleHandler.formatter"]).isEqualTo(
       "java.util.logging.SimpleFormatter"
     )
-    assertThat(p["java.util.logging.SimpleFormatter.format"] as String).isNotEmpty()
+    val goldenFormatString = File("test/org/perses/util/golden_SimpleFormatter.format.txt")
+      .readText(StandardCharsets.UTF_8).trim()
+    assertThat(p["java.util.logging.SimpleFormatter.format"]).isEqualTo(goldenFormatString)
   }
 
   @Test
