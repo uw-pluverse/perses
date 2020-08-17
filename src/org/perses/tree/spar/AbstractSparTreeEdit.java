@@ -41,7 +41,7 @@ public abstract class AbstractSparTreeEdit implements Comparable<AbstractSparTre
   private final AbstractActionSet<?> simpleActionSet;
   private final TokenizedProgram program;
 
-  AbstractSparTreeEdit(AbstractActionSet<?> actionSet, TokenizedProgram program) {
+  protected AbstractSparTreeEdit(AbstractActionSet<?> actionSet, TokenizedProgram program) {
     id = idGenerator.getAndIncrement();
     this.simpleActionSet = actionSet;
     this.program = program;
