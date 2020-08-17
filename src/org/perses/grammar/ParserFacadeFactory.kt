@@ -14,47 +14,41 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.grammar;
+package org.perses.grammar
 
-import org.perses.program.LanguageKind;
-import org.perses.grammar.c.CParserFacade;
-import org.perses.grammar.c.PnfCParserFacade;
-import org.perses.grammar.go.PnfGoParserFacade;
-import org.perses.grammar.java.JavaParserFacade;
-import org.perses.grammar.scala.PnfScalaParserFacade;
-import org.perses.grammar.rust.PnfRustParserFacade;
+import org.perses.grammar.c.CParserFacade
+import org.perses.grammar.c.PnfCParserFacade
+import org.perses.grammar.go.PnfGoParserFacade
+import org.perses.grammar.java.JavaParserFacade
+import org.perses.grammar.rust.PnfRustParserFacade
+import org.perses.grammar.scala.PnfScalaParserFacade
+import org.perses.program.LanguageKind
 
-/** Creates a parser facade, based on the type of language kind. */
-public final class ParserFacadeFactory {
+/** Creates a parser facade, based on the type of language kind.  */
+class ParserFacadeFactory private constructor(private val useOptCParser: Boolean) {
 
-  public static ParserFacadeFactory createForPnfC() {
-    return new ParserFacadeFactory(false);
+  fun createParserFacade(languageKind: LanguageKind): AbstractParserFacade {
+    val facade = when (languageKind) {
+      LanguageKind.C -> if (useOptCParser) CParserFacade() else PnfCParserFacade()
+      LanguageKind.JAVA -> JavaParserFacade()
+      LanguageKind.GO -> PnfGoParserFacade()
+      LanguageKind.SCALA -> PnfScalaParserFacade()
+      LanguageKind.RUST -> PnfRustParserFacade()
+      else -> throw RuntimeException("The language $languageKind is not supported.")
+    }
+    check(facade.language == languageKind)
+    return facade
   }
 
-  public static ParserFacadeFactory createForOptC() {
-    return new ParserFacadeFactory(true);
-  }
+  companion object {
+    @JvmStatic
+    fun createForPnfC(): ParserFacadeFactory {
+      return ParserFacadeFactory(false)
+    }
 
-  private final boolean useOptCParser;
-
-  private ParserFacadeFactory(boolean useOptCParser) {
-    this.useOptCParser = useOptCParser;
-  }
-
-  public AbstractParserFacade createParserFacade(LanguageKind languageKind) {
-    switch (languageKind) {
-      case C:
-        return useOptCParser ? new CParserFacade() : new PnfCParserFacade();
-      case JAVA:
-        return new JavaParserFacade();
-      case GO:
-        return new PnfGoParserFacade();
-      case SCALA:
-        return new PnfScalaParserFacade();
-      case RUST:
-        return new PnfRustParserFacade();
-      default:
-        throw new RuntimeException("The language " + languageKind + " is not supported.");
+    @JvmStatic
+    fun createForOptC(): ParserFacadeFactory {
+      return ParserFacadeFactory(true)
     }
   }
 }

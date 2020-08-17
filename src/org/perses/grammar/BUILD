@@ -4,6 +4,8 @@ package(default_visibility = [
     "//test/org/perses:__subpackages__",
 ])
 
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
+
 java_library(
     name = "grammar_facade",
     srcs = [
@@ -28,9 +30,9 @@ java_library(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "facade_factory",
-    srcs = ["ParserFacadeFactory.java"],
+    srcs = ["ParserFacadeFactory.kt"],
     deps = [
         ":grammar_facade",
         "//src/org/perses/grammar/c:c_parser_facade",
