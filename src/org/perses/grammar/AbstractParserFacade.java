@@ -30,6 +30,7 @@ import org.perses.antlr.GrammarHierarchy;
 import org.perses.antlr.ParseTreeWithParser;
 import org.perses.antlr.ast.PersesAstBuilder;
 import org.perses.antlr.ast.PersesGrammar;
+import org.perses.program.LanguageKind;
 import org.perses.program.TokenizedProgram;
 
 import java.io.*;
@@ -37,19 +38,25 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayDeque;
 
-/** The base class for parser faceds */
+/** The base class for the parser facade */
 public abstract class AbstractParserFacade {
 
+  private final LanguageKind language;
   private final AbstractAntlrGrammar grammar;
   private final GrammarHierarchy hierarchy;
 
-  protected AbstractParserFacade(AbstractAntlrGrammar grammar) {
+  protected AbstractParserFacade(LanguageKind language, AbstractAntlrGrammar grammar) {
+    this.language = language;
     this.grammar = grammar;
     hierarchy = GrammarHierarchy.createFromAntlrGrammar(grammar);
   }
 
   public final AbstractAntlrGrammar getAntlrGrammar() {
     return grammar;
+  }
+
+  public LanguageKind getLanguage() {
+    return language;
   }
 
   /** Parse the given file into a ParseTree. */

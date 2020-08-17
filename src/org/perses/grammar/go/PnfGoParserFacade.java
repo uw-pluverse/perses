@@ -21,6 +21,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.perses.antlr.ParseTreeWithParser;
 import org.perses.grammar.AbstractDefaultParserFacade;
+import org.perses.program.LanguageKind;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,7 +33,9 @@ import java.nio.file.Files;
 public final class PnfGoParserFacade extends AbstractDefaultParserFacade<GoLexer, PnfGoParser> {
 
   public PnfGoParserFacade() {
-    super(createSeparateAntlrGrammar("PnfGoParser.g4", "GoLexer.g4", PnfGoParserFacade.class));
+    super(
+        LanguageKind.GO,
+        createSeparateAntlrGrammar("PnfGoParser.g4", "GoLexer.g4", PnfGoParserFacade.class));
   }
 
   @Override

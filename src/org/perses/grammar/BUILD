@@ -20,6 +20,7 @@ java_library(
         "//src/org/perses/antlr:antlr_hierarchy",
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/program",
+        "//src/org/perses/program:language_kind",
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",

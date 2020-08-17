@@ -20,11 +20,12 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.perses.grammar.AbstractDefaultParserFacade;
+import org.perses.program.LanguageKind;
 
 public final class PnfCParserFacade extends AbstractDefaultParserFacade<PnfCLexer, PnfCParser> {
 
   public PnfCParserFacade() {
-    super(createCombinedAntlrGrammar("PnfC.g4", PnfCParserFacade.class));
+    super(LanguageKind.C, createCombinedAntlrGrammar("PnfC.g4", PnfCParserFacade.class));
   }
 
   @Override

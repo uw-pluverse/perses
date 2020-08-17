@@ -40,6 +40,7 @@ java_library(
         ":pnf_rust_grammar",
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/grammar:grammar_facade",
+        "//src/org/perses/program:language_kind",
         "@maven//:com_google_flogger_flogger",
         "@maven//:org_antlr_antlr4_runtime",
     ],

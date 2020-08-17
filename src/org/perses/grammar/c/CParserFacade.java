@@ -22,15 +22,13 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.perses.antlr.ParseTreeWithParser;
 import org.perses.grammar.AbstractDefaultParserFacade;
+import org.perses.program.LanguageKind;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.io.IOException;
-
-import java.nio.file.Files;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 /** This is the facade for C parsers. TODO: clean up this class. */
 public final class CParserFacade extends AbstractDefaultParserFacade<OptCLexer, OptCParser> {
@@ -38,7 +36,7 @@ public final class CParserFacade extends AbstractDefaultParserFacade<OptCLexer, 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   public CParserFacade() {
-    super(createCombinedAntlrGrammar("OptC.g4", CParserFacade.class));
+    super(LanguageKind.C, createCombinedAntlrGrammar("OptC.g4", CParserFacade.class));
   }
 
   @Override

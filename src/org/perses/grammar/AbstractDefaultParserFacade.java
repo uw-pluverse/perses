@@ -33,6 +33,7 @@ import org.antlr.v4.runtime.misc.IntervalSet;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.perses.antlr.AbstractAntlrGrammar;
 import org.perses.antlr.ParseTreeWithParser;
+import org.perses.program.LanguageKind;
 import org.perses.program.TokenizedProgram;
 
 import java.io.IOException;
@@ -81,8 +82,8 @@ public abstract class AbstractDefaultParserFacade<LEXER extends Lexer, PARSER ex
   private static final boolean DISABLE_GLOBAL_CACHING_FOR_BETTER_MEMORY_THO_AFFECT_EFFICIENCY =
       true;
 
-  protected AbstractDefaultParserFacade(AbstractAntlrGrammar grammar) {
-    super(grammar);
+  protected AbstractDefaultParserFacade(LanguageKind languageKind, AbstractAntlrGrammar grammar) {
+    super(languageKind, grammar);
   }
 
   protected abstract LEXER createLexer(ANTLRInputStream inputStream);

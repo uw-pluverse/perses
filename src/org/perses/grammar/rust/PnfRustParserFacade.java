@@ -21,6 +21,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.perses.antlr.ParseTreeWithParser;
 import org.perses.grammar.AbstractDefaultParserFacade;
+import org.perses.program.LanguageKind;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,7 +34,7 @@ public final class PnfRustParserFacade
     extends AbstractDefaultParserFacade<PnfRustLexer, PnfRustParser> {
 
   public PnfRustParserFacade() {
-    super(createCombinedAntlrGrammar("PnfRust.g4", PnfRustParserFacade.class));
+    super(LanguageKind.RUST, createCombinedAntlrGrammar("PnfRust.g4", PnfRustParserFacade.class));
   }
 
   @Override
@@ -70,8 +71,8 @@ public final class PnfRustParserFacade
     }
   }
 
-  private static ParseTreeWithParser parseWithOrigRustParser(
-      BufferedReader reader, String fileName) throws IOException {
+  private static ParseTreeWithParser parseWithOrigRustParser(BufferedReader reader, String fileName)
+      throws IOException {
     return parseReader(
         fileName,
         reader,
