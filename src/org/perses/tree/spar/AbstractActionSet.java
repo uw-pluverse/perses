@@ -29,7 +29,7 @@ public abstract class AbstractActionSet<ACTION extends AbstractTreeEditAction> {
   private final ImmutableList<ACTION> actions;
   private final String actionsDescription;
 
-  AbstractActionSet(ImmutableList<ACTION> actions, String actionsDescription) {
+  protected AbstractActionSet(ImmutableList<ACTION> actions, String actionsDescription) {
     this.actionsDescription = actionsDescription;
     checkSortedAndDistinct(actions);
 
