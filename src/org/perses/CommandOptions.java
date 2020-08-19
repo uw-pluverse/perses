@@ -186,6 +186,7 @@ public class CommandOptions extends AbstractCommandOptions {
     @Parameter(
         names = "--call-creduce",
         description = "call C-Reduce when Perses is done.",
+        arity = 1,
         order = FlagOrder.OUTPUT_REFINING + 10)
     public boolean callCReduce = false;
 
