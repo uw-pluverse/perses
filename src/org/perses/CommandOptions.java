@@ -67,6 +67,13 @@ public class CommandOptions extends AbstractCommandOptions {
       order = FlagOrder.HELP)
   public boolean help;
 
+  @Parameter(
+      names = {"--version"},
+      description = "print the version",
+      help = true,
+      order = FlagOrder.HELP + 1)
+  public boolean version;
+
   public CommandOptions(String defaultReductionAlgorithm) {
     this.defaultReductionAlgorithm = defaultReductionAlgorithm;
   }

@@ -33,6 +33,7 @@ java_binary(
         "@maven//:com_beust_jcommander",
         "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",
+        "//version/org/perses/version"
     ],
 )
 

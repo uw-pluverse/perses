@@ -83,4 +83,7 @@ Usage: org.perses.Main [options]
       Default: false
     --help, -h
       print help message
+    --version
+      print the version
+      Default: false
 
