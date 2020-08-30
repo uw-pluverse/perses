@@ -35,6 +35,7 @@ java_library(
 
 java_library(
     name = "truth",
+    visibility = ["//visibility:public"],
     exports = [
         "@maven//:com_google_truth_truth",
         "@maven//:com_googlecode_java_diff_utils_diffutils",

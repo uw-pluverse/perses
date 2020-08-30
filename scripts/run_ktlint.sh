@@ -14,4 +14,5 @@ fi
     "test/**/*.kt" \
     "fuzzer/**/*.kt" \
     "fuzzer_test/**/*.kt" \
-    "antlropt/**/*.kt"
+    "antlropt/**/*.kt" \
+    "version/**/*.kt"

@@ -9,6 +9,8 @@ if [[ ! -e "WORKSPACE" ]] ; then
   exit 1
 fi
 
+./scripts/check_copyright.sh
+
 ./scripts/format_bazel_files.sh
 
 ./scripts/run_ktlint.sh
@@ -17,6 +19,7 @@ bazel test \
     //test/... \
     //copyright/... \
     //fuzzer_test/... \
+    //version/... \
     //benchmark/toys/delta_1/... \
     //benchmark/toys/go_print/... \
     //benchmark/toys/parentheses/... \

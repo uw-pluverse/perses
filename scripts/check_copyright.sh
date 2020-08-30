@@ -16,4 +16,5 @@ bazel run //copyright:check_copyright_main -- \
     "${ROOT}/fuzzer/" \
     "${ROOT}/fuzzer_test/" \
     "${ROOT}/src/" \
-    "${ROOT}/test/"
+    "${ROOT}/test/" \
+    "${ROOT}/version/"

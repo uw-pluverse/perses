@@ -11,7 +11,7 @@ java_binary(
     visibility = ["//visibility:private"],
     deps = [
         "@maven//:com_google_guava_guava",
-    ]
+    ],
 )
 
 genrule(
@@ -24,6 +24,6 @@ genrule(
 )
 
 kt_jvm_library(
-    name ="version",
-    srcs = ["Version.kt"]
+    name = "version",
+    srcs = ["Version.kt"],
 )
