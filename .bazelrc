@@ -1,0 +1,1 @@
+build --workspace_status_command "./version/org/perses/version/compute_workspace_buildstamp.sh"
