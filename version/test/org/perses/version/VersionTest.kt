@@ -33,5 +33,7 @@ class VersionTest {
     Integer.parseInt(Version.MINOR_VERSION)
 
     Truth.assertThat(Version.STATUS.toLowerCase()).isAnyOf("clean", "modified")
+
+    Truth.assertThat(Version.BUILD_TIME).isNotEmpty()
   }
 }
