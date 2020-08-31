@@ -70,7 +70,6 @@ public class CommandOptions extends AbstractCommandOptions {
   @Parameter(
       names = {"--version"},
       description = "print the version",
-      help = true,
       order = FlagOrder.HELP + 1)
   public boolean version;
 

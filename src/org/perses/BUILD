@@ -30,10 +30,10 @@ java_binary(
         "//src/org/perses/reduction:reducer_factory",
         "//src/org/perses/reduction:reduction_driver",
         "//src/org/perses/util:default_logging_configurations",
+        "//version/org/perses/version",
         "@maven//:com_beust_jcommander",
         "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",
-        "//version/org/perses/version"
     ],
 )
 
