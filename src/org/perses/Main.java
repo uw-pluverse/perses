@@ -57,7 +57,7 @@ public class Main {
 
     if (cmd.version) {
       System.out.println(
-          String.format("Perses V%s.%s", Version.getMAJOR_VERSION(), Version.getMINOR_VERSION()));
+          String.format("perses version %s.%s", Version.getMAJOR_VERSION(), Version.getMINOR_VERSION()));
       if (!Strings.isNullOrEmpty(Version.getCOMMIT_HASH().trim())) {
         System.out.println("Git Version: " + Version.getCOMMIT_HASH());
       }
