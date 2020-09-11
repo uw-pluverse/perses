@@ -19,11 +19,10 @@ package org.perses;
 
 import com.beust.jcommander.JCommander;
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
 import org.perses.reduction.ReducerFactory;
 import org.perses.reduction.ReductionDriver;
 import org.perses.util.DefaultLoggingConfigurations;
-import org.perses.version.Version;
+import org.perses.version.VersionHelper;
 
 public class Main {
 
@@ -56,18 +55,7 @@ public class Main {
     }
 
     if (cmd.version) {
-      System.out.println(
-          String.format("perses version %s.%s", Version.getMAJOR_VERSION(), Version.getMINOR_VERSION()));
-      if (!Strings.isNullOrEmpty(Version.getCOMMIT_HASH().trim())) {
-        System.out.println("Git Version: " + Version.getCOMMIT_HASH());
-      }
-      if (!Strings.isNullOrEmpty(Version.getBRANCH().trim())) {
-        System.out.println("Git Branch: " + Version.getBRANCH());
-      }
-      if (!Strings.isNullOrEmpty(Version.getSTATUS().trim())) {
-        System.out.println("Git Status: " + Version.getSTATUS());
-      }
-      System.out.println("Built on " + Version.getBUILD_TIME());
+      VersionHelper.printVersionInfo("perses", System.out);
       return;
     }
 
