@@ -30,13 +30,13 @@ if __name__ == '__main__':
             file_list += copyright_checker.locate_files(folder, extension)
 
     if flags.update_copyright:
-    	copyright_checker.update_files(file_list)
-    	print("%d files have been updated!" % len(file_list))
+        copyright_checker.update_files(file_list)
+        print("%d files have been updated!" % len(file_list))
     else:
         missing_list = copyright_checker.check_files(file_list)
-        if missing_list != []:
+        if missing_list:
             raise Exception(
-	    'Following %d files require copyright update:\n%s' %
-	    (len(missing_list), '\n'.join(missing_list)))
+                'Following %d files require copyright update:\n%s' %
+                (len(missing_list), '\n'.join(missing_list)))
         else:
             print("All files are up to date")
