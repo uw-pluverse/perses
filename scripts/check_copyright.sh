@@ -2,7 +2,6 @@
 
 set -o nounset
 set -o pipefail
-set -o errexit
 
 if [[ ! -e "WORKSPACE" ]] ; then
   echo "ERROR: This script should be run in the root folder of the project."
@@ -10,11 +9,16 @@ if [[ ! -e "WORKSPACE" ]] ; then
 fi
 
 readonly ROOT=$(pwd)
-bazel run //copyright:check_copyright_main -- \
+if ! bazel run //copyright:check_copyright_main -- \
     "$@" \
     "${ROOT}/antlropt/" \
     "${ROOT}/fuzzer/" \
     "${ROOT}/fuzzer_test/" \
     "${ROOT}/src/" \
     "${ROOT}/test/" \
-    "${ROOT}/version/"
+    "${ROOT}/version/" ; then
+  echo "Run '$0 -u' to fix this problem"
+  exit 1
+fi
+
+exit 0
