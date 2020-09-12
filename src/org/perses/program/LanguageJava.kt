@@ -16,23 +16,17 @@
  */
 package org.perses.program
 
-import com.google.common.base.MoreObjects
-import java.io.File
+import com.google.common.collect.ImmutableSet
 
-/**
- * Abstraction for a source file. It encapsulates the details of a source file. Note that this class
- * loads the content of the passed-in file. So when you create an object of this class, the file
- * must already exist.
- */
-class SourceFile(file: File) : AbstractSourceFile(file) {
+object LanguageJava : LanguageKind() {
 
-  val languageKind: LanguageKind = LanguageRegistry.computeLanguageKind(file)
-    ?: throw RuntimeException("Cannot detect langauge for $file")
+  override val extensions = ImmutableSet.of("java")
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this)
-      .add("file", file)
-      .add("lang", languageKind)
-      .toString()
-  }
+  override val defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE
+
+  override val allowedCodeFormatControl = ImmutableSet.of(
+    EnumFormatControl.SINGLE_TOKEN_PER_LINE,
+    EnumFormatControl.COMPACT_ORIG_FORMAT,
+    EnumFormatControl.ORIG_FORMAT
+  )
 }

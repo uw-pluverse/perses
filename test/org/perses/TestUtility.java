@@ -28,7 +28,10 @@ import org.perses.grammar.AbstractParserFacade;
 import org.perses.grammar.c.CParserFacade;
 import org.perses.grammar.java.JavaParserFacade;
 import org.perses.grammar.scala.PnfScalaParserFacade;
+import org.perses.program.LanguageC;
+import org.perses.program.LanguageJava;
 import org.perses.program.LanguageKind;
+import org.perses.program.LanguageScala;
 import org.perses.program.SourceFile;
 import org.perses.program.TokenizedProgram;
 import org.perses.program.TokenizedProgramFactory;
@@ -245,14 +248,15 @@ public final class TestUtility {
   }
 
   public static AbstractParserFacade getFacade(LanguageKind languageKind) {
-    switch (languageKind) {
-      case C:
-        // Use the existing, stable parser for test stability.
-        return new CParserFacade();
-      case JAVA:
-        return new JavaParserFacade();
-      case SCALA:
-        return new PnfScalaParserFacade();
+    if (languageKind == LanguageC.INSTANCE) {
+      // Use the existing, stable parser for test stability.
+      return new CParserFacade();
+    }
+    if (languageKind == LanguageJava.INSTANCE) {
+      return new JavaParserFacade();
+    }
+    if (languageKind == LanguageScala.INSTANCE) {
+      return new PnfScalaParserFacade();
     }
     throw new RuntimeException("Cannot reach here. " + languageKind);
   }

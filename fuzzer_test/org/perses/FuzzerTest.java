@@ -18,14 +18,11 @@ package org.perses.fuzzer;
 
 import com.google.common.io.Files;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.perses.TestUtility;
-
 import org.perses.grammar.c.CParserFacade;
-import org.perses.grammar.c.PnfCParserFacade;
 import org.perses.program.SourceFile;
 import org.perses.tree.spar.AbstractSparTreeEdit;
 import org.perses.tree.spar.SparTree;
@@ -69,7 +66,7 @@ public class FuzzerTest {
     Random rnd = new Random(42);
     AbstractSparTreeEdit RandomDeleteTreeEdit = Fuzzer.treeMutation(sparTree, rnd);
     // load random mutated program into file
-    final File mutatedFile = File.createTempFile("mutatedFile", ".temp");
+    final File mutatedFile = File.createTempFile("mutatedFile", ".c");
     SourceFile mutatedSourceFile = new SourceFile(mutatedFile);
     RandomDeleteTreeEdit.getProgram()
         .writeToFile(

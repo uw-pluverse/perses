@@ -16,23 +16,32 @@
  */
 package org.perses.program
 
-import com.google.common.base.MoreObjects
+import com.google.common.collect.ImmutableMap
+import com.google.common.collect.ImmutableSet
+import com.google.common.io.Files
 import java.io.File
 
-/**
- * Abstraction for a source file. It encapsulates the details of a source file. Note that this class
- * loads the content of the passed-in file. So when you create an object of this class, the file
- * must already exist.
- */
-class SourceFile(file: File) : AbstractSourceFile(file) {
+object LanguageRegistry {
 
-  val languageKind: LanguageKind = LanguageRegistry.computeLanguageKind(file)
-    ?: throw RuntimeException("Cannot detect langauge for $file")
+  val buildinLanguages = ImmutableSet.of(
+    LanguageC,
+    LanguageJava,
+    LanguageRust,
+    LanguageGo,
+    LanguageScala
+  )
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this)
-      .add("file", file)
-      .add("lang", languageKind)
-      .toString()
+  private val fileExtToLanguageMap = buildinLanguages
+    .asSequence()
+    .flatMap { language -> language.extensions.asSequence().map { it to language } }
+    .fold(
+      ImmutableMap.builder<String, LanguageKind>(),
+      { builder, pair -> builder.put(pair.first, pair.second) }
+    )
+    .build()
+
+  fun computeLanguageKind(file: File): LanguageKind? {
+    val ext = Files.getFileExtension(file.name)
+    return fileExtToLanguageMap.get(ext)
   }
 }

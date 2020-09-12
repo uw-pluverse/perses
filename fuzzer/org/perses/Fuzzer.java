@@ -20,18 +20,14 @@ package org.perses.fuzzer;
 import com.google.common.collect.ImmutableList;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
-
 import org.perses.grammar.AbstractParserFacade;
 import org.perses.grammar.ParserFacadeFactory;
 import org.perses.grammar.c.CParserFacade;
-
-import org.perses.program.LanguageKind;
+import org.perses.program.LanguageC;
 import org.perses.program.TokenizedProgramFactory;
-
 import org.perses.tree.spar.AbstractSparTreeEdit;
 import org.perses.tree.spar.AbstractSparTreeNode;
 import org.perses.tree.spar.NodeDeletionActionSet;
-import org.perses.tree.spar.NodeDeletionTreeEdit;
 import org.perses.tree.spar.SparTree;
 import org.perses.tree.spar.SparTreeBuilder;
 
@@ -60,7 +56,7 @@ public class Fuzzer {
 
     ParserFacadeFactory factory = ParserFacadeFactory.createForPnfC();
 
-    AbstractParserFacade parserFacade = factory.createParserFacade(LanguageKind.C);
+    AbstractParserFacade parserFacade = factory.createParserFacade(LanguageC.INSTANCE);
 
     SparTree sparTree =
         new SparTreeBuilder(parserFacade.getRuleHierarchy(), tokenizedProgramFactory)

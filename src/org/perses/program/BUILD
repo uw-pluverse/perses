@@ -20,9 +20,17 @@ kt_jvm_library(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "language_kind",
-    srcs = ["LanguageKind.java"],
+    srcs = [
+        "LanguageC.kt",
+        "LanguageGo.kt",
+        "LanguageJava.kt",
+        "LanguageKind.kt",
+        "LanguageRegistry.kt",
+        "LanguageRust.kt",
+        "LanguageScala.kt",
+    ],
     deps = [
         ":enum_format_control",
         "@maven//:com_google_guava_guava",

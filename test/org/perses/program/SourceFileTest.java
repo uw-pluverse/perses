@@ -37,7 +37,7 @@ public class SourceFileTest {
     Truth.assertThat(source.getBaseName()).isEqualTo("t.c");
     Truth.assertThat(source.getFileContent())
         .isEqualTo(MoreFiles.asCharSource(Paths.get(pathname), StandardCharsets.UTF_8).read());
-    Truth.assertThat(source.getLanguageKind()).isEqualTo(LanguageKind.C);
+    Truth.assertThat(source.getLanguageKind()).isEqualTo(LanguageC.INSTANCE);
     Truth.assertThat(source.getFile()).isEqualTo(new File(pathname));
   }
 }

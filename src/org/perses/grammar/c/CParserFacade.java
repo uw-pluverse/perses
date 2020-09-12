@@ -22,7 +22,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.perses.antlr.ParseTreeWithParser;
 import org.perses.grammar.AbstractDefaultParserFacade;
-import org.perses.program.LanguageKind;
+import org.perses.program.LanguageC;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -36,7 +36,7 @@ public final class CParserFacade extends AbstractDefaultParserFacade<OptCLexer, 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   public CParserFacade() {
-    super(LanguageKind.C, createCombinedAntlrGrammar("OptC.g4", CParserFacade.class));
+    super(LanguageC.INSTANCE, createCombinedAntlrGrammar("OptC.g4", CParserFacade.class));
   }
 
   @Override

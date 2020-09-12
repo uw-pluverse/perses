@@ -29,7 +29,7 @@ import org.perses.TestUtility
 import org.perses.antlr.AntlrGrammarUtil
 import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.c.CParserFacade
-import org.perses.program.LanguageKind
+import org.perses.program.LanguageC
 import org.perses.program.PersesToken
 import org.perses.program.TokenizedProgramFactory
 import java.io.File
@@ -249,7 +249,7 @@ class SparTreeNodeTest {
       int a = 0;
       int b = 0;
       """.trimIndent(),
-      LanguageKind.C
+      LanguageC
     )
     val root = tree.root
     assertThat(root.childCount).isEqualTo(1)

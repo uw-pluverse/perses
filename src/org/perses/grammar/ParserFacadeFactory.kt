@@ -22,18 +22,23 @@ import org.perses.grammar.go.PnfGoParserFacade
 import org.perses.grammar.java.JavaParserFacade
 import org.perses.grammar.rust.PnfRustParserFacade
 import org.perses.grammar.scala.PnfScalaParserFacade
+import org.perses.program.LanguageC
+import org.perses.program.LanguageGo
+import org.perses.program.LanguageJava
 import org.perses.program.LanguageKind
+import org.perses.program.LanguageRust
+import org.perses.program.LanguageScala
 
 /** Creates a parser facade, based on the type of language kind.  */
 class ParserFacadeFactory private constructor(private val useOptCParser: Boolean) {
 
   fun createParserFacade(languageKind: LanguageKind): AbstractParserFacade {
     val facade = when (languageKind) {
-      LanguageKind.C -> if (useOptCParser) CParserFacade() else PnfCParserFacade()
-      LanguageKind.JAVA -> JavaParserFacade()
-      LanguageKind.GO -> PnfGoParserFacade()
-      LanguageKind.SCALA -> PnfScalaParserFacade()
-      LanguageKind.RUST -> PnfRustParserFacade()
+      LanguageC -> if (useOptCParser) CParserFacade() else PnfCParserFacade()
+      LanguageJava -> JavaParserFacade()
+      LanguageGo -> PnfGoParserFacade()
+      LanguageScala -> PnfScalaParserFacade()
+      LanguageRust -> PnfRustParserFacade()
       else -> throw RuntimeException("The language $languageKind is not supported.")
     }
     check(facade.language == languageKind)
