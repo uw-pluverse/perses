@@ -39,7 +39,7 @@ class ReductionConfiguration(
   val workingFolder: File,
   val testScript: ScriptFile,
   val fileToReduce: SourceFile,
-  val bestResultFile: File,
+  val bestResultFile: File, // TODO: convert this to SourceFile.
   private val statisticsFile: File?,
   private val progressDumpFile: File?,
   val programFormatControl: EnumFormatControl,
@@ -63,6 +63,7 @@ class ReductionConfiguration(
     return Optional.ofNullable(progressDumpFile)
   }
 
+  // TODO: convert the return type to File?
   val testScriptStatisticsFile: Optional<File>
     get() = if (statisticsFile == null) {
       Optional.empty()
@@ -79,12 +80,8 @@ class ReductionConfiguration(
 
   fun dumpConfiguration(): String {
     val builder = StringBuilder()
-    try {
-      for (field in ReductionConfiguration::class.java.declaredFields) {
-        builder.append(field.name).append('=').append(field[this]).append('\n')
-      }
-    } catch (e: IllegalAccessException) {
-      throw AssertionError(e)
+    for (field in ReductionConfiguration::class.java.declaredFields) {
+      builder.append(field.name).append('=').append(field[this]).append('\n')
     }
     return builder.toString()
   }
