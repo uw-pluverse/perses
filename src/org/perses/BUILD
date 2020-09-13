@@ -57,6 +57,7 @@ java_binary(
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/program",
+        "//src/org/perses/program:language_kind",
         "//src/org/perses/reduction:reducer_factory",
         "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",

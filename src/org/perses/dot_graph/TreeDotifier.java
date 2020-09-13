@@ -71,11 +71,10 @@ public class TreeDotifier {
 
   public static void dotifyAntlrParseTree(File sourceFile, File pdfFile) {
     try {
-      final SourceFile source = new SourceFile(sourceFile);
+      ParserFacadeFactory factory = ParserFacadeFactory.builderWithBuiltinLanguages().build();
+      final SourceFile source = new SourceFile(sourceFile, factory.computeLanguageKind(sourceFile));
       final ParseTreeWithParser root =
-          ParserFacadeFactory.builderWithBuiltinLanguages().build()
-              .createParserFacade(source.getLanguageKind())
-              .parseFile(sourceFile);
+          factory.createParserFacade(source.getLanguageKind()).parseFile(sourceFile);
       convertTreeToDotGraph(root.getTree())
           .dotify(pdfFile, DEFAULT_ANTLR_PARSE_TREE_LABEL_PROVIDER);
     } catch (Exception e) {

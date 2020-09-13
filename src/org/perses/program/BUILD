@@ -27,7 +27,6 @@ kt_jvm_library(
         "LanguageGo.kt",
         "LanguageJava.kt",
         "LanguageKind.kt",
-        "LanguageRegistry.kt",
         "LanguageRust.kt",
         "LanguageScala.kt",
     ],

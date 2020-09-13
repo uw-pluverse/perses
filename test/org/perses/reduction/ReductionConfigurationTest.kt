@@ -26,6 +26,7 @@ import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.ParserFacadeFactory
 import org.perses.program.EnumFormatControl.ORIG_FORMAT
+import org.perses.program.LanguageC
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
 import org.perses.reduction.ReductionConfiguration.Companion.getTempRootFolderName
@@ -40,7 +41,7 @@ class ReductionConfigurationTest {
   private val testScript = ScriptFile(File(FOLDER + "r.sh"))
   private val workingDirectory =
     TestUtility.createCleanWorkingDirectory(ReductionConfigurationTest::class.java)
-  private val sourceFile = SourceFile(File(FOLDER + "t.c"))
+  private val sourceFile = SourceFile(File(FOLDER + "t.c"), LanguageC)
 
   @After
   @Throws(IOException::class)

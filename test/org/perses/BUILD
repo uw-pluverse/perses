@@ -19,6 +19,7 @@ java_library(
     deps = [
         ":truth",
         "//src/org/perses/antlr:parse_tree_with_parser",
+        "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/grammar/c:c_parser_facade",
         "//src/org/perses/grammar/java:java_parser_facade",

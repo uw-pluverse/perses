@@ -27,6 +27,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.program.EnumFormatControl.ORIG_FORMAT
+import org.perses.program.LanguageC
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
 import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
@@ -47,8 +48,8 @@ class TestScriptExecutorServiceTest {
     private const val FOLDER = "test_data/delta_1/"
   }
 
-  private val sourceFile = SourceFile(File(FOLDER, "t.c"))
-  private val invalidSourceFile = SourceFile(File("test_data/misc/t1.c"))
+  private val sourceFile = SourceFile(File(FOLDER, "t.c"), LanguageC)
+  private val invalidSourceFile = SourceFile(File("test_data/misc/t1.c"), LanguageC)
   private val testScript = ScriptFile(File(FOLDER, "r.sh"))
   private val slowTestScript = ScriptFile(File(FOLDER, "slow_r.sh"))
   private val program = TestUtility.createSparTreeFromFile(sourceFile.file).programSnapshot

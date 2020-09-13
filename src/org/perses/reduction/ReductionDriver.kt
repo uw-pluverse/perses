@@ -215,7 +215,9 @@ class ReductionDriver(
         origTokenCount, tokenCount
       )
       // FIXME: this may crash, as c-reduce can produce programs unparseable for Perses.
-      tree = createSparTree(SourceFile(configuration.bestResultFile))
+      tree = createSparTree(
+        SourceFile(configuration.bestResultFile, configuration.parserFacade.language)
+      )
     }
   }
 
@@ -485,7 +487,10 @@ class ReductionDriver(
       cmd: CommandOptions,
       parserFacadeFactory: ParserFacadeFactory
     ): ReductionConfiguration {
-      val sourceFile = SourceFile(cmd.compulsoryFlags.sourceFile.absoluteFile)
+      val sourceFile = SourceFile(
+        cmd.compulsoryFlags.sourceFile.absoluteFile,
+        parserFacadeFactory.computeLanguageKind(cmd.compulsoryFlags.sourceFile.absoluteFile)!!
+      )
       val testScript = ScriptFile(cmd.compulsoryFlags.getTestScript().absoluteFile)
 
       require(sourceFile.parentFile.absolutePath == testScript.parentFile.absolutePath) {

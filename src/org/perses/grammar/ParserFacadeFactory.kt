@@ -17,6 +17,7 @@
 package org.perses.grammar
 
 import com.google.common.collect.ImmutableMap
+import com.google.common.io.Files
 import org.perses.grammar.c.PnfCParserFacade
 import org.perses.grammar.go.PnfGoParserFacade
 import org.perses.grammar.java.JavaParserFacade
@@ -28,6 +29,7 @@ import org.perses.program.LanguageJava
 import org.perses.program.LanguageKind
 import org.perses.program.LanguageRust
 import org.perses.program.LanguageScala
+import java.io.File
 
 /** Creates a parser facade, based on the type of language kind.  */
 class ParserFacadeFactory private constructor(
@@ -43,6 +45,20 @@ class ParserFacadeFactory private constructor(
         "${it.language} != $languageKind"
       }
     }
+  }
+
+  private val fileExtToLanguageMap = language2FacadeMap.keys
+    .asSequence()
+    .flatMap { language -> language.extensions.asSequence().map { it to language } }
+    .fold(
+      ImmutableMap.builder<String, LanguageKind>(),
+      { builder, pair -> builder.put(pair.first, pair.second) }
+    )
+    .build()
+
+  fun computeLanguageKind(file: File): LanguageKind? {
+    val ext = Files.getFileExtension(file.name)
+    return fileExtToLanguageMap.get(ext)
   }
 
   companion object {
