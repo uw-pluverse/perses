@@ -12,8 +12,6 @@ readonly ROOT=$(pwd)
 if ! bazel run //copyright:check_copyright_main -- \
     "$@" \
     "${ROOT}/antlropt/" \
-    "${ROOT}/fuzzer/" \
-    "${ROOT}/fuzzer_test/" \
     "${ROOT}/src/" \
     "${ROOT}/test/" \
     "${ROOT}/version/" ; then

@@ -18,7 +18,6 @@ fi
 bazel test \
     //test/... \
     //copyright/... \
-    //fuzzer_test/... \
     //version/... \
     //benchmark/toys/delta_1/... \
     //benchmark/toys/go_print/... \

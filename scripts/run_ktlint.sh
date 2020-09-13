@@ -12,7 +12,5 @@ fi
 "ktlint" --format \
     "src/**/*.kt" \
     "test/**/*.kt" \
-    "fuzzer/**/*.kt" \
-    "fuzzer_test/**/*.kt" \
     "antlropt/**/*.kt" \
     "version/**/*.kt"
