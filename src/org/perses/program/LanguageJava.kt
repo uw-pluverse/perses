@@ -20,6 +20,8 @@ import com.google.common.collect.ImmutableSet
 
 object LanguageJava : LanguageKind() {
 
+  override val name = "java"
+
   override val extensions = ImmutableSet.of("java")
 
   override val defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE

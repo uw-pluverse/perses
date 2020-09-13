@@ -20,6 +20,8 @@ import com.google.common.collect.ImmutableSet
 
 object LanguageRust : LanguageKind() {
 
+  override val name = "rust"
+
   override val extensions = ImmutableSet.of("rs")
 
   override val defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT

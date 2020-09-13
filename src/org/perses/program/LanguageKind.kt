@@ -20,6 +20,8 @@ import com.google.common.collect.ImmutableSet
 
 abstract class LanguageKind {
 
+  abstract val name: String
+
   abstract val extensions: ImmutableSet<String>
 
   abstract val defaultCodeFormatControl: EnumFormatControl

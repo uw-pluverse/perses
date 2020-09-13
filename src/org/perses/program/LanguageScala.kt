@@ -20,6 +20,8 @@ import com.google.common.collect.ImmutableSet
 
 object LanguageScala : LanguageKind() {
 
+  override val name = "scala"
+
   override val extensions = ImmutableSet.of("scala", "sc")
 
   override val defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT

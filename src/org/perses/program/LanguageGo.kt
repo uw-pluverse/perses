@@ -20,6 +20,8 @@ import com.google.common.collect.ImmutableSet
 
 object LanguageGo : LanguageKind() {
 
+  override val name = "go"
+
   override val extensions = ImmutableSet.of("go")
 
   override val defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT
