@@ -18,7 +18,6 @@ package org.perses;
 
 import com.google.common.collect.ImmutableList;
 import org.antlr.v4.runtime.Token;
-import org.perses.antlr.ParseTreeWithParser;
 import org.perses.grammar.AbstractParserFacade;
 import org.perses.grammar.ParserFacadeFactory;
 import org.perses.program.SourceFile;
@@ -37,7 +36,7 @@ public class TokenCounterMain {
     checkArgument(file.isFile(), "The source file is not a regular file. %s", file);
     final SourceFile sourceFile = new SourceFile(file);
     final AbstractParserFacade parserFacade =
-        ParserFacadeFactory.createForPnfC().createParserFacade(sourceFile.getLanguageKind());
+        ParserFacadeFactory.builderWithBuiltinLanguages().build().createParserFacade(sourceFile.getLanguageKind());
     final ImmutableList<Token> tokens = parserFacade.parseIntoTokens(sourceFile.getFile());
     int count = 0;
     for (Token token: tokens) {

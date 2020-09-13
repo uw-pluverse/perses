@@ -54,7 +54,7 @@ public class Fuzzer {
 
     TokenizedProgramFactory tokenizedProgramFactory = TokenizedProgramFactory.createFactory(tokens);
 
-    ParserFacadeFactory factory = ParserFacadeFactory.createForPnfC();
+    ParserFacadeFactory factory = ParserFacadeFactory.builderWithBuiltinLanguages().build();
 
     AbstractParserFacade parserFacade = factory.createParserFacade(LanguageC.INSTANCE);
 

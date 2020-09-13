@@ -7,6 +7,7 @@ java_library(
     srcs = ["AbstractReducerFunctionalTest.java"],
     deps = [
         "//src/org/perses:command_options",
+        "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/listener:listeners",
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction:reduction_driver",

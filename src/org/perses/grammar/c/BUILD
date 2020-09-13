@@ -1,8 +1,5 @@
 package(default_visibility = [
-    "//fuzzer/org/perses:__subpackages__",
-    "//fuzzer_test/org/perses:__subpackages__",
-    "//src/org/perses/grammar:__subpackages__",
-    "//test/org/perses:__subpackages__",
+    "//visibility:public",
 ])
 
 load("//antlropt/org/perses/antlr/pnf:pnf.bzl", "pnf_convert")

@@ -16,7 +16,7 @@
  */
 package org.perses.grammar
 
-import org.perses.grammar.c.CParserFacade
+import com.google.common.collect.ImmutableMap
 import org.perses.grammar.c.PnfCParserFacade
 import org.perses.grammar.go.PnfGoParserFacade
 import org.perses.grammar.java.JavaParserFacade
@@ -30,30 +30,44 @@ import org.perses.program.LanguageRust
 import org.perses.program.LanguageScala
 
 /** Creates a parser facade, based on the type of language kind.  */
-class ParserFacadeFactory private constructor(private val useOptCParser: Boolean) {
+class ParserFacadeFactory private constructor(
+  private val language2FacadeMap: ImmutableMap<LanguageKind, () -> AbstractParserFacade>
+) {
+
+  class Builder {
+    private val language2FacadeMap =
+      ImmutableMap.builder<LanguageKind, () -> AbstractParserFacade>()
+
+    fun add(language: LanguageKind, facadeCreator: () -> AbstractParserFacade): Builder {
+      language2FacadeMap.put(language, facadeCreator)
+      return this
+    }
+
+    fun build() = ParserFacadeFactory(language2FacadeMap.build())
+  }
 
   fun createParserFacade(languageKind: LanguageKind): AbstractParserFacade {
-    val facade = when (languageKind) {
-      LanguageC -> if (useOptCParser) CParserFacade() else PnfCParserFacade()
-      LanguageJava -> JavaParserFacade()
-      LanguageGo -> PnfGoParserFacade()
-      LanguageScala -> PnfScalaParserFacade()
-      LanguageRust -> PnfRustParserFacade()
-      else -> throw RuntimeException("The language $languageKind is not supported.")
+    require(language2FacadeMap.contains(languageKind)) {
+      "Unrecognized language kind $languageKind"
     }
-    check(facade.language == languageKind)
-    return facade
+    return language2FacadeMap[languageKind]!!.invoke().also {
+      check(it.language == languageKind) {
+        "${it.language} != $languageKind"
+      }
+    }
   }
 
   companion object {
-    @JvmStatic
-    fun createForPnfC(): ParserFacadeFactory {
-      return ParserFacadeFactory(false)
-    }
 
     @JvmStatic
-    fun createForOptC(): ParserFacadeFactory {
-      return ParserFacadeFactory(true)
+    fun builderWithBuiltinLanguages(): Builder {
+      val builder = Builder()
+      builder.add(LanguageGo) { PnfGoParserFacade() }
+      builder.add(LanguageRust) { PnfRustParserFacade() }
+      builder.add(LanguageScala) { PnfScalaParserFacade() }
+      builder.add(LanguageJava) { JavaParserFacade() }
+      builder.add(LanguageC) { PnfCParserFacade() }
+      return builder
     }
   }
 }

@@ -1,6 +1,5 @@
 package(default_visibility = [
-    "//src/org/perses/grammar:__pkg__",
-    "//test/org/perses:__subpackages__",
+    "//visibility:public",
 ])
 
 load("//src/org/perses/grammar:antlr_util.bzl", "antlr_codegen_combined")

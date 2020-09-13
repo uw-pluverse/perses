@@ -18,6 +18,18 @@
 package org.perses;
 
 import com.beust.jcommander.JCommander;
+import org.perses.grammar.ParserFacadeFactory;
+import org.perses.grammar.c.CParserFacade;
+import org.perses.grammar.c.PnfCParserFacade;
+import org.perses.grammar.go.PnfGoParserFacade;
+import org.perses.grammar.java.JavaParserFacade;
+import org.perses.grammar.rust.PnfRustParserFacade;
+import org.perses.grammar.scala.PnfScalaParserFacade;
+import org.perses.program.LanguageC;
+import org.perses.program.LanguageGo;
+import org.perses.program.LanguageJava;
+import org.perses.program.LanguageRust;
+import org.perses.program.LanguageScala;
 import org.perses.reduction.ReducerFactory;
 import org.perses.reduction.ReductionDriver;
 import org.perses.util.DefaultLoggingConfigurations;
@@ -75,8 +87,25 @@ public class Main {
         cmd.algorithmControlFlags.getReductionAlgorithmName());
 
     // TODO: create language registry here.
-    try (ReductionDriver driver = new ReductionDriver(cmd)) {
+    final ParserFacadeFactory facadeFactory = createParserFacadeFactory();
+    try (ReductionDriver driver = new ReductionDriver(cmd, facadeFactory)) {
       driver.reduce();
     }
+  }
+
+  private final ParserFacadeFactory createParserFacadeFactory() {
+    final ParserFacadeFactory.Builder builder = new ParserFacadeFactory.Builder();
+    fillParserFacadeFactoryBuilder(builder);
+    return builder.build();
+  }
+
+  protected void fillParserFacadeFactoryBuilder(ParserFacadeFactory.Builder builder) {
+    builder.add(LanguageGo.INSTANCE, PnfGoParserFacade::new);
+    builder.add(LanguageRust.INSTANCE, PnfRustParserFacade::new);
+    builder.add(LanguageScala.INSTANCE, PnfScalaParserFacade::new);
+    builder.add(LanguageJava.INSTANCE, JavaParserFacade::new);
+    builder.add(
+        LanguageC.INSTANCE,
+        cmd.algorithmControlFlags.useOptCParser ? CParserFacade::new : PnfCParserFacade::new);
   }
 }

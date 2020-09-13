@@ -25,6 +25,7 @@ import com.google.common.io.MoreFiles
 import org.antlr.v4.runtime.tree.ParseTree
 import org.perses.CommandOptions
 import org.perses.grammar.AbstractParserFacade
+import org.perses.grammar.ParserFacadeFactory
 import org.perses.listener.LoggingListener
 import org.perses.listener.ProgressMonitorForNodeReducer
 import org.perses.listener.ReductionProfileListener
@@ -58,10 +59,11 @@ import java.nio.charset.StandardCharsets
  */
 class ReductionDriver(
   private val cmd: CommandOptions,
+  private val parserFacadeFactory: ParserFacadeFactory,
   vararg extraListeners: AbstractReductionListener
 ) : Closeable {
 
-  val configuration = createConfiguration(cmd)
+  val configuration = createConfiguration(cmd, parserFacadeFactory)
 
   private val executorService = TestScriptExecutorService(
     configuration.tempRootFolder,
@@ -479,7 +481,10 @@ class ReductionDriver(
 
     @JvmStatic
     @VisibleForTesting
-    fun createConfiguration(cmd: CommandOptions): ReductionConfiguration {
+    fun createConfiguration(
+      cmd: CommandOptions,
+      parserFacadeFactory: ParserFacadeFactory
+    ): ReductionConfiguration {
       val sourceFile = SourceFile(cmd.compulsoryFlags.sourceFile.absoluteFile)
       val testScript = ScriptFile(cmd.compulsoryFlags.getTestScript().absoluteFile)
 
@@ -518,7 +523,7 @@ class ReductionDriver(
         enableTestScriptExecutionCaching = cmd.cacheControlFlags.queryCaching,
         useRealDeltaDebugger = cmd.algorithmControlFlags.useRealDeltaDebugger,
         numOfReductionThreads = cmd.reductionControlFlags.numOfThreads,
-        useOptCParser = cmd.algorithmControlFlags.useOptCParser
+        parserFacadeFactory = parserFacadeFactory
       )
     }
 

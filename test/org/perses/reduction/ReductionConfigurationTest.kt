@@ -24,6 +24,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
+import org.perses.grammar.ParserFacadeFactory
 import org.perses.program.EnumFormatControl.ORIG_FORMAT
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
@@ -64,7 +65,8 @@ class ReductionConfigurationTest {
       fixpointReduction = true,
       enableTestScriptExecutionCaching = true,
       useRealDeltaDebugger = false,
-      numOfReductionThreads = numOfReductionThreads
+      numOfReductionThreads = numOfReductionThreads,
+      parserFacadeFactory = ParserFacadeFactory.builderWithBuiltinLanguages().build()
     )
     Truth.assertThat(configuration.bestResultFile).isEqualTo(bestFile)
     Truth.assertThat(configuration.fileToReduce.file).isEqualTo(sourceFile.file)

@@ -20,6 +20,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.google.common.truth.Truth;
 import org.perses.CommandOptions;
+import org.perses.grammar.ParserFacadeFactory;
 import org.perses.listener.ProgressMonitorForNodeReducer;
 import org.perses.util.AutoDeletableFolder;
 
@@ -52,7 +53,9 @@ public abstract class AbstractReducerFunctionalTest {
 
       ProgressMonitorForNodeReducer progressMonitor =
           ProgressMonitorForNodeReducer.createForSystemOut();
-      try (ReductionDriver driver = new ReductionDriver(cmd, progressMonitor)) {
+      try (ReductionDriver driver =
+          new ReductionDriver(
+              cmd, ParserFacadeFactory.builderWithBuiltinLanguages().build(), progressMonitor)) {
         final File bestFile = driver.getConfiguration().getBestResultFile();
         if (bestFile.isFile()) {
           bestFile.delete();
@@ -94,9 +97,7 @@ public abstract class AbstractReducerFunctionalTest {
   }
 
   protected void runScalaTestSubject(
-      String reductionFolder,
-      ReducerAnnotation algorithmType,
-      String expected) {
+      String reductionFolder, ReducerAnnotation algorithmType, String expected) {
     test(reductionFolder, "r.sh", "t.sc", algorithmType, t -> {}, expected);
   }
 }
