@@ -34,18 +34,6 @@ class ParserFacadeFactory private constructor(
   private val language2FacadeMap: ImmutableMap<LanguageKind, () -> AbstractParserFacade>
 ) {
 
-  class Builder {
-    private val language2FacadeMap =
-      ImmutableMap.builder<LanguageKind, () -> AbstractParserFacade>()
-
-    fun add(language: LanguageKind, facadeCreator: () -> AbstractParserFacade): Builder {
-      language2FacadeMap.put(language, facadeCreator)
-      return this
-    }
-
-    fun build() = ParserFacadeFactory(language2FacadeMap.build())
-  }
-
   fun createParserFacade(languageKind: LanguageKind): AbstractParserFacade {
     require(language2FacadeMap.contains(languageKind)) {
       "Unrecognized language kind $languageKind"
@@ -69,5 +57,17 @@ class ParserFacadeFactory private constructor(
       builder.add(LanguageC) { PnfCParserFacade() }
       return builder
     }
+  }
+
+  class Builder {
+    private val language2FacadeMap =
+      ImmutableMap.builder<LanguageKind, () -> AbstractParserFacade>()
+
+    fun add(language: LanguageKind, facadeCreator: () -> AbstractParserFacade): Builder {
+      language2FacadeMap.put(language, facadeCreator)
+      return this
+    }
+
+    fun build() = ParserFacadeFactory(language2FacadeMap.build())
   }
 }
