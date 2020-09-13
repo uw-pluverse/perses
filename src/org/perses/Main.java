@@ -18,11 +18,12 @@
 package org.perses;
 
 import com.beust.jcommander.JCommander;
-import com.google.common.base.Preconditions;
 import org.perses.reduction.ReducerFactory;
 import org.perses.reduction.ReductionDriver;
 import org.perses.util.DefaultLoggingConfigurations;
 import org.perses.version.VersionHelper;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 public class Main {
 
@@ -31,14 +32,22 @@ public class Main {
   }
 
   public static void main(String[] args) {
+    new Main(args).run();
+  }
 
-    final CommandOptions cmd = new CommandOptions(ReducerFactory.getDefaultReductionAlgName());
-    final JCommander commander = cmd.createJCommander(Main.class);
+  private final JCommander commander;
+  private final CommandOptions cmd;
+
+  public Main(String[] args) {
+    cmd = new CommandOptions(ReducerFactory.getDefaultReductionAlgName());
+    commander = cmd.createJCommander(Main.class);
     commander.parse(args);
     // This method should be called as early as possible, to avoid triggering initialization of
     // logger objects.
     DefaultLoggingConfigurations.configureLogManager(cmd.verbosityFlags.verbosity.toUpperCase());
+  }
 
+  public void run() {
     if (cmd.help) {
       commander.usage();
       return;
@@ -58,14 +67,14 @@ public class Main {
       VersionHelper.printVersionInfo("perses", System.out);
       return;
     }
-
     cmd.validate();
 
-    Preconditions.checkState(
+    checkArgument(
         ReducerFactory.isValidReducerName(cmd.algorithmControlFlags.getReductionAlgorithmName()),
         "Invalid reduction algorithm %s",
         cmd.algorithmControlFlags.getReductionAlgorithmName());
 
+    // TODO: create language registry here.
     try (ReductionDriver driver = new ReductionDriver(cmd)) {
       driver.reduce();
     }
