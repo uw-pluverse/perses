@@ -41,7 +41,7 @@ public class ReductionFolderManagerTest {
   public void setup() throws IOException {
     folder = new AutoDeletableFolder(Files.createTempDir());
     testScript = new ScriptFile(new File("test_data/delta_1/r.sh"));
-    manager = new ReductionFolderManager(folder.toFile(), testScript, "t.c");
+    manager = new ReductionFolderManager(folder.getFile(), testScript, "t.c");
   }
 
   @After
@@ -62,7 +62,7 @@ public class ReductionFolderManagerTest {
 
   private void testFolder(ReductionFolder folder) {
     assertThat(folder.getFolder().getAbsoluteFile().getParentFile())
-        .isEqualTo(this.folder.toFile().getAbsoluteFile());
+        .isEqualTo(this.folder.getFile().getAbsoluteFile());
 
     assertThat(folder.getTestScript().getScriptFile().getAbsoluteFile().getParentFile())
         .isEqualTo(folder.getFolder().getAbsoluteFile());

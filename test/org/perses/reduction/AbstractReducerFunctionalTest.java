@@ -39,9 +39,9 @@ public abstract class AbstractReducerFunctionalTest {
       String expected) {
     try (AutoDeletableFolder folder = new AutoDeletableFolder(Files.createTempDir())) {
       CommandOptions cmd = new CommandOptions("");
-      File tempSourceFile = new File(folder.toFile(), sourceFile);
+      File tempSourceFile = new File(folder.getFile(), sourceFile);
       Files.copy(new File(reductionFolder, sourceFile), tempSourceFile);
-      File tempTestScript = new File(folder.toFile(), testScript);
+      File tempTestScript = new File(folder.getFile(), testScript);
       Files.copy(new File(reductionFolder, testScript), tempTestScript);
       cmd.compulsoryFlags.inputFile = tempSourceFile.getAbsolutePath();
       cmd.compulsoryFlags.testScript = tempTestScript.getAbsolutePath();

@@ -16,23 +16,37 @@
  */
 package org.perses.util
 
-import java.io.Closeable
+import com.google.common.io.Files
+import com.google.common.truth.Truth.assertThat
+import org.junit.After
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 import java.io.File
 
-class AutoDeletableFolder(val file: File) : Closeable {
+@RunWith(JUnit4::class)
+class AutoDeletableFolderTest {
 
-  override fun close() {
-    if (file.exists()) {
-      file.deleteRecursively()
-    }
+  private var workingDir: File? = null
+
+  @Before
+  fun setup() {
+    workingDir = Files.createTempDir()
   }
 
-  init {
-    if (!file.exists()) {
-      check(file.mkdirs()) {
-        "fail to create folder $file"
-      }
-    }
-    check(file.isDirectory)
+  @After
+  fun teardown() {
+    workingDir?.deleteRecursively()
+  }
+
+  @Test
+  fun testFolderIsDeletedAfterBeingClosed() {
+    val folderFile = File(workingDir, "test")
+    val autoFolder = AutoDeletableFolder(folderFile)
+    autoFolder.use { folder -> assertThat(folder.file.isDirectory).isTrue() }
+
+    assertThat(autoFolder.file.exists()).isFalse()
+    assertThat(folderFile.exists()).isFalse()
   }
 }

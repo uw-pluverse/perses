@@ -22,10 +22,9 @@ kt_jvm_test(
     ],
 )
 
-java_test(
+kt_jvm_test(
     name = "AutoDeletableFolderTest",
-    srcs = ["AutoDeletableFolderTest.java"],
-    test_class = "org.perses.util.AutoDeletableFolderTest",
+    srcs = ["AutoDeletableFolderTest.kt"],
     deps = [
         "//src/org/perses/util:auto_deltable_folder",
         "//test/org/perses:truth",
