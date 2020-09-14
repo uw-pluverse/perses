@@ -23,6 +23,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
+import org.perses.grammar.c.LanguageC
 import java.io.File
 import java.nio.charset.StandardCharsets
 import java.util.stream.Collectors

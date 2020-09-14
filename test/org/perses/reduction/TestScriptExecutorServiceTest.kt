@@ -26,8 +26,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
+import org.perses.grammar.c.LanguageC
 import org.perses.program.EnumFormatControl.ORIG_FORMAT
-import org.perses.program.LanguageC
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
 import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK

@@ -27,6 +27,7 @@ java_test(
     ],
     test_class = "org.perses.program.SourceFileTest",
     deps = DEFAULT_DEPS + [
+        "//src/org/perses/grammar/c:language_kind",
         "//src/org/perses/program:language_kind",
     ],
 )

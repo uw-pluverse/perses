@@ -18,17 +18,17 @@ package org.perses.grammar
 
 import com.google.common.collect.ImmutableMap
 import com.google.common.io.Files
+import org.perses.grammar.c.LanguageC
 import org.perses.grammar.c.PnfCParserFacade
+import org.perses.grammar.go.LanguageGo
 import org.perses.grammar.go.PnfGoParserFacade
 import org.perses.grammar.java.JavaParserFacade
+import org.perses.grammar.java.LanguageJava
+import org.perses.grammar.rust.LanguageRust
 import org.perses.grammar.rust.PnfRustParserFacade
+import org.perses.grammar.scala.LanguageScala
 import org.perses.grammar.scala.PnfScalaParserFacade
-import org.perses.program.LanguageC
-import org.perses.program.LanguageGo
-import org.perses.program.LanguageJava
 import org.perses.program.LanguageKind
-import org.perses.program.LanguageRust
-import org.perses.program.LanguageScala
 import java.io.File
 
 /** Creates a parser facade, based on the type of language kind.  */

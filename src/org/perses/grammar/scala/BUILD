@@ -7,6 +7,7 @@ load(
     "//src/org/perses/grammar:antlr_util.bzl",
     "antlr_codegen_combined",
 )
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
 
 antlr_codegen_combined(
     name = "orig_scala_grammar",
@@ -35,6 +36,7 @@ java_library(
     name = "pnfscala_parser_facade",
     srcs = ["PnfScalaParserFacade.java"],
     deps = [
+        ":language_kind",
         ":orig_scala_grammar",
         ":pnf_scala_grammar",
         "//src/org/perses/antlr:parse_tree_with_parser",
@@ -42,5 +44,13 @@ java_library(
         "//src/org/perses/program:language_kind",
         "@maven//:com_google_flogger_flogger",
         "@maven//:org_antlr_antlr4_runtime",
+    ],
+)
+
+kt_jvm_library(
+    name = "language_kind",
+    srcs = ["LanguageScala.kt"],
+    deps = [
+        "//src/org/perses/program:language_kind",
     ],
 )

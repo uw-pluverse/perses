@@ -23,12 +23,7 @@ kt_jvm_library(
 kt_jvm_library(
     name = "language_kind",
     srcs = [
-        "LanguageC.kt",
-        "LanguageGo.kt",
-        "LanguageJava.kt",
         "LanguageKind.kt",
-        "LanguageRust.kt",
-        "LanguageScala.kt",
     ],
     deps = [
         ":enum_format_control",

@@ -14,20 +14,21 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.program
+package org.perses.grammar.scala
 
 import com.google.common.collect.ImmutableSet
+import org.perses.program.EnumFormatControl
+import org.perses.program.LanguageKind
 
-object LanguageJava : LanguageKind() {
+object LanguageScala : LanguageKind() {
 
-  override val name = "java"
+  override val name = "scala"
 
-  override val extensions = ImmutableSet.of("java")
+  override val extensions = ImmutableSet.of("scala", "sc")
 
-  override val defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE
+  override val defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT
 
   override val allowedCodeFormatControl = ImmutableSet.of(
-    EnumFormatControl.SINGLE_TOKEN_PER_LINE,
     EnumFormatControl.COMPACT_ORIG_FORMAT,
     EnumFormatControl.ORIG_FORMAT
   )

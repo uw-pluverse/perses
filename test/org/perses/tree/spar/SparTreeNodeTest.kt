@@ -29,7 +29,7 @@ import org.perses.TestUtility
 import org.perses.antlr.AntlrGrammarUtil
 import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.c.CParserFacade
-import org.perses.program.LanguageC
+import org.perses.grammar.c.LanguageC
 import org.perses.program.PersesToken
 import org.perses.program.TokenizedProgramFactory
 import java.io.File

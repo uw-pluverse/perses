@@ -14,15 +14,17 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.program
+package org.perses.grammar.go
 
 import com.google.common.collect.ImmutableSet
+import org.perses.program.EnumFormatControl
+import org.perses.program.LanguageKind
 
-object LanguageScala : LanguageKind() {
+object LanguageGo : LanguageKind() {
 
-  override val name = "scala"
+  override val name = "go"
 
-  override val extensions = ImmutableSet.of("scala", "sc")
+  override val extensions = ImmutableSet.of("go")
 
   override val defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT
 

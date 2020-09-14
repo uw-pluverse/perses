@@ -27,8 +27,8 @@ import org.perses.TestUtility.createSparTreeFromFile
 import org.perses.TestUtility.createSparTreeFromString
 import org.perses.grammar.c.CParserFacade
 import org.perses.grammar.c.PnfCParserFacade
+import org.perses.grammar.scala.LanguageScala
 import org.perses.grammar.scala.PnfScalaParserFacade
-import org.perses.program.LanguageScala
 import org.perses.program.PersesToken
 import org.perses.program.TokenizedProgram
 import org.perses.tree.spar.SparTreeBuilder
