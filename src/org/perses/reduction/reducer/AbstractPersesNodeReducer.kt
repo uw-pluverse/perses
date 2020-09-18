@@ -190,16 +190,12 @@ abstract class AbstractPersesNodeReducer protected constructor(
     return ImmutableList.copyOf(kleenePlus.immutableChildView)
   }
 
-  protected enum class TreeNodeComparatorInLeafTokenCount : Comparator<AbstractSparTreeNode> {
-    SINGLETON;
+  object TreeNodeComparatorInLeafTokenCount : Comparator<AbstractSparTreeNode> {
+    private val comparator = compareByDescending<AbstractSparTreeNode> { it.leafTokenCount }
+      .thenByDescending { it.nodeId }
 
     override fun compare(o1: AbstractSparTreeNode, o2: AbstractSparTreeNode): Int {
-      val tokenCountCmpResult = o2.leafTokenCount.compareTo(o1.leafTokenCount)
-      if (tokenCountCmpResult != 0) {
-        return tokenCountCmpResult
-      }
-      // For determinism.
-      val result = o2.nodeId.compareTo(o1.nodeId)
+      val result = comparator.compare(o1, o2)
       assert(result != 0) { "Cannot guarantee determinism." }
       return result
     }
