@@ -16,6 +16,7 @@ java_library(
         "//test_data/java_programs:openjdk_testsuite",
         "//test_data/rust_programs:rust_testsuite",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         ":truth",
         "//src/org/perses/antlr:parse_tree_with_parser",
