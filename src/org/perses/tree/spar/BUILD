@@ -1,5 +1,5 @@
 package(default_visibility = [
-    "//visibility:public"
+    "//visibility:public",
 ])
 
 # TODO: need to split this target. It is too big. For example, tree_node, tree_edit_actions, tree_and_tree_edit

@@ -1,5 +1,5 @@
 package(default_visibility = [
-    "//visibility:public"
+    "//visibility:public",
 ])
 
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")

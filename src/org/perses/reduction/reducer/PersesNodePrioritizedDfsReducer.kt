@@ -27,7 +27,7 @@ class PersesNodePrioritizedDfsReducer(reducerContext: ReducerContext) :
   PersesNodeDfsReducer(META, reducerContext) {
   override fun createReductionQueue(): Queue<AbstractSparTreeNode> {
     return PriorityQueue(
-      DEFAULT_INITIAL_QUEUE_CAPACITY, TreeNodeComparatorInLeafTokenCount.SINGLETON
+      DEFAULT_INITIAL_QUEUE_CAPACITY, TreeNodeComparatorInLeafTokenCount
     )
   }
 

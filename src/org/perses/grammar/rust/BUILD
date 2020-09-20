@@ -1,5 +1,5 @@
 package(default_visibility = [
-    "//visibility:public"
+    "//visibility:public",
 ])
 
 load("//antlropt/org/perses/antlr/pnf:pnf.bzl", "pnf_convert")

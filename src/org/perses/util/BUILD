@@ -16,6 +16,13 @@ java_library(
     deps = [
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",
+    ],
+)
+
+kt_jvm_library(
+    name = "fast_string_builder",
+    srcs = ["FastStringBuilder.kt"],
+    deps = [
         "@maven//:it_unimi_dsi_fastutil",
     ],
 )

@@ -47,7 +47,7 @@ java_test(
     srcs = ["FastStringBuilderTest.java"],
     test_class = "org.perses.util.FastStringBuilderTest",
     deps = [
-        "//src/org/perses/util",
+        "//src/org/perses/util:fast_string_builder",
         "//test/org/perses:truth",
     ],
 )
