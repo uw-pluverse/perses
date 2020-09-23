@@ -98,6 +98,23 @@ golden_test(
     test_file = "perses_cmd_usage_list_verbosity_levels.txt"
 )
 
+genrule(
+    name = "get_perses_cmd_usage_print_version",
+    srcs = [],
+    outs = ["perses_cmd_usage_print_version.txt"],
+    cmd = "$(location //src/org/perses:perses) --version > \"$@\"",
+    tools = [
+        "//src/org/perses",
+    ],
+)
+
+sh_test(
+    name = "version_string_should_be_printed",
+    srcs = ["version_string_should_be_printed.sh"],
+    data = ["perses_cmd_usage_print_version.txt"],
+    args = ["$(location perses_cmd_usage_print_version.txt)"],
+)
+
 sh_test(
     name = "loging_level_should_be_configurable",
     srcs = ["loging_level_should_be_configurable.sh"],
