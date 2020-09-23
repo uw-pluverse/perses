@@ -1,0 +1,8 @@
+Available verbosity levels are:
+    SEVERE
+    WARNING
+    INFO
+    CONFIG
+    FINE
+    FINER
+    FINEST
