@@ -4,9 +4,9 @@ package(default_visibility = [
 
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
 
-java_library(
+kt_jvm_library(
     name = "command_options",
-    srcs = ["CommandOptions.java"],
+    srcs = ["CommandOptions.kt"],
     deps = [
         "//src/org/perses/program:enum_format_control",
         "//src/org/perses/util:command_line_flags",
