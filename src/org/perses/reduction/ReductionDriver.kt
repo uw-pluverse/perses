@@ -188,7 +188,7 @@ class ReductionDriver(
       "Calling C-Reduce to further refine the result. #tokens=%s",
       origTokenCount
     )
-    val creduceCmd = cmd.outputRefiningFlags.creduceCmd
+    val creduceCmd = cmd.outputRefiningFlags.getCreduceCmd()
     val reductionFolderName = "creduce_at_the_end_" +
       TimeUtil.formatDateForFileName(System.currentTimeMillis())
     val reductionFolder = executorService.createNamedReductionFolder(reductionFolderName)
@@ -444,7 +444,7 @@ class ReductionDriver(
 
   fun createMainReducer(): AbstractReducer {
     val algorithmMeta = ReducerFactory.getReductionAlgorithm(
-      cmd.algorithmControlFlags.reductionAlgorithmName
+      cmd.algorithmControlFlags.getReductionAlgorithmName()
     )
     val algorithm = createReducer(algorithmMeta)
     logger.atInfo().log(
@@ -488,8 +488,8 @@ class ReductionDriver(
       parserFacadeFactory: ParserFacadeFactory
     ): ReductionConfiguration {
       val sourceFile = SourceFile(
-        cmd.compulsoryFlags.sourceFile.absoluteFile,
-        parserFacadeFactory.computeLanguageKind(cmd.compulsoryFlags.sourceFile.absoluteFile)!!
+        cmd.compulsoryFlags.getSourceFile().absoluteFile,
+        parserFacadeFactory.computeLanguageKind(cmd.compulsoryFlags.getSourceFile().absoluteFile)!!
       )
       val testScript = ScriptFile(cmd.compulsoryFlags.getTestScript().absoluteFile)
 
@@ -506,16 +506,17 @@ class ReductionDriver(
         if (Strings.isNullOrEmpty(cmd.profilingFlags.progressDumpFile)) null
         else File(cmd.profilingFlags.progressDumpFile)
 
-      val programFormatControl =
-        if (cmd.reductionControlFlags.codeFormat != null) {
-          check(sourceFile.languageKind.isCodeFormatAllowed(cmd.reductionControlFlags.codeFormat)) {
-            cmd.reductionControlFlags.codeFormat.toString() +
-              " is not allowed for language " + sourceFile.languageKind
+      val programFormatControl = cmd.reductionControlFlags.codeFormat.let { codeFormat ->
+        if (codeFormat != null) {
+          check(sourceFile.languageKind.isCodeFormatAllowed(codeFormat)) {
+            "$codeFormat is not allowed for language ${sourceFile.languageKind}"
           }
-          cmd.reductionControlFlags.codeFormat
+          codeFormat
         } else {
           sourceFile.languageKind.defaultCodeFormatControl
         }
+      }
+
       return ReductionConfiguration(
         workingFolder = workingDirectory,
         testScript = testScript,
@@ -527,7 +528,7 @@ class ReductionDriver(
         fixpointReduction = cmd.reductionControlFlags.fixpoint,
         enableTestScriptExecutionCaching = cmd.cacheControlFlags.queryCaching,
         useRealDeltaDebugger = cmd.algorithmControlFlags.useRealDeltaDebugger,
-        numOfReductionThreads = cmd.reductionControlFlags.numOfThreads,
+        numOfReductionThreads = cmd.reductionControlFlags.getNumOfThreads(),
         parserFacadeFactory = parserFacadeFactory
       )
     }
@@ -567,12 +568,12 @@ class ReductionDriver(
     }
 
     private fun getOutputFile(cmd: CommandOptions): File {
-      val sourceFile = cmd.compulsoryFlags.sourceFile
+      val sourceFile = cmd.compulsoryFlags.getSourceFile()
       if (cmd.resultOutputFlags.inPlaceReduction) {
         return sourceFile
       }
       return if (Strings.isNullOrEmpty(cmd.resultOutputFlags.outputFile)) {
-        val reductionAlgorithm = cmd.algorithmControlFlags.reductionAlgorithmName
+        val reductionAlgorithm = cmd.algorithmControlFlags.getReductionAlgorithmName()
         File(
           sourceFile.parent, reductionAlgorithm + "_reduced_" + sourceFile.name
         )

@@ -91,7 +91,7 @@ object Shell {
   }
 
   @JvmStatic
-  fun normalizeAndCheckExecutability(cmdName: String): String? {
+  fun normalizeAndCheckExecutability(cmdName: String): String {
     val cmdPath = Paths.get(cmdName)
     if (cmdPath.isAbsolute) {
       check(Files.isRegularFile(cmdPath)) {
