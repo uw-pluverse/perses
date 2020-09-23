@@ -69,7 +69,6 @@ golden_test(
 
 genrule(
     name = "get_perses_cmd_usage",
-    srcs = [],
     outs = ["perses_cmd_usage.txt"],
     cmd = "$(location //src/org/perses:perses) --help > \"$@\"",
     tools = [
@@ -81,6 +80,22 @@ golden_test(
     name = "golden_perses_cmd_usage",
     golden_file = "golden_perses_cmd_usage.txt",
     test_file = "perses_cmd_usage.txt",
+)
+
+genrule(
+    name = "get_perses_cmd_usage_verbosity_level",
+    srcs = [],
+    outs = ["perses_cmd_usage_list_verbosity_levels.txt"],
+    cmd = "$(location //src/org/perses:perses) --list-verbosity-levels > \"$@\"",
+    tools = [
+        "//src/org/perses",
+    ],
+)
+
+golden_test(
+    name = "golden_perses_cmd_usage_list_verbosity_levels",
+    golden_file = "golden_perses_cmd_usage_list_verbosity_levels.txt",
+    test_file = "perses_cmd_usage_list_verbosity_levels.txt"
 )
 
 sh_test(

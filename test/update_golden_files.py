@@ -129,6 +129,12 @@ targets = [
     ),
 
     Target(
+        target_name="//test/org/perses:get_perses_cmd_usage_verbosity_level",
+        output_file="bazel-bin/test/org/perses/perses_cmd_usage_list_verbosity_levels.txt",
+        golden_file="test/org/perses/golden_perses_cmd_usage_list_verbosity_levels.txt"
+    ),
+
+    Target(
         target_name="//test/org/perses/grammar/go:cp_pnf_go_grammar",
         output_file="bazel-bin/test/org/perses/grammar/go/pnf_go_grammar.g4",
         golden_file="test/org/perses/grammar/go/golden_pnf_go.g4"),
