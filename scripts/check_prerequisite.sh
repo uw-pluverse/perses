@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+set -o pipefail
+set -o nounset
+
 readonly TOOLS=("creduce" \
     "go" \
     "rustc" \
