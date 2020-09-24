@@ -95,7 +95,7 @@ genrule(
 golden_test(
     name = "golden_perses_cmd_usage_list_verbosity_levels",
     golden_file = "golden_perses_cmd_usage_list_verbosity_levels.txt",
-    test_file = "perses_cmd_usage_list_verbosity_levels.txt"
+    test_file = "perses_cmd_usage_list_verbosity_levels.txt",
 )
 
 genrule(
@@ -111,8 +111,8 @@ genrule(
 sh_test(
     name = "version_string_should_be_printed",
     srcs = ["version_string_should_be_printed.sh"],
-    data = ["perses_cmd_usage_print_version.txt"],
     args = ["$(location perses_cmd_usage_print_version.txt)"],
+    data = ["perses_cmd_usage_print_version.txt"],
 )
 
 sh_test(
