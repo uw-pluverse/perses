@@ -17,12 +17,12 @@
 package org.perses
 
 import com.beust.jcommander.Parameter
-import org.perses.util.Shell.normalizeAndCheckExecutability
-import org.perses.util.Fraction.Companion.parse
 import org.perses.program.EnumFormatControl
 import org.perses.util.AbstractCommandOptions
 import org.perses.util.Fraction
+import org.perses.util.Fraction.Companion.parse
 import org.perses.util.ICommandLineFlags
+import org.perses.util.Shell.normalizeAndCheckExecutability
 import java.io.File
 
 /** Parser for command line arguments.  */
@@ -57,7 +57,8 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
     names = ["--help", "-h"],
     description = "print help message",
     help = true,
-    order = FlagOrder.HELP)
+    order = FlagOrder.HELP
+  )
   var help = false
 
   @JvmField
@@ -65,7 +66,8 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
     names = ["--version"],
     description = "print the version",
     help = true,
-    order = FlagOrder.HELP + 1)
+    order = FlagOrder.HELP + 1
+  )
   var version = false
 
   class CompulsoryFlags : ICommandLineFlags {
@@ -74,7 +76,8 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
       names = ["--test-script"],
       required = true,
       description = "The test script to specify the property the reducer needs to preserve.",
-      order = FlagOrder.COMPULSORY + 0)
+      order = FlagOrder.COMPULSORY + 0
+    )
     var testScript: String? = null
 
     @JvmField
@@ -82,7 +85,8 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
       names = ["--input-file"],
       required = true,
       description = "The input file to reduce",
-      order = FlagOrder.COMPULSORY + 1)
+      order = FlagOrder.COMPULSORY + 1
+    )
     var inputFile: String? = null
 
     fun getTestScript() = File(checkNotNull(testScript))
@@ -112,13 +116,15 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
       names = ["--in-place"],
       description = "perform in-place reduction",
       arity = 1,
-      order = FlagOrder.RESULT_OUTPUT + 0)
+      order = FlagOrder.RESULT_OUTPUT + 0
+    )
     var inPlaceReduction = false
 
     @Parameter(
       names = ["--output-file"],
       description = "The output file to save the reduced result.",
-      order = FlagOrder.RESULT_OUTPUT + 1)
+      order = FlagOrder.RESULT_OUTPUT + 1
+    )
     var outputFile: String? = null
 
     override fun validate() {
@@ -136,20 +142,23 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
       names = ["--fixpoint"],
       description = "iterative reduction till fixpoint",
       arity = 1,
-      order = FlagOrder.REDUCTION_CONTROL + 0)
+      order = FlagOrder.REDUCTION_CONTROL + 0
+    )
     var fixpoint = true
 
     @Parameter(
       names = ["--threads"],
       description = "Number of reduction threads: a positive integer, or 'auto'.",
-      order = FlagOrder.REDUCTION_CONTROL + 1)
+      order = FlagOrder.REDUCTION_CONTROL + 1
+    )
     private var numOfThreads = "auto"
 
     @Parameter(
       names = ["--code-format"],
       description = "The format of the reduced program.",
       arity = 1,
-      order = FlagOrder.REDUCTION_CONTROL + 2)
+      order = FlagOrder.REDUCTION_CONTROL + 2
+    )
     var codeFormat: EnumFormatControl? = null
 
     override fun validate() {
@@ -171,20 +180,23 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
     @Parameter(
       names = ["--format-cmd"],
       description = "the command to format the reduced source file",
-      order = FlagOrder.OUTPUT_REFINING + 0)
+      order = FlagOrder.OUTPUT_REFINING + 0
+    )
     var formatCmd = ""
 
     @Parameter(
       names = ["--call-creduce"],
       description = "call C-Reduce when Perses is done.",
       arity = 1,
-      order = FlagOrder.OUTPUT_REFINING + 10)
+      order = FlagOrder.OUTPUT_REFINING + 10
+    )
     var callCReduce = false
 
     @Parameter(
       names = ["--creduce-cmd"],
       description = "the C-Reduce command name or path",
-      order = FlagOrder.OUTPUT_REFINING + 20)
+      order = FlagOrder.OUTPUT_REFINING + 20
+    )
     private var creduceCmd = "creduce"
 
     override fun validate() {
@@ -204,7 +216,8 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
     @Parameter(
       names = ["--alg"],
       description = "reduction algorithm: use --list-algs to list all available algorithms",
-      order = FlagOrder.ALG_CONTROL + 0)
+      order = FlagOrder.ALG_CONTROL + 0
+    )
     var reductionAlgorithm: String? = null
 
     @JvmField
@@ -212,35 +225,40 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
       names = ["--list-algs"],
       description = "list all the reduction algorithms.",
       help = true,
-      order = FlagOrder.ALG_CONTROL + 1)
+      order = FlagOrder.ALG_CONTROL + 1
+    )
     var listAllReductionAlgorithms = false
 
     @Parameter(
       names = ["--reparse-each-iteration"],
       description = "Reparse the program before the start of each fixpoint iteration.",
       arity = 1,
-      order = FlagOrder.ALG_CONTROL + 2)
+      order = FlagOrder.ALG_CONTROL + 2
+    )
     var rebuildParseTreeEachIteration = true
 
     @Parameter(
       names = ["--enable-token-slicer"],
       description = "Enable token slicer after syntax-guided reduction is done. Maybe slow.",
       arity = 1,
-      order = FlagOrder.ALG_CONTROL + 3)
+      order = FlagOrder.ALG_CONTROL + 3
+    )
     var enableTokenSlicer = false
 
     @Parameter(
       names = ["--enable-tree-slicer"],
       description = "Enable tree slicer after syntax-guided reduction, and before token slicer",
       arity = 1,
-      order = FlagOrder.ALG_CONTROL + 4)
+      order = FlagOrder.ALG_CONTROL + 4
+    )
     var enableTreeSlicer = false
 
     @Parameter(
       names = ["--use-real-ddmin"],
       description = "Whether to use the real delta debugging algorithm to reduce kleene nodes.",
       arity = 1,
-      order = FlagOrder.ALG_CONTROL + 5)
+      order = FlagOrder.ALG_CONTROL + 5
+    )
     var useRealDeltaDebugger = false
 
     @JvmField
@@ -248,7 +266,8 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
       names = ["--use-optc-parser"],
       description = "Use the OptC parser to construct the spar-tree.",
       arity = 1,
-      order = FlagOrder.ALG_CONTROL + 6)
+      order = FlagOrder.ALG_CONTROL + 6
+    )
     var useOptCParser = false
 
     fun getReductionAlgorithmName(): String {
@@ -266,24 +285,28 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
       names = ["--query-caching"],
       description = "Enable query caching for test script executions.",
       arity = 1,
-      order = FlagOrder.CACHE_CONTROL + 0)
+      order = FlagOrder.CACHE_CONTROL + 0
+    )
     var queryCaching = false
 
     @Parameter(
       names = ["--edit-caching"],
       description = "Enable caching for edits performed between two successful reductions.",
       arity = 1,
-      order = FlagOrder.CACHE_CONTROL + 1)
+      order = FlagOrder.CACHE_CONTROL + 1
+    )
     var nodeActionSetCaching = true
 
     @Parameter(
       names = ["--query-cache-refresh-threshold"],
-      description = "When to trigger a refresh of the query cache. "
-        + "The value is is a fraction in the format x/y. "
-        + "Assume the original token count is t. "
-        + "Since last refresh where the best program has t' tokens, if the latest best program has b tokens, "
-        + "and (t' - b) >= t *x/y, then a refresh is triggered.",
-      order = FlagOrder.CACHE_CONTROL + 2)
+      description = "When to trigger a refresh of the query cache. " +
+        "The value is is a fraction in the format x/y. " +
+        "Assume the original token count is t. " +
+        "Since last refresh where the best program has t' tokens, " +
+        "if the latest best program has b tokens, and (t' - b) >= t *x/y, " +
+        "then a refresh is triggered.",
+      order = FlagOrder.CACHE_CONTROL + 2
+    )
     var queryCacheRefreshThreshold = "100/1"
 
     fun getQueryCacheRefreshThreshold(): Fraction {
@@ -299,38 +322,45 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
     @Parameter(
       names = ["--progress-dump-file"],
       description = "The file to record the reduction process. The dump file can be large..",
-      order = FlagOrder.PROFILING_CONTROL + 0)
+      order = FlagOrder.PROFILING_CONTROL + 0
+    )
     var progressDumpFile: String? = null
 
     @Parameter(
       names = ["--stat-dump-file"],
       description = "The file to save the statistics collected during reduction.",
-      order = FlagOrder.PROFILING_CONTROL + 1)
+      order = FlagOrder.PROFILING_CONTROL + 1
+    )
     var statDumpFile: String? = null
 
     @Parameter(
       names = ["--profile-query-cache"],
       description = "The file to save the profiling data of the query cache.",
-      order = FlagOrder.PROFILING_CONTROL + 2)
+      order = FlagOrder.PROFILING_CONTROL + 2
+    )
     var profileTestExecutionCache: String? = null
 
     @Parameter(
       names = ["--profile-actionset"],
       description = "The file to save information of all the created edit action sets.",
-      order = FlagOrder.PROFILING_CONTROL + 3)
+      order = FlagOrder.PROFILING_CONTROL + 3
+    )
     var actionSetProfiler: String? = null
 
     @Parameter(
       names = ["--profile"],
       description = "profile the reduction process for analysis",
       arity = 1,
-      order = FlagOrder.PROFILING_CONTROL + 4)
+      order = FlagOrder.PROFILING_CONTROL + 4
+    )
     var profile = false
 
     @Parameter(
       names = ["--script-monitoring-interval-millis"],
-      description = "the interval in milliseconds to monitor the performance of test script executions",
-      order = FlagOrder.PROFILING_CONTROL + 50)
+      description = "the interval in milliseconds to monitor " +
+        "the performance of test script executions",
+      order = FlagOrder.PROFILING_CONTROL + 50
+    )
     var testScriptExecutionPerformanceMonitorIntervalMillis = 1000 * 60 * 5
 
     override fun validate() {
@@ -343,7 +373,8 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
     @Parameter(
       names = ["--verbosity"],
       description = "verbosity of logging",
-      order = FlagOrder.VERBOSITY_CONTROL + 10)
+      order = FlagOrder.VERBOSITY_CONTROL + 10
+    )
     var verbosity = "INFO"
 
     @JvmField
@@ -351,7 +382,8 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
       names = ["--list-verbosity-levels"],
       description = "list all verbosity levels",
       help = true,
-      order = FlagOrder.VERBOSITY_CONTROL + 20)
+      order = FlagOrder.VERBOSITY_CONTROL + 20
+    )
     var listVerbosity = false
 
     override fun validate() = Unit

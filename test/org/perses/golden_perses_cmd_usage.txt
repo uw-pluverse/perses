@@ -80,10 +80,8 @@ Usage: org.perses.Main [options]
       Default: INFO
     --list-verbosity-levels
       list all verbosity levels
-      Default: false
     --help, -h
       print help message
     --version
       print the version
-      Default: false
 
