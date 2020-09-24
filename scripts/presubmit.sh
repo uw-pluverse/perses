@@ -9,6 +9,8 @@ if [[ ! -e "WORKSPACE" ]] ; then
   exit 1
 fi
 
+./scripts/check_prerequisite.sh
+
 ./scripts/check_copyright.sh
 
 ./scripts/format_bazel_files.sh
