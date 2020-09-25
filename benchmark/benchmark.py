@@ -12,6 +12,7 @@ import tempfile
 __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
+'''
 BENCHMARK_ALL = [
     ('clang-22382', 'r.sh', 'small.c'),
     ('clang-22704', 'r.sh', 'small.c'),
@@ -40,6 +41,7 @@ BENCHMARK_SMALL = [
     ('toys/delta_1', 'r.sh', 't.c')#,
 #    ('gcc-71626', 'r.sh', 'small.c')
 ]
+'''
 
 INSTALLS = [
     ("perses", os.path.join(__location__, "binaries", "update_perses.sh")),
@@ -58,12 +60,15 @@ REDUCERS = [
 #    ("pardis", os.path.join(__location__, "binaries", "run_pardis.sh"))
 ]
 
-benchmark_target = BENCHMARK_SMALL
+#variable initialization field
+benchmark_target = []
 output_latex = None
 silent = False
 silent_subprocess = False
+iterations = 1
 
 results=dict()
+
 
 def print_results():
     if not silent:
@@ -116,50 +121,69 @@ def main():
         print("reducer", "bench", "query", "time", "token", "code")
 
     # run programs
-    for bench_name, test_script, source_file in benchmark_target:
-        test_script_path = os.path.join(__location__, bench_name, test_script)
-        source_file_path = os.path.join(__location__, bench_name, source_file)
-        # Count bench token count
-        token_count = count_token(source_file_path)
-        if bench_name not in results:
-            results[bench_name] = dict()
-        results[bench_name]["original_token_count"] = token_count
-        if not silent:
-            print(bench_name + " have " + str(token_count) + " original tokens")
+    for iteration in range(iterations):
+        print("Iteration {}".format(iteration+1))
 
-        for reducer_name, reducer_path in REDUCERS:
-            fd, fname = tempfile.mkstemp()
-            os.close(fd)
-            pipe = None
-            if silent_subprocess:
-                pipe = subprocess.DEVNULL
-            subprocess.run(
-                [reducer_path,
-                 test_script_path,
-                 source_file_path,
-                 fname],
-                check=False,
-                stdout=pipe,
-                stderr=pipe)
-            with open(fname, "r") as output:
-                run_result = output.read().strip().split("\n")
-                if len(run_result) != 7:
-                    run_result = ["unknown", "unknown", "unknown", "failed", "failed", "failed", run_result]
-                results[bench_name][reducer_name] = dict()
-                results[bench_name][reducer_name]["reducer"] = reducer_name
-                results[bench_name][reducer_name]["bench"] = bench_name
-                results[bench_name][reducer_name]["query"] = run_result[3]
-                results[bench_name][reducer_name]["time"] = run_result[4]
-                results[bench_name][reducer_name]["reduced_token"] = run_result[5]
-                results[bench_name][reducer_name]["ret_code"] = run_result[6]
-                if not silent:
-                    print(reducer_name, bench_name, run_result[3], run_result[4], run_result[5], run_result[6], flush=True)
-            os.remove(fname)
+        for bench_name in benchmark_target:
+            #validate info.propties
+            info_properties_path = os.path.join(folder_path, "info.properties")
+            if not os.path.exists(info_properties_path):
+                raise Exception('Error: info.properties not found: {}'.format(info_properties_path))
+            with open(info_properties_path, 'r') as f:
+                source_file = f.readline().rstrip().split('=')[1]
+                script_file = f.readline().rstrip().split('=')[1]
+
+            #validate source file & script file
+            source_file_path = os.path.join(__location__, bench_name, source_file)
+            script_file_path = os.path.join(__location__, bench_name, script_file)
+            if not os.path.exists(source_file_path):
+                raise Exception('Error: source_file not found: {}'.format(source_file_path))
+            if not os.path.exists(script_file_path):
+                raise Exception('Error: script_file not found: {}'.format(script_file_path))
+
+            # Count bench token count
+            token_count = count_token(source_file_path)
+            if bench_name not in results:
+                results[bench_name] = dict()
+            results[bench_name]["original_token_count"] = token_count
+            if not silent:
+                print(bench_name + " have " + str(token_count) + " original tokens")
+
+            for reducer_name, reducer_path in REDUCERS:
+                fd, fname = tempfile.mkstemp()
+                os.close(fd)
+                pipe = None
+                if silent_subprocess:
+                    pipe = subprocess.DEVNULL
+                subprocess.run(
+                    [reducer_path,
+                     script_file_path,
+                     source_file_path,
+                     fname],
+                    check=False,
+                    stdout=pipe,
+                    stderr=pipe)
+                with open(fname, "r") as output:
+                    run_result = output.read().strip().split("\n")
+                    if len(run_result) != 7:
+                        run_result = ["unknown", "unknown", "unknown", "failed", "failed", "failed", run_result]
+                    results[bench_name][reducer_name] = dict()
+                    results[bench_name][reducer_name]["reducer"] = reducer_name
+                    results[bench_name][reducer_name]["bench"] = bench_name
+                    results[bench_name][reducer_name]["query"] = run_result[3]
+                    results[bench_name][reducer_name]["time"] = run_result[4]
+                    results[bench_name][reducer_name]["reduced_token"] = run_result[5]
+                    results[bench_name][reducer_name]["ret_code"] = run_result[6]
+                    if not silent:
+                        print(reducer_name, bench_name, run_result[3], run_result[4], run_result[5], run_result[6], flush=True)
+                os.remove(fname)
+
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-            description = "Runs the benchmark and output results in JSON")
+    parser = argparse.ArgumentParser(description = "Runs the benchmark and output results in JSON")
     # benchmark all or subset. default subset
+
+    '''
     parser.add_argument("--benchmark-subset", "-bs", action="store_true", help="Benchmark with toys")
     parser.add_argument("--benchmark-all", "-ba", action="store_true", help="Benchmark with clang and gcc")
     parser.add_argument("--silent", "-s", action="store_true", help="Writes nothing to stdout")
@@ -167,7 +191,16 @@ if __name__ == "__main__":
     parser.add_argument("--output", "-o", action="store", help="File where results from the benchmarks are dumped")
     parser.add_argument("--start", action="store", help="Starting index from the list of benchmarks where the benchmark process begins")
     parser.add_argument("--length", action="store", help="Number of benchmarks from the list to run")
+    '''
+
+    parser.add_argument("--subjects", nargs='+', help="Benchmark with the subjects provided in a list of file paths")
+    parser.add_argument("--iterations", type=int, help="Run each subjects for the number of times specified")
+    
+    
+    
     parsed = parser.parse_args()
+
+    '''
     if parsed.benchmark_subset:
         benchmark_target = BENCHMARK_SMALL
     if parsed.benchmark_all:
@@ -190,5 +223,17 @@ if __name__ == "__main__":
         else:
             print("Expect number for length, got: " + parsed.length)
             sys.exit(1)
+    '''
 
+    if parsed.subjects:
+        benchmark_target = parsed.subjects
+        for bench_name in benchmark_target:
+            folder_path = os.path.join(__location__, bench_name)
+            if not os.path.exists(folder_path):
+                raise Exception('Error: folder path not found: {}'.format(folder_path))
+        print(benchmark_target)
+
+    if parsed.iterations:
+        iterations=parsed.iterations
+        print(iterations)
     main()
