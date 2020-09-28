@@ -21,7 +21,7 @@ cd perses/benchmark
 Run ```./benchmark.py --help``` for a list of all the arguments
 
 #### --subjects
-Run benchmark(s) on specified bench(es). E.g. '--subjects clang-27137 gcc-59903'
+Run benchmark(s) on specified bench(es). E.g. ```--subjects clang-27137 gcc-59903```
 
 #### --iterations
 Run benchmark(s) on each bench for specified number of times before switching to the next.
