@@ -129,6 +129,9 @@ class TokenizedProgram(val tokens: ImmutableList<PersesToken>) {
           }
           positionInLineCurrent = 0
         }
+        check(positionInLineCurrent <= tokenPositionInLine) {
+          "This printing algorithm is designed for program reduction only. index: $i, token: $text"
+        }
         while (positionInLineCurrent < tokenPositionInLine) {
           ++positionInLineCurrent
           builder.append(' ')

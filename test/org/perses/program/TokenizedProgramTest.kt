@@ -17,8 +17,10 @@
 package org.perses.program
 
 import com.google.common.base.Joiner
+import com.google.common.collect.ImmutableList
 import com.google.common.io.Files
 import com.google.common.truth.Truth
+import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -68,6 +70,23 @@ class TokenizedProgramTest {
       |int c = 0;
       """.trimMargin()
     )
+  }
+
+  @Test
+  fun testFormattedPrintingShouldCrashOnSkewedTokens() {
+    val sourceCode = "int a, long_var;"
+    val program = TestUtility.createTokenizedProgramFromString(sourceCode, LanguageC)
+    val first = program.tokens[0]
+    val third = program.tokens[2]
+    val fourth = program.tokens[3]
+
+    val newProgram = TokenizedProgram(ImmutableList.of(first, fourth, third, fourth))
+    Assert.assertThrows(IllegalStateException::class.java) {
+      newProgram.toCompactSourceCode()
+    }
+    Assert.assertThrows(java.lang.IllegalStateException::class.java) {
+      newProgram.toSourceCodeInOrigFormatWithBlankLines()
+    }
   }
 
   private fun testTokenEquivalence(filepath: String) {
