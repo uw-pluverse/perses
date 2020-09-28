@@ -1,45 +1,46 @@
 #!/usr/bin/env python3
 
 import argparse
-import atexit
 import json
 import os
-import signal
 import subprocess
-import sys
 import tempfile
+from datetime import datetime
+from dataclasses import dataclass, field
+from typing import List, Dict
 
 __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
-BENCHMARK_ALL = [
-    ('clang-22382', 'r.sh', 'small.c'),
-    ('clang-22704', 'r.sh', 'small.c'),
-    ('clang-23309', 'r.sh', 'small.c'),
-    ('clang-23353', 'r.sh', 'small.c'),
-    ('clang-25900', 'r.sh', 'small.c'),
-    ('clang-26350', 'r.sh', 'small.c'),
-    ('clang-26760', 'r.sh', 'small.c'),
-    ('clang-27137', 'r.sh', 'small.c'),
-    ('clang-27747', 'r.sh', 'small.c'),
-    ('clang-31259', 'r.sh', 'small.c'),
-    ('gcc-59903', 'r.sh', 'small.c'),
-    ('gcc-60116', 'r.sh', 'small.c'),
-    ('gcc-61383', 'r.sh', 'small.c'),
-    ('gcc-61917', 'r.sh', 'small.c'),
-    ('gcc-64990', 'r.sh', 'small.c'),
-    ('gcc-65383', 'r.sh', 'small.c'),
-    ('gcc-66186', 'r.sh', 'small.c'),
-    ('gcc-66375', 'r.sh', 'small.c'),
-    ('gcc-70127', 'r.sh', 'small.c'),
-    ('gcc-70586', 'r.sh', 'small.c'),
-    ('gcc-71626', 'r.sh', 'small.c')]
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Runs the benchmark and output results in JSON")
+    parser.add_argument("-s", "--subjects", nargs='+', default=[], help="Benchmark with specified bench(es)")
+    parser.add_argument("-i", "--iterations", type=int, default=1, help="Run bench set for the number of times specified")
+    parser.add_argument("--silent", action="store_true", default=False, help="Writes nothing to stdout")
+    parser.add_argument("-ss", "--show-subprocess", action="store_true", default=False, help="Show all pipe stdout and stderr from reducers")
+    return parser.parse_args()
 
-BENCHMARK_SMALL = [
-    ('toys/parentheses', 'r.sh', 't.c'),
-    ('toys/delta_1', 'r.sh', 't.c')#,
-#    ('gcc-71626', 'r.sh', 'small.c')
-]
+@dataclass(frozen=True)
+class Parameter:
+    # Default field values
+    benchmark_target: List[str]
+    iterations: int
+    silent: bool
+    show_subprocess: bool
+
+
+    def validate(self):
+        # validate parameters
+        # benchmark_target
+        if self.benchmark_target == []:
+            raise Exception('Error: No subjects')
+        for bench_name in self.benchmark_target:
+            folder_path = os.path.join(__location__, bench_name)
+            if not os.path.exists(folder_path):
+                raise Exception('Error: Folder path not found: {}'.format(folder_path))
+        #iterations
+        if self.iterations < 1:
+            raise Exception('Error: Invalid ITERATIONS value')
 
 INSTALLS = [
     ("perses", os.path.join(__location__, "binaries", "update_perses.sh")),
@@ -58,26 +59,62 @@ REDUCERS = [
 #    ("pardis", os.path.join(__location__, "binaries", "run_pardis.sh"))
 ]
 
-benchmark_target = BENCHMARK_SMALL
-output_latex = None
-silent = False
-silent_subprocess = False
 
-results=dict()
+def load_token_counter(parameter_interface):
+    print("Loading token counter ...")
+    pipe = subprocess.DEVNULL
+    if parameter_interface.show_subprocess:
+        pipe = None
+    subprocess.run(
+        [os.path.join(__location__, "binaries", "update_token_counter.sh")],
+        check=False,
+        stdout=pipe,
+        stderr=pipe)
 
-def print_results():
-    if not silent:
-        print(json.dumps(results, indent=2))
+def load_reducers(parameter_interface):
+    print("Loading reducer programs ...")
+    for reducer_name, updater_path in INSTALLS:
+        pipe = subprocess.DEVNULL
+        if parameter_interface.show_subprocess:
+            pipe = None
+        subprocess.run(
+            [updater_path],
+            check=False,
+            stdout=pipe,
+            stderr=pipe)
+        print("Reducer: {} loaded".format(reducer_name))
 
-atexit.register(print_results)
-signal.signal(signal.SIGALRM, print_results)
+def extract_info_properties(bench_name:str)->Dict[str,str]:
+    info_dict = dict()
+    
+    # validate info.properties
+    info_properties_path = os.path.join(__location__, bench_name, "info.properties")
+    if not os.path.exists(info_properties_path):
+        raise Exception('Error: info.properties not found: {}'.format(info_properties_path))
 
-def write_file():
-    if output_latex:
-        with open(output_latex, "w") as output_f:
-            output_f.write(json.dumps(results))
+    with open(info_properties_path, 'r') as target_file:
+        temp_list = target_file.read().splitlines()
+    for entry in temp_list:
+        buf = entry.split('=')
+        info_dict[buf[0]] = buf[1]
+    
+    if "source_file" not in info_dict:
+        raise Exception('Error: No source_file found in info.properties')
+    if "script_file" not in info_dict:
+        raise Exception('Error: No script_file found in info.properties')
 
-atexit.register(write_file)
+    # validate source file & script file
+    source_file_path = os.path.join(__location__, bench_name, info_dict["source_file"])
+    if not os.path.exists(source_file_path):
+        raise Exception('Error: source_file not found: {}'.format(source_file_path))
+    info_dict["source_file_path"] = source_file_path
+
+    script_file_path = os.path.join(__location__, bench_name, info_dict["script_file"])
+    if not os.path.exists(script_file_path):
+        raise Exception('Error: script_file not found: {}'.format(script_file_path))
+    info_dict["script_file_path"] = script_file_path
+
+    return info_dict
 
 def count_token(source_file_path):
     try:
@@ -86,109 +123,90 @@ def count_token(source_file_path):
              source_file_path],
             stderr=subprocess.DEVNULL,
             stdout=subprocess.PIPE)
-        result = process.communicate()[0]
-        return int(result)
+        count = process.communicate()[0]
+        return int(count)
     except Exception as err:
         print("Error counting token for " + source_file_path)
         raise err
 
+
 def main():
+    # parameter handler
+    args = parse_arguments()
+    para = Parameter(args.subjects, args.iterations, args.silent, args.show_subprocess)
+    para.validate()
+    print(para)
+
+    report = dict()
+
     # install token counter
-    pipe = None
-    if silent_subprocess:
-        pipe = subprocess.DEVNULL
-    subprocess.run(
-        [os.path.join(__location__, "binaries", "update_token_counter.sh")],
-        check=False,
-        stdout=pipe,
-        stderr=pipe)
-    # install programs
-    for reducer_name, updater_path in INSTALLS:
-        pipe = None
-        if silent_subprocess:
-            pipe = subprocess.DEVNULL
-        subprocess.run(
-            [updater_path],
-            check=False,
-            stdout=pipe,
-            stderr=pipe)
-    if not silent:
-        print("reducer", "bench", "query", "time", "token", "code")
+    load_token_counter(para)
 
-    # run programs
-    for bench_name, test_script, source_file in benchmark_target:
-        test_script_path = os.path.join(__location__, bench_name, test_script)
-        source_file_path = os.path.join(__location__, bench_name, source_file)
-        # Count bench token count
+    # install reducer programs
+    load_reducers(para)
+    
+    # benchmark starts here
+    for bench_name in para.benchmark_target:
+        
+        # extract enties into a hash table(dictionary)
+        info_dict = extract_info_properties(bench_name)
+        source_file_path = info_dict["source_file_path"]
+        script_file_path = info_dict["script_file_path"]
+
+        # count bench token
         token_count = count_token(source_file_path)
-        if bench_name not in results:
-            results[bench_name] = dict()
-        results[bench_name]["original_token_count"] = token_count
-        if not silent:
-            print(bench_name + " have " + str(token_count) + " original tokens")
+        if bench_name not in report:
+            report[bench_name] = dict()
 
+        report[bench_name]["original_token_count"] = token_count
+        if not para.silent:
+            print("Bench {} has {} original tokens".format(bench_name, token_count))
+
+        # reduce
         for reducer_name, reducer_path in REDUCERS:
-            fd, fname = tempfile.mkstemp()
-            os.close(fd)
-            pipe = None
-            if silent_subprocess:
+            print("{} in process".format(reducer_name))
+            for iteration in range(para.iterations):
+                print("iteration {}".format(iteration))
+
+                fd, fname = tempfile.mkstemp()
+                os.close(fd)
                 pipe = subprocess.DEVNULL
-            subprocess.run(
-                [reducer_path,
-                 test_script_path,
-                 source_file_path,
-                 fname],
-                check=False,
-                stdout=pipe,
-                stderr=pipe)
-            with open(fname, "r") as output:
-                run_result = output.read().strip().split("\n")
-                if len(run_result) != 7:
-                    run_result = ["unknown", "unknown", "unknown", "failed", "failed", "failed", run_result]
-                results[bench_name][reducer_name] = dict()
-                results[bench_name][reducer_name]["reducer"] = reducer_name
-                results[bench_name][reducer_name]["bench"] = bench_name
-                results[bench_name][reducer_name]["query"] = run_result[3]
-                results[bench_name][reducer_name]["time"] = run_result[4]
-                results[bench_name][reducer_name]["reduced_token"] = run_result[5]
-                results[bench_name][reducer_name]["ret_code"] = run_result[6]
-                if not silent:
-                    print(reducer_name, bench_name, run_result[3], run_result[4], run_result[5], run_result[6], flush=True)
-            os.remove(fname)
+                if para.show_subprocess:
+                    pipe = None
+                subprocess.run(
+                    [reducer_path,
+                     script_file_path,
+                     source_file_path,
+                     fname],
+                    check=False,
+                    stdout=pipe,
+                    stderr=pipe)
+
+                with open(fname, "r") as output:
+                    run_result = output.read().strip().split("\n")
+                    if len(run_result) != 7:
+                        run_result = ["unknown", "unknown", "unknown", "failed", "failed", "failed", run_result]
+                    report[bench_name][reducer_name+str(iteration)] = dict()
+                    report[bench_name][reducer_name+str(iteration)]["reducer"] = reducer_name
+                    report[bench_name][reducer_name+str(iteration)]["bench"] = bench_name
+                    report[bench_name][reducer_name+str(iteration)]["query"] = run_result[3]
+                    report[bench_name][reducer_name+str(iteration)]["time"] = run_result[4]
+                    report[bench_name][reducer_name+str(iteration)]["reduced_token"] = run_result[5]
+                    report[bench_name][reducer_name+str(iteration)]["ret_code"] = run_result[6]
+
+                    if not para.silent:
+                        print(report[bench_name][reducer_name+str(iteration)])
+                os.remove(fname)
+
+    # print final report to stdout
+    if not para.silent:
+        json_object = json.dumps(report, indent=2)
+        print(json_object)
+        
+        time = datetime.now()
+        report_title = "report "+str(time)+".json"
+        with open(report_title, 'w') as out_file:
+            out_file.write(json_object)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-            description = "Runs the benchmark and output results in JSON")
-    # benchmark all or subset. default subset
-    parser.add_argument("--benchmark-subset", "-bs", action="store_true", help="Benchmark with toys")
-    parser.add_argument("--benchmark-all", "-ba", action="store_true", help="Benchmark with clang and gcc")
-    parser.add_argument("--silent", "-s", action="store_true", help="Writes nothing to stdout")
-    parser.add_argument("--silent-subprocess", "-ss", action="store_true", help="Do not pipe the stdout and stderr from the reducers to the benchmark script. Useful if you only want results")
-    parser.add_argument("--output", "-o", action="store", help="File where results from the benchmarks are dumped")
-    parser.add_argument("--start", action="store", help="Starting index from the list of benchmarks where the benchmark process begins")
-    parser.add_argument("--length", action="store", help="Number of benchmarks from the list to run")
-    parsed = parser.parse_args()
-    if parsed.benchmark_subset:
-        benchmark_target = BENCHMARK_SMALL
-    if parsed.benchmark_all:
-        benchmark_target = BENCHMARK_ALL
-    if parsed.silent:
-        silent = True
-        silent_subprocess = True
-    if parsed.silent_subprocess:
-        silent_subprocess = True
-    output_latex = parsed.output
-    if parsed.start:
-        if str.isdigit(parsed.start):
-            benchmark_target = benchmark_target[int(parsed.start):]
-        else:
-            print("Expect number for start, got: " + parsed.start)
-            sys.exit(1)
-    if parsed.length:
-        if str.isdigit(parsed.length):
-            benchmark_target = benchmark_target[:int(parsed.length)]
-        else:
-            print("Expect number for length, got: " + parsed.length)
-            sys.exit(1)
-
     main()
