@@ -19,7 +19,7 @@ package org.perses.program
 import com.google.common.base.Joiner
 import com.google.common.collect.ImmutableList
 import com.google.common.io.Files
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -48,7 +48,7 @@ class TokenizedProgramTest {
   fun testSourceCodeIsCached() {
     val filepath = "test_data/java_helloworld/t.java"
     val p = TestUtility.createTokenizedProgramFromFile(filepath)
-    Truth.assertThat(p.toSourceCodeInOrigFormatWithBlankLines())
+    assertThat(p.toSourceCodeInOrigFormatWithBlankLines())
       .isSameInstanceAs(p.toSourceCodeInOrigFormatWithBlankLines())
   }
 
@@ -62,9 +62,9 @@ class TokenizedProgramTest {
       |int c = 0;
     """.trimMargin()
     val program = TestUtility.createTokenizedProgramFromString(sourceCode, LanguageC)
-    Truth.assertThat(program.toSourceCodeInOrigFormatWithBlankLines().trim())
+    assertThat(program.toSourceCodeInOrigFormatWithBlankLines().trim())
       .isEqualTo(sourceCode.trim())
-    Truth.assertThat(program.toCompactSourceCode().trim()).isEqualTo(
+    assertThat(program.toCompactSourceCode().trim()).isEqualTo(
       """int a = 0;
       |int b = 0;
       |int c = 0;
@@ -100,12 +100,12 @@ class TokenizedProgramTest {
     val text = Files.asCharSource(File(filepath), StandardCharsets.UTF_8)
       .read()
       .replace("\\s|\n".toRegex(), "")
-    Truth.assertThat(program).isEqualTo(text)
+    assertThat(program).isEqualTo(text)
   }
 
   private fun testCodeFormatRemains(filepath: String) {
     val program = TestUtility.createTokenizedProgramFromFile(filepath)
-    Truth.assertThat(program.toSourceCodeInOrigFormatWithBlankLines().trim())
+    assertThat(program.toSourceCodeInOrigFormatWithBlankLines().trim())
       .isEqualTo(Files.asCharSource(File(filepath), StandardCharsets.UTF_8).read().trim())
   }
 }
