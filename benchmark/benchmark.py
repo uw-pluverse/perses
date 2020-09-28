@@ -5,21 +5,42 @@ import json
 import os
 import subprocess
 import tempfile
+from datetime import datetime
 from dataclasses import dataclass, field
 from typing import List, Dict
 
 __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
-@dataclass
-class Parameter:
-    """Variable field"""
-    benchmark_target: List[str] = field(default_factory=list)
-    iterations: int = 1
-    silent: bool = False
-    show_subprocess: bool = False
-    results: Dict[str,dict] = field(default_factory=dict)
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Runs the benchmark and output results in JSON")
+    parser.add_argument("-s", "--subjects", nargs='+', default=[], help="Benchmark with specified bench(es)")
+    parser.add_argument("-i", "--iterations", type=int, default=1, help="Run bench set for the number of times specified")
+    parser.add_argument("--silent", action="store_true", default=False, help="Writes nothing to stdout")
+    parser.add_argument("-ss", "--show-subprocess", action="store_true", default=False, help="Show all pipe stdout and stderr from reducers")
+    return parser.parse_args()
 
+@dataclass(frozen=True)
+class Parameter:
+    # Default field values
+    benchmark_target: List[str]
+    iterations: int
+    silent: bool
+    show_subprocess: bool
+
+
+    def validate(self):
+        # validate parameters
+        # benchmark_target
+        if self.benchmark_target == []:
+            raise Exception('Error: No subjects')
+        for bench_name in self.benchmark_target:
+            folder_path = os.path.join(__location__, bench_name)
+            if not os.path.exists(folder_path):
+                raise Exception('Error: Folder path not found: {}'.format(folder_path))
+        #iterations
+        if self.iterations < 1:
+            raise Exception('Error: Invalid ITERATIONS value')
 
 INSTALLS = [
     ("perses", os.path.join(__location__, "binaries", "update_perses.sh")),
@@ -38,14 +59,6 @@ REDUCERS = [
 #    ("pardis", os.path.join(__location__, "binaries", "run_pardis.sh"))
 ]
 
-
-def parse_arguments():
-    parser = argparse.ArgumentParser(description="Runs the benchmark and output results in JSON")
-    parser.add_argument("-s", "--subjects", nargs='+', metavar='BENCH_FOLDER', help="Benchmark with specified bench(es)")
-    parser.add_argument("-i", "--iterations", type=int, help="Run bench set for the number of times specified")
-    parser.add_argument("--silent", action="store_true", help="Writes nothing to stdout")
-    parser.add_argument("-ss", "--show_subprocess", action="store_true", help="Show all pipe stdout and stderr from reducers")
-    return parser.parse_args()
 
 def load_token_counter(parameter_interface):
     print("Loading token counter ...")
@@ -71,6 +84,38 @@ def load_reducers(parameter_interface):
             stderr=pipe)
         print("Reducer: {} loaded".format(reducer_name))
 
+def extract_info_properties(bench_name:str)->Dict[str,str]:
+    info_dict = dict()
+    
+    # validate info.properties
+    info_properties_path = os.path.join(__location__, bench_name, "info.properties")
+    if not os.path.exists(info_properties_path):
+        raise Exception('Error: info.properties not found: {}'.format(info_properties_path))
+
+    with open(info_properties_path, 'r') as target_file:
+        temp_list = target_file.read().splitlines()
+    for entry in temp_list:
+        buf = entry.split('=')
+        info_dict[buf[0]] = buf[1]
+    
+    if "source_file" not in info_dict:
+        raise Exception('Error: No source_file found in info.properties')
+    if "script_file" not in info_dict:
+        raise Exception('Error: No script_file found in info.properties')
+
+    # validate source file & script file
+    source_file_path = os.path.join(__location__, bench_name, info_dict["source_file"])
+    if not os.path.exists(source_file_path):
+        raise Exception('Error: source_file not found: {}'.format(source_file_path))
+    info_dict["source_file_path"] = source_file_path
+
+    script_file_path = os.path.join(__location__, bench_name, info_dict["script_file"])
+    if not os.path.exists(script_file_path):
+        raise Exception('Error: script_file not found: {}'.format(script_file_path))
+    info_dict["script_file_path"] = script_file_path
+
+    return info_dict
+
 def count_token(source_file_path):
     try:
         process = subprocess.Popen(
@@ -86,26 +131,13 @@ def count_token(source_file_path):
 
 
 def main():
-
-    # data class init
-    para = Parameter()
-
-    # arguments facotry
+    # parameter handler
     args = parse_arguments()
-    if args.subjects:
-        para.benchmark_target = args.subjects
-        #validate bench folder
-        for bench_name in para.benchmark_target:
-            folder_path = os.path.join(__location__, bench_name)
-            if not os.path.exists(folder_path):
-                raise Exception('Error: folder path not found: {}'.format(folder_path))
-    if args.iterations:
-        para.iterations = args.iterations
-    if args.silent:
-        para.silent = True
-        para.silent_subprocess = True
-    if args.show_subprocess:
-        para.show_subprocess = True
+    para = Parameter(args.subjects, args.iterations, args.silent, args.show_subprocess)
+    para.validate()
+    print(para)
+
+    report = dict()
 
     # install token counter
     load_token_counter(para)
@@ -113,45 +145,34 @@ def main():
     # install reducer programs
     load_reducers(para)
     
-    # benchmark
-    for iteration in range(para.iterations):
-        print("=====Iteration {}=====".format(iteration+1))
+    # benchmark starts here
+    for bench_name in para.benchmark_target:
+        
+        # extract enties into a hash table(dictionary)
+        info_dict = extract_info_properties(bench_name)
+        source_file_path = info_dict["source_file_path"]
+        script_file_path = info_dict["script_file_path"]
 
-        for bench_name in para.benchmark_target:
+        # count bench token
+        token_count = count_token(source_file_path)
+        if bench_name not in report:
+            report[bench_name] = dict()
 
-            # validate info.properties
-            info_properties_path = os.path.join(__location__, bench_name, "info.properties")
-            if not os.path.exists(info_properties_path):
-                raise Exception('Error: info.properties not found: {}'.format(info_properties_path))
+        report[bench_name]["original_token_count"] = token_count
+        if not para.silent:
+            print("Bench {} has {} original tokens".format(bench_name, token_count))
 
-            # validate source file & script file
-            with open(info_properties_path, 'r') as target_file:
-                source_file = target_file.readline().rstrip().split('=')[1]
-                script_file = target_file.readline().rstrip().split('=')[1]
-            source_file_path = os.path.join(__location__, bench_name, source_file)
-            if not os.path.exists(source_file_path):
-                raise Exception('Error: source_file not found: {}'.format(source_file_path))
-            script_file_path = os.path.join(__location__, bench_name, script_file)
-            if not os.path.exists(script_file_path):
-                raise Exception('Error: script_file not found: {}'.format(script_file_path))
+        # reduce
+        for reducer_name, reducer_path in REDUCERS:
+            print("{} in process".format(reducer_name))
+            for iteration in range(para.iterations):
+                print("iteration {}".format(iteration))
 
-            # count bench token
-            token_count = count_token(source_file_path)
-            if bench_name not in para.results:
-                para.results[bench_name] = dict()
-
-            para.results[bench_name]["original_token_count"] = token_count
-            if not para.silent:
-                print("Bench {} has {} original tokens".format(bench_name, token_count))
-
-            # reduce
-            for reducer_name, reducer_path in REDUCERS:
                 fd, fname = tempfile.mkstemp()
                 os.close(fd)
                 pipe = subprocess.DEVNULL
                 if para.show_subprocess:
                     pipe = None
-
                 subprocess.run(
                     [reducer_path,
                      script_file_path,
@@ -165,21 +186,27 @@ def main():
                     run_result = output.read().strip().split("\n")
                     if len(run_result) != 7:
                         run_result = ["unknown", "unknown", "unknown", "failed", "failed", "failed", run_result]
-                    para.results[bench_name][reducer_name] = dict()
-                    para.results[bench_name][reducer_name]["reducer"] = reducer_name
-                    para.results[bench_name][reducer_name]["bench"] = bench_name
-                    para.results[bench_name][reducer_name]["query"] = run_result[3]
-                    para.results[bench_name][reducer_name]["time"] = run_result[4]
-                    para.results[bench_name][reducer_name]["reduced_token"] = run_result[5]
-                    para.results[bench_name][reducer_name]["ret_code"] = run_result[6]
+                    report[bench_name][reducer_name+str(iteration)] = dict()
+                    report[bench_name][reducer_name+str(iteration)]["reducer"] = reducer_name
+                    report[bench_name][reducer_name+str(iteration)]["bench"] = bench_name
+                    report[bench_name][reducer_name+str(iteration)]["query"] = run_result[3]
+                    report[bench_name][reducer_name+str(iteration)]["time"] = run_result[4]
+                    report[bench_name][reducer_name+str(iteration)]["reduced_token"] = run_result[5]
+                    report[bench_name][reducer_name+str(iteration)]["ret_code"] = run_result[6]
+
                     if not para.silent:
-                        print("Reducer:{} Bench:{} Query:{} Time(s):{} Token left:{} Ret code:{}".format(reducer_name, bench_name, run_result[3], run_result[4], run_result[5], run_result[6]), flush=True)
+                        print(report[bench_name][reducer_name+str(iteration)])
                 os.remove(fname)
 
-    #print final report
+    # print final report to stdout
     if not para.silent:
-        print(json.dumps(para.results, indent=2))
-
+        json_object = json.dumps(report, indent=2)
+        print(json_object)
+        
+        time = datetime.now()
+        report_title = "report "+str(time)+".json"
+        with open(report_title, 'w') as out_file:
+            out_file.write(json_object)
 
 if __name__ == "__main__":
     main()
