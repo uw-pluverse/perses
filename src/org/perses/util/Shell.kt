@@ -17,6 +17,7 @@
 package org.perses.util
 
 import com.google.common.base.MoreObjects
+import com.google.common.collect.ImmutableMap
 import com.google.common.flogger.FluentLogger
 import org.apache.commons.exec.CommandLine
 import org.apache.commons.exec.DefaultExecutor
@@ -33,19 +34,37 @@ import java.util.Arrays
 object Shell {
 
   @JvmStatic
-  fun run(cmd: String, captureOutput: Boolean): CmdOutput {
-    return run(cmd, CURRENT_DIR, captureOutput)
+  val CURRENT_ENV = ImmutableMap.copyOf(System.getenv())
+
+  @JvmStatic
+  fun createNewEnvironmentVar(key: String, value: String) =
+    ImmutableMap.builder<String, String>()
+      .put(key, value).putAll(CURRENT_ENV).build()
+
+  @JvmStatic
+  fun run(
+    cmd: String,
+    captureOutput: Boolean,
+    environment: ImmutableMap<String, String>
+  ): CmdOutput {
+    return run(cmd, CURRENT_DIR, captureOutput, environment)
   }
 
   @JvmStatic
-  fun run(cmd: String, workingDirectory: File, captureOutput: Boolean): CmdOutput {
+  fun run(
+    cmd: String,
+    workingDirectory: File,
+    captureOutput: Boolean,
+    environment: ImmutableMap<String, String>
+  ): CmdOutput {
     if (!captureOutput) {
       return CmdOutput(
         exitCode = runAndGetExitCode(
           cmd,
           workingDirectory,
           EMPTY_OUTPUT_STREAM,
-          EMPTY_OUTPUT_STREAM
+          EMPTY_OUTPUT_STREAM,
+          environment
         ),
         stdout = ShellOutputLines.EMPTY,
         stderr = ShellOutputLines.EMPTY
@@ -55,7 +74,7 @@ object Shell {
     val stderr = ShellOutputStream()
     val exitCode = stdout.use {
       stderr.use {
-        runAndGetExitCode(cmd, workingDirectory, stdout, stderr)
+        runAndGetExitCode(cmd, workingDirectory, stdout, stderr, environment)
       }
     }
     return CmdOutput(exitCode, stdout.toOutputStringList(), stderr.toOutputStringList())
@@ -65,7 +84,8 @@ object Shell {
     cmd: String,
     workingDirectory: File,
     stdout: OutputStream,
-    stderr: OutputStream
+    stderr: OutputStream,
+    environment: ImmutableMap<String, String>
   ): Int {
 
     val commandline = CommandLine.parse(cmd)
@@ -76,7 +96,7 @@ object Shell {
     logger.atFine().log("%s", commandline)
 
     return try {
-      exec.execute(commandline)
+      exec.execute(commandline, environment)
     } catch (e: ExecuteException) {
       logger.atFine().log("error when running cmd %s", cmd)
       logger.atFine().log("cmd stdout: %s", stdout)

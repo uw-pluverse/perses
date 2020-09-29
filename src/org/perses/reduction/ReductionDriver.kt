@@ -198,7 +198,8 @@ class ReductionDriver(
     val cmdOutput = Shell.run(
       constructFullCreduceCommand(creduceCmd, reductionFolder),
       reductionFolder.folder,
-      false
+      captureOutput = false,
+      environment = Shell.CURRENT_ENV
     )
     if (cmdOutput.exitCode != 0) {
       val tempDir = copyFilesToTempDir(reductionFolder.folder)
@@ -352,7 +353,12 @@ class ReductionDriver(
     }
     val cmd = formatCmd + " " + bestFile.name
     try {
-      Shell.run(cmd, bestFile.absoluteFile.parentFile, true)
+      Shell.run(
+        cmd,
+        bestFile.absoluteFile.parentFile,
+        captureOutput = true,
+        environment = Shell.CURRENT_ENV
+      )
     } catch (e: Throwable) {
       logger.atSevere().withCause(e).log("failed to execute the format command '%s'", cmd)
     }
