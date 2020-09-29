@@ -6,7 +6,7 @@ import os
 import subprocess
 import tempfile
 from datetime import datetime
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import List, Dict
 
 __location__ = os.path.realpath(
@@ -28,7 +28,6 @@ class Parameter:
     silent: bool
     show_subprocess: bool
 
-
     def validate(self):
         # validate parameters
         # benchmark_target
@@ -42,11 +41,11 @@ class Parameter:
         if self.iterations < 1:
             raise Exception('Error: Invalid ITERATIONS value')
 
+
 INSTALLS = [
     ("perses", os.path.join(__location__, "binaries", "update_perses.sh")),
     ("creduce", os.path.join(__location__, "binaries", "update_creduce.sh")),
     ("chisel", os.path.join(__location__, "binaries", "update_chisel.sh")),
-#    ("pardis", os.path.join(__location__, "binaries", "update_pardis.sh"))
 ]
 
 REDUCERS = [
@@ -56,7 +55,6 @@ REDUCERS = [
     ("hdd-fix", os.path.join(__location__, "binaries", "run_hdd_fix.sh")),
     ("creduce", os.path.join(__location__, "binaries", "run_creduce.sh")),
     ("chisel", os.path.join(__location__, "binaries", "run_chisel.sh")),
-#    ("pardis", os.path.join(__location__, "binaries", "run_pardis.sh"))
 ]
 
 
@@ -82,11 +80,11 @@ def load_reducers(parameter_interface):
             check=False,
             stdout=pipe,
             stderr=pipe)
-        print("Reducer: {} loaded".format(reducer_name))
+        print(" Reducer: {} loaded".format(reducer_name))
 
-def extract_info_properties(bench_name:str)->Dict[str,str]:
+def extract_info_properties(bench_name: str)->Dict[str, str]:
     info_dict = dict()
-    
+
     # validate info.properties
     info_properties_path = os.path.join(__location__, bench_name, "info.properties")
     if not os.path.exists(info_properties_path):
@@ -97,13 +95,13 @@ def extract_info_properties(bench_name:str)->Dict[str,str]:
     for entry in temp_list:
         buf = entry.split('=')
         info_dict[buf[0]] = buf[1]
-    
+
+    # validate source file & script file
     if "source_file" not in info_dict:
         raise Exception('Error: No source_file found in info.properties')
     if "script_file" not in info_dict:
         raise Exception('Error: No script_file found in info.properties')
 
-    # validate source file & script file
     source_file_path = os.path.join(__location__, bench_name, info_dict["source_file"])
     if not os.path.exists(source_file_path):
         raise Exception('Error: source_file not found: {}'.format(source_file_path))
@@ -144,10 +142,10 @@ def main():
 
     # install reducer programs
     load_reducers(para)
-    
+
     # benchmark starts here
     for bench_name in para.benchmark_target:
-        
+
         # extract enties into a hash table(dictionary)
         info_dict = extract_info_properties(bench_name)
         source_file_path = info_dict["source_file_path"]
@@ -202,7 +200,7 @@ def main():
     if not para.silent:
         json_object = json.dumps(report, indent=2)
         print(json_object)
-        
+
         time = datetime.now()
         report_title = "report "+str(time)+".json"
         with open(report_title, 'w') as out_file:
