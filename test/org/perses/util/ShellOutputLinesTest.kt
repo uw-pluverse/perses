@@ -48,7 +48,7 @@ class ShellOutputLinesTest {
 
   @Test
   fun test_hasFourLines() {
-    Truth.assertThat(list.content).hasSize(4)
+    Truth.assertThat(list.lines).hasSize(4)
   }
 
   @Test

@@ -29,7 +29,7 @@ class ShellOutputStreamTest {
   fun `new stream should return empty string`() {
     val stream = ShellOutputStream()
     stream.close()
-    val content = stream.toOutputStringList().content
+    val content = stream.toOutputStringList().lines
     Truth.assertThat(content).isEmpty()
   }
 
@@ -55,7 +55,7 @@ class ShellOutputStreamTest {
       stream.write(c.toInt())
     }
     stream.close()
-    val content = stream.toOutputStringList().content
+    val content = stream.toOutputStringList().lines
     Truth.assertThat(content).hasSize(6)
     Truth.assertThat(content.joinToString(separator = "")).isEqualTo(string)
   }
