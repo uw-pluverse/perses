@@ -4,6 +4,8 @@ set -o pipefail
 set -o nounset
 
 readonly TOOLS=("creduce" \
+    "gcc" \
+    "clang" \
     "go" \
     "rustc" \
     "ktlint" \
