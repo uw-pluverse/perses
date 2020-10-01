@@ -9,8 +9,7 @@ readonly TOOLS=("creduce" \
     "go" \
     "rustc" \
     "ktlint" \
-    "scala" \
-    "buildifier")
+    "scala")
 
 missing=""
 for tool in "${TOOLS[@]}" ; do
