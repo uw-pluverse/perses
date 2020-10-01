@@ -68,54 +68,54 @@ targets = [
         golden_file="benchmark/toys/parentheses/golden_reduction_progress.txt"),
 
     Target(
-        target_name="//benchmark/toys/go_print:reduction_golden_test_reduction",
-        output_file="bazel-bin/benchmark/toys/go_print/reduction_progress.txt",
-        golden_file="benchmark/toys/go_print/golden_reduction_progress.txt"),
+        target_name="//test/org/perses/benchmark_toys/go_print:reduction_golden_test_reduction",
+        output_file="bazel-bin/test/org/perses/benchmark_toys/go_print/reduction_progress.txt",
+        golden_file="test/org/perses/benchmark_toys/go_print/golden_reduction_progress.txt"),
 
     Target(
-        target_name="//benchmark/toys/go_print:reduction_golden_test_reduction",
-        output_file="bazel-bin/benchmark/toys/go_print/result_reduction_golden_test_perses_node_priority_with_dfs_delta_small.go",
-        golden_file="benchmark/toys/go_print/golden_reduced_small.go"),
+        target_name="//test/org/perses/benchmark_toys/go_print:reduction_golden_test_reduction",
+        output_file="bazel-bin/test/org/perses/benchmark_toys/go_print/result_reduction_golden_test_perses_node_priority_with_dfs_delta_small.go",
+        golden_file="test/org/perses/benchmark_toys/go_print/golden_reduced_small.go"),
 
     Target(
-        target_name="//benchmark/toys/scala_print:reduction_golden_test_reduction",
-        output_file="bazel-bin/benchmark/toys/scala_print/reduction_progress.txt",
-        golden_file="benchmark/toys/scala_print/golden_reduction_progress.txt"),
+        target_name="//test/org/perses/benchmark_toys/scala_print:reduction_golden_test_reduction",
+        output_file="bazel-bin/test/org/perses/benchmark_toys/scala_print/reduction_progress.txt",
+        golden_file="test/org/perses/benchmark_toys/scala_print/golden_reduction_progress.txt"),
 
     Target(
-        target_name="//benchmark/toys/scala_print:reduction_golden_test_reduction",
-        output_file="bazel-bin/benchmark/toys/scala_print/result_reduction_golden_test_perses_node_priority_with_dfs_delta_Hello.sc",
-        golden_file="benchmark/toys/scala_print/golden_reduced_Hello.sc"),
+        target_name="//test/org/perses/benchmark_toys/scala_print:reduction_golden_test_reduction",
+        output_file="bazel-bin/test/org/perses/benchmark_toys/scala_print/result_reduction_golden_test_perses_node_priority_with_dfs_delta_Hello.sc",
+        golden_file="test/org/perses/benchmark_toys/scala_print/golden_reduced_Hello.sc"),
 
     Target(
-        target_name="//benchmark/toys/scala_print:reduce_scala_print_with_token_slicer",
-        output_file="bazel-bin/benchmark/toys/scala_print/Hello_reduced_with_token_slicer.sc",
-        golden_file="benchmark/toys/scala_print/golden_reduced_hello_with_token_slicer.sc"),
+        target_name="//test/org/perses/benchmark_toys/scala_print:reduce_scala_print_with_token_slicer",
+        output_file="bazel-bin/test/org/perses/benchmark_toys/scala_print/Hello_reduced_with_token_slicer.sc",
+        golden_file="test/org/perses/benchmark_toys/scala_print/golden_reduced_hello_with_token_slicer.sc"),
 
     Target(
-        target_name="//benchmark/toys/scala_print:reduce_scala_print_with_token_slicer",
-        output_file="bazel-bin/benchmark/toys/scala_print/reduce_scala_print_with_token_slicer_reduction_progress.txt",
-        golden_file="benchmark/toys/scala_print/gold_test_reduce_scala_print_with_token_slicer_progress.txt"),
+        target_name="//test/org/perses/benchmark_toys/scala_print:reduce_scala_print_with_token_slicer",
+        output_file="bazel-bin/test/org/perses/benchmark_toys/scala_print/reduce_scala_print_with_token_slicer_reduction_progress.txt",
+        golden_file="test/org/perses/benchmark_toys/scala_print/gold_test_reduce_scala_print_with_token_slicer_progress.txt"),
 
     Target(
-        target_name="//benchmark/toys/scala_print:reduce_scala_print_with_tree_slicer",
-        output_file="bazel-bin/benchmark/toys/scala_print/Hello_reduced_with_tree_slicer.sc",
-        golden_file="benchmark/toys/scala_print/golden_reduced_hello_with_tree_slicer.sc"),
+        target_name="//test/org/perses/benchmark_toys/scala_print:reduce_scala_print_with_tree_slicer",
+        output_file="bazel-bin/test/org/perses/benchmark_toys/scala_print/Hello_reduced_with_tree_slicer.sc",
+        golden_file="test/org/perses/benchmark_toys/scala_print/golden_reduced_hello_with_tree_slicer.sc"),
 
     Target(
-        target_name="//benchmark/toys/scala_print:reduce_scala_print_with_tree_slicer",
-        output_file="bazel-bin/benchmark/toys/scala_print/reduce_scala_print_with_tree_slicer_reduction_progress.txt",
-        golden_file="benchmark/toys/scala_print/gold_test_reduce_scala_print_with_tree_slicer_progress.txt"),
+        target_name="//test/org/perses/benchmark_toys/scala_print:reduce_scala_print_with_tree_slicer",
+        output_file="bazel-bin/test/org/perses/benchmark_toys/scala_print/reduce_scala_print_with_tree_slicer_reduction_progress.txt",
+        golden_file="test/org/perses/benchmark_toys/scala_print/gold_test_reduce_scala_print_with_tree_slicer_progress.txt"),
 
     Target(
-        target_name="//benchmark/toys/rs_print:reduction_golden_test_reduction",
-        output_file="bazel-bin/benchmark/toys/rs_print/reduction_progress.txt",
-        golden_file="benchmark/toys/rs_print/golden_reduction_progress.txt"),
+        target_name="//test/org/perses/benchmark_toys/rs_print:reduction_golden_test_reduction",
+        output_file="bazel-bin/test/org/perses/benchmark_toys/rs_print/reduction_progress.txt",
+        golden_file="test/org/perses/benchmark_toys/rs_print/golden_reduction_progress.txt"),
 
     Target(
-        target_name="//benchmark/toys/rs_print:reduction_golden_test_reduction",
-        output_file="bazel-bin/benchmark/toys/rs_print/result_reduction_golden_test_perses_node_priority_with_dfs_delta_hello.rs",
-        golden_file="benchmark/toys/rs_print/golden_reduced_hello.rs"),
+        target_name="//test/org/perses/benchmark_toys/rs_print:reduction_golden_test_reduction",
+        output_file="bazel-bin/test/org/perses/benchmark_toys/rs_print/result_reduction_golden_test_perses_node_priority_with_dfs_delta_hello.rs",
+        golden_file="test/org/perses/benchmark_toys/rs_print/golden_reduced_hello.rs"),
 
     Target(
         target_name="//test/org/perses:gen_token_counter_file",

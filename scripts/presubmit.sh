@@ -22,9 +22,7 @@ bazel test \
     //copyright/... \
     //version/... \
     //benchmark/toys/delta_1/... \
-    //benchmark/toys/go_print/... \
-    //benchmark/toys/parentheses/... \
-    //benchmark/toys/rs_print/... \
-    //benchmark/toys/scala_print/...
+    //benchmark/toys/parentheses/... 
+
 
 "$@"
