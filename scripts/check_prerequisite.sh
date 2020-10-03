@@ -8,7 +8,6 @@ readonly TOOLS=("creduce" \
     "clang" \
     "go" \
     "rustc" \
-    "ktlint" \
     "scala")
 
 missing=""

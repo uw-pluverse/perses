@@ -23,6 +23,7 @@ maven_install(
         "com.google.guava:guava:28.1-jre",
         "com.google.truth:truth:1.0.1",
         "com.googlecode.java-diff-utils:diffutils:1.3.0",
+        "com.pinterest:ktlint:0.39.0",
         "it.unimi.dsi:fastutil:8.3.0",
         "me.lemire.integercompression:JavaFastPFOR:0.1.9",
         "org.antlr:antlr4-runtime:4.8-1",

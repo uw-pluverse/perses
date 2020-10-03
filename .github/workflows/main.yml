@@ -35,7 +35,7 @@ jobs:
 
     - name: Test
       run: |
-        bazel test --test_output=errors //test/... //copyright/... //benchmark/toys/delta_1/... //benchmark/toys/go_print/... //benchmark/toys/rs_print/... //benchmark/toys/scala_print/... //benchmark/toys/parentheses/... 
+        ./scripts/presubmit.sh
 
     - name: Test Installation
       run: |
