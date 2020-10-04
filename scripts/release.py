@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import re
 import subprocess
 
 
@@ -9,15 +10,15 @@ def create_tag():
     # create new tag as per current release
     stream = os.popen('git describe --abbrev=0 --tags')
     current_tag = stream.read().strip()
-    # TODO(Xueyan): the current parsing is buggy, if the main version number is a two-digit number.
-    #      You need parse the string, e.g., the first string is 'v', and after 'v', there should be
-    #      two numbers seperated by a '.'
-    if current_tag[0] != 'v':
-        raise Exception("The tag name should start with v")
+
+    if not re.match("^v[0-9][.][0-9]", current_tag):
+        raise Exception("Error: tag name does not follow expected pattern.")
+
     major_version = int(current_tag[1])
     minor_version = int(current_tag[3])
-    q, r = divmod(minor_version + 1, 10)
-    return "v{}.{}".format(major_version + q, r)
+    increment, new_minor_version = divmod(minor_version + 1, 10)
+
+    return "v{}.{}".format(major_version + increment, new_minor_version)
 
 
 def build_binary():
@@ -46,7 +47,7 @@ def main():
     jar = build_binary()
 
     # release
-    release_command = ['hub', 'release', 'create', '-a', jar, '-m', title, tag_name]
+    release_command = ['hub', 'release', 'create', '-o', '-a', jar, '-m', title, tag_name]
 
     pipe = None
     subprocess.check_call(
