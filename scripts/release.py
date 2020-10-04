@@ -6,7 +6,7 @@ import subprocess
 
 
 def create_tag():
-    subprocess.check_call(["git", "fetch", "--all", "--tags"]) # fetch remote tags
+    subprocess.check_call(["git", "fetch", "--all", "--tags"]) 
     # create new tag as per current release
     stream = os.popen('git describe --abbrev=0 --tags')
     current_tag = stream.read().strip()
@@ -14,11 +14,13 @@ def create_tag():
     if not re.match("^v[0-9]+[.][0-9]", current_tag):
         raise Exception("Error: tag name does not follow expected pattern.")
 
-    major_version = int(current_tag[1])
-    minor_version = int(current_tag[3])
+    version = current_tag[1:].split('.')
+
+    major_version = int(version[0])
+    minor_version = int(version[1])
     increment, new_minor_version = divmod(minor_version + 1, 10)
 
-    return "v{}.{}".format(major_version + increment, new_minor_version)
+    return f"v{major_version + increment}.{new_minor_version}"
 
 
 def build_binary():
@@ -41,13 +43,13 @@ def main():
         raise Exception('ERROR: This script should be run in the root folder of the project.')
 
     tag_name = create_tag()
-    title = "Perses {}".format(tag_name)
+    title = f"Perses {tag_name}"
 
     # get built binary path
     jar = build_binary()
 
     # release
-    release_command = ['hub', 'release', 'create', '--browse', '--attach={}'.format(jar), '--message={}'.format(title), tag_name]
+    release_command = ['hub', 'release', 'create', '--browse', f"--attach={jar}", f'--message={title}', tag_name]
 
     pipe = None
     subprocess.check_call(
