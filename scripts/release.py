@@ -11,7 +11,7 @@ def create_tag():
     stream = os.popen('git describe --abbrev=0 --tags')
     current_tag = stream.read().strip()
 
-    if not re.match("^v[0-9][.][0-9]", current_tag):
+    if not re.match("^v[0-9]+[.][0-9]", current_tag):
         raise Exception("Error: tag name does not follow expected pattern.")
 
     major_version = int(current_tag[1])
@@ -47,7 +47,7 @@ def main():
     jar = build_binary()
 
     # release
-    release_command = ['hub', 'release', 'create', '-o', '-a', jar, '-m', title, tag_name]
+    release_command = ['hub', 'release', 'create', '--browse', '--attach={}'.format(jar), '--message={}'.format(title), tag_name]
 
     pipe = None
     subprocess.check_call(
