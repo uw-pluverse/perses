@@ -9,6 +9,8 @@ if [[ ! -e "WORKSPACE" ]] ; then
   exit 1
 fi
 
+git pull
+
 readonly BRANCH_TO_SYNC="master"
 readonly CMD_LIST_REMOTES="git remote --verbose"
 readonly PUBLIC_REPO="https://github.com/chengniansun/perses"
