@@ -20,9 +20,6 @@ fi
 bazel test \
     //test/... \
     //copyright/... \
-    //version/... \
-    //benchmark/toys/delta_1/... \
-    //benchmark/toys/parentheses/... 
-
+    //version/... 
 
 "$@"
