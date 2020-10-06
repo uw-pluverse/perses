@@ -24,7 +24,9 @@ docker pull cnsun/perses:perses_part_54_name_clang_trunk
 readonly PERSES_ROOT_IN_DOCKER="/tmp/perses"
 
 readonly USER_ID=$(id --user)
+readonly USER_NAME=$(id --user --name)
 readonly GROUP_ID=$(id --group)
+readonly GROUP_NAME=$(id --group --name)
 readonly FIX_PERMISSIONS_SCRIPT="fix_file_permissions.sh"
 cat > "${FIX_PERMISSIONS_SCRIPT}" <<-EOF
 #!/usr/bin/env bash 
@@ -38,7 +40,7 @@ chmod +x "${FIX_PERMISSIONS_SCRIPT}"
 readonly UPDATE_BAZEL_SCRIPT="update_bazel.sh"
 cat > "${UPDATE_BAZEL_SCRIPT}" <<-EOF
 #!/usr/bin/env bash
-  
+
 set -o nounset
 set -o pipefail
 set -o errexit
@@ -54,7 +56,28 @@ sudo mv /usr/local/bin/bazel /usr/local/bin/bazel.bak
 EOF
 chmod +x "${UPDATE_BAZEL_SCRIPT}"
 
-trap "rm ${FIX_PERMISSIONS_SCRIPT} ${UPDATE_BAZEL_SCRIPT}" EXIT
+readonly INIT_DOCKER_SCRIPT="init_docker.sh"
+cat > "${INIT_DOCKER_SCRIPT}" <<-EOF
+#!/usr/bin/env bash
+  
+set -o nounset
+set -o pipefail
+set -o errexit
+
+sudo groupadd --gid ${GROUP_ID} ${GROUP_NAME}
+sudo useradd --shell "/bin/bash" --create-home --uid ${USER_ID} --gid ${GROUP_ID} --groups sudo ${USER_NAME}
+echo "Change password for ${USER_NAME} in docker"
+sudo passwd ${USER_NAME}
+
+
+sudo --user=${USER_NAME} ./${UPDATE_BAZEL_SCRIPT}
+echo "Switching to user ${USER_NAME}"
+su ${USER_NAME}
+
+EOF
+chmod +x "${INIT_DOCKER_SCRIPT}"
+
+trap "rm ${FIX_PERMISSIONS_SCRIPT} ${INIT_DOCKER_SCRIPT} ${UPDATE_BAZEL_SCRIPT}" EXIT
 
 # --cap-add is to enable LeakSanitizer
 #   See https://github.com/google/sanitizers/issues/764
