@@ -6,3 +6,4 @@ exp-*
 perses_*reduced*
 statistics-*.txt
 testscript-statistics-*.txt
+/fix_file_permissions.sh
