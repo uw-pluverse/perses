@@ -27,10 +27,13 @@ Run benchmark(s) on specified bench(es). E.g. ```--subjects clang-27137 gcc-5990
 Run benchmark(s) on each bench for specified number of times before switching to the next.
 
 #### --silent
-Write nothing to stdout and save no test results.
+Write no results to stdout and save no json file.
 
 #### --show-subprocess
 Display all pipe stdout and stderr from reducers. Details of the reduction process will be dislayed.
+
+#### --reducers
+Specify reducer(s) to benchmark. Options includes: perses, hdd, perses-fix, hdd-fix, creduce, chisel. E.g. ```--reducers perses hdd creduce```
 
 
 
