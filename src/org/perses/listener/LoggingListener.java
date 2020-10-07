@@ -57,7 +57,8 @@ public class LoggingListener extends DefaultReductionListener {
 
     if (logger.atInfo().isEnabled()) {
       logger.atInfo().log(
-          "Reduction Started at %s", TimeUtil.formatDateForDisplay(timeSpanBuilder.getStartMillis()));
+          "Reduction Started at %s",
+          TimeUtil.formatDateForDisplay(timeSpanBuilder.getStartMillis()));
     }
   }
 
@@ -195,7 +196,11 @@ public class LoggingListener extends DefaultReductionListener {
   public void onNodeReductionStart(AbstractReductionEvent.NodeReductionStartEvent event) {
     nodeSize = event.getProgramSize();
     if (logger.atConfig().isEnabled()) {
-      logger.atConfig().log(FIXPOINT_REDUCER_MSG_PREFIX + "Reducing node %s", event.getNode());
+      logger.atConfig().log(
+          FIXPOINT_REDUCER_MSG_PREFIX + "Reducing node %s",
+          fixpointIteration,
+          reducerName,
+          event.getNode());
     }
   }
 
