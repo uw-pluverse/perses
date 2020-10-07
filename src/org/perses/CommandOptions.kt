@@ -307,7 +307,7 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
         "then a refresh is triggered.",
       order = FlagOrder.CACHE_CONTROL + 2
     )
-    var queryCacheRefreshThreshold = "100/1"
+    var queryCacheRefreshThreshold = "100/100"
 
     fun getQueryCacheRefreshThreshold(): Fraction {
       return parse(queryCacheRefreshThreshold)

@@ -59,7 +59,7 @@ Usage: org.perses.Main [options]
       in the format x/y. Assume the original token count is t. Since last 
       refresh where the best program has t' tokens, if the latest best program 
       has b tokens, and (t' - b) >= t *x/y, then a refresh is triggered.
-      Default: 100/1
+      Default: 100/100
     --progress-dump-file
       The file to record the reduction process. The dump file can be large..
     --stat-dump-file
