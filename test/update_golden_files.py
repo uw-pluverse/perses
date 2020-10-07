@@ -49,22 +49,22 @@ targets = [
 
     Target(
         target_name="//test/org/perses/benchmark_toys/delta_1:reduction_golden_test_reduction",
-        output_file="bazel-bin/benchmark/toys/delta_1/result_reduction_golden_test_perses_node_priority_with_dfs_delta_t.c",
+        output_file="bazel-bin/test/org/perses/benchmark_toys/delta_1/result_reduction_golden_test_perses_node_priority_with_dfs_delta_t.c",
         golden_file="test/org/perses/benchmark_toys/delta_1/golden_reduced_t.c"),
 
     Target(
         target_name="//test/org/perses/benchmark_toys/delta_1:reduction_golden_test_reduction",
-        output_file="bazel-bin/benchmark/toys/delta_1/reduction_progress.txt",
+        output_file="bazel-bin/test/org/perses/benchmark_toys/delta_1/reduction_progress.txt",
         golden_file="test/org/perses/benchmark_toys/delta_1/golden_reduction_progress.txt"),
 
     Target(
         target_name="//test/org/perses/benchmark_toys/parentheses:reduction_golden_test_reduction",
-        output_file="bazel-bin/benchmark/toys/parentheses/result_reduction_golden_test_perses_node_priority_with_dfs_delta_t.c",
+        output_file="bazel-bin/test/org/perses/benchmark_toys/parentheses/result_reduction_golden_test_perses_node_priority_with_dfs_delta_t.c",
         golden_file="test/org/perses/benchmark_toys/parentheses/golden_reduced_t.c"),
 
     Target(
         target_name="//test/org/perses/benchmark_toys/parentheses:reduction_golden_test_reduction",
-        output_file="bazel-bin/benchmark/toys/parentheses/reduction_progress.txt",
+        output_file="bazel-bin/test/org/perses/benchmark_toys/parentheses/reduction_progress.txt",
         golden_file="test/org/perses/benchmark_toys/parentheses/golden_reduction_progress.txt"),
 
     Target(
