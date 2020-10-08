@@ -2,7 +2,6 @@
 
 set -o pipefail
 set -o nounset
-set -o errexit
 
 readonly FILE="${1}"
 readonly NEEDLE="CONFIG"

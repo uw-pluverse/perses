@@ -24,6 +24,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
+import org.perses.grammar.ParserFacadeFactory
+import org.perses.grammar.c.LanguageC
 import org.perses.program.EnumFormatControl.ORIG_FORMAT
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
@@ -39,7 +41,7 @@ class ReductionConfigurationTest {
   private val testScript = ScriptFile(File(FOLDER + "r.sh"))
   private val workingDirectory =
     TestUtility.createCleanWorkingDirectory(ReductionConfigurationTest::class.java)
-  private val sourceFile = SourceFile(File(FOLDER + "t.c"))
+  private val sourceFile = SourceFile(File(FOLDER + "t.c"), LanguageC)
 
   @After
   @Throws(IOException::class)
@@ -64,7 +66,8 @@ class ReductionConfigurationTest {
       fixpointReduction = true,
       enableTestScriptExecutionCaching = true,
       useRealDeltaDebugger = false,
-      numOfReductionThreads = numOfReductionThreads
+      numOfReductionThreads = numOfReductionThreads,
+      parserFacadeFactory = ParserFacadeFactory.builderWithBuiltinLanguages().build()
     )
     Truth.assertThat(configuration.bestResultFile).isEqualTo(bestFile)
     Truth.assertThat(configuration.fileToReduce.file).isEqualTo(sourceFile.file)

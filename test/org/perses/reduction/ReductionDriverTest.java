@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.perses.CommandOptions;
+import org.perses.grammar.ParserFacadeFactory;
 
 @RunWith(JUnit4.class)
 public class ReductionDriverTest {
@@ -31,7 +32,7 @@ public class ReductionDriverTest {
     cmd.compulsoryFlags.inputFile = "t.c";
     cmd.compulsoryFlags.testScript = "r.sh";
     try {
-      ReductionDriver.createConfiguration(cmd);
+      ReductionDriver.createConfiguration(cmd, ParserFacadeFactory.builderWithBuiltinLanguages().build());
     } catch (RuntimeException e) {
       // Keep this. This is just capture a bug when only "t.c" and "r.sh" were given without parent
       // folders.

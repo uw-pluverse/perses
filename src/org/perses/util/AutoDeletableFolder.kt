@@ -16,28 +16,23 @@
  */
 package org.perses.util
 
-import com.google.common.io.MoreFiles
-import com.google.common.io.RecursiveDeleteOption
 import java.io.Closeable
 import java.io.File
-import java.io.IOException
 
-class AutoDeletableFolder(private val folder: File) : Closeable {
-  fun toFile(): File {
-    return folder
-  }
+class AutoDeletableFolder(val file: File) : Closeable {
 
-  @Throws(IOException::class)
   override fun close() {
-    if (folder.exists()) {
-      MoreFiles.deleteRecursively(folder.toPath(), RecursiveDeleteOption.ALLOW_INSECURE)
+    if (file.exists()) {
+      file.deleteRecursively()
     }
   }
 
   init {
-    if (!folder.exists()) {
-      folder.mkdirs()
+    if (!file.exists()) {
+      check(file.mkdirs()) {
+        "fail to create folder $file"
+      }
     }
-    check(folder.isDirectory)
+    check(file.isDirectory)
   }
 }

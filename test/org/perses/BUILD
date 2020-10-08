@@ -16,12 +16,17 @@ java_library(
         "//test_data/java_programs:openjdk_testsuite",
         "//test_data/rust_programs:rust_testsuite",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         ":truth",
         "//src/org/perses/antlr:parse_tree_with_parser",
+        "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/grammar/c:c_parser_facade",
+        "//src/org/perses/grammar/c:language_kind",
         "//src/org/perses/grammar/java:java_parser_facade",
+        "//src/org/perses/grammar/java:language_kind",
+        "//src/org/perses/grammar/scala:language_kind",
         "//src/org/perses/grammar/scala:pnfscala_parser_facade",
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
@@ -64,7 +69,6 @@ golden_test(
 
 genrule(
     name = "get_perses_cmd_usage",
-    srcs = [],
     outs = ["perses_cmd_usage.txt"],
     cmd = "$(location //src/org/perses:perses) --help > \"$@\"",
     tools = [
@@ -76,6 +80,39 @@ golden_test(
     name = "golden_perses_cmd_usage",
     golden_file = "golden_perses_cmd_usage.txt",
     test_file = "perses_cmd_usage.txt",
+)
+
+genrule(
+    name = "get_perses_cmd_usage_verbosity_level",
+    srcs = [],
+    outs = ["perses_cmd_usage_list_verbosity_levels.txt"],
+    cmd = "$(location //src/org/perses:perses) --list-verbosity-levels > \"$@\"",
+    tools = [
+        "//src/org/perses",
+    ],
+)
+
+golden_test(
+    name = "golden_perses_cmd_usage_list_verbosity_levels",
+    golden_file = "golden_perses_cmd_usage_list_verbosity_levels.txt",
+    test_file = "perses_cmd_usage_list_verbosity_levels.txt",
+)
+
+genrule(
+    name = "get_perses_cmd_usage_print_version",
+    srcs = [],
+    outs = ["perses_cmd_usage_print_version.txt"],
+    cmd = "$(location //src/org/perses:perses) --version > \"$@\"",
+    tools = [
+        "//src/org/perses",
+    ],
+)
+
+sh_test(
+    name = "version_string_should_be_printed",
+    srcs = ["version_string_should_be_printed.sh"],
+    args = ["$(location perses_cmd_usage_print_version.txt)"],
+    data = ["perses_cmd_usage_print_version.txt"],
 )
 
 sh_test(

@@ -23,6 +23,7 @@ maven_install(
         "com.google.guava:guava:28.1-jre",
         "com.google.truth:truth:1.0.1",
         "com.googlecode.java-diff-utils:diffutils:1.3.0",
+        "com.pinterest:ktlint:0.39.0",
         "it.unimi.dsi:fastutil:8.3.0",
         "me.lemire.integercompression:JavaFastPFOR:0.1.9",
         "org.antlr:antlr4-runtime:4.8-1",
@@ -60,3 +61,62 @@ load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kotlin_repositories", "kt_reg
 kotlin_repositories()  # if you want the default. Otherwise see custom kotlinc distribution below
 
 kt_register_toolchains()  # to use the default toolchain, otherwise see toolchains below
+
+###################################################################################################
+#
+# The following is copied from
+#        https://github.com/bazelbuild/rules_go/.
+#
+###################################################################################################
+# buildifier is written in Go and hence needs rules_go to be built.
+# See https://github.com/bazelbuild/rules_go for the up to date setup instructions.
+http_archive(
+    name = "io_bazel_rules_go",
+    sha256 = "b725e6497741d7fc2d55fcc29a276627d10e43fa5d0bb692692890ae30d98d00",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.24.3/rules_go-v0.24.3.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.24.3/rules_go-v0.24.3.tar.gz",
+    ],
+)
+
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+
+go_rules_dependencies()
+
+go_register_toolchains()
+
+http_archive(
+    name = "bazel_gazelle",
+    sha256 = "72d339ff874a382f819aaea80669be049069f502d6c726a07759fdca99653c48",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.22.1/bazel-gazelle-v0.22.1.tar.gz",
+        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.22.1/bazel-gazelle-v0.22.1.tar.gz",
+    ],
+)
+
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+
+gazelle_dependencies()
+
+###################################################################################################
+#
+# The following is copied from
+#        https://github.com/bazelbuild/buildtools/tree/master/buildifier
+#
+###################################################################################################
+http_archive(
+    name = "com_google_protobuf",
+    sha256 = "1c744a6a1f2c901e68c5521bc275e22bdc66256eeb605c2781923365b7087e5f",
+    strip_prefix = "protobuf-3.13.0",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.13.0.zip"],
+)
+
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+
+protobuf_deps()
+
+http_archive(
+    name = "com_github_bazelbuild_buildtools",
+    strip_prefix = "buildtools-3.5.0",
+    url = "https://github.com/bazelbuild/buildtools/archive/3.5.0.zip",
+)

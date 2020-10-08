@@ -59,7 +59,7 @@ class ShellTest {
   @Test
   fun noCaptureOutput() {
     val cmd = "echo 'hello'"
-    val cmdOutput = Shell.run(cmd, captureOutput = false)
+    val cmdOutput = Shell.run(cmd, captureOutput = false, environment = Shell.CURRENT_ENV)
     assertThat(cmdOutput.stdout.hasLines()).isFalse()
     assertThat(cmdOutput.stderr.hasLines()).isFalse()
   }
@@ -67,8 +67,27 @@ class ShellTest {
   @Test
   fun captureOutput() {
     val cmd = "echo 'hello'"
-    val cmdOutput = Shell.run(cmd, captureOutput = true)
+    val cmdOutput = Shell.run(cmd, captureOutput = true, environment = Shell.CURRENT_ENV)
     assertThat(cmdOutput.stdout.hasLines()).isTrue()
     assertThat(cmdOutput.stderr.hasLines()).isFalse()
+  }
+
+  @Test
+  fun testSettingEnvironmentVariable() {
+    val script = File.createTempFile("temp", "test_script.sh")
+    script.deleteOnExit()
+    assertThat(script.setExecutable(true)).isTrue()
+    script.writeText(
+      """#!/usr/bin/env bash 
+      |echo "${"$"}{TEST_ENV_VALUE}"
+    """.trimMargin()
+    )
+
+    val cmdOutput = Shell.run(
+      script.toString(),
+      captureOutput = true,
+      environment = Shell.createNewEnvironmentVar("TEST_ENV_VALUE", "hello world")
+    )
+    assertThat(cmdOutput.stdout.combineLines().trim()).isEqualTo("hello world")
   }
 }

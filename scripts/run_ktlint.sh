@@ -9,10 +9,10 @@ if [[ ! -e "WORKSPACE" ]] ; then
   exit 1
 fi
 
-"ktlint" --format \
+bazel run "//:ktlint" -- --format \
     "src/**/*.kt" \
     "test/**/*.kt" \
-    "fuzzer/**/*.kt" \
-    "fuzzer_test/**/*.kt" \
     "antlropt/**/*.kt" \
-    "version/**/*.kt"
+    "version/**/*.kt" || exit 1
+
+echo "ktlint is done."

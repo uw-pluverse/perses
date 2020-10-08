@@ -27,8 +27,8 @@ import org.perses.TestUtility.createSparTreeFromFile
 import org.perses.TestUtility.createSparTreeFromString
 import org.perses.grammar.c.CParserFacade
 import org.perses.grammar.c.PnfCParserFacade
+import org.perses.grammar.scala.LanguageScala
 import org.perses.grammar.scala.PnfScalaParserFacade
-import org.perses.program.LanguageKind
 import org.perses.program.PersesToken
 import org.perses.program.TokenizedProgram
 import org.perses.tree.spar.SparTreeBuilder
@@ -53,7 +53,7 @@ class ParserFacadeTest {
       |        println("Hello world")
       |}
     """.trimMargin()
-    scalaProgram = createSparTreeFromString(scalaSourceCode, LanguageKind.SCALA).programSnapshot
+    scalaProgram = createSparTreeFromString(scalaSourceCode, LanguageScala).programSnapshot
   }
 
   @Test

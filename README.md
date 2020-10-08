@@ -55,7 +55,7 @@ bazel build antlropt/... src/... test/...
 To test, run
 
 ```
-bazel test test/...
+./scripts/presubmit.sh
 ```
 
 Note that, if you just want to run all the tests, you do not need to run the build command first.

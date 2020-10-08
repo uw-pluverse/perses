@@ -33,5 +33,8 @@ genrule(
 
 kt_jvm_library(
     name = "version",
-    srcs = ["Version.kt"],
+    srcs = [
+        "Version.kt",
+        "VersionHelper.kt",
+    ],
 )

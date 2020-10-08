@@ -17,12 +17,15 @@
 package org.perses.program
 
 import com.google.common.base.Joiner
+import com.google.common.collect.ImmutableList
 import com.google.common.io.Files
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
+import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
+import org.perses.grammar.c.LanguageC
 import java.io.File
 import java.nio.charset.StandardCharsets
 import java.util.stream.Collectors
@@ -45,7 +48,7 @@ class TokenizedProgramTest {
   fun testSourceCodeIsCached() {
     val filepath = "test_data/java_helloworld/t.java"
     val p = TestUtility.createTokenizedProgramFromFile(filepath)
-    Truth.assertThat(p.toSourceCodeInOrigFormatWithBlankLines())
+    assertThat(p.toSourceCodeInOrigFormatWithBlankLines())
       .isSameInstanceAs(p.toSourceCodeInOrigFormatWithBlankLines())
   }
 
@@ -58,15 +61,32 @@ class TokenizedProgramTest {
       |
       |int c = 0;
     """.trimMargin()
-    val program = TestUtility.createTokenizedProgramFromString(sourceCode, LanguageKind.C)
-    Truth.assertThat(program.toSourceCodeInOrigFormatWithBlankLines().trim())
+    val program = TestUtility.createTokenizedProgramFromString(sourceCode, LanguageC)
+    assertThat(program.toSourceCodeInOrigFormatWithBlankLines().trim())
       .isEqualTo(sourceCode.trim())
-    Truth.assertThat(program.toCompactSourceCode().trim()).isEqualTo(
+    assertThat(program.toCompactSourceCode().trim()).isEqualTo(
       """int a = 0;
       |int b = 0;
       |int c = 0;
       """.trimMargin()
     )
+  }
+
+  @Test
+  fun testFormattedPrintingShouldCrashOnSkewedTokens() {
+    val sourceCode = "int a, long_var;"
+    val program = TestUtility.createTokenizedProgramFromString(sourceCode, LanguageC)
+    val first = program.tokens[0]
+    val third = program.tokens[2]
+    val fourth = program.tokens[3]
+
+    val newProgram = TokenizedProgram(ImmutableList.of(first, fourth, third, fourth))
+    Assert.assertThrows(IllegalStateException::class.java) {
+      newProgram.toCompactSourceCode()
+    }
+    Assert.assertThrows(java.lang.IllegalStateException::class.java) {
+      newProgram.toSourceCodeInOrigFormatWithBlankLines()
+    }
   }
 
   private fun testTokenEquivalence(filepath: String) {
@@ -80,12 +100,12 @@ class TokenizedProgramTest {
     val text = Files.asCharSource(File(filepath), StandardCharsets.UTF_8)
       .read()
       .replace("\\s|\n".toRegex(), "")
-    Truth.assertThat(program).isEqualTo(text)
+    assertThat(program).isEqualTo(text)
   }
 
   private fun testCodeFormatRemains(filepath: String) {
     val program = TestUtility.createTokenizedProgramFromFile(filepath)
-    Truth.assertThat(program.toSourceCodeInOrigFormatWithBlankLines().trim())
+    assertThat(program.toSourceCodeInOrigFormatWithBlankLines().trim())
       .isEqualTo(Files.asCharSource(File(filepath), StandardCharsets.UTF_8).read().trim())
   }
 }

@@ -18,12 +18,24 @@
 package org.perses;
 
 import com.beust.jcommander.JCommander;
-import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
+import org.perses.grammar.ParserFacadeFactory;
+import org.perses.grammar.c.CParserFacade;
+import org.perses.grammar.c.PnfCParserFacade;
+import org.perses.grammar.go.PnfGoParserFacade;
+import org.perses.grammar.java.JavaParserFacade;
+import org.perses.grammar.rust.PnfRustParserFacade;
+import org.perses.grammar.scala.PnfScalaParserFacade;
+import org.perses.grammar.c.LanguageC;
+import org.perses.grammar.go.LanguageGo;
+import org.perses.grammar.java.LanguageJava;
+import org.perses.grammar.rust.LanguageRust;
+import org.perses.grammar.scala.LanguageScala;
 import org.perses.reduction.ReducerFactory;
 import org.perses.reduction.ReductionDriver;
 import org.perses.util.DefaultLoggingConfigurations;
-import org.perses.version.Version;
+import org.perses.version.VersionHelper;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 public class Main {
 
@@ -32,14 +44,22 @@ public class Main {
   }
 
   public static void main(String[] args) {
+    new Main(args).run();
+  }
 
-    final CommandOptions cmd = new CommandOptions(ReducerFactory.getDefaultReductionAlgName());
-    final JCommander commander = cmd.createJCommander(Main.class);
+  private final JCommander commander;
+  private final CommandOptions cmd;
+
+  public Main(String[] args) {
+    cmd = new CommandOptions(ReducerFactory.getDefaultReductionAlgName());
+    commander = cmd.createJCommander(Main.class);
     commander.parse(args);
     // This method should be called as early as possible, to avoid triggering initialization of
     // logger objects.
     DefaultLoggingConfigurations.configureLogManager(cmd.verbosityFlags.verbosity.toUpperCase());
+  }
 
+  public void run() {
     if (cmd.help) {
       commander.usage();
       return;
@@ -56,30 +76,36 @@ public class Main {
     }
 
     if (cmd.version) {
-      System.out.println(
-          String.format("perses version %s.%s", Version.getMAJOR_VERSION(), Version.getMINOR_VERSION()));
-      if (!Strings.isNullOrEmpty(Version.getCOMMIT_HASH().trim())) {
-        System.out.println("Git Version: " + Version.getCOMMIT_HASH());
-      }
-      if (!Strings.isNullOrEmpty(Version.getBRANCH().trim())) {
-        System.out.println("Git Branch: " + Version.getBRANCH());
-      }
-      if (!Strings.isNullOrEmpty(Version.getSTATUS().trim())) {
-        System.out.println("Git Status: " + Version.getSTATUS());
-      }
-      System.out.println("Built on " + Version.getBUILD_TIME());
+      VersionHelper.printVersionInfo("perses", System.out);
       return;
     }
-
     cmd.validate();
 
-    Preconditions.checkState(
+    checkArgument(
         ReducerFactory.isValidReducerName(cmd.algorithmControlFlags.getReductionAlgorithmName()),
         "Invalid reduction algorithm %s",
         cmd.algorithmControlFlags.getReductionAlgorithmName());
 
-    try (ReductionDriver driver = new ReductionDriver(cmd)) {
+    // TODO: create language registry here.
+    final ParserFacadeFactory facadeFactory = createParserFacadeFactory();
+    try (ReductionDriver driver = new ReductionDriver(cmd, facadeFactory)) {
       driver.reduce();
     }
+  }
+
+  private final ParserFacadeFactory createParserFacadeFactory() {
+    final ParserFacadeFactory.Builder builder = new ParserFacadeFactory.Builder();
+    fillParserFacadeFactoryBuilder(builder);
+    return builder.build();
+  }
+
+  protected void fillParserFacadeFactoryBuilder(ParserFacadeFactory.Builder builder) {
+    builder.add(LanguageGo.INSTANCE, PnfGoParserFacade::new);
+    builder.add(LanguageRust.INSTANCE, PnfRustParserFacade::new);
+    builder.add(LanguageScala.INSTANCE, PnfScalaParserFacade::new);
+    builder.add(LanguageJava.INSTANCE, JavaParserFacade::new);
+    builder.add(
+        LanguageC.INSTANCE,
+        cmd.algorithmControlFlags.useOptCParser ? CParserFacade::new : PnfCParserFacade::new);
   }
 }

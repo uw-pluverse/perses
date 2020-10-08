@@ -1,8 +1,5 @@
 package(default_visibility = [
-    "//fuzzer/org/perses:__subpackages__",
-    "//fuzzer_test/org/perses:__subpackages__",
-    "//src/org/perses:__subpackages__",
-    "//test/org/perses:__subpackages__",
+    "//visibility:public",
 ])
 
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
@@ -20,9 +17,11 @@ kt_jvm_library(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "language_kind",
-    srcs = ["LanguageKind.java"],
+    srcs = [
+        "LanguageKind.kt",
+    ],
     deps = [
         ":enum_format_control",
         "@maven//:com_google_guava_guava",
@@ -34,14 +33,14 @@ java_library(
     srcs = ["EnumFormatControl.java"],
 )
 
-java_library(
+kt_jvm_library(
     name = "program",
     srcs = [
-        "AbstractLazySourceCode.java",
-        "PersesToken.java",
-        "PersesTokenFactory.java",
-        "TokenizedProgram.java",
-        "TokenizedProgramFactory.java",
+        "AbstractLazySourceCode.kt",
+        "PersesToken.kt",
+        "PersesTokenFactory.kt",
+        "TokenizedProgram.kt",
+        "TokenizedProgramFactory.kt",
     ],
     exports = [
         "enum_format_control",
@@ -50,7 +49,7 @@ java_library(
     deps = [
         ":enum_format_control",
         ":language_kind",
-        "//src/org/perses/util",
+        "//src/org/perses/util:fast_string_builder",
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",
         "@maven//:it_unimi_dsi_fastutil",

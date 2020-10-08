@@ -20,6 +20,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.google.common.truth.Truth;
 import org.perses.CommandOptions;
+import org.perses.grammar.ParserFacadeFactory;
 import org.perses.listener.ProgressMonitorForNodeReducer;
 import org.perses.util.AutoDeletableFolder;
 
@@ -38,9 +39,9 @@ public abstract class AbstractReducerFunctionalTest {
       String expected) {
     try (AutoDeletableFolder folder = new AutoDeletableFolder(Files.createTempDir())) {
       CommandOptions cmd = new CommandOptions("");
-      File tempSourceFile = new File(folder.toFile(), sourceFile);
+      File tempSourceFile = new File(folder.getFile(), sourceFile);
       Files.copy(new File(reductionFolder, sourceFile), tempSourceFile);
-      File tempTestScript = new File(folder.toFile(), testScript);
+      File tempTestScript = new File(folder.getFile(), testScript);
       Files.copy(new File(reductionFolder, testScript), tempTestScript);
       cmd.compulsoryFlags.inputFile = tempSourceFile.getAbsolutePath();
       cmd.compulsoryFlags.testScript = tempTestScript.getAbsolutePath();
@@ -52,7 +53,9 @@ public abstract class AbstractReducerFunctionalTest {
 
       ProgressMonitorForNodeReducer progressMonitor =
           ProgressMonitorForNodeReducer.createForSystemOut();
-      try (ReductionDriver driver = new ReductionDriver(cmd, progressMonitor)) {
+      try (ReductionDriver driver =
+          new ReductionDriver(
+              cmd, ParserFacadeFactory.builderWithBuiltinLanguages().build(), progressMonitor)) {
         final File bestFile = driver.getConfiguration().getBestResultFile();
         if (bestFile.isFile()) {
           bestFile.delete();
@@ -94,9 +97,7 @@ public abstract class AbstractReducerFunctionalTest {
   }
 
   protected void runScalaTestSubject(
-      String reductionFolder,
-      ReducerAnnotation algorithmType,
-      String expected) {
+      String reductionFolder, ReducerAnnotation algorithmType, String expected) {
     test(reductionFolder, "r.sh", "t.sc", algorithmType, t -> {}, expected);
   }
 }

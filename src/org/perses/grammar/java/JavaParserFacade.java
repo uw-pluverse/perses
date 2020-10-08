@@ -21,7 +21,6 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.perses.antlr.ParseTreeWithParser;
 import org.perses.grammar.AbstractDefaultParserFacade;
-import org.perses.program.LanguageKind;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,7 +31,7 @@ import java.io.IOException;
 public class JavaParserFacade extends AbstractDefaultParserFacade<OptJava8Lexer, OptJava8Parser> {
 
   public JavaParserFacade() {
-    super(LanguageKind.JAVA, createCombinedAntlrGrammar("OptJava8.g4", JavaParserFacade.class));
+    super(LanguageJava.INSTANCE, createCombinedAntlrGrammar("OptJava8.g4", JavaParserFacade.class));
   }
 
   @Override

@@ -32,6 +32,8 @@ def reduce(
         enable_tree_slicer = False
     thread_count = thread_count or 1  # for determinism
     perses_bin = "//src/org/perses:perses"
+    stdout_file = "%s.stdout.txt" % name
+
     args = [
         "$(location %s)" % perses_bin,
         "--test-script $(location %s)" % test_script,
@@ -46,8 +48,11 @@ def reduce(
         "--edit-caching %s" % ("true" if enable_edit_caching else "false"),
         "--enable-token-slicer %s" % ("true" if enable_token_slicer else "false"),
         "--enable-tree-slicer %s" % ("true" if enable_tree_slicer else "false"),
+        "&>",
+        "$(location %s)" % stdout_file,
     ]
-    outs = [result_file, statistics_file, progress_dump_file]
+
+    outs = [result_file, statistics_file, progress_dump_file, stdout_file]
     if (code_format):
         args.append("--code-format %s" % code_format)
     if (verbosity):

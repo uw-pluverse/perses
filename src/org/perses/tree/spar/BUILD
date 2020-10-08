@@ -1,8 +1,5 @@
 package(default_visibility = [
-    "//fuzzer/org/perses:__subpackages__",
-    "//fuzzer_test/org/perses:__subpackages__",
-    "//src/org/perses:__subpackages__",
-    "//test/org/perses:__subpackages__",
+    "//visibility:public",
 ])
 
 # TODO: need to split this target. It is too big. For example, tree_node, tree_edit_actions, tree_and_tree_edit

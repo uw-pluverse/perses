@@ -24,9 +24,7 @@ import java.io.File
  * loads the content of the passed-in file. So when you create an object of this class, the file
  * must already exist.
  */
-class SourceFile(file: File) : AbstractSourceFile(file) {
-
-  val languageKind: LanguageKind = LanguageKind.computeLanguageKind(file)
+class SourceFile(file: File, val languageKind: LanguageKind) : AbstractSourceFile(file) {
 
   override fun toString(): String {
     return MoreObjects.toStringHelper(this)

@@ -8,6 +8,7 @@ load(
     "antlr_codegen_lexer",
     "antlr_codegen_parser",
 )
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
 
 pnf_convert(
     name = "normalize_go_to_pnf",
@@ -71,6 +72,7 @@ java_library(
     srcs = ["PnfGoParserFacade.java"],
     deps = [
         ":go_lexer",
+        ":languge_kind",
         ":orig_go_parser",
         ":pnf_go_parser",
         "//src/org/perses/antlr:parse_tree_with_parser",
@@ -78,5 +80,13 @@ java_library(
         "//src/org/perses/program:language_kind",
         "@maven//:com_google_flogger_flogger",
         "@maven//:org_antlr_antlr4_runtime",
+    ],
+)
+
+kt_jvm_library(
+    name = "languge_kind",
+    srcs = ["LanguageGo.kt"],
+    deps = [
+        "//src/org/perses/program:language_kind",
     ],
 )

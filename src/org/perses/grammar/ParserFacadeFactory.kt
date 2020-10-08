@@ -16,39 +16,74 @@
  */
 package org.perses.grammar
 
-import org.perses.grammar.c.CParserFacade
+import com.google.common.collect.ImmutableMap
+import com.google.common.io.Files
+import org.perses.grammar.c.LanguageC
 import org.perses.grammar.c.PnfCParserFacade
+import org.perses.grammar.go.LanguageGo
 import org.perses.grammar.go.PnfGoParserFacade
 import org.perses.grammar.java.JavaParserFacade
+import org.perses.grammar.java.LanguageJava
+import org.perses.grammar.rust.LanguageRust
 import org.perses.grammar.rust.PnfRustParserFacade
+import org.perses.grammar.scala.LanguageScala
 import org.perses.grammar.scala.PnfScalaParserFacade
 import org.perses.program.LanguageKind
+import java.io.File
 
 /** Creates a parser facade, based on the type of language kind.  */
-class ParserFacadeFactory private constructor(private val useOptCParser: Boolean) {
+class ParserFacadeFactory private constructor(
+  private val language2FacadeMap: ImmutableMap<LanguageKind, () -> AbstractParserFacade>
+) {
 
   fun createParserFacade(languageKind: LanguageKind): AbstractParserFacade {
-    val facade = when (languageKind) {
-      LanguageKind.C -> if (useOptCParser) CParserFacade() else PnfCParserFacade()
-      LanguageKind.JAVA -> JavaParserFacade()
-      LanguageKind.GO -> PnfGoParserFacade()
-      LanguageKind.SCALA -> PnfScalaParserFacade()
-      LanguageKind.RUST -> PnfRustParserFacade()
-      else -> throw RuntimeException("The language $languageKind is not supported.")
+    require(language2FacadeMap.contains(languageKind)) {
+      "Unrecognized language kind $languageKind"
     }
-    check(facade.language == languageKind)
-    return facade
+    return language2FacadeMap[languageKind]!!.invoke().also {
+      check(it.language == languageKind) {
+        "${it.language} != $languageKind"
+      }
+    }
+  }
+
+  private val fileExtToLanguageMap = language2FacadeMap.keys
+    .asSequence()
+    .flatMap { language -> language.extensions.asSequence().map { it to language } }
+    .fold(
+      ImmutableMap.builder<String, LanguageKind>(),
+      { builder, pair -> builder.put(pair.first, pair.second) }
+    )
+    .build()
+
+  fun computeLanguageKind(file: File): LanguageKind? {
+    val ext = Files.getFileExtension(file.name)
+    return fileExtToLanguageMap.get(ext)
   }
 
   companion object {
-    @JvmStatic
-    fun createForPnfC(): ParserFacadeFactory {
-      return ParserFacadeFactory(false)
-    }
 
     @JvmStatic
-    fun createForOptC(): ParserFacadeFactory {
-      return ParserFacadeFactory(true)
+    fun builderWithBuiltinLanguages(): Builder {
+      val builder = Builder()
+      builder.add(LanguageGo) { PnfGoParserFacade() }
+      builder.add(LanguageRust) { PnfRustParserFacade() }
+      builder.add(LanguageScala) { PnfScalaParserFacade() }
+      builder.add(LanguageJava) { JavaParserFacade() }
+      builder.add(LanguageC) { PnfCParserFacade() }
+      return builder
     }
+  }
+
+  class Builder {
+    private val language2FacadeMap =
+      ImmutableMap.builder<LanguageKind, () -> AbstractParserFacade>()
+
+    fun add(language: LanguageKind, facadeCreator: () -> AbstractParserFacade): Builder {
+      language2FacadeMap.put(language, facadeCreator)
+      return this
+    }
+
+    fun build() = ParserFacadeFactory(language2FacadeMap.build())
   }
 }

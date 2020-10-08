@@ -25,6 +25,7 @@ import com.google.common.io.MoreFiles
 import org.antlr.v4.runtime.tree.ParseTree
 import org.perses.CommandOptions
 import org.perses.grammar.AbstractParserFacade
+import org.perses.grammar.ParserFacadeFactory
 import org.perses.listener.LoggingListener
 import org.perses.listener.ProgressMonitorForNodeReducer
 import org.perses.listener.ReductionProfileListener
@@ -58,10 +59,11 @@ import java.nio.charset.StandardCharsets
  */
 class ReductionDriver(
   private val cmd: CommandOptions,
+  private val parserFacadeFactory: ParserFacadeFactory,
   vararg extraListeners: AbstractReductionListener
 ) : Closeable {
 
-  val configuration = createConfiguration(cmd)
+  val configuration = createConfiguration(cmd, parserFacadeFactory)
 
   private val executorService = TestScriptExecutorService(
     configuration.tempRootFolder,
@@ -186,7 +188,7 @@ class ReductionDriver(
       "Calling C-Reduce to further refine the result. #tokens=%s",
       origTokenCount
     )
-    val creduceCmd = cmd.outputRefiningFlags.creduceCmd
+    val creduceCmd = cmd.outputRefiningFlags.getCreduceCmd()
     val reductionFolderName = "creduce_at_the_end_" +
       TimeUtil.formatDateForFileName(System.currentTimeMillis())
     val reductionFolder = executorService.createNamedReductionFolder(reductionFolderName)
@@ -196,7 +198,8 @@ class ReductionDriver(
     val cmdOutput = Shell.run(
       constructFullCreduceCommand(creduceCmd, reductionFolder),
       reductionFolder.folder,
-      false
+      captureOutput = false,
+      environment = Shell.CURRENT_ENV
     )
     if (cmdOutput.exitCode != 0) {
       val tempDir = copyFilesToTempDir(reductionFolder.folder)
@@ -213,7 +216,9 @@ class ReductionDriver(
         origTokenCount, tokenCount
       )
       // FIXME: this may crash, as c-reduce can produce programs unparseable for Perses.
-      tree = createSparTree(SourceFile(configuration.bestResultFile))
+      tree = createSparTree(
+        SourceFile(configuration.bestResultFile, configuration.parserFacade.language)
+      )
     }
   }
 
@@ -348,7 +353,12 @@ class ReductionDriver(
     }
     val cmd = formatCmd + " " + bestFile.name
     try {
-      Shell.run(cmd, bestFile.absoluteFile.parentFile, true)
+      Shell.run(
+        cmd,
+        bestFile.absoluteFile.parentFile,
+        captureOutput = true,
+        environment = Shell.CURRENT_ENV
+      )
     } catch (e: Throwable) {
       logger.atSevere().withCause(e).log("failed to execute the format command '%s'", cmd)
     }
@@ -440,7 +450,7 @@ class ReductionDriver(
 
   fun createMainReducer(): AbstractReducer {
     val algorithmMeta = ReducerFactory.getReductionAlgorithm(
-      cmd.algorithmControlFlags.reductionAlgorithmName
+      cmd.algorithmControlFlags.getReductionAlgorithmName()
     )
     val algorithm = createReducer(algorithmMeta)
     logger.atInfo().log(
@@ -479,8 +489,14 @@ class ReductionDriver(
 
     @JvmStatic
     @VisibleForTesting
-    fun createConfiguration(cmd: CommandOptions): ReductionConfiguration {
-      val sourceFile = SourceFile(cmd.compulsoryFlags.sourceFile.absoluteFile)
+    fun createConfiguration(
+      cmd: CommandOptions,
+      parserFacadeFactory: ParserFacadeFactory
+    ): ReductionConfiguration {
+      val sourceFile = SourceFile(
+        cmd.compulsoryFlags.getSourceFile().absoluteFile,
+        parserFacadeFactory.computeLanguageKind(cmd.compulsoryFlags.getSourceFile().absoluteFile)!!
+      )
       val testScript = ScriptFile(cmd.compulsoryFlags.getTestScript().absoluteFile)
 
       require(sourceFile.parentFile.absolutePath == testScript.parentFile.absolutePath) {
@@ -496,16 +512,17 @@ class ReductionDriver(
         if (Strings.isNullOrEmpty(cmd.profilingFlags.progressDumpFile)) null
         else File(cmd.profilingFlags.progressDumpFile)
 
-      val programFormatControl =
-        if (cmd.reductionControlFlags.codeFormat != null) {
-          check(sourceFile.languageKind.isCodeFormatAllowed(cmd.reductionControlFlags.codeFormat)) {
-            cmd.reductionControlFlags.codeFormat.toString() +
-              " is not allowed for language " + sourceFile.languageKind
+      val programFormatControl = cmd.reductionControlFlags.codeFormat.let { codeFormat ->
+        if (codeFormat != null) {
+          check(sourceFile.languageKind.isCodeFormatAllowed(codeFormat)) {
+            "$codeFormat is not allowed for language ${sourceFile.languageKind}"
           }
-          cmd.reductionControlFlags.codeFormat
+          codeFormat
         } else {
           sourceFile.languageKind.defaultCodeFormatControl
         }
+      }
+
       return ReductionConfiguration(
         workingFolder = workingDirectory,
         testScript = testScript,
@@ -517,8 +534,8 @@ class ReductionDriver(
         fixpointReduction = cmd.reductionControlFlags.fixpoint,
         enableTestScriptExecutionCaching = cmd.cacheControlFlags.queryCaching,
         useRealDeltaDebugger = cmd.algorithmControlFlags.useRealDeltaDebugger,
-        numOfReductionThreads = cmd.reductionControlFlags.numOfThreads,
-        useOptCParser = cmd.algorithmControlFlags.useOptCParser
+        numOfReductionThreads = cmd.reductionControlFlags.getNumOfThreads(),
+        parserFacadeFactory = parserFacadeFactory
       )
     }
 
@@ -557,12 +574,12 @@ class ReductionDriver(
     }
 
     private fun getOutputFile(cmd: CommandOptions): File {
-      val sourceFile = cmd.compulsoryFlags.sourceFile
+      val sourceFile = cmd.compulsoryFlags.getSourceFile()
       if (cmd.resultOutputFlags.inPlaceReduction) {
         return sourceFile
       }
       return if (Strings.isNullOrEmpty(cmd.resultOutputFlags.outputFile)) {
-        val reductionAlgorithm = cmd.algorithmControlFlags.reductionAlgorithmName
+        val reductionAlgorithm = cmd.algorithmControlFlags.getReductionAlgorithmName()
         File(
           sourceFile.parent, reductionAlgorithm + "_reduced_" + sourceFile.name
         )

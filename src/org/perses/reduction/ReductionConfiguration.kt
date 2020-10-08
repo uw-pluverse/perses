@@ -39,7 +39,7 @@ class ReductionConfiguration(
   val workingFolder: File,
   val testScript: ScriptFile,
   val fileToReduce: SourceFile,
-  val bestResultFile: File,
+  val bestResultFile: File, // TODO: convert this to SourceFile.
   private val statisticsFile: File?,
   private val progressDumpFile: File?,
   val programFormatControl: EnumFormatControl,
@@ -47,7 +47,7 @@ class ReductionConfiguration(
   val enableTestScriptExecutionCaching: Boolean,
   val useRealDeltaDebugger: Boolean,
   val numOfReductionThreads: Int,
-  useOptCParser: Boolean = false
+  parserFacadeFactory: ParserFacadeFactory
 ) {
   /** The parser facade.  */
   val parserFacade: AbstractParserFacade
@@ -63,6 +63,7 @@ class ReductionConfiguration(
     return Optional.ofNullable(progressDumpFile)
   }
 
+  // TODO: convert the return type to File?
   val testScriptStatisticsFile: Optional<File>
     get() = if (statisticsFile == null) {
       Optional.empty()
@@ -79,12 +80,8 @@ class ReductionConfiguration(
 
   fun dumpConfiguration(): String {
     val builder = StringBuilder()
-    try {
-      for (field in ReductionConfiguration::class.java.declaredFields) {
-        builder.append(field.name).append('=').append(field[this]).append('\n')
-      }
-    } catch (e: IllegalAccessException) {
-      throw AssertionError(e)
+    for (field in ReductionConfiguration::class.java.declaredFields) {
+      builder.append(field.name).append('=').append(field[this]).append('\n')
     }
     return builder.toString()
   }
@@ -123,9 +120,7 @@ class ReductionConfiguration(
       "The language ${fileToReduce.languageKind} requires format sensitivity, " +
         "but the reducer is not told to keep its original format. $programFormatControl"
     }
-    val factory = if (useOptCParser)
-      ParserFacadeFactory.createForOptC() else ParserFacadeFactory.createForPnfC()
-    parserFacade = factory.createParserFacade(this.fileToReduce.languageKind)
+    parserFacade = parserFacadeFactory.createParserFacade(this.fileToReduce.languageKind)
 
     tempRootFolder = File(
       workingFolder,

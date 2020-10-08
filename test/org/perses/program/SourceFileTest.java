@@ -21,6 +21,7 @@ import com.google.common.truth.Truth;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.perses.grammar.c.LanguageC;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,11 +34,11 @@ public class SourceFileTest {
   @Test
   public void testSourceFile() throws IOException {
     String pathname = "test_data/delta_1/t.c";
-    SourceFile source = new SourceFile(new File(pathname));
+    SourceFile source = new SourceFile(new File(pathname), org.perses.grammar.c.LanguageC.INSTANCE);
     Truth.assertThat(source.getBaseName()).isEqualTo("t.c");
     Truth.assertThat(source.getFileContent())
         .isEqualTo(MoreFiles.asCharSource(Paths.get(pathname), StandardCharsets.UTF_8).read());
-    Truth.assertThat(source.getLanguageKind()).isEqualTo(LanguageKind.C);
+    Truth.assertThat(source.getLanguageKind()).isEqualTo(LanguageC.INSTANCE);
     Truth.assertThat(source.getFile()).isEqualTo(new File(pathname));
   }
 }

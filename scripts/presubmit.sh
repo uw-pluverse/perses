@@ -9,21 +9,17 @@ if [[ ! -e "WORKSPACE" ]] ; then
   exit 1
 fi
 
-./scripts/check_copyright.sh
+./scripts/check_prerequisite.sh || exit 1
 
-./scripts/format_bazel_files.sh
+./scripts/check_copyright.sh || exit 1
 
-./scripts/run_ktlint.sh
+./scripts/format_bazel_files.sh || exit 1
+
+./scripts/run_ktlint.sh || exit 1
 
 bazel test \
     //test/... \
     //copyright/... \
-    //fuzzer_test/... \
-    //version/... \
-    //benchmark/toys/delta_1/... \
-    //benchmark/toys/go_print/... \
-    //benchmark/toys/parentheses/... \
-    //benchmark/toys/rs_print/... \
-    //benchmark/toys/scala_print/...
+    //version/... 
 
 "$@"

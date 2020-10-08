@@ -25,10 +25,14 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.perses.antlr.ParseTreeWithParser;
 import org.perses.grammar.AbstractParserFacade;
+import org.perses.grammar.ParserFacadeFactory;
 import org.perses.grammar.c.CParserFacade;
 import org.perses.grammar.java.JavaParserFacade;
 import org.perses.grammar.scala.PnfScalaParserFacade;
+import org.perses.grammar.c.LanguageC;
+import org.perses.grammar.java.LanguageJava;
 import org.perses.program.LanguageKind;
+import org.perses.grammar.scala.LanguageScala;
 import org.perses.program.SourceFile;
 import org.perses.program.TokenizedProgram;
 import org.perses.program.TokenizedProgramFactory;
@@ -209,6 +213,13 @@ public final class TestUtility {
   private static final File RUST_PROGRAM_FOLDER =
       new File(THIRD_PARTY_TEST_PROGRAMS_ROOT, "rust_programs/rust_testsuite");
 
+  private static ParserFacadeFactory parserFacadeFactory =
+      new ParserFacadeFactory.Builder()
+          .add(LanguageC.INSTANCE, CParserFacade::new)
+          .add(LanguageScala.INSTANCE, PnfScalaParserFacade::new)
+          .add(LanguageJava.INSTANCE, JavaParserFacade::new)
+          .build();
+
   private TestUtility() {}
 
   public static ImmutableList<File> getGccTestFiles() {
@@ -245,16 +256,7 @@ public final class TestUtility {
   }
 
   public static AbstractParserFacade getFacade(LanguageKind languageKind) {
-    switch (languageKind) {
-      case C:
-        // Use the existing, stable parser for test stability.
-        return new CParserFacade();
-      case JAVA:
-        return new JavaParserFacade();
-      case SCALA:
-        return new PnfScalaParserFacade();
-    }
-    throw new RuntimeException("Cannot reach here. " + languageKind);
+    return parserFacadeFactory.createParserFacade(languageKind);
   }
 
   public static ParseTreeWithParser parseFile(String file) throws IOException {
@@ -262,7 +264,8 @@ public final class TestUtility {
   }
 
   public static ParseTreeWithParser parseFile(File file) throws IOException {
-    final SourceFile sourceFile = new SourceFile(file);
+    final SourceFile sourceFile =
+        new SourceFile(file, parserFacadeFactory.computeLanguageKind(file));
     final AbstractParserFacade facade = getFacade(sourceFile.getLanguageKind());
     return facade.parseFile(file);
   }
@@ -310,7 +313,8 @@ public final class TestUtility {
 
   public static SparTree createSparTreeFromFile(File file, TokenizedProgramFactory factory)
       throws IOException {
-    final SourceFile sourceFile = new SourceFile(file);
+    final SourceFile sourceFile =
+        new SourceFile(file, parserFacadeFactory.computeLanguageKind(file));
     final AbstractParserFacade facade = getFacade(sourceFile.getLanguageKind());
     final ParseTree parseTree = facade.parseFile(file).getTree();
     final SparTree tree = new SparTreeBuilder(facade.getRuleHierarchy(), factory).build(parseTree);

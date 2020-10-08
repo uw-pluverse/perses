@@ -21,25 +21,25 @@ import com.google.common.io.Files
 import java.io.File
 import java.nio.charset.StandardCharsets
 
-data class ShellOutputLines(val content: ImmutableList<String>) {
+data class ShellOutputLines(val lines: ImmutableList<String>) {
 
   /**
    * Returns true if there is a line contains the string.
    */
-  fun anyLineContains(needle: String) = content.asSequence().any {
+  fun anyLineContains(needle: String) = lines.asSequence().any {
     it.contains(needle)
   }
 
-  fun hasLines() = !content.isEmpty()
+  fun hasLines() = !lines.isEmpty()
 
   fun combineLines(): String {
     val builder = StringBuilder()
-    content.forEach { builder.append(it).append('\n') }
+    lines.forEach { builder.append(it).append('\n') }
     return builder.toString()
   }
 
   fun writeToFile(file: File) {
-    Files.asCharSink(file, StandardCharsets.UTF_8).writeLines(content, "\n")
+    Files.asCharSink(file, StandardCharsets.UTF_8).writeLines(lines, "\n")
   }
 
   companion object {

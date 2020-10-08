@@ -47,7 +47,10 @@ public class DotGraph<T> {
     File dotFile = new File(file.getParentFile(), file.getName() + ".dot");
     Files.write(dot, dotFile, Charsets.UTF_8);
     Shell.CmdOutput output =
-        Shell.run("dot -Tpdf " + dotFile.getAbsolutePath() + " -o " + file.getAbsolutePath(), true);
+        Shell.run(
+            "dot -Tpdf " + dotFile.getAbsolutePath() + " -o " + file.getAbsolutePath(),
+            true,
+            Shell.getCURRENT_ENV());
     System.out.println(output.getStderr());
   }
 

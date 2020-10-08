@@ -1,8 +1,5 @@
 package(default_visibility = [
-    "//fuzzer/org/perses:__subpackages__",
-    "//fuzzer_test/org/perses:__subpackages__",
-    "//src/org/perses/grammar:__subpackages__",
-    "//test/org/perses:__subpackages__",
+    "//visibility:public",
 ])
 
 load("//antlropt/org/perses/antlr/pnf:pnf.bzl", "pnf_convert")
@@ -10,6 +7,7 @@ load(
     "//src/org/perses/grammar:antlr_util.bzl",
     "antlr_codegen_combined",
 )
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
 
 antlr_codegen_combined(
     name = "opt_c_grammar",
@@ -31,6 +29,7 @@ java_library(
     name = "c_parser_facade",
     srcs = ["CParserFacade.java"],
     deps = [
+        ":language_kind",
         ":opt_c_grammar",
         ":orig_c_grammar",
         "//src/org/perses/antlr:parse_tree_with_parser",
@@ -60,11 +59,20 @@ java_library(
     name = "pnfc_parser_facade",
     srcs = ["PnfCParserFacade.java"],
     deps = [
+        ":language_kind",
         ":pnf_c_grammar",
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/program:language_kind",
         "@maven//:com_google_flogger_flogger",
         "@maven//:org_antlr_antlr4_runtime",
+    ],
+)
+
+kt_jvm_library(
+    name = "language_kind",
+    srcs = ["LanguageC.kt"],
+    deps = [
+        "//src/org/perses/program:language_kind",
     ],
 )
