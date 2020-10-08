@@ -18,13 +18,9 @@ kt_jvm_library(
     ],
 )
 
-java_binary(
-    name = "perses",
+java_library(
+    name = "perses_lib",
     srcs = ["Main.java"],
-    main_class = "org.perses.Main",
-    runtime_deps = [
-        "@maven//:com_google_flogger_flogger_system_backend",
-    ],
     deps = [
         ":command_options",
         "//src/org/perses/grammar:facade_factory",
@@ -45,6 +41,36 @@ java_binary(
         "//src/org/perses/util:default_logging_configurations",
         "//version/org/perses/version",
         "@maven//:com_beust_jcommander",
+        "@maven//:com_google_guava_guava",
+        "@maven//:org_antlr_antlr4",
+    ],
+)
+
+java_binary(
+    name = "perses",
+    main_class = "org.perses.Main",
+    runtime_deps = [
+        ":command_options",
+        ":perses_lib",
+        "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar/c:c_parser_facade",
+        "//src/org/perses/grammar/c:language_kind",
+        "//src/org/perses/grammar/c:pnfc_parser_facade",
+        "//src/org/perses/grammar/go:languge_kind",
+        "//src/org/perses/grammar/go:pnfgo_parser_facade",
+        "//src/org/perses/grammar/java:java_parser_facade",
+        "//src/org/perses/grammar/java:language_kind",
+        "//src/org/perses/grammar/rust:language_kind",
+        "//src/org/perses/grammar/rust:pnfrust_parser_facade",
+        "//src/org/perses/grammar/scala:language_kind",
+        "//src/org/perses/grammar/scala:pnfscala_parser_facade",
+        "//src/org/perses/program:language_kind",
+        "//src/org/perses/reduction:reducer_factory",
+        "//src/org/perses/reduction:reduction_driver",
+        "//src/org/perses/util:default_logging_configurations",
+        "//version/org/perses/version",
+        "@maven//:com_beust_jcommander",
+        "@maven//:com_google_flogger_flogger_system_backend",
         "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",
     ],
