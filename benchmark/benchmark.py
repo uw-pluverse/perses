@@ -18,6 +18,8 @@ def parse_arguments():
     parser.add_argument("-i", "--iterations", type=int, default=1, help="Run bench set for the number of times specified")
     parser.add_argument("--silent", action="store_true", default=False, help="Writes nothing to stdout")
     parser.add_argument("-ss", "--show-subprocess", action="store_true", default=False, help="Show all pipe stdout and stderr from reducers")
+    
+    parser.add_argument("-r", "--reducers", nargs='+', default=[], help="Specify reducers for benchmarking.Options: perses, hdd, perses-fix, hdd-fix, creduce, chisel, perses_no_caching, perses_edit_query")
     return parser.parse_args()
 
 @dataclass(frozen=True)
@@ -27,6 +29,7 @@ class Parameter:
     iterations: int
     silent: bool
     show_subprocess: bool
+    reducers: List[str]
 
     def validate(self):
         # validate parameters
@@ -36,26 +39,36 @@ class Parameter:
         for bench_name in self.benchmark_target:
             folder_path = os.path.join(__location__, bench_name)
             if not os.path.exists(folder_path):
-                raise Exception('Error: Folder path not found: {}'.format(folder_path))
-        #iterations
+                raise Exception(f'Error: Folder path not found: {folder_path}')
+        # iterations
         if self.iterations < 1:
             raise Exception('Error: Invalid ITERATIONS value')
+        # reducers
+        if self.reducers == []:
+            raise Exception('Error: No reducers')
+        if len(self.reducers) != len(set(self.reducers)):
+            raise Exception('Error: Duplicated reducers')
+        for reducer in self.reducers:
+            if reducer not in REDUCERS:
+                raise Exception(f'Error: Unknown reducer: {reducer}')
 
+INSTALLS = {
+        "perses": os.path.join(__location__, "binaries", "update_perses.sh"),
+        "creduce": os.path.join(__location__, "binaries", "update_creduce.sh"),
+        "chisel": os.path.join(__location__, "binaries", "update_chisel.sh"),
+}
 
-INSTALLS = [
-    ("perses", os.path.join(__location__, "binaries", "update_perses.sh")),
-    ("creduce", os.path.join(__location__, "binaries", "update_creduce.sh")),
-    ("chisel", os.path.join(__location__, "binaries", "update_chisel.sh")),
-]
+REDUCERS = {
+        "perses": os.path.join(__location__, "binaries", "run_perses.sh"),
+        "hdd": os.path.join(__location__, "binaries", "run_hdd.sh"),
+        "perses-fix": os.path.join(__location__, "binaries", "run_perses_fix.sh"),
+        "hdd-fix": os.path.join(__location__, "binaries", "run_hdd_fix.sh"),
+        "creduce": os.path.join(__location__, "binaries", "run_creduce.sh"),
+        "chisel": os.path.join(__location__, "binaries", "run_chisel.sh"),
 
-REDUCERS = [
-    ("perses", os.path.join(__location__, "binaries", "run_perses.sh")),
-    ("hdd", os.path.join(__location__, "binaries", "run_hdd.sh")),
-    ("perses-fix", os.path.join(__location__, "binaries", "run_perses_fix.sh")),
-    ("hdd-fix", os.path.join(__location__, "binaries", "run_hdd_fix.sh")),
-    ("creduce", os.path.join(__location__, "binaries", "run_creduce.sh")),
-    ("chisel", os.path.join(__location__, "binaries", "run_chisel.sh")),
-]
+        "perses_no_caching": os.path.join(__location__, "binaries", "run_perses_no_caching.sh"),
+        "perses_edit_query": os.path.join(__location__, "binaries", "run_perses_edit_query_caching.sh"),
+}
 
 
 def load_token_counter(parameter_interface):
@@ -71,16 +84,17 @@ def load_token_counter(parameter_interface):
 
 def load_reducers(parameter_interface):
     print("Loading reducer programs ...")
-    for reducer_name, updater_path in INSTALLS:
-        pipe = subprocess.DEVNULL
-        if parameter_interface.show_subprocess:
-            pipe = None
-        subprocess.run(
-            [updater_path],
-            check=False,
-            stdout=pipe,
-            stderr=pipe)
-        print(" Reducer: {} loaded".format(reducer_name))
+    for reducer in parameter_interface.reducers:
+        if reducer in INSTALLS:
+            pipe = subprocess.DEVNULL
+            if parameter_interface.show_subprocess:
+                pipe = None
+            subprocess.run(
+                [INSTALLS[reducer]],
+                check=False,
+                stdout=pipe,
+                stderr=pipe)
+            print(" Reducer: {} loaded".format(reducer))
 
 def extract_info_properties(bench_name: str)->Dict[str, str]:
     info_dict = dict()
@@ -101,7 +115,6 @@ def extract_info_properties(bench_name: str)->Dict[str, str]:
         raise Exception('Error: No source_file found in info.properties')
     if "script_file" not in info_dict:
         raise Exception('Error: No script_file found in info.properties')
-
     source_file_path = os.path.join(__location__, bench_name, info_dict["source_file"])
     if not os.path.exists(source_file_path):
         raise Exception('Error: source_file not found: {}'.format(source_file_path))
@@ -131,11 +144,11 @@ def count_token(source_file_path):
 def main():
     # parameter handler
     args = parse_arguments()
-    para = Parameter(args.subjects, args.iterations, args.silent, args.show_subprocess)
+    para = Parameter(args.subjects, args.iterations, args.silent, args.show_subprocess, args.reducers)
     para.validate()
     print(para)
 
-    report = dict()
+    report = dict() #final printable results
 
     # install token counter
     load_token_counter(para)
@@ -158,13 +171,13 @@ def main():
 
         report[bench_name]["original_token_count"] = token_count
         if not para.silent:
-            print("Bench {} has {} original tokens".format(bench_name, token_count))
+            print(f"Bench {bench_name} has {token_count} original tokens")
 
         # reduce
-        for reducer_name, reducer_path in REDUCERS:
-            print("{} in process".format(reducer_name))
+        for reducer in para.reducers:
+            print("{} in process".format(reducer))
             for iteration in range(para.iterations):
-                print("iteration {}".format(iteration))
+                print(f"*****iteration {iteration}*****")
 
                 fd, fname = tempfile.mkstemp()
                 os.close(fd)
@@ -172,7 +185,7 @@ def main():
                 if para.show_subprocess:
                     pipe = None
                 subprocess.run(
-                    [reducer_path,
+                    [REDUCERS[reducer],
                      script_file_path,
                      source_file_path,
                      fname],
@@ -184,25 +197,25 @@ def main():
                     run_result = output.read().strip().split("\n")
                     if len(run_result) != 7:
                         run_result = ["unknown", "unknown", "unknown", "failed", "failed", "failed", run_result]
-                    report[bench_name][reducer_name+str(iteration)] = dict()
-                    report[bench_name][reducer_name+str(iteration)]["reducer"] = reducer_name
-                    report[bench_name][reducer_name+str(iteration)]["bench"] = bench_name
-                    report[bench_name][reducer_name+str(iteration)]["query"] = run_result[3]
-                    report[bench_name][reducer_name+str(iteration)]["time"] = run_result[4]
-                    report[bench_name][reducer_name+str(iteration)]["reduced_token"] = run_result[5]
-                    report[bench_name][reducer_name+str(iteration)]["ret_code"] = run_result[6]
+                    report[bench_name][f"{reducer}_iter{iteration}"] = dict()
+                    report[bench_name][f"{reducer}_iter{iteration}"]["reducer"] = reducer
+                    report[bench_name][f"{reducer}_iter{iteration}"]["bench"] = bench_name
+                    report[bench_name][f"{reducer}_iter{iteration}"]["query"] = run_result[3]
+                    report[bench_name][f"{reducer}_iter{iteration}"]["time"] = run_result[4]
+                    report[bench_name][f"{reducer}_iter{iteration}"]["reduced_token"] = run_result[5]
+                    report[bench_name][f"{reducer}_iter{iteration}"]["ret_code"] = run_result[6]
 
                     if not para.silent:
-                        print(report[bench_name][reducer_name+str(iteration)])
+                        print(report[bench_name][f"{reducer}_iter{iteration}"])
                 os.remove(fname)
 
     # print final report to stdout
     if not para.silent:
-        json_object = json.dumps(report, indent=2)
+        json_object = json.dumps(report, indent=4)
         print(json_object)
 
-        time = datetime.now()
-        report_title = "report "+str(time)+".json"
+        time = datetime.now().strftime("%Y_%m_%d_%H%M%S")
+        report_title = f'report_{time}.json'
         with open(report_title, 'w') as out_file:
             out_file.write(json_object)
 
