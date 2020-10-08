@@ -24,7 +24,7 @@ java -jar "/tmp/binaries/perses_deploy.jar" \
   --input-file "${TMP_SOURCE_FILE}" \
   --output-file "${TMP}/reduced.c" \
   --threads "${THREADS}" \
-  --query-caching true \
+  --query-caching false \
   --edit-caching false
 readonly RET_CODE="$?"
 readonly END_TIME=$(date +%s)

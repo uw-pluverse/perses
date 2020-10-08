@@ -10,8 +10,9 @@ Runs the benchmark
 git clone https://github.com/chengniansun/perses.git
 cd perses/benchmark
 ./start_docker.sh
+./init_docker.sh
 ```
-In the docker container, running benchmark.py will build and install different reducers and run reductions
+In the docker container, running benchmark.py will build and install different reducers and run reductions 
 ```shell
 cd perses/benchmark
 ./benchmark.py
