@@ -18,8 +18,8 @@ def parse_arguments():
     parser.add_argument("-i", "--iterations", type=int, default=1, help="Run bench set for the number of times specified")
     parser.add_argument("--silent", action="store_true", default=False, help="Writes nothing to stdout")
     parser.add_argument("-ss", "--show-subprocess", action="store_true", default=False, help="Show all pipe stdout and stderr from reducers")
-    
-    parser.add_argument("-r", "--reducers", nargs='+', default=[], help="Specify reducers for benchmarking.Options: perses, hdd, perses-fix, hdd-fix, creduce, chisel, perses_no_caching, perses_edit_query")
+    parser.add_argument("-r", "--reducers", nargs='+', default=[], help="Specify reducers for benchmarking.")
+    parser.add_argument("-lr", "--list-reducers", action="store_true", default=False, help="List current available reducers")
     return parser.parse_args()
 
 @dataclass(frozen=True)
@@ -30,6 +30,13 @@ class Parameter:
     silent: bool
     show_subprocess: bool
     reducers: List[str]
+    list_reducers: bool
+
+    def __post_init__(self):
+        if self.list_reducers:
+            available_reducers = '\n'.join(list(REDUCERS.keys()))
+            print(f"Current available reducers include : \n{available_reducers}")
+            exit(1)
 
     def validate(self):
         # validate parameters
@@ -144,7 +151,7 @@ def count_token(source_file_path):
 def main():
     # parameter handler
     args = parse_arguments()
-    para = Parameter(args.subjects, args.iterations, args.silent, args.show_subprocess, args.reducers)
+    para = Parameter(args.subjects, args.iterations, args.silent, args.show_subprocess, args.reducers, args.list_reducers)
     para.validate()
     print(para)
 
