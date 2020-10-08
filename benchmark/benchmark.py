@@ -19,7 +19,7 @@ def parse_arguments():
     parser.add_argument("--silent", action="store_true", default=False, help="Writes nothing to stdout")
     parser.add_argument("-ss", "--show-subprocess", action="store_true", default=False, help="Show all pipe stdout and stderr from reducers")
     
-    parser.add_argument("-r", "--reducers", nargs='+', default=[], help="Specify reducers for benchmarking.Options: perses, hdd, perses-fix, hdd-fix, creduce, chisel")
+    parser.add_argument("-r", "--reducers", nargs='+', default=[], help="Specify reducers for benchmarking.Options: perses, hdd, perses-fix, hdd-fix, creduce, chisel, perses_no_caching, perses_edit_query")
     return parser.parse_args()
 
 @dataclass(frozen=True)
@@ -39,7 +39,7 @@ class Parameter:
         for bench_name in self.benchmark_target:
             folder_path = os.path.join(__location__, bench_name)
             if not os.path.exists(folder_path):
-                raise Exception('Error: Folder path not found: {}'.format(folder_path))
+                raise Exception(f'Error: Folder path not found: {folder_path}')
         # iterations
         if self.iterations < 1:
             raise Exception('Error: Invalid ITERATIONS value')
@@ -65,6 +65,9 @@ REDUCERS = {
         "hdd-fix": os.path.join(__location__, "binaries", "run_hdd_fix.sh"),
         "creduce": os.path.join(__location__, "binaries", "run_creduce.sh"),
         "chisel": os.path.join(__location__, "binaries", "run_chisel.sh"),
+
+        "perses_no_caching": os.path.join(__location__, "binaries", "run_perses_no_caching.sh"),
+        "perses_edit_query": os.path.join(__location__, "binaries", "run_perses_edit_query_caching.sh"),
 }
 
 
@@ -168,7 +171,7 @@ def main():
 
         report[bench_name]["original_token_count"] = token_count
         if not para.silent:
-            print("Bench {} has {} original tokens".format(bench_name, token_count))
+            print(f"Bench {bench_name} has {token_count} original tokens")
 
         # reduce
         for reducer in para.reducers:
@@ -208,11 +211,11 @@ def main():
 
     # print final report to stdout
     if not para.silent:
-        json_object = json.dumps(report, indent=2)
+        json_object = json.dumps(report, indent=4)
         print(json_object)
 
-        time = datetime.now()
-        report_title = "report "+str(time)+".json"
+        time = datetime.now().strftime("%Y_%m_%d_%H%M%S")
+        report_title = f'report_{time}.json'
         with open(report_title, 'w') as out_file:
             out_file.write(json_object)
 
