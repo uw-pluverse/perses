@@ -27,15 +27,6 @@ readonly USER_ID=$(id --user)
 readonly USER_NAME=$(id --user --name)
 readonly GROUP_ID=$(id --group)
 readonly GROUP_NAME=$(id --group --name)
-readonly FIX_PERMISSIONS_SCRIPT="fix_file_permissions.sh"
-cat > "${FIX_PERMISSIONS_SCRIPT}" <<-EOF
-#!/usr/bin/env bash 
-set -o nounset
-set -o errexit
-set -o pipefail
-sudo chown "${USER_ID}:${GROUP_ID}" "${PERSES_ROOT_IN_DOCKER}" -R
-EOF
-chmod +x "${FIX_PERMISSIONS_SCRIPT}"
 
 readonly UPDATE_BAZEL_SCRIPT="update_bazel.sh"
 cat > "${UPDATE_BAZEL_SCRIPT}" <<-EOF
@@ -69,15 +60,13 @@ sudo useradd --shell "/bin/bash" --create-home --uid ${USER_ID} --gid ${GROUP_ID
 echo "Change password for ${USER_NAME} in docker"
 sudo passwd ${USER_NAME}
 
-
 sudo --user=${USER_NAME} ./${UPDATE_BAZEL_SCRIPT}
 echo "Switching to user ${USER_NAME}"
 su ${USER_NAME}
-
 EOF
 chmod +x "${INIT_DOCKER_SCRIPT}"
 
-trap "rm ${FIX_PERMISSIONS_SCRIPT} ${INIT_DOCKER_SCRIPT} ${UPDATE_BAZEL_SCRIPT}" EXIT
+trap "rm ${INIT_DOCKER_SCRIPT} ${UPDATE_BAZEL_SCRIPT}" EXIT
 
 # --cap-add is to enable LeakSanitizer
 #   See https://github.com/google/sanitizers/issues/764

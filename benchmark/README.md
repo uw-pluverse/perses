@@ -34,9 +34,10 @@ Write no results to stdout and save no json file.
 Display all pipe stdout and stderr from reducers. Details of the reduction process will be dislayed.
 
 #### --reducers
-Specify reducer(s) to benchmark. Options includes: perses, hdd, perses-fix, hdd-fix, creduce, chisel. E.g. ```--reducers perses hdd creduce```
+Specify reducer(s) to benchmark. E.g. ```--reducers perses hdd creduce```
 
-
+#### --list-reducers
+List current available reducers.
 
 ### Supported Reducers
 Currently the reducers are ran in the following order
