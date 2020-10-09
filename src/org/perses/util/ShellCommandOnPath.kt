@@ -22,38 +22,23 @@ import com.google.common.flogger.FluentLogger
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.util.Arrays
 
 /**
  * This class represents a command in the shell.
  */
-data class ShellCommandOnPath(
-  val command: String,
+class ShellCommandOnPath(
+  command: String,
   val defaultFlags: ImmutableList<String> = ImmutableList.of()) {
 
   private val path = Paths.get(command)
 
   val fileName = path.fileName.toString()
 
-  init {
-    checkCommandExecutability()
-  }
+  val command: String
 
-  private fun checkCommandExecutability() {
-    if (path.isAbsolute) {
-      check(Files.isRegularFile(path)) { "The command $command does not exist" }
-      check(path.toFile().canExecute()) { "The command $command is not executable" }
-      return
-    }
-    if (path.nameCount != 1) {
-      logger.atWarning().log("The command is a relative path, and will NOT be checked: %s", path)
-    } else {
-      val pathEnv = System.getenv("PATH")
-      val result = pathEnv.split(File.pathSeparatorChar).asSequence().any {
-        val fullpath = Paths.get(it).resolve(command)
-        Files.isRegularFile(fullpath) && fullpath.toFile().canExecute()
-      }
-      check(result) { "The command $command cannot be found on PATH. $pathEnv" }
-    }
+  init {
+    this.command = normalizeAndCheckExecutability(command)
   }
 
   fun runWith(
@@ -73,5 +58,38 @@ data class ShellCommandOnPath(
 
   companion object {
     private val logger = FluentLogger.forEnclosingClass()
+
+    @JvmStatic
+    fun normalizeAndCheckExecutability(cmdName: String): String {
+      val cmdPath = Paths.get(cmdName)
+      if (cmdPath.isAbsolute) {
+        check(Files.isRegularFile(cmdPath)) {
+          "The command $cmdName is not a regular file."
+        }
+        check(Files.isExecutable(cmdPath)) {
+          "The command $cmdName is not executable."
+        }
+        return cmdName
+      }
+      if (cmdPath.nameCount == 1) {
+        val pathEnv = System.getenv("PATH")
+        val foundOnPath = Arrays.stream(pathEnv.split(File.pathSeparator.toRegex()).toTypedArray())
+          .anyMatch {
+            val fullPath = Paths.get(it).resolve(cmdName)
+            Files.isRegularFile(fullPath) && fullPath.toFile().canExecute()
+          }
+        if (foundOnPath) {
+          return cmdName
+        }
+      }
+      check(Files.isRegularFile(cmdPath)) {
+        "The command $cmdPath is not a regular file."
+      }
+      check(Files.isExecutable(cmdPath)) {
+        "The command $cmdPath is not executable."
+      }
+      return cmdPath.toAbsolutePath().toString()
+    }
+
   }
 }

@@ -22,6 +22,7 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.util.ShellCommandOnPath.Companion.normalizeAndCheckExecutability
 import java.io.File
 
 @RunWith(JUnit4::class)
@@ -29,14 +30,14 @@ class ShellTest {
 
   @Test
   fun lsExists() {
-    val normalized = Shell.normalizeAndCheckExecutability("ls")
+    val normalized = normalizeAndCheckExecutability("ls")
     assertThat(normalized).isEqualTo("ls")
   }
 
   @Test
   fun doesNotExist() {
     Assert.assertThrows(IllegalStateException::class.java) {
-      Shell.normalizeAndCheckExecutability("this_shell_cmd_does_not_exist")
+      normalizeAndCheckExecutability("this_shell_cmd_does_not_exist")
     }
   }
 
@@ -46,14 +47,14 @@ class ShellTest {
     Preconditions.checkState(tempFile.setExecutable(true))
     tempFile.deleteOnExit()
 
-    val normalized = Shell.normalizeAndCheckExecutability(tempFile.toString())
+    val normalized = normalizeAndCheckExecutability(tempFile.toString())
     assertThat(normalized).isEqualTo(tempFile.toString())
   }
 
   @Test
   fun localRelativeScript() {
     val cmd = "test/org/perses/util/fake_creduce.sh"
-    val normalized = Shell.normalizeAndCheckExecutability(cmd)
+    val normalized = normalizeAndCheckExecutability(cmd)
     assertThat(normalized).contains(cmd)
   }
 

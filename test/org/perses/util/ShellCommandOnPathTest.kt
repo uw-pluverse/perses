@@ -42,7 +42,7 @@ class ShellCommandOnPathTest {
 
   @Test
   fun testCmdWithRelativePath() {
-    val cmd = ShellCommandOnPath("test/org/kira/framework/shell/fake_executable.sh")
+    val cmd = ShellCommandOnPath("test/org/perses/util/fake_executable.sh")
     assertThat(cmd.fileName).isEqualTo("fake_executable.sh")
     val output = cmd.runWith(ImmutableList.of(), captureOutput = true)
     assertThat(output.exitCode).isEqualTo(0)
