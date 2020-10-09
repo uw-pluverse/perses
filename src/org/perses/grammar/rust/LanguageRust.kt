@@ -28,7 +28,7 @@ object LanguageRust : LanguageKind() {
 
   override val defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT
 
-  override val defaultFormmaterCommand = "rustfmt"
+  override val defaultFormmaterCommand = tryObtainingDefaultFormatter("rustfmt")
 
   override val allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.COMPACT_ORIG_FORMAT,
