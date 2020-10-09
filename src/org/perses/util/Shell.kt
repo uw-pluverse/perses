@@ -37,6 +37,9 @@ object Shell {
   val CURRENT_ENV = ImmutableMap.copyOf(System.getenv())
 
   @JvmStatic
+  val CURRENT_DIR = File(".")
+
+  @JvmStatic
   fun createNewEnvironmentVar(key: String, value: String) =
     ImmutableMap.builder<String, String>()
       .put(key, value).putAll(CURRENT_ENV).build()
@@ -159,7 +162,6 @@ object Shell {
 
   private val logger = FluentLogger.forEnclosingClass()
 
-  private val CURRENT_DIR = File(".")
 
   private val EMPTY_OUTPUT_STREAM: OutputStream = object : OutputStream() {
     override fun write(b: Int) {
