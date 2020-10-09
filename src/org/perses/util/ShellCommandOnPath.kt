@@ -57,6 +57,7 @@ class ShellCommandOnPath(
   }
 
   companion object {
+
     private val logger = FluentLogger.forEnclosingClass()
 
     @JvmStatic
