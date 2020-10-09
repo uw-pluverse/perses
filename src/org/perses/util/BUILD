@@ -37,6 +37,7 @@ kt_jvm_library(
     srcs = [
         "Shell.kt",
         "ShellOutputLines.kt",
+        "ShellCommandOnPath.kt",
         "ShellOutputStream.kt",
     ],
     deps = [
