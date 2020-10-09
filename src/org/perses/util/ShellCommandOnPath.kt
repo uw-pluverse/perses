@@ -57,10 +57,10 @@ data class ShellCommandOnPath(
   }
 
   fun runWith(
-    extraArguments: ImmutableList<String>,
-    workingDirectory: File,
-    captureOutput: Boolean, environment:
-    ImmutableMap<String, String>
+    extraArguments: ImmutableList<String> = ImmutableList.of(),
+    captureOutput: Boolean = true,
+    workingDirectory: File = Shell.CURRENT_DIR,
+    environment: ImmutableMap<String, String> = Shell.CURRENT_ENV
   ): Shell.CmdOutput {
 
     val cmd = StringBuilder()
