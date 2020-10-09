@@ -24,6 +24,7 @@ kt_jvm_library(
     ],
     deps = [
         ":enum_format_control",
+        "//src/org/perses/util:shell",
         "@maven//:com_google_guava_guava",
     ],
 )

@@ -16,7 +16,10 @@
  */
 package org.perses.grammar.rust
 
+import com.google.common.collect.ImmutableList
+import com.google.common.io.Files
 import com.google.common.truth.Truth.assertThat
+import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -25,7 +28,14 @@ import java.io.File
 
 @RunWith(JUnit4::class)
 class PnfRustParserFacadeTest {
+
   val facade = PnfRustParserFacade()
+  val workingDir = Files.createTempDir()
+
+  @After
+  fun teardown() {
+    workingDir.deleteRecursively()
+  }
 
   // Collection for keeping track of the shards of tests we need to run
   private companion object testData {
@@ -48,7 +58,19 @@ class PnfRustParserFacadeTest {
 
   @Test
   fun testDefaultFormatterCmd() {
-    assertThat(facade.language.defaultFormmaterCommand).isEqualTo("rustfmt")
+    assertThat(facade.language.defaultFormmaterCommand).isNotNull()
+    val tempFile = File(workingDir, "to-be-formatted.rs")
+    val unformatted = """
+      |fn main() {
+      |println!("Hello World!");}
+    """
+    tempFile.writeText(unformatted.trimMargin())
+
+    facade.language.defaultFormmaterCommand!!.runWith(ImmutableList.of(tempFile.toString()))
+    val formatted = tempFile.readText()
+    assertThat(formatted).isNotEqualTo(unformatted)
+    facade.language.defaultFormmaterCommand!!.runWith(ImmutableList.of(tempFile.toString()))
+    assertThat(formatted).isEqualTo(tempFile.readText())
   }
 
   fun testString(program: String, name: String) {
