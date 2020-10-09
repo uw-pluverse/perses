@@ -20,7 +20,7 @@ jobs:
 
     - name: Install Prerequisite Software
       run: |
-        sudo apt-get install scala creduce
+        sudo apt-get install scala creduce clang-format
 
     # Runs a single command using the runners shell
     - name: Mount bazel cache
