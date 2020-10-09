@@ -26,6 +26,7 @@ import java.io.File
 
 @RunWith(JUnit4::class)
 class ShellTest {
+
   @Test
   fun lsExists() {
     val normalized = Shell.normalizeAndCheckExecutability("ls")
