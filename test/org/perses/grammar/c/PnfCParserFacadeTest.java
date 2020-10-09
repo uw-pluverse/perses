@@ -17,7 +17,6 @@
 package org.perses.grammar.c;
 
 import com.google.common.io.Files;
-import com.google.common.truth.Truth;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -26,17 +25,25 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import static com.google.common.truth.Truth.assertThat;
+
 @RunWith(JUnit4.class)
 public class PnfCParserFacadeTest {
 
+  private final PnfCParserFacade facade = new PnfCParserFacade();
+
   @Test
   public void testGoldenPnfCGrammar() throws IOException {
-    PnfCParserFacade facade = new PnfCParserFacade();
     String content = facade.getAntlrGrammar().asCombined().getGrammar().getSourceCode();
     String golden =
         Files.asCharSource(
                 new File("test/org/perses/grammar/c/golden_pnf_c.g4"), StandardCharsets.UTF_8)
             .read();
-    Truth.assertThat(content).isEqualTo(golden);
+    assertThat(content).isEqualTo(golden);
+  }
+
+  @Test
+  public void testDefaultFormatterCommand() {
+    assertThat(facade.getLanguage().getDefaultFormmaterCommand()).isEqualTo("clang-format");
   }
 }

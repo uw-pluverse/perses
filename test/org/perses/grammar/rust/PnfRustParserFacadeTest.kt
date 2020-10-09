@@ -16,7 +16,7 @@
  */
 package org.perses.grammar.rust
 
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -46,6 +46,11 @@ class PnfRustParserFacadeTest {
     }
   }
 
+  @Test
+  fun testDefaultFormatterCmd() {
+    assertThat(facade.language.defaultFormmaterCommand).isEqualTo("rustfmt")
+  }
+
   fun testString(program: String, name: String) {
     val parseTreeFromOrigParser = facade.parseWithOrigRustParser(program, name)
     val tokensByOrigParser = TestUtility.extractTokens(parseTreeFromOrigParser.tree)
@@ -53,7 +58,7 @@ class PnfRustParserFacadeTest {
     val parseTreeWithPnfParser = facade.parseString(program, name)
     val tokensByPnfParser = TestUtility.extractTokens(parseTreeWithPnfParser.tree)
 
-    Truth.assertThat(tokensByPnfParser).containsExactlyElementsIn(tokensByOrigParser).inOrder()
+    assertThat(tokensByPnfParser).containsExactlyElementsIn(tokensByOrigParser).inOrder()
   }
 
   fun testSingleFile(file: File) {
