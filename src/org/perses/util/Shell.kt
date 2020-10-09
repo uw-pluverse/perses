@@ -125,7 +125,7 @@ object Shell {
     if (cmdPath.nameCount == 1) {
       val pathEnv = System.getenv("PATH")
       val foundOnPath = Arrays.stream(pathEnv.split(File.pathSeparator.toRegex()).toTypedArray())
-        .anyMatch { it: String? ->
+        .anyMatch {
           val fullPath = Paths.get(it).resolve(cmdName)
           Files.isRegularFile(fullPath) && fullPath.toFile().canExecute()
         }
