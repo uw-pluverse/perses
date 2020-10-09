@@ -182,9 +182,16 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
 
   class OutputRefiningFlags : ICommandLineFlags {
     @Parameter(
+      names = ["--call-formatter"],
+      description = "call a formatter on the final result",
+      order = FlagOrder.OUTPUT_REFINING + 0
+    )
+    var callFormatter = false
+
+    @Parameter(
       names = ["--format-cmd"],
       description = "the command to format the reduced source file",
-      order = FlagOrder.OUTPUT_REFINING + 0
+      order = FlagOrder.OUTPUT_REFINING + 100
     )
     var formatCmd = ""
 
@@ -192,14 +199,14 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
       names = ["--call-creduce"],
       description = "call C-Reduce when Perses is done.",
       arity = 1,
-      order = FlagOrder.OUTPUT_REFINING + 10
+      order = FlagOrder.OUTPUT_REFINING + 200
     )
     var callCReduce = false
 
     @Parameter(
       names = ["--creduce-cmd"],
       description = "the C-Reduce command name or path",
-      order = FlagOrder.OUTPUT_REFINING + 20
+      order = FlagOrder.OUTPUT_REFINING + 300
     )
     private var creduceCmd = "creduce"
 

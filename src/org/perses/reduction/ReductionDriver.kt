@@ -130,7 +130,7 @@ class ReductionDriver(
       listenerManager.onReductionEnd(finalTokenCount, countOfTestScriptExecutions)
     }
     callCreduceIfEnabled()
-    formatBestFile(cmd.outputRefiningFlags.formatCmd, configuration.bestResultFile)
+    formatBestFileIfEnabled()
   }
 
   private fun reduce(
@@ -209,6 +209,7 @@ class ReductionDriver(
       )
       return
     } else {
+      // TODO: use kotlin's copyTo.
       Files.copy(reductionFolder.sourceFilePath, configuration.bestResultFile)
       val tokenCount = configuration.parserFacade.parseIntoTokens(configuration.bestResultFile).size
       logger.atInfo().log(
@@ -347,21 +348,31 @@ class ReductionDriver(
   }
 
   // TODO: test this function.
-  private fun formatBestFile(formatCmd: String, bestFile: File) {
-    if (Strings.isNullOrEmpty(formatCmd)) {
+  private fun formatBestFileIfEnabled() {
+    if (!cmd.outputRefiningFlags.callFormatter) {
       return
     }
-    val cmd = formatCmd + " " + bestFile.name
-    try {
-      Shell.run(
-        cmd,
-        bestFile.absoluteFile.parentFile,
-        captureOutput = true,
-        environment = Shell.CURRENT_ENV
+    val formatCmd = configuration.parserFacade.language.defaultFormmaterCommand ?: return
+
+    val formatFolderName = "formatter_at_the_end_" +
+      TimeUtil.formatDateForFileName(System.currentTimeMillis())
+    val formatFolder = executorService.createNamedReductionFolder(formatFolderName)
+    configuration.bestResultFile.copyTo(formatFolder.sourceFilePath)
+    val cmdOutput = formatCmd.runWith(
+      ImmutableList.of(formatFolder.sourceFilePath.name),
+      workingDirectory = formatFolder.folder
+    )
+    if (cmdOutput.exitCode != 0) {
+      logger.atSevere().log(
+        "Failed to call formatter %s on the final result %s.",
+        formatCmd.command,
+        configuration.bestResultFile
       )
-    } catch (e: Throwable) {
-      logger.atSevere().withCause(e).log("failed to execute the format command '%s'", cmd)
+      logger.atSevere().log("stdout: %s", cmdOutput.stderr.combineLines())
+      logger.atSevere().log("stderr: %s", cmdOutput.stdout.combineLines())
+      return
     }
+    formatFolder.sourceFilePath.copyTo(configuration.bestResultFile, overwrite = true)
   }
 
   fun reparseAndCreateSparTree(originalTree: SparTree): SparTree {
