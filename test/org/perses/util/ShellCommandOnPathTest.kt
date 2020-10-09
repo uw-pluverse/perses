@@ -16,6 +16,7 @@
  */
 package org.perses.util
 
+import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,11 +30,21 @@ class ShellCommandOnPathTest {
   fun testCmdOnPath() {
     val cmd = ShellCommandOnPath("gcc")
     assertThat(cmd.fileName).isEqualTo("gcc")
+    assertThat(cmd.runWith(ImmutableList.of("--version")).exitCode).isEqualTo(0)
+  }
+
+  @Test
+  fun testCmdWithDefaultArguments() {
+    val cmd = ShellCommandOnPath("gcc", defaultFlags = ImmutableList.of("--version"))
+    val cmdOutput = cmd.runWith()
+    assertThat(cmdOutput.exitCode).isEqualTo(0)
   }
 
   @Test
   fun testCmdWithRelativePath() {
     val cmd = ShellCommandOnPath("test/org/kira/framework/shell/fake_executable.sh")
     assertThat(cmd.fileName).isEqualTo("fake_executable.sh")
+    val output = cmd.runWith(ImmutableList.of(), captureOutput = true)
+    assertThat(output.exitCode).isEqualTo(0)
   }
 }
