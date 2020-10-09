@@ -28,6 +28,8 @@ abstract class LanguageKind {
 
   abstract val allowedCodeFormatControl: ImmutableSet<EnumFormatControl>
 
+  abstract val defaultFormmaterCommand: String
+
   fun isCodeFormatAllowed(codeFormat: EnumFormatControl) =
     allowedCodeFormatControl.contains(codeFormat)
 }

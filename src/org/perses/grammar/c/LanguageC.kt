@@ -28,6 +28,8 @@ object LanguageC : LanguageKind() {
 
   override val defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE
 
+  override val defaultFormmaterCommand = "clang-format"
+
   override val allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.SINGLE_TOKEN_PER_LINE,
     EnumFormatControl.COMPACT_ORIG_FORMAT,
