@@ -26,9 +26,6 @@ import org.apache.commons.exec.PumpStreamHandler
 import java.io.File
 import java.io.IOException
 import java.io.OutputStream
-import java.nio.file.Files
-import java.nio.file.Paths
-import java.util.Arrays
 
 /** Shell to run external commands.  */
 object Shell {
@@ -113,37 +110,6 @@ object Shell {
     }
   }
 
-  @JvmStatic
-  fun normalizeAndCheckExecutability(cmdName: String): String {
-    val cmdPath = Paths.get(cmdName)
-    if (cmdPath.isAbsolute) {
-      check(Files.isRegularFile(cmdPath)) {
-        "The command $cmdName is not a regular file."
-      }
-      check(Files.isExecutable(cmdPath)) {
-        "The command $cmdName is not executable."
-      }
-      return cmdName
-    }
-    if (cmdPath.nameCount == 1) {
-      val pathEnv = System.getenv("PATH")
-      val foundOnPath = Arrays.stream(pathEnv.split(File.pathSeparator.toRegex()).toTypedArray())
-        .anyMatch {
-          val fullPath = Paths.get(it).resolve(cmdName)
-          Files.isRegularFile(fullPath) && fullPath.toFile().canExecute()
-        }
-      if (foundOnPath) {
-        return cmdName
-      }
-    }
-    check(Files.isRegularFile(cmdPath)) {
-      "The command $cmdPath is not a regular file."
-    }
-    check(Files.isExecutable(cmdPath)) {
-      "The command $cmdPath is not executable."
-    }
-    return cmdPath.toAbsolutePath().toString()
-  }
 
   class CmdOutput constructor(
     val exitCode: Int,

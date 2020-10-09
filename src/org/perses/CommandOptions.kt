@@ -22,7 +22,7 @@ import org.perses.util.AbstractCommandOptions
 import org.perses.util.Fraction
 import org.perses.util.Fraction.Companion.parse
 import org.perses.util.ICommandLineFlags
-import org.perses.util.Shell.normalizeAndCheckExecutability
+import org.perses.util.ShellCommandOnPath.Companion.normalizeAndCheckExecutability
 import java.io.File
 
 /** Parser for command line arguments.  */
