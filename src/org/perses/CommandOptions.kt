@@ -29,15 +29,19 @@ import java.io.File
 class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCommandOptions() {
   @JvmField
   val compulsoryFlags = registerFlags(CompulsoryFlags())
+
   @JvmField
   val resultOutputFlags = registerFlags(ResultOutputFlags())
+
   @JvmField
   val reductionControlFlags = registerFlags(ReductionControlFlags())
   val outputRefiningFlags = registerFlags(OutputRefiningFlags())
+
   @JvmField
   val algorithmControlFlags = registerFlags(ReductionAlgorithmControlFlags())
   val cacheControlFlags = registerFlags(CacheControlFlags())
   val profilingFlags = registerFlags(ProfilingFlags())
+
   @JvmField
   val verbosityFlags = registerFlags(VerbosityFlags())
 
@@ -202,6 +206,9 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
     override fun validate() {
       if (callCReduce) {
         normalizeAndCheckExecutability(creduceCmd)
+      }
+      check(formatCmd.isBlank()) {
+        "Does not support customized format command yet. $formatCmd"
       }
     }
 
