@@ -20,13 +20,12 @@ java_test(
     ],
 )
 
-java_test(
+kt_jvm_test(
     name = "PnfCParserFacadeTest",
     size = "large",  # This is a slow test.
-    srcs = ["PnfCParserFacadeTest.java"],
+    srcs = ["PnfCParserFacadeTest.kt"],
     data = ["golden_pnf_c.g4"],
     shard_count = 1,
-    test_class = "org.perses.grammar.c.PnfCParserFacadeTest",
     deps = [
         "//src/org/perses/antlr:antlr_grammar_util",
         "//src/org/perses/grammar/c:pnfc_parser_facade",

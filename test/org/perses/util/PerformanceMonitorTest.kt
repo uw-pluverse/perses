@@ -58,9 +58,17 @@ class PerformanceMonitorTest {
   fun testDurationList() {
     val task1 = Object()
     monitor.onTaskStart(task1)
+
+    assertThat(monitor.finishedTaskCount()).isEqualTo(0)
+    assertThat(monitor.maxDuration()).isEqualTo(Integer.MIN_VALUE)
+    assertThat(monitor.minDuration()).isEqualTo(Integer.MAX_VALUE)
+
     monitor.onTaskEnd(task1)
 
+    assertThat(monitor.finishedTaskCount()).isEqualTo(1)
     assertThat(monitor.maxDuration()).isEqualTo(monitor.minDuration())
+    assertThat(monitor.maxDuration()).isNotEqualTo(Integer.MIN_VALUE)
+    assertThat(monitor.minDuration()).isNotEqualTo(Integer.MAX_VALUE)
 
     val task2 = Object()
     monitor.onTaskStart(task2)
@@ -68,7 +76,8 @@ class PerformanceMonitorTest {
 
     assertThat(monitor.finishedTaskCount()).isEqualTo(2)
     assertThat(monitor.maxDuration()).isAtLeast(monitor.minDuration())
-
+    assertThat(monitor.maxDuration()).isLessThan(Integer.MAX_VALUE)
+    assertThat(monitor.minDuration()).isGreaterThan(-1)
     monitor.close()
   }
 

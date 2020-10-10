@@ -46,7 +46,7 @@ filegroup(
     name = "delta_1_reduced",
     srcs = [
         "progress_dump_t_with_cache.c",
-        "reduce_delta_1_with_caching.log",
+        "reduce_delta_1_with_caching_reduction_log.txt",
         "reduced_t.c",
         "stat_t.c",
     ],

@@ -28,6 +28,8 @@ object LanguageJava : LanguageKind() {
 
   override val defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE
 
+  override val defaultFormmaterCommand = null
+
   override val allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.SINGLE_TOKEN_PER_LINE,
     EnumFormatControl.COMPACT_ORIG_FORMAT,
