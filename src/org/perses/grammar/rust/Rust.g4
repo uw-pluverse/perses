@@ -1301,6 +1301,7 @@ prim_bound:
 
 ty:
     '_'
+    |'...'
     // The next 3 productions match exactly `'(' ty_sum_list? ')'`,
     // but (i32) and (i32,) are distinct types, so parse them with different rules.
     | '(' ')'                           // unit

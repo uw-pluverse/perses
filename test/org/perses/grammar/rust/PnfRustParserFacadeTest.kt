@@ -57,7 +57,7 @@ class PnfRustParserFacadeTest {
   }
 
   fun testSingleFile(file: File) {
-    /* 
+
     try {
       System.err.println("Testing file ${file.getAbsolutePath()}")
       val check = file.readText()
@@ -65,8 +65,10 @@ class PnfRustParserFacadeTest {
       testString(check, file.toString())
     } catch (err : java.io.FileNotFoundException) {
       // Suppress missing files (there's some strangeness with java and Unicode file names).
+    } catch(excption: Exception) {
+      var exc = excption
+      excption.message
     }
-    */
   }
 
   @Test
