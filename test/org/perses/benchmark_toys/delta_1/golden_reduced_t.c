@@ -1,4 +1,4 @@
 int printf(const char*, ...);
 int main (                      ) {
-  printf("world\n");
+ printf("world\n");
 }

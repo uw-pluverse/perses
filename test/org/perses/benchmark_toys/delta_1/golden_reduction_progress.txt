@@ -142,12 +142,12 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("hello\n");
-      printf("world\n");
-      return 0;
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
     }
 ------------------------------------------------------------
 
@@ -169,12 +169,12 @@ The current best program is the following
 
 // edit action set type: [kleene_plus]dd@1
     int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("hello\n");
-      printf("world\n");
-      return 0;
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
     }
 ------------------------------------------------------------
 
@@ -191,12 +191,12 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("hello\n");
-      printf("world\n");
-      return 0;
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
     }
 ------------------------------------------------------------
 
@@ -211,7 +211,7 @@ The current best program is the following
 
 // edit action set type: [regular node]compatible replacement
     int printf(const char*, ...);
-      int a = 1;
+         int a = 1;
 ------------------------------------------------------------
 
 
@@ -219,7 +219,7 @@ The current best program is the following
 
 // edit action set type: [regular node]compatible replacement
     int printf(const char*, ...);
-      int b = a + 1;
+              int b = a + 1;
 ------------------------------------------------------------
 
 
@@ -235,12 +235,12 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("hello\n");
-      printf("world\n");
-      return 0;
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
     }
 ------------------------------------------------------------
 
@@ -257,12 +257,12 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("hello\n");
-      printf("world\n");
-      return 0;
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
     }
 ------------------------------------------------------------
 
@@ -288,12 +288,12 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("hello\n");
-      printf("world\n");
-      return 0;
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
     }
 ------------------------------------------------------------
 
@@ -309,7 +309,7 @@ The current best program is the following
 // edit action set type: [kleene_plus]remove whole except first
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
-      int a = 1;
+         int a = 1;
     }
 ------------------------------------------------------------
 
@@ -319,9 +319,9 @@ The current best program is the following
 // edit action set type: [kleene_plus]dd@3
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
     }
 ------------------------------------------------------------
 
@@ -331,11 +331,11 @@ The current best program is the following
 // edit action set type: [kleene_plus]dd@1
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("hello\n");
-      printf("world\n");
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -356,9 +356,9 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
     }
 ------------------------------------------------------------
 
@@ -368,10 +368,10 @@ The current best program is the following
 // edit action set type: [kleene_plus]dd@1
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("hello\n");
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
     }
 ------------------------------------------------------------
 
@@ -381,10 +381,10 @@ The current best program is the following
 // edit action set type: [kleene_plus]dd@1
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("world\n");
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -406,7 +406,7 @@ The current best program is the following
 // edit action set type: [kleene_plus]dd@3
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -435,7 +435,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -445,7 +445,7 @@ The current best program is the following
 // edit action set type: [regular node]compatible replacement
     int printf(const char*, ...);
     int main                          {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -455,7 +455,7 @@ The current best program is the following
 // edit action set type: [regular node]compatible replacement
     int printf(const char*, ...);
     int           argc                {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -472,7 +472,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -481,7 +481,7 @@ The current best program is the following
 
 // edit action set type: [regular_node]can be epsilon
     int main (int argc, char *argv[]) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -498,7 +498,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -507,7 +507,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main                          {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -524,7 +524,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -547,7 +547,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -557,7 +557,7 @@ The current best program is the following
 // edit action set type: [kleene_star]dd@1
     int                         ;
     int main (int argc, char *argv[]) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -574,7 +574,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -590,7 +590,7 @@ The current best program is the following
 // edit action set type: [regular node]compatible replacement
     int printf                  ;
     int main (int argc, char *argv[]) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -607,7 +607,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -617,7 +617,7 @@ The current best program is the following
 // edit action set type: [regular_node]can be epsilon
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -628,7 +628,7 @@ It took less than 1 second to cancel the task.
 
     int printf(const char*, ...);
     int main (int argc              ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -639,7 +639,7 @@ It took less than 1 second to cancel the task.
 
     int printf(const char*, ...);
     int main (          char *argv[]) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -668,7 +668,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -678,7 +678,7 @@ The current best program is the following
 // edit action set type: [kleene_star]dd@1
     int printf                  ;
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -695,7 +695,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -718,7 +718,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -728,7 +728,7 @@ The current best program is the following
 // edit action set type: [regular_node]can be epsilon
     int printf(                );
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -738,7 +738,7 @@ The current best program is the following
 // edit action set type: [regular node]compatible replacement
     int printf(const char*     );
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -755,7 +755,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -781,7 +781,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -791,7 +791,7 @@ The current best program is the following
 // edit action set type: [kleene_star]dd@1
     int printf(const char*, ...);
     int main (                      ) {
-                       ;
+                      ;
     }
 ------------------------------------------------------------
 
@@ -808,7 +808,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -824,7 +824,7 @@ The current best program is the following
 // edit action set type: [regular node]compatible replacement
     int printf(const char*, ...);
     int main (                      ) {
-      printf           ;
+     printf           ;
     }
 ------------------------------------------------------------
 
@@ -834,7 +834,7 @@ The current best program is the following
 // edit action set type: [regular node]compatible replacement
     int printf(const char*, ...);
     int main (                      ) {
-             "world\n" ;
+            "world\n" ;
     }
 ------------------------------------------------------------
 
@@ -851,7 +851,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -861,7 +861,7 @@ The current best program is the following
 // edit action set type: [regular node]compatible replacement
     int printf(const char , ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -878,7 +878,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -887,7 +887,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf           ;
+     printf           ;
     }
 ------------------------------------------------------------
 
@@ -904,7 +904,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -927,7 +927,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -937,7 +937,7 @@ The current best program is the following
 // edit action set type: [kleene_plus]remove whole except first
     int printf(const     *, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -953,7 +953,7 @@ The current best program is the following
 // edit action set type: [kleene_plus]dd@1
     int printf(      char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -970,7 +970,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -979,7 +979,7 @@ The current best program is the following
 
     int printf(const char*     );
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -996,7 +996,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1019,7 +1019,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1036,7 +1036,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1053,7 +1053,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1070,7 +1070,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1087,7 +1087,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1104,7 +1104,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1113,7 +1113,7 @@ The current best program is the following
 
     int printf(const char , ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1130,7 +1130,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1147,7 +1147,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1164,7 +1164,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1181,7 +1181,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1198,7 +1198,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1215,7 +1215,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1232,7 +1232,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1249,7 +1249,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1266,7 +1266,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1283,7 +1283,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1300,7 +1300,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1317,7 +1317,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1327,7 +1327,7 @@ The current best program is the following
 // edit action set type: [kleene_star]dd@1
     int printf(const char*, ...);
     int main (                      ) {
-      printf(         );
+     printf(         );
     }
 ------------------------------------------------------------
 
@@ -1344,7 +1344,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1367,7 +1367,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1384,7 +1384,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1401,7 +1401,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1418,7 +1418,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1435,7 +1435,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1452,7 +1452,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1462,7 +1462,7 @@ The current best program is the following
 // edit action set type: [kleene_star]dd@1
     int printf(const char*, ...);
         main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1479,7 +1479,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1502,7 +1502,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1519,7 +1519,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1540,7 +1540,7 @@ The current best program is the following
 
 // edit action set type: [kleene_plus]dd@1
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1557,7 +1557,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1580,7 +1580,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1603,7 +1603,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1613,7 +1613,7 @@ The current best program is the following
 // edit action set type: [kleene_star]dd@1
     int                         ;
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1630,7 +1630,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1645,7 +1645,7 @@ The current best program is the following
 
     int printf                  ;
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1662,7 +1662,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1671,7 +1671,7 @@ The current best program is the following
 
     int printf                  ;
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1688,7 +1688,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1711,7 +1711,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1728,7 +1728,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1737,7 +1737,7 @@ The current best program is the following
 
     int printf(                );
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1746,7 +1746,7 @@ The current best program is the following
 
     int printf(const char*     );
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1763,7 +1763,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1788,7 +1788,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1811,7 +1811,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1836,7 +1836,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1845,7 +1845,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-                       ;
+                      ;
     }
 ------------------------------------------------------------
 
@@ -1862,7 +1862,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1877,7 +1877,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf           ;
+     printf           ;
     }
 ------------------------------------------------------------
 
@@ -1886,7 +1886,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-             "world\n" ;
+            "world\n" ;
     }
 ------------------------------------------------------------
 
@@ -1903,7 +1903,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1912,7 +1912,7 @@ The current best program is the following
 
     int printf(const char , ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1929,7 +1929,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1938,7 +1938,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main                          {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1955,7 +1955,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -1964,7 +1964,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf           ;
+     printf           ;
     }
 ------------------------------------------------------------
 
@@ -1981,7 +1981,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2004,7 +2004,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2013,7 +2013,7 @@ The current best program is the following
 
     int printf(const     *, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2028,7 +2028,7 @@ The current best program is the following
 
     int printf(      char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2045,7 +2045,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2054,7 +2054,7 @@ The current best program is the following
 
     int printf(const char*     );
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2071,7 +2071,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2094,7 +2094,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2103,7 +2103,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main                          {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2120,7 +2120,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2143,7 +2143,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2160,7 +2160,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2177,7 +2177,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2194,7 +2194,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2211,7 +2211,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2228,7 +2228,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2237,7 +2237,7 @@ The current best program is the following
 
     int printf(const char , ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2254,7 +2254,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2271,7 +2271,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2288,7 +2288,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2305,7 +2305,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2322,7 +2322,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2339,7 +2339,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2356,7 +2356,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2373,7 +2373,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2390,7 +2390,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2407,7 +2407,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2424,7 +2424,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2441,7 +2441,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2450,7 +2450,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf(         );
+     printf(         );
     }
 ------------------------------------------------------------
 
@@ -2467,7 +2467,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2490,7 +2490,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2507,7 +2507,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2524,7 +2524,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2541,7 +2541,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2558,7 +2558,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2575,7 +2575,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2584,7 +2584,7 @@ The current best program is the following
 
     int printf(const char*, ...);
         main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2601,7 +2601,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
@@ -2624,7 +2624,7 @@ The current best program is the following
 
     int printf(const char*, ...);
     int main (                      ) {
-      printf("world\n");
+     printf("world\n");
     }
 ------------------------------------------------------------
 
