@@ -28,6 +28,8 @@ object LanguageGo : LanguageKind() {
 
   override val defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT
 
+  override val defaultFormmaterCommand = null
+
   override val allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.COMPACT_ORIG_FORMAT,
     EnumFormatControl.ORIG_FORMAT

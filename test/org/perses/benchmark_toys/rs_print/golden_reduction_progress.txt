@@ -51,9 +51,9 @@ crate {id=1}
 The current best program is the following
 
     fn main() {
-        println!("ingress");
-        println!("hello_world");
-        println!("egress");
+                                  println!("ingress");
+    println!("hello_world");
+             println!("egress");
     }
 ------------------------------------------------------------
 
@@ -75,9 +75,9 @@ Failed to reduce node 3
 The current best program is the following
 
     fn main() {
-        println!("ingress");
-        println!("hello_world");
-        println!("egress");
+                                  println!("ingress");
+    println!("hello_world");
+             println!("egress");
     }
 ------------------------------------------------------------
 
@@ -120,9 +120,9 @@ Failed to reduce node 7
 The current best program is the following
 
     fn main() {
-        println!("ingress");
-        println!("hello_world");
-        println!("egress");
+                                  println!("ingress");
+    println!("hello_world");
+             println!("egress");
     }
 ------------------------------------------------------------
 
@@ -138,9 +138,9 @@ Failed to reduce node 11
 The current best program is the following
 
     fn main() {
-        println!("ingress");
-        println!("hello_world");
-        println!("egress");
+                                  println!("ingress");
+    println!("hello_world");
+             println!("egress");
     }
 ------------------------------------------------------------
 
@@ -157,8 +157,8 @@ The current best program is the following
 
 // edit action set type: [kleene_star]dd@1
     fn main() {
-        println!("ingress");
-        println!("hello_world");
+                                  println!("ingress");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -186,7 +186,7 @@ The current best program is the following
 
 // edit action set type: [kleene_star]dd@1
     fn main() {
-        println!("ingress");
+                                  println!("ingress");
     }
 ------------------------------------------------------------
 
@@ -195,7 +195,7 @@ The current best program is the following
 
 // edit action set type: [kleene_star]dd@1
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -223,7 +223,7 @@ Succeeded to reduce node 13 from 24 to 12
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -246,7 +246,7 @@ Failed to reduce node 36
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -262,7 +262,7 @@ Failed to reduce node 39
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -278,7 +278,7 @@ Failed to reduce node 42
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -294,7 +294,7 @@ Failed to reduce node 8
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -310,7 +310,7 @@ Failed to reduce node 68
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -326,7 +326,7 @@ Failed to reduce node 66
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -342,7 +342,7 @@ Failed to reduce node 49
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -358,7 +358,7 @@ Failed to reduce node 45
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -367,7 +367,7 @@ The current best program is the following
 
 // edit action set type: [kleene_star]dd@1
     fn main() {
-        println!(             );
+    println!(             );
     }
 ------------------------------------------------------------
 
@@ -383,7 +383,7 @@ Failed to reduce node 44
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -399,7 +399,7 @@ Failed to reduce node 47
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -415,7 +415,7 @@ Failed to reduce node 43
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -431,7 +431,7 @@ Failed to reduce node 41
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -447,7 +447,7 @@ Failed to reduce node 38
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -463,7 +463,7 @@ Failed to reduce node 14
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -479,7 +479,7 @@ Failed to reduce node 12
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -495,7 +495,7 @@ Failed to reduce node 10
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -511,7 +511,7 @@ Failed to reduce node 9
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -532,7 +532,7 @@ Failed to reduce node 3
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -560,7 +560,7 @@ Failed to reduce node 7
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -576,7 +576,7 @@ Failed to reduce node 11
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -599,7 +599,7 @@ Failed to reduce node 13
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -621,7 +621,7 @@ Failed to reduce node 18
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -637,7 +637,7 @@ Failed to reduce node 21
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -653,7 +653,7 @@ Failed to reduce node 24
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -669,7 +669,7 @@ Failed to reduce node 8
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -685,7 +685,7 @@ Failed to reduce node 34
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -701,7 +701,7 @@ Failed to reduce node 32
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -717,7 +717,7 @@ Failed to reduce node 31
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -733,7 +733,7 @@ Failed to reduce node 27
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -741,7 +741,7 @@ The current best program is the following
 =========Cache hit for the following program: fail==========
 
     fn main() {
-        println!(             );
+    println!(             );
     }
 ------------------------------------------------------------
 
@@ -757,7 +757,7 @@ Failed to reduce node 26
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -773,7 +773,7 @@ Failed to reduce node 29
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -789,7 +789,7 @@ Failed to reduce node 25
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -805,7 +805,7 @@ Failed to reduce node 23
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -821,7 +821,7 @@ Failed to reduce node 20
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -837,7 +837,7 @@ Failed to reduce node 14
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -853,7 +853,7 @@ Failed to reduce node 12
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
@@ -869,7 +869,7 @@ Failed to reduce node 10
 The current best program is the following
 
     fn main() {
-        println!("hello_world");
+    println!("hello_world");
     }
 ------------------------------------------------------------
 
