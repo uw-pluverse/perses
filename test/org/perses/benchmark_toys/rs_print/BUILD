@@ -1,6 +1,7 @@
 package(default_visibility = ["//test/org/perses:__subpackages__"])
 
 load("//src/org/perses:reduction.bzl", "reduce")
+load("//test/org/perses:test.bzl", "golden_test")
 load("//benchmark:benchmark.bzl", "reduction_golden_test", "sanity_test")
 
 sanity_test(
@@ -27,6 +28,30 @@ reduce(
     source_file = "hello.rs",
     statistics_file = "statistics.txt",
     test_script = "r.sh",
+)
+
+genrule(
+    name = "format_rs_from_reduced_rs_print",
+    srcs = ["hello_reduced.rs"],
+    outs = ["golden_file_format_rs_from_reduced_rs_print.rs"],
+    cmd = "cat $(location hello_reduced.rs) | rustfmt > $@",
+)
+
+reduce(
+    name = "reduce_rs_print_with_formatter",
+    call_formatter = True,
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    reduction_algorithm = "perses_node_with_dfs_delta",
+    result_file = "hello_reduced_formatted.rs",
+    source_file = "hello.rs",
+    test_script = "r.sh",
+)
+
+golden_test(
+    name = "golden_test_reduce_rs_print_with_formatter",
+    golden_file = "golden_file_format_rs_from_reduced_rs_print.rs",
+    test_file = "hello_reduced_formatted.rs",
 )
 
 reduction_golden_test(

@@ -20,7 +20,7 @@ def reduce(
     if "/" in test_script:
         fail("The test script should be in the current folder.")
 
-    result_file = result_file or "reduced_result_%s" % source_file
+    result_file = result_file or "reduced_%s_result_%s" % (name, source_file)
     statistics_file = statistics_file or "%s_statistics.txt" % name
     progress_dump_file = progress_dump_file or "%s_progress.txt" % name
     if enable_query_caching == None:
@@ -51,7 +51,7 @@ def reduce(
         "--enable-tree-slicer %s" % ("true" if enable_tree_slicer else "false"),
     ]
     if call_formatter != None:
-        args.append("--call-formatter=%s" % ("true" if call_formatter else "false"))
+        args.append("--call-formatter %s" % ("true" if call_formatter else "false"))
     args.append("&>")
     args.append("$(location %s)" % stdout_file)
 
