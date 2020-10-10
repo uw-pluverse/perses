@@ -358,6 +358,11 @@ class ReductionDriver(
       TimeUtil.formatDateForFileName(System.currentTimeMillis())
     val formatFolder = executorService.createNamedReductionFolder(formatFolderName)
     configuration.bestResultFile.copyTo(formatFolder.sourceFilePath)
+    logger.atInfo().log(
+      "Formatting the reduction result %s with %s",
+      configuration.bestResultFile,
+      formatCmd.command
+    )
     val cmdOutput = formatCmd.runWith(
       ImmutableList.of(formatFolder.sourceFilePath.name),
       workingDirectory = formatFolder.folder
@@ -366,10 +371,19 @@ class ReductionDriver(
       logger.atSevere().log(
         "Failed to call formatter %s on the final result %s.",
         formatCmd.command,
-        configuration.bestResultFile
+        formatFolder.sourceFilePath
       )
       logger.atSevere().log("stdout: %s", cmdOutput.stderr.combineLines())
       logger.atSevere().log("stderr: %s", cmdOutput.stdout.combineLines())
+      return
+    }
+    val scriptTestResult = formatFolder.testScript.test()
+    if (scriptTestResult.isFail) {
+      logger.atSevere().log(
+        "The formatted file failed the property test: formatter=%s, program=%s",
+        formatCmd.command,
+        formatFolder.sourceFilePath
+      )
       return
     }
     formatFolder.sourceFilePath.copyTo(configuration.bestResultFile, overwrite = true)
