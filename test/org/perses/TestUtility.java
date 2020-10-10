@@ -239,7 +239,7 @@ public final class TestUtility {
   }
 
   public static ImmutableList<File> getRustTestFiles() {
-    return getGolangFiles(RUST_PROGRAM_FOLDER);
+    return getRustFiles(RUST_PROGRAM_FOLDER);
   }
 
   public static File getOneGccTestFile(String fileName) {
