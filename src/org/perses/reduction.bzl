@@ -50,6 +50,8 @@ def reduce(
         "--enable-token-slicer %s" % ("true" if enable_token_slicer else "false"),
         "--enable-tree-slicer %s" % ("true" if enable_tree_slicer else "false"),
     ]
+    if call_formatter != None:
+        args.append("--call-formatter=%s" % ("true" if call_formatter else "false"))
     args.append("&>")
     args.append("$(location %s)" % stdout_file)
 
