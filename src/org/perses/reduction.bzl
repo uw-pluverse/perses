@@ -13,7 +13,8 @@ def reduce(
         enable_tree_slicer = None,
         code_format = None,
         verbosity = None,
-        log_file = None):
+        log_file = None,
+        call_formatter = None):
     if "/" in source_file:
         fail("The source file should be in the current folder.")
     if "/" in test_script:
@@ -48,9 +49,9 @@ def reduce(
         "--edit-caching %s" % ("true" if enable_edit_caching else "false"),
         "--enable-token-slicer %s" % ("true" if enable_token_slicer else "false"),
         "--enable-tree-slicer %s" % ("true" if enable_tree_slicer else "false"),
-        "&>",
-        "$(location %s)" % stdout_file,
     ]
+    args.append("&>")
+    args.append("$(location %s)" % stdout_file)
 
     outs = [result_file, statistics_file, progress_dump_file, stdout_file]
     if (code_format):
