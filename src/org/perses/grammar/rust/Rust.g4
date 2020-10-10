@@ -1008,7 +1008,8 @@ param:
     pat ':' param_ty;
 
 param_ty:
-    ty_sum
+    '...'
+    | ty_sum
     | 'impl' bound;  // experimental: feature(universal_impl_trait)
 
 param_list:
@@ -1301,7 +1302,6 @@ prim_bound:
 
 ty:
     '_'
-    |'...'
     // The next 3 productions match exactly `'(' ty_sum_list? ')'`,
     // but (i32) and (i32,) are distinct types, so parse them with different rules.
     | '(' ')'                           // unit
