@@ -184,6 +184,7 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
     @Parameter(
       names = ["--call-formatter"],
       description = "call a formatter on the final result",
+      arity = 1,
       order = FlagOrder.OUTPUT_REFINING + 0
     )
     var callFormatter = false
