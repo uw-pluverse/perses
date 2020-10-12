@@ -158,10 +158,6 @@ def main():
 
     report = dict() #final printable results
 
-    e = os.getenv('PERSES_EXTRA_FLAGS')
-    print(e)
-    exit(1)
-
     # install token counter
     load_token_counter(para)
 
