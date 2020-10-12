@@ -5,6 +5,7 @@ import json
 import os
 import subprocess
 import tempfile
+import tracemalloc
 from datetime import datetime
 from dataclasses import dataclass
 from typing import List, Dict
@@ -157,6 +158,10 @@ def main():
 
     report = dict() #final printable results
 
+    e = os.getenv('PERSES_EXTRA_FLAGS')
+    print(e)
+    exit(1)
+
     # install token counter
     load_token_counter(para)
 
@@ -186,6 +191,8 @@ def main():
             for iteration in range(para.iterations):
                 print(f"*****iteration {iteration}*****")
 
+                tracemalloc.start()
+
                 fd, fname = tempfile.mkstemp()
                 os.close(fd)
                 pipe = subprocess.DEVNULL
@@ -200,6 +207,10 @@ def main():
                     stdout=pipe,
                     stderr=pipe)
 
+                current, peak = tracemalloc.get_traced_memory()
+                tracemalloc.stop()
+                tracemalloc.reset_peak()
+
                 with open(fname, "r") as output:
                     run_result = output.read().strip().split("\n")
                     if len(run_result) != 7:
@@ -209,8 +220,9 @@ def main():
                     report[bench_name][f"{reducer}_iter{iteration}"]["bench"] = bench_name
                     report[bench_name][f"{reducer}_iter{iteration}"]["query"] = run_result[3]
                     report[bench_name][f"{reducer}_iter{iteration}"]["time"] = run_result[4]
-                    report[bench_name][f"{reducer}_iter{iteration}"]["reduced_token"] = run_result[5]
+                    report[bench_name][f"{reducer}_iter{iteration}"]["token_remaining"] = run_result[5]
                     report[bench_name][f"{reducer}_iter{iteration}"]["ret_code"] = run_result[6]
+                    report[bench_name][f"{reducer}_iter{iteration}"]["peak_memory_usage"] = peak
 
                     if not para.silent:
                         print(report[bench_name][f"{reducer}_iter{iteration}"])
