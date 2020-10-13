@@ -45,12 +45,14 @@ class PnfRustParserFacadeTest {
     val shard4 = mutableListOf<File>()
     val shard5 = mutableListOf<File>()
     val shard6 = mutableListOf<File>()
+    val all = mutableListOf<File>()
 
     init {
       var counter = 0
       val files = listOf(shard1, shard2, shard3, shard4, shard5, shard6)
       for (file in TestUtility.getRustTestFiles()) {
         files.get(counter % files.size).add(file)
+        all.add(file)
         counter += 1
       }
     }
@@ -84,7 +86,7 @@ class PnfRustParserFacadeTest {
   }
 
   fun testSingleFile(file: File) {
-    /* 
+
     try {
       System.err.println("Testing file ${file.getAbsolutePath()}")
       val check = file.readText()
@@ -92,8 +94,17 @@ class PnfRustParserFacadeTest {
       testString(check, file.toString())
     } catch (err : java.io.FileNotFoundException) {
       // Suppress missing files (there's some strangeness with java and Unicode file names).
+    } catch(excption: Exception) {
+      var exc = excption
+      excption.message
     }
-    */
+  }
+
+  @Test
+  fun testall() {
+    for (file in testData.all) {
+      testSingleFile(file)
+    }
   }
 
   @Test
