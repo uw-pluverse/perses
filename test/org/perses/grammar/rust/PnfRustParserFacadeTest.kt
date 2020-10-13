@@ -45,12 +45,14 @@ class PnfRustParserFacadeTest {
     val shard4 = mutableListOf<File>()
     val shard5 = mutableListOf<File>()
     val shard6 = mutableListOf<File>()
+    val all = mutableListOf<File>()
 
     init {
       var counter = 0
       val files = listOf(shard1, shard2, shard3, shard4, shard5, shard6)
       for (file in TestUtility.getRustTestFiles()) {
         files.get(counter % files.size).add(file)
+        all.add(file)
         counter += 1
       }
     }
@@ -95,6 +97,13 @@ class PnfRustParserFacadeTest {
     } catch(excption: Exception) {
       var exc = excption
       excption.message
+    }
+  }
+
+  @Test
+  fun testall() {
+    for (file in testData.all) {
+      testSingleFile(file)
     }
   }
 
