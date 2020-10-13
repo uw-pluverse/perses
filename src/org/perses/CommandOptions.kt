@@ -299,18 +299,19 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
 
     @Parameter(
       names = ["--query-cache-refresh-threshold"],
-      description = "When to trigger a refresh of the query cache. " +
-        "The value is is a fraction in the format x/y. " +
-        "Assume the original token count is t. " +
-        "Since last refresh where the best program has t' tokens, " +
-        "if the latest best program has b tokens, and (t' - b) >= t *x/y, " +
-        "then a refresh is triggered.",
+      description = "The threshold triggers a refresh of the query cache. " +
+        "The refresh follows the equation: t' - t'' >= t * threshold(%). " +
+        "t 	- original tokens. " +
+        "t' 	- tokens of the best program at last refresh. " +
+        "t''	- tokens of the current best program. " +
+        "Refresh threshold requires an integer input ranging [0, 100]. " +
+        "e.g. 0 represents 0%, 85 represents 85%.",
       order = FlagOrder.CACHE_CONTROL + 2
     )
-    var queryCacheRefreshThreshold = "100/100"
+    var queryCacheRefreshThreshold = 100 // Represent 100/100 = 100%
 
     fun getQueryCacheRefreshThreshold(): Fraction {
-      return parse(queryCacheRefreshThreshold)
+      return Fraction(queryCacheRefreshThreshold, 100)
     }
 
     override fun validate() {
