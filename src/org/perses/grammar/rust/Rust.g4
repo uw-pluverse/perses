@@ -852,10 +852,6 @@ fragment XID_Continue:
 
 // === Modules and items
 
-
-Async:
-    'async' -> skip;
-
 crate:
     mod_body EOF;
 
@@ -928,8 +924,7 @@ extern_crate:
 // --- use declarations
 
 use_decl:
-    'use' use_path ';'
-    |'use' use_path 'as' pat_ident';';
+    'use' use_path ';';
 
 use_path:
     '::'? '{' use_item_list '}'
@@ -1013,8 +1008,7 @@ param:
     pat ':' param_ty;
 
 param_ty:
-    '...'
-    | ty_sum
+    ty_sum
     | 'impl' bound;  // experimental: feature(universal_impl_trait)
 
 param_list:
@@ -1085,9 +1079,7 @@ field_decl_list:
     field_decl (',' field_decl)* ','?;
 
 enum_decl:
-    'enum' ident ty_params? where_clause? '{' enum_variant_list? '}'
-    |'crate' 'enum' ident ty_params? where_clause? '{' enum_variant_list? '}';
-
+    'enum' ident ty_params? where_clause? '{' enum_variant_list? '}';
 
 enum_variant:
     attr* visibility? enum_variant_main;
@@ -1128,7 +1120,6 @@ trait_decl:
 
 trait_item:
     attr* 'type' ident colon_bound? ty_default? ';'
-    | attr* 'type' ident '<' ident '>' ':' ident where_clause ';'
     | attr* 'const' ident ':' ty_sum const_default? ';'  // experimental associated constants
     | attr* trait_method_decl
     | attr* item_macro_path '!' item_macro_tail;
@@ -1157,8 +1148,6 @@ impl_item:
 impl_item_tail:
     'default'? method_decl
     | 'type' ident '=' ty_sum ';'
-    | 'type' ident '=' '!' ';'
-    | 'type' ident '<' ident '>' where_clause '=' ty_sum ';'
     | (const_decl | associated_const_decl)
     | item_macro_path '!' item_macro_tail;
 
@@ -1218,7 +1207,6 @@ path:
 
 path_parent:
     'self'
-    |'crate'
     | '<' ty_sum as_trait? '>'
     | path_segment
     | '::' path_segment
@@ -1301,7 +1289,6 @@ colon_bound:
 
 bound:
     prim_bound
-    | where_clause
     | bound '+' prim_bound;
 
 prim_bound:
@@ -1364,7 +1351,7 @@ lifetime_param_list:
     lifetime_param (',' lifetime_param)* ','?;
 
 ty_param:
-    attr* mut_or_const? ident colon_bound? ty_default?;
+    attr* ident colon_bound? ty_default?;
 
 ty_param_list:
     ty_param (',' ty_param)* ','?;
@@ -1798,13 +1785,10 @@ fragment IDENT:
 
 Lifetime:
     [']IDENT;
-
 Ident:
     IDENT;
-
 fragment SIMPLE_ESCAPE:
     '\\' [0nrt'"\\];
-
 fragment CHAR:
     ~['"\r\n\\\ud800-\udfff]          // a single BMP character other than a backslash, newline, or quote
     | [\ud800-\udbff][\udc00-\udfff]  // a single non-BMP character (hack for Java)
