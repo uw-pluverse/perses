@@ -23,8 +23,7 @@ java -jar "/tmp/binaries/perses_deploy.jar" \
   --test-script "${TMP_TEST_SCRIPT}" \
   --input-file "${TMP_SOURCE_FILE}" \
   --output-file "${TMP}/reduced.c" \
-  --threads "${THREADS}" \
-  ${PERSES_EXTRA_FLAGS}
+  --threads "${THREADS}" ${PERSES_EXTRA_FLAGS:-""}
 readonly RET_CODE="$?"
 readonly END_TIME=$(date +%s)
 

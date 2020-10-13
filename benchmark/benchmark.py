@@ -203,9 +203,8 @@ def main():
                     stdout=pipe,
                     stderr=pipe)
 
-                current, peak = tracemalloc.get_traced_memory()
+                peak = tracemalloc.get_traced_memory()[1]
                 tracemalloc.stop()
-                tracemalloc.reset_peak()
 
                 with open(fname, "r") as output:
                     run_result = output.read().strip().split("\n")
