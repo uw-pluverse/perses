@@ -1785,10 +1785,13 @@ fragment IDENT:
 
 Lifetime:
     [']IDENT;
+
 Ident:
     IDENT;
+
 fragment SIMPLE_ESCAPE:
     '\\' [0nrt'"\\];
+
 fragment CHAR:
     ~['"\r\n\\\ud800-\udfff]          // a single BMP character other than a backslash, newline, or quote
     | [\ud800-\udbff][\udc00-\udfff]  // a single non-BMP character (hack for Java)
