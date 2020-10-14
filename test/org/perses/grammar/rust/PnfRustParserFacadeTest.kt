@@ -56,11 +56,11 @@ class PnfRustParserFacadeTest {
     assertThat(formatted).isEqualTo(tempFile.readText())
   }
 
-  fun testString(program: String, name: String) {
-    val parseTreeFromOrigParser = facade.parseWithOrigRustParser(program, name)
+  fun testString(file: File) {
+    val parseTreeFromOrigParser = facade.parseWithOrigRustParser(file)
     val tokensByOrigParser = TestUtility.extractTokens(parseTreeFromOrigParser.tree)
 
-    val parseTreeWithPnfParser = facade.parseString(program, name)
+    val parseTreeWithPnfParser = facade.parseFile(file)
     val tokensByPnfParser = TestUtility.extractTokens(parseTreeWithPnfParser.tree)
 
     assertThat(tokensByPnfParser).containsExactlyElementsIn(tokensByOrigParser).inOrder()
@@ -68,8 +68,7 @@ class PnfRustParserFacadeTest {
 
   fun testSingleFile(file: File) {
     try {
-      val check = file.readText()
-      testString(check, file.toString())
+      testString(file)
       assertThat(failedTests.contains(file.toString())).isFalse()
     } catch (err: java.io.FileNotFoundException) {
       // Suppress missing files (there's some strangeness with java and Unicode file names).
@@ -134,7 +133,10 @@ class PnfRustParserFacadeTest {
     |}
     """.trimMargin()
 
-    testString(program, "<in memory>")
+    val file = File(workingDir, "test.rs")
+    file.writeText(program)
+
+    testString(file)
   }
 
   // Collection for keeping track of the shards of tests we need to run
