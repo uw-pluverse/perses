@@ -396,14 +396,18 @@ associated_const_decl
     ;
 
 fn_head
-    : optional__fn_head_1 optional__impl_block_1 optional__fn_head_3 'fn' ident optional__impl_block_2
+    : optional__fn_head_1 optional__fn_head_2 optional__impl_block_1 optional__fn_head_4 'fn' ident optional__impl_block_2
     ;
 
 optional__fn_head_1
+    : 'async'?
+    ;
+
+optional__fn_head_2
     : 'const'?
     ;
 
-optional__fn_head_3
+optional__fn_head_4
     : extern_abi?
     ;
 
@@ -601,7 +605,7 @@ ty
     | ty_path optional__ty_13
     | '(' alternative__ty_16 ')'
     | alternative__ty_17 ty
-    | optional__ty_8 optional__impl_block_1 optional__fn_head_3 'fn' '(' optional__ty_11 ')' optional__foreign_fn_decl_2
+    | optional__ty_8 optional__impl_block_1 optional__fn_head_4 'fn' '(' optional__ty_11 ')' optional__foreign_fn_decl_2
     ;
 
 optional__ty_1
@@ -1157,7 +1161,7 @@ kleene_star__lifetime_param_list_2
     ;
 
 lifetime_param
-    : kleene_star__item_1 optional__fn_head_1 Lifetime optional__lifetime_def_2
+    : kleene_star__item_1 optional__fn_head_2 Lifetime optional__lifetime_def_2
     ;
 
 ty_param_list
@@ -1173,7 +1177,7 @@ kleene_star__ty_param_list_2
     ;
 
 ty_param
-    : kleene_star__item_1 optional__fn_head_1 ident optional__trait_decl_4 optional__trait_item_3
+    : kleene_star__item_1 optional__fn_head_2 ident optional__trait_decl_4 optional__trait_item_3
     ;
 
 pat_no_mut

@@ -90,6 +90,11 @@ public abstract class AbstractDefaultParserFacade<LEXER extends Lexer, PARSER ex
 
   protected LEXER createLexerWithoutCache(ANTLRInputStream inputStream) {
     final LEXER lexer = createLexer(inputStream);
+    disableGlobalCachingIfInstructed(lexer);
+    return lexer;
+  }
+
+  protected static <LEXER extends Lexer> LEXER disableGlobalCachingIfInstructed(LEXER lexer) {
     if (DISABLE_GLOBAL_CACHING_FOR_BETTER_MEMORY_THO_AFFECT_EFFICIENCY) {
       lexer.setInterpreter(
           new LexerATNSimulator(
@@ -105,6 +110,11 @@ public abstract class AbstractDefaultParserFacade<LEXER extends Lexer, PARSER ex
 
   protected PARSER createParserWithoutCache(CommonTokenStream tokens) {
     final PARSER parser = createParser(tokens);
+    disableGlobalCachingIfInstructed(parser);
+    return parser;
+  }
+
+  protected static <PARSER extends Parser> PARSER disableGlobalCachingIfInstructed(PARSER parser) {
     if (DISABLE_GLOBAL_CACHING_FOR_BETTER_MEMORY_THO_AFFECT_EFFICIENCY) {
       // The following code is from.
       // https://github.com/antlr/antlr4/issues/499#issuecomment-38159752
