@@ -22,7 +22,10 @@ In the docker container, running benchmark.py will build and install different r
 Run ```./benchmark.py --help``` for a list of all the arguments
 
 #### --subjects
-Run benchmark(s) on specified bench(es). E.g. ```--subjects clang-27137 gcc-59903```
+Run benchmark(s) on specified bench(es). 
+```
+--subjects clang-27137 gcc-59903
+```
 
 #### --iterations
 Run benchmark(s) on each bench for specified number of times before switching to the next.
@@ -34,10 +37,16 @@ Write no results to stdout and save no json file.
 Display all pipe stdout and stderr from reducers. Details of the reduction process will be dislayed.
 
 #### --reducers
-Specify reducer(s) to benchmark. E.g. ```--reducers perses hdd creduce```
+Specify reducer(s) to benchmark. 
+```
+--reducers perses hdd creduce
+```
 
 #### --list-reducers
 List current available reducers.
+
+#### --memory-profiler
+Enable Perses memory usage profiler and output runtime data to a text file.
 
 ### Supported Reducers
 Currently the reducers are ran in the following order
@@ -53,8 +62,7 @@ Perses allows additional environment variables for testing flexibilities.
 
 ### PERSES_EXTRA_FLAGS
 Provide additional command line arguments to Perses. If not specified, Perses would run default settings.
-E.g. ```PERSES_EXTRA_FLAGS="--query-caching true" ./benchmark.py ...```
+```
+PERSES_EXTRA_FLAGS="--query-caching false --edit-caching false" ./benchmark.py ...
+```
 
-### PERSES_MEMORY_PROFILER
-Enable memory usage profiler of Perses when benchmarking. Output results to specified target file.
-E.g. ```PERSES_MEMORY_PROFILER="memory_log.txt" ./benchmark.py ...```
