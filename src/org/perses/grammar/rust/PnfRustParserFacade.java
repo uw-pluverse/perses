@@ -18,6 +18,14 @@ package org.perses.grammar.rust;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.TokenStream;
+import org.antlr.v4.runtime.atn.ATN;
+import org.antlr.v4.runtime.atn.ATNDeserializer;
+import org.antlr.v4.runtime.atn.LexerATNSimulator;
+import org.antlr.v4.runtime.atn.ParserATNSimulator;
+import org.antlr.v4.runtime.atn.PredictionContextCache;
+import org.antlr.v4.runtime.atn.PredictionMode;
+import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.perses.antlr.ParseTreeWithParser;
 import org.perses.grammar.AbstractDefaultParserFacade;
@@ -64,11 +72,36 @@ public final class PnfRustParserFacade
     }
   }
 
-  public ParseTreeWithParser parseWithOrigRustParser(String goProgram, String fileName)
+  public ParseTreeWithParser parseWithOrigRustParser(String rustProgram, String fileName)
       throws IOException {
-    try (BufferedReader reader = new BufferedReader(new StringReader(goProgram))) {
+    try (BufferedReader reader = new BufferedReader(new StringReader(rustProgram))) {
       return parseWithOrigRustParser(reader, fileName);
     }
+  }
+
+  private static RustLexer createOrigSlowRustLexerWithoutCaching(ANTLRInputStream stream) {
+    final RustLexer lexer = new RustLexer(stream);
+    final ATN atn = new ATNDeserializer().deserialize(RustLexer._serializedATN.toCharArray());
+    final DFA[] decisionToDFA = new DFA[atn.getNumberOfDecisions()];
+    for (int i = 0; i < atn.getNumberOfDecisions(); i++) {
+      decisionToDFA[i] = new DFA(atn.getDecisionState(i), i);
+    }
+    lexer.setInterpreter(
+        new LexerATNSimulator(lexer, atn, decisionToDFA, new PredictionContextCache()));
+    return lexer;
+  }
+
+  private static RustParser createOrigSlowRustParserWithoutCaching(TokenStream input) {
+    final RustParser parser = new RustParser(input);
+    final ATN atn = new ATNDeserializer().deserialize(RustParser._serializedATN.toCharArray());
+    final DFA[] decisionToDFA = new DFA[atn.getNumberOfDecisions()];
+    for (int i = 0; i < atn.getNumberOfDecisions(); i++) {
+      decisionToDFA[i] = new DFA(atn.getDecisionState(i), i);
+    }
+    parser.setInterpreter(
+        new ParserATNSimulator(parser, atn, decisionToDFA, new PredictionContextCache()));
+    parser.getInterpreter().setPredictionMode(PredictionMode.LL);
+    return parser;
   }
 
   private static ParseTreeWithParser parseWithOrigRustParser(BufferedReader reader, String fileName)
@@ -76,8 +109,8 @@ public final class PnfRustParserFacade
     return parseReader(
         fileName,
         reader,
-        antlrInputStream -> new RustLexer(antlrInputStream),
-        commonTokenStream -> new RustParser(commonTokenStream),
+        PnfRustParserFacade::createOrigSlowRustLexerWithoutCaching,
+        PnfRustParserFacade::createOrigSlowRustParserWithoutCaching,
         RustParser::crate);
   }
 }

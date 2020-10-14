@@ -17,7 +17,9 @@
 package org.perses.grammar.rust
 
 import com.google.common.collect.ImmutableList
+import com.google.common.collect.ImmutableSet
 import com.google.common.io.Files
+import com.google.common.truth.Truth
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Test
@@ -37,26 +39,6 @@ class PnfRustParserFacadeTest {
     workingDir.deleteRecursively()
   }
 
-  // Collection for keeping track of the shards of tests we need to run
-  private companion object testData {
-    val shard1 = mutableListOf<File>()
-    val shard2 = mutableListOf<File>()
-    val shard3 = mutableListOf<File>()
-    val shard4 = mutableListOf<File>()
-    val shard5 = mutableListOf<File>()
-    val shard6 = mutableListOf<File>()
-    val all = mutableListOf<File>()
-
-    init {
-      var counter = 0
-      val files = listOf(shard1, shard2, shard3, shard4, shard5, shard6)
-      for (file in TestUtility.getRustTestFiles()) {
-        files.get(counter % files.size).add(file)
-        all.add(file)
-        counter += 1
-      }
-    }
-  }
 
   @Test
   fun testDefaultFormatterCmd() {
@@ -75,76 +57,64 @@ class PnfRustParserFacadeTest {
     assertThat(formatted).isEqualTo(tempFile.readText())
   }
 
-  fun testString(program: String, name: String) {
-    val parseTreeFromOrigParser = facade.parseWithOrigRustParser(program, name)
+  fun testString(file: File) {
+    val parseTreeFromOrigParser = facade.parseWithOrigRustParser(file)
     val tokensByOrigParser = TestUtility.extractTokens(parseTreeFromOrigParser.tree)
 
-    val parseTreeWithPnfParser = facade.parseString(program, name)
+    val parseTreeWithPnfParser = facade.parseFile(file)
     val tokensByPnfParser = TestUtility.extractTokens(parseTreeWithPnfParser.tree)
 
     assertThat(tokensByPnfParser).containsExactlyElementsIn(tokensByOrigParser).inOrder()
   }
 
   fun testSingleFile(file: File) {
-
     try {
-      System.err.println("Testing file ${file.getAbsolutePath()}")
-      val check = file.readText()
-
-      testString(check, file.toString())
-    } catch (err : java.io.FileNotFoundException) {
-      // Suppress missing files (there's some strangeness with java and Unicode file names).
-    } catch(excption: Exception) {
-      var exc = excption
-      excption.message
-    }
-  }
-
-  @Test
-  fun testall() {
-    for (file in testData.all) {
-      testSingleFile(file)
+      testString(file)
+      Truth.assertWithMessage("Remove $file").that(failedTests).containsNoneIn(arrayOf(file.toString()))
+    } catch (e: Throwable) {
+      e.printStackTrace()
+      assertThat(failedTests).contains(file.toString())
     }
   }
 
   @Test
   fun testShard1() {
-    for (file in testData.shard1) {
+    for (file in shard1) {
       testSingleFile(file)
     }
   }
 
   @Test
   fun testShard2() {
-    for (file in testData.shard2) {
+    for (file in shard2) {
       testSingleFile(file)
     }
   }
 
   @Test
   fun testShard3() {
-    for (file in testData.shard3) {
+    for (file in shard3) {
       testSingleFile(file)
     }
   }
 
   @Test
   fun testShard4() {
-    for (file in testData.shard4) {
+    for (file in shard4) {
       testSingleFile(file)
     }
   }
 
   @Test
   fun testShard5() {
-    for (file in testData.shard5) {
+    for (file in shard5) {
       testSingleFile(file)
     }
   }
 
   @Test
   fun testShard6() {
-    for (file in testData.shard6) {
+    for (file in shard6) {
       testSingleFile(file)
     }
   }
@@ -162,6 +132,40 @@ class PnfRustParserFacadeTest {
     |}
     """.trimMargin()
 
-    testString(program, "<in memory>")
+    val file = File(workingDir, "test.rs")
+    file.writeText(program)
+
+    testString(file)
   }
+
+  // Collection for keeping track of the shards of tests we need to run
+  private companion object {
+    val shard1 = mutableListOf<File>()
+    val shard2 = mutableListOf<File>()
+    val shard3 = mutableListOf<File>()
+    val shard4 = mutableListOf<File>()
+    val shard5 = mutableListOf<File>()
+    val shard6 = mutableListOf<File>()
+    val failedTests = buildFailedTests()
+
+    init {
+      var counter = 0
+      val shards = listOf(shard1, shard2, shard3, shard4, shard5, shard6)
+      for (file in TestUtility.getRustTestFiles()) {
+        val shard = shards.get(counter++ % shards.size)
+        shard.add(file)
+      }
+    }
+
+    private fun buildFailedTests() =
+      File("test/org/perses/grammar/rust/golden_fail_list.txt")
+        .readLines()
+        .asSequence()
+        .map { it.trim() }
+        .filter { it.isNotBlank() }
+        .fold(ImmutableSet.builder<String>(), { builder, f -> builder.add(f) })
+        .build()
+
+  }
+
 }
