@@ -64,9 +64,9 @@ public final class PnfRustParserFacade
     }
   }
 
-  public ParseTreeWithParser parseWithOrigRustParser(String goProgram, String fileName)
+  public ParseTreeWithParser parseWithOrigRustParser(String rustProgram, String fileName)
       throws IOException {
-    try (BufferedReader reader = new BufferedReader(new StringReader(goProgram))) {
+    try (BufferedReader reader = new BufferedReader(new StringReader(rustProgram))) {
       return parseWithOrigRustParser(reader, fileName);
     }
   }
