@@ -1002,7 +1002,7 @@ foreign_fn_decl:
 // rule, not a syntactic one. That is, not every rule that can be
 // enforced gramatically should be.
 fn_head:
-    'const'? 'unsafe'? extern_abi? 'fn' ident ty_params?;
+    'async'? 'const'? 'unsafe'? extern_abi? 'fn' ident ty_params?;
 
 param:
     pat ':' param_ty;
