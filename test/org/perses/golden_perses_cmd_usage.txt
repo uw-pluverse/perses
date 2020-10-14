@@ -55,11 +55,12 @@ Usage: org.perses.Main [options]
       Enable caching for edits performed between two successful reductions.
       Default: true
     --query-cache-refresh-threshold
-      When to trigger a refresh of the query cache. The value is is a fraction 
-      in the format x/y. Assume the original token count is t. Since last 
-      refresh where the best program has t' tokens, if the latest best program 
-      has b tokens, and (t' - b) >= t *x/y, then a refresh is triggered.
-      Default: 100/100
+      The threshold triggers a refresh of the query cache. The refresh follows 
+      the equation: t' - t'' >= t * threshold(%). t 	- original tokens. t' 	- 
+      tokens of the best program at last refresh. t''	- tokens of the current 
+      best program. Refresh threshold requires an integer input ranging [0, 
+      100]. e.g. 0 represents 0%, 85 represents 85%.
+      Default: 100
     --progress-dump-file
       The file to record the reduction process. The dump file can be large..
     --stat-dump-file

@@ -47,3 +47,14 @@ Currently the reducers are ran in the following order
 * HDD Fix point
 * CReduce
 * Chisel
+
+### Environment Variables
+Perses allows additional environment variables for testing flexibilities.
+
+### PERSES_EXTRA_FLAGS
+Provide additional command line arguments to Perses. If not specified, Perses would run default settings.
+E.g. ```PERSES_EXTRA_FLAGS="--query-caching true" ./benchmark.py ...```
+
+### PERSES_MEMORY_PROFILER
+Enable memory usage profiler of Perses when benchmarking. Output results to specified target file.
+E.g. ```PERSES_MEMORY_PROFILER="memory_log.txt" ./benchmark.py ...```
