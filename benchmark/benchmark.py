@@ -20,6 +20,7 @@ def parse_arguments():
     parser.add_argument("-ss", "--show-subprocess", action="store_true", default=False, help="Show all pipe stdout and stderr from reducers")
     parser.add_argument("-r", "--reducers", nargs='+', default=[], help="Specify reducers for benchmarking.")
     parser.add_argument("-lr", "--list-reducers", action="store_true", default=False, help="List current available reducers")
+    parser.add_argument("-mp", "--memory-profiler", action="store_true", default=False, help="Enable Perses memory profiler")
     return parser.parse_args()
 
 @dataclass(frozen=True)
@@ -31,6 +32,7 @@ class Parameter:
     show_subprocess: bool
     reducers: List[str]
     list_reducers: bool
+    memory_profiler: bool
 
     def __post_init__(self):
         if self.list_reducers:
@@ -72,9 +74,6 @@ REDUCERS = {
         "hdd-fix": os.path.join(__location__, "binaries", "run_hdd_fix.sh"),
         "creduce": os.path.join(__location__, "binaries", "run_creduce.sh"),
         "chisel": os.path.join(__location__, "binaries", "run_chisel.sh"),
-
-        "perses_no_caching": os.path.join(__location__, "binaries", "run_perses_no_caching.sh"),
-        "perses_edit_query": os.path.join(__location__, "binaries", "run_perses_edit_query_caching.sh"),
 }
 
 
@@ -147,11 +146,21 @@ def count_token(source_file_path):
         print("Error counting token for " + source_file_path)
         raise err
 
+def environment_udpater(parameter_interface):
+    # update env var if memory_profiler enabled
+    if parameter_interface.memory_profiler:
+        time = datetime.now().strftime("%Y_%m_%d_%H%M%S")
+        new_env = os.environ.copy()
+        new_env["PERSES_MEMORY_PROFILER"] = f"{__location__}/tmp_memory_log_{time}"
+        return new_env
+    else:
+        return os.environ.copy()
 
 def main():
     # parameter handler
     args = parse_arguments()
-    para = Parameter(args.subjects, args.iterations, args.silent, args.show_subprocess, args.reducers, args.list_reducers)
+    para = Parameter(args.subjects, args.iterations, args.silent, args.show_subprocess, 
+            args.reducers, args.list_reducers, args.memory_profiler)
     para.validate()
     print(para)
 
@@ -175,10 +184,10 @@ def main():
         token_count = count_token(source_file_path)
         if bench_name not in report:
             report[bench_name] = dict()
-
         report[bench_name]["original_token_count"] = token_count
         if not para.silent:
             print(f"Bench {bench_name} has {token_count} original tokens")
+
 
         # reduce
         for reducer in para.reducers:
@@ -186,11 +195,17 @@ def main():
             for iteration in range(para.iterations):
                 print(f"*****iteration {iteration}*****")
 
+                # update environment variables
+                new_env = environment_udpater(para)
+                
+                # create tmp output file
                 fd, fname = tempfile.mkstemp()
                 os.close(fd)
+
                 pipe = subprocess.DEVNULL
                 if para.show_subprocess:
                     pipe = None
+                
                 subprocess.run(
                     [REDUCERS[reducer],
                      script_file_path,
@@ -198,7 +213,8 @@ def main():
                      fname],
                     check=False,
                     stdout=pipe,
-                    stderr=pipe)
+                    stderr=pipe,
+                    env=new_env)
 
                 with open(fname, "r") as output:
                     run_result = output.read().strip().split("\n")
@@ -222,7 +238,7 @@ def main():
         print(json_object)
 
         time = datetime.now().strftime("%Y_%m_%d_%H%M%S")
-        report_title = f'report_{time}.json'
+        report_title = f'tmp_report_{time}.json'
         with open(report_title, 'w') as out_file:
             out_file.write(json_object)
 
