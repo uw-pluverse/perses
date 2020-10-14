@@ -70,12 +70,11 @@ class PnfRustParserFacadeTest {
     try {
       val check = file.readText()
       testString(check, file.toString())
-      if (failedTests.contains(file.toString())) {
-        System.err.println("New passing test program: ${file}")
-      }
+      assertThat(failedTests.contains(file.toString())).isFalse()
     } catch (err: java.io.FileNotFoundException) {
       // Suppress missing files (there's some strangeness with java and Unicode file names).
-    } catch (_: Throwable) {
+    } catch (e: Throwable) {
+      e.printStackTrace()
       assertThat(failedTests).contains(file.toString())
     }
   }
@@ -159,7 +158,6 @@ class PnfRustParserFacadeTest {
 
     private fun buildFailedTests(): ImmutableSet<String> {
       val builder = ImmutableSet.builder<String>()
-      builder.add("test_data/rust_programs/rust_testsuite/codegen/c-variadic.rs")
       builder.add("test_data/rust_programs/rust_testsuite/incremental/const-generics/issue-61338.rs")
       builder.add("test_data/rust_programs/rust_testsuite/incremental/const-generics/issue-68477.rs")
       builder.add("test_data/rust_programs/rust_testsuite/incremental/thinlto/cgu_invalidated_when_import_added.rs")
