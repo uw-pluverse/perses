@@ -595,6 +595,8 @@ optional__restricted_pat_2
 
 ty
     : '_'
+    | '!'
+    | '{' expr '}'
     | '[' ty_sum optional__ty_3 ']'
     | ty_path optional__ty_13
     | '(' alternative__ty_16 ')'
@@ -817,6 +819,7 @@ const_default
 
 impl_what
     : ty_sum 'for' '..'
+    | ident ty_args
     | alternative__impl_what_3 ty_sum
     ;
 
@@ -835,6 +838,23 @@ alternative__impl_what_3
 
 impl_item
     : kleene_star__item_1 optional__item_2 impl_item_tail
+    ;
+
+ty_args
+    : '<' alternative__ty_args_3 '>'
+    ;
+
+ty_args_1
+    : Lifetime ','
+    ;
+
+kleene_star__ty_args_2
+    : ty_args_1*
+    ;
+
+alternative__ty_args_3
+    : lifetime_list
+    | kleene_star__ty_args_2 ty_arg_list
     ;
 
 impl_item_tail
@@ -926,23 +946,6 @@ path_segment
 simple_path_segment
     : ident
     | 'Self'
-    ;
-
-ty_args
-    : '<' alternative__ty_args_3 '>'
-    ;
-
-ty_args_1
-    : Lifetime ','
-    ;
-
-kleene_star__ty_args_2
-    : ty_args_1*
-    ;
-
-alternative__ty_args_3
-    : lifetime_list
-    | kleene_star__ty_args_2 ty_arg_list
     ;
 
 ty_path
@@ -1154,7 +1157,7 @@ kleene_star__lifetime_param_list_2
     ;
 
 lifetime_param
-    : kleene_star__item_1 Lifetime optional__lifetime_def_2
+    : kleene_star__item_1 optional__fn_head_1 Lifetime optional__lifetime_def_2
     ;
 
 ty_param_list
@@ -1170,7 +1173,7 @@ kleene_star__ty_param_list_2
     ;
 
 ty_param
-    : kleene_star__item_1 ident optional__trait_decl_4 optional__trait_item_3
+    : kleene_star__item_1 optional__fn_head_1 ident optional__trait_decl_4 optional__trait_item_3
     ;
 
 pat_no_mut

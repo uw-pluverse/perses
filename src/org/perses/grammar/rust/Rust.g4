@@ -1140,7 +1140,9 @@ impl_what:
     '!' ty_sum 'for' ty_sum
     | ty_sum 'for' ty_sum
     | ty_sum 'for' '..'
-    | ty_sum;
+    | ident ty_args
+    | ty_sum
+    ;
 
 impl_item:
     attr* visibility? impl_item_tail;
@@ -1311,7 +1313,10 @@ ty:
     | '&&' Lifetime? 'mut'? ty          // meaning `& & ty`
     | '*' mut_or_const ty               // pointer type
     | for_lifetime? 'unsafe'? extern_abi? 'fn' '(' variadic_param_list_names_optional? ')' rtype?
-    | ty_path macro_tail?;
+    | ty_path macro_tail?
+    | '!'
+    | '{' expr '}'
+    ;
 
 mut_or_const:
     'mut'
@@ -1345,13 +1350,13 @@ ty_params:
     | '<' (lifetime_param ',')* ty_param_list '>';
 
 lifetime_param:
-    attr* Lifetime (':' lifetime_bound)?;
+    attr* 'const'? Lifetime (':' lifetime_bound)?;
 
 lifetime_param_list:
     lifetime_param (',' lifetime_param)* ','?;
 
 ty_param:
-    attr* ident colon_bound? ty_default?;
+    attr* 'const'? ident colon_bound? ty_default?;
 
 ty_param_list:
     ty_param (',' ty_param)* ','?;
