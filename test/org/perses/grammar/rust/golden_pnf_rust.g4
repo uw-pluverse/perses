@@ -408,7 +408,7 @@ optional__fn_head_3
     ;
 
 param_list
-    : param kleene_star__param_list_2 optional__use_item_list_3
+    : param kleene_star__param_list_2 optional__param_list_4 optional__use_item_list_3
     ;
 
 param_list_1
@@ -417,6 +417,14 @@ param_list_1
 
 kleene_star__param_list_2
     : param_list_1*
+    ;
+
+param_list_3
+    : ',' pat ':' '...'
+    ;
+
+optional__param_list_4
+    : param_list_3?
     ;
 
 fn_rtype

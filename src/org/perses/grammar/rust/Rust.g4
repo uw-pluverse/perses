@@ -1012,7 +1012,7 @@ param_ty:
     | 'impl' bound;  // experimental: feature(universal_impl_trait)
 
 param_list:
-    param (',' param)* ','?;
+    param (',' param)* (',' pat ':' '...')? ','?;
 
 variadic_param_list:
     param (',' param)* (',' '...')? ','?;
