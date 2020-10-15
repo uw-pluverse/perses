@@ -1340,7 +1340,9 @@ ty_sum_list:
 
 ty_arg:
     ident '=' ty_sum
-    | ty_sum;
+    | ty_sum
+    | BareIntLit
+    ;
 
 ty_arg_list:
     ty_arg (',' ty_arg)* ','?;
