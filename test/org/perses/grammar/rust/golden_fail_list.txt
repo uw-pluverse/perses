@@ -6,7 +6,6 @@ test_data/rust_programs/rust_testsuite/mir-opt/exponential-or.rs
 test_data/rust_programs/rust_testsuite/mir-opt/inline/inline-specialization.rs
 test_data/rust_programs/rust_testsuite/mir-opt/uniform_array_move_out.rs
 test_data/rust_programs/rust_testsuite/pretty/gat-bounds.rs
-test_data/rust_programs/rust_testsuite/pretty/issue-68710-field-attr-proc-mac-lost.rs
 test_data/rust_programs/rust_testsuite/pretty/macro.rs
 test_data/rust_programs/rust_testsuite/pretty/nested-item-vis-defaultness.rs
 test_data/rust_programs/rust_testsuite/pretty/raw-address-of.rs

@@ -1601,7 +1601,7 @@ struct_update_base:
 
 field:
     ident  // struct field shorthand (field and local variable have the same name)
-    | field_name ':' expr;
+    | expr_attrs* field_name ':' expr;
 
 field_name:
     ident
