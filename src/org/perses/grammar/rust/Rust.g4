@@ -1226,7 +1226,9 @@ path_segment_no_super:
 
 simple_path_segment:
     ident
-    | 'Self';
+    | 'Self'
+    | 'crate'
+    | '$crate';
 
 
 // === Type paths

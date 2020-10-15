@@ -1,7 +1,5 @@
 test_data/rust_programs/rust_testsuite/compile-fail/issue-46209-private-enum-variant-reexport.rs
 test_data/rust_programs/rust_testsuite/incremental/hashes/match_expressions.rs
-test_data/rust_programs/rust_testsuite/incremental/thinlto/cgu_invalidated_when_import_added.rs
-test_data/rust_programs/rust_testsuite/incremental/thinlto/cgu_invalidated_when_import_removed.rs
 test_data/rust_programs/rust_testsuite/mir-opt/exponential-or.rs
 test_data/rust_programs/rust_testsuite/mir-opt/inline/inline-specialization.rs
 test_data/rust_programs/rust_testsuite/mir-opt/uniform_array_move_out.rs
