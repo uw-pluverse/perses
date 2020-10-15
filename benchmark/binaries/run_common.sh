@@ -6,6 +6,7 @@ else
   exit 1
 fi
 
+#command line arguments
 readonly TEST_SCRIPT=$1
 readonly SOURCE_FILE=$2
 readonly COMPLETE_STAT_FILE=${3:-}
