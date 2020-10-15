@@ -1137,7 +1137,8 @@ kleene_star__ty_arg_list_2
     ;
 
 ty_arg
-    : optional__ty_arg_2 ty_sum
+    : BareIntLit
+    | optional__ty_arg_2 ty_sum
     ;
 
 ty_arg_1
