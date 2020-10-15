@@ -787,30 +787,30 @@ colon_bound
     ;
 
 trait_item
-    : alternative__trait_item_8 ';'
-    | kleene_star__item_1 alternative__trait_item_9
-    ;
-
-optional__trait_item_3
-    : ty_default?
+    : alternative__trait_item_10 ';'
+    | kleene_star__item_1 alternative__trait_item_11
     ;
 
 optional__trait_item_5
+    : ty_default?
+    ;
+
+optional__trait_item_7
     : const_default?
     ;
 
-alternative__trait_item_8
-    : kleene_star__item_1 alternative__trait_item_10
+alternative__trait_item_10
+    : kleene_star__item_1 alternative__trait_item_12
     ;
 
-alternative__trait_item_9
+alternative__trait_item_11
     : item_macro_path '!' item_macro_tail
     | trait_method_decl
     ;
 
-alternative__trait_item_10
-    : 'const' ident ':' ty_sum optional__trait_item_5
-    | 'type' ident optional__trait_decl_4 optional__trait_item_3
+alternative__trait_item_12
+    : 'const' ident ':' ty_sum optional__trait_item_7
+    | 'type' ident optional__impl_block_2 optional__trait_decl_4 optional__impl_block_3 optional__trait_item_5
     ;
 
 ty_default
@@ -864,9 +864,9 @@ alternative__ty_args_3
 impl_item_tail
     : const_decl
     | associated_const_decl
-    | 'type' ident '=' ty_sum ';'
     | item_macro_path '!' item_macro_tail
     | optional__impl_item_tail_1 method_decl
+    | 'type' ident optional__impl_block_2 optional__impl_block_3 '=' ty_sum ';'
     ;
 
 optional__impl_item_tail_1
@@ -1178,7 +1178,7 @@ kleene_star__ty_param_list_2
     ;
 
 ty_param
-    : kleene_star__item_1 optional__fn_head_2 ident optional__trait_decl_4 optional__trait_item_3
+    : kleene_star__item_1 optional__fn_head_2 ident optional__trait_decl_4 optional__trait_item_5
     ;
 
 pat_no_mut
@@ -1448,7 +1448,7 @@ optional__stmt_tail_3
 
 alternative__stmt_tail_7
     : expr
-    | kleene_star__item_1 'let' pat optional__stmt_tail_3 optional__trait_item_5
+    | kleene_star__item_1 'let' pat optional__stmt_tail_3 optional__trait_item_7
     ;
 
 blocky_expr
