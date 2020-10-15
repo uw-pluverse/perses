@@ -1119,7 +1119,7 @@ trait_decl:
     'unsafe'? 'auto'? 'trait' ident ty_params? colon_bound? where_clause? '{' trait_item* '}';
 
 trait_item:
-    attr* 'type' ident colon_bound? ty_default? ';'
+    attr* 'type' ident ty_params? colon_bound? where_clause? ty_default? ';'
     | attr* 'const' ident ':' ty_sum const_default? ';'  // experimental associated constants
     | attr* trait_method_decl
     | attr* item_macro_path '!' item_macro_tail;
@@ -1149,7 +1149,7 @@ impl_item:
 
 impl_item_tail:
     'default'? method_decl
-    | 'type' ident '=' ty_sum ';'
+    | 'type' ident ty_params? where_clause? '=' ty_sum ';'
     | (const_decl | associated_const_decl)
     | item_macro_path '!' item_macro_tail;
 
