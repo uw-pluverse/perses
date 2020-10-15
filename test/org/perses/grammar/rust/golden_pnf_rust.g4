@@ -1668,7 +1668,11 @@ struct_update_base
 
 field
     : ident
-    | field_name ':' expr
+    | kleene_star__field_1 field_name ':' expr
+    ;
+
+kleene_star__field_1
+    : expr_attrs*
     ;
 
 field_name
