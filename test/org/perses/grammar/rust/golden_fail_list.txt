@@ -691,4 +691,3 @@ test_data/rust_programs/rust_testsuite/ui/unused/unused-macro.rs
 test_data/rust_programs/rust_testsuite/ui/use/use-self-type.rs
 test_data/rust_programs/rust_testsuite/ui/useless-pub.rs
 test_data/rust_programs/rust_testsuite/ui/weird-exprs.rs
-test_data/rust_programs/rust_testsuite/ui/where-clauses/where-equality-constraints.rs
