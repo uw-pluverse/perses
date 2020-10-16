@@ -7,6 +7,7 @@ filegroup(
         exclude = [
             "rust_testsuite/run-make-fulldeps/dep-info-spaces/*.rs",
             "rust_testsuite/ui/closures/deeply-nested_closures.rs",  # TODO: cause infinite loop of antlr.
+            "rust_testsuite/rustfix/str-as-char.rs", # This program is syntactically invalid.
         ],
     ),
 )
