@@ -1236,7 +1236,7 @@ ty_path:
     for_lifetime? ('dyn' | 'impl')? ty_path_main;
 
 for_lifetime:
-    'for' '<' lifetime_def_list? '>';
+    'dyn'? 'for' '<' lifetime_def_list? '>';
 
 lifetime_def_list:
     lifetime_def (',' lifetime_def)* ','?;

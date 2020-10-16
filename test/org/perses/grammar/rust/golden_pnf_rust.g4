@@ -966,10 +966,14 @@ optional__ty_path_3
     ;
 
 for_lifetime
-    : 'for' '<' optional__for_lifetime_1 '>'
+    : optional__for_lifetime_1 'for' '<' optional__for_lifetime_2 '>'
     ;
 
 optional__for_lifetime_1
+    : 'dyn'?
+    ;
+
+optional__for_lifetime_2
     : lifetime_def_list?
     ;
 
