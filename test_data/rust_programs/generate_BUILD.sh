@@ -17,7 +17,7 @@ trap "rm -rf ${OUTPUT_FOLDER}" EXIT
 
 
 readonly PKG="rust_testsuite"
-rustup toolchain install "${RUSTC_VERSION}"
+rustup toolchain install "${RUSTC_VERSION}" || exit 100
 for f in $(find "${PKG}" -name '*.rs') ; do
   if [[ "$(dirname "${f}")" == "${PKG}/run-make-fulldeps/dep-info-spaces" ]] ; then
     continue
