@@ -890,7 +890,8 @@ pub_item:
     | struct_decl
     | enum_decl
     | union_decl
-    | trait_decl;
+    | trait_decl
+    | macro_decl;
 
 item_macro_use:
     item_macro_path '!' ident? item_macro_tail;
@@ -994,6 +995,11 @@ trait_method_decl:
 foreign_fn_decl:
     fn_head '(' variadic_param_list? ')' rtype? where_clause? ';';
 
+macro_decl:
+     macro_head '(' param_list? ')' fn_rtype? where_clause? block_with_inner_attrs;
+
+macro_head:
+    'macro' ident ty_param?;
 // Parts of a `fn` definition up to the type parameters.
 //
 // `const` and `extern` are incompatible on a `fn`, but this grammar
@@ -1224,6 +1230,9 @@ path_segment:
 path_segment_no_super:
     simple_path_segment ('::' ty_args)?;
 
+simple_path:
+    '::'? simple_path_segment ( '::' simple_path_segment)*;
+
 simple_path_segment:
     ident
     | 'Self'
@@ -1396,7 +1405,8 @@ pat_no_mut:
     | '&' 'mut' pat
     | '&&' pat_no_mut   // `&& pat` means the same as `& & pat`
     | '&&' 'mut' pat
-    | 'box' pat;
+    | 'box' pat
+    | '$' pat;
 
 pat_range_end:
     path
@@ -1789,6 +1799,70 @@ any_ident:
     | 'self'
     | 'static'
     | 'super';
+tokens_no_delimiters_cash:
+    any_ident;
+
+tokens_no_delimiters:
+    any_ident;
+
+tokens_no_delimiters_repetition_operators:
+    any_ident;
+//not complete all tokens need to be refactore
+
+
+//macro rules
+
+macro_rules_definition:
+    'macro_rules' '!' ident macro_rules_def;
+
+macro_rules_def:
+    '(' macro_rules')' ';'
+    | '[' macro_rules ')' ';'
+    | '{' macro_rules '}' ';';
+
+macro_rules:
+    macro_rule ( ';' macro_rule)* ';'? ;
+
+macro_rule:
+    macro_matcher '=>' macro_transcriber;
+
+macro_matcher:
+    '(' macro_match* ')'
+    |'[' macro_match* ']'
+    |'{' macro_match* '}';
+
+macro_match:
+    tokens_no_delimiters_cash
+    |macro_matcher
+    |'$' ident ';' macro_frag_spec
+    |'$' '(' macro_match+ ')'  macro_rep_sep? macro_rep_op;
+
+
+macro_frag_spec:
+    'block' | 'expr' | 'ident' | 'item' | 'lifetime' | 'literal'
+    | 'meta' | 'pat' | 'path' | 'stmt' | 'tt' | 'ty' | 'vis';
+
+macro_rep_sep:
+    tokens_no_delimiters_repetition_operators;
+
+macro_rep_op:
+    '*' | '+' | '?';
+
+macro_transcriber:
+    delim_token_tree;
+
+delim_token_tree:
+    '(' token_tree ')'
+    | '[' token_tree ']'
+    | '{' token_tree '}';
+
+token_tree:
+    tokens_no_delimiters| delim_token_tree;
+
+macroInvocation_semi:
+    simple_path '!' '(' token_tree* ')' ';'
+    | simple_path '!' '[' token_tree* ']' ';'
+    | simple_path '!' '{' token_tree* '}' ';';
 
 // `$` is recognized as a token, so it may be present in token trees,
 // and `macro_rules!` makes use of it. But it is not mentioned anywhere
