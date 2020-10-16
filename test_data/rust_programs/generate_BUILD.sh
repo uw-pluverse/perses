@@ -3,20 +3,20 @@
 set -o nounset
 set -o pipefail
 
-if [[ ! -e "WORKSPACE" ]] ; then
-  echo "ERROR: This script should be run in the root folder of the project."
+if [[ "$(dirname "${0}")" != "." ]] ; then
+  echo "ERROR: This script should be run in the folder of the script."
   exit 1
 fi
 
-readonly PKG="test_data/rust_programs/rust_testsuite"
+
 readonly RUSTC_VERSION="nightly"
 
 readonly OUTPUT_FOLDER="$(mktemp -d)"
 readonly INVALID_FILE_LIST="${OUTPUT_FOLDER}/syntactically_invalid_rust_programs.txt"
 trap "rm -rf ${OUTPUT_FOLDER}" EXIT
 
-readonly BUILD="test_data/rust_programs/BUILD"
 
+readonly PKG="rust_testsuite"
 rustup toolchain install "${RUSTC_VERSION}"
 for f in $(find "${PKG}" -name '*.rs') ; do
   if [[ "$(dirname "${f}")" == "${PKG}/run-make-fulldeps/dep-info-spaces" ]] ; then
@@ -36,7 +36,7 @@ for f in $(find "${PKG}" -name '*.rs') ; do
   fi
 done
 
-readonly BUILD_FILE="$(dirname "${PKG}")/BUILD"
+readonly BUILD_FILE="BUILD"
 echo "writing to ${BUILD_FILE}"
 
 cat > "${BUILD_FILE}" <<-EOF
