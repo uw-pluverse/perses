@@ -9,6 +9,7 @@ readonly TOOLS=("creduce" \
     "clang-format" \
     "go" \
     "rustc" \
+    "rustup" \
     "rustfmt" \
     "scala")
 
