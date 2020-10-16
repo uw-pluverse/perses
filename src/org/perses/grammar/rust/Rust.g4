@@ -1378,6 +1378,8 @@ pat_ident:
 // pattern `&mut x`, which must parse like `&mut (x)`, not `&(mut x)`.
 pat_no_mut:
     '_'
+	| ident ('@' match_pat)
+    | ident ('@' '(' match_pat ')' )
     | pat_lit
     | pat_range_end '...' pat_range_end
     | pat_range_end '..' pat_range_end  // experimental `feature(exclusive_range_pattern)`
@@ -1408,7 +1410,7 @@ pat_list:
 
 pat_list_with_dots:
     pat_list_dots_tail
-    | pat (',' pat)* (',' pat_list_dots_tail?)?;
+    | match_pat (',' pat)* (',' pat_list_dots_tail?)?;
 
 pat_list_dots_tail:
     '..' (',' pat_list)?;
@@ -1492,8 +1494,11 @@ stmt:
 //
 // Attributes on block expressions that appear anywhere else are an
 // experimental feature, `feature(stmt_expr_attributes)`. We support both.
+let_stat:
+    attr* 'let' pat (':' ty)? ('=' expr)? ';';
+
 stmt_tail:
-    attr* 'let' pat (':' ty)? ('=' expr)? ';'
+    let_stat
     | attr* blocky_expr
     | expr ';';
 
@@ -1501,16 +1506,20 @@ stmt_tail:
 // experimental, `feature(stmt_expr_attributes)`.
 blocky_expr:
     block_with_inner_attrs
-    | 'if' cond_or_pat block ('else' 'if' cond_or_pat block)* ('else' block)?
+    | if_cond_or_pat block ('else'  if_cond_or_pat block)* ('else' block)?
     | 'match' expr_no_struct '{' expr_inner_attrs? match_arms? '}'
-    | loop_label? 'while' cond_or_pat block_with_inner_attrs
+    | loop_label? while_cond_or_pat block_with_inner_attrs
     | loop_label? 'for' pat 'in' expr_no_struct block_with_inner_attrs
     | loop_label? 'loop' block_with_inner_attrs
     | 'unsafe' block_with_inner_attrs;
 
-cond_or_pat:
-    expr_no_struct
-    | 'let' pat '=' expr;
+if_cond_or_pat:
+    'if' expr_no_struct
+    | 'if' 'let' pat '=' expr;
+
+while_cond_or_pat:
+    'while' expr_no_struct
+    | 'while' 'let' pat '=' expr;
 
 loop_label:
     Lifetime ':';
