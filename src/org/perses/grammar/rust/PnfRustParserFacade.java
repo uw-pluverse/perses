@@ -66,8 +66,8 @@ public final class PnfRustParserFacade
     }
   }
 
-  public ParseTreeWithParser parseWithOrigRustParser(String RustProgram) throws IOException {
-    try (BufferedReader reader = new BufferedReader(new StringReader(RustProgram))) {
+  public ParseTreeWithParser parseWithOrigRustParser(String rustProgram) throws IOException {
+    try (BufferedReader reader = new BufferedReader(new StringReader(rustProgram))) {
       return parseWithOrigRustParser(reader, "<in-memory>");
     }
   }
