@@ -51,6 +51,7 @@ filegroup(
         ["rust_testsuite/**/*.rs"],
         exclude = [
             "rust_testsuite/run-make-fulldeps/dep-info-spaces/*.rs",
+            "rust_testsuite/ui/where-clauses/where-equality-constraints.rs", #equality constraints are not yet supported in 'where' clauses
             "rust_testsuite/ui/closures/deeply-nested_closures.rs",  # TODO: cause infinite loop of antlr.
 $(cat "${INVALID_FILE_LIST}")
         ],
