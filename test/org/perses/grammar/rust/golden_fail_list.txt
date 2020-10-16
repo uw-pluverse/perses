@@ -24,7 +24,6 @@ test_data/rust_programs/rust_testsuite/rustdoc/pub-restricted.rs
 test_data/rust_programs/rust_testsuite/rustdoc/structfields.rs
 test_data/rust_programs/rust_testsuite/rustdoc/trait_alias.rs
 test_data/rust_programs/rust_testsuite/rustfix/missing-comma-in-match.rs
-test_data/rust_programs/rust_testsuite/rustfix/str-as-char.rs
 test_data/rust_programs/rust_testsuite/rustfix/tuple-float-index.rs
 test_data/rust_programs/rust_testsuite/ui/array-slice-vec/issue-69103-extra-binding-subslice.rs
 test_data/rust_programs/rust_testsuite/ui/array-slice-vec/slice-pat-type-mismatches.rs
