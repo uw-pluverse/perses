@@ -288,7 +288,6 @@ test_data/rust_programs/rust_testsuite/ui/impl-trait/issue-55872-2.rs
 test_data/rust_programs/rust_testsuite/ui/imports/auxiliary/glob-conflict.rs
 test_data/rust_programs/rust_testsuite/ui/imports/extern-crate-self/extern-crate-self-fail.rs
 test_data/rust_programs/rust_testsuite/ui/imports/extern-crate-self/extern-crate-self-pass.rs
-test_data/rust_programs/rust_testsuite/ui/imports/extern-crate-used.rs
 test_data/rust_programs/rust_testsuite/ui/imports/glob-shadowing.rs
 test_data/rust_programs/rust_testsuite/ui/imports/import-glob-crate.rs
 test_data/rust_programs/rust_testsuite/ui/imports/local-modularized-tricky-fail-1.rs
@@ -309,7 +308,6 @@ test_data/rust_programs/rust_testsuite/ui/issues/issue-27033.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-29184.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-32995-2.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-32995.rs
-test_data/rust_programs/rust_testsuite/ui/issues/issue-33140-traitobject-crate.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-35423.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-36116.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-37598.rs
@@ -593,7 +591,6 @@ test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-only-ma
 test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-syntax.rs
 test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-wf.rs
 test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias.rs
-test_data/rust_programs/rust_testsuite/ui/traits/trait-impl-2.rs
 test_data/rust_programs/rust_testsuite/ui/traits/trait-object-lifetime-first.rs
 test_data/rust_programs/rust_testsuite/ui/traits/trait-object-vs-lifetime-2.rs
 test_data/rust_programs/rust_testsuite/ui/traits/trait-object-vs-lifetime.rs
