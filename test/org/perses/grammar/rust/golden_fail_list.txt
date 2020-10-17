@@ -208,7 +208,6 @@ test_data/rust_programs/rust_testsuite/ui/feature-gates/feature-gate-generators.
 test_data/rust_programs/rust_testsuite/ui/feature-gates/feature-gate-label_break_value.rs
 test_data/rust_programs/rust_testsuite/ui/feature-gates/feature-gate-rustc-attrs.rs
 test_data/rust_programs/rust_testsuite/ui/feature-gates/feature-gate-trait-alias.rs
-test_data/rust_programs/rust_testsuite/ui/feature-gates/feature-gate-trivial_bounds.rs
 test_data/rust_programs/rust_testsuite/ui/feature-gates/feature-gate-try_blocks.rs
 test_data/rust_programs/rust_testsuite/ui/for-loop-while/label_break_value.rs
 test_data/rust_programs/rust_testsuite/ui/for-loop-while/loop-break-value.rs
@@ -511,7 +510,6 @@ test_data/rust_programs/rust_testsuite/ui/resolve/typo-suggestion-named-undersco
 test_data/rust_programs/rust_testsuite/ui/resolve/visibility-indeterminate.rs
 test_data/rust_programs/rust_testsuite/ui/rfc-2005-default-binding-mode/slice.rs
 test_data/rust_programs/rust_testsuite/ui/rfc-2008-non-exhaustive/struct.rs
-test_data/rust_programs/rust_testsuite/ui/rfc-2093-infer-outlives/explicit-union.rs
 test_data/rust_programs/rust_testsuite/ui/rfc-2093-infer-outlives/self-dyn.rs
 test_data/rust_programs/rust_testsuite/ui/rfc-2126-crate-paths/crate-path-non-absolute.rs
 test_data/rust_programs/rust_testsuite/ui/rfc-2126-crate-paths/keyword-crate-as-identifier.rs
@@ -550,15 +548,12 @@ test_data/rust_programs/rust_testsuite/ui/rust-2018/async-ident.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/dyn-keyword.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/dyn-trait-compatibility.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/edition-lint-fully-qualified-paths.rs
-test_data/rust_programs/rust_testsuite/ui/rust-2018/edition-lint-infer-outlives-multispan.rs
-test_data/rust_programs/rust_testsuite/ui/rust-2018/edition-lint-infer-outlives.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/edition-lint-nested-empty-paths.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/edition-lint-nested-paths.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/edition-lint-paths.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/extern-crate-idiomatic-in-2018.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/uniform-paths/from-decl-macro.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/uniform-paths/macro-rules.rs
-test_data/rust_programs/rust_testsuite/ui/self/self-in-typedefs.rs
 test_data/rust_programs/rust_testsuite/ui/span/macro-ty-params.rs
 test_data/rust_programs/rust_testsuite/ui/specialization/assoc-ty-graph-cycle.rs
 test_data/rust_programs/rust_testsuite/ui/specialization/defaultimpl/auxiliary/go_trait.rs
@@ -614,7 +609,6 @@ test_data/rust_programs/rust_testsuite/ui/traits/wf-trait-object-maybe-bound.rs
 test_data/rust_programs/rust_testsuite/ui/traits/wf-trait-object-only-maybe-bound.rs
 test_data/rust_programs/rust_testsuite/ui/transmute-specialization.rs
 test_data/rust_programs/rust_testsuite/ui/transmute/transmute-different-sizes.rs
-test_data/rust_programs/rust_testsuite/ui/trivial-bounds/trivial-bounds-inconsistent.rs
 test_data/rust_programs/rust_testsuite/ui/trivial-bounds/trivial-bounds-object.rs
 test_data/rust_programs/rust_testsuite/ui/try-block.rs
 test_data/rust_programs/rust_testsuite/ui/try-block/try-block-bad-lifetime.rs
@@ -641,8 +635,6 @@ test_data/rust_programs/rust_testsuite/ui/underscore-imports/hygiene.rs
 test_data/rust_programs/rust_testsuite/ui/underscore-imports/macro-expanded.rs
 test_data/rust_programs/rust_testsuite/ui/uniform-paths/basic-nested.rs
 test_data/rust_programs/rust_testsuite/ui/union/union-empty.rs
-test_data/rust_programs/rust_testsuite/ui/union/union-generic-rpass.rs
-test_data/rust_programs/rust_testsuite/ui/union/union-overwrite.rs
 test_data/rust_programs/rust_testsuite/ui/unnecessary-extern-crate.rs
 test_data/rust_programs/rust_testsuite/ui/unused/unused-macro.rs
 test_data/rust_programs/rust_testsuite/ui/use/use-self-type.rs
