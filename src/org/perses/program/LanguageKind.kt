@@ -16,7 +16,9 @@
  */
 package org.perses.program
 
+import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
+import org.perses.util.ShellCommandOnPath
 
 abstract class LanguageKind {
 
@@ -28,6 +30,17 @@ abstract class LanguageKind {
 
   abstract val allowedCodeFormatControl: ImmutableSet<EnumFormatControl>
 
+  abstract val defaultFormmaterCommand: ShellCommandOnPath?
+
   fun isCodeFormatAllowed(codeFormat: EnumFormatControl) =
     allowedCodeFormatControl.contains(codeFormat)
+
+  protected fun tryObtainingDefaultFormatter(
+    formamtterCmd: String,
+    defaultFlags: ImmutableList<String> = ImmutableList.of()
+  ) = try {
+    ShellCommandOnPath(formamtterCmd, defaultFlags)
+  } catch (e: Exception) {
+    null
+  }
 }

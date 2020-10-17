@@ -17,19 +17,22 @@
 package org.perses.util
 
 import com.google.common.collect.MapMaker
-import it.unimi.dsi.fastutil.ints.IntArrayList
 import java.util.concurrent.ConcurrentMap
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicInteger
 
+/**
+ * This class has to be THREAD_SAFE.
+ */
 class PerformanceMonitor<T>(
   private val sleepIntervalMillis: Int,
   private val actionOnLongRunningTask: IActionOnLongRunningTask<T>
 ) : AutoCloseable {
 
   private val thread: ExecutorService = Executors.newFixedThreadPool(1)
-  private val durationList = DurationList()
+  private val durationList = ThreadSafeDurationStat()
 
   private val runningTaskToStartTimeMap: ConcurrentMap<T, Long> = MapMaker()
     .weakKeys()
@@ -42,7 +45,7 @@ class PerformanceMonitor<T>(
     thread.submit {
       while (true) {
         Thread.sleep(sleepIntervalMillis.toLong())
-        val threshold = Math.max(durationList.maxDuration, sleepIntervalMillis)
+        val threshold = Math.max(durationList.maxDuration(), sleepIntervalMillis)
 
         val now = System.currentTimeMillis()
         var iterator = runningTaskToStartTimeMap.iterator()
@@ -59,6 +62,9 @@ class PerformanceMonitor<T>(
     }
   }
 
+  /**
+   * This method is thread-safe.
+   */
   fun onTaskStart(task: T) {
     runningTaskToStartTimeMap[task] = System.currentTimeMillis()
   }
@@ -75,29 +81,27 @@ class PerformanceMonitor<T>(
 
   fun isClosed() = thread.isTerminated
 
-  fun finishedTaskCount() = durationList.size()
+  fun finishedTaskCount() = durationList.durationCount()
 
-  fun maxDuration() = durationList.maxDuration
+  fun maxDuration() = durationList.maxDuration()
 
-  fun minDuration() = durationList.minDuration
+  fun minDuration() = durationList.minDuration()
 
-  class DurationList {
-    private val durationList = IntArrayList()
-
-    var minDuration = Int.MAX_VALUE
-      private set
-
-    var maxDuration = Int.MIN_VALUE
-      private set
+  class ThreadSafeDurationStat {
+    private val numOfDurations = AtomicInteger(0)
+    private val minDuration = AtomicInteger(Integer.MAX_VALUE)
+    private val maxDuration = AtomicInteger(Integer.MIN_VALUE)
 
     fun addDuration(duration: Int) {
-      assert(duration >= 0)
-      durationList.add(duration)
-      minDuration = Math.min(minDuration, duration)
-      maxDuration = Math.max(maxDuration, duration)
+      check(duration >= 0)
+      numOfDurations.incrementAndGet()
+      minDuration.accumulateAndGet(duration, Math::min)
+      maxDuration.accumulateAndGet(duration, Math::max)
     }
 
-    fun size() = durationList.size
+    fun maxDuration() = maxDuration.get()
+    fun minDuration() = minDuration.get()
+    fun durationCount() = numOfDurations.get()
   }
 
   fun finalize() {

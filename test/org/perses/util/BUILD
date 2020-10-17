@@ -94,6 +94,18 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
+    name = "ShellCommandOnPathTest",
+    srcs = ["ShellCommandOnPathTest.kt"],
+    data = ["fake_executable.sh"],
+    test_class = "org.perses.util.ShellCommandOnPathTest",
+    deps = [
+        "//src/org/perses/util:shell",
+        "@maven//:com_google_flogger_flogger_system_backend",
+        "@maven//:com_google_truth_truth",
+    ],
+)
+
+kt_jvm_test(
     name = "ShellOutputStreamTest",
     srcs = ["ShellOutputStreamTest.kt"],
     deps = [

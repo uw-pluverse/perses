@@ -186,7 +186,7 @@ optional__enum_decl_3
     ;
 
 union_decl
-    : 'union' ident '{' field_decl_list '}'
+    : 'union' ident optional__impl_block_2 optional__impl_block_3 '{' field_decl_list '}'
     ;
 
 trait_decl
@@ -270,7 +270,7 @@ tt_block
     ;
 
 rename
-    : 'as' ident
+    : 'as' (ident | '_')
     ;
 
 use_path
@@ -312,6 +312,7 @@ optional__use_item_list_3
 
 any_ident
     : ident
+    | 'crate'
     | 'Self'
     | 'self'
     | 'static'
@@ -396,19 +397,23 @@ associated_const_decl
     ;
 
 fn_head
-    : optional__fn_head_1 optional__impl_block_1 optional__fn_head_3 'fn' ident optional__impl_block_2
+    : optional__fn_head_1 optional__fn_head_2 optional__impl_block_1 optional__fn_head_4 'fn' ident optional__impl_block_2
     ;
 
 optional__fn_head_1
+    : 'async'?
+    ;
+
+optional__fn_head_2
     : 'const'?
     ;
 
-optional__fn_head_3
+optional__fn_head_4
     : extern_abi?
     ;
 
 param_list
-    : param kleene_star__param_list_2 optional__use_item_list_3
+    : param kleene_star__param_list_2 optional__param_list_4 optional__use_item_list_3
     ;
 
 param_list_1
@@ -417,6 +422,14 @@ param_list_1
 
 kleene_star__param_list_2
     : param_list_1*
+    ;
+
+param_list_3
+    : ',' pat ':' '...'
+    ;
+
+optional__param_list_4
+    : param_list_3?
     ;
 
 fn_rtype
@@ -587,11 +600,13 @@ optional__restricted_pat_2
 
 ty
     : '_'
+    | '!'
+    | '{' expr '}'
     | '[' ty_sum optional__ty_3 ']'
     | ty_path optional__ty_13
     | '(' alternative__ty_16 ')'
     | alternative__ty_17 ty
-    | optional__ty_8 optional__impl_block_1 optional__fn_head_3 'fn' '(' optional__ty_11 ')' optional__foreign_fn_decl_2
+    | optional__ty_8 optional__impl_block_1 optional__fn_head_4 'fn' '(' optional__ty_11 ')' optional__foreign_fn_decl_2
     ;
 
 optional__ty_1
@@ -773,30 +788,30 @@ colon_bound
     ;
 
 trait_item
-    : alternative__trait_item_8 ';'
-    | kleene_star__item_1 alternative__trait_item_9
-    ;
-
-optional__trait_item_3
-    : ty_default?
+    : alternative__trait_item_10 ';'
+    | kleene_star__item_1 alternative__trait_item_11
     ;
 
 optional__trait_item_5
+    : ty_default?
+    ;
+
+optional__trait_item_7
     : const_default?
     ;
 
-alternative__trait_item_8
-    : kleene_star__item_1 alternative__trait_item_10
+alternative__trait_item_10
+    : kleene_star__item_1 alternative__trait_item_12
     ;
 
-alternative__trait_item_9
+alternative__trait_item_11
     : item_macro_path '!' item_macro_tail
     | trait_method_decl
     ;
 
-alternative__trait_item_10
-    : 'const' ident ':' ty_sum optional__trait_item_5
-    | 'type' ident optional__trait_decl_4 optional__trait_item_3
+alternative__trait_item_12
+    : 'const' ident ':' ty_sum optional__trait_item_7
+    | 'type' ident optional__impl_block_2 optional__trait_decl_4 optional__impl_block_3 optional__trait_item_5
     ;
 
 ty_default
@@ -809,6 +824,7 @@ const_default
 
 impl_what
     : ty_sum 'for' '..'
+    | ident ty_args
     | alternative__impl_what_3 ty_sum
     ;
 
@@ -829,12 +845,29 @@ impl_item
     : kleene_star__item_1 optional__item_2 impl_item_tail
     ;
 
+ty_args
+    : '<' alternative__ty_args_3 '>'
+    ;
+
+ty_args_1
+    : Lifetime ','
+    ;
+
+kleene_star__ty_args_2
+    : ty_args_1*
+    ;
+
+alternative__ty_args_3
+    : lifetime_list
+    | kleene_star__ty_args_2 ty_arg_list
+    ;
+
 impl_item_tail
     : const_decl
     | associated_const_decl
-    | 'type' ident '=' ty_sum ';'
     | item_macro_path '!' item_macro_tail
     | optional__impl_item_tail_1 method_decl
+    | 'type' ident optional__impl_block_2 optional__impl_block_3 '=' ty_sum ';'
     ;
 
 optional__impl_item_tail_1
@@ -920,23 +953,6 @@ simple_path_segment
     | 'Self'
     ;
 
-ty_args
-    : '<' alternative__ty_args_3 '>'
-    ;
-
-ty_args_1
-    : Lifetime ','
-    ;
-
-kleene_star__ty_args_2
-    : ty_args_1*
-    ;
-
-alternative__ty_args_3
-    : lifetime_list
-    | kleene_star__ty_args_2 ty_arg_list
-    ;
-
 ty_path
     : optional__ty_8 optional__ty_path_3 ty_path_main
     ;
@@ -951,10 +967,14 @@ optional__ty_path_3
     ;
 
 for_lifetime
-    : 'for' '<' optional__for_lifetime_1 '>'
+    : optional__for_lifetime_1 'for' '<' optional__for_lifetime_2 '>'
     ;
 
 optional__for_lifetime_1
+    : 'dyn'?
+    ;
+
+optional__for_lifetime_2
     : lifetime_def_list?
     ;
 
@@ -1122,7 +1142,8 @@ kleene_star__ty_arg_list_2
     ;
 
 ty_arg
-    : optional__ty_arg_2 ty_sum
+    : BareIntLit
+    | optional__ty_arg_2 ty_sum
     ;
 
 ty_arg_1
@@ -1146,7 +1167,7 @@ kleene_star__lifetime_param_list_2
     ;
 
 lifetime_param
-    : kleene_star__item_1 Lifetime optional__lifetime_def_2
+    : kleene_star__item_1 optional__fn_head_2 Lifetime optional__lifetime_def_2
     ;
 
 ty_param_list
@@ -1162,7 +1183,7 @@ kleene_star__ty_param_list_2
     ;
 
 ty_param
-    : kleene_star__item_1 ident optional__trait_decl_4 optional__trait_item_3
+    : kleene_star__item_1 optional__fn_head_2 ident optional__trait_decl_4 optional__trait_item_5
     ;
 
 pat_no_mut
@@ -1432,7 +1453,7 @@ optional__stmt_tail_3
 
 alternative__stmt_tail_7
     : expr
-    | kleene_star__item_1 'let' pat optional__stmt_tail_3 optional__trait_item_5
+    | kleene_star__item_1 'let' pat optional__stmt_tail_3 optional__trait_item_7
     ;
 
 blocky_expr
@@ -1652,7 +1673,11 @@ struct_update_base
 
 field
     : ident
-    | field_name ':' expr
+    | kleene_star__field_1 field_name ':' expr
+    ;
+
+kleene_star__field_1
+    : expr_attrs*
     ;
 
 field_name

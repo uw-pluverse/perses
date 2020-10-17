@@ -14,29 +14,25 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.grammar.c
+package org.perses.grammar.rust
 
-import com.google.common.collect.ImmutableList
-import com.google.common.collect.ImmutableSet
-import org.perses.program.EnumFormatControl
-import org.perses.program.LanguageKind
+class PnfRustParserFailListGenerator {
 
-object LanguageC : LanguageKind() {
+  val facade = PnfRustParserFacade()
 
-  override val name = "c"
 
-  override val extensions = ImmutableSet.of("c")
+  // Collection for keeping track of the shards of tests we need to run
+  private companion object {
 
-  override val defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE
+    init {
+//      var counter = 0
+//      val shards = listOf(shard1, shard2, shard3, shard4, shard5, shard6)
+//      for (file in TestUtility.getRustTestFiles()) {
+//        val shard = shards.get(counter++ % shards.size)
+//        shard.add(file)
+//      }
+    }
 
-  override val defaultFormmaterCommand =
-    tryObtainingDefaultFormatter(
-      "clang-format",
-      ImmutableList.of(/*in-place formatting*/"-i"))
+  }
 
-  override val allowedCodeFormatControl = ImmutableSet.of(
-    EnumFormatControl.SINGLE_TOKEN_PER_LINE,
-    EnumFormatControl.COMPACT_ORIG_FORMAT,
-    EnumFormatControl.ORIG_FORMAT
-  )
 }

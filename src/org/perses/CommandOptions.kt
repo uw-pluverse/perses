@@ -22,22 +22,26 @@ import org.perses.util.AbstractCommandOptions
 import org.perses.util.Fraction
 import org.perses.util.Fraction.Companion.parse
 import org.perses.util.ICommandLineFlags
-import org.perses.util.Shell.normalizeAndCheckExecutability
+import org.perses.util.ShellCommandOnPath.Companion.normalizeAndCheckExecutability
 import java.io.File
 
 /** Parser for command line arguments.  */
 class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCommandOptions() {
   @JvmField
   val compulsoryFlags = registerFlags(CompulsoryFlags())
+
   @JvmField
   val resultOutputFlags = registerFlags(ResultOutputFlags())
+
   @JvmField
   val reductionControlFlags = registerFlags(ReductionControlFlags())
   val outputRefiningFlags = registerFlags(OutputRefiningFlags())
+
   @JvmField
   val algorithmControlFlags = registerFlags(ReductionAlgorithmControlFlags())
   val cacheControlFlags = registerFlags(CacheControlFlags())
   val profilingFlags = registerFlags(ProfilingFlags())
+
   @JvmField
   val verbosityFlags = registerFlags(VerbosityFlags())
 
@@ -178,9 +182,17 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
 
   class OutputRefiningFlags : ICommandLineFlags {
     @Parameter(
+      names = ["--call-formatter"],
+      description = "call a formatter on the final result",
+      arity = 1,
+      order = FlagOrder.OUTPUT_REFINING + 0
+    )
+    var callFormatter = false
+
+    @Parameter(
       names = ["--format-cmd"],
       description = "the command to format the reduced source file",
-      order = FlagOrder.OUTPUT_REFINING + 0
+      order = FlagOrder.OUTPUT_REFINING + 100
     )
     var formatCmd = ""
 
@@ -188,20 +200,23 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
       names = ["--call-creduce"],
       description = "call C-Reduce when Perses is done.",
       arity = 1,
-      order = FlagOrder.OUTPUT_REFINING + 10
+      order = FlagOrder.OUTPUT_REFINING + 200
     )
     var callCReduce = false
 
     @Parameter(
       names = ["--creduce-cmd"],
       description = "the C-Reduce command name or path",
-      order = FlagOrder.OUTPUT_REFINING + 20
+      order = FlagOrder.OUTPUT_REFINING + 300
     )
     private var creduceCmd = "creduce"
 
     override fun validate() {
       if (callCReduce) {
         normalizeAndCheckExecutability(creduceCmd)
+      }
+      check(formatCmd.isBlank()) {
+        "Does not support customized format command yet. $formatCmd"
       }
     }
 

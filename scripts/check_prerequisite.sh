@@ -6,8 +6,10 @@ set -o nounset
 readonly TOOLS=("creduce" \
     "gcc" \
     "clang" \
+    "clang-format" \
     "go" \
     "rustc" \
+    "rustfmt" \
     "scala")
 
 missing=""

@@ -942,7 +942,7 @@ use_item_list:
     use_item (',' use_item)* ','?;
 
 rename:
-    'as' ident;
+    'as' (ident | '_');
 
 
 // --- Modules
@@ -1002,7 +1002,7 @@ foreign_fn_decl:
 // rule, not a syntactic one. That is, not every rule that can be
 // enforced gramatically should be.
 fn_head:
-    'const'? 'unsafe'? extern_abi? 'fn' ident ty_params?;
+    'async'? 'const'? 'unsafe'? extern_abi? 'fn' ident ty_params?;
 
 param:
     pat ':' param_ty;
@@ -1012,7 +1012,7 @@ param_ty:
     | 'impl' bound;  // experimental: feature(universal_impl_trait)
 
 param_list:
-    param (',' param)* ','?;
+    param (',' param)* (',' pat ':' '...')? ','?;
 
 variadic_param_list:
     param (',' param)* (',' '...')? ','?;
@@ -1108,7 +1108,7 @@ enum_field_decl_list:
     enum_field_decl (',' enum_field_decl)* ','?;
 
 union_decl:
-    'union' ident '{' field_decl_list '}';
+    'union' ident ty_params? where_clause? '{' field_decl_list '}';
 
 
 // --- Traits
@@ -1119,7 +1119,7 @@ trait_decl:
     'unsafe'? 'auto'? 'trait' ident ty_params? colon_bound? where_clause? '{' trait_item* '}';
 
 trait_item:
-    attr* 'type' ident colon_bound? ty_default? ';'
+    attr* 'type' ident ty_params? colon_bound? where_clause? ty_default? ';'
     | attr* 'const' ident ':' ty_sum const_default? ';'  // experimental associated constants
     | attr* trait_method_decl
     | attr* item_macro_path '!' item_macro_tail;
@@ -1140,14 +1140,16 @@ impl_what:
     '!' ty_sum 'for' ty_sum
     | ty_sum 'for' ty_sum
     | ty_sum 'for' '..'
-    | ty_sum;
+    | ident ty_args
+    | ty_sum
+    ;
 
 impl_item:
     attr* visibility? impl_item_tail;
 
 impl_item_tail:
     'default'? method_decl
-    | 'type' ident '=' ty_sum ';'
+    | 'type' ident ty_params? where_clause? '=' ty_sum ';'
     | (const_decl | associated_const_decl)
     | item_macro_path '!' item_macro_tail;
 
@@ -1234,7 +1236,7 @@ ty_path:
     for_lifetime? ('dyn' | 'impl')? ty_path_main;
 
 for_lifetime:
-    'for' '<' lifetime_def_list? '>';
+    'dyn'? 'for' '<' lifetime_def_list? '>';
 
 lifetime_def_list:
     lifetime_def (',' lifetime_def)* ','?;
@@ -1311,7 +1313,10 @@ ty:
     | '&&' Lifetime? 'mut'? ty          // meaning `& & ty`
     | '*' mut_or_const ty               // pointer type
     | for_lifetime? 'unsafe'? extern_abi? 'fn' '(' variadic_param_list_names_optional? ')' rtype?
-    | ty_path macro_tail?;
+    | ty_path macro_tail?
+    | '!'
+    | '{' expr '}'
+    ;
 
 mut_or_const:
     'mut'
@@ -1335,7 +1340,9 @@ ty_sum_list:
 
 ty_arg:
     ident '=' ty_sum
-    | ty_sum;
+    | ty_sum
+    | BareIntLit
+    ;
 
 ty_arg_list:
     ty_arg (',' ty_arg)* ','?;
@@ -1345,13 +1352,13 @@ ty_params:
     | '<' (lifetime_param ',')* ty_param_list '>';
 
 lifetime_param:
-    attr* Lifetime (':' lifetime_bound)?;
+    attr* 'const'? Lifetime (':' lifetime_bound)?;
 
 lifetime_param_list:
     lifetime_param (',' lifetime_param)* ','?;
 
 ty_param:
-    attr* ident colon_bound? ty_default?;
+    attr* 'const'? ident colon_bound? ty_default?;
 
 ty_param_list:
     ty_param (',' ty_param)* ','?;
@@ -1594,7 +1601,7 @@ struct_update_base:
 
 field:
     ident  // struct field shorthand (field and local variable have the same name)
-    | field_name ':' expr;
+    | expr_attrs* field_name ':' expr;
 
 field_name:
     ident
@@ -1769,6 +1776,7 @@ ident:
 
 any_ident:
     ident
+    | 'crate'
     | 'Self'
     | 'self'
     | 'static'
