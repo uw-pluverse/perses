@@ -942,7 +942,7 @@ use_item_list:
     use_item (',' use_item)* ','?;
 
 rename:
-    'as' ident;
+    'as' (ident | '_');
 
 
 // --- Modules
