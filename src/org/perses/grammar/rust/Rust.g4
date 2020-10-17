@@ -1333,7 +1333,7 @@ lifetime_list:
     Lifetime (',' Lifetime)* ','?;
 
 ty_sum:
-    ty ('+' bound)?;
+    'dyn'? ty ('+' bound)?;
 
 ty_sum_list:
     ty_sum (',' ty_sum)* ','?;

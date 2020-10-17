@@ -366,15 +366,19 @@ alternative__foreign_item_tail_2
     ;
 
 ty_sum
-    : ty optional__ty_sum_2
+    : optional__ty_sum_1 ty optional__ty_sum_3
     ;
 
-ty_sum_1
+optional__ty_sum_1
+    : 'dyn'?
+    ;
+
+ty_sum_2
     : '+' bound
     ;
 
-optional__ty_sum_2
-    : ty_sum_1?
+optional__ty_sum_3
+    : ty_sum_2?
     ;
 
 foreign_fn_decl
@@ -968,11 +972,7 @@ optional__ty_path_3
     ;
 
 for_lifetime
-    : optional__for_lifetime_1 'for' '<' optional__for_lifetime_2 '>'
-    ;
-
-optional__for_lifetime_1
-    : 'dyn'?
+    : optional__ty_sum_1 'for' '<' optional__for_lifetime_2 '>'
     ;
 
 optional__for_lifetime_2
