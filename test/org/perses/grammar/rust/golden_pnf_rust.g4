@@ -186,7 +186,7 @@ optional__enum_decl_3
     ;
 
 union_decl
-    : 'union' ident '{' field_decl_list '}'
+    : 'union' ident optional__impl_block_2 '{' field_decl_list '}'
     ;
 
 trait_decl

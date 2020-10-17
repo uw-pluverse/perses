@@ -1108,7 +1108,7 @@ enum_field_decl_list:
     enum_field_decl (',' enum_field_decl)* ','?;
 
 union_decl:
-    'union' ident '{' field_decl_list '}';
+    'union' ident ty_params? '{' field_decl_list '}';
 
 
 // --- Traits
