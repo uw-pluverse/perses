@@ -366,7 +366,7 @@ alternative__foreign_item_tail_2
     ;
 
 ty_sum
-    : optional__ty_sum_1 ty optional__ty_sum_3
+    : optional__ty_sum_1 type optional__ty_sum_3
     ;
 
 optional__ty_sum_1
@@ -438,7 +438,7 @@ optional__param_list_4
     ;
 
 fn_rtype
-    : '->' (ty | '!' | 'impl' bound)
+    : '->' (type | '!' | 'impl' bound)
     ;
 
 where_clause
@@ -490,7 +490,7 @@ kleene_star__trait_method_param_list_2
     ;
 
 rtype
-    : '->' (ty | '!')
+    : '->' (type | '!')
     ;
 
 variadic_param_list
@@ -603,56 +603,56 @@ optional__restricted_pat_2
     : restricted_pat_1?
     ;
 
-ty
+type
     : '_'
     | '!'
     | '{' expr '}'
-    | '[' ty_sum optional__ty_3 ']'
-    | ty_path optional__ty_13
-    | '(' alternative__ty_16 ')'
-    | alternative__ty_17 ty
-    | optional__ty_8 optional__impl_block_1 optional__fn_head_4 'fn' '(' optional__ty_11 ')' optional__foreign_fn_decl_2
+    | '[' ty_sum optional__type_3 ']'
+    | ty_path optional__type_13
+    | '(' alternative__type_16 ')'
+    | alternative__type_17 type
+    | optional__type_8 optional__impl_block_1 optional__fn_head_4 'fn' '(' optional__type_11 ')' optional__foreign_fn_decl_2
     ;
 
-optional__ty_1
+optional__type_1
     : ty_sum_list?
     ;
 
-ty_2
+type_2
     : ';' expr
     ;
 
-optional__ty_3
-    : ty_2?
+optional__type_3
+    : type_2?
     ;
 
-optional__ty_8
+optional__type_8
     : for_lifetime?
     ;
 
-optional__ty_11
+optional__type_11
     : variadic_param_list_names_optional?
     ;
 
-optional__ty_13
+optional__type_13
     : macro_tail?
     ;
 
-optional__ty_14
+optional__type_14
     : ty_sum?
     ;
 
-alternative__ty_16
-    : optional__ty_14
-    | ty_sum ',' optional__ty_1
+alternative__type_16
+    : optional__type_14
+    | ty_sum ',' optional__type_1
     ;
 
-alternative__ty_17
+alternative__type_17
     : '*' mut_or_const
-    | alternative__ty_18 optional__self_param_4 optional__static_decl_1
+    | alternative__type_18 optional__self_param_4 optional__static_decl_1
     ;
 
-alternative__ty_18
+alternative__type_18
     : '&&'
     | '&'
     ;
@@ -959,7 +959,7 @@ simple_path_segment
     ;
 
 ty_path
-    : optional__ty_8 optional__ty_path_3 ty_path_main
+    : optional__type_8 optional__ty_path_3 ty_path_main
     ;
 
 ty_path_2
@@ -1033,7 +1033,7 @@ lifetime_bound_2
 
 ty_path_tail
     : ty_path_segment_no_super
-    | (ident | 'Self') '(' optional__ty_1 ')' optional__foreign_fn_decl_2
+    | (ident | 'Self') '(' optional__type_1 ')' optional__foreign_fn_decl_2
     ;
 
 ty_path_parent
@@ -1093,7 +1093,7 @@ kleene_star__where_bound_list_2
 
 where_bound
     : Lifetime ':' lifetime_bound
-    | optional__ty_8 ty empty_ok_colon_bound
+    | optional__type_8 type empty_ok_colon_bound
     ;
 
 empty_ok_colon_bound
@@ -1196,7 +1196,7 @@ pat_no_mut
     | path alternative__pat_no_mut_22
     | '(' optional__pat_no_mut_7 ')'
     | alternative__pat_no_mut_24 optional__pat_2
-    | alternative__ty_18 alternative__pat_no_mut_17
+    | alternative__type_18 alternative__pat_no_mut_17
     ;
 
 pat_no_mut_1
@@ -1445,7 +1445,7 @@ optional__stmt_1
     ;
 
 stmt_tail_2
-    : ':' ty
+    : ':' type
     ;
 
 optional__stmt_tail_3
@@ -1587,7 +1587,7 @@ prim_expr_no_struct
     | '[' alternative__prim_expr_no_struct_15 ']'
     | 'return' optional__block_with_inner_attrs_3
     | 'continue' optional__self_param_4
-    | path optional__ty_13
+    | path optional__type_13
     ;
 
 optional__prim_expr_no_struct_5
@@ -1726,7 +1726,7 @@ alternative__pre_expr_8
     | '!'
     | '*'
     | expr_attrs
-    | alternative__ty_18 optional__static_decl_1
+    | alternative__type_18 optional__static_decl_1
     ;
 
 cast_expr
