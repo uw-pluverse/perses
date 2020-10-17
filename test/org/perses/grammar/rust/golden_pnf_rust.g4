@@ -68,6 +68,7 @@ ident
     | 'auto'
     | 'default'
     | 'union'
+    | RawIdentifier
     ;
 
 attr
@@ -2893,6 +2894,10 @@ XID_Continue
 
 CashMoney
     : '$'
+    ;
+
+RawIdentifier
+    : 'r#' IDENT
     ;
 
 fragment
