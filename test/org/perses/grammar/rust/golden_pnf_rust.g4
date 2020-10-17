@@ -270,7 +270,7 @@ tt_block
     ;
 
 rename
-    : 'as' ident
+    : 'as' (ident | '_')
     ;
 
 use_path

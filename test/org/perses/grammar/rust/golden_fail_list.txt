@@ -9,7 +9,6 @@ test_data/rust_programs/rust_testsuite/pretty/macro.rs
 test_data/rust_programs/rust_testsuite/pretty/nested-item-vis-defaultness.rs
 test_data/rust_programs/rust_testsuite/pretty/raw-address-of.rs
 test_data/rust_programs/rust_testsuite/pretty/trait-inner-attr.rs
-test_data/rust_programs/rust_testsuite/run-make/thumb-none-qemu/example/src/main.rs
 test_data/rust_programs/rust_testsuite/rustdoc-ui/coverage/traits.rs
 test_data/rust_programs/rust_testsuite/rustdoc-ui/issue-61732.rs
 test_data/rust_programs/rust_testsuite/rustdoc/auxiliary/extern-impl-trait.rs
@@ -199,7 +198,6 @@ test_data/rust_programs/rust_testsuite/ui/error-codes/E0528.rs
 test_data/rust_programs/rust_testsuite/ui/error-codes/E0642.rs
 test_data/rust_programs/rust_testsuite/ui/error-codes/e0119/auxiliary/complex_impl_support.rs
 test_data/rust_programs/rust_testsuite/ui/extern/extern-ffi-fn-with-body.rs
-test_data/rust_programs/rust_testsuite/ui/feature-gates/bench.rs
 test_data/rust_programs/rust_testsuite/ui/feature-gates/feature-gate-associated_type_bounds.rs
 test_data/rust_programs/rust_testsuite/ui/feature-gates/feature-gate-const_generics-ptr.rs
 test_data/rust_programs/rust_testsuite/ui/feature-gates/feature-gate-const_generics.rs
@@ -565,7 +563,6 @@ test_data/rust_programs/rust_testsuite/ui/rust-2018/edition-lint-nested-empty-pa
 test_data/rust_programs/rust_testsuite/ui/rust-2018/edition-lint-nested-paths.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/edition-lint-paths.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/extern-crate-idiomatic-in-2018.rs
-test_data/rust_programs/rust_testsuite/ui/rust-2018/future-proofing-locals.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/suggestions-not-always-applicable.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/uniform-paths/from-decl-macro.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/uniform-paths/issue-54253.rs
@@ -649,15 +646,11 @@ test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/issue-57611-trai
 test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/type-alias-impl-trait-with-no-traits.rs
 test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/unused_generic_param.rs
 test_data/rust_programs/rust_testsuite/ui/unboxed-closures/unboxed-closure-sugar-used-on-struct-3.rs
-test_data/rust_programs/rust_testsuite/ui/underscore-imports/auxiliary/underscore-imports.rs
-test_data/rust_programs/rust_testsuite/ui/underscore-imports/basic.rs
 test_data/rust_programs/rust_testsuite/ui/underscore-imports/cycle.rs
-test_data/rust_programs/rust_testsuite/ui/underscore-imports/duplicate.rs
 test_data/rust_programs/rust_testsuite/ui/underscore-imports/hygiene-2.rs
 test_data/rust_programs/rust_testsuite/ui/underscore-imports/hygiene.rs
 test_data/rust_programs/rust_testsuite/ui/underscore-imports/macro-expanded.rs
 test_data/rust_programs/rust_testsuite/ui/underscore-imports/shadow.rs
-test_data/rust_programs/rust_testsuite/ui/underscore-imports/unused-2018.rs
 test_data/rust_programs/rust_testsuite/ui/uniform-paths/basic-nested.rs
 test_data/rust_programs/rust_testsuite/ui/uniform-paths/same-crate.rs
 test_data/rust_programs/rust_testsuite/ui/union/union-empty.rs
