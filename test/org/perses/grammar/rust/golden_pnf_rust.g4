@@ -312,6 +312,7 @@ optional__use_item_list_3
 
 any_ident
     : ident
+    | 'crate'
     | 'Self'
     | 'self'
     | 'static'

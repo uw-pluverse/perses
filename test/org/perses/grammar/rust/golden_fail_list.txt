@@ -296,7 +296,6 @@ test_data/rust_programs/rust_testsuite/ui/imports/extern-crate-self/extern-crate
 test_data/rust_programs/rust_testsuite/ui/imports/extern-crate-used.rs
 test_data/rust_programs/rust_testsuite/ui/imports/glob-shadowing.rs
 test_data/rust_programs/rust_testsuite/ui/imports/import-glob-crate.rs
-test_data/rust_programs/rust_testsuite/ui/imports/issue-57539.rs
 test_data/rust_programs/rust_testsuite/ui/imports/local-modularized-tricky-fail-1.rs
 test_data/rust_programs/rust_testsuite/ui/imports/local-modularized-tricky-fail-2.rs
 test_data/rust_programs/rust_testsuite/ui/imports/local-modularized.rs
@@ -305,8 +304,6 @@ test_data/rust_programs/rust_testsuite/ui/inference/cannot-infer-async-enabled-i
 test_data/rust_programs/rust_testsuite/ui/inference/cannot-infer-async.rs
 test_data/rust_programs/rust_testsuite/ui/inner-attrs-on-impl.rs
 test_data/rust_programs/rust_testsuite/ui/invalid-self-argument/bare-fn-start.rs
-test_data/rust_programs/rust_testsuite/ui/issues/auxiliary/issue-56943.rs
-test_data/rust_programs/rust_testsuite/ui/issues/auxiliary/xcrate-issue-61711-b.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-10806.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-11085.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-12369.rs
@@ -331,7 +328,6 @@ test_data/rust_programs/rust_testsuite/ui/issues/issue-47673.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-50187.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-50571.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-50761.rs
-test_data/rust_programs/rust_testsuite/ui/issues/issue-52141/main.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-55376.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-55731.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-56488.rs
@@ -360,7 +356,6 @@ test_data/rust_programs/rust_testsuite/ui/lint/lint-unused-mut-variables.rs
 test_data/rust_programs/rust_testsuite/ui/lint/lint-unused-variables.rs
 test_data/rust_programs/rust_testsuite/ui/lint/unreachable_pub.rs
 test_data/rust_programs/rust_testsuite/ui/lint/unused_labels.rs
-test_data/rust_programs/rust_testsuite/ui/lint/use-redundant.rs
 test_data/rust_programs/rust_testsuite/ui/loops/loop-break-value.rs
 test_data/rust_programs/rust_testsuite/ui/macros/ambiguity-legacy-vs-modern.rs
 test_data/rust_programs/rust_testsuite/ui/macros/issue-63102.rs
@@ -378,7 +373,6 @@ test_data/rust_programs/rust_testsuite/ui/moves/move-out-of-array-ref.rs
 test_data/rust_programs/rust_testsuite/ui/moves/move-out-of-slice-2.rs
 test_data/rust_programs/rust_testsuite/ui/nll/decl-macro-illegal-copy.rs
 test_data/rust_programs/rust_testsuite/ui/no-patterns-in-args.rs
-test_data/rust_programs/rust_testsuite/ui/non-ice-error-on-worker-io-fail.rs
 test_data/rust_programs/rust_testsuite/ui/numeric/numeric-fields.rs
 test_data/rust_programs/rust_testsuite/ui/or-patterns/already-bound-name.rs
 test_data/rust_programs/rust_testsuite/ui/or-patterns/basic-switch.rs
@@ -498,7 +492,6 @@ test_data/rust_programs/rust_testsuite/ui/privacy/restricted/auxiliary/pub_restr
 test_data/rust_programs/rust_testsuite/ui/privacy/restricted/private-in-public.rs
 test_data/rust_programs/rust_testsuite/ui/privacy/restricted/relative-2018.rs
 test_data/rust_programs/rust_testsuite/ui/privacy/restricted/test.rs
-test_data/rust_programs/rust_testsuite/ui/proc-macro/dollar-crate.rs
 test_data/rust_programs/rust_testsuite/ui/proc-macro/issue-42708.rs
 test_data/rust_programs/rust_testsuite/ui/proc-macro/issue-50061.rs
 test_data/rust_programs/rust_testsuite/ui/proc-macro/macro-namespace-reserved-2.rs
@@ -563,9 +556,7 @@ test_data/rust_programs/rust_testsuite/ui/rust-2018/edition-lint-nested-empty-pa
 test_data/rust_programs/rust_testsuite/ui/rust-2018/edition-lint-nested-paths.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/edition-lint-paths.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/extern-crate-idiomatic-in-2018.rs
-test_data/rust_programs/rust_testsuite/ui/rust-2018/suggestions-not-always-applicable.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/uniform-paths/from-decl-macro.rs
-test_data/rust_programs/rust_testsuite/ui/rust-2018/uniform-paths/issue-54253.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/uniform-paths/macro-rules.rs
 test_data/rust_programs/rust_testsuite/ui/self/self-in-typedefs.rs
 test_data/rust_programs/rust_testsuite/ui/span/macro-ty-params.rs
@@ -593,7 +584,6 @@ test_data/rust_programs/rust_testsuite/ui/stmt_expr_attrs_no_feature.rs
 test_data/rust_programs/rust_testsuite/ui/structs-enums/numeric-fields.rs
 test_data/rust_programs/rust_testsuite/ui/structs/struct-field-cfg.rs
 test_data/rust_programs/rust_testsuite/ui/suggestions/async-fn-ctor-passed-as-arg-where-it-should-have-been-called.rs
-test_data/rust_programs/rust_testsuite/ui/suggestions/constrain-trait.rs
 test_data/rust_programs/rust_testsuite/ui/suggestions/missing-assoc-fn.rs
 test_data/rust_programs/rust_testsuite/ui/suggestions/suggest-move-lifetimes.rs
 test_data/rust_programs/rust_testsuite/ui/suggestions/suggest-move-types.rs
@@ -646,13 +636,10 @@ test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/issue-57611-trai
 test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/type-alias-impl-trait-with-no-traits.rs
 test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/unused_generic_param.rs
 test_data/rust_programs/rust_testsuite/ui/unboxed-closures/unboxed-closure-sugar-used-on-struct-3.rs
-test_data/rust_programs/rust_testsuite/ui/underscore-imports/cycle.rs
 test_data/rust_programs/rust_testsuite/ui/underscore-imports/hygiene-2.rs
 test_data/rust_programs/rust_testsuite/ui/underscore-imports/hygiene.rs
 test_data/rust_programs/rust_testsuite/ui/underscore-imports/macro-expanded.rs
-test_data/rust_programs/rust_testsuite/ui/underscore-imports/shadow.rs
 test_data/rust_programs/rust_testsuite/ui/uniform-paths/basic-nested.rs
-test_data/rust_programs/rust_testsuite/ui/uniform-paths/same-crate.rs
 test_data/rust_programs/rust_testsuite/ui/union/union-empty.rs
 test_data/rust_programs/rust_testsuite/ui/union/union-generic-rpass.rs
 test_data/rust_programs/rust_testsuite/ui/union/union-overwrite.rs
