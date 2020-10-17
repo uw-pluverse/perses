@@ -62,7 +62,6 @@ test_data/rust_programs/rust_testsuite/ui/async-await/async-block-control-flow-s
 test_data/rust_programs/rust_testsuite/ui/async-await/async-borrowck-escaping-block-error.rs
 test_data/rust_programs/rust_testsuite/ui/async-await/async-borrowck-escaping-closure-error.rs
 test_data/rust_programs/rust_testsuite/ui/async-await/async-closure.rs
-test_data/rust_programs/rust_testsuite/ui/async-await/await-keyword/post_expansion_error.rs
 test_data/rust_programs/rust_testsuite/ui/async-await/drop-order/drop-order-for-locals-when-cancelled.rs
 test_data/rust_programs/rust_testsuite/ui/async-await/feature-async-closure.rs
 test_data/rust_programs/rust_testsuite/ui/async-await/generics-and-bounds.rs
@@ -173,13 +172,10 @@ test_data/rust_programs/rust_testsuite/ui/drop/dynamic-drop-async.rs
 test_data/rust_programs/rust_testsuite/ui/drop/dynamic-drop.rs
 test_data/rust_programs/rust_testsuite/ui/dyn-keyword/dyn-2015-edition-keyword-ident-lint.rs
 test_data/rust_programs/rust_testsuite/ui/dyn-keyword/dyn-2015-idents-in-decl-macros-unlinted.rs
-test_data/rust_programs/rust_testsuite/ui/dyn-keyword/dyn-2015-idents-in-macros-unlinted.rs
 test_data/rust_programs/rust_testsuite/ui/dyn-keyword/dyn-2015-no-warnings-without-lints.rs
 test_data/rust_programs/rust_testsuite/ui/dyn-trait-compatibility.rs
 test_data/rust_programs/rust_testsuite/ui/edition-keywords-2015-2015.rs
 test_data/rust_programs/rust_testsuite/ui/edition-keywords-2015-2018.rs
-test_data/rust_programs/rust_testsuite/ui/edition-keywords-2018-2015.rs
-test_data/rust_programs/rust_testsuite/ui/edition-keywords-2018-2018.rs
 test_data/rust_programs/rust_testsuite/ui/editions/edition-keywords-2015-2015-parsing.rs
 test_data/rust_programs/rust_testsuite/ui/editions/edition-keywords-2015-2018-parsing.rs
 test_data/rust_programs/rust_testsuite/ui/editions/edition-keywords-2018-2015-parsing.rs
@@ -331,13 +327,11 @@ test_data/rust_programs/rust_testsuite/ui/issues/issue-55376.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-55731.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-56488.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-56685.rs
-test_data/rust_programs/rust_testsuite/ui/issues/issue-57198-pass.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-59029-1.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-59029-2.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-59508-1.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-59508.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-62480.rs
-test_data/rust_programs/rust_testsuite/ui/issues/issue-65634-raw-ident-suggestion.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-65673.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-68103.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-7784.rs
@@ -539,8 +533,6 @@ test_data/rust_programs/rust_testsuite/ui/rfc-2632-const-trait-impl/inherent-imp
 test_data/rust_programs/rust_testsuite/ui/rfc-2632-const-trait-impl/stability.rs
 test_data/rust_programs/rust_testsuite/ui/rfc-2632-const-trait-impl/syntax.rs
 test_data/rust_programs/rust_testsuite/ui/rfcs/rfc-2005-default-binding-mode/slice.rs
-test_data/rust_programs/rust_testsuite/ui/rfcs/rfc-2151-raw-identifiers/basic.rs
-test_data/rust_programs/rust_testsuite/ui/rfcs/rfc-2151-raw-identifiers/items.rs
 test_data/rust_programs/rust_testsuite/ui/rfcs/rfc-2151-raw-identifiers/macros.rs
 test_data/rust_programs/rust_testsuite/ui/rfcs/rfc-2175-or-if-while-let/basic.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/async-ident-allowed.rs

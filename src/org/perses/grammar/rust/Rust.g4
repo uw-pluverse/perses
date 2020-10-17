@@ -1772,7 +1772,9 @@ ident:
     Ident
     | 'auto'
     | 'default'
-    | 'union';
+    | 'union'
+    | RawIdentifier
+    ;
 
 any_ident:
     ident
@@ -1787,6 +1789,10 @@ any_ident:
 // else in this grammar.
 CashMoney:
     '$';
+
+RawIdentifier:
+    'r#' IDENT
+    ;
 
 fragment IDENT:
     XID_Start XID_Continue*;
