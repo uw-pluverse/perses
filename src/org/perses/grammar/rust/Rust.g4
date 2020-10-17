@@ -1776,6 +1776,7 @@ ident:
 
 any_ident:
     ident
+    | 'crate'
     | 'Self'
     | 'self'
     | 'static'
