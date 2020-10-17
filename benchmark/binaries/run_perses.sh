@@ -27,12 +27,12 @@ java -jar "/tmp/binaries/perses_deploy.jar" ${PERSES_EXTRA_FLAGS:=''}\
 readonly PERSES_PID=$!
 
 
-if [ -n ${PERSES_MEMORY_PROFILER:=''} ]
+if [ ! -z ${PERSES_MEMORY_PROFILER:-''} ]
 then
 	echo "	*****PERSES_PID=${PERSES_PID}*****"
 	echo "	Memory usage logging into ${PERSES_MEMORY_PROFILER}"
 	#Take samples at 60 seconds interval until process exit
-	jstat -gccapacity -t -h30 ${PERSES_PID} 60000 > ${PERSES_MEMORY_PROFILER}
+	jstat -gccapacity -t -h30 ${PERSES_PID} 60000 > "${PERSES_MEMORY_PROFILER}"
 fi
 
 
