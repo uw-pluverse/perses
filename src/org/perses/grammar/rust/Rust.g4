@@ -923,7 +923,7 @@ use_item_list:
     use_item (',' use_item)* ','?;
 
 rename:
-    'as' ident;
+    'as' (ident | '_');
 
 
 // --- Modules
@@ -1032,11 +1032,11 @@ trait_method_param_list:
 // `where T: Fn() -> X + Clone`, we're saying that T implements both
 // `Fn() -> X` and `Clone`, not that its return type is `X + Clone`.
 rtype:
-    '->' (ty | '!');
+    '->' (type | '!');
 
 // Experimental `feature(conservative_impl_trait)`.
 fn_rtype:
-    '->' (ty | '!' | 'impl' bound);
+    '->' (type | '!' | 'impl' bound);
 
 
 // --- type, struct, and enum declarations
@@ -1094,7 +1094,7 @@ enum_field_decl_list:
     enum_field_decl (',' enum_field_decl)* ','?;
 
 union_decl:
-    'union' ident '{' field_decl_list '}';
+    'union' ident ty_params? where_clause? '{' field_decl_list '}';
 
 
 // --- Traits
@@ -1105,7 +1105,7 @@ trait_decl:
     'unsafe'? 'auto'? 'trait' ident ty_params? colon_bound? where_clause? '{' trait_item* '}';
 
 trait_item:
-    attr* 'type' ident colon_bound? ty_default? ';'
+    attr* 'type' ident ty_params? colon_bound? where_clause? ty_default? ';'
     | attr* 'const' ident ':' ty_sum const_default? ';'  // experimental associated constants
     | attr* trait_method_decl
     | attr* macro_invocation_semi;
@@ -1135,7 +1135,7 @@ impl_item:
 
 impl_item_tail:
     'default'? method_decl
-    | 'type' ident '=' ty_sum ';'
+    | 'type' ident ty_params? where_clause? '=' ty_sum ';'
     | (const_decl | associated_const_decl)
     | macro_invocation_semi;
 
@@ -1228,7 +1228,7 @@ ty_path:
     for_lifetime? ('dyn' | 'impl')? ty_path_main;
 
 for_lifetime:
-    'for' '<' lifetime_def_list? '>';
+    'dyn'? 'for' '<' lifetime_def_list? '>';
 
 lifetime_def_list:
     lifetime_def (',' lifetime_def)* ','?;
@@ -1273,7 +1273,7 @@ where_bound_list:
 
 where_bound:
     Lifetime ':' lifetime_bound
-    | for_lifetime? ty empty_ok_colon_bound;
+    | for_lifetime? type empty_ok_colon_bound;
 
 empty_ok_colon_bound:
     ':' bound?;
@@ -1293,7 +1293,7 @@ prim_bound:
 
 // === Types and type parameters
 
-ty:
+type:
     '_'
     // The next 3 productions match exactly `'(' ty_sum_list? ')'`,
     // but (i32) and (i32,) are distinct types, so parse them with different rules.
@@ -1301,9 +1301,9 @@ ty:
     | '(' ty_sum ')'                    // grouping (parens are ignored)
     | '(' ty_sum ',' ty_sum_list? ')'   // tuple
     | '[' ty_sum (';' expr)? ']'
-    | '&' Lifetime? 'mut'? ty
-    | '&&' Lifetime? 'mut'? ty          // meaning `& & ty`
-    | '*' mut_or_const ty               // pointer type
+    | '&' Lifetime? 'mut'? type
+    | '&&' Lifetime? 'mut'? type          // meaning `& & ty`
+    | '*' mut_or_const type               // pointer type
     | for_lifetime? 'unsafe'? extern_abi? 'fn' '(' variadic_param_list_names_optional? ')' rtype?
     | ty_path macro_tail?
     | '!'
@@ -1325,14 +1325,16 @@ lifetime_list:
     Lifetime (',' Lifetime)* ','?;
 
 ty_sum:
-    ty ('+' bound)?;
+    'dyn'? type ('+' bound)?;
 
 ty_sum_list:
     ty_sum (',' ty_sum)* ','?;
 
 ty_arg:
     ident '=' ty_sum
-    | ty_sum;
+    | ty_sum
+    | BareIntLit
+    ;
 
 ty_arg_list:
     ty_arg (',' ty_arg)* ','?;
@@ -1490,7 +1492,7 @@ let_stat:
     attr* 'let' pat (':' ty)? ('=' expr)? ';';
 
 stmt_tail:
-    let_stat
+    attr* 'let' pat (':' type)? ('=' expr)? ';'
     | attr* blocky_expr
     | expr ';';
 
@@ -1580,7 +1582,7 @@ closure_params:
     | '|' closure_param_list? '|';
 
 closure_param:
-    pat (':' ty)?;
+    pat (':' type)?;
 
 closure_param_list:
     closure_param (',' closure_param)* ','?;
@@ -1602,7 +1604,7 @@ struct_update_base:
 
 field:
     ident  // struct field shorthand (field and local variable have the same name)
-    | field_name ':' expr;
+    | expr_attrs* field_name ':' expr;
 
 field_name:
     ident
@@ -1773,10 +1775,13 @@ ident:
     Ident
     | 'auto'
     | 'default'
-    | 'union';
+    | 'union'
+    | RawIdentifier
+    ;
 
 any_ident:
     ident
+    | 'crate'
     | 'Self'
     | 'self'
     | 'static'
@@ -1895,6 +1900,10 @@ macro_invocation:
 // else in this grammar.
 CashMoney:
     '$';
+
+RawIdentifier:
+    'r#' IDENT
+    ;
 
 fragment IDENT:
     XID_Start XID_Continue*;

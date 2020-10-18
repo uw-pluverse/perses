@@ -39,7 +39,6 @@ class PnfRustParserFacadeTest {
     workingDir.deleteRecursively()
   }
 
-
   @Test
   fun testDefaultFormatterCmd() {
     assertThat(facade.language.defaultFormmaterCommand).isNotNull()

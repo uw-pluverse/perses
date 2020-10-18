@@ -35,6 +35,7 @@ kt_jvm_test(
 
 java_binary(
     name = "RustParserFailListGenerator",
+    testonly = True,
     srcs = ["RustParserFailListGenerator.java"],
     main_class = "org.perses.grammar.rust.RustParserFailListGenerator",
     deps = [
@@ -47,6 +48,7 @@ java_binary(
 
 genrule(
     name = "generate_rust_parser_faillist",
+    testonly = True,
     srcs = ["//test_data/rust_programs:rust_testsuite"],
     outs = ["rust_parser_failed_files.txt"],
     cmd = "$(location :RustParserFailListGenerator) $@",
