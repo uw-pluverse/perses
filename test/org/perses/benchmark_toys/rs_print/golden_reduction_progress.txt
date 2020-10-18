@@ -12,35 +12,35 @@ crate {id=1}
         |___block_with_inner_attrs {id=11,slot_type=block_with_inner_attrs}
             |___Token:{ {id=12,slot_type=Token}
             |___(*) {id=13,slot_type=kleene_star__block_with_inner_attrs_2}
-            |   |___item_macro_use {id=52,slot_type=stmt}
-            |   |   |___Token:println {id=65,slot_type=item_macro_path}
+            |   |___macro_invocation_semi {id=52,slot_type=stmt}
+            |   |   |___Token:println {id=65,slot_type=simple_path}
             |   |   |___Token:! {id=54,slot_type=Token}
-            |   |   |___item_macro_tail {id=55,slot_type=item_macro_tail}
-            |   |       |___tt_parens {id=58,slot_type=alternative__item_macro_tail_1}
-            |   |       |   |___Token:( {id=59,slot_type=Token}
-            |   |       |   |___(*) {id=60,slot_type=kleene_star__inner_attr_1}
-            |   |       |   |   |___Token:"ingress" {id=63,slot_type=tt}
-            |   |       |   |___Token:) {id=61,slot_type=Token}
+            |   |   |___alternative__macro_invocation_semi_5 {id=55,slot_type=alternative__macro_invocation_semi_5}
+            |   |       |___alternative__macro_invocation_semi_4 {id=56,slot_type=alternative__macro_invocation_semi_4}
+            |   |       |   |___Token:( {id=58,slot_type=Token}
+            |   |       |   |___(*) {id=59,slot_type=kleene_star__inner_attr_1}
+            |   |       |   |   |___Token:"ingress" {id=62,slot_type=tt}
+            |   |       |   |___Token:) {id=60,slot_type=Token}
             |   |       |___Token:; {id=57,slot_type=Token}
-            |   |___item_macro_use {id=36,slot_type=stmt}
-            |   |   |___Token:println {id=49,slot_type=item_macro_path}
+            |   |___macro_invocation_semi {id=36,slot_type=stmt}
+            |   |   |___Token:println {id=49,slot_type=simple_path}
             |   |   |___Token:! {id=38,slot_type=Token}
-            |   |   |___item_macro_tail {id=39,slot_type=item_macro_tail}
-            |   |       |___tt_parens {id=42,slot_type=alternative__item_macro_tail_1}
-            |   |       |   |___Token:( {id=43,slot_type=Token}
-            |   |       |   |___(*) {id=44,slot_type=kleene_star__inner_attr_1}
-            |   |       |   |   |___Token:"hello_world" {id=47,slot_type=tt}
-            |   |       |   |___Token:) {id=45,slot_type=Token}
+            |   |   |___alternative__macro_invocation_semi_5 {id=39,slot_type=alternative__macro_invocation_semi_5}
+            |   |       |___alternative__macro_invocation_semi_4 {id=40,slot_type=alternative__macro_invocation_semi_4}
+            |   |       |   |___Token:( {id=42,slot_type=Token}
+            |   |       |   |___(*) {id=43,slot_type=kleene_star__inner_attr_1}
+            |   |       |   |   |___Token:"hello_world" {id=46,slot_type=tt}
+            |   |       |   |___Token:) {id=44,slot_type=Token}
             |   |       |___Token:; {id=41,slot_type=Token}
-            |   |___item_macro_use {id=20,slot_type=stmt}
-            |       |___Token:println {id=33,slot_type=item_macro_path}
+            |   |___macro_invocation_semi {id=20,slot_type=stmt}
+            |       |___Token:println {id=33,slot_type=simple_path}
             |       |___Token:! {id=22,slot_type=Token}
-            |       |___item_macro_tail {id=23,slot_type=item_macro_tail}
-            |           |___tt_parens {id=26,slot_type=alternative__item_macro_tail_1}
-            |           |   |___Token:( {id=27,slot_type=Token}
-            |           |   |___(*) {id=28,slot_type=kleene_star__inner_attr_1}
-            |           |   |   |___Token:"egress" {id=31,slot_type=tt}
-            |           |   |___Token:) {id=29,slot_type=Token}
+            |       |___alternative__macro_invocation_semi_5 {id=23,slot_type=alternative__macro_invocation_semi_5}
+            |           |___alternative__macro_invocation_semi_4 {id=24,slot_type=alternative__macro_invocation_semi_4}
+            |           |   |___Token:( {id=26,slot_type=Token}
+            |           |   |___(*) {id=27,slot_type=kleene_star__inner_attr_1}
+            |           |   |   |___Token:"egress" {id=30,slot_type=tt}
+            |           |   |___Token:) {id=28,slot_type=Token}
             |           |___Token:; {id=25,slot_type=Token}
             |___Token:} {id=14,slot_type=Token}
 ------------------------------------------------------------
@@ -257,7 +257,7 @@ Failed to reduce node 39
 ------------------------------------------------------------
 
 
-=================Reducing node 42, size=12==================
+=================Reducing node 40, size=12==================
 
 The current best program is the following
 
@@ -269,7 +269,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 42
+Failed to reduce node 40
 ------------------------------------------------------------
 
 
@@ -337,7 +337,7 @@ Failed to reduce node 49
 ------------------------------------------------------------
 
 
-=================Reducing node 45, size=12==================
+=================Reducing node 44, size=12==================
 
 The current best program is the following
 
@@ -349,11 +349,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 45
+Failed to reduce node 44
 ------------------------------------------------------------
 
 
-=================Reducing node 44, size=12==================
+=================Reducing node 43, size=12==================
 
 The current best program is the following
 
@@ -374,39 +374,39 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 44
-------------------------------------------------------------
-
-
-=================Reducing node 47, size=12==================
-
-The current best program is the following
-
-    fn main() {
-    println!("hello_world");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 47
-------------------------------------------------------------
-
-
-=================Reducing node 43, size=12==================
-
-The current best program is the following
-
-    fn main() {
-    println!("hello_world");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
 Failed to reduce node 43
+------------------------------------------------------------
+
+
+=================Reducing node 46, size=12==================
+
+The current best program is the following
+
+    fn main() {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 46
+------------------------------------------------------------
+
+
+=================Reducing node 42, size=12==================
+
+The current best program is the following
+
+    fn main() {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 42
 ------------------------------------------------------------
 
 
@@ -632,7 +632,7 @@ Failed to reduce node 21
 ------------------------------------------------------------
 
 
-=================Reducing node 24, size=12==================
+=================Reducing node 22, size=12==================
 
 The current best program is the following
 
@@ -644,7 +644,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 24
+Failed to reduce node 22
 ------------------------------------------------------------
 
 
@@ -712,7 +712,7 @@ Failed to reduce node 31
 ------------------------------------------------------------
 
 
-=================Reducing node 27, size=12==================
+=================Reducing node 26, size=12==================
 
 The current best program is the following
 
@@ -724,11 +724,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 27
+Failed to reduce node 26
 ------------------------------------------------------------
 
 
-=================Reducing node 26, size=12==================
+=================Reducing node 25, size=12==================
 
 The current best program is the following
 
@@ -748,39 +748,39 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26
-------------------------------------------------------------
-
-
-=================Reducing node 29, size=12==================
-
-The current best program is the following
-
-    fn main() {
-    println!("hello_world");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 29
-------------------------------------------------------------
-
-
-=================Reducing node 25, size=12==================
-
-The current best program is the following
-
-    fn main() {
-    println!("hello_world");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
 Failed to reduce node 25
+------------------------------------------------------------
+
+
+=================Reducing node 28, size=12==================
+
+The current best program is the following
+
+    fn main() {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 28
+------------------------------------------------------------
+
+
+=================Reducing node 24, size=12==================
+
+The current best program is the following
+
+    fn main() {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 24
 ------------------------------------------------------------
 
 
