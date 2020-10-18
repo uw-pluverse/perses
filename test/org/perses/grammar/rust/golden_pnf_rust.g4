@@ -89,6 +89,7 @@ pub_item
     | enum_decl
     | union_decl
     | trait_decl
+    | macro_decl
     ;
 
 impl_block
@@ -197,6 +198,10 @@ optional__trait_decl_4
 
 kleene_star__trait_decl_6
     : trait_item*
+    ;
+
+macro_decl
+    : macro_head '(' optional__fn_decl_1 ')' optional__fn_decl_2 optional__impl_block_3 tt
     ;
 
 rename
@@ -450,6 +455,19 @@ variadic_param_list_3
 
 optional__variadic_param_list_4
     : variadic_param_list_3?
+    ;
+
+macro_head
+    : 'macro' ident optional__macro_head_1
+    ;
+
+optional__macro_head_1
+    : ty_param?
+    ;
+
+tt
+    : ~('(' | ')' | '{' | '}' | '[' | ']')
+    | tt_delimited
     ;
 
 ty_param
@@ -828,11 +846,6 @@ impl_item_tail
 
 optional__impl_item_tail_1
     : 'default'?
-    ;
-
-tt
-    : ~('(' | ')' | '{' | '}' | '[' | ']')
-    | tt_delimited
     ;
 
 tt_delimited
