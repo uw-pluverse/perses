@@ -31,6 +31,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import static com.google.common.base.Preconditions.checkState;
+
 public class RustParserFailListGenerator {
 
   public static void main(String[] args) throws IOException, InterruptedException {
@@ -51,12 +53,12 @@ public class RustParserFailListGenerator {
       }
     } finally {
       executorService.shutdown();
-      executorService.awaitTermination(6, TimeUnit.MINUTES);
+      checkState(executorService.awaitTermination(60, TimeUnit.MINUTES), "Time out!!!");
     }
     ArrayList<String> result = new ArrayList<>(failList);
     Collections.sort(result);
     try (BufferedWriter writer =
-                 Files.newBufferedWriter(Paths.get(args[0]), StandardCharsets.UTF_8)) {
+        Files.newBufferedWriter(Paths.get(args[0]), StandardCharsets.UTF_8)) {
       for (String file : result) {
         writer.append(file).append('\n');
       }
