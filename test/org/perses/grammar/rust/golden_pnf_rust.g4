@@ -41,7 +41,8 @@ optional__item_2
 alternative__item_8
     : extern_mod
     | impl_block
-    | item_macro_use
+    | macro_rules_definition
+    | macro_invocation_semi
     | optional__item_2 pub_item
     ;
 
@@ -116,14 +117,6 @@ extern_mod
 
 kleene_star__extern_mod_2
     : foreign_item*
-    ;
-
-item_macro_use
-    : item_macro_path '!' optional__item_macro_use_1 item_macro_tail
-    ;
-
-optional__item_macro_use_1
-    : ident?
     ;
 
 extern_crate
@@ -206,76 +199,16 @@ kleene_star__trait_decl_6
     : trait_item*
     ;
 
-item_macro_path
-    : optional__item_macro_path_3 ident
-    ;
-
-optional__item_macro_path_1
-    : item_macro_path_parent?
-    ;
-
-item_macro_path_2
-    : optional__item_macro_path_1 '::'
-    ;
-
-optional__item_macro_path_3
-    : item_macro_path_2?
-    ;
-
-item_macro_tail
-    : tt_block
-    | alternative__item_macro_tail_1 ';'
-    ;
-
-alternative__item_macro_tail_1
-    : tt_brackets
-    | tt_parens
-    ;
-
-item_macro_path_parent
-    : item_macro_path_parent_3 kleene_star__item_macro_path_parent_1
-    ;
-
-kleene_star__item_macro_path_parent_1
-    : item_macro_path_parent_2*
-    ;
-
-item_macro_path_parent_2
-    : '::' item_macro_path_segment
-    ;
-
-item_macro_path_parent_3
-    : 'self'
-    | optional__item_macro_path_parent_4 item_macro_path_segment
-    ;
-
-optional__item_macro_path_parent_4
-    : '::'?
-    ;
-
-item_macro_path_segment
-    : ident
-    | 'super'
-    ;
-
-tt_parens
-    : '(' kleene_star__inner_attr_1 ')'
-    ;
-
-tt_brackets
-    : '[' kleene_star__inner_attr_1 ']'
-    ;
-
-tt_block
-    : '{' kleene_star__inner_attr_1 '}'
-    ;
-
 rename
     : 'as' (ident | '_')
     ;
 
 use_path
-    : optional__item_macro_path_parent_4 alternative__use_path_6
+    : optional__use_path_1 alternative__use_path_6
+    ;
+
+optional__use_path_1
+    : '::'?
     ;
 
 use_path_3
@@ -351,7 +284,7 @@ foreign_item
     ;
 
 alternative__foreign_item_4
-    : item_macro_use
+    : macro_invocation_semi
     | optional__item_2 foreign_item_tail
     ;
 
@@ -363,6 +296,20 @@ foreign_item_tail
 alternative__foreign_item_tail_2
     : 'type' ident
     | 'static' optional__static_decl_1 ident ':' ty_sum
+    ;
+
+macro_invocation_semi
+    : simple_path '!' alternative__macro_invocation_semi_5
+    ;
+
+alternative__macro_invocation_semi_4
+    : '(' kleene_star__inner_attr_1 ')'
+    | '[' kleene_star__inner_attr_1 ']'
+    ;
+
+alternative__macro_invocation_semi_5
+    : alternative__macro_invocation_semi_4 ';'
+    | '{' kleene_star__inner_attr_1 '}'
     ;
 
 ty_sum
@@ -503,6 +450,14 @@ variadic_param_list_3
 
 optional__variadic_param_list_4
     : variadic_param_list_3?
+    ;
+
+ty_param
+    : kleene_star__item_1 optional__fn_head_2 ident optional__trait_decl_4 optional__ty_param_4
+    ;
+
+optional__ty_param_4
+    : ty_default?
     ;
 
 ty_params
@@ -797,10 +752,6 @@ trait_item
     | kleene_star__item_1 alternative__trait_item_11
     ;
 
-optional__trait_item_5
-    : ty_default?
-    ;
-
 optional__trait_item_7
     : const_default?
     ;
@@ -810,13 +761,13 @@ alternative__trait_item_10
     ;
 
 alternative__trait_item_11
-    : item_macro_path '!' item_macro_tail
+    : macro_invocation_semi
     | trait_method_decl
     ;
 
 alternative__trait_item_12
     : 'const' ident ':' ty_sum optional__trait_item_7
-    | 'type' ident optional__impl_block_2 optional__trait_decl_4 optional__impl_block_3 optional__trait_item_5
+    | 'type' ident optional__impl_block_2 optional__trait_decl_4 optional__impl_block_3 optional__ty_param_4
     ;
 
 ty_default
@@ -870,7 +821,7 @@ alternative__ty_args_3
 impl_item_tail
     : const_decl
     | associated_const_decl
-    | item_macro_path '!' item_macro_tail
+    | macro_invocation_semi
     | optional__impl_item_tail_1 method_decl
     | 'type' ident optional__impl_block_2 optional__impl_block_3 '=' ty_sum ';'
     ;
@@ -888,6 +839,18 @@ tt_delimited
     : tt_parens
     | tt_brackets
     | tt_block
+    ;
+
+tt_parens
+    : '(' kleene_star__inner_attr_1 ')'
+    ;
+
+tt_brackets
+    : '[' kleene_star__inner_attr_1 ']'
+    ;
+
+tt_block
+    : '{' kleene_star__inner_attr_1 '}'
     ;
 
 macro_tail
@@ -941,7 +904,7 @@ path_parent_3
 path_parent_4
     : 'self'
     | '<' ty_sum optional__path_parent_1 '>'
-    | optional__item_macro_path_parent_4 path_segment
+    | optional__use_path_1 path_segment
     ;
 
 as_trait
@@ -956,6 +919,20 @@ path_segment
 simple_path_segment
     : ident
     | 'Self'
+    | 'crate'
+    | '$crate'
+    ;
+
+simple_path
+    : optional__use_path_1 simple_path_segment kleene_star__simple_path_3
+    ;
+
+simple_path_2
+    : '::' simple_path_segment
+    ;
+
+kleene_star__simple_path_3
+    : simple_path_2*
     ;
 
 ty_path
@@ -1050,7 +1027,7 @@ ty_path_parent_3
 
 ty_path_parent_4
     : 'self'
-    | optional__item_macro_path_parent_4 ty_path_segment
+    | optional__use_path_1 ty_path_segment
     | '<' ty_sum optional__path_parent_1 '>'
     ;
 
@@ -1183,20 +1160,17 @@ kleene_star__ty_param_list_2
     : ty_param_list_1*
     ;
 
-ty_param
-    : kleene_star__item_1 optional__fn_head_2 ident optional__trait_decl_4 optional__trait_item_5
-    ;
-
 pat_no_mut
     : '_'
     | pat_lit
-    | 'box' pat
+    | ident '@' match_pat
     | '[' optional__pat_no_mut_13 optional__pat_no_mut_14 ']'
-    | pat_range_end alternative__pat_no_mut_20 pat_range_end
-    | path alternative__pat_no_mut_22
-    | '(' optional__pat_no_mut_7 ')'
-    | alternative__pat_no_mut_24 optional__pat_2
-    | alternative__type_18 alternative__pat_no_mut_17
+    | alternative__pat_no_mut_20 ')'
+    | alternative__pat_no_mut_21 pat
+    | pat_range_end alternative__pat_no_mut_23 pat_range_end
+    | path alternative__pat_no_mut_25
+    | alternative__pat_no_mut_26 optional__pat_2
+    | alternative__type_18 pat_no_mut
     ;
 
 pat_no_mut_1
@@ -1235,24 +1209,30 @@ optional__pat_no_mut_16
     : pat_no_mut_15?
     ;
 
-alternative__pat_no_mut_17
-    : pat_no_mut
-    | 'mut' pat
+alternative__pat_no_mut_20
+    : ident '@' '(' match_pat
+    | '(' optional__pat_no_mut_7
     ;
 
-alternative__pat_no_mut_20
+alternative__pat_no_mut_21
+    : '$'
+    | 'box'
+    | alternative__type_18 'mut'
+    ;
+
+alternative__pat_no_mut_23
     : '..='
     | '..'
     | '...'
     ;
 
-alternative__pat_no_mut_22
+alternative__pat_no_mut_25
     : macro_tail
     | optional__pat_no_mut_16
     | '{' optional__pat_no_mut_8 '}'
     ;
 
-alternative__pat_no_mut_24
+alternative__pat_no_mut_26
     : 'ref' 'mut' ident
     | kleene_star__pat_no_mut_2 pat_ident
     ;
@@ -1260,6 +1240,18 @@ alternative__pat_no_mut_24
 pat_ident
     : '_'
     | 'ref' ident
+    ;
+
+match_pat
+    : pat kleene_star__match_pat_1
+    ;
+
+kleene_star__match_pat_1
+    : match_pat_2*
+    ;
+
+match_pat_2
+    : '|' pat
     ;
 
 pat_lit
@@ -1277,7 +1269,7 @@ pat_range_end
 
 pat_list_with_dots
     : pat_list_dots_tail
-    | pat kleene_star__pat_list_with_dots_2 optional__pat_list_with_dots_5
+    | match_pat kleene_star__pat_list_with_dots_2 optional__pat_list_with_dots_5
     ;
 
 pat_list_with_dots_1
@@ -1411,7 +1403,7 @@ assign_expr_no_struct
     ;
 
 assign_expr_no_struct_1
-    : ('=' | '*=' | '/=' | '%=' | '+=' | '-=' | '<<=' | '>' '>' '=' | '&=' | '^=' | '|=') assign_expr_no_struct
+    : ('=' | '*=' | '/=' | '%=' | '+=' | '-=' | '<<=' | '>' '>' '=' | '&=' | '^=' | '|=' | '>=' | '<=') assign_expr_no_struct
     ;
 
 optional__assign_expr_no_struct_2
@@ -1436,6 +1428,7 @@ block
 
 stmt
     : item
+    | macro_invocation_semi
     | kleene_star__item_1 blocky_expr
     | optional__stmt_1 ';'
     ;
@@ -1458,13 +1451,13 @@ alternative__stmt_tail_7
     ;
 
 blocky_expr
-    : 'if' cond_or_pat block kleene_star__blocky_expr_2 optional__blocky_expr_4
+    : if_cond_or_pat block kleene_star__blocky_expr_2 optional__blocky_expr_4
     | 'match' expr_no_struct '{' optional__blocky_expr_5 optional__blocky_expr_6 '}'
     | alternative__blocky_expr_13 block_with_inner_attrs
     ;
 
 blocky_expr_1
-    : 'else' 'if' cond_or_pat block
+    : 'else' if_cond_or_pat block
     ;
 
 kleene_star__blocky_expr_2
@@ -1497,12 +1490,16 @@ alternative__blocky_expr_13
     ;
 
 alternative__blocky_expr_15
-    : 'while' cond_or_pat
-    | 'for' pat 'in' expr_no_struct
+    : 'for' pat 'in' expr_no_struct
     | 'loop'
+    | while_cond_or_pat
     ;
 
-cond_or_pat
+if_cond_or_pat
+    : 'if' alternative__if_cond_or_pat_1
+    ;
+
+alternative__if_cond_or_pat_1
     : expr_no_struct
     | 'let' pat '=' expr
     ;
@@ -1536,24 +1533,16 @@ loop_label
     : Lifetime ':'
     ;
 
+while_cond_or_pat
+    : 'while' alternative__if_cond_or_pat_1
+    ;
+
 match_arm_intro
     : kleene_star__item_1 match_pat optional__match_arm_intro_2 '=>'
     ;
 
 optional__match_arm_intro_2
     : match_if_clause?
-    ;
-
-match_pat
-    : pat kleene_star__match_pat_1
-    ;
-
-kleene_star__match_pat_1
-    : match_pat_2*
-    ;
-
-match_pat_2
-    : '|' pat
     ;
 
 match_if_clause
@@ -1839,7 +1828,7 @@ cmp_expr
     ;
 
 cmp_expr_1
-    : ('==' | '!=' | '<' | '<=' | '>' | '>' '=') bit_or_expr
+    : ('==' | '!=' | '<' | '<=' | '>' | '>=') bit_or_expr
     ;
 
 optional__cmp_expr_2
@@ -2038,6 +2027,97 @@ optional__range_expr_no_struct_6
 alternative__range_expr_no_struct_7
     : optional__range_expr_no_struct_6
     | '..=' optional__range_expr_no_struct_1
+    ;
+
+tokens_no_delimiters_cash
+    : ~('(' | ')' | '{' | '}' | '[' | ']' | CashMoney)
+    ;
+
+tokens_no_delimiters_repetition_operators
+    : ~('(' | ')' | '{' | '}' | '[' | ']' | '+' | '*' | '?')
+    ;
+
+macro_rules_definition
+    : 'macro_rules' '!' ident macro_rules_def
+    ;
+
+macro_rules_def
+    : '{' macro_rules '}'
+    | alternative__macro_rules_def_1 ';'
+    ;
+
+alternative__macro_rules_def_1
+    : '(' macro_rules ')'
+    | '[' macro_rules ']'
+    ;
+
+macro_rules
+    : macro_rule kleene_star__macro_rules_2 optional__macro_rules_3
+    ;
+
+macro_rules_1
+    : ';' macro_rule
+    ;
+
+kleene_star__macro_rules_2
+    : macro_rules_1*
+    ;
+
+optional__macro_rules_3
+    : ';'?
+    ;
+
+macro_rule
+    : macro_matcher '=>' macro_transcriber
+    ;
+
+macro_matcher
+    : '(' kleene_star__macro_matcher_1 ')'
+    | '[' kleene_star__macro_matcher_1 ']'
+    | '{' kleene_star__macro_matcher_1 '}'
+    ;
+
+kleene_star__macro_matcher_1
+    : macro_match*
+    ;
+
+macro_transcriber
+    : '(' kleene_star__inner_attr_1 ')'
+    | '[' kleene_star__inner_attr_1 ']'
+    | '{' kleene_star__inner_attr_1 '}'
+    ;
+
+macro_match
+    : tokens_no_delimiters_cash
+    | macro_matcher
+    | '$' alternative__macro_match_3
+    ;
+
+kleene_plus__macro_match_1
+    : macro_match+
+    ;
+
+optional__macro_match_2
+    : macro_rep_sep?
+    ;
+
+alternative__macro_match_3
+    : '(' kleene_plus__macro_match_1 ')' optional__macro_match_2 macro_rep_op
+    | ident ':' macro_frag_spec
+    ;
+
+macro_frag_spec
+    : ~EOF
+    ;
+
+macro_rep_sep
+    : tokens_no_delimiters_repetition_operators
+    ;
+
+macro_rep_op
+    : '*'
+    | '+'
+    | '?'
     ;
 
 fragment
