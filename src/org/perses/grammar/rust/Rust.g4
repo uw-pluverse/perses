@@ -991,14 +991,14 @@ fn_head:
     'async'? 'const'? 'unsafe'? extern_abi? 'fn' ident ty_params?;
 
 param:
-    pat ':' param_ty;
+    pattern ':' param_ty;
 
 param_ty:
     ty_sum
     | 'impl' bound;  // experimental: feature(universal_impl_trait)
 
 param_list:
-    param (',' param)* (',' pat ':' '...')? ','?;
+    param (',' param)* (',' pattern ':' '...')? ','?;
 
 variadic_param_list:
     param (',' param)* (',' '...')? ','?;
@@ -1358,38 +1358,38 @@ ty_param_list:
 
 // === Patterns
 
-pat:
-    pat_no_mut
-    | 'mut' ident ('@' pat)?;
+pattern:
+    pattern_without_mut
+    | 'mut' ident ('@' pattern)?;
 
 pat_ident:
     ('_' | 'ref' ident);
 
-// A `pat_no_mut` is a pattern that does not start with `mut`.
-// It is distinct from `pat` to rule out ambiguity in parsing the
+// A `pattern_without_mut` is a pattern that does not start with `mut`.
+// It is distinct from `pattern` to rule out ambiguity in parsing the
 // pattern `&mut x`, which must parse like `&mut (x)`, not `&(mut x)`.
-pat_no_mut:
+pattern_without_mut:
     '_'
-	| ident ('@' match_pat)
-    | ident ('@' '(' match_pat ')' )
+	| ident ('@' match_pattern)
+    | ident ('@' '(' match_pattern ')' )
     | pat_lit
     | pat_range_end '...' pat_range_end
     | pat_range_end '..' pat_range_end  // experimental `feature(exclusive_range_pattern)`
     | pat_range_end '..=' pat_range_end
     | path macro_tail
-    | (pat_ident ',')* pat_ident ('@' pat)?
-    | 'ref' 'mut' ident ('@' pat)?
+    | (pat_ident ',')* pat_ident ('@' pattern)?
+    | 'ref' 'mut' ident ('@' pattern)?
     | path '(' pat_list_with_dots? ')'
     | path '{' pat_fields? '}'
     | path  // BUG: ambiguity with bare ident case (above)
     | '(' pat_list_with_dots? ')'
     | '[' ((pat_ident ',')* pat_ident '@')? pat_elt_list? ']'
-    | '&' pat_no_mut
-    | '&' 'mut' pat
-    | '&&' pat_no_mut   // `&& pat` means the same as `& & pat`
-    | '&&' 'mut' pat
-    | 'box' pat
-    | '$' pat;
+    | '&' pattern_without_mut
+    | '&' 'mut' pattern
+    | '&&' pattern_without_mut   // `&& pat` means the same as `& & pat`
+    | '&&' 'mut' pattern
+    | 'box' pattern
+    | '$' pattern;
 
 pat_range_end:
     path
@@ -1399,11 +1399,11 @@ pat_lit:
     '-'? lit;
 
 pat_list:
-    pat (',' pat)* ','?;
+    pattern (',' pattern)* ','?;
 
 pat_list_with_dots:
     pat_list_dots_tail
-    | match_pat (',' pat)* (',' pat_list_dots_tail?)?;
+    | match_pattern (',' pattern)* (',' pat_list_dots_tail?)?;
 
 pat_list_dots_tail:
     '..' (',' pat_list)?;
@@ -1417,7 +1417,7 @@ pat_list_dots_tail:
 // at most one `..`.
 
 pat_elt:
-    pat '..'?
+    pattern '..'?
     | '..';
 
 pat_elt_list:
@@ -1433,7 +1433,7 @@ pat_fields:
 
 pat_field:
     'box'? 'ref'? 'mut'? ident
-    | ident ':' pat;
+    | ident ':' pattern;
 
 
 // === Expressions
@@ -1490,7 +1490,7 @@ stmt:
 // experimental feature, `feature(stmt_expr_attributes)`. We support both.
 
 stmt_tail:
-    attr* 'let' pat (':' type)? ('=' expr)? ';'
+    attr* 'let' match_pattern (':' type)? ('=' expr)? ';'
     | attr* blocky_expr
     | expr ';';
 
@@ -1501,17 +1501,17 @@ blocky_expr:
     | if_cond_or_pat block ('else'  if_cond_or_pat block)* ('else' block)?
     | 'match' expr_no_struct '{' expr_inner_attrs? match_arms? '}'
     | loop_label? while_cond_or_pat block_with_inner_attrs
-    | loop_label? 'for' pat 'in' expr_no_struct block_with_inner_attrs
+    | loop_label? 'for' pattern 'in' expr_no_struct block_with_inner_attrs
     | loop_label? 'loop' block_with_inner_attrs
     | 'unsafe' block_with_inner_attrs;
 
 if_cond_or_pat:
     'if' expr_no_struct
-    | 'if' 'let' pat '=' expr;
+    | 'if' 'let' pattern '=' expr;
 
 while_cond_or_pat:
     'while' expr_no_struct
-    | 'while' 'let' pat '=' expr;
+    | 'while' 'let' pattern '=' expr;
 
 loop_label:
     Lifetime ':';
@@ -1521,11 +1521,11 @@ match_arms:
     | match_arm_intro expr (',' match_arms?)?;
 
 match_arm_intro:
-    attr* match_pat match_if_clause? '=>';
+    attr* match_pattern match_if_clause? '=>';
 
-match_pat:
-    pat
-    | match_pat '|' pat;
+match_pattern:
+    pattern
+    | match_pattern '|' pattern;
 
 match_if_clause:
     'if' expr;
@@ -1580,7 +1580,7 @@ closure_params:
     | '|' closure_param_list? '|';
 
 closure_param:
-    pat (':' type)?;
+    pattern (':' type)?;
 
 closure_param_list:
     closure_param (',' closure_param)* ','?;
