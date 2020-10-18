@@ -892,7 +892,8 @@ pub_item:
     | struct_decl
     | enum_decl
     | union_decl
-    | trait_decl;
+    | trait_decl
+    | macro_decl;
 
 
 
@@ -975,8 +976,9 @@ trait_method_decl:
 foreign_fn_decl:
     fn_head '(' variadic_param_list? ')' rtype? where_clause? ';';
 
+//macro declaration here is not documented,
 macro_decl:
-     macro_head '(' param_list? ')' fn_rtype? where_clause? block_with_inner_attrs;
+     macro_head '(' param_list? ')' fn_rtype? where_clause? tt;
 
 macro_head:
     'macro' ident ty_param?;
@@ -1800,9 +1802,6 @@ puntuation_no_repetition:
 // TODO: tokens '<<' '>>' confilcts ty_args, type need to be refactored
 
 //TOD0:classify this token
-other_tokens:
-    'let'|'mut'
-    |'pub'|'struct'|'impl'|'fn'|'enum'|'const'|'trait'|'for'|'match'|'box'|'else'|'as'|'use'|'$crate'|'type'|'break'|'extern'|'mod';
 
 tokens_no_delimiters_cash:
     ~('(' | ')' | '{' | '}' | '[' | ']' | CashMoney);
