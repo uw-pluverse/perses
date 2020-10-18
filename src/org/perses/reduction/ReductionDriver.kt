@@ -153,14 +153,14 @@ class ReductionDriver(
         } else {
           SparTreeSimplifier.simplify(tree)
         }
-        assert(tree.tokenizedProgramFactory == originalTokenizedProgramFactory) {
+        check(tree.tokenizedProgramFactory == originalTokenizedProgramFactory) {
           "The tokenized program factory should be unchanged during a reduction process."
         }
-        assert(
-          tree.tokenizedProgramFactory.tokenFactory ==
+        check(
+          tree.tokenizedProgramFactory.tokenFactory==
             originalTokenizedProgramFactory.tokenFactory
         ) {
-          "The perses token factory should be unchanged duing a reduction process."
+          "The perses token factory should be unchanged during a reduction process."
         }
       }
       val initialTokenCount = tree.tokenCount
@@ -201,7 +201,7 @@ class ReductionDriver(
       captureOutput = false,
       environment = Shell.CURRENT_ENV
     )
-    if (cmdOutput.exitCode != 0) {
+    if (cmdOutput.exitCode!=0) {
       val tempDir = copyFilesToTempDir(reductionFolder.folder)
       logger.atSevere().log(
         "C-Reduce failed to reduce the file. All files are copied to %s",
@@ -238,7 +238,7 @@ class ReductionDriver(
 
   private fun shouldExitFixpointIteration(initialTokenCount: Int): Boolean {
     check(initialTokenCount >= tree.tokenCount)
-    return !configuration.fixpointReduction || initialTokenCount == tree.tokenCount
+    return !configuration.fixpointReduction || initialTokenCount==tree.tokenCount
   }
 
   private fun runTreeSlicerIfEnabled(initialTokenCount: Int) {
@@ -293,7 +293,7 @@ class ReductionDriver(
       currentFixpointIteration, preSize, mainReducer.redcucerAnnotation
     )
     val reductionState = ReductionState(tree)
-    assert(reductionState.sparTree == tree)
+    assert(reductionState.sparTree==tree)
     mainReducer.reduce(reductionState)
     val scriptExecutionNumberAfter = executorService.statistics.getScriptExecutionNumber()
     val countOfTestScriptExecutionsInThisIteration =
@@ -327,11 +327,15 @@ class ReductionDriver(
       program, configuration.programFormatControl
     )
     if (!future.get().isPass) {
-      logger.atSevere().log("***** ***** ***** ***** ***** ***** ***** *****")
-      logger.atSevere().log("The initial sanity check failed. Folder: ${future.workingDirectory}")
+      logger.atFine().log("The initial sanity check failed. Folder: %s", future.workingDirectory)
       val tempDir = copyFilesToTempDir(future.workingDirectory)
-      logger.atSevere().log("The files have been saved to $tempDir")
-      logger.atSevere().log("***** ***** ***** ***** ***** ***** ***** *****")
+      logger.atSevere().log("***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****")
+      logger.atSevere().log("*")
+      logger.atSevere().log("* The initial sanity check failed.")
+      logger.atSevere().log("* The files have been saved, and you can check them at:")
+      logger.atSevere().log("*     $tempDir")
+      logger.atSevere().log("*")
+      logger.atSevere().log("***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****")
       throw IllegalStateException()
     }
     check(future.get().isPass) {
@@ -369,7 +373,7 @@ class ReductionDriver(
       ImmutableList.of(formatFolder.sourceFilePath.name),
       workingDirectory = formatFolder.folder
     )
-    if (cmdOutput.exitCode != 0) {
+    if (cmdOutput.exitCode!=0) {
       logger.atSevere().log(
         "Failed to call formatter %s on the final result %s.",
         formatCmd.command,
@@ -526,7 +530,7 @@ class ReductionDriver(
       )
       val testScript = ScriptFile(cmd.compulsoryFlags.getTestScript().absoluteFile)
 
-      require(sourceFile.parentFile.absolutePath == testScript.parentFile.absolutePath) {
+      require(sourceFile.parentFile.absolutePath==testScript.parentFile.absolutePath) {
         "The source file and the test script should reside in the same folder. " +
           "sourceFile:$sourceFile, testScript:$testScript"
       }
@@ -540,7 +544,7 @@ class ReductionDriver(
         else File(cmd.profilingFlags.progressDumpFile)
 
       val programFormatControl = cmd.reductionControlFlags.codeFormat.let { codeFormat ->
-        if (codeFormat != null) {
+        if (codeFormat!=null) {
           check(sourceFile.languageKind.isCodeFormatAllowed(codeFormat)) {
             "$codeFormat is not allowed for language ${sourceFile.languageKind}"
           }
