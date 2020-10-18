@@ -856,7 +856,7 @@ crate:
     mod_body EOF;
 
 mod_body:
-    inner_attr* item*;
+    inner_attr*  item*;
 
 visibility:
     'pub' visibility_restriction?;
@@ -876,7 +876,9 @@ item:
     attr* visibility? pub_item
     | attr* impl_block
     | attr* extern_mod
-    | attr* item_macro_use;
+    | attr* macro_iterm;
+//TODO: attr* need to be moved to somewhere else here
+
 
 pub_item:
     extern_crate     // `pub extern crate` is deprecated but still allowed
@@ -890,30 +892,8 @@ pub_item:
     | struct_decl
     | enum_decl
     | union_decl
-    | trait_decl
-    | macro_decl;
+    | trait_decl;
 
-item_macro_use:
-    item_macro_path '!' ident? item_macro_tail;
-
-item_macro_path:
-    ident
-    | item_macro_path_parent? '::' ident;  // experimental `feature(use_extern_macros)`
-
-item_macro_path_parent:
-    'self'
-    | item_macro_path_segment
-    | '::' item_macro_path_segment
-    | item_macro_path_parent '::' item_macro_path_segment;
-
-item_macro_path_segment:
-    ident
-    | 'super';
-
-item_macro_tail:
-    tt_parens ';'
-    | tt_brackets ';'
-    | tt_block;
 
 
 // --- extern crate
@@ -962,7 +942,7 @@ extern_mod:
 
 foreign_item:
     attr* visibility? foreign_item_tail
-    | attr* item_macro_use;
+    | attr* macro_invocation_semi;
 
 foreign_item_tail:
     'static' 'mut'? ident ':' ty_sum ';'
@@ -1128,7 +1108,7 @@ trait_item:
     attr* 'type' ident colon_bound? ty_default? ';'
     | attr* 'const' ident ':' ty_sum const_default? ';'  // experimental associated constants
     | attr* trait_method_decl
-    | attr* item_macro_path '!' item_macro_tail;
+    | attr* macro_invocation_semi;
 
 ty_default:
     '=' ty_sum;
@@ -1157,7 +1137,7 @@ impl_item_tail:
     'default'? method_decl
     | 'type' ident '=' ty_sum ';'
     | (const_decl | associated_const_decl)
-    | item_macro_path '!' item_macro_tail;
+    | macro_invocation_semi;
 
 
 // === Attributes and token trees
@@ -1186,6 +1166,7 @@ tt_brackets:
 tt_block:
     '{' tt* '}';
 
+//nothing to do with macro now. Need to be refined in future
 macro_tail:
     '!' tt_delimited;
 
@@ -1489,7 +1470,8 @@ block_with_inner_attrs:
 stmt:
     ';'
     | item  // Statement macros are included here.
-    | stmt_tail;
+    | stmt_tail
+    | macro_invocation_semi;
 
 // Attributes are supported on most statements.  Let statements can have
 // attributes; block statements can have outer or inner attributes, like this:
@@ -1686,7 +1668,7 @@ bit_or_expr:
 
 cmp_expr:
     bit_or_expr
-    | bit_or_expr ('==' | '!=' | '<' | '<=' | '>' | '>' '=') bit_or_expr;
+    | bit_or_expr ('==' | '!=' | '<' | '<='  | '>' | '>=') bit_or_expr;
 
 and_expr:
     cmp_expr
@@ -1780,7 +1762,7 @@ range_expr_no_struct:
 assign_expr_no_struct:
     range_expr_no_struct
     | range_expr_no_struct ('=' | '*=' | '/=' | '%=' | '+=' | '-='
-                                | '<<=' | '>' '>' '=' | '&=' | '^=' | '|=' ) assign_expr_no_struct;
+                                | '<<=' | '>' '>' '=' | '&=' | '^=' | '|=' |'>='|'<=') assign_expr_no_struct;
 
 
 // === Tokens
@@ -1799,26 +1781,61 @@ any_ident:
     | 'self'
     | 'static'
     | 'super';
+
+puntuation_no_cash:
+    '+'|'-'|'*'|'/'|'%'|'^'|'!'|'&'|'|'|'&&'|'||'|'+='|'-='|'*='|'/='|'%='|'^='|'&='|'|='|'<<='
+    |'>>='|'='|'=='|'!='|'>'|'<'|'>='|'<='|'@'|'_'|'.'|'..'|'...'|'..='|','|';'|':'|'::'|'->'|'=>'|'#'|'?';
+
+puntuation:
+    '+'|'-'|'*'|'/'|'%'|'^'|'!'|'&'|'|'|'&&'|'||'|'+='|'-='|'*='|'/='|'%='|'^='|'&='|'|='|'<<='
+    |'>>='|'='|'=='|'!='|'>'|'<'|'>='|'<='|'@'|'_'|'.'|'..'|'...'|'..='|','|';'|':'|'::'|'->'|'=>'|'#'|'?'|CashMoney;
+
+puntuation_no_repetition:
+    '-'|'/'|'%'|'^'|'!'|'&'|'|'|'&&'|'||'|'+='|'-='|'*='|'/='|'%='|'^='|'&='|'|='|'<<='
+    |'>>='|'='|'=='|'!='|'>'|'<'|'>='|'<='|'@'|'_'|'.'|'..'|'...'|'..='|','|';'|':'|'::'|'->'|'=>'|'#'|CashMoney;
+
+// TODO: tokens '<<' '>>' confilcts ty_args, type need to be refactored
+
+//TOD0:classify this token
+other_tokens:
+    'let'|'mut'
+    |'pub'|'struct'|'impl'|'fn'|'enum'|'const'|'trait'|'for'|'match'|'box'|'else'|'as'|'use'|'$crate'|'type'|'break'|'extern'|'mod';
+
 tokens_no_delimiters_cash:
-    any_ident;
+    ~('(' | ')' | '{' | '}' | '[' | ']' | CashMoney);
+
 
 tokens_no_delimiters:
-    any_ident;
+    ~('(' | ')' | '{' | '}' | '[' | ']' );
 
 tokens_no_delimiters_repetition_operators:
-    any_ident;
-//not complete all tokens need to be refactore
+    ~('(' | ')' | '{' | '}' | '[' | ']' | '+'|'*'|'?');
+//not complete all tokens need to be refactored
 
+//token:
+//    keyword_token
+//    | ident
+//    | lit
+//    | lifetime
+//    | punctuation
+//    | delimiter;
+
+delimiter:
+    '{'|'}'|'['|']'|'('|')';
 
 //macro rules
+macro_iterm:
+    macro_rules_definition
+    |macro_invocation_semi;
+
 
 macro_rules_definition:
     'macro_rules' '!' ident macro_rules_def;
 
 macro_rules_def:
     '(' macro_rules')' ';'
-    | '[' macro_rules ')' ';'
-    | '{' macro_rules '}' ';';
+    | '[' macro_rules ']' ';'
+    | '{' macro_rules '}' ;
 
 macro_rules:
     macro_rule ( ';' macro_rule)* ';'? ;
@@ -1834,13 +1851,18 @@ macro_matcher:
 macro_match:
     tokens_no_delimiters_cash
     |macro_matcher
-    |'$' ident ';' macro_frag_spec
+    |'$' ident ':' macro_frag_spec
     |'$' '(' macro_match+ ')'  macro_rep_sep? macro_rep_op;
 
 
 macro_frag_spec:
-    'block' | 'expr' | 'ident' | 'item' | 'lifetime' | 'literal'
-    | 'meta' | 'pat' | 'path' | 'stmt' | 'tt' | 'ty' | 'vis';
+    ~EOF;
+//TODO:
+// should be
+//    'block' | 'expr' | 'ident' | 'item' | 'lifetime' | 'literal'
+//    | 'meta' | 'pat' | 'path' | 'stmt' | 'tt' | 'ty' | 'vis';
+// but it will mismatch some IDs
+
 
 macro_rep_sep:
     tokens_no_delimiters_repetition_operators;
@@ -1852,17 +1874,21 @@ macro_transcriber:
     delim_token_tree;
 
 delim_token_tree:
-    '(' token_tree ')'
-    | '[' token_tree ']'
-    | '{' token_tree '}';
+    '(' tt* ')'
+    | '[' tt* ']'
+    | '{' tt* '}';
+
 
 token_tree:
     tokens_no_delimiters| delim_token_tree;
 
-macroInvocation_semi:
-    simple_path '!' '(' token_tree* ')' ';'
-    | simple_path '!' '[' token_tree* ']' ';'
-    | simple_path '!' '{' token_tree* '}' ';';
+macro_invocation_semi:
+    simple_path '!' '(' tt* ')' ';'
+    | simple_path '!' '[' tt* ']' ';'
+    | simple_path '!' '{' tt* '}' ;
+
+macro_invocation:
+    simple_path ':' delim_token_tree;
 
 // `$` is recognized as a token, so it may be present in token trees,
 // and `macro_rules!` makes use of it. But it is not mentioned anywhere

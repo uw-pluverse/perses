@@ -1,4 +1,5 @@
 test_data/rust_programs/rust_testsuite/compile-fail/issue-46209-private-enum-variant-reexport.rs
+test_data/rust_programs/rust_testsuite/debuginfo/macro-stepping.rs
 test_data/rust_programs/rust_testsuite/incremental/const-generics/issue-65623.rs
 test_data/rust_programs/rust_testsuite/incremental/hashes/match_expressions.rs
 test_data/rust_programs/rust_testsuite/mir-opt/exponential-or.rs
@@ -1214,3 +1215,18 @@ test_data/rust_programs/rust_testsuite/ui/weird-exprs.rs
 test_data/rust_programs/rust_testsuite/ui/wf-bound-region-in-object-type.rs
 test_data/rust_programs/rust_testsuite/ui/where-clauses/where-equality-constraints.rs
 test_data/rust_programs/rust_testsuite/ui/where-clauses/where-lifetime-resolution.rs
+
+test_data/rust_programs/rust_testsuite/ui-fulldeps/auxiliary/lint-for-crate-rpass.rs
+test_data/rust_programs/rust_testsuite/ui/array-slice-vec/subslice-patterns-const-eval-match.rs
+test_data/rust_programs/rust_testsuite/ui-fulldeps/internal-lints/ty_tykind_usage.rs
+test_data/rust_programs/rust_testsuite/ui/directory_ownership/macro-expanded-mod.rs
+test_data/rust_programs/rust_testsuite/ui/hygiene/hygienic-label-3.rs
+test_data/rust_programs/rust_testsuite/ui/impl-trait/example-calendar.rs
+test_data/rust_programs/rust_testsuite/ui/invalid/invalid-macro-matcher.rs
+
+
+
+test_data/rust_programs/rust_testsuite/ui/issues/issue-39388.rs
+test_data/rust_programs/rust_testsuite/ui/issues/issue-5067.rs
+test_data/rust_programs/rust_testsuite/ui/macros/macro-missing-delimiters.rs
+test_data/rust_programs/rust_testsuite/ui/issues/issue-39404.rs
