@@ -1488,8 +1488,6 @@ stmt:
 //
 // Attributes on block expressions that appear anywhere else are an
 // experimental feature, `feature(stmt_expr_attributes)`. We support both.
-let_stat:
-    attr* 'let' pat (':' ty)? ('=' expr)? ';';
 
 stmt_tail:
     attr* 'let' pat (':' type)? ('=' expr)? ';'
