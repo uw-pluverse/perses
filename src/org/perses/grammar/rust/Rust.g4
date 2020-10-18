@@ -923,7 +923,7 @@ use_item_list:
     use_item (',' use_item)* ','?;
 
 rename:
-    'as' ident;
+    'as' (ident | '_');
 
 
 // --- Modules
@@ -991,14 +991,14 @@ fn_head:
     'async'? 'const'? 'unsafe'? extern_abi? 'fn' ident ty_params?;
 
 param:
-    pat ':' param_ty;
+    pattern ':' param_ty;
 
 param_ty:
     ty_sum
     | 'impl' bound;  // experimental: feature(universal_impl_trait)
 
 param_list:
-    param (',' param)* (',' pat ':' '...')? ','?;
+    param (',' param)* (',' pattern ':' '...')? ','?;
 
 variadic_param_list:
     param (',' param)* (',' '...')? ','?;
@@ -1032,11 +1032,11 @@ trait_method_param_list:
 // `where T: Fn() -> X + Clone`, we're saying that T implements both
 // `Fn() -> X` and `Clone`, not that its return type is `X + Clone`.
 rtype:
-    '->' (ty | '!');
+    '->' (type | '!');
 
 // Experimental `feature(conservative_impl_trait)`.
 fn_rtype:
-    '->' (ty | '!' | 'impl' bound);
+    '->' (type | '!' | 'impl' bound);
 
 
 // --- type, struct, and enum declarations
@@ -1094,7 +1094,7 @@ enum_field_decl_list:
     enum_field_decl (',' enum_field_decl)* ','?;
 
 union_decl:
-    'union' ident '{' field_decl_list '}';
+    'union' ident ty_params? where_clause? '{' field_decl_list '}';
 
 
 // --- Traits
@@ -1105,7 +1105,7 @@ trait_decl:
     'unsafe'? 'auto'? 'trait' ident ty_params? colon_bound? where_clause? '{' trait_item* '}';
 
 trait_item:
-    attr* 'type' ident colon_bound? ty_default? ';'
+    attr* 'type' ident ty_params? colon_bound? where_clause? ty_default? ';'
     | attr* 'const' ident ':' ty_sum const_default? ';'  // experimental associated constants
     | attr* trait_method_decl
     | attr* macro_invocation_semi;
@@ -1135,7 +1135,7 @@ impl_item:
 
 impl_item_tail:
     'default'? method_decl
-    | 'type' ident '=' ty_sum ';'
+    | 'type' ident ty_params? where_clause? '=' ty_sum ';'
     | (const_decl | associated_const_decl)
     | macro_invocation_semi;
 
@@ -1228,7 +1228,7 @@ ty_path:
     for_lifetime? ('dyn' | 'impl')? ty_path_main;
 
 for_lifetime:
-    'for' '<' lifetime_def_list? '>';
+    'dyn'? 'for' '<' lifetime_def_list? '>';
 
 lifetime_def_list:
     lifetime_def (',' lifetime_def)* ','?;
@@ -1273,7 +1273,7 @@ where_bound_list:
 
 where_bound:
     Lifetime ':' lifetime_bound
-    | for_lifetime? ty empty_ok_colon_bound;
+    | for_lifetime? type empty_ok_colon_bound;
 
 empty_ok_colon_bound:
     ':' bound?;
@@ -1293,7 +1293,7 @@ prim_bound:
 
 // === Types and type parameters
 
-ty:
+type:
     '_'
     // The next 3 productions match exactly `'(' ty_sum_list? ')'`,
     // but (i32) and (i32,) are distinct types, so parse them with different rules.
@@ -1301,9 +1301,9 @@ ty:
     | '(' ty_sum ')'                    // grouping (parens are ignored)
     | '(' ty_sum ',' ty_sum_list? ')'   // tuple
     | '[' ty_sum (';' expr)? ']'
-    | '&' Lifetime? 'mut'? ty
-    | '&&' Lifetime? 'mut'? ty          // meaning `& & ty`
-    | '*' mut_or_const ty               // pointer type
+    | '&' Lifetime? 'mut'? type
+    | '&&' Lifetime? 'mut'? type          // meaning `& & ty`
+    | '*' mut_or_const type               // pointer type
     | for_lifetime? 'unsafe'? extern_abi? 'fn' '(' variadic_param_list_names_optional? ')' rtype?
     | ty_path macro_tail?
     | '!'
@@ -1325,14 +1325,16 @@ lifetime_list:
     Lifetime (',' Lifetime)* ','?;
 
 ty_sum:
-    ty ('+' bound)?;
+    'dyn'? type ('+' bound)?;
 
 ty_sum_list:
     ty_sum (',' ty_sum)* ','?;
 
 ty_arg:
     ident '=' ty_sum
-    | ty_sum;
+    | ty_sum
+    | BareIntLit
+    ;
 
 ty_arg_list:
     ty_arg (',' ty_arg)* ','?;
@@ -1356,38 +1358,38 @@ ty_param_list:
 
 // === Patterns
 
-pat:
-    pat_no_mut
-    | 'mut' ident ('@' pat)?;
+pattern:
+    pattern_without_mut
+    | 'mut' ident ('@' pattern)?;
 
 pat_ident:
     ('_' | 'ref' ident);
 
-// A `pat_no_mut` is a pattern that does not start with `mut`.
-// It is distinct from `pat` to rule out ambiguity in parsing the
+// A `pattern_without_mut` is a pattern that does not start with `mut`.
+// It is distinct from `pattern` to rule out ambiguity in parsing the
 // pattern `&mut x`, which must parse like `&mut (x)`, not `&(mut x)`.
-pat_no_mut:
+pattern_without_mut:
     '_'
-	| ident ('@' match_pat)
-    | ident ('@' '(' match_pat ')' )
+	| ident ('@' match_pattern)
+    | ident ('@' '(' match_pattern ')' )
     | pat_lit
     | pat_range_end '...' pat_range_end
     | pat_range_end '..' pat_range_end  // experimental `feature(exclusive_range_pattern)`
     | pat_range_end '..=' pat_range_end
     | path macro_tail
-    | (pat_ident ',')* pat_ident ('@' pat)?
-    | 'ref' 'mut' ident ('@' pat)?
+    | (pat_ident ',')* pat_ident ('@' pattern)?
+    | 'ref' 'mut' ident ('@' pattern)?
     | path '(' pat_list_with_dots? ')'
     | path '{' pat_fields? '}'
     | path  // BUG: ambiguity with bare ident case (above)
     | '(' pat_list_with_dots? ')'
     | '[' ((pat_ident ',')* pat_ident '@')? pat_elt_list? ']'
-    | '&' pat_no_mut
-    | '&' 'mut' pat
-    | '&&' pat_no_mut   // `&& pat` means the same as `& & pat`
-    | '&&' 'mut' pat
-    | 'box' pat
-    | '$' pat;
+    | '&' pattern_without_mut
+    | '&' 'mut' pattern
+    | '&&' pattern_without_mut   // `&& pat` means the same as `& & pat`
+    | '&&' 'mut' pattern
+    | 'box' pattern
+    | '$' pattern;
 
 pat_range_end:
     path
@@ -1397,11 +1399,11 @@ pat_lit:
     '-'? lit;
 
 pat_list:
-    pat (',' pat)* ','?;
+    pattern (',' pattern)* ','?;
 
 pat_list_with_dots:
     pat_list_dots_tail
-    | match_pat (',' pat)* (',' pat_list_dots_tail?)?;
+    | match_pattern (',' pattern)* (',' pat_list_dots_tail?)?;
 
 pat_list_dots_tail:
     '..' (',' pat_list)?;
@@ -1415,7 +1417,7 @@ pat_list_dots_tail:
 // at most one `..`.
 
 pat_elt:
-    pat '..'?
+    pattern '..'?
     | '..';
 
 pat_elt_list:
@@ -1431,7 +1433,7 @@ pat_fields:
 
 pat_field:
     'box'? 'ref'? 'mut'? ident
-    | ident ':' pat;
+    | ident ':' pattern;
 
 
 // === Expressions
@@ -1488,7 +1490,7 @@ stmt:
 // experimental feature, `feature(stmt_expr_attributes)`. We support both.
 
 stmt_tail:
-    let_stat
+    attr* 'let' match_pattern (':' type)? ('=' expr)? ';'
     | attr* blocky_expr
     | expr ';';
 
@@ -1499,17 +1501,17 @@ blocky_expr:
     | if_cond_or_pat block ('else'  if_cond_or_pat block)* ('else' block)?
     | 'match' expr_no_struct '{' expr_inner_attrs? match_arms? '}'
     | loop_label? while_cond_or_pat block_with_inner_attrs
-    | loop_label? 'for' pat 'in' expr_no_struct block_with_inner_attrs
+    | loop_label? 'for' pattern 'in' expr_no_struct block_with_inner_attrs
     | loop_label? 'loop' block_with_inner_attrs
     | 'unsafe' block_with_inner_attrs;
 
 if_cond_or_pat:
     'if' expr_no_struct
-    | 'if' 'let' pat '=' expr;
+    | 'if' 'let' pattern '=' expr;
 
 while_cond_or_pat:
     'while' expr_no_struct
-    | 'while' 'let' pat '=' expr;
+    | 'while' 'let' pattern '=' expr;
 
 loop_label:
     Lifetime ':';
@@ -1519,11 +1521,11 @@ match_arms:
     | match_arm_intro expr (',' match_arms?)?;
 
 match_arm_intro:
-    attr* match_pat match_if_clause? '=>';
+    attr* match_pattern match_if_clause? '=>';
 
-match_pat:
-    pat
-    | match_pat '|' pat;
+match_pattern:
+    pattern
+    | match_pattern '|' pattern;
 
 match_if_clause:
     'if' expr;
@@ -1578,7 +1580,7 @@ closure_params:
     | '|' closure_param_list? '|';
 
 closure_param:
-    pat (':' ty)?;
+    pattern (':' type)?;
 
 closure_param_list:
     closure_param (',' closure_param)* ','?;
@@ -1600,7 +1602,7 @@ struct_update_base:
 
 field:
     ident  // struct field shorthand (field and local variable have the same name)
-    | field_name ':' expr;
+    | expr_attrs* field_name ':' expr;
 
 field_name:
     ident
@@ -1771,10 +1773,13 @@ ident:
     Ident
     | 'auto'
     | 'default'
-    | 'union';
+    | 'union'
+    | RawIdentifier
+    ;
 
 any_ident:
     ident
+    | 'crate'
     | 'Self'
     | 'self'
     | 'static'
@@ -1893,6 +1898,10 @@ macro_invocation:
 // else in this grammar.
 CashMoney:
     '$';
+
+RawIdentifier:
+    'r#' IDENT
+    ;
 
 fragment IDENT:
     XID_Start XID_Continue*;

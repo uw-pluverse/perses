@@ -381,14 +381,11 @@ test_data/rust_programs/rust_testsuite/ui/or-patterns/consistent-bindings.rs
 test_data/rust_programs/rust_testsuite/ui/or-patterns/exhaustiveness-non-exhaustive.rs
 test_data/rust_programs/rust_testsuite/ui/or-patterns/exhaustiveness-pass.rs
 test_data/rust_programs/rust_testsuite/ui/or-patterns/exhaustiveness-unreachable-pattern.rs
-test_data/rust_programs/rust_testsuite/ui/or-patterns/feature-gate-const-fn.rs
 test_data/rust_programs/rust_testsuite/ui/or-patterns/feature-gate-or_patterns-leading-for.rs
 test_data/rust_programs/rust_testsuite/ui/or-patterns/feature-gate-or_patterns-leading-let.rs
 test_data/rust_programs/rust_testsuite/ui/or-patterns/feature-gate-or_patterns.rs
 test_data/rust_programs/rust_testsuite/ui/or-patterns/for-loop.rs
 test_data/rust_programs/rust_testsuite/ui/or-patterns/inconsistent-modes.rs
-test_data/rust_programs/rust_testsuite/ui/or-patterns/let-pattern.rs
-test_data/rust_programs/rust_testsuite/ui/or-patterns/missing-bindings.rs
 test_data/rust_programs/rust_testsuite/ui/or-patterns/or-patterns-binding-type-mismatch.rs
 test_data/rust_programs/rust_testsuite/ui/or-patterns/or-patterns-default-binding-modes.rs
 test_data/rust_programs/rust_testsuite/ui/or-patterns/or-patterns-syntactic-pass.rs
