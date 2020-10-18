@@ -327,13 +327,15 @@ class ReductionDriver(
       program, configuration.programFormatControl
     )
     if (!future.get().isPass) {
+      logger.atSevere().log("***** ***** ***** ***** ***** ***** ***** *****")
       logger.atSevere().log("The initial sanity check failed. Folder: ${future.workingDirectory}")
       val tempDir = copyFilesToTempDir(future.workingDirectory)
       logger.atSevere().log("The files have been saved to $tempDir")
+      logger.atSevere().log("***** ***** ***** ***** ***** ***** ***** *****")
       throw IllegalStateException()
     }
     check(future.get().isPass) {
-      "The initial sanity check failed. Folder: ${future.workingDirectory}"
+      "***** The initial sanity check failed. Folder: ${future.workingDirectory} *****"
     }
   }
 
