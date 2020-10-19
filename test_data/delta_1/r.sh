@@ -13,6 +13,9 @@ fi
 
 if grep -q "Wimplicit-int" temp.txt || \
    grep -q "defaulting to type" temp.txt || \
+   grep -q "uninitialized" temp.txt || \
+   grep -q "Wimplicit-function-declaration" temp.txt || \
+   grep -q "Wformat" temp.txt || \
    grep -q "too few arguments" temp.txt ; then
   exit 1
 fi
