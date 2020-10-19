@@ -32,6 +32,7 @@ class HddReducerFunctionalTest : AbstractReducerFunctionalTest() {
     runCTestSubject(
       "test_data/delta_1", HDDReducer.META,
       """
+      |int printf();
       |int main(){
       |  printf("world\n");
       |}""".trimMargin()

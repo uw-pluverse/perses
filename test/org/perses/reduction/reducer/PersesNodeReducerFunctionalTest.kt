@@ -28,7 +28,9 @@ class PersesNodeReducerFunctionalTest : AbstractReducerFunctionalTest() {
   fun testFunctionalTest() {
     test(
       "delta_1",
-      """int main() {
+      """
+        |int printf();
+        |int main() {
         |    printf("world\n"); 
         |}""".trimMargin()
     )

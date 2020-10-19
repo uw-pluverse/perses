@@ -102,6 +102,7 @@ class TokenSlicerTest : AbstractReducerFunctionalTest() {
       "test_data/delta_1",
       TokenSlicer.META,
       """
+        |int printf();
         |int main() {
         |  printf("world\n");
         |}
