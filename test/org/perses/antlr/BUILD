@@ -44,6 +44,7 @@ java_library(
 java_binary(
     name = "GrammarHierarchyDumpMain",
     srcs = ["GrammarHierarchyDumpMain.java"],
+    jvm_flags = ["-ea"],
     main_class = "org.perses.antlr.GrammarHierarchyDumpMain",
     deps = [
         ":GrammarTestingUtility",

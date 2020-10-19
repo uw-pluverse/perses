@@ -162,6 +162,7 @@ java_test(
 java_binary(
     name = "DumpPnfPassManagerLog",
     srcs = ["DumpPnfPassManagerLog.java"],
+    jvm_flags = ["-ea"],
     main_class = "org.perses.antlr.pnf.DumpPnfPassManagerLog",
     deps = DEFAULT_TEST_DEPS,
 )
