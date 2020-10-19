@@ -525,7 +525,6 @@ test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/issue-57611-trai
 test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/type-alias-impl-trait-with-no-traits.rs
 test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/unused_generic_param.rs
 test_data/rust_programs/rust_testsuite/ui/unboxed-closures/unboxed-closure-sugar-used-on-struct-3.rs
-test_data/rust_programs/rust_testsuite/ui/union/union-empty.rs
 test_data/rust_programs/rust_testsuite/ui/unnecessary-extern-crate.rs
 test_data/rust_programs/rust_testsuite/ui/unused/unused-macro.rs
 test_data/rust_programs/rust_testsuite/ui/use/use-self-type.rs
