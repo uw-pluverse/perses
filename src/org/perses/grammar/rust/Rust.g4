@@ -1,5 +1,14 @@
 grammar Rust;
 
+@lexer::members {
+    private Token lastToken;
+
+    public void emit(Token token) {
+      lastToken = token;
+      super.emit(token);
+    }
+}
+
 fragment XID_Start :
       '\u0041' .. '\u005a'
     | '_'
@@ -2012,8 +2021,9 @@ fragment FLOAT_SUFFIX:
 //     so that `1.abs()` parses a method call. The type checker will
 //     later reject it, though.
 //
-FloatLit:
-    DEC_DIGITS '.' [0-9] [0-9_]* EXPONENT? FLOAT_SUFFIX?
+FloatLit
+    :
+    ( DEC_DIGITS '.' [0-9] [0-9_]* EXPONENT? FLOAT_SUFFIX?
     | DEC_DIGITS ('.' {
         /* dot followed by another dot is a range, not a float */
         _input.LA(1) != '.' &&
@@ -2021,9 +2031,12 @@ FloatLit:
         _input.LA(1) != '_' &&
         !(_input.LA(1) >= 'a' && _input.LA(1) <= 'z') &&
         !(_input.LA(1) >= 'A' && _input.LA(1) <= 'Z')
-    }?)
+      }?)
     | DEC_DIGITS EXPONENT FLOAT_SUFFIX?
-    | DEC_DIGITS FLOAT_SUFFIX;
+    | DEC_DIGITS FLOAT_SUFFIX
+    )
+    { lastToken == null || !".".equals(lastToken.getText()) }? // This is for (1, (2, 3)).1.1
+    ;
 
 Whitespace:
     [ \t\r\n]+ -> skip;

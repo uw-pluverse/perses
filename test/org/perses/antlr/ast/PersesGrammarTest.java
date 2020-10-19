@@ -82,6 +82,13 @@ public class PersesGrammarTest {
   }
 
   @Test
+  public void testLexerSemanticPredicate() {
+    PersesGrammar grammar = createAndTest("lexer_semantic_predicate.g4");
+    final String code = grammar.getSourceCode();
+    assertThat(code).contains("false");
+  }
+
+  @Test
   public void test_PersesEpsilonAst() {
     createAndTest("epsilon.g4");
   }

@@ -2,6 +2,14 @@
 // DO NOT MODIFY.
 grammar PnfRust;
 
+@lexer::members {
+    private Token lastToken;
+
+    public void emit(Token token) {
+      lastToken = token;
+      super.emit(token);
+    }
+}
 crate
     : mod_body EOF
     ;
@@ -3122,17 +3130,14 @@ FLOAT_SUFFIX
     ;
 
 FloatLit
-    : DEC_DIGITS '.' [0-9] [0-9_]* EXPONENT? FLOAT_SUFFIX?
-    | DEC_DIGITS '.' {
+    : (DEC_DIGITS '.' [0-9] [0-9_]* EXPONENT? FLOAT_SUFFIX? | DEC_DIGITS '.' {
         /* dot followed by another dot is a range, not a float */
         _input.LA(1) != '.' &&
         /* dot followed by an identifier is an integer with a function call, not a float */
         _input.LA(1) != '_' &&
         !(_input.LA(1) >= 'a' && _input.LA(1) <= 'z') &&
         !(_input.LA(1) >= 'A' && _input.LA(1) <= 'Z')
-    }?
-    | DEC_DIGITS EXPONENT FLOAT_SUFFIX?
-    | DEC_DIGITS FLOAT_SUFFIX
+      }? | DEC_DIGITS EXPONENT FLOAT_SUFFIX? | DEC_DIGITS FLOAT_SUFFIX) { lastToken == null || !".".equals(lastToken.getText()) }?
     ;
 
 Whitespace

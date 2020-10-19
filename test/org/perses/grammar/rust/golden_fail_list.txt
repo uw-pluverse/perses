@@ -16,7 +16,6 @@ test_data/rust_programs/rust_testsuite/rustdoc/issue-42875.rs
 test_data/rust_programs/rust_testsuite/rustdoc/pub-restricted.rs
 test_data/rust_programs/rust_testsuite/rustdoc/structfields.rs
 test_data/rust_programs/rust_testsuite/rustdoc/trait_alias.rs
-test_data/rust_programs/rust_testsuite/rustfix/tuple-float-index.rs
 test_data/rust_programs/rust_testsuite/ui-fulldeps/auxiliary/lint-for-crate-rpass.rs
 test_data/rust_programs/rust_testsuite/ui/array-slice-vec/issue-69103-extra-binding-subslice.rs
 test_data/rust_programs/rust_testsuite/ui/array-slice-vec/slice-pat-type-mismatches.rs
@@ -516,7 +515,6 @@ test_data/rust_programs/rust_testsuite/ui/try-block/try-block-maybe-bad-lifetime
 test_data/rust_programs/rust_testsuite/ui/try-block/try-block-opt-init.rs
 test_data/rust_programs/rust_testsuite/ui/try-block/try-block-type-error.rs
 test_data/rust_programs/rust_testsuite/ui/try-block/try-block-unreachable-code-lint.rs
-test_data/rust_programs/rust_testsuite/ui/tuple/tuple-float-index.rs
 test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/generic_nondefining_use.rs
 test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/generic_not_used.rs
 test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/generic_type_does_not_live_long_enough.rs
