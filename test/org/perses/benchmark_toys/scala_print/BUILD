@@ -32,6 +32,7 @@ reduce(
 
 reduction_golden_test(
     name = "reduction_golden_test",
+    enable_query_caching = False,  # FIXME: issue #65
     golden_progress_file = "golden_reduction_progress.txt",
     golden_reduced_file = "golden_reduced_Hello.sc",
     progress_dump_file = "reduction_progress.txt",
@@ -43,7 +44,7 @@ reduction_golden_test(
 reduce(
     name = "reduce_scala_print_with_token_slicer",
     enable_edit_caching = True,
-    enable_query_caching = False,  # Due to issue #65
+    enable_query_caching = False,  # FIXME: issue #65
     enable_token_slicer = True,
     progress_dump_file = "reduce_scala_print_with_token_slicer_reduction_progress.txt",
     reduction_algorithm = "perses_node_with_dfs_delta",
