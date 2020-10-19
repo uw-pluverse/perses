@@ -806,7 +806,7 @@ const_default
 
 impl_what
     : ty_sum 'for' '..'
-    | ident ty_args
+    | ident type_arguments
     | alternative__impl_what_3 ty_sum
     ;
 
@@ -827,21 +827,41 @@ impl_item
     : kleene_star__item_1 optional__item_2 impl_item_tail
     ;
 
-ty_args
-    : '<' alternative__ty_args_3 '>'
+type_arguments
+    : '<' alternative__type_arguments_9 '>'
     ;
 
-ty_args_1
+type_arguments_1
+    : ',' Lifetime
+    ;
+
+kleene_star__type_arguments_2
+    : type_arguments_1*
+    ;
+
+type_arguments_4
     : Lifetime ','
     ;
 
-kleene_star__ty_args_2
-    : ty_args_1*
+kleene_star__type_arguments_5
+    : type_arguments_4*
     ;
 
-alternative__ty_args_3
-    : lifetime_list
-    | kleene_star__ty_args_2 ty_arg_list
+type_arguments_6
+    : ',' type_argument
+    ;
+
+kleene_star__type_arguments_7
+    : type_arguments_6*
+    ;
+
+alternative__type_arguments_9
+    : alternative__type_arguments_10 optional__use_item_list_3
+    ;
+
+alternative__type_arguments_10
+    : Lifetime kleene_star__type_arguments_2
+    | kleene_star__type_arguments_5 type_argument kleene_star__type_arguments_7
     ;
 
 impl_item_tail
@@ -899,7 +919,7 @@ path_segment_no_super
     ;
 
 path_segment_no_super_1
-    : '::' ty_args
+    : '::' type_arguments
     ;
 
 optional__path_segment_no_super_2
@@ -1069,7 +1089,7 @@ ty_path_segment_no_super
     ;
 
 optional__ty_path_segment_no_super_1
-    : ty_args?
+    : type_arguments?
     ;
 
 ty_path_segment
@@ -1116,41 +1136,17 @@ mut_or_const
     | 'const'
     ;
 
-lifetime_list
-    : Lifetime kleene_star__lifetime_list_2 optional__use_item_list_3
-    ;
-
-lifetime_list_1
-    : ',' Lifetime
-    ;
-
-kleene_star__lifetime_list_2
-    : lifetime_list_1*
-    ;
-
-ty_arg_list
-    : ty_arg kleene_star__ty_arg_list_2 optional__use_item_list_3
-    ;
-
-ty_arg_list_1
-    : ',' ty_arg
-    ;
-
-kleene_star__ty_arg_list_2
-    : ty_arg_list_1*
-    ;
-
-ty_arg
+type_argument
     : BareIntLit
-    | optional__ty_arg_2 ty_sum
+    | optional__type_argument_2 ty_sum
     ;
 
-ty_arg_1
+type_argument_1
     : ident '='
     ;
 
-optional__ty_arg_2
-    : ty_arg_1?
+optional__type_argument_2
+    : type_argument_1?
     ;
 
 lifetime_param_list

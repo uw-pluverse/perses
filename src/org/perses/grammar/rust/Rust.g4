@@ -1137,7 +1137,7 @@ impl_what:
     '!' ty_sum 'for' ty_sum
     | ty_sum 'for' ty_sum
     | ty_sum 'for' '..'
-    | ident ty_args
+    | ident type_arguments
     | ty_sum
     ;
 
@@ -1220,7 +1220,7 @@ path_segment:
     | 'super';
 
 path_segment_no_super:
-    simple_path_segment ('::' ty_args)?;
+    simple_path_segment ('::' type_arguments)?;
 
 simple_path:
     '::'? simple_path_segment ( '::' simple_path_segment)*;
@@ -1271,7 +1271,7 @@ ty_path_segment:
     | 'super';
 
 ty_path_segment_no_super:
-    (ident | 'Self') ty_args?;
+    (ident | 'Self') type_arguments?;
 
 
 // === Type bounds
@@ -1328,12 +1328,9 @@ mut_or_const:
 extern_abi:
     'extern' StringLit?;
 
-ty_args:
-    '<' lifetime_list '>'
-    | '<' (Lifetime ',')* ty_arg_list '>';
-
-lifetime_list:
-    Lifetime (',' Lifetime)* ','?;
+type_arguments:
+    '<' Lifetime (',' Lifetime)* ','? '>'
+    | '<' (Lifetime ',')* type_argument (',' type_argument)* ','? '>';
 
 ty_sum:
     'dyn'? type ('+' bound)?;
@@ -1341,14 +1338,11 @@ ty_sum:
 ty_sum_list:
     ty_sum (',' ty_sum)* ','?;
 
-ty_arg:
+type_argument:
     ident '=' ty_sum
     | ty_sum
     | BareIntLit
     ;
-
-ty_arg_list:
-    ty_arg (',' ty_arg)* ','?;
 
 ty_params:
     '<' lifetime_param_list '>'
@@ -1629,7 +1623,7 @@ post_expr:
 post_expr_tail:
     '?'
     | '[' expr ']'
-    | '.' ident (('::' ty_args)? '(' expr_list? ')')?
+    | '.' ident (('::' type_arguments)? '(' expr_list? ')')?
     | '.' BareIntLit
     | '(' expr_list? ')';
 
