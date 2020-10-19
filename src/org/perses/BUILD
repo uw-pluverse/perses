@@ -48,6 +48,7 @@ java_library(
 
 java_binary(
     name = "perses",
+    jvm_flags = ["-ea"],
     main_class = "org.perses.Main",
     runtime_deps = [
         ":command_options",
@@ -79,6 +80,7 @@ java_binary(
 java_binary(
     name = "token_counter",
     srcs = ["TokenCounterMain.java"],
+    jvm_flags = ["-ea"],
     main_class = "org.perses.TokenCounterMain",
     runtime_deps = [
         "@maven//:com_google_flogger_flogger_system_backend",

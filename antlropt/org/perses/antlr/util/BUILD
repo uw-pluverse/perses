@@ -22,6 +22,7 @@ java_library(
 
 java_binary(
     name = "combine_lexer_parser_bin",
+    jvm_flags = ["-ea"],
     main_class = "org.perses.antlr.util.LexerParserCombiner",
     runtime_deps = [":lexer_parser_combiner"],
 )

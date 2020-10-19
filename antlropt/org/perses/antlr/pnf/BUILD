@@ -18,6 +18,7 @@ java_library(
 java_binary(
     name = "pnf_main",
     srcs = ["Main.java"],
+    jvm_flags = ["-ea"],
     main_class = "org.perses.antlr.pnf.Main",
     deps = [
         ":pnf",

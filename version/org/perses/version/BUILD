@@ -15,6 +15,7 @@ kt_jvm_library(
 java_binary(
     name = "version_class_generator_main",
     srcs = ["VersionClassGeneratorMain.java"],
+    jvm_flags = ["-ea"],
     main_class = "org.perses.version.VersionClassGeneratorMain",
     visibility = ["//visibility:private"],
     deps = [

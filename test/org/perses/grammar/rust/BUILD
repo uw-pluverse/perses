@@ -37,6 +37,7 @@ java_binary(
     name = "RustParserFailListGenerator",
     testonly = True,
     srcs = ["RustParserFailListGenerator.java"],
+    jvm_flags = ["-ea"],
     main_class = "org.perses.grammar.rust.RustParserFailListGenerator",
     deps = [
         "//src/org/perses/antlr:antlr_grammar_util",
