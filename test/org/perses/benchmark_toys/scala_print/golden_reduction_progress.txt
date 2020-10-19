@@ -150,8 +150,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+============Testing the following program: fail=============
 
+// edit action set type: [kleene_star]dd@1
     object Hello
 ------------------------------------------------------------
 
@@ -318,7 +319,7 @@ The current best program is the following
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-1 entries are removed: 4 --> 3.
+0 entries are removed: 0 --> 0.
 ------------------------------------------------------------
 
 
@@ -440,8 +441,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+============Testing the following program: fail=============
 
+// edit action set type: [kleene_star]dd@1
     object Hello {
         def main                      =
             println("line 1")
@@ -495,8 +497,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+============Testing the following program: fail=============
 
+// edit action set type: [kleene_star]dd@1
     object Hello {
         def main(args: Array[String]) =
             println("line 1")
@@ -570,17 +573,6 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
-
-    object Hello {
-        def main(args: Array[String]) =
-            println("line 1")
-            println
-                   ("line 2")
-    }
-------------------------------------------------------------
-
-
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
@@ -604,9 +596,22 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    object Hello {
+        def main(args: Array[String]) =
+            println("line 1")
+            println
+                   ("line 2")
+    }
+------------------------------------------------------------
+
+
 ===========TestScriptExecutionCacheEntryEviction============
 
-2 entries are removed: 11 --> 9.
+0 entries are removed: 0 --> 0.
 ------------------------------------------------------------
 
 
@@ -709,8 +714,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+============Testing the following program: fail=============
 
+// edit action set type: [kleene_star]dd@1
     object Hello {
         def main(args               ) =
             println("line 1")
@@ -826,7 +832,7 @@ It took less than 1 second to cancel the task.
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-5 entries are removed: 15 --> 10.
+0 entries are removed: 0 --> 0.
 ------------------------------------------------------------
 
 
@@ -1361,8 +1367,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+============Testing the following program: fail=============
 
+// edit action set type: [regular node]compatible replacement
     object Hello
 ------------------------------------------------------------
 
@@ -1385,8 +1392,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+============Testing the following program: fail=============
 
+// edit action set type: [kleene_star]dd@1
     object Hello
 ------------------------------------------------------------
 
@@ -1451,8 +1459,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+============Testing the following program: fail=============
 
+// edit action set type: [regular node]compatible replacement
     object Hello {
             main
     }
@@ -1545,8 +1554,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+============Testing the following program: fail=============
 
+// edit action set type: [kleene_star]dd@1
     object Hello {
         def main                      =
             println
@@ -1690,8 +1700,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+============Testing the following program: fail=============
 
+// edit action set type: [kleene_star]dd@1
     object Hello {
         def main(args               ) =
             println
@@ -1742,8 +1753,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+============Testing the following program: fail=============
 
+// edit action set type: [regular node]compatible replacement
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1751,8 +1763,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+============Testing the following program: fail=============
 
+// edit action set type: [regular node]compatible replacement
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1788,8 +1801,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+============Testing the following program: fail=============
 
+// edit action set type: [regular node]compatible replacement
     object Hello {
         def main(args: Array        ) =
             println
@@ -1827,8 +1841,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+============Testing the following program: fail=============
 
+// edit action set type: [kleene_star]dd@1
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1878,8 +1893,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+============Testing the following program: fail=============
 
+// edit action set type: [kleene_star]dd@1
     object Hello {
         def main(args: Array        ) =
             println
@@ -1930,8 +1946,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+============Testing the following program: fail=============
 
+// edit action set type: [regular node]compatible replacement
     object Hello {
         def main(args: Array[String]) =
             println
@@ -2156,8 +2173,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+============Testing the following program: fail=============
 
+// edit action set type: [kleene_star]dd@1
     object Hello {
         def main(args: Array[String]) =
             println
@@ -2335,7 +2353,7 @@ Failed to reduce node 7
 
 
 #test success = 3
-#test failure = 27
-#test result cache hits = 17
-#test execution cancelled = 1
+#test failure = 43
+#test result cache hits = 0
+#test execution cancelled = 2
 #node edit action set cache hits = 12
