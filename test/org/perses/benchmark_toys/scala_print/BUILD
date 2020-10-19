@@ -21,7 +21,7 @@ filegroup(
 reduce(
     name = "reduce_scala_print",
     enable_edit_caching = True,
-    enable_query_caching = True,
+    enable_query_caching = False,  # FIXME: issue #65
     progress_dump_file = "progress_dump.txt",
     reduction_algorithm = "perses_node_with_dfs_delta",
     result_file = "Hello_reduced.scala",
