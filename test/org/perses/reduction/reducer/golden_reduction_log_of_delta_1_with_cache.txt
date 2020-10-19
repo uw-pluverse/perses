@@ -165,7 +165,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+============Testing the following program: pass=============
 
 // edit action set type: [kleene_plus]dd@1
     int main (int argc, char *argv[]) {
@@ -179,17 +179,28 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-===================Node reduction is done===================
+===========TestScriptExecutionCacheEntryEviction============
 
-Failed to reduce node 2
+1 entries are removed: 2 --> 1.
 ------------------------------------------------------------
 
 
-=================Reducing node 333, size=56=================
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 2 from 56 to 46
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=46==================
 
 The current best program is the following
 
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
       int b = a + 1;
@@ -201,53 +212,17 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==============Node edit action set cache hit.===============
+============Testing the following program: fail=============
 
-    NodeDeletionAction{target_node=333}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 333
-------------------------------------------------------------
-
-
-==================Reducing node 5, size=56==================
-
-The current best program is the following
-
-    int printf(const char*, ...);
-    int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("hello\n");
-      printf("world\n");
-      return 0;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=5}
+// edit action set type: [regular node]compatible replacement
+    int a = 1;
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    int printf(const char*, ...);
-      int a = 1;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    int printf(const char*, ...);
-      int b = a + 1;
+    int b = a + 1;
 ------------------------------------------------------------
 
 
@@ -257,33 +232,10 @@ Failed to reduce node 5
 ------------------------------------------------------------
 
 
-=================Reducing node 370, size=56=================
+==================Reducing node 6, size=46==================
 
 The current best program is the following
 
-    int printf(const char*, ...);
-    int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("hello\n");
-      printf("world\n");
-      return 0;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 370
-------------------------------------------------------------
-
-
-=================Reducing node 335, size=56=================
-
-The current best program is the following
-
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
       int b = a + 1;
@@ -298,67 +250,7 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star]dd@1
-    int                         ;
-    int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("hello\n");
-      printf("world\n");
-      return 0;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 335
-------------------------------------------------------------
-
-
-=================Reducing node 336, size=56=================
-
-The current best program is the following
-
-    int printf(const char*, ...);
-    int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("hello\n");
-      printf("world\n");
-      return 0;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 336
-------------------------------------------------------------
-
-
-==================Reducing node 6, size=56==================
-
-The current best program is the following
-
-    int printf(const char*, ...);
-    int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("hello\n");
-      printf("world\n");
-      return 0;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star]dd@1
-    int printf(const char*, ...);
-        main (int argc, char *argv[]) {
+    main (int argc, char *argv[]) {
       int a = 1;
       int b = a + 1;
       printf("%d\n", b);
@@ -375,11 +267,10 @@ Failed to reduce node 6
 ------------------------------------------------------------
 
 
-=================Reducing node 282, size=56=================
+=================Reducing node 282, size=46=================
 
 The current best program is the following
 
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
       int b = a + 1;
@@ -394,7 +285,6 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    int printf(const char*, ...);
     int main                          {
       int a = 1;
       int b = a + 1;
@@ -409,7 +299,6 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    int printf(const char*, ...);
     int           argc                {
       int a = 1;
       int b = a + 1;
@@ -427,11 +316,10 @@ Failed to reduce node 282
 ------------------------------------------------------------
 
 
-==================Reducing node 8, size=56==================
+==================Reducing node 8, size=46==================
 
 The current best program is the following
 
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
       int b = a + 1;
@@ -449,76 +337,10 @@ Failed to reduce node 8
 ------------------------------------------------------------
 
 
-=================Reducing node 373, size=56=================
+=================Reducing node 329, size=46=================
 
 The current best program is the following
 
-    int printf(const char*, ...);
-    int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("hello\n");
-      printf("world\n");
-      return 0;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 373
-------------------------------------------------------------
-
-
-=================Reducing node 340, size=56=================
-
-The current best program is the following
-
-    int printf(const char*, ...);
-    int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("hello\n");
-      printf("world\n");
-      return 0;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=340}
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    int printf                  ;
-    int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("hello\n");
-      printf("world\n");
-      return 0;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 340
-------------------------------------------------------------
-
-
-=================Reducing node 329, size=56=================
-
-The current best program is the following
-
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
       int b = a + 1;
@@ -542,11 +364,10 @@ Failed to reduce node 329
 ------------------------------------------------------------
 
 
-=================Reducing node 327, size=56=================
+=================Reducing node 327, size=46=================
 
 The current best program is the following
 
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
       int b = a + 1;
@@ -564,11 +385,10 @@ Failed to reduce node 327
 ------------------------------------------------------------
 
 
-=================Reducing node 284, size=56=================
+=================Reducing node 284, size=46=================
 
 The current best program is the following
 
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
       int b = a + 1;
@@ -582,7 +402,6 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
-    int printf(const char*, ...);
     int main                          {
       int a = 1;
       int b = a + 1;
@@ -600,11 +419,10 @@ Failed to reduce node 284
 ------------------------------------------------------------
 
 
-==================Reducing node 9, size=56==================
+==================Reducing node 9, size=46==================
 
 The current best program is the following
 
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
       int b = a + 1;
@@ -622,11 +440,10 @@ Failed to reduce node 9
 ------------------------------------------------------------
 
 
-=================Reducing node 10, size=56==================
+=================Reducing node 10, size=46==================
 
 The current best program is the following
 
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
       int b = a + 1;
@@ -641,7 +458,6 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star]dd@1
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
     }
 ------------------------------------------------------------
@@ -653,11 +469,10 @@ Failed to reduce node 10
 ------------------------------------------------------------
 
 
-=================Reducing node 11, size=56==================
+=================Reducing node 11, size=46==================
 
 The current best program is the following
 
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
       int b = a + 1;
@@ -675,69 +490,10 @@ Failed to reduce node 11
 ------------------------------------------------------------
 
 
-=================Reducing node 369, size=56=================
+=================Reducing node 332, size=46=================
 
 The current best program is the following
 
-    int printf(const char*, ...);
-    int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("hello\n");
-      printf("world\n");
-      return 0;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 369
-------------------------------------------------------------
-
-
-=================Reducing node 342, size=56=================
-
-The current best program is the following
-
-    int printf(const char*, ...);
-    int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("hello\n");
-      printf("world\n");
-      return 0;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int printf                  ;
-    int main (int argc, char *argv[]) {
-      int a = 1;
-      int b = a + 1;
-      printf("%d\n", b);
-      printf("hello\n");
-      printf("world\n");
-      return 0;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 342
-------------------------------------------------------------
-
-
-=================Reducing node 332, size=56=================
-
-The current best program is the following
-
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
       int b = a + 1;
@@ -755,11 +511,10 @@ Failed to reduce node 332
 ------------------------------------------------------------
 
 
-=================Reducing node 285, size=56=================
+=================Reducing node 285, size=46=================
 
 The current best program is the following
 
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
       int b = a + 1;
@@ -783,11 +538,10 @@ Failed to reduce node 285
 ------------------------------------------------------------
 
 
-=================Reducing node 13, size=56==================
+=================Reducing node 13, size=46==================
 
 The current best program is the following
 
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
       int b = a + 1;
@@ -808,7 +562,6 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus]remove whole except first
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
     }
@@ -818,7 +571,6 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus]dd@3
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
       int b = a + 1;
@@ -830,7 +582,6 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_plus]dd@1
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
       int b = a + 1;
@@ -843,19 +594,18 @@ The current best program is the following
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-2 entries are removed: 13 --> 11.
+2 entries are removed: 10 --> 8.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 15
+    size before clearance = 10
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
       int b = a + 1;
@@ -867,7 +617,6 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus]dd@1
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
       int b = a + 1;
@@ -880,7 +629,6 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_plus]dd@1
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
       int b = a + 1;
@@ -892,7 +640,7 @@ The current best program is the following
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-4 entries are removed: 13 --> 9.
+2 entries are removed: 10 --> 8.
 ------------------------------------------------------------
 
 
@@ -905,7 +653,6 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_plus]dd@3
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       printf("world\n");
     }
@@ -914,7 +661,7 @@ The current best program is the following
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-6 entries are removed: 10 --> 4.
+5 entries are removed: 9 --> 4.
 ------------------------------------------------------------
 
 
@@ -926,42 +673,14 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 13 from 56 to 29
+Succeeded to reduce node 13 from 46 to 19
 ------------------------------------------------------------
 
 
-=================Reducing node 343, size=29=================
+=================Reducing node 286, size=19=================
 
 The current best program is the following
 
-    int printf(const char*, ...);
-    int main (int argc, char *argv[]) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    int printf                  ;
-    int main (int argc, char *argv[]) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 343
-------------------------------------------------------------
-
-
-=================Reducing node 286, size=29=================
-
-The current best program is the following
-
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       printf("world\n");
     }
@@ -974,11 +693,10 @@ Failed to reduce node 286
 ------------------------------------------------------------
 
 
-=================Reducing node 290, size=29=================
+=================Reducing node 290, size=19=================
 
 The current best program is the following
 
-    int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       printf("world\n");
     }
@@ -988,7 +706,6 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [regular_node]can be epsilon
-    int printf(const char*, ...);
     int main (                      ) {
       printf("world\n");
     }
@@ -999,7 +716,6 @@ The current best program is the following
 
 It took less than 1 second to cancel the task.
 
-    int printf(const char*, ...);
     int main (int argc              ) {
       printf("world\n");
     }
@@ -1010,7 +726,6 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
-    int printf(const char*, ...);
     int main (          char *argv[]) {
       printf("world\n");
     }
@@ -1019,27 +734,26 @@ It took less than 1 second to cancel the task.
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-3 entries are removed: 6 --> 3.
+2 entries are removed: 5 --> 3.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 4
+    size before clearance = 3
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 290 from 29 to 21
+Succeeded to reduce node 290 from 19 to 11
 ------------------------------------------------------------
 
 
-=================Reducing node 288, size=21=================
+=================Reducing node 288, size=11=================
 
 The current best program is the following
 
-    int printf(const char*, ...);
     int main (                      ) {
       printf("world\n");
     }
@@ -1052,11 +766,10 @@ Failed to reduce node 288
 ------------------------------------------------------------
 
 
-=================Reducing node 45, size=21==================
+=================Reducing node 45, size=11==================
 
 The current best program is the following
 
-    int printf(const char*, ...);
     int main (                      ) {
       printf("world\n");
     }
@@ -1066,7 +779,6 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
-    int printf(const char*, ...);
     int main (                      ) {
     }
 ------------------------------------------------------------
@@ -1078,95 +790,10 @@ Failed to reduce node 45
 ------------------------------------------------------------
 
 
-=================Reducing node 344, size=21=================
+=================Reducing node 46, size=11==================
 
 The current best program is the following
 
-    int printf(const char*, ...);
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 344
-------------------------------------------------------------
-
-
-=================Reducing node 347, size=21=================
-
-The current best program is the following
-
-    int printf(const char*, ...);
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: pass=============
-
-// edit action set type: [regular_node]can be epsilon
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    int printf(const char*     );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===========TestScriptExecutionCacheEntryEviction============
-
-3 entries are removed: 5 --> 2.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 3
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Succeeded to reduce node 347 from 21 to 16
-------------------------------------------------------------
-
-
-=================Reducing node 346, size=16=================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 346
-------------------------------------------------------------
-
-
-=================Reducing node 46, size=16==================
-
-The current best program is the following
-
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
@@ -1176,7 +803,6 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star]dd@1
-    int printf(                );
     int main (                      ) {
                        ;
     }
@@ -1189,11 +815,10 @@ Failed to reduce node 46
 ------------------------------------------------------------
 
 
-=================Reducing node 47, size=16==================
+=================Reducing node 47, size=11==================
 
 The current best program is the following
 
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
@@ -1206,11 +831,10 @@ Failed to reduce node 47
 ------------------------------------------------------------
 
 
-=================Reducing node 63, size=16==================
+=================Reducing node 63, size=11==================
 
 The current best program is the following
 
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
@@ -1226,7 +850,6 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    int printf(                );
     int main (                      ) {
       printf           ;
     }
@@ -1236,7 +859,6 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    int printf(                );
     int main (                      ) {
              "world\n" ;
     }
@@ -1249,11 +871,10 @@ Failed to reduce node 63
 ------------------------------------------------------------
 
 
-=================Reducing node 89, size=16==================
+=================Reducing node 89, size=11==================
 
 The current best program is the following
 
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
@@ -1266,11 +887,10 @@ Failed to reduce node 89
 ------------------------------------------------------------
 
 
-=================Reducing node 65, size=16==================
+=================Reducing node 65, size=11==================
 
 The current best program is the following
 
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
@@ -1279,7 +899,6 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
-    int printf(                );
     int main (                      ) {
       printf           ;
     }
@@ -1292,11 +911,10 @@ Failed to reduce node 65
 ------------------------------------------------------------
 
 
-=================Reducing node 66, size=16==================
+=================Reducing node 66, size=11==================
 
 The current best program is the following
 
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
@@ -1315,11 +933,10 @@ Failed to reduce node 66
 ------------------------------------------------------------
 
 
-=================Reducing node 67, size=16==================
+=================Reducing node 67, size=11==================
 
 The current best program is the following
 
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
@@ -1332,11 +949,10 @@ Failed to reduce node 67
 ------------------------------------------------------------
 
 
-=================Reducing node 68, size=16==================
+=================Reducing node 68, size=11==================
 
 The current best program is the following
 
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
@@ -1346,7 +962,6 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star]dd@1
-    int printf(                );
     int main (                      ) {
       printf(         );
     }
@@ -1359,11 +974,10 @@ Failed to reduce node 68
 ------------------------------------------------------------
 
 
-=================Reducing node 69, size=16==================
+=================Reducing node 69, size=11==================
 
 The current best program is the following
 
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
@@ -1376,11 +990,10 @@ Failed to reduce node 69
 ------------------------------------------------------------
 
 
-=================Reducing node 87, size=16==================
+=================Reducing node 87, size=11==================
 
 The current best program is the following
 
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
@@ -1399,11 +1012,10 @@ Failed to reduce node 87
 ------------------------------------------------------------
 
 
-=================Reducing node 88, size=16==================
+=================Reducing node 88, size=11==================
 
 The current best program is the following
 
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
@@ -1416,33 +1028,10 @@ Failed to reduce node 88
 ------------------------------------------------------------
 
 
-==================Reducing node 2, size=16==================
+==================Reducing node 2, size=11==================
 
 The current best program is the following
 
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_plus]remove whole except first
-    int printf(                );
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=5}
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_plus]dd@1
     int main (                      ) {
       printf("world\n");
     }
@@ -1455,43 +1044,38 @@ Failed to reduce node 2
 ------------------------------------------------------------
 
 
-=================Reducing node 74, size=16==================
+==================Reducing node 4, size=11==================
 
 The current best program is the following
 
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=74}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 74
+Failed to reduce node 4
 ------------------------------------------------------------
 
 
-==================Reducing node 5, size=16==================
+==================Reducing node 5, size=11==================
 
 The current best program is the following
 
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
 ------------------------------------------------------------
 
 
-==============Node edit action set cache hit.===============
+============Testing the following program: fail=============
 
-    NodeDeletionAction{target_node=5}
+// edit action set type: [kleene_star]dd@1
+    main (                      ) {
+      printf("world\n");
+    }
 ------------------------------------------------------------
 
 
@@ -1501,99 +1085,10 @@ Failed to reduce node 5
 ------------------------------------------------------------
 
 
-=================Reducing node 89, size=16==================
+=================Reducing node 60, size=11==================
 
 The current best program is the following
 
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 89
-------------------------------------------------------------
-
-
-=================Reducing node 76, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star]dd@1
-    int                         ;
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 76
-------------------------------------------------------------
-
-
-=================Reducing node 77, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 77
-------------------------------------------------------------
-
-
-==================Reducing node 6, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star]dd@1
-    int printf(                );
-        main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 6
-------------------------------------------------------------
-
-
-=================Reducing node 61, size=16==================
-
-The current best program is the following
-
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
@@ -1603,7 +1098,6 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    int printf(                );
     int main                          {
       printf("world\n");
     }
@@ -1612,15 +1106,14 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 61
+Failed to reduce node 60
 ------------------------------------------------------------
 
 
-==================Reducing node 8, size=16==================
+==================Reducing node 7, size=11==================
 
 The current best program is the following
 
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
@@ -1629,32 +1122,14 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 8
+Failed to reduce node 7
 ------------------------------------------------------------
 
 
-=================Reducing node 92, size=16==================
+=================Reducing node 69, size=11==================
 
 The current best program is the following
 
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 92
-------------------------------------------------------------
-
-
-=================Reducing node 81, size=16==================
-
-The current best program is the following
-
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
@@ -1663,303 +1138,20 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=81}
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    int printf                  ;
-    int main (                      ) {
-      printf("world\n");
-    }
+    NodeDeletionAction{target_node=69}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 81
+Failed to reduce node 69
 ------------------------------------------------------------
 
 
-=================Reducing node 70, size=16==================
+=================Reducing node 67, size=11==================
 
 The current best program is the following
 
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=70}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 70
-------------------------------------------------------------
-
-
-=================Reducing node 68, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 68
-------------------------------------------------------------
-
-
-=================Reducing node 63, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int printf(                );
-    int main                          {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 63
-------------------------------------------------------------
-
-
-==================Reducing node 9, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 9
-------------------------------------------------------------
-
-
-=================Reducing node 10, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star]dd@1
-    int printf(                );
-    int main (                      ) {
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 10
-------------------------------------------------------------
-
-
-=================Reducing node 11, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 11
-------------------------------------------------------------
-
-
-=================Reducing node 88, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 88
-------------------------------------------------------------
-
-
-=================Reducing node 83, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int printf                  ;
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 83
-------------------------------------------------------------
-
-
-=================Reducing node 73, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 73
-------------------------------------------------------------
-
-
-=================Reducing node 64, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=64}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 64
-------------------------------------------------------------
-
-
-=================Reducing node 13, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=13}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 13
-------------------------------------------------------------
-
-
-=================Reducing node 84, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=84}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 84
-------------------------------------------------------------
-
-
-=================Reducing node 65, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 65
-------------------------------------------------------------
-
-
-=================Reducing node 67, size=16==================
-
-The current best program is the following
-
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
@@ -1972,11 +1164,10 @@ Failed to reduce node 67
 ------------------------------------------------------------
 
 
-=================Reducing node 16, size=16==================
+=================Reducing node 62, size=11==================
 
 The current best program is the following
 
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
@@ -1985,8 +1176,202 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
-    int printf(                );
+    int main                          {
+      printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 62
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=11==================
+
+The current best program is the following
+
     int main (                      ) {
+      printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=11==================
+
+The current best program is the following
+
+    int main (                      ) {
+      printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main (                      ) {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=11==================
+
+The current best program is the following
+
+    int main (                      ) {
+      printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+=================Reducing node 72, size=11==================
+
+The current best program is the following
+
+    int main (                      ) {
+      printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 72
+------------------------------------------------------------
+
+
+=================Reducing node 63, size=11==================
+
+The current best program is the following
+
+    int main (                      ) {
+      printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=63}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 63
+------------------------------------------------------------
+
+
+=================Reducing node 12, size=11==================
+
+The current best program is the following
+
+    int main (                      ) {
+      printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=12}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 12
+------------------------------------------------------------
+
+
+=================Reducing node 64, size=11==================
+
+The current best program is the following
+
+    int main (                      ) {
+      printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 64
+------------------------------------------------------------
+
+
+=================Reducing node 66, size=11==================
+
+The current best program is the following
+
+    int main (                      ) {
+      printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 66
+------------------------------------------------------------
+
+
+=================Reducing node 15, size=11==================
+
+The current best program is the following
+
+    int main (                      ) {
+      printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main (                      ) {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+=================Reducing node 16, size=11==================
+
+The current best program is the following
+
+    int main (                      ) {
+      printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main (                      ) {
+                       ;
     }
 ------------------------------------------------------------
 
@@ -1997,56 +1382,12 @@ Failed to reduce node 16
 ------------------------------------------------------------
 
 
-=================Reducing node 85, size=16==================
+=================Reducing node 17, size=11==================
 
 The current best program is the following
 
-    int printf(                );
     int main (                      ) {
       printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 85
-------------------------------------------------------------
-
-
-=================Reducing node 87, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 87
-------------------------------------------------------------
-
-
-=================Reducing node 17, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int printf(                );
-    int main (                      ) {
-                       ;
     }
 ------------------------------------------------------------
 
@@ -2057,28 +1398,10 @@ Failed to reduce node 17
 ------------------------------------------------------------
 
 
-=================Reducing node 18, size=16==================
+=================Reducing node 33, size=11==================
 
 The current best program is the following
 
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 18
-------------------------------------------------------------
-
-
-=================Reducing node 34, size=16==================
-
-The current best program is the following
-
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
@@ -2087,13 +1410,12 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=34}
+    NodeDeletionAction{target_node=33}
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
-    int printf(                );
     int main (                      ) {
       printf           ;
     }
@@ -2102,7 +1424,6 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
-    int printf(                );
     int main (                      ) {
              "world\n" ;
     }
@@ -2111,164 +1432,14 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 34
+Failed to reduce node 33
 ------------------------------------------------------------
 
 
-=================Reducing node 60, size=16==================
+=================Reducing node 59, size=11==================
 
 The current best program is the following
 
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 60
-------------------------------------------------------------
-
-
-=================Reducing node 36, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int printf(                );
-    int main (                      ) {
-      printf           ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 36
-------------------------------------------------------------
-
-
-=================Reducing node 37, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=37}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 37
-------------------------------------------------------------
-
-
-=================Reducing node 38, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 38
-------------------------------------------------------------
-
-
-=================Reducing node 39, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int printf(                );
-    int main (                      ) {
-      printf(         );
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 39
-------------------------------------------------------------
-
-
-=================Reducing node 40, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 40
-------------------------------------------------------------
-
-
-=================Reducing node 58, size=16==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      printf("world\n");
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=58}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 58
-------------------------------------------------------------
-
-
-=================Reducing node 59, size=16==================
-
-The current best program is the following
-
-    int printf(                );
     int main (                      ) {
       printf("world\n");
     }
@@ -2281,8 +1452,148 @@ Failed to reduce node 59
 ------------------------------------------------------------
 
 
+=================Reducing node 35, size=11==================
+
+The current best program is the following
+
+    int main (                      ) {
+      printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main (                      ) {
+      printf           ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 35
+------------------------------------------------------------
+
+
+=================Reducing node 36, size=11==================
+
+The current best program is the following
+
+    int main (                      ) {
+      printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=36}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 36
+------------------------------------------------------------
+
+
+=================Reducing node 37, size=11==================
+
+The current best program is the following
+
+    int main (                      ) {
+      printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 37
+------------------------------------------------------------
+
+
+=================Reducing node 38, size=11==================
+
+The current best program is the following
+
+    int main (                      ) {
+      printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main (                      ) {
+      printf(         );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 38
+------------------------------------------------------------
+
+
+=================Reducing node 39, size=11==================
+
+The current best program is the following
+
+    int main (                      ) {
+      printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 39
+------------------------------------------------------------
+
+
+=================Reducing node 57, size=11==================
+
+The current best program is the following
+
+    int main (                      ) {
+      printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=57}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 57
+------------------------------------------------------------
+
+
+=================Reducing node 58, size=11==================
+
+The current best program is the following
+
+    int main (                      ) {
+      printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 58
+------------------------------------------------------------
+
+
 #test success = 5
-#test failure = 26
-#test result cache hits = 12
-#test execution cancelled = 3
-#node edit action set cache hits = 21
+#test failure = 17
+#test result cache hits = 11
+#test execution cancelled = 2
+#node edit action set cache hits = 13
