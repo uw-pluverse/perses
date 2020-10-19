@@ -73,11 +73,11 @@ public final class PersesAstBuilder {
         checkState(rules == null, "duplicate rules node: %s", rules);
         rules = convertRuleDefinitions(child, symbolTable);
       } else if (isNamedActionNode(child)) {
-        checkState(child.getChildCount() == 2);
-        final String name = child.getChild(0).getText();
-        checkState(child.getChild(1) instanceof ActionAST);
-        final ActionAST action = (ActionAST) child.getChild(1);
-        final String body = action.getText();
+        checkState(child.getChildCount() >= 2);
+        final String name = extractNameFromNamedActionNode(child);
+        final GrammarAST lastChild = (GrammarAST) child.getChild(child.getChildCount() - 1);
+        checkState(lastChild instanceof ActionAST);
+        final String body = lastChild.getText();
         namedActions.add(new PersesNamedAction(name, body));
       } else {
         throw new RuntimeException("Unhandled child: " + child);
@@ -87,6 +87,20 @@ public final class PersesAstBuilder {
     final PersesGrammar.GrammarType grammarType = identifyGrammarType(root);
     return new PersesGrammar(
         grammarType, grammarName, options, namedActions.build(), rules, symbolTable);
+  }
+
+  private static String extractNameFromNamedActionNode(GrammarAST node) {
+    checkArgument(isNamedActionNode(node));
+    final int childCount = node.getChildCount();
+    final StringBuilder builder = new StringBuilder();
+    checkState(childCount > 1);
+    final GrammarAST firstChild = (GrammarAST) node.getChild(0);
+    builder.append(firstChild.getText());
+
+    for (int i = 1; i < childCount - 1; ++i) {
+      builder.append("::").append(node.getChild(i).getText());
+    }
+    return builder.toString();
   }
 
   private static PersesGrammar.GrammarType identifyGrammarType(GrammarRootAST root) {
