@@ -1242,11 +1242,8 @@ simple_path_segment:
 // === Type paths
 // (forward references: rtype, ty_sum, ty_args)
 
-type_path:
-    for_lifetimes? ('dyn' | 'impl')? type_path_main;
-
 for_lifetimes:
-    'dyn'? 'for' '<' lifetime_def_list? '>';
+    'for' '<' lifetime_def_list? '>';
 
 lifetime_def_list:
     lifetime_def (',' lifetime_def)* ','?;
@@ -1304,8 +1301,7 @@ bound:
     | bound '+' prim_bound;
 
 prim_bound:
-    type_path
-    | '?' type_path
+    | '?'? for_lifetimes? ('dyn' | 'impl')? type_path_main
     | lifetime;
 
 
@@ -1323,9 +1319,22 @@ type:
     | '&&' lifetime? 'mut'? type          // meaning `& & ty`
     | '*' mut_or_const type               // pointer type
     | bare_function_type
-    | type_path macro_tail?
+    | ('dyn' | 'impl')? for_lifetimes? type_path_main macro_tail?
     | '!'
     | '{' expr '}'
+    ;
+
+trait_object_type
+    : 'dyn'? type_param_bound ('+' type_param_bound)* '+'?
+    ;
+
+type_param_bound
+    : lifetime | trait_bound
+    ;
+
+trait_bound
+    : '?'? for_lifetimes? type_path_main
+    | '(' '?'? for_lifetimes? type_path_main ')'
     ;
 
 bare_function_type

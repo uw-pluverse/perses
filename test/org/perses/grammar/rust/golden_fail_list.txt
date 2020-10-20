@@ -345,7 +345,6 @@ test_data/rust_programs/rust_testsuite/ui/parser/issue-14303-enum.rs
 test_data/rust_programs/rust_testsuite/ui/parser/issue-14303-fn-def.rs
 test_data/rust_programs/rust_testsuite/ui/parser/issue-14303-fncall.rs
 test_data/rust_programs/rust_testsuite/ui/parser/issue-14303-impl.rs
-test_data/rust_programs/rust_testsuite/ui/parser/issue-14303-path.rs
 test_data/rust_programs/rust_testsuite/ui/parser/issue-14303-struct.rs
 test_data/rust_programs/rust_testsuite/ui/parser/issue-14303-trait.rs
 test_data/rust_programs/rust_testsuite/ui/parser/issue-65041-empty-vis-matcher-in-trait.rs
@@ -359,7 +358,6 @@ test_data/rust_programs/rust_testsuite/ui/parser/pat-tuple-2.rs
 test_data/rust_programs/rust_testsuite/ui/parser/pat-tuple-3.rs
 test_data/rust_programs/rust_testsuite/ui/parser/self-param-semantic-fail.rs
 test_data/rust_programs/rust_testsuite/ui/parser/self-param-syntactic-pass.rs
-test_data/rust_programs/rust_testsuite/ui/parser/trailing-plus-in-bounds.rs
 test_data/rust_programs/rust_testsuite/ui/parser/trait-item-with-defaultness-fail-semantic.rs
 test_data/rust_programs/rust_testsuite/ui/parser/trait-item-with-defaultness-pass.rs
 test_data/rust_programs/rust_testsuite/ui/parser/trait-object-trait-parens.rs
