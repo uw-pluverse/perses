@@ -110,7 +110,7 @@ optional__impl_block_1
     ;
 
 optional__impl_block_2
-    : ty_params?
+    : type_parameters?
     ;
 
 optional__impl_block_3
@@ -210,11 +210,7 @@ kleene_star__trait_decl_6
     ;
 
 trait_alias
-    : 'trait' ident optional__impl_block_2 '=' optional__trait_alias_2 optional__impl_block_3 ';'
-    ;
-
-optional__trait_alias_2
-    : type?
+    : 'trait' ident optional__impl_block_2 '=' (ty_sum optional__impl_block_3 | where_clause) ';'
     ;
 
 macro_decl
@@ -479,7 +475,7 @@ macro_head
     ;
 
 optional__macro_head_1
-    : ty_param?
+    : type_parameter?
     ;
 
 tt
@@ -487,29 +483,29 @@ tt
     | tt_delimited
     ;
 
-ty_param
-    : kleene_star__item_1 optional__fn_head_2 ident optional__trait_decl_4 optional__ty_param_4
+type_parameter
+    : kleene_star__item_1 optional__fn_head_2 ident optional__trait_decl_4 optional__type_parameter_4
     ;
 
-optional__ty_param_4
+optional__type_parameter_4
     : ty_default?
     ;
 
-ty_params
-    : '<' alternative__ty_params_3 '>'
+type_parameters
+    : '<' alternative__type_parameters_3 '>'
     ;
 
-ty_params_1
+type_parameters_1
     : lifetime_param ','
     ;
 
-kleene_star__ty_params_2
-    : ty_params_1*
+kleene_star__type_parameters_2
+    : type_parameters_1*
     ;
 
-alternative__ty_params_3
+alternative__type_parameters_3
     : lifetime_param_list
-    | kleene_star__ty_params_2 ty_param_list
+    | kleene_star__type_parameters_2 type_parameter_list
     ;
 
 param
@@ -794,7 +790,7 @@ alternative__trait_item_11
 
 alternative__trait_item_12
     : 'const' ident ':' ty_sum optional__trait_item_7
-    | 'type' ident optional__impl_block_2 optional__trait_decl_4 optional__impl_block_3 optional__ty_param_4
+    | 'type' ident optional__impl_block_2 optional__trait_decl_4 optional__impl_block_3 optional__type_parameter_4
     ;
 
 ty_default
@@ -1178,16 +1174,16 @@ lifetime_param
     : kleene_star__item_1 optional__fn_head_2 Lifetime optional__lifetime_def_2
     ;
 
-ty_param_list
-    : ty_param kleene_star__ty_param_list_2 optional__use_item_list_3
+type_parameter_list
+    : type_parameter kleene_star__type_parameter_list_2 optional__use_item_list_3
     ;
 
-ty_param_list_1
-    : ',' ty_param
+type_parameter_list_1
+    : ',' type_parameter
     ;
 
-kleene_star__ty_param_list_2
-    : ty_param_list_1*
+kleene_star__type_parameter_list_2
+    : type_parameter_list_1*
     ;
 
 pattern_without_mut
