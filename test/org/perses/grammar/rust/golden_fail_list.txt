@@ -49,8 +49,6 @@ test_data/rust_programs/rust_testsuite/ui/associated-type-bounds/trait-params.rs
 test_data/rust_programs/rust_testsuite/ui/associated-type-bounds/type-alias.rs
 test_data/rust_programs/rust_testsuite/ui/associated-type-bounds/union-bounds.rs
 test_data/rust_programs/rust_testsuite/ui/associated-type/associated-type-projection-from-multiple-supertraits.rs
-test_data/rust_programs/rust_testsuite/ui/associated-types/associated-types-overridden-binding-2.rs
-test_data/rust_programs/rust_testsuite/ui/associated-types/associated-types-overridden-binding.rs
 test_data/rust_programs/rust_testsuite/ui/associated-types/defaults-specialization.rs
 test_data/rust_programs/rust_testsuite/ui/ast-json/ast-json-ice.rs
 test_data/rust_programs/rust_testsuite/ui/async-await/async-await.rs
@@ -275,12 +273,9 @@ test_data/rust_programs/rust_testsuite/ui/issues/issue-50761.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-55376.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-55731.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-56685.rs
-test_data/rust_programs/rust_testsuite/ui/issues/issue-59029-1.rs
-test_data/rust_programs/rust_testsuite/ui/issues/issue-59029-2.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-59508-1.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-59508.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-62480.rs
-test_data/rust_programs/rust_testsuite/ui/issues/issue-65673.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-68103.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-69396-const-no-type-in-macro.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-7784.rs
@@ -481,7 +476,6 @@ test_data/rust_programs/rust_testsuite/ui/suggestions/suggest-move-types.rs
 test_data/rust_programs/rust_testsuite/ui/syntax-trait-polarity.rs
 test_data/rust_programs/rust_testsuite/ui/traits/dyn-trait.rs
 test_data/rust_programs/rust_testsuite/ui/traits/trait-alias-ambiguous.rs
-test_data/rust_programs/rust_testsuite/ui/traits/trait-alias-import.rs
 test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/auxiliary/trait_alias.rs
 test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-bounds.rs
 test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-maybe-bound.rs
@@ -491,7 +485,6 @@ test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-object-
 test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-object.rs
 test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-only-maybe-bound.rs
 test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-syntax.rs
-test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-wf.rs
 test_data/rust_programs/rust_testsuite/ui/traits/trait-object-lifetime-first.rs
 test_data/rust_programs/rust_testsuite/ui/traits/trait-object-vs-lifetime-2.rs
 test_data/rust_programs/rust_testsuite/ui/traits/trait-object-vs-lifetime.rs
@@ -515,7 +508,6 @@ test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/generic_type_doe
 test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/generic_underconstrained.rs
 test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/generic_underconstrained2.rs
 test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/issue-53678-generator-and-const-fn.rs
-test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/issue-57611-trait-alias.rs
 test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/type-alias-impl-trait-with-no-traits.rs
 test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/unused_generic_param.rs
 test_data/rust_programs/rust_testsuite/ui/unboxed-closures/unboxed-closure-sugar-used-on-struct-3.rs

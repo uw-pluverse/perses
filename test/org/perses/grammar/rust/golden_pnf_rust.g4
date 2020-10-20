@@ -210,7 +210,11 @@ kleene_star__trait_decl_6
     ;
 
 trait_alias
-    : 'trait' ident '=' Ident ';'
+    : 'trait' ident optional__impl_block_2 '=' optional__trait_alias_2 optional__impl_block_3 ';'
+    ;
+
+optional__trait_alias_2
+    : type?
     ;
 
 macro_decl

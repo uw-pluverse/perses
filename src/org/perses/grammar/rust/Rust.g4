@@ -1118,7 +1118,7 @@ trait_decl:
     'unsafe'? 'auto'? 'trait' ident ty_params? colon_bound? where_clause? '{' trait_item* '}';
 
 trait_alias
-    : 'trait' ident '=' Ident ';'
+    : 'trait' ident ty_params? '=' type? where_clause?  ';'
     ;
 
 trait_item:
