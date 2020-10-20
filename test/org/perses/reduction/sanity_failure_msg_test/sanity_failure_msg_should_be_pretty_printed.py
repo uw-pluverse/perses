@@ -9,8 +9,7 @@ class TestCheckCopyright(unittest.TestCase):
         start = error_message.find("*")
         end = error_message.rfind("*")
         result = error_message[start:end].find("Theinitialsanitycheckfailed")
-        flag = False if result == -1 else True
-        self.assertTrue(flag)
+        self.assertGreater(result, -1)
 
 
 if __name__ == '__main__':
