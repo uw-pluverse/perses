@@ -1021,7 +1021,7 @@ variadic_param_list_names_optional:
 
 self_param:
     'mut'? 'self' (':' ty_sum)?
-    | '&' Lifetime? 'mut'? 'self';
+    | '&' lifetime? 'mut'? 'self';
 
 method_param_list:
     (param | self_param) (',' param)* ','?;
@@ -1242,23 +1242,23 @@ simple_path_segment:
 // === Type paths
 // (forward references: rtype, ty_sum, ty_args)
 
-ty_path:
-    for_lifetime? ('dyn' | 'impl')? ty_path_main;
+type_path:
+    for_lifetimes? ('dyn' | 'impl')? type_path_main;
 
-for_lifetime:
+for_lifetimes:
     'dyn'? 'for' '<' lifetime_def_list? '>';
 
 lifetime_def_list:
     lifetime_def (',' lifetime_def)* ','?;
 
 lifetime_def:
-    Lifetime (':' lifetime_bound)?;
+    lifetime (':' lifetime_bound)?;
 
 lifetime_bound:
-    Lifetime
-    | lifetime_bound '+' Lifetime;
+    lifetime
+    | lifetime_bound '+' lifetime;
 
-ty_path_main:
+type_path_main:
     ty_path_tail
     | ty_path_parent? '::' ty_path_tail;
 
@@ -1290,8 +1290,8 @@ where_bound_list:
     where_bound (',' where_bound)* ','?;
 
 where_bound:
-    Lifetime ':' lifetime_bound
-    | for_lifetime? type empty_ok_colon_bound;
+    lifetime ':' lifetime_bound
+    | for_lifetimes? type empty_ok_colon_bound;
 
 empty_ok_colon_bound:
     ':' bound?;
@@ -1304,9 +1304,9 @@ bound:
     | bound '+' prim_bound;
 
 prim_bound:
-    ty_path
-    | '?' ty_path
-    | Lifetime;
+    type_path
+    | '?' type_path
+    | lifetime;
 
 
 // === Types and type parameters
@@ -1319,17 +1319,17 @@ type:
     | '(' ty_sum ')'                    // grouping (parens are ignored)
     | '(' ty_sum ',' ty_sum_list? ')'   // tuple
     | '[' ty_sum (';' expr)? ']'
-    | '&' Lifetime? 'mut'? type
-    | '&&' Lifetime? 'mut'? type          // meaning `& & ty`
+    | '&' lifetime? 'mut'? type
+    | '&&' lifetime? 'mut'? type          // meaning `& & ty`
     | '*' mut_or_const type               // pointer type
     | bare_function_type
-    | ty_path macro_tail?
+    | type_path macro_tail?
     | '!'
     | '{' expr '}'
     ;
 
 bare_function_type
-    : for_lifetime? 'unsafe'? extern_abi? 'fn' '(' variadic_param_list_names_optional? ')' rtype?
+    : for_lifetimes? 'unsafe'? extern_abi? 'fn' '(' variadic_param_list_names_optional? ')' rtype?
     ;
 
 mut_or_const:
@@ -1340,8 +1340,8 @@ extern_abi:
     'extern' StringLit?;
 
 type_arguments:
-    '<' Lifetime (',' Lifetime)* ','? '>'
-    | '<' (Lifetime ',')* type_argument (',' type_argument)* ','? '>';
+    '<' lifetime (',' (lifetime | type_argument))* ','? '>'
+    | '<' (lifetime ',')* type_argument (',' type_argument)* ','? '>';
 
 type_argument:
     ident '=' ty_sum
@@ -1360,7 +1360,7 @@ type_parameters:
     | '<' (lifetime_param ',')* type_parameter_list '>';
 
 lifetime_param:
-    attr* 'const'? Lifetime (':' lifetime_bound)?;
+    attr* 'const'? lifetime (':' lifetime_bound)?;
 
 lifetime_param_list:
     lifetime_param (',' lifetime_param)* ','?;
@@ -1530,7 +1530,7 @@ while_cond_or_pat:
     | 'while' 'let' pattern '=' expr;
 
 loop_label:
-    Lifetime ':';
+    lifetime ':';
 
 match_arms:
     match_arm_intro blocky_expr ','? match_arms?
@@ -1577,7 +1577,7 @@ prim_expr_no_struct:
     | 'move'? closure_params closure_tail
     | blocky_expr
     | 'break' lifetime_or_expr?
-    | 'continue' Lifetime?
+    | 'continue' lifetime?
     | 'return' expr?;  // this is IMO a rustc bug, should be expr_no_struct
 
 lit:
@@ -1606,7 +1606,7 @@ closure_tail:
     | expr;
 
 lifetime_or_expr:
-    Lifetime
+    lifetime
     | expr_no_struct;
 
 fields:
@@ -1918,6 +1918,12 @@ RawIdentifier:
 
 fragment IDENT:
     XID_Start XID_Continue*;
+
+lifetime
+    : Lifetime
+    | '\'static'
+    | '\'_'
+    ;
 
 Lifetime:
     [']IDENT;

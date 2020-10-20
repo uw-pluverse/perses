@@ -572,7 +572,13 @@ optional__self_param_3
     ;
 
 optional__self_param_4
-    : Lifetime?
+    : lifetime?
+    ;
+
+lifetime
+    : Lifetime
+    | '\'static'
+    | '\'_'
     ;
 
 restricted_pat
@@ -829,7 +835,7 @@ type_arguments
     ;
 
 type_arguments_1
-    : ',' Lifetime
+    : ',' lifetime
     ;
 
 kleene_star__type_arguments_2
@@ -837,7 +843,7 @@ kleene_star__type_arguments_2
     ;
 
 type_arguments_4
-    : Lifetime ','
+    : lifetime ','
     ;
 
 kleene_star__type_arguments_5
@@ -857,8 +863,8 @@ alternative__type_arguments_9
     ;
 
 alternative__type_arguments_10
-    : Lifetime kleene_star__type_arguments_2
-    | kleene_star__type_arguments_5 type_argument kleene_star__type_arguments_7
+    : kleene_star__type_arguments_5 type_argument kleene_star__type_arguments_7
+    | lifetime kleene_star__type_arguments_2
     ;
 
 impl_item_tail
@@ -1027,7 +1033,7 @@ kleene_star__lifetime_def_list_2
     ;
 
 lifetime_def
-    : Lifetime optional__lifetime_def_2
+    : lifetime optional__lifetime_def_2
     ;
 
 lifetime_def_1
@@ -1039,7 +1045,7 @@ optional__lifetime_def_2
     ;
 
 lifetime_bound
-    : Lifetime kleene_star__lifetime_bound_1
+    : lifetime kleene_star__lifetime_bound_1
     ;
 
 kleene_star__lifetime_bound_1
@@ -1047,7 +1053,7 @@ kleene_star__lifetime_bound_1
     ;
 
 lifetime_bound_2
-    : '+' Lifetime
+    : '+' lifetime
     ;
 
 ty_path_tail
@@ -1111,7 +1117,7 @@ kleene_star__where_bound_list_2
     ;
 
 where_bound
-    : Lifetime ':' lifetime_bound
+    : lifetime ':' lifetime_bound
     | optional__ty_path_1 type empty_ok_colon_bound
     ;
 
@@ -1124,7 +1130,7 @@ optional__empty_ok_colon_bound_1
     ;
 
 prim_bound
-    : Lifetime
+    : lifetime
     | optional__prim_bound_1 ty_path
     ;
 
@@ -1171,7 +1177,7 @@ kleene_star__lifetime_param_list_2
     ;
 
 lifetime_param
-    : kleene_star__item_1 optional__fn_head_2 Lifetime optional__lifetime_def_2
+    : kleene_star__item_1 optional__fn_head_2 lifetime optional__lifetime_def_2
     ;
 
 type_parameter_list
@@ -1556,7 +1562,7 @@ alternative__match_arms_6
     ;
 
 loop_label
-    : Lifetime ':'
+    : lifetime ':'
     ;
 
 while_cond_or_pat
@@ -1663,7 +1669,7 @@ closure_tail
     ;
 
 lifetime_or_expr
-    : Lifetime
+    : lifetime
     | expr_no_struct
     ;
 
