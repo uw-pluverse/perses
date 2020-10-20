@@ -1332,17 +1332,17 @@ type_arguments:
     '<' Lifetime (',' Lifetime)* ','? '>'
     | '<' (Lifetime ',')* type_argument (',' type_argument)* ','? '>';
 
-ty_sum:
-    'dyn'? type ('+' bound)?;
-
-ty_sum_list:
-    ty_sum (',' ty_sum)* ','?;
-
 type_argument:
     ident '=' ty_sum
     | ty_sum
     | BareIntLit
     ;
+
+ty_sum:
+    'dyn'? type ('+' bound)?;
+
+ty_sum_list:
+    ty_sum (',' ty_sum)* ','?;
 
 ty_params:
     '<' lifetime_param_list '>'
