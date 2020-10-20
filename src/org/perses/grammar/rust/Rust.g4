@@ -992,7 +992,7 @@ macro_decl:
      macro_head '(' param_list? ')' fn_rtype? where_clause? tt;
 
 macro_head:
-    'macro' ident ty_param?;
+    'macro' ident type_parameter?;
 // Parts of a `fn` definition up to the type parameters.
 //
 // `const` and `extern` are incompatible on a `fn`, but this grammar
@@ -1001,7 +1001,7 @@ macro_head:
 // rule, not a syntactic one. That is, not every rule that can be
 // enforced gramatically should be.
 fn_head:
-    'async'? 'const'? 'unsafe'? extern_abi? 'fn' ident ty_params?;
+    'async'? 'const'? 'unsafe'? extern_abi? 'fn' ident type_parameters?;
 
 param:
     pattern ':' param_ty;
@@ -1055,10 +1055,10 @@ fn_rtype:
 // --- type, struct, and enum declarations
 
 type_decl:
-    'type' ident ty_params? where_clause? '=' ty_sum ';';
+    'type' ident type_parameters? where_clause? '=' ty_sum ';';
 
 struct_decl:
-    'struct' ident ty_params? struct_tail;
+    'struct' ident type_parameters? struct_tail;
 
 struct_tail:
     where_clause? ';'
@@ -1078,7 +1078,7 @@ field_decl_list:
     field_decl (',' field_decl)* ','?;
 
 enum_decl:
-    'enum' ident ty_params? where_clause? '{' enum_variant_list? '}';
+    'enum' ident type_parameters? where_clause? '{' enum_variant_list? '}';
 
 enum_variant:
     attr* visibility? enum_variant_main;
@@ -1107,7 +1107,7 @@ enum_field_decl_list:
     enum_field_decl (',' enum_field_decl)* ','?;
 
 union_decl:
-    'union' ident ty_params? where_clause? '{' field_decl_list '}';
+    'union' ident type_parameters? where_clause? '{' field_decl_list '}';
 
 
 // --- Traits
@@ -1115,14 +1115,15 @@ union_decl:
 // The `auto trait` syntax is an experimental feature, `optin_builtin_traits`,
 // also known as OIBIT.
 trait_decl:
-    'unsafe'? 'auto'? 'trait' ident ty_params? colon_bound? where_clause? '{' trait_item* '}';
+    'unsafe'? 'auto'? 'trait' ident type_parameters? colon_bound? where_clause? '{' trait_item* '}';
 
 trait_alias
-    : 'trait' ident ty_params? '=' type? where_clause?  ';'
+    : 'trait' ident type_parameters? '='
+        (ty_sum where_clause? | where_clause)  ';'
     ;
 
 trait_item:
-    attr* 'type' ident ty_params? colon_bound? where_clause? ty_default? ';'
+    attr* 'type' ident type_parameters? colon_bound? where_clause? ty_default? ';'
     | attr* 'const' ident ':' ty_sum const_default? ';'  // experimental associated constants
     | attr* trait_method_decl
     | attr* macro_invocation_semi;
@@ -1137,7 +1138,7 @@ const_default:
 // --- impl blocks
 
 impl_block:
-    'unsafe'? 'impl' ty_params? impl_what where_clause? '{' impl_item* '}';
+    'unsafe'? 'impl' type_parameters? impl_what where_clause? '{' impl_item* '}';
 
 impl_what:
     '!' ty_sum 'for' ty_sum
@@ -1152,7 +1153,7 @@ impl_item:
 
 impl_item_tail:
     'default'? method_decl
-    | 'type' ident ty_params? where_clause? '=' ty_sum ';'
+    | 'type' ident type_parameters? where_clause? '=' ty_sum ';'
     | (const_decl | associated_const_decl)
     | macro_invocation_semi;
 
@@ -1354,9 +1355,9 @@ ty_sum:
 ty_sum_list:
     ty_sum (',' ty_sum)* ','?;
 
-ty_params:
+type_parameters:
     '<' lifetime_param_list '>'
-    | '<' (lifetime_param ',')* ty_param_list '>';
+    | '<' (lifetime_param ',')* type_parameter_list '>';
 
 lifetime_param:
     attr* 'const'? Lifetime (':' lifetime_bound)?;
@@ -1364,11 +1365,11 @@ lifetime_param:
 lifetime_param_list:
     lifetime_param (',' lifetime_param)* ','?;
 
-ty_param:
+type_parameter:
     attr* 'const'? ident colon_bound? ty_default?;
 
-ty_param_list:
-    ty_param (',' ty_param)* ','?;
+type_parameter_list:
+    type_parameter (',' type_parameter)* ','?;
 
 
 // === Patterns

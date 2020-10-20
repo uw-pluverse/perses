@@ -6,7 +6,6 @@ test_data/rust_programs/rust_testsuite/pretty/macro.rs
 test_data/rust_programs/rust_testsuite/pretty/nested-item-vis-defaultness.rs
 test_data/rust_programs/rust_testsuite/pretty/raw-address-of.rs
 test_data/rust_programs/rust_testsuite/pretty/trait-inner-attr.rs
-test_data/rust_programs/rust_testsuite/rustdoc-ui/coverage/traits.rs
 test_data/rust_programs/rust_testsuite/rustdoc-ui/issue-61732.rs
 test_data/rust_programs/rust_testsuite/rustdoc/auxiliary/extern-impl-trait.rs
 test_data/rust_programs/rust_testsuite/rustdoc/const-generics/const-impl.rs
@@ -15,7 +14,6 @@ test_data/rust_programs/rust_testsuite/rustdoc/edition-flag.rs
 test_data/rust_programs/rust_testsuite/rustdoc/issue-42875.rs
 test_data/rust_programs/rust_testsuite/rustdoc/pub-restricted.rs
 test_data/rust_programs/rust_testsuite/rustdoc/structfields.rs
-test_data/rust_programs/rust_testsuite/rustdoc/trait_alias.rs
 test_data/rust_programs/rust_testsuite/ui-fulldeps/auxiliary/lint-for-crate-rpass.rs
 test_data/rust_programs/rust_testsuite/ui/array-slice-vec/issue-69103-extra-binding-subslice.rs
 test_data/rust_programs/rust_testsuite/ui/array-slice-vec/slice-pat-type-mismatches.rs
@@ -175,7 +173,6 @@ test_data/rust_programs/rust_testsuite/ui/enum-discriminant/arbitrary_enum_discr
 test_data/rust_programs/rust_testsuite/ui/enum-discriminant/arbitrary_enum_discriminant.rs
 test_data/rust_programs/rust_testsuite/ui/enum-discriminant/discriminant_value.rs
 test_data/rust_programs/rust_testsuite/ui/enum-discriminant/feature-gate-arbitrary_enum_discriminant.rs
-test_data/rust_programs/rust_testsuite/ui/error-codes/E0225.rs
 test_data/rust_programs/rust_testsuite/ui/error-codes/E0424.rs
 test_data/rust_programs/rust_testsuite/ui/error-codes/E0449.rs
 test_data/rust_programs/rust_testsuite/ui/error-codes/E0516.rs
@@ -475,14 +472,7 @@ test_data/rust_programs/rust_testsuite/ui/suggestions/suggest-move-lifetimes.rs
 test_data/rust_programs/rust_testsuite/ui/suggestions/suggest-move-types.rs
 test_data/rust_programs/rust_testsuite/ui/syntax-trait-polarity.rs
 test_data/rust_programs/rust_testsuite/ui/traits/dyn-trait.rs
-test_data/rust_programs/rust_testsuite/ui/traits/trait-alias-ambiguous.rs
-test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/auxiliary/trait_alias.rs
-test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-bounds.rs
 test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-maybe-bound.rs
-test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-no-duplicates.rs
-test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-no-extra-traits.rs
-test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-object-wf.rs
-test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-object.rs
 test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-only-maybe-bound.rs
 test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-syntax.rs
 test_data/rust_programs/rust_testsuite/ui/traits/trait-object-lifetime-first.rs
