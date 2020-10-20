@@ -1045,11 +1045,11 @@ trait_method_param_list:
 // `where T: Fn() -> X + Clone`, we're saying that T implements both
 // `Fn() -> X` and `Clone`, not that its return type is `X + Clone`.
 rtype:
-    '->' (type | '!');
+    '->' type;
 
 // Experimental `feature(conservative_impl_trait)`.
 fn_rtype:
-    '->' (type | '!' | 'impl' bound);
+    '->' (type | 'impl' bound);
 
 
 // --- type, struct, and enum declarations
@@ -1319,7 +1319,7 @@ type:
     | '&&' lifetime? 'mut'? type          // meaning `& & ty`
     | '*' mut_or_const type               // pointer type
     | bare_function_type
-    | ('dyn' | 'impl')? for_lifetimes? type_path_main macro_tail?
+    | ('dyn' | 'impl')? for_lifetimes? type_path_main macro_tail? '+'?
     | '!'
     | '{' expr '}'
     ;
