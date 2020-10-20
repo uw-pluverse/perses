@@ -586,13 +586,13 @@ optional__restricted_pat_2
 
 type
     : '_'
+    | bare_function_type
     | '!'
     | '{' expr '}'
     | '[' ty_sum optional__type_3 ']'
-    | ty_path optional__type_13
-    | '(' alternative__type_16 ')'
-    | alternative__type_17 type
-    | optional__type_8 optional__impl_block_1 optional__fn_head_4 'fn' '(' optional__type_11 ')' optional__foreign_fn_decl_2
+    | ty_path optional__type_8
+    | '(' alternative__type_11 ')'
+    | alternative__type_12 type
     ;
 
 optional__type_1
@@ -608,32 +608,24 @@ optional__type_3
     ;
 
 optional__type_8
-    : for_lifetime?
-    ;
-
-optional__type_11
-    : variadic_param_list_names_optional?
-    ;
-
-optional__type_13
     : macro_tail?
     ;
 
-optional__type_14
+optional__type_9
     : ty_sum?
     ;
 
-alternative__type_16
-    : optional__type_14
+alternative__type_11
+    : optional__type_9
     | ty_sum ',' optional__type_1
     ;
 
-alternative__type_17
+alternative__type_12
     : '*' mut_or_const
-    | alternative__type_18 optional__self_param_4 optional__static_decl_1
+    | alternative__type_13 optional__self_param_4 optional__static_decl_1
     ;
 
-alternative__type_18
+alternative__type_13
     : '&&'
     | '&'
     ;
@@ -977,7 +969,11 @@ kleene_star__simple_path_3
     ;
 
 ty_path
-    : optional__type_8 optional__ty_path_3 ty_path_main
+    : optional__ty_path_1 optional__ty_path_3 ty_path_main
+    ;
+
+optional__ty_path_1
+    : for_lifetime?
     ;
 
 ty_path_2
@@ -1111,7 +1107,7 @@ kleene_star__where_bound_list_2
 
 where_bound
     : Lifetime ':' lifetime_bound
-    | optional__type_8 type empty_ok_colon_bound
+    | optional__ty_path_1 type empty_ok_colon_bound
     ;
 
 empty_ok_colon_bound
@@ -1134,6 +1130,14 @@ optional__prim_bound_1
 mut_or_const
     : 'mut'
     | 'const'
+    ;
+
+bare_function_type
+    : optional__ty_path_1 optional__impl_block_1 optional__fn_head_4 'fn' '(' optional__bare_function_type_4 ')' optional__foreign_fn_decl_2
+    ;
+
+optional__bare_function_type_4
+    : variadic_param_list_names_optional?
     ;
 
 type_argument
@@ -1187,7 +1191,7 @@ pattern_without_mut
     | pat_range_end alternative__pattern_without_mut_23 pat_range_end
     | path alternative__pattern_without_mut_25
     | alternative__pattern_without_mut_26 optional__pattern_2
-    | alternative__type_18 pattern_without_mut
+    | alternative__type_13 pattern_without_mut
     ;
 
 pattern_without_mut_1
@@ -1234,7 +1238,7 @@ alternative__pattern_without_mut_20
 alternative__pattern_without_mut_21
     : '$'
     | 'box'
-    | alternative__type_18 'mut'
+    | alternative__type_13 'mut'
     ;
 
 alternative__pattern_without_mut_23
@@ -1593,7 +1597,7 @@ prim_expr_no_struct
     | '[' alternative__prim_expr_no_struct_15 ']'
     | 'return' optional__block_with_inner_attrs_3
     | 'continue' optional__self_param_4
-    | path optional__type_13
+    | path optional__type_8
     ;
 
 optional__prim_expr_no_struct_5
@@ -1732,7 +1736,7 @@ alternative__pre_expr_8
     | '!'
     | '*'
     | expr_attrs
-    | alternative__type_18 optional__static_decl_1
+    | alternative__type_13 optional__static_decl_1
     ;
 
 cast_expr

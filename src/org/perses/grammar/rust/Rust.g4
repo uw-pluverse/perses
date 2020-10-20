@@ -1315,10 +1315,14 @@ type:
     | '&' Lifetime? 'mut'? type
     | '&&' Lifetime? 'mut'? type          // meaning `& & ty`
     | '*' mut_or_const type               // pointer type
-    | for_lifetime? 'unsafe'? extern_abi? 'fn' '(' variadic_param_list_names_optional? ')' rtype?
+    | bare_function_type
     | ty_path macro_tail?
     | '!'
     | '{' expr '}'
+    ;
+
+bare_function_type
+    : for_lifetime? 'unsafe'? extern_abi? 'fn' '(' variadic_param_list_names_optional? ')' rtype?
     ;
 
 mut_or_const:
