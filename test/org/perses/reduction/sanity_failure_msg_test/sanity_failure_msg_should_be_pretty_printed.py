@@ -1,15 +1,22 @@
 import unittest
 
 
-class TestCheckCopyright(unittest.TestCase):
+class SanityFailureMsgTest(unittest.TestCase):
 
     def test_sanity_failure_msg_should_be_pretty_printed(self):
         with open("test/org/perses/reduction/sanity_failure_msg_test/sanity_failure_log.txt") as f:
             error_message = ''.join(f.read().split())
-        start = error_message.find("*")
-        end = error_message.rfind("*")
-        result = error_message[start:end].find("Theinitialsanitycheckfailed")
-        self.assertGreater(result, -1)
+        start = error_message.find("****")
+        end = error_message.rfind("****")
+        message_segment = error_message[start:end]
+        self.assertIn(
+            "The initial sanity check failed.".replace(" ", ""),
+            message_segment
+        )
+        self.assertIn(
+            "The files have been saved, and you can check them at".replace(" ", ""),
+            message_segment
+        )
 
 
 if __name__ == '__main__':
