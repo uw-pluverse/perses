@@ -1044,8 +1044,9 @@ trait_method_param_list:
 // but only `ty` in return types. This means that in the where-clause
 // `where T: Fn() -> X + Clone`, we're saying that T implements both
 // `Fn() -> X` and `Clone`, not that its return type is `X + Clone`.
-rtype:
-    '->' type;
+rtype
+    : '->' type
+    ;
 
 // Experimental `feature(conservative_impl_trait)`.
 fn_rtype:
@@ -1319,23 +1320,27 @@ type:
     | '&&' lifetime? 'mut'? type          // meaning `& & ty`
     | '*' mut_or_const type               // pointer type
     | bare_function_type
-    | ('dyn' | 'impl')? for_lifetimes? type_path_main macro_tail? '+'?
+    | trait_type
     | '!'
     | '{' expr '}'
     ;
 
-trait_object_type
-    : 'dyn'? type_param_bound ('+' type_param_bound)* '+'?
+trait_type
+    : ('dyn' | 'impl')? for_lifetimes? type_path_main macro_tail? '+'?
     ;
 
-type_param_bound
-    : lifetime | trait_bound
-    ;
-
-trait_bound
-    : '?'? for_lifetimes? type_path_main
-    | '(' '?'? for_lifetimes? type_path_main ')'
-    ;
+//trait_object_type
+//    : 'dyn'? type_param_bound ('+' type_param_bound)* '+'?
+//    ;
+//
+//type_param_bound
+//    : lifetime | trait_bound
+//    ;
+//
+//trait_bound
+//    : '?'? for_lifetimes? type_path_main
+//    | '(' '?'? for_lifetimes? type_path_main ')'
+//    ;
 
 bare_function_type
     : for_lifetimes? 'unsafe'? extern_abi? 'fn' '(' variadic_param_list_names_optional? ')' rtype?
@@ -1359,7 +1364,7 @@ type_argument:
     ;
 
 ty_sum:
-    'dyn'? type ('+' bound)?;
+   'dyn'? type ('+' bound)?;
 
 ty_sum_list:
     ty_sum (',' ty_sum)* ','?;
