@@ -1320,13 +1320,18 @@ type:
     | '&&' lifetime? 'mut'? type          // meaning `& & ty`
     | '*' mut_or_const type               // pointer type
     | bare_function_type
-    | trait_type
+    | impl_trait_type
+    | trait_object_type
     | '!'
     | '{' expr '}'
     ;
 
-trait_type
-    : ('dyn' | 'impl')? for_lifetimes? type_path_main macro_tail? '+'?
+impl_trait_type
+    : 'impl'? for_lifetimes? type_path_main macro_tail? '+'?
+    ;
+
+trait_object_type
+    : 'dyn'? for_lifetimes? type_path_main macro_tail? '+'?
     ;
 
 //trait_object_type
