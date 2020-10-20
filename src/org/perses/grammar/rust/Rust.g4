@@ -889,8 +889,8 @@ item:
 //TODO: attr* need to be moved to somewhere else here
 
 
-pub_item:
-    extern_crate     // `pub extern crate` is deprecated but still allowed
+pub_item
+    : extern_crate     // `pub extern crate` is deprecated but still allowed
     | use_decl
     | mod_decl_short
     | mod_decl
@@ -902,7 +902,9 @@ pub_item:
     | enum_decl
     | union_decl
     | trait_decl
-    | macro_decl;
+    | trait_alias
+    | macro_decl
+    ;
 
 
 
@@ -1114,6 +1116,10 @@ union_decl:
 // also known as OIBIT.
 trait_decl:
     'unsafe'? 'auto'? 'trait' ident ty_params? colon_bound? where_clause? '{' trait_item* '}';
+
+trait_alias
+    : 'trait' ident '=' Ident ';'
+    ;
 
 trait_item:
     attr* 'type' ident ty_params? colon_bound? where_clause? ty_default? ';'

@@ -97,6 +97,7 @@ pub_item
     | enum_decl
     | union_decl
     | trait_decl
+    | trait_alias
     | macro_decl
     ;
 
@@ -206,6 +207,10 @@ optional__trait_decl_4
 
 kleene_star__trait_decl_6
     : trait_item*
+    ;
+
+trait_alias
+    : 'trait' ident '=' Ident ';'
     ;
 
 macro_decl
