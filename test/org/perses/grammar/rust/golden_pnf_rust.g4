@@ -596,7 +596,8 @@ optional__restricted_pat_2
     ;
 
 type
-    : tuple_type
+    : impl_trait_type_one_bound
+    | tuple_type
     | never_type
     | raw_pointer_type
     | reference_type
@@ -604,7 +605,7 @@ type
     | inferred_type
     | bare_function_type
     | macro_invocation
-    | old_impl_trait_type
+    | impl_trait_type
     | trait_object_type
     | '(' ty_sum ')'
     | '{' expr '}'
@@ -1109,24 +1110,24 @@ optional__prim_bound_4
     : prim_bound_3?
     ;
 
-old_impl_trait_type
-    : optional__old_impl_trait_type_1 optional__where_bound_1 type_path_main optional__old_impl_trait_type_3 optional__old_impl_trait_type_4
-    ;
-
-optional__old_impl_trait_type_1
-    : 'impl'?
-    ;
-
-optional__old_impl_trait_type_3
-    : macro_tail?
-    ;
-
-optional__old_impl_trait_type_4
-    : '+'?
+impl_trait_type
+    : 'impl' type_param_bounds
     ;
 
 trait_object_type
-    : optional__ty_sum_1 optional__where_bound_1 type_path_main optional__old_impl_trait_type_3 optional__old_impl_trait_type_4
+    : optional__ty_sum_1 optional__where_bound_1 type_path_main optional__trait_object_type_3 optional__trait_object_type_4
+    ;
+
+optional__trait_object_type_3
+    : macro_tail?
+    ;
+
+optional__trait_object_type_4
+    : '+'?
+    ;
+
+impl_trait_type_one_bound
+    : 'impl' trait_bound
     ;
 
 tuple_type
@@ -1184,6 +1185,28 @@ macro_invocation
 mut_or_const
     : 'mut'
     | 'const'
+    ;
+
+type_param_bounds
+    : type_param_bound kleene_star__type_param_bounds_2 optional__trait_object_type_4
+    ;
+
+type_param_bounds_1
+    : '+' type_param_bound
+    ;
+
+kleene_star__type_param_bounds_2
+    : type_param_bounds_1*
+    ;
+
+trait_bound
+    : optional__prim_bound_1 optional__where_bound_1 type_path_main
+    | '(' optional__prim_bound_1 optional__where_bound_1 type_path_main ')'
+    ;
+
+type_param_bound
+    : lifetime
+    | trait_bound
     ;
 
 type_argument
@@ -1648,7 +1671,7 @@ prim_expr_no_struct
     | '[' alternative__prim_expr_no_struct_15 ']'
     | 'return' optional__block_with_inner_attrs_3
     | 'continue' optional__self_param_4
-    | path optional__old_impl_trait_type_3
+    | path optional__trait_object_type_3
     ;
 
 optional__prim_expr_no_struct_5
