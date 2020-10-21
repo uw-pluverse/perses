@@ -20,20 +20,22 @@ readonly PKG="rust_testsuite"
 rustup toolchain install "${RUSTC_VERSION}" || exit 100
 for f in $(find "${PKG}" -name '*.rs') ; do
   if [[ "$(dirname "${f}")" == "${PKG}/run-make-fulldeps/dep-info-spaces" ]] ; then
+    # Skip files in this folder with weird file names.
     continue
-  elif [[ "$(dirname ${f})" == "." ]] ; then
+  elif [[ "$(dirname "${f}")" == "." ]] ; then
     # Skip empty dir.
     continue
-  fi
-  if rustup run "${RUSTC_VERSION}" rustc --edition 2015 -Z ast-json-noexpand=yes "${f}" --out-dir "${OUTPUT_FOLDER}" &> /dev/null || \
-     rustup run "${RUSTC_VERSION}" rustc --edition 2018 -Z ast-json-noexpand=yes "${f}" --out-dir "${OUTPUT_FOLDER}" &> /dev/null
-  then
+  elif [[ "$(dirname "${f}")" == "${PKG}/ui"* ]] \
+    && grep --quiet --ignore-case --regexp "//.*ERROR" "${f}"; then
+    # Exclude this incompilable UI test.
+    true # fall through
+  elif rustup run "${RUSTC_VERSION}" rustc --edition 2015 -Z ast-json-noexpand=yes "${f}" --out-dir "${OUTPUT_FOLDER}" &> /dev/null || \
+     rustup run "${RUSTC_VERSION}" rustc --edition 2018 -Z ast-json-noexpand=yes "${f}" --out-dir "${OUTPUT_FOLDER}" &> /dev/null ; then
     # This file is parsable.
     continue
-  else
-    echo "\"${f}\"," >> "${INVALID_FILE_LIST}"
-    echo "$f"
   fi
+
+  echo "\"${f}\"," | sed -E 's/(\[|\])+/*/g' | tee -a "${INVALID_FILE_LIST}"
 done
 
 readonly BUILD_FILE="BUILD"
@@ -51,11 +53,11 @@ filegroup(
         ["rust_testsuite/**/*.rs"],
         exclude = [
             "rust_testsuite/run-make-fulldeps/dep-info-spaces/*.rs",
-            "rust_testsuite/ui/union/union-empty.rs", # syntactically invalid.
-            "rust_testsuite/ui/where-clauses/where-equality-constraints.rs", #equality constraints are not yet supported in 'where' clauses
             "rust_testsuite/ui/closures/deeply-nested_closures.rs",  # TODO: cause infinite loop of antlr.
 $(cat "${INVALID_FILE_LIST}")
         ],
     ),
 )
 EOF
+
+bazel build //:buildifier
