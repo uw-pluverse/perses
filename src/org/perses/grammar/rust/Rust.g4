@@ -1570,14 +1570,16 @@ stmt_tail:
 
 // Inner attributes in `match`, `while`, `for`, `loop`, and `unsafe` blocks are
 // experimental, `feature(stmt_expr_attributes)`.
-blocky_expr:
-    block_with_inner_attrs
+blocky_expr
+    : block_with_inner_attrs
     | if_cond_or_pat block ('else'  if_cond_or_pat block)* ('else' block)?
     | 'match' expr_no_struct '{' expr_inner_attrs? match_arms? '}'
     | loop_label? while_cond_or_pat block_with_inner_attrs
     | loop_label? 'for' pattern 'in' expr_no_struct block_with_inner_attrs
     | loop_label? 'loop' block_with_inner_attrs
-    | 'unsafe' block_with_inner_attrs;
+    | 'unsafe' block_with_inner_attrs
+    | 'try' block_with_inner_attrs
+    ;
 
 if_cond_or_pat:
     'if' expr_no_struct
@@ -1848,6 +1850,7 @@ ident:
     | 'auto'
     | 'default'
     | 'union'
+    | 'try'
     | RawIdentifier
     ;
 
