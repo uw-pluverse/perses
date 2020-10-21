@@ -7,7 +7,6 @@ test_data/rust_programs/rust_testsuite/pretty/nested-item-vis-defaultness.rs
 test_data/rust_programs/rust_testsuite/pretty/raw-address-of.rs
 test_data/rust_programs/rust_testsuite/pretty/trait-inner-attr.rs
 test_data/rust_programs/rust_testsuite/rustdoc-ui/issue-61732.rs
-test_data/rust_programs/rust_testsuite/rustdoc/auxiliary/extern-impl-trait.rs
 test_data/rust_programs/rust_testsuite/rustdoc/const-generics/const-impl.rs
 test_data/rust_programs/rust_testsuite/rustdoc/const-underscore.rs
 test_data/rust_programs/rust_testsuite/rustdoc/edition-flag.rs
@@ -229,7 +228,6 @@ test_data/rust_programs/rust_testsuite/ui/half-open-range-patterns/pat-tuple-4.r
 test_data/rust_programs/rust_testsuite/ui/half-open-range-patterns/pat-tuple-5.rs
 test_data/rust_programs/rust_testsuite/ui/hygiene/fields-numeric-borrowck.rs
 test_data/rust_programs/rust_testsuite/ui/hygiene/globs.rs
-test_data/rust_programs/rust_testsuite/ui/impl-trait-in-bindings.rs
 test_data/rust_programs/rust_testsuite/ui/impl-trait/equality-rpass.rs
 test_data/rust_programs/rust_testsuite/ui/impl-trait/equality.rs
 test_data/rust_programs/rust_testsuite/ui/impl-trait/equality2.rs
@@ -490,14 +488,7 @@ test_data/rust_programs/rust_testsuite/ui/try-block/try-block-maybe-bad-lifetime
 test_data/rust_programs/rust_testsuite/ui/try-block/try-block-opt-init.rs
 test_data/rust_programs/rust_testsuite/ui/try-block/try-block-type-error.rs
 test_data/rust_programs/rust_testsuite/ui/try-block/try-block-unreachable-code-lint.rs
-test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/generic_nondefining_use.rs
-test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/generic_not_used.rs
-test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/generic_type_does_not_live_long_enough.rs
-test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/generic_underconstrained.rs
-test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/generic_underconstrained2.rs
 test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/issue-53678-generator-and-const-fn.rs
-test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/type-alias-impl-trait-with-no-traits.rs
-test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/unused_generic_param.rs
 test_data/rust_programs/rust_testsuite/ui/unboxed-closures/unboxed-closure-sugar-used-on-struct-3.rs
 test_data/rust_programs/rust_testsuite/ui/unnecessary-extern-crate.rs
 test_data/rust_programs/rust_testsuite/ui/unused/unused-macro.rs

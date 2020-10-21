@@ -1311,13 +1311,15 @@ prim_bound:
 type
     : type_no_bounds
     | '&&' lifetime? 'mut'? type          // meaning `& & ty`
-    | old_impl_trait_type
+//    | old_impl_trait_type
+    | impl_trait_type
     | trait_object_type
     | '{' expr '}'
     ;
 
 type_no_bounds
-    : '(' ty_sum ')'                    // grouping (parens are ignored)
+    : impl_trait_type_one_bound
+    | '(' ty_sum ')'                    // grouping (parens are ignored)
     | tuple_type
     | never_type
     | raw_pointer_type
@@ -1358,6 +1360,10 @@ tuple_type
 
 impl_trait_type
     : 'impl' type_param_bounds
+    ;
+
+impl_trait_type_one_bound
+    : 'impl' trait_bound
     ;
 
 type_param_bounds
