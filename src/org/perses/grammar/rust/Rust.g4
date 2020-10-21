@@ -1311,7 +1311,6 @@ prim_bound:
 type
     : type_no_bounds
     | '&&' lifetime? 'mut'? type          // meaning `& & ty`
-//    | old_impl_trait_type
     | impl_trait_type
     | trait_object_type
     | '{' expr '}'
@@ -1319,6 +1318,7 @@ type
 
 type_no_bounds
     : impl_trait_type_one_bound
+    | trait_object_type_one_bound
     | '(' ty_sum ')'                    // grouping (parens are ignored)
     | tuple_type
     | never_type
@@ -1333,9 +1333,6 @@ type_no_bounds
 inferred_type
     : '_'
     ;
-//impl_trait_type_one_bound
-//    : 'impl' trait_bound
-//    ;
 
 array_or_slice_type
     : '[' ty_sum (';' expr)? ']'
@@ -1366,6 +1363,10 @@ impl_trait_type_one_bound
     : 'impl' trait_bound
     ;
 
+trait_object_type_one_bound
+    : 'dyn'? trait_bound
+    ;
+
 type_param_bounds
     : type_param_bound ('+' type_param_bound)* '+'?
     ;
@@ -1375,22 +1376,10 @@ type_param_bound
     | trait_bound
     ;
 
-old_impl_trait_type
-    : 'impl'? for_lifetimes? type_path_main macro_tail? '+'?
-    ;
-
 trait_object_type
-    : 'dyn'? for_lifetimes? type_path_main macro_tail? '+'?
+    : 'dyn'? type_param_bounds?
     ;
 
-//trait_object_type
-//    : 'dyn'? type_param_bound ('+' type_param_bound)* '+'?
-//    ;
-//
-//type_param_bound
-//    : lifetime | trait_bound
-//    ;
-//
 trait_bound
     : '?'? for_lifetimes? type_path_main
     | '(' '?'? for_lifetimes? type_path_main ')'

@@ -597,6 +597,7 @@ optional__restricted_pat_2
 
 type
     : impl_trait_type_one_bound
+    | trait_object_type_one_bound
     | tuple_type
     | never_type
     | raw_pointer_type
@@ -1115,19 +1116,19 @@ impl_trait_type
     ;
 
 trait_object_type
-    : optional__ty_sum_1 optional__where_bound_1 type_path_main optional__trait_object_type_3 optional__trait_object_type_4
+    : optional__ty_sum_1 optional__trait_object_type_2
     ;
 
-optional__trait_object_type_3
-    : macro_tail?
-    ;
-
-optional__trait_object_type_4
-    : '+'?
+optional__trait_object_type_2
+    : type_param_bounds?
     ;
 
 impl_trait_type_one_bound
     : 'impl' trait_bound
+    ;
+
+trait_object_type_one_bound
+    : optional__ty_sum_1 trait_bound
     ;
 
 tuple_type
@@ -1188,7 +1189,7 @@ mut_or_const
     ;
 
 type_param_bounds
-    : type_param_bound kleene_star__type_param_bounds_2 optional__trait_object_type_4
+    : type_param_bound kleene_star__type_param_bounds_2 optional__type_param_bounds_3
     ;
 
 type_param_bounds_1
@@ -1197,6 +1198,10 @@ type_param_bounds_1
 
 kleene_star__type_param_bounds_2
     : type_param_bounds_1*
+    ;
+
+optional__type_param_bounds_3
+    : '+'?
     ;
 
 trait_bound
@@ -1665,13 +1670,17 @@ prim_expr_no_struct
     : lit
     | 'self'
     | blocky_expr
+    | path optional__prim_expr_no_struct_1
     | optional__prim_expr_no_struct_9 closure_params closure_tail
     | 'break' optional__prim_expr_no_struct_10
     | '(' alternative__prim_expr_no_struct_14 ')'
     | '[' alternative__prim_expr_no_struct_15 ']'
     | 'return' optional__block_with_inner_attrs_3
     | 'continue' optional__self_param_4
-    | path optional__trait_object_type_3
+    ;
+
+optional__prim_expr_no_struct_1
+    : macro_tail?
     ;
 
 optional__prim_expr_no_struct_5
