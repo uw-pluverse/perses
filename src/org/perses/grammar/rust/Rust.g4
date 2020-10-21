@@ -1312,18 +1312,22 @@ type:
     '_'
     // The next 3 productions match exactly `'(' ty_sum_list? ')'`,
     // but (i32) and (i32,) are distinct types, so parse them with different rules.
-    | '(' ')'                           // unit
     | '(' ty_sum ')'                    // grouping (parens are ignored)
-    | '(' ty_sum ',' ty_sum_list? ')'   // tuple
     | '[' ty_sum (';' expr)? ']'
     | '&' lifetime? 'mut'? type
     | '&&' lifetime? 'mut'? type          // meaning `& & ty`
     | '*' mut_or_const type               // pointer type
+    | tuple_type
     | bare_function_type
     | impl_trait_type
     | trait_object_type
     | '!'
     | '{' expr '}'
+    ;
+
+tuple_type
+    : '(' ')'
+    | '(' ty_sum ',' ty_sum_list? ')'
     ;
 
 impl_trait_type
