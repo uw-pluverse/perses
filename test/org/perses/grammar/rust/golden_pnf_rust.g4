@@ -596,16 +596,16 @@ optional__restricted_pat_2
     ;
 
 type
-    : '_'
-    | array_or_slice_type
-    | reference_type
+    : tuple_type
+    | never_type
     | raw_pointer_type
-    | tuple_type
+    | reference_type
+    | array_or_slice_type
+    | inferred_type
     | bare_function_type
+    | macro_invocation
     | impl_trait_type
     | trait_object_type
-    | never_type
-    | macro_invocation
     | '(' ty_sum ')'
     | '{' expr '}'
     | '&&' optional__self_param_4 optional__static_decl_1 type
@@ -1109,46 +1109,6 @@ optional__prim_bound_4
     : prim_bound_3?
     ;
 
-array_or_slice_type
-    : '[' ty_sum optional__array_or_slice_type_2 ']'
-    ;
-
-array_or_slice_type_1
-    : ';' expr
-    ;
-
-optional__array_or_slice_type_2
-    : array_or_slice_type_1?
-    ;
-
-reference_type
-    : '&' optional__self_param_4 optional__static_decl_1 type
-    ;
-
-raw_pointer_type
-    : '*' mut_or_const type
-    ;
-
-tuple_type
-    : '(' optional__tuple_type_3 ')'
-    ;
-
-tuple_type_2
-    : ty_sum ',' optional__ty_path_tail_1
-    ;
-
-optional__tuple_type_3
-    : tuple_type_2?
-    ;
-
-bare_function_type
-    : optional__where_bound_1 optional__impl_block_1 optional__fn_head_4 'fn' '(' optional__bare_function_type_4 ')' optional__foreign_fn_decl_2
-    ;
-
-optional__bare_function_type_4
-    : variadic_param_list_names_optional?
-    ;
-
 impl_trait_type
     : optional__impl_trait_type_1 optional__where_bound_1 type_path_main optional__impl_trait_type_3 optional__impl_trait_type_4
     ;
@@ -1169,8 +1129,52 @@ trait_object_type
     : optional__ty_sum_1 optional__where_bound_1 type_path_main optional__impl_trait_type_3 optional__impl_trait_type_4
     ;
 
+tuple_type
+    : '(' optional__tuple_type_3 ')'
+    ;
+
+tuple_type_2
+    : ty_sum ',' optional__ty_path_tail_1
+    ;
+
+optional__tuple_type_3
+    : tuple_type_2?
+    ;
+
 never_type
     : '!'
+    ;
+
+raw_pointer_type
+    : '*' mut_or_const type
+    ;
+
+reference_type
+    : '&' optional__self_param_4 optional__static_decl_1 type
+    ;
+
+array_or_slice_type
+    : '[' ty_sum optional__array_or_slice_type_2 ']'
+    ;
+
+array_or_slice_type_1
+    : ';' expr
+    ;
+
+optional__array_or_slice_type_2
+    : array_or_slice_type_1?
+    ;
+
+inferred_type
+    : '_'
+    ;
+
+bare_function_type
+    : optional__where_bound_1 optional__impl_block_1 optional__fn_head_4 'fn' '(' optional__bare_function_type_4 ')' optional__foreign_fn_decl_2
+    ;
+
+optional__bare_function_type_4
+    : variadic_param_list_names_optional?
     ;
 
 macro_invocation

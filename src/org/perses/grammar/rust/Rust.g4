@@ -1308,23 +1308,32 @@ prim_bound:
 
 // === Types and type parameters
 
-type:
-    '_'
-    // The next 3 productions match exactly `'(' ty_sum_list? ')'`,
-    // but (i32) and (i32,) are distinct types, so parse them with different rules.
-    | '(' ty_sum ')'                    // grouping (parens are ignored)
+type
+    : type_no_bounds
     | '&&' lifetime? 'mut'? type          // meaning `& & ty`
-    | array_or_slice_type
-    | reference_type
-    | raw_pointer_type
-    | tuple_type
-    | bare_function_type
     | impl_trait_type
     | trait_object_type
-    | never_type
     | '{' expr '}'
+    ;
+
+type_no_bounds
+    : '(' ty_sum ')'                    // grouping (parens are ignored)
+    | tuple_type
+    | never_type
+    | raw_pointer_type
+    | reference_type
+    | array_or_slice_type
+    | inferred_type
+    | bare_function_type
     | macro_invocation
     ;
+
+inferred_type
+    : '_'
+    ;
+//impl_trait_type_one_bound
+//    : 'impl' trait_bound
+//    ;
 
 array_or_slice_type
     : '[' ty_sum (';' expr)? ']'
@@ -1363,10 +1372,10 @@ trait_object_type
 //    : lifetime | trait_bound
 //    ;
 //
-//trait_bound
-//    : '?'? for_lifetimes? type_path_main
-//    | '(' '?'? for_lifetimes? type_path_main ')'
-//    ;
+trait_bound
+    : '?'? for_lifetimes? type_path_main
+    | '(' '?'? for_lifetimes? type_path_main ')'
+    ;
 
 bare_function_type
     : for_lifetimes? 'unsafe'? extern_abi? 'fn' '(' variadic_param_list_names_optional? ')' rtype?
