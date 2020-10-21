@@ -1313,16 +1313,32 @@ type:
     // The next 3 productions match exactly `'(' ty_sum_list? ')'`,
     // but (i32) and (i32,) are distinct types, so parse them with different rules.
     | '(' ty_sum ')'                    // grouping (parens are ignored)
-    | '[' ty_sum (';' expr)? ']'
-    | '&' lifetime? 'mut'? type
     | '&&' lifetime? 'mut'? type          // meaning `& & ty`
-    | '*' mut_or_const type               // pointer type
+    | array_or_slice_type
+    | reference_type
+    | raw_pointer_type
     | tuple_type
     | bare_function_type
     | impl_trait_type
     | trait_object_type
-    | '!'
+    | never_type
     | '{' expr '}'
+    ;
+
+array_or_slice_type
+    : '[' ty_sum (';' expr)? ']'
+    ;
+
+reference_type
+    : '&' lifetime? 'mut'? type
+    ;
+
+raw_pointer_type
+    : '*' mut_or_const type
+    ;
+
+never_type
+    : '!'
     ;
 
 tuple_type
@@ -1372,6 +1388,7 @@ type_argument:
     | BareIntLit
     ;
 
+// TODO(cnsun): get rid of this.
 ty_sum:
    'dyn'? type ('+' bound)?;
 

@@ -597,33 +597,17 @@ optional__restricted_pat_2
 
 type
     : '_'
+    | array_or_slice_type
+    | reference_type
+    | raw_pointer_type
     | tuple_type
     | bare_function_type
     | impl_trait_type
     | trait_object_type
-    | '!'
+    | never_type
     | '(' ty_sum ')'
     | '{' expr '}'
-    | '[' ty_sum optional__type_2 ']'
-    | alternative__type_8 type
-    ;
-
-type_1
-    : ';' expr
-    ;
-
-optional__type_2
-    : type_1?
-    ;
-
-alternative__type_8
-    : '*' mut_or_const
-    | alternative__type_9 optional__self_param_4 optional__static_decl_1
-    ;
-
-alternative__type_9
-    : '&&'
-    | '&'
+    | '&&' optional__self_param_4 optional__static_decl_1 type
     ;
 
 struct_tail
@@ -1124,9 +1108,24 @@ optional__prim_bound_4
     : prim_bound_3?
     ;
 
-mut_or_const
-    : 'mut'
-    | 'const'
+array_or_slice_type
+    : '[' ty_sum optional__array_or_slice_type_2 ']'
+    ;
+
+array_or_slice_type_1
+    : ';' expr
+    ;
+
+optional__array_or_slice_type_2
+    : array_or_slice_type_1?
+    ;
+
+reference_type
+    : '&' optional__self_param_4 optional__static_decl_1 type
+    ;
+
+raw_pointer_type
+    : '*' mut_or_const type
     ;
 
 tuple_type
@@ -1167,6 +1166,15 @@ optional__impl_trait_type_4
 
 trait_object_type
     : optional__ty_sum_1 optional__where_bound_1 type_path_main optional__impl_trait_type_3 optional__impl_trait_type_4
+    ;
+
+never_type
+    : '!'
+    ;
+
+mut_or_const
+    : 'mut'
+    | 'const'
     ;
 
 type_argument
@@ -1215,12 +1223,12 @@ pattern_without_mut
     | pat_lit
     | ident '@' match_pattern
     | '[' optional__pattern_without_mut_13 optional__pattern_without_mut_14 ']'
+    | alternative__pattern_without_mut_18 pattern_without_mut
     | alternative__pattern_without_mut_20 ')'
     | alternative__pattern_without_mut_21 pattern
     | pat_range_end alternative__pattern_without_mut_23 pat_range_end
     | path alternative__pattern_without_mut_25
     | alternative__pattern_without_mut_26 optional__pattern_2
-    | alternative__type_9 pattern_without_mut
     ;
 
 pattern_without_mut_1
@@ -1259,6 +1267,11 @@ optional__pattern_without_mut_16
     : pattern_without_mut_15?
     ;
 
+alternative__pattern_without_mut_18
+    : '&&'
+    | '&'
+    ;
+
 alternative__pattern_without_mut_20
     : ident '@' '(' match_pattern
     | '(' optional__pattern_without_mut_7
@@ -1267,7 +1280,7 @@ alternative__pattern_without_mut_20
 alternative__pattern_without_mut_21
     : '$'
     | 'box'
-    | alternative__type_9 'mut'
+    | alternative__pattern_without_mut_18 'mut'
     ;
 
 alternative__pattern_without_mut_23
@@ -1765,7 +1778,7 @@ alternative__pre_expr_8
     | '!'
     | '*'
     | expr_attrs
-    | alternative__type_9 optional__static_decl_1
+    | alternative__pattern_without_mut_18 optional__static_decl_1
     ;
 
 cast_expr
