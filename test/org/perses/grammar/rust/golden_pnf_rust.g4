@@ -604,7 +604,7 @@ type
     | inferred_type
     | bare_function_type
     | macro_invocation
-    | impl_trait_type
+    | old_impl_trait_type
     | trait_object_type
     | '(' ty_sum ')'
     | '{' expr '}'
@@ -1027,12 +1027,12 @@ kleene_star__ty_path_parent_2
     ;
 
 ty_path_parent_3
-    : '::' ty_path_segment
+    : '::' type_path_segment
     ;
 
 ty_path_parent_4
     : 'self'
-    | optional__use_path_1 ty_path_segment
+    | optional__use_path_1 type_path_segment
     | '<' ty_sum optional__path_parent_1 '>'
     ;
 
@@ -1056,7 +1056,7 @@ optional__ty_path_segment_no_super_1
     : type_arguments?
     ;
 
-ty_path_segment
+type_path_segment
     : ty_path_segment_no_super
     | 'super'
     ;
@@ -1109,24 +1109,24 @@ optional__prim_bound_4
     : prim_bound_3?
     ;
 
-impl_trait_type
-    : optional__impl_trait_type_1 optional__where_bound_1 type_path_main optional__impl_trait_type_3 optional__impl_trait_type_4
+old_impl_trait_type
+    : optional__old_impl_trait_type_1 optional__where_bound_1 type_path_main optional__old_impl_trait_type_3 optional__old_impl_trait_type_4
     ;
 
-optional__impl_trait_type_1
+optional__old_impl_trait_type_1
     : 'impl'?
     ;
 
-optional__impl_trait_type_3
+optional__old_impl_trait_type_3
     : macro_tail?
     ;
 
-optional__impl_trait_type_4
+optional__old_impl_trait_type_4
     : '+'?
     ;
 
 trait_object_type
-    : optional__ty_sum_1 optional__where_bound_1 type_path_main optional__impl_trait_type_3 optional__impl_trait_type_4
+    : optional__ty_sum_1 optional__where_bound_1 type_path_main optional__old_impl_trait_type_3 optional__old_impl_trait_type_4
     ;
 
 tuple_type
@@ -1648,7 +1648,7 @@ prim_expr_no_struct
     | '[' alternative__prim_expr_no_struct_15 ']'
     | 'return' optional__block_with_inner_attrs_3
     | 'continue' optional__self_param_4
-    | path optional__impl_trait_type_3
+    | path optional__old_impl_trait_type_3
     ;
 
 optional__prim_expr_no_struct_5
