@@ -1323,6 +1323,7 @@ type:
     | trait_object_type
     | never_type
     | '{' expr '}'
+    | macro_invocation
     ;
 
 array_or_slice_type
@@ -1944,7 +1945,7 @@ macro_invocation_semi:
     | simple_path '!' '{' tt* '}' ;
 
 macro_invocation:
-    simple_path ':' delim_token_tree;
+    simple_path '!' delim_token_tree;
 
 // `$` is recognized as a token, so it may be present in token trees,
 // and `macro_rules!` makes use of it. But it is not mentioned anywhere
