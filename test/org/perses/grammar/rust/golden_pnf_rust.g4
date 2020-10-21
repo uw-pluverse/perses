@@ -605,6 +605,7 @@ type
     | impl_trait_type
     | trait_object_type
     | never_type
+    | macro_invocation
     | '(' ty_sum ')'
     | '{' expr '}'
     | '&&' optional__self_param_4 optional__static_decl_1 type
@@ -1170,6 +1171,10 @@ trait_object_type
 
 never_type
     : '!'
+    ;
+
+macro_invocation
+    : simple_path '!' delim_token_tree
     ;
 
 mut_or_const
@@ -2145,9 +2150,7 @@ kleene_star__macro_matcher_1
     ;
 
 macro_transcriber
-    : '(' kleene_star__inner_attr_1 ')'
-    | '[' kleene_star__inner_attr_1 ']'
-    | '{' kleene_star__inner_attr_1 '}'
+    : delim_token_tree
     ;
 
 macro_match
@@ -2181,6 +2184,12 @@ macro_rep_op
     : '*'
     | '+'
     | '?'
+    ;
+
+delim_token_tree
+    : '(' kleene_star__inner_attr_1 ')'
+    | '[' kleene_star__inner_attr_1 ']'
+    | '{' kleene_star__inner_attr_1 '}'
     ;
 
 fragment
