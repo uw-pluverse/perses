@@ -597,43 +597,31 @@ optional__restricted_pat_2
 
 type
     : '_'
+    | tuple_type
     | bare_function_type
     | impl_trait_type
     | trait_object_type
     | '!'
+    | '(' ty_sum ')'
     | '{' expr '}'
-    | '[' ty_sum optional__type_3 ']'
-    | '(' alternative__type_10 ')'
-    | alternative__type_11 type
+    | '[' ty_sum optional__type_2 ']'
+    | alternative__type_8 type
     ;
 
-optional__type_1
-    : ty_sum_list?
-    ;
-
-type_2
+type_1
     : ';' expr
     ;
 
-optional__type_3
-    : type_2?
+optional__type_2
+    : type_1?
     ;
 
-optional__type_8
-    : ty_sum?
-    ;
-
-alternative__type_10
-    : optional__type_8
-    | ty_sum ',' optional__type_1
-    ;
-
-alternative__type_11
+alternative__type_8
     : '*' mut_or_const
-    | alternative__type_12 optional__self_param_4 optional__static_decl_1
+    | alternative__type_9 optional__self_param_4 optional__static_decl_1
     ;
 
-alternative__type_12
+alternative__type_9
     : '&&'
     | '&'
     ;
@@ -1038,7 +1026,11 @@ optional__type_path_main_3
 
 ty_path_tail
     : ty_path_segment_no_super
-    | (ident | 'Self') '(' optional__type_1 ')' optional__foreign_fn_decl_2
+    | (ident | 'Self') '(' optional__ty_path_tail_1 ')' optional__foreign_fn_decl_2
+    ;
+
+optional__ty_path_tail_1
+    : ty_sum_list?
     ;
 
 ty_path_parent
@@ -1137,6 +1129,18 @@ mut_or_const
     | 'const'
     ;
 
+tuple_type
+    : '(' optional__tuple_type_3 ')'
+    ;
+
+tuple_type_2
+    : ty_sum ',' optional__ty_path_tail_1
+    ;
+
+optional__tuple_type_3
+    : tuple_type_2?
+    ;
+
 bare_function_type
     : optional__where_bound_1 optional__impl_block_1 optional__fn_head_4 'fn' '(' optional__bare_function_type_4 ')' optional__foreign_fn_decl_2
     ;
@@ -1216,7 +1220,7 @@ pattern_without_mut
     | pat_range_end alternative__pattern_without_mut_23 pat_range_end
     | path alternative__pattern_without_mut_25
     | alternative__pattern_without_mut_26 optional__pattern_2
-    | alternative__type_12 pattern_without_mut
+    | alternative__type_9 pattern_without_mut
     ;
 
 pattern_without_mut_1
@@ -1263,7 +1267,7 @@ alternative__pattern_without_mut_20
 alternative__pattern_without_mut_21
     : '$'
     | 'box'
-    | alternative__type_12 'mut'
+    | alternative__type_9 'mut'
     ;
 
 alternative__pattern_without_mut_23
@@ -1761,7 +1765,7 @@ alternative__pre_expr_8
     | '!'
     | '*'
     | expr_attrs
-    | alternative__type_12 optional__static_decl_1
+    | alternative__type_9 optional__static_decl_1
     ;
 
 cast_expr
