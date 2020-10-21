@@ -47,7 +47,6 @@ test_data/rust_programs/rust_testsuite/ui/associated-type-bounds/type-alias.rs
 test_data/rust_programs/rust_testsuite/ui/associated-type-bounds/union-bounds.rs
 test_data/rust_programs/rust_testsuite/ui/associated-type/associated-type-projection-from-multiple-supertraits.rs
 test_data/rust_programs/rust_testsuite/ui/associated-types/defaults-specialization.rs
-test_data/rust_programs/rust_testsuite/ui/ast-json/ast-json-ice.rs
 test_data/rust_programs/rust_testsuite/ui/async-await/async-await.rs
 test_data/rust_programs/rust_testsuite/ui/async-await/async-block-control-flow-static-semantics.rs
 test_data/rust_programs/rust_testsuite/ui/async-await/async-borrowck-escaping-block-error.rs
@@ -245,7 +244,6 @@ test_data/rust_programs/rust_testsuite/ui/invalid/invalid-macro-matcher.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-10806.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-11085.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-12369.rs
-test_data/rust_programs/rust_testsuite/ui/issues/issue-14366.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-15043.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-15080.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-20616.rs
@@ -264,7 +262,6 @@ test_data/rust_programs/rust_testsuite/ui/issues/issue-45124.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-47673.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-50571.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-5067.rs
-test_data/rust_programs/rust_testsuite/ui/issues/issue-50761.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-55376.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-55731.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-56685.rs
@@ -296,7 +293,6 @@ test_data/rust_programs/rust_testsuite/ui/macros/macro-match-nonterminal.rs
 test_data/rust_programs/rust_testsuite/ui/macros/macro-missing-delimiters.rs
 test_data/rust_programs/rust_testsuite/ui/macros/macro-missing-fragment.rs
 test_data/rust_programs/rust_testsuite/ui/malformed_macro_lhs.rs
-test_data/rust_programs/rust_testsuite/ui/maybe-bounds.rs
 test_data/rust_programs/rust_testsuite/ui/mir/mir_augmented_assignments.rs
 test_data/rust_programs/rust_testsuite/ui/mir/mir_raw_fat_ptr.rs
 test_data/rust_programs/rust_testsuite/ui/moves/move-out-of-array-ref.rs
@@ -337,11 +333,9 @@ test_data/rust_programs/rust_testsuite/ui/parser/impl-item-fn-no-body-pass.rs
 test_data/rust_programs/rust_testsuite/ui/parser/impl-item-fn-no-body-semantic-fail.rs
 test_data/rust_programs/rust_testsuite/ui/parser/impl-item-type-no-body-pass.rs
 test_data/rust_programs/rust_testsuite/ui/parser/impl-item-type-no-body-semantic-fail.rs
-test_data/rust_programs/rust_testsuite/ui/parser/impl-qpath.rs
 test_data/rust_programs/rust_testsuite/ui/parser/inner-attr-in-trait-def.rs
 test_data/rust_programs/rust_testsuite/ui/parser/issue-14303-enum.rs
 test_data/rust_programs/rust_testsuite/ui/parser/issue-14303-fn-def.rs
-test_data/rust_programs/rust_testsuite/ui/parser/issue-14303-fncall.rs
 test_data/rust_programs/rust_testsuite/ui/parser/issue-14303-impl.rs
 test_data/rust_programs/rust_testsuite/ui/parser/issue-14303-struct.rs
 test_data/rust_programs/rust_testsuite/ui/parser/issue-14303-trait.rs
@@ -403,7 +397,6 @@ test_data/rust_programs/rust_testsuite/ui/resolve/typo-suggestion-named-undersco
 test_data/rust_programs/rust_testsuite/ui/resolve/visibility-indeterminate.rs
 test_data/rust_programs/rust_testsuite/ui/rfc-2005-default-binding-mode/slice.rs
 test_data/rust_programs/rust_testsuite/ui/rfc-2008-non-exhaustive/struct.rs
-test_data/rust_programs/rust_testsuite/ui/rfc-2093-infer-outlives/self-dyn.rs
 test_data/rust_programs/rust_testsuite/ui/rfc-2126-extern-absolute-paths/single-segment.rs
 test_data/rust_programs/rust_testsuite/ui/rfc-2497-if-let-chains/feature-gate.rs
 test_data/rust_programs/rust_testsuite/ui/rfc-2565-param-attrs/issue-64682-dropping-first-attrs-in-impl-fns.rs
@@ -439,7 +432,6 @@ test_data/rust_programs/rust_testsuite/ui/rust-2018/edition-lint-fully-qualified
 test_data/rust_programs/rust_testsuite/ui/rust-2018/edition-lint-nested-empty-paths.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/edition-lint-nested-paths.rs
 test_data/rust_programs/rust_testsuite/ui/rust-2018/edition-lint-paths.rs
-test_data/rust_programs/rust_testsuite/ui/span/macro-ty-params.rs
 test_data/rust_programs/rust_testsuite/ui/specialization/assoc-ty-graph-cycle.rs
 test_data/rust_programs/rust_testsuite/ui/specialization/defaultimpl/auxiliary/go_trait.rs
 test_data/rust_programs/rust_testsuite/ui/specialization/defaultimpl/out-of-order.rs
@@ -465,20 +457,9 @@ test_data/rust_programs/rust_testsuite/ui/structs/struct-field-cfg.rs
 test_data/rust_programs/rust_testsuite/ui/suggestions/async-fn-ctor-passed-as-arg-where-it-should-have-been-called.rs
 test_data/rust_programs/rust_testsuite/ui/suggestions/missing-assoc-fn.rs
 test_data/rust_programs/rust_testsuite/ui/suggestions/suggest-move-lifetimes.rs
-test_data/rust_programs/rust_testsuite/ui/suggestions/suggest-move-types.rs
 test_data/rust_programs/rust_testsuite/ui/syntax-trait-polarity.rs
-test_data/rust_programs/rust_testsuite/ui/traits/dyn-trait.rs
-test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-maybe-bound.rs
-test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-only-maybe-bound.rs
-test_data/rust_programs/rust_testsuite/ui/traits/trait-alias/trait-alias-syntax.rs
-test_data/rust_programs/rust_testsuite/ui/traits/trait-object-lifetime-first.rs
-test_data/rust_programs/rust_testsuite/ui/traits/trait-object-vs-lifetime-2.rs
-test_data/rust_programs/rust_testsuite/ui/traits/trait-object-vs-lifetime.rs
-test_data/rust_programs/rust_testsuite/ui/traits/wf-trait-object-maybe-bound.rs
-test_data/rust_programs/rust_testsuite/ui/traits/wf-trait-object-only-maybe-bound.rs
 test_data/rust_programs/rust_testsuite/ui/transmute-specialization.rs
 test_data/rust_programs/rust_testsuite/ui/transmute/transmute-different-sizes.rs
-test_data/rust_programs/rust_testsuite/ui/trivial-bounds/trivial-bounds-object.rs
 test_data/rust_programs/rust_testsuite/ui/try-block.rs
 test_data/rust_programs/rust_testsuite/ui/try-block/try-block-bad-lifetime.rs
 test_data/rust_programs/rust_testsuite/ui/try-block/try-block-bad-type.rs
