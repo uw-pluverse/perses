@@ -137,7 +137,6 @@ test_data/rust_programs/rust_testsuite/ui/issues/issue-37598.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-38091.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-38987.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-43692.rs
-test_data/rust_programs/rust_testsuite/ui/issues/issue-45124.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-47673.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-55376.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-68103.rs
@@ -211,8 +210,6 @@ test_data/rust_programs/rust_testsuite/ui/specialization/specialization-projecti
 test_data/rust_programs/rust_testsuite/ui/specialization/specialization-projection.rs
 test_data/rust_programs/rust_testsuite/ui/structs-enums/numeric-fields.rs
 test_data/rust_programs/rust_testsuite/ui/transmute-specialization.rs
-test_data/rust_programs/rust_testsuite/ui/try-block.rs
-test_data/rust_programs/rust_testsuite/ui/try-block/try-block-unreachable-code-lint.rs
 test_data/rust_programs/rust_testsuite/ui/type-alias-impl-trait/issue-53678-generator-and-const-fn.rs
 test_data/rust_programs/rust_testsuite/ui/user-defined-macro-rules.rs
 test_data/rust_programs/rust_testsuite/ui/weird-exprs.rs

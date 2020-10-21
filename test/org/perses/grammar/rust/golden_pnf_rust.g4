@@ -77,6 +77,7 @@ ident
     | 'auto'
     | 'default'
     | 'union'
+    | 'try'
     | RawIdentifier
     ;
 
@@ -1553,7 +1554,7 @@ alternative__stmt_tail_7
 blocky_expr
     : if_cond_or_pat block kleene_star__blocky_expr_2 optional__blocky_expr_4
     | 'match' expr_no_struct '{' optional__blocky_expr_5 optional__blocky_expr_6 '}'
-    | alternative__blocky_expr_13 block_with_inner_attrs
+    | alternative__blocky_expr_14 block_with_inner_attrs
     ;
 
 blocky_expr_1
@@ -1584,12 +1585,17 @@ optional__blocky_expr_7
     : loop_label?
     ;
 
-alternative__blocky_expr_13
-    : optional__impl_block_1
-    | optional__blocky_expr_7 alternative__blocky_expr_15
+optional__blocky_expr_10
+    : 'try'?
     ;
 
-alternative__blocky_expr_15
+alternative__blocky_expr_14
+    : 'unsafe'
+    | optional__blocky_expr_10
+    | optional__blocky_expr_7 alternative__blocky_expr_16
+    ;
+
+alternative__blocky_expr_16
     : 'for' pattern 'in' expr_no_struct
     | 'loop'
     | while_cond_or_pat
