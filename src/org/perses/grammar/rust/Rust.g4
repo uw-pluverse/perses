@@ -1267,11 +1267,11 @@ ty_path_tail:
 ty_path_parent:
     'self'
     | '<' ty_sum as_trait? '>'
-    | ty_path_segment
-    | '::' ty_path_segment
-    | ty_path_parent '::' ty_path_segment;
+    | type_path_segment
+    | '::' type_path_segment
+    | ty_path_parent '::' type_path_segment;
 
-ty_path_segment:
+type_path_segment:
     ty_path_segment_no_super
     | 'super';
 
@@ -1311,7 +1311,7 @@ prim_bound:
 type
     : type_no_bounds
     | '&&' lifetime? 'mut'? type          // meaning `& & ty`
-    | impl_trait_type
+    | old_impl_trait_type
     | trait_object_type
     | '{' expr '}'
     ;
@@ -1357,6 +1357,19 @@ tuple_type
     ;
 
 impl_trait_type
+    : 'impl' type_param_bounds
+    ;
+
+type_param_bounds
+    : type_param_bound ('+' type_param_bound)* '+'?
+    ;
+
+type_param_bound
+    : lifetime
+    | trait_bound
+    ;
+
+old_impl_trait_type
     : 'impl'? for_lifetimes? type_path_main macro_tail? '+'?
     ;
 
