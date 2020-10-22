@@ -1623,9 +1623,8 @@ prim_expr_no_struct
     | '(' expr_inner_attrs? expr ',' expr_list? ')'
     | '[' expr_inner_attrs? expr_list? ']'
     | '[' expr_inner_attrs? expr ';' expr ']'
-    | 'move'? closure_params closure_tail
-    | 'async' 'move' blocky_expr
-    | 'async' 'move' closure_params closure_tail
+    | ('static' | 'move')? closure_params closure_tail
+    | 'async' 'move' (blocky_expr | closure_params closure_tail)
     | blocky_expr
     | 'break' lifetime_or_expr?
     | 'continue' lifetime?

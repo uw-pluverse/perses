@@ -71,17 +71,9 @@ test_data/rust_programs/rust_testsuite/ui/error-codes/e0119/auxiliary/complex_im
 test_data/rust_programs/rust_testsuite/ui/for-loop-while/label_break_value.rs
 test_data/rust_programs/rust_testsuite/ui/for-loop-while/loop-break-value.rs
 test_data/rust_programs/rust_testsuite/ui/functions-closures/closure-returning-closure.rs
-test_data/rust_programs/rust_testsuite/ui/generator/addassign-yield.rs
 test_data/rust_programs/rust_testsuite/ui/generator/issue-52398.rs
 test_data/rust_programs/rust_testsuite/ui/generator/issue-53548.rs
-test_data/rust_programs/rust_testsuite/ui/generator/issue-61442-stmt-expr-with-drop.rs
-test_data/rust_programs/rust_testsuite/ui/generator/pin-box-generator.rs
-test_data/rust_programs/rust_testsuite/ui/generator/size-moved-locals.rs
-test_data/rust_programs/rust_testsuite/ui/generator/static-generators.rs
-test_data/rust_programs/rust_testsuite/ui/generator/static-mut-reference-across-yield.rs
-test_data/rust_programs/rust_testsuite/ui/generator/static-reference-across-yield.rs
 test_data/rust_programs/rust_testsuite/ui/generator/too-live-local-in-immovable-gen.rs
-test_data/rust_programs/rust_testsuite/ui/generator/yield-in-initializer.rs
 test_data/rust_programs/rust_testsuite/ui/generic/generic-param-attrs.rs
 test_data/rust_programs/rust_testsuite/ui/half-open-range-patterns/half-open-range-pats-syntactic-pass.rs
 test_data/rust_programs/rust_testsuite/ui/half-open-range-patterns/pat-tuple-4.rs

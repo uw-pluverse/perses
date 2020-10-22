@@ -1657,14 +1657,15 @@ optional__prim_expr_2
 prim_expr_no_struct
     : lit
     | 'self'
+    | blocky_expr
+    | 'async' 'move' (blocky_expr | closure_params closure_tail)
     | path optional__prim_expr_no_struct_1
-    | 'break' optional__prim_expr_no_struct_10
-    | optional__prim_expr_no_struct_15 blocky_expr
-    | '(' alternative__prim_expr_no_struct_17 ')'
-    | '[' alternative__prim_expr_no_struct_18 ']'
-    | alternative__prim_expr_no_struct_19 closure_params closure_tail
+    | optional__prim_expr_no_struct_10 closure_params closure_tail
+    | 'break' optional__prim_expr_no_struct_11
+    | '(' alternative__prim_expr_no_struct_16 ')'
+    | '[' alternative__prim_expr_no_struct_17 ']'
     | 'continue' optional__self_param_4
-    | alternative__prim_expr_no_struct_21 optional__block_with_inner_attrs_3
+    | alternative__prim_expr_no_struct_19 optional__block_with_inner_attrs_3
     ;
 
 optional__prim_expr_no_struct_1
@@ -1675,46 +1676,38 @@ optional__prim_expr_no_struct_5
     : expr_list?
     ;
 
-optional__prim_expr_no_struct_9
-    : 'move'?
+prim_expr_no_struct_9
+    : 'static'
+    | 'move'
     ;
 
 optional__prim_expr_no_struct_10
+    : prim_expr_no_struct_9?
+    ;
+
+optional__prim_expr_no_struct_11
     : lifetime_or_expr?
     ;
 
-prim_expr_no_struct_14
-    : 'async' 'move'
-    ;
-
-optional__prim_expr_no_struct_15
-    : prim_expr_no_struct_14?
+alternative__prim_expr_no_struct_16
+    : optional__blocky_expr_5 alternative__prim_expr_no_struct_20
     ;
 
 alternative__prim_expr_no_struct_17
-    : optional__blocky_expr_5 alternative__prim_expr_no_struct_22
-    ;
-
-alternative__prim_expr_no_struct_18
-    : optional__blocky_expr_5 alternative__prim_expr_no_struct_23
+    : optional__blocky_expr_5 alternative__prim_expr_no_struct_21
     ;
 
 alternative__prim_expr_no_struct_19
-    : optional__prim_expr_no_struct_9
-    | 'async' 'move'
-    ;
-
-alternative__prim_expr_no_struct_21
     : 'return'
     | 'yield'
     ;
 
-alternative__prim_expr_no_struct_22
+alternative__prim_expr_no_struct_20
     : expr ',' optional__prim_expr_no_struct_5
     | optional__block_with_inner_attrs_3
     ;
 
-alternative__prim_expr_no_struct_23
+alternative__prim_expr_no_struct_21
     : expr ';' expr
     | optional__prim_expr_no_struct_5
     ;
