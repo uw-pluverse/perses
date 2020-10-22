@@ -9,7 +9,7 @@ if [[ "$(dirname "${0}")" != "." ]] ; then
 fi
 
 
-readonly RUSTC_VERSION="nightly"
+readonly RUSTC_VERSION="nightly-2020-10-08"
 
 readonly OUTPUT_FOLDER="$(mktemp -d)"
 readonly INVALID_FILE_LIST="${OUTPUT_FOLDER}/syntactically_invalid_rust_programs.txt"
@@ -17,7 +17,7 @@ trap "rm -rf ${OUTPUT_FOLDER}" EXIT
 
 
 readonly PKG="rust_testsuite"
-rustup toolchain install "${RUSTC_VERSION}" || exit 100
+rustup toolchain install "${RUSTC_VERSION}"
 for f in $(find "${PKG}" -name '*.rs') ; do
   if [[ "$(dirname "${f}")" == "${PKG}/run-make-fulldeps/dep-info-spaces" ]] ; then
     # Skip files in this folder with weird file names.
@@ -25,12 +25,21 @@ for f in $(find "${PKG}" -name '*.rs') ; do
   elif [[ "$(dirname "${f}")" == "." ]] ; then
     # Skip empty dir.
     continue
-  elif [[ "$(dirname "${f}")" == "${PKG}/ui"* ]] \
-    && grep --quiet --ignore-case --regexp "//.*ERROR" "${f}"; then
+  elif [[ ! -e "${f}" ]] ; then
+    # weird file name, and does not exit
+    continue
+  elif rustup run "${RUSTC_VERSION}" rustc --edition 2015 --crate-type rlib "${f}" --out-dir "${OUTPUT_FOLDER}" &> /dev/null || \
+       rustup run "${RUSTC_VERSION}" rustc --edition 2018 --crate-type rlib "${f}" --out-dir "${OUTPUT_FOLDER}" &> /dev/null ; then
+    # A compilable program, will include this file in the test set.
+    continue
+  elif grep --quiet --ignore-case --extended-regexp --regexp "//\W*ERROR(\s+|\s*:|\s*,|$)" "${f}" || \
+       grep --quiet --ignore-case --extended-regexp --regexp "//\W*\[.+\]\W*ERROR(\s+|\s*:|\s*,|$)" "${f}" ; then
     # Exclude this incompilable UI test.
     true # fall through
   elif rustup run "${RUSTC_VERSION}" rustc --edition 2015 -Z ast-json-noexpand=yes "${f}" --out-dir "${OUTPUT_FOLDER}" &> /dev/null || \
-     rustup run "${RUSTC_VERSION}" rustc --edition 2018 -Z ast-json-noexpand=yes "${f}" --out-dir "${OUTPUT_FOLDER}" &> /dev/null ; then
+     rustup run "${RUSTC_VERSION}" rustc --edition 2018 -Z ast-json-noexpand=yes "${f}" --out-dir "${OUTPUT_FOLDER}" &> /dev/null || \
+     rustup run "${RUSTC_VERSION}" rustc --edition 2015 -Z parse-only "${f}" --out-dir "${OUTPUT_FOLDER}" &> /dev/null || \
+     rustup run "${RUSTC_VERSION}" rustc --edition 2018 -Z parse-only "${f}" --out-dir "${OUTPUT_FOLDER}" &> /dev/null ; then
     # This file is parsable.
     continue
   fi
@@ -60,4 +69,4 @@ $(cat "${INVALID_FILE_LIST}")
 )
 EOF
 
-bazel build //:buildifier
+bazel run //:buildifier
