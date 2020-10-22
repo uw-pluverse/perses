@@ -1519,25 +1519,21 @@ block
 stmt
     : item
     | macro_invocation_semi
+    | alternative__stmt_8 ';'
     | kleene_star__item_1 blocky_expr
-    | optional__stmt_1 ';'
     ;
 
-optional__stmt_1
-    : alternative__stmt_tail_7?
-    ;
-
-stmt_tail_2
+stmt_2
     : ':' type
     ;
 
-optional__stmt_tail_3
-    : stmt_tail_2?
+optional__stmt_3
+    : stmt_2?
     ;
 
-alternative__stmt_tail_7
-    : expr
-    | kleene_star__item_1 'let' match_pattern optional__stmt_tail_3 optional__trait_item_7
+alternative__stmt_8
+    : optional__block_with_inner_attrs_3
+    | kleene_star__item_1 'let' match_pattern optional__stmt_3 optional__trait_item_7
     ;
 
 blocky_expr
@@ -1663,12 +1659,12 @@ prim_expr_no_struct
     | 'self'
     | path optional__prim_expr_no_struct_1
     | 'break' optional__prim_expr_no_struct_10
-    | optional__prim_expr_no_struct_14 blocky_expr
-    | '(' alternative__prim_expr_no_struct_16 ')'
-    | '[' alternative__prim_expr_no_struct_17 ']'
-    | alternative__prim_expr_no_struct_18 closure_params closure_tail
-    | 'return' optional__block_with_inner_attrs_3
+    | optional__prim_expr_no_struct_15 blocky_expr
+    | '(' alternative__prim_expr_no_struct_17 ')'
+    | '[' alternative__prim_expr_no_struct_18 ']'
+    | alternative__prim_expr_no_struct_19 closure_params closure_tail
     | 'continue' optional__self_param_4
+    | alternative__prim_expr_no_struct_21 optional__block_with_inner_attrs_3
     ;
 
 optional__prim_expr_no_struct_1
@@ -1687,33 +1683,38 @@ optional__prim_expr_no_struct_10
     : lifetime_or_expr?
     ;
 
-prim_expr_no_struct_13
+prim_expr_no_struct_14
     : 'async' 'move'
     ;
 
-optional__prim_expr_no_struct_14
-    : prim_expr_no_struct_13?
-    ;
-
-alternative__prim_expr_no_struct_16
-    : optional__blocky_expr_5 alternative__prim_expr_no_struct_20
+optional__prim_expr_no_struct_15
+    : prim_expr_no_struct_14?
     ;
 
 alternative__prim_expr_no_struct_17
-    : optional__blocky_expr_5 alternative__prim_expr_no_struct_21
+    : optional__blocky_expr_5 alternative__prim_expr_no_struct_22
     ;
 
 alternative__prim_expr_no_struct_18
+    : optional__blocky_expr_5 alternative__prim_expr_no_struct_23
+    ;
+
+alternative__prim_expr_no_struct_19
     : optional__prim_expr_no_struct_9
     | 'async' 'move'
     ;
 
-alternative__prim_expr_no_struct_20
+alternative__prim_expr_no_struct_21
+    : 'return'
+    | 'yield'
+    ;
+
+alternative__prim_expr_no_struct_22
     : expr ',' optional__prim_expr_no_struct_5
     | optional__block_with_inner_attrs_3
     ;
 
-alternative__prim_expr_no_struct_21
+alternative__prim_expr_no_struct_23
     : expr ';' expr
     | optional__prim_expr_no_struct_5
     ;
@@ -1733,16 +1734,20 @@ kleene_star__fields_2
 
 closure_params
     : '||'
-    | '|' optional__closure_params_1 '|'
+    | '|' optional__closure_params_2 '|'
     ;
 
 optional__closure_params_1
     : closure_param_list?
     ;
 
+optional__closure_params_2
+    : optional__closure_params_1?
+    ;
+
 closure_tail
     : expr
-    | rtype block
+    | optional__foreign_fn_decl_2 block
     ;
 
 lifetime_or_expr
@@ -1763,7 +1768,7 @@ kleene_star__closure_param_list_2
     ;
 
 closure_param
-    : pattern optional__stmt_tail_3
+    : pattern optional__stmt_3
     ;
 
 struct_update_base
