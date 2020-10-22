@@ -1554,7 +1554,7 @@ alternative__stmt_tail_7
 blocky_expr
     : if_cond_or_pat block kleene_star__blocky_expr_2 optional__blocky_expr_4
     | 'match' expr_no_struct '{' optional__blocky_expr_5 optional__blocky_expr_6 '}'
-    | alternative__blocky_expr_14 block_with_inner_attrs
+    | alternative__blocky_expr_15 block_with_inner_attrs
     ;
 
 blocky_expr_1
@@ -1585,17 +1585,14 @@ optional__blocky_expr_7
     : loop_label?
     ;
 
-optional__blocky_expr_10
-    : 'try'?
+alternative__blocky_expr_15
+    : 'try'
+    | 'unsafe'
+    | optional__fn_head_1
+    | optional__blocky_expr_7 alternative__blocky_expr_17
     ;
 
-alternative__blocky_expr_14
-    : 'unsafe'
-    | optional__blocky_expr_10
-    | optional__blocky_expr_7 alternative__blocky_expr_16
-    ;
-
-alternative__blocky_expr_16
+alternative__blocky_expr_17
     : 'for' pattern 'in' expr_no_struct
     | 'loop'
     | while_cond_or_pat
@@ -1675,12 +1672,12 @@ optional__prim_expr_2
 prim_expr_no_struct
     : lit
     | 'self'
-    | blocky_expr
     | path optional__prim_expr_no_struct_1
-    | optional__prim_expr_no_struct_9 closure_params closure_tail
     | 'break' optional__prim_expr_no_struct_10
-    | '(' alternative__prim_expr_no_struct_14 ')'
-    | '[' alternative__prim_expr_no_struct_15 ']'
+    | optional__prim_expr_no_struct_14 blocky_expr
+    | '(' alternative__prim_expr_no_struct_16 ')'
+    | '[' alternative__prim_expr_no_struct_17 ']'
+    | alternative__prim_expr_no_struct_18 closure_params closure_tail
     | 'return' optional__block_with_inner_attrs_3
     | 'continue' optional__self_param_4
     ;
@@ -1701,20 +1698,33 @@ optional__prim_expr_no_struct_10
     : lifetime_or_expr?
     ;
 
-alternative__prim_expr_no_struct_14
-    : optional__blocky_expr_5 alternative__prim_expr_no_struct_17
+prim_expr_no_struct_13
+    : 'async' 'move'
     ;
 
-alternative__prim_expr_no_struct_15
-    : optional__blocky_expr_5 alternative__prim_expr_no_struct_18
+optional__prim_expr_no_struct_14
+    : prim_expr_no_struct_13?
+    ;
+
+alternative__prim_expr_no_struct_16
+    : optional__blocky_expr_5 alternative__prim_expr_no_struct_20
     ;
 
 alternative__prim_expr_no_struct_17
+    : optional__blocky_expr_5 alternative__prim_expr_no_struct_21
+    ;
+
+alternative__prim_expr_no_struct_18
+    : optional__prim_expr_no_struct_9
+    | 'async' 'move'
+    ;
+
+alternative__prim_expr_no_struct_20
     : expr ',' optional__prim_expr_no_struct_5
     | optional__block_with_inner_attrs_3
     ;
 
-alternative__prim_expr_no_struct_18
+alternative__prim_expr_no_struct_21
     : expr ';' expr
     | optional__prim_expr_no_struct_5
     ;
