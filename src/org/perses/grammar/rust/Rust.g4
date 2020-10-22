@@ -1547,30 +1547,14 @@ block:
 block_with_inner_attrs:
     '{' inner_attr* stmt* expr? '}';
 
-stmt:
-    ';'
+stmt
+    : ';'
     | item  // Statement macros are included here.
-    | stmt_tail
-    | macro_invocation_semi;
-
-// Attributes are supported on most statements.  Let statements can have
-// attributes; block statements can have outer or inner attributes, like this:
-//
-//     fn f() {
-//         #[cfg(test)]
-//         {
-//             #![allow()]
-//             println!("testing...");
-//         }
-//     }
-//
-// Attributes on block expressions that appear anywhere else are an
-// experimental feature, `feature(stmt_expr_attributes)`. We support both.
-
-stmt_tail:
-    attr* 'let' match_pattern (':' type)? ('=' expr)? ';'
+    | attr* 'let' match_pattern (':' type)? ('=' expr)? ';'
     | attr* blocky_expr
-    | expr ';';
+    | expr ';'
+    | macro_invocation_semi
+    ;
 
 // Inner attributes in `match`, `while`, `for`, `loop`, and `unsafe` blocks are
 // experimental, `feature(stmt_expr_attributes)`.
@@ -1628,8 +1612,8 @@ prim_expr:
     prim_expr_no_struct
     | path '{' expr_inner_attrs? fields? '}';
 
-prim_expr_no_struct:
-    lit
+prim_expr_no_struct
+    : lit
     | 'self'
     | path macro_tail?
     // The next 3 productions match exactly `'(' expr_list ')'`,
@@ -1645,7 +1629,9 @@ prim_expr_no_struct:
     | blocky_expr
     | 'break' lifetime_or_expr?
     | 'continue' lifetime?
-    | 'return' expr?;  // this is IMO a rustc bug, should be expr_no_struct
+    | 'return' expr? // this is IMO a rustc bug, should be expr_no_struct
+    | 'yield' expr?
+    ;
 
 lit:
     'true'
@@ -1658,8 +1644,9 @@ lit:
     | CharLit
     | StringLit;
 
-closure_params:
-    '||'
+closure_params
+    : '|' '|'
+    | '||'
     | '|' closure_param_list? '|';
 
 closure_param:
@@ -1668,8 +1655,8 @@ closure_param:
 closure_param_list:
     closure_param (',' closure_param)* ','?;
 
-closure_tail:
-    rtype block
+closure_tail
+    : rtype? block
     | expr;
 
 lifetime_or_expr:
