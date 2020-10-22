@@ -1579,6 +1579,7 @@ blocky_expr
     | loop_label? 'loop' block_with_inner_attrs
     | 'unsafe' block_with_inner_attrs
     | 'try' block_with_inner_attrs
+    | 'async' block_with_inner_attrs
     ;
 
 if_cond_or_pat:
@@ -1635,6 +1636,8 @@ prim_expr_no_struct:
     | '[' expr_inner_attrs? expr_list? ']'
     | '[' expr_inner_attrs? expr ';' expr ']'
     | 'move'? closure_params closure_tail
+    | 'async' 'move' blocky_expr
+    | 'async' 'move' closure_params closure_tail
     | blocky_expr
     | 'break' lifetime_or_expr?
     | 'continue' lifetime?
