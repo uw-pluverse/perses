@@ -868,7 +868,9 @@ mod_body:
     inner_attr*  item*;
 
 visibility:
-    'pub' visibility_restriction?;
+    'pub' visibility_restriction?
+    | 'crate'  //experimental, issue 46209
+    ;
 
 // Note that `pub(` does not necessarily signal the beginning of a visibility
 // restriction! For example:
@@ -921,7 +923,7 @@ use_decl:
 
 use_path:
     '::'? '{' use_item_list '}'
-    | '::'? any_ident ('::' any_ident)* use_suffix?;
+    | '::'? (any_ident|'*') ('::' any_ident)* use_suffix?;
 
 use_suffix:
     '::' '*'
@@ -968,7 +970,7 @@ static_decl:
     'static' 'mut'? ident ':' ty_sum '=' expr ';';
 
 const_decl:
-    'const' ident ':' ty_sum '=' expr ';';
+    'const' (ident|'_') ':' ty_sum '=' expr ';';
 
 associated_const_decl:
     'const' ident ':' ty_sum ';';
@@ -989,7 +991,7 @@ foreign_fn_decl:
 
 //macro declaration here is not documented,
 macro_decl:
-     macro_head '(' param_list? ')' fn_rtype? where_clause? tt;
+     macro_head ( '(' param_list? ')' )? fn_rtype? where_clause? tt;
 
 macro_head:
     'macro' ident type_parameter?;
@@ -1102,6 +1104,8 @@ enum_tuple_field_list:
 
 // enum variants that are struct-like can't have `pub` on individual fields.
 enum_field_decl:
+    attr*
+    visibility?
     ident ':' ty_sum;
 
 enum_field_decl_list:
@@ -1116,7 +1120,7 @@ union_decl:
 // The `auto trait` syntax is an experimental feature, `optin_builtin_traits`,
 // also known as OIBIT.
 trait_decl:
-    'unsafe'? 'auto'? 'trait' ident type_parameters? colon_bound? where_clause? '{' trait_item* '}';
+    'unsafe'? 'auto'? 'trait' ident type_parameters? colon_bound? where_clause? '{'inner_attr* trait_item* '}';
 
 trait_alias
     : 'trait' ident type_parameters? '='

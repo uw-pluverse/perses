@@ -55,7 +55,8 @@ alternative__item_8
     ;
 
 visibility
-    : 'pub' optional__visibility_1
+    : 'crate'
+    | 'pub' optional__visibility_1
     ;
 
 optional__visibility_1
@@ -159,7 +160,7 @@ optional__static_decl_1
     ;
 
 const_decl
-    : 'const' ident ':' ty_sum '=' expr ';'
+    : 'const' (ident | '_') ':' ty_sum '=' expr ';'
     ;
 
 fn_decl
@@ -195,7 +196,7 @@ union_decl
     ;
 
 trait_decl
-    : optional__impl_block_1 optional__trait_decl_2 'trait' ident optional__impl_block_2 optional__trait_decl_4 optional__impl_block_3 '{' kleene_star__trait_decl_6 '}'
+    : optional__impl_block_1 optional__trait_decl_2 'trait' ident optional__impl_block_2 optional__trait_decl_4 optional__impl_block_3 '{' kleene_star__mod_body_1 kleene_star__trait_decl_7 '}'
     ;
 
 optional__trait_decl_2
@@ -206,7 +207,7 @@ optional__trait_decl_4
     : colon_bound?
     ;
 
-kleene_star__trait_decl_6
+kleene_star__trait_decl_7
     : trait_item*
     ;
 
@@ -215,7 +216,15 @@ trait_alias
     ;
 
 macro_decl
-    : macro_head '(' optional__fn_decl_1 ')' optional__fn_decl_2 optional__impl_block_3 tt
+    : macro_head optional__macro_decl_3 optional__fn_decl_2 optional__impl_block_3 tt
+    ;
+
+macro_decl_2
+    : '(' optional__fn_decl_1 ')'
+    ;
+
+optional__macro_decl_3
+    : macro_decl_2?
     ;
 
 rename
@@ -244,7 +253,7 @@ optional__use_path_5
 
 alternative__use_path_6
     : '{' use_item_list '}'
-    | any_ident kleene_star__use_path_4 optional__use_path_5
+    | (any_ident | '*') kleene_star__use_path_4 optional__use_path_5
     ;
 
 use_item_list
@@ -695,10 +704,6 @@ optional__enum_variant_main_1
     : enum_tuple_field_list?
     ;
 
-optional__enum_variant_main_2
-    : enum_field_decl_list?
-    ;
-
 enum_variant_main_3
     : '(' optional__enum_variant_main_1 ')'
     ;
@@ -710,7 +715,7 @@ optional__enum_variant_main_4
 alternative__enum_variant_main_6
     : optional__enum_variant_main_4
     | '=' expr
-    | '{' optional__enum_variant_main_2 '}'
+    | '{' optional__struct_tail_5 '}'
     ;
 
 enum_tuple_field_list
@@ -725,24 +730,8 @@ kleene_star__enum_tuple_field_list_2
     : enum_tuple_field_list_1*
     ;
 
-enum_field_decl_list
-    : enum_field_decl kleene_star__enum_field_decl_list_2 optional__use_item_list_3
-    ;
-
-enum_field_decl_list_1
-    : ',' enum_field_decl
-    ;
-
-kleene_star__enum_field_decl_list_2
-    : enum_field_decl_list_1*
-    ;
-
 enum_tuple_field
     : kleene_star__item_1 ty_sum
-    ;
-
-enum_field_decl
-    : ident ':' ty_sum
     ;
 
 colon_bound
