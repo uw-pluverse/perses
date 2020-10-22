@@ -1865,17 +1865,6 @@ any_ident:
     | 'static'
     | 'super';
 
-puntuation_no_cash:
-    '+'|'-'|'*'|'/'|'%'|'^'|'!'|'&'|'|'|'&&'|'||'|'+='|'-='|'*='|'/='|'%='|'^='|'&='|'|='|'<<='
-    |'>>='|'='|'=='|'!='|'>'|'<'|'>='|'<='|'@'|'_'|'.'|'..'|'...'|'..='|','|';'|':'|'::'|'->'|'=>'|'#'|'?';
-
-puntuation:
-    '+'|'-'|'*'|'/'|'%'|'^'|'!'|'&'|'|'|'&&'|'||'|'+='|'-='|'*='|'/='|'%='|'^='|'&='|'|='|'<<='
-    |'>>='|'='|'=='|'!='|'>'|'<'|'>='|'<='|'@'|'_'|'.'|'..'|'...'|'..='|','|';'|':'|'::'|'->'|'=>'|'#'|'?'|CashMoney;
-
-puntuation_no_repetition:
-    '-'|'/'|'%'|'^'|'!'|'&'|'|'|'&&'|'||'|'+='|'-='|'*='|'/='|'%='|'^='|'&='|'|='|'<<='
-    |'>>='|'='|'=='|'!='|'>'|'<'|'>='|'<='|'@'|'_'|'.'|'..'|'...'|'..='|','|';'|':'|'::'|'->'|'=>'|'#'|CashMoney;
 
 // TODO: tokens '<<' '>>' confilcts ty_args, type need to be refactored
 
@@ -1885,8 +1874,6 @@ tokens_no_delimiters_cash:
     ~('(' | ')' | '{' | '}' | '[' | ']' | CashMoney);
 
 
-tokens_no_delimiters:
-    ~('(' | ')' | '{' | '}' | '[' | ']' );
 
 tokens_no_delimiters_repetition_operators:
     ~('(' | ')' | '{' | '}' | '[' | ']' | '+'|'*'|'?');
@@ -1900,8 +1887,6 @@ tokens_no_delimiters_repetition_operators:
 //    | punctuation
 //    | delimiter;
 
-delimiter:
-    '{'|'}'|'['|']'|'('|')';
 
 //macro rules
 macro_iterm:
@@ -1958,9 +1943,6 @@ delim_token_tree:
     | '[' tt* ']'
     | '{' tt* '}';
 
-
-token_tree:
-    tokens_no_delimiters| delim_token_tree;
 
 macro_invocation_semi:
     simple_path '!' '(' tt* ')' ';'
