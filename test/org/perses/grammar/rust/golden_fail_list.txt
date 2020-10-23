@@ -143,11 +143,6 @@ test_data/rust_programs/rust_testsuite/ui/rfc-2632-const-trait-impl/generic-boun
 test_data/rust_programs/rust_testsuite/ui/rfc-2632-const-trait-impl/syntax.rs
 test_data/rust_programs/rust_testsuite/ui/rfcs/rfc-2005-default-binding-mode/slice.rs
 test_data/rust_programs/rust_testsuite/ui/rfcs/rfc-2175-or-if-while-let/basic.rs
-test_data/rust_programs/rust_testsuite/ui/specialization/defaultimpl/auxiliary/go_trait.rs
-test_data/rust_programs/rust_testsuite/ui/specialization/defaultimpl/out-of-order.rs
-test_data/rust_programs/rust_testsuite/ui/specialization/defaultimpl/overlap-projection.rs
-test_data/rust_programs/rust_testsuite/ui/specialization/defaultimpl/projection.rs
-test_data/rust_programs/rust_testsuite/ui/specialization/defaultimpl/specialization-trait-item-not-implemented-rpass.rs
 test_data/rust_programs/rust_testsuite/ui/structs-enums/numeric-fields.rs
 test_data/rust_programs/rust_testsuite/ui/user-defined-macro-rules.rs
 test_data/rust_programs/rust_testsuite/ui/weird-exprs.rs

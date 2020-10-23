@@ -104,22 +104,26 @@ pub_item
     ;
 
 impl_block
-    : optional__impl_block_1 'impl' optional__impl_block_2 impl_what optional__impl_block_3 '{' kleene_star__impl_block_4 '}'
+    : optional__impl_block_1 optional__impl_block_2 'impl' optional__impl_block_3 impl_what optional__impl_block_4 '{' kleene_star__impl_block_5 '}'
     ;
 
 optional__impl_block_1
-    : 'unsafe'?
+    : 'default'?
     ;
 
 optional__impl_block_2
-    : type_parameters?
+    : 'unsafe'?
     ;
 
 optional__impl_block_3
+    : type_parameters?
+    ;
+
+optional__impl_block_4
     : where_clause?
     ;
 
-kleene_star__impl_block_4
+kleene_star__impl_block_5
     : impl_item*
     ;
 
@@ -164,7 +168,7 @@ const_decl
     ;
 
 fn_decl
-    : fn_head '(' optional__fn_decl_1 ')' optional__fn_decl_2 optional__impl_block_3 block_with_inner_attrs
+    : fn_head '(' optional__fn_decl_1 ')' optional__fn_decl_2 optional__impl_block_4 block_with_inner_attrs
     ;
 
 optional__fn_decl_1
@@ -176,15 +180,15 @@ optional__fn_decl_2
     ;
 
 type_decl
-    : 'type' ident optional__impl_block_2 optional__impl_block_3 '=' ty_sum ';'
+    : 'type' ident optional__impl_block_3 optional__impl_block_4 '=' ty_sum ';'
     ;
 
 struct_decl
-    : 'struct' ident optional__impl_block_2 struct_tail
+    : 'struct' ident optional__impl_block_3 struct_tail
     ;
 
 enum_decl
-    : 'enum' ident optional__impl_block_2 optional__impl_block_3 '{' optional__enum_decl_3 '}'
+    : 'enum' ident optional__impl_block_3 optional__impl_block_4 '{' optional__enum_decl_3 '}'
     ;
 
 optional__enum_decl_3
@@ -192,11 +196,11 @@ optional__enum_decl_3
     ;
 
 union_decl
-    : 'union' ident optional__impl_block_2 optional__impl_block_3 '{' field_decl_list '}'
+    : 'union' ident optional__impl_block_3 optional__impl_block_4 '{' field_decl_list '}'
     ;
 
 trait_decl
-    : optional__impl_block_1 optional__trait_decl_2 'trait' ident optional__impl_block_2 optional__trait_decl_4 optional__impl_block_3 '{' kleene_star__mod_body_1 kleene_star__trait_decl_7 '}'
+    : optional__impl_block_2 optional__trait_decl_2 'trait' ident optional__impl_block_3 optional__trait_decl_4 optional__impl_block_4 '{' kleene_star__mod_body_1 kleene_star__trait_decl_7 '}'
     ;
 
 optional__trait_decl_2
@@ -212,11 +216,11 @@ kleene_star__trait_decl_7
     ;
 
 trait_alias
-    : 'trait' ident optional__impl_block_2 '=' (ty_sum optional__impl_block_3 | where_clause) ';'
+    : 'trait' ident optional__impl_block_3 '=' (ty_sum optional__impl_block_4 | where_clause) ';'
     ;
 
 macro_decl
-    : macro_head optional__macro_decl_3 optional__fn_decl_2 optional__impl_block_3 tt
+    : macro_head optional__macro_decl_3 optional__fn_decl_2 optional__impl_block_4 tt
     ;
 
 macro_decl_2
@@ -357,7 +361,7 @@ optional__ty_sum_3
     ;
 
 foreign_fn_decl
-    : fn_head '(' optional__foreign_fn_decl_1 ')' optional__foreign_fn_decl_2 optional__impl_block_3 ';'
+    : fn_head '(' optional__foreign_fn_decl_1 ')' optional__foreign_fn_decl_2 optional__impl_block_4 ';'
     ;
 
 optional__foreign_fn_decl_1
@@ -377,7 +381,7 @@ associated_const_decl
     ;
 
 fn_head
-    : optional__fn_head_1 optional__fn_head_2 optional__impl_block_1 optional__fn_head_4 'fn' ident optional__impl_block_2
+    : optional__fn_head_1 optional__fn_head_2 optional__impl_block_2 optional__fn_head_4 'fn' ident optional__impl_block_3
     ;
 
 optional__fn_head_1
@@ -433,7 +437,7 @@ optional__block_with_inner_attrs_3
     ;
 
 method_decl
-    : fn_head '(' optional__method_decl_1 ')' optional__fn_decl_2 optional__impl_block_3 block_with_inner_attrs
+    : fn_head '(' optional__method_decl_1 ')' optional__fn_decl_2 optional__impl_block_4 block_with_inner_attrs
     ;
 
 optional__method_decl_1
@@ -445,7 +449,7 @@ method_param_list
     ;
 
 trait_method_decl
-    : fn_head '(' optional__trait_method_decl_1 ')' optional__foreign_fn_decl_2 optional__impl_block_3 (block_with_inner_attrs | ';')
+    : fn_head '(' optional__trait_method_decl_1 ')' optional__foreign_fn_decl_2 optional__impl_block_4 (block_with_inner_attrs | ';')
     ;
 
 optional__trait_method_decl_1
@@ -625,7 +629,7 @@ type
 
 struct_tail
     : alternative__struct_tail_6 ';'
-    | optional__impl_block_3 '{' optional__struct_tail_5 '}'
+    | optional__impl_block_4 '{' optional__struct_tail_5 '}'
     ;
 
 optional__struct_tail_2
@@ -637,7 +641,7 @@ optional__struct_tail_5
     ;
 
 alternative__struct_tail_6
-    : optional__struct_tail_8 optional__impl_block_3
+    : optional__struct_tail_8 optional__impl_block_4
     ;
 
 struct_tail_7
@@ -758,7 +762,7 @@ alternative__trait_item_11
 
 alternative__trait_item_12
     : 'const' ident ':' ty_sum optional__trait_item_7
-    | 'type' ident optional__impl_block_2 optional__trait_decl_4 optional__impl_block_3 optional__type_parameter_4
+    | 'type' ident optional__impl_block_3 optional__trait_decl_4 optional__impl_block_4 optional__type_parameter_4
     ;
 
 ty_default
@@ -833,15 +837,11 @@ impl_item_tail
     : const_decl
     | associated_const_decl
     | macro_invocation_semi
-    | optional__impl_item_tail_1 alternative__impl_item_tail_5
-    ;
-
-optional__impl_item_tail_1
-    : 'default'?
+    | optional__impl_block_1 alternative__impl_item_tail_5
     ;
 
 alternative__impl_item_tail_5
-    : 'type' ident optional__impl_block_2 optional__impl_block_3 '=' ty_sum ';'
+    : 'type' ident optional__impl_block_3 optional__impl_block_4 '=' ty_sum ';'
     | method_decl
     ;
 
@@ -1166,7 +1166,7 @@ inferred_type
     ;
 
 bare_function_type
-    : optional__where_bound_1 optional__impl_block_1 optional__fn_head_4 'fn' '(' optional__bare_function_type_4 ')' optional__foreign_fn_decl_2
+    : optional__where_bound_1 optional__impl_block_2 optional__fn_head_4 'fn' '(' optional__bare_function_type_4 ')' optional__foreign_fn_decl_2
     ;
 
 optional__bare_function_type_4
