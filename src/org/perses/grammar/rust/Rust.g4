@@ -1589,9 +1589,9 @@ match_arms:
 match_arm_intro:
     attr* match_pattern match_if_clause? '=>';
 
-match_pattern:
-    pattern
-    | match_pattern '|' pattern;
+match_pattern
+    : pattern ('|' pattern)*
+    ;
 
 match_if_clause:
     'if' expr;
