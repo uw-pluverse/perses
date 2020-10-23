@@ -1353,15 +1353,15 @@ pat_ident
     ;
 
 match_pattern
-    : pattern kleene_star__match_pattern_1
+    : pattern kleene_star__match_pattern_2
     ;
 
-kleene_star__match_pattern_1
-    : match_pattern_2*
-    ;
-
-match_pattern_2
+match_pattern_1
     : '|' pattern
+    ;
+
+kleene_star__match_pattern_2
+    : match_pattern_1*
     ;
 
 pat_lit
