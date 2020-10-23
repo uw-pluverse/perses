@@ -77,7 +77,6 @@ test_data/rust_programs/rust_testsuite/ui/generator/too-live-local-in-immovable-
 test_data/rust_programs/rust_testsuite/ui/generic/generic-param-attrs.rs
 test_data/rust_programs/rust_testsuite/ui/half-open-range-patterns/half-open-range-pats-syntactic-pass.rs
 test_data/rust_programs/rust_testsuite/ui/half-open-range-patterns/pat-tuple-4.rs
-test_data/rust_programs/rust_testsuite/ui/impl-trait/equality-rpass.rs
 test_data/rust_programs/rust_testsuite/ui/imports/extern-crate-self/extern-crate-self-pass.rs
 test_data/rust_programs/rust_testsuite/ui/inner-attrs-on-impl.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-10806.rs
@@ -86,7 +85,6 @@ test_data/rust_programs/rust_testsuite/ui/issues/issue-15080.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-20616.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-36116.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-37598.rs
-test_data/rust_programs/rust_testsuite/ui/issues/issue-38091.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-38987.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-43692.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-47673.rs
@@ -150,18 +148,12 @@ test_data/rust_programs/rust_testsuite/ui/rfc-2632-const-trait-impl/generic-boun
 test_data/rust_programs/rust_testsuite/ui/rfc-2632-const-trait-impl/syntax.rs
 test_data/rust_programs/rust_testsuite/ui/rfcs/rfc-2005-default-binding-mode/slice.rs
 test_data/rust_programs/rust_testsuite/ui/rfcs/rfc-2175-or-if-while-let/basic.rs
-test_data/rust_programs/rust_testsuite/ui/specialization/assoc-ty-graph-cycle.rs
 test_data/rust_programs/rust_testsuite/ui/specialization/defaultimpl/auxiliary/go_trait.rs
 test_data/rust_programs/rust_testsuite/ui/specialization/defaultimpl/out-of-order.rs
 test_data/rust_programs/rust_testsuite/ui/specialization/defaultimpl/overlap-projection.rs
 test_data/rust_programs/rust_testsuite/ui/specialization/defaultimpl/projection.rs
 test_data/rust_programs/rust_testsuite/ui/specialization/defaultimpl/specialization-trait-item-not-implemented-rpass.rs
-test_data/rust_programs/rust_testsuite/ui/specialization/specialization-out-of-order.rs
-test_data/rust_programs/rust_testsuite/ui/specialization/specialization-overlap-projection.rs
-test_data/rust_programs/rust_testsuite/ui/specialization/specialization-projection-alias.rs
-test_data/rust_programs/rust_testsuite/ui/specialization/specialization-projection.rs
 test_data/rust_programs/rust_testsuite/ui/structs-enums/numeric-fields.rs
-test_data/rust_programs/rust_testsuite/ui/transmute-specialization.rs
 test_data/rust_programs/rust_testsuite/ui/user-defined-macro-rules.rs
 test_data/rust_programs/rust_testsuite/ui/weird-exprs.rs
 test_data/rust_programs/rust_testsuite/ui/wrapping-int-combinations.rs

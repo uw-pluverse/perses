@@ -1158,7 +1158,7 @@ impl_item:
 
 impl_item_tail:
     'default'? method_decl
-    | 'type' ident type_parameters? where_clause? '=' ty_sum ';'
+    | 'default'? 'type' ident type_parameters? where_clause? '=' ty_sum ';'
     | (const_decl | associated_const_decl)
     | macro_invocation_semi;
 

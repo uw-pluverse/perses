@@ -833,12 +833,16 @@ impl_item_tail
     : const_decl
     | associated_const_decl
     | macro_invocation_semi
-    | optional__impl_item_tail_1 method_decl
-    | 'type' ident optional__impl_block_2 optional__impl_block_3 '=' ty_sum ';'
+    | optional__impl_item_tail_1 alternative__impl_item_tail_5
     ;
 
 optional__impl_item_tail_1
     : 'default'?
+    ;
+
+alternative__impl_item_tail_5
+    : 'type' ident optional__impl_block_2 optional__impl_block_3 '=' ty_sum ';'
+    | method_decl
     ;
 
 tt_delimited
