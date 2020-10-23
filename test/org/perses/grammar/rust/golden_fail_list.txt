@@ -114,7 +114,6 @@ test_data/rust_programs/rust_testsuite/ui/parser/extern-crate-async.rs
 test_data/rust_programs/rust_testsuite/ui/parser/fn-body-optional-syntactic-pass.rs
 test_data/rust_programs/rust_testsuite/ui/parser/fn-header-syntactic-pass.rs
 test_data/rust_programs/rust_testsuite/ui/parser/foreign-static-syntactic-pass.rs
-test_data/rust_programs/rust_testsuite/ui/parser/foreign-ty-syntactic-pass.rs
 test_data/rust_programs/rust_testsuite/ui/parser/impl-item-fn-no-body-pass.rs
 test_data/rust_programs/rust_testsuite/ui/parser/impl-item-type-no-body-pass.rs
 test_data/rust_programs/rust_testsuite/ui/parser/issue-65041-empty-vis-matcher-in-trait.rs

@@ -959,8 +959,8 @@ foreign_item:
     | attr* macro_invocation_semi;
 
 foreign_item_tail:
-    'static' 'mut'? ident ':' ty_sum ';'
-    | 'type' ident ';'
+    'static' 'mut'? ident ':' type ';'
+    | 'type' ident type_parameters? colon_bound? where_clause? (':' type)? ('=' type)?';'
     | foreign_fn_decl;
 
 
