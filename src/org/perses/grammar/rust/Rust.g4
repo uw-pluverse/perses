@@ -1143,7 +1143,7 @@ const_default:
 // --- impl blocks
 
 impl_block:
-    'unsafe'? 'impl' type_parameters? impl_what where_clause? '{' impl_item* '}';
+    'default'? 'unsafe'? 'impl' type_parameters? impl_what where_clause? '{' impl_item* '}';
 
 impl_what:
     '!' ty_sum 'for' ty_sum
