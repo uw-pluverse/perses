@@ -9,13 +9,6 @@ if !  timeout -s 9 30 rustc -Z parse-only mutant.rs &> /dev/null ; then
   exit 1
 fi
 
-timeout -s 9 30 rustc +1.45.0 mutant.rs &> /dev/null 
-
-if [[ "$?" != 1 ]] ; then
-  # Should be just normal compiler error.
-  exit 1
-fi
-
 if timeout -s 9 30 rustc --crate-type=staticlib -C debuginfo=2 -C opt-level=z -C target-cpu=skylake mutant.rs &> "${OUTPUT}" ; then 
   exit 1
 fi
