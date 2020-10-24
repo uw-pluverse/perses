@@ -53,7 +53,7 @@ let year = self . year ( ) ;
 let wd = self . weekday ( ) ;
 if week_mon_0 < 0 {
 ( year - 1 , NaiveDate :: from_ymd ( year - 1 , 1 , 1 ) . last_week_number ( ) , wd )
-} else if week_mon_0 > = weeks_in_year as i32 {
+} else if week_mon_0 >= weeks_in_year as i32 {
 ( year + 1 , ( week_mon_0 + 1 - weeks_in_year as i32 ) as u32 , wd )
 } else {
 ( year , ( week_mon_0 + 1 ) as u32 , wd )
@@ -68,7 +68,7 @@ NaiveDate :: from_ymd ( self . year ( ) , 1 , 1 ) . weekday ( )
 }
 fn weeks_in_year ( & self ) -> u32 {
 let days_in_last_week = self . year_first_day_of_week ( ) . num_days_from_monday ( ) + 1 ;
-if days_in_last_week > = 4 { 53 } else { 52 }
+if days_in_last_week >= 4 { 53 } else { 52 }
 }
 fn last_week_number ( & self ) -> u32 {
 let wiy = self . weeks_in_year ( ) ;
