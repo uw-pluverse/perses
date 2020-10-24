@@ -1,0 +1,3 @@
+thread 'rustc' panicked at 'assertion failed: body.yield_ty.is_some() && universal_regions.yield_ty.is_some() ||
+error: internal compiler error: unexpected panic
+note: the compiler unexpectedly panicked. this is a bug.
