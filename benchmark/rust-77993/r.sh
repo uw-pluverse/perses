@@ -4,6 +4,10 @@ set -o pipefail
 
 readonly OUTPUT="temp_compilation_output.tmp.txt"
 
+if !  timeout -s 9 30 rustc -Z parse-only mutant.rs &> /dev/null ; then
+  # make sure the source file is syntactically correct.
+  exit 1
+fi
 if timeout -s 9 30 rustc --crate-type=staticlib -C debuginfo=2 -C opt-level=z -C target-cpu=skylake mutant.rs &> "${OUTPUT}" ; then 
   exit 1
 fi
