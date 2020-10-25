@@ -898,6 +898,8 @@ pub_item
     | mod_decl
     | static_decl
     | const_decl
+    | associated_const_decl //experimental
+    | associated_static_decl //experimental
     | fn_decl
     | type_decl
     | struct_decl
@@ -922,7 +924,7 @@ use_decl:
     'use' use_path ';';
 
 use_path:
-    '::'? '{' use_item_list '}'
+    '::'? '{' use_item_list? '}'
     | '::'? (any_ident|'*') ('::' any_ident)* use_suffix?;
 
 use_suffix:
@@ -959,7 +961,7 @@ foreign_item:
     | attr* macro_invocation_semi;
 
 foreign_item_tail:
-    'static' 'mut'? ident ':' type ';'
+    'static' 'mut'? ident ':' type ('=' expr)? ';' // experimental: added ('=' expr)? . Syntactically, a foreign static may have a body.
     | 'type' ident type_parameters? colon_bound? where_clause? (':' type)? ('=' type)?';'
     | foreign_fn_decl;
 
@@ -969,25 +971,32 @@ foreign_item_tail:
 static_decl:
     'static' 'mut'? ident ':' ty_sum '=' expr ';';
 
+associated_static_decl:
+    'static' 'mut'? ident ':' ty_sum';';
+
 const_decl:
     'const' (ident|'_') ':' ty_sum '=' expr ';';
+//    | 'const' (ident|'_') ':' ty_sum '=' '(' ')' ';';
 
 associated_const_decl:
-    'const' ident ':' ty_sum ';';
+    'const' ident (':' ty_sum)? ';'; //experimental:  const ident syntactic but not semantically
 
 // --- Functions
 
 fn_decl:
-    fn_head '(' param_list? ')' fn_rtype? where_clause? block_with_inner_attrs;
+    fn_head '(' param_list? ')' fn_rtype? where_clause? block_with_inner_attrs
+    | fn_head '(' param_list? ')' fn_rtype? where_clause? ';'; //experimental for supporting `fn` forms having or lacking a body are syntactically valid.
 
 method_decl:
-    fn_head '(' method_param_list? ')' fn_rtype? where_clause? block_with_inner_attrs;
+    fn_head '(' method_param_list? ')' fn_rtype? where_clause? block_with_inner_attrs
+    | fn_head '(' method_param_list? ')' fn_rtype? where_clause? ';'; //experimental for supporting `fn` forms having or lacking a body are syntactically valid.
 
 trait_method_decl:
     fn_head '(' trait_method_param_list? ')' rtype? where_clause? (block_with_inner_attrs | ';');
 
 foreign_fn_decl:
-    fn_head '(' variadic_param_list? ')' rtype? where_clause? ';';
+    fn_head '(' variadic_param_list? ')' rtype? where_clause? block_with_inner_attrs  //experimental for supporting `fn` forms having or lacking a body are syntactically valid.
+    | fn_head '(' variadic_param_list? ')' rtype? where_clause? ';';
 
 //macro declaration here is not documented,
 macro_decl:
@@ -1003,10 +1012,12 @@ macro_head:
 // rule, not a syntactic one. That is, not every rule that can be
 // enforced gramatically should be.
 fn_head:
-    'async'? 'const'? 'unsafe'? extern_abi? 'fn' ident type_parameters?;
+    'async'? 'const'? 'unsafe'? extern_abi? 'fn' ident type_parameters?
+    | 'const' 'async' 'unsafe'? extern_abi? 'fn' ident type_parameters?; //experimental Ensures that all `fn` forms can have all the function qualifiers syntactically.
 
 param:
-    pattern ':' param_ty;
+    pattern ':' param_ty
+    | '&'? lifetime? mut_or_const?  'self' (':' type)?; // experimental:`self` is syntactically accepted
 
 param_ty:
     ty_sum
@@ -1058,7 +1069,8 @@ fn_rtype:
 // --- type, struct, and enum declarations
 
 type_decl:
-    'type' ident type_parameters? where_clause? '=' ty_sum ';';
+    'type' ident type_parameters? where_clause? '=' ty_sum ';'
+    | 'type' ident type_parameters? colon_bound? where_clause? (':' type)? ('=' type)?';'; //experimental:test_data/rust_programs/rust_testsuite/ui/parser/item-free-type-bounds-syntactic-pass.rs
 
 struct_decl:
     'struct' ident type_parameters? struct_tail;
@@ -1128,10 +1140,11 @@ trait_alias
     ;
 
 trait_item:
-    attr* 'type' ident type_parameters? colon_bound? where_clause? ty_default? ';'
+    attr* visibility? 'type' ident type_parameters? colon_bound? where_clause? ty_default? ';'
     | attr* 'const' ident ':' ty_sum const_default? ';'  // experimental associated constants
-    | attr* trait_method_decl
-    | attr* macro_invocation_semi;
+    | attr* visibility? trait_method_decl
+    | attr* visibility? macro_invocation_semi // experimental:accept visibilities on items in traits syntactically but not semantically.
+    | visibility? (const_decl|associated_const_decl); //experimental
 
 ty_default:
     '=' ty_sum;
@@ -1160,6 +1173,9 @@ impl_item_tail:
     'default'? method_decl
     | 'default'? 'type' ident type_parameters? where_clause? '=' ty_sum ';'
     | (const_decl | associated_const_decl)
+     // experimental test_data/rust_programs/rust_testsuite/ui/parser/impl-item-type-no-body-pass.rs
+     // and test_data/rust_programs/rust_testsuite/ui/parser/self-param-syntactic-pass.rs
+    | 'type' ident type_parameters? colon_bound? where_clause? (':' type)? ('=' tt*)?';'
     | macro_invocation_semi;
 
 
@@ -1450,7 +1466,8 @@ pat_ident:
 pattern_without_mut:
     '_' // wildcard pattern
     | '..' //experimental
-    | pattern_without_mut '|' pattern_without_mut
+    |  pattern_without_mut '|' pattern_without_mut //experimental
+    | '|' pattern_without_mut '|'? //experimental
 	| ident ('@' match_pattern)?
     | ident ('@' '(' match_pattern ')' )
     | pat_lit //litreal pattern
@@ -1464,8 +1481,7 @@ pattern_without_mut:
     | path '{' pat_fields? '}'
     | path  // BUG: ambiguity with bare ident case (above)
     | '(' pat_list_with_dots? ')'
-//    | '[' ((pat_ident ',')* pat_ident '@')? pat_elt_list? ']' // slice pattern
-    | '[' pattern ( ',' pattern )* ','? ']'
+    | '[' pattern ( ',' pattern )* ','? ']' // slice pattern
     | '['']'
     | '&' pattern_without_mut
     | '&' 'mut' pattern
@@ -1499,12 +1515,6 @@ pat_list_dots_tail:
 // This grammar does not enforce the rule that a given slice pattern must have
 // at most one `..`.
 
-pat_elt:
-    pattern '..'?
-    | '..';
-
-pat_elt_list:
-    pat_elt (',' pat_elt)* ','?;
 
 pat_fields_left:
     (ident | BareIntLit | FullIntLit);
@@ -1566,7 +1576,7 @@ stmt
 blocky_expr
     : block_with_inner_attrs
     | if_cond_or_pat block ('else'  if_cond_or_pat block)* ('else' block)?
-    | 'match' expr_no_struct '{' expr_inner_attrs? match_arms? '}'
+    | 'match' expr_no_struct '{' inner_attr? match_arms? '}'
     | loop_label? while_cond_or_pat block_with_inner_attrs
     | loop_label? 'for' pattern 'in' expr_no_struct block_with_inner_attrs
     | loop_label? 'loop' block_with_inner_attrs
@@ -1594,7 +1604,7 @@ match_arm_intro:
     attr* match_pattern match_if_clause? '=>';
 
 match_pattern:
-    pattern ('|' pattern)*
+    '|'? pattern ('|' pattern)*
     ;
 
 match_if_clause:
