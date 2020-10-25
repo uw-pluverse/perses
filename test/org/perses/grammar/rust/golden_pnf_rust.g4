@@ -2208,7 +2208,7 @@ optional__macro_match_2
 
 alternative__macro_match_3
     : '(' kleene_plus__macro_match_1 ')' optional__macro_match_2 macro_rep_op
-    | ident ':' macro_frag_spec
+    | ~EOF ':' macro_frag_spec
     ;
 
 macro_frag_spec
