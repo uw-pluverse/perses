@@ -959,8 +959,8 @@ foreign_item:
     | attr* macro_invocation_semi;
 
 foreign_item_tail:
-    'static' 'mut'? ident ':' ty_sum ';'
-    | 'type' ident ';'
+    'static' 'mut'? ident ':' type ';'
+    | 'type' ident type_parameters? colon_bound? where_clause? (':' type)? ('=' type)?';'
     | foreign_fn_decl;
 
 
@@ -1143,7 +1143,7 @@ const_default:
 // --- impl blocks
 
 impl_block:
-    'unsafe'? 'impl' type_parameters? impl_what where_clause? '{' impl_item* '}';
+    'default'? 'unsafe'? 'impl' type_parameters? impl_what where_clause? '{' impl_item* '}';
 
 impl_what:
     '!' ty_sum 'for' ty_sum
@@ -1158,7 +1158,7 @@ impl_item:
 
 impl_item_tail:
     'default'? method_decl
-    | 'type' ident type_parameters? where_clause? '=' ty_sum ';'
+    | 'default'? 'type' ident type_parameters? where_clause? '=' ty_sum ';'
     | (const_decl | associated_const_decl)
     | macro_invocation_semi;
 
@@ -1589,9 +1589,9 @@ match_arms:
 match_arm_intro:
     attr* match_pattern match_if_clause? '=>';
 
-match_pattern:
-    pattern
-    | match_pattern '|' pattern;
+match_pattern
+    : pattern ('|' pattern)*
+    ;
 
 match_if_clause:
     'if' expr;
