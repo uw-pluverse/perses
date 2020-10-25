@@ -1,0 +1,44 @@
+error[E0277]: the trait bound `U: Copy` is not satisfied
+  --> $DIR/wf-fn-where-clause.rs:8:24
+   |
+LL | trait ExtraCopy<T:Copy> { }
+   |                   ---- required by this bound in `ExtraCopy`
+LL | 
+LL | fn foo<T,U>() where T: ExtraCopy<U>
+   |                        ^^^^^^^^^^^^ the trait `Copy` is not implemented for `U`
+   |
+help: consider further restricting type parameter `U`
+   |
+LL | fn foo<T,U>() where T: ExtraCopy<U>, U: Copy
+   |                                    ^^^^^^^^^
+
+error[E0277]: the size for values of type `(dyn Copy + 'static)` cannot be known at compilation time
+  --> $DIR/wf-fn-where-clause.rs:12:16
+   |
+LL | fn bar() where Vec<dyn Copy>:, {}
+   |                ^^^^^^^^^^^^^ doesn't have a size known at compile-time
+...
+LL | struct Vec<T> {
+   |            - required by this bound in `Vec`
+   |
+   = help: the trait `Sized` is not implemented for `(dyn Copy + 'static)`
+help: you could relax the implicit `Sized` bound on `T` if it were used through indirection like `&T` or `Box<T>`
+  --> $DIR/wf-fn-where-clause.rs:16:12
+   |
+LL | struct Vec<T> {
+   |            ^ this could be changed to `T: ?Sized`...
+LL |     t: T,
+   |        - ...if indirection was used here: `Box<T>`
+
+error[E0038]: the trait `Copy` cannot be made into an object
+  --> $DIR/wf-fn-where-clause.rs:12:16
+   |
+LL | fn bar() where Vec<dyn Copy>:, {}
+   |                ^^^^^^^^^^^^^ the trait `Copy` cannot be made into an object
+   |
+   = note: the trait cannot be made into an object because it requires `Self: Sized`
+
+error: aborting due to 3 previous errors
+
+Some errors have detailed explanations: E0038, E0277.
+For more information about an error, try `rustc --explain E0038`.

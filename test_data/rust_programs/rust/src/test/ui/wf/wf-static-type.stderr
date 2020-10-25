@@ -1,0 +1,14 @@
+error[E0277]: the trait bound `NotCopy: Copy` is not satisfied
+  --> $DIR/wf-static-type.rs:10:13
+   |
+LL | struct IsCopy<T:Copy> { t: T }
+   |                 ---- required by this bound in `IsCopy`
+...
+LL | static FOO: IsCopy<Option<NotCopy>> = IsCopy { t: None };
+   |             ^^^^^^^^^^^^^^^^^^^^^^^ the trait `Copy` is not implemented for `NotCopy`
+   |
+   = note: required because of the requirements on the impl of `Copy` for `Option<NotCopy>`
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0277`.

@@ -1,0 +1,14 @@
+error[E0631]: type mismatch in closure arguments
+  --> $DIR/issue-41366.rs:10:5
+   |
+LL |     (&|_| ()) as &dyn for<'x> Fn(<u32 as T<'x>>::V);
+   |     ^^------^
+   |     | |
+   |     | found signature of `fn(u16) -> _`
+   |     expected signature of `fn(<u32 as T<'x>>::V) -> _`
+   |
+   = note: required for the cast to the object type `dyn for<'x> Fn(<u32 as T<'x>>::V)`
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0631`.

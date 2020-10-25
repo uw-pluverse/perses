@@ -1,0 +1,40 @@
+error: lifetime may not live long enough
+  --> $DIR/regions-lifetime-bounds-on-fns.rs:8:5
+   |
+LL | fn b<'a, 'b>(x: &mut &'a isize, y: &mut &'b isize) {
+   |      --  -- lifetime `'b` defined here
+   |      |
+   |      lifetime `'a` defined here
+LL |     // Illegal now because there is no `'b:'a` declaration.
+LL |     *x = *y;
+   |     ^^^^^^^ assignment requires that `'b` must outlive `'a`
+   |
+   = help: consider adding the following bound: `'b: 'a`
+
+error: lifetime may not live long enough
+  --> $DIR/regions-lifetime-bounds-on-fns.rs:14:5
+   |
+LL | fn c<'a,'b>(x: &mut &'a isize, y: &mut &'b isize) {
+   |      -- -- lifetime `'b` defined here
+   |      |
+   |      lifetime `'a` defined here
+...
+LL |     a(x, y);
+   |     ^^^^^^^ argument requires that `'b` must outlive `'a`
+   |
+   = help: consider adding the following bound: `'b: 'a`
+
+error: higher-ranked subtype error
+  --> $DIR/regions-lifetime-bounds-on-fns.rs:20:12
+   |
+LL |     let _: fn(&mut &isize, &mut &isize) = a;
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: higher-ranked subtype error
+  --> $DIR/regions-lifetime-bounds-on-fns.rs:20:12
+   |
+LL |     let _: fn(&mut &isize, &mut &isize) = a;
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: aborting due to 4 previous errors
+

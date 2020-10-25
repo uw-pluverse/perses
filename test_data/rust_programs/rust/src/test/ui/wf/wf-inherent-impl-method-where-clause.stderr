@@ -1,0 +1,17 @@
+error[E0277]: the trait bound `U: Copy` is not satisfied
+  --> $DIR/wf-inherent-impl-method-where-clause.rs:12:27
+   |
+LL | trait ExtraCopy<T:Copy> { }
+   |                   ---- required by this bound in `ExtraCopy`
+...
+LL |     fn foo(self) where T: ExtraCopy<U>
+   |                           ^^^^^^^^^^^^ the trait `Copy` is not implemented for `U`
+   |
+help: consider restricting type parameter `U`
+   |
+LL | impl<T,U: Copy> Foo<T,U> {
+   |         ^^^^^^
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0277`.
