@@ -1,0 +1,16 @@
+error: expected type, found reserved keyword `box`
+  --> $DIR/issue-47666.rs:3:25
+   |
+LL |     let _ = Option:Some(vec![0, 1]);
+   |                   -     ^^^^^^^^^^
+   |                   |     |
+   |                   |     expected type
+   |                   |     in this macro invocation
+   |                   |     this macro call doesn't expand to a type
+   |                   help: maybe write a path separator here: `::`
+   |
+   = note: `#![feature(type_ascription)]` lets you annotate an expression with a type: `<expr>: <type>`
+   = note: this error originates in a macro (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: aborting due to previous error
+

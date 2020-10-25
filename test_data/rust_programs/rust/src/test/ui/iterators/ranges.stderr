@@ -1,0 +1,21 @@
+error[E0277]: `RangeTo<{integer}>` is not an iterator
+  --> $DIR/ranges.rs:2:14
+   |
+LL |     for _ in ..10 {}
+   |              ^^^^ `RangeTo<{integer}>` is not an iterator
+   |
+   = help: the trait `Iterator` is not implemented for `RangeTo<{integer}>`
+   = note: required by `into_iter`
+
+error[E0277]: `RangeToInclusive<{integer}>` is not an iterator
+  --> $DIR/ranges.rs:4:14
+   |
+LL |     for _ in ..=10 {}
+   |              ^^^^^ `RangeToInclusive<{integer}>` is not an iterator
+   |
+   = help: the trait `Iterator` is not implemented for `RangeToInclusive<{integer}>`
+   = note: required by `into_iter`
+
+error: aborting due to 2 previous errors
+
+For more information about this error, try `rustc --explain E0277`.

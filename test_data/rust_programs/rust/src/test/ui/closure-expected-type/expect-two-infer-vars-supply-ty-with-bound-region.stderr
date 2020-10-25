@@ -1,0 +1,9 @@
+error[E0282]: type annotations needed
+  --> $DIR/expect-two-infer-vars-supply-ty-with-bound-region.rs:8:5
+   |
+LL |     with_closure(|x: u32, y| {});
+   |     ^^^^^^^^^^^^ cannot infer type for type parameter `B` declared on the function `with_closure`
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0282`.

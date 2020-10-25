@@ -1303,7 +1303,8 @@ colon_bound:
 
 bound:
     prim_bound
-    | bound '+' prim_bound;
+    | bound '+' prim_bound
+    | bound '<' (lifetime_param ',')* type_parameter_list '>'; //experimental for associated_type_bounds
 
 prim_bound:
     | '?'? for_lifetimes? ('dyn' | 'impl')? type_path_main
@@ -1906,7 +1907,7 @@ macro_matcher:
 macro_match:
     tokens_no_delimiters_cash
     |macro_matcher
-    |'$' ident ':' macro_frag_spec
+    |'$' ~(EOF) ':' macro_frag_spec
     |'$' '(' macro_match+ ')'  macro_rep_sep? macro_rep_op;
 
 

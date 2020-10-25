@@ -1,0 +1,12 @@
+error[E0308]: mismatched types
+  --> $DIR/issue-11515.rs:9:33
+   |
+LL |     let test = box Test { func: closure };
+   |                                 ^^^^^^^ expected trait `FnMut`, found trait `Fn`
+   |
+   = note: expected struct `Box<(dyn FnMut() + 'static)>`
+              found struct `Box<(dyn Fn() + 'static)>`
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0308`.
