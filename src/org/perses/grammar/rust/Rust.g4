@@ -1448,21 +1448,25 @@ pat_ident:
 // It is distinct from `pattern` to rule out ambiguity in parsing the
 // pattern `&mut x`, which must parse like `&mut (x)`, not `&(mut x)`.
 pattern_without_mut:
-    '_'
-	| ident ('@' match_pattern)
+    '_' // wildcard pattern
+    | '..' //experimental
+    | pattern_without_mut '|' pattern_without_mut
+	| ident ('@' match_pattern)?
     | ident ('@' '(' match_pattern ')' )
-    | pat_lit
-    | pat_range_end '...' pat_range_end
+    | pat_lit //litreal pattern
+    | pat_range_end '...' pat_range_end // range pattern
     | pat_range_end '..' pat_range_end  // experimental `feature(exclusive_range_pattern)`
     | pat_range_end '..=' pat_range_end
     | path macro_tail
     | (pat_ident ',')* pat_ident ('@' pattern)?
-    | 'ref' 'mut' ident ('@' pattern)?
+    | 'ref'? 'mut'? ident ('@' pattern)? //IDpattern
     | path '(' pat_list_with_dots? ')'
     | path '{' pat_fields? '}'
     | path  // BUG: ambiguity with bare ident case (above)
     | '(' pat_list_with_dots? ')'
-    | '[' ((pat_ident ',')* pat_ident '@')? pat_elt_list? ']'
+//    | '[' ((pat_ident ',')* pat_ident '@')? pat_elt_list? ']' // slice pattern
+    | '[' pattern ( ',' pattern )* ','? ']'
+    | '['']'
     | '&' pattern_without_mut
     | '&' 'mut' pattern
     | '&&' pattern_without_mut   // `&& pat` means the same as `& & pat`
@@ -1589,8 +1593,8 @@ match_arms:
 match_arm_intro:
     attr* match_pattern match_if_clause? '=>';
 
-match_pattern
-    : pattern ('|' pattern)*
+match_pattern:
+    pattern ('|' pattern)*
     ;
 
 match_if_clause:
