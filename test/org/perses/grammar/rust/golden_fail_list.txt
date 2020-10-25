@@ -5,7 +5,6 @@ test_data/rust_programs/rust_testsuite/pretty/nested-item-vis-defaultness.rs
 test_data/rust_programs/rust_testsuite/pretty/raw-address-of.rs
 test_data/rust_programs/rust_testsuite/rustdoc/const-generics/const-impl.rs
 test_data/rust_programs/rust_testsuite/rustdoc/pub-restricted.rs
-test_data/rust_programs/rust_testsuite/ui-fulldeps/auxiliary/lint-for-crate-rpass.rs
 test_data/rust_programs/rust_testsuite/ui/array-slice-vec/vec-matching-legal-tail-element-borrow.rs
 test_data/rust_programs/rust_testsuite/ui/array-slice-vec/vec-matching.rs
 test_data/rust_programs/rust_testsuite/ui/array-slice-vec/vec-tail-matching.rs
@@ -49,16 +48,13 @@ test_data/rust_programs/rust_testsuite/ui/const-generics/issues/issue-61747.rs
 test_data/rust_programs/rust_testsuite/ui/const-generics/raw-ptr-const-param-deref.rs
 test_data/rust_programs/rust_testsuite/ui/const-generics/raw-ptr-const-param.rs
 test_data/rust_programs/rust_testsuite/ui/const-generics/slice-const-param.rs
-test_data/rust_programs/rust_testsuite/ui/consts/ascii_ctype.rs
 test_data/rust_programs/rust_testsuite/ui/consts/const-address-of.rs
 test_data/rust_programs/rust_testsuite/ui/consts/const-endianess.rs
-test_data/rust_programs/rust_testsuite/ui/consts/const-int-arithmetic.rs
 test_data/rust_programs/rust_testsuite/ui/consts/const-mut-refs/const_mut_address_of.rs
 test_data/rust_programs/rust_testsuite/ui/consts/const_let_eq.rs
 test_data/rust_programs/rust_testsuite/ui/consts/const_prop_slice_pat_ice.rs
 test_data/rust_programs/rust_testsuite/ui/consts/min_const_fn/address_of_const.rs
 test_data/rust_programs/rust_testsuite/ui/consts/trait_specialization.rs
-test_data/rust_programs/rust_testsuite/ui/consts/underscore_const_names.rs
 test_data/rust_programs/rust_testsuite/ui/cross-crate/issue-64872/auxiliary/a_def_obj.rs
 test_data/rust_programs/rust_testsuite/ui/cross-crate/issue-64872/auxiliary/c_another_vtable_for_obj.rs
 test_data/rust_programs/rust_testsuite/ui/drop/dynamic-drop-async.rs
@@ -99,7 +95,6 @@ test_data/rust_programs/rust_testsuite/ui/lex-bare-cr-nondoc-comment.rs
 test_data/rust_programs/rust_testsuite/ui/lint/unused_labels.rs
 test_data/rust_programs/rust_testsuite/ui/mir/mir_augmented_assignments.rs
 test_data/rust_programs/rust_testsuite/ui/mir/mir_raw_fat_ptr.rs
-test_data/rust_programs/rust_testsuite/ui/nll/ty-outlives/issue-53789-2.rs
 test_data/rust_programs/rust_testsuite/ui/op-assign-builtins-by-ref.rs
 test_data/rust_programs/rust_testsuite/ui/or-patterns/basic-switchint.rs
 test_data/rust_programs/rust_testsuite/ui/or-patterns/consistent-bindings.rs
@@ -164,4 +159,3 @@ test_data/rust_programs/rust_testsuite/ui/structs-enums/numeric-fields.rs
 test_data/rust_programs/rust_testsuite/ui/transmute-specialization.rs
 test_data/rust_programs/rust_testsuite/ui/user-defined-macro-rules.rs
 test_data/rust_programs/rust_testsuite/ui/weird-exprs.rs
-test_data/rust_programs/rust_testsuite/ui/wrapping-int-combinations.rs
