@@ -186,7 +186,7 @@ associated_static_decl
     ;
 
 fn_decl
-    : fn_head '(' alternative__fn_decl_7
+    : fn_head '(' optional__fn_decl_1 ')' optional__fn_decl_2 optional__impl_block_4 (block_with_inner_attrs | ';')
     ;
 
 optional__fn_decl_1
@@ -195,15 +195,6 @@ optional__fn_decl_1
 
 optional__fn_decl_2
     : fn_rtype?
-    ;
-
-alternative__fn_decl_7
-    : optional__fn_decl_1 ')' optional__fn_decl_2 optional__impl_block_4 alternative__fn_decl_8
-    ;
-
-alternative__fn_decl_8
-    : ';'
-    | block_with_inner_attrs
     ;
 
 type_decl
@@ -456,7 +447,7 @@ where_clause
     ;
 
 foreign_fn_decl
-    : fn_head '(' alternative__foreign_fn_decl_7
+    : fn_head '(' optional__foreign_fn_decl_1 ')' optional__foreign_fn_decl_2 optional__impl_block_4 (block_with_inner_attrs | ';')
     ;
 
 optional__foreign_fn_decl_1
@@ -465,10 +456,6 @@ optional__foreign_fn_decl_1
 
 optional__foreign_fn_decl_2
     : rtype?
-    ;
-
-alternative__foreign_fn_decl_7
-    : optional__foreign_fn_decl_1 ')' optional__foreign_fn_decl_2 optional__impl_block_4 alternative__fn_decl_8
     ;
 
 ty_sum
@@ -488,24 +475,21 @@ optional__ty_sum_3
     ;
 
 fn_head
-    : alternative__fn_head_9 optional__impl_block_2 optional__fn_head_4 'fn' ident optional__impl_block_3
+    : kleene_star__fn_head_2 optional__fn_head_3 'fn' ident optional__impl_block_3
     ;
 
-optional__fn_head_1
-    : 'async'?
+fn_head_1
+    : 'async'
+    | 'const'
+    | 'unsafe'
     ;
 
-optional__fn_head_2
-    : 'const'?
+kleene_star__fn_head_2
+    : fn_head_1*
     ;
 
-optional__fn_head_4
+optional__fn_head_3
     : extern_abi?
-    ;
-
-alternative__fn_head_9
-    : 'const' 'async'
-    | optional__fn_head_1 optional__fn_head_2
     ;
 
 param_list
@@ -545,15 +529,11 @@ optional__block_with_inner_attrs_3
     ;
 
 method_decl
-    : fn_head '(' alternative__method_decl_7
+    : fn_head '(' optional__method_decl_1 ')' optional__fn_decl_2 optional__impl_block_4 (block_with_inner_attrs | ';')
     ;
 
 optional__method_decl_1
     : method_param_list?
-    ;
-
-alternative__method_decl_7
-    : optional__method_decl_1 ')' optional__fn_decl_2 optional__impl_block_4 alternative__fn_decl_8
     ;
 
 method_param_list
@@ -610,7 +590,11 @@ tt
     ;
 
 type_parameter
-    : kleene_star__item_1 optional__fn_head_2 ident optional__type_decl_4 optional__type_parameter_4
+    : kleene_star__item_1 optional__type_parameter_2 ident optional__type_decl_4 optional__type_parameter_4
+    ;
+
+optional__type_parameter_2
+    : 'const'?
     ;
 
 optional__type_parameter_4
@@ -1184,7 +1168,7 @@ optional__prim_bound_4
     ;
 
 lifetime_param
-    : kleene_star__item_1 optional__fn_head_2 lifetime optional__lifetime_def_2
+    : kleene_star__item_1 optional__type_parameter_2 lifetime optional__lifetime_def_2
     ;
 
 type_parameter_list
@@ -1260,7 +1244,7 @@ inferred_type
     ;
 
 bare_function_type
-    : optional__where_bound_1 optional__impl_block_2 optional__fn_head_4 'fn' '(' optional__bare_function_type_4 ')' optional__foreign_fn_decl_2
+    : optional__where_bound_1 optional__impl_block_2 optional__fn_head_3 'fn' '(' optional__bare_function_type_4 ')' optional__foreign_fn_decl_2
     ;
 
 optional__bare_function_type_4
@@ -1636,10 +1620,14 @@ optional__blocky_expr_7
     : loop_label?
     ;
 
+optional__blocky_expr_10
+    : 'async'?
+    ;
+
 alternative__blocky_expr_15
     : 'try'
     | 'unsafe'
-    | optional__fn_head_1
+    | optional__blocky_expr_10
     | optional__blocky_expr_7 alternative__blocky_expr_17
     ;
 

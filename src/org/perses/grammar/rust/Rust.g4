@@ -984,19 +984,16 @@ associated_const_decl:
 // --- Functions
 
 fn_decl:
-    fn_head '(' param_list? ')' fn_rtype? where_clause? block_with_inner_attrs
-    | fn_head '(' param_list? ')' fn_rtype? where_clause? ';'; //experimental for supporting `fn` forms having or lacking a body are syntactically valid.
+    fn_head '(' param_list? ')' fn_rtype? where_clause? ( block_with_inner_attrs | ';'); //experimental for supporting `fn` forms having or lacking a body are syntactically valid.
 
 method_decl:
-    fn_head '(' method_param_list? ')' fn_rtype? where_clause? block_with_inner_attrs
-    | fn_head '(' method_param_list? ')' fn_rtype? where_clause? ';'; //experimental for supporting `fn` forms having or lacking a body are syntactically valid.
+    fn_head '(' method_param_list? ')' fn_rtype? where_clause? ( block_with_inner_attrs | ';');//experimental for supporting `fn` forms having or lacking a body are syntactically valid.
 
 trait_method_decl:
     fn_head '(' trait_method_param_list? ')' rtype? where_clause? (block_with_inner_attrs | ';');
 
 foreign_fn_decl:
-    fn_head '(' variadic_param_list? ')' rtype? where_clause? block_with_inner_attrs  //experimental for supporting `fn` forms having or lacking a body are syntactically valid.
-    | fn_head '(' variadic_param_list? ')' rtype? where_clause? ';';
+    fn_head '(' variadic_param_list? ')' rtype? where_clause? ( block_with_inner_attrs | ';');  //experimental for supporting `fn` forms having or lacking a body are syntactically valid.
 
 //macro declaration here is not documented,
 macro_decl:
@@ -1012,8 +1009,7 @@ macro_head:
 // rule, not a syntactic one. That is, not every rule that can be
 // enforced gramatically should be.
 fn_head:
-    'async'? 'const'? 'unsafe'? extern_abi? 'fn' ident type_parameters?
-    | 'const' 'async' 'unsafe'? extern_abi? 'fn' ident type_parameters?; //experimental Ensures that all `fn` forms can have all the function qualifiers syntactically.
+    ('async' | 'const' | 'unsafe')*extern_abi? 'fn' ident type_parameters?; //experimental Ensures that all `fn` forms can have all the function qualifiers syntactically.
 
 param:
     pattern ':' param_ty
