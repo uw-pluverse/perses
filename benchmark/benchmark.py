@@ -146,12 +146,12 @@ def count_token(source_file_path):
         print("Error counting token for " + source_file_path)
         raise err
 
-def environment_udpater(parameter_interface):
+def environment_udpater(parameter_interface, bench):
     # update env var if memory_profiler enabled
     if parameter_interface.memory_profiler:
         time = datetime.now().strftime("%Y_%m_%d_%H%M%S")
         new_env = os.environ.copy()
-        new_env["PERSES_MEMORY_PROFILER"] = f"{__location__}/tmp_memory_log_{time}"
+        new_env["PERSES_MEMORY_PROFILER"] = f"{__location__}/tmp_memory_log_{bench}_{time}"
         return new_env
     else:
         return os.environ.copy()
@@ -196,7 +196,7 @@ def main():
                 print(f"*****iteration {iteration}*****")
 
                 # update environment variables
-                new_env = environment_udpater(para)
+                new_env = environment_udpater(para, bench_name)
                 
                 # create tmp output file
                 fd, fname = tempfile.mkstemp()
