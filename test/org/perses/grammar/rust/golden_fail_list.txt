@@ -63,7 +63,6 @@ test_data/rust_programs/rust_testsuite/ui/mir/mir_raw_fat_ptr.rs
 test_data/rust_programs/rust_testsuite/ui/op-assign-builtins-by-ref.rs
 test_data/rust_programs/rust_testsuite/ui/packed/packed-struct-address-of-element.rs
 test_data/rust_programs/rust_testsuite/ui/parser-unicode-whitespace.rs
-test_data/rust_programs/rust_testsuite/ui/parser/extern-crate-async.rs
 test_data/rust_programs/rust_testsuite/ui/parser/trait-item-with-defaultness-pass.rs
 test_data/rust_programs/rust_testsuite/ui/parser/trait-plusequal-splitting.rs
 test_data/rust_programs/rust_testsuite/ui/parser/underscore-suffix-for-string.rs
