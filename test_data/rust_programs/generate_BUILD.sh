@@ -62,6 +62,7 @@ filegroup(
         ["rust_testsuite/**/*.rs"],
         exclude = [
             "rust_testsuite/run-make-fulldeps/dep-info-spaces/*.rs",
+            "rust_testsuite/ui/parser/extern-crate-async.rs ", # Should not be parsed according to the comments in this file.
             "rust_testsuite/ui/closures/deeply-nested_closures.rs",  # TODO: cause infinite loop of antlr.
 $(cat "${INVALID_FILE_LIST}")
         ],
