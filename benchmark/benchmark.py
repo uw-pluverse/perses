@@ -146,10 +146,10 @@ def count_token(source_file_path):
         print("Error counting token for " + source_file_path)
         raise err
 
-def environment_udpater(parameter_interface, bench):
+
+def environment_udpater(parameter_interface, bench, time):
     # update env var if memory_profiler enabled
     if parameter_interface.memory_profiler:
-        time = datetime.now().strftime("%Y_%m_%d_%H%M%S")
         new_env = os.environ.copy()
         new_env["PERSES_MEMORY_PROFILER"] = f"{__location__}/tmp_memory_log_{bench}_{time}"
         return new_env
@@ -164,7 +164,11 @@ def main():
     para.validate()
     print(para)
 
+    time = datetime.now().strftime("%Y_%m_%d_%H%M%S")
     report = dict() #final printable json results
+    report["arguments"] = para
+    report["timestamp"] = time
+    report["environment"] = f"PERSES_EXTRA_FLAGS = {os.environ.get('PERSES_EXTRA_FLAGS')}"
 
     # install token counter
     load_token_counter(para)
@@ -196,7 +200,7 @@ def main():
                 print(f"*****iteration {iteration}*****")
 
                 # update environment variables
-                new_env = environment_udpater(para, bench_name)
+                new_env = environment_udpater(para, bench_name, time)
                 
                 # create tmp output file
                 fd, fname = tempfile.mkstemp()
@@ -237,7 +241,6 @@ def main():
         json_object = json.dumps(report, indent=4)
         print(json_object)
 
-        time = datetime.now().strftime("%Y_%m_%d_%H%M%S")
         report_title = f'tmp_report_{time}.json'
         with open(report_title, 'w') as out_file:
             out_file.write(json_object)
