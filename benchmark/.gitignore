@@ -7,3 +7,5 @@ perses_*reduced*
 statistics-*.txt
 testscript-statistics-*.txt
 /fix_file_permissions.sh
+init_docker.sh
+update_bazel.sh
