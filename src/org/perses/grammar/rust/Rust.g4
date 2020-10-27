@@ -1012,21 +1012,21 @@ fn_head:
     ('async' | 'const' | 'unsafe')*extern_abi? 'fn' ident type_parameters?; //experimental Ensures that all `fn` forms can have all the function qualifiers syntactically.
 
 param:
-    pattern ':' param_ty
-    | '&'? lifetime? mut_or_const?  'self' (':' type)?; // experimental:`self` is syntactically accepted
+    attr* mut_or_const? pattern ':' (param_ty|'...')
+    | attr*  '&'? lifetime? mut_or_const?  'self' (':' type)?; // experimental:`self` is syntactically accepted
 
 param_ty:
     ty_sum
     | 'impl' bound;  // experimental: feature(universal_impl_trait)
 
 param_list:
-    param (',' param)* (',' pattern ':' '...')? ','?;
+    param (',' param)* (',' attr* pattern mut_or_const ':' '...')? ','?;
 
 variadic_param_list:
-    param (',' param)* (',' '...')? ','?;
+     param (','  param)* (',' attr* '...')? ','?; //experimental c_variadic
 
 variadic_param_list_names_optional:
-    trait_method_param (',' trait_method_param)* (',' '...')? ','?;
+    trait_method_param (',' trait_method_param)* (',' attr* '...')? ','?;
 
 self_param:
     'mut'? 'self' (':' ty_sum)?
@@ -1039,14 +1039,14 @@ method_param_list:
 // `(pat ':')? ty_sum`, but parsing this would be unreasonably complicated.
 // Instead, the `pat` is restricted to a few short, simple cases.
 trait_method_param:
-    restricted_pat ':' ty_sum
-    | ty_sum;
+    attr* restricted_pat ':' attr* ty_sum
+    | attr* ty_sum;
 
 restricted_pat:
     ('&' | '&&' | 'mut')? ('_' | ident);
 
 trait_method_param_list:
-    (trait_method_param | self_param) (',' trait_method_param)* ','?;
+    attr* (trait_method_param | self_param) (',' trait_method_param)* ','?;
 
 // `ty_sum` is permitted in parameter types (although as a matter of semantics
 // an actual sum is always rejected later, as having no statically known size),
@@ -1152,7 +1152,8 @@ const_default:
 // --- impl blocks
 
 impl_block:
-    'default'? 'unsafe'? 'impl' type_parameters? impl_what where_clause? '{' impl_item* '}';
+    //experimental: ?const parse only
+    'default'? 'unsafe'? 'impl' type_parameters? '?'? 'const'? impl_what where_clause? '{' impl_item* '}';
 
 impl_what:
     '!' ty_sum 'for' ty_sum
@@ -1517,7 +1518,7 @@ pat_fields_left:
 
 pat_fields:
     '..'
-    | pat_fields_left ':' pat_fields_left (',' pat_fields_left ':' pat_fields_left)*
+    | pat_fields_left ':' pat_fields_left ((',' pat_fields_left ':' pat_fields_left)|(',' '..'))*
     | pat_field (',' pat_field)* (',' '..' | ','?);
 
 pat_field:
@@ -1660,7 +1661,7 @@ closure_params
     | '|' closure_param_list? '|';
 
 closure_param:
-    pattern (':' type)?;
+    attr* pattern (':' type)?;
 
 closure_param_list:
     closure_param (',' closure_param)* ','?;
@@ -1896,12 +1897,13 @@ macro_iterm:
 
 
 macro_rules_definition:
-    'macro_rules' '!' ident macro_rules_def;
+    'macro_rules' '!' (~EOF)? macro_rules_def; //experimental: relex syntax for allowing macro_rules declaration with invalid name or without name
 
 macro_rules_def:
-    '(' macro_rules')' ';'
-    | '[' macro_rules ']' ';'
-    | '{' macro_rules '}' ;
+    '(' macro_rules?')' ';'
+    | '[' macro_rules? ']' ';'
+    | '{' macro_rules? '}' ;
+ //experimental: relex syntax for allowing empty macro rules body
 
 macro_rules:
     macro_rule ( ';' macro_rule)* ';'? ;
