@@ -164,9 +164,8 @@ def main():
     para.validate()
     print(para)
 
-    time = datetime.now().strftime("%Y_%m_%d_%H%M%S")
+    time = datetime.now().strftime("%Y%m%d_%H%M%S")
     report = dict() #final printable json results
-    report["arguments"] = para
     report["timestamp"] = time
     report["environment"] = f"PERSES_EXTRA_FLAGS = {os.environ.get('PERSES_EXTRA_FLAGS')}"
 
