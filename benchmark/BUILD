@@ -7,3 +7,16 @@ filegroup(
     name = "sanity_test",
     srcs = ["sanity_test.sh"],
 )
+
+py_library(
+    name = "analyze_memory",
+    srcs = ["analyze_memory.py"],
+)
+
+py_test(
+    name = "test_analyze_memory",
+    srcs = ["test_analyze_memory.py"],
+    deps = [
+        ":analyze_memory",
+    ],
+)

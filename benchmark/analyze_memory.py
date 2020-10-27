@@ -3,17 +3,22 @@
 import argparse
 import json
 
+from typing import List
+
+
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Analyse memory log file produced from jstat")
     parser.add_argument("files", nargs='+', default=[], help="List of file(s) to be analyzed")
     return parser.parse_args()
 
-def read_file(file_name):
-    with open(file_name) as f:
-        lines = f.readlines()
-    return lines
 
-def get_average_heap_usage(data):
+def read_file(file_name: str) -> List[str]:
+    with open(file_name) as f:
+        lines = f.read()
+    return lines.split('\n')
+
+
+def get_average_heap_usage(data: List[str]) -> int:
     heap = []
     for line in data:
         if 'Timestamp' in line:
@@ -25,6 +30,7 @@ def get_average_heap_usage(data):
     samples = heap[sample_quantity::]
 
     return int(sum(samples)/len(samples))
+
 
 def main():
     report = dict()
@@ -40,9 +46,6 @@ def main():
 
     json_object = json.dumps(report, indent=4)
     print(json_object)
-
-
-
 
 
 if __name__ == "__main__":
