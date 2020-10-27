@@ -71,7 +71,7 @@ trap "rm ${INIT_DOCKER_SCRIPT} ${UPDATE_BAZEL_SCRIPT}" EXIT
 # --cap-add is to enable LeakSanitizer
 #   See https://github.com/google/sanitizers/issues/764
 docker container run \
-        --volume "${WORKSPACE}:${PERSES_ROOT_IN_DOCKER}" \
+  --volume "${WORKSPACE}:${PERSES_ROOT_IN_DOCKER}" \
 	--cap-add SYS_PTRACE \
 	--interactive \
 	--tty cnsun/perses:perses_part_54_name_clang_trunk 
