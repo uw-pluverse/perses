@@ -72,15 +72,5 @@ test_data/rust_programs/rust_testsuite/ui/raw-ref-op/raw-ref-op.rs
 test_data/rust_programs/rust_testsuite/ui/raw-ref-op/raw-ref-temp-deref.rs
 test_data/rust_programs/rust_testsuite/ui/raw-ref-op/unusual_locations.rs
 test_data/rust_programs/rust_testsuite/ui/resolve/auxiliary/privacy-struct-ctor.rs
-test_data/rust_programs/rust_testsuite/ui/rfc-2565-param-attrs/issue-64682-dropping-first-attrs-in-impl-fns.rs
-test_data/rust_programs/rust_testsuite/ui/rfc-2565-param-attrs/param-attrs-2018.rs
-test_data/rust_programs/rust_testsuite/ui/rfc-2565-param-attrs/param-attrs-allowed.rs
-test_data/rust_programs/rust_testsuite/ui/rfc-2565-param-attrs/param-attrs-pretty.rs
-test_data/rust_programs/rust_testsuite/ui/rfc-2632-const-trait-impl/assoc-type.rs
-test_data/rust_programs/rust_testsuite/ui/rfc-2632-const-trait-impl/call-const-trait-method-pass.rs
 test_data/rust_programs/rust_testsuite/ui/rfc-2632-const-trait-impl/const-trait-bound-opt-out/syntax.rs
-test_data/rust_programs/rust_testsuite/ui/rfc-2632-const-trait-impl/generic-bound.rs
-test_data/rust_programs/rust_testsuite/ui/rfc-2632-const-trait-impl/syntax.rs
-test_data/rust_programs/rust_testsuite/ui/structs-enums/numeric-fields.rs
-test_data/rust_programs/rust_testsuite/ui/user-defined-macro-rules.rs
 test_data/rust_programs/rust_testsuite/ui/weird-exprs.rs
