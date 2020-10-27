@@ -27,11 +27,9 @@ def get_average_heap_usage(data):
     return int(sum(samples)/len(samples))
 
 def main():
-    files = parse_arguments().files
-
     report = dict()
 
-    for file in files:
+    for file in parse_arguments().files:
         report[file] = dict()
 
         lines = read_file(file)
