@@ -26,6 +26,8 @@ def get_average_heap_usage(data: List[str]) -> int:
         data = line.split()
         heap.append(int(float(data[3])+float(data[9])))
 
+    # the heap memory usage is in increasing order
+    # pick the top 30% as sample points
     sample_quantity = int(len(heap)*0.3)
     samples = heap[sample_quantity::]
 
