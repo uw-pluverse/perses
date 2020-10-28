@@ -1012,7 +1012,8 @@ fn_head:
     ('async' | 'const' | 'unsafe')*extern_abi? 'fn' ident type_parameters?; //experimental Ensures that all `fn` forms can have all the function qualifiers syntactically.
 
 param:
-    attr* mut_or_const? pattern ':' (param_ty|'...')
+    '...'
+    | attr* mut_or_const? ~(EOF)? pattern ':' (param_ty|'...')
     | attr*  '&'? lifetime? mut_or_const?  'self' (':' type)?; // experimental:`self` is syntactically accepted
 
 param_ty:
@@ -1039,7 +1040,8 @@ method_param_list:
 // `(pat ':')? ty_sum`, but parsing this would be unreasonably complicated.
 // Instead, the `pat` is restricted to a few short, simple cases.
 trait_method_param:
-    attr* restricted_pat ':' attr* ty_sum
+    '...'
+    | attr* restricted_pat ':' attr* ty_sum
     | attr* ty_sum;
 
 restricted_pat:
@@ -1136,11 +1138,11 @@ trait_alias
     ;
 
 trait_item:
-    attr* visibility? 'type' ident type_parameters? colon_bound? where_clause? ty_default? ';'
-    | attr* 'const' ident ':' ty_sum const_default? ';'  // experimental associated constants
-    | attr* visibility? trait_method_decl
-    | attr* visibility? macro_invocation_semi // experimental:accept visibilities on items in traits syntactically but not semantically.
-    | visibility? (const_decl|associated_const_decl); //experimental
+    attr* 'default'? visibility? 'type' ident type_parameters? colon_bound? where_clause? ty_default? ';'
+    | attr* 'default'? 'const' ident ':' ty_sum const_default? ';'  // experimental associated constants
+    | attr* 'default'? visibility? trait_method_decl
+    | attr* 'default'? visibility? macro_invocation_semi // experimental:accept visibilities on items in traits syntactically but not semantically.
+    | 'default'? visibility? (const_decl|associated_const_decl); //experimental
 
 ty_default:
     '=' ty_sum;
@@ -1529,10 +1531,10 @@ pat_field:
 // === Expressions
 
 expr:
-    assign_expr;
+   '&raw'? mut_or_const? assign_expr;
 
 expr_no_struct:
-    assign_expr_no_struct;
+    '&raw'? mut_or_const? assign_expr_no_struct;
 
 expr_list:
     expr (',' expr)* ','?;
@@ -1823,7 +1825,7 @@ bit_or_expr_no_struct:
 
 cmp_expr_no_struct:
     bit_or_expr_no_struct
-    | bit_or_expr_no_struct ('==' | '!=' | '<' | '<=' | '>' | '>' '=') bit_or_expr_no_struct;
+    | '&raw'? mut_or_const? bit_or_expr_no_struct ('==' | '!=' | '<' | '<=' | '>' | '>' '=') '&raw'? mut_or_const? bit_or_expr_no_struct;
 
 and_expr_no_struct:
     cmp_expr_no_struct
