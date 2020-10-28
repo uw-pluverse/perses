@@ -15,7 +15,7 @@ def parse_arguments():
 def read_file(file_name: str) -> List[str]:
     with open(file_name) as f:
         lines = f.read()
-    return lines.split('\n')
+    return lines.rstrip().split('\n')
 
 
 def get_average_heap_usage(data: List[str]) -> int:
