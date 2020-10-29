@@ -22,13 +22,19 @@ class TestAnalyzeMemory(unittest.TestCase):
 
     def test_read_file(self):
         tmp_memory_log = tempfile.mkstemp()[1]
-        print(tmp_memory_log)
         with open(tmp_memory_log, 'w+') as f:
             f. write(MINI_MEMORY_LOG)
         lines_returned = analyze_memory.read_file(tmp_memory_log)
         os.unlink(tmp_memory_log)
-        lines_correct = MINI_MEMORY_LOG.split('\n')
+        lines_correct = MINI_MEMORY_LOG.split('\n')[1::]
         self.assertEqual(lines_returned, lines_correct)
+
+    def test_read_file_exception_raise(self):
+        tmp_memory_log = tempfile.mkstemp()[1]
+        with open(tmp_memory_log, 'w+') as f:
+            f.write("#!/usr/bin/env python3")
+        self.assertRaises(Exception, analyze_memory.read_file, tmp_memory_log)
+        os.unlink(tmp_memory_log)
 
     def test_get_average_heap_usage(self):
         average_returned = analyze_memory.get_average_heap_usage(MINI_MEMORY_LOG.split('\n'))
