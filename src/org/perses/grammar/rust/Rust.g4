@@ -887,7 +887,8 @@ item:
     attr* visibility? pub_item
     | attr* impl_block
     | attr* extern_mod
-    | attr* macro_iterm;
+    | attr* macro_iterm
+    | attr* '\''; // experimental ignore-tidy-cr
 //TODO: attr* need to be moved to somewhere else here
 
 
@@ -915,7 +916,7 @@ pub_item
 // --- extern crate
 
 extern_crate:
-    'extern' 'crate' ident rename? ';';
+    'extern' 'crate' (ident|'self') rename? ';'; //experimental: extern-crate-self-pass
 
 
 // --- use declarations
@@ -1166,7 +1167,7 @@ impl_what:
     ;
 
 impl_item:
-    attr* visibility? impl_item_tail;
+    (attr|inner_attr)* visibility? impl_item_tail;
 
 impl_item_tail:
     'default'? method_decl
@@ -1579,6 +1580,7 @@ blocky_expr
     | loop_label? while_cond_or_pat block_with_inner_attrs
     | loop_label? 'for' pattern 'in' expr_no_struct block_with_inner_attrs
     | loop_label? 'loop' block_with_inner_attrs
+    | loop_label? block_with_inner_attrs
     | 'unsafe' block_with_inner_attrs
     | 'try' block_with_inner_attrs
     | 'async' block_with_inner_attrs
@@ -1637,7 +1639,7 @@ prim_expr_no_struct
     | '(' expr_inner_attrs? expr ',' expr_list? ')'
     | '[' expr_inner_attrs? expr_list? ']'
     | '[' expr_inner_attrs? expr ';' expr ']'
-    | ('static' | 'move')? closure_params closure_tail
+    | 'static'? 'move'? closure_params closure_tail
     | 'async' 'move' (blocky_expr | closure_params closure_tail)
     | blocky_expr
     | 'break' lifetime_or_expr?
@@ -1771,7 +1773,7 @@ range_expr:
 assign_expr:
     range_expr
     | range_expr ('=' | '*=' | '/=' | '%=' | '+=' | '-='
-                      | '<<=' | '>' '>' '=' | '&=' | '^=' | '|=' ) assign_expr;
+                      | '<<=' | '>>=' | '&=' | '^=' | '|=' ) assign_expr;
 
 
 // --- Copy of the operator expression syntax but without structs

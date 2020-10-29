@@ -35,7 +35,7 @@ kleene_star__inner_attr_1
     ;
 
 item
-    : kleene_star__item_1 alternative__item_8
+    : kleene_star__item_1 alternative__item_10
     ;
 
 kleene_star__item_1
@@ -46,8 +46,9 @@ optional__item_2
     : visibility?
     ;
 
-alternative__item_8
-    : extern_mod
+alternative__item_10
+    : '\''
+    | extern_mod
     | impl_block
     | macro_rules_definition
     | macro_invocation_semi
@@ -146,7 +147,7 @@ kleene_star__extern_mod_2
     ;
 
 extern_crate
-    : 'extern' 'crate' ident optional__extern_crate_1 ';'
+    : 'extern' 'crate' (ident | 'self') optional__extern_crate_1 ';'
     ;
 
 optional__extern_crate_1
@@ -872,7 +873,16 @@ alternative__impl_what_3
     ;
 
 impl_item
-    : kleene_star__item_1 optional__item_2 impl_item_tail
+    : kleene_star__impl_item_2 optional__item_2 impl_item_tail
+    ;
+
+impl_item_1
+    : attr
+    | inner_attr
+    ;
+
+kleene_star__impl_item_2
+    : impl_item_1*
     ;
 
 type_arguments
@@ -1562,7 +1572,7 @@ assign_expr
     ;
 
 assign_expr_1
-    : ('=' | '*=' | '/=' | '%=' | '+=' | '-=' | '<<=' | '>' '>' '=' | '&=' | '^=' | '|=') assign_expr
+    : ('=' | '*=' | '/=' | '%=' | '+=' | '-=' | '<<=' | '>>=' | '&=' | '^=' | '|=') assign_expr
     ;
 
 optional__assign_expr_2
@@ -1616,7 +1626,7 @@ alternative__stmt_8
 blocky_expr
     : if_cond_or_pat block kleene_star__blocky_expr_2 optional__blocky_expr_4
     | 'match' expr_no_struct '{' optional__blocky_expr_5 optional__blocky_expr_6 '}'
-    | alternative__blocky_expr_15 block_with_inner_attrs
+    | alternative__blocky_expr_17 block_with_inner_attrs
     ;
 
 blocky_expr_1
@@ -1647,20 +1657,28 @@ optional__blocky_expr_7
     : loop_label?
     ;
 
-optional__blocky_expr_10
+optional__blocky_expr_11
     : 'async'?
     ;
 
-alternative__blocky_expr_15
+alternative__blocky_expr_17
     : 'try'
     | 'unsafe'
-    | optional__blocky_expr_10
-    | optional__blocky_expr_7 alternative__blocky_expr_17
+    | optional__blocky_expr_11
+    | optional__blocky_expr_7 alternative__blocky_expr_21
     ;
 
-alternative__blocky_expr_17
+blocky_expr_18
     : 'for' pattern 'in' expr_no_struct
-    | 'loop'
+    ;
+
+optional__blocky_expr_19
+    : blocky_expr_18?
+    ;
+
+alternative__blocky_expr_21
+    : 'loop'
+    | optional__blocky_expr_19
     | while_cond_or_pat
     ;
 
@@ -1745,7 +1763,7 @@ prim_expr_no_struct
     | blocky_expr
     | 'async' 'move' (blocky_expr | closure_params closure_tail)
     | path optional__prim_expr_no_struct_1
-    | optional__prim_expr_no_struct_10 closure_params closure_tail
+    | optional__prim_expr_no_struct_9 optional__prim_expr_no_struct_10 closure_params closure_tail
     | 'break' optional__prim_expr_no_struct_11
     | '(' alternative__prim_expr_no_struct_16 ')'
     | '[' alternative__prim_expr_no_struct_17 ']'
@@ -1761,13 +1779,12 @@ optional__prim_expr_no_struct_5
     : expr_list?
     ;
 
-prim_expr_no_struct_9
-    : 'static'
-    | 'move'
+optional__prim_expr_no_struct_9
+    : 'static'?
     ;
 
 optional__prim_expr_no_struct_10
-    : prim_expr_no_struct_9?
+    : 'move'?
     ;
 
 optional__prim_expr_no_struct_11
