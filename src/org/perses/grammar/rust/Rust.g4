@@ -887,7 +887,8 @@ item:
     attr* visibility? pub_item
     | attr* impl_block
     | attr* extern_mod
-    | attr* macro_iterm;
+    | attr* macro_iterm
+    | attr* '\''; // experimental ignore-tidy-cr
 //TODO: attr* need to be moved to somewhere else here
 
 
@@ -915,7 +916,7 @@ pub_item
 // --- extern crate
 
 extern_crate:
-    'extern' 'crate' ident rename? ';';
+    'extern' 'crate' (ident|'self') rename? ';'; //experimental: extern-crate-self-pass
 
 
 // --- use declarations
@@ -1012,7 +1013,8 @@ fn_head:
     ('async' | 'const' | 'unsafe')*extern_abi? 'fn' ident type_parameters?; //experimental Ensures that all `fn` forms can have all the function qualifiers syntactically.
 
 param:
-    attr* mut_or_const? pattern ':' (param_ty|'...')
+    '...'
+    | attr* mut_or_const? ~(EOF)? pattern ':' (param_ty|'...')
     | attr*  '&'? lifetime? mut_or_const?  'self' (':' type)?; // experimental:`self` is syntactically accepted
 
 param_ty:
@@ -1039,7 +1041,8 @@ method_param_list:
 // `(pat ':')? ty_sum`, but parsing this would be unreasonably complicated.
 // Instead, the `pat` is restricted to a few short, simple cases.
 trait_method_param:
-    attr* restricted_pat ':' attr* ty_sum
+    '...'
+    | attr* restricted_pat ':' attr* ty_sum
     | attr* ty_sum;
 
 restricted_pat:
@@ -1136,11 +1139,11 @@ trait_alias
     ;
 
 trait_item:
-    attr* visibility? 'type' ident type_parameters? colon_bound? where_clause? ty_default? ';'
-    | attr* 'const' ident ':' ty_sum const_default? ';'  // experimental associated constants
-    | attr* visibility? trait_method_decl
-    | attr* visibility? macro_invocation_semi // experimental:accept visibilities on items in traits syntactically but not semantically.
-    | visibility? (const_decl|associated_const_decl); //experimental
+    attr* 'default'? visibility? 'type' ident type_parameters? colon_bound? where_clause? ty_default? ';'
+    | attr* 'default'? 'const' ident ':' ty_sum const_default? ';'  // experimental associated constants
+    | attr* 'default'? visibility? trait_method_decl
+    | attr* 'default'? visibility? macro_invocation_semi // experimental:accept visibilities on items in traits syntactically but not semantically.
+    | 'default'? visibility? (const_decl|associated_const_decl); //experimental
 
 ty_default:
     '=' ty_sum;
@@ -1164,7 +1167,7 @@ impl_what:
     ;
 
 impl_item:
-    attr* visibility? impl_item_tail;
+    (attr|inner_attr)* visibility? impl_item_tail;
 
 impl_item_tail:
     'default'? method_decl
@@ -1529,10 +1532,10 @@ pat_field:
 // === Expressions
 
 expr:
-    assign_expr;
+   '&raw'? mut_or_const? assign_expr;
 
 expr_no_struct:
-    assign_expr_no_struct;
+    '&raw'? mut_or_const? assign_expr_no_struct;
 
 expr_list:
     expr (',' expr)* ','?;
@@ -1577,6 +1580,7 @@ blocky_expr
     | loop_label? while_cond_or_pat block_with_inner_attrs
     | loop_label? 'for' pattern 'in' expr_no_struct block_with_inner_attrs
     | loop_label? 'loop' block_with_inner_attrs
+    | loop_label? block_with_inner_attrs
     | 'unsafe' block_with_inner_attrs
     | 'try' block_with_inner_attrs
     | 'async' block_with_inner_attrs
@@ -1635,7 +1639,7 @@ prim_expr_no_struct
     | '(' expr_inner_attrs? expr ',' expr_list? ')'
     | '[' expr_inner_attrs? expr_list? ']'
     | '[' expr_inner_attrs? expr ';' expr ']'
-    | ('static' | 'move')? closure_params closure_tail
+    | 'static'? 'move'? closure_params closure_tail
     | 'async' 'move' (blocky_expr | closure_params closure_tail)
     | blocky_expr
     | 'break' lifetime_or_expr?
@@ -1769,7 +1773,7 @@ range_expr:
 assign_expr:
     range_expr
     | range_expr ('=' | '*=' | '/=' | '%=' | '+=' | '-='
-                      | '<<=' | '>' '>' '=' | '&=' | '^=' | '|=' ) assign_expr;
+                      | '<<=' | '>>=' | '&=' | '^=' | '|=' ) assign_expr;
 
 
 // --- Copy of the operator expression syntax but without structs
@@ -1823,7 +1827,7 @@ bit_or_expr_no_struct:
 
 cmp_expr_no_struct:
     bit_or_expr_no_struct
-    | bit_or_expr_no_struct ('==' | '!=' | '<' | '<=' | '>' | '>' '=') bit_or_expr_no_struct;
+    | '&raw'? mut_or_const? bit_or_expr_no_struct ('==' | '!=' | '<' | '<=' | '>' | '>' '=') '&raw'? mut_or_const? bit_or_expr_no_struct;
 
 and_expr_no_struct:
     cmp_expr_no_struct

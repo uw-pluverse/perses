@@ -35,7 +35,7 @@ kleene_star__inner_attr_1
     ;
 
 item
-    : kleene_star__item_1 alternative__item_8
+    : kleene_star__item_1 alternative__item_10
     ;
 
 kleene_star__item_1
@@ -46,8 +46,9 @@ optional__item_2
     : visibility?
     ;
 
-alternative__item_8
-    : extern_mod
+alternative__item_10
+    : '\''
+    | extern_mod
     | impl_block
     | macro_rules_definition
     | macro_invocation_semi
@@ -146,7 +147,7 @@ kleene_star__extern_mod_2
     ;
 
 extern_crate
-    : 'extern' 'crate' ident optional__extern_crate_1 ';'
+    : 'extern' 'crate' (ident | 'self') optional__extern_crate_1 ';'
     ;
 
 optional__extern_crate_1
@@ -426,7 +427,15 @@ optional__type_1
     ;
 
 expr
-    : assign_expr
+    : optional__expr_1 optional__expr_2 assign_expr
+    ;
+
+optional__expr_1
+    : '&raw'?
+    ;
+
+optional__expr_2
+    : mut_or_const?
     ;
 
 type_parameters
@@ -606,20 +615,25 @@ optional__type_parameter_4
     ;
 
 param
-    : kleene_star__item_1 alternative__param_9
+    : '...'
+    | kleene_star__item_1 alternative__param_11
     ;
 
-optional__param_2
-    : mut_or_const?
+param_3
+    : ~EOF
     ;
 
 optional__param_4
+    : param_3?
+    ;
+
+optional__param_6
     : '&'?
     ;
 
-alternative__param_9
-    : optional__param_2 pattern ':' (param_ty | '...')
-    | optional__param_4 optional__type_1 optional__param_2 'self' optional__type_decl_7
+alternative__param_11
+    : optional__expr_2 optional__param_4 pattern ':' (param_ty | '...')
+    | optional__param_6 optional__type_1 optional__expr_2 'self' optional__type_decl_7
     ;
 
 mut_or_const
@@ -669,7 +683,8 @@ variadic_param_list_names_optional
     ;
 
 trait_method_param
-    : alternative__trait_method_param_4 ty_sum
+    : '...'
+    | alternative__trait_method_param_4 ty_sum
     ;
 
 alternative__trait_method_param_4
@@ -815,21 +830,21 @@ enum_tuple_field
     ;
 
 trait_item
-    : alternative__trait_item_14 ';'
-    | optional__item_2 (const_decl | associated_const_decl)
-    | kleene_star__item_1 optional__item_2 alternative__trait_item_15
+    : alternative__trait_item_19 ';'
+    | optional__impl_block_1 optional__item_2 (const_decl | associated_const_decl)
+    | kleene_star__item_1 optional__impl_block_1 optional__item_2 alternative__trait_item_20
     ;
 
-alternative__trait_item_14
-    : kleene_star__item_1 alternative__trait_item_16
+alternative__trait_item_19
+    : kleene_star__item_1 optional__impl_block_1 alternative__trait_item_21
     ;
 
-alternative__trait_item_15
+alternative__trait_item_20
     : macro_invocation_semi
     | trait_method_decl
     ;
 
-alternative__trait_item_16
+alternative__trait_item_21
     : 'const' ident ':' ty_sum optional__foreign_item_tail_3
     | optional__item_2 'type' ident optional__impl_block_3 optional__type_decl_4 optional__impl_block_6 optional__type_parameter_4
     ;
@@ -858,7 +873,16 @@ alternative__impl_what_3
     ;
 
 impl_item
-    : kleene_star__item_1 optional__item_2 impl_item_tail
+    : kleene_star__impl_item_2 optional__item_2 impl_item_tail
+    ;
+
+impl_item_1
+    : attr
+    | inner_attr
+    ;
+
+kleene_star__impl_item_2
+    : impl_item_1*
     ;
 
 type_arguments
@@ -1548,7 +1572,7 @@ assign_expr
     ;
 
 assign_expr_1
-    : ('=' | '*=' | '/=' | '%=' | '+=' | '-=' | '<<=' | '>' '>' '=' | '&=' | '^=' | '|=') assign_expr
+    : ('=' | '*=' | '/=' | '%=' | '+=' | '-=' | '<<=' | '>>=' | '&=' | '^=' | '|=') assign_expr
     ;
 
 optional__assign_expr_2
@@ -1556,7 +1580,7 @@ optional__assign_expr_2
     ;
 
 expr_no_struct
-    : assign_expr_no_struct
+    : optional__expr_1 optional__expr_2 assign_expr_no_struct
     ;
 
 assign_expr_no_struct
@@ -1602,7 +1626,7 @@ alternative__stmt_8
 blocky_expr
     : if_cond_or_pat block kleene_star__blocky_expr_2 optional__blocky_expr_4
     | 'match' expr_no_struct '{' optional__blocky_expr_5 optional__blocky_expr_6 '}'
-    | alternative__blocky_expr_15 block_with_inner_attrs
+    | alternative__blocky_expr_17 block_with_inner_attrs
     ;
 
 blocky_expr_1
@@ -1633,20 +1657,28 @@ optional__blocky_expr_7
     : loop_label?
     ;
 
-optional__blocky_expr_10
+optional__blocky_expr_11
     : 'async'?
     ;
 
-alternative__blocky_expr_15
+alternative__blocky_expr_17
     : 'try'
     | 'unsafe'
-    | optional__blocky_expr_10
-    | optional__blocky_expr_7 alternative__blocky_expr_17
+    | optional__blocky_expr_11
+    | optional__blocky_expr_7 alternative__blocky_expr_21
     ;
 
-alternative__blocky_expr_17
+blocky_expr_18
     : 'for' pattern 'in' expr_no_struct
-    | 'loop'
+    ;
+
+optional__blocky_expr_19
+    : blocky_expr_18?
+    ;
+
+alternative__blocky_expr_21
+    : 'loop'
+    | optional__blocky_expr_19
     | while_cond_or_pat
     ;
 
@@ -1731,7 +1763,7 @@ prim_expr_no_struct
     | blocky_expr
     | 'async' 'move' (blocky_expr | closure_params closure_tail)
     | path optional__prim_expr_no_struct_1
-    | optional__prim_expr_no_struct_10 closure_params closure_tail
+    | optional__prim_expr_no_struct_9 optional__prim_expr_no_struct_10 closure_params closure_tail
     | 'break' optional__prim_expr_no_struct_11
     | '(' alternative__prim_expr_no_struct_16 ')'
     | '[' alternative__prim_expr_no_struct_17 ']'
@@ -1747,13 +1779,12 @@ optional__prim_expr_no_struct_5
     : expr_list?
     ;
 
-prim_expr_no_struct_9
-    : 'static'
-    | 'move'
+optional__prim_expr_no_struct_9
+    : 'static'?
     ;
 
 optional__prim_expr_no_struct_10
-    : prim_expr_no_struct_9?
+    : 'move'?
     ;
 
 optional__prim_expr_no_struct_11
@@ -2150,15 +2181,15 @@ bit_or_expr_no_struct_2
     ;
 
 cmp_expr_no_struct
-    : bit_or_expr_no_struct optional__cmp_expr_no_struct_2
+    : optional__cmp_expr_no_struct_6 bit_or_expr_no_struct
     ;
 
-cmp_expr_no_struct_1
-    : ('==' | '!=' | '<' | '<=' | '>' | '>' '=') bit_or_expr_no_struct
+cmp_expr_no_struct_5
+    : optional__expr_1 optional__expr_2 bit_or_expr_no_struct ('==' | '!=' | '<' | '<=' | '>' | '>' '=') optional__expr_1 optional__expr_2
     ;
 
-optional__cmp_expr_no_struct_2
-    : cmp_expr_no_struct_1?
+optional__cmp_expr_no_struct_6
+    : cmp_expr_no_struct_5?
     ;
 
 and_expr_no_struct
@@ -2216,15 +2247,7 @@ tokens_no_delimiters_repetition_operators
     ;
 
 macro_rules_definition
-    : 'macro_rules' '!' optional__macro_rules_definition_2 macro_rules_def
-    ;
-
-macro_rules_definition_1
-    : ~EOF
-    ;
-
-optional__macro_rules_definition_2
-    : macro_rules_definition_1?
+    : 'macro_rules' '!' optional__param_4 macro_rules_def
     ;
 
 macro_rules_def
@@ -2291,7 +2314,7 @@ optional__macro_match_2
 
 alternative__macro_match_3
     : '(' kleene_plus__macro_match_1 ')' optional__macro_match_2 macro_rep_op
-    | ~EOF ':' macro_rules_definition_1
+    | ~EOF ':' param_3
     ;
 
 macro_rep_sep
