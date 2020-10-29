@@ -14,6 +14,8 @@ def parse_arguments():
 
 def read_file(file_name: str) -> List[str]:
     with open(file_name) as f:
+        if 'Timestamp' not in f.readline():
+            raise Exception(f"{file_name} is not a proper memory log file")
         lines = f.read()
     return lines.rstrip().split('\n')
 
