@@ -12,7 +12,8 @@ from typing import List, Dict
 __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
-def parse_arguments():
+
+def parse_arguments() -> object:
     parser = argparse.ArgumentParser(description="Runs the benchmark and output results in JSON")
     parser.add_argument("-s", "--subjects", nargs='+', default=[], help="Benchmark with specified bench(es)")
     parser.add_argument("-i", "--iterations", type=int, default=1, help="Run bench set for the number of times specified")
@@ -22,6 +23,7 @@ def parse_arguments():
     parser.add_argument("-lr", "--list-reducers", action="store_true", default=False, help="List current available reducers")
     parser.add_argument("-mp", "--memory-profiler", action="store_true", default=False, help="Enable Perses memory profiler")
     return parser.parse_args()
+
 
 @dataclass(frozen=True)
 class Parameter:
@@ -43,7 +45,7 @@ class Parameter:
     def validate(self):
         # validate parameters
         # benchmark_target
-        if self.benchmark_target == []:
+        if not self.benchmark_target:
             raise Exception('Error: No subjects')
         for bench_name in self.benchmark_target:
             folder_path = os.path.join(__location__, bench_name)
@@ -53,13 +55,14 @@ class Parameter:
         if self.iterations < 1:
             raise Exception('Error: Invalid ITERATIONS value')
         # reducers
-        if self.reducers == []:
+        if not self.reducers:
             raise Exception('Error: No reducers')
         if len(self.reducers) != len(set(self.reducers)):
             raise Exception('Error: Duplicated reducers')
         for reducer in self.reducers:
             if reducer not in REDUCERS:
                 raise Exception(f'Error: Unknown reducer: {reducer}')
+
 
 INSTALLS = {
         "perses": os.path.join(__location__, "binaries", "update_perses.sh"),
@@ -88,6 +91,7 @@ def load_token_counter(parameter_interface):
         stdout=pipe,
         stderr=pipe)
 
+
 def load_reducers(parameter_interface):
     print("Loading reducer programs ...")
     for reducer in parameter_interface.reducers:
@@ -102,7 +106,8 @@ def load_reducers(parameter_interface):
                 stderr=pipe)
             print(" Reducer: {} loaded".format(reducer))
 
-def extract_info_properties(bench_name: str)->Dict[str, str]:
+
+def extract_info_properties(bench_name: str) -> Dict[str, str]:
     info_dict = dict()
 
     # validate info.properties
@@ -133,7 +138,8 @@ def extract_info_properties(bench_name: str)->Dict[str, str]:
 
     return info_dict
 
-def count_token(source_file_path):
+
+def count_token(source_file_path) -> int:
     try:
         process = subprocess.Popen(
             [os.path.join(__location__, "binaries", "run_token_counter.sh"),
@@ -156,6 +162,16 @@ def environment_udpater(parameter_interface):
     else:
         return os.environ.copy()
 
+def environment_udpater(parameter_interface, bench, time) -> dict():
+    # update env var if memory_profiler enabled
+    if parameter_interface.memory_profiler:
+        new_env = os.environ.copy()
+        new_env["PERSES_MEMORY_PROFILER"] = f"{__location__}/tmp_memory_log_{bench}_{time}"
+        return new_env
+    else:
+        return os.environ.copy()
+
+
 def main():
     # parameter handler
     args = parse_arguments()
@@ -164,7 +180,10 @@ def main():
     para.validate()
     print(para)
 
-    report = dict() #final printable json results
+    time = datetime.now().strftime("%Y%m%d_%H%M%S")
+    report = dict()  # final printable json results
+    report["timestamp"] = time
+    report["environment"] = f"PERSES_EXTRA_FLAGS = {os.environ.get('PERSES_EXTRA_FLAGS')}"
 
     # install token counter
     load_token_counter(para)
@@ -188,7 +207,6 @@ def main():
         if not para.silent:
             print(f"Bench {bench_name} has {token_count} original tokens")
 
-
         # reduce
         for reducer in para.reducers:
             print("{} in process".format(reducer))
@@ -196,7 +214,7 @@ def main():
                 print(f"*****iteration {iteration}*****")
 
                 # update environment variables
-                new_env = environment_udpater(para)
+                new_env = environment_udpater(para, bench_name, time)
                 
                 # create tmp output file
                 fd, fname = tempfile.mkstemp()
@@ -237,10 +255,10 @@ def main():
         json_object = json.dumps(report, indent=4)
         print(json_object)
 
-        time = datetime.now().strftime("%Y_%m_%d_%H%M%S")
         report_title = f'tmp_report_{time}.json'
         with open(report_title, 'w') as out_file:
             out_file.write(json_object)
+
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,3 @@
-![](https://github.com/chengniansun/perses/workflows/CI/badge.svg)
- 
 # Perses: Syntax-Directed Program Reduction
 
 Perses is a language-agnostic program reducer to minimize a program with 

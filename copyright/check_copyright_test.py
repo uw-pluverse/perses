@@ -22,7 +22,6 @@ class TestCheckCopyright(unittest.TestCase):
         with open(full_path, 'w+') as self.java_temp_file:
             self.java_temp_file.write("import java.util.*;")
 
-
     def tearDown(self):
         os.unlink(self.java_temp_file.name)
         os.rmdir(self.temp_dir)
@@ -42,7 +41,6 @@ class TestCheckCopyright(unittest.TestCase):
         self.copyright_checker.update_files([self.java_temp_file.name])
         missing_list = self.copyright_checker.check_files([self.java_temp_file.name])
         self.assertEqual(missing_list, [])
-
 
     def test_check_copyright(self):
         ## Test check_copyright() with & without comment block
@@ -72,6 +70,6 @@ class TestCheckCopyright(unittest.TestCase):
             new_content = java_file.read()
         self.assertEqual(new_content, TINY_COPYRIGHT_CMTBLK + old_content)
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     unittest.main()

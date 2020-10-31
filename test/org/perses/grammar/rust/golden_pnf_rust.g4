@@ -35,7 +35,7 @@ kleene_star__inner_attr_1
     ;
 
 item
-    : kleene_star__item_1 alternative__item_8
+    : kleene_star__item_1 alternative__item_10
     ;
 
 kleene_star__item_1
@@ -46,8 +46,9 @@ optional__item_2
     : visibility?
     ;
 
-alternative__item_8
-    : extern_mod
+alternative__item_10
+    : '\''
+    | extern_mod
     | impl_block
     | macro_rules_definition
     | macro_invocation_semi
@@ -106,7 +107,7 @@ pub_item
     ;
 
 impl_block
-    : optional__impl_block_1 optional__impl_block_2 'impl' optional__impl_block_3 impl_what optional__impl_block_4 '{' kleene_star__impl_block_5 '}'
+    : optional__impl_block_1 optional__impl_block_2 'impl' optional__impl_block_3 optional__impl_block_4 optional__impl_block_5 impl_what optional__impl_block_6 '{' kleene_star__impl_block_7 '}'
     ;
 
 optional__impl_block_1
@@ -122,10 +123,18 @@ optional__impl_block_3
     ;
 
 optional__impl_block_4
+    : '?'?
+    ;
+
+optional__impl_block_5
+    : 'const'?
+    ;
+
+optional__impl_block_6
     : where_clause?
     ;
 
-kleene_star__impl_block_5
+kleene_star__impl_block_7
     : impl_item*
     ;
 
@@ -138,7 +147,7 @@ kleene_star__extern_mod_2
     ;
 
 extern_crate
-    : 'extern' 'crate' ident optional__extern_crate_1 ';'
+    : 'extern' 'crate' (ident | 'self') optional__extern_crate_1 ';'
     ;
 
 optional__extern_crate_1
@@ -186,7 +195,7 @@ associated_static_decl
     ;
 
 fn_decl
-    : fn_head '(' optional__fn_decl_1 ')' optional__fn_decl_2 optional__impl_block_4 (block_with_inner_attrs | ';')
+    : fn_head '(' optional__fn_decl_1 ')' optional__fn_decl_2 optional__impl_block_6 (block_with_inner_attrs | ';')
     ;
 
 optional__fn_decl_1
@@ -226,8 +235,8 @@ alternative__type_decl_10
     ;
 
 alternative__type_decl_11
-    : optional__impl_block_4 '=' ty_sum
-    | optional__type_decl_4 optional__impl_block_4 optional__type_decl_7 optional__type_decl_9
+    : optional__impl_block_6 '=' ty_sum
+    | optional__type_decl_4 optional__impl_block_6 optional__type_decl_7 optional__type_decl_9
     ;
 
 struct_decl
@@ -235,7 +244,7 @@ struct_decl
     ;
 
 enum_decl
-    : 'enum' ident optional__impl_block_3 optional__impl_block_4 '{' optional__enum_decl_3 '}'
+    : 'enum' ident optional__impl_block_3 optional__impl_block_6 '{' optional__enum_decl_3 '}'
     ;
 
 optional__enum_decl_3
@@ -243,11 +252,11 @@ optional__enum_decl_3
     ;
 
 union_decl
-    : 'union' ident optional__impl_block_3 optional__impl_block_4 '{' field_decl_list '}'
+    : 'union' ident optional__impl_block_3 optional__impl_block_6 '{' field_decl_list '}'
     ;
 
 trait_decl
-    : optional__impl_block_2 optional__trait_decl_2 'trait' ident optional__impl_block_3 optional__type_decl_4 optional__impl_block_4 '{' kleene_star__mod_body_1 kleene_star__trait_decl_7 '}'
+    : optional__impl_block_2 optional__trait_decl_2 'trait' ident optional__impl_block_3 optional__type_decl_4 optional__impl_block_6 '{' kleene_star__mod_body_1 kleene_star__trait_decl_7 '}'
     ;
 
 optional__trait_decl_2
@@ -259,11 +268,11 @@ kleene_star__trait_decl_7
     ;
 
 trait_alias
-    : 'trait' ident optional__impl_block_3 '=' (ty_sum optional__impl_block_4 | where_clause) ';'
+    : 'trait' ident optional__impl_block_3 '=' (ty_sum optional__impl_block_6 | where_clause) ';'
     ;
 
 macro_decl
-    : macro_head optional__macro_decl_3 optional__fn_decl_2 optional__impl_block_4 tt
+    : macro_head optional__macro_decl_3 optional__fn_decl_2 optional__impl_block_6 tt
     ;
 
 macro_decl_2
@@ -378,7 +387,7 @@ optional__foreign_item_tail_3
 
 alternative__foreign_item_tail_11
     : 'static' optional__static_decl_1 ident ':' type optional__foreign_item_tail_3
-    | 'type' ident optional__impl_block_3 optional__type_decl_4 optional__impl_block_4 optional__type_decl_7 optional__type_decl_9
+    | 'type' ident optional__impl_block_3 optional__type_decl_4 optional__impl_block_6 optional__type_decl_7 optional__type_decl_9
     ;
 
 macro_invocation_semi
@@ -418,7 +427,15 @@ optional__type_1
     ;
 
 expr
-    : assign_expr
+    : optional__expr_1 optional__expr_2 assign_expr
+    ;
+
+optional__expr_1
+    : '&raw'?
+    ;
+
+optional__expr_2
+    : mut_or_const?
     ;
 
 type_parameters
@@ -447,7 +464,7 @@ where_clause
     ;
 
 foreign_fn_decl
-    : fn_head '(' optional__foreign_fn_decl_1 ')' optional__foreign_fn_decl_2 optional__impl_block_4 (block_with_inner_attrs | ';')
+    : fn_head '(' optional__foreign_fn_decl_1 ')' optional__foreign_fn_decl_2 optional__impl_block_6 (block_with_inner_attrs | ';')
     ;
 
 optional__foreign_fn_decl_1
@@ -493,7 +510,7 @@ optional__fn_head_3
     ;
 
 param_list
-    : param kleene_star__param_list_2 optional__param_list_4 optional__use_item_list_3
+    : param kleene_star__param_list_2 optional__param_list_5 optional__use_item_list_3
     ;
 
 param_list_1
@@ -504,12 +521,12 @@ kleene_star__param_list_2
     : param_list_1*
     ;
 
-param_list_3
-    : ',' pattern ':' '...'
+param_list_4
+    : ',' kleene_star__item_1 pattern mut_or_const ':' '...'
     ;
 
-optional__param_list_4
-    : param_list_3?
+optional__param_list_5
+    : param_list_4?
     ;
 
 fn_rtype
@@ -529,7 +546,7 @@ optional__block_with_inner_attrs_3
     ;
 
 method_decl
-    : fn_head '(' optional__method_decl_1 ')' optional__fn_decl_2 optional__impl_block_4 (block_with_inner_attrs | ';')
+    : fn_head '(' optional__method_decl_1 ')' optional__fn_decl_2 optional__impl_block_6 (block_with_inner_attrs | ';')
     ;
 
 optional__method_decl_1
@@ -541,7 +558,7 @@ method_param_list
     ;
 
 trait_method_decl
-    : fn_head '(' optional__trait_method_decl_1 ')' optional__foreign_fn_decl_2 optional__impl_block_4 (block_with_inner_attrs | ';')
+    : fn_head '(' optional__trait_method_decl_1 ')' optional__foreign_fn_decl_2 optional__impl_block_6 (block_with_inner_attrs | ';')
     ;
 
 optional__trait_method_decl_1
@@ -549,15 +566,15 @@ optional__trait_method_decl_1
     ;
 
 trait_method_param_list
-    : (trait_method_param | self_param) kleene_star__trait_method_param_list_2 optional__use_item_list_3
+    : kleene_star__item_1 (trait_method_param | self_param) kleene_star__trait_method_param_list_3 optional__use_item_list_3
     ;
 
-trait_method_param_list_1
+trait_method_param_list_2
     : ',' trait_method_param
     ;
 
-kleene_star__trait_method_param_list_2
-    : trait_method_param_list_1*
+kleene_star__trait_method_param_list_3
+    : trait_method_param_list_2*
     ;
 
 rtype
@@ -565,15 +582,15 @@ rtype
     ;
 
 variadic_param_list
-    : param kleene_star__param_list_2 optional__variadic_param_list_4 optional__use_item_list_3
+    : param kleene_star__param_list_2 optional__variadic_param_list_5 optional__use_item_list_3
     ;
 
-variadic_param_list_3
-    : ',' '...'
+variadic_param_list_4
+    : ',' kleene_star__item_1 '...'
     ;
 
-optional__variadic_param_list_4
-    : variadic_param_list_3?
+optional__variadic_param_list_5
+    : variadic_param_list_4?
     ;
 
 macro_head
@@ -590,11 +607,7 @@ tt
     ;
 
 type_parameter
-    : kleene_star__item_1 optional__type_parameter_2 ident optional__type_decl_4 optional__type_parameter_4
-    ;
-
-optional__type_parameter_2
-    : 'const'?
+    : kleene_star__item_1 optional__impl_block_5 ident optional__type_decl_4 optional__type_parameter_4
     ;
 
 optional__type_parameter_4
@@ -602,16 +615,30 @@ optional__type_parameter_4
     ;
 
 param
-    : pattern ':' param_ty
-    | optional__param_1 optional__type_1 optional__param_3 'self' optional__type_decl_7
+    : '...'
+    | kleene_star__item_1 alternative__param_11
     ;
 
-optional__param_1
+param_3
+    : ~EOF
+    ;
+
+optional__param_4
+    : param_3?
+    ;
+
+optional__param_6
     : '&'?
     ;
 
-optional__param_3
-    : mut_or_const?
+alternative__param_11
+    : optional__expr_2 optional__param_4 pattern ':' (param_ty | '...')
+    | optional__param_6 optional__type_1 optional__expr_2 'self' optional__type_decl_7
+    ;
+
+mut_or_const
+    : 'mut'
+    | 'const'
     ;
 
 pattern
@@ -638,11 +665,6 @@ lifetime
     | '\'_'
     ;
 
-mut_or_const
-    : 'mut'
-    | 'const'
-    ;
-
 bound
     : prim_bound kleene_star__bound_3
     ;
@@ -657,19 +679,24 @@ bound_4
     ;
 
 variadic_param_list_names_optional
-    : trait_method_param kleene_star__trait_method_param_list_2 optional__variadic_param_list_4 optional__use_item_list_3
+    : trait_method_param kleene_star__trait_method_param_list_3 optional__variadic_param_list_5 optional__use_item_list_3
     ;
 
 trait_method_param
-    : optional__trait_method_param_2 ty_sum
+    : '...'
+    | alternative__trait_method_param_4 ty_sum
     ;
 
-trait_method_param_1
-    : restricted_pat ':'
+alternative__trait_method_param_4
+    : kleene_star__item_1 optional__trait_method_param_6
     ;
 
-optional__trait_method_param_2
-    : trait_method_param_1?
+trait_method_param_5
+    : restricted_pat ':' kleene_star__item_1
+    ;
+
+optional__trait_method_param_6
+    : trait_method_param_5?
     ;
 
 self_param
@@ -693,7 +720,7 @@ optional__restricted_pat_2
 
 struct_tail
     : alternative__struct_tail_6 ';'
-    | optional__impl_block_4 '{' optional__struct_tail_5 '}'
+    | optional__impl_block_6 '{' optional__struct_tail_5 '}'
     ;
 
 optional__struct_tail_2
@@ -705,7 +732,7 @@ optional__struct_tail_5
     ;
 
 alternative__struct_tail_6
-    : optional__struct_tail_8 optional__impl_block_4
+    : optional__struct_tail_8 optional__impl_block_6
     ;
 
 struct_tail_7
@@ -803,23 +830,23 @@ enum_tuple_field
     ;
 
 trait_item
-    : alternative__trait_item_14 ';'
-    | optional__item_2 (const_decl | associated_const_decl)
-    | kleene_star__item_1 optional__item_2 alternative__trait_item_15
+    : alternative__trait_item_19 ';'
+    | optional__impl_block_1 optional__item_2 (const_decl | associated_const_decl)
+    | kleene_star__item_1 optional__impl_block_1 optional__item_2 alternative__trait_item_20
     ;
 
-alternative__trait_item_14
-    : kleene_star__item_1 alternative__trait_item_16
+alternative__trait_item_19
+    : kleene_star__item_1 optional__impl_block_1 alternative__trait_item_21
     ;
 
-alternative__trait_item_15
+alternative__trait_item_20
     : macro_invocation_semi
     | trait_method_decl
     ;
 
-alternative__trait_item_16
+alternative__trait_item_21
     : 'const' ident ':' ty_sum optional__foreign_item_tail_3
-    | optional__item_2 'type' ident optional__impl_block_3 optional__type_decl_4 optional__impl_block_4 optional__type_parameter_4
+    | optional__item_2 'type' ident optional__impl_block_3 optional__type_decl_4 optional__impl_block_6 optional__type_parameter_4
     ;
 
 ty_default
@@ -846,7 +873,53 @@ alternative__impl_what_3
     ;
 
 impl_item
-    : kleene_star__item_1 optional__item_2 impl_item_tail
+    : kleene_star__impl_item_2 optional__item_2 impl_item_tail
+    ;
+
+impl_item_1
+    : attr
+    | inner_attr
+    ;
+
+kleene_star__impl_item_2
+    : impl_item_1*
+    ;
+
+type_arguments
+    : '<' alternative__type_arguments_9 '>'
+    ;
+
+type_arguments_1
+    : ',' (lifetime | type_argument)
+    ;
+
+kleene_star__type_arguments_2
+    : type_arguments_1*
+    ;
+
+type_arguments_4
+    : lifetime ','
+    ;
+
+kleene_star__type_arguments_5
+    : type_arguments_4*
+    ;
+
+type_arguments_6
+    : ',' type_argument
+    ;
+
+kleene_star__type_arguments_7
+    : type_arguments_6*
+    ;
+
+alternative__type_arguments_9
+    : alternative__type_arguments_10 optional__use_item_list_3
+    ;
+
+alternative__type_arguments_10
+    : kleene_star__type_arguments_5 type_argument kleene_star__type_arguments_7
+    | lifetime kleene_star__type_arguments_2
     ;
 
 type_arguments
@@ -903,8 +976,8 @@ optional__impl_item_tail_12
     ;
 
 alternative__impl_item_tail_13
-    : optional__impl_block_1 'type' ident optional__impl_block_3 optional__impl_block_4 '=' ty_sum
-    | 'type' ident optional__impl_block_3 optional__type_decl_4 optional__impl_block_4 optional__type_decl_7 optional__impl_item_tail_12
+    : optional__impl_block_1 'type' ident optional__impl_block_3 optional__impl_block_6 '=' ty_sum
+    | 'type' ident optional__impl_block_3 optional__type_decl_4 optional__impl_block_6 optional__type_decl_7 optional__impl_item_tail_12
     ;
 
 tt_delimited
@@ -1151,11 +1224,7 @@ optional__empty_ok_colon_bound_1
 prim_bound
     : /* Epsilon. */
     | lifetime
-    | optional__prim_bound_1 optional__where_bound_1 optional__prim_bound_4 type_path_main
-    ;
-
-optional__prim_bound_1
-    : '?'?
+    | optional__impl_block_4 optional__where_bound_1 optional__prim_bound_4 type_path_main
     ;
 
 prim_bound_3
@@ -1168,7 +1237,7 @@ optional__prim_bound_4
     ;
 
 lifetime_param
-    : kleene_star__item_1 optional__type_parameter_2 lifetime optional__lifetime_def_2
+    : kleene_star__item_1 optional__impl_block_5 lifetime optional__lifetime_def_2
     ;
 
 type_parameter_list
@@ -1272,8 +1341,8 @@ optional__type_param_bounds_3
     ;
 
 trait_bound
-    : optional__prim_bound_1 optional__where_bound_1 type_path_main
-    | '(' optional__prim_bound_1 optional__where_bound_1 type_path_main ')'
+    : optional__impl_block_4 optional__where_bound_1 type_path_main
+    | '(' optional__impl_block_4 optional__where_bound_1 type_path_main ')'
     ;
 
 type_param_bound
@@ -1476,7 +1545,7 @@ pat_fields
     ;
 
 pat_fields_1
-    : ',' pat_fields_left ':' pat_fields_left
+    : ',' alternative__pat_fields_6
     ;
 
 kleene_star__pat_fields_2
@@ -1489,6 +1558,11 @@ pat_fields_3
 
 kleene_star__pat_fields_4
     : pat_fields_3*
+    ;
+
+alternative__pat_fields_6
+    : '..'
+    | pat_fields_left ':' pat_fields_left
     ;
 
 lit
@@ -1535,7 +1609,7 @@ assign_expr
     ;
 
 assign_expr_1
-    : ('=' | '*=' | '/=' | '%=' | '+=' | '-=' | '<<=' | '>' '>' '=' | '&=' | '^=' | '|=') assign_expr
+    : ('=' | '*=' | '/=' | '%=' | '+=' | '-=' | '<<=' | '>>=' | '&=' | '^=' | '|=') assign_expr
     ;
 
 optional__assign_expr_2
@@ -1543,7 +1617,7 @@ optional__assign_expr_2
     ;
 
 expr_no_struct
-    : assign_expr_no_struct
+    : optional__expr_1 optional__expr_2 assign_expr_no_struct
     ;
 
 assign_expr_no_struct
@@ -1589,7 +1663,7 @@ alternative__stmt_8
 blocky_expr
     : if_cond_or_pat block kleene_star__blocky_expr_2 optional__blocky_expr_4
     | 'match' expr_no_struct '{' optional__blocky_expr_5 optional__blocky_expr_6 '}'
-    | alternative__blocky_expr_15 block_with_inner_attrs
+    | alternative__blocky_expr_17 block_with_inner_attrs
     ;
 
 blocky_expr_1
@@ -1620,20 +1694,28 @@ optional__blocky_expr_7
     : loop_label?
     ;
 
-optional__blocky_expr_10
+optional__blocky_expr_11
     : 'async'?
     ;
 
-alternative__blocky_expr_15
+alternative__blocky_expr_17
     : 'try'
     | 'unsafe'
-    | optional__blocky_expr_10
-    | optional__blocky_expr_7 alternative__blocky_expr_17
+    | optional__blocky_expr_11
+    | optional__blocky_expr_7 alternative__blocky_expr_21
     ;
 
-alternative__blocky_expr_17
+blocky_expr_18
     : 'for' pattern 'in' expr_no_struct
-    | 'loop'
+    ;
+
+optional__blocky_expr_19
+    : blocky_expr_18?
+    ;
+
+alternative__blocky_expr_21
+    : 'loop'
+    | optional__blocky_expr_19
     | while_cond_or_pat
     ;
 
@@ -1718,7 +1800,7 @@ prim_expr_no_struct
     | blocky_expr
     | 'async' 'move' (blocky_expr | closure_params closure_tail)
     | path optional__prim_expr_no_struct_1
-    | optional__prim_expr_no_struct_10 closure_params closure_tail
+    | optional__prim_expr_no_struct_9 optional__prim_expr_no_struct_10 closure_params closure_tail
     | 'break' optional__prim_expr_no_struct_11
     | '(' alternative__prim_expr_no_struct_16 ')'
     | '[' alternative__prim_expr_no_struct_17 ']'
@@ -1734,13 +1816,12 @@ optional__prim_expr_no_struct_5
     : expr_list?
     ;
 
-prim_expr_no_struct_9
-    : 'static'
-    | 'move'
+optional__prim_expr_no_struct_9
+    : 'static'?
     ;
 
 optional__prim_expr_no_struct_10
-    : prim_expr_no_struct_9?
+    : 'move'?
     ;
 
 optional__prim_expr_no_struct_11
@@ -1819,7 +1900,7 @@ kleene_star__closure_param_list_2
     ;
 
 closure_param
-    : pattern optional__type_decl_7
+    : kleene_star__item_1 pattern optional__type_decl_7
     ;
 
 struct_update_base
@@ -2137,15 +2218,15 @@ bit_or_expr_no_struct_2
     ;
 
 cmp_expr_no_struct
-    : bit_or_expr_no_struct optional__cmp_expr_no_struct_2
+    : optional__cmp_expr_no_struct_6 bit_or_expr_no_struct
     ;
 
-cmp_expr_no_struct_1
-    : ('==' | '!=' | '<' | '<=' | '>' | '>' '=') bit_or_expr_no_struct
+cmp_expr_no_struct_5
+    : optional__expr_1 optional__expr_2 bit_or_expr_no_struct ('==' | '!=' | '<' | '<=' | '>' | '>' '=') optional__expr_1 optional__expr_2
     ;
 
-optional__cmp_expr_no_struct_2
-    : cmp_expr_no_struct_1?
+optional__cmp_expr_no_struct_6
+    : cmp_expr_no_struct_5?
     ;
 
 and_expr_no_struct
@@ -2203,17 +2284,21 @@ tokens_no_delimiters_repetition_operators
     ;
 
 macro_rules_definition
-    : 'macro_rules' '!' ident macro_rules_def
+    : 'macro_rules' '!' optional__param_4 macro_rules_def
     ;
 
 macro_rules_def
-    : '{' macro_rules '}'
-    | alternative__macro_rules_def_1 ';'
+    : alternative__macro_rules_def_4 ';'
+    | '{' optional__macro_rules_def_1 '}'
     ;
 
-alternative__macro_rules_def_1
-    : '(' macro_rules ')'
-    | '[' macro_rules ']'
+optional__macro_rules_def_1
+    : macro_rules?
+    ;
+
+alternative__macro_rules_def_4
+    : '(' optional__macro_rules_def_1 ')'
+    | '[' optional__macro_rules_def_1 ']'
     ;
 
 macro_rules
@@ -2266,11 +2351,7 @@ optional__macro_match_2
 
 alternative__macro_match_3
     : '(' kleene_plus__macro_match_1 ')' optional__macro_match_2 macro_rep_op
-    | ~EOF ':' macro_frag_spec
-    ;
-
-macro_frag_spec
-    : ~EOF
+    | ~EOF ':' param_3
     ;
 
 macro_rep_sep
