@@ -4,6 +4,8 @@ set -o pipefail
 set -o nounset
 set -o errexit
 
+readonly PWD=$(pwd)
+
 if [[ "${HOME}" == "" ]] ; then
     echo "ERROR: HOME is empty."
     exit 1
@@ -26,6 +28,7 @@ readonly FOLDER_BIN="${ROOT}/bin"
 mkdir -p "${FOLDER_BIN}"
 cp "bazel-bin/src/org/perses/perses_deploy.jar" "${FOLDER_BIN}"
 
+cd "${PWD}"
 readonly FILE_JAR="${FOLDER_BIN}/perses_deploy.jar"
 java -jar "${FILE_JAR}" "$@"
 
