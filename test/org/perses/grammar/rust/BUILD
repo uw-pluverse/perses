@@ -18,7 +18,10 @@ kt_jvm_test(
     name = "PnfRustParserFacadeTest",
     size = "enormous",  # This is a slow test.
     srcs = ["PnfRustParserFacadeTest.kt"],
-    data = ["golden_fail_list.txt"],
+    data = [
+        "golden_fail_list.txt",
+        "//test_data/rust_programs:whole_rust_repo",
+    ],
     shard_count = 7,
     test_class = "org.perses.grammar.rust.PnfRustParserFacadeTest",
     deps = [
