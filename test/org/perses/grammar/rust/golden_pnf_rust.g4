@@ -80,6 +80,7 @@ ident
     | 'default'
     | 'union'
     | 'try'
+    | 'crate'
     | RawIdentifier
     ;
 
@@ -175,7 +176,7 @@ optional__static_decl_1
     ;
 
 const_decl
-    : 'const' (ident | '_') ':' ty_sum '=' expr ';'
+    : optional__impl_block_1 'const' (ident | '_') ':' ty_sum '=' expr ';'
     ;
 
 associated_const_decl
@@ -439,7 +440,7 @@ optional__expr_2
     ;
 
 type_parameters
-    : '<' alternative__type_parameters_3 '>'
+    : '<' alternative__type_parameters_4 '>'
     ;
 
 type_parameters_1
@@ -450,9 +451,13 @@ kleene_star__type_parameters_2
     : type_parameters_1*
     ;
 
-alternative__type_parameters_3
+optional__type_parameters_3
+    : type_parameter_list?
+    ;
+
+alternative__type_parameters_4
     : lifetime_param_list
-    | kleene_star__type_parameters_2 type_parameter_list
+    | kleene_star__type_parameters_2 optional__type_parameters_3
     ;
 
 colon_bound
@@ -788,7 +793,15 @@ kleene_star__enum_variant_list_2
     ;
 
 enum_variant
-    : kleene_star__item_1 optional__item_2 enum_variant_main
+    : kleene_star__item_1 optional__item_2 enum_variant_main optional__enum_variant_4
+    ;
+
+enum_variant_3
+    : '=' lit
+    ;
+
+optional__enum_variant_4
+    : enum_variant_3?
     ;
 
 enum_variant_main
@@ -811,6 +824,18 @@ alternative__enum_variant_main_6
     : optional__enum_variant_main_4
     | '=' expr
     | '{' optional__struct_tail_5 '}'
+    ;
+
+lit
+    : 'true'
+    | 'false'
+    | BareIntLit
+    | FullIntLit
+    | ByteLit
+    | ByteStringLit
+    | FloatLit
+    | CharLit
+    | StringLit
     ;
 
 enum_tuple_field_list
@@ -1143,11 +1168,26 @@ kleene_star__ty_sum_list_2
     ;
 
 ty_path_segment_no_super
-    : (ident | 'Self') optional__ty_path_segment_no_super_1
+    : alternative__ty_path_segment_no_super_5 optional__ty_path_segment_no_super_3
     ;
 
-optional__ty_path_segment_no_super_1
+ty_path_segment_no_super_1
+    : ident
+    | 'Self'
+    ;
+
+optional__ty_path_segment_no_super_2
+    : ty_path_segment_no_super_1?
+    ;
+
+optional__ty_path_segment_no_super_3
     : type_arguments?
+    ;
+
+alternative__ty_path_segment_no_super_5
+    : '(' optional__ty_path_segment_no_super_2 ')'
+    | ident
+    | 'Self'
     ;
 
 type_path_segment
@@ -1528,18 +1568,6 @@ alternative__pat_fields_6
     | pat_fields_left ':' pat_fields_left
     ;
 
-lit
-    : 'true'
-    | 'false'
-    | BareIntLit
-    | FullIntLit
-    | ByteLit
-    | ByteStringLit
-    | FloatLit
-    | CharLit
-    | StringLit
-    ;
-
 pat_list_dots_tail
     : '..' optional__pat_list_dots_tail_2
     ;
@@ -1559,12 +1587,16 @@ pat_fields_left
     ;
 
 pat_field
-    : ident ':' pattern
-    | optional__pat_field_1 optional__pattern_without_mut_8 optional__static_decl_1 ident
+    : kleene_star__item_1 alternative__pat_field_6
     ;
 
-optional__pat_field_1
+optional__pat_field_2
     : 'box'?
+    ;
+
+alternative__pat_field_6
+    : ident ':' pattern
+    | optional__pat_field_2 optional__pattern_without_mut_8 optional__static_decl_1 ident
     ;
 
 assign_expr
@@ -1764,11 +1796,11 @@ prim_expr_no_struct
     | 'async' 'move' (blocky_expr | closure_params closure_tail)
     | path optional__prim_expr_no_struct_1
     | optional__prim_expr_no_struct_9 optional__prim_expr_no_struct_10 closure_params closure_tail
-    | 'break' optional__prim_expr_no_struct_11
-    | '(' alternative__prim_expr_no_struct_16 ')'
-    | '[' alternative__prim_expr_no_struct_17 ']'
+    | 'break' optional__prim_expr_no_struct_11 optional__prim_expr_no_struct_12 optional__prim_expr_no_struct_13
+    | '(' alternative__prim_expr_no_struct_18 ')'
+    | '[' alternative__prim_expr_no_struct_19 ']'
     | 'continue' optional__type_1
-    | alternative__prim_expr_no_struct_19 optional__block_with_inner_attrs_3
+    | alternative__prim_expr_no_struct_21 optional__block_with_inner_attrs_3
     ;
 
 optional__prim_expr_no_struct_1
@@ -1791,25 +1823,33 @@ optional__prim_expr_no_struct_11
     : lifetime_or_expr?
     ;
 
-alternative__prim_expr_no_struct_16
-    : optional__prim_expr_1 alternative__prim_expr_no_struct_20
+optional__prim_expr_no_struct_12
+    : lit?
     ;
 
-alternative__prim_expr_no_struct_17
-    : optional__prim_expr_1 alternative__prim_expr_no_struct_21
+optional__prim_expr_no_struct_13
+    : item?
+    ;
+
+alternative__prim_expr_no_struct_18
+    : optional__prim_expr_1 alternative__prim_expr_no_struct_22
     ;
 
 alternative__prim_expr_no_struct_19
+    : optional__prim_expr_1 alternative__prim_expr_no_struct_23
+    ;
+
+alternative__prim_expr_no_struct_21
     : 'return'
     | 'yield'
     ;
 
-alternative__prim_expr_no_struct_20
+alternative__prim_expr_no_struct_22
     : expr ',' optional__prim_expr_no_struct_5
     | optional__block_with_inner_attrs_3
     ;
 
-alternative__prim_expr_no_struct_21
+alternative__prim_expr_no_struct_23
     : expr ';' expr
     | optional__prim_expr_no_struct_5
     ;
@@ -1829,6 +1869,7 @@ kleene_star__fields_2
 
 closure_params
     : '||'
+    | '|_|'
     | '|' optional__closure_params_2 '|'
     ;
 
