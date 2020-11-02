@@ -5,7 +5,12 @@ package(default_visibility = ["//test/org/perses:__subpackages__"])
 
 filegroup(
     name = "whole_rust_repo",
-    srcs = glob(["rust/**/*.rs"]),
+    srcs = glob(
+        ["rust/**/*.rs"],
+        exclude = [
+            "rust/src/test/**",
+        ],
+    ),
 )
 
 filegroup(
