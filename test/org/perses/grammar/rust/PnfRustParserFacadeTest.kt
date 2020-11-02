@@ -22,6 +22,7 @@ import com.google.common.io.Files
 import com.google.common.truth.Truth
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -56,7 +57,7 @@ class PnfRustParserFacadeTest {
     assertThat(formatted).isEqualTo(tempFile.readText())
   }
 
-  fun testString(file: File) {
+  fun compareOrigAndPnfParsers(file: File) {
     val parseTreeFromOrigParser = facade.parseWithOrigRustParser(file)
     val tokensByOrigParser = TestUtility.extractTokens(parseTreeFromOrigParser.tree)
 
@@ -68,7 +69,7 @@ class PnfRustParserFacadeTest {
 
   fun testSingleFile(file: File) {
     try {
-      testString(file)
+      compareOrigAndPnfParsers(file)
       Truth.assertWithMessage("Remove $file").that(failedTests).containsNoneIn(arrayOf(file.toString()))
     } catch (e: Throwable) {
       e.printStackTrace()
@@ -134,7 +135,13 @@ class PnfRustParserFacadeTest {
     val file = File(workingDir, "test.rs")
     file.writeText(program)
 
-    testString(file)
+    compareOrigAndPnfParsers(file)
+  }
+
+  @Ignore("TODO(gs): fix this issue.")
+  @Test
+  fun test_compiler_rustc_ast_src_mut_visit() {
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_ast/src/mut_visit.rs"))
   }
 
   // Collection for keeping track of the shards of tests we need to run
