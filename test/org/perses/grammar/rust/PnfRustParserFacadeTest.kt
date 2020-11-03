@@ -138,10 +138,11 @@ class PnfRustParserFacadeTest {
     compareOrigAndPnfParsers(file)
   }
 
-  @Ignore("TODO(gs): fix this issue.")
   @Test
   fun test_compiler_rustc_ast_src_mut_visit() {
     compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_ast/src/mut_visit.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_ast/src/token.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_ast/src/tokenstream.rs"))
   }
 
   // Collection for keeping track of the shards of tests we need to run

@@ -976,8 +976,7 @@ associated_static_decl:
     'static' 'mut'? ident ':' ty_sum';';
 
 const_decl:
-    'const' (ident|'_') ':' ty_sum '=' expr ';';
-//    | 'const' (ident|'_') ':' ty_sum '=' '(' ')' ';';
+    'default'? 'const' (ident|'_') ':' ty_sum '=' expr ';';
 
 associated_const_decl:
     'const' ident (':' ty_sum)? ';'; //experimental:  const ident syntactic but not semantically
@@ -1095,7 +1094,7 @@ enum_decl:
     'enum' ident type_parameters? where_clause? '{' enum_variant_list? '}';
 
 enum_variant:
-    attr* visibility? enum_variant_main;
+    attr* visibility? enum_variant_main ('=' lit)?;
 
 enum_variant_list:
     enum_variant (',' enum_variant)* ','?;
@@ -1296,7 +1295,8 @@ type_path_segment:
     | 'super';
 
 ty_path_segment_no_super:
-    (ident | 'Self') type_arguments?;
+    '(' (ident | 'Self')? ')' type_arguments?
+    | (ident | 'Self') type_arguments?;
 
 
 // === Type bounds
@@ -1436,7 +1436,7 @@ ty_sum_list:
 
 type_parameters:
     '<' lifetime_param_list '>'
-    | '<' (lifetime_param ',')* type_parameter_list '>';
+    | '<' (lifetime_param ',')* type_parameter_list? '>';
 
 lifetime_param:
     attr* 'const'? lifetime (':' lifetime_bound)?;
@@ -1525,8 +1525,8 @@ pat_fields:
     | pat_field (',' pat_field)* (',' '..' | ','?);
 
 pat_field:
-    'box'? 'ref'? 'mut'? ident
-    | ident ':' pattern;
+    attr* 'box'? 'ref'? 'mut'? ident
+    | attr* ident ':' pattern;
 
 
 // === Expressions
@@ -1642,7 +1642,7 @@ prim_expr_no_struct
     | 'static'? 'move'? closure_params closure_tail
     | 'async' 'move' (blocky_expr | closure_params closure_tail)
     | blocky_expr
-    | 'break' lifetime_or_expr?
+    | 'break' lifetime_or_expr? lit? item? //experimental: label/loop break value
     | 'continue' lifetime?
     | 'return' expr? // this is IMO a rustc bug, should be expr_no_struct
     | 'yield' expr?
@@ -1662,6 +1662,7 @@ lit:
 closure_params
     : '|' '|'
     | '||'
+    | '|_|'
     | '|' closure_param_list? '|';
 
 closure_param:
@@ -1860,6 +1861,8 @@ ident:
     | 'default'
     | 'union'
     | 'try'
+    | 'crate'
+    | 'macro_rules'
     | RawIdentifier
     ;
 
