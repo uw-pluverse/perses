@@ -81,6 +81,7 @@ ident
     | 'union'
     | 'try'
     | 'crate'
+    | 'macro_rules'
     | RawIdentifier
     ;
 
