@@ -120,8 +120,8 @@ object Shell {
     override fun toString(): String {
       return MoreObjects.toStringHelper(this)
         .add("exitCode", exitCode)
-        .add("stdout", stdout.combineLines())
-        .add("stderr", stderr.combineLines())
+        .add("stdout", stdout.combinedLines)
+        .add("stderr", stderr.combinedLines)
         .toString()
     }
   }

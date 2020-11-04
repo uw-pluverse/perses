@@ -21,7 +21,6 @@ import com.google.common.base.Strings
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
 import com.google.common.io.Files
-import com.google.common.io.MoreFiles
 import org.antlr.v4.runtime.tree.ParseTree
 import org.perses.CommandOptions
 import org.perses.grammar.AbstractParserFacade
@@ -51,7 +50,6 @@ import org.perses.util.TimeUtil
 import java.io.Closeable
 import java.io.File
 import java.io.IOException
-import java.nio.charset.StandardCharsets
 
 /**
  * This is the main entry to invoke Perses reducer. It does not have a main, but is the main entry
@@ -378,8 +376,8 @@ class ReductionDriver(
         formatCmd.command,
         formatFolder.sourceFilePath
       )
-      logger.atSevere().log("stdout: %s", cmdOutput.stderr.combineLines())
-      logger.atSevere().log("stderr: %s", cmdOutput.stdout.combineLines())
+      logger.atSevere().log("stdout: %s", cmdOutput.stderr.combinedLines)
+      logger.atSevere().log("stderr: %s", cmdOutput.stdout.combinedLines)
       return
     }
     val scriptTestResult = formatFolder.testScript.test()
