@@ -9,14 +9,12 @@ test_data/rust_programs/rust_testsuite/ui/associated-type-bounds/fn-dyn-apit.rs
 test_data/rust_programs/rust_testsuite/ui/associated-type-bounds/fn-wrap-apit.rs
 test_data/rust_programs/rust_testsuite/ui/associated-type-bounds/lcsit.rs
 test_data/rust_programs/rust_testsuite/ui/associated-type-bounds/trait-alias-impl-trait.rs
-test_data/rust_programs/rust_testsuite/ui/const-generics/condition-in-trait-const-arg.rs
 test_data/rust_programs/rust_testsuite/ui/const-generics/fn-const-param-call.rs
 test_data/rust_programs/rust_testsuite/ui/const-generics/fn-const-param-infer.rs
 test_data/rust_programs/rust_testsuite/ui/const-generics/issues/issue-61747.rs
 test_data/rust_programs/rust_testsuite/ui/const-generics/raw-ptr-const-param-deref.rs
 test_data/rust_programs/rust_testsuite/ui/const-generics/raw-ptr-const-param.rs
 test_data/rust_programs/rust_testsuite/ui/const-generics/slice-const-param.rs
-test_data/rust_programs/rust_testsuite/ui/consts/const-endianess.rs
 test_data/rust_programs/rust_testsuite/ui/dyn-keyword/dyn-2015-no-warnings-without-lints.rs
 test_data/rust_programs/rust_testsuite/ui/error-codes/e0119/auxiliary/complex_impl_support.rs
 test_data/rust_programs/rust_testsuite/ui/generic/generic-param-attrs.rs
@@ -25,7 +23,6 @@ test_data/rust_programs/rust_testsuite/ui/half-open-range-patterns/pat-tuple-4.r
 test_data/rust_programs/rust_testsuite/ui/issues/issue-15043.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-20616.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-36116.rs
-test_data/rust_programs/rust_testsuite/ui/issues/issue-38987.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-43692.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-50571.rs
 test_data/rust_programs/rust_testsuite/ui/issues/issue-55376.rs

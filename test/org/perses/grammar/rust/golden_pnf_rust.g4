@@ -278,7 +278,7 @@ macro_decl
     ;
 
 macro_decl_2
-    : '(' optional__fn_decl_1 ')'
+    : '(' kleene_star__inner_attr_1 ')'
     ;
 
 optional__macro_decl_3
@@ -970,13 +970,9 @@ alternative__impl_item_tail_13
     ;
 
 tt_delimited
-    : tt_parens
-    | tt_brackets
+    : tt_brackets
     | tt_block
-    ;
-
-tt_parens
-    : '(' kleene_star__inner_attr_1 ')'
+    | macro_decl_2
     ;
 
 tt_brackets
@@ -1356,6 +1352,8 @@ type_param_bound
 
 type_argument
     : BareIntLit
+    | 'true'
+    | 'false'
     | optional__type_argument_2 ty_sum
     ;
 
@@ -1797,11 +1795,10 @@ prim_expr_no_struct
     | 'async' 'move' (blocky_expr | closure_params closure_tail)
     | path optional__prim_expr_no_struct_1
     | optional__prim_expr_no_struct_9 optional__prim_expr_no_struct_10 closure_params closure_tail
-    | 'break' optional__prim_expr_no_struct_11 optional__prim_expr_no_struct_12 optional__prim_expr_no_struct_13
-    | '(' alternative__prim_expr_no_struct_18 ')'
-    | '[' alternative__prim_expr_no_struct_19 ']'
+    | '(' alternative__prim_expr_no_struct_19 ')'
+    | '[' alternative__prim_expr_no_struct_20 ']'
     | 'continue' optional__type_1
-    | alternative__prim_expr_no_struct_21 optional__block_with_inner_attrs_3
+    | alternative__prim_expr_no_struct_23 optional__block_with_inner_attrs_3
     ;
 
 optional__prim_expr_no_struct_1
@@ -1832,25 +1829,26 @@ optional__prim_expr_no_struct_13
     : item?
     ;
 
-alternative__prim_expr_no_struct_18
-    : optional__prim_expr_1 alternative__prim_expr_no_struct_22
-    ;
-
 alternative__prim_expr_no_struct_19
-    : optional__prim_expr_1 alternative__prim_expr_no_struct_23
+    : optional__prim_expr_1 alternative__prim_expr_no_struct_24
     ;
 
-alternative__prim_expr_no_struct_21
-    : 'return'
-    | 'yield'
+alternative__prim_expr_no_struct_20
+    : optional__prim_expr_1 alternative__prim_expr_no_struct_25
     ;
 
-alternative__prim_expr_no_struct_22
+alternative__prim_expr_no_struct_23
+    : 'yield'
+    | 'break' optional__prim_expr_no_struct_11 optional__prim_expr_no_struct_12 optional__prim_expr_no_struct_13
+    | 'return'
+    ;
+
+alternative__prim_expr_no_struct_24
     : expr ',' optional__prim_expr_no_struct_5
     | optional__block_with_inner_attrs_3
     ;
 
-alternative__prim_expr_no_struct_23
+alternative__prim_expr_no_struct_25
     : expr ';' expr
     | optional__prim_expr_no_struct_5
     ;
@@ -3342,7 +3340,7 @@ BareIntLit
 
 fragment
 INT_SUFFIX
-    : [ui] ('8' | '16' | '32' | '64' | 'size')
+    : [ui] ('8' | '16' | '32' | '64' | '128' | 'size')
     ;
 
 FullIntLit
@@ -3354,7 +3352,7 @@ FullIntLit
 
 fragment
 EXPONENT
-    : [Ee] [+-]? '_'* [0-9] [0-9_]*
+    : [Ee] [+-]? 'd_'* [0-9] [0-9_]*
     ;
 
 fragment
