@@ -997,7 +997,7 @@ foreign_fn_decl:
 
 //macro declaration here is not documented,
 macro_decl:
-     macro_head ( '(' param_list? ')' )? fn_rtype? where_clause? tt;
+     macro_head ( '(' tt* ')' )? fn_rtype? where_clause? tt; // tt* should be replaced onced offical grammar is released
 
 macro_head:
     'macro' ident type_parameter?;
@@ -1425,6 +1425,8 @@ type_argument:
     ident '=' ty_sum
     | ty_sum
     | BareIntLit
+    | 'true'
+    | 'false'
     ;
 
 // TODO(cnsun): get rid of this.
@@ -1642,7 +1644,7 @@ prim_expr_no_struct
     | 'static'? 'move'? closure_params closure_tail
     | 'async' 'move' (blocky_expr | closure_params closure_tail)
     | blocky_expr
-    | 'break' lifetime_or_expr? lit? item? //experimental: label/loop break value
+    | 'break' lifetime_or_expr? lit? item? expr? //experimental: label/loop break value
     | 'continue' lifetime?
     | 'return' expr? // this is IMO a rustc bug, should be expr_no_struct
     | 'yield' expr?
@@ -2060,7 +2062,7 @@ BareIntLit:
     DEC_DIGITS;
 
 fragment INT_SUFFIX:
-    [ui] ('8'|'16'|'32'|'64'|'size');
+    [ui] ('8'|'16'|'32'|'64'|'128'|'size');
 
 FullIntLit:
     DEC_DIGITS INT_SUFFIX?
@@ -2069,7 +2071,7 @@ FullIntLit:
     | '0b' '_'* [01] [01_]* INT_SUFFIX?;
 
 fragment EXPONENT:
-    [Ee] [+-]? '_'* [0-9] [0-9_]*;
+    [Ee] [+-]? 'd_'* [0-9] [0-9_]*;
 
 fragment FLOAT_SUFFIX:
     'f32'

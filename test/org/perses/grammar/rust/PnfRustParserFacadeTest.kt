@@ -143,6 +143,12 @@ class PnfRustParserFacadeTest {
     compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_ast/src/mut_visit.rs"))
     compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_ast/src/token.rs"))
     compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_ast/src/tokenstream.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_ast/src/attr/mod.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_builtin_macros/src/deriving/mod.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_data_structures/src/sip128/tests.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_data_structures/src/tagged_ptr/copy.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_index/src/bit_set.rs"))
+
   }
 
   // Collection for keeping track of the shards of tests we need to run
