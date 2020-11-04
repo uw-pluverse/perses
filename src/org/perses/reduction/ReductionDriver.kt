@@ -118,8 +118,7 @@ class ReductionDriver(
       val fileToReduce = configuration.fileToReduce
       val bestFile = configuration.bestResultFile
       if (fileToReduce.file.canonicalPath != bestFile.canonicalPath) {
-        MoreFiles.asCharSink(bestFile.toPath(), StandardCharsets.UTF_8)
-          .write(fileToReduce.fileContent)
+        bestFile.writeText(fileToReduce.fileContent)
       }
     }
     listenerManager.onReductionStart(tree, tree.originalTokenCount)
@@ -512,7 +511,7 @@ class ReductionDriver(
       configuration.workingFolder,
       baseName + "." + TimeUtil.formatDateForFileName(System.currentTimeMillis()) + ".orig"
     )
-    MoreFiles.asCharSink(backupFile.toPath(), StandardCharsets.UTF_8).write(fileContent)
+    backupFile.writeText(fileContent)
   }
 
   companion object {

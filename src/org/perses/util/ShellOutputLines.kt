@@ -26,7 +26,7 @@ data class ShellOutputLines(val lines: ImmutableList<String>) {
   /**
    * Returns true if there is a line contains the string.
    */
-  fun anyLineContains(needle: String) = lines.asSequence().any {
+  fun anyLineContains(needle: String) = lines.any {
     it.contains(needle)
   }
 
