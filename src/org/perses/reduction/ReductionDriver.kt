@@ -223,15 +223,13 @@ class ReductionDriver(
   private fun constructFullCreduceCommand(
     creduceCmd: String,
     reductionFolder: ReductionFolder
-  ): String {
-    return StringBuilder()
+  ) = StringBuilder()
       .append(creduceCmd)
       .append(' ')
       .append(reductionFolder.testScript.scriptFile.name)
       .append(' ')
       .append(reductionFolder.sourceFilePath.name)
       .toString()
-  }
 
   private fun shouldExitFixpointIteration(initialTokenCount: Int): Boolean {
     check(initialTokenCount >= tree.tokenCount)
@@ -326,13 +324,16 @@ class ReductionDriver(
     if (!future.get().isPass) {
       logger.atFine().log("The initial sanity check failed. Folder: %s", future.workingDirectory)
       val tempDir = copyFilesToTempDir(future.workingDirectory)
-      logger.atSevere().log("***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****")
-      logger.atSevere().log("*")
-      logger.atSevere().log("* The initial sanity check failed.")
-      logger.atSevere().log("* The files have been saved, and you can check them at:")
-      logger.atSevere().log("*     $tempDir")
-      logger.atSevere().log("*")
-      logger.atSevere().log("***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****")
+      logger.atSevere().apply {
+        log("***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****")
+        log("*")
+        log("* The initial sanity check failed.")
+        log("* The files have been saved, and you can check them at:")
+        log("*     $tempDir")
+        log("*")
+        log("***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****")
+      }
+
       throw IllegalStateException()
     }
     check(future.get().isPass) {
