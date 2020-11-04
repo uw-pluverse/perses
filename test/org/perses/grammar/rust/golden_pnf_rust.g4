@@ -71,18 +71,23 @@ visibility_restriction
 alternative__visibility_restriction_2
     : 'super'
     | 'crate'
-    | 'in' ident
+    | 'in' simple_path
     ;
 
-ident
-    : Ident
-    | 'auto'
-    | 'default'
-    | 'union'
-    | 'try'
-    | 'crate'
-    | 'macro_rules'
-    | RawIdentifier
+simple_path
+    : optional__simple_path_1 simple_path_segment kleene_star__simple_path_3
+    ;
+
+optional__simple_path_1
+    : '::'?
+    ;
+
+simple_path_2
+    : '::' simple_path_segment
+    ;
+
+kleene_star__simple_path_3
+    : simple_path_2*
     ;
 
 attr
@@ -285,16 +290,23 @@ optional__macro_decl_3
     : macro_decl_2?
     ;
 
+ident
+    : Ident
+    | 'auto'
+    | 'default'
+    | 'union'
+    | 'try'
+    | 'crate'
+    | 'macro_rules'
+    | RawIdentifier
+    ;
+
 rename
     : 'as' (ident | '_')
     ;
 
 use_path
-    : optional__use_path_1 alternative__use_path_7
-    ;
-
-optional__use_path_1
-    : '::'?
+    : optional__simple_path_1 alternative__use_path_7
     ;
 
 optional__use_path_2
@@ -1034,7 +1046,7 @@ path_parent_3
 path_parent_4
     : 'self'
     | '<' ty_sum optional__path_parent_1 '>'
-    | optional__use_path_1 path_segment
+    | optional__simple_path_1 path_segment
     ;
 
 as_trait
@@ -1048,21 +1060,10 @@ path_segment
 
 simple_path_segment
     : ident
+    | 'super'
     | 'Self'
     | 'crate'
     | '$crate'
-    ;
-
-simple_path
-    : optional__use_path_1 simple_path_segment kleene_star__simple_path_3
-    ;
-
-simple_path_2
-    : '::' simple_path_segment
-    ;
-
-kleene_star__simple_path_3
-    : simple_path_2*
     ;
 
 for_lifetimes
@@ -1148,7 +1149,7 @@ ty_path_parent_3
 
 ty_path_parent_4
     : 'self'
-    | optional__use_path_1 type_path_segment
+    | optional__simple_path_1 type_path_segment
     | '<' ty_sum optional__path_parent_1 '>'
     ;
 

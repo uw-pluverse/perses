@@ -148,7 +148,15 @@ class PnfRustParserFacadeTest {
     compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_data_structures/src/sip128/tests.rs"))
     compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_data_structures/src/tagged_ptr/copy.rs"))
     compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_index/src/bit_set.rs"))
-
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/diagnostics/conflict_errors.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/diagnostics/region_errors.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/nll.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/nll.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/region_infer/mod.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/region_infer/opaque_types.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/type_check/free_region_relations.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/type_check/mod.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir_build/src/build/into.rs"))
   }
 
   // Collection for keeping track of the shards of tests we need to run
