@@ -30,6 +30,5 @@ test_data/rust_programs/rust_testsuite/ui/json-bom-plus-crlf-multifile.rs
 test_data/rust_programs/rust_testsuite/ui/parser-unicode-whitespace.rs
 test_data/rust_programs/rust_testsuite/ui/parser/trait-plusequal-splitting.rs
 test_data/rust_programs/rust_testsuite/ui/parser/underscore-suffix-for-string.rs
-test_data/rust_programs/rust_testsuite/ui/resolve/auxiliary/privacy-struct-ctor.rs
 test_data/rust_programs/rust_testsuite/ui/rfc-2632-const-trait-impl/const-trait-bound-opt-out/syntax.rs
 test_data/rust_programs/rust_testsuite/ui/weird-exprs.rs

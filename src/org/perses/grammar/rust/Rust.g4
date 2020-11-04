@@ -881,7 +881,7 @@ visibility:
 visibility_restriction:
     '(' 'crate' ')'
     | '(' 'super' ')'
-    | '(' 'in' ident ')';
+    | '(' 'in' simple_path ')';
 
 item:
     attr* visibility? pub_item
@@ -1254,6 +1254,7 @@ simple_path:
 
 simple_path_segment:
     ident
+    | 'super'
     | 'Self'
     | 'crate'
     | '$crate';
