@@ -1041,11 +1041,11 @@ method_param_list:
 // Instead, the `pat` is restricted to a few short, simple cases.
 trait_method_param:
     '...'
-    | attr* restricted_pat ':' attr* ty_sum
+    | attr* ( ('(' (restricted_pat ',')* restricted_pat')' ) |  restricted_pat) ':' attr* ty_sum
     | attr* ty_sum;
 
 restricted_pat:
-    ('&' | '&&' | 'mut')? ('_' | ident);
+    'ref'? ('&' | '&&' | 'mut')? ('_' | ident);
 
 trait_method_param_list:
     attr* (trait_method_param | self_param) (',' trait_method_param)* ','?;
@@ -1297,7 +1297,7 @@ type_path_segment:
 
 ty_path_segment_no_super:
     '(' (ident | 'Self')? ')' type_arguments?
-    | (ident | 'Self') type_arguments?;
+    | (ident | 'Self'| '&raw') type_arguments?;
 
 
 // === Type bounds
@@ -1310,7 +1310,7 @@ where_bound_list:
 
 where_bound:
     lifetime ':' lifetime_bound
-    | for_lifetimes? type empty_ok_colon_bound;
+    | for_lifetimes? type empty_ok_colon_bound ?;
 
 empty_ok_colon_bound:
     ':' bound?;
@@ -1448,7 +1448,8 @@ lifetime_param_list:
     lifetime_param (',' lifetime_param)* ','?;
 
 type_parameter:
-    attr* 'const'? ident colon_bound? ty_default?;
+    attr* 'const'? ident colon_bound? ty_default?
+    | ty_sum;
 
 type_parameter_list:
     type_parameter (',' type_parameter)* ','?;
@@ -1716,6 +1717,7 @@ pre_expr:
     | expr_attrs pre_expr
     | '-' pre_expr
     | '!' pre_expr
+    | '&raw'
     | '&' 'mut'? pre_expr
     | '&&' 'mut'? pre_expr   // meaning `& & expr`
     | '*' pre_expr

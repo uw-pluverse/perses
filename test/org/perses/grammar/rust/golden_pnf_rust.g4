@@ -625,7 +625,8 @@ tt
     ;
 
 type_parameter
-    : kleene_star__item_1 optional__impl_block_5 ident optional__type_decl_4 optional__type_parameter_4
+    : ty_sum
+    | kleene_star__item_1 optional__impl_block_5 ident optional__type_decl_4 optional__type_parameter_4
     ;
 
 optional__type_parameter_4
@@ -702,19 +703,27 @@ variadic_param_list_names_optional
 
 trait_method_param
     : '...'
-    | alternative__trait_method_param_4 ty_sum
+    | alternative__trait_method_param_6 ty_sum
     ;
 
-alternative__trait_method_param_4
-    : kleene_star__item_1 optional__trait_method_param_6
+trait_method_param_2
+    : restricted_pat ','
     ;
 
-trait_method_param_5
-    : restricted_pat ':' kleene_star__item_1
+kleene_star__trait_method_param_3
+    : trait_method_param_2*
     ;
 
-optional__trait_method_param_6
-    : trait_method_param_5?
+alternative__trait_method_param_6
+    : kleene_star__item_1 optional__trait_method_param_8
+    ;
+
+trait_method_param_7
+    : ('(' kleene_star__trait_method_param_3 restricted_pat ')' | restricted_pat) ':' kleene_star__item_1
+    ;
+
+optional__trait_method_param_8
+    : trait_method_param_7?
     ;
 
 self_param
@@ -723,17 +732,21 @@ self_param
     ;
 
 restricted_pat
-    : optional__restricted_pat_2 ('_' | ident)
+    : optional__restricted_pat_1 optional__restricted_pat_3 ('_' | ident)
     ;
 
-restricted_pat_1
+optional__restricted_pat_1
+    : 'ref'?
+    ;
+
+restricted_pat_2
     : '&'
     | '&&'
     | 'mut'
     ;
 
-optional__restricted_pat_2
-    : restricted_pat_1?
+optional__restricted_pat_3
+    : restricted_pat_2?
     ;
 
 struct_tail
@@ -1186,6 +1199,7 @@ alternative__ty_path_segment_no_super_5
     : '(' optional__ty_path_segment_no_super_2 ')'
     | ident
     | 'Self'
+    | '&raw'
     ;
 
 type_path_segment
@@ -1207,11 +1221,15 @@ kleene_star__where_bound_list_2
 
 where_bound
     : lifetime ':' lifetime_bound
-    | optional__where_bound_1 type empty_ok_colon_bound
+    | optional__where_bound_1 type optional__where_bound_2
     ;
 
 optional__where_bound_1
     : for_lifetimes?
+    ;
+
+optional__where_bound_2
+    : empty_ok_colon_bound?
     ;
 
 empty_ok_colon_bound
@@ -1402,10 +1420,6 @@ kleene_star__pattern_without_mut_5
     : pattern_without_mut_4*
     ;
 
-optional__pattern_without_mut_8
-    : 'ref'?
-    ;
-
 optional__pattern_without_mut_12
     : pat_list_with_dots?
     ;
@@ -1491,7 +1505,7 @@ alternative__pattern_without_mut_33
 
 alternative__pattern_without_mut_34
     : kleene_star__pattern_without_mut_5 pat_ident
-    | optional__pattern_without_mut_8 optional__static_decl_1 ident
+    | optional__restricted_pat_1 optional__static_decl_1 ident
     ;
 
 pat_ident
@@ -1596,7 +1610,7 @@ optional__pat_field_2
 
 alternative__pat_field_6
     : ident ':' pattern
-    | optional__pat_field_2 optional__pattern_without_mut_8 optional__static_decl_1 ident
+    | optional__pat_field_2 optional__restricted_pat_1 optional__static_decl_1 ident
     ;
 
 assign_expr
@@ -1955,6 +1969,7 @@ alternative__post_expr_tail_7
 
 pre_expr
     : post_expr
+    | '&raw'
     | 'in' expr_no_struct block
     | alternative__pre_expr_8 pre_expr
     ;
