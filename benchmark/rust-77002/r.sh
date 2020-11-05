@@ -27,15 +27,22 @@ readonly OUTPUT_WRONG="wrong_output.txt"
 readonly OUTPUT_CORRECT_1="correct_output.txt"
 readonly OUTPUT_CORRECT_2="correct_output_2.txt"
 
-timeout -s 9 30 "${EXE_WRONG}" &> "${OUTPUT_WRONG}"
-echo "$?" >> "${OUTPUT_WRONG}"
+if ! timeout -s 9 30 "${EXE_WRONG}" &> "${OUTPUT_WRONG}" ; then
+  exit 1
+fi
 
-timeout -s 9 30 "${EXE_CORRECT}" &> "${OUTPUT_CORRECT_1}"
-echo "$?" >> "${OUTPUT_CORRECT_1}"
+if ! timeout -s 9 30 "${EXE_CORRECT}" &> "${OUTPUT_CORRECT_1}" ; then
+  exit 1
+fi
 
-timeout -s 9 30 "${EXE_CORRECT_2}" &> "${OUTPUT_CORRECT_2}"
-echo "$?" >> "${OUTPUT_CORRECT_2}"
+if ! timeout -s 9 30 "${EXE_CORRECT_2}" &> "${OUTPUT_CORRECT_2}" ; then
+  exit 1
+fi
 
+if [[ ! -s "${OUTPUT_WRONG}" ]] ; then
+  # empty file, return 1.
+  exit 1
+fi
 if ! diff -q "${OUTPUT_CORRECT_1}" "${OUTPUT_CORRECT_2}" ; then 
   exit 1
 fi
