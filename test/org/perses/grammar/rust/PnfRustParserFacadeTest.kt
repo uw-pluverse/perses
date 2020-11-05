@@ -157,6 +157,23 @@ class PnfRustParserFacadeTest {
     compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/type_check/free_region_relations.rs"))
     compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/type_check/mod.rs"))
     compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir_build/src/build/into.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/diagnostics/explain_borrow.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/android/fs.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/dragonfly/fs.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/emscripten/fs.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/freebsd/fs.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/haiku/fs.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/illumos/fs.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/ios/fs.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/linux/fs.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/macos/fs.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/netbsd/fs.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/openbsd/fs.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/redox/fs.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/solaris/fs.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/sys/sgx/abi/usercalls/alloc.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_data_structures/src/tagged_ptr.rs"))
+    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_middle/src/mir/interpret/pointer.rs"))
   }
 
   // Collection for keeping track of the shards of tests we need to run
