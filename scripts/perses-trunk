@@ -31,4 +31,3 @@ cp -f "bazel-bin/src/org/perses/perses_deploy.jar" "${FOLDER_BIN}"
 cd "${REDUCTION_DIR}"
 readonly FILE_JAR="${FOLDER_BIN}/perses_deploy.jar"
 java -jar "${FILE_JAR}" "$@"
-
