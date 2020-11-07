@@ -323,7 +323,7 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
         "e.g. 0 represents 0%, 85 represents 85%.",
       order = FlagOrder.CACHE_CONTROL + 2
     )
-    var queryCacheRefreshThreshold = 100 // Represent 100/100 = 100%
+    var queryCacheRefreshThreshold = 0 // Represent 0/100 = 0%
 
     fun getQueryCacheRefreshThreshold(): Fraction {
       return Fraction(queryCacheRefreshThreshold, 100)

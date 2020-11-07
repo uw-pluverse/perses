@@ -843,7 +843,7 @@ The current best program is the following
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-2 entries are removed: 13 --> 11.
+7 entries are removed: 13 --> 6.
 ------------------------------------------------------------
 
 
@@ -892,7 +892,7 @@ The current best program is the following
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-4 entries are removed: 13 --> 9.
+2 entries are removed: 8 --> 6.
 ------------------------------------------------------------
 
 
@@ -914,7 +914,7 @@ The current best program is the following
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-6 entries are removed: 10 --> 4.
+5 entries are removed: 7 --> 2.
 ------------------------------------------------------------
 
 
@@ -1019,7 +1019,7 @@ It took less than 1 second to cancel the task.
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-3 entries are removed: 6 --> 3.
+3 entries are removed: 4 --> 1.
 ------------------------------------------------------------
 
 
@@ -1129,7 +1129,7 @@ It took less than 1 second to cancel the task.
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-3 entries are removed: 5 --> 2.
+3 entries are removed: 3 --> 0.
 ------------------------------------------------------------
 
 
