@@ -21,22 +21,16 @@ import com.google.common.collect.ImmutableSet
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
 
-object LanguageC : LanguageKind() {
-
-  override val name = "c"
-
-  override val extensions = ImmutableSet.of("c")
-
-  override val defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE
-
-  override val defaultFormmaterCommand =
-    tryObtainingDefaultFormatter(
-      "clang-format",
-      ImmutableList.of(/*in-place formatting*/"-i"))
-
-  override val allowedCodeFormatControl = ImmutableSet.of(
+object LanguageC : LanguageKind(
+  name = "c",
+  extensions = ImmutableSet.of("c"),
+  defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE,
+  defaultFormmaterCommand = tryObtainingDefaultFormatter(
+    "clang-format",
+    ImmutableList.of(/*in-place formatting*/"-i")),
+  allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.SINGLE_TOKEN_PER_LINE,
     EnumFormatControl.COMPACT_ORIG_FORMAT,
     EnumFormatControl.ORIG_FORMAT
   )
-}
+)

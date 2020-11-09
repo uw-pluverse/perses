@@ -20,19 +20,14 @@ import com.google.common.collect.ImmutableSet
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
 
-object LanguageJava : LanguageKind() {
-
-  override val name = "java"
-
-  override val extensions = ImmutableSet.of("java")
-
-  override val defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE
-
-  override val defaultFormmaterCommand = null
-
-  override val allowedCodeFormatControl = ImmutableSet.of(
+object LanguageJava : LanguageKind(
+  name = "java",
+  extensions = ImmutableSet.of("java"),
+  defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE,
+  allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.SINGLE_TOKEN_PER_LINE,
     EnumFormatControl.COMPACT_ORIG_FORMAT,
     EnumFormatControl.ORIG_FORMAT
-  )
-}
+  ),
+  defaultFormmaterCommand = null
+)

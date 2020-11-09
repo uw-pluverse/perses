@@ -20,27 +20,33 @@ import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.util.ShellCommandOnPath
 
-abstract class LanguageKind {
+abstract class LanguageKind(
+  val name: String,
+  val extensions: ImmutableSet<String>,
+  val defaultCodeFormatControl: EnumFormatControl,
+  val allowedCodeFormatControl: ImmutableSet<EnumFormatControl>,
+  val defaultFormmaterCommand: ShellCommandOnPath?
+) {
 
-  abstract val name: String
-
-  abstract val extensions: ImmutableSet<String>
-
-  abstract val defaultCodeFormatControl: EnumFormatControl
-
-  abstract val allowedCodeFormatControl: ImmutableSet<EnumFormatControl>
-
-  abstract val defaultFormmaterCommand: ShellCommandOnPath?
+  init {
+    check(defaultCodeFormatControl in allowedCodeFormatControl) {
+      "The default code format $defaultFormmaterCommand is not in $allowedCodeFormatControl"
+    }
+  }
 
   fun isCodeFormatAllowed(codeFormat: EnumFormatControl) =
     allowedCodeFormatControl.contains(codeFormat)
 
-  protected fun tryObtainingDefaultFormatter(
-    formamtterCmd: String,
-    defaultFlags: ImmutableList<String> = ImmutableList.of()
-  ) = try {
-    ShellCommandOnPath(formamtterCmd, defaultFlags)
-  } catch (e: Exception) {
-    null
+  companion object {
+    @JvmStatic
+    fun tryObtainingDefaultFormatter(
+      formamtterCmd: String,
+      defaultFlags: ImmutableList<String> = ImmutableList.of()
+    ) = try {
+      ShellCommandOnPath(formamtterCmd, defaultFlags)
+    } catch (e: Exception) {
+      null
+    }
   }
+
 }

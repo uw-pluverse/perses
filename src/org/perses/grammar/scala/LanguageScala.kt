@@ -20,18 +20,13 @@ import com.google.common.collect.ImmutableSet
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
 
-object LanguageScala : LanguageKind() {
-
-  override val name = "scala"
-
-  override val extensions = ImmutableSet.of("scala", "sc")
-
-  override val defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT
-
-  override val defaultFormmaterCommand = null
-
-  override val allowedCodeFormatControl = ImmutableSet.of(
+object LanguageScala : LanguageKind(
+  name = "scala",
+  extensions = ImmutableSet.of("scala", "sc"),
+  defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT,
+  allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.COMPACT_ORIG_FORMAT,
     EnumFormatControl.ORIG_FORMAT
-  )
-}
+  ),
+  defaultFormmaterCommand = null
+)
