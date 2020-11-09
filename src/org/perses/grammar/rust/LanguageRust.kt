@@ -25,7 +25,7 @@ import org.perses.util.ShellCommandOnPath
 object LanguageRust : LanguageKind(
   name = "rust",
   extensions = ImmutableSet.of("rs"),
-  defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT,
+  defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE,
   allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.SINGLE_TOKEN_PER_LINE,
     EnumFormatControl.COMPACT_ORIG_FORMAT,
