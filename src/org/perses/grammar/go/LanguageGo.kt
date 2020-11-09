@@ -24,7 +24,7 @@ object LanguageGo : LanguageKind(
   name = "go",
   extensions = ImmutableSet.of("go"),
   defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT,
-  defaultFormmaterCommand = null,
+  defaultFormaterCommand = null,
   allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.COMPACT_ORIG_FORMAT,
     EnumFormatControl.ORIG_FORMAT

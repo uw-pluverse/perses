@@ -16,6 +16,7 @@
  */
 package org.perses.grammar.rust
 
+import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
@@ -29,5 +30,13 @@ object LanguageRust : LanguageKind(
     EnumFormatControl.COMPACT_ORIG_FORMAT,
     EnumFormatControl.ORIG_FORMAT
   ),
-  defaultFormmaterCommand = tryObtainingDefaultFormatter("rustfmt")
-)
+  defaultFormaterCommand = tryObtainingDefaultFormatter("rustfmt")
+) {
+  override fun isDefaultFormatterWorking(): Boolean {
+    if (defaultFormaterCommand == null) {
+      return false
+    }
+    val cmdOutput = defaultFormaterCommand.runWith(ImmutableList.of("--help"))
+    return cmdOutput.exitCode == 0
+  }
+}

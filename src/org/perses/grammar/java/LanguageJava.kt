@@ -29,5 +29,5 @@ object LanguageJava : LanguageKind(
     EnumFormatControl.COMPACT_ORIG_FORMAT,
     EnumFormatControl.ORIG_FORMAT
   ),
-  defaultFormmaterCommand = null
+  defaultFormaterCommand = null
 )

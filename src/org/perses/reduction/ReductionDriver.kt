@@ -115,7 +115,7 @@ class ReductionDriver(
     run {
       val fileToReduce = configuration.fileToReduce
       val bestFile = configuration.bestResultFile
-      if (fileToReduce.file.canonicalPath != bestFile.canonicalPath) {
+      if (fileToReduce.file.canonicalPath!=bestFile.canonicalPath) {
         bestFile.writeText(fileToReduce.fileContent)
       }
     }
@@ -150,7 +150,7 @@ class ReductionDriver(
         } else {
           SparTreeSimplifier.simplify(tree)
         }
-        check(tree.tokenizedProgramFactory == originalTokenizedProgramFactory) {
+        check(tree.tokenizedProgramFactory==originalTokenizedProgramFactory) {
           "The tokenized program factory should be unchanged during a reduction process."
         }
         check(
@@ -224,12 +224,12 @@ class ReductionDriver(
     creduceCmd: String,
     reductionFolder: ReductionFolder
   ) = StringBuilder()
-      .append(creduceCmd)
-      .append(' ')
-      .append(reductionFolder.testScript.scriptFile.name)
-      .append(' ')
-      .append(reductionFolder.sourceFilePath.name)
-      .toString()
+    .append(creduceCmd)
+    .append(' ')
+    .append(reductionFolder.testScript.scriptFile.name)
+    .append(' ')
+    .append(reductionFolder.sourceFilePath.name)
+    .toString()
 
   private fun shouldExitFixpointIteration(initialTokenCount: Int): Boolean {
     check(initialTokenCount >= tree.tokenCount)
@@ -356,7 +356,14 @@ class ReductionDriver(
     if (!cmd.outputRefiningFlags.callFormatter) {
       return
     }
-    val formatCmd = configuration.parserFacade.language.defaultFormmaterCommand ?: return
+
+    if (!configuration.parserFacade.language.isDefaultFormatterWorking()) {
+      logger.atSevere().log("The default formatter is not working. cmd=%s",
+        configuration.parserFacade.language.defaultFormaterCommand
+      )
+      return
+    }
+    val formatCmd = configuration.parserFacade.language.defaultFormaterCommand!!
 
     val formatFolderName = "formatter_at_the_end_" +
       TimeUtil.formatDateForFileName(System.currentTimeMillis())

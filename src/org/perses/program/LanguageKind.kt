@@ -25,13 +25,17 @@ abstract class LanguageKind(
   val extensions: ImmutableSet<String>,
   val defaultCodeFormatControl: EnumFormatControl,
   val allowedCodeFormatControl: ImmutableSet<EnumFormatControl>,
-  val defaultFormmaterCommand: ShellCommandOnPath?
+  val defaultFormaterCommand: ShellCommandOnPath?
 ) {
 
   init {
     check(defaultCodeFormatControl in allowedCodeFormatControl) {
-      "The default code format $defaultFormmaterCommand is not in $allowedCodeFormatControl"
+      "The default code format $defaultFormaterCommand is not in $allowedCodeFormatControl"
     }
+  }
+
+  open fun isDefaultFormatterWorking(): Boolean {
+    return defaultFormaterCommand!=null
   }
 
   fun isCodeFormatAllowed(codeFormat: EnumFormatControl) =

@@ -22,7 +22,6 @@ import com.google.common.io.Files
 import com.google.common.truth.Truth
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -42,7 +41,7 @@ class PnfRustParserFacadeTest {
 
   @Test
   fun testDefaultFormatterCmd() {
-    assertThat(facade.language.defaultFormmaterCommand).isNotNull()
+    assertThat(facade.language.defaultFormaterCommand).isNotNull()
     val tempFile = File(workingDir, "to-be-formatted.rs")
     val unformatted = """
       |fn main() {
@@ -50,10 +49,10 @@ class PnfRustParserFacadeTest {
     """
     tempFile.writeText(unformatted.trimMargin())
 
-    facade.language.defaultFormmaterCommand!!.runWith(ImmutableList.of(tempFile.toString()))
+    facade.language.defaultFormaterCommand!!.runWith(ImmutableList.of(tempFile.toString()))
     val formatted = tempFile.readText()
     assertThat(formatted).isNotEqualTo(unformatted)
-    facade.language.defaultFormmaterCommand!!.runWith(ImmutableList.of(tempFile.toString()))
+    facade.language.defaultFormaterCommand!!.runWith(ImmutableList.of(tempFile.toString()))
     assertThat(formatted).isEqualTo(tempFile.readText())
   }
 
