@@ -27,6 +27,5 @@ object LanguageScala : LanguageKind(
   allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.COMPACT_ORIG_FORMAT,
     EnumFormatControl.ORIG_FORMAT
-  ),
-  defaultFormaterCommand = null
+  )
 )

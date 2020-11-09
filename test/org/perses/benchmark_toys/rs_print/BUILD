@@ -34,7 +34,8 @@ genrule(
     name = "format_rs_from_reduced_rs_print",
     srcs = ["hello_reduced.rs"],
     outs = ["golden_file_format_rs_from_reduced_rs_print.rs"],
-    cmd = "cat $(location hello_reduced.rs) | rustfmt > $@",
+    cmd = "$(location rustfmt_wrapper.sh) $(location hello_reduced.rs) $@",
+    tools = ["rustfmt_wrapper.sh"],
 )
 
 reduce(

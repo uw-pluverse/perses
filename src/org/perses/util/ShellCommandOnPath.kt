@@ -61,6 +61,23 @@ class ShellCommandOnPath(
     private val logger = FluentLogger.forEnclosingClass()
 
     @JvmStatic
+    fun tryCreating(
+      command: String,
+      defaultFlags: ImmutableList<String> = ImmutableList.of()
+    ) =
+      try {
+        ShellCommandOnPath(command, defaultFlags)
+      } catch (e: Exception) {
+        null
+      }
+
+    @JvmStatic
+    fun tryCreating(
+      command: String,
+      vararg defaultFlags: String
+    ) = tryCreating(command, ImmutableList.copyOf<String>(defaultFlags))
+
+    @JvmStatic
     fun normalizeAndCheckExecutability(cmdName: String): String {
       val cmdPath = Paths.get(cmdName)
       if (cmdPath.isAbsolute) {
@@ -72,7 +89,7 @@ class ShellCommandOnPath(
         }
         return cmdName
       }
-      if (cmdPath.nameCount == 1) {
+      if (cmdPath.nameCount==1) {
         val pathEnv = System.getenv("PATH")
         val foundOnPath = Arrays.stream(pathEnv.split(File.pathSeparator.toRegex()).toTypedArray())
           .anyMatch {

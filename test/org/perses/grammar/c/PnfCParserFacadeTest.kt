@@ -52,7 +52,8 @@ class PnfCParserFacadeTest {
       |return 0;}
     """.trimMargin()
     tempFile.writeText(orig)
-    facade.language.defaultFormaterCommand!!.runWith(ImmutableList.of(tempFile.toString()))
+    facade.language.getDefaultWorkingFormatter()!!
+      .runWith(ImmutableList.of(tempFile.toString()))
     val formatted = tempFile.readText()
     assertThat(orig).isNotEqualTo(formatted)
   }

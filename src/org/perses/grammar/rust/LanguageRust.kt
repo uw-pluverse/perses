@@ -20,6 +20,7 @@ import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
+import org.perses.util.ShellCommandOnPath
 
 object LanguageRust : LanguageKind(
   name = "rust",
@@ -30,13 +31,33 @@ object LanguageRust : LanguageKind(
     EnumFormatControl.COMPACT_ORIG_FORMAT,
     EnumFormatControl.ORIG_FORMAT
   ),
-  defaultFormaterCommand = tryObtainingDefaultFormatter("rustfmt")
+  defaultFormaterCommand = createPotentialCodeFormatterList(
+    ShellCommandOnPath.tryCreating("rustfmt"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.47.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.46.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.45.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.44.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.43.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.42.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.41.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.40.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.39.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.38.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.37.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.36.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.35.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.34.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.33.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.32.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.31.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.30.0")
+  )
 ) {
-  override fun isDefaultFormatterWorking(): Boolean {
-    if (defaultFormaterCommand == null) {
-      return false
+
+  override fun getDefaultWorkingFormatter(): ShellCommandOnPath? {
+    return defaultFormaterCommand.asSequence().firstOrNull {
+      it.runWith(ImmutableList.of("--help")).exitCode==0
     }
-    val cmdOutput = defaultFormaterCommand.runWith(ImmutableList.of("--help"))
-    return cmdOutput.exitCode == 0
   }
+
 }

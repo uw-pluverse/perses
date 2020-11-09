@@ -41,7 +41,7 @@ class PnfRustParserFacadeTest {
 
   @Test
   fun testDefaultFormatterCmd() {
-    assertThat(facade.language.defaultFormaterCommand).isNotNull()
+    assertThat(facade.language.getDefaultWorkingFormatter()).isNotNull()
     val tempFile = File(workingDir, "to-be-formatted.rs")
     val unformatted = """
       |fn main() {
@@ -49,10 +49,10 @@ class PnfRustParserFacadeTest {
     """
     tempFile.writeText(unformatted.trimMargin())
 
-    facade.language.defaultFormaterCommand!!.runWith(ImmutableList.of(tempFile.toString()))
+    facade.language.getDefaultWorkingFormatter()!!.runWith(ImmutableList.of(tempFile.toString()))
     val formatted = tempFile.readText()
     assertThat(formatted).isNotEqualTo(unformatted)
-    facade.language.defaultFormaterCommand!!.runWith(ImmutableList.of(tempFile.toString()))
+    facade.language.getDefaultWorkingFormatter()!!.runWith(ImmutableList.of(tempFile.toString()))
     assertThat(formatted).isEqualTo(tempFile.readText())
   }
 

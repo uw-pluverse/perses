@@ -356,14 +356,13 @@ class ReductionDriver(
     if (!cmd.outputRefiningFlags.callFormatter) {
       return
     }
-
-    if (!configuration.parserFacade.language.isDefaultFormatterWorking()) {
+    val formatCmd = configuration.parserFacade.language.getDefaultWorkingFormatter()
+    if (formatCmd==null) {
       logger.atSevere().log("The default formatter is not working. cmd=%s",
-        configuration.parserFacade.language.defaultFormaterCommand
+        configuration.parserFacade.language.getDefaultFormatterCommandStrings()
       )
       return
     }
-    val formatCmd = configuration.parserFacade.language.defaultFormaterCommand!!
 
     val formatFolderName = "formatter_at_the_end_" +
       TimeUtil.formatDateForFileName(System.currentTimeMillis())

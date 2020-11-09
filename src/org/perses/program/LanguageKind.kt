@@ -25,7 +25,7 @@ abstract class LanguageKind(
   val extensions: ImmutableSet<String>,
   val defaultCodeFormatControl: EnumFormatControl,
   val allowedCodeFormatControl: ImmutableSet<EnumFormatControl>,
-  val defaultFormaterCommand: ShellCommandOnPath?
+  protected val defaultFormaterCommand: ImmutableList<ShellCommandOnPath> = ImmutableList.of()
 ) {
 
   init {
@@ -34,23 +34,35 @@ abstract class LanguageKind(
     }
   }
 
-  open fun isDefaultFormatterWorking(): Boolean {
-    return defaultFormaterCommand!=null
+  open fun getDefaultWorkingFormatter(): ShellCommandOnPath? {
+    return if (defaultFormaterCommand.isEmpty()) {
+      null
+    } else {
+      defaultFormaterCommand[0]
+    }
   }
+
+  fun getDefaultFormatterCommandStrings() = StringBuilder().apply {
+    defaultFormaterCommand.asSequence().map { "'$it'" }.forEach {
+      append(it).append(", ")
+    }
+  }.toString()
 
   fun isCodeFormatAllowed(codeFormat: EnumFormatControl) =
     allowedCodeFormatControl.contains(codeFormat)
 
   companion object {
+
     @JvmStatic
-    fun tryObtainingDefaultFormatter(
-      formamtterCmd: String,
-      defaultFlags: ImmutableList<String> = ImmutableList.of()
-    ) = try {
-      ShellCommandOnPath(formamtterCmd, defaultFlags)
-    } catch (e: Exception) {
-      null
-    }
+    fun createPotentialCodeFormatterList(vararg formatters: ShellCommandOnPath?) =
+      formatters
+        .asSequence()
+        .filter { it!=null }
+        .fold(
+          ImmutableList.builder<ShellCommandOnPath>(),
+          { builder, formatter -> builder.add(formatter!!) })
+        .build()!!
+
   }
 
 }

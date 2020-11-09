@@ -20,14 +20,16 @@ import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
+import org.perses.util.ShellCommandOnPath
 
 object LanguageC : LanguageKind(
   name = "c",
   extensions = ImmutableSet.of("c"),
   defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE,
-  defaultFormaterCommand = tryObtainingDefaultFormatter(
-    "clang-format",
-    ImmutableList.of(/*in-place formatting*/"-i")),
+  defaultFormaterCommand = createPotentialCodeFormatterList(
+    ShellCommandOnPath.tryCreating("clang-format",
+      ImmutableList.of(/*in-place formatting*/"-i"))
+  ),
   allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.SINGLE_TOKEN_PER_LINE,
     EnumFormatControl.COMPACT_ORIG_FORMAT,
