@@ -34,7 +34,6 @@ abstract class LanguageKind(
     }
   }
 
-
   open fun getDefaultWorkingFormatter(): ShellCommandOnPath? {
     return if (defaultFormaterCommand.isEmpty()) {
       null
