@@ -359,7 +359,7 @@ class ReductionDriver(
     val formatCmd = configuration.parserFacade.language.getDefaultWorkingFormatter()
     if (formatCmd==null) {
       logger.atSevere().log("The default formatter is not working. cmd=%s",
-        configuration.parserFacade.language.getDefaultFormatterCommandStrings()
+        configuration.parserFacade.language.getAllDefaultFormatterCommandStrings()
       )
       return
     }

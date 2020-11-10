@@ -34,6 +34,7 @@ abstract class LanguageKind(
     }
   }
 
+
   open fun getDefaultWorkingFormatter(): ShellCommandOnPath? {
     return if (defaultFormaterCommand.isEmpty()) {
       null
@@ -42,11 +43,11 @@ abstract class LanguageKind(
     }
   }
 
-  fun getDefaultFormatterCommandStrings() = StringBuilder().apply {
-    defaultFormaterCommand.asSequence().map { "'$it'" }.forEach {
-      append(it).append(", ")
-    }
-  }.toString()
+  fun getAllDefaultFormatterCommandStrings() = defaultFormaterCommand
+    .fold(
+      StringBuilder(), { builder, shellCmd ->
+      builder.append("'$shellCmd'").append(", ")
+    }).toString()
 
   fun isCodeFormatAllowed(codeFormat: EnumFormatControl) =
     allowedCodeFormatControl.contains(codeFormat)
