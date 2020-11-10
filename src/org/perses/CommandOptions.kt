@@ -20,13 +20,12 @@ import com.beust.jcommander.Parameter
 import org.perses.program.EnumFormatControl
 import org.perses.util.AbstractCommandOptions
 import org.perses.util.Fraction
-import org.perses.util.Fraction.Companion.parse
 import org.perses.util.ICommandLineFlags
 import org.perses.util.ShellCommandOnPath.Companion.normalizeAndCheckExecutability
 import java.io.File
 
 /** Parser for command line arguments.  */
-class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCommandOptions() {
+class CommandOptions(defaultReductionAlgorithm: String) : AbstractCommandOptions() {
   @JvmField
   val compulsoryFlags = registerFlags(CompulsoryFlags())
 
@@ -38,7 +37,7 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
   val outputRefiningFlags = registerFlags(OutputRefiningFlags())
 
   @JvmField
-  val algorithmControlFlags = registerFlags(ReductionAlgorithmControlFlags())
+  val algorithmControlFlags = registerFlags(ReductionAlgorithmControlFlags(defaultReductionAlgorithm))
   val cacheControlFlags = registerFlags(CacheControlFlags())
   val profilingFlags = registerFlags(ProfilingFlags())
 
@@ -166,13 +165,13 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
     var codeFormat: EnumFormatControl? = null
 
     override fun validate() {
-      if ("auto" != numOfThreads) {
+      if ("auto"!=numOfThreads) {
         check(numOfThreads.toInt() > 0) { numOfThreads }
       }
     }
 
     fun getNumOfThreads(): Int {
-      return if ("auto" == numOfThreads) {
+      return if ("auto"==numOfThreads) {
         Runtime.getRuntime().availableProcessors()
       } else {
         numOfThreads.toInt()
@@ -226,7 +225,8 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
     }
   }
 
-  inner class ReductionAlgorithmControlFlags : ICommandLineFlags {
+  class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String)
+    : ICommandLineFlags {
     @JvmField
     @Parameter(
       names = ["--alg"],
@@ -295,14 +295,14 @@ class CommandOptions(private val defaultReductionAlgorithm: String) : AbstractCo
     override fun validate() = Unit
   }
 
-  inner class CacheControlFlags : ICommandLineFlags {
+  class CacheControlFlags : ICommandLineFlags {
     @Parameter(
       names = ["--query-caching"],
       description = "Enable query caching for test script executions.",
       arity = 1,
       order = FlagOrder.CACHE_CONTROL + 0
     )
-    var queryCaching = false
+    var queryCaching: Boolean = false
 
     @Parameter(
       names = ["--edit-caching"],
