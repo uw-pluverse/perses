@@ -16,8 +16,11 @@
  */
 package org.perses
 
+import com.beust.jcommander.IStringConverter
 import com.beust.jcommander.Parameter
+import com.beust.jcommander.ParameterException
 import org.perses.program.EnumFormatControl
+import org.perses.reduction.EnumQueryCachingControl
 import org.perses.util.AbstractCommandOptions
 import org.perses.util.Fraction
 import org.perses.util.ICommandLineFlags
@@ -295,14 +298,23 @@ class CommandOptions(defaultReductionAlgorithm: String) : AbstractCommandOptions
     override fun validate() = Unit
   }
 
+  class QueryCachingControlConverter : IStringConverter<EnumQueryCachingControl> {
+    override fun convert(flagValue: String?): EnumQueryCachingControl {
+      return EnumQueryCachingControl.convert(flagValue!!)
+        ?: throw ParameterException(
+          "Cannot convert '$flagValue' to an instanceof ${EnumQueryCachingControl::class}")
+    }
+  }
+
   class CacheControlFlags : ICommandLineFlags {
     @Parameter(
       names = ["--query-caching"],
       description = "Enable query caching for test script executions.",
       arity = 1,
+      converter = QueryCachingControlConverter::class,
       order = FlagOrder.CACHE_CONTROL + 0
     )
-    var queryCaching: Boolean = false
+    var queryCaching = EnumQueryCachingControl.FALSE
 
     @Parameter(
       names = ["--edit-caching"],

@@ -9,6 +9,7 @@ kt_jvm_library(
     srcs = ["CommandOptions.kt"],
     deps = [
         "//src/org/perses/program:enum_format_control",
+        "//src/org/perses/reduction:enum_query_caching_control",
         "//src/org/perses/util:command_line_flags",
         "//src/org/perses/util:percentage",
         "//src/org/perses/util:shell",

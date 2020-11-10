@@ -567,7 +567,10 @@ class ReductionDriver(
         progressDumpFile = progressDumpFile,
         programFormatControl = programFormatControl,
         fixpointReduction = cmd.reductionControlFlags.fixpoint,
-        enableTestScriptExecutionCaching = cmd.cacheControlFlags.queryCaching,
+        enableTestScriptExecutionCaching = when(cmd.cacheControlFlags.queryCaching) {
+          EnumQueryCachingControl.TRUE -> true
+          else -> false
+        },
         useRealDeltaDebugger = cmd.algorithmControlFlags.useRealDeltaDebugger,
         numOfReductionThreads = cmd.reductionControlFlags.getNumOfThreads(),
         parserFacadeFactory = parserFacadeFactory

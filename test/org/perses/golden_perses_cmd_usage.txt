@@ -53,7 +53,8 @@ Usage: org.perses.Main [options]
       Default: false
     --query-caching
       Enable query caching for test script executions.
-      Default: false
+      Default: FALSE
+      Possible Values: [TRUE, FALSE, AUTO]
     --edit-caching
       Enable caching for edits performed between two successful reductions.
       Default: true
