@@ -8,28 +8,55 @@ in the test script. Compared to Delta Debugging and Hierarchical Delta Debugging
 Perses leverages the syntax information in the Antlr grammar, and prunes the
 search space by avoiding generating syntactically invalid programs.
 
+### Supported Languages ###
 
-### Build & Use ###
+Currently, Perses supports reduction for the following programming languages:
 
-```
-git clone https://github.com/chengniansun/perses.git
-cd perses
-bazel build //src/org/perses:perses_deploy.jar
-```
++ C
++ Rust
++ Java 8
++ Go
 
-Bazel will generate a self-contained java file named *perses_deploy.jar*.
-This jar file includes all required class files, and can be directly run
-with the following command.
+Support for other languages is planned or under development, and will happen soon. 
 
-```
-java -jar perses_deploy.jar  [options]? --test-script <test-script.sh> --input-file <program file>
-```
+### Obtain and Run ###
 
-* __test-script.sh__:
+There are three ways to obtain Perses.
+
++  Download a prebuilt release JAR file from our [release page](https://github.com/perses-project/perses/releases),
+for example,
+    
+    ```
+    wget https://github.com/perses-project/perses/releases/download/v1.4/perses_deploy.jar
+    java -jar perses_deploy.jar [options]? --test-script <test-script.sh> --input-file <program file>
+    ```
+
++ Clone the repo and build Perses from the source.
+
+    ```
+    git clone https://github.com/perses-project/perses.git
+    cd perses
+    bazel build //src/org/perses:perses_deploy.jar
+   java -jar bazel-bin/src/org/perses/perses_deploy.jar [options]? --test-script <test-script.sh> --input-file <program file>
+    ```
+
++ If you want to always use the trunk version of Perses, you can use [perses-trunk](https://github.com/perses-project/perses/blob/master/scripts/perses-trunk).
+It can be installed on your machine with
+
+    ```
+    wget https://raw.githubusercontent.com/perses-project/perses/master/scripts/perses-trunk
+    chmod +x perses-trunk
+    # mv perses-trunk to your $PATH
+    perses-trunk [options]? --test-script <test-script.sh> --input-file <program file>
+    ```
+
+#### Important Flags ####
+* --test-script __<test-script.sh>__:
 The script encodes the constraints that the original program file and the reduced version should satisfy. It should return **0** if the constraints are satisfied. 
  
-* __program file__: the program needs to be reduced. Currently, antlr-hdd 
-supports the following languages, C, Java. Note that we can easily support any other languages, if the specific language can be parsed by an Antlr parser. 
+* --input-file __<program file>__: the program needs to be reduced. Currently, Perses 
+supports C, Rust, Java and Go. Note that we can easily support any other languages,
+if the specific language can be parsed by an Antlr parser. 
 
 
 
@@ -47,7 +74,7 @@ Perses is written in combination of Java 8 and Kotlin, and built with [Bazel](ht
 To build, run
 
 ```
-bazel build antlropt/... src/... test/...
+bazel build //src/org/perses:perses_deploy.jar 
 ```
 
 To test, run
@@ -70,12 +97,7 @@ cd benchmark
 ./start_docker.sh
 ``` 
 
-In the docker container, you can build the benchmark and run the tests with the following
-
-```shell
-cd perses
-bazel test benchmark/...
-```
+For more instructions on the benchmark folder, pelase refer to this [document](https://github.com/perses-project/perses/tree/master/benchmark)
 
 #### For Intellij Users ####
 
