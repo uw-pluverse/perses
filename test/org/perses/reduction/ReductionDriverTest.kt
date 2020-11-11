@@ -24,6 +24,7 @@ import org.perses.CommandOptions
 import org.perses.grammar.ParserFacadeFactory.Companion.builderWithBuiltinLanguages
 import org.perses.program.EnumFormatControl
 import org.perses.reduction.ReducerFactory.defaultReductionAlgName
+import org.perses.reduction.ReductionDriver.Companion.booleanToEnabledOrDisabled
 import org.perses.reduction.ReductionDriver.Companion.computeWhetherToEnableQueryCaching
 import org.perses.reduction.ReductionDriver.Companion.createConfiguration
 
@@ -61,6 +62,12 @@ class ReductionDriverTest {
         EnumQueryCachingControl.AUTO, EnumFormatControl.SINGLE_TOKEN_PER_LINE
       )
     ).isTrue()
+  }
+
+  @Test
+  fun testBooleanToEnabledOrDisabled() {
+    assertThat(booleanToEnabledOrDisabled(true)).isEqualTo("enabled")
+    assertThat(booleanToEnabledOrDisabled(false)).isEqualTo("disabled")
   }
 
   @Test
