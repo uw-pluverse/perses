@@ -23,10 +23,6 @@ def reduce(
     result_file = result_file or "reduced_%s_result_%s" % (name, source_file)
     statistics_file = statistics_file or "%s_statistics.txt" % name
     progress_dump_file = progress_dump_file or "%s_progress.txt" % name
-    if enable_query_caching == None:
-        enable_query_caching = True
-    if enable_edit_caching == None:
-        enable_edit_caching = True
     if enable_token_slicer == None:
         enable_token_slicer = False
     if enable_tree_slicer == None:
@@ -45,11 +41,14 @@ def reduce(
         "--output-file $(location %s)" % result_file,
         "--stat-dump-file $(location %s)" % statistics_file,
         "--progress-dump-file $(location %s)" % progress_dump_file,
-        "--query-caching %s" % ("true" if enable_query_caching else "false"),
-        "--edit-caching %s" % ("true" if enable_edit_caching else "false"),
         "--enable-token-slicer %s" % ("true" if enable_token_slicer else "false"),
         "--enable-tree-slicer %s" % ("true" if enable_tree_slicer else "false"),
     ]
+
+    if enable_query_caching != None:
+        args.append("--query-caching %s" % ("true" if enable_query_caching else "false"))
+    if enable_edit_caching != None:
+        args.append("--edit-caching %s" % ("true" if enable_edit_caching else "false"))
     if call_formatter != None:
         args.append("--call-formatter %s" % ("true" if call_formatter else "false"))
     args.append("&>")

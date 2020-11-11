@@ -10,6 +10,8 @@ sanity_test(
 
 reduction_golden_test(
     name = "reduction_golden_test",
+    enable_edit_caching = True,
+    enable_query_caching = True,
     golden_progress_file = "golden_reduction_progress.txt",
     golden_reduced_file = "golden_reduced_t.c",
     progress_dump_file = "reduction_progress.txt",
