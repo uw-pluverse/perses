@@ -20,18 +20,12 @@ import com.google.common.collect.ImmutableSet
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
 
-object LanguageGo : LanguageKind() {
-
-  override val name = "go"
-
-  override val extensions = ImmutableSet.of("go")
-
-  override val defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT
-
-  override val defaultFormmaterCommand = null
-
-  override val allowedCodeFormatControl = ImmutableSet.of(
+object LanguageGo : LanguageKind(
+  name = "go",
+  extensions = ImmutableSet.of("go"),
+  defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT,
+  allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.COMPACT_ORIG_FORMAT,
     EnumFormatControl.ORIG_FORMAT
   )
-}
+)

@@ -71,16 +71,23 @@ visibility_restriction
 alternative__visibility_restriction_2
     : 'super'
     | 'crate'
-    | 'in' ident
+    | 'in' simple_path
     ;
 
-ident
-    : Ident
-    | 'auto'
-    | 'default'
-    | 'union'
-    | 'try'
-    | RawIdentifier
+simple_path
+    : optional__simple_path_1 simple_path_segment kleene_star__simple_path_3
+    ;
+
+optional__simple_path_1
+    : '::'?
+    ;
+
+simple_path_2
+    : '::' simple_path_segment
+    ;
+
+kleene_star__simple_path_3
+    : simple_path_2*
     ;
 
 attr
@@ -175,7 +182,7 @@ optional__static_decl_1
     ;
 
 const_decl
-    : 'const' (ident | '_') ':' ty_sum '=' expr ';'
+    : optional__impl_block_1 'const' (ident | '_') ':' ty_sum '=' expr ';'
     ;
 
 associated_const_decl
@@ -276,11 +283,22 @@ macro_decl
     ;
 
 macro_decl_2
-    : '(' optional__fn_decl_1 ')'
+    : '(' kleene_star__inner_attr_1 ')'
     ;
 
 optional__macro_decl_3
     : macro_decl_2?
+    ;
+
+ident
+    : Ident
+    | 'auto'
+    | 'default'
+    | 'union'
+    | 'try'
+    | 'crate'
+    | 'macro_rules'
+    | RawIdentifier
     ;
 
 rename
@@ -288,11 +306,7 @@ rename
     ;
 
 use_path
-    : optional__use_path_1 alternative__use_path_7
-    ;
-
-optional__use_path_1
-    : '::'?
+    : optional__simple_path_1 alternative__use_path_7
     ;
 
 optional__use_path_2
@@ -439,7 +453,7 @@ optional__expr_2
     ;
 
 type_parameters
-    : '<' alternative__type_parameters_3 '>'
+    : '<' alternative__type_parameters_4 '>'
     ;
 
 type_parameters_1
@@ -450,9 +464,13 @@ kleene_star__type_parameters_2
     : type_parameters_1*
     ;
 
-alternative__type_parameters_3
+optional__type_parameters_3
+    : type_parameter_list?
+    ;
+
+alternative__type_parameters_4
     : lifetime_param_list
-    | kleene_star__type_parameters_2 type_parameter_list
+    | kleene_star__type_parameters_2 optional__type_parameters_3
     ;
 
 colon_bound
@@ -607,7 +625,8 @@ tt
     ;
 
 type_parameter
-    : kleene_star__item_1 optional__impl_block_5 ident optional__type_decl_4 optional__type_parameter_4
+    : ty_sum
+    | kleene_star__item_1 optional__impl_block_5 ident optional__type_decl_4 optional__type_parameter_4
     ;
 
 optional__type_parameter_4
@@ -684,19 +703,27 @@ variadic_param_list_names_optional
 
 trait_method_param
     : '...'
-    | alternative__trait_method_param_4 ty_sum
+    | alternative__trait_method_param_6 ty_sum
     ;
 
-alternative__trait_method_param_4
-    : kleene_star__item_1 optional__trait_method_param_6
+trait_method_param_2
+    : restricted_pat ','
     ;
 
-trait_method_param_5
-    : restricted_pat ':' kleene_star__item_1
+kleene_star__trait_method_param_3
+    : trait_method_param_2*
     ;
 
-optional__trait_method_param_6
-    : trait_method_param_5?
+alternative__trait_method_param_6
+    : kleene_star__item_1 optional__trait_method_param_8
+    ;
+
+trait_method_param_7
+    : ('(' kleene_star__trait_method_param_3 restricted_pat ')' | restricted_pat) ':' kleene_star__item_1
+    ;
+
+optional__trait_method_param_8
+    : trait_method_param_7?
     ;
 
 self_param
@@ -705,17 +732,21 @@ self_param
     ;
 
 restricted_pat
-    : optional__restricted_pat_2 ('_' | ident)
+    : optional__restricted_pat_1 optional__restricted_pat_3 ('_' | ident)
     ;
 
-restricted_pat_1
+optional__restricted_pat_1
+    : 'ref'?
+    ;
+
+restricted_pat_2
     : '&'
     | '&&'
     | 'mut'
     ;
 
-optional__restricted_pat_2
-    : restricted_pat_1?
+optional__restricted_pat_3
+    : restricted_pat_2?
     ;
 
 struct_tail
@@ -788,7 +819,15 @@ kleene_star__enum_variant_list_2
     ;
 
 enum_variant
-    : kleene_star__item_1 optional__item_2 enum_variant_main
+    : kleene_star__item_1 optional__item_2 enum_variant_main optional__enum_variant_4
+    ;
+
+enum_variant_3
+    : '=' lit
+    ;
+
+optional__enum_variant_4
+    : enum_variant_3?
     ;
 
 enum_variant_main
@@ -811,6 +850,18 @@ alternative__enum_variant_main_6
     : optional__enum_variant_main_4
     | '=' expr
     | '{' optional__struct_tail_5 '}'
+    ;
+
+lit
+    : 'true'
+    | 'false'
+    | BareIntLit
+    | FullIntLit
+    | ByteLit
+    | ByteStringLit
+    | FloatLit
+    | CharLit
+    | StringLit
     ;
 
 enum_tuple_field_list
@@ -981,13 +1032,9 @@ alternative__impl_item_tail_13
     ;
 
 tt_delimited
-    : tt_parens
-    | tt_brackets
+    : tt_brackets
     | tt_block
-    ;
-
-tt_parens
-    : '(' kleene_star__inner_attr_1 ')'
+    | macro_decl_2
     ;
 
 tt_brackets
@@ -1049,7 +1096,7 @@ path_parent_3
 path_parent_4
     : 'self'
     | '<' ty_sum optional__path_parent_1 '>'
-    | optional__use_path_1 path_segment
+    | optional__simple_path_1 path_segment
     ;
 
 as_trait
@@ -1063,21 +1110,10 @@ path_segment
 
 simple_path_segment
     : ident
+    | 'super'
     | 'Self'
     | 'crate'
     | '$crate'
-    ;
-
-simple_path
-    : optional__use_path_1 simple_path_segment kleene_star__simple_path_3
-    ;
-
-simple_path_2
-    : '::' simple_path_segment
-    ;
-
-kleene_star__simple_path_3
-    : simple_path_2*
     ;
 
 for_lifetimes
@@ -1163,7 +1199,7 @@ ty_path_parent_3
 
 ty_path_parent_4
     : 'self'
-    | optional__use_path_1 type_path_segment
+    | optional__simple_path_1 type_path_segment
     | '<' ty_sum optional__path_parent_1 '>'
     ;
 
@@ -1180,11 +1216,27 @@ kleene_star__ty_sum_list_2
     ;
 
 ty_path_segment_no_super
-    : (ident | 'Self') optional__ty_path_segment_no_super_1
+    : alternative__ty_path_segment_no_super_5 optional__ty_path_segment_no_super_3
     ;
 
-optional__ty_path_segment_no_super_1
+ty_path_segment_no_super_1
+    : ident
+    | 'Self'
+    ;
+
+optional__ty_path_segment_no_super_2
+    : ty_path_segment_no_super_1?
+    ;
+
+optional__ty_path_segment_no_super_3
     : type_arguments?
+    ;
+
+alternative__ty_path_segment_no_super_5
+    : '(' optional__ty_path_segment_no_super_2 ')'
+    | ident
+    | 'Self'
+    | '&raw'
     ;
 
 type_path_segment
@@ -1206,11 +1258,15 @@ kleene_star__where_bound_list_2
 
 where_bound
     : lifetime ':' lifetime_bound
-    | optional__where_bound_1 type empty_ok_colon_bound
+    | optional__where_bound_1 type optional__where_bound_2
     ;
 
 optional__where_bound_1
     : for_lifetimes?
+    ;
+
+optional__where_bound_2
+    : empty_ok_colon_bound?
     ;
 
 empty_ok_colon_bound
@@ -1352,6 +1408,8 @@ type_param_bound
 
 type_argument
     : BareIntLit
+    | 'true'
+    | 'false'
     | optional__type_argument_2 ty_sum
     ;
 
@@ -1397,10 +1455,6 @@ pattern_without_mut_4
 
 kleene_star__pattern_without_mut_5
     : pattern_without_mut_4*
-    ;
-
-optional__pattern_without_mut_8
-    : 'ref'?
     ;
 
 optional__pattern_without_mut_12
@@ -1488,7 +1542,7 @@ alternative__pattern_without_mut_33
 
 alternative__pattern_without_mut_34
     : kleene_star__pattern_without_mut_5 pat_ident
-    | optional__pattern_without_mut_8 optional__static_decl_1 ident
+    | optional__restricted_pat_1 optional__static_decl_1 ident
     ;
 
 pat_ident
@@ -1565,18 +1619,6 @@ alternative__pat_fields_6
     | pat_fields_left ':' pat_fields_left
     ;
 
-lit
-    : 'true'
-    | 'false'
-    | BareIntLit
-    | FullIntLit
-    | ByteLit
-    | ByteStringLit
-    | FloatLit
-    | CharLit
-    | StringLit
-    ;
-
 pat_list_dots_tail
     : '..' optional__pat_list_dots_tail_2
     ;
@@ -1596,12 +1638,16 @@ pat_fields_left
     ;
 
 pat_field
-    : ident ':' pattern
-    | optional__pat_field_1 optional__pattern_without_mut_8 optional__static_decl_1 ident
+    : kleene_star__item_1 alternative__pat_field_6
     ;
 
-optional__pat_field_1
+optional__pat_field_2
     : 'box'?
+    ;
+
+alternative__pat_field_6
+    : ident ':' pattern
+    | optional__pat_field_2 optional__restricted_pat_1 optional__static_decl_1 ident
     ;
 
 assign_expr
@@ -1801,11 +1847,10 @@ prim_expr_no_struct
     | 'async' 'move' (blocky_expr | closure_params closure_tail)
     | path optional__prim_expr_no_struct_1
     | optional__prim_expr_no_struct_9 optional__prim_expr_no_struct_10 closure_params closure_tail
-    | 'break' optional__prim_expr_no_struct_11
-    | '(' alternative__prim_expr_no_struct_16 ')'
-    | '[' alternative__prim_expr_no_struct_17 ']'
+    | '(' alternative__prim_expr_no_struct_19 ')'
+    | '[' alternative__prim_expr_no_struct_20 ']'
     | 'continue' optional__type_1
-    | alternative__prim_expr_no_struct_19 optional__block_with_inner_attrs_3
+    | alternative__prim_expr_no_struct_23 optional__block_with_inner_attrs_3
     ;
 
 optional__prim_expr_no_struct_1
@@ -1828,25 +1873,34 @@ optional__prim_expr_no_struct_11
     : lifetime_or_expr?
     ;
 
-alternative__prim_expr_no_struct_16
-    : optional__prim_expr_1 alternative__prim_expr_no_struct_20
+optional__prim_expr_no_struct_12
+    : lit?
     ;
 
-alternative__prim_expr_no_struct_17
-    : optional__prim_expr_1 alternative__prim_expr_no_struct_21
+optional__prim_expr_no_struct_13
+    : item?
     ;
 
 alternative__prim_expr_no_struct_19
-    : 'return'
-    | 'yield'
+    : optional__prim_expr_1 alternative__prim_expr_no_struct_24
     ;
 
 alternative__prim_expr_no_struct_20
+    : optional__prim_expr_1 alternative__prim_expr_no_struct_25
+    ;
+
+alternative__prim_expr_no_struct_23
+    : 'yield'
+    | 'break' optional__prim_expr_no_struct_11 optional__prim_expr_no_struct_12 optional__prim_expr_no_struct_13
+    | 'return'
+    ;
+
+alternative__prim_expr_no_struct_24
     : expr ',' optional__prim_expr_no_struct_5
     | optional__block_with_inner_attrs_3
     ;
 
-alternative__prim_expr_no_struct_21
+alternative__prim_expr_no_struct_25
     : expr ';' expr
     | optional__prim_expr_no_struct_5
     ;
@@ -1866,6 +1920,7 @@ kleene_star__fields_2
 
 closure_params
     : '||'
+    | '|_|'
     | '|' optional__closure_params_2 '|'
     ;
 
@@ -1951,6 +2006,7 @@ alternative__post_expr_tail_7
 
 pre_expr
     : post_expr
+    | '&raw'
     | 'in' expr_no_struct block
     | alternative__pre_expr_8 pre_expr
     ;
@@ -3337,7 +3393,7 @@ BareIntLit
 
 fragment
 INT_SUFFIX
-    : [ui] ('8' | '16' | '32' | '64' | 'size')
+    : [ui] ('8' | '16' | '32' | '64' | '128' | 'size')
     ;
 
 FullIntLit
@@ -3349,7 +3405,7 @@ FullIntLit
 
 fragment
 EXPONENT
-    : [Ee] [+-]? '_'* [0-9] [0-9_]*
+    : [Ee] [+-]? 'd_'* [0-9] [0-9_]*
     ;
 
 fragment

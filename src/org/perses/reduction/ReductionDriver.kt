@@ -21,7 +21,6 @@ import com.google.common.base.Strings
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
 import com.google.common.io.Files
-import com.google.common.io.MoreFiles
 import org.antlr.v4.runtime.tree.ParseTree
 import org.perses.CommandOptions
 import org.perses.grammar.AbstractParserFacade
@@ -31,6 +30,7 @@ import org.perses.listener.ProgressMonitorForNodeReducer
 import org.perses.listener.ReductionProfileListener
 import org.perses.listener.StatisticsListener
 import org.perses.listener.TestScriptExecutionListener
+import org.perses.program.EnumFormatControl
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
 import org.perses.program.TokenizedProgramFactory
@@ -51,7 +51,6 @@ import org.perses.util.TimeUtil
 import java.io.Closeable
 import java.io.File
 import java.io.IOException
-import java.nio.charset.StandardCharsets
 
 /**
  * This is the main entry to invoke Perses reducer. It does not have a main, but is the main entry
@@ -59,7 +58,7 @@ import java.nio.charset.StandardCharsets
  */
 class ReductionDriver(
   private val cmd: CommandOptions,
-  private val parserFacadeFactory: ParserFacadeFactory,
+  parserFacadeFactory: ParserFacadeFactory,
   vararg extraListeners: AbstractReductionListener
 ) : Closeable {
 
@@ -103,6 +102,11 @@ class ReductionDriver(
       "The reduction process started at %s",
       TimeUtil.formatDateForDisplay(System.currentTimeMillis())
     )
+    logger.atInfo().log(
+      "Cache setting: query-caching=%s, edit-caching=%s",
+      booleanToEnabledOrDisabled(configuration.enableTestScriptExecutionCaching),
+      booleanToEnabledOrDisabled(cmd.cacheControlFlags.nodeActionSetCaching)
+    )
     backupFile(configuration)
     val worker = createMainReducer()
     val sparTreeEditListeners = createSparTreeEditListeners(configuration)
@@ -118,8 +122,7 @@ class ReductionDriver(
       val fileToReduce = configuration.fileToReduce
       val bestFile = configuration.bestResultFile
       if (fileToReduce.file.canonicalPath != bestFile.canonicalPath) {
-        MoreFiles.asCharSink(bestFile.toPath(), StandardCharsets.UTF_8)
-          .write(fileToReduce.fileContent)
+        bestFile.writeText(fileToReduce.fileContent)
       }
     }
     listenerManager.onReductionStart(tree, tree.originalTokenCount)
@@ -157,7 +160,7 @@ class ReductionDriver(
           "The tokenized program factory should be unchanged during a reduction process."
         }
         check(
-          tree.tokenizedProgramFactory.tokenFactory==
+          tree.tokenizedProgramFactory.tokenFactory ==
             originalTokenizedProgramFactory.tokenFactory
         ) {
           "The perses token factory should be unchanged during a reduction process."
@@ -201,7 +204,7 @@ class ReductionDriver(
       captureOutput = false,
       environment = Shell.CURRENT_ENV
     )
-    if (cmdOutput.exitCode!=0) {
+    if (cmdOutput.exitCode != 0) {
       val tempDir = copyFilesToTempDir(reductionFolder.folder)
       logger.atSevere().log(
         "C-Reduce failed to reduce the file. All files are copied to %s",
@@ -226,19 +229,17 @@ class ReductionDriver(
   private fun constructFullCreduceCommand(
     creduceCmd: String,
     reductionFolder: ReductionFolder
-  ): String {
-    return StringBuilder()
-      .append(creduceCmd)
-      .append(' ')
-      .append(reductionFolder.testScript.scriptFile.name)
-      .append(' ')
-      .append(reductionFolder.sourceFilePath.name)
-      .toString()
-  }
+  ) = StringBuilder()
+    .append(creduceCmd)
+    .append(' ')
+    .append(reductionFolder.testScript.scriptFile.name)
+    .append(' ')
+    .append(reductionFolder.sourceFilePath.name)
+    .toString()
 
   private fun shouldExitFixpointIteration(initialTokenCount: Int): Boolean {
     check(initialTokenCount >= tree.tokenCount)
-    return !configuration.fixpointReduction || initialTokenCount==tree.tokenCount
+    return !configuration.fixpointReduction || initialTokenCount == tree.tokenCount
   }
 
   private fun runTreeSlicerIfEnabled(initialTokenCount: Int) {
@@ -293,7 +294,7 @@ class ReductionDriver(
       currentFixpointIteration, preSize, mainReducer.redcucerAnnotation
     )
     val reductionState = ReductionState(tree)
-    assert(reductionState.sparTree==tree)
+    assert(reductionState.sparTree == tree)
     mainReducer.reduce(reductionState)
     val scriptExecutionNumberAfter = executorService.statistics.getScriptExecutionNumber()
     val countOfTestScriptExecutionsInThisIteration =
@@ -329,13 +330,16 @@ class ReductionDriver(
     if (!future.get().isPass) {
       logger.atFine().log("The initial sanity check failed. Folder: %s", future.workingDirectory)
       val tempDir = copyFilesToTempDir(future.workingDirectory)
-      logger.atSevere().log("***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****")
-      logger.atSevere().log("*")
-      logger.atSevere().log("* The initial sanity check failed.")
-      logger.atSevere().log("* The files have been saved, and you can check them at:")
-      logger.atSevere().log("*     $tempDir")
-      logger.atSevere().log("*")
-      logger.atSevere().log("***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****")
+      logger.atSevere().apply {
+        log("***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****")
+        log("*")
+        log("* The initial sanity check failed.")
+        log("* The files have been saved, and you can check them at:")
+        log("*     $tempDir")
+        log("*")
+        log("***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****")
+      }
+
       throw IllegalStateException()
     }
     check(future.get().isPass) {
@@ -358,7 +362,14 @@ class ReductionDriver(
     if (!cmd.outputRefiningFlags.callFormatter) {
       return
     }
-    val formatCmd = configuration.parserFacade.language.defaultFormmaterCommand ?: return
+    val formatCmd = configuration.parserFacade.language.getDefaultWorkingFormatter()
+    if (formatCmd == null) {
+      logger.atSevere().log(
+        "The default formatter is not working. cmd=%s",
+        configuration.parserFacade.language.getAllDefaultFormatterCommandStrings()
+      )
+      return
+    }
 
     val formatFolderName = "formatter_at_the_end_" +
       TimeUtil.formatDateForFileName(System.currentTimeMillis())
@@ -373,14 +384,14 @@ class ReductionDriver(
       ImmutableList.of(formatFolder.sourceFilePath.name),
       workingDirectory = formatFolder.folder
     )
-    if (cmdOutput.exitCode!=0) {
+    if (cmdOutput.exitCode != 0) {
       logger.atSevere().log(
         "Failed to call formatter %s on the final result %s.",
         formatCmd.command,
         formatFolder.sourceFilePath
       )
-      logger.atSevere().log("stdout: %s", cmdOutput.stderr.combineLines())
-      logger.atSevere().log("stderr: %s", cmdOutput.stdout.combineLines())
+      logger.atSevere().log("stdout: %s", cmdOutput.stderr.combinedLines)
+      logger.atSevere().log("stderr: %s", cmdOutput.stdout.combinedLines)
       return
     }
     val scriptTestResult = formatFolder.testScript.test()
@@ -512,7 +523,7 @@ class ReductionDriver(
       configuration.workingFolder,
       baseName + "." + TimeUtil.formatDateForFileName(System.currentTimeMillis()) + ".orig"
     )
-    MoreFiles.asCharSink(backupFile.toPath(), StandardCharsets.UTF_8).write(fileContent)
+    backupFile.writeText(fileContent)
   }
 
   companion object {
@@ -530,7 +541,7 @@ class ReductionDriver(
       )
       val testScript = ScriptFile(cmd.compulsoryFlags.getTestScript().absoluteFile)
 
-      require(sourceFile.parentFile.absolutePath==testScript.parentFile.absolutePath) {
+      require(sourceFile.parentFile.absolutePath == testScript.parentFile.absolutePath) {
         "The source file and the test script should reside in the same folder. " +
           "sourceFile:$sourceFile, testScript:$testScript"
       }
@@ -544,7 +555,7 @@ class ReductionDriver(
         else File(cmd.profilingFlags.progressDumpFile)
 
       val programFormatControl = cmd.reductionControlFlags.codeFormat.let { codeFormat ->
-        if (codeFormat!=null) {
+        if (codeFormat != null) {
           check(sourceFile.languageKind.isCodeFormatAllowed(codeFormat)) {
             "$codeFormat is not allowed for language ${sourceFile.languageKind}"
           }
@@ -563,11 +574,26 @@ class ReductionDriver(
         progressDumpFile = progressDumpFile,
         programFormatControl = programFormatControl,
         fixpointReduction = cmd.reductionControlFlags.fixpoint,
-        enableTestScriptExecutionCaching = cmd.cacheControlFlags.queryCaching,
+        enableTestScriptExecutionCaching = computeWhetherToEnableQueryCaching(
+          cmd.cacheControlFlags.queryCaching,
+          programFormatControl
+        ),
         useRealDeltaDebugger = cmd.algorithmControlFlags.useRealDeltaDebugger,
         numOfReductionThreads = cmd.reductionControlFlags.getNumOfThreads(),
         parserFacadeFactory = parserFacadeFactory
       )
+    }
+
+    fun booleanToEnabledOrDisabled(value: Boolean) = if (value) "enabled" else "disabled"
+
+    private fun computeWhetherToEnableQueryCaching(
+      userSpecified: EnumQueryCachingControl,
+      programFormatControl: EnumFormatControl
+    ) = when (userSpecified) {
+      EnumQueryCachingControl.TRUE -> true
+      EnumQueryCachingControl.FALSE -> false
+      EnumQueryCachingControl.AUTO ->
+        programFormatControl == EnumFormatControl.SINGLE_TOKEN_PER_LINE
     }
 
     private fun createTokenizedProgramFactory(originalTree: ParseTree): TokenizedProgramFactory {

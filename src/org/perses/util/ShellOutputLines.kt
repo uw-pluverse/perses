@@ -26,16 +26,16 @@ data class ShellOutputLines(val lines: ImmutableList<String>) {
   /**
    * Returns true if there is a line contains the string.
    */
-  fun anyLineContains(needle: String) = lines.asSequence().any {
+  fun anyLineContains(needle: String) = lines.any {
     it.contains(needle)
   }
 
   fun hasLines() = !lines.isEmpty()
 
-  fun combineLines(): String {
-    val builder = StringBuilder()
-    lines.forEach { builder.append(it).append('\n') }
-    return builder.toString()
+  val combinedLines by lazy {
+    StringBuilder(lines.map { it.length + 1 }.sum()).apply {
+      lines.forEach { line -> append(line).append('\n') }
+    }.toString()
   }
 
   fun writeToFile(file: File) {

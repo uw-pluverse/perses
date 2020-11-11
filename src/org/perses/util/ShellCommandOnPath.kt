@@ -29,7 +29,8 @@ import java.util.Arrays
  */
 class ShellCommandOnPath(
   command: String,
-  val defaultFlags: ImmutableList<String> = ImmutableList.of()) {
+  val defaultFlags: ImmutableList<String> = ImmutableList.of()
+) {
 
   private val path = Paths.get(command)
 
@@ -59,6 +60,23 @@ class ShellCommandOnPath(
   companion object {
 
     private val logger = FluentLogger.forEnclosingClass()
+
+    @JvmStatic
+    fun tryCreating(
+      command: String,
+      defaultFlags: ImmutableList<String> = ImmutableList.of()
+    ) =
+      try {
+        ShellCommandOnPath(command, defaultFlags)
+      } catch (e: Exception) {
+        null
+      }
+
+    @JvmStatic
+    fun tryCreating(
+      command: String,
+      vararg defaultFlags: String
+    ) = tryCreating(command, ImmutableList.copyOf<String>(defaultFlags))
 
     @JvmStatic
     fun normalizeAndCheckExecutability(cmdName: String): String {
@@ -91,6 +109,5 @@ class ShellCommandOnPath(
       }
       return cmdPath.toAbsolutePath().toString()
     }
-
   }
 }

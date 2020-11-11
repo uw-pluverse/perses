@@ -56,6 +56,6 @@ class ShellOutputLinesTest {
     val file = File.createTempFile("test_shell_output_lines_test", ".txt")
     list.writeToFile(file)
     val readText = file.readText(StandardCharsets.UTF_8)
-    Truth.assertThat(readText.trim()).isEqualTo(list.combineLines().trim())
+    Truth.assertThat(readText.trim()).isEqualTo(list.combinedLines.trim())
   }
 }

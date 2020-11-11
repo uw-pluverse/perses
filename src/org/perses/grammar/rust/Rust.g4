@@ -881,7 +881,7 @@ visibility:
 visibility_restriction:
     '(' 'crate' ')'
     | '(' 'super' ')'
-    | '(' 'in' ident ')';
+    | '(' 'in' simple_path ')';
 
 item:
     attr* visibility? pub_item
@@ -976,8 +976,7 @@ associated_static_decl:
     'static' 'mut'? ident ':' ty_sum';';
 
 const_decl:
-    'const' (ident|'_') ':' ty_sum '=' expr ';';
-//    | 'const' (ident|'_') ':' ty_sum '=' '(' ')' ';';
+    'default'? 'const' (ident|'_') ':' ty_sum '=' expr ';';
 
 associated_const_decl:
     'const' ident (':' ty_sum)? ';'; //experimental:  const ident syntactic but not semantically
@@ -998,7 +997,7 @@ foreign_fn_decl:
 
 //macro declaration here is not documented,
 macro_decl:
-     macro_head ( '(' param_list? ')' )? fn_rtype? where_clause? tt;
+     macro_head ( '(' tt* ')' )? fn_rtype? where_clause? tt; // tt* should be replaced onced offical grammar is released
 
 macro_head:
     'macro' ident type_parameter?;
@@ -1042,11 +1041,11 @@ method_param_list:
 // Instead, the `pat` is restricted to a few short, simple cases.
 trait_method_param:
     '...'
-    | attr* restricted_pat ':' attr* ty_sum
+    | attr* ( ('(' (restricted_pat ',')* restricted_pat')' ) |  restricted_pat) ':' attr* ty_sum
     | attr* ty_sum;
 
 restricted_pat:
-    ('&' | '&&' | 'mut')? ('_' | ident);
+    'ref'? ('&' | '&&' | 'mut')? ('_' | ident);
 
 trait_method_param_list:
     attr* (trait_method_param | self_param) (',' trait_method_param)* ','?;
@@ -1095,7 +1094,7 @@ enum_decl:
     'enum' ident type_parameters? where_clause? '{' enum_variant_list? '}';
 
 enum_variant:
-    attr* visibility? enum_variant_main;
+    attr* visibility? enum_variant_main ('=' lit)?;
 
 enum_variant_list:
     enum_variant (',' enum_variant)* ','?;
@@ -1255,6 +1254,7 @@ simple_path:
 
 simple_path_segment:
     ident
+    | 'super'
     | 'Self'
     | 'crate'
     | '$crate';
@@ -1296,7 +1296,8 @@ type_path_segment:
     | 'super';
 
 ty_path_segment_no_super:
-    (ident | 'Self') type_arguments?;
+    '(' (ident | 'Self')? ')' type_arguments?
+    | (ident | 'Self'| '&raw') type_arguments?;
 
 
 // === Type bounds
@@ -1309,7 +1310,7 @@ where_bound_list:
 
 where_bound:
     lifetime ':' lifetime_bound
-    | for_lifetimes? type empty_ok_colon_bound;
+    | for_lifetimes? type empty_ok_colon_bound ?;
 
 empty_ok_colon_bound:
     ':' bound?;
@@ -1425,6 +1426,8 @@ type_argument:
     ident '=' ty_sum
     | ty_sum
     | BareIntLit
+    | 'true'
+    | 'false'
     ;
 
 // TODO(cnsun): get rid of this.
@@ -1436,7 +1439,7 @@ ty_sum_list:
 
 type_parameters:
     '<' lifetime_param_list '>'
-    | '<' (lifetime_param ',')* type_parameter_list '>';
+    | '<' (lifetime_param ',')* type_parameter_list? '>';
 
 lifetime_param:
     attr* 'const'? lifetime (':' lifetime_bound)?;
@@ -1445,7 +1448,8 @@ lifetime_param_list:
     lifetime_param (',' lifetime_param)* ','?;
 
 type_parameter:
-    attr* 'const'? ident colon_bound? ty_default?;
+    attr* 'const'? ident colon_bound? ty_default?
+    | ty_sum;
 
 type_parameter_list:
     type_parameter (',' type_parameter)* ','?;
@@ -1525,8 +1529,8 @@ pat_fields:
     | pat_field (',' pat_field)* (',' '..' | ','?);
 
 pat_field:
-    'box'? 'ref'? 'mut'? ident
-    | ident ':' pattern;
+    attr* 'box'? 'ref'? 'mut'? ident
+    | attr* ident ':' pattern;
 
 
 // === Expressions
@@ -1642,7 +1646,7 @@ prim_expr_no_struct
     | 'static'? 'move'? closure_params closure_tail
     | 'async' 'move' (blocky_expr | closure_params closure_tail)
     | blocky_expr
-    | 'break' lifetime_or_expr?
+    | 'break' lifetime_or_expr? lit? item? expr? //experimental: label/loop break value
     | 'continue' lifetime?
     | 'return' expr? // this is IMO a rustc bug, should be expr_no_struct
     | 'yield' expr?
@@ -1662,6 +1666,7 @@ lit:
 closure_params
     : '|' '|'
     | '||'
+    | '|_|'
     | '|' closure_param_list? '|';
 
 closure_param:
@@ -1712,6 +1717,7 @@ pre_expr:
     | expr_attrs pre_expr
     | '-' pre_expr
     | '!' pre_expr
+    | '&raw'
     | '&' 'mut'? pre_expr
     | '&&' 'mut'? pre_expr   // meaning `& & expr`
     | '*' pre_expr
@@ -1860,6 +1866,8 @@ ident:
     | 'default'
     | 'union'
     | 'try'
+    | 'crate'
+    | 'macro_rules'
     | RawIdentifier
     ;
 
@@ -2057,7 +2065,7 @@ BareIntLit:
     DEC_DIGITS;
 
 fragment INT_SUFFIX:
-    [ui] ('8'|'16'|'32'|'64'|'size');
+    [ui] ('8'|'16'|'32'|'64'|'128'|'size');
 
 FullIntLit:
     DEC_DIGITS INT_SUFFIX?
@@ -2066,7 +2074,7 @@ FullIntLit:
     | '0b' '_'* [01] [01_]* INT_SUFFIX?;
 
 fragment EXPONENT:
-    [Ee] [+-]? '_'* [0-9] [0-9_]*;
+    [Ee] [+-]? 'd_'* [0-9] [0-9_]*;
 
 fragment FLOAT_SUFFIX:
     'f32'

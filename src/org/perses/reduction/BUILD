@@ -5,6 +5,11 @@ package(default_visibility = [
 
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
 
+kt_jvm_library(
+    name = "enum_query_caching_control",
+    srcs = ["EnumQueryCachingControl.kt"],
+)
+
 java_library(
     name = "test_script_execution_cache",
     srcs = [
@@ -155,6 +160,7 @@ kt_jvm_library(
     deps = [
         ":abstract_reducer",
         ":actionset_profiler",
+        ":enum_query_caching_control",
         ":reducer_factory",
         ":reduction_configuration",
         ":test_script_execution_cache",

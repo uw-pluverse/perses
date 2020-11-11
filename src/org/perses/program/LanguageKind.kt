@@ -20,27 +20,50 @@ import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.util.ShellCommandOnPath
 
-abstract class LanguageKind {
+abstract class LanguageKind(
+  val name: String,
+  val extensions: ImmutableSet<String>,
+  val defaultCodeFormatControl: EnumFormatControl,
+  val allowedCodeFormatControl: ImmutableSet<EnumFormatControl>,
+  protected val defaultFormaterCommand: ImmutableList<ShellCommandOnPath> = ImmutableList.of()
+) {
 
-  abstract val name: String
+  init {
+    check(defaultCodeFormatControl in allowedCodeFormatControl) {
+      "The default code format $defaultFormaterCommand is not in $allowedCodeFormatControl"
+    }
+  }
 
-  abstract val extensions: ImmutableSet<String>
+  open fun getDefaultWorkingFormatter(): ShellCommandOnPath? {
+    return if (defaultFormaterCommand.isEmpty()) {
+      null
+    } else {
+      defaultFormaterCommand[0]
+    }
+  }
 
-  abstract val defaultCodeFormatControl: EnumFormatControl
-
-  abstract val allowedCodeFormatControl: ImmutableSet<EnumFormatControl>
-
-  abstract val defaultFormmaterCommand: ShellCommandOnPath?
+  fun getAllDefaultFormatterCommandStrings() = defaultFormaterCommand
+    .fold(
+      StringBuilder(),
+      { builder, shellCmd ->
+        builder.append("'$shellCmd'").append(", ")
+      }
+    ).toString()
 
   fun isCodeFormatAllowed(codeFormat: EnumFormatControl) =
     allowedCodeFormatControl.contains(codeFormat)
 
-  protected fun tryObtainingDefaultFormatter(
-    formamtterCmd: String,
-    defaultFlags: ImmutableList<String> = ImmutableList.of()
-  ) = try {
-    ShellCommandOnPath(formamtterCmd, defaultFlags)
-  } catch (e: Exception) {
-    null
+  companion object {
+
+    @JvmStatic
+    fun createPotentialCodeFormatterList(vararg formatters: ShellCommandOnPath?) =
+      formatters
+        .asSequence()
+        .filter { it != null }
+        .fold(
+          ImmutableList.builder<ShellCommandOnPath>(),
+          { builder, formatter -> builder.add(formatter!!) }
+        )
+        .build()!!
   }
 }

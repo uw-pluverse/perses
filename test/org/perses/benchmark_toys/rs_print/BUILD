@@ -34,7 +34,8 @@ genrule(
     name = "format_rs_from_reduced_rs_print",
     srcs = ["hello_reduced.rs"],
     outs = ["golden_file_format_rs_from_reduced_rs_print.rs"],
-    cmd = "cat $(location hello_reduced.rs) | rustfmt > $@",
+    cmd = "$(location rustfmt_wrapper.sh) $(location hello_reduced.rs) $@",
+    tools = ["rustfmt_wrapper.sh"],
 )
 
 reduce(
@@ -56,6 +57,8 @@ golden_test(
 
 reduction_golden_test(
     name = "reduction_golden_test",
+    enable_edit_caching = True,
+    enable_query_caching = True,
     golden_progress_file = "golden_reduction_progress.txt",
     golden_reduced_file = "golden_reduced_hello.rs",
     progress_dump_file = "reduction_progress.txt",

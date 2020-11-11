@@ -16,22 +16,47 @@
  */
 package org.perses.grammar.rust
 
+import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
+import org.perses.util.ShellCommandOnPath
 
-object LanguageRust : LanguageKind() {
-
-  override val name = "rust"
-
-  override val extensions = ImmutableSet.of("rs")
-
-  override val defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT
-
-  override val defaultFormmaterCommand = tryObtainingDefaultFormatter("rustfmt")
-
-  override val allowedCodeFormatControl = ImmutableSet.of(
+object LanguageRust : LanguageKind(
+  name = "rust",
+  extensions = ImmutableSet.of("rs"),
+  defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE,
+  allowedCodeFormatControl = ImmutableSet.of(
+    EnumFormatControl.SINGLE_TOKEN_PER_LINE,
     EnumFormatControl.COMPACT_ORIG_FORMAT,
     EnumFormatControl.ORIG_FORMAT
+  ),
+  defaultFormaterCommand = createPotentialCodeFormatterList(
+    ShellCommandOnPath.tryCreating("rustfmt"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.47.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.46.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.45.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.44.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.43.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.42.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.41.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.40.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.39.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.38.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.37.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.36.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.35.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.34.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.33.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.32.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.31.0"),
+    ShellCommandOnPath.tryCreating("rustfmt", "+1.30.0")
   )
+) {
+
+  override fun getDefaultWorkingFormatter(): ShellCommandOnPath? {
+    return defaultFormaterCommand.asSequence().firstOrNull {
+      it.runWith(ImmutableList.of("--help")).exitCode == 0
+    }
+  }
 }

@@ -53,7 +53,8 @@ Usage: org.perses.Main [options]
       Default: false
     --query-caching
       Enable query caching for test script executions.
-      Default: false
+      Default: AUTO
+      Possible Values: [TRUE, FALSE, AUTO]
     --edit-caching
       Enable caching for edits performed between two successful reductions.
       Default: true
@@ -63,7 +64,7 @@ Usage: org.perses.Main [options]
       tokens of the best program at last refresh. t''	- tokens of the current 
       best program. Refresh threshold requires an integer input ranging [0, 
       100]. e.g. 0 represents 0%, 85 represents 85%.
-      Default: 100
+      Default: 0
     --progress-dump-file
       The file to record the reduction process. The dump file can be large..
     --stat-dump-file

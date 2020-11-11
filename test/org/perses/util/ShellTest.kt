@@ -90,6 +90,6 @@ class ShellTest {
       captureOutput = true,
       environment = Shell.createNewEnvironmentVar("TEST_ENV_VALUE", "hello world")
     )
-    assertThat(cmdOutput.stdout.combineLines().trim()).isEqualTo("hello world")
+    assertThat(cmdOutput.stdout.combinedLines.trim()).isEqualTo("hello world")
   }
 }
