@@ -69,7 +69,9 @@ class PnfRustParserFacadeTest {
   fun testSingleFile(file: File) {
     try {
       compareOrigAndPnfParsers(file)
-      Truth.assertWithMessage("Remove $file").that(failedTests).containsNoneIn(arrayOf(file.toString()))
+      Truth.assertWithMessage("Remove $file")
+        .that(failedTests)
+        .containsNoneIn(arrayOf(file.toString()))
     } catch (e: Throwable) {
       e.printStackTrace()
       assertThat(failedTests).contains(file.toString())
@@ -139,40 +141,52 @@ class PnfRustParserFacadeTest {
 
   @Test
   fun test_compiler_rustc_ast_src_mut_visit() {
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_ast/src/mut_visit.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_ast/src/token.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_ast/src/tokenstream.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_ast/src/attr/mod.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_builtin_macros/src/deriving/mod.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_data_structures/src/sip128/tests.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_data_structures/src/tagged_ptr/copy.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_index/src/bit_set.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/diagnostics/conflict_errors.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/diagnostics/region_errors.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/nll.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/nll.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/region_infer/mod.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/region_infer/opaque_types.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/type_check/free_region_relations.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/type_check/mod.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir_build/src/build/into.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_mir/src/borrow_check/diagnostics/explain_borrow.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/android/fs.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/dragonfly/fs.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/emscripten/fs.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/freebsd/fs.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/haiku/fs.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/illumos/fs.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/ios/fs.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/linux/fs.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/macos/fs.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/netbsd/fs.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/openbsd/fs.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/redox/fs.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/os/solaris/fs.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/library/std/src/sys/sgx/abi/usercalls/alloc.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_data_structures/src/tagged_ptr.rs"))
-    compareOrigAndPnfParsers(File("test_data/rust_programs/rust/compiler/rustc_middle/src/mir/interpret/pointer.rs"))
+    val compilerFolder = "test_data/rust_programs/rust/compiler"
+    val libraryFolder = "test_data/rust_programs/rust/library"
+    compareOrigAndPnfParsers(File("$compilerFolder/rustc_ast/src/mut_visit.rs"))
+    compareOrigAndPnfParsers(File("$compilerFolder/rustc_ast/src/token.rs"))
+    compareOrigAndPnfParsers(File("$compilerFolder/rustc_ast/src/tokenstream.rs"))
+    compareOrigAndPnfParsers(File("$compilerFolder/rustc_ast/src/attr/mod.rs"))
+    compareOrigAndPnfParsers(File("$compilerFolder/rustc_builtin_macros/src/deriving/mod.rs"))
+    compareOrigAndPnfParsers(File("$compilerFolder/rustc_data_structures/src/sip128/tests.rs"))
+    compareOrigAndPnfParsers(File("$compilerFolder/rustc_data_structures/src/tagged_ptr/copy.rs"))
+    compareOrigAndPnfParsers(File("$compilerFolder/rustc_index/src/bit_set.rs"))
+    compareOrigAndPnfParsers(
+      File("$compilerFolder/rustc_mir/src/borrow_check/diagnostics/conflict_errors.rs")
+    )
+    compareOrigAndPnfParsers(
+      File("$compilerFolder/rustc_mir/src/borrow_check/diagnostics/region_errors.rs")
+    )
+    compareOrigAndPnfParsers(File("$compilerFolder/rustc_mir/src/borrow_check/nll.rs"))
+    compareOrigAndPnfParsers(File("$compilerFolder/rustc_mir/src/borrow_check/nll.rs"))
+    compareOrigAndPnfParsers(File("$compilerFolder/rustc_mir/src/borrow_check/region_infer/mod.rs"))
+    compareOrigAndPnfParsers(
+      File("$compilerFolder/rustc_mir/src/borrow_check/region_infer/opaque_types.rs")
+    )
+    compareOrigAndPnfParsers(
+      File("$compilerFolder/rustc_mir/src/borrow_check/type_check/free_region_relations.rs")
+    )
+    compareOrigAndPnfParsers(File("$compilerFolder/rustc_mir/src/borrow_check/type_check/mod.rs"))
+    compareOrigAndPnfParsers(File("$compilerFolder/rustc_mir_build/src/build/into.rs"))
+    compareOrigAndPnfParsers(
+      File("$compilerFolder/rustc_mir/src/borrow_check/diagnostics/explain_borrow.rs")
+    )
+    compareOrigAndPnfParsers(File("$libraryFolder/std/src/os/android/fs.rs"))
+    compareOrigAndPnfParsers(File("$libraryFolder/std/src/os/dragonfly/fs.rs"))
+    compareOrigAndPnfParsers(File("$libraryFolder/std/src/os/emscripten/fs.rs"))
+    compareOrigAndPnfParsers(File("$libraryFolder/std/src/os/freebsd/fs.rs"))
+    compareOrigAndPnfParsers(File("$libraryFolder/std/src/os/haiku/fs.rs"))
+    compareOrigAndPnfParsers(File("$libraryFolder/std/src/os/illumos/fs.rs"))
+    compareOrigAndPnfParsers(File("$libraryFolder/std/src/os/ios/fs.rs"))
+    compareOrigAndPnfParsers(File("$libraryFolder/std/src/os/linux/fs.rs"))
+    compareOrigAndPnfParsers(File("$libraryFolder/std/src/os/macos/fs.rs"))
+    compareOrigAndPnfParsers(File("$libraryFolder/std/src/os/netbsd/fs.rs"))
+    compareOrigAndPnfParsers(File("$libraryFolder/std/src/os/openbsd/fs.rs"))
+    compareOrigAndPnfParsers(File("$libraryFolder/std/src/os/redox/fs.rs"))
+    compareOrigAndPnfParsers(File("$libraryFolder/std/src/os/solaris/fs.rs"))
+    compareOrigAndPnfParsers(File("$libraryFolder/std/src/sys/sgx/abi/usercalls/alloc.rs"))
+    compareOrigAndPnfParsers(File("$compilerFolder/rustc_data_structures/src/tagged_ptr.rs"))
+    compareOrigAndPnfParsers(File("$compilerFolder/rustc_middle/src/mir/interpret/pointer.rs"))
   }
 
   // Collection for keeping track of the shards of tests we need to run
@@ -202,7 +216,5 @@ class PnfRustParserFacadeTest {
         .filter { it.isNotBlank() }
         .fold(ImmutableSet.builder<String>(), { builder, f -> builder.add(f) })
         .build()
-
   }
-
 }

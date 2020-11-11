@@ -93,19 +93,20 @@ java_test(
     ],
 )
 
-java_test(
+kt_jvm_test(
     name = "ReductionDriverTest",
-    srcs = ["ReductionDriverTest.java"],
+    srcs = ["ReductionDriverTest.kt"],
     data = [
         "//test_data/delta_1",
     ],
-    test_class = "org.perses.reduction.ReductionDriverTest",
     deps = [
         "//src/org/perses:command_options",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/program",
+        "//src/org/perses/program:enum_format_control",
         "//src/org/perses/program:language_kind",
+        "//src/org/perses/reduction:enum_query_caching_control",
         "//src/org/perses/reduction:reducer_factory",
         "//src/org/perses/reduction:reduction_configuration",
         "//src/org/perses/reduction:reduction_driver",

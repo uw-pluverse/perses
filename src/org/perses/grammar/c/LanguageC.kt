@@ -27,8 +27,10 @@ object LanguageC : LanguageKind(
   extensions = ImmutableSet.of("c"),
   defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE,
   defaultFormaterCommand = createPotentialCodeFormatterList(
-    ShellCommandOnPath.tryCreating("clang-format",
-      ImmutableList.of(/*in-place formatting*/"-i"))
+    ShellCommandOnPath.tryCreating(
+      "clang-format",
+      ImmutableList.of(/*in-place formatting*/"-i")
+    )
   ),
   allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.SINGLE_TOKEN_PER_LINE,

@@ -34,7 +34,7 @@ data class ShellOutputLines(val lines: ImmutableList<String>) {
 
   val combinedLines by lazy {
     StringBuilder(lines.map { it.length + 1 }.sum()).apply {
-      lines.forEach{line -> append(line).append('\n')}
+      lines.forEach { line -> append(line).append('\n') }
     }.toString()
   }
 

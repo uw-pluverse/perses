@@ -29,7 +29,8 @@ import java.util.Arrays
  */
 class ShellCommandOnPath(
   command: String,
-  val defaultFlags: ImmutableList<String> = ImmutableList.of()) {
+  val defaultFlags: ImmutableList<String> = ImmutableList.of()
+) {
 
   private val path = Paths.get(command)
 
@@ -89,7 +90,7 @@ class ShellCommandOnPath(
         }
         return cmdName
       }
-      if (cmdPath.nameCount==1) {
+      if (cmdPath.nameCount == 1) {
         val pathEnv = System.getenv("PATH")
         val foundOnPath = Arrays.stream(pathEnv.split(File.pathSeparator.toRegex()).toTypedArray())
           .anyMatch {
@@ -108,6 +109,5 @@ class ShellCommandOnPath(
       }
       return cmdPath.toAbsolutePath().toString()
     }
-
   }
 }

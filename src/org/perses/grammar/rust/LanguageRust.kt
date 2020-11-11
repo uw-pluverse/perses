@@ -56,8 +56,7 @@ object LanguageRust : LanguageKind(
 
   override fun getDefaultWorkingFormatter(): ShellCommandOnPath? {
     return defaultFormaterCommand.asSequence().firstOrNull {
-      it.runWith(ImmutableList.of("--help")).exitCode==0
+      it.runWith(ImmutableList.of("--help")).exitCode == 0
     }
   }
-
 }

@@ -110,7 +110,6 @@ object Shell {
     }
   }
 
-
   class CmdOutput constructor(
     val exitCode: Int,
     val stdout: ShellOutputLines,
@@ -127,7 +126,6 @@ object Shell {
   }
 
   private val logger = FluentLogger.forEnclosingClass()
-
 
   private val EMPTY_OUTPUT_STREAM: OutputStream = object : OutputStream() {
     override fun write(b: Int) {

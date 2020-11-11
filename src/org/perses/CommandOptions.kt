@@ -40,7 +40,9 @@ class CommandOptions(defaultReductionAlgorithm: String) : AbstractCommandOptions
   val outputRefiningFlags = registerFlags(OutputRefiningFlags())
 
   @JvmField
-  val algorithmControlFlags = registerFlags(ReductionAlgorithmControlFlags(defaultReductionAlgorithm))
+  val algorithmControlFlags = registerFlags(
+    ReductionAlgorithmControlFlags(defaultReductionAlgorithm)
+  )
   val cacheControlFlags = registerFlags(CacheControlFlags())
   val profilingFlags = registerFlags(ProfilingFlags())
 
@@ -168,13 +170,13 @@ class CommandOptions(defaultReductionAlgorithm: String) : AbstractCommandOptions
     var codeFormat: EnumFormatControl? = null
 
     override fun validate() {
-      if ("auto"!=numOfThreads) {
+      if ("auto" != numOfThreads) {
         check(numOfThreads.toInt() > 0) { numOfThreads }
       }
     }
 
     fun getNumOfThreads(): Int {
-      return if ("auto"==numOfThreads) {
+      return if ("auto" == numOfThreads) {
         Runtime.getRuntime().availableProcessors()
       } else {
         numOfThreads.toInt()
@@ -228,8 +230,8 @@ class CommandOptions(defaultReductionAlgorithm: String) : AbstractCommandOptions
     }
   }
 
-  class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String)
-    : ICommandLineFlags {
+  class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
+    ICommandLineFlags {
     @JvmField
     @Parameter(
       names = ["--alg"],
@@ -302,7 +304,8 @@ class CommandOptions(defaultReductionAlgorithm: String) : AbstractCommandOptions
     override fun convert(flagValue: String?): EnumQueryCachingControl {
       return EnumQueryCachingControl.convert(flagValue!!)
         ?: throw ParameterException(
-          "Cannot convert '$flagValue' to an instanceof ${EnumQueryCachingControl::class}")
+          "Cannot convert '$flagValue' to an instanceof ${EnumQueryCachingControl::class}"
+        )
     }
   }
 
@@ -314,7 +317,7 @@ class CommandOptions(defaultReductionAlgorithm: String) : AbstractCommandOptions
       converter = QueryCachingControlConverter::class,
       order = FlagOrder.CACHE_CONTROL + 0
     )
-    var queryCaching = EnumQueryCachingControl.FALSE
+    var queryCaching = EnumQueryCachingControl.AUTO
 
     @Parameter(
       names = ["--edit-caching"],

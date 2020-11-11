@@ -44,9 +44,11 @@ abstract class LanguageKind(
 
   fun getAllDefaultFormatterCommandStrings() = defaultFormaterCommand
     .fold(
-      StringBuilder(), { builder, shellCmd ->
-      builder.append("'$shellCmd'").append(", ")
-    }).toString()
+      StringBuilder(),
+      { builder, shellCmd ->
+        builder.append("'$shellCmd'").append(", ")
+      }
+    ).toString()
 
   fun isCodeFormatAllowed(codeFormat: EnumFormatControl) =
     allowedCodeFormatControl.contains(codeFormat)
@@ -57,12 +59,11 @@ abstract class LanguageKind(
     fun createPotentialCodeFormatterList(vararg formatters: ShellCommandOnPath?) =
       formatters
         .asSequence()
-        .filter { it!=null }
+        .filter { it != null }
         .fold(
           ImmutableList.builder<ShellCommandOnPath>(),
-          { builder, formatter -> builder.add(formatter!!) })
+          { builder, formatter -> builder.add(formatter!!) }
+        )
         .build()!!
-
   }
-
 }
