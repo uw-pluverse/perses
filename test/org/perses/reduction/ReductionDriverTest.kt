@@ -16,7 +16,9 @@
  */
 package org.perses.reduction
 
+import com.google.common.io.Files
 import com.google.common.truth.Truth.assertThat
+import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -25,43 +27,17 @@ import org.perses.grammar.ParserFacadeFactory.Companion.builderWithBuiltinLangua
 import org.perses.program.EnumFormatControl
 import org.perses.reduction.ReducerFactory.defaultReductionAlgName
 import org.perses.reduction.ReductionDriver.Companion.booleanToEnabledOrDisabled
-import org.perses.reduction.ReductionDriver.Companion.computeWhetherToEnableQueryCaching
 import org.perses.reduction.ReductionDriver.Companion.createConfiguration
+import java.io.File
 
 @RunWith(JUnit4::class)
 class ReductionDriverTest {
-  @Test
-  fun test_computeWhetherToEnableQueryCaching() {
-    for (format in EnumFormatControl.values()) {
-      assertThat(
-        computeWhetherToEnableQueryCaching(
-          EnumQueryCachingControl.FALSE, format
-        )
-      )
-        .isFalse()
-    }
-    for (format in EnumFormatControl.values()) {
-      assertThat(
-        computeWhetherToEnableQueryCaching(
-          EnumQueryCachingControl.TRUE, format
-        )
-      ).isTrue()
-    }
-    assertThat(
-      computeWhetherToEnableQueryCaching(
-        EnumQueryCachingControl.AUTO, EnumFormatControl.ORIG_FORMAT
-      )
-    ).isFalse()
-    assertThat(
-      computeWhetherToEnableQueryCaching(
-        EnumQueryCachingControl.AUTO, EnumFormatControl.COMPACT_ORIG_FORMAT
-      )
-    ).isFalse()
-    assertThat(
-      computeWhetherToEnableQueryCaching(
-        EnumQueryCachingControl.AUTO, EnumFormatControl.SINGLE_TOKEN_PER_LINE
-      )
-    ).isTrue()
+
+  private val workDir = Files.createTempDir()
+
+  @After
+  fun teardown() {
+    workDir.deleteRecursively()
   }
 
   @Test
@@ -71,7 +47,63 @@ class ReductionDriverTest {
   }
 
   @Test
-  fun testCreateConfiguration() {
+  fun test() {
+    val sourceFile = File(workDir, "t.c").apply { check(createNewFile()) }
+    val scriptFile = File(workDir, "r.sh").apply {
+      check(createNewFile())
+      check(setExecutable(true))
+      writeText("#!/usr/bin/env bash")
+    }
+
+    for (format in EnumFormatControl.values()) {
+      val cmd = CommandOptions(defaultReductionAlgName).apply {
+        compulsoryFlags.inputFile = sourceFile.absolutePath
+        compulsoryFlags.testScript = scriptFile.absolutePath
+        reductionControlFlags.codeFormat = format
+        cacheControlFlags.nodeActionSetCaching = true
+        cacheControlFlags.queryCaching = EnumQueryCachingControl.TRUE
+      }
+      val config = createConfiguration(cmd, builderWithBuiltinLanguages().build())
+      assertThat(config.enableTestScriptExecutionCaching).isTrue()
+    }
+
+    for (format in EnumFormatControl.values()) {
+      val cmd = CommandOptions(defaultReductionAlgName).apply {
+        compulsoryFlags.inputFile = sourceFile.absolutePath
+        compulsoryFlags.testScript = scriptFile.absolutePath
+        reductionControlFlags.codeFormat = format
+        cacheControlFlags.nodeActionSetCaching = true
+        cacheControlFlags.queryCaching = EnumQueryCachingControl.FALSE
+      }
+      val config = createConfiguration(cmd, builderWithBuiltinLanguages().build())
+      assertThat(config.enableTestScriptExecutionCaching).isFalse()
+    }
+
+    CommandOptions(defaultReductionAlgName).apply {
+      compulsoryFlags.inputFile = sourceFile.absolutePath
+      compulsoryFlags.testScript = scriptFile.absolutePath
+      reductionControlFlags.codeFormat = EnumFormatControl.SINGLE_TOKEN_PER_LINE
+      cacheControlFlags.nodeActionSetCaching = true
+      cacheControlFlags.queryCaching = EnumQueryCachingControl.AUTO
+    }.let {
+      val config = createConfiguration(it, builderWithBuiltinLanguages().build())
+      assertThat(config.enableTestScriptExecutionCaching).isTrue()
+    }
+
+    CommandOptions(defaultReductionAlgName).apply {
+      compulsoryFlags.inputFile = sourceFile.absolutePath
+      compulsoryFlags.testScript = scriptFile.absolutePath
+      reductionControlFlags.codeFormat = EnumFormatControl.COMPACT_ORIG_FORMAT
+      cacheControlFlags.nodeActionSetCaching = true
+      cacheControlFlags.queryCaching = EnumQueryCachingControl.AUTO
+    }.let {
+      val config = createConfiguration(it, builderWithBuiltinLanguages().build())
+      assertThat(config.enableTestScriptExecutionCaching).isFalse()
+    }
+  }
+
+  @Test
+  fun testCreateConfigurationForNonExistingFiles() {
     val cmd = CommandOptions(defaultReductionAlgName)
     cmd.compulsoryFlags.inputFile = "t.c"
     cmd.compulsoryFlags.testScript = "r.sh"

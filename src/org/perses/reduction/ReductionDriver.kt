@@ -58,7 +58,7 @@ import java.io.IOException
  */
 class ReductionDriver(
   private val cmd: CommandOptions,
-  private val parserFacadeFactory: ParserFacadeFactory,
+  parserFacadeFactory: ParserFacadeFactory,
   vararg extraListeners: AbstractReductionListener
 ) : Closeable {
 
@@ -574,10 +574,10 @@ class ReductionDriver(
         progressDumpFile = progressDumpFile,
         programFormatControl = programFormatControl,
         fixpointReduction = cmd.reductionControlFlags.fixpoint,
-        enableTestScriptExecutionCaching = when (cmd.cacheControlFlags.queryCaching) {
-          EnumQueryCachingControl.TRUE -> true
-          else -> false
-        },
+        enableTestScriptExecutionCaching = computeWhetherToEnableQueryCaching(
+          cmd.cacheControlFlags.queryCaching,
+          programFormatControl
+        ),
         useRealDeltaDebugger = cmd.algorithmControlFlags.useRealDeltaDebugger,
         numOfReductionThreads = cmd.reductionControlFlags.getNumOfThreads(),
         parserFacadeFactory = parserFacadeFactory
@@ -586,8 +586,7 @@ class ReductionDriver(
 
     fun booleanToEnabledOrDisabled(value: Boolean) = if (value) "enabled" else "disabled"
 
-    @JvmStatic
-    fun computeWhetherToEnableQueryCaching(
+    private fun computeWhetherToEnableQueryCaching(
       userSpecified: EnumQueryCachingControl,
       programFormatControl: EnumFormatControl
     ) = when (userSpecified) {
