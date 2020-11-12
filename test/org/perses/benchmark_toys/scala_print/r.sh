@@ -2,8 +2,8 @@
 
 set -o pipefail
 set -o nounset
+ulimit -t 60
 
-export GOCACHE=$(mktemp -d) # Build cache for the go compiler. Otherwise, go does not run.
 
 readonly OUTPUT="output.txt.tmp"
 readonly SRC="Hello.sc"
