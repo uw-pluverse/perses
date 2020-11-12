@@ -52,7 +52,7 @@ It can be installed on your machine with
 
 #### Important Flags ####
 * --test-script __<test-script.sh>__:
-The script encodes the constraints that the original program file and the reduced version should satisfy. It should return **0** if the constraints are satisfied. 
+The script encodes the constraints that both of the original program file and the reduced version should satisfy. It should return **0** if the constraints are satisfied. 
  
 * --input-file __<program file>__: the program needs to be reduced. Currently, Perses 
 supports C, Rust, Java and Go. Note that we can easily support any other languages,
@@ -97,9 +97,9 @@ cd benchmark
 ./start_docker.sh
 ``` 
 
-For more instructions on the benchmark folder, pelase refer to this [document](https://github.com/perses-project/perses/tree/master/benchmark)
+For more instructions on the benchmark folder, please refer to this [document](https://github.com/perses-project/perses/tree/master/benchmark)
 
-#### For Intellij Users ####
+##### For Intellij Users #####
 
 You can use the [Bazel plugin for Intellij](https://plugins.jetbrains.com/plugin/8609-bazel/) to import the project into Ideas, 
 and then run/debug as usual. You can find more at [the official documentation](https://ij.bazel.build/docs/bazel-plugin.html)
