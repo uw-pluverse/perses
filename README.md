@@ -17,7 +17,7 @@ Currently, Perses supports reduction for the following programming languages:
 + Java 8
 + Go
 
-Support for other languages is planned or under development, and will happen soon. 
+Support for other languages is comming soon. 
 
 ### Obtain and Run ###
 
@@ -40,21 +40,19 @@ for example,
    java -jar bazel-bin/src/org/perses/perses_deploy.jar [options]? --test-script <test-script.sh> --input-file <program file>
     ```
 
-+ If you want to always use the trunk version of Perses, you can use [perses-trunk](https://github.com/perses-project/perses/blob/master/scripts/perses-trunk).
-It can be installed on your machine with
-
++ If you want to always use the trunk version of Perses, [perses-trunk](https://github.com/perses-project/perses/blob/master/scripts/perses-trunk) automatically downloads and builds the latest version.
+NOTE: [Bazel](https://bazel.build/) is the prerequisite to run perses-trunk successfully.
     ```
     wget https://raw.githubusercontent.com/perses-project/perses/master/scripts/perses-trunk
     chmod +x perses-trunk
-    # mv perses-trunk to your $PATH
-    perses-trunk [options]? --test-script <test-script.sh> --input-file <program file>
+    ./perses-trunk [options]? --test-script <test-script.sh> --input-file <program file>
     ```
 
 #### Important Flags ####
 * --test-script __<test-script.sh>__:
 The script encodes the constraints that both of the original program file and the reduced version should satisfy. It should return **0** if the constraints are satisfied. 
  
-* --input-file __<program file>__: the program needs to be reduced. Currently, Perses 
+* --input-file __<program-file>__: the program needs to be reduced. Currently, Perses 
 supports C, Rust, Java and Go. Note that we can easily support any other languages,
 if the specific language can be parsed by an Antlr parser. 
 
