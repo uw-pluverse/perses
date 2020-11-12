@@ -4,7 +4,6 @@ set -o pipefail
 set -o nounset
 ulimit -t 60
 
-
 readonly OUTPUT="output.txt.tmp"
 readonly SRC="Hello.sc"
 readonly EXE="Hello"
@@ -24,7 +23,7 @@ if ! scalac "${SRC}" ; then
   exit 4
 fi
 
-scala "${EXE}" &> "${OUTPUT}"
+scala -nc "${EXE}" &> "${OUTPUT}"
 
 # shellcheck disable=SC2181
 if [[ "${?}" != 0 ]] ; then
