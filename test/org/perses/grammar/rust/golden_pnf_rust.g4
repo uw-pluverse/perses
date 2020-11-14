@@ -973,43 +973,6 @@ alternative__type_arguments_10
     | lifetime kleene_star__type_arguments_2
     ;
 
-type_arguments
-    : '<' alternative__type_arguments_9 '>'
-    ;
-
-type_arguments_1
-    : ',' (lifetime | type_argument)
-    ;
-
-kleene_star__type_arguments_2
-    : type_arguments_1*
-    ;
-
-type_arguments_4
-    : lifetime ','
-    ;
-
-kleene_star__type_arguments_5
-    : type_arguments_4*
-    ;
-
-type_arguments_6
-    : ',' type_argument
-    ;
-
-kleene_star__type_arguments_7
-    : type_arguments_6*
-    ;
-
-alternative__type_arguments_9
-    : alternative__type_arguments_10 optional__use_item_list_3
-    ;
-
-alternative__type_arguments_10
-    : kleene_star__type_arguments_5 type_argument kleene_star__type_arguments_7
-    | lifetime kleene_star__type_arguments_2
-    ;
-
 impl_item_tail
     : const_decl
     | associated_const_decl
