@@ -24,13 +24,17 @@ kt_jvm_test(
     name = "PnfCParserFacadeTest",
     size = "large",  # This is a slow test.
     srcs = ["PnfCParserFacadeTest.kt"],
-    data = ["golden_pnf_c.g4"],
+    data = [
+        "golden_pnf_c.g4",
+        "//test_data/delta_1",
+    ],
     shard_count = 1,
     deps = [
         "//src/org/perses/antlr:antlr_grammar_util",
         "//src/org/perses/grammar/c:pnfc_parser_facade",
         "//test/org/perses:test_util",
         "//test/org/perses:truth",
+        "//test/org/perses/program:LanguageKindTestUtil",
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",

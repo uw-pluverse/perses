@@ -23,11 +23,12 @@ import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.program.LanguageKindTestUtil
 import java.io.File
-import java.io.IOException
 
 @RunWith(JUnit4::class)
 class PnfCParserFacadeTest {
+
   private val facade = PnfCParserFacade()
   private val workingDir = Files.createTempDir()
 
@@ -37,11 +38,18 @@ class PnfCParserFacadeTest {
   }
 
   @Test
-  @Throws(IOException::class)
   fun testGoldenPnfCGrammar() {
     val content = facade.antlrGrammar.asCombined().grammar.sourceCode
     val golden = File("test/org/perses/grammar/c/golden_pnf_c.g4").readText()
     assertThat(content).isEqualTo(golden)
+  }
+
+  @Test
+  fun testCodeFormats() {
+    LanguageKindTestUtil.assertCodeFormatsDoNotProduceSyntaxticallyInvalidPrograms(
+      facade,
+      File("test_data/delta_1/t.c")
+    )
   }
 
   @Test
