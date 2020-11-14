@@ -305,9 +305,10 @@ public final class TestUtility {
 
   public static SparTree createSparTreeFromFile(File file) throws IOException {
     final ParseTreeWithParser parseTreeWithParser = parseFile(file);
+    ParseTree parseTree = parseTreeWithParser.getTree();
     final TokenizedProgramFactory factory =
         TokenizedProgramFactory.createFactory(
-            AbstractParserFacade.getTokens(parseTreeWithParser.getTree()));
+            AbstractParserFacade.getTokens(parseTree));
     return createSparTreeFromFile(file, factory);
   }
 
