@@ -26,6 +26,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
+import org.perses.program.LanguageKindTestUtil
 import java.io.File
 
 @RunWith(JUnit4::class)
@@ -137,6 +138,14 @@ class PnfRustParserFacadeTest {
     file.writeText(program)
 
     compareOrigAndPnfParsers(file)
+  }
+
+  @Test
+  fun testLanguageRustCodeFormat() {
+    LanguageKindTestUtil.assertCodeFormatsDoNotProduceSyntaxticallyInvalidPrograms(
+      facade,
+      File("test_data/rust_programs/rust/compiler/rustc_ast/src/mut_visit.rs")
+    )
   }
 
   @Test

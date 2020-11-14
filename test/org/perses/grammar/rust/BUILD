@@ -29,6 +29,7 @@ kt_jvm_test(
         "//src/org/perses/grammar/rust:pnfrust_parser_facade",
         "//test/org/perses:test_util",
         "//test/org/perses:truth",
+        "//test/org/perses/program:LanguageKindTestUtil",
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",
