@@ -18,10 +18,10 @@ cd "${BUILD_ROOT}"
 
 readonly FOLDER_PERSES="${BUILD_ROOT}/perses"
 if [[ ! -e "${FOLDER_PERSES}" ]] ; then
-  git clone --depth 1 "${REPO}"
+  git clone "${REPO}"
 fi
 cd "${FOLDER_PERSES}"
-git pull --merge --depth 1 "${REPO}"
+git pull --rebase=merges "${REPO}"
 bazel build //src/org/perses:perses_deploy.jar || true
 
 readonly FOLDER_BIN="${ROOT}/bin"
