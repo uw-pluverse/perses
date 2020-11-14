@@ -21,7 +21,7 @@ if [[ ! -e "${FOLDER_PERSES}" ]] ; then
   git clone "${REPO}"
 fi
 cd "${FOLDER_PERSES}"
-git pull --rebase=merges "${REPO}"
+git pull --rebase=false "${REPO}"
 bazel build //src/org/perses:perses_deploy.jar || true
 
 readonly FOLDER_BIN="${ROOT}/bin"
