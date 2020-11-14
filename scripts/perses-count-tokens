@@ -23,7 +23,7 @@ fi
 cd "${FOLDER_PERSES}"
 git pull --rebase=false "${REPO}"
 
-readonly JAR_BASE_NAME=token_counter_deploy.jar"
+readonly JAR_BASE_NAME="token_counter_deploy.jar"
 bazel build "//src/org/perses:${JAR_BASE_NAME}" || true
 
 readonly FOLDER_BIN="${ROOT}/bin"
