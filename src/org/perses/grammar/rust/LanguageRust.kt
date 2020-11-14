@@ -25,9 +25,8 @@ import org.perses.util.ShellCommandOnPath
 object LanguageRust : LanguageKind(
   name = "rust",
   extensions = ImmutableSet.of("rs"),
-  defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE,
+  defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT,
   allowedCodeFormatControl = ImmutableSet.of(
-    EnumFormatControl.SINGLE_TOKEN_PER_LINE,
     EnumFormatControl.COMPACT_ORIG_FORMAT,
     EnumFormatControl.ORIG_FORMAT
   ),
@@ -55,7 +54,7 @@ object LanguageRust : LanguageKind(
 ) {
 
   override fun getDefaultWorkingFormatter(): ShellCommandOnPath? {
-    return defaultFormaterCommand.asSequence().firstOrNull {
+    return defaultFormaterCommand.firstOrNull {
       it.runWith(ImmutableList.of("--help")).exitCode == 0
     }
   }
