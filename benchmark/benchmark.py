@@ -110,7 +110,7 @@ def load_reducers(parameter_interface):
 def extract_info_properties(bench_name: str) -> Dict[str, str]:
     info_dict = dict()
 
-    # validate info.properties
+    # validate info.properties existence
     info_properties_path = os.path.join(__location__, bench_name, "info.properties")
     if not os.path.exists(info_properties_path):
         raise Exception('Error: info.properties not found: {}'.format(info_properties_path))
@@ -157,7 +157,7 @@ def environment_udpater(parameter_interface, bench, time) -> dict():
     # update env var if memory_profiler enabled
     if parameter_interface.memory_profiler:
         new_env = os.environ.copy()
-        new_env["PERSES_MEMORY_PROFILER"] = f"{__location__}/tmp_memory_log_{bench}_{time}"
+        new_env["PERSES_XLOG"] = f"-Xlog:gc+heap=debug:file={__location__}/tmp_GC_{bench}_{time}.log"
         return new_env
     else:
         return os.environ.copy()
@@ -204,7 +204,7 @@ def main():
             for iteration in range(para.iterations):
                 print(f"*****iteration {iteration}*****")
 
-                # update environment variables
+                # setup environment variables
                 new_env = environment_udpater(para, bench_name, time)
                 
                 # create tmp output file
