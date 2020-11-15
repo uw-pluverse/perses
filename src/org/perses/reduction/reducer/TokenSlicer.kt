@@ -22,6 +22,7 @@ import org.perses.reduction.AbstractReductionEvent
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.TestScript.TestResult
+import org.perses.reduction.TestScriptExecutorService
 import org.perses.tree.spar.LexerRuleSparTreeNode
 import org.perses.tree.spar.NodeDeletionActionSet
 import org.perses.tree.spar.SparTree
@@ -68,12 +69,16 @@ class TokenSlicer(
         }
         val parserFacade = configuration.parserFacade
         val futureTestScriptExecutionTask = testProgramAsynchronously(
-          {
-            if (parserFacade.isSourceCodeParsable(testProgram.toCompactSourceCode())) {
-              TestResult(exitCode = 0, elapsedMilliseconds = -1)
-            } else {
-              TestResult(exitCode = INVALID_SYNTAX_EXIT_CODE, elapsedMilliseconds = -1)
+          if (testProgram.tokenCount() <= 150) { // TODO: need to tune the threshold.
+            {
+              if (parserFacade.isSourceCodeParsable(testProgram.toCompactSourceCode())) {
+                TestResult(exitCode = 0, elapsedMilliseconds = -1)
+              } else {
+                TestResult(exitCode = INVALID_SYNTAX_EXIT_CODE, elapsedMilliseconds = -1)
+              }
             }
+          } else {
+            TestScriptExecutorService.ALWAYS_TRUE_PRECHECK
           },
           testProgram
         )
