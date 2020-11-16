@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import re
 import os
 import subprocess
 import tempfile
@@ -153,9 +154,26 @@ def count_token(source_file_path) -> int:
         raise err
 
 
+def check_java_version():
+    # validate java version so Xlog is supported
+    java_version = subprocess.check_output(
+        ['java', '-version'],
+        stderr=subprocess.STDOUT)
+    java_version = java_version.decode("utf-8")
+
+    pattern = '\"(\d.+)\"'
+    version_number = re.search(pattern, java_version)[0]
+    major_version = version_number[1:].split('.')[0]
+
+    if int(major_version) < 9:
+        raise Exception(f"java version: {major_version} detected. Xlog not supported below java 9")
+
+
+
 def environment_udpater(parameter_interface, bench, time) -> dict():
     # update env var if memory_profiler enabled
     if parameter_interface.memory_profiler:
+        check_java_version()
         new_env = os.environ.copy()
         new_env["PERSES_XLOG"] = f"-Xlog:gc+heap=debug:file={__location__}/tmp_GC_{bench}_{time}.log"
         return new_env
