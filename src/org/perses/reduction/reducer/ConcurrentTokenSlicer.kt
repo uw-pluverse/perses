@@ -59,8 +59,9 @@ class ConcurrentTokenSlicer(
       slicingTasks.add(SlicingTask(tokens, startIndex, tokenSlicingGranularity, tree))
     }
     slicingTasks.forEach {
-      it.asyncRun()
-      it.waitAndApplyEditIfSuccess()
+      if (it.tryAsyncRun()) {
+        it.waitAndApplyEditIfSuccess()
+      }
     }
     listenerManager.onSlicingTokensEnd(
       AbstractReductionEvent.TokenSlicingEndEvent(
@@ -78,17 +79,17 @@ class ConcurrentTokenSlicer(
 
     private var futureResult: FutureExecutionResultInfo? = null
 
-
-    fun asyncRun() {
+    fun tryAsyncRun(): Boolean {
+      check(futureResult == null)
       if (tokens[startIndex].isPermanentlyDeleted) {
-        return
+        return false
       }
       val nodeDeletionActionSet = createNodeDeletionActionSetReverse(
         tokens, startIndex, tokenSlicingGranularity
       )
       if (nodeActionSetCache.isCachedOrCacheIt(nodeDeletionActionSet)) {
         listenerManager.onNodeEditActionSetCacheHit(nodeDeletionActionSet)
-        return
+        return false
       }
       val treeEdit = tree.createNodeDeletionEdit(nodeDeletionActionSet)
       val testProgram = treeEdit.program
@@ -96,7 +97,7 @@ class ConcurrentTokenSlicer(
       if (cachedResult.isPresent) {
         check(cachedResult.get().isFail) { "Only failed programs can be cached." }
         listenerManager.onTestResultCacheHit(cachedResult.get(), testProgram, treeEdit)
-        return
+        return false
       }
 
       val future = testProgramAsynchronously(
@@ -116,18 +117,24 @@ class ConcurrentTokenSlicer(
         },
         testProgram
       )
-      check(futureResult==null)
+      check(futureResult == null)
       futureResult = FutureExecutionResultInfo(
         treeEdit,
         testProgram,
         future
       )
+      return true
+    }
+
+    fun cancel() {
+      if (futureResult != null) {
+        futureResult!!.future.cancel(true)
+        futureResult = null
+      }
     }
 
     fun waitAndApplyEditIfSuccess(): Boolean {
-      if (futureResult==null) {
-        return false
-      }
+      check(futureResult != null)
       val best = analyzeResultsAndGetBest(listOf(futureResult!!)) ?: return false
       tree.applyEdit(best.edit)
       return true
