@@ -27,7 +27,5 @@ public abstract class AbstractTestScriptExecutionCache {
 
   public abstract int size();
 
-  public abstract int memoryFootprintInBytes();
-
   public abstract void evictEntriesLargerThan(TokenizedProgram best);
 }

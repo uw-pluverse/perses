@@ -45,13 +45,13 @@ public final class TestScriptExecutionCache extends AbstractTestScriptExecutionC
   }
 
   @Override
-  public Optional<TestResult> getCachedResult(TokenizedProgram program) {
+  synchronized public Optional<TestResult> getCachedResult(TokenizedProgram program) {
     final CompactProgramEncoding key = encoder.encode(program).get();
     return Optional.ofNullable(cache.get(key));
   }
 
   @Override
-  void addResult(TokenizedProgram program, TestResult result) {
+  synchronized void addResult(TokenizedProgram program, TestResult result) {
     final CompactProgramEncoding key = encoder.encode(program).get();
     assert !cache.containsKey(key);
     cache.put(key, result);
@@ -62,15 +62,6 @@ public final class TestScriptExecutionCache extends AbstractTestScriptExecutionC
     return cache.size();
   }
 
-  @Override
-  public int memoryFootprintInBytes() {
-    int result = 0;
-    for (Map.Entry<CompactProgramEncoding, TestResult> entry : cache.entrySet()) {
-      result += entry.getKey().memoryFootprintInBytes() + 4;
-    }
-    return result;
-  }
-
   private final boolean needsHeavyWeightCleanup(
       ImmutableList<PersesToken> programInEncoder, TokenizedProgram currentBestProgram) {
     final int oldSize = programInEncoder.size();
@@ -79,7 +70,7 @@ public final class TestScriptExecutionCache extends AbstractTestScriptExecutionC
   }
 
   @Override
-  public void evictEntriesLargerThan(TokenizedProgram best) {
+  public synchronized void evictEntriesLargerThan(TokenizedProgram best) {
     if (needsHeavyWeightCleanup(encoder.getTokensInOrigin(), best)) {
       heavyweightCleanup(best);
     } else {

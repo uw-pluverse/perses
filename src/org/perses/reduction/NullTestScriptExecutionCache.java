@@ -35,10 +35,5 @@ public final class NullTestScriptExecutionCache extends AbstractTestScriptExecut
   }
 
   @Override
-  public int memoryFootprintInBytes() {
-    return 0;
-  }
-
-  @Override
   public void evictEntriesLargerThan(TokenizedProgram best) {}
 }
