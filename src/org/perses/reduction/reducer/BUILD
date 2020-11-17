@@ -68,20 +68,10 @@ kt_jvm_library(
 
 kt_jvm_library(
     name = "token_slicer",
-    srcs = ["TokenSlicer.kt"],
-    deps = [
-        ":tree_transforms",
-        "//src/org/perses/reduction:abstract_reducer",
-        "//src/org/perses/reduction:tree_edit_with_its_program",
-        "//src/org/perses/reduction/partition",
-        "//src/org/perses/tree/spar",
-        "@maven//:org_checkerframework_checker_qual",
+    srcs = [
+        "ConcurrentTokenSlicer.kt",
+        "TokenSlicer.kt",
     ],
-)
-
-kt_jvm_library(
-    name = "concurrent_token_slicer",
-    srcs = ["ConcurrentTokenSlicer.kt"],
     deps = [
         ":tree_transforms",
         "//src/org/perses/reduction:abstract_reducer",

@@ -16,15 +16,16 @@
  */
 package org.perses.reduction.reducer
 
-import com.google.common.annotations.VisibleForTesting
 import org.perses.reduction.AbstractReducer
 import org.perses.reduction.AbstractReductionEvent
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.TestScript.TestResult
 import org.perses.reduction.TestScriptExecutorService
+import org.perses.reduction.reducer.TokenSlicer.Companion.INVALID_SYNTAX_EXIT_CODE
+import org.perses.reduction.reducer.TokenSlicer.Companion.createNodeDeletionActionSetReverse
+import org.perses.reduction.reducer.TokenSlicer.Companion.extractLexerRuleNodes
 import org.perses.tree.spar.LexerRuleSparTreeNode
-import org.perses.tree.spar.NodeDeletionActionSet
 import org.perses.tree.spar.SparTree
 
 class ConcurrentTokenSlicer(
@@ -53,59 +54,68 @@ class ConcurrentTokenSlicer(
     )
     listenerManager.onSlicingTokensStart(slicingStartEvent)
     for (startIndex in tokens.size - 1 downTo tokenSlicingGranularity - 1) {
-      if (tokens[startIndex].isPermanentlyDeleted) {
-        continue
-      }
-      val nodeDeletionActionSet = createNodeDeletionActionSetReverse(
-        tokens, startIndex, tokenSlicingGranularity
-      )
-      if (nodeActionSetCache.isCachedOrCacheIt(nodeDeletionActionSet)) {
-        listenerManager.onNodeEditActionSetCacheHit(nodeDeletionActionSet)
-        continue
-      }
-      val treeEdit = tree.createNodeDeletionEdit(nodeDeletionActionSet)
-      val testProgram = treeEdit.program
-      val cachedResult = queryCache.getCachedResult(testProgram)
-      if (cachedResult.isPresent) {
-        check(cachedResult.get().isFail) { "Only failed programs can be cached." }
-        listenerManager.onTestResultCacheHit(cachedResult.get(), testProgram, treeEdit)
-        continue
-      }
-      val futureTestScriptExecutionTask = testProgramAsynchronously(
-        if (testProgram.tokenCount() <= 150) { // TODO: need to tune the threshold.
-          {
-            if (configuration.parserFacade.isSourceCodeParsable(
-                testProgram.toCompactSourceCode()
-              )
-            ) {
-              TestResult(exitCode = 0, elapsedMilliseconds = -1)
-            } else {
-              TestResult(exitCode = INVALID_SYNTAX_EXIT_CODE, elapsedMilliseconds = -1)
-            }
-          }
-        } else {
-          TestScriptExecutorService.ALWAYS_TRUE_PRECHECK
-        },
-        testProgram
-      )
-      val best = analyzeResultsAndGetBest(
-        listOf(
-          FutureExecutionResultInfo(
-            treeEdit,
-            testProgram,
-            futureTestScriptExecutionTask
-          )
-        )
-      )
-      if (best.isPresent) {
-        tree.applyEdit(best.get().edit)
-      }
+      slicingTask(tokens, startIndex, tokenSlicingGranularity, tree)
     }
     listenerManager.onSlicingTokensEnd(
       AbstractReductionEvent.TokenSlicingEndEvent(
         System.currentTimeMillis(), tree.programSnapshot.tokenCount(), slicingStartEvent
       )
     )
+  }
+
+  private fun slicingTask(
+    tokens: List<LexerRuleSparTreeNode>,
+    startIndex: Int,
+    tokenSlicingGranularity: Int,
+    tree: SparTree
+  ) {
+    if (tokens[startIndex].isPermanentlyDeleted) {
+      return
+    }
+    val nodeDeletionActionSet = createNodeDeletionActionSetReverse(
+      tokens, startIndex, tokenSlicingGranularity
+    )
+    if (nodeActionSetCache.isCachedOrCacheIt(nodeDeletionActionSet)) {
+      listenerManager.onNodeEditActionSetCacheHit(nodeDeletionActionSet)
+      return
+    }
+    val treeEdit = tree.createNodeDeletionEdit(nodeDeletionActionSet)
+    val testProgram = treeEdit.program
+    val cachedResult = queryCache.getCachedResult(testProgram)
+    if (cachedResult.isPresent) {
+      check(cachedResult.get().isFail) { "Only failed programs can be cached." }
+      listenerManager.onTestResultCacheHit(cachedResult.get(), testProgram, treeEdit)
+      return
+    }
+    val futureTestScriptExecutionTask = testProgramAsynchronously(
+      if (testProgram.tokenCount() <= 150) { // TODO: need to tune the threshold.
+        {
+          if (configuration.parserFacade.isSourceCodeParsable(
+              testProgram.toCompactSourceCode()
+            )
+          ) {
+            TestResult(exitCode = 0, elapsedMilliseconds = -1)
+          } else {
+            TestResult(exitCode = INVALID_SYNTAX_EXIT_CODE, elapsedMilliseconds = -1)
+          }
+        }
+      } else {
+        TestScriptExecutorService.ALWAYS_TRUE_PRECHECK
+      },
+      testProgram
+    )
+    val best = analyzeResultsAndGetBest(
+      listOf(
+        FutureExecutionResultInfo(
+          treeEdit,
+          testProgram,
+          futureTestScriptExecutionTask
+        )
+      )
+    )
+    if (best.isPresent) {
+      tree.applyEdit(best.get().edit)
+    }
   }
 
   companion object {
@@ -122,33 +132,6 @@ class ConcurrentTokenSlicer(
         reducerContext,
         minSlicingGranularity = 1, maxSlicingGranularity = 14
       )
-    }
-
-    @VisibleForTesting
-    val INVALID_SYNTAX_EXIT_CODE = 99
-
-    @VisibleForTesting
-    fun extractLexerRuleNodes(tree: SparTree): List<LexerRuleSparTreeNode> {
-      val tokens = ArrayList<LexerRuleSparTreeNode>()
-      tree.visitRemainingTokens { tokens.add(it) }
-      return tokens
-    }
-
-    @VisibleForTesting
-    fun createNodeDeletionActionSetReverse(
-      tokenList: List<LexerRuleSparTreeNode>,
-      startIndex: Int,
-      tokenCountToSlice: Int
-    ): NodeDeletionActionSet {
-      val actionSetBuilder =
-        NodeDeletionActionSet.Builder("token slicer@$tokenCountToSlice")
-      val endIndex = startIndex - tokenCountToSlice + 1
-      check(endIndex >= 0) { endIndex }
-      for (i in startIndex downTo endIndex) {
-        assert(!tokenList[i].isPermanentlyDeleted) { tokenList[i] }
-        actionSetBuilder.deleteNode(tokenList[i])
-      }
-      return actionSetBuilder.build()
     }
   }
 }

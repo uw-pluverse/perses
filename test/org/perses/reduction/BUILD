@@ -58,7 +58,6 @@ java_test(
     deps = [
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction:reducer_factory",
-        "//src/org/perses/reduction/reducer:concurrent_token_slicer",
         "//src/org/perses/reduction/reducer:level_based_reducers",
         "//src/org/perses/reduction/reducer:node_based_reducer",
         "//src/org/perses/reduction/reducer:token_slicer",
