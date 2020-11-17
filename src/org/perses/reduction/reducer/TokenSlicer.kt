@@ -92,8 +92,8 @@ class TokenSlicer(
             )
           )
         )
-        if (best.isPresent) {
-          tree.applyEdit(best.get().edit)
+        if (best != null) {
+          tree.applyEdit(best.edit)
         }
       }
       val endEvent = AbstractReductionEvent.TokenSlicingEndEvent(

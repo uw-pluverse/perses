@@ -118,8 +118,8 @@ class ConcurrentTokenSlicer(
           )
         )
       )
-      if (best.isPresent) {
-        tree.applyEdit(best.get().edit)
+      if (best != null) {
+        tree.applyEdit(best.edit)
       }
     }
   }

@@ -28,7 +28,6 @@ import org.perses.tree.spar.SparTree
 import org.perses.tree.spar.SparTreeSimplifier
 import java.io.IOException
 import java.util.LinkedList
-import java.util.Optional
 import java.util.concurrent.ExecutionException
 
 /** The base class for reducer. Both hdd and perses algorithms extend this class.  */
@@ -78,19 +77,23 @@ abstract class AbstractReducer protected constructor(
 
   protected fun testAllTreeEditsAndReturnTheBest(
     editList: List<AbstractSparTreeEdit>
-  ): Optional<TreeEditWithItsResult> {
+  ): TreeEditWithItsResult? {
     if (editList.isEmpty()) {
-      return Optional.empty()
+      return null
     }
     val futureList = asyncApplyEditsInOrderOfProgramSizeFromLeast(editList)
     val best = analyzeResultsAndGetBest(futureList)
     assert(
-      !best.isPresent ||
+      best == null ||
         configuration.parserFacade.isSourceCodeParsable(
-          best.get().edit.program.toCompactSourceCode()
+          best.edit.program.toCompactSourceCode()
         )
     )
-    return best.map { TreeEditWithItsResult(it.edit, it.result) }
+    return if (best == null) {
+      null
+    } else {
+      TreeEditWithItsResult(best.edit, best.result)
+    }
   }
 
   private fun isFutureListSortedFromLeastProgramSizeToGreatest(
@@ -112,15 +115,15 @@ abstract class AbstractReducer protected constructor(
 
   protected fun analyzeResultsAndGetBest(
     futureList: List<FutureExecutionResultInfo>
-  ): Optional<FutureExecutionResultInfo> {
+  ): FutureExecutionResultInfo? {
     assert(isFutureListSortedFromLeastProgramSizeToGreatest(futureList)) { futureList }
     var best: FutureExecutionResultInfo? = null
     for (executionResultInfo in futureList) {
       if (best != null) {
-// The best is already found, then it is safe to cancel all the remaining testing tasks, as
-// none of these tasks will beat the current best one. Moreover, the tasks are not useful
-// for future cache testing, as all future programs will be smaller than the programs
-// represented by these tasks.
+        // The best is already found, then it is safe to cancel all the remaining testing tasks, as
+        // none of these tasks will beat the current best one. Moreover, the tasks are not useful
+        // for future cache testing, as all future programs will be smaller than the programs
+        // represented by these tasks.
         val start = System.currentTimeMillis()
         executionResultInfo.cancel()
         val duration = (System.currentTimeMillis() - start).toInt()
@@ -138,7 +141,7 @@ abstract class AbstractReducer protected constructor(
         best = executionResultInfo
       }
     }
-    return Optional.ofNullable(best)
+    return best
   }
 
   private fun cacheTestResult(program: TokenizedProgram, result: TestResult) {

@@ -24,15 +24,12 @@ import org.perses.tree.spar.AbstractNodeActionSetCache
 import org.perses.tree.spar.AbstractSparTreeEdit
 import org.perses.tree.spar.SparTree
 import java.util.ArrayDeque
-import java.util.Optional
-import java.util.function.Function
 
 abstract class AbstractSpecialDeltaDebugger protected constructor(
   listenerManager: ReductionListenerManager,
   nodeActionSetCache: AbstractNodeActionSetCache,
-  treeEditTester: Function<AbstractSparTreeEdit, Optional<TreeEditWithItsResult>>
-) :
-  AbstractDeltaDebugger(listenerManager, nodeActionSetCache, treeEditTester) {
+  treeEditTester: (AbstractSparTreeEdit) -> TreeEditWithItsResult?
+) : AbstractDeltaDebugger(listenerManager, nodeActionSetCache, treeEditTester) {
 
   override fun reduce(
     tree: SparTree,
@@ -53,13 +50,12 @@ abstract class AbstractSpecialDeltaDebugger protected constructor(
         continue
       }
       val edit = tree.createNodeDeletionEdit(actionSet)
-      val best = treeEditTester.apply(edit)
-      if (!best.isPresent) {
+      val best = treeEditTester.invoke(edit)
+      if (best == null) {
         addToWorklist(worklist, partition.split())
         continue
       }
-      val (edit1) = best.get()
-      tree.applyEdit(edit1)
+      tree.applyEdit(best.edit)
     }
   }
 

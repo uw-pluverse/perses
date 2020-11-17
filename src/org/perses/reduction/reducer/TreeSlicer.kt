@@ -51,12 +51,11 @@ class TreeSlicer(
       return node.copyAndReverseChildren()
     }
     val best = testAllTreeEditsAndReturnTheBest(ImmutableList.of(treeEdit))
-    if (!best.isPresent) {
-      return node.copyAndReverseChildren()
+    return if (best == null) {
+      node.copyAndReverseChildren()
     } else {
-      val edit = best.get().edit
-      tree.applyEdit(edit)
-      return computePendingNodes(node, edit).reverse()
+      tree.applyEdit(best.edit)
+      computePendingNodes(node, best.edit).reverse()
     }
   }
 

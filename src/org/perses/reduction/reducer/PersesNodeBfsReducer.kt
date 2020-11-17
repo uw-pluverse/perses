@@ -19,12 +19,10 @@ package org.perses.reduction.reducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.partition.Partition
-import org.perses.tree.spar.AbstractSparTreeEdit
 import org.perses.tree.spar.AbstractSparTreeNode
 import org.perses.tree.spar.SparTree
 import java.util.ArrayDeque
 import java.util.Queue
-import java.util.function.Function
 
 /** Perses node reducer, with bfs delta debugging  */
 open class PersesNodeBfsReducer protected constructor(
@@ -34,9 +32,8 @@ open class PersesNodeBfsReducer protected constructor(
 
   private val deltaDebugger = BfsDeltaDebugger(
     reducerContext.listenerManager,
-    reducerContext.nodeActionSetCache,
-    Function { edit: AbstractSparTreeEdit -> testSparTreeEdit(edit) }
-  )
+    reducerContext.nodeActionSetCache
+  ) { testSparTreeEdit(it) }
 
   override fun createReductionQueue(): Queue<AbstractSparTreeNode> {
     return ArrayDeque<AbstractSparTreeNode>(DEFAULT_INITIAL_QUEUE_CAPACITY)
@@ -53,6 +50,7 @@ open class PersesNodeBfsReducer protected constructor(
 
   companion object {
     const val NAME = "perses_node_with_bfs_delta"
+
     @JvmField
     val META: ReducerAnnotation = object : ReducerAnnotation() {
       override fun shortName() = NAME
