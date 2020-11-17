@@ -21,6 +21,8 @@ import org.perses.program.TokenizedProgram;
 import java.util.Optional;
 
 public abstract class AbstractTestScriptExecutionCache {
+
+  // TODO: after this class is converted to kotlin, the return type should be TestResult?
   public abstract Optional<TestScript.TestResult> getCachedResult(TokenizedProgram program);
 
   abstract void addResult(TokenizedProgram program, TestScript.TestResult result);
