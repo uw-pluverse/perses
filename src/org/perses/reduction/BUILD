@@ -139,6 +139,7 @@ kt_jvm_library(
         ":abstract_reducer",
         ":reduction_configuration",
         ":test_script_executor_service",
+        "//src/org/perses/reduction/reducer:concurrent_token_slicer",
         "//src/org/perses/reduction/reducer:level_based_reducers",
         "//src/org/perses/reduction/reducer:node_based_reducer",
         "//src/org/perses/reduction/reducer:token_slicer",

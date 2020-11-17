@@ -45,7 +45,8 @@ class TreeSlicer(
     val testProgram = treeEdit.program
     val parserFacade = configuration.parserFacade
     if (testProgram.tokenCount() <= 150 &&
-      !parserFacade.isSourceCodeParsable(testProgram.toCompactSourceCode())) {
+      !parserFacade.isSourceCodeParsable(testProgram.toCompactSourceCode())
+    ) {
       // TODO: dynamically change the threshold, rather than this hard coded 150.
       return node.copyAndReverseChildren()
     }

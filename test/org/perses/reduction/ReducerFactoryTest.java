@@ -67,6 +67,7 @@ public class ReducerFactoryTest {
             HDDReducer.NAME,
             TokenSlicer.NAME,
             TreeSlicer.NAME,
+            ConcurrentTokenSlicer.NAME,
             PersesNodeBfsReducer.NAME,
             PersesNodeDfsReducer.NAME,
             PersesNodePrioritizedBfsReducer.NAME,
