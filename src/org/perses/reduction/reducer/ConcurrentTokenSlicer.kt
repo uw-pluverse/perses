@@ -54,9 +54,11 @@ class ConcurrentTokenSlicer(
       System.currentTimeMillis(), tree.programSnapshot.tokenCount(), tokenSlicingGranularity
     )
     listenerManager.onSlicingTokensStart(slicingStartEvent)
+    val slicingTasks = ArrayList<SlicingTask>()
     for (startIndex in tokens.size - 1 downTo tokenSlicingGranularity - 1) {
-      SlicingTask(tokens, startIndex, tokenSlicingGranularity, tree).run()
+      slicingTasks.add(SlicingTask(tokens, startIndex, tokenSlicingGranularity, tree))
     }
+    slicingTasks.forEach { it.run() }
     listenerManager.onSlicingTokensEnd(
       AbstractReductionEvent.TokenSlicingEndEvent(
         System.currentTimeMillis(), tree.programSnapshot.tokenCount(), slicingStartEvent
