@@ -16,6 +16,7 @@
  */
 package org.perses.reduction.reducer
 
+import com.google.common.collect.ImmutableList
 import org.perses.reduction.AbstractReducer
 import org.perses.reduction.AbstractReductionEvent
 import org.perses.reduction.ReducerAnnotation
@@ -54,7 +55,7 @@ class ConcurrentTokenSlicer(
     )
     listenerManager.onSlicingTokensStart(slicingStartEvent)
     for (startIndex in tokens.size - 1 downTo tokenSlicingGranularity - 1) {
-      slicingTask(tokens, startIndex, tokenSlicingGranularity, tree)
+      SlicingTask(tokens, startIndex, tokenSlicingGranularity, tree).run()
     }
     listenerManager.onSlicingTokensEnd(
       AbstractReductionEvent.TokenSlicingEndEvent(
@@ -63,58 +64,61 @@ class ConcurrentTokenSlicer(
     )
   }
 
-  private fun slicingTask(
-    tokens: List<LexerRuleSparTreeNode>,
-    startIndex: Int,
-    tokenSlicingGranularity: Int,
-    tree: SparTree
+  inner class SlicingTask(
+    val tokens: ImmutableList<LexerRuleSparTreeNode>,
+    val startIndex: Int,
+    val tokenSlicingGranularity: Int,
+    val tree: SparTree
   ) {
-    if (tokens[startIndex].isPermanentlyDeleted) {
-      return
-    }
-    val nodeDeletionActionSet = createNodeDeletionActionSetReverse(
-      tokens, startIndex, tokenSlicingGranularity
-    )
-    if (nodeActionSetCache.isCachedOrCacheIt(nodeDeletionActionSet)) {
-      listenerManager.onNodeEditActionSetCacheHit(nodeDeletionActionSet)
-      return
-    }
-    val treeEdit = tree.createNodeDeletionEdit(nodeDeletionActionSet)
-    val testProgram = treeEdit.program
-    val cachedResult = queryCache.getCachedResult(testProgram)
-    if (cachedResult.isPresent) {
-      check(cachedResult.get().isFail) { "Only failed programs can be cached." }
-      listenerManager.onTestResultCacheHit(cachedResult.get(), testProgram, treeEdit)
-      return
-    }
-    val futureTestScriptExecutionTask = testProgramAsynchronously(
-      if (testProgram.tokenCount() <= 150) { // TODO: need to tune the threshold.
-        {
-          if (configuration.parserFacade.isSourceCodeParsable(
-              testProgram.toCompactSourceCode()
-            )
-          ) {
-            TestResult(exitCode = 0, elapsedMilliseconds = -1)
-          } else {
-            TestResult(exitCode = INVALID_SYNTAX_EXIT_CODE, elapsedMilliseconds = -1)
+
+    fun run() {
+      if (tokens[startIndex].isPermanentlyDeleted) {
+        return
+      }
+      val nodeDeletionActionSet = createNodeDeletionActionSetReverse(
+        tokens, startIndex, tokenSlicingGranularity
+      )
+      if (nodeActionSetCache.isCachedOrCacheIt(nodeDeletionActionSet)) {
+        listenerManager.onNodeEditActionSetCacheHit(nodeDeletionActionSet)
+        return
+      }
+      val treeEdit = tree.createNodeDeletionEdit(nodeDeletionActionSet)
+      val testProgram = treeEdit.program
+      val cachedResult = queryCache.getCachedResult(testProgram)
+      if (cachedResult.isPresent) {
+        check(cachedResult.get().isFail) { "Only failed programs can be cached." }
+        listenerManager.onTestResultCacheHit(cachedResult.get(), testProgram, treeEdit)
+        return
+      }
+      val futureTestScriptExecutionTask = testProgramAsynchronously(
+        if (testProgram.tokenCount() <= 150) { // TODO: need to tune the threshold.
+          {
+            if (configuration.parserFacade.isSourceCodeParsable(
+                testProgram.toCompactSourceCode()
+              )
+            ) {
+              TestResult(exitCode = 0, elapsedMilliseconds = -1)
+            } else {
+              TestResult(exitCode = INVALID_SYNTAX_EXIT_CODE, elapsedMilliseconds = -1)
+            }
           }
-        }
-      } else {
-        TestScriptExecutorService.ALWAYS_TRUE_PRECHECK
-      },
-      testProgram
-    )
-    val best = analyzeResultsAndGetBest(
-      listOf(
-        FutureExecutionResultInfo(
-          treeEdit,
-          testProgram,
-          futureTestScriptExecutionTask
+        } else {
+          TestScriptExecutorService.ALWAYS_TRUE_PRECHECK
+        },
+        testProgram
+      )
+      val best = analyzeResultsAndGetBest(
+        listOf(
+          FutureExecutionResultInfo(
+            treeEdit,
+            testProgram,
+            futureTestScriptExecutionTask
+          )
         )
       )
-    )
-    if (best.isPresent) {
-      tree.applyEdit(best.get().edit)
+      if (best.isPresent) {
+        tree.applyEdit(best.get().edit)
+      }
     }
   }
 
