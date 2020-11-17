@@ -33,7 +33,7 @@ import java.util.concurrent.atomic.AtomicInteger
 /** An execution service for test script runs.  */
 class TestScriptExecutorService(
   tempRootFolder: File,
-  private val numOfThreads: Int,
+  val specifiedNumOfThreads: Int,
   testScriptFile: ScriptFile,
   sourceFileName: String,
   scriptExecutionMonitorIntervalMillis: Int
@@ -49,14 +49,14 @@ class TestScriptExecutorService(
 
   // TODO: create the executor outside, and pass it in as a parameter, so that others can use the
   //       executor.
-  private var executorService = Executors.newFixedThreadPool(numOfThreads)
+  private var executorService = Executors.newFixedThreadPool(specifiedNumOfThreads)
   private var reductionFolderManager: ReductionFolderManager?
   private var scriptExecutionMonitor:
     PerformanceMonitor<ReductionTestScriptExecutorCallback>?
 
   init {
-    require(numOfThreads > 0) {
-      "The number of threads must be positive: $numOfThreads"
+    require(specifiedNumOfThreads > 0) {
+      "The number of threads must be positive: $specifiedNumOfThreads"
     }
     require(sourceFileName.indexOf('/') < 0 || sourceFileName.indexOf('\\') < 0) {
       "Invalid source file name. It should be the name only: $sourceFileName"
