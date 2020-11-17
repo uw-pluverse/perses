@@ -58,7 +58,10 @@ class ConcurrentTokenSlicer(
     for (startIndex in tokens.size - 1 downTo tokenSlicingGranularity - 1) {
       slicingTasks.add(SlicingTask(tokens, startIndex, tokenSlicingGranularity, tree))
     }
-    slicingTasks.forEach { it.run() }
+    slicingTasks.forEach {
+      it.asyncRun()
+      it.waitAndApplyEditIfSuccess()
+    }
     listenerManager.onSlicingTokensEnd(
       AbstractReductionEvent.TokenSlicingEndEvent(
         System.currentTimeMillis(), tree.programSnapshot.tokenCount(), slicingStartEvent
@@ -73,7 +76,10 @@ class ConcurrentTokenSlicer(
     val tree: SparTree
   ) {
 
-    fun run() {
+    private var futureResult: FutureExecutionResultInfo? = null
+
+
+    fun asyncRun() {
       if (tokens[startIndex].isPermanentlyDeleted) {
         return
       }
@@ -92,7 +98,8 @@ class ConcurrentTokenSlicer(
         listenerManager.onTestResultCacheHit(cachedResult.get(), testProgram, treeEdit)
         return
       }
-      val futureTestScriptExecutionTask = testProgramAsynchronously(
+
+      val future = testProgramAsynchronously(
         if (testProgram.tokenCount() <= 150) { // TODO: need to tune the threshold.
           {
             if (configuration.parserFacade.isSourceCodeParsable(
@@ -109,18 +116,21 @@ class ConcurrentTokenSlicer(
         },
         testProgram
       )
-      val best = analyzeResultsAndGetBest(
-        listOf(
-          FutureExecutionResultInfo(
-            treeEdit,
-            testProgram,
-            futureTestScriptExecutionTask
-          )
-        )
+      check(futureResult==null)
+      futureResult = FutureExecutionResultInfo(
+        treeEdit,
+        testProgram,
+        future
       )
-      if (best != null) {
-        tree.applyEdit(best.edit)
+    }
+
+    fun waitAndApplyEditIfSuccess(): Boolean {
+      if (futureResult==null) {
+        return false
       }
+      val best = analyzeResultsAndGetBest(listOf(futureResult!!)) ?: return false
+      tree.applyEdit(best.edit)
+      return true
     }
   }
 
