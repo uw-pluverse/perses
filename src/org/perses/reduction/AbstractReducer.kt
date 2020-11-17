@@ -141,7 +141,7 @@ abstract class AbstractReducer protected constructor(
     return Optional.ofNullable(best)
   }
 
-  protected fun cacheTestResult(program: TokenizedProgram?, result: TestResult) {
+  private fun cacheTestResult(program: TokenizedProgram, result: TestResult) {
     queryCache.addResult(program, result)
   }
 
