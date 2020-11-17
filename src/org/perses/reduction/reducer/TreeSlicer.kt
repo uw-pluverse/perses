@@ -44,7 +44,9 @@ class TreeSlicer(
     val treeEdit = tree.createNodeDeletionEdit(actionSet)
     val testProgram = treeEdit.program
     val parserFacade = configuration.parserFacade
-    if (!parserFacade.isSourceCodeParsable(testProgram.toCompactSourceCode())) {
+    if (testProgram.tokenCount() <= 150 &&
+      !parserFacade.isSourceCodeParsable(testProgram.toCompactSourceCode())) {
+      // TODO: dynamically change the threshold, rather than this hard coded 150.
       return node.copyAndReverseChildren()
     }
     val best = testAllTreeEditsAndReturnTheBest(ImmutableList.of(treeEdit))
