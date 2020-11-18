@@ -90,7 +90,9 @@ kt_jvm_library(
         "SlicingTaskConcurrentExecutor.kt",
     ],
     deps = [
+        "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction:future_execution_result_triple",
+        "//src/org/perses/reduction:reduction_configuration",
         "//src/org/perses/tree/spar",
         "@maven//:com_google_guava_guava",
     ],

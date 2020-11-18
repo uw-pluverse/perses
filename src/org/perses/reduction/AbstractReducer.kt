@@ -51,11 +51,10 @@ abstract class AbstractReducer protected constructor(
   protected fun testProgramAsynchronously(
     precheck: () -> TestResult,
     program: TokenizedProgram
-  ) =
-    executorService.testProgramAsync(
-      precheck,
-      program, configuration.programFormatControl
-    )
+  ) = executorService.testProgramAsync(
+    precheck,
+    program, configuration.programFormatControl
+  )
 
   protected fun testAllTreeEditsAndReturnTheBest(
     editList: List<AbstractSparTreeEdit>
