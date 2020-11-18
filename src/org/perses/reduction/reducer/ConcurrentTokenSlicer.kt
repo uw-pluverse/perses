@@ -19,6 +19,7 @@ package org.perses.reduction.reducer
 import com.google.common.collect.ImmutableList
 import org.perses.reduction.AbstractReducer
 import org.perses.reduction.AbstractReductionEvent
+import org.perses.reduction.FutureExecutionResultInfo
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.TestScript.TestResult
@@ -28,7 +29,6 @@ import org.perses.reduction.reducer.TokenSlicer.Companion.createNodeDeletionActi
 import org.perses.reduction.reducer.TokenSlicer.Companion.extractLexerRuleNodes
 import org.perses.tree.spar.LexerRuleSparTreeNode
 import org.perses.tree.spar.SparTree
-import java.util.ArrayDeque
 
 class ConcurrentTokenSlicer(
   reducerContext: ReducerContext,
@@ -61,7 +61,11 @@ class ConcurrentTokenSlicer(
       }
     }.build()
 
-    SlicingTaskConcurrentExecutor(slicingTasks, executorService).run()
+    SlicingTaskConcurrentExecutor<SlicingTask>(
+      slicingTasks,
+      workingDequeExpectedSize = executorService.specifiedNumOfThreads + 2
+    )
+      .run()
 
     listenerManager.onSlicingTokensEnd(
       AbstractReductionEvent.TokenSlicingEndEvent(
@@ -70,65 +74,14 @@ class ConcurrentTokenSlicer(
     )
   }
 
-  class SlicingTaskConcurrentExecutor(
-    tasks: ImmutableList<SlicingTask>,
-    executorService: TestScriptExecutorService
-  ) {
-    private val workingDeque = ArrayDeque<SlicingTask>()
-    private val pendingDeque = ArrayDeque<SlicingTask>(tasks)
-    private val workingDequeExpectedSize = executorService.specifiedNumOfThreads + 2
-
-    fun run() {
-      while (true) {
-        val next = nextTask() ?: return
-        val bestFound = next.waitAndApplyEditIfSuccess()
-        if (bestFound) {
-          cancelTasks()
-        }
-        populateTasks()
-      }
-    }
-
-    private fun nextTask(): SlicingTask? {
-      populateTasks()
-      if (workingDeque.isEmpty()) {
-        return null
-      }
-      val result = workingDeque.removeFirst()
-      populateTasks()
-      return result
-    }
-
-    private fun populateTasks() {
-      while (workingDeque.size < workingDequeExpectedSize && pendingDeque.isNotEmpty()) {
-        val newTask = pendingDeque.removeFirst()
-        if (newTask.tryAsyncRun()) {
-          workingDeque.addLast(newTask)
-        }
-      }
-    }
-
-    private fun cancelTasks() {
-      val iterator = workingDeque.descendingIterator()
-      while (iterator.hasNext()) {
-        val task = iterator.next()
-        task.cancel()
-        pendingDeque.addFirst(task)
-      }
-      workingDeque.clear()
-    }
-  }
-
   inner class SlicingTask(
     val tokens: ImmutableList<LexerRuleSparTreeNode>,
     val startIndex: Int,
     val tokenSlicingGranularity: Int,
-    val tree: SparTree
-  ) {
+    tree: SparTree
+  ) : AbstractSlicingTask(tree) {
 
-    private var futureResult: FutureExecutionResultInfo? = null
-
-    fun tryAsyncRun(): Boolean {
+    override fun tryAsyncRun(): Boolean {
       check(futureResult == null)
       if (tokens[startIndex].isPermanentlyDeleted) {
         return false
@@ -175,14 +128,7 @@ class ConcurrentTokenSlicer(
       return true
     }
 
-    fun cancel() {
-      if (futureResult != null) {
-        futureResult!!.future.cancel(true)
-        futureResult = null
-      }
-    }
-
-    fun waitAndApplyEditIfSuccess(): Boolean {
+    override fun waitAndApplyEditIfSuccess(): Boolean {
       check(futureResult != null)
       val best = analyzeResultsAndGetBest(listOf(futureResult!!)) ?: return false
       tree.applyEdit(best.edit)

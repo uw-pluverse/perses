@@ -33,6 +33,18 @@ java_library(
 )
 
 kt_jvm_library(
+    name = "future_execution_result_triple",
+    srcs = [
+        "FutureExecutionResultInfo.kt",
+    ],
+    deps = [
+        ":test_script_executor_service",
+        "//src/org/perses/program",
+        "//src/org/perses/tree/spar",
+    ],
+)
+
+kt_jvm_library(
     name = "tree_edit_with_its_program",
     srcs = ["TreeEditWithItsResult.kt"],
     deps = [
@@ -102,6 +114,7 @@ kt_jvm_library(
     ],
     deps = [
         ":actionset_profiler",
+        ":future_execution_result_triple",
         ":reduction_configuration",
         ":test_script",
         ":test_script_execution_cache",

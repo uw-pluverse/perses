@@ -20,6 +20,7 @@ import com.google.common.annotations.VisibleForTesting
 import com.google.common.collect.ImmutableList
 import org.perses.reduction.AbstractReducer
 import org.perses.reduction.AbstractReductionEvent
+import org.perses.reduction.FutureExecutionResultInfo
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.TestScript.TestResult

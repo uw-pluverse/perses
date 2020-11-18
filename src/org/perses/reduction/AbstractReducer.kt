@@ -20,7 +20,6 @@ import org.perses.antlr.RuleType
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.TestScript.TestResult
 import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
-import org.perses.reduction.TestScriptExecutorService.FutureTestScriptExecutionTask
 import org.perses.tree.spar.AbstractNodeActionSetCache
 import org.perses.tree.spar.AbstractSparTreeEdit
 import org.perses.tree.spar.AbstractSparTreeNode
@@ -57,23 +56,6 @@ abstract class AbstractReducer protected constructor(
       precheck,
       program, configuration.programFormatControl
     )
-
-  protected class FutureExecutionResultInfo(
-    val edit: AbstractSparTreeEdit,
-    val program: TokenizedProgram,
-    val future: FutureTestScriptExecutionTask
-  ) {
-    val result: TestResult
-      get() = try {
-        future.get()
-      } catch (e: Exception) {
-        throw RuntimeException(e)
-      }
-
-    fun cancel() {
-      future.cancel(true)
-    }
-  }
 
   protected fun testAllTreeEditsAndReturnTheBest(
     editList: List<AbstractSparTreeEdit>
