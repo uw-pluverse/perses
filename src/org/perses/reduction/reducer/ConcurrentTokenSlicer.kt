@@ -64,8 +64,7 @@ class ConcurrentTokenSlicer(
     SlicingTaskConcurrentExecutor<SlicingTask>(
       slicingTasks,
       workingDequeExpectedSize = executorService.specifiedNumOfThreads + 2
-    )
-      .run()
+    ).run()
 
     listenerManager.onSlicingTokensEnd(
       AbstractReductionEvent.TokenSlicingEndEvent(
