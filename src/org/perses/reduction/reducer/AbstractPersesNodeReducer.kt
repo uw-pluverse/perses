@@ -60,10 +60,8 @@ abstract class AbstractPersesNodeReducer protected constructor(
   ): ImmutableList<AbstractSparTreeNode> {
     val editList = createEditListForRegularRuleNode(tree, regularRuleNode)
     val best = testAllTreeEditsAndReturnTheBest(editList)
-    if (!best.isPresent) {
-      return ImmutableList.copyOf(regularRuleNode.immutableChildView)
-    }
-    val edit = best.get().edit
+      ?: return ImmutableList.copyOf(regularRuleNode.immutableChildView)
+    val edit = best.edit
     tree.applyEdit(edit)
     return computePendingNodes(regularRuleNode, edit)
   }
@@ -173,10 +171,9 @@ abstract class AbstractPersesNodeReducer protected constructor(
       )
     }
     val best = testAllTreeEditsAndReturnTheBest(editList)
-    if (best.isPresent) {
-      val (edit) = best.get()
-      tree.applyEdit(edit)
-      return computePendingNodes(kleenePlus, edit)
+    if (best != null) {
+      tree.applyEdit(best.edit)
+      return computePendingNodes(kleenePlus, best.edit)
     }
     if (childCount > 1) {
       val halfIndex = (childCount + 1) / 2

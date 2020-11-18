@@ -4138,6 +4138,12 @@ Failed to reduce node 82
 ------------------------------------------------------------
 
 
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=51}
+------------------------------------------------------------
+
+
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@1
@@ -4156,12 +4162,6 @@ Failed to reduce node 82
             println
             println("Hello, world"
     }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=51}
 ------------------------------------------------------------
 
 
@@ -4205,7 +4205,7 @@ Failed to reduce node 82
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 200
+    size before clearance = 203
 ------------------------------------------------------------
 
 
@@ -6775,6 +6775,12 @@ Failed to reduce node 79
 ------------------------------------------------------------
 
 
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=50}
+------------------------------------------------------------
+
+
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@1
@@ -6791,12 +6797,6 @@ Failed to reduce node 79
         def main(args: Array[String]) =
             println("Hello, world"
     }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=50}
 ------------------------------------------------------------
 
 

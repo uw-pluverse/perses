@@ -20,7 +20,6 @@ import org.perses.antlr.RuleType
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.TestScript.TestResult
 import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
-import org.perses.reduction.TestScriptExecutorService.FutureTestScriptExecutionTask
 import org.perses.tree.spar.AbstractNodeActionSetCache
 import org.perses.tree.spar.AbstractSparTreeEdit
 import org.perses.tree.spar.AbstractSparTreeNode
@@ -28,7 +27,6 @@ import org.perses.tree.spar.SparTree
 import org.perses.tree.spar.SparTreeSimplifier
 import java.io.IOException
 import java.util.LinkedList
-import java.util.Optional
 import java.util.concurrent.ExecutionException
 
 /** The base class for reducer. Both hdd and perses algorithms extend this class.  */
@@ -53,44 +51,30 @@ abstract class AbstractReducer protected constructor(
   protected fun testProgramAsynchronously(
     precheck: () -> TestResult,
     program: TokenizedProgram
-  ) =
-    executorService.testProgramAsync(
-      precheck,
-      program, configuration.programFormatControl
-    )
-
-  protected class FutureExecutionResultInfo(
-    val edit: AbstractSparTreeEdit,
-    val program: TokenizedProgram,
-    val future: FutureTestScriptExecutionTask
-  ) {
-    val result: TestResult
-      get() = try {
-        future.get()
-      } catch (e: Exception) {
-        throw RuntimeException(e)
-      }
-
-    fun cancel() {
-      future.cancel(true)
-    }
-  }
+  ) = executorService.testProgramAsync(
+    precheck,
+    program, configuration.programFormatControl
+  )
 
   protected fun testAllTreeEditsAndReturnTheBest(
     editList: List<AbstractSparTreeEdit>
-  ): Optional<TreeEditWithItsResult> {
+  ): TreeEditWithItsResult? {
     if (editList.isEmpty()) {
-      return Optional.empty()
+      return null
     }
     val futureList = asyncApplyEditsInOrderOfProgramSizeFromLeast(editList)
     val best = analyzeResultsAndGetBest(futureList)
     assert(
-      !best.isPresent ||
+      best == null ||
         configuration.parserFacade.isSourceCodeParsable(
-          best.get().edit.program.toCompactSourceCode()
+          best.edit.program.toCompactSourceCode()
         )
     )
-    return best.map { TreeEditWithItsResult(it.edit, it.result) }
+    return if (best == null) {
+      null
+    } else {
+      TreeEditWithItsResult(best.edit, best.result)
+    }
   }
 
   private fun isFutureListSortedFromLeastProgramSizeToGreatest(
@@ -112,15 +96,15 @@ abstract class AbstractReducer protected constructor(
 
   protected fun analyzeResultsAndGetBest(
     futureList: List<FutureExecutionResultInfo>
-  ): Optional<FutureExecutionResultInfo> {
+  ): FutureExecutionResultInfo? {
     assert(isFutureListSortedFromLeastProgramSizeToGreatest(futureList)) { futureList }
     var best: FutureExecutionResultInfo? = null
     for (executionResultInfo in futureList) {
       if (best != null) {
-// The best is already found, then it is safe to cancel all the remaining testing tasks, as
-// none of these tasks will beat the current best one. Moreover, the tasks are not useful
-// for future cache testing, as all future programs will be smaller than the programs
-// represented by these tasks.
+        // The best is already found, then it is safe to cancel all the remaining testing tasks, as
+        // none of these tasks will beat the current best one. Moreover, the tasks are not useful
+        // for future cache testing, as all future programs will be smaller than the programs
+        // represented by these tasks.
         val start = System.currentTimeMillis()
         executionResultInfo.cancel()
         val duration = (System.currentTimeMillis() - start).toInt()
@@ -138,10 +122,10 @@ abstract class AbstractReducer protected constructor(
         best = executionResultInfo
       }
     }
-    return Optional.ofNullable(best)
+    return best
   }
 
-  protected fun cacheTestResult(program: TokenizedProgram?, result: TestResult) {
+  private fun cacheTestResult(program: TokenizedProgram, result: TestResult) {
     queryCache.addResult(program, result)
   }
 

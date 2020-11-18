@@ -20,6 +20,17 @@ reduction_golden_test(
     test_script = "r.sh",
 )
 
+reduction_golden_test(
+    name = "reduction_concurrent_token_slicer_golden_test",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    golden_reduced_file = "golden_reduced_t.c",
+    reduction_algorithm = "concurrent_token_slicer",
+    source_file = "t.c",
+    test_script = "r.sh",
+    thread_count = 3,
+)
+
 reduce(
     name = "reduce_with_formatter",
     call_formatter = True,

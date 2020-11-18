@@ -14,26 +14,10 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.reduction;
+package org.perses.reduction.reducer
 
-import org.perses.program.TokenizedProgram;
+import org.perses.reduction.TestScriptExecutorService
 
-import java.util.Optional;
-
-public final class NullTestScriptExecutionCache extends AbstractTestScriptExecutionCache {
-  @Override
-  public Optional<TestScript.TestResult> getCachedResult(TokenizedProgram program) {
-    return Optional.empty();
-  }
-
-  @Override
-  void addResult(TokenizedProgram program, TestScript.TestResult result) {}
-
-  @Override
-  public int size() {
-    return 0;
-  }
-
-  @Override
-  public void evictEntriesLargerThan(TokenizedProgram best) {}
-}
+class BinaryTreeConcurrentEvaluator<TASK>(
+  private val executorService: TestScriptExecutorService
+)

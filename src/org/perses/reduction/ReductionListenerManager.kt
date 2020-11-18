@@ -169,6 +169,7 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
     }
   }
 
+  @Synchronized
   fun onTestResultCacheHit(
     result: TestScript.TestResult,
     program: TokenizedProgram,
@@ -182,6 +183,7 @@ class ReductionListenerManager(private val listeners: ImmutableList<AbstractRedu
     }
   }
 
+  @Synchronized
   fun onNodeEditActionSetCacheHit(query: AbstractActionSet<*>) {
     val event = AbstractReductionEvent.NodeEditActionSetCacheHitEvent(
       System.currentTimeMillis(), query

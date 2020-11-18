@@ -31,7 +31,8 @@ def reduction_golden_test(
         progress_dump_file = None,
         golden_progress_file = None,
         enable_query_caching = None,
-        enable_edit_caching = None):
+        enable_edit_caching = None,
+        thread_count = None):
     if "/" in source_file:
         fail("The source file should be in the current folder.")
     if "/" in test_script:
@@ -45,7 +46,7 @@ def reduction_golden_test(
         reduction_algorithm = reduction_algorithm,
         source_file = source_file,
         test_script = test_script,
-        thread_count = 1,
+        thread_count = thread_count,
         result_file = result_file,
         statistics_file = statistics_file,
         progress_dump_file = progress_dump_file,

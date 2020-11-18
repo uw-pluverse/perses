@@ -14,26 +14,25 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.reduction;
+package org.perses.reduction
 
-import org.perses.program.TokenizedProgram;
+import org.perses.program.TokenizedProgram
+import org.perses.tree.spar.AbstractSparTreeEdit
 
-import java.util.Optional;
+class FutureExecutionResultInfo(
+  val edit: AbstractSparTreeEdit,
+  val program: TokenizedProgram,
+  // TODO: make future private.
+  val future: TestScriptExecutorService.FutureTestScriptExecutionTask
+) {
+  val result: TestScript.TestResult
+    get() = try {
+      future.get()
+    } catch (e: Exception) {
+      throw RuntimeException(e)
+    }
 
-public final class NullTestScriptExecutionCache extends AbstractTestScriptExecutionCache {
-  @Override
-  public Optional<TestScript.TestResult> getCachedResult(TokenizedProgram program) {
-    return Optional.empty();
+  fun cancel() {
+    future.cancel(true)
   }
-
-  @Override
-  void addResult(TokenizedProgram program, TestScript.TestResult result) {}
-
-  @Override
-  public int size() {
-    return 0;
-  }
-
-  @Override
-  public void evictEntriesLargerThan(TokenizedProgram best) {}
 }

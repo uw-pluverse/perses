@@ -37,7 +37,7 @@ import org.perses.program.TokenizedProgramFactory
 import org.perses.reduction.AbstractActionSetProfiler.ActionSetProfiler
 import org.perses.reduction.AbstractTestScriptExecutionCacheProfiler.TestScriptExecutionCacheProfiler
 import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
-import org.perses.reduction.reducer.TokenSlicer
+import org.perses.reduction.reducer.ConcurrentTokenSlicer
 import org.perses.reduction.reducer.TreeSlicer
 import org.perses.tree.spar.AbstractSparTreeEditListener
 import org.perses.tree.spar.NodeActionSetCache
@@ -260,7 +260,7 @@ class ReductionDriver(
     if (!cmd.algorithmControlFlags.enableTokenSlicer) {
       return
     }
-    callSlicer(TokenSlicer.META)
+    callSlicer(ConcurrentTokenSlicer.META)
   }
 
   private fun callSlicer(reducerAnnotation: ReducerAnnotation) {

@@ -20,12 +20,10 @@ import com.google.common.flogger.FluentLogger
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.partition.Partition
-import org.perses.tree.spar.AbstractSparTreeEdit
 import org.perses.tree.spar.AbstractSparTreeNode
 import org.perses.tree.spar.SparTree
 import java.util.ArrayDeque
 import java.util.Queue
-import java.util.function.Function
 
 /** Perses node reducer, with dfs delta debugging  */
 open class PersesNodeDfsReducer constructor(
@@ -35,15 +33,17 @@ open class PersesNodeDfsReducer constructor(
   private val deltaDebugger = if (reducerContext.configuration.useRealDeltaDebugger)
     DeltaDebugger(
       reducerContext.listenerManager,
-      reducerContext.nodeActionSetCache,
-      Function { edit: AbstractSparTreeEdit -> testSparTreeEdit(edit) }
-    )
+      reducerContext.nodeActionSetCache
+    ) {
+      testSparTreeEdit(it)
+    }
   else
     DfsDeltaDebugger(
       reducerContext.listenerManager,
-      reducerContext.nodeActionSetCache,
-      Function { edit: AbstractSparTreeEdit -> testSparTreeEdit(edit) }
-    )
+      reducerContext.nodeActionSetCache
+    ) {
+      testSparTreeEdit(it)
+    }
 
   init {
     logger.atConfig().log("Delta Debugger is %s", deltaDebugger.javaClass)

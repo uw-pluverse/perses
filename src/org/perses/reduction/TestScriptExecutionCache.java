@@ -17,6 +17,7 @@
 package org.perses.reduction;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.flogger.FluentLogger;
 import org.perses.program.PersesToken;
 import org.perses.program.TokenizedProgram;
 import org.perses.reduction.TestScript.TestResult;
@@ -45,30 +46,24 @@ public final class TestScriptExecutionCache extends AbstractTestScriptExecutionC
   }
 
   @Override
-  public Optional<TestResult> getCachedResult(TokenizedProgram program) {
+  synchronized public Optional<TestResult> getCachedResult(TokenizedProgram program) {
     final CompactProgramEncoding key = encoder.encode(program).get();
     return Optional.ofNullable(cache.get(key));
   }
 
   @Override
-  void addResult(TokenizedProgram program, TestResult result) {
+  synchronized void addResult(TokenizedProgram program, TestResult result) {
     final CompactProgramEncoding key = encoder.encode(program).get();
-    assert !cache.containsKey(key);
-    cache.put(key, result);
+    final TestResult oldValue = cache.put(key, result);
+    if (oldValue != null) {
+      logger.atWarning().log("A query cache item was created before. This is unexpected.");
+      assert oldValue.isPass() == result.isPass();
+    }
   }
 
   @Override
   public int size() {
     return cache.size();
-  }
-
-  @Override
-  public int memoryFootprintInBytes() {
-    int result = 0;
-    for (Map.Entry<CompactProgramEncoding, TestResult> entry : cache.entrySet()) {
-      result += entry.getKey().memoryFootprintInBytes() + 4;
-    }
-    return result;
   }
 
   private final boolean needsHeavyWeightCleanup(
@@ -79,7 +74,7 @@ public final class TestScriptExecutionCache extends AbstractTestScriptExecutionC
   }
 
   @Override
-  public void evictEntriesLargerThan(TokenizedProgram best) {
+  public synchronized void evictEntriesLargerThan(TokenizedProgram best) {
     if (needsHeavyWeightCleanup(encoder.getTokensInOrigin(), best)) {
       heavyweightCleanup(best);
     } else {
@@ -153,4 +148,6 @@ public final class TestScriptExecutionCache extends AbstractTestScriptExecutionC
       }
     }
   }
+
+  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 }

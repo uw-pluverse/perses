@@ -21,6 +21,7 @@ import com.google.common.collect.ImmutableCollection
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableSet
+import org.perses.reduction.reducer.ConcurrentTokenSlicer
 import org.perses.reduction.reducer.HDDReducer
 import org.perses.reduction.reducer.PersesNodeBfsReducer
 import org.perses.reduction.reducer.PersesNodeDfsReducer
@@ -39,6 +40,7 @@ object ReducerFactory {
   private val REDUCTION_ALGs = ImmutableSet.builder<ReducerAnnotation>()
     .add(HDDReducer.META)
     .add(TokenSlicer.META)
+    .add(ConcurrentTokenSlicer.META)
     .add(TreeSlicer.META)
     .add(PersesNodeBfsReducer.META)
     .add(PersesNodePrioritizedBfsReducer.META)

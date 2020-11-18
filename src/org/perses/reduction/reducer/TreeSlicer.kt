@@ -45,17 +45,17 @@ class TreeSlicer(
     val testProgram = treeEdit.program
     val parserFacade = configuration.parserFacade
     if (testProgram.tokenCount() <= 150 &&
-      !parserFacade.isSourceCodeParsable(testProgram.toCompactSourceCode())) {
+      !parserFacade.isSourceCodeParsable(testProgram.toCompactSourceCode())
+    ) {
       // TODO: dynamically change the threshold, rather than this hard coded 150.
       return node.copyAndReverseChildren()
     }
     val best = testAllTreeEditsAndReturnTheBest(ImmutableList.of(treeEdit))
-    if (!best.isPresent) {
-      return node.copyAndReverseChildren()
+    return if (best == null) {
+      node.copyAndReverseChildren()
     } else {
-      val edit = best.get().edit
-      tree.applyEdit(edit)
-      return computePendingNodes(node, edit).reverse()
+      tree.applyEdit(best.edit)
+      computePendingNodes(node, best.edit).reverse()
     }
   }
 

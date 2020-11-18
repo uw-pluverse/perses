@@ -22,13 +22,11 @@ import org.perses.reduction.partition.Partition
 import org.perses.tree.spar.AbstractNodeActionSetCache
 import org.perses.tree.spar.AbstractSparTreeEdit
 import java.util.ArrayDeque
-import java.util.Optional
-import java.util.function.Function
 
 class DfsDeltaDebugger(
   listenerManager: ReductionListenerManager,
   nodeActionSetCache: AbstractNodeActionSetCache,
-  treeEditTester: Function<AbstractSparTreeEdit, Optional<TreeEditWithItsResult>>
+  treeEditTester: (AbstractSparTreeEdit) -> TreeEditWithItsResult?
 ) :
   AbstractSpecialDeltaDebugger(listenerManager, nodeActionSetCache, treeEditTester) {
 

@@ -20,7 +20,6 @@ import com.google.common.collect.ImmutableList
 import org.perses.reduction.AbstractReducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.reduction.TreeEditWithItsResult
 import org.perses.tree.spar.AbstractSparTreeEdit
 import org.perses.tree.spar.AbstractSparTreeNode
 import org.perses.tree.spar.ChildHoistingActionSet
@@ -29,7 +28,6 @@ import org.perses.tree.spar.NodeDeletionTreeEdit
 import org.perses.tree.spar.NodeReplacementTreeEdit
 import org.perses.tree.spar.SparTree
 import org.perses.tree.spar.SparTreeSimplifier
-import java.util.Optional
 import java.util.Queue
 
 abstract class AbstractNodeReducer(
@@ -60,13 +58,8 @@ abstract class AbstractNodeReducer(
     node: AbstractSparTreeNode
   ): ImmutableList<AbstractSparTreeNode>
 
-  protected fun testSparTreeEdit(edit: AbstractSparTreeEdit): Optional<TreeEditWithItsResult> {
-    return try {
-      testAllTreeEditsAndReturnTheBest(ImmutableList.of(edit))
-    } catch (e: Exception) {
-      throw RuntimeException(e)
-    }
-  }
+  protected fun testSparTreeEdit(edit: AbstractSparTreeEdit) =
+    testAllTreeEditsAndReturnTheBest(ImmutableList.of(edit))
 
   protected fun addDeletionEditToEditListAndLog(
     actionSet: NodeDeletionActionSet,

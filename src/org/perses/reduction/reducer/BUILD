@@ -68,14 +68,33 @@ kt_jvm_library(
 
 kt_jvm_library(
     name = "token_slicer",
-    srcs = ["TokenSlicer.kt"],
+    srcs = [
+        "ConcurrentTokenSlicer.kt",
+        "TokenSlicer.kt",
+    ],
     deps = [
+        ":concurrent_slicing_tasks",
         ":tree_transforms",
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction:tree_edit_with_its_program",
         "//src/org/perses/reduction/partition",
         "//src/org/perses/tree/spar",
         "@maven//:org_checkerframework_checker_qual",
+    ],
+)
+
+kt_jvm_library(
+    name = "concurrent_slicing_tasks",
+    srcs = [
+        "AbstractSlicingTask.kt",
+        "SlicingTaskConcurrentExecutor.kt",
+    ],
+    deps = [
+        "//src/org/perses/reduction:abstract_reducer",
+        "//src/org/perses/reduction:future_execution_result_triple",
+        "//src/org/perses/reduction:reduction_configuration",
+        "//src/org/perses/tree/spar",
+        "@maven//:com_google_guava_guava",
     ],
 )
 

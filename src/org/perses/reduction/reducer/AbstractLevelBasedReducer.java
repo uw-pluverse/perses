@@ -111,11 +111,11 @@ public abstract class AbstractLevelBasedReducer extends AbstractReducer {
       if (editList.isEmpty()) {
         logEmptyEdits(partition);
       }
-      final Optional<TreeEditWithItsResult> bestEdit = testAllTreeEditsAndReturnTheBest(editList);
-      if (!bestEdit.isPresent()) {
+      final TreeEditWithItsResult bestEdit = testAllTreeEditsAndReturnTheBest(editList);
+      if (bestEdit == null) {
         continue;
       }
-      final TreeEditWithItsResult bestEditWithItsProgram = bestEdit.get();
+      final TreeEditWithItsResult bestEditWithItsProgram = bestEdit;
 
       final AbstractSparTreeEdit treeEdit = bestEditWithItsProgram.getEdit();
       tree.applyEdit(treeEdit);

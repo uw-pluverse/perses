@@ -17,8 +17,10 @@
 package org.perses.reduction.reducer
 
 import com.google.common.annotations.VisibleForTesting
+import com.google.common.collect.ImmutableList
 import org.perses.reduction.AbstractReducer
 import org.perses.reduction.AbstractReductionEvent
+import org.perses.reduction.FutureExecutionResultInfo
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.TestScript.TestResult
@@ -91,8 +93,8 @@ class TokenSlicer(
             )
           )
         )
-        if (best.isPresent) {
-          tree.applyEdit(best.get().edit)
+        if (best != null) {
+          tree.applyEdit(best.edit)
         }
       }
       val endEvent = AbstractReductionEvent.TokenSlicingEndEvent(
@@ -122,10 +124,10 @@ class TokenSlicer(
     val INVALID_SYNTAX_EXIT_CODE = 99
 
     @VisibleForTesting
-    fun extractLexerRuleNodes(tree: SparTree): ArrayList<LexerRuleSparTreeNode> {
-      val tokens = ArrayList<LexerRuleSparTreeNode>()
+    fun extractLexerRuleNodes(tree: SparTree): ImmutableList<LexerRuleSparTreeNode> {
+      val tokens = ImmutableList.builder<LexerRuleSparTreeNode>()
       tree.visitRemainingTokens { tokens.add(it) }
-      return tokens
+      return tokens.build()
     }
 
     @VisibleForTesting
