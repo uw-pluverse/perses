@@ -17,6 +17,7 @@
 package org.perses.reduction;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.flogger.FluentLogger;
 import org.perses.program.PersesToken;
 import org.perses.program.TokenizedProgram;
 import org.perses.reduction.TestScript.TestResult;
@@ -53,8 +54,11 @@ public final class TestScriptExecutionCache extends AbstractTestScriptExecutionC
   @Override
   synchronized void addResult(TokenizedProgram program, TestResult result) {
     final CompactProgramEncoding key = encoder.encode(program).get();
-    assert !cache.containsKey(key);
-    cache.put(key, result);
+    final TestResult oldValue = cache.put(key, result);
+    if (oldValue != null) {
+      logger.atWarning().log("A query cache item was created before. This is unexpected.");
+      assert oldValue.isPass() == result.isPass();
+    }
   }
 
   @Override
@@ -144,4 +148,6 @@ public final class TestScriptExecutionCache extends AbstractTestScriptExecutionC
       }
     }
   }
+
+  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 }

@@ -25,6 +25,7 @@ java_library(
         "//src/org/perses/program",
         "//src/org/perses/util:percentage",
         "@maven//:com_google_errorprone_error_prone_annotations",
+        "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",
         "@maven//:it_unimi_dsi_fastutil",
         "@maven//:me_lemire_integercompression_JavaFastPFOR",

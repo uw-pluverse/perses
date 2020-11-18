@@ -28,6 +28,7 @@ import org.perses.reduction.reducer.TokenSlicer.Companion.createNodeDeletionActi
 import org.perses.reduction.reducer.TokenSlicer.Companion.extractLexerRuleNodes
 import org.perses.tree.spar.LexerRuleSparTreeNode
 import org.perses.tree.spar.SparTree
+import java.util.ArrayDeque
 
 class ConcurrentTokenSlicer(
   reducerContext: ReducerContext,
@@ -54,20 +55,68 @@ class ConcurrentTokenSlicer(
       System.currentTimeMillis(), tree.programSnapshot.tokenCount(), tokenSlicingGranularity
     )
     listenerManager.onSlicingTokensStart(slicingStartEvent)
-    val slicingTasks = ArrayList<SlicingTask>()
-    for (startIndex in tokens.size - 1 downTo tokenSlicingGranularity - 1) {
-      slicingTasks.add(SlicingTask(tokens, startIndex, tokenSlicingGranularity, tree))
-    }
-    slicingTasks.forEach {
-      if (it.tryAsyncRun()) {
-        it.waitAndApplyEditIfSuccess()
+    val slicingTasks = ImmutableList.builder<SlicingTask>().apply {
+      for (startIndex in tokens.size - 1 downTo tokenSlicingGranularity - 1) {
+        add(SlicingTask(tokens, startIndex, tokenSlicingGranularity, tree))
       }
-    }
+    }.build()
+
+    SlicingTaskConcurrentExecutor(slicingTasks, executorService).run()
+
     listenerManager.onSlicingTokensEnd(
       AbstractReductionEvent.TokenSlicingEndEvent(
         System.currentTimeMillis(), tree.programSnapshot.tokenCount(), slicingStartEvent
       )
     )
+  }
+
+  class SlicingTaskConcurrentExecutor(
+    tasks: ImmutableList<SlicingTask>,
+    executorService: TestScriptExecutorService
+  ) {
+    private val workingDeque = ArrayDeque<SlicingTask>()
+    private val pendingDeque = ArrayDeque<SlicingTask>(tasks)
+    private val workingDequeExpectedSize = executorService.specifiedNumOfThreads + 2
+
+    fun run() {
+      while (true) {
+        val next = nextTask() ?: return
+        val bestFound = next.waitAndApplyEditIfSuccess()
+        if (bestFound) {
+          cancelTasks()
+        }
+        populateTasks()
+      }
+    }
+
+    private fun nextTask(): SlicingTask? {
+      populateTasks()
+      if (workingDeque.isEmpty()) {
+        return null
+      }
+      val result = workingDeque.removeFirst()
+      populateTasks()
+      return result
+    }
+
+    private fun populateTasks() {
+      while (workingDeque.size < workingDequeExpectedSize && pendingDeque.isNotEmpty()) {
+        val newTask = pendingDeque.removeFirst()
+        if (newTask.tryAsyncRun()) {
+          workingDeque.addLast(newTask)
+        }
+      }
+    }
+
+    private fun cancelTasks() {
+      val iterator = workingDeque.descendingIterator()
+      while (iterator.hasNext()) {
+        val task = iterator.next()
+        task.cancel()
+        pendingDeque.addFirst(task)
+      }
+      workingDeque.clear()
+    }
   }
 
   inner class SlicingTask(
@@ -137,13 +186,14 @@ class ConcurrentTokenSlicer(
       check(futureResult != null)
       val best = analyzeResultsAndGetBest(listOf(futureResult!!)) ?: return false
       tree.applyEdit(best.edit)
+      futureResult = null
       return true
     }
   }
 
   companion object {
 
-    const val NAME = "concurrent_token_sclier"
+    const val NAME = "concurrent_token_slicer"
 
     @JvmStatic
     val META = object : ReducerAnnotation() {
