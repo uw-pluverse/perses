@@ -17,12 +17,12 @@
 package org.perses.util.java
 
 import com.google.common.collect.ImmutableList
-import org.perses.antlr.reducer.Util
 import java.io.Closeable
 import java.io.File.pathSeparator
-import java.lang.RuntimeException
 import java.nio.charset.StandardCharsets
+import java.nio.file.Files
 import java.nio.file.Path
+import java.nio.file.Paths
 import javax.tools.DiagnosticCollector
 import javax.tools.JavaFileObject
 import javax.tools.ToolProvider
@@ -44,7 +44,7 @@ class JavacWrapper(val sourceFiles: ImmutableList<Path>) : Closeable {
   val options = ImmutableList
     .builder<String>()
     .add("-classpath")
-    .add(Util.getJarsOnClasspath().joinToString(pathSeparator))
+    .add(getJarsOnClasspath().joinToString(pathSeparator))
     .add("-target")
     .add("1.8")
     .add("-source")
@@ -80,6 +80,22 @@ class JavacWrapper(val sourceFiles: ImmutableList<Path>) : Closeable {
     require(isJava8Supported()) {
       "The current compiler does not support Java 8. " +
         "The supported versions are ${compiler.sourceVersions}"
+    }
+  }
+
+  companion object {
+    @JvmStatic
+    fun getJarsOnClasspath(): ImmutableList<Path> {
+      val pathSeparator = pathSeparator!!
+      val classpath = System.getProperty("java.class.path")!!.trim()
+      return classpath.splitToSequence(pathSeparator)
+        .asSequence()
+        .filter { it.endsWith(".jar") }
+        .distinct()
+        .map { Paths.get(it).toAbsolutePath() }
+        .filter { Files.isRegularFile(it) }
+        .fold(ImmutableList.builder<Path>()) { acc, path -> acc!!.add(path) }
+        .build()
     }
   }
 }

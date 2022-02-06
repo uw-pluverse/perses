@@ -55,4 +55,15 @@ class JarFileTest {
     )
     assertThat(value).isEqualTo(content)
   }
+
+  @Test
+  fun test_getJarsOnClasspath() {
+    val jars = JavacWrapper.getJarsOnClasspath()
+    assertThat(jars).isNotEmpty()
+    for (path in jars) {
+      assertThat(path.toString()).endsWith(".jar")
+      assertThat(Files.exists(path)).isTrue()
+      assertThat(Files.isDirectory(path)).isFalse()
+    }
+  }
 }

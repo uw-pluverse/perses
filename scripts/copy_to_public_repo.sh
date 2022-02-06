@@ -33,7 +33,7 @@ fi
 
 # check if repo points to "github.com/perses-project/perses"
 if ! ( git -C "$PUBLIC_REPO_DIR" ls-remote --get-url | grep 'perses-project/perses' &>/dev/null ) ; then
-  echo "Git remote repo points to \"perses-project/perses\"."
+  echo "Git remote repo should point to \"perses-project/perses\"."
   exit 4
 fi
 
@@ -44,7 +44,7 @@ if [[ -n $(git -C "$PUBLIC_REPO_DIR" status --short) ]]; then
 fi
 
 # update public repo first layer (folders & files)
-for entry in "$PUBLIC_REPO_DIR"/*; do
+for entry in $(git -C "$PUBLIC_REPO_DIR" ls-tree --name-only HEAD); do
   # delete the entry in the public repo.
   rm -rf "${PUBLIC_REPO_DIR}/${entry}"
   cp -rf "$(basename "${entry}")" "${PUBLIC_REPO_DIR}/"

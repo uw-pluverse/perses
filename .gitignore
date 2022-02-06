@@ -27,9 +27,16 @@ temp*
 statistics-*.txt
 testscript-statistics-*.txt
 /.idea/*
-
+gen
 *DS_Store
 __pycache__
 
 /default_finding_folder*
 /default_temp_folder*
+
+.rsync_host_info
+
+perses_result*
+t.c.*.orig
+
+perses-fuzzer

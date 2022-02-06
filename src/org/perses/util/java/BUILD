@@ -17,7 +17,6 @@ kt_jvm_library(
     deps = [
         "//:guava",
         "//antlropt/src/org/perses/antlr/util:antlr_tool_wrapper",
-        "//antlrrdc/src/org/perses/antlr/reducer:util",
         "//src/org/perses/grammar:antlr_exception_strategy",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/grammar/adhoc:language_kind",
