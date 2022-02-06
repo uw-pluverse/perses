@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,23 +18,22 @@ package org.perses.analyzer;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.flogger.FluentLogger;
-import org.perses.listener.IProfileEvent;
-
 import java.io.EOFException;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.UncheckedIOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import org.perses.listener.IProfileEvent;
 
 public abstract class AbstractHddPerformanceAnalysis {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   protected final ImmutableList<IProfileEvent> events;
 
-  protected final File eventFile;
+  protected final Path eventFile;
 
-  protected AbstractHddPerformanceAnalysis(File eventFile) {
+  protected AbstractHddPerformanceAnalysis(Path eventFile) {
     this.events = loadEvents(eventFile);
     this.eventFile = eventFile;
   }
@@ -45,10 +44,10 @@ public abstract class AbstractHddPerformanceAnalysis {
 
   protected abstract void performAnalysis();
 
-  private ImmutableList<IProfileEvent> loadEvents(File eventFile) {
+  private ImmutableList<IProfileEvent> loadEvents(Path eventFile) {
     logger.atInfo().log("Loading events from %s", eventFile);
     ImmutableList.Builder<IProfileEvent> builder = ImmutableList.builder();
-    try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(eventFile))) {
+    try (ObjectInputStream stream = new ObjectInputStream(Files.newInputStream(eventFile))) {
       for (IProfileEvent event = ((IProfileEvent) stream.readObject());
           event != null;
           event = ((IProfileEvent) stream.readObject())) {

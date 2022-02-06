@@ -1,54 +1,257 @@
 #!/usr/bin/env python3
-
-import argparse
+import re
+import os
 import json
+import argparse
+from typing import List, Final, Tuple
 
-from typing import List
+__location__ = os.path.realpath(
+    os.path.join(os.getcwd(), os.path.dirname(__file__)))
+
+# constant index
+TIME: Final = 0
+TOTAL: Final = -5
+USED: Final = -3
+BENCH: Final = -4
+REDUCER: Final = -3
+TIMEMARK: Final = -2
 
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(description="Analyse memory log file produced from jstat")
-    parser.add_argument("files", nargs='+', default=[], help="List of file(s) to be analyzed")
+    parser = argparse.ArgumentParser(description="Summarize benchmark results")
+    parser.add_argument("files", nargs='+', default=[], help="Json and log files should be paired")
     return parser.parse_args()
 
 
-def read_file(file_name: str) -> List[str]:
-    with open(file_name) as f:
-        if 'Timestamp' not in f.readline():
-            raise Exception(f"{file_name} is not a proper memory log file")
-        lines = f.read()
-    return lines.rstrip().split('\n')
-
-
-def get_average_heap_usage(data: List[str]) -> int:
-    heap = []
-    for line in data:
-        if 'Timestamp' in line:
+def extract_entries(lines: List[str], position: int) -> List:
+    array = []
+    for line in lines:
+        if not re.search("(Heap after|Heap before)", line):
             continue
-        data = line.split()
-        heap.append(int(float(data[3])+float(data[9])))
+        line = line.split()
+        if position == TIME:
+            buf = line[position][1:line[position].find(']') - 1]
+            number = float(buf)
+            array.append(number)
+        else:
+            buf = line[position][0:line[position].find('K')]
+            number = int(buf)
+            array.append(number)
+    return array
 
-    # the heap memory usage is in increasing order
-    # pick the top 30% as sample points
-    sample_quantity = int(len(heap)*0.3)
-    samples = heap[sample_quantity::]
 
-    return int(sum(samples)/len(samples))
+def average_usage(timestamp: List[float], used: List[float]) -> int:
+    # calculate average function value
+    # average = area under curve / period
+    total_usage = 0
+    previous_time = timestamp[0]
+    previous_usage = used[0]
+    l = len(timestamp)
+    for i in range(1, l):
+        delta_time = timestamp[i] - previous_time
+        usage_sum = used[i] + previous_usage
+        # trapezoid rule
+        total_usage += usage_sum / 2 * delta_time
+        previous_time = timestamp[i]
+        previous_usage = used[i]
+
+    return int(total_usage / (timestamp[-1] - timestamp[1]))
+
+
+def average_usage_after_gc(timestamp: List[float], used: List[float]) -> int:
+    # calculate average function value
+    # average = area under curve / period
+    # after gc and before gc are always paired
+    # slice out the after gc from list 'used'
+    assert len(timestamp) % 2 == 0
+    timestamp = timestamp[1::2]
+    assert len(used) % 2 == 0
+    used = used[1::2]
+    assert len(timestamp) == len(used)
+
+    total_usage = 0
+    previous_time = timestamp[0]
+    previous_usage = used[0]
+    l = len(timestamp)
+    for i in range(1, l):
+        delta_time = timestamp[i] - previous_time
+        usage_sum = used[i] + previous_usage
+        # trapezoid rule
+        total_usage += usage_sum / 2 * delta_time
+        previous_time = timestamp[i]
+        previous_usage = used[i]
+
+    return int(total_usage / (timestamp[-1] - timestamp[1]))
+
+
+def get_gc_number(last_line: str) -> int:
+    # get the total number GC events
+    buf = last_line.split()[1]
+    return int(buf[3:-1])
+
+
+def analyze_json_file(filepath: str, statistics: dict) -> dict:
+    # decode filename
+    elements = filepath.split('_')
+    bench = elements[BENCH]
+    reducer = elements[REDUCER]
+    timemark = elements[TIMEMARK]
+    reducer_at_timemark = f"{reducer}@{timemark}"
+
+    # read json file to a map
+    with open(filepath) as f:
+        json_dict = json.load(f)
+
+    # trim redundant information
+    if bench not in json_dict:
+        raise Exception(f"Error: File name and content inconsistent: BENCH. Please check {filepath}")
+    json_dict.pop(bench)
+    if reducer not in json_dict:
+        raise Exception(f"Error: File name and content inconsistent: REDUCER. Please check {filepath}")
+    json_dict.pop(reducer)
+
+    # dictionary keys
+    KEY_QUERY: Final = "Query"
+    KEY_TIME: Final = "Time"
+    KEY_TOKEN_REMAINING: Final = "Token_remaining"
+    KEY_ITERATION: Final = "Iteration"
+
+    # append any new data to statistics report
+    if bench not in statistics:
+        statistics[bench] = dict()
+    if reducer_at_timemark not in statistics[bench]:
+        statistics[bench][reducer_at_timemark] = json_dict
+    else:
+        # average if existing already
+        statistics[bench][reducer_at_timemark][KEY_QUERY] += json_dict[KEY_QUERY]
+        statistics[bench][reducer_at_timemark][KEY_QUERY] //= 2
+        statistics[bench][reducer_at_timemark][KEY_TIME] += json_dict[KEY_TIME]
+        statistics[bench][reducer_at_timemark][KEY_TIME] //= 2
+        statistics[bench][reducer_at_timemark][KEY_TOKEN_REMAINING] += json_dict[KEY_TOKEN_REMAINING]
+        statistics[bench][reducer_at_timemark][KEY_TOKEN_REMAINING] //= 2
+        if statistics[bench][reducer_at_timemark][KEY_ITERATION] < json_dict[KEY_ITERATION]:
+            statistics[bench][reducer_at_timemark][KEY_ITERATION] = json_dict[KEY_ITERATION]
+
+
+def analyze_log_file(filepath: str, statistics: dict):
+    # decode filename
+    elements = filepath.split('_')
+    bench = elements[BENCH]
+    reducer = elements[REDUCER]
+    timemark = elements[TIMEMARK]
+    reducer_at_timemark = f"{reducer}@{timemark}"
+
+    # read log file to a list
+    with open(filepath) as f:
+        lines = f.readlines()
+
+    # extract memory info from log file
+    timestamp = extract_entries(lines, TIME)
+    total = extract_entries(lines, TOTAL)
+    used = extract_entries(lines, USED)
+    peak_memory_before_gc = max(used)
+    # after gc and before gc are always paired
+    # slice out the after gc from list 'used'
+    assert len(used) % 2 == 0
+    peak_memory_after_gc = max(used[1::2])
+
+    # dictionary keys
+    KEY_PEAK_BEFORE_GC: Final = "peak_memory_before_gc"
+    KEY_PEAK_AFTER_GC: Final = "peak_memory_after_gc"
+    KEY_AVERAGE_MEMORY_USAGE: Final = "average_memory_usage"
+    KEY_AVERAGE_MEMORY_USAGE_AFTER_GC: Final = "average_memory_usage_after_gc"
+    KEY_HEAP_ACQUIRED: Final = "heap_size_acquired"
+    KEY_GC_NUMBER: Final = "gc_number"
+
+    # calculate memory usages and store in map
+    log_dict = dict()
+    log_dict[KEY_PEAK_BEFORE_GC] = peak_memory_before_gc
+    log_dict[KEY_PEAK_AFTER_GC] = peak_memory_after_gc
+    log_dict[KEY_AVERAGE_MEMORY_USAGE] = average_usage(timestamp, used)
+    log_dict[KEY_AVERAGE_MEMORY_USAGE_AFTER_GC] = average_usage_after_gc(timestamp, used)
+    log_dict[KEY_HEAP_ACQUIRED] = total[-1]
+    log_dict[KEY_GC_NUMBER] = get_gc_number(lines[-1])
+
+    if "peak_memory_before_gc" not in statistics[bench][reducer_at_timemark]:
+        statistics[bench][reducer_at_timemark].update(log_dict)
+    else:
+        statistics[bench][reducer_at_timemark][KEY_PEAK_BEFORE_GC] += log_dict[KEY_PEAK_BEFORE_GC]
+        statistics[bench][reducer_at_timemark][KEY_PEAK_BEFORE_GC] //= 2
+        statistics[bench][reducer_at_timemark][KEY_PEAK_AFTER_GC] += log_dict[KEY_PEAK_AFTER_GC]
+        statistics[bench][reducer_at_timemark][KEY_PEAK_AFTER_GC] //= 2
+        statistics[bench][reducer_at_timemark][KEY_AVERAGE_MEMORY_USAGE] += log_dict[KEY_AVERAGE_MEMORY_USAGE]
+        statistics[bench][reducer_at_timemark][KEY_AVERAGE_MEMORY_USAGE] //= 2
+        statistics[bench][reducer_at_timemark][KEY_AVERAGE_MEMORY_USAGE_AFTER_GC] += log_dict[KEY_AVERAGE_MEMORY_USAGE_AFTER_GC]
+        statistics[bench][reducer_at_timemark][KEY_AVERAGE_MEMORY_USAGE_AFTER_GC] //= 2
+        statistics[bench][reducer_at_timemark][KEY_HEAP_ACQUIRED] += log_dict[KEY_HEAP_ACQUIRED]
+        statistics[bench][reducer_at_timemark][KEY_HEAP_ACQUIRED] //= 2
+        statistics[bench][reducer_at_timemark][KEY_GC_NUMBER] += log_dict[KEY_GC_NUMBER]
+        statistics[bench][reducer_at_timemark][KEY_GC_NUMBER] //= 2
+
+
+def validate_existence(filepath: str):
+    if not os.path.exists(filepath):
+        raise Exception(f"Error: File not found in path: {filepath}")
+
+
+def validate_integrity(file_list: List[str]) -> Tuple[dict, list]:
+    # set of reducers who should have paired input files
+    paired_reducers = {"perses"}
+
+    files_paired = dict()
+    files_single = list()
+
+    for file in file_list:
+        validate_existence(file)
+
+        # decode file name
+        elements = file.split('_')
+        reducer = elements[REDUCER]
+
+        if reducer in paired_reducers:
+            # reducers expect paired input files
+            if file.endswith(".json"):
+                files_paired[file] = None
+            elif file.endswith(".log"):
+                key = file.replace(".log", ".json")
+                if key in files_paired:
+                    files_paired[key] = file
+                else:
+                    # no corresponding json file
+                    raise Exception(f"Error: Integrity check: No paired json file for: {file}")
+            else:
+                raise Exception(f"Error: Integrity check: Unsupported file type: {file}")
+        else:
+            # reducers expect a single input file
+            if file.endswith(".json"):
+                files_single.append(file)
+            else:
+                raise Exception(f"Error: Integrity check: Unsupported file type: {file}")
+
+    # check if any json file missing log file
+    for key in files_paired:
+        if files_paired[key] is None:
+            raise Exception(f"Error: Integrity check: No paired log file for: {key}")
+
+    return files_paired, files_single
 
 
 def main():
-    report = dict()
+    args = parse_arguments()
+    statistics = dict()
+    files_sorted = sorted(args.files)
 
-    for file in parse_arguments().files:
-        report[file] = dict()
+    files_paired, files_single = validate_integrity(files_sorted)
 
-        lines = read_file(file)
+    # paired input files
+    for file in files_paired:
+        analyze_json_file(file, statistics)
+        analyze_log_file(files_paired[file], statistics)
+    # single input file
+    for file in files_single:
+        analyze_json_file(file, statistics)
 
-        average_usage = get_average_heap_usage(lines)
-
-        report[file]['average_heap_usage (kB)'] = average_usage
-
-    json_object = json.dumps(report, indent=4)
+    json_object = json.dumps(statistics, indent=4)
     print(json_object)
 
 

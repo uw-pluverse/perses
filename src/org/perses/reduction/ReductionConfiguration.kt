@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,67 +16,39 @@
  */
 package org.perses.reduction
 
-import com.google.common.annotations.VisibleForTesting
-import com.google.common.base.Joiner
 import org.perses.grammar.AbstractParserFacade
-import org.perses.grammar.ParserFacadeFactory
-import org.perses.program.EnumFormatControl
-import org.perses.program.ScriptFile
-import org.perses.program.SourceFile
-import org.perses.util.TimeUtil
-import java.io.File
-import java.time.LocalDateTime
-import java.util.Optional
+import org.perses.grammar.AbstractParserFacadeFactory
+import org.perses.program.LanguageKind
+import java.nio.file.Path
+import kotlin.io.path.name
 
 /**
  * This is the internal configuration for Perses reducer.
  *
- *
  * TODO: refactor this to a AutoValue class, or use the BUILDER pattern.
  */
 class ReductionConfiguration(
-  /** The working directory of the reduction.  */
-  val workingFolder: File,
-  val testScript: ScriptFile,
-  val fileToReduce: SourceFile,
-  val bestResultFile: File, // TODO: convert this to SourceFile.
-  private val statisticsFile: File?,
-  private val progressDumpFile: File?,
-  val programFormatControl: EnumFormatControl,
+  languageKind: LanguageKind,
+  val statisticsFile: Path?,
+  val progressDumpFile: Path?,
   val fixpointReduction: Boolean,
   val enableTestScriptExecutionCaching: Boolean,
   val useRealDeltaDebugger: Boolean,
   val numOfReductionThreads: Int,
-  parserFacadeFactory: ParserFacadeFactory
+  parserFacadeFactory: AbstractParserFacadeFactory,
+  val persesNodeReducerConfig: PersesNodeReducerConfiguration
 ) {
   /** The parser facade.  */
   val parserFacade: AbstractParserFacade
 
-  /** This file is used to store the best result of reduction.  */
-  val tempRootFolder: File
-
-  fun getStatisticsFile(): Optional<File> {
-    return Optional.ofNullable(statisticsFile)
-  }
-
-  fun getProgressDumpFile(): Optional<File> {
-    return Optional.ofNullable(progressDumpFile)
-  }
-
   // TODO: convert the return type to File?
-  val testScriptStatisticsFile: Optional<File>
+  val testScriptStatisticsFile: Path?
     get() = if (statisticsFile == null) {
-      Optional.empty()
-    } else Optional.of(
-      File(statisticsFile.parentFile, "testscript-" + statisticsFile.name)
-    )
-
-  fun getFixpointIterationResultFile(fixpointIteration: Int): File {
-    val bestResultFile = bestResultFile
-    return File(
-      tempRootFolder, bestResultFile.name + "_fixpoint_iteration_" + fixpointIteration
-    )
-  }
+      null
+    } else {
+      statisticsFile.parent.resolve("testscript-" + statisticsFile.name)
+//      File(statisticsFile.parentFile, "testscript-" + statisticsFile.name)
+    }
 
   fun dumpConfiguration(): String {
     val builder = StringBuilder()
@@ -86,47 +58,22 @@ class ReductionConfiguration(
     return builder.toString()
   }
 
-  companion object {
-    private const val PERSES_TEMP_ROOT_PREFIX = "PersesTempRoot"
-
-    @JvmStatic
-    @VisibleForTesting
-    fun getTempRootFolderName(
-      fileNameForReduction: String,
-      testScriptName: String?,
-      time: LocalDateTime
-    ): String {
-      return Joiner.on('_')
-        .join(
-          PERSES_TEMP_ROOT_PREFIX,
-          fileNameForReduction,
-          testScriptName,
-          TimeUtil.formatDateForFileName(time)
-        )
-    }
-  }
-
   init {
-    require(workingFolder.exists()) {
-      "The working folder does not exist: $workingFolder"
-    }
-    require(workingFolder.isDirectory) {
-      "The working folder is not a directory: $workingFolder"
-    }
+
     require(numOfReductionThreads > 0) {
       "The number of reduction threads should be positive: $numOfReductionThreads"
     }
-    require(fileToReduce.languageKind.isCodeFormatAllowed(programFormatControl)) {
-      "The language ${fileToReduce.languageKind} requires format sensitivity, " +
-        "but the reducer is not told to keep its original format. $programFormatControl"
-    }
-    parserFacade = parserFacadeFactory.createParserFacade(this.fileToReduce.languageKind)
+    parserFacade = parserFacadeFactory.createParserFacade(languageKind)
+  }
 
-    tempRootFolder = File(
-      workingFolder,
-      getTempRootFolderName(
-        fileToReduce.file.name, testScript.file.name, LocalDateTime.now()
-      )
-    )
+  class PersesNodeReducerConfiguration(
+    val maxEditCountForRegularRuleNode: Int,
+    val maxBfsDepthForRegularRuleNode: Int,
+    val stopAtFirstCompatibleChildren: Boolean
+  ) {
+    init {
+      require(maxEditCountForRegularRuleNode > 0)
+      require(maxBfsDepthForRegularRuleNode > 0)
+    }
   }
 }

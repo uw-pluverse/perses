@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -27,10 +27,11 @@ class ShellOutputStream : OutputStream() {
   private val builderList = ImmutableList.builder<String>()
 
   override fun write(b: Int) {
-    current!!.write(b)
-    if (b == '\n'.toInt()) {
+    if (b == '\n'.code) {
       dumpCurrentToList()
       current!!.reset()
+    } else {
+      current!!.write(b)
     }
   }
 

@@ -14,10 +14,12 @@ if __name__ == '__main__':
                         action='store_true',
                         default=False,
                         help='update copyright (default: check copyright only)')
+    parser.add_argument('copyright',
+                        help='copyright filepath')
     parser.add_argument('dirs', nargs='*')
     flags = parser.parse_args()
 
-    with open("copyright/copyright.txt") as file:
+    with open(flags.copyright) as file:
         copyright_text = file.readlines()
     copyright_checker = check_copyright.CopyrightChecker(copyright_text)
 

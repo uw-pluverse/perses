@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,14 +19,13 @@ package org.perses.dot_graph;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.perses.util.Shell;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.perses.util.Shell;
 
 public class DotGraph<T> {
 

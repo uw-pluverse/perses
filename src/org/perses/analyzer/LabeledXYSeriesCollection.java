@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,13 +17,12 @@
 
 package org.perses.analyzer;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.jfree.chart.labels.XYItemLabelGenerator;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LabeledXYSeriesCollection {
 

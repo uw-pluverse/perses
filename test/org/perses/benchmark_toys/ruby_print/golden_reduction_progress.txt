@@ -1,0 +1,757 @@
+======================Reduction starts======================
+
+The spar tree is the following.
+compilation_unit {id=1}
+|___statement_list_terms {id=2,slot_type=statement_list_terms}
+    |___aux_rule__statement_list_terms_3 {id=3,slot_type=aux_rule__statement_list_terms_3}
+    |   |___(?) {id=61,slot_type=optional__statement_list_terms_4}
+    |   |   |___function_definition {id=72,slot_type=[statement,expr,aux_rule__expr_16,function_definition]}
+    |   |       |___function_definition_header {id=73,slot_type=function_definition_header}
+    |   |       |   |___Token:def {id=151,slot_type=DEF}
+    |   |       |   |___Token:main {id=159,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
+    |   |       |   |___(+) {id=153,slot_type=terms}
+    |   |       |       |___Token:
+ {id=155,slot_type=[term,CRLF]}
+    |   |       |___(?) {id=74,slot_type=optional__module_definition_1}
+    |   |       |   |___statement_list_terms {id=76,slot_type=statement_list_terms}
+    |   |       |       |___aux_rule__statement_list_terms_3 {id=77,slot_type=aux_rule__statement_list_terms_3}
+    |   |       |       |   |___(?) {id=127,slot_type=optional__statement_list_terms_4}
+    |   |       |       |   |   |___aux_rule__expr_44 {id=134,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_44]}
+    |   |       |       |   |       |___Token:puts {id=150,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
+    |   |       |       |   |       |___(+) {id=145,slot_type=[altnt_block__expr_23,aux_rule__expr_46,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+    |   |       |       |   |           |___Token:"start" {id=146,slot_type=String}
+    |   |       |       |   |___(+) {id=128,slot_type=terms}
+    |   |       |       |       |___Token:
+ {id=130,slot_type=[term,CRLF]}
+    |   |       |       |___(*) {id=78,slot_type=kleene_star__statement_list_terms_1}
+    |   |       |           |___aux_rule__statement_list_terms_2 {id=79,slot_type=aux_rule__statement_list_terms_2}
+    |   |       |           |   |___aux_rule__expr_44 {id=110,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_44]}
+    |   |       |           |   |   |___Token:puts {id=126,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
+    |   |       |           |   |   |___(+) {id=121,slot_type=[altnt_block__expr_23,aux_rule__expr_46,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+    |   |       |           |   |       |___Token:"hello world" {id=122,slot_type=String}
+    |   |       |           |   |___(+) {id=105,slot_type=terms}
+    |   |       |           |       |___Token:
+ {id=107,slot_type=[term,CRLF]}
+    |   |       |           |___aux_rule__statement_list_terms_2 {id=80,slot_type=aux_rule__statement_list_terms_2}
+    |   |       |               |___aux_rule__expr_44 {id=87,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_44]}
+    |   |       |               |   |___Token:puts {id=103,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
+    |   |       |               |   |___(+) {id=98,slot_type=[altnt_block__expr_23,aux_rule__expr_46,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+    |   |       |               |       |___Token:"finish" {id=99,slot_type=String}
+    |   |       |               |___(+) {id=82,slot_type=terms}
+    |   |       |                   |___Token:
+ {id=84,slot_type=[term,CRLF]}
+    |   |       |___Token:end {id=75,slot_type=END}
+    |   |___(+) {id=62,slot_type=terms}
+    |       |___Token:
+ {id=68,slot_type=[term,CRLF]}
+    |       |___Token:
+ {id=67,slot_type=[term,CRLF]}
+    |       |___Token:
+ {id=66,slot_type=[term,CRLF]}
+    |___(*) {id=4,slot_type=kleene_star__statement_list_terms_1}
+        |___aux_rule__statement_list_terms_2 {id=5,slot_type=aux_rule__statement_list_terms_2}
+            |___aux_rule__expr_41 {id=14,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_41]}
+            |   |___aux_rule__primary_53 {id=17,slot_type=[altnt_block__primary_44,aux_rule__primary_53]}
+            |   |   |___Token:if {id=18,slot_type=IF}
+            |   |   |___aux_rule__primary_57 {id=20,slot_type=[altnt_block__primary_45,aux_rule__primary_57]}
+            |   |       |___expr {id=21,slot_type=expr}
+            |   |       |   |___Token:__FILE__ {id=60,slot_type=[aux_rule__expr_16,variable_path,aux_rule__variable_path_3,identifier,Identifier]}
+            |   |       |   |___(*) {id=41,slot_type=kleene_star__expr_14}
+            |   |       |       |___aux_rule__expr_29 {id=43,slot_type=[aux_rule__expr_15,aux_rule__expr_29]}
+            |   |       |           |___Token:== {id=56,slot_type=[altnt_block__expr_17,aux_rule__expr_35,altnt_block__expr_25,equalsOperator,EQUAL]}
+            |   |       |           |___aux_rule__identifier_1 {id=50,slot_type=[expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,identifier,aux_rule__identifier_1]}
+            |   |       |               |___Token:$ {id=51,slot_type=DOLLAR}
+            |   |       |               |___Token:0 {id=52,slot_type=Integer}
+            |   |       |___(+) {id=37,slot_type=[then_keyword,terms]}
+            |   |       |   |___Token:
+ {id=39,slot_type=[term,CRLF]}
+            |   |       |___(?) {id=23,slot_type=optional__module_definition_1}
+            |   |           |___aux_rule__statement_list_terms_3 {id=25,slot_type=[statement_list_terms,aux_rule__statement_list_terms_3]}
+            |   |               |___(?) {id=26,slot_type=optional__statement_list_terms_4}
+            |   |               |   |___Token:main {id=36,slot_type=[statement,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,identifier,Identifier]}
+            |   |               |___(+) {id=27,slot_type=terms}
+            |   |                   |___Token:
+ {id=29,slot_type=[term,CRLF]}
+            |   |___Token:end {id=16,slot_type=END}
+            |___(+) {id=7,slot_type=terms}
+                |___Token:
+ {id=11,slot_type=[term,CRLF]}
+                |___Token:
+ {id=10,slot_type=[term,CRLF]}
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=27==================
+
+The current best program is the following
+
+    def main 
+        puts "start"
+        puts "hello world"
+        puts "finish"
+    end
+    if __FILE__ == $0
+        main
+    end
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    puts "start"
+        puts "hello world"
+        puts "finish"
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    def main 
+        puts "start"
+        puts "hello world"
+        puts "finish"
+    end
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 2 from 27 to 9
+------------------------------------------------------------
+
+
+==================Reducing node 76, size=9==================
+
+The current best program is the following
+
+    puts "start"
+        puts "hello world"
+        puts "finish"
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    puts "start"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 76
+------------------------------------------------------------
+
+
+==================Reducing node 78, size=9==================
+
+The current best program is the following
+
+    puts "start"
+        puts "hello world"
+        puts "finish"
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@2
+    puts "start"
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_star]dd@1
+    puts "start"
+        puts "hello world"
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    puts "start"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 78 from 9 to 6
+------------------------------------------------------------
+
+
+==================Reducing node 79, size=6==================
+
+The current best program is the following
+
+    puts "start"
+        puts "hello world"
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    puts "start"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 79
+------------------------------------------------------------
+
+
+==================Reducing node 77, size=6==================
+
+The current best program is the following
+
+    puts "start"
+        puts "hello world"
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    puts "hello world"
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 77 from 6 to 4
+------------------------------------------------------------
+
+
+=================Reducing node 110, size=4==================
+
+The current best program is the following
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    puts
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    "hello world"
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    "hello world"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 110
+------------------------------------------------------------
+
+
+=================Reducing node 128, size=4==================
+
+The current best program is the following
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 128
+------------------------------------------------------------
+
+
+=================Reducing node 130, size=4==================
+
+The current best program is the following
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 130
+------------------------------------------------------------
+
+
+=================Reducing node 126, size=4==================
+
+The current best program is the following
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 126
+------------------------------------------------------------
+
+
+=================Reducing node 121, size=4==================
+
+The current best program is the following
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 121
+------------------------------------------------------------
+
+
+=================Reducing node 122, size=4==================
+
+The current best program is the following
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 122
+------------------------------------------------------------
+
+
+=================Reducing node 105, size=4==================
+
+The current best program is the following
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 105
+------------------------------------------------------------
+
+
+=================Reducing node 107, size=4==================
+
+The current best program is the following
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 107
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=6===================
+
+The current best program is the following
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=6===================
+
+The current best program is the following
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 4
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=6===================
+
+The current best program is the following
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+==================Reducing node 31, size=6==================
+
+The current best program is the following
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_plus]remove whole except first
+    puts "hello world"
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 31 from 6 to 5
+------------------------------------------------------------
+
+
+==================Reducing node 14, size=5==================
+
+The current best program is the following
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    puts
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    "hello world"
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    "hello world"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 14
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=5===================
+
+The current best program is the following
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_plus]remove whole except first
+    puts "hello world"
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 7 from 5 to 4
+------------------------------------------------------------
+
+
+==================Reducing node 35, size=4==================
+
+The current best program is the following
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 35
+------------------------------------------------------------
+
+
+==================Reducing node 30, size=4==================
+
+The current best program is the following
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 30
+------------------------------------------------------------
+
+
+==================Reducing node 25, size=4==================
+
+The current best program is the following
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 25
+------------------------------------------------------------
+
+
+==================Reducing node 26, size=4==================
+
+The current best program is the following
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 26
+------------------------------------------------------------
+
+
+==================Reducing node 11, size=4==================
+
+The current best program is the following
+
+    puts "hello world"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+#test success = 5
+#test failure = 32
+#test result cache hits = 0
+#test execution cancelled = 2
+#node edit action set cache hits = 0

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,7 +16,6 @@
  */
 package org.perses.program
 
-import com.google.common.io.Files
 import com.google.common.truth.Truth
 import org.junit.After
 import org.junit.Assert
@@ -24,25 +23,27 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import java.io.File
 import java.io.IOException
 import java.io.UncheckedIOException
 import java.nio.charset.StandardCharsets
+import java.nio.file.Files
+import java.nio.file.Path
+import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class ScriptFileTest {
-  private var tempFile: File? = null
+  private lateinit var tempFile: Path
 
   @Before
   @Throws(IOException::class)
   fun setup() {
-    tempFile = File.createTempFile("prefix_for_" + javaClass.simpleName, ".sh")
-    tempFile!!.deleteOnExit()
+    tempFile = Files.createTempFile("prefix_for_" + javaClass.simpleName, ".sh")
+    tempFile.toFile().deleteOnExit()
   }
 
   @After
   fun teardown() {
-    tempFile!!.delete()
+    tempFile.toFile().delete()
   }
 
   @Test
@@ -80,12 +81,12 @@ class ScriptFileTest {
   }
 
   private fun readShebang(): String {
-    return ScriptFile(tempFile!!).shebang
+    return ScriptFile(tempFile).shebang
   }
 
   private fun write(string: String) {
     try {
-      Files.asCharSink(tempFile!!, StandardCharsets.UTF_8).write(string)
+      tempFile.writeText(string, StandardCharsets.UTF_8)
     } catch (e: IOException) {
       throw UncheckedIOException(e)
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,19 +16,19 @@
  */
 package org.perses.listener;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
-import java.io.File;
 
 @RunWith(JUnit4.class)
 public class TestScriptExecutionListenerTest {
 
   @Test
   public void testResultFileIsAbsolute() {
-    File file = new File("__this_file_should_not_exist__");
+    Path file = Paths.get("__this_file_should_not_exist__");
     try {
       new TestScriptExecutionListener(file);
     } catch (NullPointerException e) {

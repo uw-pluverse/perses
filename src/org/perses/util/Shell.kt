@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -23,21 +23,25 @@ import org.apache.commons.exec.CommandLine
 import org.apache.commons.exec.DefaultExecutor
 import org.apache.commons.exec.ExecuteException
 import org.apache.commons.exec.PumpStreamHandler
-import java.io.File
 import java.io.IOException
 import java.io.OutputStream
+import java.nio.file.Path
+import java.nio.file.Paths
 
 /** Shell to run external commands.  */
 object Shell {
 
   @JvmStatic
-  val CURRENT_ENV = ImmutableMap.copyOf(System.getenv())
+  val CURRENT_ENV: ImmutableMap<String, String> = ImmutableMap.copyOf(System.getenv())
 
   @JvmStatic
-  val CURRENT_DIR = File(".")
+  val CURRENT_DIR: Path = Paths.get(".")
 
   @JvmStatic
-  fun createNewEnvironmentVar(key: String, value: String) =
+  val ABSOLUTE_CURRENT_DIR: Path = Paths.get(".").toAbsolutePath()
+
+  @JvmStatic
+  fun createNewEnvironmentVar(key: String, value: String): ImmutableMap<String, String> =
     ImmutableMap.builder<String, String>()
       .put(key, value).putAll(CURRENT_ENV).build()
 
@@ -53,7 +57,7 @@ object Shell {
   @JvmStatic
   fun run(
     cmd: String,
-    workingDirectory: File,
+    workingDirectory: Path,
     captureOutput: Boolean,
     environment: ImmutableMap<String, String>
   ): CmdOutput {
@@ -82,7 +86,7 @@ object Shell {
 
   private fun runAndGetExitCode(
     cmd: String,
-    workingDirectory: File,
+    workingDirectory: Path,
     stdout: OutputStream,
     stderr: OutputStream,
     environment: ImmutableMap<String, String>
@@ -90,7 +94,7 @@ object Shell {
 
     val commandline = CommandLine.parse(cmd)
     val exec = DefaultExecutor()
-    exec.workingDirectory = workingDirectory
+    exec.workingDirectory = workingDirectory.toFile()
     val streamHandler = PumpStreamHandler(stdout, stderr)
     exec.streamHandler = streamHandler
     logger.atFine().log("%s", commandline)

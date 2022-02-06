@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,11 +17,13 @@
 package org.perses.reduction.reducer
 
 import com.google.common.collect.ImmutableList
+import org.perses.program.printer.PrinterRegistry
+import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.tree.spar.AbstractSparTreeNode
-import org.perses.tree.spar.NodeDeletionActionSet
-import org.perses.tree.spar.SparTree
+import org.perses.spartree.AbstractSparTreeNode
+import org.perses.spartree.NodeDeletionActionSet
+import org.perses.spartree.SparTree
 import java.util.ArrayDeque
 
 class TreeSlicer(
@@ -45,7 +47,10 @@ class TreeSlicer(
     val testProgram = treeEdit.program
     val parserFacade = configuration.parserFacade
     if (testProgram.tokenCount() <= 150 &&
-      !parserFacade.isSourceCodeParsable(testProgram.toCompactSourceCode())
+      !parserFacade.isSourceCodeParsable(
+          PrinterRegistry.getPrinter(ioManager.getDefaultProgramFormat())
+            .print(testProgram).sourceCode
+        )
     ) {
       // TODO: dynamically change the threshold, rather than this hard coded 150.
       return node.copyAndReverseChildren()
@@ -59,14 +64,20 @@ class TreeSlicer(
     }
   }
 
+  override fun requiresParsableTree() = false
+
   companion object {
     const val NAME = "tree_slicer"
 
     @JvmStatic
     val META = object : ReducerAnnotation() {
+      override val deterministic = true
+
       override fun shortName() = NAME
       override fun description() = ""
-      override fun create(reducerContext: ReducerContext) = TreeSlicer(reducerContext)
+      override fun create(
+        reducerContext: ReducerContext
+      ): ImmutableList<AbstractTokenReducer> = ImmutableList.of(TreeSlicer(reducerContext))
     }
   }
 }

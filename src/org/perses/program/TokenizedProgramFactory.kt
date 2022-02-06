@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,31 +17,59 @@
 package org.perses.program
 
 import com.google.common.collect.ImmutableList
+import com.google.common.primitives.ImmutableIntArray
 import org.antlr.v4.runtime.Token
+import org.perses.util.toImmutableList
 
 class TokenizedProgramFactory private constructor(
   // TODO: build an inverted index for this original program.
   val tokenFactory: PersesTokenFactory,
-  val tokensInOrigin: ImmutableList<PersesToken>
+  val tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
+  val languageKind: LanguageKind
 ) {
 
+  val histogram = ImmutableIntArray.copyOf(
+    computeLexemeHistogram(tokenFactory, tokensInOrigin)
+  )
+
+  fun computeHistogramFor(program: TokenizedProgram): IntArray {
+    assert(program.factory === this)
+    return computeLexemeHistogram(tokenFactory, program.tokens)
+  }
+
   fun create(tokens: List<Token>): TokenizedProgram {
-    val persesTokens = tokens.asSequence().fold(
-      ImmutableList.builderWithExpectedSize<PersesToken>(tokens.size),
-      { builder, token -> builder.add(tokenFactory.getPersesToken(token)) }
-    ).build()
-    return TokenizedProgram(persesTokens)
+    val persesTokens = tokens
+      .asSequence()
+      .map { tokenFactory.getPersesTokenOrThrow(it) }
+      .toImmutableList()
+    return TokenizedProgram(persesTokens, this)
   }
 
   companion object {
+
     @JvmStatic
-    fun createFactory(originalProgram: List<Token>): TokenizedProgramFactory {
-      val tokenFactoryBuilder = PersesTokenFactory.Builder()
-      val persesTokens = originalProgram.asSequence().fold(
-        ImmutableList.builderWithExpectedSize<PersesToken>(originalProgram.size),
-        { builder, token -> builder.add(tokenFactoryBuilder.create(token)) }
-      ).build()
-      return TokenizedProgramFactory(tokenFactoryBuilder.build(), persesTokens)
+    fun computeLexemeHistogram(
+      tokenFactory: PersesTokenFactory,
+      tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>
+    ): IntArray {
+      val histogram = IntArray(tokenFactory.numOfLexemes())
+      for (token in tokensInOrigin) {
+        ++histogram[token.persesLexemeId]
+      }
+      return histogram
+    }
+
+    @JvmStatic
+    fun createFactory(
+      originalProgram: List<Token>,
+      languageKind: LanguageKind
+    ): TokenizedProgramFactory {
+      val tokenFactory = PersesTokenFactory()
+      val persesTokens = originalProgram
+        .asSequence()
+        .map { tokenFactory.createPersesToken(it) }
+        .toImmutableList()
+      return TokenizedProgramFactory(tokenFactory, persesTokens, languageKind)
     }
   }
 }

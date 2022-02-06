@@ -1,0 +1,3211 @@
+======================Reduction starts======================
+
+The spar tree is the following.
+translationUnit {id=1}
+|___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=175,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+    |   |___(?) {id=176,slot_type=optional__functionDefinition_2}
+    |   |   |___(+) {id=227,slot_type=declarationSpecifiers}
+    |   |       |___Token:void {id=230,slot_type=[declarationSpecifier,typeSpecifier,Void]}
+    |   |___directDeclarator {id=181,slot_type=[declarator,directDeclarator]}
+    |   |   |___Token:fun {id=226,slot_type=[aux_rule__directDeclarator_8,Identifier]}
+    |   |   |___(*) {id=183,slot_type=kleene_star__directDeclarator_6}
+    |   |       |___aux_rule__directDeclarator_14 {id=185,slot_type=[aux_rule__directDeclarator_7,aux_rule__directDeclarator_14]}
+    |   |           |___Token:( {id=186,slot_type=LeftParen}
+    |   |           |___parameterList {id=190,slot_type=[altnt_block__directDeclarator_10,parameterTypeList,parameterList]}
+    |   |           |   |___(+) {id=217,slot_type=[parameterDeclaration,declarationSpecifiers]}
+    |   |           |   |   |___Token:int {id=225,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+    |   |           |   |   |___Token:a {id=223,slot_type=[declarationSpecifier,typeSpecifier,typedefName,Identifier]}
+    |   |           |   |___(*) {id=192,slot_type=kleene_star__parameterList_1}
+    |   |           |       |___aux_rule__parameterList_2 {id=193,slot_type=aux_rule__parameterList_2}
+    |   |           |       |   |___Token:, {id=206,slot_type=Comma}
+    |   |           |       |   |___(+) {id=208,slot_type=[parameterDeclaration,declarationSpecifiers]}
+    |   |           |       |       |___Token:int {id=216,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+    |   |           |       |       |___Token:b {id=214,slot_type=[declarationSpecifier,typeSpecifier,typedefName,Identifier]}
+    |   |           |       |___aux_rule__parameterList_2 {id=194,slot_type=aux_rule__parameterList_2}
+    |   |           |           |___Token:, {id=195,slot_type=Comma}
+    |   |           |           |___(+) {id=197,slot_type=[parameterDeclaration,declarationSpecifiers]}
+    |   |           |               |___Token:int {id=205,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+    |   |           |               |___Token:c {id=203,slot_type=[declarationSpecifier,typeSpecifier,typedefName,Identifier]}
+    |   |           |___Token:) {id=188,slot_type=RightParen}
+    |   |___compoundStatement {id=178,slot_type=compoundStatement}
+    |       |___Token:{ {id=179,slot_type=LeftBrace}
+    |       |___Token:} {id=180,slot_type=RightBrace}
+    |___functionDefinition {id=5,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=6,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=171,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=174,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+        |___directDeclarator {id=162,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=170,slot_type=[aux_rule__directDeclarator_8,Identifier]}
+        |   |___(*) {id=164,slot_type=kleene_star__directDeclarator_6}
+        |       |___aux_rule__directDeclarator_14 {id=166,slot_type=[aux_rule__directDeclarator_7,aux_rule__directDeclarator_14]}
+        |           |___Token:( {id=167,slot_type=LeftParen}
+        |           |___Token:) {id=169,slot_type=RightParen}
+        |___compoundStatement {id=8,slot_type=compoundStatement}
+            |___Token:{ {id=9,slot_type=LeftBrace}
+            |___(?) {id=10,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=13,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___aux_rule__declaration_3 {id=128,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=129,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=161,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+            |       |   |___(?) {id=130,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=133,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:var {id=158,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_8,Identifier]}
+            |       |   |       |___(?) {id=135,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=136,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=137,slot_type=Assign}
+            |       |   |               |___Token:99 {id=155,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=131,slot_type=Semi}
+            |       |___expressionStatement {id=43,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
+            |       |   |___(?) {id=44,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=61,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression]}
+            |       |   |       |___Token:fun {id=126,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=63,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=65,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=66,slot_type=LeftParen}
+            |       |   |               |___(?) {id=67,slot_type=optional__postfixExpression_1}
+            |       |   |               |   |___expression {id=69,slot_type=expression}
+            |       |   |               |       |___Token:1 {id=125,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |               |       |___(*) {id=71,slot_type=kleene_star__expression_1}
+            |       |   |               |           |___aux_rule__expression_2 {id=72,slot_type=aux_rule__expression_2}
+            |       |   |               |           |   |___Token:, {id=92,slot_type=Comma}
+            |       |   |               |           |   |___Token:var {id=109,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |               |           |___aux_rule__expression_2 {id=73,slot_type=aux_rule__expression_2}
+            |       |   |               |               |___Token:, {id=74,slot_type=Comma}
+            |       |   |               |               |___Token:2 {id=91,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |               |___Token:) {id=68,slot_type=RightParen}
+            |       |   |___Token:; {id=45,slot_type=Semi}
+            |       |___jumpStatement {id=18,slot_type=[aux_rule__blockItemList_2,statement,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=21,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=22,slot_type=Return}
+            |           |   |___(?) {id=23,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:var {id=41,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |           |___Token:; {id=20,slot_type=Semi}
+            |___Token:} {id=11,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=37==================
+
+The current best program is the following
+
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]remove whole except first
+    void fun(int a, int b, int c) {
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@1
+    void fun(int a, int b, int c) {
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@1
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=37==================
+
+The current best program is the following
+
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    void fun(int a, int b, int c) {
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    void fun(int a, int b, int c) {
+    }
+      int var = 99;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=37==================
+
+The current best program is the following
+
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=37==================
+
+The current best program is the following
+
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+=================Reducing node 13, size=37==================
+
+The current best program is the following
+
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]can be epsilon
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]remove whole except first
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@1
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@2
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@1
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@1
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 13
+------------------------------------------------------------
+
+
+=================Reducing node 175, size=37=================
+
+The current best program is the following
+
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 175
+------------------------------------------------------------
+
+
+=================Reducing node 181, size=37=================
+
+The current best program is the following
+
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    void fun                      {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    void         a                {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 181
+------------------------------------------------------------
+
+
+=================Reducing node 183, size=37=================
+
+The current best program is the following
+
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    void fun                      {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 183
+------------------------------------------------------------
+
+
+=================Reducing node 185, size=37=================
+
+The current best program is the following
+
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    void fun                      {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 185
+------------------------------------------------------------
+
+
+=================Reducing node 43, size=37==================
+
+The current best program is the following
+
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 43
+------------------------------------------------------------
+
+
+=================Reducing node 190, size=37=================
+
+The current best program is the following
+
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular_node]can be epsilon
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    void fun(    a              ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    void fun(           b       ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    void fun(                  c) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    void fun(int a              ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    void fun(       int b       ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    void fun(              int c) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 190 from 37 to 29
+------------------------------------------------------------
+
+
+=================Reducing node 44, size=29==================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+                    ;
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 44
+------------------------------------------------------------
+
+
+=================Reducing node 61, size=29==================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+                    ;
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun           ;
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+          1         ;
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+          1, var, 2 ;
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 61
+------------------------------------------------------------
+
+
+=================Reducing node 63, size=29==================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun           ;
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 63
+------------------------------------------------------------
+
+
+=================Reducing node 65, size=29==================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun           ;
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 65
+------------------------------------------------------------
+
+
+=================Reducing node 128, size=29=================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    void fun(                   ) {
+    }
+    int main() {
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 128
+------------------------------------------------------------
+
+
+=================Reducing node 67, size=29==================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(         );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 67
+------------------------------------------------------------
+
+
+=================Reducing node 69, size=29==================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(         );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1        );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(        2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 69 from 29 to 25
+------------------------------------------------------------
+
+
+=================Reducing node 162, size=25=================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    void fun(                   ) {
+    }
+    int main   {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 162
+------------------------------------------------------------
+
+
+=================Reducing node 130, size=25=================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    void fun(                   ) {
+    }
+    int main() {
+      int         ;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 130
+------------------------------------------------------------
+
+
+=================Reducing node 133, size=25=================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    void fun(                   ) {
+    }
+    int main() {
+      int         ;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    void fun(                   ) {
+    }
+    int main() {
+      int var     ;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 133
+------------------------------------------------------------
+
+
+=================Reducing node 18, size=25==================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 18
+------------------------------------------------------------
+
+
+=================Reducing node 178, size=25=================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 178
+------------------------------------------------------------
+
+
+=================Reducing node 164, size=25=================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    void fun(                   ) {
+    }
+    int main   {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 164
+------------------------------------------------------------
+
+
+=================Reducing node 166, size=25=================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    void fun(                   ) {
+    }
+    int main   {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 166
+------------------------------------------------------------
+
+
+=================Reducing node 135, size=25=================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    void fun(                   ) {
+    }
+    int main() {
+      int var     ;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 135
+------------------------------------------------------------
+
+
+=================Reducing node 136, size=25=================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    void fun(                   ) {
+    }
+    int main() {
+      int var     ;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 136
+------------------------------------------------------------
+
+
+=================Reducing node 21, size=25==================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 21
+------------------------------------------------------------
+
+
+=================Reducing node 226, size=25=================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 226
+------------------------------------------------------------
+
+
+=================Reducing node 188, size=25=================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 188
+------------------------------------------------------------
+
+
+=================Reducing node 186, size=25=================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 186
+------------------------------------------------------------
+
+
+=================Reducing node 180, size=25=================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 180
+------------------------------------------------------------
+
+
+=================Reducing node 179, size=25=================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 179
+------------------------------------------------------------
+
+
+=================Reducing node 176, size=25=================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_star]dd@1
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 176 from 25 to 24
+------------------------------------------------------------
+
+
+=================Reducing node 170, size=24=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 170
+------------------------------------------------------------
+
+
+=================Reducing node 169, size=24=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 169
+------------------------------------------------------------
+
+
+=================Reducing node 167, size=24=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 167
+------------------------------------------------------------
+
+
+=================Reducing node 158, size=24=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 158
+------------------------------------------------------------
+
+
+=================Reducing node 155, size=24=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 155
+------------------------------------------------------------
+
+
+=================Reducing node 137, size=24=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 137
+------------------------------------------------------------
+
+
+=================Reducing node 131, size=24=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 131
+------------------------------------------------------------
+
+
+=================Reducing node 129, size=24=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 129
+------------------------------------------------------------
+
+
+=================Reducing node 161, size=24=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 161
+------------------------------------------------------------
+
+
+=================Reducing node 126, size=24=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 126
+------------------------------------------------------------
+
+
+=================Reducing node 109, size=24=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 109
+------------------------------------------------------------
+
+
+=================Reducing node 68, size=24==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 68
+------------------------------------------------------------
+
+
+=================Reducing node 66, size=24==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 66
+------------------------------------------------------------
+
+
+=================Reducing node 45, size=24==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 45
+------------------------------------------------------------
+
+
+=================Reducing node 23, size=24==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return    ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 23
+------------------------------------------------------------
+
+
+=================Reducing node 41, size=24==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 41
+------------------------------------------------------------
+
+
+=================Reducing node 22, size=24==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 22
+------------------------------------------------------------
+
+
+=================Reducing node 20, size=24==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 20
+------------------------------------------------------------
+
+
+=================Reducing node 11, size=24==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=24==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=24==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_star]dd@1
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 6 from 24 to 23
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]remove whole except first
+    fun(                   ) {
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@1
+    fun(                   ) {
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@1
+    main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    fun(                   ) {
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    fun(                   ) {
+    }
+      int var = 99;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    fun(                   ) {
+    }
+      fun(   var   );
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 7
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    fun(                   ) {
+    }
+        main() {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+=================Reducing node 12, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]can be epsilon
+    fun(                   ) {
+    }
+        main() {
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]remove whole except first
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@1
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@2
+    fun(                   ) {
+    }
+        main() {
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@1
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@1
+    fun(                   ) {
+    }
+        main() {
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 12
+------------------------------------------------------------
+
+
+=================Reducing node 106, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 106
+------------------------------------------------------------
+
+
+=================Reducing node 63, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    fun(                   ) {
+    }
+        main() {
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 63
+------------------------------------------------------------
+
+
+=================Reducing node 42, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 42
+------------------------------------------------------------
+
+
+=================Reducing node 111, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    fun                      {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 111
+------------------------------------------------------------
+
+
+=================Reducing node 97, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    fun(                   ) {
+    }
+        main   {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 97
+------------------------------------------------------------
+
+
+=================Reducing node 65, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    fun(                   ) {
+    }
+        main() {
+      int         ;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 65
+------------------------------------------------------------
+
+
+=================Reducing node 68, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    fun(                   ) {
+    }
+        main() {
+      int         ;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    fun(                   ) {
+    }
+        main() {
+      int var     ;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 68
+------------------------------------------------------------
+
+
+=================Reducing node 44, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun           ;
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 44
+------------------------------------------------------------
+
+
+=================Reducing node 51, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun           ;
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun    var    ;
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 51
+------------------------------------------------------------
+
+
+=================Reducing node 17, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 17
+------------------------------------------------------------
+
+
+=================Reducing node 113, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    fun                      {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 113
+------------------------------------------------------------
+
+
+=================Reducing node 115, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    fun                      {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 115
+------------------------------------------------------------
+
+
+=================Reducing node 108, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 108
+------------------------------------------------------------
+
+
+=================Reducing node 99, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    fun(                   ) {
+    }
+        main   {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 99
+------------------------------------------------------------
+
+
+=================Reducing node 101, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    fun(                   ) {
+    }
+        main   {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 101
+------------------------------------------------------------
+
+
+=================Reducing node 70, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    fun(                   ) {
+    }
+        main() {
+      int var     ;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 70
+------------------------------------------------------------
+
+
+=================Reducing node 71, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    fun(                   ) {
+    }
+        main() {
+      int var     ;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 71
+------------------------------------------------------------
+
+
+=================Reducing node 20, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 20
+------------------------------------------------------------
+
+
+=================Reducing node 119, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 119
+------------------------------------------------------------
+
+
+=================Reducing node 118, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 118
+------------------------------------------------------------
+
+
+=================Reducing node 116, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 116
+------------------------------------------------------------
+
+
+=================Reducing node 110, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 110
+------------------------------------------------------------
+
+
+=================Reducing node 109, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 109
+------------------------------------------------------------
+
+
+=================Reducing node 105, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 105
+------------------------------------------------------------
+
+
+=================Reducing node 104, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 104
+------------------------------------------------------------
+
+
+=================Reducing node 102, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 102
+------------------------------------------------------------
+
+
+=================Reducing node 93, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 93
+------------------------------------------------------------
+
+
+=================Reducing node 90, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 90
+------------------------------------------------------------
+
+
+=================Reducing node 72, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 72
+------------------------------------------------------------
+
+
+=================Reducing node 66, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 66
+------------------------------------------------------------
+
+
+=================Reducing node 64, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 64
+------------------------------------------------------------
+
+
+=================Reducing node 96, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 96
+------------------------------------------------------------
+
+
+=================Reducing node 57, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 57
+------------------------------------------------------------
+
+
+=================Reducing node 54, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 54
+------------------------------------------------------------
+
+
+=================Reducing node 52, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 52
+------------------------------------------------------------
+
+
+=================Reducing node 45, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 45
+------------------------------------------------------------
+
+
+=================Reducing node 43, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 43
+------------------------------------------------------------
+
+
+=================Reducing node 61, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 61
+------------------------------------------------------------
+
+
+=================Reducing node 22, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return    ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 22
+------------------------------------------------------------
+
+
+=================Reducing node 40, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 40
+------------------------------------------------------------
+
+
+=================Reducing node 21, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 21
+------------------------------------------------------------
+
+
+=================Reducing node 19, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 19
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+#test success = 4
+#test failure = 71
+#test result cache hits = 0
+#test execution cancelled = 7
+#node edit action set cache hits = 0

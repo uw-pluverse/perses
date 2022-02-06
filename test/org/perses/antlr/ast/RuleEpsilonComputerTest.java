@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,16 +16,15 @@
  */
 package org.perses.antlr.ast;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import com.google.common.collect.ImmutableSet;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.perses.antlr.GrammarTestingUtility;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(JUnit4.class)
 public class RuleEpsilonComputerTest {
@@ -88,11 +87,12 @@ public class RuleEpsilonComputerTest {
   private List<String> getEpsilonableRuleNames(String... lines) {
     PersesGrammar grammar = GrammarTestingUtility.createPersesGrammarFromString(lines);
     ImmutableSet<AbstractPersesRuleDefAst> rules =
-        RuleEpsilonComputer.computeEpsilonableRules(grammar.getRules()).getEpsilonableRules();
+        RuleEpsilonComputer.computeEpsilonableRules(grammar.getFlattenedAllRules())
+            .getEpsilonableRules();
     List<String> ruleNames =
         rules.stream()
             .map(AbstractPersesRuleDefAst::getRuleNameHandle)
-            .map(RuleNameRegistry.RuleNameHandle::get)
+            .map(RuleNameRegistry.RuleNameHandle::getRuleName)
             .collect(Collectors.toList());
     return ruleNames;
   }

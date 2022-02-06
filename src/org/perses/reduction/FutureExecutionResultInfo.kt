@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,21 +16,17 @@
  */
 package org.perses.reduction
 
-import org.perses.program.TokenizedProgram
-import org.perses.tree.spar.AbstractSparTreeEdit
+import org.perses.reduction.cache.AbstractCacheRetrievalResult
+import org.perses.spartree.AbstractSparTreeEdit
 
 class FutureExecutionResultInfo(
-  val edit: AbstractSparTreeEdit,
-  val program: TokenizedProgram,
+  val edit: AbstractSparTreeEdit<*>,
+  val program: AbstractCacheRetrievalResult.CacheMiss,
   // TODO: make future private.
   val future: TestScriptExecutorService.FutureTestScriptExecutionTask
 ) {
-  val result: TestScript.TestResult
-    get() = try {
-      future.get()
-    } catch (e: Exception) {
-      throw RuntimeException(e)
-    }
+  val result: PropertyTestResult
+    get() = future.get()
 
   fun cancel() {
     future.cancel(true)

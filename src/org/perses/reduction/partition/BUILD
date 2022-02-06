@@ -3,15 +3,15 @@ package(default_visibility = [
     "//test/org/perses:__subpackages__",
 ])
 
-load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 kt_jvm_library(
     name = "partition",
     srcs = ["Partition.kt"],
     deps = [
-        "//src/org/perses/tree/spar",
+        "//:guava",
+        "//src/org/perses/spartree",
         "//src/org/perses/util",
-        "@maven//:com_google_guava_guava",
     ],
 )
 
@@ -23,7 +23,7 @@ java_library(
     ],
     deps = [
         ":partition",
+        "//:guava",
         "//src/org/perses/reduction:reduction_level",
-        "@maven//:com_google_guava_guava",
     ],
 )

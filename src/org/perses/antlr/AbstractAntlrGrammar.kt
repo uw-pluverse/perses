@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -45,7 +45,7 @@ abstract class AbstractAntlrGrammar {
       require(grammar.grammarType == PersesGrammar.GrammarType.COMBINED)
     }
 
-    override fun getCombinedRules() = grammar.rules
+    override fun getCombinedRules() = grammar.flattenedAllRules
 
     override fun asCombined() = this
   }
@@ -56,16 +56,19 @@ abstract class AbstractAntlrGrammar {
     override val isCombined = false
 
     init {
-      require(parserGrammar.grammarType == PersesGrammar.GrammarType.PARSER)
+      require(
+        parserGrammar.grammarType == PersesGrammar.GrammarType.PARSER ||
+          parserGrammar.grammarType == PersesGrammar.GrammarType.COMBINED
+      ) {
+        parserGrammar.grammarType
+      }
       require(lexerGrammar.grammarType == PersesGrammar.GrammarType.LEXER)
     }
 
     override fun getCombinedRules(): ImmutableList<AbstractPersesRuleDefAst> {
-      val builder = ImmutableList.builderWithExpectedSize<AbstractPersesRuleDefAst>(
-        parserGrammar.rules.size + lexerGrammar.rules.size
-      )
-      builder.addAll(parserGrammar.rules)
-      builder.addAll(lexerGrammar.rules)
+      val builder = ImmutableList.builder<AbstractPersesRuleDefAst>()
+      builder.addAll(lexerGrammar.flattenedAllRules)
+      builder.addAll(parserGrammar.flattenedAllRules)
       return builder.build()
     }
 

@@ -2,972 +2,8 @@
 // DO NOT MODIFY.
 grammar PnfC;
 
-kleene_plus__primaryExpression_1
-    : StringLiteral+
-    ;
-
-optional__primaryExpression_2
-    : '__extension__'?
-    ;
-
-alternative__primaryExpression_5
-    : '__builtin_va_arg' '(' unaryExpression ',' typeName
-    | '(' expression
-    | '__builtin_offsetof' '(' typeName ',' unaryExpression
-    | optional__primaryExpression_2 '(' compoundStatement
-    ;
-
-expression
-    : assignmentExpression kleene_star__expression_1
-    ;
-
-kleene_star__expression_1
-    : expression_2*
-    ;
-
-expression_2
-    : ',' assignmentExpression
-    ;
-
-genericSelection
-    : '_Generic' '(' assignmentExpression ',' genericAssocList ')'
-    ;
-
-compoundStatement
-    : '{' optional__compoundStatement_1 '}'
-    ;
-
-optional__compoundStatement_1
-    : blockItemList?
-    ;
-
-unaryExpression
-    : postfixExpression
-    | unaryOperator castExpression
-    | (Alignof | Alignof_gcc) '(' (typeName | unaryExpression) ')'
-    | '&&' Identifier
-    | alternative__unaryExpression_1 unaryExpression
-    | 'sizeof' alternative__unaryExpression_2
-    ;
-
-alternative__unaryExpression_1
-    : '++'
-    | '--'
-    ;
-
-alternative__unaryExpression_2
-    : unaryExpression
-    | '(' typeName ')'
-    ;
-
-typeName
-    : specifierQualifierList optional__typeName_1
-    ;
-
-optional__typeName_1
-    : abstractDeclarator?
-    ;
-
-assignmentExpression
-    : conditionalExpression
-    | unaryExpression assignmentOperator assignmentExpression
-    ;
-
-genericAssocList
-    : genericAssociation kleene_star__genericAssocList_1
-    ;
-
-kleene_star__genericAssocList_1
-    : genericAssocList_2*
-    ;
-
-genericAssocList_2
-    : ',' genericAssociation
-    ;
-
-genericAssociation
-    : alternative__genericAssociation_1 ':' assignmentExpression
-    ;
-
-alternative__genericAssociation_1
-    : 'default'
-    | typeName
-    ;
-
-postfixExpression
-    : postfixExpression_4 kleene_star__postfixExpression_2
-    ;
-
-optional__postfixExpression_1
-    : expression?
-    ;
-
-kleene_star__postfixExpression_2
-    : postfixExpression_3*
-    ;
-
-postfixExpression_3
-    : '++'
-    | '--'
-    | '[' expression ']'
-    | '(' optional__postfixExpression_1 ')'
-    | alternative__postfixExpression_7 Identifier
-    ;
-
-postfixExpression_4
-    : Identifier
-    | Constant
-    | genericSelection
-    | kleene_plus__primaryExpression_1
-    | alternative__primaryExpression_5 ')'
-    | alternative__postfixExpression_8 '}'
-    ;
-
-optional__postfixExpression_5
-    : ','?
-    ;
-
-alternative__postfixExpression_7
-    : '->'
-    | '.'
-    ;
-
-alternative__postfixExpression_8
-    : optional__primaryExpression_2 '(' typeName ')' '{' initializerList optional__postfixExpression_5
-    ;
-
-initializerList
-    : optional__initializerList_1 initializer kleene_star__initializerList_3
-    ;
-
-optional__initializerList_1
-    : designation?
-    ;
-
-kleene_star__initializerList_3
-    : initializerList_4*
-    ;
-
-initializerList_4
-    : ',' optional__initializerList_1 initializer
-    ;
-
-unaryOperator
-    : '&'
-    | '*'
-    | '+'
-    | '-'
-    | '~'
-    | '!'
-    ;
-
-castExpression
-    : unaryExpression
-    | optional__primaryExpression_2 '(' typeName ')' castExpression
-    ;
-
-multiplicativeExpression
-    : castExpression kleene_star__multiplicativeExpression_1
-    ;
-
-kleene_star__multiplicativeExpression_1
-    : multiplicativeExpression_2*
-    ;
-
-multiplicativeExpression_2
-    : alternative__multiplicativeExpression_4 castExpression
-    ;
-
-alternative__multiplicativeExpression_4
-    : '/'
-    | '%'
-    | '*'
-    ;
-
-additiveExpression
-    : multiplicativeExpression kleene_star__additiveExpression_1
-    ;
-
-kleene_star__additiveExpression_1
-    : additiveExpression_2*
-    ;
-
-additiveExpression_2
-    : alternative__additiveExpression_3 multiplicativeExpression
-    ;
-
-alternative__additiveExpression_3
-    : '+'
-    | '-'
-    ;
-
-shiftExpression
-    : additiveExpression kleene_star__shiftExpression_1
-    ;
-
-kleene_star__shiftExpression_1
-    : shiftExpression_2*
-    ;
-
-shiftExpression_2
-    : alternative__shiftExpression_3 additiveExpression
-    ;
-
-alternative__shiftExpression_3
-    : '<<'
-    | '>>'
-    ;
-
-relationalExpression
-    : shiftExpression kleene_star__relationalExpression_1
-    ;
-
-kleene_star__relationalExpression_1
-    : relationalExpression_2*
-    ;
-
-relationalExpression_2
-    : alternative__relationalExpression_5 shiftExpression
-    ;
-
-alternative__relationalExpression_5
-    : '<'
-    | '<='
-    | '>'
-    | '>='
-    ;
-
-equalityExpression
-    : relationalExpression kleene_star__equalityExpression_1
-    ;
-
-kleene_star__equalityExpression_1
-    : equalityExpression_2*
-    ;
-
-equalityExpression_2
-    : alternative__equalityExpression_3 relationalExpression
-    ;
-
-alternative__equalityExpression_3
-    : '!='
-    | '=='
-    ;
-
-andExpression
-    : equalityExpression kleene_star__andExpression_1
-    ;
-
-kleene_star__andExpression_1
-    : andExpression_2*
-    ;
-
-andExpression_2
-    : '&' equalityExpression
-    ;
-
-exclusiveOrExpression
-    : andExpression kleene_star__exclusiveOrExpression_1
-    ;
-
-kleene_star__exclusiveOrExpression_1
-    : exclusiveOrExpression_2*
-    ;
-
-exclusiveOrExpression_2
-    : '^' andExpression
-    ;
-
-inclusiveOrExpression
-    : exclusiveOrExpression kleene_star__inclusiveOrExpression_1
-    ;
-
-kleene_star__inclusiveOrExpression_1
-    : inclusiveOrExpression_2*
-    ;
-
-inclusiveOrExpression_2
-    : '|' exclusiveOrExpression
-    ;
-
-logicalAndExpression
-    : inclusiveOrExpression kleene_star__logicalAndExpression_1
-    ;
-
-kleene_star__logicalAndExpression_1
-    : logicalAndExpression_2*
-    ;
-
-logicalAndExpression_2
-    : '&&' inclusiveOrExpression
-    ;
-
-logicalOrExpression
-    : logicalAndExpression kleene_star__logicalOrExpression_1
-    ;
-
-kleene_star__logicalOrExpression_1
-    : logicalOrExpression_2*
-    ;
-
-logicalOrExpression_2
-    : '||' logicalAndExpression
-    ;
-
-conditionalExpression
-    : logicalOrExpression optional__conditionalExpression_2
-    ;
-
-conditionalExpression_1
-    : '?' expression ':' conditionalExpression
-    ;
-
-optional__conditionalExpression_2
-    : conditionalExpression_1?
-    ;
-
-assignmentOperator
-    : '='
-    | '*='
-    | '/='
-    | '%='
-    | '+='
-    | '-='
-    | '<<='
-    | '>>='
-    | '&='
-    | '^='
-    | '|='
-    ;
-
-constantExpression
-    : conditionalExpression
-    ;
-
-declaration
-    : staticAssertDeclaration
-    | asmStatement
-    | optional__declaration_1 declarationSpecifiers optional__declaration_2 ';'
-    ;
-
-optional__declaration_1
-    : Extension_gcc?
-    ;
-
-optional__declaration_2
-    : initDeclaratorList?
-    ;
-
-declarationSpecifiers
-    : kleene_plus__declarationSpecifiers_1
-    ;
-
-kleene_plus__declarationSpecifiers_1
-    : declarationSpecifier+
-    ;
-
-initDeclaratorList
-    : initDeclarator kleene_star__initDeclaratorList_1
-    ;
-
-kleene_star__initDeclaratorList_1
-    : initDeclaratorList_2*
-    ;
-
-initDeclaratorList_2
-    : ',' initDeclarator
-    ;
-
-staticAssertDeclaration
-    : '_Static_assert' '(' constantExpression ',' kleene_plus__primaryExpression_1 ')' ';'
-    ;
-
-asmStatement
-    : asmKeyword optional__asmStatement_2 '(' optional__asmStatement_6 kleene_star__asmStatement_12 ')' ';'
-    ;
-
-asmStatement_1
-    : 'volatile'
-    | '__volatile__'
-    ;
-
-optional__asmStatement_2
-    : asmStatement_1?
-    ;
-
-asmStatement_3
-    : ',' logicalOrExpression
-    ;
-
-kleene_star__asmStatement_4
-    : asmStatement_3*
-    ;
-
-asmStatement_5
-    : logicalOrExpression kleene_star__asmStatement_4
-    ;
-
-optional__asmStatement_6
-    : asmStatement_5?
-    ;
-
-asmStatement_11
-    : ':' optional__asmStatement_6
-    ;
-
-kleene_star__asmStatement_12
-    : asmStatement_11*
-    ;
-
-declarationSpecifier
-    : 'typedef'
-    | 'extern'
-    | 'static'
-    | '_Thread_local'
-    | 'auto'
-    | 'register'
-    | typeSpecifier
-    | typeQualifier
-    | 'inline'
-    | '_Noreturn'
-    | '__inline__'
-    | '__stdcall'
-    | gccAttributeSpecifier
-    | alignmentSpecifier
-    | '__declspec' '(' Identifier ')'
-    ;
-
-typeSpecifier
-    : 'void'
-    | 'char'
-    | 'short'
-    | 'int'
-    | 'long'
-    | 'float'
-    | 'double'
-    | 'signed'
-    | 'unsigned'
-    | '_Bool'
-    | '_Complex'
-    | '__m128'
-    | '__m128d'
-    | '__m128i'
-    | atomicTypeSpecifier
-    | structOrUnionSpecifier
-    | enumSpecifier
-    | typedefName
-    | alternative__typeSpecifier_1 ')'
-    ;
-
-alternative__typeSpecifier_1
-    : '__extension__' '(' ('__m128' | '__m128d' | '__m128i')
-    | '__typeof__' '(' constantExpression
-    ;
-
-typeQualifier
-    : 'const'
-    | Restrict
-    | Restrict_gcc
-    | Restrict_gcc2
-    | 'volatile'
-    | '_Atomic'
-    | '_Nonnull'
-    | '_Nullable'
-    ;
-
-alignmentSpecifier
-    : '_Alignas' '(' alternative__alignmentSpecifier_1 ')'
-    ;
-
-alternative__alignmentSpecifier_1
-    : constantExpression
-    | typeName
-    ;
-
-initDeclarator
-    : declarator optional__initDeclarator_2
-    ;
-
-initDeclarator_1
-    : '=' initializer
-    ;
-
-optional__initDeclarator_2
-    : initDeclarator_1?
-    ;
-
-declarator
-    : optional__declarator_1 directDeclarator kleene_star__declarator_2
-    ;
-
-optional__declarator_1
-    : pointer?
-    ;
-
-kleene_star__declarator_2
-    : gccDeclaratorExtension*
-    ;
-
-initializer
-    : assignmentExpression
-    | '{' initializerList optional__postfixExpression_5 '}'
-    ;
-
-atomicTypeSpecifier
-    : '_Atomic' '(' typeName ')'
-    ;
-
-structOrUnionSpecifier
-    : structOrUnion alternative__structOrUnionSpecifier_2
-    ;
-
-optional__structOrUnionSpecifier_1
-    : Identifier?
-    ;
-
-alternative__structOrUnionSpecifier_2
-    : Identifier
-    | optional__structOrUnionSpecifier_1 '{' structDeclarationList '}'
-    ;
-
-enumSpecifier
-    : 'enum' alternative__enumSpecifier_4
-    ;
-
-alternative__enumSpecifier_4
-    : Identifier
-    | optional__structOrUnionSpecifier_1 '{' enumeratorList optional__postfixExpression_5 '}'
-    ;
-
-typedefName
-    : Identifier
-    ;
-
-structOrUnion
-    : 'struct'
-    | 'union'
-    ;
-
-structDeclarationList
-    : kleene_plus__structDeclarationList_3
-    ;
-
-structDeclarationList_2
-    : staticAssertDeclaration
-    | optional__declaration_1 specifierQualifierList optional__structDeclaration_2 ';'
-    ;
-
-kleene_plus__structDeclarationList_3
-    : structDeclarationList_2+
-    ;
-
-optional__structDeclaration_2
-    : structDeclaratorList?
-    ;
-
-specifierQualifierList
-    : alternative__specifierQualifierList_3 optional__specifierQualifierList_1
-    ;
-
-optional__specifierQualifierList_1
-    : specifierQualifierList?
-    ;
-
-alternative__specifierQualifierList_3
-    : typeQualifier
-    | typeSpecifier
-    ;
-
-structDeclaratorList
-    : structDeclarator kleene_star__structDeclaratorList_1
-    ;
-
-kleene_star__structDeclaratorList_1
-    : structDeclaratorList_2*
-    ;
-
-structDeclaratorList_2
-    : ',' structDeclarator
-    ;
-
-structDeclarator
-    : declarator
-    | optional__structDeclarator_1 ':' constantExpression
-    ;
-
-optional__structDeclarator_1
-    : declarator?
-    ;
-
-enumeratorList
-    : enumerator kleene_star__enumeratorList_1
-    ;
-
-kleene_star__enumeratorList_1
-    : enumeratorList_2*
-    ;
-
-enumeratorList_2
-    : ',' enumerator
-    ;
-
-enumerator
-    : typedefName optional__enumerator_2
-    ;
-
-enumerator_1
-    : '=' constantExpression
-    ;
-
-optional__enumerator_2
-    : enumerator_1?
-    ;
-
-gccAttributeSpecifier
-    : '__attribute__' '(' '(' gccAttributeList ')' ')'
-    ;
-
-pointer
-    : alternative__pointer_8 alternative__pointer_5
-    ;
-
-optional__pointer_1
-    : typeQualifierList?
-    ;
-
-alternative__pointer_5
-    : optional__pointer_1 optional__declarator_1
-    ;
-
-alternative__pointer_8
-    : '*'
-    | '^'
-    ;
-
-directDeclarator
-    : directDeclarator_8 kleene_star__directDeclarator_6
-    ;
-
-optional__directDeclarator_2
-    : assignmentExpression?
-    ;
-
-optional__directDeclarator_5
-    : identifierList?
-    ;
-
-kleene_star__directDeclarator_6
-    : directDeclarator_7*
-    ;
-
-directDeclarator_7
-    : '(' alternative__directDeclarator_9 ')'
-    | '[' alternative__directDeclarator_12 ']'
-    ;
-
-directDeclarator_8
-    : Identifier
-    | '(' declarator ')'
-    ;
-
-alternative__directDeclarator_9
-    : optional__directDeclarator_5
-    | parameterTypeList
-    ;
-
-alternative__directDeclarator_12
-    : alternative__directDeclarator_13 assignmentExpression
-    | optional__pointer_1 alternative__directDeclarator_14
-    ;
-
-alternative__directDeclarator_13
-    : 'static' optional__pointer_1
-    | typeQualifierList 'static'
-    ;
-
-alternative__directDeclarator_14
-    : '*'
-    | optional__directDeclarator_2
-    ;
-
-gccDeclaratorExtension
-    : gccAttributeSpecifier
-    | asmKeyword '(' kleene_plus__primaryExpression_1 ')'
-    ;
-
-typeQualifierList
-    : kleene_plus__typeQualifierList_3
-    ;
-
-typeQualifierList_2
-    : typeQualifier
-    ;
-
-kleene_plus__typeQualifierList_3
-    : typeQualifierList_2+
-    ;
-
-parameterTypeList
-    : parameterList optional__parameterTypeList_2
-    ;
-
-parameterTypeList_1
-    : ',' '...'
-    ;
-
-optional__parameterTypeList_2
-    : parameterTypeList_1?
-    ;
-
-identifierList
-    : Identifier kleene_star__identifierList_1
-    ;
-
-kleene_star__identifierList_1
-    : identifierList_2*
-    ;
-
-identifierList_2
-    : ',' Identifier
-    ;
-
-asmKeyword
-    : 'asm'
-    | '__asm__'
-    | '__asm'
-    ;
-
-gccAttributeList
-    : /* Epsilon. */
-    | gccAttribute kleene_star__gccAttributeList_2
-    ;
-
-gccAttributeList_1
-    : ',' gccAttribute
-    ;
-
-kleene_star__gccAttributeList_2
-    : gccAttributeList_1*
-    ;
-
-gccAttribute
-    : /* Epsilon. */
-    | ~(',' | '(' | ')') optional__gccAttribute_3
-    ;
-
-gccAttribute_2
-    : '(' optional__postfixExpression_1 ')'
-    ;
-
-optional__gccAttribute_3
-    : gccAttribute_2?
-    ;
-
-parameterList
-    : parameterDeclaration kleene_star__parameterList_1
-    ;
-
-kleene_star__parameterList_1
-    : parameterList_2*
-    ;
-
-parameterList_2
-    : ',' parameterDeclaration
-    ;
-
-parameterDeclaration
-    : declarationSpecifiers alternative__parameterDeclaration_2
-    ;
-
-alternative__parameterDeclaration_2
-    : declarator
-    | optional__typeName_1
-    ;
-
-abstractDeclarator
-    : pointer
-    | optional__declarator_1 directAbstractDeclarator kleene_star__declarator_2
-    ;
-
-directAbstractDeclarator
-    : directAbstractDeclarator_14 kleene_star__directAbstractDeclarator_12
-    ;
-
-optional__directAbstractDeclarator_5
-    : parameterTypeList?
-    ;
-
-kleene_star__directAbstractDeclarator_12
-    : directAbstractDeclarator_13*
-    ;
-
-directAbstractDeclarator_13
-    : '[' alternative__directAbstractDeclarator_17 ']'
-    | '(' optional__directAbstractDeclarator_5 ')' kleene_star__declarator_2
-    ;
-
-directAbstractDeclarator_14
-    : '(' alternative__directAbstractDeclarator_18
-    | '[' alternative__directAbstractDeclarator_17 ']'
-    ;
-
-alternative__directAbstractDeclarator_17
-    : '*'
-    | optional__pointer_1 optional__directDeclarator_2
-    | alternative__directDeclarator_13 assignmentExpression
-    ;
-
-alternative__directAbstractDeclarator_18
-    : alternative__directAbstractDeclarator_23 ')' kleene_star__declarator_2
-    ;
-
-alternative__directAbstractDeclarator_23
-    : abstractDeclarator
-    | optional__directAbstractDeclarator_5
-    ;
-
-designation
-    : designatorList '='
-    ;
-
-designatorList
-    : kleene_plus__designatorList_3
-    ;
-
-designatorList_2
-    : '[' constantExpression ']'
-    | '.' Identifier
-    ;
-
-kleene_plus__designatorList_3
-    : designatorList_2+
-    ;
-
-statement
-    : labeledStatement
-    | compoundStatement
-    | expressionStatement
-    | jumpStatement
-    | asmStatement
-    | 'if' '(' expression ')' statement optional__selectionStatement_2
-    | 'do' statement 'while' '(' expression ')' ';'
-    | alternative__statement_1 ')' statement
-    ;
-
-alternative__statement_1
-    : 'for' '(' alternative__iterationStatement_6
-    | alternative__statement_2 '(' expression
-    ;
-
-alternative__statement_2
-    : 'switch'
-    | 'while'
-    ;
-
-labeledStatement
-    : alternative__labeledStatement_2 ':' statement
-    ;
-
-alternative__labeledStatement_2
-    : Identifier
-    | 'default'
-    | 'case' constantExpression
-    ;
-
-expressionStatement
-    : optional__postfixExpression_1 ';'
-    ;
-
-selectionStatement_1
-    : 'else' statement
-    ;
-
-optional__selectionStatement_2
-    : selectionStatement_1?
-    ;
-
-alternative__iterationStatement_6
-    : alternative__iterationStatement_8 optional__postfixExpression_1 ';' optional__postfixExpression_1
-    ;
-
-alternative__iterationStatement_8
-    : declaration
-    | optional__postfixExpression_1 ';'
-    ;
-
-jumpStatement
-    : alternative__jumpStatement_5 ';'
-    ;
-
-alternative__jumpStatement_3
-    : Identifier
-    | unaryExpression
-    ;
-
-alternative__jumpStatement_5
-    : 'break'
-    | 'continue'
-    | 'goto' alternative__jumpStatement_3
-    | 'return' optional__postfixExpression_1
-    ;
-
-blockItemList
-    : kleene_plus__blockItemList_3
-    ;
-
-blockItemList_2
-    : declaration
-    | statement
-    ;
-
-kleene_plus__blockItemList_3
-    : blockItemList_2+
-    ;
-
-compilationUnit
-    : optional__compilationUnit_1 EOF
-    ;
-
-optional__compilationUnit_1
-    : translationUnit?
-    ;
-
-translationUnit
-    : kleene_plus__translationUnit_3
-    ;
-
-translationUnit_2
-    : functionDefinition
-    | declaration
-    | ';'
-    ;
-
-kleene_plus__translationUnit_3
-    : translationUnit_2+
-    ;
-
-functionDefinition
-    : optional__declaration_1 optional__functionDefinition_2 declarator optional__functionDefinition_3 compoundStatement
-    ;
-
-optional__functionDefinition_2
-    : declarationSpecifiers?
-    ;
-
-optional__functionDefinition_3
-    : declarationList?
-    ;
-
-declarationList
-    : kleene_plus__declarationList_3
-    ;
-
-declarationList_2
-    : declaration
-    ;
-
-kleene_plus__declarationList_3
-    : declarationList_2+
+IncludeDirective
+    : '#' 'include' (~[\n])*
     ;
 
 Auto
@@ -1358,30 +394,25 @@ Identifier
     : IdentifierNondigit (IdentifierNondigit | Digit)*
     ;
 
-fragment
-IdentifierNondigit
+fragment IdentifierNondigit
     : Nondigit
     | UniversalCharacterName
     ;
 
-fragment
-Nondigit
+fragment Nondigit
     : [a-zA-Z_]
     ;
 
-fragment
-Digit
+fragment Digit
     : [0-9]
     ;
 
-fragment
-UniversalCharacterName
+fragment UniversalCharacterName
     : '\\u' HexQuad
     | '\\U' HexQuad HexQuad
     ;
 
-fragment
-HexQuad
+fragment HexQuad
     : HexadecimalDigit HexadecimalDigit HexadecimalDigit HexadecimalDigit
     ;
 
@@ -1391,185 +422,154 @@ Constant
     | CharacterConstant
     ;
 
-fragment
-IntegerConstant
+fragment IntegerConstant
     : DecimalConstant IntegerSuffix?
     | OctalConstant IntegerSuffix?
     | HexadecimalConstant IntegerSuffix?
     | BinaryConstant
     ;
 
-fragment
-BinaryConstant
+fragment BinaryConstant
     : '0' [bB] [0-1]+
     ;
 
-fragment
-DecimalConstant
+fragment DecimalConstant
     : NonzeroDigit Digit*
     ;
 
-fragment
-OctalConstant
+fragment OctalConstant
     : '0' OctalDigit*
     ;
 
-fragment
-HexadecimalConstant
+fragment HexadecimalConstant
     : HexadecimalPrefix HexadecimalDigit+
     ;
 
-fragment
-HexadecimalPrefix
+fragment HexadecimalPrefix
     : '0' [xX]
     ;
 
-fragment
-NonzeroDigit
+fragment NonzeroDigit
     : [1-9]
     ;
 
-fragment
-OctalDigit
+fragment OctalDigit
     : [0-7]
     ;
 
-fragment
-HexadecimalDigit
+fragment HexadecimalDigit
     : [0-9a-fA-F]
     ;
 
-fragment
-IntegerSuffix
+fragment IntegerSuffix
     : UnsignedSuffix LongSuffix?
     | UnsignedSuffix LongLongSuffix
     | LongSuffix UnsignedSuffix?
     | LongLongSuffix UnsignedSuffix?
     ;
 
-fragment
-UnsignedSuffix
+fragment UnsignedSuffix
     : [uU]
     ;
 
-fragment
-LongSuffix
+fragment LongSuffix
     : [lL]
     ;
 
-fragment
-LongLongSuffix
+fragment LongLongSuffix
     : 'll'
     | 'LL'
     ;
 
-fragment
-FloatingConstant
+fragment FloatingConstant
     : DecimalFloatingConstant
     | HexadecimalFloatingConstant
     ;
 
-fragment
-DecimalFloatingConstant
+fragment DecimalFloatingConstant
     : FractionalConstant ExponentPart? FloatingSuffix?
     | DigitSequence ExponentPart FloatingSuffix?
     ;
 
-fragment
-HexadecimalFloatingConstant
+fragment HexadecimalFloatingConstant
     : HexadecimalPrefix HexadecimalFractionalConstant BinaryExponentPart FloatingSuffix?
     | HexadecimalPrefix HexadecimalDigitSequence BinaryExponentPart FloatingSuffix?
     ;
 
-fragment
-FractionalConstant
+fragment FractionalConstant
     : DigitSequence? '.' DigitSequence
     | DigitSequence '.'
     ;
 
-fragment
-ExponentPart
+fragment ExponentPart
     : 'e' Sign? DigitSequence
     | 'E' Sign? DigitSequence
     ;
 
-fragment
-Sign
+fragment Sign
     : '+'
     | '-'
     ;
 
-fragment
-DigitSequence
+fragment DigitSequence
     : Digit+
     ;
 
-fragment
-HexadecimalFractionalConstant
+fragment HexadecimalFractionalConstant
     : HexadecimalDigitSequence? '.' HexadecimalDigitSequence
     | HexadecimalDigitSequence '.'
     ;
 
-fragment
-BinaryExponentPart
+fragment BinaryExponentPart
     : 'p' Sign? DigitSequence
     | 'P' Sign? DigitSequence
     ;
 
-fragment
-HexadecimalDigitSequence
+fragment HexadecimalDigitSequence
     : HexadecimalDigit+
     ;
 
-fragment
-FloatingSuffix
+fragment FloatingSuffix
     : 'f'
     | 'l'
     | 'F'
     | 'L'
     ;
 
-fragment
-CharacterConstant
+fragment CharacterConstant
     : '\'' CCharSequence '\''
     | 'L\'' CCharSequence '\''
     | 'u\'' CCharSequence '\''
     | 'U\'' CCharSequence '\''
     ;
 
-fragment
-CCharSequence
+fragment CCharSequence
     : CChar+
     ;
 
-fragment
-CChar
+fragment CChar
     : ~['\\\r\n]
     | EscapeSequence
     ;
 
-fragment
-EscapeSequence
+fragment EscapeSequence
     : SimpleEscapeSequence
     | OctalEscapeSequence
     | HexadecimalEscapeSequence
     | UniversalCharacterName
     ;
 
-fragment
-SimpleEscapeSequence
+fragment SimpleEscapeSequence
     : '\\' ['"?abfnrtv\\]
     ;
 
-fragment
-OctalEscapeSequence
+fragment OctalEscapeSequence
     : '\\' OctalDigit
     | '\\' OctalDigit OctalDigit
     | '\\' OctalDigit OctalDigit OctalDigit
     ;
 
-fragment
-HexadecimalEscapeSequence
+fragment HexadecimalEscapeSequence
     : '\\x' HexadecimalDigit+
     ;
 
@@ -1577,21 +577,18 @@ StringLiteral
     : EncodingPrefix? '"' SCharSequence? '"'
     ;
 
-fragment
-EncodingPrefix
+fragment EncodingPrefix
     : 'u8'
     | 'u'
     | 'U'
     | 'L'
     ;
 
-fragment
-SCharSequence
+fragment SCharSequence
     : SChar+
     ;
 
-fragment
-SChar
+fragment SChar
     : ~["\\\r\n]
     | EscapeSequence
     | '\\\n'
@@ -1643,5 +640,1208 @@ BlockComment
 LineComment
     : '//' (~[\r\n])* -> skip
 
+    ;
+
+genericSelection
+    : '_Generic' '(' assignmentExpression ',' genericAssocList ')'
+    ;
+
+genericAssociation
+    : altnt_block__genericAssociation_1 ':' assignmentExpression
+    ;
+
+unaryExpression
+    : postfixExpression
+    | aux_rule__unaryExpression_5
+    | aux_rule__unaryExpression_6
+    | aux_rule__unaryExpression_7
+    | aux_rule__unaryExpression_8
+    ;
+
+unaryOperator
+    : '&'
+    | '*'
+    | '+'
+    | '-'
+    | '~'
+    | '!'
+    ;
+
+castExpression
+    : unaryExpression
+    | aux_rule__castExpression_2
+    ;
+
+conditionalExpression
+    : logicalOrExpression optional__conditionalExpression_2
+    ;
+
+assignmentExpression
+    : conditionalExpression
+    | aux_rule__assignmentExpression_1
+    ;
+
+assignmentOperator
+    : '='
+    | '*='
+    | '/='
+    | '%='
+    | '+='
+    | '-='
+    | '<<='
+    | '>>='
+    | '&='
+    | '^='
+    | '|='
+    ;
+
+constantExpression
+    : conditionalExpression
+    ;
+
+declaration
+    : aux_rule__declaration_3
+    | staticAssertDeclaration
+    | asmStatement
+    ;
+
+declarationSpecifiers
+    : declarationSpecifier+
+    ;
+
+initDeclarator
+    : declarator optional__initDeclarator_2
+    ;
+
+typeSpecifier
+    : 'void'
+    | 'char'
+    | 'short'
+    | 'int'
+    | 'long'
+    | 'float'
+    | 'double'
+    | 'signed'
+    | 'unsigned'
+    | '_Bool'
+    | '_Complex'
+    | '__m128'
+    | '__m128d'
+    | '__m128i'
+    | atomicTypeSpecifier
+    | structOrUnionSpecifier
+    | enumSpecifier
+    | typedefName
+    | aux_rule__typeSpecifier_3
+    ;
+
+structOrUnionSpecifier
+    : structOrUnion altnt_block__structOrUnionSpecifier_2
+    ;
+
+structOrUnion
+    : 'struct'
+    | 'union'
+    ;
+
+specifierQualifierList
+    : altnt_block__specifierQualifierList_3 optional__specifierQualifierList_1
+    ;
+
+structDeclarator
+    : declarator
+    | aux_rule__structDeclarator_2
+    ;
+
+enumSpecifier
+    : 'enum' altnt_block__enumSpecifier_3
+    ;
+
+enumerator
+    : typedefName optional__enumerator_2
+    ;
+
+atomicTypeSpecifier
+    : '_Atomic' '(' typeName ')'
+    ;
+
+typeQualifier
+    : 'const'
+    | Restrict
+    | Restrict_gcc
+    | Restrict_gcc2
+    | 'volatile'
+    | '_Atomic'
+    | '_Nonnull'
+    | '_Nullable'
+    ;
+
+alignmentSpecifier
+    : '_Alignas' '(' altnt_block__alignmentSpecifier_1 ')'
+    ;
+
+declarator
+    : optional__declarator_1 directDeclarator kleene_star__declarator_2
+    ;
+
+gccDeclaratorExtension
+    : aux_rule__gccDeclaratorExtension_2
+    | gccAttributeSpecifier
+    ;
+
+asmKeyword
+    : 'asm'
+    | '__asm__'
+    | '__asm'
+    ;
+
+gccAttributeSpecifier
+    : '__attribute__' '(' '(' gccAttributeList ')' ')'
+    ;
+
+gccAttributeList
+    : aux_rule__gccAttributeList_3?
+    ;
+
+gccAttribute
+    : aux_rule__gccAttribute_4?
+    ;
+
+pointer
+    : altnt_block__pointer_8 altnt_block__pointer_5
+    ;
+
+parameterTypeList
+    : parameterList optional__parameterTypeList_2
+    ;
+
+parameterDeclaration
+    : declarationSpecifiers altnt_block__parameterDeclaration_2
+    ;
+
+typeName
+    : specifierQualifierList optional__typeName_1
+    ;
+
+abstractDeclarator
+    : pointer
+    | aux_rule__abstractDeclarator_3
+    ;
+
+typedefName
+    : Identifier
+    ;
+
+initializer
+    : assignmentExpression
+    | aux_rule__initializer_2
+    ;
+
+designation
+    : designatorList '='
+    ;
+
+staticAssertDeclaration
+    : '_Static_assert' '(' constantExpression ',' kleene_plus__primaryExpression_1 ')' ';'
+    ;
+
+asmStatement
+    : asmKeyword optional__asmStatement_2 '(' optional__asmStatement_6 kleene_star__asmStatement_12 ')' ';'
+    ;
+
+labeledStatement
+    : altnt_block__labeledStatement_1 ':' statement
+    ;
+
+compoundStatement
+    : '{' optional__compoundStatement_1 '}'
+    ;
+
+expressionStatement
+    : optional__postfixExpression_1 ';'
+    ;
+
+jumpStatement
+    : altnt_block__jumpStatement_2 ';'
+    ;
+
+compilationUnit
+    : optional__compilationUnit_1 EOF
+    ;
+
+functionDefinition
+    : optional__declaration_1 optional__functionDefinition_2 declarator optional__functionDefinition_3 compoundStatement
+    ;
+
+kleene_plus__primaryExpression_1
+    : StringLiteral+
+    ;
+
+optional__primaryExpression_2
+    : '__extension__'?
+    ;
+
+optional__postfixExpression_1
+    : expression?
+    ;
+
+aux_rule__conditionalExpression_1
+    : '?' expression ':' conditionalExpression
+    ;
+
+optional__conditionalExpression_2
+    : aux_rule__conditionalExpression_1?
+    ;
+
+optional__declaration_1
+    : Extension_gcc?
+    ;
+
+optional__declaration_2
+    : initDeclaratorList?
+    ;
+
+optional__structOrUnionSpecifier_1
+    : Identifier?
+    ;
+
+optional__structDeclaration_2
+    : structDeclaratorList?
+    ;
+
+optional__specifierQualifierList_1
+    : specifierQualifierList?
+    ;
+
+optional__structDeclarator_1
+    : declarator?
+    ;
+
+optional__declarator_1
+    : pointer?
+    ;
+
+kleene_star__declarator_2
+    : gccDeclaratorExtension*
+    ;
+
+optional__directDeclarator_2
+    : assignmentExpression?
+    ;
+
+optional__directDeclarator_5
+    : identifierList?
+    ;
+
+aux_rule__gccAttributeList_1
+    : ',' gccAttribute
+    ;
+
+kleene_star__gccAttributeList_2
+    : aux_rule__gccAttributeList_1*
+    ;
+
+aux_rule__gccAttributeList_3
+    : gccAttribute kleene_star__gccAttributeList_2
+    ;
+
+aux_rule__gccAttribute_2
+    : '(' optional__postfixExpression_1 ')'
+    ;
+
+optional__gccAttribute_3
+    : aux_rule__gccAttribute_2?
+    ;
+
+aux_rule__gccAttribute_4
+    : ~(',' | '(' | ')') optional__gccAttribute_3
+    ;
+
+optional__pointer_1
+    : typeQualifierList?
+    ;
+
+optional__typeName_1
+    : abstractDeclarator?
+    ;
+
+optional__directAbstractDeclarator_5
+    : parameterTypeList?
+    ;
+
+optional__initializerList_1
+    : designation?
+    ;
+
+aux_rule__asmStatement_1
+    : 'volatile'
+    | '__volatile__'
+    ;
+
+optional__asmStatement_2
+    : aux_rule__asmStatement_1?
+    ;
+
+aux_rule__asmStatement_3
+    : ',' logicalOrExpression
+    ;
+
+kleene_star__asmStatement_4
+    : aux_rule__asmStatement_3*
+    ;
+
+aux_rule__asmStatement_5
+    : logicalOrExpression kleene_star__asmStatement_4
+    ;
+
+optional__asmStatement_6
+    : aux_rule__asmStatement_5?
+    ;
+
+aux_rule__asmStatement_11
+    : ':' optional__asmStatement_6
+    ;
+
+kleene_star__asmStatement_12
+    : aux_rule__asmStatement_11*
+    ;
+
+optional__compoundStatement_1
+    : blockItemList?
+    ;
+
+aux_rule__selectionStatement_1
+    : 'else' statement
+    ;
+
+optional__selectionStatement_2
+    : aux_rule__selectionStatement_1?
+    ;
+
+optional__compilationUnit_1
+    : translationUnit?
+    ;
+
+optional__functionDefinition_2
+    : declarationSpecifiers?
+    ;
+
+optional__functionDefinition_3
+    : declarationList?
+    ;
+
+aux_rule__expression_2
+    : ',' assignmentExpression
+    ;
+
+kleene_star__expression_1
+    : aux_rule__expression_2*
+    ;
+
+expression
+    : assignmentExpression kleene_star__expression_1
+    ;
+
+aux_rule__genericAssocList_2
+    : ',' genericAssociation
+    ;
+
+kleene_star__genericAssocList_1
+    : aux_rule__genericAssocList_2*
+    ;
+
+genericAssocList
+    : genericAssociation kleene_star__genericAssocList_1
+    ;
+
+aux_rule__postfixExpression_3
+    : aux_rule__postfixExpression_10
+    | aux_rule__postfixExpression_11
+    | '++'
+    | '--'
+    | aux_rule__postfixExpression_12
+    ;
+
+kleene_star__postfixExpression_2
+    : aux_rule__postfixExpression_3*
+    ;
+
+postfixExpression
+    : aux_rule__postfixExpression_4 kleene_star__postfixExpression_2
+    ;
+
+aux_rule__initializerList_4
+    : ',' optional__initializerList_1 initializer
+    ;
+
+kleene_star__initializerList_3
+    : aux_rule__initializerList_4*
+    ;
+
+initializerList
+    : optional__initializerList_1 initializer kleene_star__initializerList_3
+    ;
+
+aux_rule__multiplicativeExpression_2
+    : altnt_block__multiplicativeExpression_3 castExpression
+    ;
+
+kleene_star__multiplicativeExpression_1
+    : aux_rule__multiplicativeExpression_2*
+    ;
+
+multiplicativeExpression
+    : castExpression kleene_star__multiplicativeExpression_1
+    ;
+
+aux_rule__additiveExpression_2
+    : altnt_block__additiveExpression_3 multiplicativeExpression
+    ;
+
+kleene_star__additiveExpression_1
+    : aux_rule__additiveExpression_2*
+    ;
+
+additiveExpression
+    : multiplicativeExpression kleene_star__additiveExpression_1
+    ;
+
+aux_rule__shiftExpression_2
+    : altnt_block__shiftExpression_3 additiveExpression
+    ;
+
+kleene_star__shiftExpression_1
+    : aux_rule__shiftExpression_2*
+    ;
+
+shiftExpression
+    : additiveExpression kleene_star__shiftExpression_1
+    ;
+
+aux_rule__relationalExpression_2
+    : altnt_block__relationalExpression_3 shiftExpression
+    ;
+
+kleene_star__relationalExpression_1
+    : aux_rule__relationalExpression_2*
+    ;
+
+relationalExpression
+    : shiftExpression kleene_star__relationalExpression_1
+    ;
+
+aux_rule__equalityExpression_2
+    : altnt_block__equalityExpression_3 relationalExpression
+    ;
+
+kleene_star__equalityExpression_1
+    : aux_rule__equalityExpression_2*
+    ;
+
+equalityExpression
+    : relationalExpression kleene_star__equalityExpression_1
+    ;
+
+aux_rule__andExpression_2
+    : '&' equalityExpression
+    ;
+
+kleene_star__andExpression_1
+    : aux_rule__andExpression_2*
+    ;
+
+andExpression
+    : equalityExpression kleene_star__andExpression_1
+    ;
+
+aux_rule__exclusiveOrExpression_2
+    : '^' andExpression
+    ;
+
+kleene_star__exclusiveOrExpression_1
+    : aux_rule__exclusiveOrExpression_2*
+    ;
+
+exclusiveOrExpression
+    : andExpression kleene_star__exclusiveOrExpression_1
+    ;
+
+aux_rule__inclusiveOrExpression_2
+    : '|' exclusiveOrExpression
+    ;
+
+kleene_star__inclusiveOrExpression_1
+    : aux_rule__inclusiveOrExpression_2*
+    ;
+
+inclusiveOrExpression
+    : exclusiveOrExpression kleene_star__inclusiveOrExpression_1
+    ;
+
+aux_rule__logicalAndExpression_2
+    : '&&' inclusiveOrExpression
+    ;
+
+kleene_star__logicalAndExpression_1
+    : aux_rule__logicalAndExpression_2*
+    ;
+
+logicalAndExpression
+    : inclusiveOrExpression kleene_star__logicalAndExpression_1
+    ;
+
+aux_rule__logicalOrExpression_2
+    : '||' logicalAndExpression
+    ;
+
+kleene_star__logicalOrExpression_1
+    : aux_rule__logicalOrExpression_2*
+    ;
+
+logicalOrExpression
+    : logicalAndExpression kleene_star__logicalOrExpression_1
+    ;
+
+aux_rule__initDeclaratorList_2
+    : ',' initDeclarator
+    ;
+
+kleene_star__initDeclaratorList_1
+    : aux_rule__initDeclaratorList_2*
+    ;
+
+initDeclaratorList
+    : initDeclarator kleene_star__initDeclaratorList_1
+    ;
+
+structDeclarationList
+    : kleene_plus__structDeclarationList_3
+    ;
+
+aux_rule__structDeclaratorList_2
+    : ',' structDeclarator
+    ;
+
+kleene_star__structDeclaratorList_1
+    : aux_rule__structDeclaratorList_2*
+    ;
+
+structDeclaratorList
+    : structDeclarator kleene_star__structDeclaratorList_1
+    ;
+
+aux_rule__enumeratorList_2
+    : ',' enumerator
+    ;
+
+kleene_star__enumeratorList_1
+    : aux_rule__enumeratorList_2*
+    ;
+
+enumeratorList
+    : enumerator kleene_star__enumeratorList_1
+    ;
+
+aux_rule__directDeclarator_7
+    : aux_rule__directDeclarator_13
+    | aux_rule__directDeclarator_14
+    ;
+
+kleene_star__directDeclarator_6
+    : aux_rule__directDeclarator_7*
+    ;
+
+aux_rule__directDeclarator_8
+    : Identifier
+    | aux_rule__directDeclarator_15
+    ;
+
+directDeclarator
+    : aux_rule__directDeclarator_8 kleene_star__directDeclarator_6
+    ;
+
+aux_rule__typeQualifierList_2
+    : typeQualifier
+    ;
+
+typeQualifierList
+    : kleene_plus__typeQualifierList_3
+    ;
+
+aux_rule__identifierList_2
+    : ',' Identifier
+    ;
+
+kleene_star__identifierList_1
+    : aux_rule__identifierList_2*
+    ;
+
+identifierList
+    : Identifier kleene_star__identifierList_1
+    ;
+
+aux_rule__parameterList_2
+    : ',' parameterDeclaration
+    ;
+
+kleene_star__parameterList_1
+    : aux_rule__parameterList_2*
+    ;
+
+parameterList
+    : parameterDeclaration kleene_star__parameterList_1
+    ;
+
+aux_rule__directAbstractDeclarator_13
+    : aux_rule__directAbstractDeclarator_21
+    | aux_rule__directAbstractDeclarator_22
+    ;
+
+kleene_star__directAbstractDeclarator_12
+    : aux_rule__directAbstractDeclarator_13*
+    ;
+
+aux_rule__directAbstractDeclarator_14
+    : aux_rule__directAbstractDeclarator_23
+    | aux_rule__directAbstractDeclarator_24
+    ;
+
+directAbstractDeclarator
+    : aux_rule__directAbstractDeclarator_14 kleene_star__directAbstractDeclarator_12
+    ;
+
+designatorList
+    : kleene_plus__designatorList_3
+    ;
+
+blockItemList
+    : kleene_plus__blockItemList_3
+    ;
+
+translationUnit
+    : kleene_plus__translationUnit_3
+    ;
+
+aux_rule__declarationList_2
+    : declaration
+    ;
+
+declarationList
+    : kleene_plus__declarationList_3
+    ;
+
+kleene_plus__structDeclarationList_3
+    : aux_rule__structDeclarationList_2+
+    ;
+
+kleene_plus__typeQualifierList_3
+    : aux_rule__typeQualifierList_2+
+    ;
+
+kleene_plus__designatorList_3
+    : aux_rule__designatorList_2+
+    ;
+
+kleene_plus__blockItemList_3
+    : aux_rule__blockItemList_2+
+    ;
+
+kleene_plus__translationUnit_3
+    : aux_rule__translationUnit_2+
+    ;
+
+kleene_plus__declarationList_3
+    : aux_rule__declarationList_2+
+    ;
+
+optional__postfixExpression_5
+    : ','?
+    ;
+
+aux_rule__initDeclarator_1
+    : '=' initializer
+    ;
+
+optional__initDeclarator_2
+    : aux_rule__initDeclarator_1?
+    ;
+
+aux_rule__enumerator_1
+    : '=' constantExpression
+    ;
+
+optional__enumerator_2
+    : aux_rule__enumerator_1?
+    ;
+
+aux_rule__parameterTypeList_1
+    : ',' '...'
+    ;
+
+optional__parameterTypeList_2
+    : aux_rule__parameterTypeList_1?
+    ;
+
+altnt_block__primaryExpression_3
+    : aux_rule__primaryExpression_4
+    | aux_rule__primaryExpression_5
+    | aux_rule__primaryExpression_6
+    | aux_rule__primaryExpression_7
+    ;
+
+altnt_block__unaryExpression_1
+    : '++'
+    | '--'
+    | 'sizeof'
+    ;
+
+altnt_block__unaryExpression_2
+    : aux_rule__unaryExpression_9
+    | aux_rule__unaryExpression_10
+    ;
+
+altnt_block__genericAssociation_1
+    : typeName
+    | 'default'
+    ;
+
+altnt_block__postfixExpression_7
+    : '.'
+    | '->'
+    ;
+
+altnt_block__postfixExpression_8
+    : optional__primaryExpression_2 '(' typeName ')' '{' initializerList optional__postfixExpression_5
+    ;
+
+altnt_block__multiplicativeExpression_3
+    : '*'
+    | '/'
+    | '%'
+    ;
+
+altnt_block__additiveExpression_3
+    : '+'
+    | '-'
+    ;
+
+altnt_block__shiftExpression_3
+    : '<<'
+    | '>>'
+    ;
+
+altnt_block__relationalExpression_3
+    : '<'
+    | '>'
+    | '<='
+    | '>='
+    ;
+
+altnt_block__equalityExpression_3
+    : '=='
+    | '!='
+    ;
+
+altnt_block__typeSpecifier_1
+    : aux_rule__typeSpecifier_4
+    | aux_rule__typeSpecifier_5
+    ;
+
+altnt_block__alignmentSpecifier_1
+    : typeName
+    | constantExpression
+    ;
+
+altnt_block__structOrUnionSpecifier_2
+    : aux_rule__structOrUnionSpecifier_3
+    | Identifier
+    ;
+
+altnt_block__enumSpecifier_3
+    : Identifier
+    | aux_rule__enumSpecifier_6
+    ;
+
+altnt_block__pointer_5
+    : optional__pointer_1 optional__declarator_1
+    ;
+
+altnt_block__directDeclarator_9
+    : aux_rule__directDeclarator_16
+    | aux_rule__directDeclarator_17
+    ;
+
+altnt_block__directDeclarator_10
+    : parameterTypeList
+    | optional__directDeclarator_5
+    ;
+
+altnt_block__directAbstractDeclarator_15
+    : aux_rule__directAbstractDeclarator_25
+    | '*'
+    | aux_rule__directAbstractDeclarator_26
+    ;
+
+altnt_block__directAbstractDeclarator_17
+    : altnt_block__directAbstractDeclarator_20 ')' kleene_star__declarator_2
+    ;
+
+altnt_block__labeledStatement_1
+    : Identifier
+    | aux_rule__labeledStatement_2
+    | 'default'
+    ;
+
+altnt_block__jumpStatement_2
+    : 'continue'
+    | 'break'
+    | aux_rule__jumpStatement_4
+    | aux_rule__jumpStatement_5
+    ;
+
+altnt_block__enumSpecifier_4
+    : optional__structOrUnionSpecifier_1 '{' enumeratorList optional__postfixExpression_5
+    ;
+
+altnt_block__directDeclarator_11
+    : aux_rule__directDeclarator_18
+    | aux_rule__directDeclarator_19
+    ;
+
+altnt_block__iterationStatement_7
+    : altnt_block__iterationStatement_8 optional__postfixExpression_1 ';' optional__postfixExpression_1
+    ;
+
+altnt_block__jumpStatement_3
+    : Identifier
+    | unaryExpression
+    ;
+
+aux_rule__postfixExpression_4
+    : Identifier
+    | Constant
+    | kleene_plus__primaryExpression_1
+    | genericSelection
+    | aux_rule__postfixExpression_13
+    | aux_rule__postfixExpression_14
+    ;
+
+declarationSpecifier
+    : 'typedef'
+    | 'extern'
+    | 'static'
+    | '_Thread_local'
+    | 'auto'
+    | 'register'
+    | typeSpecifier
+    | typeQualifier
+    | 'inline'
+    | '_Noreturn'
+    | '__inline__'
+    | '__stdcall'
+    | gccAttributeSpecifier
+    | aux_rule__declarationSpecifier_1
+    | alignmentSpecifier
+    ;
+
+aux_rule__structDeclarationList_2
+    : aux_rule__structDeclarationList_4
+    | staticAssertDeclaration
+    ;
+
+aux_rule__designatorList_2
+    : aux_rule__designatorList_4
+    | aux_rule__designatorList_5
+    ;
+
+statement
+    : labeledStatement
+    | compoundStatement
+    | expressionStatement
+    | aux_rule__statement_3
+    | aux_rule__statement_4
+    | jumpStatement
+    | asmStatement
+    | aux_rule__statement_5
+    ;
+
+aux_rule__blockItemList_2
+    : declaration
+    | statement
+    ;
+
+aux_rule__translationUnit_2
+    : functionDefinition
+    | declaration
+    | IncludeDirective
+    | ';'
+    ;
+
+altnt_block__unaryExpression_3
+    : Alignof
+    | Alignof_gcc
+    ;
+
+altnt_block__unaryExpression_4
+    : typeName
+    | unaryExpression
+    ;
+
+altnt_block__typeSpecifier_2
+    : '__m128'
+    | '__m128d'
+    | '__m128i'
+    ;
+
+altnt_block__specifierQualifierList_3
+    : typeSpecifier
+    | typeQualifier
+    ;
+
+altnt_block__pointer_8
+    : '*'
+    | '^'
+    ;
+
+altnt_block__directDeclarator_12
+    : optional__directDeclarator_2
+    | '*'
+    ;
+
+altnt_block__parameterDeclaration_2
+    : declarator
+    | optional__typeName_1
+    ;
+
+altnt_block__directAbstractDeclarator_20
+    : abstractDeclarator
+    | optional__directAbstractDeclarator_5
+    ;
+
+altnt_block__iterationStatement_8
+    : aux_rule__iterationStatement_9
+    | declaration
+    ;
+
+altnt_block__statement_1
+    : aux_rule__statement_6
+    | aux_rule__statement_7
+    ;
+
+altnt_block__statement_2
+    : 'switch'
+    | 'while'
+    ;
+
+aux_rule__unaryExpression_5
+    : unaryOperator castExpression
+    ;
+
+aux_rule__unaryExpression_6
+    : '&&' Identifier
+    ;
+
+aux_rule__unaryExpression_7
+    : altnt_block__unaryExpression_1 unaryExpression
+    ;
+
+aux_rule__unaryExpression_8
+    : altnt_block__unaryExpression_2 ')'
+    ;
+
+aux_rule__castExpression_2
+    : optional__primaryExpression_2 '(' typeName ')' castExpression
+    ;
+
+aux_rule__assignmentExpression_1
+    : unaryExpression assignmentOperator assignmentExpression
+    ;
+
+aux_rule__declaration_3
+    : optional__declaration_1 declarationSpecifiers optional__declaration_2 ';'
+    ;
+
+aux_rule__typeSpecifier_3
+    : altnt_block__typeSpecifier_1 ')'
+    ;
+
+aux_rule__structDeclarator_2
+    : optional__structDeclarator_1 ':' constantExpression
+    ;
+
+aux_rule__gccDeclaratorExtension_2
+    : asmKeyword '(' kleene_plus__primaryExpression_1 ')'
+    ;
+
+aux_rule__abstractDeclarator_3
+    : optional__declarator_1 directAbstractDeclarator kleene_star__declarator_2
+    ;
+
+aux_rule__initializer_2
+    : '{' initializerList optional__postfixExpression_5 '}'
+    ;
+
+aux_rule__postfixExpression_10
+    : '[' expression ']'
+    ;
+
+aux_rule__postfixExpression_11
+    : '(' optional__postfixExpression_1 ')'
+    ;
+
+aux_rule__postfixExpression_12
+    : altnt_block__postfixExpression_7 Identifier
+    ;
+
+aux_rule__directDeclarator_13
+    : '[' altnt_block__directDeclarator_9 ']'
+    ;
+
+aux_rule__directDeclarator_14
+    : '(' altnt_block__directDeclarator_10 ')'
+    ;
+
+aux_rule__directDeclarator_15
+    : '(' declarator ')'
+    ;
+
+aux_rule__directAbstractDeclarator_21
+    : '(' optional__directAbstractDeclarator_5 ')' kleene_star__declarator_2
+    ;
+
+aux_rule__directAbstractDeclarator_22
+    : '[' altnt_block__directAbstractDeclarator_15 ']'
+    ;
+
+aux_rule__directAbstractDeclarator_23
+    : '[' altnt_block__directAbstractDeclarator_15 ']'
+    ;
+
+aux_rule__directAbstractDeclarator_24
+    : '(' altnt_block__directAbstractDeclarator_17
+    ;
+
+aux_rule__primaryExpression_4
+    : '(' expression
+    ;
+
+aux_rule__primaryExpression_5
+    : optional__primaryExpression_2 '(' compoundStatement
+    ;
+
+aux_rule__primaryExpression_6
+    : '__builtin_va_arg' '(' unaryExpression ',' typeName
+    ;
+
+aux_rule__primaryExpression_7
+    : '__builtin_offsetof' '(' typeName ',' unaryExpression
+    ;
+
+aux_rule__unaryExpression_9
+    : 'sizeof' '(' typeName
+    ;
+
+aux_rule__unaryExpression_10
+    : altnt_block__unaryExpression_3 '(' altnt_block__unaryExpression_4
+    ;
+
+aux_rule__typeSpecifier_4
+    : '__extension__' '(' altnt_block__typeSpecifier_2
+    ;
+
+aux_rule__typeSpecifier_5
+    : '__typeof__' '(' constantExpression
+    ;
+
+aux_rule__structOrUnionSpecifier_3
+    : optional__structOrUnionSpecifier_1 '{' structDeclarationList '}'
+    ;
+
+aux_rule__enumSpecifier_6
+    : altnt_block__enumSpecifier_4 '}'
+    ;
+
+aux_rule__directDeclarator_16
+    : altnt_block__directDeclarator_11 assignmentExpression
+    ;
+
+aux_rule__directDeclarator_17
+    : optional__pointer_1 altnt_block__directDeclarator_12
+    ;
+
+aux_rule__directAbstractDeclarator_25
+    : optional__pointer_1 optional__directDeclarator_2
+    ;
+
+aux_rule__directAbstractDeclarator_26
+    : altnt_block__directDeclarator_11 assignmentExpression
+    ;
+
+aux_rule__labeledStatement_2
+    : 'case' constantExpression
+    ;
+
+aux_rule__jumpStatement_4
+    : 'return' optional__postfixExpression_1
+    ;
+
+aux_rule__jumpStatement_5
+    : 'goto' altnt_block__jumpStatement_3
+    ;
+
+aux_rule__directDeclarator_18
+    : 'static' optional__pointer_1
+    ;
+
+aux_rule__directDeclarator_19
+    : typeQualifierList 'static'
+    ;
+
+aux_rule__postfixExpression_13
+    : altnt_block__primaryExpression_3 ')'
+    ;
+
+aux_rule__postfixExpression_14
+    : altnt_block__postfixExpression_8 '}'
+    ;
+
+aux_rule__declarationSpecifier_1
+    : '__declspec' '(' Identifier ')'
+    ;
+
+aux_rule__structDeclarationList_4
+    : optional__declaration_1 specifierQualifierList optional__structDeclaration_2 ';'
+    ;
+
+aux_rule__designatorList_4
+    : '[' constantExpression ']'
+    ;
+
+aux_rule__designatorList_5
+    : '.' Identifier
+    ;
+
+aux_rule__statement_3
+    : 'if' '(' expression ')' statement optional__selectionStatement_2
+    ;
+
+aux_rule__statement_4
+    : 'do' statement 'while' '(' expression ')' ';'
+    ;
+
+aux_rule__statement_5
+    : altnt_block__statement_1 ')' statement
+    ;
+
+aux_rule__iterationStatement_9
+    : optional__postfixExpression_1 ';'
+    ;
+
+aux_rule__statement_6
+    : 'for' '(' altnt_block__iterationStatement_7
+    ;
+
+aux_rule__statement_7
+    : altnt_block__statement_2 '(' expression
     ;
 

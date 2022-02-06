@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,7 +21,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
-import java.io.File
+import java.nio.file.Path
+import kotlin.io.path.absolutePathString
+import kotlin.io.path.readText
 
 @RunWith(JUnit4::class)
 class PnfGoParserFacadeTest {
@@ -29,17 +31,17 @@ class PnfGoParserFacadeTest {
 
   // Collection for keeping track of the shards of tests we need to run
   private companion object testData {
-    val shard1 = mutableListOf<File>()
-    val shard2 = mutableListOf<File>()
-    val shard3 = mutableListOf<File>()
-    val shard4 = mutableListOf<File>()
-    val shard5 = mutableListOf<File>()
-    val shard6 = mutableListOf<File>()
+    val shard1 = mutableListOf<Path>()
+    val shard2 = mutableListOf<Path>()
+    val shard3 = mutableListOf<Path>()
+    val shard4 = mutableListOf<Path>()
+    val shard5 = mutableListOf<Path>()
+    val shard6 = mutableListOf<Path>()
 
     init {
       var counter = 0
       val files = listOf(shard1, shard2, shard3, shard4, shard5, shard6)
-      for (file in TestUtility.getGolangTestFiles()) {
+      for (file in TestUtility.golangTestFiles) {
         files.get(counter % files.size).add(file)
         counter += 1
       }
@@ -48,17 +50,17 @@ class PnfGoParserFacadeTest {
 
   fun testString(program: String, name: String) {
     val parseTreeFromOrigParser = facade.parseWithOrigGoParser(program, name)
-    val tokensByOrigParser = TestUtility.extractTokens(parseTreeFromOrigParser.tree)
+    val tokensByOrigParser = TestUtility.extractTokenTexts(parseTreeFromOrigParser.tree)
 
     val parseTreeWithPnfParser = facade.parseString(program, name)
-    val tokensByPnfParser = TestUtility.extractTokens(parseTreeWithPnfParser.tree)
+    val tokensByPnfParser = TestUtility.extractTokenTexts(parseTreeWithPnfParser.tree)
 
     Truth.assertThat(tokensByPnfParser).containsExactlyElementsIn(tokensByOrigParser).inOrder()
   }
 
-  fun testSingleFile(file: File) {
+  fun testSingleFile(file: Path) {
     try {
-      System.err.println("Testing file ${file.getAbsolutePath()}")
+      System.err.println("Testing file ${file.absolutePathString()}")
       val check = file.readText()
       // Skip files that contain ERROR in them, as they may not parse properly.
       if (check.contains("ERROR") || check.contains("ignored")) {
@@ -66,13 +68,13 @@ class PnfGoParserFacadeTest {
       }
       // Skip bad files (using nil as an identifier, which is technically allowed,
       //  but causes a lot of headaches for the grammar)
-      if (file.getAbsolutePath().contains("issue4252.dir") ||
-        file.getAbsolutePath().contains("rename.go")
+      if (file.absolutePathString().contains("issue4252.dir") ||
+        file.absolutePathString().contains("rename.go")
       ) {
         return
       }
       // Skip fancy literals (for now) -- need to fix lexer for this.
-      if (file.getAbsolutePath().contains("literal2.go")) {
+      if (file.absolutePathString().contains("literal2.go")) {
         return
       }
 

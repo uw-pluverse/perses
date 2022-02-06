@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,8 +20,9 @@ import com.google.common.truth.Truth
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import java.io.File
 import java.nio.charset.StandardCharsets
+import java.nio.file.Files
+import kotlin.io.path.readText
 
 @RunWith(JUnit4::class)
 class ShellOutputLinesTest {
@@ -35,13 +36,13 @@ class ShellOutputLinesTest {
         |b
         |c""".trimMargin()
     val stream = ShellOutputStream()
-    content.forEach { stream.write(it.toInt()) }
+    content.forEach { stream.write(it.code) }
     stream.close()
     list = stream.toOutputStringList()
   }
 
   @Test
-  fun `contains a string`() {
+  fun test_containsString() {
     Truth.assertThat(list.anyLineContains("a")).isTrue()
     Truth.assertThat(list.anyLineContains("A")).isFalse()
   }
@@ -53,7 +54,7 @@ class ShellOutputLinesTest {
 
   @Test
   fun test_writeToFile() {
-    val file = File.createTempFile("test_shell_output_lines_test", ".txt")
+    val file = Files.createTempFile("test_shell_output_lines_test", ".txt")
     list.writeToFile(file)
     val readText = file.readText(StandardCharsets.UTF_8)
     Truth.assertThat(readText.trim()).isEqualTo(list.combinedLines.trim())

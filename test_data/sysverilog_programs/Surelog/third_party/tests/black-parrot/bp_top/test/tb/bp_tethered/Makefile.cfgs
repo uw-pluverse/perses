@@ -1,0 +1,53 @@
+e_bp_multicore_16_cce_ucode_cfg_cores   := 16
+e_bp_multicore_16_cfg_cores             := 16
+e_bp_multicore_12_cce_ucode_cfg_cores   := 12
+e_bp_multicore_12_cfg_cores             := 12
+e_bp_multicore_8_cce_ucode_cfg_cores    := 8
+e_bp_multicore_8_cfg_cores              := 8
+e_bp_multicore_6_cce_ucode_cfg_cores    := 6
+e_bp_multicore_6_cfg_cores              := 6
+e_bp_multicore_4_accelerator_cfg_cores  := 4
+e_bp_multicore_4_cce_ucode_cfg_cores    := 4
+e_bp_multicore_4_l2e_cfg_cores          := 6
+e_bp_multicore_4_cfg_cores              := 4
+e_bp_multicore_3_cce_ucode_cfg_cores    := 3
+e_bp_multicore_3_cfg_cores              := 3
+e_bp_multicore_2_cce_ucode_cfg_cores    := 2
+e_bp_multicore_2_l2e_cfg_cores          := 4
+e_bp_multicore_2_cfg_cores              := 2
+e_bp_multicore_1_l2e_cfg_cores          := 2
+
+e_bp_default_cfg_cores                  := 1
+
+_NCPUS :=$($(CFG)_cores)
+ifeq ($(_NCPUS),)
+	export NCPUS ?= 1
+else
+	export NCPUS ?= $(_NCPUS)
+endif
+
+e_bp_unicore_l2_atomic_cfg_amoen       := 1
+e_bp_unicore_l1_atomic_cfg_amoen       := 1
+
+e_bp_default_cfg_amoen                 := 0
+
+_AMOEN :=$($(CFG)_amoen)
+ifeq ($(_AMOEN),)
+	export AMOEN ?= 0
+else
+	export AMOEN ?= $(_AMOEN)
+endif
+
+e_bp_unicore_paddr_large_cfg_paddr_width               := 44
+e_bp_multicore_1_paddr_large_cfg_paddr_width           := 44
+e_bp_multicore_1_cce_ucode_paddr_large_cfg_paddr_width := 44
+
+e_bp_default_cfg_paddr_width                           := 40
+
+_PADDR_WIDTH :=$($(CFG)_paddr_width)
+ifeq ($(_PADDR_WIDTH),)
+	export PADDR_WIDTH ?= 40
+else
+	export PADDR_WIDTH ?= $(_PADDR_WIDTH)
+endif
+

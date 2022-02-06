@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -25,13 +25,33 @@ class FastStringBuilder(capacity: Int) {
 
   private var data: CharArray
 
+  var currentLineNo: Int = 1
+    private set
+
+  var charPositionInLine: Int = FIRST_CHAR_POSITION_IN_LINE
+    private set
+
   fun append(s: String): FastStringBuilder {
     val stringLength = s.length
     val newSize = size + stringLength
     ensureCapacity(newSize)
     s.toCharArray(data, size, 0, stringLength)
     size = newSize
+    updatePosition(s)
     return this
+  }
+
+  private fun updatePosition(s: String) {
+    s.forEach { updatePosition(it) }
+  }
+
+  private fun updatePosition(c: Char) {
+    if (c == '\n') {
+      ++currentLineNo
+      charPositionInLine = FIRST_CHAR_POSITION_IN_LINE
+    } else {
+      ++charPositionInLine
+    }
   }
 
   fun length() = size
@@ -45,6 +65,7 @@ class FastStringBuilder(capacity: Int) {
     ensureCapacity(newSize)
     data[size] = c
     size = newSize
+    updatePosition(c)
     return this
   }
 
@@ -76,5 +97,6 @@ class FastStringBuilder(capacity: Int) {
 
   companion object {
     private val EMPTY = CharArray(0)
+    private const val FIRST_CHAR_POSITION_IN_LINE = 0
   }
 }

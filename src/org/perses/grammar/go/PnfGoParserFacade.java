@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,29 +16,32 @@
  */
 package org.perses.grammar.go;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.perses.antlr.ParseTreeWithParser;
-import org.perses.grammar.AbstractDefaultParserFacade;
-
+import com.google.common.primitives.ImmutableIntArray;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.perses.antlr.ParseTreeWithParser;
+import org.perses.grammar.AbstractDefaultParserFacade;
 
 public final class PnfGoParserFacade extends AbstractDefaultParserFacade<GoLexer, PnfGoParser> {
 
   public PnfGoParserFacade() {
     super(
         LanguageGo.INSTANCE,
-        createSeparateAntlrGrammar("PnfGoParser.g4", "GoLexer.g4", PnfGoParserFacade.class));
+        createSeparateAntlrGrammar("PnfGoParser.g4", "GoLexer.g4", PnfGoParserFacade.class),
+        GoLexer.class,
+        PnfGoParser.class,
+        ImmutableIntArray.of(GoLexer.IDENTIFIER));
   }
 
   @Override
-  protected GoLexer createLexer(ANTLRInputStream inputStream) {
+  protected GoLexer createLexer(CharStream inputStream) {
     return new GoLexer(inputStream);
   }
 
@@ -52,9 +55,9 @@ public final class PnfGoParserFacade extends AbstractDefaultParserFacade<GoLexer
     return parser.sourceFile();
   }
 
-  public ParseTreeWithParser parseWithOrigGoParser(File file) throws IOException {
-    try (BufferedReader reader = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8)) {
-      return parseWithOrigGoParser(reader, file.getPath());
+  public ParseTreeWithParser parseWithOrigGoParser(Path file) throws IOException {
+    try (BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
+      return parseWithOrigGoParser(reader, file.toString());
     }
   }
 

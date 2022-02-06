@@ -3,19 +3,14 @@
 set -o nounset
 set -o pipefail
 
-if [[ ! -e "WORKSPACE" ]] ; then
-  echo "ERROR: This script should be run in the root folder of the project."
-  exit 1
-fi
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+source "${SCRIPT_DIR}/constants.sh" || exit 1
 
-readonly ROOT=$(pwd)
+COPYRIGHT_FILEPATH="./copyright/copyright.txt"
+
 if ! bazel run //copyright:check_copyright_main -- \
-    "$@" \
-    "${ROOT}/antlropt/" \
-    "${ROOT}/src/" \
-    "${ROOT}/test/" \
-    "${ROOT}/version/" ; then
-  echo "Run '$0 -u' to fix this problem"
+    "$@" "${WORKSPACE_ROOT}/${COPYRIGHT_FILEPATH}" ${ABS_BAZEL_DIRS_STRING} ; then
+  echo "Run '$0 --update-copyright' to fix this problem"
   exit 1
 fi
 

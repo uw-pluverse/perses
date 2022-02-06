@@ -1,4 +1,7 @@
-package(default_visibility = ["//test/org/perses:__subpackages__"])
+package(default_visibility = [
+    "//antlropt/test:__subpackages__",
+    "//test/org/perses:__subpackages__",
+])
 
 filegroup(
     name = "antlr_grammars",

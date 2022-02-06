@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,21 +24,22 @@ import org.perses.reduction.ReducerContext
 import org.perses.reduction.partition.Partition
 import org.perses.reduction.reducer.TreeTransformations.createNodeDeletionActionSetFor
 import org.perses.reduction.reducer.TreeTransformations.replaceKleeneQualifiedNodeWithKleeneQualifiedChildren
-import org.perses.reduction.reducer.TreeTransformations.replaceNodeWithNearestCompatibleChildren
-import org.perses.tree.spar.AbstractSparTreeEdit
-import org.perses.tree.spar.AbstractSparTreeNode
-import org.perses.tree.spar.ChildHoistingAction
-import org.perses.tree.spar.ChildHoistingActionSet
-import org.perses.tree.spar.NodeDeletionActionSet
-import org.perses.tree.spar.SparTree
-import java.util.ArrayList
-import java.util.Comparator
+import org.perses.reduction.reducer.TreeTransformations.replaceNodeWithCompatibleChildren
+import org.perses.spartree.AbstractSparTreeEdit
+import org.perses.spartree.AbstractSparTreeNode
+import org.perses.spartree.ChildHoistingAction
+import org.perses.spartree.ChildHoistingActionSet
+import org.perses.spartree.NodeDeletionActionSet
+import org.perses.spartree.SparTree
 
 /** Perses reducer. The granularity is parse tree nodes, but not level-based.  */
 abstract class AbstractPersesNodeReducer protected constructor(
   reducerAnnotation: ReducerAnnotation,
   reducerContext: ReducerContext
 ) : AbstractNodeReducer(reducerAnnotation, reducerContext) {
+
+  protected val nodeReducerConfiguation =
+    reducerContext.configuration.persesNodeReducerConfig
 
   override fun reduceOneNode(
     tree: SparTree,
@@ -47,12 +48,13 @@ abstract class AbstractPersesNodeReducer protected constructor(
     return when (node.nodeType) {
       RuleType.KLEENE_PLUS -> reduceKleenePlus(tree, node)
       RuleType.KLEENE_STAR, RuleType.OPTIONAL -> reduceKleenStar(tree, node)
-      RuleType.OTHER_RULE -> reduceRegularRule(tree, node)
-      RuleType.TOKEN -> // TODO: Do nothing.
-        ImmutableList.of()
+      RuleType.ALT_BLOCKS, RuleType.OTHER_RULE -> reduceRegularRule(tree, node)
+      RuleType.TOKEN -> ImmutableList.of() // TODO: Do nothing.
       else -> throw AssertionError("Unhandled node type: $node")
     }
   }
+
+  override fun requiresParsableTree() = true
 
   private fun reduceRegularRule(
     tree: SparTree,
@@ -69,14 +71,16 @@ abstract class AbstractPersesNodeReducer protected constructor(
   private fun createEditListForRegularRuleNode(
     tree: SparTree,
     regularRuleNode: AbstractSparTreeNode
-  ): List<AbstractSparTreeEdit> {
-    assert(regularRuleNode.antlrRule.get().ruleDef.isParserRule)
+  ): List<AbstractSparTreeEdit<*>> {
+    assert(regularRuleNode.antlrRule!!.ruleDef.isParserRule) {
+      regularRuleNode.antlrRule!!.ruleDef
+    }
     val childCount = regularRuleNode.childCount
     if (childCount == 0) {
       return emptyList()
     }
-    val maxEditCount = 100
-    val editList = ArrayList<AbstractSparTreeEdit>(maxEditCount)
+    val maxEditCount = nodeReducerConfiguation.maxEditCountForRegularRuleNode
+    val editList = ArrayList<AbstractSparTreeEdit<*>>(maxEditCount)
     if (canBeEpsilon(regularRuleNode)) {
       addDeletionEditToEditListAndLog(
         NodeDeletionActionSet.createByDeleteSingleNode(
@@ -101,13 +105,18 @@ abstract class AbstractPersesNodeReducer protected constructor(
         tree
       )
     }
-    val compatibleReplacements = replaceNodeWithNearestCompatibleChildren(regularRuleNode, 5)
-    actionSetProfiler.onReplaceNodeWithNearestCompatibleChildren(compatibleReplacements)
     val remainingQuota = maxEditCount - editList.size
     if (remainingQuota > 0) {
+      val compatibleReplacements = replaceNodeWithCompatibleChildren(
+        currentNode = regularRuleNode,
+        stopAtFirstCompatible = nodeReducerConfiguation.stopAtFirstCompatibleChildren,
+        maxNodeToCollect = remainingQuota,
+        maxBfsDepth = nodeReducerConfiguation.maxBfsDepthForRegularRuleNode
+      )
+      actionSetProfiler.onReplaceNodeWithNearestCompatibleChildren(compatibleReplacements)
       compatibleReplacements.stream()
         .limit(remainingQuota.toLong())
-        .forEach { action: ChildHoistingAction? ->
+        .forEach { action: ChildHoistingAction ->
           addEditToEditListAndLog(
             ChildHoistingActionSet.createByReplacingSingleNode(
               action, "[regular node]compatible replacement"
@@ -152,7 +161,7 @@ abstract class AbstractPersesNodeReducer protected constructor(
     if (childCount == 0) {
       return ImmutableList.of()
     }
-    val editList = ArrayList<AbstractSparTreeEdit>()
+    val editList = ArrayList<AbstractSparTreeEdit<*>>()
     if (canBeEpsilon(kleenePlus)) {
       addDeletionEditToEditListAndLog(
         NodeDeletionActionSet.createByDeleteSingleNode(kleenePlus, "[kleene_plus]can be epsilon"),

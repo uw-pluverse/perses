@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,22 +17,37 @@
 package org.perses.util
 
 import java.io.Closeable
-import java.io.File
+import java.nio.file.Files
+import java.nio.file.Path
+import kotlin.io.path.createDirectory
+import kotlin.io.path.exists
+import kotlin.io.path.isDirectory
 
-class AutoDeletableFolder(val file: File) : Closeable {
+class AutoDeletableFolder(val file: Path) : Closeable {
+
+  private var open = true
 
   override fun close() {
-    if (file.exists()) {
-      file.deleteRecursively()
+    if (open) {
+      file.toFile().deleteRecursively()
+      open = false
     }
   }
 
   init {
     if (!file.exists()) {
-      check(file.mkdirs()) {
+      file.createDirectory()
+      check(file.exists()) {
         "fail to create folder $file"
       }
     }
-    check(file.isDirectory)
+    check(file.isDirectory())
+    check(open)
+  }
+
+  companion object {
+
+    fun createTempDir(prefix: String) =
+      AutoDeletableFolder(Files.createTempDirectory(prefix))
   }
 }

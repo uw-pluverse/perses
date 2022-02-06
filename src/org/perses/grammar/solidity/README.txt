@@ -1,0 +1,2 @@
+Solidity.g4 is downloaded from https://github.com/ethereum/solidity/blob/develop/docs/grammar/Solidity.g4.
+SolidityLexer.g4 is downloaded from https://github.com/ethereum/solidity/blob/develop/docs/grammar/SolidityLexer.g4.

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,15 +20,15 @@ import org.perses.reduction.ReductionListenerManager
 import org.perses.reduction.TreeEditWithItsResult
 import org.perses.reduction.partition.Partition
 import org.perses.reduction.reducer.TreeTransformations.createNodeDeletionActionSetFor
-import org.perses.tree.spar.AbstractNodeActionSetCache
-import org.perses.tree.spar.AbstractSparTreeEdit
-import org.perses.tree.spar.SparTree
+import org.perses.spartree.AbstractNodeActionSetCache
+import org.perses.spartree.AbstractSparTreeEdit
+import org.perses.spartree.SparTree
 import java.util.ArrayDeque
 
 abstract class AbstractSpecialDeltaDebugger protected constructor(
   listenerManager: ReductionListenerManager,
   nodeActionSetCache: AbstractNodeActionSetCache,
-  treeEditTester: (AbstractSparTreeEdit) -> TreeEditWithItsResult?
+  treeEditTester: (AbstractSparTreeEdit<*>) -> TreeEditWithItsResult?
 ) : AbstractDeltaDebugger(listenerManager, nodeActionSetCache, treeEditTester) {
 
   override fun reduce(

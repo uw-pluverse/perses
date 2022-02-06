@@ -19,11 +19,12 @@ if ! command -v "scala" ; then
   exit 3
 fi
 
-if ! scalac "${SRC}" ; then
+# scalac interacts with stty, and can suspend if it runs in the background.
+if ! scalac "${SRC}" < /dev/null ; then
   exit 4
 fi
 
-scala -nc "${EXE}" &> "${OUTPUT}"
+scala -nc "${EXE}" < /dev/null &> "${OUTPUT}"
 
 # shellcheck disable=SC2181
 if [[ "${?}" != 0 ]] ; then

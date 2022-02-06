@@ -1,0 +1,2277 @@
+======================Reduction starts======================
+
+The spar tree is the following.
+compilationUnit {id=1}
+|___(*) {id=2,slot_type=kleene_star__typeDeclaration}
+    |___normalClassDeclaration {id=5,slot_type=[typeDeclaration,classDeclaration,normalClassDeclaration]}
+        |___(*) {id=6,slot_type=kleene_star__normalClassDeclaration_1}
+        |   |___Token:public {id=138,slot_type=[classModifier,PUBLIC]}
+        |___Token:class {id=7,slot_type=CLASS}
+        |___Token:Hello {id=8,slot_type=Identifier}
+        |___classBody {id=9,slot_type=classBody}
+            |___Token:{ {id=10,slot_type=LBRACE}
+            |___(*) {id=11,slot_type=kleene_star__classBody_1}
+            |   |___methodDeclaration {id=14,slot_type=[classBodyDeclaration,methodDeclaration]}
+            |       |___(*) {id=15,slot_type=kleene_star__methodDeclaration_1}
+            |       |   |___Token:public {id=136,slot_type=[methodModifier,PUBLIC]}
+            |       |   |___Token:static {id=135,slot_type=[methodModifier,STATIC]}
+            |       |___methodHeader {id=16,slot_type=methodHeader}
+            |       |   |___Token:void {id=132,slot_type=[result,VOID]}
+            |       |   |___methodDeclarator {id=110,slot_type=methodDeclarator}
+            |       |       |___Token:main {id=111,slot_type=Identifier}
+            |       |       |___Token:( {id=112,slot_type=LPAREN}
+            |       |       |___(?) {id=113,slot_type=optional__methodDeclarator_1}
+            |       |       |   |___formalParameter {id=117,slot_type=[formalParameterList,lastFormalParameter,formalParameter]}
+            |       |       |       |___unannArrayType {id=121,slot_type=[unannType,unannArrayType]}
+            |       |       |       |   |___Token:String {id=131,slot_type=[altnt_block__unannArrayType_1,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |       |       |       |   |___(+) {id=124,slot_type=[dims,kleene_plus__dims_3]}
+            |       |       |       |       |___aux_rule__dims_1 {id=125,slot_type=aux_rule__dims_1}
+            |       |       |       |           |___Token:[ {id=126,slot_type=LBRACK}
+            |       |       |       |           |___Token:] {id=127,slot_type=RBRACK}
+            |       |       |       |___Token:args {id=120,slot_type=[variableDeclaratorId,Identifier]}
+            |       |       |___Token:) {id=114,slot_type=RPAREN}
+            |       |___block {id=18,slot_type=[methodBody,block]}
+            |           |___Token:{ {id=19,slot_type=LBRACE}
+            |           |___(?) {id=20,slot_type=optional__block_1}
+            |           |   |___(+) {id=22,slot_type=blockStatements}
+            |           |       |___expressionStatement {id=69,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |           |       |   |___methodInvocation {id=72,slot_type=[statementExpression,methodInvocation]}
+            |           |       |   |   |___aux_rule__methodInvocation_18 {id=75,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
+            |           |       |   |   |   |___typeName {id=76,slot_type=typeName}
+            |           |       |   |   |   |   |___(?) {id=103,slot_type=optional__typeName_2}
+            |           |       |   |   |   |   |   |___aux_rule__typeName_1 {id=105,slot_type=aux_rule__typeName_1}
+            |           |       |   |   |   |   |       |___Token:System {id=108,slot_type=[packageName,Identifier]}
+            |           |       |   |   |   |   |       |___Token:. {id=107,slot_type=DOT}
+            |           |       |   |   |   |   |___Token:out {id=104,slot_type=Identifier}
+            |           |       |   |   |   |___Token:. {id=77,slot_type=DOT}
+            |           |       |   |   |   |___altnt_block__methodInvocation_13 {id=78,slot_type=altnt_block__methodInvocation_13}
+            |           |       |   |   |       |___Token:println {id=79,slot_type=Identifier}
+            |           |       |   |   |       |___Token:( {id=80,slot_type=LPAREN}
+            |           |       |   |   |       |___(?) {id=81,slot_type=optional__explicitConstructorInvocation_2}
+            |           |       |   |   |           |___Token:"hello" {id=102,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,StringLiteral]}
+            |           |       |   |   |___Token:) {id=74,slot_type=RPAREN}
+            |           |       |   |___Token:; {id=71,slot_type=SEMI}
+            |           |       |___expressionStatement {id=27,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |           |           |___methodInvocation {id=30,slot_type=[statementExpression,methodInvocation]}
+            |           |           |   |___aux_rule__methodInvocation_18 {id=33,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
+            |           |           |   |   |___typeName {id=34,slot_type=typeName}
+            |           |           |   |   |   |___(?) {id=61,slot_type=optional__typeName_2}
+            |           |           |   |   |   |   |___aux_rule__typeName_1 {id=63,slot_type=aux_rule__typeName_1}
+            |           |           |   |   |   |       |___Token:System {id=66,slot_type=[packageName,Identifier]}
+            |           |           |   |   |   |       |___Token:. {id=65,slot_type=DOT}
+            |           |           |   |   |   |___Token:out {id=62,slot_type=Identifier}
+            |           |           |   |   |___Token:. {id=35,slot_type=DOT}
+            |           |           |   |   |___altnt_block__methodInvocation_13 {id=36,slot_type=altnt_block__methodInvocation_13}
+            |           |           |   |       |___Token:println {id=37,slot_type=Identifier}
+            |           |           |   |       |___Token:( {id=38,slot_type=LPAREN}
+            |           |           |   |       |___(?) {id=39,slot_type=optional__explicitConstructorInvocation_2}
+            |           |           |   |           |___Token:"world" {id=60,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,StringLiteral]}
+            |           |           |   |___Token:) {id=32,slot_type=RPAREN}
+            |           |           |___Token:; {id=29,slot_type=SEMI}
+            |           |___Token:} {id=21,slot_type=RBRACE}
+            |___Token:} {id=12,slot_type=RBRACE}
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=35==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("hello");
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=35==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("hello");
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=5}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=35==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("hello");
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+=================Reducing node 11, size=35==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("hello");
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    public class Hello {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+=================Reducing node 14, size=35==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("hello");
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=14}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    public class Hello {
+                                             {
+        System.out.println("hello");
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 14
+------------------------------------------------------------
+
+
+=================Reducing node 18, size=35==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("hello");
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 18
+------------------------------------------------------------
+
+
+=================Reducing node 20, size=35==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("hello");
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    public class Hello {
+      public static void main(String[] args) {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 20
+------------------------------------------------------------
+
+
+=================Reducing node 22, size=35==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("hello");
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=22}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]remove whole except first
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("hello");
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=27}
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_plus]dd@1
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+2 entries are removed: 5 --> 3.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 6
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 22 from 35 to 26
+------------------------------------------------------------
+
+
+=================Reducing node 27, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    public class Hello {
+      public static void main(String[] args) {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 27
+------------------------------------------------------------
+
+
+=================Reducing node 30, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 30
+------------------------------------------------------------
+
+
+=================Reducing node 16, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 16
+------------------------------------------------------------
+
+
+=================Reducing node 110, size=26=================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 110
+------------------------------------------------------------
+
+
+=================Reducing node 33, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 33
+------------------------------------------------------------
+
+
+=================Reducing node 113, size=26=================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    public class Hello {
+      public static void main(             ) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 113
+------------------------------------------------------------
+
+
+=================Reducing node 117, size=26=================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=117}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 117
+------------------------------------------------------------
+
+
+=================Reducing node 121, size=26=================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    public class Hello {
+      public static void main(String   args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 121
+------------------------------------------------------------
+
+
+=================Reducing node 36, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 36
+------------------------------------------------------------
+
+
+=================Reducing node 34, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    public class Hello {
+      public static void main(String[] args) {
+               out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    public class Hello {
+      public static void main(String[] args) {
+        System    .println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 34
+------------------------------------------------------------
+
+
+=================Reducing node 124, size=26=================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 124
+------------------------------------------------------------
+
+
+=================Reducing node 125, size=26=================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 125
+------------------------------------------------------------
+
+
+=================Reducing node 61, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    public class Hello {
+      public static void main(String[] args) {
+               out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 61
+------------------------------------------------------------
+
+
+=================Reducing node 63, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=63}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 63
+------------------------------------------------------------
+
+
+=================Reducing node 15, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@2
+    public class Hello {
+                    void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    public class Hello {
+      public        void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    public class Hello {
+             static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+=================Reducing node 136, size=26=================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 136
+------------------------------------------------------------
+
+
+=================Reducing node 135, size=26=================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 135
+------------------------------------------------------------
+
+
+=================Reducing node 132, size=26=================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 132
+------------------------------------------------------------
+
+
+=================Reducing node 131, size=26=================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 131
+------------------------------------------------------------
+
+
+=================Reducing node 127, size=26=================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 127
+------------------------------------------------------------
+
+
+=================Reducing node 126, size=26=================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 126
+------------------------------------------------------------
+
+
+=================Reducing node 120, size=26=================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 120
+------------------------------------------------------------
+
+
+=================Reducing node 114, size=26=================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 114
+------------------------------------------------------------
+
+
+=================Reducing node 112, size=26=================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 112
+------------------------------------------------------------
+
+
+=================Reducing node 111, size=26=================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 111
+------------------------------------------------------------
+
+
+=================Reducing node 66, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 66
+------------------------------------------------------------
+
+
+=================Reducing node 65, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 65
+------------------------------------------------------------
+
+
+=================Reducing node 62, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 62
+------------------------------------------------------------
+
+
+=================Reducing node 39, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println(       );
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 39
+------------------------------------------------------------
+
+
+=================Reducing node 60, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 60
+------------------------------------------------------------
+
+
+=================Reducing node 38, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 38
+------------------------------------------------------------
+
+
+=================Reducing node 37, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 37
+------------------------------------------------------------
+
+
+=================Reducing node 35, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 35
+------------------------------------------------------------
+
+
+=================Reducing node 32, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 32
+------------------------------------------------------------
+
+
+=================Reducing node 29, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 29
+------------------------------------------------------------
+
+
+=================Reducing node 21, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 21
+------------------------------------------------------------
+
+
+=================Reducing node 19, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 19
+------------------------------------------------------------
+
+
+=================Reducing node 12, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 12
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 7
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=26==================
+
+The current best program is the following
+
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_star]dd@1
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+10 entries are removed: 11 --> 1.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 11
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 6 from 26 to 25
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=5}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    class Hello {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+=================Reducing node 13, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=13}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    class Hello {
+                                             {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 13
+------------------------------------------------------------
+
+
+=================Reducing node 17, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 17
+------------------------------------------------------------
+
+
+=================Reducing node 19, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    class Hello {
+      public static void main(String[] args) {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 19
+------------------------------------------------------------
+
+
+=================Reducing node 21, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=21}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 21
+------------------------------------------------------------
+
+
+=================Reducing node 25, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    class Hello {
+      public static void main(String[] args) {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 25
+------------------------------------------------------------
+
+
+=================Reducing node 28, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 28
+------------------------------------------------------------
+
+
+=================Reducing node 15, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+=================Reducing node 66, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 66
+------------------------------------------------------------
+
+
+=================Reducing node 31, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 31
+------------------------------------------------------------
+
+
+=================Reducing node 69, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    class Hello {
+      public static void main(             ) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 69
+------------------------------------------------------------
+
+
+=================Reducing node 73, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=73}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 73
+------------------------------------------------------------
+
+
+=================Reducing node 77, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    class Hello {
+      public static void main(String   args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 77
+------------------------------------------------------------
+
+
+=================Reducing node 34, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 34
+------------------------------------------------------------
+
+
+=================Reducing node 32, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    class Hello {
+      public static void main(String[] args) {
+               out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    class Hello {
+      public static void main(String[] args) {
+        System    .println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 32
+------------------------------------------------------------
+
+
+=================Reducing node 80, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 80
+------------------------------------------------------------
+
+
+=================Reducing node 81, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 81
+------------------------------------------------------------
+
+
+=================Reducing node 59, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    class Hello {
+      public static void main(String[] args) {
+               out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 59
+------------------------------------------------------------
+
+
+=================Reducing node 61, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=61}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 61
+------------------------------------------------------------
+
+
+=================Reducing node 14, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@2
+    class Hello {
+                    void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    class Hello {
+      public        void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    class Hello {
+             static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 14
+------------------------------------------------------------
+
+
+=================Reducing node 92, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 92
+------------------------------------------------------------
+
+
+=================Reducing node 91, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 91
+------------------------------------------------------------
+
+
+=================Reducing node 88, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 88
+------------------------------------------------------------
+
+
+=================Reducing node 87, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 87
+------------------------------------------------------------
+
+
+=================Reducing node 83, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 83
+------------------------------------------------------------
+
+
+=================Reducing node 82, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 82
+------------------------------------------------------------
+
+
+=================Reducing node 76, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 76
+------------------------------------------------------------
+
+
+=================Reducing node 70, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 70
+------------------------------------------------------------
+
+
+=================Reducing node 68, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 68
+------------------------------------------------------------
+
+
+=================Reducing node 67, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 67
+------------------------------------------------------------
+
+
+=================Reducing node 64, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 64
+------------------------------------------------------------
+
+
+=================Reducing node 63, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 63
+------------------------------------------------------------
+
+
+=================Reducing node 60, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 60
+------------------------------------------------------------
+
+
+=================Reducing node 37, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println(       );
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 37
+------------------------------------------------------------
+
+
+=================Reducing node 58, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 58
+------------------------------------------------------------
+
+
+=================Reducing node 36, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 36
+------------------------------------------------------------
+
+
+=================Reducing node 35, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 35
+------------------------------------------------------------
+
+
+=================Reducing node 33, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 33
+------------------------------------------------------------
+
+
+=================Reducing node 30, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 30
+------------------------------------------------------------
+
+
+=================Reducing node 27, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 27
+------------------------------------------------------------
+
+
+=================Reducing node 20, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 20
+------------------------------------------------------------
+
+
+=================Reducing node 18, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 18
+------------------------------------------------------------
+
+
+=================Reducing node 11, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 7
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=25==================
+
+The current best program is the following
+
+    class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 6
+------------------------------------------------------------
+
+
+#test success = 2
+#test failure = 24
+#test result cache hits = 5
+#test execution cancelled = 0
+#node edit action set cache hits = 11

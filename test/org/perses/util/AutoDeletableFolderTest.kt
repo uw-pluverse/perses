@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,37 +16,39 @@
  */
 package org.perses.util
 
-import com.google.common.io.Files
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import java.io.File
+import java.nio.file.Files
+import java.nio.file.Path
+import kotlin.io.path.exists
+import kotlin.io.path.isDirectory
 
 @RunWith(JUnit4::class)
 class AutoDeletableFolderTest {
 
-  private var workingDir: File? = null
+  private lateinit var workingDir: Path
 
   @Before
   fun setup() {
-    workingDir = Files.createTempDir()
+    workingDir = Files.createTempDirectory("AutoDeletableFolderTest_")
   }
 
   @After
   fun teardown() {
-    workingDir?.deleteRecursively()
+    workingDir.toFile().deleteRecursively()
   }
 
   @Test
   fun testFolderIsDeletedAfterBeingClosed() {
-    val folderFile = File(workingDir, "test")
+    val folderFile = workingDir.resolve("test")
     val autoFolder = AutoDeletableFolder(folderFile)
-    autoFolder.use { folder -> assertThat(folder.file.isDirectory).isTrue() }
+    autoFolder.use { folder -> assertThat(folder.file.isDirectory()).isTrue() }
 
     assertThat(autoFolder.file.exists()).isFalse()
-    assertThat(folderFile.exists()).isFalse()
+    assertThat(Files.exists(folderFile)).isFalse()
   }
 }

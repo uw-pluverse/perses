@@ -7,59 +7,24 @@ options {
     superClass=GoParserBase;
 }
 sourceFile
-    : EOF
-    | packageClause eos kleene_star__sourceFile_2 kleene_star__sourceFile_4
-    ;
-
-sourceFile_1
-    : importDecl eos
-    ;
-
-kleene_star__sourceFile_2
-    : sourceFile_1*
-    ;
-
-sourceFile_3
-    : (functionDecl | methodDecl | declaration) eos
-    ;
-
-kleene_star__sourceFile_4
-    : sourceFile_3*
+    : aux_rule__sourceFile_6
+    | EOF
     ;
 
 packageClause
     : 'package' IDENTIFIER
     ;
 
-eos
-    : ';'
-    | EOF
-    | {$start.getType() != SEMI && checkPreviousTokenText("}")}?
-    | {$start.getType() != SEMI && checkPreviousTokenText(")")}?
-    ;
-
 importDecl
-    : 'import' (importSpec | '(' kleene_star__importDecl_2 ')')
+    : 'import' altnt_block__importDecl_3
     ;
 
-importDecl_1
-    : importSpec eos
+importSpec
+    : optional__importSpec_2 importPath
     ;
 
-kleene_star__importDecl_2
-    : importDecl_1*
-    ;
-
-functionDecl
-    : 'func' IDENTIFIER signature optional__functionDecl_1
-    ;
-
-optional__functionDecl_1
-    : block?
-    ;
-
-methodDecl
-    : 'func' receiver IDENTIFIER signature optional__functionDecl_1
+importPath
+    : string_
     ;
 
 declaration
@@ -68,21 +33,311 @@ declaration
     | varDecl
     ;
 
-importSpec
-    : optional__importSpec_2 importPath
+constDecl
+    : 'const' altnt_block__constDecl_3
     ;
 
-importSpec_1
-    : '.'
-    | IDENTIFIER
+constSpec
+    : identifierList optional__constSpec_3
     ;
 
-optional__importSpec_2
-    : importSpec_1?
+identifierList
+    : IDENTIFIER kleene_star__identifierList_2
     ;
 
-importPath
-    : string_
+expressionList
+    : expression kleene_star__expressionList_2
+    ;
+
+typeDecl
+    : 'type' altnt_block__typeDecl_3
+    ;
+
+typeSpec
+    : IDENTIFIER optional__typeSpec_1 type_
+    ;
+
+functionDecl
+    : 'func' IDENTIFIER signature optional__functionDecl_1
+    ;
+
+methodDecl
+    : 'func' receiver IDENTIFIER signature optional__functionDecl_1
+    ;
+
+receiver
+    : parameters
+    ;
+
+varDecl
+    : 'var' altnt_block__varDecl_3
+    ;
+
+varSpec
+    : identifierList altnt_block__varSpec_3
+    ;
+
+block
+    : '{' optional__block_1 '}'
+    ;
+
+statementList
+    : aux_rule__statementList_1+
+    ;
+
+statement
+    : realStatement?
+    ;
+
+simpleStmt
+    : realSimpleStmt?
+    ;
+
+realSimpleStmt
+    : sendStmt
+    | assignment
+    | expressionStmt
+    | incDecStmt
+    | shortVarDecl
+    ;
+
+expressionStmt
+    : expression
+    ;
+
+sendStmt
+    : expression '<-' expression
+    ;
+
+incDecStmt
+    : expression altnt_block__incDecStmt_1
+    ;
+
+assignment
+    : expressionList assign_op expressionList
+    ;
+
+assign_op
+    : optional__assign_op_2 '='
+    ;
+
+shortVarDecl
+    : identifierList ':=' expressionList
+    ;
+
+labeledStmt
+    : IDENTIFIER ':' statement
+    ;
+
+returnStmt
+    : 'return' optional__returnStmt_1
+    ;
+
+breakStmt
+    : 'break' optional__breakStmt_1
+    ;
+
+continueStmt
+    : 'continue' optional__breakStmt_1
+    ;
+
+gotoStmt
+    : 'goto' IDENTIFIER
+    ;
+
+fallthroughStmt
+    : 'fallthrough'
+    ;
+
+deferStmt
+    : 'defer' expression
+    ;
+
+ifStmt
+    : 'if' optional__ifStmt_2 expression block optional__ifStmt_4
+    ;
+
+exprSwitchStmt
+    : 'switch' optional__ifStmt_2 optional__exprSwitchStmt_3 '{' kleene_star__exprSwitchStmt_4 '}'
+    ;
+
+exprCaseClause
+    : exprSwitchCase ':' optional__block_1
+    ;
+
+exprSwitchCase
+    : aux_rule__exprSwitchCase_1
+    | 'default'
+    ;
+
+typeSwitchStmt
+    : 'switch' optional__ifStmt_2 typeSwitchGuard '{' kleene_star__typeSwitchStmt_3 '}'
+    ;
+
+typeSwitchGuard
+    : optional__typeSwitchGuard_2 primaryExpr '.' '(' 'type' ')'
+    ;
+
+typeCaseClause
+    : typeSwitchCase ':' optional__block_1
+    ;
+
+typeSwitchCase
+    : aux_rule__typeSwitchCase_1
+    | 'default'
+    ;
+
+typeList
+    : altnt_block__typeList_3 kleene_star__typeList_2
+    ;
+
+selectStmt
+    : 'select' '{' kleene_star__selectStmt_1 '}'
+    ;
+
+commClause
+    : commCase ':' optional__block_1
+    ;
+
+commCase
+    : aux_rule__commCase_2
+    | 'default'
+    ;
+
+recvStmt
+    : optional__recvStmt_2 expression
+    ;
+
+forStmt
+    : 'for' optional__forStmt_2 block
+    ;
+
+forClause
+    : optional__forClause_1 ';' optional__exprSwitchStmt_3 ';' optional__forClause_1
+    ;
+
+rangeClause
+    : optional__recvStmt_2 'range' expression
+    ;
+
+goStmt
+    : 'go' expression
+    ;
+
+typeName
+    : IDENTIFIER
+    | qualifiedIdent
+    ;
+
+arrayType
+    : '[' expressionStmt ']' elementType
+    ;
+
+elementType
+    : type_
+    ;
+
+pointerType
+    : '*' type_
+    ;
+
+interfaceType
+    : 'interface' '{' kleene_star__interfaceType_2 '}'
+    ;
+
+sliceType
+    : '[' ']' elementType
+    ;
+
+mapType
+    : 'map' '[' type_ ']' elementType
+    ;
+
+channelType
+    : altnt_block__channelType_1 elementType
+    ;
+
+methodSpec
+    : aux_rule__methodSpec_2
+    | typeName
+    ;
+
+functionType
+    : 'func' signature
+    ;
+
+signature
+    : parameters optional__signature_1
+    ;
+
+result
+    : parameters
+    | type_
+    ;
+
+parameters
+    : '(' optional__parameters_5 ')'
+    ;
+
+parameterDecl
+    : optional__parameterDecl_1 optional__parameterDecl_2 type_
+    ;
+
+unaryExpr
+    : primaryExpr
+    | aux_rule__unaryExpr_2
+    ;
+
+conversion
+    : type_ '(' expression optional__conversion_1 ')'
+    ;
+
+qualifiedIdent
+    : IDENTIFIER '.' IDENTIFIER
+    ;
+
+compositeLit
+    : literalType literalValue
+    ;
+
+literalType
+    : structType
+    | arrayType
+    | aux_rule__literalType_1
+    | sliceType
+    | mapType
+    | typeName
+    ;
+
+literalValue
+    : '{' optional__literalValue_3 '}'
+    ;
+
+elementList
+    : keyedElement kleene_star__elementList_2
+    ;
+
+keyedElement
+    : optional__keyedElement_2 element
+    ;
+
+key
+    : IDENTIFIER
+    | expression
+    | literalValue
+    ;
+
+element
+    : expression
+    | literalValue
+    ;
+
+structType
+    : 'struct' '{' kleene_star__structType_2 '}'
+    ;
+
+fieldDecl
+    : altnt_block__fieldDecl_2 optional__fieldDecl_1
     ;
 
 string_
@@ -90,108 +345,377 @@ string_
     | INTERPRETED_STRING_LIT
     ;
 
-constDecl
-    : 'const' (constSpec | '(' kleene_star__constDecl_2 ')')
+anonymousField
+    : optional__anonymousField_1 typeName
     ;
 
-constDecl_1
+functionLit
+    : 'func' signature block
+    ;
+
+index
+    : '[' expression ']'
+    ;
+
+slice
+    : '[' altnt_block__slice_4 ']'
+    ;
+
+typeAssertion
+    : '.' '(' type_ ')'
+    ;
+
+arguments
+    : '(' optional__arguments_6 ')'
+    ;
+
+methodExpr
+    : elementType DOT IDENTIFIER
+    ;
+
+eos
+    : ';'
+    | EOF
+    | aux_rule__eos_1
+    | aux_rule__eos_2
+    ;
+
+aux_rule__sourceFile_1
+    : importDecl eos
+    ;
+
+kleene_star__sourceFile_2
+    : aux_rule__sourceFile_1*
+    ;
+
+aux_rule__sourceFile_3
+    : altnt_block__sourceFile_5 eos
+    ;
+
+kleene_star__sourceFile_4
+    : aux_rule__sourceFile_3*
+    ;
+
+aux_rule__importDecl_1
+    : importSpec eos
+    ;
+
+kleene_star__importDecl_2
+    : aux_rule__importDecl_1*
+    ;
+
+aux_rule__importSpec_1
+    : '.'
+    | IDENTIFIER
+    ;
+
+optional__importSpec_2
+    : aux_rule__importSpec_1?
+    ;
+
+aux_rule__constDecl_1
     : constSpec eos
     ;
 
 kleene_star__constDecl_2
-    : constDecl_1*
-    ;
-
-typeDecl
-    : 'type' (typeSpec | '(' kleene_star__typeDecl_2 ')')
-    ;
-
-typeDecl_1
-    : typeSpec eos
-    ;
-
-kleene_star__typeDecl_2
-    : typeDecl_1*
-    ;
-
-varDecl
-    : 'var' (varSpec | '(' kleene_star__varDecl_2 ')')
-    ;
-
-varDecl_1
-    : varSpec eos
-    ;
-
-kleene_star__varDecl_2
-    : varDecl_1*
-    ;
-
-constSpec
-    : identifierList optional__constSpec_3
+    : aux_rule__constDecl_1*
     ;
 
 optional__constSpec_1
     : type_?
     ;
 
-constSpec_2
+aux_rule__constSpec_2
     : optional__constSpec_1 '=' expressionList
     ;
 
 optional__constSpec_3
-    : constSpec_2?
+    : aux_rule__constSpec_2?
     ;
 
-identifierList
-    : IDENTIFIER kleene_star__identifierList_2
-    ;
-
-identifierList_1
+aux_rule__identifierList_1
     : ',' IDENTIFIER
     ;
 
 kleene_star__identifierList_2
-    : identifierList_1*
+    : aux_rule__identifierList_1*
     ;
 
-type_
-    : typeName
-    | arrayType
-    | structType
-    | pointerType
-    | functionType
-    | interfaceType
-    | sliceType
-    | mapType
-    | channelType
-    | '(' type_ ')'
-    ;
-
-expressionList
-    : expression kleene_star__expressionList_2
-    ;
-
-expressionList_1
+aux_rule__expressionList_1
     : ',' expression
     ;
 
 kleene_star__expressionList_2
-    : expressionList_1*
+    : aux_rule__expressionList_1*
+    ;
+
+aux_rule__typeDecl_1
+    : typeSpec eos
+    ;
+
+kleene_star__typeDecl_2
+    : aux_rule__typeDecl_1*
+    ;
+
+optional__typeSpec_1
+    : ASSIGN?
+    ;
+
+optional__functionDecl_1
+    : block?
+    ;
+
+aux_rule__varDecl_1
+    : varSpec eos
+    ;
+
+kleene_star__varDecl_2
+    : aux_rule__varDecl_1*
+    ;
+
+aux_rule__varSpec_1
+    : '=' expressionList
+    ;
+
+optional__varSpec_2
+    : aux_rule__varSpec_1?
+    ;
+
+optional__block_1
+    : statementList?
+    ;
+
+aux_rule__statementList_1
+    : aux_rule__statementList_2
+    | ';'
+    ;
+
+aux_rule__assign_op_1
+    : '+'
+    | '-'
+    | '|'
+    | '^'
+    | '*'
+    | '/'
+    | '%'
+    | '<<'
+    | '>>'
+    | '&'
+    | '&^'
+    ;
+
+optional__assign_op_2
+    : aux_rule__assign_op_1?
+    ;
+
+optional__returnStmt_1
+    : expressionList?
+    ;
+
+optional__breakStmt_1
+    : IDENTIFIER?
+    ;
+
+aux_rule__ifStmt_1
+    : simpleStmt ';'
+    ;
+
+optional__ifStmt_2
+    : aux_rule__ifStmt_1?
+    ;
+
+aux_rule__ifStmt_3
+    : 'else' altnt_block__ifStmt_5
+    ;
+
+optional__ifStmt_4
+    : aux_rule__ifStmt_3?
+    ;
+
+optional__exprSwitchStmt_3
+    : expression?
+    ;
+
+kleene_star__exprSwitchStmt_4
+    : exprCaseClause*
+    ;
+
+kleene_star__typeSwitchStmt_3
+    : typeCaseClause*
+    ;
+
+aux_rule__typeSwitchGuard_1
+    : IDENTIFIER ':='
+    ;
+
+optional__typeSwitchGuard_2
+    : aux_rule__typeSwitchGuard_1?
+    ;
+
+aux_rule__typeList_1
+    : ',' altnt_block__typeList_3
+    ;
+
+kleene_star__typeList_2
+    : aux_rule__typeList_1*
+    ;
+
+kleene_star__selectStmt_1
+    : commClause*
+    ;
+
+aux_rule__recvStmt_1
+    : aux_rule__recvStmt_3
+    | aux_rule__recvStmt_4
+    ;
+
+optional__recvStmt_2
+    : aux_rule__recvStmt_1?
+    ;
+
+aux_rule__forStmt_1
+    : expression
+    | forClause
+    | rangeClause
+    ;
+
+optional__forStmt_2
+    : aux_rule__forStmt_1?
+    ;
+
+optional__forClause_1
+    : simpleStmt?
+    ;
+
+aux_rule__interfaceType_1
+    : methodSpec eos
+    ;
+
+kleene_star__interfaceType_2
+    : aux_rule__interfaceType_1*
+    ;
+
+aux_rule__parameters_1
+    : COMMA parameterDecl
+    ;
+
+kleene_star__parameters_2
+    : aux_rule__parameters_1*
+    ;
+
+optional__parameters_3
+    : COMMA?
+    ;
+
+aux_rule__parameters_4
+    : parameterDecl kleene_star__parameters_2 optional__parameters_3
+    ;
+
+optional__parameters_5
+    : aux_rule__parameters_4?
+    ;
+
+optional__parameterDecl_1
+    : identifierList?
+    ;
+
+optional__parameterDecl_2
+    : '...'?
+    ;
+
+optional__conversion_1
+    : ','?
+    ;
+
+aux_rule__literalValue_2
+    : elementList optional__conversion_1
+    ;
+
+optional__literalValue_3
+    : aux_rule__literalValue_2?
+    ;
+
+aux_rule__elementList_1
+    : ',' keyedElement
+    ;
+
+kleene_star__elementList_2
+    : aux_rule__elementList_1*
+    ;
+
+aux_rule__keyedElement_1
+    : key ':'
+    ;
+
+optional__keyedElement_2
+    : aux_rule__keyedElement_1?
+    ;
+
+aux_rule__structType_1
+    : fieldDecl eos
+    ;
+
+kleene_star__structType_2
+    : aux_rule__structType_1*
+    ;
+
+optional__fieldDecl_1
+    : string_?
+    ;
+
+optional__anonymousField_1
+    : '*'?
+    ;
+
+aux_rule__arguments_1
+    : ',' expressionList
+    ;
+
+optional__arguments_2
+    : aux_rule__arguments_1?
+    ;
+
+aux_rule__arguments_5
+    : altnt_block__arguments_7 optional__parameterDecl_2 optional__conversion_1
+    ;
+
+optional__arguments_6
+    : aux_rule__arguments_5?
+    ;
+
+aux_rule__expression_2
+    : altnt_block__expression_3 expression
+    ;
+
+kleene_star__expression_1
+    : aux_rule__expression_2*
     ;
 
 expression
     : unaryExpr kleene_star__expression_1
     ;
 
-kleene_star__expression_1
-    : expression_2*
+aux_rule__primaryExpr_2
+    : aux_rule__primaryExpr_4
+    | index
+    | slice
+    | typeAssertion
+    | arguments
     ;
 
-expression_2
-    : alternative__expression_6 expression
+kleene_star__primaryExpr_1
+    : aux_rule__primaryExpr_2*
     ;
 
-alternative__expression_6
+primaryExpr
+    : aux_rule__primaryExpr_3 kleene_star__primaryExpr_1
+    ;
+
+optional__signature_1
+    : result?
+    ;
+
+altnt_block__expression_3
     : '*'
     | '/'
     | '%'
@@ -213,81 +737,17 @@ alternative__expression_6
     | '||'
     ;
 
-typeSpec
-    : IDENTIFIER optional__typeSpec_1 type_
-    ;
-
-optional__typeSpec_1
-    : ASSIGN?
-    ;
-
-signature
-    : parameters optional__signature_1
-    ;
-
-optional__signature_1
-    : result?
-    ;
-
-block
-    : '{' optional__block_1 '}'
-    ;
-
-optional__block_1
-    : statementList?
-    ;
-
-receiver
-    : parameters
-    ;
-
-parameters
-    : '(' optional__parameters_5 ')'
-    ;
-
-parameters_1
-    : COMMA parameterDecl
-    ;
-
-kleene_star__parameters_2
-    : parameters_1*
-    ;
-
-optional__parameters_3
-    : COMMA?
-    ;
-
-parameters_4
-    : parameterDecl kleene_star__parameters_2 optional__parameters_3
-    ;
-
-optional__parameters_5
-    : parameters_4?
-    ;
-
-varSpec
-    : identifierList (type_ optional__varSpec_2 | '=' expressionList)
-    ;
-
-varSpec_1
-    : '=' expressionList
-    ;
-
-optional__varSpec_2
-    : varSpec_1?
-    ;
-
-statementList
-    : kleene_plus__statementList_2
-    ;
-
-statementList_1
-    : ';'
-    | realStatement eos
-    ;
-
-kleene_plus__statementList_2
-    : statementList_1+
+type_
+    : typeName
+    | arrayType
+    | structType
+    | pointerType
+    | functionType
+    | interfaceType
+    | sliceType
+    | mapType
+    | channelType
+    | aux_rule__type__1
     ;
 
 realStatement
@@ -309,216 +769,96 @@ realStatement
     | deferStmt
     ;
 
-statement
-    : optional__statement_1
+altnt_block__importDecl_3
+    : importSpec
+    | aux_rule__importDecl_4
     ;
 
-optional__statement_1
-    : realStatement?
+altnt_block__constDecl_3
+    : constSpec
+    | aux_rule__constDecl_4
     ;
 
-simpleStmt
-    : optional__simpleStmt_1
+altnt_block__typeDecl_3
+    : typeSpec
+    | aux_rule__typeDecl_4
     ;
 
-optional__simpleStmt_1
-    : realSimpleStmt?
+altnt_block__varDecl_3
+    : varSpec
+    | aux_rule__varDecl_4
     ;
 
-realSimpleStmt
+altnt_block__varSpec_3
+    : aux_rule__varSpec_4
+    | aux_rule__varSpec_5
+    ;
+
+altnt_block__incDecStmt_1
+    : PLUS_PLUS
+    | MINUS_MINUS
+    ;
+
+altnt_block__typeList_3
+    : type_
+    | NIL_LIT
+    ;
+
+altnt_block__commCase_1
     : sendStmt
-    | assignment
-    | expressionStmt
-    | incDecStmt
-    | shortVarDecl
+    | recvStmt
     ;
 
-labeledStmt
-    : IDENTIFIER ':' statement
+altnt_block__channelType_1
+    : aux_rule__channelType_3
+    | aux_rule__channelType_4
     ;
 
-goStmt
-    : 'go' expression
-    ;
-
-returnStmt
-    : 'return' optional__returnStmt_1
-    ;
-
-optional__returnStmt_1
-    : expressionList?
-    ;
-
-breakStmt
-    : 'break' optional__breakStmt_1
-    ;
-
-optional__breakStmt_1
-    : IDENTIFIER?
-    ;
-
-continueStmt
-    : 'continue' optional__breakStmt_1
-    ;
-
-gotoStmt
-    : 'goto' IDENTIFIER
-    ;
-
-fallthroughStmt
-    : 'fallthrough'
-    ;
-
-ifStmt
-    : 'if' optional__ifStmt_2 expression block optional__ifStmt_4
-    ;
-
-ifStmt_1
-    : simpleStmt ';'
-    ;
-
-optional__ifStmt_2
-    : ifStmt_1?
-    ;
-
-ifStmt_3
-    : 'else' (ifStmt | block)
-    ;
-
-optional__ifStmt_4
-    : ifStmt_3?
-    ;
-
-selectStmt
-    : 'select' '{' kleene_star__selectStmt_1 '}'
-    ;
-
-kleene_star__selectStmt_1
-    : commClause*
-    ;
-
-forStmt
-    : 'for' optional__forStmt_2 block
-    ;
-
-forStmt_1
-    : expression
-    | forClause
-    | rangeClause
-    ;
-
-optional__forStmt_2
-    : forStmt_1?
-    ;
-
-deferStmt
-    : 'defer' expression
-    ;
-
-sendStmt
-    : expression '<-' expression
-    ;
-
-assignment
-    : expressionList assign_op expressionList
-    ;
-
-expressionStmt
-    : expression
-    ;
-
-incDecStmt
-    : expression (PLUS_PLUS | MINUS_MINUS)
-    ;
-
-shortVarDecl
-    : identifierList ':=' expressionList
-    ;
-
-assign_op
-    : optional__assign_op_2 '='
-    ;
-
-assign_op_1
+altnt_block__unaryExpr_1
     : '+'
     | '-'
-    | '|'
+    | '!'
     | '^'
     | '*'
-    | '/'
-    | '%'
-    | '<<'
-    | '>>'
     | '&'
-    | '&^'
+    | '<-'
     ;
 
-optional__assign_op_2
-    : assign_op_1?
+altnt_block__fieldDecl_2
+    : aux_rule__fieldDecl_3
+    | anonymousField
     ;
 
-exprSwitchStmt
-    : 'switch' optional__ifStmt_2 optional__exprSwitchStmt_3 '{' kleene_star__exprSwitchStmt_4 '}'
+altnt_block__slice_4
+    : optional__exprSwitchStmt_3 ':' altnt_block__slice_5
     ;
 
-optional__exprSwitchStmt_3
-    : expression?
+altnt_block__sourceFile_5
+    : functionDecl
+    | methodDecl
+    | declaration
     ;
 
-kleene_star__exprSwitchStmt_4
-    : exprCaseClause*
+altnt_block__ifStmt_5
+    : ifStmt
+    | block
     ;
 
-typeSwitchStmt
-    : 'switch' optional__ifStmt_2 typeSwitchGuard '{' kleene_star__typeSwitchStmt_3 '}'
+altnt_block__arguments_7
+    : expressionList
+    | aux_rule__arguments_8
     ;
 
-kleene_star__typeSwitchStmt_3
-    : typeCaseClause*
+optional__channelType_2
+    : '<-'?
     ;
 
-exprCaseClause
-    : exprSwitchCase ':' optional__block_1
+altnt_block__slice_5
+    : optional__exprSwitchStmt_3
+    | aux_rule__slice_6
     ;
 
-exprSwitchCase
-    : 'default'
-    | 'case' expressionList
-    ;
-
-typeSwitchGuard
-    : optional__typeSwitchGuard_2 primaryExpr '.' '(' 'type' ')'
-    ;
-
-typeSwitchGuard_1
-    : IDENTIFIER ':='
-    ;
-
-optional__typeSwitchGuard_2
-    : typeSwitchGuard_1?
-    ;
-
-typeCaseClause
-    : typeSwitchCase ':' optional__block_1
-    ;
-
-primaryExpr
-    : primaryExpr_3 kleene_star__primaryExpr_1
-    ;
-
-kleene_star__primaryExpr_1
-    : primaryExpr_2*
-    ;
-
-primaryExpr_2
-    : index
-    | slice
-    | typeAssertion
-    | arguments
-    | DOT IDENTIFIER
-    ;
-
-primaryExpr_3
+aux_rule__primaryExpr_3
     : NIL_LIT
     | DECIMAL_LIT
     | OCTAL_LIT
@@ -529,272 +869,113 @@ primaryExpr_3
     | FLOAT_LIT
     | compositeLit
     | functionLit
+    | typeName
     | methodExpr
+    | aux_rule__primaryExpr_5
     | conversion
-    | typeName
-    | '(' expression ')'
     ;
 
-typeSwitchCase
-    : 'default'
-    | 'case' typeList
+aux_rule__sourceFile_6
+    : packageClause eos kleene_star__sourceFile_2 kleene_star__sourceFile_4
     ;
 
-typeList
-    : (type_ | NIL_LIT) kleene_star__typeList_2
+aux_rule__exprSwitchCase_1
+    : 'case' expressionList
     ;
 
-typeList_1
-    : ',' (type_ | NIL_LIT)
+aux_rule__typeSwitchCase_1
+    : 'case' typeList
     ;
 
-kleene_star__typeList_2
-    : typeList_1*
+aux_rule__commCase_2
+    : 'case' altnt_block__commCase_1
     ;
 
-commClause
-    : commCase ':' optional__block_1
+aux_rule__methodSpec_2
+    : IDENTIFIER parameters optional__signature_1
     ;
 
-commCase
-    : 'default'
-    | 'case' (sendStmt | recvStmt)
+aux_rule__unaryExpr_2
+    : altnt_block__unaryExpr_1 unaryExpr
     ;
 
-recvStmt
-    : optional__recvStmt_2 expression
+aux_rule__literalType_1
+    : '[' '...' ']' elementType
     ;
 
-recvStmt_1
+aux_rule__eos_1
+    : {$start.getType() != SEMI && checkPreviousTokenText("}")}?
+    ;
+
+aux_rule__eos_2
+    : {$start.getType() != SEMI && checkPreviousTokenText(")")}?
+    ;
+
+aux_rule__statementList_2
+    : realStatement eos
+    ;
+
+aux_rule__recvStmt_3
     : expressionList '='
-    | identifierList ':='
     ;
 
-optional__recvStmt_2
-    : recvStmt_1?
+aux_rule__recvStmt_4
+    : identifierList ':='
     ;
 
-forClause
-    : optional__forClause_1 ';' optional__exprSwitchStmt_3 ';' optional__forClause_1
+aux_rule__primaryExpr_4
+    : DOT IDENTIFIER
     ;
 
-optional__forClause_1
-    : simpleStmt?
+aux_rule__type__1
+    : '(' type_ ')'
     ;
 
-rangeClause
-    : optional__recvStmt_2 'range' expression
+aux_rule__importDecl_4
+    : '(' kleene_star__importDecl_2 ')'
     ;
 
-typeName
-    : IDENTIFIER
-    | qualifiedIdent
+aux_rule__constDecl_4
+    : '(' kleene_star__constDecl_2 ')'
     ;
 
-qualifiedIdent
-    : IDENTIFIER '.' IDENTIFIER
+aux_rule__typeDecl_4
+    : '(' kleene_star__typeDecl_2 ')'
     ;
 
-arrayType
-    : '[' expressionStmt ']' elementType
+aux_rule__varDecl_4
+    : '(' kleene_star__varDecl_2 ')'
     ;
 
-structType
-    : 'struct' '{' kleene_star__structType_2 '}'
+aux_rule__varSpec_4
+    : type_ optional__varSpec_2
     ;
 
-structType_1
-    : fieldDecl eos
+aux_rule__varSpec_5
+    : '=' expressionList
     ;
 
-kleene_star__structType_2
-    : structType_1*
+aux_rule__channelType_3
+    : 'chan' '<-'
     ;
 
-pointerType
-    : '*' type_
+aux_rule__channelType_4
+    : optional__channelType_2 'chan'
     ;
 
-functionType
-    : 'func' signature
+aux_rule__fieldDecl_3
+    : identifierList type_
     ;
 
-interfaceType
-    : 'interface' '{' kleene_star__interfaceType_2 '}'
+aux_rule__arguments_8
+    : type_ optional__arguments_2
     ;
 
-interfaceType_1
-    : methodSpec eos
+aux_rule__slice_6
+    : expression ':' expression
     ;
 
-kleene_star__interfaceType_2
-    : interfaceType_1*
-    ;
-
-sliceType
-    : '[' ']' elementType
-    ;
-
-mapType
-    : 'map' '[' type_ ']' elementType
-    ;
-
-channelType
-    : ('chan' | 'chan' '<-' | '<-' 'chan') elementType
-    ;
-
-elementType
-    : type_
-    ;
-
-methodSpec
-    : typeName
-    | IDENTIFIER parameters optional__signature_1
-    ;
-
-result
-    : parameters
-    | type_
-    ;
-
-parameterDecl
-    : optional__parameterDecl_1 optional__parameterDecl_2 type_
-    ;
-
-optional__parameterDecl_1
-    : identifierList?
-    ;
-
-optional__parameterDecl_2
-    : '...'?
-    ;
-
-unaryExpr
-    : primaryExpr
-    | ('+' | '-' | '!' | '^' | '*' | '&' | '<-') unaryExpr
-    ;
-
-conversion
-    : type_ '(' expression optional__conversion_1 ')'
-    ;
-
-optional__conversion_1
-    : ','?
-    ;
-
-index
-    : '[' expression ']'
-    ;
-
-slice
-    : '[' (optional__exprSwitchStmt_3 ':' optional__exprSwitchStmt_3 | optional__exprSwitchStmt_3 ':' expression ':' expression) ']'
-    ;
-
-typeAssertion
-    : '.' '(' type_ ')'
-    ;
-
-arguments
-    : '(' optional__arguments_6 ')'
-    ;
-
-arguments_1
-    : ',' expressionList
-    ;
-
-optional__arguments_2
-    : arguments_1?
-    ;
-
-arguments_5
-    : (expressionList | type_ optional__arguments_2) optional__parameterDecl_2 optional__conversion_1
-    ;
-
-optional__arguments_6
-    : arguments_5?
-    ;
-
-methodExpr
-    : elementType DOT IDENTIFIER
-    ;
-
-compositeLit
-    : literalType literalValue
-    ;
-
-functionLit
-    : 'func' signature block
-    ;
-
-literalType
-    : structType
-    | arrayType
-    | sliceType
-    | mapType
-    | typeName
-    | '[' '...' ']' elementType
-    ;
-
-literalValue
-    : '{' optional__literalValue_3 '}'
-    ;
-
-literalValue_2
-    : elementList optional__conversion_1
-    ;
-
-optional__literalValue_3
-    : literalValue_2?
-    ;
-
-elementList
-    : keyedElement kleene_star__elementList_2
-    ;
-
-elementList_1
-    : ',' keyedElement
-    ;
-
-kleene_star__elementList_2
-    : elementList_1*
-    ;
-
-keyedElement
-    : optional__keyedElement_2 element
-    ;
-
-keyedElement_1
-    : key ':'
-    ;
-
-optional__keyedElement_2
-    : keyedElement_1?
-    ;
-
-key
-    : IDENTIFIER
-    | expression
-    | literalValue
-    ;
-
-element
-    : expression
-    | literalValue
-    ;
-
-fieldDecl
-    : (identifierList type_ | anonymousField) optional__fieldDecl_1
-    ;
-
-optional__fieldDecl_1
-    : string_?
-    ;
-
-anonymousField
-    : optional__anonymousField_1 typeName
-    ;
-
-optional__anonymousField_1
-    : '*'?
+aux_rule__primaryExpr_5
+    : '(' expression ')'
     ;
 

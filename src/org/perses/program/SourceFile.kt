@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,14 +17,14 @@
 package org.perses.program
 
 import com.google.common.base.MoreObjects
-import java.io.File
+import java.nio.file.Path
 
 /**
  * Abstraction for a source file. It encapsulates the details of a source file. Note that this class
  * loads the content of the passed-in file. So when you create an object of this class, the file
  * must already exist.
  */
-class SourceFile(file: File, val languageKind: LanguageKind) : AbstractSourceFile(file) {
+class SourceFile(file: Path, val languageKind: LanguageKind) : AbstractSourceFile(file) {
 
   override fun toString(): String {
     return MoreObjects.toStringHelper(this)

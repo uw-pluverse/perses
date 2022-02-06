@@ -1,0 +1,14 @@
+---
+name: "test_lang"
+extensions:
+  - "test"
+defaultCodeFormatControl: "ORIG_FORMAT"
+origCodeFormatControl: "ORIG_FORMAT"
+allowedCodeFormatControl:
+  - "SINGLE_TOKEN_PER_LINE"
+  - "ORIG_FORMAT"
+  - "COMPACT_ORIG_FORMAT"
+defaultFormatterCommands:
+  - command: "clang-format"
+    defaultFlags:
+      - "-i"

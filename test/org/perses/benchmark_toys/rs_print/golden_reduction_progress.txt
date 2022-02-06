@@ -2,47 +2,47 @@
 
 The spar tree is the following.
 crate {id=1}
-|___(*) {id=3,slot_type=mod_body}
-    |___fn_decl {id=7,slot_type=item}
-        |___fn_head {id=8,slot_type=fn_head}
-        |   |___Token:fn {id=66,slot_type=Token}
-        |   |___Token:main {id=68,slot_type=ident}
-        |___Token:( {id=9,slot_type=Token}
-        |___Token:) {id=10,slot_type=Token}
-        |___block_with_inner_attrs {id=11,slot_type=block_with_inner_attrs}
-            |___Token:{ {id=12,slot_type=Token}
-            |___(*) {id=13,slot_type=kleene_star__block_with_inner_attrs_2}
-            |   |___macro_invocation_semi {id=52,slot_type=stmt}
-            |   |   |___Token:println {id=65,slot_type=simple_path}
-            |   |   |___Token:! {id=54,slot_type=Token}
-            |   |   |___alternative__macro_invocation_semi_5 {id=55,slot_type=alternative__macro_invocation_semi_5}
-            |   |       |___alternative__macro_invocation_semi_4 {id=56,slot_type=alternative__macro_invocation_semi_4}
-            |   |       |   |___Token:( {id=58,slot_type=Token}
-            |   |       |   |___(*) {id=59,slot_type=kleene_star__inner_attr_1}
-            |   |       |   |   |___Token:"ingress" {id=62,slot_type=tt}
-            |   |       |   |___Token:) {id=60,slot_type=Token}
-            |   |       |___Token:; {id=57,slot_type=Token}
-            |   |___macro_invocation_semi {id=36,slot_type=stmt}
-            |   |   |___Token:println {id=49,slot_type=simple_path}
-            |   |   |___Token:! {id=38,slot_type=Token}
-            |   |   |___alternative__macro_invocation_semi_5 {id=39,slot_type=alternative__macro_invocation_semi_5}
-            |   |       |___alternative__macro_invocation_semi_4 {id=40,slot_type=alternative__macro_invocation_semi_4}
-            |   |       |   |___Token:( {id=42,slot_type=Token}
-            |   |       |   |___(*) {id=43,slot_type=kleene_star__inner_attr_1}
-            |   |       |   |   |___Token:"hello_world" {id=46,slot_type=tt}
-            |   |       |   |___Token:) {id=44,slot_type=Token}
-            |   |       |___Token:; {id=41,slot_type=Token}
-            |   |___macro_invocation_semi {id=20,slot_type=stmt}
-            |       |___Token:println {id=33,slot_type=simple_path}
-            |       |___Token:! {id=22,slot_type=Token}
-            |       |___alternative__macro_invocation_semi_5 {id=23,slot_type=alternative__macro_invocation_semi_5}
-            |           |___alternative__macro_invocation_semi_4 {id=24,slot_type=alternative__macro_invocation_semi_4}
-            |           |   |___Token:( {id=26,slot_type=Token}
-            |           |   |___(*) {id=27,slot_type=kleene_star__inner_attr_1}
-            |           |   |   |___Token:"egress" {id=30,slot_type=tt}
-            |           |   |___Token:) {id=28,slot_type=Token}
-            |           |___Token:; {id=25,slot_type=Token}
-            |___Token:} {id=14,slot_type=Token}
+|___(*) {id=3,slot_type=[mod_body,kleene_star__mod_body_2]}
+    |___fn_decl {id=8,slot_type=[item,altnt_block__item_7,aux_rule__item_8,pub_item,fn_decl]}
+        |___fn_head {id=9,slot_type=fn_head}
+        |   |___Token:fn {id=77,slot_type=Token}
+        |   |___Token:main {id=79,slot_type=[ident,Ident]}
+        |___Token:( {id=10,slot_type=Token}
+        |___Token:) {id=11,slot_type=Token}
+        |___block_with_inner_attrs {id=13,slot_type=[altnt_block__fn_decl_4,block_with_inner_attrs]}
+            |___Token:{ {id=14,slot_type=Token}
+            |___(*) {id=15,slot_type=kleene_star__block_with_inner_attrs_2}
+            |   |___macro_invocation_semi {id=60,slot_type=[stmt,item,altnt_block__item_7,macro_invocation_semi]}
+            |   |   |___Token:println {id=76,slot_type=[simple_path,simple_path_segment,ident,Ident]}
+            |   |   |___Token:! {id=62,slot_type=Token}
+            |   |   |___aux_rule__macro_invocation_semi_7 {id=64,slot_type=[altnt_block__macro_invocation_semi_4,aux_rule__macro_invocation_semi_7]}
+            |   |       |___aux_rule__macro_invocation_semi_8 {id=67,slot_type=[altnt_block__macro_invocation_semi_5,aux_rule__macro_invocation_semi_8]}
+            |   |       |   |___Token:( {id=68,slot_type=Token}
+            |   |       |   |___(*) {id=69,slot_type=kleene_star__inner_attr_1}
+            |   |       |   |   |___Token:"ingress" {id=73,slot_type=[tt,aux_rule__tt_1,StringLit]}
+            |   |       |   |___Token:) {id=70,slot_type=Token}
+            |   |       |___Token:; {id=66,slot_type=Token}
+            |   |___macro_invocation_semi {id=41,slot_type=[stmt,item,altnt_block__item_7,macro_invocation_semi]}
+            |   |   |___Token:println {id=57,slot_type=[simple_path,simple_path_segment,ident,Ident]}
+            |   |   |___Token:! {id=43,slot_type=Token}
+            |   |   |___aux_rule__macro_invocation_semi_7 {id=45,slot_type=[altnt_block__macro_invocation_semi_4,aux_rule__macro_invocation_semi_7]}
+            |   |       |___aux_rule__macro_invocation_semi_8 {id=48,slot_type=[altnt_block__macro_invocation_semi_5,aux_rule__macro_invocation_semi_8]}
+            |   |       |   |___Token:( {id=49,slot_type=Token}
+            |   |       |   |___(*) {id=50,slot_type=kleene_star__inner_attr_1}
+            |   |       |   |   |___Token:"hello_world" {id=54,slot_type=[tt,aux_rule__tt_1,StringLit]}
+            |   |       |   |___Token:) {id=51,slot_type=Token}
+            |   |       |___Token:; {id=47,slot_type=Token}
+            |   |___macro_invocation_semi {id=22,slot_type=[stmt,item,altnt_block__item_7,macro_invocation_semi]}
+            |       |___Token:println {id=38,slot_type=[simple_path,simple_path_segment,ident,Ident]}
+            |       |___Token:! {id=24,slot_type=Token}
+            |       |___aux_rule__macro_invocation_semi_7 {id=26,slot_type=[altnt_block__macro_invocation_semi_4,aux_rule__macro_invocation_semi_7]}
+            |           |___aux_rule__macro_invocation_semi_8 {id=29,slot_type=[altnt_block__macro_invocation_semi_5,aux_rule__macro_invocation_semi_8]}
+            |           |   |___Token:( {id=30,slot_type=Token}
+            |           |   |___(*) {id=31,slot_type=kleene_star__inner_attr_1}
+            |           |   |   |___Token:"egress" {id=35,slot_type=[tt,aux_rule__tt_1,StringLit]}
+            |           |   |___Token:) {id=32,slot_type=Token}
+            |           |___Token:; {id=28,slot_type=Token}
+            |___Token:} {id=16,slot_type=Token}
 ------------------------------------------------------------
 
 
@@ -70,7 +70,7 @@ Failed to reduce node 3
 ------------------------------------------------------------
 
 
-==================Reducing node 7, size=24==================
+==================Reducing node 8, size=24==================
 
 The current best program is the following
 
@@ -84,7 +84,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=7}
+    NodeDeletionAction{target_node=8}
 ------------------------------------------------------------
 
 
@@ -111,11 +111,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 7
+Failed to reduce node 8
 ------------------------------------------------------------
 
 
-=================Reducing node 11, size=24==================
+=================Reducing node 13, size=24==================
 
 The current best program is the following
 
@@ -129,11 +129,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 11
+Failed to reduce node 13
 ------------------------------------------------------------
 
 
-=================Reducing node 13, size=24==================
+=================Reducing node 15, size=24==================
 
 The current best program is the following
 
@@ -165,7 +165,7 @@ The current best program is the following
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-2 entries are removed: 6 --> 4.
+1 entries are removed: 5 --> 4.
 ------------------------------------------------------------
 
 
@@ -202,7 +202,7 @@ The current best program is the following
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-3 entries are removed: 6 --> 3.
+2 entries are removed: 5 --> 3.
 ------------------------------------------------------------
 
 
@@ -214,11 +214,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 13 from 24 to 12
+Succeeded to reduce node 15 from 24 to 12
 ------------------------------------------------------------
 
 
-=================Reducing node 36, size=12==================
+=================Reducing node 41, size=12==================
 
 The current best program is the following
 
@@ -237,11 +237,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 36
+Failed to reduce node 41
 ------------------------------------------------------------
 
 
-=================Reducing node 39, size=12==================
+=================Reducing node 45, size=12==================
 
 The current best program is the following
 
@@ -253,11 +253,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 39
+Failed to reduce node 45
 ------------------------------------------------------------
 
 
-=================Reducing node 40, size=12==================
+=================Reducing node 48, size=12==================
 
 The current best program is the following
 
@@ -269,11 +269,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 40
+Failed to reduce node 48
 ------------------------------------------------------------
 
 
-==================Reducing node 8, size=12==================
+==================Reducing node 9, size=12==================
 
 The current best program is the following
 
@@ -285,11 +285,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 8
+Failed to reduce node 9
 ------------------------------------------------------------
 
 
-=================Reducing node 68, size=12==================
+=================Reducing node 79, size=12==================
 
 The current best program is the following
 
@@ -301,11 +301,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 68
+Failed to reduce node 79
 ------------------------------------------------------------
 
 
-=================Reducing node 66, size=12==================
+=================Reducing node 77, size=12==================
 
 The current best program is the following
 
@@ -317,11 +317,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 66
+Failed to reduce node 77
 ------------------------------------------------------------
 
 
-=================Reducing node 49, size=12==================
+=================Reducing node 57, size=12==================
 
 The current best program is the following
 
@@ -333,11 +333,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 49
+Failed to reduce node 57
 ------------------------------------------------------------
 
 
-=================Reducing node 44, size=12==================
+=================Reducing node 51, size=12==================
 
 The current best program is the following
 
@@ -349,11 +349,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 44
+Failed to reduce node 51
 ------------------------------------------------------------
 
 
-=================Reducing node 43, size=12==================
+=================Reducing node 50, size=12==================
 
 The current best program is the following
 
@@ -374,11 +374,75 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
+Failed to reduce node 50
+------------------------------------------------------------
+
+
+=================Reducing node 54, size=12==================
+
+The current best program is the following
+
+    fn main() {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 54
+------------------------------------------------------------
+
+
+=================Reducing node 49, size=12==================
+
+The current best program is the following
+
+    fn main() {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 49
+------------------------------------------------------------
+
+
+=================Reducing node 47, size=12==================
+
+The current best program is the following
+
+    fn main() {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 47
+------------------------------------------------------------
+
+
+=================Reducing node 43, size=12==================
+
+The current best program is the following
+
+    fn main() {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
 Failed to reduce node 43
 ------------------------------------------------------------
 
 
-=================Reducing node 46, size=12==================
+=================Reducing node 16, size=12==================
 
 The current best program is the following
 
@@ -390,55 +454,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 46
-------------------------------------------------------------
-
-
-=================Reducing node 42, size=12==================
-
-The current best program is the following
-
-    fn main() {
-    println!("hello_world");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 42
-------------------------------------------------------------
-
-
-=================Reducing node 41, size=12==================
-
-The current best program is the following
-
-    fn main() {
-    println!("hello_world");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 41
-------------------------------------------------------------
-
-
-=================Reducing node 38, size=12==================
-
-The current best program is the following
-
-    fn main() {
-    println!("hello_world");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 38
+Failed to reduce node 16
 ------------------------------------------------------------
 
 
@@ -458,7 +474,7 @@ Failed to reduce node 14
 ------------------------------------------------------------
 
 
-=================Reducing node 12, size=12==================
+=================Reducing node 11, size=12==================
 
 The current best program is the following
 
@@ -470,7 +486,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 12
+Failed to reduce node 11
 ------------------------------------------------------------
 
 
@@ -487,22 +503,6 @@ The current best program is the following
 ===================Node reduction is done===================
 
 Failed to reduce node 10
-------------------------------------------------------------
-
-
-==================Reducing node 9, size=12==================
-
-The current best program is the following
-
-    fn main() {
-    println!("hello_world");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 9
 ------------------------------------------------------------
 
 
@@ -527,7 +527,7 @@ Failed to reduce node 3
 ------------------------------------------------------------
 
 
-==================Reducing node 7, size=12==================
+==================Reducing node 8, size=12==================
 
 The current best program is the following
 
@@ -539,7 +539,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=7}
+    NodeDeletionAction{target_node=8}
 ------------------------------------------------------------
 
 
@@ -551,23 +551,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 7
-------------------------------------------------------------
-
-
-=================Reducing node 11, size=12==================
-
-The current best program is the following
-
-    fn main() {
-    println!("hello_world");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 11
+Failed to reduce node 8
 ------------------------------------------------------------
 
 
@@ -581,6 +565,22 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+===================Node reduction is done===================
+
+Failed to reduce node 13
+------------------------------------------------------------
+
+
+=================Reducing node 15, size=12==================
+
+The current best program is the following
+
+    fn main() {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
 =========Cache hit for the following program: fail==========
 
     fn main() {
@@ -590,11 +590,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 13
+Failed to reduce node 15
 ------------------------------------------------------------
 
 
-=================Reducing node 18, size=12==================
+=================Reducing node 20, size=12==================
 
 The current best program is the following
 
@@ -606,165 +606,13 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=18}
+    NodeDeletionAction{target_node=20}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 18
-------------------------------------------------------------
-
-
-=================Reducing node 21, size=12==================
-
-The current best program is the following
-
-    fn main() {
-    println!("hello_world");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 21
-------------------------------------------------------------
-
-
-=================Reducing node 22, size=12==================
-
-The current best program is the following
-
-    fn main() {
-    println!("hello_world");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 22
-------------------------------------------------------------
-
-
-==================Reducing node 8, size=12==================
-
-The current best program is the following
-
-    fn main() {
-    println!("hello_world");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 8
-------------------------------------------------------------
-
-
-=================Reducing node 34, size=12==================
-
-The current best program is the following
-
-    fn main() {
-    println!("hello_world");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 34
-------------------------------------------------------------
-
-
-=================Reducing node 32, size=12==================
-
-The current best program is the following
-
-    fn main() {
-    println!("hello_world");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 32
-------------------------------------------------------------
-
-
-=================Reducing node 31, size=12==================
-
-The current best program is the following
-
-    fn main() {
-    println!("hello_world");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 31
-------------------------------------------------------------
-
-
-=================Reducing node 26, size=12==================
-
-The current best program is the following
-
-    fn main() {
-    println!("hello_world");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 26
-------------------------------------------------------------
-
-
-=================Reducing node 25, size=12==================
-
-The current best program is the following
-
-    fn main() {
-    println!("hello_world");
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    fn main() {
-    println!(             );
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 25
-------------------------------------------------------------
-
-
-=================Reducing node 28, size=12==================
-
-The current best program is the following
-
-    fn main() {
-    println!("hello_world");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 28
+Failed to reduce node 20
 ------------------------------------------------------------
 
 
@@ -784,7 +632,7 @@ Failed to reduce node 24
 ------------------------------------------------------------
 
 
-=================Reducing node 23, size=12==================
+=================Reducing node 27, size=12==================
 
 The current best program is the following
 
@@ -796,11 +644,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 23
+Failed to reduce node 27
 ------------------------------------------------------------
 
 
-=================Reducing node 20, size=12==================
+==================Reducing node 9, size=12==================
 
 The current best program is the following
 
@@ -812,7 +660,175 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 20
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+=================Reducing node 39, size=12==================
+
+The current best program is the following
+
+    fn main() {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 39
+------------------------------------------------------------
+
+
+=================Reducing node 37, size=12==================
+
+The current best program is the following
+
+    fn main() {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 37
+------------------------------------------------------------
+
+
+=================Reducing node 36, size=12==================
+
+The current best program is the following
+
+    fn main() {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 36
+------------------------------------------------------------
+
+
+=================Reducing node 30, size=12==================
+
+The current best program is the following
+
+    fn main() {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 30
+------------------------------------------------------------
+
+
+=================Reducing node 29, size=12==================
+
+The current best program is the following
+
+    fn main() {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    fn main() {
+    println!(             );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 29
+------------------------------------------------------------
+
+
+=================Reducing node 33, size=12==================
+
+The current best program is the following
+
+    fn main() {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 33
+------------------------------------------------------------
+
+
+=================Reducing node 28, size=12==================
+
+The current best program is the following
+
+    fn main() {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 28
+------------------------------------------------------------
+
+
+=================Reducing node 26, size=12==================
+
+The current best program is the following
+
+    fn main() {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 26
+------------------------------------------------------------
+
+
+=================Reducing node 22, size=12==================
+
+The current best program is the following
+
+    fn main() {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 22
+------------------------------------------------------------
+
+
+=================Reducing node 16, size=12==================
+
+The current best program is the following
+
+    fn main() {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 16
 ------------------------------------------------------------
 
 
@@ -832,7 +848,7 @@ Failed to reduce node 14
 ------------------------------------------------------------
 
 
-=================Reducing node 12, size=12==================
+=================Reducing node 11, size=12==================
 
 The current best program is the following
 
@@ -844,7 +860,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 12
+Failed to reduce node 11
 ------------------------------------------------------------
 
 
@@ -861,22 +877,6 @@ The current best program is the following
 ===================Node reduction is done===================
 
 Failed to reduce node 10
-------------------------------------------------------------
-
-
-==================Reducing node 9, size=12==================
-
-The current best program is the following
-
-    fn main() {
-    println!("hello_world");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 9
 ------------------------------------------------------------
 
 

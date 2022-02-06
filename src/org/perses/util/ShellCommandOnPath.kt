@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,38 +19,32 @@ package org.perses.util
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
 import com.google.common.flogger.FluentLogger
-import java.io.File
+import java.io.File.pathSeparator
 import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.Paths
-import java.util.Arrays
 
 /**
  * This class represents a command in the shell.
  */
-class ShellCommandOnPath(
-  command: String,
+data class ShellCommandOnPath(
+  val originalCommand: String,
   val defaultFlags: ImmutableList<String> = ImmutableList.of()
 ) {
 
-  private val path = Paths.get(command)
+  val fileName = Paths.get(originalCommand).fileName.toString()
 
-  val fileName = path.fileName.toString()
-
-  val command: String
-
-  init {
-    this.command = normalizeAndCheckExecutability(command)
-  }
+  val normalizedCommand: String = normalizeAndCheckExecutability(originalCommand)
 
   fun runWith(
     extraArguments: ImmutableList<String> = ImmutableList.of(),
     captureOutput: Boolean = true,
-    workingDirectory: File = Shell.CURRENT_DIR,
+    workingDirectory: Path = Shell.CURRENT_DIR,
     environment: ImmutableMap<String, String> = Shell.CURRENT_ENV
   ): Shell.CmdOutput {
 
     val cmd = StringBuilder()
-    cmd.append(command).append(' ')
+    cmd.append(normalizedCommand).append(' ')
     defaultFlags.joinTo(cmd, separator = " ")
     cmd.append(' ')
     extraArguments.joinTo(cmd, separator = " ")
@@ -76,7 +70,14 @@ class ShellCommandOnPath(
     fun tryCreating(
       command: String,
       vararg defaultFlags: String
-    ) = tryCreating(command, ImmutableList.copyOf<String>(defaultFlags))
+    ) = tryCreating(command, ImmutableList.copyOf(defaultFlags))
+
+    val ELEMENTS_ON_ENV_PATH = System.getenv("PATH")
+      .split(pathSeparator.toRegex())
+      .toTypedArray()
+      .asSequence()
+      .map { Paths.get(it) }
+      .toImmutableList()
 
     @JvmStatic
     fun normalizeAndCheckExecutability(cmdName: String): String {
@@ -90,24 +91,29 @@ class ShellCommandOnPath(
         }
         return cmdName
       }
-      if (cmdPath.nameCount == 1) {
-        val pathEnv = System.getenv("PATH")
-        val foundOnPath = Arrays.stream(pathEnv.split(File.pathSeparator.toRegex()).toTypedArray())
-          .anyMatch {
-            val fullPath = Paths.get(it).resolve(cmdName)
-            Files.isRegularFile(fullPath) && fullPath.toFile().canExecute()
-          }
-        if (foundOnPath) {
-          return cmdName
-        }
+      val pathEnv = System.getenv("PATH")
+      if (cmdPath.nameCount == 1 && isCmdOnPATH(cmdName, ELEMENTS_ON_ENV_PATH)) {
+        return cmdName
       }
       check(Files.isRegularFile(cmdPath)) {
-        "The command $cmdPath is not a regular file."
+        "The command $cmdPath is not a regular file. PATH=$pathEnv"
       }
       check(Files.isExecutable(cmdPath)) {
         "The command $cmdPath is not executable."
       }
       return cmdPath.toAbsolutePath().toString()
+    }
+
+    internal fun isCmdOnPATH(cmdName: String, elementsOnEnvPath: ImmutableList<Path>): Boolean {
+      return elementsOnEnvPath.any {
+        if (Files.isRegularFile(it)) {
+          it.endsWith(cmdName)
+        } else {
+          val fullPath = it.resolve(cmdName)
+          // TODO: better way to test whether a file is executable.
+          Files.isRegularFile(fullPath) && Files.isExecutable(fullPath)
+        }
+      }
     }
   }
 }

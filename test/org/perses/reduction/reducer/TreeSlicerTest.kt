@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,6 +20,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.reduction.AbstractReducerFunctionalTest
+import org.perses.reduction.reducer.token.TokenSlicer
 
 @RunWith(JUnit4::class)
 class TreeSlicerTest : AbstractReducerFunctionalTest() {

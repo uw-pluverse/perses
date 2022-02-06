@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,14 +16,18 @@
  */
 package org.perses.reduction.reducer
 
+import com.google.common.collect.ImmutableList
+import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.tree.spar.AbstractSparTreeNode
+import org.perses.spartree.AbstractSparTreeNode
 import java.util.PriorityQueue
 import java.util.Queue
 
 /** Perses node reducer, with dfs delta debugging  */
-class PersesNodePrioritizedDfsReducer(reducerContext: ReducerContext) :
+class PersesNodePrioritizedDfsReducer(
+  reducerContext: ReducerContext
+) :
   PersesNodeDfsReducer(META, reducerContext) {
   override fun createReductionQueue(): Queue<AbstractSparTreeNode> {
     return PriorityQueue(
@@ -33,14 +37,17 @@ class PersesNodePrioritizedDfsReducer(reducerContext: ReducerContext) :
 
   companion object {
     const val NAME = "perses_node_priority_with_dfs_delta"
+
     @JvmField
     val META = object : ReducerAnnotation() {
+      override val deterministic = true
+
       override fun shortName() = NAME
 
       override fun description() = ""
 
       override fun create(reducerContext: ReducerContext) =
-        PersesNodePrioritizedDfsReducer(reducerContext)
+        ImmutableList.of<AbstractTokenReducer>(PersesNodePrioritizedDfsReducer(reducerContext))
     }
   }
 }

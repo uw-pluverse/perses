@@ -1,6 +1,5 @@
 package(default_visibility = [
-    "//benchmark:__subpackages__",
-    "//test/org/perses/benchmark_toys:__subpackages__",
+    "//visibility:public",
 ])
 
 filegroup(
@@ -8,15 +7,35 @@ filegroup(
     srcs = ["sanity_test.sh"],
 )
 
-py_library(
-    name = "analyze_memory",
-    srcs = ["analyze_memory.py"],
+py_binary(
+    name = "run_benchmark",
+    srcs = ["run_benchmark.py"],
+)
+
+py_binary(
+    name = "analyze_cache_profiling",
+    srcs = ["analyze_cache_profiling.py"],
+)
+
+py_binary(
+    name = "snapshot_generator",
+    srcs = ["snapshot_generator.py"],
 )
 
 py_test(
-    name = "test_analyze_memory",
-    srcs = ["test_analyze_memory.py"],
-    deps = [
-        ":analyze_memory",
-    ],
+    name = "run_benchmark_test",
+    srcs = ["run_benchmark_test.py"],
+    deps = ["run_benchmark"],
+)
+
+py_test(
+    name = "analyze_cache_profiling_test",
+    srcs = ["analyze_cache_profiling_test.py"],
+    deps = ["analyze_cache_profiling"],
+)
+
+py_test(
+    name = "snapshot_generator_test",
+    srcs = ["snapshot_generator_test.py"],
+    deps = ["snapshot_generator"],
 )

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,9 +16,10 @@
  */
 package org.perses.program
 
-import java.io.File
+import com.google.common.base.MoreObjects
+import java.nio.file.Path
 
-class ScriptFile(file: File) : AbstractSourceFile(file) {
+class ScriptFile(file: Path) : AbstractSourceFile(file) {
   val shebang = extractShebang(fileContent).trim()
 
   init {
@@ -42,5 +43,9 @@ class ScriptFile(file: File) : AbstractSourceFile(file) {
       }
     }
     return result.toString()
+  }
+
+  override fun toString(): String {
+    return MoreObjects.toStringHelper(this).add("file", file).toString()
   }
 }

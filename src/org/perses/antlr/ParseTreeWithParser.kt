@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,7 +16,8 @@
  */
 package org.perses.antlr
 
+import org.antlr.v4.runtime.Lexer
 import org.antlr.v4.runtime.Parser
 import org.antlr.v4.runtime.tree.ParseTree
 
-data class ParseTreeWithParser(val tree: ParseTree, val parser: Parser)
+data class ParseTreeWithParser(val tree: ParseTree, val parser: Parser, val lexer: Lexer)

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,14 +17,27 @@
 package org.perses.util
 
 import com.google.common.collect.ImmutableList
+import com.google.common.io.MoreFiles
+import com.google.common.io.RecursiveDeleteOption
 import com.google.common.truth.Truth.assertThat
+import org.junit.After
+import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import java.nio.file.Files
+import java.nio.file.Paths
 
 // TODO: add more tests for the other methods.
 @RunWith(JUnit4::class)
 class ShellCommandOnPathTest {
+
+  val tempDir = Files.createTempDirectory(javaClass.simpleName)
+
+  @After
+  fun teardown() {
+    MoreFiles.deleteRecursively(tempDir, RecursiveDeleteOption.ALLOW_INSECURE)
+  }
 
   @Test
   fun testCmdOnPath() {
@@ -46,5 +59,35 @@ class ShellCommandOnPathTest {
     assertThat(cmd.fileName).isEqualTo("fake_executable.sh")
     val output = cmd.runWith(ImmutableList.of(), captureOutput = true)
     assertThat(output.exitCode).isEqualTo(0)
+    assertThat(Paths.get(cmd.normalizedCommand).isAbsolute).isTrue()
+  }
+
+  @Test
+  fun testFieldsOfCmd() {
+    val cmd = ShellCommandOnPath("ls")
+    assertThat(cmd.fileName).isEqualTo("ls")
+    assertThat(Paths.get(cmd.normalizedCommand).isAbsolute).isFalse()
+  }
+
+  @Test
+  fun testShouldPrintPATHOnFailure() {
+    val exception: Exception = Assert.assertThrows(Exception::class.java) {
+      ShellCommandOnPath("does-not-exist")
+    }
+    assertThat(exception.message).contains(System.getenv("PATH"))
+  }
+
+  @Test
+  fun testPathOnPATHIsARegularFile() {
+    val script = tempDir.resolve("temp.sh").apply {
+      Files.createFile(this)
+    }
+    Util.setExecutable(script)
+    assertThat(
+      ShellCommandOnPath.isCmdOnPATH(
+        cmdName = script.fileName.toString(),
+        ImmutableList.of(script)
+      )
+    ).isTrue()
   }
 }

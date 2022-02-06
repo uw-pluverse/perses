@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,6 +24,7 @@ object LanguageScala : LanguageKind(
   name = "scala",
   extensions = ImmutableSet.of("scala", "sc"),
   defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT,
+  origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
   allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.COMPACT_ORIG_FORMAT,
     EnumFormatControl.ORIG_FORMAT

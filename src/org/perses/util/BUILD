@@ -2,21 +2,82 @@ package(default_visibility = [
     "//visibility:public",
 ])
 
-load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
-java_library(
+kt_jvm_library(
     name = "util",
-    srcs = glob(
-        ["*.java"],
-        exclude = [
-            "AntlrParseTreePdfier.java",
-            "Shell.java",
-        ],
-    ),
+    srcs = ["Util.kt"],
     deps = [
-        "@maven//:com_google_flogger_flogger",
-        "@maven//:com_google_guava_guava",
+        "//:flogger",
+        "//:guava",
     ],
+)
+
+kt_jvm_library(
+    name = "simple_stack_and_queue",
+    srcs = [
+        "SimpleStackAndQueue.kt",
+    ],
+    deps = [
+        "//:guava",
+    ],
+)
+
+kt_jvm_library(
+    name = "YamlUtil",
+    srcs = [
+        "YamlUtil.kt",
+    ],
+    deps = [
+        "//:jackson",
+        "//:kotlin_stdib",
+    ],
+)
+
+kt_jvm_library(
+    name = "AbstractBashScriptGenerator",
+    srcs = [
+        "AbstractBashScriptGenerator.kt",
+    ],
+    deps = [
+        "//src/org/perses/program:source_file",
+    ],
+)
+
+kt_jvm_library(
+    name = "perses_diffutil",
+    srcs = [
+        "AbstractEditOperation.kt",
+        "ListAlignment.kt",
+        "PersesDiffUtil.kt",
+    ],
+    deps = [
+        ":perses_kt_exts",
+        "//:guava",
+        "@maven//:com_googlecode_java_diff_utils_diffutils",
+    ],
+)
+
+kt_jvm_library(
+    name = "tiny_list_map",
+    srcs = [
+        "TinyListMap.kt",
+    ],
+)
+
+kt_jvm_library(
+    name = "file_name_content_pair",
+    srcs = [
+        "FileNameContentPair.kt",
+    ],
+    deps = [
+        ":util",
+    ],
+)
+
+kt_jvm_library(
+    name = "mutable_int",
+    srcs = ["MutableInt.kt"],
 )
 
 kt_jvm_library(
@@ -41,8 +102,10 @@ kt_jvm_library(
         "ShellOutputStream.kt",
     ],
     deps = [
-        "@maven//:com_google_flogger_flogger",
-        "@maven//:com_google_guava_guava",
+        ":perses_kt_exts",
+        ":util",
+        "//:flogger",
+        "//:guava",
         "@maven//:org_apache_commons_commons_exec",
     ],
 )
@@ -63,19 +126,55 @@ kt_jvm_library(
 )
 
 kt_jvm_library(
+    name = "daemon_thread_pool",
+    srcs = ["DaemonThreadPool.kt"],
+)
+
+kt_jvm_library(
     name = "performance_monitor",
     srcs = ["PerformanceMonitor.kt"],
     deps = [
-        "@maven//:com_google_guava_guava",
+        ":daemon_thread_pool",
+        "//:flogger",
+        "//:guava",
         "@maven//:it_unimi_dsi_fastutil",
     ],
 )
 
 kt_jvm_library(
     name = "timeutil",
-    srcs = ["TimeUtil.kt"],
+    srcs = [
+        "TimeSpan.kt",
+        "TimeUtil.kt",
+    ],
     deps = [
-        "@maven//:com_google_guava_guava",
+        "//:guava",
+    ],
+)
+
+kt_jvm_library(
+    name = "auto_increment_dir",
+    srcs = [
+        "AutoIncrementDirectory.kt",
+    ],
+    deps = [
+    ],
+)
+
+kt_jvm_library(
+    name = "Interval",
+    srcs = ["Interval.kt"],
+)
+
+kt_jvm_library(
+    name = "flogger_kt_exts",
+    srcs = ["flogger_kt_exts.kt"],
+    visibility = [
+        "//:__pkg__",
+    ],
+    deps = [
+        "@maven//:com_google_flogger_flogger",
+        "@maven//:com_google_flogger_flogger_system_backend",
     ],
 )
 
@@ -83,17 +182,16 @@ kt_jvm_library(
     name = "auto_deltable_folder",
     srcs = ["AutoDeletableFolder.kt"],
     deps = [
-        "@maven//:com_google_guava_guava",
+        "//:guava",
+        "//:kotlin_stdib",
     ],
 )
 
 kt_jvm_library(
-    name = "command_line_flags",
-    srcs = [
-        "AbstractCommandOptions.kt",
-        "ICommandLineFlags.kt",
-    ],
+    name = "perses_kt_exts",
+    srcs = ["perses_kt_exts.kt"],
     deps = [
-        "@maven//:com_beust_jcommander",
+        "//:flogger",
+        "//:guava",
     ],
 )

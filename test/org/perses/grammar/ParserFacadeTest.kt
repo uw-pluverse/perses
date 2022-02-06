@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,7 +19,6 @@ package org.perses.grammar
 import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -29,11 +28,12 @@ import org.perses.grammar.c.CParserFacade
 import org.perses.grammar.c.PnfCParserFacade
 import org.perses.grammar.scala.LanguageScala
 import org.perses.grammar.scala.PnfScalaParserFacade
-import org.perses.program.PersesToken
+import org.perses.program.EnumFormatControl
+import org.perses.program.PersesTokenFactory.PersesToken
 import org.perses.program.TokenizedProgram
-import org.perses.tree.spar.SparTreeBuilder
-import java.io.File
+import org.perses.program.printer.PrinterRegistry
 import java.io.IOException
+import java.nio.file.Paths
 
 @RunWith(JUnit4::class)
 class ParserFacadeTest {
@@ -42,6 +42,13 @@ class ParserFacadeTest {
   private val scalaFacade = PnfScalaParserFacade()
 
   private var scalaProgram: TokenizedProgram? = null
+
+  private val printerSingleLine =
+    PrinterRegistry.getPrinter(EnumFormatControl.SINGLE_TOKEN_PER_LINE)
+  private val printerCompact =
+    PrinterRegistry.getPrinter(EnumFormatControl.COMPACT_ORIG_FORMAT)
+  private val printerOrig =
+    PrinterRegistry.getPrinter(EnumFormatControl.ORIG_FORMAT)
 
   @Before
   fun setup() {
@@ -59,7 +66,7 @@ class ParserFacadeTest {
   @Test
   @Throws(IOException::class)
   fun testTokenize() {
-    val tokens = cFacade.parseIntoTokens(File("test_data/misc/t1.c"))
+    val tokens = cFacade.parseIntoTokens(Paths.get("test_data/misc/t1.c"))
     val tokenTexts = tokens.stream().map { it.text }.collect(ImmutableList.toImmutableList())
     assertThat(tokenTexts)
       .containsExactly("int", "a", ";", "int", "b", ";", "int", "a", ",", "b", ";")
@@ -69,10 +76,16 @@ class ParserFacadeTest {
   @Test
   fun testIsParsableForScala_true_case() {
     val program = scalaProgram!!
-    assertThat(scalaFacade.isSourceCodeParsable(program.toSourceCodeInOrigFormatWithBlankLines()))
-      .isTrue()
-    assertThat(scalaFacade.isSourceCodeParsable(program.toCompactSourceCode())).isTrue()
-    assertThat(scalaFacade.isSourceCodeParsable(program)).isTrue()
+    assertThat(
+      scalaFacade.isSourceCodeParsable(
+        printerOrig.print(program).sourceCode
+      )
+    ).isTrue()
+    assertThat(
+      scalaFacade.isSourceCodeParsable(
+        printerCompact.print(program).sourceCode
+      )
+    ).isTrue()
   }
 
   @Test
@@ -81,89 +94,40 @@ class ParserFacadeTest {
     run {
       val invalidProgram = projectProgram(program, "object", "Hello", "{")
       assertThat(invalidProgram.tokens).hasSize(3)
-      assertThat(scalaFacade.isSourceCodeParsable(invalidProgram.toCompactSourceCode())).isFalse()
+      assertThat(
+        scalaFacade.isSourceCodeParsable(
+          printerCompact.print(invalidProgram).sourceCode
+        )
+      ).isFalse()
     }
   }
 
   @Test
   fun testIsParsable_true() {
     val program = createSparTreeFromFile("test_data/misc/t1.c").programSnapshot
-    assertThat(cFacade.isSourceCodeParsable(program.toSourceCodeInOrigFormatWithBlankLines()))
-      .isTrue()
-//    assertThat(cFacade.isSourceCodeParsable(program)).isTrue()
-    assertThat(pnfcFacade.isSourceCodeParsable(program.toSourceCodeInOrigFormatWithBlankLines()))
-      .isTrue()
-//    assertThat(pnfcFacade.isSourceCodeParsable(program)).isTrue()
-    val invalidProgram = deriveInvalidProgram(program)
     assertThat(
-      cFacade.isSourceCodeParsable(invalidProgram.toSourceCodeInOrigFormatWithBlankLines())
-    )
-      .isFalse()
-//    assertThat(cFacade.isSourceCodeParsable(invalidProgram)).isFalse()
-    assertThat(
-      pnfcFacade.isSourceCodeParsable(
-        invalidProgram.toSourceCodeInOrigFormatWithBlankLines()
+      cFacade.isSourceCodeParsable(
+        printerOrig.print(program).sourceCode
       )
     )
-      .isFalse()
-//    assertThat(pnfcFacade.isSourceCodeParsable(invalidProgram)).isFalse()
-  }
-
-  @Ignore
-  @Test
-  fun testParseTokenizedProgram_t1() {
-    testParseTokenizedProgram("t1.c")
-  }
-
-  @Ignore
-  @Test
-  fun testParseTokenizedProgram_t2() {
-    testParseTokenizedProgram("t2.c")
-  }
-
-  @Ignore
-  @Test
-  fun testParseTokenizedProgram_t3() {
-    testParseTokenizedProgram("t3.c")
-  }
-
-  @Ignore
-  @Test
-  fun testParseTokenizedProgram_t4() {
-    testParseTokenizedProgram("t4.c")
-  }
-
-  @Ignore
-  @Test
-  fun testParseTokenizedProgram_t5() {
-    testParseTokenizedProgram("t5.c")
-  }
-
-  @Ignore
-  @Test
-  fun testParseTokenizedProgram_t9() {
-    testParseTokenizedProgram("t9.c")
-  }
-
-  private fun testParseTokenizedProgram(filename: String) {
-    val sparTreeFromFile = createSparTreeFromFile("test_data/misc/$filename")
-    val originalProgram = sparTreeFromFile.programSnapshot
-    val originalTokens = toAntlrTokens(originalProgram.tokens)
-    val factory = sparTreeFromFile.tokenizedProgramFactory
-    run {
-      val (tree1) = cFacade.parseTokenizedProgram(originalProgram)
-      val tree = SparTreeBuilder(cFacade.ruleHierarchy, factory)
-        .build(tree1)
-      val tokens = toAntlrTokens(tree.programSnapshot.tokens)
-      assertThat(tokens).containsExactlyElementsIn(originalTokens).inOrder()
-    }
-    run {
-      val (tree) = pnfcFacade.parseTokenizedProgram(originalProgram)
-      val treeFromPnfc = SparTreeBuilder(pnfcFacade.ruleHierarchy, factory)
-        .build(tree)
-      val tokens = toAntlrTokens(treeFromPnfc.programSnapshot.tokens)
-      assertThat(tokens).containsExactlyElementsIn(originalTokens).inOrder()
-    }
+      .isTrue()
+    assertThat(
+      pnfcFacade.isSourceCodeParsable(
+        printerOrig.print(program).sourceCode
+      )
+    )
+      .isTrue()
+    val invalidProgram = deriveInvalidProgram(program)
+    assertThat(
+      cFacade.isSourceCodeParsable(
+        printerOrig.print(invalidProgram).sourceCode
+      )
+    ).isFalse()
+    assertThat(
+      pnfcFacade.isSourceCodeParsable(
+        printerOrig.print(invalidProgram).sourceCode
+      )
+    ).isFalse()
   }
 
   companion object {
@@ -188,7 +152,7 @@ class ParserFacadeTest {
           }
         }
       }
-      return TokenizedProgram(builder.build())
+      return TokenizedProgram(builder.build(), program.factory)
     }
 
     private fun deriveInvalidProgram(program: TokenizedProgram): TokenizedProgram {
@@ -200,7 +164,7 @@ class ParserFacadeTest {
         }
         builder.add(t)
       }
-      return TokenizedProgram(builder.build())
+      return TokenizedProgram(builder.build(), program.factory)
     }
   }
 }

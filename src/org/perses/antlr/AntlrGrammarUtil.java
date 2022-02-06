@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,27 +19,21 @@ package org.perses.antlr;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.ArrayList;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.ast.*;
+import org.antlr.v4.tool.ast.GrammarAST;
+import org.perses.program.LanguageKind;
 import org.perses.program.TokenizedProgram;
 import org.perses.program.TokenizedProgramFactory;
 
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.function.Function;
-
-import static com.google.common.base.Preconditions.checkState;
-
 /** Utility class to process Antlr grammars. */
 public final class AntlrGrammarUtil {
-
-  private static final int INDENT_STEP = 4;
 
   /** Make this class a pure utility class. */
   private AntlrGrammarUtil() {}
@@ -62,127 +56,13 @@ public final class AntlrGrammarUtil {
     }
   }
 
-  /**
-   * Pre-order traversal of an Antlr grammar AST.
-   *
-   * @param visitor: processes a node, and returns a boolean to indicate whether to process its
-   *     children.
-   */
-  public static void preOrderVisitAntlrGrammarAST(
-      GrammarRootAST ast, Function<GrammarAST, Boolean> visitor) {
-    final ArrayDeque<GrammarAST> stack = new ArrayDeque<>();
-    stack.add(ast);
-    while (stack.size() > 0) {
-      final GrammarAST node = stack.pop();
-      final boolean proceed = visitor.apply(node);
-      if (!proceed) {
-        continue;
-      }
-      final int childCount = node.getChildCount();
-      for (int i = childCount - 1; i >= 0; --i) {
-        stack.push((GrammarAST) node.getChild(i));
-      }
-    }
-  }
-
-  public static ImmutableList<RuleAST> getLexerAndParserRuleASTList(GrammarRootAST grammar) {
-    assert grammar != null;
-    ImmutableList.Builder<RuleAST> builder = ImmutableList.builder();
-    preOrderVisitAntlrGrammarAST(
-        grammar,
-        node -> {
-          if (node instanceof RuleAST) {
-            builder.add(((RuleAST) node));
-            return false;
-          } else {
-            return true;
-          }
-        });
-    return builder.build();
-  }
-
-  public static ImmutableList<String> getParserRuleNameList(GrammarRootAST grammar) {
-    assert grammar != null;
-    ImmutableList.Builder<String> builder = ImmutableList.builder();
-    preOrderVisitAntlrGrammarAST(
-        grammar,
-        node -> {
-          if (node instanceof RuleAST) {
-            RuleAST ruleAST = (RuleAST) node;
-            if (ruleAST.isLexerRule()) {
-              return false;
-            } else {
-              builder.add(ruleAST.getChild(0).toString());
-              return false;
-            }
-          } else {
-            return true;
-          }
-        });
-    return builder.build();
-  }
-
-  /**
-   * Verify whether the given Antlr grammar has the Spar-tree properties, that is,
-   * <li>The name of the parent rule of '?' starts with "optiona__"
-   * <li>The name of the parent rule of '*' starts with "kleene_star__"
-   * <li>The name of the parent rule of '+' starts with 'kleene_plus__"
-   * <li>The children of any '?', '*' or '+' must be of size 1
-   */
-  public static void verifySparTreeProperties(GrammarRootAST ast) {
-    preOrderVisitAntlrGrammarAST(
-        ast,
-        node -> {
-          final int childCount = node.getChildCount();
-
-          if (node instanceof OptionalBlockAST
-              || node instanceof StarBlockAST
-              || node instanceof PlusBlockAST) {
-            checkState(node.getParent() instanceof AltAST);
-            checkState(node.getParent().getParent() instanceof BlockAST);
-            checkState(
-                node.getParent().getParent().getParent() instanceof RuleAST,
-                "%s",
-                node.getParent().getParent().getParent().toStringTree());
-            final RuleAST rule = (RuleAST) node.getParent().getParent().getParent();
-            final String ruleName = rule.getChild(0).toString();
-            checkState(
-                !(node instanceof OptionalBlockAST) || RuleType.isOptional(ruleName),
-                "%s",
-                ruleName);
-            checkState(
-                !(node instanceof StarBlockAST) || RuleType.isKleeneStar(ruleName),
-                "%s: %s",
-                ruleName,
-                rule.toStringTree());
-            checkState(
-                !(node instanceof PlusBlockAST) || RuleType.isKleenePlus(ruleName), "%s", ruleName);
-            checkState(childCount == 1);
-          }
-          if (isLexerRule(node)) {
-            return false;
-          }
-          return true;
-        });
-  }
-
-  public static boolean isLexerRule(GrammarAST node) {
-    return node instanceof RuleAST && ((RuleAST) node).isLexerRule();
-  }
-
-  private static GrammarAST getParentRule(OptionalBlockAST ast) {
-    checkState(ast.getParent() instanceof AltAST);
-    final AltAST parent = (AltAST) ast.getParent();
-    checkState(parent.getParent() instanceof BlockAST);
-    return null;
-  }
-
   /** TODO: can be optimzied by converting to an iterative algorithm. */
-  public static TokenizedProgram convertParseTreeToProgram(ParseTree root) {
+  public static TokenizedProgram convertParseTreeToProgram(
+      ParseTree root, LanguageKind languageKind) {
     final ImmutableList.Builder<Token> builder = ImmutableList.builder();
     convertParseTreeToProgram(root, builder);
     final ImmutableList<Token> tokens = builder.build();
-    return TokenizedProgramFactory.createFactory(tokens).create(tokens);
+    return TokenizedProgramFactory.createFactory(tokens, languageKind).create(tokens);
   }
 
   private static void convertParseTreeToProgram(

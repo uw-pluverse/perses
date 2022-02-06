@@ -18,11 +18,94 @@ reduce(
     log_file = "reduce_delta_1_with_caching_reduction_log.txt",
     progress_dump_file = "progress_dump_t_with_cache.c",
     reduction_algorithm = "perses_node_with_dfs_delta",
-    result_file = "reduced_t.c",
     source_file = "t.c",
     statistics_file = "stat_t.c",
     test_script = "r.sh",
     verbosity = "CONFIG",
+)
+
+reduce(
+    name = "reduce_delta_1_with_content_string_based_caching",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    log_file = "reduce_delta_1_with_content_string_based_caching_reduction_log.txt",
+    progress_dump_file = "progress_dump_t_with_content_string_based_cache_process.log",
+    query_cache_type = "ORIG_CONTENT_STRING_BASED",
+    reduction_algorithm = "perses_node_with_dfs_delta",
+    source_file = "t.c",
+    test_script = "r.sh",
+)
+
+reduce(
+    name = "reduce_delta_1_with_content_sha512_based_caching",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    log_file = "reduce_delta_1_with_content_sha512_based_caching_reduction_log.txt",
+    progress_dump_file = "progress_dump_t_with_content_sha512_based_cache_process.log",
+    query_cache_type = "CONTENT_SHA512",
+    reduction_algorithm = "perses_node_with_dfs_delta",
+    source_file = "t.c",
+    test_script = "r.sh",
+)
+
+reduce(
+    name = "reduce_delta_1_with_content_lexeme_list_caching",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    log_file = "reduce_delta_1_with_content_lexeme_list_caching_reduction_log.txt",
+    progress_dump_file = "progress_dump_t_with_content_lexeme_list_cache_process.log",
+    query_cache_type = "CONTENT_LEXEME_LIST_BASE",
+    reduction_algorithm = "perses_node_with_dfs_delta",
+    source_file = "t.c",
+    test_script = "r.sh",
+)
+
+reduce(
+    name = "reduce_delta_1_with_config_based_caching",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    log_file = "reduce_delta_1_with_config_based_caching_reduction_log.txt",
+    progress_dump_file = "progress_dump_t_with_config_based_cache_process.log",
+    query_cache_type = "CONFIG_BASED",
+    reduction_algorithm = "perses_node_with_dfs_delta",
+    source_file = "t.c",
+    test_script = "r.sh",
+)
+
+reduce(
+    name = "reduce_delta_1_with_lexeme_id_caching",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    log_file = "reduce_delta_1_with_lexeme_id_caching_reduction_log.txt",
+    progress_dump_file = "progress_dump_t_with_lexeme_id_cache_process.log",
+    query_cache_type = "PERSES_LEXEME_ID",
+    reduction_algorithm = "perses_node_with_dfs_delta",
+    source_file = "t.c",
+    test_script = "r.sh",
+)
+
+reduce(
+    name = "reduce_delta_1_with_fast_linear_scan_caching",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    log_file = "reduce_delta_1_with_fast_linear_scan_caching_reduction_log.txt",
+    progress_dump_file = "progress_dump_t_with_fast_linear_scan_cache_process.log",
+    query_cache_type = "COMPACT_QUERY_CACHE",
+    reduction_algorithm = "perses_node_with_dfs_delta",
+    source_file = "t.c",
+    test_script = "r.sh",
+)
+
+reduce(
+    name = "reduce_delta_1_with_fast_linear_scan_without_compression_caching",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    log_file = "reduce_delta_1_with_fast_linear_scan_without_compression_caching_reduction_log.txt",
+    progress_dump_file = "progress_dump_t_with_fast_linear_scan_without_compression_cache_process.log",
+    query_cache_type = "PERSES_FAST_LINEAR_SCAN_NO_COMPRESSION",
+    reduction_algorithm = "perses_node_with_dfs_delta",
+    source_file = "t.c",
+    test_script = "r.sh",
 )
 
 reduce(
@@ -31,7 +114,6 @@ reduce(
     enable_query_caching = False,
     progress_dump_file = "progress_dump_t_wo_cache.c",
     reduction_algorithm = "perses_node_with_dfs_delta",
-    result_file = "reduced_t_wo_cache.c",
     source_file = "t.c",
     statistics_file = "stat_t_wo_cache.c",
     test_script = "r.sh",
@@ -43,11 +125,36 @@ filegroup(
 )
 
 filegroup(
-    name = "delta_1_reduced",
-    srcs = [
-        "progress_dump_t_with_cache.c",
-        "reduce_delta_1_with_caching_reduction_log.txt",
-        "reduced_t.c",
-        "stat_t.c",
-    ],
+    name = "progress_dump_t_with_fast_linear_scan_cache_process",
+    srcs = ["progress_dump_t_with_fast_linear_scan_cache_process.log"],
+)
+
+filegroup(
+    name = "progress_dump_t_with_fast_linear_scan_without_compression_cache_process",
+    srcs = ["progress_dump_t_with_fast_linear_scan_without_compression_cache_process.log"],
+)
+
+filegroup(
+    name = "progress_dump_t_with_lexeme_id_cache_process",
+    srcs = ["progress_dump_t_with_lexeme_id_cache_process.log"],
+)
+
+filegroup(
+    name = "progress_dump_t_with_content_string_based_cache_process",
+    srcs = ["progress_dump_t_with_content_string_based_cache_process.log"],
+)
+
+filegroup(
+    name = "progress_dump_t_with_content_sha512_based_cache_process",
+    srcs = ["progress_dump_t_with_content_sha512_based_cache_process.log"],
+)
+
+filegroup(
+    name = "progress_dump_t_with_content_lexeme_list_cache_process",
+    srcs = ["progress_dump_t_with_content_lexeme_list_cache_process.log"],
+)
+
+filegroup(
+    name = "progress_dump_t_with_config_based_cache_process",
+    srcs = ["progress_dump_t_with_config_based_cache_process.log"],
 )

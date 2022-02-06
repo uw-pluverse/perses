@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,14 +16,14 @@
  */
 package org.perses.util
 
-import com.google.common.base.Preconditions
 import com.google.common.truth.Truth.assertThat
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.util.ShellCommandOnPath.Companion.normalizeAndCheckExecutability
-import java.io.File
+import java.nio.file.Files
+import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class ShellTest {
@@ -43,9 +43,10 @@ class ShellTest {
 
   @Test
   fun localScript() {
-    val tempFile = File.createTempFile("test", "run.sh")
-    Preconditions.checkState(tempFile.setExecutable(true))
-    tempFile.deleteOnExit()
+    val tempFile = Files.createTempFile("test", "run.sh")
+    Util.setExecutable(tempFile)
+    check(Files.isExecutable(tempFile))
+    tempFile.toFile().deleteOnExit()
 
     val normalized = normalizeAndCheckExecutability(tempFile.toString())
     assertThat(normalized).isEqualTo(tempFile.toString())
@@ -76,13 +77,15 @@ class ShellTest {
 
   @Test
   fun testSettingEnvironmentVariable() {
-    val script = File.createTempFile("temp", "test_script.sh")
-    script.deleteOnExit()
-    assertThat(script.setExecutable(true)).isTrue()
+    val script = Files.createTempFile("temp", "test_script.sh")
+    script.toFile().deleteOnExit()
+    Util.setExecutable(script)
+    assertThat(Files.isExecutable(script)).isTrue()
+
     script.writeText(
       """#!/usr/bin/env bash 
       |echo "${"$"}{TEST_ENV_VALUE}"
-    """.trimMargin()
+      """.trimMargin()
     )
 
     val cmdOutput = Shell.run(

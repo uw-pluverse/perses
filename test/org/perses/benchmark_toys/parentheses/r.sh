@@ -36,10 +36,21 @@ if grep -q "Wimplicit-int" temp.txt || \
 fi
 # End of the check.
 
-./a.out > temp.txt
+# Since we do not use CompCert, it is unavoidable to have UBs. Thus we rely on multiple optimization flags.
+readonly COMPILE_CMD_LIST=(
+    "-O0"
+    "-O1"
+    "-O2"
+    "-O3"
+    "-Os"
+)
 
-if grep -q 'b=2' temp.txt ; then
-  exit 0
-fi
+for compiler in "${GCC}" "${CLANG}" ; do
+  for flag in "${COMPILE_CMD_LIST[@]}" ; do
+    echo ${flag}
+    "${compiler}" "${flag}" t.c || exit 1
+    ./a.out | grep "b=2" || exit 1
+  done
+done
 
-exit 1
+exit 0

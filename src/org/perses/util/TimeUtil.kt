@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -30,7 +30,7 @@ object TimeUtil {
   }
 
   @JvmStatic
-  fun formatDateForFileName(epochMillis: Long): String? {
+  fun formatDateForFileName(epochMillis: Long): String {
     return formatDateForFileName(converToLocalDateTime(epochMillis, ZoneId.systemDefault()))
   }
 

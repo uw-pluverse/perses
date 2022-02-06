@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,76 +18,82 @@ package org.perses.reduction
 
 import com.google.common.io.MoreFiles
 import com.google.common.io.RecursiveDeleteOption
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
-import org.perses.grammar.ParserFacadeFactory
+import org.perses.grammar.SingleParserFacadeFactory
 import org.perses.grammar.c.LanguageC
 import org.perses.program.EnumFormatControl.ORIG_FORMAT
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
-import org.perses.reduction.ReductionConfiguration.Companion.getTempRootFolderName
-import java.io.File
-import java.io.IOException
+import org.perses.reduction.io.RegularReductionInputs
+import org.perses.reduction.io.token.RegularOutputManagerFactory
+import org.perses.reduction.io.token.TokenReductionIOManager
 import java.nio.charset.StandardCharsets
-import java.time.LocalDateTime
+import java.nio.file.Files
+import java.nio.file.Paths
 
 /** Test for [ReductionConfiguration]  */
 @RunWith(JUnit4::class)
 class ReductionConfigurationTest {
-  private val testScript = ScriptFile(File(FOLDER + "r.sh"))
+  private val testScript = ScriptFile(Paths.get(FOLDER, "r.sh"))
   private val workingDirectory =
     TestUtility.createCleanWorkingDirectory(ReductionConfigurationTest::class.java)
-  private val sourceFile = SourceFile(File(FOLDER + "t.c"), LanguageC)
+  private val sourceFile = SourceFile(Paths.get(FOLDER, "t.c"), LanguageC)
+  private val outputDir = workingDirectory.resolve("perses_output_dir")
 
   @After
-  @Throws(IOException::class)
   fun teardown() {
-    MoreFiles.deleteRecursively(workingDirectory!!.toPath(), RecursiveDeleteOption.ALLOW_INSECURE)
+    MoreFiles.deleteRecursively(workingDirectory, RecursiveDeleteOption.ALLOW_INSECURE)
   }
 
   @Test
-  @Throws(IOException::class)
   fun testConfiguration() {
-    Truth.assertThat(workingDirectory.isDirectory).isTrue()
-    val bestFile = sourceFile.file
+    assertThat(Files.isDirectory(workingDirectory)).isTrue()
     val numOfReductionThreads = 2
+    val ioManager = TokenReductionIOManager(
+      workingDirectory,
+      RegularReductionInputs(
+        testScript = testScript,
+        mainFile = sourceFile
+      ),
+      outputManagerFactory = RegularOutputManagerFactory(
+        sourceFile.baseName,
+        ORIG_FORMAT
+      ),
+      outputDirectory = outputDir
+    )
     val configuration = ReductionConfiguration(
-      workingFolder = workingDirectory,
-      testScript = testScript,
-      fileToReduce = sourceFile,
-      bestResultFile = bestFile,
+      languageKind = ioManager.reductionInputs.mainLanguage,
       statisticsFile = null,
       progressDumpFile = null,
-      programFormatControl = ORIG_FORMAT,
       fixpointReduction = true,
       enableTestScriptExecutionCaching = true,
       useRealDeltaDebugger = false,
       numOfReductionThreads = numOfReductionThreads,
-      parserFacadeFactory = ParserFacadeFactory.builderWithBuiltinLanguages().build()
+      parserFacadeFactory = SingleParserFacadeFactory.builderWithBuiltinLanguages().build(),
+      persesNodeReducerConfig = ReductionConfiguration.PersesNodeReducerConfiguration(
+        maxEditCountForRegularRuleNode = 100,
+        maxBfsDepthForRegularRuleNode = 5,
+        stopAtFirstCompatibleChildren = true
+      )
     )
-    Truth.assertThat(configuration.bestResultFile).isEqualTo(bestFile)
-    Truth.assertThat(configuration.fileToReduce.file).isEqualTo(sourceFile.file)
-    Truth.assertThat(configuration.fileToReduce.fileContent)
-      .isEqualTo(MoreFiles.asCharSource(sourceFile.file.toPath(), StandardCharsets.UTF_8).read())
-    Truth.assertThat(configuration.numOfReductionThreads).isEqualTo(numOfReductionThreads)
-    Truth.assertThat(configuration.workingFolder).isEqualTo(workingDirectory)
+    val mainFile = (ioManager.reductionInputs as RegularReductionInputs).mainFile
+    assertThat(mainFile.file).isEqualTo(sourceFile.file)
+    assertThat(mainFile.fileContent)
+      .isEqualTo(MoreFiles.asCharSource(sourceFile.file, StandardCharsets.UTF_8).read())
+    assertThat(configuration.numOfReductionThreads).isEqualTo(numOfReductionThreads)
+    val profileFile = ioManager.getProfileFile()
+    assertThat(profileFile.parent.toRealPath()).isEqualTo(workingDirectory.toRealPath())
     run {
-      val tempRootFolder = configuration.tempRootFolder
-      Truth.assertThat(tempRootFolder.parentFile).isEqualTo(workingDirectory)
-      Truth.assertThat(tempRootFolder.name).startsWith("PersesTempRoot_t.c_r.sh_")
+      val tempRootFolder = ioManager.tempRootFolder
+      assertThat(tempRootFolder.parent).isEqualTo(workingDirectory)
+      assertThat(tempRootFolder.fileName.toString()).startsWith("PersesTempRoot_t.c_r.sh_")
     }
-    Truth.assertThat(configuration.fixpointReduction).isTrue()
-  }
-
-  @Test
-  fun testGetTempRootFolderName() {
-    val time = LocalDateTime.of(2000, 1, 21, 1, 2, 3)
-    Truth.assertThat(getTempRootFolderName("t.c", "r.sh", time))
-      .isEqualTo("PersesTempRoot_t.c_r.sh_20000121_010203")
+    assertThat(configuration.fixpointReduction).isTrue()
   }
 
   companion object {

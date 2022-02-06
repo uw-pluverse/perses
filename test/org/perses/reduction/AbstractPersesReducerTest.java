@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,10 +16,9 @@
  */
 package org.perses.reduction;
 
-import org.perses.TestUtility;
-import org.perses.tree.spar.SparTree;
-
 import java.io.IOException;
+import org.perses.TestUtility;
+import org.perses.spartree.SparTree;
 
 /** Base class for Perses reducer tests. */
 public class AbstractPersesReducerTest {

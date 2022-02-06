@@ -1,0 +1,3266 @@
+======================Reduction starts======================
+
+The spar tree is the following.
+translationUnit {id=1}
+|___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=4,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=5,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=934,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=937,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+        |___directDeclarator {id=925,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=933,slot_type=[aux_rule__directDeclarator_8,Identifier]}
+        |   |___(*) {id=927,slot_type=kleene_star__directDeclarator_6}
+        |       |___aux_rule__directDeclarator_14 {id=929,slot_type=[aux_rule__directDeclarator_7,aux_rule__directDeclarator_14]}
+        |           |___Token:( {id=930,slot_type=LeftParen}
+        |           |___Token:) {id=932,slot_type=RightParen}
+        |___compoundStatement {id=7,slot_type=compoundStatement}
+            |___Token:{ {id=8,slot_type=LeftBrace}
+            |___(?) {id=9,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=12,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___aux_rule__declaration_3 {id=891,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=892,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=924,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+            |       |   |___(?) {id=893,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=896,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:a {id=921,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_8,Identifier]}
+            |       |   |       |___(?) {id=898,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=899,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=900,slot_type=Assign}
+            |       |   |               |___Token:99 {id=918,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=894,slot_type=Semi}
+            |       |___aux_rule__declaration_3 {id=42,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=43,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=889,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+            |       |   |___(?) {id=44,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=47,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:b {id=886,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_8,Identifier]}
+            |       |   |       |___(?) {id=49,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=50,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=51,slot_type=Assign}
+            |       |   |               |___aux_rule__postfixExpression_13 {id=69,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |___aux_rule__primaryExpression_4 {id=72,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |   |___Token:( {id=73,slot_type=LeftParen}
+            |       |   |                   |   |___aux_rule__postfixExpression_13 {id=91,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |___aux_rule__primaryExpression_4 {id=94,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |   |___Token:( {id=95,slot_type=LeftParen}
+            |       |   |                   |       |   |___aux_rule__postfixExpression_13 {id=113,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |___aux_rule__primaryExpression_4 {id=116,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |   |___Token:( {id=117,slot_type=LeftParen}
+            |       |   |                   |       |       |   |___aux_rule__postfixExpression_13 {id=135,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |___aux_rule__primaryExpression_4 {id=138,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |   |___Token:( {id=139,slot_type=LeftParen}
+            |       |   |                   |       |       |       |   |___aux_rule__postfixExpression_13 {id=157,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |___aux_rule__primaryExpression_4 {id=160,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |   |___Token:( {id=161,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=179,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=182,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |   |___Token:( {id=183,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=201,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=204,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |   |___Token:( {id=205,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=223,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=226,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |   |___Token:( {id=227,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=245,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=248,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |   |___Token:( {id=249,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=267,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=270,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |   |___Token:( {id=271,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=289,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=292,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=293,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=311,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=314,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=315,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=333,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=336,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=337,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=355,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=358,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=359,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=377,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=380,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=381,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=399,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=402,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=403,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=421,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=424,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=425,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=443,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=446,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=447,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=465,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=468,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=469,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=487,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=490,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=491,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=509,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=512,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=513,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=531,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=534,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=535,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=553,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=556,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=557,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=575,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=578,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=579,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=597,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=600,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=601,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=619,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=622,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=623,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=641,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=644,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=645,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=663,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=666,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=667,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=685,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=688,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=689,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=707,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=710,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=711,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=729,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=732,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=733,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=751,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=754,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=755,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=773,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=776,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=777,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=795,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=798,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=799,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=817,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=820,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=821,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=839,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=842,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=843,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13 {id=861,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4 {id=864,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:( {id=865,slot_type=LeftParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:a {id=883,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=863,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=841,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=819,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=797,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=775,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=753,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=731,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=709,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=687,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=665,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=643,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=621,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=599,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=577,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=555,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=533,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=511,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=489,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=467,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=445,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=423,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=401,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=379,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=357,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=335,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |       |___Token:) {id=313,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |       |___Token:) {id=291,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |       |___Token:) {id=269,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |       |___Token:) {id=247,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |       |___Token:) {id=225,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |       |___Token:) {id=203,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |       |___Token:) {id=181,slot_type=RightParen}
+            |       |   |                   |       |       |       |       |___Token:) {id=159,slot_type=RightParen}
+            |       |   |                   |       |       |       |___Token:) {id=137,slot_type=RightParen}
+            |       |   |                   |       |       |___Token:) {id=115,slot_type=RightParen}
+            |       |   |                   |       |___Token:) {id=93,slot_type=RightParen}
+            |       |   |                   |___Token:) {id=71,slot_type=RightParen}
+            |       |   |___Token:; {id=45,slot_type=Semi}
+            |       |___jumpStatement {id=17,slot_type=[aux_rule__blockItemList_2,statement,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=20,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=21,slot_type=Return}
+            |           |   |___(?) {id=22,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:b {id=40,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |           |___Token:; {id=19,slot_type=Semi}
+            |___Token:} {id=10,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=93==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b = (((((((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))))));
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=93==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b = (((((((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))))));
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    int a = 99;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    int b = (((((((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))))));
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 4
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=93==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b = (((((((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))))));
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 7
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=93==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b = (((((((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))))));
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    int main() {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+=================Reducing node 12, size=93==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b = (((((((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))))));
+      return b;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=12}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]remove whole except first
+    int main() {
+      int a = 99;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@1
+    int main() {
+      int a = 99;
+      int b = (((((((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))))));
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@2
+    int main() {
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@1
+    int main() {
+      int a = 99;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@1
+    int main() {
+      int b = (((((((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))))));
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 12
+------------------------------------------------------------
+
+
+=================Reducing node 42, size=93==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b = (((((((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))))));
+      return b;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=42}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 42
+------------------------------------------------------------
+
+
+=================Reducing node 44, size=93==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b = (((((((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))))));
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    int main() {
+      int a = 99;
+      int                                                                                ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 44
+------------------------------------------------------------
+
+
+=================Reducing node 47, size=93==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b = (((((((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))))));
+      return b;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=47}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b                                                                              ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 47
+------------------------------------------------------------
+
+
+=================Reducing node 49, size=93==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b = (((((((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))))));
+      return b;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      int a = 99;
+      int b                                                                              ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 49
+------------------------------------------------------------
+
+
+=================Reducing node 50, size=93==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b = (((((((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))))));
+      return b;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=50}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 50
+------------------------------------------------------------
+
+
+=================Reducing node 69, size=93==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b = (((((((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))))));
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =   (((((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))))  ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    int main() {
+      int a = 99;
+      int b =  ((((((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))))) ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+3 entries are removed: 10 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 13
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 69 from 93 to 89
+------------------------------------------------------------
+
+
+=================Reducing node 113, size=89=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =   (((((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))))  ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =     (((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))    ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    int main() {
+      int a = 99;
+      int b =    ((((((((((((((((((((((((((((((((((a))))))))))))))))))))))))))))))))))   ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 7 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 113 from 89 to 85
+------------------------------------------------------------
+
+
+=================Reducing node 157, size=85=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =     (((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))    ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =       (((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))      ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    int main() {
+      int a = 99;
+      int b =      ((((((((((((((((((((((((((((((((a))))))))))))))))))))))))))))))))     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 7 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 157 from 85 to 81
+------------------------------------------------------------
+
+
+=================Reducing node 201, size=81=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =       (((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))      ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =         (((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))        ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    int main() {
+      int a = 99;
+      int b =        ((((((((((((((((((((((((((((((a))))))))))))))))))))))))))))))       ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 7 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 201 from 81 to 77
+------------------------------------------------------------
+
+
+=================Reducing node 245, size=77=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =         (((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))        ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =           (((((((((((((((((((((((((((a)))))))))))))))))))))))))))          ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    int main() {
+      int a = 99;
+      int b =          ((((((((((((((((((((((((((((a))))))))))))))))))))))))))))         ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 7 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 245 from 77 to 73
+------------------------------------------------------------
+
+
+=================Reducing node 289, size=73=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =           (((((((((((((((((((((((((((a)))))))))))))))))))))))))))          ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =             (((((((((((((((((((((((((a)))))))))))))))))))))))))            ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    int main() {
+      int a = 99;
+      int b =            ((((((((((((((((((((((((((a))))))))))))))))))))))))))           ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 7 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 289 from 73 to 69
+------------------------------------------------------------
+
+
+=================Reducing node 333, size=69=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =             (((((((((((((((((((((((((a)))))))))))))))))))))))))            ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =               (((((((((((((((((((((((a)))))))))))))))))))))))              ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    int main() {
+      int a = 99;
+      int b =              ((((((((((((((((((((((((a))))))))))))))))))))))))             ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 7 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 333 from 69 to 65
+------------------------------------------------------------
+
+
+=================Reducing node 377, size=65=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =               (((((((((((((((((((((((a)))))))))))))))))))))))              ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =                 (((((((((((((((((((((a)))))))))))))))))))))                ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    int main() {
+      int a = 99;
+      int b =                ((((((((((((((((((((((a))))))))))))))))))))))               ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 7 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 377 from 65 to 61
+------------------------------------------------------------
+
+
+=================Reducing node 421, size=61=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                 (((((((((((((((((((((a)))))))))))))))))))))                ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =                   (((((((((((((((((((a)))))))))))))))))))                  ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    int main() {
+      int a = 99;
+      int b =                  ((((((((((((((((((((a))))))))))))))))))))                 ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 7 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 421 from 61 to 57
+------------------------------------------------------------
+
+
+=================Reducing node 465, size=57=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                   (((((((((((((((((((a)))))))))))))))))))                  ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =                     (((((((((((((((((a)))))))))))))))))                    ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    int main() {
+      int a = 99;
+      int b =                    ((((((((((((((((((a))))))))))))))))))                   ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 7 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 465 from 57 to 53
+------------------------------------------------------------
+
+
+=================Reducing node 509, size=53=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                     (((((((((((((((((a)))))))))))))))))                    ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =                       (((((((((((((((a)))))))))))))))                      ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    int main() {
+      int a = 99;
+      int b =                      ((((((((((((((((a))))))))))))))))                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 7 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 509 from 53 to 49
+------------------------------------------------------------
+
+
+=================Reducing node 553, size=49=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                       (((((((((((((((a)))))))))))))))                      ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =                         (((((((((((((a)))))))))))))                        ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    int main() {
+      int a = 99;
+      int b =                        ((((((((((((((a))))))))))))))                       ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 7 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 553 from 49 to 45
+------------------------------------------------------------
+
+
+=================Reducing node 597, size=45=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                         (((((((((((((a)))))))))))))                        ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =                           (((((((((((a)))))))))))                          ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    int main() {
+      int a = 99;
+      int b =                          ((((((((((((a))))))))))))                         ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 7 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 597 from 45 to 41
+------------------------------------------------------------
+
+
+=================Reducing node 641, size=41=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                           (((((((((((a)))))))))))                          ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =                             (((((((((a)))))))))                            ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    int main() {
+      int a = 99;
+      int b =                            ((((((((((a))))))))))                           ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 7 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 641 from 41 to 37
+------------------------------------------------------------
+
+
+=================Reducing node 685, size=37=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                             (((((((((a)))))))))                            ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =                               (((((((a)))))))                              ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    int main() {
+      int a = 99;
+      int b =                              ((((((((a))))))))                             ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 7 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 685 from 37 to 33
+------------------------------------------------------------
+
+
+=================Reducing node 729, size=33=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                               (((((((a)))))))                              ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =                                 (((((a)))))                                ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    int main() {
+      int a = 99;
+      int b =                                ((((((a))))))                               ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 7 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 729 from 33 to 29
+------------------------------------------------------------
+
+
+=================Reducing node 773, size=29=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                 (((((a)))))                                ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =                                   (((a)))                                  ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    int main() {
+      int a = 99;
+      int b =                                  ((((a))))                                 ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 7 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 773 from 29 to 25
+------------------------------------------------------------
+
+
+=================Reducing node 817, size=25=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                   (((a)))                                  ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =                                     (a)                                    ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    int main() {
+      int a = 99;
+      int b =                                    ((a))                                   ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 7 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 817 from 25 to 21
+------------------------------------------------------------
+
+
+=================Reducing node 891, size=21=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                     (a)                                    ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    int main() {
+      int b =                                     (a)                                    ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 891
+------------------------------------------------------------
+
+
+=================Reducing node 925, size=21=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                     (a)                                    ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    int main   {
+      int a = 99;
+      int b =                                     (a)                                    ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 925
+------------------------------------------------------------
+
+
+=================Reducing node 893, size=21=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                     (a)                                    ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    int main() {
+      int       ;
+      int b =                                     (a)                                    ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 893
+------------------------------------------------------------
+
+
+=================Reducing node 896, size=21=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                     (a)                                    ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=896}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a     ;
+      int b =                                     (a)                                    ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 896
+------------------------------------------------------------
+
+
+=================Reducing node 861, size=21=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                     (a)                                    ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+4 entries are removed: 11 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 5
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 861 from 21 to 19
+------------------------------------------------------------
+
+
+=================Reducing node 17, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 17
+------------------------------------------------------------
+
+
+=================Reducing node 927, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    int main   {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 927
+------------------------------------------------------------
+
+
+=================Reducing node 929, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=929}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 929
+------------------------------------------------------------
+
+
+=================Reducing node 898, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    int main() {
+      int a     ;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 898
+------------------------------------------------------------
+
+
+=================Reducing node 899, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=899}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 899
+------------------------------------------------------------
+
+
+=================Reducing node 20, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 20
+------------------------------------------------------------
+
+
+=================Reducing node 933, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 933
+------------------------------------------------------------
+
+
+=================Reducing node 932, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 932
+------------------------------------------------------------
+
+
+=================Reducing node 930, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 930
+------------------------------------------------------------
+
+
+=================Reducing node 921, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 921
+------------------------------------------------------------
+
+
+=================Reducing node 918, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 918
+------------------------------------------------------------
+
+
+=================Reducing node 900, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 900
+------------------------------------------------------------
+
+
+=================Reducing node 894, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 894
+------------------------------------------------------------
+
+
+=================Reducing node 892, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 892
+------------------------------------------------------------
+
+
+=================Reducing node 924, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 924
+------------------------------------------------------------
+
+
+=================Reducing node 886, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 886
+------------------------------------------------------------
+
+
+=================Reducing node 883, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 883
+------------------------------------------------------------
+
+
+=================Reducing node 51, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 51
+------------------------------------------------------------
+
+
+=================Reducing node 45, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 45
+------------------------------------------------------------
+
+
+=================Reducing node 43, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 43
+------------------------------------------------------------
+
+
+=================Reducing node 889, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 889
+------------------------------------------------------------
+
+
+=================Reducing node 22, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return  ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 22
+------------------------------------------------------------
+
+
+=================Reducing node 40, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 40
+------------------------------------------------------------
+
+
+=================Reducing node 21, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 21
+------------------------------------------------------------
+
+
+=================Reducing node 19, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 19
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+=================Reducing node 934, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=934}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 934
+------------------------------------------------------------
+
+
+=================Reducing node 937, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 937
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int a = 99;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    int b =                                      a                                     ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 4
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 7
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+=================Reducing node 12, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=12}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      int a = 99;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      return b;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      int a = 99;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@1
+    int main() {
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 12
+------------------------------------------------------------
+
+
+=================Reducing node 77, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=77}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 77
+------------------------------------------------------------
+
+
+=================Reducing node 42, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=42}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 42
+------------------------------------------------------------
+
+
+=================Reducing node 111, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main   {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 111
+------------------------------------------------------------
+
+
+=================Reducing node 79, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    int main() {
+      int       ;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 79
+------------------------------------------------------------
+
+
+=================Reducing node 82, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=82}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      int a     ;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 82
+------------------------------------------------------------
+
+
+=================Reducing node 44, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      int a = 99;
+      int                                                                                ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 44
+------------------------------------------------------------
+
+
+=================Reducing node 47, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=47}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      int a = 99;
+      int b                                                                              ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int                                          a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 47
+------------------------------------------------------------
+
+
+=================Reducing node 17, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=17}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 17
+------------------------------------------------------------
+
+
+=================Reducing node 113, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main   {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 113
+------------------------------------------------------------
+
+
+=================Reducing node 115, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=115}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 115
+------------------------------------------------------------
+
+
+=================Reducing node 84, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      int a     ;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 84
+------------------------------------------------------------
+
+
+=================Reducing node 85, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=85}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 85
+------------------------------------------------------------
+
+
+=================Reducing node 49, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      int a = 99;
+      int b                                                                              ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 49
+------------------------------------------------------------
+
+
+=================Reducing node 50, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=50}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 50
+------------------------------------------------------------
+
+
+=================Reducing node 20, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 20
+------------------------------------------------------------
+
+
+=================Reducing node 119, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 119
+------------------------------------------------------------
+
+
+=================Reducing node 118, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 118
+------------------------------------------------------------
+
+
+=================Reducing node 116, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 116
+------------------------------------------------------------
+
+
+=================Reducing node 107, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 107
+------------------------------------------------------------
+
+
+=================Reducing node 104, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 104
+------------------------------------------------------------
+
+
+=================Reducing node 86, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 86
+------------------------------------------------------------
+
+
+=================Reducing node 80, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 80
+------------------------------------------------------------
+
+
+=================Reducing node 78, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 78
+------------------------------------------------------------
+
+
+=================Reducing node 110, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 110
+------------------------------------------------------------
+
+
+=================Reducing node 72, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 72
+------------------------------------------------------------
+
+
+=================Reducing node 69, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 69
+------------------------------------------------------------
+
+
+=================Reducing node 51, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 51
+------------------------------------------------------------
+
+
+=================Reducing node 45, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 45
+------------------------------------------------------------
+
+
+=================Reducing node 43, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 43
+------------------------------------------------------------
+
+
+=================Reducing node 75, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 75
+------------------------------------------------------------
+
+
+=================Reducing node 22, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return  ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 22
+------------------------------------------------------------
+
+
+=================Reducing node 40, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 40
+------------------------------------------------------------
+
+
+=================Reducing node 21, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 21
+------------------------------------------------------------
+
+
+=================Reducing node 19, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 19
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=19==================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+=================Reducing node 120, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=120}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 120
+------------------------------------------------------------
+
+
+=================Reducing node 123, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 123
+------------------------------------------------------------
+
+
+#test success = 19
+#test failure = 23
+#test result cache hits = 16
+#test execution cancelled = 18
+#node edit action set cache hits = 18

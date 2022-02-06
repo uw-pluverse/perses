@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,21 +16,24 @@
  */
 package org.perses.program
 
-import java.io.File
+import java.nio.file.Files
+import java.nio.file.Path
+import kotlin.io.path.readText
+import kotlin.io.path.writeText
 
-abstract class AbstractSourceFile(val file: File) {
+abstract class AbstractSourceFile(val file: Path) {
   val fileContent: String
 
   val baseName: String
-    get() = file.name
+    get() = file.fileName.toString()
 
-  val parentFile: File
-    get() = file.parentFile
+  val parentFile: Path
+    get() = file.parent
 
-  fun writeTo(path: File) = path.writeText(fileContent)
+  fun writeTo(path: Path) = path.writeText(fileContent)
 
   init {
-    require(file.isFile) {
+    require(Files.isRegularFile(file)) {
       "The file should be a regular file $file"
     }
     fileContent = file.readText()

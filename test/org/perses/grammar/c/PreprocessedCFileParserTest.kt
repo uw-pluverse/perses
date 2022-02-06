@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,7 +20,7 @@ import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import java.io.File
+import java.nio.file.Paths
 
 @RunWith(JUnit4::class)
 class PreprocessedCFileParserTest {
@@ -80,5 +80,5 @@ class PreprocessedCFileParserTest {
   }
 
   private fun getFile(fileName: String) =
-    File("test_data/c_programs/preprocessed_files/$fileName")
+    Paths.get("test_data/c_programs/preprocessed_files/$fileName")
 }

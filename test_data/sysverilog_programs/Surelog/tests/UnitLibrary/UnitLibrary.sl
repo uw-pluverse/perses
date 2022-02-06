@@ -1,0 +1,1 @@
+ -map lib.map -cfgfile configs.cfg -cfg top -cfg bad -parse -verbose -d lib  -d inst -mt 0 -fileunit

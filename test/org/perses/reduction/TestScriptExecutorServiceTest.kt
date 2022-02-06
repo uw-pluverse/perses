@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,7 +21,6 @@ import com.google.common.io.MoreFiles
 import com.google.common.io.RecursiveDeleteOption
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -31,11 +30,16 @@ import org.perses.program.EnumFormatControl.ORIG_FORMAT
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
 import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
+import org.perses.reduction.TestScriptExecutorService.Companion.IDENTITY_POST_CHECK
+import org.perses.reduction.io.RegularReductionInputs
+import org.perses.reduction.io.token.RegularOutputManagerFactory
+import org.perses.reduction.io.token.TokenReductionIOManager
 import org.perses.util.TimeUtil
 import java.io.ByteArrayOutputStream
-import java.io.File
 import java.io.PrintStream
 import java.nio.charset.StandardCharsets
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.util.ArrayList
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
@@ -48,27 +52,30 @@ class TestScriptExecutorServiceTest {
     private const val FOLDER = "test_data/delta_1/"
   }
 
-  private val sourceFile = SourceFile(File(FOLDER, "t.c"), LanguageC)
-  private val invalidSourceFile = SourceFile(File("test_data/misc/t1.c"), LanguageC)
-  private val testScript = ScriptFile(File(FOLDER, "r.sh"))
-  private val slowTestScript = ScriptFile(File(FOLDER, "slow_r.sh"))
+  private val sourceFile = SourceFile(Paths.get(FOLDER, "t.c"), LanguageC)
+  private val invalidSourceFile = SourceFile(Paths.get("test_data/misc/t1.c"), LanguageC)
+  private val testScript = ScriptFile(Paths.get(FOLDER, "r.sh"))
+  private val slowTestScript = ScriptFile(Paths.get(FOLDER, "slow_r.sh"))
   private val program = TestUtility.createSparTreeFromFile(sourceFile.file).programSnapshot
 
-  private var workingDirectory: File? = null
+  private val workingDirectory =
+    TestUtility.createCleanWorkingDirectory(TestScriptExecutorServiceTest::class.java)
+  private val outputManagerFactory = RegularOutputManagerFactory(
+    sourceFile.baseName,
+    ORIG_FORMAT
+  )
 
-  @Before
-  fun setup() {
-    workingDirectory =
-      TestUtility.createCleanWorkingDirectory(TestScriptExecutorServiceTest::class.java)
-  }
+  private val outputDir = workingDirectory.resolve("perses_output_dir")
 
   @After
   fun teardown() {
-    if (workingDirectory!!.exists()) {
+    if (Files.exists(workingDirectory)) {
       // Just to make sure to release the resources.
-      MoreFiles.deleteRecursively(workingDirectory!!.toPath(), RecursiveDeleteOption.ALLOW_INSECURE)
+      MoreFiles.deleteRecursively(
+        workingDirectory,
+        RecursiveDeleteOption.ALLOW_INSECURE
+      )
     }
-    workingDirectory = null
   }
 
   @Test
@@ -94,54 +101,55 @@ class TestScriptExecutorServiceTest {
     System.setOut(newOut)
     System.setErr(newOut)
     try {
+      val reductionInputs = RegularReductionInputs(slowTestScript, sourceFile)
+      val ioManager = TokenReductionIOManager(
+        workingFolder = workingDirectory,
+        reductionInputs = reductionInputs,
+        outputManagerFactory = outputManagerFactory,
+        outputDirectory = outputDir
+      )
       TestScriptExecutorService(
-        workingDirectory!!,
+        ioManager.createReductionFolderManager(),
         1,
-        slowTestScript,
-        sourceFile.file.name,
         scriptExecutionMonitorIntervalMillis = TimeUtil.toMillisFromSeconds(1)
       ).use {
-        it.testProgramAsync(ALWAYS_TRUE_PRECHECK, program!!, ORIG_FORMAT).get()
+        it.testProgramAsync(
+          ALWAYS_TRUE_PRECHECK,
+          IDENTITY_POST_CHECK,
+          outputManagerFactory.createManagerFor(program)
+        ).get()
       }
       newOut.flush()
       val stdout = byteArrayOutputStream.toString(StandardCharsets.UTF_8.name())
-      assertThat(stdout).contains(TestScriptExecutorService.MSG_SCRAIPT_RUN_TOO_LONG)
+      assertThat(stdout).contains(TestScriptExecutorService.MSG_SCRIPT_RUN_TOO_LONG)
     } finally {
       System.setOut(oldSysout)
       System.setErr(oldSyserr)
     }
   }
 
-//  private fun createConfiguration(
-//    threadCount: Int,
-//    testScript: ScriptFile = this.testScript
-//  ) = ReductionConfiguration(
-//    workingFolder = workingDirectory!!,
-//    testScript = testScript,
-//    fileToReduce = sourceFile,
-//    bestResultFile = sourceFile.file,
-//    statisticsFile = null,
-//    progressDumpFile = null,
-//    programFormatControl = ORIG_FORMAT,
-//    fixpointReduction = true,
-//    enableTestScriptExecutionCaching = true,
-//    useRealDeltaDebugger = false,
-//    numOfReductionThreads = threadCount
-//  )
-
   private fun testTestScriptExecutor(threadCount: Int) {
     val stopwatch = Stopwatch.createStarted()
+    val reductionInputs = RegularReductionInputs(testScript, sourceFile)
+    val ioManager = TokenReductionIOManager(
+      workingDirectory,
+      reductionInputs,
+      outputManagerFactory = RegularOutputManagerFactory(
+        sourceFile.baseName,
+        ORIG_FORMAT
+      ),
+      outputDirectory = outputDir
+    )
     TestScriptExecutorService(
-      workingDirectory!!,
+      ioManager.createReductionFolderManager(),
       threadCount,
-      testScript,
-      sourceFile.file.name,
       scriptExecutionMonitorIntervalMillis = TimeUtil.toMillisFromMinutes(4)
     ).use {
       // TODO: refine this test.
       testPassing(it)
       testFailing(it)
       testPrecheckFailing(it)
+      testpostCheckPassing(it)
       stopwatch.stop()
       println(
         "#threads=" + threadCount + ": time=" + stopwatch.elapsed(TimeUnit.SECONDS) + " seconds"
@@ -149,47 +157,59 @@ class TestScriptExecutorServiceTest {
     }
   }
 
-  private fun testPrecheckFailing(it: TestScriptExecutorService) {
+  private fun testpostCheckPassing(service: TestScriptExecutorService) {
     val invalidProgram = TestUtility.createSparTreeFromFile(invalidSourceFile.file)
       .programSnapshot
-    val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
+    val futureList: MutableList<Future<PropertyTestResult>> = ArrayList()
     for (i in 0..49) {
       futureList.add(
-        it.testProgramAsync(
-          { TestScript.TestResult(exitCode = 1, elapsedMilliseconds = 1) },
-          invalidProgram,
-          ORIG_FORMAT
+        service.testProgramAsync(
+          ALWAYS_TRUE_PRECHECK,
+          { PropertyTestResult(exitCode = 0, elapsedMilliseconds = 1) },
+          outputManagerFactory.createManagerFor(invalidProgram)
         )
       )
     }
-    futureList.forEach(
-      Consumer {
-        try {
-          assertThat(it.get().isPass).isFalse()
-        } catch (e: Throwable) {
-          throw AssertionError(e)
-        }
-      }
-    )
+    futureList.forEach {
+      assertThat(it.get().isInteresting).isTrue()
+    }
+  }
+
+  private fun testPrecheckFailing(service: TestScriptExecutorService) {
+    val invalidProgram = TestUtility.createSparTreeFromFile(invalidSourceFile.file)
+      .programSnapshot
+    val futureList: MutableList<Future<PropertyTestResult>> = ArrayList()
+    for (i in 0..49) {
+      futureList.add(
+        service.testProgramAsync(
+          { PropertyTestResult(exitCode = 1, elapsedMilliseconds = 1) },
+          IDENTITY_POST_CHECK,
+          outputManagerFactory.createManagerFor(invalidProgram)
+        )
+      )
+    }
+    futureList.forEach {
+      assertThat(it.get().isInteresting).isFalse()
+    }
   }
 
   private fun testFailing(it: TestScriptExecutorService) {
     val invalidProgram = TestUtility.createSparTreeFromFile(invalidSourceFile.file)
       .programSnapshot
-    val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
+    val futureList: MutableList<Future<PropertyTestResult>> = ArrayList()
     for (i in 0..49) {
       futureList.add(
         it.testProgramAsync(
           ALWAYS_TRUE_PRECHECK,
-          invalidProgram,
-          ORIG_FORMAT
+          IDENTITY_POST_CHECK,
+          outputManagerFactory.createManagerFor(invalidProgram)
         )
       )
     }
     futureList.forEach(
       Consumer {
         try {
-          assertThat(it.get().isPass).isFalse()
+          assertThat(it.get().isInteresting).isFalse()
         } catch (e: Throwable) {
           throw AssertionError(e)
         }
@@ -198,20 +218,20 @@ class TestScriptExecutorServiceTest {
   }
 
   private fun testPassing(service: TestScriptExecutorService) {
-    val futureList: MutableList<Future<TestScript.TestResult>> = ArrayList()
+    val futureList: MutableList<Future<PropertyTestResult>> = ArrayList()
     for (i in 0..49) {
       futureList.add(
         service.testProgramAsync(
           ALWAYS_TRUE_PRECHECK,
-          program!!,
-          ORIG_FORMAT
+          IDENTITY_POST_CHECK,
+          outputManagerFactory.createManagerFor(program)
         )
       )
     }
     futureList.forEach(
       Consumer {
         try {
-          assertThat(it.get().isPass).isTrue()
+          assertThat(it.get().isInteresting).isTrue()
         } catch (e: Throwable) {
           throw AssertionError(e)
         }

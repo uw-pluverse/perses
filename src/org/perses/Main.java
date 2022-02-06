@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,95 +17,75 @@
 
 package org.perses;
 
-import com.beust.jcommander.JCommander;
-import org.perses.grammar.ParserFacadeFactory;
-import org.perses.grammar.c.CParserFacade;
-import org.perses.grammar.c.PnfCParserFacade;
-import org.perses.grammar.go.PnfGoParserFacade;
-import org.perses.grammar.java.JavaParserFacade;
-import org.perses.grammar.rust.PnfRustParserFacade;
-import org.perses.grammar.scala.PnfScalaParserFacade;
-import org.perses.grammar.c.LanguageC;
-import org.perses.grammar.go.LanguageGo;
-import org.perses.grammar.java.LanguageJava;
-import org.perses.grammar.rust.LanguageRust;
-import org.perses.grammar.scala.LanguageScala;
-import org.perses.reduction.ReducerFactory;
-import org.perses.reduction.ReductionDriver;
-import org.perses.util.DefaultLoggingConfigurations;
-import org.perses.version.VersionHelper;
-
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class Main {
+import com.google.common.collect.ImmutableList;
+import org.perses.grammar.AbstractParserFacadeFactory;
+import org.perses.grammar.SingleParserFacadeFactory;
+import org.perses.grammar.adhoc.AdhocParserFacadeFactoryUtil;
+import org.perses.grammar.c.CParserFacade;
+import org.perses.grammar.c.LanguageC;
+import org.perses.grammar.c.PnfCParserFacade;
+import org.perses.reduction.IReductionDriver;
+import org.perses.reduction.ReducerFactory;
+import org.perses.reduction.RegularProgramReductionDriver;
 
-  static {
-    DefaultLoggingConfigurations.configureLogManager("INFO");
+public class Main extends AbstractMain<CommandOptions> {
+
+  public Main(String[] args) {
+    super(args);
+  }
+
+  protected CommandOptions createCommandOptions() {
+    return new CommandOptions(ReducerFactory.getDefaultReductionAlgName());
+  }
+
+  @Override
+  protected SingleParserFacadeFactory.ParserFacadeFactoryCustomizer createCustomizer() {
+    return (language, defaultParserFacadeCreator) -> {
+      if (language == LanguageC.INSTANCE) {
+        return cmd.getAlgorithmControlFlags().useOptCParser
+            ? CParserFacade::new
+            : PnfCParserFacade::new;
+      } else {
+        return defaultParserFacadeCreator;
+      }
+    };
+  }
+
+  @Override
+  protected AbstractParserFacadeFactory createExtFacadeFactory() {
+    // Cannot close this file, as the file has class loader to load the parser facade classes.
+    return AdhocParserFacadeFactoryUtil.INSTANCE.createParserFacadeFactory(
+        cmd.getLanguageExtFlags().languageJarFiles);
+  }
+
+  @Override
+  protected void validateCommandOptions() {
+    super.validateCommandOptions();
+    checkArgument(
+        ReducerFactory.isValidReducerName(
+            cmd.getAlgorithmControlFlags().getReductionAlgorithmName()),
+        "Invalid reduction algorithm %s",
+        cmd.getAlgorithmControlFlags().getReductionAlgorithmName());
+  }
+
+  @Override
+  protected HelpRequestProcessingDecision processHelpRequests() {
+    if (cmd.getAlgorithmControlFlags().listAllReductionAlgorithms) {
+      System.out.println("All available reduction algorithms: ");
+      System.out.println(ReducerFactory.printAllReductionAlgorithms());
+      return HelpRequestProcessingDecision.EXIT;
+    }
+    return HelpRequestProcessingDecision.NO_EXIT;
+  }
+
+  @Override
+  protected IReductionDriver createReductionDriver(AbstractParserFacadeFactory facadeFactory) {
+    return RegularProgramReductionDriver.Companion.create(cmd, facadeFactory, ImmutableList.of());
   }
 
   public static void main(String[] args) {
     new Main(args).run();
-  }
-
-  private final JCommander commander;
-  private final CommandOptions cmd;
-
-  public Main(String[] args) {
-    cmd = new CommandOptions(ReducerFactory.getDefaultReductionAlgName());
-    commander = cmd.createJCommander(Main.class);
-    commander.parse(args);
-    // This method should be called as early as possible, to avoid triggering initialization of
-    // logger objects.
-    DefaultLoggingConfigurations.configureLogManager(cmd.verbosityFlags.verbosity.toUpperCase());
-  }
-
-  public void run() {
-    if (cmd.help) {
-      commander.usage();
-      return;
-    }
-    if (cmd.verbosityFlags.listVerbosity) {
-      DefaultLoggingConfigurations.printAllAllowedLoggingLevels();
-      return;
-    }
-
-    if (cmd.algorithmControlFlags.listAllReductionAlgorithms) {
-      System.out.println("All available reduction algorithms: ");
-      System.out.println(ReducerFactory.printAllReductionAlgorithms());
-      return;
-    }
-
-    if (cmd.version) {
-      VersionHelper.printVersionInfo("perses", System.out);
-      return;
-    }
-    cmd.validate();
-
-    checkArgument(
-        ReducerFactory.isValidReducerName(cmd.algorithmControlFlags.getReductionAlgorithmName()),
-        "Invalid reduction algorithm %s",
-        cmd.algorithmControlFlags.getReductionAlgorithmName());
-
-    // TODO: create language registry here.
-    final ParserFacadeFactory facadeFactory = createParserFacadeFactory();
-    try (ReductionDriver driver = new ReductionDriver(cmd, facadeFactory)) {
-      driver.reduce();
-    }
-  }
-
-  private final ParserFacadeFactory createParserFacadeFactory() {
-    final ParserFacadeFactory.Builder builder = new ParserFacadeFactory.Builder();
-    fillParserFacadeFactoryBuilder(builder);
-    return builder.build();
-  }
-
-  protected void fillParserFacadeFactoryBuilder(ParserFacadeFactory.Builder builder) {
-    builder.add(LanguageGo.INSTANCE, PnfGoParserFacade::new);
-    builder.add(LanguageRust.INSTANCE, PnfRustParserFacade::new);
-    builder.add(LanguageScala.INSTANCE, PnfScalaParserFacade::new);
-    builder.add(LanguageJava.INSTANCE, JavaParserFacade::new);
-    builder.add(
-        LanguageC.INSTANCE,
-        cmd.algorithmControlFlags.useOptCParser ? CParserFacade::new : PnfCParserFacade::new);
   }
 }

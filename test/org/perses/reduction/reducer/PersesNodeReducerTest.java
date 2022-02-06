@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,17 +16,16 @@
  */
 package org.perses.reduction.reducer;
 
+import static com.google.common.truth.Truth.assertThat;
+
+import java.io.IOException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.perses.reduction.AbstractPersesReducerTest;
 import org.perses.reduction.partition.Partition;
-import org.perses.tree.spar.SparTree;
-import org.perses.tree.spar.AbstractSparTreeNode;
-
-import java.io.IOException;
-
-import static com.google.common.truth.Truth.assertThat;
+import org.perses.spartree.AbstractSparTreeNode;
+import org.perses.spartree.SparTree;
 
 /** Test for {@link AbstractPersesNodeReducer} */
 @RunWith(JUnit4.class)
@@ -38,7 +37,7 @@ public class PersesNodeReducerTest extends AbstractPersesReducerTest {
   public void testCreatePartition() {
     final SparTree tree = treeT1;
     {
-      AbstractSparTreeNode node = tree.getNodeByTreeScanForId(2).get();
+      AbstractSparTreeNode node = tree.getNodeByTreeScanForId(2);
       assertThat(node.getRuleName()).isEqualTo("kleene_plus__externalDeclaration");
       {
         final Partition p1 = AbstractPersesNodeReducer.createPartition(node, 0, 1);

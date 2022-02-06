@@ -2,7 +2,7 @@ package(default_visibility = [
     "//visibility:public",
 ])
 
-load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 kt_jvm_library(
     name = "source_file",
@@ -13,7 +13,8 @@ kt_jvm_library(
     ],
     deps = [
         ":language_kind",
-        "@maven//:com_google_guava_guava",
+        "//:guava",
+        "//src/org/perses/util",
     ],
 )
 
@@ -24,8 +25,24 @@ kt_jvm_library(
     ],
     deps = [
         ":enum_format_control",
+        "//:guava",
+        "//src/org/perses/util:perses_kt_exts",
         "//src/org/perses/util:shell",
-        "@maven//:com_google_guava_guava",
+    ],
+)
+
+kt_jvm_library(
+    name = "serializable_language_kind",
+    srcs = [
+        "SerializableLanguageKind.kt",
+    ],
+    deps = [
+        ":enum_format_control",
+        ":language_kind",
+        "//:guava",
+        "//:jackson",
+        "//src/org/perses/util:YamlUtil",
+        "//src/org/perses/util:shell",
     ],
 )
 
@@ -38,21 +55,21 @@ kt_jvm_library(
     name = "program",
     srcs = [
         "AbstractLazySourceCode.kt",
-        "PersesToken.kt",
+        "AbstractTokenizedProgramPrinter.kt",
         "PersesTokenFactory.kt",
         "TokenizedProgram.kt",
         "TokenizedProgramFactory.kt",
     ],
     exports = [
-        "enum_format_control",
         "source_file",
     ],
     deps = [
-        ":enum_format_control",
         ":language_kind",
+        "//:flogger",
+        "//:guava",
         "//src/org/perses/util:fast_string_builder",
-        "@maven//:com_google_flogger_flogger",
-        "@maven//:com_google_guava_guava",
+        "//src/org/perses/util:perses_kt_exts",
+        "//src/org/perses/util:tiny_list_map",
         "@maven//:it_unimi_dsi_fastutil",
         "@maven//:org_antlr_antlr4_runtime",
         "@maven//:org_checkerframework_checker_qual",

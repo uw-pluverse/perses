@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,25 +16,25 @@
  */
 package org.perses.antlr;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.Files;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 import org.antlr.v4.tool.Grammar;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.perses.TestUtility;
 import org.perses.grammar.c.CParserFacade;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Collection;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
-
-import static com.google.common.truth.Truth.assertThat;
 
 /** Test for {@link AntlrGrammarParser} */
 @RunWith(JUnit4.class)
@@ -150,7 +150,7 @@ public class GrammarHierarchyTest {
   private static String readResourceFileToString(String goldenFileName) throws IOException {
     final String resourceName =
         TestUtility.getBazelPathForTestingResource(GrammarHierarchyTest.class, goldenFileName);
-    return Files.asCharSource(new File(resourceName), StandardCharsets.UTF_8).read();
+    return Files.asCharSource(Paths.get(resourceName).toFile(), StandardCharsets.UTF_8).read();
   }
 
   @Test
@@ -170,7 +170,8 @@ public class GrammarHierarchyTest {
   @Test
   public void testSubruleCompatibilityChecking() {
     final GrammarHierarchy hierarchy = new CParserFacade().getRuleHierarchy();
-    final RuleHierarchyInfo primaryRule = hierarchy.getRuleHierarchyInfoWithIndex(0);
+    final RuleHierarchyInfo primaryRule =
+        hierarchy.getRuleHierarchyInfoWithName("primaryExpression");
     assertThat(primaryRule.getRuleName()).isEqualTo("primaryExpression");
     assertThat(hierarchy.getRuleHierarchyInfoWithName("primaryExpression")).isEqualTo(primaryRule);
     final RuleHierarchyInfo expressionRule = hierarchy.getRuleHierarchyInfoWithName("expression");
@@ -260,8 +261,8 @@ public class GrammarHierarchyTest {
 
   private static GrammarHierarchy createFromFile(String filename) {
     try {
-      File file = new File("test_data/antlr_grammars/", filename);
-      String content = Files.asCharSource(file, StandardCharsets.UTF_8).read();
+      Path file = Paths.get("test_data/antlr_grammars/", filename);
+      String content = Files.asCharSource(file.toFile(), StandardCharsets.UTF_8).read();
       return GrammarHierarchy.createFromString(content);
     } catch (Exception e) {
       throw new RuntimeException(e);

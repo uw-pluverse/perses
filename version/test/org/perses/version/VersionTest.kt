@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -34,7 +34,7 @@ class VersionTest {
     assertThat(Version.MINOR_VERSION).isNotEmpty()
     Integer.parseInt(Version.MINOR_VERSION)
 
-    assertThat(Version.STATUS.toLowerCase()).isAnyOf("clean", "modified")
+    assertThat(Version.STATUS.lowercase()).isAnyOf("clean", "modified")
 
     assertThat(Version.BUILD_TIME).isNotEmpty()
   }

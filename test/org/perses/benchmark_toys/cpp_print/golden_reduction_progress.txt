@@ -1,0 +1,1927 @@
+======================Reduction starts======================
+
+The spar tree is the following.
+translationUnit {id=1}
+|___(?) {id=2,slot_type=optional__translationUnit_1}
+    |___(+) {id=3,slot_type=declarationseq}
+        |___Token:#include <iostream> {id=217,slot_type=[declaration,IncludeDirective]}
+        |___usingDirective {id=210,slot_type=[declaration,blockDeclaration,usingDirective]}
+        |   |___Token:using {id=211,slot_type=Using}
+        |   |___Token:namespace {id=212,slot_type=Namespace}
+        |   |___Token:std {id=216,slot_type=[namespaceName,typedefName,Identifier]}
+        |   |___Token:; {id=214,slot_type=Semi}
+        |___functionDefinition {id=7,slot_type=[declaration,functionDefinition]}
+            |___(?) {id=8,slot_type=optional__simpleDeclaration_1}
+            |   |___(+) {id=200,slot_type=[declSpecifierSeq,kleene_plus__declSpecifierSeq_1]}
+            |       |___Token:int {id=208,slot_type=[declSpecifier,typeSpecifier,trailingTypeSpecifier,simpleTypeSpecifier,aux_rule__simpleTypeSpecifier_15,altnt_block__simpleTypeSpecifier_11,aux_rule__simpleTypeSpecifier_16,Int]}
+            |___noPointerDeclarator {id=130,slot_type=[declarator,pointerDeclarator,noPointerDeclarator]}
+            |   |___Token:main {id=198,slot_type=[aux_rule__noPointerDeclarator_6,aux_rule__noPointerDeclarator_8,declaratorid,idExpression,unqualifiedId,Identifier]}
+            |   |___(*) {id=132,slot_type=kleene_star__noPointerDeclarator_4}
+            |       |___parametersAndQualifiers {id=134,slot_type=[aux_rule__noPointerDeclarator_5,parametersAndQualifiers]}
+            |           |___Token:( {id=135,slot_type=LeftParen}
+            |           |___(?) {id=136,slot_type=optional__lambdaDeclarator_1}
+            |           |   |___parameterDeclarationList {id=139,slot_type=[parameterDeclarationClause,parameterDeclarationList]}
+            |           |       |___parameterDeclaration {id=140,slot_type=parameterDeclaration}
+            |           |       |   |___(+) {id=185,slot_type=[declSpecifierSeq,kleene_plus__declSpecifierSeq_1]}
+            |           |       |   |   |___Token:int {id=193,slot_type=[declSpecifier,typeSpecifier,trailingTypeSpecifier,simpleTypeSpecifier,aux_rule__simpleTypeSpecifier_15,altnt_block__simpleTypeSpecifier_11,aux_rule__simpleTypeSpecifier_16,Int]}
+            |           |       |   |___Token:argc {id=184,slot_type=[altnt_block__parameterDeclaration_5,declarator,pointerDeclarator,noPointerDeclarator,aux_rule__noPointerDeclarator_6,aux_rule__noPointerDeclarator_8,declaratorid,idExpression,unqualifiedId,Identifier]}
+            |           |       |___(*) {id=141,slot_type=kleene_star__parameterDeclarationList_2}
+            |           |           |___aux_rule__parameterDeclarationList_1 {id=142,slot_type=aux_rule__parameterDeclarationList_1}
+            |           |               |___Token:, {id=143,slot_type=Comma}
+            |           |               |___parameterDeclaration {id=144,slot_type=parameterDeclaration}
+            |           |                   |___(+) {id=166,slot_type=[declSpecifierSeq,kleene_plus__declSpecifierSeq_1]}
+            |           |                   |   |___Token:char {id=173,slot_type=[declSpecifier,typeSpecifier,trailingTypeSpecifier,simpleTypeSpecifier,aux_rule__simpleTypeSpecifier_15,altnt_block__simpleTypeSpecifier_11,Char]}
+            |           |                   |___pointerDeclarator {id=148,slot_type=[altnt_block__parameterDeclaration_5,declarator,pointerDeclarator]}
+            |           |                       |___(*) {id=149,slot_type=kleene_star__pointerDeclarator_3}
+            |           |                       |   |___Token:* {id=165,slot_type=[aux_rule__pointerDeclarator_2,pointerOperator,aux_rule__pointerOperator_7,Star]}
+            |           |                       |___noPointerDeclarator {id=150,slot_type=noPointerDeclarator}
+            |           |                           |___Token:argv {id=161,slot_type=[aux_rule__noPointerDeclarator_6,aux_rule__noPointerDeclarator_8,declaratorid,idExpression,unqualifiedId,Identifier]}
+            |           |                           |___(*) {id=152,slot_type=kleene_star__noPointerDeclarator_4}
+            |           |                               |___aux_rule__noPointerDeclarator_7 {id=154,slot_type=[aux_rule__noPointerDeclarator_5,aux_rule__noPointerDeclarator_7]}
+            |           |                                   |___Token:[ {id=155,slot_type=LeftBracket}
+            |           |                                   |___Token:] {id=156,slot_type=RightBracket}
+            |           |___Token:) {id=137,slot_type=RightParen}
+            |___compoundStatement {id=12,slot_type=[functionBody,aux_rule__functionBody_3,compoundStatement]}
+                |___Token:{ {id=13,slot_type=LeftBrace}
+                |___(?) {id=14,slot_type=optional__compoundStatement_1}
+                |   |___(+) {id=16,slot_type=statementSeq}
+                |       |___expressionStatement {id=51,slot_type=[statement,aux_rule__statement_5,altnt_block__statement_2,expressionStatement]}
+                |       |   |___(?) {id=52,slot_type=optional__expressionStatement_1}
+                |       |   |   |___shiftExpression {id=64,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression]}
+                |       |   |       |___qualifiedId {id=119,slot_type=[additiveExpression,multiplicativeExpression,pointerMemberExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_6,idExpression,qualifiedId]}
+                |       |   |       |   |___nestedNameSpecifier {id=120,slot_type=nestedNameSpecifier}
+                |       |   |       |   |   |___(?) {id=123,slot_type=optional__nestedNameSpecifier_2}
+                |       |   |       |   |   |   |___Token:std {id=128,slot_type=[aux_rule__nestedNameSpecifier_1,theTypeName,className,Identifier]}
+                |       |   |       |   |   |___Token::: {id=124,slot_type=Doublecolon}
+                |       |   |       |   |___Token:cout {id=122,slot_type=[unqualifiedId,Identifier]}
+                |       |   |       |___(*) {id=66,slot_type=kleene_star__shiftExpression_2}
+                |       |   |           |___aux_rule__shiftExpression_1 {id=67,slot_type=aux_rule__shiftExpression_1}
+                |       |   |           |   |___aux_rule__shiftOperator_2 {id=109,slot_type=[shiftOperator,aux_rule__shiftOperator_2]}
+                |       |   |           |   |   |___Token:< {id=110,slot_type=Less}
+                |       |   |           |   |   |___Token:< {id=111,slot_type=Less}
+                |       |   |           |   |___(+) {id=106,slot_type=[additiveExpression,multiplicativeExpression,pointerMemberExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_6,kleene_plus__primaryExpression_1]}
+                |       |   |           |       |___Token:"not-interesting " {id=108,slot_type=[literal,StringLiteral]}
+                |       |   |           |___aux_rule__shiftExpression_1 {id=68,slot_type=aux_rule__shiftExpression_1}
+                |       |   |           |   |___aux_rule__shiftOperator_2 {id=95,slot_type=[shiftOperator,aux_rule__shiftOperator_2]}
+                |       |   |           |   |   |___Token:< {id=96,slot_type=Less}
+                |       |   |           |   |   |___Token:< {id=97,slot_type=Less}
+                |       |   |           |   |___(+) {id=92,slot_type=[additiveExpression,multiplicativeExpression,pointerMemberExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_6,kleene_plus__primaryExpression_1]}
+                |       |   |           |       |___Token:"hello world" {id=94,slot_type=[literal,StringLiteral]}
+                |       |   |           |___aux_rule__shiftExpression_1 {id=69,slot_type=aux_rule__shiftExpression_1}
+                |       |   |               |___aux_rule__shiftOperator_2 {id=81,slot_type=[shiftOperator,aux_rule__shiftOperator_2]}
+                |       |   |               |   |___Token:< {id=82,slot_type=Less}
+                |       |   |               |   |___Token:< {id=83,slot_type=Less}
+                |       |   |               |___(+) {id=78,slot_type=[additiveExpression,multiplicativeExpression,pointerMemberExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_6,kleene_plus__primaryExpression_1]}
+                |       |   |                   |___Token:"\n" {id=80,slot_type=[literal,StringLiteral]}
+                |       |   |___Token:; {id=53,slot_type=Semi}
+                |       |___jumpStatement {id=21,slot_type=[statement,aux_rule__statement_5,altnt_block__statement_2,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4 {id=24,slot_type=[altnt_block__jumpStatement_3,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return {id=25,slot_type=Return}
+                |           |   |___(?) {id=26,slot_type=optional__jumpStatement_2}
+                |           |       |___(+) {id=46,slot_type=[altnt_block__postfixExpression_8,expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,pointerMemberExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_6,kleene_plus__primaryExpression_1]}
+                |           |           |___Token:0 {id=48,slot_type=[literal,IntegerLiteral]}
+                |           |___Token:; {id=23,slot_type=Semi}
+                |___Token:} {id=15,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=35==================
+
+The current best program is the following
+
+    #include <iostream>
+    using namespace std;
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+        return 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 3, size=35==================
+
+The current best program is the following
+
+    #include <iostream>
+    using namespace std;
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+        return 0;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=3}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]remove whole except first
+    #include <iostream>
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@1
+    #include <iostream>
+    using namespace std;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@2
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+        return 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_plus]dd@1
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+        return 0;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 4 --> 3.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 5
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+        return 0;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 3 from 35 to 31
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=31==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+        return 0;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    #include <iostream>
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    #include <iostream>
+                                                                ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 7
+------------------------------------------------------------
+
+
+=================Reducing node 12, size=31==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+        return 0;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 12
+------------------------------------------------------------
+
+
+=================Reducing node 14, size=31==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+        return 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 14
+------------------------------------------------------------
+
+
+=================Reducing node 16, size=31==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+        return 0;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=16}
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_plus]remove whole except first
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 5 --> 4.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 6
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 16 from 31 to 28
+------------------------------------------------------------
+
+
+=================Reducing node 51, size=28==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+                                                                ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 51
+------------------------------------------------------------
+
+
+=================Reducing node 52, size=28==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+                                                                ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 52
+------------------------------------------------------------
+
+
+=================Reducing node 64, size=28==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=64}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+             cout                                               ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+                     "not-interesting "                         ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+                                           "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+                                                            "\n";
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std                                                     ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout                                               ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 64
+------------------------------------------------------------
+
+
+=================Reducing node 130, size=28=================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    #include <iostream>
+    int main                          {
+        std::cout << "not-interesting " << "hello world" << "\n";
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 130
+------------------------------------------------------------
+
+
+=================Reducing node 132, size=28=================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    #include <iostream>
+    int main                          {
+        std::cout << "not-interesting " << "hello world" << "\n";
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 132
+------------------------------------------------------------
+
+
+=================Reducing node 134, size=28=================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=134}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 134
+------------------------------------------------------------
+
+
+=================Reducing node 66, size=28==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout                                               ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_star]dd@1
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+2 entries are removed: 12 --> 10.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 16
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout                                               ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting "                         ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_star]dd@1
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+2 entries are removed: 11 --> 9.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 3
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 66 from 28 to 22
+------------------------------------------------------------
+
+
+=================Reducing node 136, size=22=================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_star]dd@1
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+6 entries are removed: 9 --> 3.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 136 from 22 to 14
+------------------------------------------------------------
+
+
+=================Reducing node 119, size=14=================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    #include <iostream>
+    int main (                      ) {
+             cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    #include <iostream>
+    int main (                      ) {
+        std                             << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 119
+------------------------------------------------------------
+
+
+=================Reducing node 68, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    #include <iostream>
+    int main (                      ) {
+        std::cout                                               ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 68
+------------------------------------------------------------
+
+
+=================Reducing node 120, size=14=================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    #include <iostream>
+    int main (                      ) {
+           ::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 120
+------------------------------------------------------------
+
+
+=================Reducing node 95, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 95
+------------------------------------------------------------
+
+
+=================Reducing node 217, size=14=================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 217
+------------------------------------------------------------
+
+
+=================Reducing node 198, size=14=================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 198
+------------------------------------------------------------
+
+
+=================Reducing node 137, size=14=================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 137
+------------------------------------------------------------
+
+
+=================Reducing node 135, size=14=================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 135
+------------------------------------------------------------
+
+
+=================Reducing node 124, size=14=================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 124
+------------------------------------------------------------
+
+
+=================Reducing node 123, size=14=================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    #include <iostream>
+    int main (                      ) {
+           ::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 123
+------------------------------------------------------------
+
+
+=================Reducing node 128, size=14=================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 128
+------------------------------------------------------------
+
+
+=================Reducing node 122, size=14=================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 122
+------------------------------------------------------------
+
+
+=================Reducing node 97, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 97
+------------------------------------------------------------
+
+
+=================Reducing node 96, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 96
+------------------------------------------------------------
+
+
+=================Reducing node 92, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 92
+------------------------------------------------------------
+
+
+=================Reducing node 94, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 94
+------------------------------------------------------------
+
+
+=================Reducing node 53, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 53
+------------------------------------------------------------
+
+
+=================Reducing node 15, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+=================Reducing node 13, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 13
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    #include <iostream>
+        main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+=================Reducing node 200, size=14=================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=200}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 200
+------------------------------------------------------------
+
+
+=================Reducing node 208, size=14=================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 208
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 3, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=3}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    #include <iostream>
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=6}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@1
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 3
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=6}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    #include <iostream>
+                                                                ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 6
+------------------------------------------------------------
+
+
+=================Reducing node 11, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+=================Reducing node 13, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    #include <iostream>
+    int main (                      ) {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 13
+------------------------------------------------------------
+
+
+=================Reducing node 15, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=15}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+=================Reducing node 19, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    #include <iostream>
+    int main (                      ) {
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    #include <iostream>
+    int main (                      ) {
+                                                                ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 19
+------------------------------------------------------------
+
+
+=================Reducing node 20, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    #include <iostream>
+    int main (                      ) {
+                                                                ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 20
+------------------------------------------------------------
+
+
+=================Reducing node 32, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=32}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                                               ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    #include <iostream>
+    int main (                      ) {
+             cout                                               ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    #include <iostream>
+    int main (                      ) {
+                                           "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    #include <iostream>
+    int main (                      ) {
+        std                                                     ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 32
+------------------------------------------------------------
+
+
+=================Reducing node 68, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    #include <iostream>
+    int main                          {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 68
+------------------------------------------------------------
+
+
+=================Reducing node 57, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    #include <iostream>
+    int main (                      ) {
+             cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    #include <iostream>
+    int main (                      ) {
+        std                             << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 57
+------------------------------------------------------------
+
+
+=================Reducing node 34, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                                               ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 34
+------------------------------------------------------------
+
+
+=================Reducing node 35, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=35}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 35
+------------------------------------------------------------
+
+
+=================Reducing node 70, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    #include <iostream>
+    int main                          {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 70
+------------------------------------------------------------
+
+
+=================Reducing node 72, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=72}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 72
+------------------------------------------------------------
+
+
+=================Reducing node 58, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    #include <iostream>
+    int main (                      ) {
+           ::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 58
+------------------------------------------------------------
+
+
+=================Reducing node 47, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 47
+------------------------------------------------------------
+
+
+=================Reducing node 90, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 90
+------------------------------------------------------------
+
+
+=================Reducing node 79, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 79
+------------------------------------------------------------
+
+
+=================Reducing node 74, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 74
+------------------------------------------------------------
+
+
+=================Reducing node 73, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 73
+------------------------------------------------------------
+
+
+=================Reducing node 62, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 62
+------------------------------------------------------------
+
+
+=================Reducing node 61, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    #include <iostream>
+    int main (                      ) {
+           ::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 61
+------------------------------------------------------------
+
+
+=================Reducing node 66, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 66
+------------------------------------------------------------
+
+
+=================Reducing node 60, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 60
+------------------------------------------------------------
+
+
+=================Reducing node 49, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 49
+------------------------------------------------------------
+
+
+=================Reducing node 48, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 48
+------------------------------------------------------------
+
+
+=================Reducing node 44, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 44
+------------------------------------------------------------
+
+
+=================Reducing node 46, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 46
+------------------------------------------------------------
+
+
+=================Reducing node 21, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 21
+------------------------------------------------------------
+
+
+=================Reducing node 14, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 14
+------------------------------------------------------------
+
+
+=================Reducing node 12, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 12
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    #include <iostream>
+        main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 7
+------------------------------------------------------------
+
+
+=================Reducing node 81, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=81}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 81
+------------------------------------------------------------
+
+
+=================Reducing node 89, size=14==================
+
+The current best program is the following
+
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 89
+------------------------------------------------------------
+
+
+#test success = 5
+#test failure = 27
+#test result cache hits = 21
+#test execution cancelled = 0
+#node edit action set cache hits = 13

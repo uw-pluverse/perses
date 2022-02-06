@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,34 +19,42 @@ package org.perses.program
 import com.google.common.truth.Truth.assertThat
 import org.perses.grammar.AbstractParserFacade
 import org.perses.program.TokenizedProgramFactory.Companion.createFactory
-import org.perses.tree.spar.SparTreeBuilder
-import java.io.File
+import org.perses.program.printer.PrinterRegistry
+import org.perses.spartree.SparTreeBuilder
+import java.nio.file.Files
+import java.nio.file.Path
 
 class LanguageKindTestUtil {
 
   companion object {
-    fun assertCodeFormatsDoNotProduceSyntaxticallyInvalidPrograms(
+    fun assertCodeFormatsDoNotProduceSyntacticallyInvalidPrograms(
       facade: AbstractParserFacade,
-      program: File
+      program: Path
     ) {
       val language = facade.language
-      val parseTree = facade.parseFile(program).tree
+      val parseTree = facade.parseFile(program)
       val tokenizedProgramFactory = createFactory(
-        AbstractParserFacade.getTokens(parseTree)
+        AbstractParserFacade.getTokens(parseTree.tree),
+        language
       )
-      val sparTreeBuilder = SparTreeBuilder(facade.ruleHierarchy, tokenizedProgramFactory)
-      val sparTree = sparTreeBuilder.build(parseTree)
+      val sparTreeBuilder = SparTreeBuilder(
+        facade.ruleHierarchy, tokenizedProgramFactory, parseTree
+      )
+      val sparTree = sparTreeBuilder.result
       val tokenizedProgram = sparTree.programSnapshot
 
       val allowedCodeFormatControl = language.allowedCodeFormatControl
       for (formatControl in allowedCodeFormatControl) {
-        val tempFile = File.createTempFile(
+        val tempFile = Files.createTempFile(
           LanguageKindTestUtil::class.java.simpleName, ".test_file"
         )
         try {
-          tokenizedProgram.writeToFile(tempFile, formatControl)
-          val reconstructedParseTree = facade.parseFile(tempFile).tree
-          val reconstructedSparTree = sparTreeBuilder.build(reconstructedParseTree)
+          val printer = PrinterRegistry.getPrinter(formatControl)
+          printer.print(tokenizedProgram).writeTo(tempFile)
+          val reconstructedParseTree = facade.parseFile(tempFile)
+          val reconstructedSparTree = SparTreeBuilder(
+            facade.ruleHierarchy, tokenizedProgramFactory, reconstructedParseTree
+          ).result
           val reconstructedTokens = reconstructedSparTree.programSnapshot.tokens.map {
             it.text
           }
@@ -54,7 +62,7 @@ class LanguageKindTestUtil {
             tokenizedProgram.tokens.map { it.text }
           )
         } finally {
-          tempFile.delete()
+          Files.delete(tempFile)
         }
       }
     }

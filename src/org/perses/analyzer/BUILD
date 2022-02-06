@@ -6,9 +6,9 @@ java_library(
         "LevelReductionSpeedAnalysis.java",
     ],
     deps = [
+        "//:flogger",
+        "//:guava",
         "//src/org/perses/listener:profile_event_interface",
-        "@maven//:com_google_flogger_flogger",
-        "@maven//:com_google_guava_guava",
         "@maven//:org_jfree_jfreechart",
     ],
 )

@@ -1,2 +1,6 @@
 #!/usr/bin/env bash
-exit 1 # always fail.
+
+set -o xtrace # enable debug.
+readonly MARK="this is a mark"
+# always fail.
+exit 1

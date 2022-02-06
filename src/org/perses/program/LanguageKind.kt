@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,42 +16,79 @@
  */
 package org.perses.program
 
+import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.util.ShellCommandOnPath
+import org.perses.util.toImmutableList
 
 abstract class LanguageKind(
   val name: String,
   val extensions: ImmutableSet<String>,
   val defaultCodeFormatControl: EnumFormatControl,
+  val origCodeFormatControl: EnumFormatControl,
   val allowedCodeFormatControl: ImmutableSet<EnumFormatControl>,
-  protected val defaultFormaterCommand: ImmutableList<ShellCommandOnPath> = ImmutableList.of()
+  val defaultFormatterCommands: ImmutableList<ShellCommandOnPath> = ImmutableList.of()
 ) {
 
   init {
     check(defaultCodeFormatControl in allowedCodeFormatControl) {
-      "The default code format $defaultFormaterCommand is not in $allowedCodeFormatControl"
+      "The default code format $defaultFormatterCommands is not in $allowedCodeFormatControl"
+    }
+    check(origCodeFormatControl in allowedCodeFormatControl) {
+      "The orig code format $origCodeFormatControl is not in $allowedCodeFormatControl"
+    }
+    extensions.forEach {
+      require(it.isNotBlank() && it.first() != '.') {
+        "File extension $it should not start with '.'"
+      }
     }
   }
 
   open fun getDefaultWorkingFormatter(): ShellCommandOnPath? {
-    return if (defaultFormaterCommand.isEmpty()) {
+    return if (defaultFormatterCommands.isEmpty()) {
       null
     } else {
-      defaultFormaterCommand[0]
+      defaultFormatterCommands[0]
     }
   }
 
-  fun getAllDefaultFormatterCommandStrings() = defaultFormaterCommand
-    .fold(
-      StringBuilder(),
-      { builder, shellCmd ->
-        builder.append("'$shellCmd'").append(", ")
-      }
-    ).toString()
+  override fun equals(other: Any?): Boolean {
+    if (other === this) {
+      return true
+    }
+    if (other == null) {
+      return false
+    }
+    if (other::class.java != this::class.java) {
+      return false
+    }
+    check(other is LanguageKind)
+    if (name != other.name) {
+      return false
+    }
+    check(other.extensions == extensions)
+    check(other.defaultCodeFormatControl == defaultCodeFormatControl)
+    check(other.origCodeFormatControl == origCodeFormatControl)
+    check(other.allowedCodeFormatControl == allowedCodeFormatControl)
+    return true
+  }
+
+  override fun hashCode(): Int {
+    return name.hashCode()
+  }
+
+  fun getAllDefaultFormatterCommandStrings() = defaultFormatterCommands
+    .joinToString(separator = ", ")
 
   fun isCodeFormatAllowed(codeFormat: EnumFormatControl) =
     allowedCodeFormatControl.contains(codeFormat)
+
+  override fun toString() = MoreObjects.toStringHelper(this)
+    .add("name", name)
+    .add("extensions", extensions)
+    .add("defaultCodeFormatControl", defaultCodeFormatControl)
+    .toString()
 
   companion object {
 
@@ -60,10 +97,7 @@ abstract class LanguageKind(
       formatters
         .asSequence()
         .filter { it != null }
-        .fold(
-          ImmutableList.builder<ShellCommandOnPath>(),
-          { builder, formatter -> builder.add(formatter!!) }
-        )
-        .build()!!
+        .map { it!! }
+        .toImmutableList()
   }
 }

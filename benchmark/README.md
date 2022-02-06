@@ -15,8 +15,11 @@ cd perses/benchmark
 ```
 In the docker container, running benchmark.py will build and install different reducers and run reductions 
 ```shell
-./benchmark.py
+./run_benchmark.py
 ```
+
+Note: To avoid conflicts on resources, do not use Bazel to compile the project 
+in both host and virtual machine simultaneously. 
 
 ### Arguments
 Run ```./benchmark.py --help``` for a list of all the arguments

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,13 +16,13 @@
  */
 package org.perses.grammar.rust;
 
-import org.perses.TestUtility;
+import static com.google.common.base.Preconditions.checkState;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,8 +30,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
-import static com.google.common.base.Preconditions.checkState;
+import org.perses.TestUtility;
 
 public class RustParserFailListGenerator {
 
@@ -40,11 +39,10 @@ public class RustParserFailListGenerator {
     final ConcurrentLinkedQueue<String> failList = new ConcurrentLinkedQueue<>();
     try {
       final PnfRustParserFacade facade = new PnfRustParserFacade();
-      for (File f : TestUtility.getRustTestFiles()) {
+      for (Path f : TestUtility.getRustTestFiles()) {
         executorService.submit(
             () -> {
               try {
-                System.err.println("parsing " + f);
                 facade.parseWithOrigRustParser(f);
               } catch (Throwable e) {
                 failList.add(f.toString());

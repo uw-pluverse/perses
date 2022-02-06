@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,12 +16,14 @@
  */
 package org.perses.version
 
-import com.google.common.base.Preconditions
 import com.google.common.collect.ImmutableMap
-import java.io.File
 import java.nio.charset.StandardCharsets
+import java.nio.file.Path
+import java.nio.file.Paths
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.io.path.readLines
+import kotlin.io.path.writeText
 
 object VersionClassGenerator {
 
@@ -31,13 +33,13 @@ object VersionClassGenerator {
   @JvmStatic
   fun generate(args: Array<String>) {
     require(args.size == 2)
-    val lines = File(args[0]).readLines(StandardCharsets.UTF_8)
+    val lines = Paths.get(args[0]).readLines(StandardCharsets.UTF_8)
     val map = parse(lines)
-    val outputFile = File(args[1])
+    val outputFile = Paths.get(args[1])
     writeVersionClass(map, outputFile)
   }
 
-  private fun writeVersionClass(map: ImmutableMap<String, String>, outputFile: File) {
+  private fun writeVersionClass(map: ImmutableMap<String, String>, outputFile: Path) {
     val branch = map["PERSES_GIT_BRANCH"]
     val hash = map["PERSES_GIT_COMMIT_HASH"]
     val status = map["PERSES_GIT_STATUS"]
@@ -74,7 +76,7 @@ object VersionClassGenerator {
     val builder = ImmutableMap.builder<String, String>()
     for (line in lines) {
       val segments = line.split("\\s|=".toRegex()).toTypedArray()
-      Preconditions.checkState(segments.size == 2)
+      check(segments.size == 2)
       builder.put(segments[0].trim { it <= ' ' }, segments[1].trim { it <= ' ' })
     }
     return builder.build()

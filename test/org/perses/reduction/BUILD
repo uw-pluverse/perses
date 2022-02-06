@@ -1,11 +1,24 @@
 package(default_visibility = ["//test/org/perses:__subpackages__"])
 
-load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_test")
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 
-java_library(
-    name = "reducer_functional_test_base",
-    srcs = ["AbstractReducerFunctionalTest.java"],
+kt_jvm_test(
+    name = "AbstractReducerContextTest",
+    srcs = ["AbstractReducerContextTest.kt"],
     deps = [
+        "//:truth",
+        "//src/org/perses/reduction:reducer_context_interface",
+        "//src/org/perses/reduction:test_script_executor_service",
+        "//test/org/perses/reduction/io:CommonReductionIOManagerData",
+    ],
+)
+
+kt_jvm_library(
+    name = "reducer_functional_test_base",
+    srcs = ["AbstractReducerFunctionalTest.kt"],
+    deps = [
+        "//:guava",
+        "//:truth",
         "//src/org/perses:command_options",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/listener:listeners",
@@ -13,8 +26,6 @@ java_library(
         "//src/org/perses/reduction:reduction_driver",
         "//src/org/perses/util",
         "//src/org/perses/util:auto_deltable_folder",
-        "//test/org/perses:truth",
-        "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",
     ],
 )
@@ -38,9 +49,9 @@ java_library(
         "//test_data/parentheses",
     ],
     deps = [
-        "//src/org/perses/tree/spar",
+        "//:truth",
+        "//src/org/perses/spartree",
         "//test/org/perses:test_util",
-        "//test/org/perses:truth",
     ],
 )
 
@@ -51,19 +62,18 @@ java_test(
     deps = ["//src/org/perses/listener:profile_event_interface"],
 )
 
-java_test(
+kt_jvm_test(
     name = "ReducerFactoryTest",
-    srcs = ["ReducerFactoryTest.java"],
+    srcs = ["ReducerFactoryTest.kt"],
     test_class = "org.perses.reduction.ReducerFactoryTest",
     deps = [
+        "//:guava",
+        "//:truth",
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction:reducer_factory",
-        "//src/org/perses/reduction/reducer:level_based_reducers",
         "//src/org/perses/reduction/reducer:node_based_reducer",
-        "//src/org/perses/reduction/reducer:token_slicer",
-        "//test/org/perses:truth",
-        "@maven//:com_google_flogger_flogger_system_backend",
-        "@maven//:com_google_guava_guava",
+        "//src/org/perses/reduction/reducer/hdd:level_based_reducers",
+        "//src/org/perses/reduction/reducer/token:token_slicer",
     ],
 )
 
@@ -75,12 +85,38 @@ kt_jvm_test(
     ],
     test_class = "org.perses.reduction.ReductionConfigurationTest",
     deps = [
+        "//:guava",
+        "//:truth",
         "//src/org/perses/reduction:reduction_configuration",
+        "//src/org/perses/reduction/io",
+        "//src/org/perses/reduction/io/token:regular_output_manager_factory",
+        "//src/org/perses/reduction/io/token:token_reduction_io_manager",
         "//src/org/perses/util",
         "//test/org/perses:test_util",
-        "//test/org/perses:truth",
-        "@maven//:com_google_guava_guava",
     ],
+)
+
+genrule(
+    name = "profile_query_cache_memory_usage",
+    srcs = [
+        "//src/org/perses:perses_deploy.jar",
+        "//third_party/memory_measurer:object_explorer",
+        "//test_data/delta_1",
+    ],
+    outs = ["query_cache_memory_usage.log"],
+    cmd = "java -javaagent:$(location //third_party/memory_measurer:object_explorer) " +
+          " -jar $(location //src/org/perses:perses_deploy.jar) " +
+          " --test-script test_data/delta_1/r.sh " +
+          " --input-file test_data/delta_1/t.c " +
+          " --profile-query-cache-memory $@ " +
+          " > profile_query_cache_memory_usage.stdout_stderr.txt 2>&1",
+)
+
+sh_test(
+    name = "test_query_cache_memory_usage_is_not_empty",
+    srcs = ["ensure_file_is_not_empty.sh"],
+    args = ["$(location query_cache_memory_usage.log)"],
+    data = ["query_cache_memory_usage.log"],
 )
 
 java_test(
@@ -88,74 +124,34 @@ java_test(
     srcs = ["ReductionLevelSequenceTest.java"],
     test_class = "org.perses.reduction.ReductionLevelSequenceTest",
     deps = [
+        "//:guava",
         "//src/org/perses/reduction:reduction_level_sequence",
-        "@maven//:com_google_guava_guava",
     ],
 )
 
 kt_jvm_test(
-    name = "ReductionDriverTest",
-    srcs = ["ReductionDriverTest.kt"],
+    name = "RegularProgramReductionDriverTest",
+    srcs = ["RegularProgramReductionDriverTest.kt"],
     data = [
         "//test_data/delta_1",
     ],
     deps = [
+        "//:guava",
+        "//:kotlin_stdib",
+        "//:truth",
         "//src/org/perses:command_options",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/program",
         "//src/org/perses/program:enum_format_control",
         "//src/org/perses/program:language_kind",
-        "//src/org/perses/reduction:enum_query_caching_control",
         "//src/org/perses/reduction:reducer_factory",
         "//src/org/perses/reduction:reduction_configuration",
         "//src/org/perses/reduction:reduction_driver",
         "//src/org/perses/reduction:test_script",
         "//src/org/perses/reduction:test_script_executor_service",
+        "//src/org/perses/reduction/cache:enum_query_caching_control",
         "//test/org/perses:test_util",
-        "//test/org/perses:truth",
-        "@maven//:com_google_guava_guava",
-    ],
-)
-
-java_test(
-    name = "TokenizedProgramEncoderTest",
-    srcs = ["TokenizedProgramEncoderTest.java"],
-    data = [
-        "clang-22704.c",
-        "//test_data/delta_1",
-        "//test_data/java_helloworld",
-        "//test_data/parentheses",
-    ],
-    test_class = "org.perses.reduction.TokenizedProgramEncoderTest",
-    deps = [
-        "//src/org/perses/grammar:facade_factory",
-        "//src/org/perses/grammar:grammar_facade",
-        "//src/org/perses/program",
-        "//src/org/perses/program:language_kind",
-        "//src/org/perses/reduction:reduction_configuration",
-        "//src/org/perses/reduction:test_script",
-        "//src/org/perses/reduction:test_script_execution_cache",
-        "//src/org/perses/reduction:test_script_executor_service",
-        "//src/org/perses/tree/spar",
-        "//test/org/perses:test_util",
-        "//test/org/perses:truth",
-        "@maven//:com_google_guava_guava",
-        "@maven//:org_antlr_antlr4_runtime",
-    ],
-)
-
-java_test(
-    name = "ForwardAdjacencyMapTest",
-    srcs = ["ForwardAdjacencyMapTest.java"],
-    test_class = "org.perses.reduction.ForwardAdjacencyMapTest",
-    deps = [
-        "//src/org/perses/program",
-        "//src/org/perses/reduction:test_script_execution_cache",
-        "//test/org/perses:test_util",
-        "//test/org/perses:truth",
-        "@maven//:com_google_guava_guava",
-        "@maven//:it_unimi_dsi_fastutil",
     ],
 )
 
@@ -168,6 +164,8 @@ kt_jvm_test(
     ],
     test_class = "org.perses.reduction.TestScriptExecutorServiceTest",
     deps = [
+        "//:guava",
+        "//:truth",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/program",
@@ -175,54 +173,56 @@ kt_jvm_test(
         "//src/org/perses/reduction:reduction_configuration",
         "//src/org/perses/reduction:test_script",
         "//src/org/perses/reduction:test_script_executor_service",
+        "//src/org/perses/reduction/io/token:regular_output_manager_factory",
+        "//src/org/perses/reduction/io/token:token_reduction_io_manager",
         "//test/org/perses:test_util",
-        "//test/org/perses:truth",
-        "@maven//:com_google_guava_guava",
     ],
 )
 
-java_test(
+kt_jvm_test(
     name = "ReductionFolderManagerTest",
-    srcs = ["ReductionFolderManagerTest.java"],
+    srcs = ["ReductionFolderManagerTest.kt"],
     data = ["//test_data/delta_1"],
-    test_class = "org.perses.reduction.ReductionFolderManagerTest",
     deps = [
+        "//:guava",
+        "//:truth",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
+        "//src/org/perses/grammar/c:language_kind",
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
         "//src/org/perses/reduction:reduction_configuration",
         "//src/org/perses/reduction:test_script",
         "//src/org/perses/reduction:test_script_executor_service",
+        "//src/org/perses/reduction/io",
+        "//src/org/perses/reduction/io/token:regular_output_manager_factory",
+        "//src/org/perses/reduction/io/token:token_reduction_io_manager",
         "//src/org/perses/util",
         "//src/org/perses/util:auto_deltable_folder",
         "//test/org/perses:test_util",
-        "//test/org/perses:truth",
-        "@maven//:com_google_guava_guava",
     ],
 )
 
-java_test(
-    name = "encoder_benchmark",
-    timeout = "eternal",
-    srcs = ["TokenizedProgramEncoderBenchmark.java"],
-    data = [
-        "clang-22704.c",
-    ],
-    test_class = "org.perses.reduction.TokenizedProgramEncoderBenchmark",
+kt_jvm_test(
+    name = "SortedIntArrayReferenceTest",
+    srcs = ["SortedIntArrayReferenceTest.kt"],
     deps = [
-        "//src/org/perses/grammar:facade_factory",
-        "//src/org/perses/grammar:grammar_facade",
-        "//src/org/perses/program",
-        "//src/org/perses/program:language_kind",
-        "//src/org/perses/reduction:reduction_configuration",
-        "//src/org/perses/reduction:test_script",
-        "//src/org/perses/reduction:test_script_execution_cache",
-        "//src/org/perses/reduction:test_script_executor_service",
-        "//src/org/perses/tree/spar",
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/reduction:sorted_int_arrays",
         "//test/org/perses:test_util",
-        "//test/org/perses:truth",
-        "@maven//:com_google_guava_guava",
-        "@maven//:org_antlr_antlr4_runtime",
+    ],
+)
+
+kt_jvm_test(
+    name = "AbstractProgramReductionDriverTest",
+    srcs = ["AbstractProgramReductionDriverTest.kt"],
+    associates = [
+        "//src/org/perses/reduction:reduction_driver",
+    ],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "@com_github_jetbrains_kotlin//:kotlin-test",
     ],
 )

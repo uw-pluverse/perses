@@ -1,21 +1,21 @@
 translationUnit {id=1}
 |___(+) {id=2,slot_type=kleene_plus__externalDeclaration}
-    |___declaration {id=630,slot_type=externalDeclaration}
+    |___(|:declaration) {id=630,slot_type=externalDeclaration}
     |   |___(+) {id=631,slot_type=kleene_plus__declarationSpecifiers}
     |   |   |___Token:char {id=639,slot_type=declarationSpecifier}
     |   |   |___Token:b {id=637,slot_type=declarationSpecifier}
     |   |___Token:; {id=632,slot_type=Semi}
-    |___declaration {id=620,slot_type=externalDeclaration}
+    |___(|:declaration) {id=620,slot_type=externalDeclaration}
     |   |___(+) {id=621,slot_type=kleene_plus__declarationSpecifiers}
     |   |   |___Token:short {id=629,slot_type=declarationSpecifier}
     |   |   |___Token:f {id=627,slot_type=declarationSpecifier}
     |   |___Token:; {id=622,slot_type=Semi}
-    |___declaration {id=610,slot_type=externalDeclaration}
+    |___(|:declaration) {id=610,slot_type=externalDeclaration}
     |   |___(+) {id=611,slot_type=kleene_plus__declarationSpecifiers}
     |   |   |___Token:unsigned {id=619,slot_type=declarationSpecifier}
     |   |   |___Token:e {id=617,slot_type=declarationSpecifier}
     |   |___Token:; {id=612,slot_type=Semi}
-    |___declaration {id=586,slot_type=externalDeclaration}
+    |___(|:declaration) {id=586,slot_type=externalDeclaration}
     |   |___(+) {id=587,slot_type=kleene_plus__declarationSpecifiers}
     |   |   |___Token:int {id=609,slot_type=declarationSpecifier}
     |   |___(?) {id=588,slot_type=optional__initDeclaratorList}
@@ -38,7 +38,7 @@ translationUnit {id=1}
     |   |___compoundStatement {id=60,slot_type=compoundStatement}
     |       |___Token:{ {id=61,slot_type=LeftBrace}
     |       |___(*) {id=62,slot_type=kleene_star__blockItem}
-    |       |   |___declaration {id=553,slot_type=blockItem}
+    |       |   |___(|:declaration) {id=553,slot_type=blockItem}
     |       |   |   |___(+) {id=554,slot_type=kleene_plus__declarationSpecifiers}
     |       |   |   |   |___Token:int {id=576,slot_type=declarationSpecifier}
     |       |   |   |___(?) {id=555,slot_type=optional__initDeclaratorList}
@@ -69,7 +69,7 @@ translationUnit {id=1}
     |       |       |___compoundStatement {id=76,slot_type=statement}
     |       |           |___Token:{ {id=77,slot_type=LeftBrace}
     |       |           |___(*) {id=78,slot_type=kleene_star__blockItem}
-    |       |           |   |___declaration {id=493,slot_type=blockItem}
+    |       |           |   |___(|:declaration) {id=493,slot_type=blockItem}
     |       |           |   |   |___(+) {id=494,slot_type=kleene_plus__declarationSpecifiers}
     |       |           |   |   |   |___Token:int {id=523,slot_type=declarationSpecifier}
     |       |           |   |   |___(?) {id=495,slot_type=optional__initDeclaratorList}
@@ -117,7 +117,7 @@ translationUnit {id=1}
     |       |           |       |___compoundStatement {id=93,slot_type=statement}
     |       |           |           |___Token:{ {id=94,slot_type=LeftBrace}
     |       |           |           |___(*) {id=95,slot_type=kleene_star__blockItem}
-    |       |           |           |   |___declaration {id=371,slot_type=blockItem}
+    |       |           |           |   |___(|:declaration) {id=371,slot_type=blockItem}
     |       |           |           |   |   |___(+) {id=372,slot_type=kleene_plus__declarationSpecifiers}
     |       |           |           |   |   |   |___Token:int {id=429,slot_type=declarationSpecifier}
     |       |           |           |   |   |___(?) {id=373,slot_type=optional__initDeclaratorList}

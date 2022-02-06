@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,11 +16,13 @@
  */
 package org.perses.reduction.reducer
 
+import com.google.common.collect.ImmutableList
+import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.partition.Partition
-import org.perses.tree.spar.AbstractSparTreeNode
-import org.perses.tree.spar.SparTree
+import org.perses.spartree.AbstractSparTreeNode
+import org.perses.spartree.SparTree
 import java.util.ArrayDeque
 import java.util.Queue
 
@@ -53,12 +55,17 @@ open class PersesNodeBfsReducer protected constructor(
 
     @JvmField
     val META: ReducerAnnotation = object : ReducerAnnotation() {
+
+      override val deterministic = true
+
       override fun shortName() = NAME
 
       override fun description() = ""
 
       override fun create(reducerContext: ReducerContext) =
-        PersesNodeBfsReducer(this, reducerContext)
+        ImmutableList.of<AbstractTokenReducer>(
+          PersesNodeBfsReducer(this, reducerContext)
+        )
     }
   }
 }

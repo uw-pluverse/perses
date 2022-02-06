@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,5 +19,7 @@ package org.perses.program;
 public enum EnumFormatControl {
   SINGLE_TOKEN_PER_LINE,
   ORIG_FORMAT,
-  COMPACT_ORIG_FORMAT
+  COMPACT_ORIG_FORMAT,
+  PYTHON3_FORMAT,
+  COMPACT_PYTHON3_FORMAT
 }

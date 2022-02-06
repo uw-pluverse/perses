@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -26,7 +26,8 @@ object LanguageC : LanguageKind(
   name = "c",
   extensions = ImmutableSet.of("c"),
   defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE,
-  defaultFormaterCommand = createPotentialCodeFormatterList(
+  origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
+  defaultFormatterCommands = createPotentialCodeFormatterList(
     ShellCommandOnPath.tryCreating(
       "clang-format",
       ImmutableList.of(/*in-place formatting*/"-i")

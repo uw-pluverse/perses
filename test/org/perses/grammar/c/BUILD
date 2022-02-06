@@ -1,4 +1,5 @@
-load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_test")
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
+load("//test/org/perses:test.bzl", "cross_folder_golden_test")
 
 java_test(
     name = "OptCParserTest",
@@ -7,17 +8,36 @@ java_test(
     shard_count = 1,
     test_class = "org.perses.grammar.c.OptCParserTest",
     deps = [
-        "//antlropt/org/perses/antlr/ast",
+        "//:flogger",
+        "//:guava",
+        "//:truth",
+        "//antlropt/src/org/perses/antlr/ast",
         "//src/org/perses/antlr:antlr_grammar_util",
-        "//src/org/perses/grammar/c:c_parser_facade",
-        "//src/org/perses/grammar/c:pnfc_parser_facade",
+        "//src/org/perses/grammar/c:optc_parser_facade",
+        "//src/org/perses/grammar/c:parser_facade",
         "//test/org/perses:test_util",
-        "//test/org/perses:truth",
-        "@maven//:com_google_flogger_flogger",
-        "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",
         "@maven//:org_antlr_antlr4_runtime",
     ],
+)
+
+kt_jvm_test(
+    name = "LanguageCTest",
+    srcs = [
+        "LanguageCTest.kt",
+    ],
+    deps = [
+        "//:flogger",
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/grammar/c:language_kind",
+    ],
+)
+
+cross_folder_golden_test(
+    name = "golden_test_pnf_c",
+    golden_file = "golden_pnf_c.g4",
+    test_file_in_other_folders = "//src/org/perses/grammar/c:PnfC.g4",
 )
 
 kt_jvm_test(
@@ -25,18 +45,17 @@ kt_jvm_test(
     size = "large",  # This is a slow test.
     srcs = ["PnfCParserFacadeTest.kt"],
     data = [
-        "golden_pnf_c.g4",
         "//test_data/delta_1",
     ],
-    shard_count = 1,
     deps = [
+        "//:flogger",
+        "//:guava",
+        "//:kotlin_stdib",
+        "//:truth",
         "//src/org/perses/antlr:antlr_grammar_util",
-        "//src/org/perses/grammar/c:pnfc_parser_facade",
+        "//src/org/perses/grammar/c:parser_facade",
         "//test/org/perses:test_util",
-        "//test/org/perses:truth",
         "//test/org/perses/program:LanguageKindTestUtil",
-        "@maven//:com_google_flogger_flogger",
-        "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",
         "@maven//:org_antlr_antlr4_runtime",
     ],
@@ -48,12 +67,12 @@ kt_jvm_test(
     data = ["//test_data/c_programs/preprocessed_files"],
     test_class = "org.perses.grammar.c.PreprocessedCFileParserTest",
     deps = [
+        "//:flogger",
+        "//:guava",
+        "//:truth",
         "//src/org/perses/antlr:antlr_grammar_util",
-        "//src/org/perses/grammar/c:pnfc_parser_facade",
+        "//src/org/perses/grammar/c:parser_facade",
         "//test/org/perses:test_util",
-        "//test/org/perses:truth",
-        "@maven//:com_google_flogger_flogger",
-        "@maven//:com_google_guava_guava",
         "@maven//:org_antlr_antlr4",
         "@maven//:org_antlr_antlr4_runtime",
     ],

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -52,11 +52,10 @@ class ShellOutputStreamTest {
                    |""".trimMargin()
     val stream = ShellOutputStream()
     for (c in string) {
-      stream.write(c.toInt())
+      stream.write(c.code)
     }
     stream.close()
-    val content = stream.toOutputStringList().lines
-    Truth.assertThat(content).hasSize(6)
-    Truth.assertThat(content.joinToString(separator = "")).isEqualTo(string)
+    val content = stream.toOutputStringList()
+    Truth.assertThat(content.combinedLines.trim()).isEqualTo(string.trim())
   }
 }

@@ -53,16 +53,23 @@ cat > "${INIT_DOCKER_SCRIPT}" <<-EOF
   
 set -o nounset
 set -o pipefail
-set -o errexit
 
-sudo groupadd --gid ${GROUP_ID} ${GROUP_NAME}
-sudo useradd --shell "/bin/bash" --create-home --uid ${USER_ID} --gid ${GROUP_ID} --groups sudo ${USER_NAME}
-echo "Change password for ${USER_NAME} in docker"
-sudo passwd ${USER_NAME}
+getent group $GROUP_ID > /dev/null
+if [ \$? -ne 0 ]; then
+  sudo groupadd --gid ${GROUP_ID} ${GROUP_NAME}
+fi
 
-sudo --user=${USER_NAME} ./${UPDATE_BAZEL_SCRIPT}
-echo "Switching to user ${USER_NAME}"
-su ${USER_NAME}
+getent passwd $USER_ID > /dev/null
+if [ \$? -ne 0 ]; then
+  sudo useradd --shell "/bin/bash" --create-home --uid ${USER_ID} --gid ${GROUP_ID} --groups sudo ${USER_NAME}
+fi
+
+echo "Change password for \$(id -nu $USER_ID) in docker"
+sudo passwd \$(id -nu $USER_ID)
+
+sudo --user=\$(id -nu $USER_ID) ./${UPDATE_BAZEL_SCRIPT}
+echo "Switching to user \$(id -nu $USER_ID)"
+su \$(id -nu $USER_ID)
 EOF
 chmod +x "${INIT_DOCKER_SCRIPT}"
 
@@ -74,5 +81,4 @@ docker container run \
   --volume "${WORKSPACE}:${PERSES_ROOT_IN_DOCKER}" \
 	--cap-add SYS_PTRACE \
 	--interactive \
-	--tty cnsun/perses:perses_part_54_name_clang_trunk 
-
+	--tty cnsun/perses:perses_part_54_name_clang_trunk

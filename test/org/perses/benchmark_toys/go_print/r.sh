@@ -4,6 +4,7 @@ set -o pipefail
 set -o nounset
 
 export GOCACHE=$(mktemp -d) # Build cache for the go compiler. Otherwise, go does not run.
+export GOPATH=${GOCACHE}/go
 trap "{ rm ${GOCACHE} -rf; }" EXIT
 
 readonly OUTPUT="output.txt.tmp"

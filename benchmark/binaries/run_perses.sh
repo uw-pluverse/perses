@@ -15,14 +15,13 @@ set -o errexit
 
 readonly BINARY_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${BINARY_DIR}/run_common.sh"
-readonly REDUCED_TOKEN_FILE="${TMP}/reduced.c"
 
 pushd "${TMP}"
 readonly START_TIME=$(date +%s)
-java "${PERSES_XLOG:=''}" -jar "/tmp/binaries/perses_deploy.jar" ${PERSES_EXTRA_FLAGS:=''} \
+java ${JVM_FLAGS:=''} -jar "/tmp/binaries/perses_deploy.jar" ${PERSES_FLAGS:=''} \
   --test-script "${TMP_TEST_SCRIPT}" \
   --input-file "${TMP_SOURCE_FILE}" \
-  --output-file "${TMP}/reduced.c" \
+  --output-dir "${TMP}" \
   --threads "${THREADS}"
 
 readonly RET_CODE="$?"

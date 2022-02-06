@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,6 +20,10 @@ package org.perses.antlr;
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import com.google.common.io.CharStreams;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Path;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -32,16 +36,11 @@ import org.antlr.v4.tool.Grammar;
 import org.antlr.v4.tool.ast.GrammarAST;
 import org.antlr.v4.tool.ast.GrammarRootAST;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 /** A parser for grammars written in Antlr. It parses a grammar file into an AST. */
 public class AntlrGrammarParser extends Tool {
 
-  public static Grammar loadAntlrGrammarFromFile(File file) {
-    return new AntlrGrammarParser().loadGrammar(file.getAbsolutePath());
+  public static Grammar loadAntlrGrammarFromFile(Path file) {
+    return new AntlrGrammarParser().loadGrammar(file.toAbsolutePath().toString());
   }
 
   public static Grammar loadAntlrGrammarFromInputStream(InputStream inputStream)

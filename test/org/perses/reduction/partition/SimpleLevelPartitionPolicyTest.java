@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,27 +17,27 @@
 
 package org.perses.reduction.partition;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertEquals;
+
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.perses.TestUtility;
 import org.perses.reduction.ReductionLevel;
-import org.perses.tree.spar.SparTree;
-import org.perses.tree.spar.AbstractSparTreeNode;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
+import org.perses.spartree.AbstractSparTreeNode;
+import org.perses.spartree.SparTree;
 
 /** Test for {@link SimpleLevelPartitionPolicy} */
 @RunWith(JUnit4.class)
 public class SimpleLevelPartitionPolicyTest {
 
   private final SimpleLevelPartitionPolicy policy = new SimpleLevelPartitionPolicy();
-  private final SparTree tree = TestUtility.createSparTreeFromFile(new File("test_data/misc/t1.c"));
+  private final SparTree tree =
+      TestUtility.createSparTreeFromFile(Paths.get("test_data/misc/t1.c"));
 
   public SimpleLevelPartitionPolicyTest() throws IOException {}
 

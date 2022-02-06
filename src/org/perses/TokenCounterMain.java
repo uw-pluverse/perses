@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,29 +16,53 @@
  */
 package org.perses;
 
+import com.beust.jcommander.Parameter;
+import com.beust.jcommander.converters.PathConverter;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.antlr.v4.runtime.Token;
+import org.perses.cmd.LanguageExtFlags;
 import org.perses.grammar.AbstractParserFacade;
-import org.perses.grammar.ParserFacadeFactory;
+import org.perses.grammar.AbstractParserFacadeFactory;
+import org.perses.grammar.CompositeParserFacadeFactory;
+import org.perses.grammar.SingleParserFacadeFactory;
+import org.perses.grammar.adhoc.AdhocParserFacadeFactoryUtil;
 import org.perses.program.LanguageKind;
 import org.perses.program.SourceFile;
+import org.perses.util.cmd.AbstractCommandOptions;
+import org.perses.util.cmd.ICommandLineFlags;
 
-import java.io.File;
-import java.io.IOException;
+public class TokenCounterMain
+    extends org.perses.util.cmd.AbstractMain<TokenCounterMain.CommandOptions> {
 
-import static com.google.common.base.Preconditions.checkArgument;
+  public TokenCounterMain(String[] args) {
+    super(args);
+  }
 
-public class TokenCounterMain {
+  @Override
+  protected CommandOptions createCommandOptions() {
+    return new CommandOptions();
+  }
 
-  public static void main(String[] args) throws IOException {
-    checkArgument(args.length == 1, "Usage: <main> <source file>");
-    final File file = new File(args[0]);
-    checkArgument(file.exists(), "The source file does not exist. %s", file);
-    checkArgument(file.isFile(), "The source file is not a regular file. %s", file);
+  private CompositeParserFacadeFactory createParserFacadeFactory() {
+    final SingleParserFacadeFactory builtin =
+        SingleParserFacadeFactory.builderWithBuiltinLanguages(
+                SingleParserFacadeFactory.IDENTITY_CUSTOMIZER)
+            .build();
+    final AbstractParserFacadeFactory ext =
+        AdhocParserFacadeFactoryUtil.INSTANCE.createParserFacadeFactory(
+            cmd.extFlags.languageJarFiles);
+    return new CompositeParserFacadeFactory(builtin, ext);
+  }
 
-    ParserFacadeFactory parserFacadeFactory =
-        ParserFacadeFactory.builderWithBuiltinLanguages().build();
-    LanguageKind language = parserFacadeFactory.computeLanguageKind(file);
+  @Override
+  protected void internalRun() {
+    final Path file = cmd.flags.file;
+    final AbstractParserFacadeFactory parserFacadeFactory = createParserFacadeFactory();
+    final LanguageKind language = parserFacadeFactory.computeLanguageKindWithFileName(file);
     final SourceFile sourceFile = new SourceFile(file, language);
     final AbstractParserFacade parserFacade =
         parserFacadeFactory.createParserFacade(sourceFile.getLanguageKind());
@@ -52,5 +76,26 @@ public class TokenCounterMain {
     System.out.println();
     System.out.printf("The number of tokens in file '%s' is:\n", file);
     System.out.println(count);
+  }
+
+  public class CommandOptions extends AbstractCommandOptions {
+
+    private final RequiredFlags flags = registerFlags(new RequiredFlags());
+    private final LanguageExtFlags extFlags = registerFlags(new LanguageExtFlags());
+
+    class RequiredFlags implements ICommandLineFlags {
+      @Parameter(description = "source file", required = true, converter = PathConverter.class)
+      private Path file = null;
+
+      @Override
+      public void validate() {
+        Preconditions.checkNotNull(file);
+        Preconditions.checkState(Files.isRegularFile(file));
+      }
+    }
+  }
+
+  public static void main(String[] args) throws IOException {
+    new TokenCounterMain(args).run();
   }
 }

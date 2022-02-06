@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,8 +16,14 @@
  */
 package org.perses.grammar.c;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.truth.Truth;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,12 +34,6 @@ import org.perses.antlr.ast.AbstractPersesRuleDefAst;
 import org.perses.antlr.ast.PersesGrammar;
 import org.perses.antlr.ast.RuleNameRegistry;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import static com.google.common.truth.Truth.assertThat;
-
 /** Test for testing the optimized C grammar. */
 @RunWith(JUnit4.class)
 public class OptCParserTest {
@@ -41,20 +41,20 @@ public class OptCParserTest {
   private static final CParserFacade C_PARSER_FACADE = new CParserFacade();
   private static final PnfCParserFacade PNF_C_PARSER_FACADE = new PnfCParserFacade();
 
-  private static void testOneCFile(File testFile) {
+  private static void testOneCFile(Path testFile) {
     try {
       final ArrayList<String> origTokens =
-          TestUtility.extractTokens(C_PARSER_FACADE.parseWithOrigCParser(testFile).getTree());
+          TestUtility.extractTokenTexts(C_PARSER_FACADE.parseWithOrigCParser(testFile).getTree());
       {
         final ParseTree treeByOpt = C_PARSER_FACADE.parseFile(testFile).getTree();
         assertThat(origTokens)
-            .containsExactlyElementsIn(TestUtility.extractTokens(treeByOpt))
+            .containsExactlyElementsIn(TestUtility.extractTokenTexts(treeByOpt))
             .inOrder();
       }
       {
         final ParseTree treeByPnfc = PNF_C_PARSER_FACADE.parseFile(testFile).getTree();
         assertThat(origTokens)
-            .containsExactlyElementsIn(TestUtility.extractTokens(treeByPnfc))
+            .containsExactlyElementsIn(TestUtility.extractTokenTexts(treeByPnfc))
             .inOrder();
       }
 
@@ -66,17 +66,15 @@ public class OptCParserTest {
 
   @Test
   public void testAsmStmt_Issue16() throws IOException {
-    final File file = new File("test_data/c_programs/gcc_testsuite/06002.c");
+    final Path file = Paths.get("test_data/c_programs/gcc_testsuite/06002.c");
     C_PARSER_FACADE.parseFile(file);
     PNF_C_PARSER_FACADE.parseFile(file);
   }
 
-  /**
-   * https://gcc.gnu.org/onlinedocs/gcc/Local-Register-Variables.html#Local-Register-Variables
-   */
+  /** https://gcc.gnu.org/onlinedocs/gcc/Local-Register-Variables.html#Local-Register-Variables */
   @Test
   public void testRegisterVariableWithAsm() throws IOException {
-    final File file = new File("test_data/c_programs/clang_testsuite/00374.c");
+    final Path file = Paths.get("test_data/c_programs/clang_testsuite/00374.c");
     PNF_C_PARSER_FACADE.parseFile(file);
     C_PARSER_FACADE.parseWithOrigCParser(file);
     C_PARSER_FACADE.parseFile(file);
@@ -103,10 +101,10 @@ public class OptCParserTest {
     final PersesGrammar persesGrammar = C_PARSER_FACADE.getAntlrGrammar().asCombined().getGrammar();
 
     final ImmutableList<String> ruleNames =
-        persesGrammar.getRules().stream()
+        persesGrammar.getFlattenedAllRules().stream()
             .filter(AbstractPersesRuleDefAst::isParserRule)
             .map(AbstractPersesRuleDefAst::getRuleNameHandle)
-            .map(RuleNameRegistry.RuleNameHandle::get)
+            .map(RuleNameRegistry.RuleNameHandle::getRuleName)
             .collect(ImmutableList.toImmutableList());
     assertThat(ruleNames).containsExactlyElementsIn(TestUtility.OPT_C_PARSER_RULE_NAMES);
   }

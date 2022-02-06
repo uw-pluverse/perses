@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,13 +16,19 @@
  */
 package org.perses.reduction
 
-import org.perses.tree.spar.AbstractNodeActionSetCache
+import org.perses.program.TokenizedProgram
+import org.perses.reduction.cache.AbstractQueryCache
+import org.perses.reduction.io.token.TokenReductionIOManager
+import org.perses.spartree.AbstractNodeActionSetCache
 
 class ReducerContext(
+  ioManager: TokenReductionIOManager,
   val configuration: ReductionConfiguration,
-  val executorService: TestScriptExecutorService,
+  executorService: TestScriptExecutorService,
   val listenerManager: ReductionListenerManager,
-  val queryCache: AbstractTestScriptExecutionCache,
+  val queryCache: AbstractQueryCache,
   val nodeActionSetCache: AbstractNodeActionSetCache,
   val actionSetProfiler: AbstractActionSetProfiler
+) : AbstractReducerContext<TokenizedProgram, TokenReductionIOManager, ReducerContext>(
+  ioManager, executorService
 )

@@ -1,0 +1,1329 @@
+======================Reduction starts======================
+
+The spar tree is the following.
+translationUnit {id=1}
+|___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=4,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=5,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=94,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=97,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+        |___directDeclarator {id=85,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=93,slot_type=[aux_rule__directDeclarator_8,Identifier]}
+        |   |___(*) {id=87,slot_type=kleene_star__directDeclarator_6}
+        |       |___aux_rule__directDeclarator_14 {id=89,slot_type=[aux_rule__directDeclarator_7,aux_rule__directDeclarator_14]}
+        |           |___Token:( {id=90,slot_type=LeftParen}
+        |           |___Token:) {id=92,slot_type=RightParen}
+        |___compoundStatement {id=7,slot_type=compoundStatement}
+            |___Token:{ {id=8,slot_type=LeftBrace}
+            |___(?) {id=9,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=12,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___aux_rule__declaration_3 {id=51,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=52,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=84,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+            |       |   |___(?) {id=53,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=56,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:a {id=81,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_8,Identifier]}
+            |       |   |       |___(?) {id=58,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=59,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=60,slot_type=Assign}
+            |       |   |               |___Token:99 {id=78,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=54,slot_type=Semi}
+            |       |___jumpStatement {id=16,slot_type=[aux_rule__blockItemList_2,statement,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=19,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=20,slot_type=Return}
+            |           |   |___(?) {id=21,slot_type=optional__postfixExpression_1}
+            |           |       |___additiveExpression {id=33,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+            |           |           |___Token:a {id=49,slot_type=[multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |           |           |___(*) {id=35,slot_type=kleene_star__additiveExpression_1}
+            |           |               |___aux_rule__additiveExpression_2 {id=36,slot_type=aux_rule__additiveExpression_2}
+            |           |                   |___Token:+ {id=44,slot_type=[altnt_block__additiveExpression_3,Plus]}
+            |           |                   |___Token:0 {id=43,slot_type=[multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |           |___Token:; {id=18,slot_type=Semi}
+            |___Token:} {id=10,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@0
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@8
+    int main() {
+      int a =
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@8
+    99;
+      return a + 0;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    99;
+      return a + 0;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      int a =
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@4
+    int main()
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@4
+    {
+      int a =
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@4
+    99;
+      return a
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@4
+    + 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@12
+    {
+      int a = 99;
+      return a + 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@12
+    int main()
+              99;
+      return a + 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@12
+    int main() {
+      int a =
+               + 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@12
+    int main() {
+      int a = 99;
+      return a
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@2
+    int main
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@2
+    ()
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@2
+    {
+      int
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@2
+    a =
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@2
+    99;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@2
+    return a
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@2
+    + 0
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@2
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@14
+    () {
+      int a = 99;
+      return a + 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@14
+    int main   {
+      int a = 99;
+      return a + 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@14
+    int main()
+          a = 99;
+      return a + 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@14
+    int main() {
+      int     99;
+      return a + 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@14
+    int main() {
+      int a =
+      return a + 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@14
+    int main() {
+      int a = 99;
+               + 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: delta debugger@14
+    int main() {
+      int a = 99;
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+12 entries are removed: 25 --> 13.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    ()
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    {
+      int
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    a =
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    99;
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    return a
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@12
+    () {
+      int a = 99;
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@12
+    int main   {
+      int a = 99;
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@12
+    int main()
+          a = 99;
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@12
+    int main() {
+      int     99;
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@12
+    int main() {
+      int a =
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@12
+    int main() {
+      int a = 99;
+                  ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      int a = 99;
+      return a
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@1
+    int
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@1
+    main
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@1
+    (
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@1
+    )
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@1
+    {
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@1
+    a
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@1
+    =
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@1
+    99
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@1
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@1
+    return
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    a
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@1
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@13
+    main() {
+      int a = 99;
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@13
+    int     () {
+      int a = 99;
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@13
+    int main ) {
+      int a = 99;
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@13
+    int main(  {
+      int a = 99;
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@13
+    int main()
+      int a = 99;
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@13
+    int main() {
+          a = 99;
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@13
+    int main() {
+      int   = 99;
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@13
+    int main() {
+      int a   99;
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@13
+    int main() {
+      int a =   ;
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@13
+    int main() {
+      int a = 99
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@13
+    int main() {
+      int a = 99;
+             a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@13
+    int main() {
+      int a = 99;
+      return      ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@13
+    int main() {
+      int a = 99;
+      return a
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@13
+    int main() {
+      int a = 99;
+      return a    ;
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@7
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@7
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    (
+    )
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    {
+    int
+    a
+    =
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@3
+    99
+    ;
+    return
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@3
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@10
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@10
+    int
+    main
+    (
+    )
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@11
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: delta debugger@11
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    (
+    )
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    {
+    int
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    a
+    =
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    99
+    ;
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    return
+    a
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    ;
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    (
+    )
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    (
+    )
+    {
+    int
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    main
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    (
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    )
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    {
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    a
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    =
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    99
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    ;
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    return
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    a
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    ;
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    (
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    (
+    )
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    (
+    )
+    {
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    (
+    )
+    {
+    int
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+------------------------------------------------------------
+
+
+#test success = 1
+#test failure = 64
+#test result cache hits = 62
+#test execution cancelled = 0
+#node edit action set cache hits = 0

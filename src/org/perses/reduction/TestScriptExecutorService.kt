@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,40 +17,29 @@
 package org.perses.reduction
 
 import com.google.common.flogger.FluentLogger
-import org.perses.program.EnumFormatControl
-import org.perses.program.ScriptFile
-import org.perses.program.TokenizedProgram
+import org.perses.reduction.io.AbstractOutputManager
+import org.perses.reduction.io.ReductionFolder
+import org.perses.reduction.io.ReductionFolderManager
+import org.perses.util.DaemonThreadPool
 import org.perses.util.PerformanceMonitor
 import org.perses.util.PerformanceMonitor.IActionOnLongRunningTask
 import org.perses.util.TimeUtil
 import java.io.Closeable
-import java.io.File
+import java.nio.file.Path
 import java.util.concurrent.Callable
-import java.util.concurrent.Executors
 import java.util.concurrent.FutureTask
 import java.util.concurrent.atomic.AtomicInteger
 
 /** An execution service for test script runs.  */
 class TestScriptExecutorService(
-  tempRootFolder: File,
+  private val reductionFolderManager: ReductionFolderManager,
   val specifiedNumOfThreads: Int,
-  testScriptFile: ScriptFile,
-  sourceFileName: String,
   scriptExecutionMonitorIntervalMillis: Int
 ) : Closeable {
 
-  companion object {
-    val ALWAYS_TRUE_PRECHECK = { TestScript.TestResult(exitCode = 0, elapsedMilliseconds = 0) }
-    val logger = FluentLogger.forEnclosingClass()
-    val MSG_SCRAIPT_RUN_TOO_LONG = "One script execution took too much time"
-  }
-
   val statistics = Statistics()
 
-  // TODO: create the executor outside, and pass it in as a parameter, so that others can use the
-  //       executor.
-  private var executorService = Executors.newFixedThreadPool(specifiedNumOfThreads)
-  private var reductionFolderManager: ReductionFolderManager?
+  private var executorService = DaemonThreadPool.create(specifiedNumOfThreads)
   private var scriptExecutionMonitor:
     PerformanceMonitor<ReductionTestScriptExecutorCallback>?
 
@@ -58,59 +47,43 @@ class TestScriptExecutorService(
     require(specifiedNumOfThreads > 0) {
       "The number of threads must be positive: $specifiedNumOfThreads"
     }
-    require(sourceFileName.indexOf('/') < 0 || sourceFileName.indexOf('\\') < 0) {
-      "Invalid source file name. It should be the name only: $sourceFileName"
-    }
-    if (!tempRootFolder.exists()) {
-      check(tempRootFolder.mkdir()) { "Failed to create folder $tempRootFolder" }
-    }
-    assert(tempRootFolder.isDirectory) {
-      "The temp root folder is not a directory: $tempRootFolder"
-    }
 
-    reductionFolderManager = ReductionFolderManager(
-      tempRootFolder,
-      testScriptFile,
-      sourceFileName
-    )
+    val action = object : IActionOnLongRunningTask<ReductionTestScriptExecutorCallback> {
+      override fun onLongRunningTask(
+        task: ReductionTestScriptExecutorCallback,
+        duration: Int,
+        threshold: Int
+      ) {
+        if (logger.atWarning().isEnabled) {
+          TimeUtil.formatDateForDisplay(duration.toLong())
+          logger.atWarning().log(
+            "%s: %s",
+            MSG_SCRIPT_RUN_TOO_LONG,
+            TimeUtil.formatDateForDisplay(duration.toLong())
+          )
+        }
+      }
+    }
     scriptExecutionMonitor = PerformanceMonitor(
       sleepIntervalMillis = scriptExecutionMonitorIntervalMillis,
-      actionOnLongRunningTask =
-        object : IActionOnLongRunningTask<ReductionTestScriptExecutorCallback> {
-          override fun onLongRunningTask(
-            task: ReductionTestScriptExecutorCallback,
-            duration: Int,
-            threshold: Int
-          ) {
-            if (logger.atWarning().isEnabled) {
-              TimeUtil.formatDateForDisplay(duration.toLong())
-              logger.atWarning().log(
-                "%s: %s",
-                MSG_SCRAIPT_RUN_TOO_LONG,
-                TimeUtil.formatDateForDisplay(duration.toLong())
-              )
-            }
-          }
-        }
+      actionOnLongRunningTask = action
     )
   }
 
   fun createNamedReductionFolder(folderName: String) =
-    reductionFolderManager!!.createNamedFolder(folderName)
+    reductionFolderManager.createNamedFolder(folderName)
 
   @Override
   override fun close() {
-    executorService?.shutdown()
-    reductionFolderManager?.deleteRootFolder()
+    executorService.shutdown()
+    reductionFolderManager.deleteRootFolder()
     scriptExecutionMonitor!!.close()
 
-    executorService = null
-    reductionFolderManager = null
     scriptExecutionMonitor = null
   }
 
   fun finalize() {
-    check(executorService == null && reductionFolderManager == null) {
+    check(scriptExecutionMonitor == null) {
       "This $this has not been closed."
     }
   }
@@ -119,18 +92,18 @@ class TestScriptExecutorService(
    * FIXME: make this method blocking if there is no available tasks.
    */
   fun testProgramAsync(
-    prechecker: () -> TestScript.TestResult,
-    program: TokenizedProgram,
-    keepOrigCodeFormat: EnumFormatControl
+    preChecke: () -> PropertyTestResult,
+    postCheck: (currentResult: PropertyTestResult) -> PropertyTestResult,
+    outputManager: AbstractOutputManager
   ): FutureTestScriptExecutionTask {
     statistics.onSubmitTest()
-    val workingFolder = reductionFolderManager!!.createNextFolder()
+    val workingFolder = reductionFolderManager.createNextFolder()
     val result = FutureTestScriptExecutionTask(
       ReductionTestScriptExecutorCallback(
         workingFolder,
-        prechecker,
-        program,
-        keepOrigCodeFormat,
+        preChecke,
+        postCheck,
+        outputManager,
         statistics,
         scriptExecutionMonitor!!
       )
@@ -141,38 +114,39 @@ class TestScriptExecutorService(
 
   class FutureTestScriptExecutionTask(
     private val callable: ReductionTestScriptExecutorCallback
-  ) : FutureTask<TestScript.TestResult>(callable) {
-    val workingDirectory: File
+  ) : FutureTask<PropertyTestResult>(callable) {
+    val workingDirectory: Path
       get() = callable.workingDirectory.folder
 
-    val program: TokenizedProgram
-      get() = callable.program
+    val reductionFolder: ReductionFolder
+      get() = callable.workingDirectory
   }
 
   /** The test script runner for future.  */
   class ReductionTestScriptExecutorCallback(
     val workingDirectory: ReductionFolder,
-    private val prechecker: () -> TestScript.TestResult,
-    val program: TokenizedProgram,
-    private val keepOrigCodeFormat: EnumFormatControl,
+    private val preChecker: () -> PropertyTestResult,
+    private val postChecker: (currentResult: PropertyTestResult) -> PropertyTestResult,
+    private val outputManager: AbstractOutputManager,
     private val statistics: Statistics,
     private val runtimePerformanceMonitor:
       PerformanceMonitor<ReductionTestScriptExecutorCallback>
-  ) : Callable<TestScript.TestResult> {
+  ) : Callable<PropertyTestResult> {
 
-    override fun call(): TestScript.TestResult {
+    override fun call(): PropertyTestResult {
       statistics.onRunPrecheck()
-      val precheckResult = prechecker.invoke()
-      if (precheckResult.isFail) {
-        return precheckResult
+      preChecker().let {
+        if (it.isNotInteresting) {
+          return it
+        }
       }
       statistics.onExecuteScript()
       runtimePerformanceMonitor.onTaskStart(this)
-      program.writeToFile(workingDirectory.sourceFilePath, keepOrigCodeFormat)
-      val result = workingDirectory.testScript.test()
+      outputManager.write(workingDirectory)
+      val result = workingDirectory.runTestScript()
       workingDirectory.deleteAllOtherFiles()
       runtimePerformanceMonitor.onTaskEnd(this)
-      return result
+      return postChecker(result)
     }
   }
 
@@ -196,5 +170,12 @@ class TestScriptExecutorService(
     fun getSubmittedTestNumber() = submittedTestCounter.get()
     fun getPrecheckExecutionNumber() = preCheckCounterCounter.get()
     fun getScriptExecutionNumber() = scriptExecutionCounter.get()
+  }
+
+  companion object {
+    val ALWAYS_TRUE_PRECHECK = { PropertyTestResult(exitCode = 0, elapsedMilliseconds = 0) }
+    val IDENTITY_POST_CHECK: (currentResult: PropertyTestResult) -> PropertyTestResult = { it }
+    val logger = FluentLogger.forEnclosingClass()
+    const val MSG_SCRIPT_RUN_TOO_LONG = "One script execution took too much time"
   }
 }

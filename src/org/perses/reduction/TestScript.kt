@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,39 +20,36 @@ import com.google.common.flogger.FluentLogger
 import org.perses.program.ScriptFile
 import org.perses.util.Shell
 import org.perses.util.TimeSpan
-import java.io.File
+import org.perses.util.Util
+import java.nio.file.Files
+import java.nio.file.Path
 
 /** Represents a test script, that specifies the property to preserve during reduction.  */
-class TestScript(val scriptFile: File, private val scriptTemplate: ScriptFile) {
+class TestScript(val scriptFile: Path, private val scriptTemplate: ScriptFile) {
 
   /** @return true if the test script passes.
    */
-  fun test(): TestResult {
+  fun test(): PropertyTestResult {
     val timeSpanBuilder = TimeSpan.Builder.start(System.currentTimeMillis())
     val output = Shell.run(
-      "${scriptTemplate.shebang}  ${scriptFile.name}",
-      scriptFile.parentFile,
+      "${scriptTemplate.shebang}  ${scriptFile.fileName}",
+      scriptFile.parent,
       captureOutput = false,
       environment = Shell.CURRENT_ENV
     )
     logger.atFine().log("test script stdout: %s", output.stdout)
     logger.atFine().log("test script stderr: %s", output.stderr)
     val timeSpan = timeSpanBuilder.end(System.currentTimeMillis())
-    return TestResult(output.exitCode, timeSpan.elapsedTimeInMillis)
+    return PropertyTestResult(output.exitCode, timeSpan.elapsedTimeInMillis)
   }
 
-  /** The result of a test, including runtime information, i.e., time, exit code.  */
-  class TestResult(val exitCode: Int, val elapsedMilliseconds: Long) {
-
-    val isPass: Boolean
-      get() = exitCode == 0
-
-    val isFail: Boolean
-      get() = !isPass
-
-    companion object {
-      val TRUE_RESULT = TestResult(exitCode = 0, elapsedMilliseconds = 0)
-    }
+  fun runAndCaptureOutput(): Shell.CmdOutput {
+    return Shell.run(
+      "${scriptTemplate.shebang}  ${scriptFile.fileName}",
+      scriptFile.parent,
+      captureOutput = true,
+      environment = Shell.CURRENT_ENV
+    )
   }
 
   companion object {
@@ -61,6 +58,7 @@ class TestScript(val scriptFile: File, private val scriptTemplate: ScriptFile) {
 
   init {
     scriptTemplate.writeTo(scriptFile)
-    check(scriptFile.setExecutable(true)) { "Fail to set executable bit for $scriptFile" }
+    Util.setExecutable(scriptFile)
+    check(Files.isExecutable(scriptFile)) { "Fail to set executable bit for $scriptFile" }
   }
 }

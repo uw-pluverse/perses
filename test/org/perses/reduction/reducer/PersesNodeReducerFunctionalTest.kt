@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,6 +20,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.reduction.AbstractReducerFunctionalTest
+import java.nio.file.Paths
 
 @RunWith(JUnit4::class)
 class PersesNodeReducerFunctionalTest : AbstractReducerFunctionalTest() {
@@ -41,7 +42,12 @@ class PersesNodeReducerFunctionalTest : AbstractReducerFunctionalTest() {
     runCTestSubject(
       "test_data/creduce_example",
       PersesNodePrioritizedDfsReducer.META,
-      { cmd -> cmd.outputRefiningFlags.callCReduce = true },
+      { cmd ->
+        cmd.outputRefiningFlags.callCReduce = true
+        cmd.outputRefiningFlags.creduceCmd =
+          Paths.get("test/org/perses/reduction/reducer/dummy-creduce.sh")
+            .toAbsolutePath().toString()
+      },
       """
         | int printf(const char*, ...);
         | int main() {

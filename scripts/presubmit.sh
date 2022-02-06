@@ -4,22 +4,23 @@ set -o nounset
 set -o pipefail
 set -o errexit
 
-if [[ ! -e "WORKSPACE" ]] ; then
-  echo "ERROR: This script should be run in the root folder of the project."
-  exit 1
-fi
+source "./scripts/constants.sh" || exit 1
 
-./scripts/check_prerequisite.sh || exit 1
+./scripts/cleanup.sh || exit 1
 
-./scripts/check_copyright.sh || exit 1
+bazel test ${ALL_BAZEL_BUILD_TARGETS_STRING} \
+    //benchmark:run_benchmark_test\
+    //benchmark:analyze_cache_profiling_test\
+    //benchmark:snapshot_generator_test || exit 1
 
-./scripts/format_bazel_files.sh || exit 1
+# Run the build later, because test takes more time and needs parallelism.
+# Note that `bazel build` builds more targets than `bazel test`
+bazel build ${ALL_BAZEL_BUILD_TARGETS_STRING} || exit 1
 
-./scripts/run_ktlint.sh || exit 1
-
-bazel test \
-    //test/... \
-    //copyright/... \
-    //version/... 
+./scripts/update_golden_files.sh || exit 1
 
 "$@"
+
+echo "============================================"
+echo "The presubmit finished successfully."
+echo "============================================"

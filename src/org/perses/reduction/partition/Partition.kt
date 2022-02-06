@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,7 +17,7 @@
 package org.perses.reduction.partition
 
 import com.google.common.base.MoreObjects
-import org.perses.tree.spar.AbstractSparTreeNode
+import org.perses.spartree.AbstractSparTreeNode
 import org.perses.util.Util
 import java.util.stream.Stream
 
@@ -57,7 +57,9 @@ class Partition(private val nodes: ArrayList<AbstractSparTreeNode>) {
   }
 
   fun removePermanentlyDeletedNodes() {
-    Util.removeElementsFromList(nodes) { it.isPermanentlyDeleted }
+    Util.removeElementsFromList(nodes) { _, node ->
+      node.isPermanentlyDeleted
+    }
   }
 
   fun split(): Array<Partition> {

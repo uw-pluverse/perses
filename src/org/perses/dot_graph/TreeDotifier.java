@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,17 +18,16 @@
 package org.perses.dot_graph;
 
 import com.google.common.flogger.FluentLogger;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.TerminalNode;
-import org.perses.antlr.ParseTreeWithParser;
-import org.perses.grammar.ParserFacadeFactory;
-import org.perses.program.SourceFile;
-import org.perses.tree.spar.AbstractSparTreeNode;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.TerminalNode;
+import org.perses.antlr.ParseTreeWithParser;
+import org.perses.grammar.SingleParserFacadeFactory;
+import org.perses.program.SourceFile;
+import org.perses.spartree.AbstractSparTreeNode;
 
 public class TreeDotifier {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
@@ -54,11 +53,13 @@ public class TreeDotifier {
                   return "(*)";
                 case OPTIONAL:
                   return "(?)";
+                case ALT_BLOCKS:
+                  return "(|)" + node.getAntlrRule().getRuleName();
                 case TOKEN:
                   return node.asLexerRule().getToken().getText();
                 case OTHER_RULE:
-                  assert node.getAntlrRule().isPresent();
-                  return node.getAntlrRule().get().getRuleName();
+                  assert node.getAntlrRule() != null;
+                  return node.getAntlrRule().getRuleName();
                 default:
                   throw new AssertionError("Cannot reach here");
               }
@@ -71,10 +72,15 @@ public class TreeDotifier {
 
   public static void dotifyAntlrParseTree(File sourceFile, File pdfFile) {
     try {
-      ParserFacadeFactory factory = ParserFacadeFactory.builderWithBuiltinLanguages().build();
-      final SourceFile source = new SourceFile(sourceFile, factory.computeLanguageKind(sourceFile));
+      SingleParserFacadeFactory factory =
+          SingleParserFacadeFactory.builderWithBuiltinLanguages(
+                  SingleParserFacadeFactory.IDENTITY_CUSTOMIZER)
+              .build();
+      final SourceFile source =
+          new SourceFile(
+              sourceFile.toPath(), factory.computeLanguageKindWithFileName(sourceFile.toPath()));
       final ParseTreeWithParser root =
-          factory.createParserFacade(source.getLanguageKind()).parseFile(sourceFile);
+          factory.createParserFacade(source.getLanguageKind()).parseFile(sourceFile.toPath());
       convertTreeToDotGraph(root.getTree())
           .dotify(pdfFile, DEFAULT_ANTLR_PARSE_TREE_LABEL_PROVIDER);
     } catch (Exception e) {

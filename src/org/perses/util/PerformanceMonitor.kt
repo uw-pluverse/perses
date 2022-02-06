@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,9 +17,9 @@
 package org.perses.util
 
 import com.google.common.collect.MapMaker
+import com.google.common.flogger.FluentLogger
 import java.util.concurrent.ConcurrentMap
 import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -31,7 +31,7 @@ class PerformanceMonitor<T>(
   private val actionOnLongRunningTask: IActionOnLongRunningTask<T>
 ) : AutoCloseable {
 
-  private val thread: ExecutorService = Executors.newFixedThreadPool(1)
+  private val thread: ExecutorService = DaemonThreadPool.create(numThreads = 1)
   private val durationList = ThreadSafeDurationStat()
 
   private val runningTaskToStartTimeMap: ConcurrentMap<T, Long> = MapMaker()
@@ -75,8 +75,20 @@ class PerformanceMonitor<T>(
   }
 
   override fun close() {
-    thread.shutdownNow()
-    thread.awaitTermination(2, TimeUnit.SECONDS)
+    try {
+      var times = 0
+      do {
+        thread.shutdownNow()
+        if (times++ > 0) {
+          logger.ktInfo { "Attempting to shutdown $this. This is the $times-th time." }
+        }
+      } while (!thread.awaitTermination(2, TimeUnit.SECONDS))
+      thread.shutdownNow()
+      thread.awaitTermination(2, TimeUnit.SECONDS)
+    } catch (e: Throwable) {
+      // ignore
+      e.printStackTrace()
+    }
   }
 
   fun isClosed() = thread.isTerminated
@@ -110,5 +122,9 @@ class PerformanceMonitor<T>(
 
   interface IActionOnLongRunningTask<T> {
     fun onLongRunningTask(task: T, duration: Int, threshold: Int)
+  }
+
+  companion object {
+    val logger = FluentLogger.forEnclosingClass()
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,13 +16,13 @@
  */
 package org.perses.reduction
 
+import com.google.common.collect.ImmutableList
+
 /** Annotation for a reducer.  */
-abstract class ReducerAnnotation {
-  /** The short name of the reducer.  */
-  abstract fun shortName(): String
+// TODO: test the equals and hashcode function.
+abstract class ReducerAnnotation : AbstractReducerNameAndDesc() {
 
-  /** The description fo the reducer.  */
-  abstract fun description(): String
+  abstract fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer>
 
-  abstract fun create(reducerContext: ReducerContext): AbstractReducer
+  abstract val deterministic: Boolean
 }

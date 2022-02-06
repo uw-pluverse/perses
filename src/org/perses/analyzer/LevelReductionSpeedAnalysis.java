@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,6 +19,13 @@ package org.perses.analyzer;
 
 import com.google.common.base.Preconditions;
 import com.google.common.flogger.FluentLogger;
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
@@ -26,17 +33,11 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.perses.listener.IProfileEvent;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.util.ArrayList;
-import java.util.List;
-
 /** Created by neo on 12/26/16. */
 public class LevelReductionSpeedAnalysis extends AbstractHddPerformanceAnalysis {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
-  public LevelReductionSpeedAnalysis(File eventFile) {
+  public LevelReductionSpeedAnalysis(Path eventFile) {
     super(eventFile);
   }
 
@@ -46,8 +47,8 @@ public class LevelReductionSpeedAnalysis extends AbstractHddPerformanceAnalysis 
       System.exit(1);
     }
 
-    final File eventFile = new File(args[0]);
-    if (!eventFile.exists() || !eventFile.isFile()) {
+    final Path eventFile = Paths.get(args[0]);
+    if (Files.notExists(eventFile) || !Files.isRegularFile(eventFile)) {
       System.err.println("The event file does not exist: " + eventFile);
       System.exit(1);
     }
@@ -56,11 +57,12 @@ public class LevelReductionSpeedAnalysis extends AbstractHddPerformanceAnalysis 
 
   private void exportChart(JFreeChart chart, String fileNameSuffix) {
     try {
-      File file =
-          new File(
-              this.eventFile.getParentFile(), this.eventFile.getName() + fileNameSuffix + ".jpg");
+      Path file =
+          this.eventFile
+              .getParent()
+              .resolve(this.eventFile.getFileName().toString() + fileNameSuffix + ".jpg");
       logger.atInfo().log("Exporting chart to %s", file);
-      ChartUtils.saveChartAsJPEG(file, chart, 1920, 1080);
+      ChartUtils.saveChartAsJPEG(file.toFile(), chart, 1920, 1080);
     } catch (IOException e) {
       throw new UncheckedIOException(e);
     }

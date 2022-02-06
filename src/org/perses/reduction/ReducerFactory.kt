@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,17 +21,17 @@ import com.google.common.collect.ImmutableCollection
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableSet
-import org.perses.reduction.reducer.ConcurrentTokenSlicer
-import org.perses.reduction.reducer.HDDReducer
 import org.perses.reduction.reducer.PersesNodeBfsReducer
 import org.perses.reduction.reducer.PersesNodeDfsReducer
 import org.perses.reduction.reducer.PersesNodePrioritizedBfsReducer
 import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
-import org.perses.reduction.reducer.TokenSlicer
 import org.perses.reduction.reducer.TreeSlicer
-import java.util.Comparator
-import java.util.Optional
-import java.util.function.Function
+import org.perses.reduction.reducer.hdd.HDDReducer
+import org.perses.reduction.reducer.hdd.PristineHDDReducer
+import org.perses.reduction.reducer.token.ConcurrentTokenSlicer
+import org.perses.reduction.reducer.token.DeltaDebuggingReducer
+import org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer
+import org.perses.reduction.reducer.token.TokenSlicer
 
 /** Factory to create various reducers.  */
 object ReducerFactory {
@@ -40,18 +40,23 @@ object ReducerFactory {
   private val REDUCTION_ALGs = ImmutableSet.builder<ReducerAnnotation>()
     .add(HDDReducer.META)
     .add(TokenSlicer.META)
-    .add(ConcurrentTokenSlicer.META)
+    .addAll(ConcurrentTokenSlicer.REDUCER_ANNOTATIONS)
+    .add(ConcurrentTokenSlicer.COMPOSITE_REDUCER)
+    .addAll(LineBasedConcurrentTokenSlicer.REDUCER_ANNOTATIONS)
+    .add(LineBasedConcurrentTokenSlicer.COMPOSITE_REDUCER)
     .add(TreeSlicer.META)
     .add(PersesNodeBfsReducer.META)
     .add(PersesNodePrioritizedBfsReducer.META)
     .add(PersesNodeDfsReducer.META)
+    .add(PristineHDDReducer.META)
+    .add(DeltaDebuggingReducer.META)
     .add(DEFAULT_REDUCTION_ALG)
     .build()
     .stream()
     .collect(
       ImmutableMap.toImmutableMap(
-        Function { obj: ReducerAnnotation -> obj.shortName() },
-        Functions.identity<ReducerAnnotation>()
+        { obj: ReducerAnnotation -> obj.shortName() },
+        Functions.identity()
       )
     )
 
@@ -64,8 +69,8 @@ object ReducerFactory {
     }
 
   @JvmStatic
-  fun getAnnotationWithName(algorithmName: String): Optional<ReducerAnnotation> {
-    return Optional.ofNullable(REDUCTION_ALGs[algorithmName])
+  fun getAnnotationWithName(algorithmName: String): ReducerAnnotation? {
+    return REDUCTION_ALGs[algorithmName]
   }
 
   @JvmStatic
@@ -78,10 +83,10 @@ object ReducerFactory {
   @JvmStatic
   fun getReductionAlgorithm(reducerShortName: String): ReducerAnnotation {
     val annotation = getAnnotationWithName(reducerShortName)
-    check(annotation.isPresent) {
+    requireNotNull(annotation) {
       "Cannot find annotation for the name $reducerShortName"
     }
-    return annotation.get()
+    return annotation
   }
 
   @JvmStatic

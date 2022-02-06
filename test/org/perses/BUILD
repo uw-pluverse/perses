@@ -4,50 +4,49 @@ package(default_visibility = [
     "//test/org/perses:__subpackages__",
 ])
 
-load("//test/org/perses:test.bzl", "golden_test")
+load("//test/org/perses:test.bzl", "copy", "golden_test")
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 
-java_library(
+kt_jvm_library(
     name = "test_util",
-    srcs = ["TestUtility.java"],
+    srcs = ["TestUtility.kt"],
     data = [
         "//test_data/c_programs:clang_testsuite",
         "//test_data/c_programs:gcc_testsuite",
         "//test_data/go_programs:go_testsuite",
         "//test_data/java_programs:openjdk_testsuite",
         "//test_data/rust_programs:rust_testsuite",
+        "//test_data/solidity_programs",
     ],
     visibility = ["//visibility:public"],
     deps = [
-        ":truth",
+        "//:guava",
+        "//:truth",
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
-        "//src/org/perses/grammar/c:c_parser_facade",
         "//src/org/perses/grammar/c:language_kind",
-        "//src/org/perses/grammar/java:java_parser_facade",
+        "//src/org/perses/grammar/c:optc_parser_facade",
         "//src/org/perses/grammar/java:language_kind",
+        "//src/org/perses/grammar/java:parser_facade",
+        "//src/org/perses/grammar/php:language_kind",
+        "//src/org/perses/grammar/php:parser_facade",
+        "//src/org/perses/grammar/python3:language_kind",
+        "//src/org/perses/grammar/python3:parser_facade",
         "//src/org/perses/grammar/scala:language_kind",
-        "//src/org/perses/grammar/scala:pnfscala_parser_facade",
+        "//src/org/perses/grammar/scala:parser_facade",
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
-        "//src/org/perses/tree/spar",
-        "@maven//:com_google_flogger_flogger_system_backend",
-        "@maven//:com_google_guava_guava",
+        "//src/org/perses/spartree",
         "@maven//:org_antlr_antlr4",
         "@maven//:org_antlr_antlr4_runtime",
     ],
 )
 
-java_library(
-    name = "truth",
-    visibility = ["//visibility:public"],
-    exports = [
-        "@maven//:com_google_truth_truth",
-        "@maven//:com_googlecode_java_diff_utils_diffutils",
-    ],
-)
-
-exports_files(["diff.sh"])
+exports_files([
+    "copy.sh",
+    "diff.sh",
+])
 
 genrule(
     name = "gen_token_counter_file",
@@ -120,4 +119,49 @@ sh_test(
     srcs = ["loging_level_should_be_configurable.sh"],
     args = ["$(location //test_data/delta_1:log_with_level_below_INFO)"],
     data = ["//test_data/delta_1:log_with_level_below_INFO"],
+)
+
+kt_jvm_test(
+    name = "PersesConstantsTest",
+    srcs = ["PersesConstantsTest.kt"],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//src/org/perses:perses_contants",
+    ],
+)
+
+PERSES_BIN = "//src/org/perses:perses_deploy.jar"
+
+copy(
+    name = "copy_perses_deploy_jar",
+    src = PERSES_BIN,
+    dest = "perses_deploy.jar",
+)
+
+java_import(
+    name = "perses_deploy_jar",
+    jars = [
+        "perses_deploy.jar",
+    ],
+)
+
+kt_jvm_test(
+    name = "ClassNotFoundTestCase",
+    srcs = ["ClassNotFoundTestCase.kt"],
+    deps = [
+        ":perses_deploy_jar",
+        "//:truth",
+    ],
+)
+
+sh_test(
+    name = "informative_error_message_should_be_printed_when_file_cannot_be_parsed",
+    srcs = ["informative_error_message_in_case_of_unsupported_language.sh"],
+    args = [
+        "$(location %s)" % PERSES_BIN,
+    ],
+    data = [
+        PERSES_BIN,
+    ],
 )

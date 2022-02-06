@@ -2,7 +2,7 @@ load("//benchmark:benchmark.bzl", "reduction_golden_test", "sanity_test")
 
 sanity_test(
     name = "sanity_test",
-    source_file = "t.c",
+    source_files = ["t.c"],
     test_script = "r.sh",
 )
 

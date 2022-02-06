@@ -4,6 +4,6 @@ load("//benchmark:benchmark.bzl", "sanity_test")
 
 sanity_test(
     name = "sanity_test",
-    source_file = "small.c",
+    source_files = ["small.c"],
     test_script = "r.sh",
 )

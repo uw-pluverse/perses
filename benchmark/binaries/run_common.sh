@@ -30,7 +30,7 @@ export REDUCTION_STAT_FILE
 
 
 summarize_results () {
-  REDUCED_TOKEN_COUNT=$("${BINARY_DIR}/run_token_counter.sh" "${REDUCED_TOKEN_FILE}")
+  REDUCED_TOKEN_COUNT=$("${BINARY_DIR}/run_token_counter.sh" "${TMP_SOURCE_FILE}")
 
   if [ -z "${COMPLETE_STAT_FILE}" ]; then
     echo "${REDUCTION_STAT_FILE} ${TEST_SCRIPT} ${SOURCE_FILE}" \

@@ -1,0 +1,1079 @@
+======================Reduction starts======================
+
+The spar tree is the following.
+translationUnit {id=1}
+|___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
+    |___aux_rule__declaration_3 {id=338,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+    |   |___(+) {id=339,slot_type=declarationSpecifiers}
+    |   |   |___Token:int {id=377,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+    |   |___(?) {id=340,slot_type=optional__declaration_2}
+    |   |   |___directDeclarator {id=345,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
+    |   |       |___Token:printf {id=374,slot_type=[aux_rule__directDeclarator_8,Identifier]}
+    |   |       |___(*) {id=347,slot_type=kleene_star__directDeclarator_6}
+    |   |           |___aux_rule__directDeclarator_14 {id=349,slot_type=[aux_rule__directDeclarator_7,aux_rule__directDeclarator_14]}
+    |   |               |___Token:( {id=350,slot_type=LeftParen}
+    |   |               |___parameterTypeList {id=353,slot_type=[altnt_block__directDeclarator_10,parameterTypeList]}
+    |   |               |   |___parameterDeclaration {id=359,slot_type=[parameterList,parameterDeclaration]}
+    |   |               |   |   |___(+) {id=360,slot_type=declarationSpecifiers}
+    |   |               |   |   |   |___Token:const {id=373,slot_type=[declarationSpecifier,typeQualifier,Const]}
+    |   |               |   |   |   |___Token:char {id=371,slot_type=[declarationSpecifier,typeSpecifier,Char]}
+    |   |               |   |   |___(?) {id=362,slot_type=[altnt_block__parameterDeclaration_2,optional__typeName_1]}
+    |   |               |   |       |___Token:* {id=367,slot_type=[abstractDeclarator,pointer,altnt_block__pointer_8,Star]}
+    |   |               |   |___(?) {id=355,slot_type=optional__parameterTypeList_2}
+    |   |               |       |___aux_rule__parameterTypeList_1 {id=356,slot_type=aux_rule__parameterTypeList_1}
+    |   |               |           |___Token:, {id=357,slot_type=Comma}
+    |   |               |           |___Token:... {id=358,slot_type=Ellipsis}
+    |   |               |___Token:) {id=352,slot_type=RightParen}
+    |   |___Token:; {id=341,slot_type=Semi}
+    |___functionDefinition {id=5,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=6,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=333,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=336,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+        |___directDeclarator {id=286,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=332,slot_type=[aux_rule__directDeclarator_8,Identifier]}
+        |   |___(*) {id=288,slot_type=kleene_star__directDeclarator_6}
+        |       |___aux_rule__directDeclarator_14 {id=290,slot_type=[aux_rule__directDeclarator_7,aux_rule__directDeclarator_14]}
+        |           |___Token:( {id=291,slot_type=LeftParen}
+        |           |___parameterList {id=295,slot_type=[altnt_block__directDeclarator_10,parameterTypeList,parameterList]}
+        |           |   |___(+) {id=323,slot_type=[parameterDeclaration,declarationSpecifiers]}
+        |           |   |   |___Token:int {id=331,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+        |           |   |   |___Token:argc {id=329,slot_type=[declarationSpecifier,typeSpecifier,typedefName,Identifier]}
+        |           |   |___(*) {id=297,slot_type=kleene_star__parameterList_1}
+        |           |       |___aux_rule__parameterList_2 {id=298,slot_type=aux_rule__parameterList_2}
+        |           |           |___Token:, {id=299,slot_type=Comma}
+        |           |           |___parameterDeclaration {id=300,slot_type=parameterDeclaration}
+        |           |               |___(+) {id=301,slot_type=declarationSpecifiers}
+        |           |               |   |___Token:char {id=322,slot_type=[declarationSpecifier,typeSpecifier,Char]}
+        |           |               |___declarator {id=303,slot_type=[altnt_block__parameterDeclaration_2,declarator]}
+        |           |                   |___(?) {id=304,slot_type=optional__declarator_1}
+        |           |                   |   |___Token:* {id=319,slot_type=[pointer,altnt_block__pointer_8,Star]}
+        |           |                   |___directDeclarator {id=305,slot_type=directDeclarator}
+        |           |                       |___Token:argv {id=315,slot_type=[aux_rule__directDeclarator_8,Identifier]}
+        |           |                       |___(*) {id=307,slot_type=kleene_star__directDeclarator_6}
+        |           |                           |___aux_rule__directDeclarator_13 {id=309,slot_type=[aux_rule__directDeclarator_7,aux_rule__directDeclarator_13]}
+        |           |                               |___Token:[ {id=310,slot_type=LeftBracket}
+        |           |                               |___Token:] {id=312,slot_type=RightBracket}
+        |           |___Token:) {id=293,slot_type=RightParen}
+        |___compoundStatement {id=8,slot_type=compoundStatement}
+            |___Token:{ {id=9,slot_type=LeftBrace}
+            |___(?) {id=10,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=13,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___aux_rule__declaration_3 {id=252,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=253,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=285,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+            |       |   |___(?) {id=254,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=257,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:a {id=282,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_8,Identifier]}
+            |       |   |       |___(?) {id=259,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=260,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=261,slot_type=Assign}
+            |       |   |               |___Token:1 {id=279,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=255,slot_type=Semi}
+            |       |___aux_rule__declaration_3 {id=207,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=208,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=250,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+            |       |   |___(?) {id=209,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=212,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:b {id=247,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_8,Identifier]}
+            |       |   |       |___(?) {id=214,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=215,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=216,slot_type=Assign}
+            |       |   |               |___additiveExpression {id=228,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+            |       |   |                   |___Token:a {id=244,slot_type=[multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |                   |___(*) {id=230,slot_type=kleene_star__additiveExpression_1}
+            |       |   |                       |___aux_rule__additiveExpression_2 {id=231,slot_type=aux_rule__additiveExpression_2}
+            |       |   |                           |___Token:+ {id=239,slot_type=[altnt_block__additiveExpression_3,Plus]}
+            |       |   |                           |___Token:1 {id=238,slot_type=[multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=210,slot_type=Semi}
+            |       |___expressionStatement {id=140,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
+            |       |   |___(?) {id=141,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=158,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression]}
+            |       |   |       |___Token:printf {id=205,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=160,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=162,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=163,slot_type=LeftParen}
+            |       |   |               |___(?) {id=164,slot_type=optional__postfixExpression_1}
+            |       |   |               |   |___expression {id=166,slot_type=expression}
+            |       |   |               |       |___(+) {id=203,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |       |   |               |       |   |___Token:"%d\n" {id=204,slot_type=StringLiteral}
+            |       |   |               |       |___(*) {id=168,slot_type=kleene_star__expression_1}
+            |       |   |               |           |___aux_rule__expression_2 {id=169,slot_type=aux_rule__expression_2}
+            |       |   |               |               |___Token:, {id=170,slot_type=Comma}
+            |       |   |               |               |___Token:b {id=187,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |               |___Token:) {id=165,slot_type=RightParen}
+            |       |   |___Token:; {id=142,slot_type=Semi}
+            |       |___expressionStatement {id=93,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
+            |       |   |___(?) {id=94,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=111,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression]}
+            |       |   |       |___Token:printf {id=138,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=113,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=115,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=116,slot_type=LeftParen}
+            |       |   |               |___(?) {id=117,slot_type=optional__postfixExpression_1}
+            |       |   |               |   |___(+) {id=136,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |       |   |               |       |___Token:"hello\n" {id=137,slot_type=StringLiteral}
+            |       |   |               |___Token:) {id=118,slot_type=RightParen}
+            |       |   |___Token:; {id=95,slot_type=Semi}
+            |       |___expressionStatement {id=46,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
+            |       |   |___(?) {id=47,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=64,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression]}
+            |       |   |       |___Token:printf {id=91,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=66,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=68,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=69,slot_type=LeftParen}
+            |       |   |               |___(?) {id=70,slot_type=optional__postfixExpression_1}
+            |       |   |               |   |___(+) {id=89,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |       |   |               |       |___Token:"world\n" {id=90,slot_type=StringLiteral}
+            |       |   |               |___Token:) {id=71,slot_type=RightParen}
+            |       |   |___Token:; {id=48,slot_type=Semi}
+            |       |___jumpStatement {id=21,slot_type=[aux_rule__blockItemList_2,statement,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=24,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=25,slot_type=Return}
+            |           |   |___(?) {id=26,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:0 {id=44,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |           |___Token:; {id=23,slot_type=Semi}
+            |___Token:} {id=11,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=56==================
+
+The current best program is the following
+
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]remove whole except first
+    int printf(const char*, ...);
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=5}
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_plus]dd@1
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 1 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 2 from 56 to 46
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=46==================
+
+The current best program is the following
+
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    int a = 1;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    int b = a + 1;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=46==================
+
+The current best program is the following
+
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=46==================
+
+The current best program is the following
+
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    int main (int argc, char *argv[]) {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+=================Reducing node 13, size=46==================
+
+The current best program is the following
+
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=13}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]remove whole except first
+    int main (int argc, char *argv[]) {
+         int a = 1;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@3
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_plus]dd@1
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 5 --> 5.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 6
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus]dd@1
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_plus]dd@1
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 6 --> 5.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 3
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_plus]dd@3
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+4 entries are removed: 5 --> 1.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 13 from 46 to 19
+------------------------------------------------------------
+
+
+=================Reducing node 286, size=19=================
+
+The current best program is the following
+
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main                          {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    int           argc                {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 1 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 286 from 19 to 9
+------------------------------------------------------------
+
+
+==================Reducing node 46, size=9==================
+
+The current best program is the following
+
+    int main                          {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    int main                          {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 46
+------------------------------------------------------------
+
+
+==================Reducing node 47, size=9==================
+
+The current best program is the following
+
+    int main                          {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    int main                          {
+                      ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 47
+------------------------------------------------------------
+
+
+==================Reducing node 64, size=9==================
+
+The current best program is the following
+
+    int main                          {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=64}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    int main                          {
+     printf           ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    int main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 3 --> 2.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 5
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 64 from 9 to 6
+------------------------------------------------------------
+
+
+=================Reducing node 332, size=6==================
+
+The current best program is the following
+
+    int main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 332
+------------------------------------------------------------
+
+
+==================Reducing node 89, size=6==================
+
+The current best program is the following
+
+    int main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main                          {
+                      ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 89
+------------------------------------------------------------
+
+
+==================Reducing node 90, size=6==================
+
+The current best program is the following
+
+    int main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 90
+------------------------------------------------------------
+
+
+==================Reducing node 48, size=6==================
+
+The current best program is the following
+
+    int main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 48
+------------------------------------------------------------
+
+
+==================Reducing node 11, size=6==================
+
+The current best program is the following
+
+    int main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=6===================
+
+The current best program is the following
+
+    int main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=6===================
+
+The current best program is the following
+
+    int main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_star]dd@1
+    main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+2 entries are removed: 2 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 6 from 6 to 5
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=5===================
+
+The current best program is the following
+
+    main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=5===================
+
+The current best program is the following
+
+    main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 4
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=5===================
+
+The current best program is the following
+
+    main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 6
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=5===================
+
+The current best program is the following
+
+    main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    main                          {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+==================Reducing node 11, size=5==================
+
+The current best program is the following
+
+    main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=11}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+==================Reducing node 14, size=5==================
+
+The current best program is the following
+
+    main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    main                          {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 14
+------------------------------------------------------------
+
+
+==================Reducing node 38, size=5==================
+
+The current best program is the following
+
+    main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 38
+------------------------------------------------------------
+
+
+==================Reducing node 16, size=5==================
+
+The current best program is the following
+
+    main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 16
+------------------------------------------------------------
+
+
+==================Reducing node 15, size=5==================
+
+The current best program is the following
+
+    main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    main                          {
+                      ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+==================Reducing node 34, size=5==================
+
+The current best program is the following
+
+    main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=34}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 34
+------------------------------------------------------------
+
+
+==================Reducing node 35, size=5==================
+
+The current best program is the following
+
+    main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 35
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=5===================
+
+The current best program is the following
+
+    main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=5===================
+
+The current best program is the following
+
+    main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 7
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    main                          {
+                      ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: token slicer@1
+    main                          {
+            "world\n" ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: token slicer@1
+    main                          {
+            "world\n"
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: token slicer@1
+    main
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: token slicer@1
+    {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    main                          {
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: token slicer@2
+    main                          {
+            "world\n"
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: token slicer@2
+    main
+                      ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: token slicer@2
+    "world\n" ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: token slicer@3
+    main                          {
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: token slicer@3
+    main
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: token slicer@3
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: token slicer@4
+    main
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: token slicer@4
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: token slicer@5
+------------------------------------------------------------
+
+
+#test success = 7
+#test failure = 25
+#test result cache hits = 5
+#test execution cancelled = 1
+#node edit action set cache hits = 5

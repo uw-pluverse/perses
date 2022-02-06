@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,14 +19,14 @@ package org.perses.reduction.reducer
 import org.perses.reduction.ReductionListenerManager
 import org.perses.reduction.TreeEditWithItsResult
 import org.perses.reduction.partition.Partition
-import org.perses.tree.spar.AbstractNodeActionSetCache
-import org.perses.tree.spar.AbstractSparTreeEdit
+import org.perses.spartree.AbstractNodeActionSetCache
+import org.perses.spartree.AbstractSparTreeEdit
 import java.util.ArrayDeque
 
 class DfsDeltaDebugger(
   listenerManager: ReductionListenerManager,
   nodeActionSetCache: AbstractNodeActionSetCache,
-  treeEditTester: (AbstractSparTreeEdit) -> TreeEditWithItsResult?
+  treeEditTester: (AbstractSparTreeEdit<*>) -> TreeEditWithItsResult?
 ) :
   AbstractSpecialDeltaDebugger(listenerManager, nodeActionSetCache, treeEditTester) {
 

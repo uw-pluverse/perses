@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,10 +19,6 @@ package org.perses.antlr;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.google.common.collect.ImmutableList;
-import org.perses.grammar.c.PnfCParserFacade;
-import org.perses.grammar.go.PnfGoParserFacade;
-import org.perses.grammar.scala.PnfScalaParserFacade;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -30,6 +26,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Comparator;
+import org.perses.grammar.c.PnfCParserFacade;
+import org.perses.grammar.go.PnfGoParserFacade;
+import org.perses.grammar.scala.PnfScalaParserFacade;
 
 public class GrammarHierarchyDumpMain {
 

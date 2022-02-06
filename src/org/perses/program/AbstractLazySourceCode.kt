@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,8 +18,11 @@ package org.perses.program
 
 import org.perses.util.FastStringBuilder
 import java.io.Writer
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files
+import java.nio.file.Path
 
-internal abstract class AbstractLazySourceCode {
+abstract class AbstractLazySourceCode {
 
   val sourceCode: String by lazy {
     stringBuilder.toString()
@@ -30,6 +33,11 @@ internal abstract class AbstractLazySourceCode {
   }
 
   fun writeTo(writer: Writer) = stringBuilder.writeToWriter(writer)
+
+  fun writeTo(file: Path) =
+    Files.newBufferedWriter(file, StandardCharsets.UTF_8).use {
+      writeTo(it)
+    }
 
   protected abstract fun computeStringBuilder(): FastStringBuilder
 }

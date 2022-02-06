@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,41 +21,40 @@ import com.google.common.collect.ImmutableSet
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
 import org.perses.util.ShellCommandOnPath
+import org.perses.util.toImmutableList
 
 object LanguageRust : LanguageKind(
   name = "rust",
   extensions = ImmutableSet.of("rs"),
   defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT,
+  origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
   allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.COMPACT_ORIG_FORMAT,
     EnumFormatControl.ORIG_FORMAT
   ),
-  defaultFormaterCommand = createPotentialCodeFormatterList(
-    ShellCommandOnPath.tryCreating("rustfmt"),
-    ShellCommandOnPath.tryCreating("rustfmt", "+1.47.0"),
-    ShellCommandOnPath.tryCreating("rustfmt", "+1.46.0"),
-    ShellCommandOnPath.tryCreating("rustfmt", "+1.45.0"),
-    ShellCommandOnPath.tryCreating("rustfmt", "+1.44.0"),
-    ShellCommandOnPath.tryCreating("rustfmt", "+1.43.0"),
-    ShellCommandOnPath.tryCreating("rustfmt", "+1.42.0"),
-    ShellCommandOnPath.tryCreating("rustfmt", "+1.41.0"),
-    ShellCommandOnPath.tryCreating("rustfmt", "+1.40.0"),
-    ShellCommandOnPath.tryCreating("rustfmt", "+1.39.0"),
-    ShellCommandOnPath.tryCreating("rustfmt", "+1.38.0"),
-    ShellCommandOnPath.tryCreating("rustfmt", "+1.37.0"),
-    ShellCommandOnPath.tryCreating("rustfmt", "+1.36.0"),
-    ShellCommandOnPath.tryCreating("rustfmt", "+1.35.0"),
-    ShellCommandOnPath.tryCreating("rustfmt", "+1.34.0"),
-    ShellCommandOnPath.tryCreating("rustfmt", "+1.33.0"),
-    ShellCommandOnPath.tryCreating("rustfmt", "+1.32.0"),
-    ShellCommandOnPath.tryCreating("rustfmt", "+1.31.0"),
-    ShellCommandOnPath.tryCreating("rustfmt", "+1.30.0")
-  )
+  defaultFormatterCommands = sequence {
+    val rustFmtName = "rustfmt"
+    yield(ShellCommandOnPath.tryCreating(rustFmtName))
+    for (versionString in allStableVersionStrings) {
+      yield(ShellCommandOnPath.tryCreating(rustFmtName, "+$versionString"))
+    }
+  }.filter { it != null }.map { it!! }.toImmutableList()
 ) {
 
-  override fun getDefaultWorkingFormatter(): ShellCommandOnPath? {
-    return defaultFormaterCommand.firstOrNull {
-      it.runWith(ImmutableList.of("--help")).exitCode == 0
-    }
+  private val firstWorkingFormatter = defaultFormatterCommands.firstOrNull {
+    it.runWith(ImmutableList.of("--help")).exitCode == 0
   }
+
+  override fun getDefaultWorkingFormatter() = firstWorkingFormatter
+
+  val stableVersionStrings: ImmutableList<String> = allStableVersionStrings
 }
+
+private val allStableVersionStrings: ImmutableList<String> = ImmutableList.builder<String>()
+  .apply {
+    (57 downTo 30).forEach { major ->
+      (2 downTo 0).forEach { minor ->
+        add("1.$major.$minor")
+      }
+    }
+  }.build()

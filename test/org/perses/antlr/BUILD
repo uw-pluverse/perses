@@ -1,4 +1,54 @@
+package(
+    default_visibility = [
+        "//antlropt/test:__subpackages__",
+        "//antlrrdc/test:__subpackages__",
+        "//test/org/perses:__subpackages__",
+    ],
+)
+
 load("//test/org/perses:test.bzl", "golden_test")
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
+
+kt_jvm_test(
+    name = "ParseTreeUtilTest",
+    srcs = [
+        "ParseTreeUtilTest.kt",
+    ],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/antlr:parse_tree_util",
+        "@maven//:org_antlr_antlr4",
+    ],
+)
+
+kt_jvm_test(
+    name = "AntlrToolWrapperTest",
+    srcs = ["AntlrToolWrapperTest.kt"],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//antlropt/src/org/perses/antlr/util:antlr_tool_wrapper",
+        "//src/org/perses/util",
+        "@maven//:org_antlr_antlr4",
+    ],
+)
+
+kt_jvm_test(
+    name = "CompilersTest",
+    srcs = ["CompilersTest.kt"],
+    data = [
+        "//src/org/perses/grammar/solidity:grammar_files",
+    ],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//antlrrdc/src/org/perses/antlr/reducer/codegen:templates",
+        "//src/org/perses/antlr:antlr_compiler",
+        "//src/org/perses/grammar/adhoc:parser_facade_template",
+        "//test/org/perses/antlr:AbstractAntlrrdcTest",
+    ],
+)
 
 java_test(
     name = "GrammarHierarchyTest",
@@ -10,32 +60,29 @@ java_test(
     test_class = "org.perses.antlr.GrammarHierarchyTest",
     deps = [
         ":GrammarTestingUtility",
-        "//antlropt/org/perses/antlr/ast",
+        "//:guava",
+        "//:truth",
+        "//antlropt/src/org/perses/antlr/ast",
         "//src/org/perses/antlr:antlr_grammar_parser",
         "//src/org/perses/antlr:antlr_hierarchy",
-        "//src/org/perses/grammar/c:c_parser_facade",
+        "//src/org/perses/grammar/c:optc_parser_facade",
         "//test/org/perses:test_util",
-        "@maven//:com_google_flogger_flogger_system_backend",
-        "@maven//:com_google_guava_guava",
-        "@maven//:com_google_truth_truth",
         "@maven//:org_antlr_antlr4",
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "GrammarTestingUtility",
-    srcs = ["GrammarTestingUtility.java"],
-    visibility = ["//test/org/perses:__subpackages__"],
+    srcs = ["GrammarTestingUtility.kt"],
     deps = [
-        "//antlropt/org/perses/antlr/ast",
-        "//antlropt/org/perses/antlr/pnf",
+        "//:guava",
+        "//:kotlin_stdib",
+        "//:truth",
+        "//antlropt/src/org/perses/antlr/ast",
+        "//antlropt/src/org/perses/antlr/ast:ast_builder",
+        "//antlropt/src/org/perses/antlr/pnf",
         "//src/org/perses/antlr:antlr_grammar_parser",
-        "//src/org/perses/grammar/c:c_parser_facade",
-        "//src/org/perses/grammar/java:java_parser_facade",
-        "//test/org/perses:test_util",
-        "@maven//:com_google_flogger_flogger_system_backend",
-        "@maven//:com_google_guava_guava",
-        "@maven//:com_google_truth_truth",
+        "//src/org/perses/util",
         "@maven//:org_antlr_antlr4",
         "@maven//:org_jgrapht_jgrapht_core",
     ],
@@ -48,19 +95,30 @@ java_binary(
     main_class = "org.perses.antlr.GrammarHierarchyDumpMain",
     deps = [
         ":GrammarTestingUtility",
-        "//antlropt/org/perses/antlr/ast",
+        "//:guava",
+        "//:truth",
+        "//antlropt/src/org/perses/antlr/ast",
         "//src/org/perses/antlr:antlr_grammar_parser",
         "//src/org/perses/antlr:antlr_hierarchy",
-        "//src/org/perses/grammar/c:c_parser_facade",
-        "//src/org/perses/grammar/c:pnfc_parser_facade",
-        "//src/org/perses/grammar/go:pnfgo_parser_facade",
-        "//src/org/perses/grammar/scala:pnfscala_parser_facade",
+        "//src/org/perses/grammar/c:optc_parser_facade",
+        "//src/org/perses/grammar/c:parser_facade",
+        "//src/org/perses/grammar/go:parser_facade",
+        "//src/org/perses/grammar/scala:parser_facade",
         "//test/org/perses:test_util",
         "@maven//:com_beust_jcommander",
-        "@maven//:com_google_flogger_flogger_system_backend",
-        "@maven//:com_google_guava_guava",
-        "@maven//:com_google_truth_truth",
         "@maven//:org_antlr_antlr4",
+    ],
+)
+
+kt_jvm_library(
+    name = "AbstractAntlrrdcTest",
+    srcs = [
+        "AbstractAntlrrdcTest.kt",
+    ],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/util",
     ],
 )
 

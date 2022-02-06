@@ -1,12 +1,15 @@
 abstractDeclarator
     epsilonable: false
     immediate sub-rule names:
-        directAbstractDeclarator
+        aux_rule__abstractDeclarator_3
         pointer
     transitive sub-rule names:
-        alternative__pointer_8
+        altnt_block__pointer_8
+        aux_rule__abstractDeclarator_3
+        aux_rule__directAbstractDeclarator_14
+        aux_rule__directAbstractDeclarator_23
+        aux_rule__directAbstractDeclarator_24
         directAbstractDeclarator
-        directAbstractDeclarator_14
         pointer
 additiveExpression
     epsilonable: false
@@ -16,14 +19,21 @@ additiveExpression
         Constant
         Identifier
         StringLiteral
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         genericSelection
         kleene_plus__primaryExpression_1
         multiplicativeExpression
         postfixExpression
-        postfixExpression_4
         unaryExpression
-alternative__alignmentSpecifier_1
+altnt_block__alignmentSpecifier_1
     epsilonable: false
     immediate sub-rule names:
         constantExpression
@@ -36,9 +46,18 @@ alternative__alignmentSpecifier_1
         Restrict_gcc2
         StringLiteral
         additiveExpression
-        alternative__specifierQualifierList_3
+        altnt_block__specifierQualifierList_3
         andExpression
         atomicTypeSpecifier
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__typeSpecifier_3
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         conditionalExpression
         constantExpression
@@ -52,7 +71,6 @@ alternative__alignmentSpecifier_1
         logicalOrExpression
         multiplicativeExpression
         postfixExpression
-        postfixExpression_4
         relationalExpression
         shiftExpression
         specifierQualifierList
@@ -62,11 +80,11 @@ alternative__alignmentSpecifier_1
         typeSpecifier
         typedefName
         unaryExpression
-alternative__directAbstractDeclarator_17
+altnt_block__directAbstractDeclarator_15
     epsilonable: true
     immediate sub-rule names:
-        optional__directDeclarator_2
-        optional__pointer_1
+        aux_rule__directAbstractDeclarator_25
+        aux_rule__directAbstractDeclarator_26
     transitive sub-rule names:
         Constant
         Identifier
@@ -77,6 +95,18 @@ alternative__directAbstractDeclarator_17
         additiveExpression
         andExpression
         assignmentExpression
+        aux_rule__assignmentExpression_1
+        aux_rule__castExpression_2
+        aux_rule__directAbstractDeclarator_25
+        aux_rule__directAbstractDeclarator_26
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__typeQualifierList_2
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         conditionalExpression
         equalityExpression
@@ -91,14 +121,12 @@ alternative__directAbstractDeclarator_17
         optional__directDeclarator_2
         optional__pointer_1
         postfixExpression
-        postfixExpression_4
         relationalExpression
         shiftExpression
         typeQualifier
         typeQualifierList
-        typeQualifierList_2
         unaryExpression
-alternative__directAbstractDeclarator_23
+altnt_block__directAbstractDeclarator_20
     epsilonable: true
     immediate sub-rule names:
         abstractDeclarator
@@ -110,15 +138,19 @@ alternative__directAbstractDeclarator_23
         Restrict_gcc2
         abstractDeclarator
         alignmentSpecifier
-        alternative__pointer_8
+        altnt_block__pointer_8
         atomicTypeSpecifier
+        aux_rule__abstractDeclarator_3
+        aux_rule__declarationSpecifier_1
+        aux_rule__directAbstractDeclarator_14
+        aux_rule__directAbstractDeclarator_23
+        aux_rule__directAbstractDeclarator_24
+        aux_rule__typeSpecifier_3
         declarationSpecifier
         declarationSpecifiers
         directAbstractDeclarator
-        directAbstractDeclarator_14
         enumSpecifier
         gccAttributeSpecifier
-        kleene_plus__declarationSpecifiers_1
         optional__directAbstractDeclarator_5
         parameterDeclaration
         parameterList
@@ -128,71 +160,7 @@ alternative__directAbstractDeclarator_23
         typeQualifier
         typeSpecifier
         typedefName
-alternative__directDeclarator_12
-    epsilonable: true
-    immediate sub-rule names:
-        alternative__directDeclarator_14
-        optional__pointer_1
-    transitive sub-rule names:
-        Constant
-        Identifier
-        Restrict
-        Restrict_gcc
-        Restrict_gcc2
-        StringLiteral
-        additiveExpression
-        alternative__directDeclarator_14
-        andExpression
-        assignmentExpression
-        castExpression
-        conditionalExpression
-        equalityExpression
-        exclusiveOrExpression
-        genericSelection
-        inclusiveOrExpression
-        kleene_plus__primaryExpression_1
-        kleene_plus__typeQualifierList_3
-        logicalAndExpression
-        logicalOrExpression
-        multiplicativeExpression
-        optional__directDeclarator_2
-        optional__pointer_1
-        postfixExpression
-        postfixExpression_4
-        relationalExpression
-        shiftExpression
-        typeQualifier
-        typeQualifierList
-        typeQualifierList_2
-        unaryExpression
-alternative__directDeclarator_14
-    epsilonable: true
-    immediate sub-rule names:
-        optional__directDeclarator_2
-    transitive sub-rule names:
-        Constant
-        Identifier
-        StringLiteral
-        additiveExpression
-        andExpression
-        assignmentExpression
-        castExpression
-        conditionalExpression
-        equalityExpression
-        exclusiveOrExpression
-        genericSelection
-        inclusiveOrExpression
-        kleene_plus__primaryExpression_1
-        logicalAndExpression
-        logicalOrExpression
-        multiplicativeExpression
-        optional__directDeclarator_2
-        postfixExpression
-        postfixExpression_4
-        relationalExpression
-        shiftExpression
-        unaryExpression
-alternative__directDeclarator_9
+altnt_block__directDeclarator_10
     epsilonable: true
     immediate sub-rule names:
         optional__directDeclarator_5
@@ -204,12 +172,13 @@ alternative__directDeclarator_9
         Restrict_gcc2
         alignmentSpecifier
         atomicTypeSpecifier
+        aux_rule__declarationSpecifier_1
+        aux_rule__typeSpecifier_3
         declarationSpecifier
         declarationSpecifiers
         enumSpecifier
         gccAttributeSpecifier
         identifierList
-        kleene_plus__declarationSpecifiers_1
         optional__directDeclarator_5
         parameterDeclaration
         parameterList
@@ -218,13 +187,105 @@ alternative__directDeclarator_9
         typeQualifier
         typeSpecifier
         typedefName
-alternative__enumSpecifier_4
+altnt_block__directDeclarator_11
+    epsilonable: false
+    immediate sub-rule names:
+        aux_rule__directDeclarator_18
+        aux_rule__directDeclarator_19
+    transitive sub-rule names:
+        aux_rule__directDeclarator_18
+        aux_rule__directDeclarator_19
+altnt_block__directDeclarator_12
+    epsilonable: true
+    immediate sub-rule names:
+        optional__directDeclarator_2
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        assignmentExpression
+        aux_rule__assignmentExpression_1
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
+        castExpression
+        conditionalExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_1
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        optional__directDeclarator_2
+        postfixExpression
+        relationalExpression
+        shiftExpression
+        unaryExpression
+altnt_block__directDeclarator_9
+    epsilonable: true
+    immediate sub-rule names:
+        aux_rule__directDeclarator_16
+        aux_rule__directDeclarator_17
+    transitive sub-rule names:
+        Constant
+        Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
+        StringLiteral
+        additiveExpression
+        altnt_block__directDeclarator_12
+        andExpression
+        assignmentExpression
+        aux_rule__assignmentExpression_1
+        aux_rule__castExpression_2
+        aux_rule__directDeclarator_16
+        aux_rule__directDeclarator_17
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__typeQualifierList_2
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
+        castExpression
+        conditionalExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_1
+        kleene_plus__typeQualifierList_3
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        optional__directDeclarator_2
+        optional__pointer_1
+        postfixExpression
+        relationalExpression
+        shiftExpression
+        typeQualifier
+        typeQualifierList
+        unaryExpression
+altnt_block__enumSpecifier_3
     epsilonable: false
     immediate sub-rule names:
         Identifier
+        aux_rule__enumSpecifier_6
     transitive sub-rule names:
         Identifier
-alternative__genericAssociation_1
+        aux_rule__enumSpecifier_6
+altnt_block__genericAssociation_1
     epsilonable: false
     immediate sub-rule names:
         typeName
@@ -233,8 +294,9 @@ alternative__genericAssociation_1
         Restrict
         Restrict_gcc
         Restrict_gcc2
-        alternative__specifierQualifierList_3
+        altnt_block__specifierQualifierList_3
         atomicTypeSpecifier
+        aux_rule__typeSpecifier_3
         enumSpecifier
         specifierQualifierList
         structOrUnionSpecifier
@@ -242,15 +304,26 @@ alternative__genericAssociation_1
         typeQualifier
         typeSpecifier
         typedefName
-alternative__iterationStatement_8
+altnt_block__iterationStatement_8
     epsilonable: false
     immediate sub-rule names:
+        aux_rule__iterationStatement_9
         declaration
     transitive sub-rule names:
         asmStatement
+        aux_rule__declaration_3
+        aux_rule__iterationStatement_9
         declaration
         staticAssertDeclaration
-alternative__jumpStatement_3
+altnt_block__jumpStatement_2
+    epsilonable: false
+    immediate sub-rule names:
+        aux_rule__jumpStatement_4
+        aux_rule__jumpStatement_5
+    transitive sub-rule names:
+        aux_rule__jumpStatement_4
+        aux_rule__jumpStatement_5
+altnt_block__jumpStatement_3
     epsilonable: false
     immediate sub-rule names:
         Identifier
@@ -259,18 +332,26 @@ alternative__jumpStatement_3
         Constant
         Identifier
         StringLiteral
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         genericSelection
         kleene_plus__primaryExpression_1
         postfixExpression
-        postfixExpression_4
         unaryExpression
-alternative__labeledStatement_2
+altnt_block__labeledStatement_1
     epsilonable: false
     immediate sub-rule names:
         Identifier
+        aux_rule__labeledStatement_2
     transitive sub-rule names:
         Identifier
-alternative__parameterDeclaration_2
+        aux_rule__labeledStatement_2
+altnt_block__parameterDeclaration_2
     epsilonable: true
     immediate sub-rule names:
         declarator
@@ -278,15 +359,19 @@ alternative__parameterDeclaration_2
     transitive sub-rule names:
         Identifier
         abstractDeclarator
-        alternative__pointer_8
+        altnt_block__pointer_8
+        aux_rule__abstractDeclarator_3
+        aux_rule__directAbstractDeclarator_14
+        aux_rule__directAbstractDeclarator_23
+        aux_rule__directAbstractDeclarator_24
+        aux_rule__directDeclarator_15
+        aux_rule__directDeclarator_8
         declarator
         directAbstractDeclarator
-        directAbstractDeclarator_14
         directDeclarator
-        directDeclarator_8
         optional__typeName_1
         pointer
-alternative__pointer_5
+altnt_block__pointer_5
     epsilonable: true
     immediate sub-rule names:
         optional__declarator_1
@@ -295,15 +380,27 @@ alternative__pointer_5
         Restrict
         Restrict_gcc
         Restrict_gcc2
-        alternative__pointer_8
+        altnt_block__pointer_8
+        aux_rule__typeQualifierList_2
         kleene_plus__typeQualifierList_3
         optional__declarator_1
         optional__pointer_1
         pointer
         typeQualifier
         typeQualifierList
-        typeQualifierList_2
-alternative__specifierQualifierList_3
+altnt_block__primaryExpression_3
+    epsilonable: false
+    immediate sub-rule names:
+        aux_rule__primaryExpression_4
+        aux_rule__primaryExpression_5
+        aux_rule__primaryExpression_6
+        aux_rule__primaryExpression_7
+    transitive sub-rule names:
+        aux_rule__primaryExpression_4
+        aux_rule__primaryExpression_5
+        aux_rule__primaryExpression_6
+        aux_rule__primaryExpression_7
+altnt_block__specifierQualifierList_3
     epsilonable: false
     immediate sub-rule names:
         typeQualifier
@@ -314,29 +411,84 @@ alternative__specifierQualifierList_3
         Restrict_gcc
         Restrict_gcc2
         atomicTypeSpecifier
+        aux_rule__typeSpecifier_3
         enumSpecifier
         structOrUnionSpecifier
         typeQualifier
         typeSpecifier
         typedefName
-alternative__structOrUnionSpecifier_2
+altnt_block__statement_1
+    epsilonable: false
+    immediate sub-rule names:
+        aux_rule__statement_6
+        aux_rule__statement_7
+    transitive sub-rule names:
+        aux_rule__statement_6
+        aux_rule__statement_7
+altnt_block__structOrUnionSpecifier_2
     epsilonable: false
     immediate sub-rule names:
         Identifier
+        aux_rule__structOrUnionSpecifier_3
     transitive sub-rule names:
         Identifier
-alternative__unaryExpression_2
+        aux_rule__structOrUnionSpecifier_3
+altnt_block__typeSpecifier_1
     epsilonable: false
     immediate sub-rule names:
+        aux_rule__typeSpecifier_4
+        aux_rule__typeSpecifier_5
+    transitive sub-rule names:
+        aux_rule__typeSpecifier_4
+        aux_rule__typeSpecifier_5
+altnt_block__unaryExpression_2
+    epsilonable: false
+    immediate sub-rule names:
+        aux_rule__unaryExpression_10
+        aux_rule__unaryExpression_9
+    transitive sub-rule names:
+        aux_rule__unaryExpression_10
+        aux_rule__unaryExpression_9
+altnt_block__unaryExpression_3
+    epsilonable: false
+    immediate sub-rule names:
+        Alignof
+        Alignof_gcc
+    transitive sub-rule names:
+        Alignof
+        Alignof_gcc
+altnt_block__unaryExpression_4
+    epsilonable: false
+    immediate sub-rule names:
+        typeName
         unaryExpression
     transitive sub-rule names:
         Constant
         Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
         StringLiteral
+        altnt_block__specifierQualifierList_3
+        atomicTypeSpecifier
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__typeSpecifier_3
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
+        enumSpecifier
         genericSelection
         kleene_plus__primaryExpression_1
         postfixExpression
-        postfixExpression_4
+        specifierQualifierList
+        structOrUnionSpecifier
+        typeName
+        typeQualifier
+        typeSpecifier
+        typedefName
         unaryExpression
 andExpression
     epsilonable: false
@@ -347,43 +499,27 @@ andExpression
         Identifier
         StringLiteral
         additiveExpression
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         equalityExpression
         genericSelection
         kleene_plus__primaryExpression_1
         multiplicativeExpression
         postfixExpression
-        postfixExpression_4
-        relationalExpression
-        shiftExpression
-        unaryExpression
-asmStatement_5
-    epsilonable: false
-    immediate sub-rule names:
-        logicalOrExpression
-    transitive sub-rule names:
-        Constant
-        Identifier
-        StringLiteral
-        additiveExpression
-        andExpression
-        castExpression
-        equalityExpression
-        exclusiveOrExpression
-        genericSelection
-        inclusiveOrExpression
-        kleene_plus__primaryExpression_1
-        logicalAndExpression
-        logicalOrExpression
-        multiplicativeExpression
-        postfixExpression
-        postfixExpression_4
         relationalExpression
         shiftExpression
         unaryExpression
 assignmentExpression
     epsilonable: false
     immediate sub-rule names:
+        aux_rule__assignmentExpression_1
         conditionalExpression
     transitive sub-rule names:
         Constant
@@ -391,6 +527,15 @@ assignmentExpression
         StringLiteral
         additiveExpression
         andExpression
+        aux_rule__assignmentExpression_1
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         conditionalExpression
         equalityExpression
@@ -402,17 +547,283 @@ assignmentExpression
         logicalOrExpression
         multiplicativeExpression
         postfixExpression
-        postfixExpression_4
         relationalExpression
         shiftExpression
         unaryExpression
+aux_rule__abstractDeclarator_3
+    epsilonable: false
+    immediate sub-rule names:
+        directAbstractDeclarator
+    transitive sub-rule names:
+        aux_rule__directAbstractDeclarator_14
+        aux_rule__directAbstractDeclarator_23
+        aux_rule__directAbstractDeclarator_24
+        directAbstractDeclarator
+aux_rule__asmStatement_5
+    epsilonable: false
+    immediate sub-rule names:
+        logicalOrExpression
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        additiveExpression
+        andExpression
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
+        castExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_1
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        postfixExpression
+        relationalExpression
+        shiftExpression
+        unaryExpression
+aux_rule__blockItemList_2
+    epsilonable: false
+    immediate sub-rule names:
+        declaration
+        statement
+    transitive sub-rule names:
+        asmStatement
+        aux_rule__declaration_3
+        aux_rule__statement_3
+        aux_rule__statement_4
+        aux_rule__statement_5
+        compoundStatement
+        declaration
+        expressionStatement
+        jumpStatement
+        labeledStatement
+        statement
+        staticAssertDeclaration
+aux_rule__declarationList_2
+    epsilonable: false
+    immediate sub-rule names:
+        declaration
+    transitive sub-rule names:
+        asmStatement
+        aux_rule__declaration_3
+        declaration
+        staticAssertDeclaration
+aux_rule__designatorList_2
+    epsilonable: false
+    immediate sub-rule names:
+        aux_rule__designatorList_4
+        aux_rule__designatorList_5
+    transitive sub-rule names:
+        aux_rule__designatorList_4
+        aux_rule__designatorList_5
+aux_rule__directAbstractDeclarator_13
+    epsilonable: false
+    immediate sub-rule names:
+        aux_rule__directAbstractDeclarator_21
+        aux_rule__directAbstractDeclarator_22
+    transitive sub-rule names:
+        aux_rule__directAbstractDeclarator_21
+        aux_rule__directAbstractDeclarator_22
+aux_rule__directAbstractDeclarator_14
+    epsilonable: false
+    immediate sub-rule names:
+        aux_rule__directAbstractDeclarator_23
+        aux_rule__directAbstractDeclarator_24
+    transitive sub-rule names:
+        aux_rule__directAbstractDeclarator_23
+        aux_rule__directAbstractDeclarator_24
+aux_rule__directAbstractDeclarator_25
+    epsilonable: true
+    immediate sub-rule names:
+        optional__directDeclarator_2
+        optional__pointer_1
+    transitive sub-rule names:
+        Constant
+        Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
+        StringLiteral
+        additiveExpression
+        andExpression
+        assignmentExpression
+        aux_rule__assignmentExpression_1
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__typeQualifierList_2
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
+        castExpression
+        conditionalExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_1
+        kleene_plus__typeQualifierList_3
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        optional__directDeclarator_2
+        optional__pointer_1
+        postfixExpression
+        relationalExpression
+        shiftExpression
+        typeQualifier
+        typeQualifierList
+        unaryExpression
+aux_rule__directDeclarator_17
+    epsilonable: true
+    immediate sub-rule names:
+        altnt_block__directDeclarator_12
+        optional__pointer_1
+    transitive sub-rule names:
+        Constant
+        Identifier
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
+        StringLiteral
+        additiveExpression
+        altnt_block__directDeclarator_12
+        andExpression
+        assignmentExpression
+        aux_rule__assignmentExpression_1
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__typeQualifierList_2
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
+        castExpression
+        conditionalExpression
+        equalityExpression
+        exclusiveOrExpression
+        genericSelection
+        inclusiveOrExpression
+        kleene_plus__primaryExpression_1
+        kleene_plus__typeQualifierList_3
+        logicalAndExpression
+        logicalOrExpression
+        multiplicativeExpression
+        optional__directDeclarator_2
+        optional__pointer_1
+        postfixExpression
+        relationalExpression
+        shiftExpression
+        typeQualifier
+        typeQualifierList
+        unaryExpression
+aux_rule__directDeclarator_7
+    epsilonable: false
+    immediate sub-rule names:
+        aux_rule__directDeclarator_13
+        aux_rule__directDeclarator_14
+    transitive sub-rule names:
+        aux_rule__directDeclarator_13
+        aux_rule__directDeclarator_14
+aux_rule__directDeclarator_8
+    epsilonable: false
+    immediate sub-rule names:
+        Identifier
+        aux_rule__directDeclarator_15
+    transitive sub-rule names:
+        Identifier
+        aux_rule__directDeclarator_15
+aux_rule__gccAttributeList_3
+    epsilonable: true
+    immediate sub-rule names:
+        gccAttribute
+        kleene_star__gccAttributeList_2
+    transitive sub-rule names:
+        aux_rule__gccAttributeList_1
+        aux_rule__gccAttribute_4
+        gccAttribute
+        kleene_star__gccAttributeList_2
+aux_rule__postfixExpression_3
+    epsilonable: false
+    immediate sub-rule names:
+        aux_rule__postfixExpression_10
+        aux_rule__postfixExpression_11
+        aux_rule__postfixExpression_12
+    transitive sub-rule names:
+        aux_rule__postfixExpression_10
+        aux_rule__postfixExpression_11
+        aux_rule__postfixExpression_12
+aux_rule__postfixExpression_4
+    epsilonable: false
+    immediate sub-rule names:
+        Constant
+        Identifier
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        genericSelection
+        kleene_plus__primaryExpression_1
+    transitive sub-rule names:
+        Constant
+        Identifier
+        StringLiteral
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        genericSelection
+        kleene_plus__primaryExpression_1
+aux_rule__structDeclarationList_2
+    epsilonable: false
+    immediate sub-rule names:
+        aux_rule__structDeclarationList_4
+        staticAssertDeclaration
+    transitive sub-rule names:
+        aux_rule__structDeclarationList_4
+        staticAssertDeclaration
+aux_rule__translationUnit_2
+    epsilonable: false
+    immediate sub-rule names:
+        IncludeDirective
+        declaration
+        functionDefinition
+    transitive sub-rule names:
+        IncludeDirective
+        asmStatement
+        aux_rule__declaration_3
+        declaration
+        functionDefinition
+        staticAssertDeclaration
+aux_rule__typeQualifierList_2
+    epsilonable: false
+    immediate sub-rule names:
+        typeQualifier
+    transitive sub-rule names:
+        Restrict
+        Restrict_gcc
+        Restrict_gcc2
+        typeQualifier
 blockItemList
     epsilonable: false
     immediate sub-rule names:
         kleene_plus__blockItemList_3
     transitive sub-rule names:
         asmStatement
-        blockItemList_2
+        aux_rule__blockItemList_2
+        aux_rule__declaration_3
+        aux_rule__statement_3
+        aux_rule__statement_4
+        aux_rule__statement_5
         compoundStatement
         declaration
         expressionStatement
@@ -421,32 +832,26 @@ blockItemList
         labeledStatement
         statement
         staticAssertDeclaration
-blockItemList_2
-    epsilonable: false
-    immediate sub-rule names:
-        declaration
-        statement
-    transitive sub-rule names:
-        asmStatement
-        compoundStatement
-        declaration
-        expressionStatement
-        jumpStatement
-        labeledStatement
-        statement
-        staticAssertDeclaration
 castExpression
     epsilonable: false
     immediate sub-rule names:
+        aux_rule__castExpression_2
         unaryExpression
     transitive sub-rule names:
         Constant
         Identifier
         StringLiteral
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         genericSelection
         kleene_plus__primaryExpression_1
         postfixExpression
-        postfixExpression_4
         unaryExpression
 conditionalExpression
     epsilonable: false
@@ -458,6 +863,14 @@ conditionalExpression
         StringLiteral
         additiveExpression
         andExpression
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         equalityExpression
         exclusiveOrExpression
@@ -468,7 +881,6 @@ conditionalExpression
         logicalOrExpression
         multiplicativeExpression
         postfixExpression
-        postfixExpression_4
         relationalExpression
         shiftExpression
         unaryExpression
@@ -482,6 +894,14 @@ constantExpression
         StringLiteral
         additiveExpression
         andExpression
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         conditionalExpression
         equalityExpression
@@ -493,7 +913,6 @@ constantExpression
         logicalOrExpression
         multiplicativeExpression
         postfixExpression
-        postfixExpression_4
         relationalExpression
         shiftExpression
         unaryExpression
@@ -501,9 +920,11 @@ declaration
     epsilonable: false
     immediate sub-rule names:
         asmStatement
+        aux_rule__declaration_3
         staticAssertDeclaration
     transitive sub-rule names:
         asmStatement
+        aux_rule__declaration_3
         staticAssertDeclaration
 declarationList
     epsilonable: false
@@ -511,22 +932,16 @@ declarationList
         kleene_plus__declarationList_3
     transitive sub-rule names:
         asmStatement
+        aux_rule__declarationList_2
+        aux_rule__declaration_3
         declaration
-        declarationList_2
         kleene_plus__declarationList_3
-        staticAssertDeclaration
-declarationList_2
-    epsilonable: false
-    immediate sub-rule names:
-        declaration
-    transitive sub-rule names:
-        asmStatement
-        declaration
         staticAssertDeclaration
 declarationSpecifier
     epsilonable: false
     immediate sub-rule names:
         alignmentSpecifier
+        aux_rule__declarationSpecifier_1
         gccAttributeSpecifier
         typeQualifier
         typeSpecifier
@@ -537,6 +952,8 @@ declarationSpecifier
         Restrict_gcc2
         alignmentSpecifier
         atomicTypeSpecifier
+        aux_rule__declarationSpecifier_1
+        aux_rule__typeSpecifier_3
         enumSpecifier
         gccAttributeSpecifier
         structOrUnionSpecifier
@@ -546,7 +963,7 @@ declarationSpecifier
 declarationSpecifiers
     epsilonable: false
     immediate sub-rule names:
-        kleene_plus__declarationSpecifiers_1
+        declarationSpecifier
     transitive sub-rule names:
         Identifier
         Restrict
@@ -554,10 +971,11 @@ declarationSpecifiers
         Restrict_gcc2
         alignmentSpecifier
         atomicTypeSpecifier
+        aux_rule__declarationSpecifier_1
+        aux_rule__typeSpecifier_3
         declarationSpecifier
         enumSpecifier
         gccAttributeSpecifier
-        kleene_plus__declarationSpecifiers_1
         structOrUnionSpecifier
         typeQualifier
         typeSpecifier
@@ -568,34 +986,34 @@ declarator
         directDeclarator
     transitive sub-rule names:
         Identifier
+        aux_rule__directDeclarator_15
+        aux_rule__directDeclarator_8
         directDeclarator
-        directDeclarator_8
 designatorList
     epsilonable: false
     immediate sub-rule names:
         kleene_plus__designatorList_3
     transitive sub-rule names:
-        designatorList_2
+        aux_rule__designatorList_2
+        aux_rule__designatorList_4
+        aux_rule__designatorList_5
         kleene_plus__designatorList_3
 directAbstractDeclarator
     epsilonable: false
     immediate sub-rule names:
-        directAbstractDeclarator_14
+        aux_rule__directAbstractDeclarator_14
     transitive sub-rule names:
-        directAbstractDeclarator_14
+        aux_rule__directAbstractDeclarator_14
+        aux_rule__directAbstractDeclarator_23
+        aux_rule__directAbstractDeclarator_24
 directDeclarator
     epsilonable: false
     immediate sub-rule names:
-        directDeclarator_8
+        aux_rule__directDeclarator_8
     transitive sub-rule names:
         Identifier
-        directDeclarator_8
-directDeclarator_8
-    epsilonable: false
-    immediate sub-rule names:
-        Identifier
-    transitive sub-rule names:
-        Identifier
+        aux_rule__directDeclarator_15
+        aux_rule__directDeclarator_8
 enumerator
     epsilonable: false
     immediate sub-rule names:
@@ -620,12 +1038,19 @@ equalityExpression
         Identifier
         StringLiteral
         additiveExpression
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         genericSelection
         kleene_plus__primaryExpression_1
         multiplicativeExpression
         postfixExpression
-        postfixExpression_4
         relationalExpression
         shiftExpression
         unaryExpression
@@ -639,13 +1064,20 @@ exclusiveOrExpression
         StringLiteral
         additiveExpression
         andExpression
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         equalityExpression
         genericSelection
         kleene_plus__primaryExpression_1
         multiplicativeExpression
         postfixExpression
-        postfixExpression_4
         relationalExpression
         shiftExpression
         unaryExpression
@@ -660,6 +1092,15 @@ expression
         additiveExpression
         andExpression
         assignmentExpression
+        aux_rule__assignmentExpression_1
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         conditionalExpression
         equalityExpression
@@ -671,15 +1112,32 @@ expression
         logicalOrExpression
         multiplicativeExpression
         postfixExpression
-        postfixExpression_4
         relationalExpression
         shiftExpression
         unaryExpression
+gccAttribute
+    epsilonable: true
+    immediate sub-rule names:
+        aux_rule__gccAttribute_4
+    transitive sub-rule names:
+        aux_rule__gccAttribute_4
+gccAttributeList
+    epsilonable: true
+    immediate sub-rule names:
+        aux_rule__gccAttributeList_3
+    transitive sub-rule names:
+        aux_rule__gccAttributeList_1
+        aux_rule__gccAttributeList_3
+        aux_rule__gccAttribute_4
+        gccAttribute
+        kleene_star__gccAttributeList_2
 gccDeclaratorExtension
     epsilonable: false
     immediate sub-rule names:
+        aux_rule__gccDeclaratorExtension_2
         gccAttributeSpecifier
     transitive sub-rule names:
+        aux_rule__gccDeclaratorExtension_2
         gccAttributeSpecifier
 genericAssocList
     epsilonable: false
@@ -703,6 +1161,14 @@ inclusiveOrExpression
         StringLiteral
         additiveExpression
         andExpression
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         equalityExpression
         exclusiveOrExpression
@@ -710,7 +1176,6 @@ inclusiveOrExpression
         kleene_plus__primaryExpression_1
         multiplicativeExpression
         postfixExpression
-        postfixExpression_4
         relationalExpression
         shiftExpression
         unaryExpression
@@ -720,23 +1185,26 @@ initDeclarator
         declarator
     transitive sub-rule names:
         Identifier
+        aux_rule__directDeclarator_15
+        aux_rule__directDeclarator_8
         declarator
         directDeclarator
-        directDeclarator_8
 initDeclaratorList
     epsilonable: false
     immediate sub-rule names:
         initDeclarator
     transitive sub-rule names:
         Identifier
+        aux_rule__directDeclarator_15
+        aux_rule__directDeclarator_8
         declarator
         directDeclarator
-        directDeclarator_8
         initDeclarator
 initializer
     epsilonable: false
     immediate sub-rule names:
         assignmentExpression
+        aux_rule__initializer_2
     transitive sub-rule names:
         Constant
         Identifier
@@ -744,6 +1212,16 @@ initializer
         additiveExpression
         andExpression
         assignmentExpression
+        aux_rule__assignmentExpression_1
+        aux_rule__castExpression_2
+        aux_rule__initializer_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         conditionalExpression
         equalityExpression
@@ -755,7 +1233,6 @@ initializer
         logicalOrExpression
         multiplicativeExpression
         postfixExpression
-        postfixExpression_4
         relationalExpression
         shiftExpression
         unaryExpression
@@ -770,6 +1247,16 @@ initializerList
         additiveExpression
         andExpression
         assignmentExpression
+        aux_rule__assignmentExpression_1
+        aux_rule__castExpression_2
+        aux_rule__initializer_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         conditionalExpression
         equalityExpression
@@ -782,17 +1269,20 @@ initializerList
         logicalOrExpression
         multiplicativeExpression
         postfixExpression
-        postfixExpression_4
         relationalExpression
         shiftExpression
         unaryExpression
 kleene_plus__blockItemList_3
     epsilonable: false
     immediate sub-rule names:
-        blockItemList_2
+        aux_rule__blockItemList_2
     transitive sub-rule names:
         asmStatement
-        blockItemList_2
+        aux_rule__blockItemList_2
+        aux_rule__declaration_3
+        aux_rule__statement_3
+        aux_rule__statement_4
+        aux_rule__statement_5
         compoundStatement
         declaration
         expressionStatement
@@ -803,36 +1293,21 @@ kleene_plus__blockItemList_3
 kleene_plus__declarationList_3
     epsilonable: false
     immediate sub-rule names:
-        declarationList_2
+        aux_rule__declarationList_2
     transitive sub-rule names:
         asmStatement
+        aux_rule__declarationList_2
+        aux_rule__declaration_3
         declaration
-        declarationList_2
         staticAssertDeclaration
-kleene_plus__declarationSpecifiers_1
-    epsilonable: false
-    immediate sub-rule names:
-        declarationSpecifier
-    transitive sub-rule names:
-        Identifier
-        Restrict
-        Restrict_gcc
-        Restrict_gcc2
-        alignmentSpecifier
-        atomicTypeSpecifier
-        declarationSpecifier
-        enumSpecifier
-        gccAttributeSpecifier
-        structOrUnionSpecifier
-        typeQualifier
-        typeSpecifier
-        typedefName
 kleene_plus__designatorList_3
     epsilonable: false
     immediate sub-rule names:
-        designatorList_2
+        aux_rule__designatorList_2
     transitive sub-rule names:
-        designatorList_2
+        aux_rule__designatorList_2
+        aux_rule__designatorList_4
+        aux_rule__designatorList_5
 kleene_plus__primaryExpression_1
     epsilonable: false
     immediate sub-rule names:
@@ -842,181 +1317,192 @@ kleene_plus__primaryExpression_1
 kleene_plus__structDeclarationList_3
     epsilonable: false
     immediate sub-rule names:
-        structDeclarationList_2
+        aux_rule__structDeclarationList_2
     transitive sub-rule names:
+        aux_rule__structDeclarationList_2
+        aux_rule__structDeclarationList_4
         staticAssertDeclaration
-        structDeclarationList_2
 kleene_plus__translationUnit_3
     epsilonable: false
     immediate sub-rule names:
-        translationUnit_2
+        aux_rule__translationUnit_2
     transitive sub-rule names:
+        IncludeDirective
         asmStatement
+        aux_rule__declaration_3
+        aux_rule__translationUnit_2
         declaration
         functionDefinition
         staticAssertDeclaration
-        translationUnit_2
 kleene_plus__typeQualifierList_3
     epsilonable: false
     immediate sub-rule names:
-        typeQualifierList_2
+        aux_rule__typeQualifierList_2
     transitive sub-rule names:
         Restrict
         Restrict_gcc
         Restrict_gcc2
+        aux_rule__typeQualifierList_2
         typeQualifier
-        typeQualifierList_2
 kleene_star__additiveExpression_1
     epsilonable: true
     immediate sub-rule names:
-        additiveExpression_2
+        aux_rule__additiveExpression_2
     transitive sub-rule names:
-        additiveExpression_2
+        aux_rule__additiveExpression_2
 kleene_star__andExpression_1
     epsilonable: true
     immediate sub-rule names:
-        andExpression_2
+        aux_rule__andExpression_2
     transitive sub-rule names:
-        andExpression_2
+        aux_rule__andExpression_2
 kleene_star__asmStatement_12
     epsilonable: true
     immediate sub-rule names:
-        asmStatement_11
+        aux_rule__asmStatement_11
     transitive sub-rule names:
-        asmStatement_11
+        aux_rule__asmStatement_11
 kleene_star__asmStatement_4
     epsilonable: true
     immediate sub-rule names:
-        asmStatement_3
+        aux_rule__asmStatement_3
     transitive sub-rule names:
-        asmStatement_3
+        aux_rule__asmStatement_3
 kleene_star__declarator_2
     epsilonable: true
     immediate sub-rule names:
         gccDeclaratorExtension
     transitive sub-rule names:
+        aux_rule__gccDeclaratorExtension_2
         gccAttributeSpecifier
         gccDeclaratorExtension
 kleene_star__directAbstractDeclarator_12
     epsilonable: true
     immediate sub-rule names:
-        directAbstractDeclarator_13
+        aux_rule__directAbstractDeclarator_13
     transitive sub-rule names:
-        directAbstractDeclarator_13
+        aux_rule__directAbstractDeclarator_13
+        aux_rule__directAbstractDeclarator_21
+        aux_rule__directAbstractDeclarator_22
 kleene_star__directDeclarator_6
     epsilonable: true
     immediate sub-rule names:
-        directDeclarator_7
+        aux_rule__directDeclarator_7
     transitive sub-rule names:
-        directDeclarator_7
+        aux_rule__directDeclarator_13
+        aux_rule__directDeclarator_14
+        aux_rule__directDeclarator_7
 kleene_star__enumeratorList_1
     epsilonable: true
     immediate sub-rule names:
-        enumeratorList_2
+        aux_rule__enumeratorList_2
     transitive sub-rule names:
-        enumeratorList_2
+        aux_rule__enumeratorList_2
 kleene_star__equalityExpression_1
     epsilonable: true
     immediate sub-rule names:
-        equalityExpression_2
+        aux_rule__equalityExpression_2
     transitive sub-rule names:
-        equalityExpression_2
+        aux_rule__equalityExpression_2
 kleene_star__exclusiveOrExpression_1
     epsilonable: true
     immediate sub-rule names:
-        exclusiveOrExpression_2
+        aux_rule__exclusiveOrExpression_2
     transitive sub-rule names:
-        exclusiveOrExpression_2
+        aux_rule__exclusiveOrExpression_2
 kleene_star__expression_1
     epsilonable: true
     immediate sub-rule names:
-        expression_2
+        aux_rule__expression_2
     transitive sub-rule names:
-        expression_2
+        aux_rule__expression_2
 kleene_star__gccAttributeList_2
     epsilonable: true
     immediate sub-rule names:
-        gccAttributeList_1
+        aux_rule__gccAttributeList_1
     transitive sub-rule names:
-        gccAttributeList_1
+        aux_rule__gccAttributeList_1
 kleene_star__genericAssocList_1
     epsilonable: true
     immediate sub-rule names:
-        genericAssocList_2
+        aux_rule__genericAssocList_2
     transitive sub-rule names:
-        genericAssocList_2
+        aux_rule__genericAssocList_2
 kleene_star__identifierList_1
     epsilonable: true
     immediate sub-rule names:
-        identifierList_2
+        aux_rule__identifierList_2
     transitive sub-rule names:
-        identifierList_2
+        aux_rule__identifierList_2
 kleene_star__inclusiveOrExpression_1
     epsilonable: true
     immediate sub-rule names:
-        inclusiveOrExpression_2
+        aux_rule__inclusiveOrExpression_2
     transitive sub-rule names:
-        inclusiveOrExpression_2
+        aux_rule__inclusiveOrExpression_2
 kleene_star__initDeclaratorList_1
     epsilonable: true
     immediate sub-rule names:
-        initDeclaratorList_2
+        aux_rule__initDeclaratorList_2
     transitive sub-rule names:
-        initDeclaratorList_2
+        aux_rule__initDeclaratorList_2
 kleene_star__initializerList_3
     epsilonable: true
     immediate sub-rule names:
-        initializerList_4
+        aux_rule__initializerList_4
     transitive sub-rule names:
-        initializerList_4
+        aux_rule__initializerList_4
 kleene_star__logicalAndExpression_1
     epsilonable: true
     immediate sub-rule names:
-        logicalAndExpression_2
+        aux_rule__logicalAndExpression_2
     transitive sub-rule names:
-        logicalAndExpression_2
+        aux_rule__logicalAndExpression_2
 kleene_star__logicalOrExpression_1
     epsilonable: true
     immediate sub-rule names:
-        logicalOrExpression_2
+        aux_rule__logicalOrExpression_2
     transitive sub-rule names:
-        logicalOrExpression_2
+        aux_rule__logicalOrExpression_2
 kleene_star__multiplicativeExpression_1
     epsilonable: true
     immediate sub-rule names:
-        multiplicativeExpression_2
+        aux_rule__multiplicativeExpression_2
     transitive sub-rule names:
-        multiplicativeExpression_2
+        aux_rule__multiplicativeExpression_2
 kleene_star__parameterList_1
     epsilonable: true
     immediate sub-rule names:
-        parameterList_2
+        aux_rule__parameterList_2
     transitive sub-rule names:
-        parameterList_2
+        aux_rule__parameterList_2
 kleene_star__postfixExpression_2
     epsilonable: true
     immediate sub-rule names:
-        postfixExpression_3
+        aux_rule__postfixExpression_3
     transitive sub-rule names:
-        postfixExpression_3
+        aux_rule__postfixExpression_10
+        aux_rule__postfixExpression_11
+        aux_rule__postfixExpression_12
+        aux_rule__postfixExpression_3
 kleene_star__relationalExpression_1
     epsilonable: true
     immediate sub-rule names:
-        relationalExpression_2
+        aux_rule__relationalExpression_2
     transitive sub-rule names:
-        relationalExpression_2
+        aux_rule__relationalExpression_2
 kleene_star__shiftExpression_1
     epsilonable: true
     immediate sub-rule names:
-        shiftExpression_2
+        aux_rule__shiftExpression_2
     transitive sub-rule names:
-        shiftExpression_2
+        aux_rule__shiftExpression_2
 kleene_star__structDeclaratorList_1
     epsilonable: true
     immediate sub-rule names:
-        structDeclaratorList_2
+        aux_rule__structDeclaratorList_2
     transitive sub-rule names:
-        structDeclaratorList_2
+        aux_rule__structDeclaratorList_2
 logicalAndExpression
     epsilonable: false
     immediate sub-rule names:
@@ -1027,6 +1513,14 @@ logicalAndExpression
         StringLiteral
         additiveExpression
         andExpression
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         equalityExpression
         exclusiveOrExpression
@@ -1035,7 +1529,6 @@ logicalAndExpression
         kleene_plus__primaryExpression_1
         multiplicativeExpression
         postfixExpression
-        postfixExpression_4
         relationalExpression
         shiftExpression
         unaryExpression
@@ -1049,6 +1542,14 @@ logicalOrExpression
         StringLiteral
         additiveExpression
         andExpression
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         equalityExpression
         exclusiveOrExpression
@@ -1058,7 +1559,6 @@ logicalOrExpression
         logicalAndExpression
         multiplicativeExpression
         postfixExpression
-        postfixExpression_4
         relationalExpression
         shiftExpression
         unaryExpression
@@ -1070,29 +1570,44 @@ multiplicativeExpression
         Constant
         Identifier
         StringLiteral
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         genericSelection
         kleene_plus__primaryExpression_1
         postfixExpression
-        postfixExpression_4
         unaryExpression
 optional__asmStatement_2
     epsilonable: true
     immediate sub-rule names:
-        asmStatement_1
+        aux_rule__asmStatement_1
     transitive sub-rule names:
-        asmStatement_1
+        aux_rule__asmStatement_1
 optional__asmStatement_6
     epsilonable: true
     immediate sub-rule names:
-        asmStatement_5
+        aux_rule__asmStatement_5
     transitive sub-rule names:
         Constant
         Identifier
         StringLiteral
         additiveExpression
         andExpression
-        asmStatement_5
+        aux_rule__asmStatement_5
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         equalityExpression
         exclusiveOrExpression
@@ -1103,7 +1618,6 @@ optional__asmStatement_6
         logicalOrExpression
         multiplicativeExpression
         postfixExpression
-        postfixExpression_4
         relationalExpression
         shiftExpression
         unaryExpression
@@ -1112,21 +1626,27 @@ optional__compilationUnit_1
     immediate sub-rule names:
         translationUnit
     transitive sub-rule names:
+        IncludeDirective
         asmStatement
+        aux_rule__declaration_3
+        aux_rule__translationUnit_2
         declaration
         functionDefinition
         kleene_plus__translationUnit_3
         staticAssertDeclaration
         translationUnit
-        translationUnit_2
 optional__compoundStatement_1
     epsilonable: true
     immediate sub-rule names:
         blockItemList
     transitive sub-rule names:
         asmStatement
+        aux_rule__blockItemList_2
+        aux_rule__declaration_3
+        aux_rule__statement_3
+        aux_rule__statement_4
+        aux_rule__statement_5
         blockItemList
-        blockItemList_2
         compoundStatement
         declaration
         expressionStatement
@@ -1138,9 +1658,9 @@ optional__compoundStatement_1
 optional__conditionalExpression_2
     epsilonable: true
     immediate sub-rule names:
-        conditionalExpression_1
+        aux_rule__conditionalExpression_1
     transitive sub-rule names:
-        conditionalExpression_1
+        aux_rule__conditionalExpression_1
 optional__declaration_1
     epsilonable: true
     immediate sub-rule names:
@@ -1153,9 +1673,10 @@ optional__declaration_2
         initDeclaratorList
     transitive sub-rule names:
         Identifier
+        aux_rule__directDeclarator_15
+        aux_rule__directDeclarator_8
         declarator
         directDeclarator
-        directDeclarator_8
         initDeclarator
         initDeclaratorList
 optional__declarator_1
@@ -1163,7 +1684,7 @@ optional__declarator_1
     immediate sub-rule names:
         pointer
     transitive sub-rule names:
-        alternative__pointer_8
+        altnt_block__pointer_8
         pointer
 optional__directAbstractDeclarator_5
     epsilonable: true
@@ -1176,11 +1697,12 @@ optional__directAbstractDeclarator_5
         Restrict_gcc2
         alignmentSpecifier
         atomicTypeSpecifier
+        aux_rule__declarationSpecifier_1
+        aux_rule__typeSpecifier_3
         declarationSpecifier
         declarationSpecifiers
         enumSpecifier
         gccAttributeSpecifier
-        kleene_plus__declarationSpecifiers_1
         parameterDeclaration
         parameterList
         parameterTypeList
@@ -1199,6 +1721,15 @@ optional__directDeclarator_2
         additiveExpression
         andExpression
         assignmentExpression
+        aux_rule__assignmentExpression_1
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         conditionalExpression
         equalityExpression
@@ -1210,7 +1741,6 @@ optional__directDeclarator_2
         logicalOrExpression
         multiplicativeExpression
         postfixExpression
-        postfixExpression_4
         relationalExpression
         shiftExpression
         unaryExpression
@@ -1224,9 +1754,9 @@ optional__directDeclarator_5
 optional__enumerator_2
     epsilonable: true
     immediate sub-rule names:
-        enumerator_1
+        aux_rule__enumerator_1
     transitive sub-rule names:
-        enumerator_1
+        aux_rule__enumerator_1
 optional__functionDefinition_2
     epsilonable: true
     immediate sub-rule names:
@@ -1238,11 +1768,12 @@ optional__functionDefinition_2
         Restrict_gcc2
         alignmentSpecifier
         atomicTypeSpecifier
+        aux_rule__declarationSpecifier_1
+        aux_rule__typeSpecifier_3
         declarationSpecifier
         declarationSpecifiers
         enumSpecifier
         gccAttributeSpecifier
-        kleene_plus__declarationSpecifiers_1
         structOrUnionSpecifier
         typeQualifier
         typeSpecifier
@@ -1253,23 +1784,24 @@ optional__functionDefinition_3
         declarationList
     transitive sub-rule names:
         asmStatement
+        aux_rule__declarationList_2
+        aux_rule__declaration_3
         declaration
         declarationList
-        declarationList_2
         kleene_plus__declarationList_3
         staticAssertDeclaration
 optional__gccAttribute_3
     epsilonable: true
     immediate sub-rule names:
-        gccAttribute_2
+        aux_rule__gccAttribute_2
     transitive sub-rule names:
-        gccAttribute_2
+        aux_rule__gccAttribute_2
 optional__initDeclarator_2
     epsilonable: true
     immediate sub-rule names:
-        initDeclarator_1
+        aux_rule__initDeclarator_1
     transitive sub-rule names:
-        initDeclarator_1
+        aux_rule__initDeclarator_1
 optional__initializerList_1
     epsilonable: true
     immediate sub-rule names:
@@ -1279,9 +1811,9 @@ optional__initializerList_1
 optional__parameterTypeList_2
     epsilonable: true
     immediate sub-rule names:
-        parameterTypeList_1
+        aux_rule__parameterTypeList_1
     transitive sub-rule names:
-        parameterTypeList_1
+        aux_rule__parameterTypeList_1
 optional__pointer_1
     epsilonable: true
     immediate sub-rule names:
@@ -1290,10 +1822,10 @@ optional__pointer_1
         Restrict
         Restrict_gcc
         Restrict_gcc2
+        aux_rule__typeQualifierList_2
         kleene_plus__typeQualifierList_3
         typeQualifier
         typeQualifierList
-        typeQualifierList_2
 optional__postfixExpression_1
     epsilonable: true
     immediate sub-rule names:
@@ -1305,6 +1837,15 @@ optional__postfixExpression_1
         additiveExpression
         andExpression
         assignmentExpression
+        aux_rule__assignmentExpression_1
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         conditionalExpression
         equalityExpression
@@ -1317,16 +1858,15 @@ optional__postfixExpression_1
         logicalOrExpression
         multiplicativeExpression
         postfixExpression
-        postfixExpression_4
         relationalExpression
         shiftExpression
         unaryExpression
 optional__selectionStatement_2
     epsilonable: true
     immediate sub-rule names:
-        selectionStatement_1
+        aux_rule__selectionStatement_1
     transitive sub-rule names:
-        selectionStatement_1
+        aux_rule__selectionStatement_1
 optional__specifierQualifierList_1
     epsilonable: true
     immediate sub-rule names:
@@ -1336,8 +1876,9 @@ optional__specifierQualifierList_1
         Restrict
         Restrict_gcc
         Restrict_gcc2
-        alternative__specifierQualifierList_3
+        altnt_block__specifierQualifierList_3
         atomicTypeSpecifier
+        aux_rule__typeSpecifier_3
         enumSpecifier
         specifierQualifierList
         structOrUnionSpecifier
@@ -1350,9 +1891,11 @@ optional__structDeclaration_2
         structDeclaratorList
     transitive sub-rule names:
         Identifier
+        aux_rule__directDeclarator_15
+        aux_rule__directDeclarator_8
+        aux_rule__structDeclarator_2
         declarator
         directDeclarator
-        directDeclarator_8
         structDeclarator
         structDeclaratorList
 optional__structDeclarator_1
@@ -1361,9 +1904,10 @@ optional__structDeclarator_1
         declarator
     transitive sub-rule names:
         Identifier
+        aux_rule__directDeclarator_15
+        aux_rule__directDeclarator_8
         declarator
         directDeclarator
-        directDeclarator_8
 optional__structOrUnionSpecifier_1
     epsilonable: true
     immediate sub-rule names:
@@ -1376,9 +1920,12 @@ optional__typeName_1
         abstractDeclarator
     transitive sub-rule names:
         abstractDeclarator
-        alternative__pointer_8
+        altnt_block__pointer_8
+        aux_rule__abstractDeclarator_3
+        aux_rule__directAbstractDeclarator_14
+        aux_rule__directAbstractDeclarator_23
+        aux_rule__directAbstractDeclarator_24
         directAbstractDeclarator
-        directAbstractDeclarator_14
         pointer
 parameterDeclaration
     epsilonable: false
@@ -1391,11 +1938,12 @@ parameterDeclaration
         Restrict_gcc2
         alignmentSpecifier
         atomicTypeSpecifier
+        aux_rule__declarationSpecifier_1
+        aux_rule__typeSpecifier_3
         declarationSpecifier
         declarationSpecifiers
         enumSpecifier
         gccAttributeSpecifier
-        kleene_plus__declarationSpecifiers_1
         structOrUnionSpecifier
         typeQualifier
         typeSpecifier
@@ -1411,11 +1959,12 @@ parameterList
         Restrict_gcc2
         alignmentSpecifier
         atomicTypeSpecifier
+        aux_rule__declarationSpecifier_1
+        aux_rule__typeSpecifier_3
         declarationSpecifier
         declarationSpecifiers
         enumSpecifier
         gccAttributeSpecifier
-        kleene_plus__declarationSpecifiers_1
         parameterDeclaration
         structOrUnionSpecifier
         typeQualifier
@@ -1432,11 +1981,12 @@ parameterTypeList
         Restrict_gcc2
         alignmentSpecifier
         atomicTypeSpecifier
+        aux_rule__declarationSpecifier_1
+        aux_rule__typeSpecifier_3
         declarationSpecifier
         declarationSpecifiers
         enumSpecifier
         gccAttributeSpecifier
-        kleene_plus__declarationSpecifiers_1
         parameterDeclaration
         parameterList
         structOrUnionSpecifier
@@ -1446,31 +1996,20 @@ parameterTypeList
 pointer
     epsilonable: false
     immediate sub-rule names:
-        alternative__pointer_8
+        altnt_block__pointer_8
     transitive sub-rule names:
-        alternative__pointer_8
+        altnt_block__pointer_8
 postfixExpression
     epsilonable: false
     immediate sub-rule names:
-        postfixExpression_4
+        aux_rule__postfixExpression_4
     transitive sub-rule names:
         Constant
         Identifier
         StringLiteral
-        genericSelection
-        kleene_plus__primaryExpression_1
-        postfixExpression_4
-postfixExpression_4
-    epsilonable: false
-    immediate sub-rule names:
-        Constant
-        Identifier
-        genericSelection
-        kleene_plus__primaryExpression_1
-    transitive sub-rule names:
-        Constant
-        Identifier
-        StringLiteral
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
         genericSelection
         kleene_plus__primaryExpression_1
 relationalExpression
@@ -1482,12 +2021,19 @@ relationalExpression
         Identifier
         StringLiteral
         additiveExpression
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         genericSelection
         kleene_plus__primaryExpression_1
         multiplicativeExpression
         postfixExpression
-        postfixExpression_4
         shiftExpression
         unaryExpression
 shiftExpression
@@ -1499,24 +2045,32 @@ shiftExpression
         Identifier
         StringLiteral
         additiveExpression
+        aux_rule__castExpression_2
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         castExpression
         genericSelection
         kleene_plus__primaryExpression_1
         multiplicativeExpression
         postfixExpression
-        postfixExpression_4
         unaryExpression
 specifierQualifierList
     epsilonable: false
     immediate sub-rule names:
-        alternative__specifierQualifierList_3
+        altnt_block__specifierQualifierList_3
     transitive sub-rule names:
         Identifier
         Restrict
         Restrict_gcc
         Restrict_gcc2
-        alternative__specifierQualifierList_3
+        altnt_block__specifierQualifierList_3
         atomicTypeSpecifier
+        aux_rule__typeSpecifier_3
         enumSpecifier
         structOrUnionSpecifier
         typeQualifier
@@ -1526,12 +2080,18 @@ statement
     epsilonable: false
     immediate sub-rule names:
         asmStatement
+        aux_rule__statement_3
+        aux_rule__statement_4
+        aux_rule__statement_5
         compoundStatement
         expressionStatement
         jumpStatement
         labeledStatement
     transitive sub-rule names:
         asmStatement
+        aux_rule__statement_3
+        aux_rule__statement_4
+        aux_rule__statement_5
         compoundStatement
         expressionStatement
         jumpStatement
@@ -1541,54 +2101,46 @@ structDeclarationList
     immediate sub-rule names:
         kleene_plus__structDeclarationList_3
     transitive sub-rule names:
+        aux_rule__structDeclarationList_2
+        aux_rule__structDeclarationList_4
         kleene_plus__structDeclarationList_3
-        staticAssertDeclaration
-        structDeclarationList_2
-structDeclarationList_2
-    epsilonable: false
-    immediate sub-rule names:
-        staticAssertDeclaration
-    transitive sub-rule names:
         staticAssertDeclaration
 structDeclarator
     epsilonable: false
     immediate sub-rule names:
+        aux_rule__structDeclarator_2
         declarator
     transitive sub-rule names:
         Identifier
+        aux_rule__directDeclarator_15
+        aux_rule__directDeclarator_8
+        aux_rule__structDeclarator_2
         declarator
         directDeclarator
-        directDeclarator_8
 structDeclaratorList
     epsilonable: false
     immediate sub-rule names:
         structDeclarator
     transitive sub-rule names:
         Identifier
+        aux_rule__directDeclarator_15
+        aux_rule__directDeclarator_8
+        aux_rule__structDeclarator_2
         declarator
         directDeclarator
-        directDeclarator_8
         structDeclarator
 translationUnit
     epsilonable: false
     immediate sub-rule names:
         kleene_plus__translationUnit_3
     transitive sub-rule names:
+        IncludeDirective
         asmStatement
+        aux_rule__declaration_3
+        aux_rule__translationUnit_2
         declaration
         functionDefinition
         kleene_plus__translationUnit_3
-        staticAssertDeclaration
-        translationUnit_2
-translationUnit_2
-    epsilonable: false
-    immediate sub-rule names:
-        declaration
-        functionDefinition
-    transitive sub-rule names:
-        asmStatement
-        declaration
-        functionDefinition
         staticAssertDeclaration
 typeName
     epsilonable: false
@@ -1599,8 +2151,9 @@ typeName
         Restrict
         Restrict_gcc
         Restrict_gcc2
-        alternative__specifierQualifierList_3
+        altnt_block__specifierQualifierList_3
         atomicTypeSpecifier
+        aux_rule__typeSpecifier_3
         enumSpecifier
         specifierQualifierList
         structOrUnionSpecifier
@@ -1625,28 +2178,21 @@ typeQualifierList
         Restrict
         Restrict_gcc
         Restrict_gcc2
+        aux_rule__typeQualifierList_2
         kleene_plus__typeQualifierList_3
-        typeQualifier
-        typeQualifierList_2
-typeQualifierList_2
-    epsilonable: false
-    immediate sub-rule names:
-        typeQualifier
-    transitive sub-rule names:
-        Restrict
-        Restrict_gcc
-        Restrict_gcc2
         typeQualifier
 typeSpecifier
     epsilonable: false
     immediate sub-rule names:
         atomicTypeSpecifier
+        aux_rule__typeSpecifier_3
         enumSpecifier
         structOrUnionSpecifier
         typedefName
     transitive sub-rule names:
         Identifier
         atomicTypeSpecifier
+        aux_rule__typeSpecifier_3
         enumSpecifier
         structOrUnionSpecifier
         typedefName
@@ -1659,12 +2205,22 @@ typedefName
 unaryExpression
     epsilonable: false
     immediate sub-rule names:
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         postfixExpression
     transitive sub-rule names:
         Constant
         Identifier
         StringLiteral
+        aux_rule__postfixExpression_13
+        aux_rule__postfixExpression_14
+        aux_rule__postfixExpression_4
+        aux_rule__unaryExpression_5
+        aux_rule__unaryExpression_6
+        aux_rule__unaryExpression_7
+        aux_rule__unaryExpression_8
         genericSelection
         kleene_plus__primaryExpression_1
         postfixExpression
-        postfixExpression_4

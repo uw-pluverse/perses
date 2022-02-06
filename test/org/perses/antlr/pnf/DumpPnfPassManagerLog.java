@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,14 +17,14 @@
 package org.perses.antlr.pnf;
 
 import com.google.common.base.Preconditions;
-import org.perses.antlr.GrammarTestingUtility;
-import org.perses.antlr.ast.PersesGrammar;
-import org.perses.grammar.c.CParserFacade;
-
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import org.perses.antlr.GrammarTestingUtility;
+import org.perses.antlr.ast.PersesGrammar;
+import org.perses.grammar.c.CParserFacade;
+import org.perses.util.FileNameContentPair;
 
 public class DumpPnfPassManagerLog {
 
@@ -38,7 +38,8 @@ public class DumpPnfPassManagerLog {
     PersesGrammar grammar = GrammarTestingUtility.loadGrammarFromString(antlrGrammarContent);
     PnfPassManager manager = new PnfPassManager();
     try (PassListener listener = new PassListener(output)) {
-      manager.process(grammar, "compilationUnit", listener);
+      final FileNameContentPair lexerGrammar = null;
+      manager.process(grammar, "compilationUnit", lexerGrammar, listener);
     }
   }
 
@@ -56,14 +57,14 @@ public class DumpPnfPassManagerLog {
     }
 
     @Override
-    protected void start(PersesGrammar grammar, String startRuleName) {
+    public void start(PersesGrammar grammar, String startRuleName) {
       stream.println(grammar.getSourceCode().trim());
     }
 
     @Override
-    protected void afterPass(ImmutableRuleDefMap grammar, Class<?> passClass, int iteration) {
+    public void afterPass(PersesGrammar grammar, Class<?> passClass, int iteration) {
       print(passClass, iteration);
-      stream.println(grammar.getPersesGrammar().getSourceCode().trim());
+      stream.println(grammar.getSourceCode().trim());
     }
 
     private void print(Class<?> passClass, int iteration) {

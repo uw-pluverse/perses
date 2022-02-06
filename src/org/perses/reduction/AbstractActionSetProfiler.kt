@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,12 +17,12 @@
 package org.perses.reduction
 
 import com.google.common.collect.ImmutableList
-import org.perses.tree.spar.ChildHoistingAction
+import org.perses.spartree.ChildHoistingAction
 import java.io.BufferedWriter
-import java.io.File
 import java.io.IOException
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
+import java.nio.file.Path
 
 abstract class AbstractActionSetProfiler {
   abstract fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedChildren(
@@ -33,7 +33,7 @@ abstract class AbstractActionSetProfiler {
     replacements: ImmutableList<ChildHoistingAction>
   )
 
-  class ActionSetProfiler(file: File) : AbstractActionSetProfiler(), AutoCloseable {
+  class ActionSetProfiler(file: Path) : AbstractActionSetProfiler(), AutoCloseable {
     private var writer: BufferedWriter?
     override fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedChildren(
       kleeneReplacements: ImmutableList<ChildHoistingAction>
@@ -74,7 +74,7 @@ abstract class AbstractActionSetProfiler {
     }
 
     init {
-      writer = Files.newBufferedWriter(file.toPath(), StandardCharsets.UTF_8)
+      writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8)
       Runtime.getRuntime().addShutdownHook(Thread(Runnable { close() }))
     }
   }

@@ -1,11 +1,12 @@
 DEFAULT_DEPS = [
     "//src/org/perses/program",
     "//test/org/perses:test_util",
-    "//test/org/perses:truth",
-    "@maven//:com_google_guava_guava",
+    "//:truth",
+    "//src/org/perses/program/printer",
+    "//:guava",
 ]
 
-load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library", "kt_jvm_test")
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 
 kt_jvm_test(
     name = "TokenizedProgramTest",
@@ -40,6 +41,7 @@ kt_jvm_test(
     ],
     test_class = "org.perses.program.ScriptFileTest",
     deps = DEFAULT_DEPS + [
+        "//:kotlin_stdib",
         "//src/org/perses/program:language_kind",
     ],
 )
@@ -53,11 +55,21 @@ kt_jvm_library(
     ],
 )
 
-java_test(
+kt_jvm_test(
     name = "TokenizedProgramFactoryTest",
-    srcs = ["TokenizedProgramFactoryTest.java"],
-    test_class = "org.perses.program.TokenizedProgramFactoryTest",
+    srcs = ["TokenizedProgramFactoryTest.kt"],
     deps = DEFAULT_DEPS + [
         "@maven//:org_antlr_antlr4_runtime",
+        "//src/org/perses/grammar/c:language_kind",
+    ],
+)
+
+kt_jvm_test(
+    name = "SerializableLanguageKindTest",
+    srcs = ["SerializableLanguageKindTest.kt"],
+    associates = ["//src/org/perses/program:serializable_language_kind"],
+    deps = [
+        "//:jackson",
+        "//:truth",
     ],
 )

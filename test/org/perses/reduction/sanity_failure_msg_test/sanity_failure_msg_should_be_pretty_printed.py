@@ -11,11 +11,23 @@ class SanityFailureMsgTest(unittest.TestCase):
         message_segment = error_message[start:end]
         self.assertIn(
             "The initial sanity check failed.".replace(" ", ""),
-            message_segment
+            error_message
         )
         self.assertIn(
             "The files have been saved, and you can check them at".replace(" ", ""),
             message_segment
+        )
+        self.assertIn(
+            "MARK=".replace(" ", ""),
+            error_message
+        )
+        self.assertIn(
+            "exit 1".replace(" ", ""),
+            error_message
+        )
+        self.assertIn(
+            "<empty>",
+            error_message
         )
 
 

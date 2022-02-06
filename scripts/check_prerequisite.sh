@@ -3,13 +3,15 @@
 set -o pipefail
 set -o nounset
 
-readonly TOOLS=("creduce" \
-    "gcc" \
-    "clang" \
-    "clang-format" \
-    "go" \
-    "rustc" \
-    "rustfmt" \
+readonly TOOLS=("creduce"
+    "gcc"
+    "clang"
+    "clang-format"
+    "go"
+    "python"
+    "ruby"
+    "rustc"
+    "rustfmt"
     "scala")
 
 missing=""

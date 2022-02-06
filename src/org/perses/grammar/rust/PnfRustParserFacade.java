@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,7 +16,14 @@
  */
 package org.perses.grammar.rust;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
+import com.google.common.primitives.ImmutableIntArray;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.atn.ATN;
@@ -30,23 +37,20 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.perses.antlr.ParseTreeWithParser;
 import org.perses.grammar.AbstractDefaultParserFacade;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-
 public final class PnfRustParserFacade
     extends AbstractDefaultParserFacade<PnfRustLexer, PnfRustParser> {
 
   public PnfRustParserFacade() {
     super(
-        LanguageRust.INSTANCE, createCombinedAntlrGrammar("PnfRust.g4", PnfRustParserFacade.class));
+        LanguageRust.INSTANCE,
+        createCombinedAntlrGrammar("PnfRust.g4", PnfRustParserFacade.class),
+        PnfRustLexer.class,
+        PnfRustParser.class,
+        ImmutableIntArray.of(PnfRustLexer.Ident, PnfRustLexer.RawIdentifier));
   }
 
   @Override
-  protected PnfRustLexer createLexer(ANTLRInputStream inputStream) {
+  protected PnfRustLexer createLexer(CharStream inputStream) {
     return new PnfRustLexer(inputStream);
   }
 
@@ -60,9 +64,9 @@ public final class PnfRustParserFacade
     return parser.crate();
   }
 
-  public ParseTreeWithParser parseWithOrigRustParser(File file) throws IOException {
-    try (BufferedReader reader = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8)) {
-      return parseWithOrigRustParser(reader, file.getPath());
+  public ParseTreeWithParser parseWithOrigRustParser(Path file) throws IOException {
+    try (BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
+      return parseWithOrigRustParser(reader, file.toString());
     }
   }
 
@@ -79,7 +83,7 @@ public final class PnfRustParserFacade
     }
   }
 
-  private static RustLexer createOrigSlowRustLexerWithoutCaching(ANTLRInputStream stream) {
+  private static RustLexer createOrigSlowRustLexerWithoutCaching(CharStream stream) {
     final RustLexer lexer = new RustLexer(stream);
     final ATN atn = new ATNDeserializer().deserialize(RustLexer._serializedATN.toCharArray());
     final DFA[] decisionToDFA = new DFA[atn.getNumberOfDecisions()];

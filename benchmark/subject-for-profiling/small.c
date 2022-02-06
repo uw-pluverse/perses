@@ -7,6 +7,9 @@ typedef unsigned char uint8_t;
 typedef unsigned short int uint16_t;
 typedef unsigned int uint32_t;
 typedef unsigned long long int uint64_t;
+
+extern double fabs (double x);
+extern float fabsf (float x);
 int printf(const char *, ...);
 void __assert_fail(const char *__assertion, const char *__file,
                    unsigned int __line, const char *__function);

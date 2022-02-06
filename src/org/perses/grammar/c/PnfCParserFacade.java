@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,7 +16,8 @@
  */
 package org.perses.grammar.c;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
+import com.google.common.primitives.ImmutableIntArray;
+import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.perses.grammar.AbstractDefaultParserFacade;
@@ -24,11 +25,16 @@ import org.perses.grammar.AbstractDefaultParserFacade;
 public final class PnfCParserFacade extends AbstractDefaultParserFacade<PnfCLexer, PnfCParser> {
 
   public PnfCParserFacade() {
-    super(LanguageC.INSTANCE, createCombinedAntlrGrammar("PnfC.g4", PnfCParserFacade.class));
+    super(
+        LanguageC.INSTANCE,
+        createCombinedAntlrGrammar("PnfC.g4", PnfCParserFacade.class),
+        PnfCLexer.class,
+        PnfCParser.class,
+        ImmutableIntArray.of(PnfCLexer.Identifier));
   }
 
   @Override
-  protected PnfCLexer createLexer(ANTLRInputStream inputStream) {
+  protected PnfCLexer createLexer(CharStream inputStream) {
     return new PnfCLexer(inputStream);
   }
 

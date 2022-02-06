@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,24 +18,23 @@
 package org.perses.util;
 
 import com.google.common.base.Preconditions;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.TerminalNode;
-import org.perses.program.SourceFile;
-import org.perses.dot_graph.DotGraph;
-import org.perses.dot_graph.TreeDotifier;
-import org.perses.grammar.ParserFacadeFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.TerminalNode;
+import org.perses.dot_graph.DotGraph;
+import org.perses.dot_graph.TreeDotifier;
+import org.perses.grammar.SingleParserFacadeFactory;
+import org.perses.program.SourceFile;
 
 public class AntlrParseTreePdfier {
 
   public static void pdfier(File sourceFile, File pdfFile) throws IOException {
     final SourceFile source = SourceFile.createFromPath(sourceFile);
     final ParseTreeWithParser treeWithParser =
-        ParserFacadeFactory.SINGLETON
+        SingleParserFacadeFactory.SINGLETON
             .createParserFacade(source.getLanguageKind())
             .parseFile(sourceFile);
     TreeDotifier.dotifyAntlrParseTree(

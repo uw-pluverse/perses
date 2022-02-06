@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,25 +17,39 @@
 package org.perses.reduction.reducer
 
 import com.google.common.collect.ImmutableList
-import org.perses.reduction.AbstractReducer
+import org.perses.reduction.AbstractTokenReducer
+import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.tree.spar.AbstractSparTreeEdit
-import org.perses.tree.spar.AbstractSparTreeNode
-import org.perses.tree.spar.ChildHoistingActionSet
-import org.perses.tree.spar.NodeDeletionActionSet
-import org.perses.tree.spar.NodeDeletionTreeEdit
-import org.perses.tree.spar.NodeReplacementTreeEdit
-import org.perses.tree.spar.SparTree
-import org.perses.tree.spar.SparTreeSimplifier
+import org.perses.spartree.AbstractSparTreeEdit
+import org.perses.spartree.AbstractSparTreeNode
+import org.perses.spartree.ChildHoistingActionSet
+import org.perses.spartree.NodeDeletionActionSet
+import org.perses.spartree.NodeDeletionTreeEdit
+import org.perses.spartree.NodeReplacementTreeEdit
+import org.perses.spartree.SparTree
+import org.perses.spartree.SparTreeSimplifier
 import java.util.Queue
 
 abstract class AbstractNodeReducer(
   reducerAnnotation: ReducerAnnotation,
   reducerContext: ReducerContext
-) : AbstractReducer(reducerAnnotation, reducerContext) {
+) : AbstractTokenReducer(reducerAnnotation, reducerContext) {
 
-  override fun internalReduce(tree: SparTree) {
+  final override fun internalReduce(fixpointReductionState: FixpointReductionState) {
+    if (requiresParsableTree() && !fixpointReductionState.sparTree.parsable) {
+      val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
+      listenerManager.onReductionSkipped(
+        fixpointReductionState.fixpointIterationStartEvent.createReductionSkippedEvent(
+          System.currentTimeMillis(),
+          tree.tokenCount,
+          tree = tree,
+          message = "The spar-tree is not parsable."
+        )
+      )
+      return
+    }
+    val tree = fixpointReductionState.sparTree.getParsableTreeOrFail()
     val root = tree.root
     assert(SparTreeSimplifier.assertSingleEntrySingleExitPathProperty(root))
     val queue = createReductionQueue()
@@ -43,13 +57,28 @@ abstract class AbstractNodeReducer(
     while (!queue.isEmpty()) {
       val node = queue.poll()
       val oldTokenCount = tree.tokenCount
-      listenerManager.onNodeReductionStart(tree, node, oldTokenCount)
+      val nodeReductionStartEvent =
+        fixpointReductionState.fixpointIterationStartEvent.createNodeReductionStartEvent(
+          System.currentTimeMillis(),
+          programSize = oldTokenCount,
+          tree = tree,
+          node = node
+        )
+      listenerManager.onNodeReductionStart(nodeReductionStartEvent)
       val pendingNodes = reduceOneNode(tree, node)
       val newTokenCount = tree.tokenCount
-      listenerManager.onNodeReductionEnd(tree, node, queue.size, newTokenCount)
+      listenerManager.onNodeReductionEnd(
+        nodeReductionStartEvent.createEndEvent(
+          currentTimeMillis = System.currentTimeMillis(),
+          remainingQueueSize = queue.size,
+          programSize = newTokenCount
+        )
+      )
       queue.addAll(pendingNodes)
     }
   }
+
+  protected abstract fun requiresParsableTree(): Boolean
 
   protected abstract fun createReductionQueue(): Queue<AbstractSparTreeNode>
 
@@ -58,12 +87,12 @@ abstract class AbstractNodeReducer(
     node: AbstractSparTreeNode
   ): ImmutableList<AbstractSparTreeNode>
 
-  protected fun testSparTreeEdit(edit: AbstractSparTreeEdit) =
+  protected fun testSparTreeEdit(edit: AbstractSparTreeEdit<*>) =
     testAllTreeEditsAndReturnTheBest(ImmutableList.of(edit))
 
   protected fun addDeletionEditToEditListAndLog(
     actionSet: NodeDeletionActionSet,
-    editList: MutableList<in AbstractSparTreeEdit>,
+    editList: MutableList<in AbstractSparTreeEdit<*>>,
     tree: SparTree
   ) {
     if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
@@ -75,7 +104,7 @@ abstract class AbstractNodeReducer(
 
   protected fun addEditToEditListAndLog(
     actionSet: ChildHoistingActionSet,
-    editList: MutableList<in AbstractSparTreeEdit>,
+    editList: MutableList<in AbstractSparTreeEdit<*>>,
     tree: SparTree
   ) {
     if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
@@ -87,7 +116,7 @@ abstract class AbstractNodeReducer(
 
   protected fun computePendingNodes(
     currentNode: AbstractSparTreeNode,
-    bestEdit: AbstractSparTreeEdit
+    bestEdit: AbstractSparTreeEdit<*>
   ): ImmutableList<AbstractSparTreeNode> {
     if (!currentNode.isPermanentlyDeleted) { // Children are changed, so work on the children later.
       return ImmutableList.copyOf(currentNode.immutableChildView)

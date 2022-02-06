@@ -1,14 +1,11 @@
 Usage: org.perses.Main [options]
   Options:
-  * --test-script
+  * --test-script, --test, -t
       The test script to specify the property the reducer needs to preserve.
-  * --input-file
+  * --input-file, --input, -i
       The input file to reduce
-    --in-place
-      perform in-place reduction
-      Default: false
-    --output-file
-      The output file to save the reduced result.
+    --output-dir, -o
+      The output directory to save the reduced result.
     --fixpoint
       iterative reduction till fixpoint
       Default: true
@@ -17,7 +14,7 @@ Usage: org.perses.Main [options]
       Default: auto
     --code-format
       The format of the reduced program.
-      Possible Values: [SINGLE_TOKEN_PER_LINE, ORIG_FORMAT, COMPACT_ORIG_FORMAT]
+      Possible Values: [SINGLE_TOKEN_PER_LINE, ORIG_FORMAT, COMPACT_ORIG_FORMAT, PYTHON3_FORMAT, COMPACT_PYTHON3_FORMAT]
     --call-formatter
       call a formatter on the final result
       Default: false
@@ -34,9 +31,6 @@ Usage: org.perses.Main [options]
       reduction algorithm: use --list-algs to list all available algorithms
     --list-algs
       list all the reduction algorithms.
-    --reparse-each-iteration
-      Reparse the program before the start of each fixpoint iteration.
-      Default: true
     --enable-token-slicer
       Enable token slicer after syntax-guided reduction is done. Maybe slow.
       Default: false
@@ -44,32 +38,24 @@ Usage: org.perses.Main [options]
       Enable tree slicer after syntax-guided reduction, and before token 
       slicer 
       Default: false
-    --use-real-ddmin
-      Whether to use the real delta debugging algorithm to reduce kleene 
-      nodes. 
+    --enable-line-slicer
+      Enable line slicer after syntax-guided reduction, and before token 
+      slicer 
       Default: false
-    --use-optc-parser
-      Use the OptC parser to construct the spar-tree.
-      Default: false
+    --language-ext-jars
+      A list of JAR files to support new languages
+      Default: []
     --query-caching
       Enable query caching for test script executions.
       Default: AUTO
       Possible Values: [TRUE, FALSE, AUTO]
-    --edit-caching
-      Enable caching for edits performed between two successful reductions.
-      Default: true
-    --query-cache-refresh-threshold
-      The threshold triggers a refresh of the query cache. The refresh follows 
-      the equation: t' - t'' >= t * threshold(%). t 	- original tokens. t' 	- 
-      tokens of the best program at last refresh. t''	- tokens of the current 
-      best program. Refresh threshold requires an integer input ranging [0, 
-      100]. e.g. 0 represents 0%, 85 represents 85%.
-      Default: 0
     --progress-dump-file
       The file to record the reduction process. The dump file can be large..
     --stat-dump-file
       The file to save the statistics collected during reduction.
     --profile-query-cache
+      The file to save the profiling data of the query cache.
+    --profile-query-cache-memory
       The file to save the profiling data of the query cache.
     --profile-actionset
       The file to save information of all the created edit action sets.

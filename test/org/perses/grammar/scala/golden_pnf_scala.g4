@@ -2,1178 +2,6 @@
 // DO NOT MODIFY.
 grammar PnfScala;
 
-literal
-    : BooleanLiteral
-    | CharacterLiteral
-    | StringLiteral
-    | SymbolLiteral
-    | 'null'
-    | optional__literal_1 alternative__literal_3
-    ;
-
-optional__literal_1
-    : '-'?
-    ;
-
-alternative__literal_3
-    : FloatingPointLiteral
-    | IntegerLiteral
-    ;
-
-qualId
-    : Id kleene_star__qualId_2
-    ;
-
-qualId_1
-    : '.' Id
-    ;
-
-kleene_star__qualId_2
-    : qualId_1*
-    ;
-
-ids
-    : Id kleene_star__ids_2
-    ;
-
-ids_1
-    : ',' Id
-    ;
-
-kleene_star__ids_2
-    : ids_1*
-    ;
-
-stableId
-    : stableId_6 kleene_star__qualId_2
-    ;
-
-stableId_1
-    : Id '.'
-    ;
-
-optional__stableId_2
-    : stableId_1?
-    ;
-
-optional__stableId_3
-    : classQualifier?
-    ;
-
-stableId_6
-    : Id
-    | optional__stableId_2 ('this' | 'super' optional__stableId_3 '.' Id)
-    ;
-
-classQualifier
-    : '[' Id ']'
-    ;
-
-type_
-    : functionArgTypes '=>' type_
-    | infixType optional__type__1
-    ;
-
-optional__type__1
-    : existentialClause?
-    ;
-
-functionArgTypes
-    : infixType
-    | '(' optional__functionArgTypes_4 ')'
-    ;
-
-functionArgTypes_1
-    : ',' paramType
-    ;
-
-kleene_star__functionArgTypes_2
-    : functionArgTypes_1*
-    ;
-
-functionArgTypes_3
-    : paramType kleene_star__functionArgTypes_2
-    ;
-
-optional__functionArgTypes_4
-    : functionArgTypes_3?
-    ;
-
-infixType
-    : compoundType kleene_star__infixType_2
-    ;
-
-infixType_1
-    : Id compoundType
-    ;
-
-kleene_star__infixType_2
-    : infixType_1*
-    ;
-
-existentialClause
-    : 'forSome' '{' kleene_plus__existentialClause_1 '}'
-    ;
-
-kleene_plus__existentialClause_1
-    : existentialDcl+
-    ;
-
-paramType
-    : type_ '*'
-    | optional__paramType_1 type_
-    ;
-
-optional__paramType_1
-    : '=>'?
-    ;
-
-existentialDcl
-    : 'type' typeDcl
-    | 'val' valDcl
-    ;
-
-typeDcl
-    : Id optional__typeDcl_1 optional__typeDcl_3 optional__typeDcl_5
-    ;
-
-optional__typeDcl_1
-    : typeParamClause?
-    ;
-
-typeDcl_2
-    : '>:' type_
-    ;
-
-optional__typeDcl_3
-    : typeDcl_2?
-    ;
-
-typeDcl_4
-    : '<:' type_
-    ;
-
-optional__typeDcl_5
-    : typeDcl_4?
-    ;
-
-valDcl
-    : ids ':' type_
-    ;
-
-compoundType
-    : refinement
-    | annotType kleene_star__compoundType_2 optional__compoundType_3
-    ;
-
-compoundType_1
-    : 'with' annotType
-    ;
-
-kleene_star__compoundType_2
-    : compoundType_1*
-    ;
-
-optional__compoundType_3
-    : refinement?
-    ;
-
-annotType
-    : simpleType kleene_star__annotType_1
-    ;
-
-kleene_star__annotType_1
-    : annotation*
-    ;
-
-refinement
-    : optional__refinement_1 '{' kleene_plus__refinement_2 '}'
-    ;
-
-optional__refinement_1
-    : NL?
-    ;
-
-kleene_plus__refinement_2
-    : refineStat+
-    ;
-
-simpleType
-    : simpleType_5 kleene_star__simpleType_3
-    ;
-
-simpleType_1
-    : '.' 'type'
-    ;
-
-optional__simpleType_2
-    : simpleType_1?
-    ;
-
-kleene_star__simpleType_3
-    : simpleType_4*
-    ;
-
-simpleType_4
-    : typeArgs
-    | '#' Id
-    ;
-
-simpleType_5
-    : '(' types ')'
-    | stableId optional__simpleType_2
-    ;
-
-annotation
-    : '@' simpleType kleene_star__annotation_1
-    ;
-
-kleene_star__annotation_1
-    : argumentExprs*
-    ;
-
-typeArgs
-    : '[' types ']'
-    ;
-
-types
-    : type_ kleene_star__types_2
-    ;
-
-types_1
-    : ',' type_
-    ;
-
-kleene_star__types_2
-    : types_1*
-    ;
-
-refineStat
-    : dcl
-    | 'type' typeDef
-    ;
-
-dcl
-    : 'def' funDcl
-    | 'type' kleene_star__dcl_1 typeDcl
-    | alternative__dcl_2 valDcl
-    ;
-
-kleene_star__dcl_1
-    : NL*
-    ;
-
-alternative__dcl_2
-    : 'val'
-    | 'var'
-    ;
-
-typeDef
-    : Id optional__typeDcl_1 '=' type_
-    ;
-
-typePat
-    : type_
-    ;
-
-ascription
-    : ':' alternative__ascription_3
-    ;
-
-kleene_plus__ascription_1
-    : annotation+
-    ;
-
-alternative__ascription_3
-    : infixType
-    | kleene_plus__ascription_1
-    | '_' '*'
-    ;
-
-expr
-    : expr1
-    | (bindings | optional__expr_1 Id | '_') '=>' expr
-    ;
-
-optional__expr_1
-    : 'implicit'?
-    ;
-
-bindings
-    : '(' binding kleene_star__bindings_2 ')'
-    ;
-
-bindings_1
-    : ',' binding
-    ;
-
-kleene_star__bindings_2
-    : bindings_1*
-    ;
-
-expr1
-    : 'do' expr 'while' '(' expr ')'
-    | 'try' expr optional__expr1_6 optional__expr1_8
-    | 'return' optional__expr1_10
-    | alternative__expr1_18 expr
-    | postfixExpr alternative__expr1_19
-    | 'if' '(' expr ')' kleene_star__dcl_1 expr optional__expr1_3
-    ;
-
-expr1_2
-    : 'else' expr
-    ;
-
-optional__expr1_3
-    : expr1_2?
-    ;
-
-expr1_5
-    : 'catch' expr
-    ;
-
-optional__expr1_6
-    : expr1_5?
-    ;
-
-expr1_7
-    : 'finally' expr
-    ;
-
-optional__expr1_8
-    : expr1_7?
-    ;
-
-optional__expr1_9
-    : 'yield'?
-    ;
-
-optional__expr1_10
-    : expr?
-    ;
-
-optional__expr1_11
-    : '_'?
-    ;
-
-expr1_12
-    : (simpleExpr | simpleExpr1 optional__expr1_11) '.'
-    ;
-
-optional__expr1_13
-    : expr1_12?
-    ;
-
-optional__expr1_14
-    : ascription?
-    ;
-
-alternative__expr1_18
-    : 'throw'
-    | 'for' ('(' enumerators ')' | '{' enumerators '}') optional__expr1_9
-    | 'while' '(' expr ')' kleene_star__dcl_1
-    | alternative__expr1_20 '='
-    ;
-
-alternative__expr1_19
-    : optional__expr1_14
-    | 'match' '{' caseClauses '}'
-    ;
-
-alternative__expr1_20
-    : optional__expr1_13 Id
-    | simpleExpr1 argumentExprs
-    ;
-
-enumerators
-    : kleene_plus__enumerators_1
-    ;
-
-kleene_plus__enumerators_1
-    : generator+
-    ;
-
-simpleExpr
-    : blockExpr
-    | 'new' (classTemplate | templateBody)
-    ;
-
-simpleExpr1
-    : simpleExpr1_6 kleene_star__simpleExpr1_4
-    ;
-
-optional__simpleExpr1_1
-    : exprs?
-    ;
-
-kleene_star__simpleExpr1_4
-    : simpleExpr1_5*
-    ;
-
-simpleExpr1_5
-    : argumentExprs
-    | optional__expr1_11 alternative__simpleExpr1_7
-    ;
-
-simpleExpr1_6
-    : literal
-    | stableId
-    | '_'
-    | '(' optional__simpleExpr1_1 ')'
-    | simpleExpr alternative__simpleExpr1_7
-    ;
-
-alternative__simpleExpr1_7
-    : typeArgs
-    | '.' Id
-    ;
-
-argumentExprs
-    : '(' alternative__argumentExprs_5 ')'
-    | optional__refinement_1 blockExpr
-    ;
-
-argumentExprs_2
-    : exprs ','
-    ;
-
-optional__argumentExprs_3
-    : argumentExprs_2?
-    ;
-
-alternative__argumentExprs_5
-    : optional__simpleExpr1_1
-    | optional__argumentExprs_3 postfixExpr ':' '_' '*'
-    ;
-
-postfixExpr
-    : infixExpr optional__postfixExpr_1 kleene_star__postfixExpr_3 optional__refinement_1
-    ;
-
-optional__postfixExpr_1
-    : Id?
-    ;
-
-postfixExpr_2
-    : prefixDef simpleExpr1
-    ;
-
-kleene_star__postfixExpr_3
-    : postfixExpr_2*
-    ;
-
-caseClauses
-    : kleene_plus__caseClauses_1
-    ;
-
-kleene_plus__caseClauses_1
-    : caseClause+
-    ;
-
-prefixDef
-    : '-'
-    | '+'
-    | '~'
-    | '!'
-    ;
-
-infixExpr
-    : prefixExpr kleene_star__infixExpr_2
-    ;
-
-kleene_star__infixExpr_2
-    : infixExpr_3*
-    ;
-
-infixExpr_3
-    : Id optional__refinement_1 infixExpr
-    ;
-
-prefixExpr
-    : optional__prefixExpr_1 (simpleExpr | simpleExpr1 optional__expr1_11)
-    ;
-
-optional__prefixExpr_1
-    : prefixDef?
-    ;
-
-classTemplate
-    : optional__classTemplate_1 classParents optional__classTemplate_2
-    ;
-
-optional__classTemplate_1
-    : earlyDefs?
-    ;
-
-optional__classTemplate_2
-    : templateBody?
-    ;
-
-templateBody
-    : optional__refinement_1 '{' optional__templateBody_2 kleene_plus__templateBody_3 '}'
-    ;
-
-optional__templateBody_2
-    : selfType?
-    ;
-
-kleene_plus__templateBody_3
-    : templateStat+
-    ;
-
-blockExpr
-    : '{' alternative__blockExpr_1 '}'
-    ;
-
-alternative__blockExpr_1
-    : block
-    | caseClauses
-    ;
-
-exprs
-    : expr kleene_star__exprs_2
-    ;
-
-exprs_1
-    : ',' expr
-    ;
-
-kleene_star__exprs_2
-    : exprs_1*
-    ;
-
-block
-    : kleene_plus__block_1 optional__block_2
-    ;
-
-kleene_plus__block_1
-    : blockStat+
-    ;
-
-optional__block_2
-    : resultExpr?
-    ;
-
-blockStat
-    : import_
-    | expr1
-    | kleene_star__annotType_1 alternative__blockStat_6
-    ;
-
-blockStat_2
-    : 'implicit'
-    | 'lazy'
-    ;
-
-optional__blockStat_3
-    : blockStat_2?
-    ;
-
-kleene_star__blockStat_5
-    : localModifier*
-    ;
-
-alternative__blockStat_6
-    : kleene_star__blockStat_5 tmplDef
-    | optional__blockStat_3 def
-    ;
-
-resultExpr
-    : expr1
-    | (bindings | (optional__expr_1 Id | '_') ':' compoundType) '=>' block
-    ;
-
-import_
-    : 'import' importExpr kleene_star__import__2
-    ;
-
-import__1
-    : ',' importExpr
-    ;
-
-kleene_star__import__2
-    : import__1*
-    ;
-
-def
-    : patVarDef
-    | tmplDef
-    | 'def' funDef
-    | 'type' kleene_star__dcl_1 typeDef
-    ;
-
-localModifier
-    : 'abstract'
-    | 'final'
-    | 'sealed'
-    | 'implicit'
-    | 'lazy'
-    ;
-
-tmplDef
-    : 'trait' traitDef
-    | optional__tmplDef_1 alternative__tmplDef_3
-    ;
-
-optional__tmplDef_1
-    : 'case'?
-    ;
-
-alternative__tmplDef_3
-    : 'class' classDef
-    | 'object' objectDef
-    ;
-
-generator
-    : pattern1 '<-' expr kleene_star__generator_2
-    ;
-
-generator_1
-    : guard
-    | pattern1 '=' expr
-    ;
-
-kleene_star__generator_2
-    : generator_1*
-    ;
-
-pattern1
-    : pattern2
-    | (BoundVarid | '_' | Id) ':' typePat
-    ;
-
-guard
-    : 'if' postfixExpr
-    ;
-
-caseClause
-    : 'case' pattern optional__caseClause_1 '=>' block
-    ;
-
-optional__caseClause_1
-    : guard?
-    ;
-
-pattern
-    : pattern1 kleene_star__pattern_2
-    ;
-
-pattern_1
-    : '|' pattern1
-    ;
-
-kleene_star__pattern_2
-    : pattern_1*
-    ;
-
-pattern2
-    : pattern3
-    | Id optional__pattern2_2
-    ;
-
-pattern2_1
-    : '@' pattern3
-    ;
-
-optional__pattern2_2
-    : pattern2_1?
-    ;
-
-pattern3
-    : simplePattern optional__pattern3_4
-    ;
-
-pattern3_2
-    : Id optional__refinement_1 simplePattern
-    ;
-
-kleene_star__pattern3_3
-    : pattern3_2*
-    ;
-
-optional__pattern3_4
-    : kleene_star__pattern3_3?
-    ;
-
-simplePattern
-    : '_'
-    | Varid
-    | literal
-    | stableId optional__simplePattern_3
-    | alternative__simplePattern_9 ')'
-    ;
-
-optional__simplePattern_1
-    : patterns?
-    ;
-
-simplePattern_2
-    : '(' optional__simplePattern_1 ')'
-    ;
-
-optional__simplePattern_3
-    : simplePattern_2?
-    ;
-
-simplePattern_4
-    : patterns ','
-    ;
-
-optional__simplePattern_5
-    : simplePattern_4?
-    ;
-
-simplePattern_6
-    : Id '@'
-    ;
-
-optional__simplePattern_7
-    : simplePattern_6?
-    ;
-
-alternative__simplePattern_9
-    : stableId '(' optional__simplePattern_5 optional__simplePattern_7 '_' '*'
-    | '(' optional__simplePattern_1
-    ;
-
-patterns
-    : '_' '*'
-    | pattern optional__patterns_2
-    ;
-
-patterns_1
-    : ',' patterns
-    ;
-
-optional__patterns_2
-    : patterns_1?
-    ;
-
-typeParamClause
-    : '[' variantTypeParam kleene_star__typeParamClause_2 ']'
-    ;
-
-typeParamClause_1
-    : ',' variantTypeParam
-    ;
-
-kleene_star__typeParamClause_2
-    : typeParamClause_1*
-    ;
-
-variantTypeParam
-    : kleene_star__annotType_1 optional__variantTypeParam_3 typeParam
-    ;
-
-variantTypeParam_2
-    : '+'
-    | '-'
-    ;
-
-optional__variantTypeParam_3
-    : variantTypeParam_2?
-    ;
-
-funTypeParamClause
-    : '[' typeParam kleene_star__funTypeParamClause_2 ']'
-    ;
-
-funTypeParamClause_1
-    : ',' typeParam
-    ;
-
-kleene_star__funTypeParamClause_2
-    : funTypeParamClause_1*
-    ;
-
-typeParam
-    : (Id | '_') optional__typeDcl_1 optional__typeDcl_3 optional__typeDcl_5 kleene_star__typeParam_7 kleene_star__typeParam_9
-    ;
-
-typeParam_6
-    : '<%' type_
-    ;
-
-kleene_star__typeParam_7
-    : typeParam_6*
-    ;
-
-typeParam_8
-    : ':' type_
-    ;
-
-kleene_star__typeParam_9
-    : typeParam_8*
-    ;
-
-paramClauses
-    : kleene_star__paramClauses_1 optional__paramClauses_4
-    ;
-
-kleene_star__paramClauses_1
-    : paramClause*
-    ;
-
-paramClauses_3
-    : optional__refinement_1 '(' 'implicit' params ')'
-    ;
-
-optional__paramClauses_4
-    : paramClauses_3?
-    ;
-
-paramClause
-    : optional__refinement_1 '(' optional__paramClause_2 ')'
-    ;
-
-optional__paramClause_2
-    : params?
-    ;
-
-params
-    : param kleene_star__params_2
-    ;
-
-params_1
-    : ',' param
-    ;
-
-kleene_star__params_2
-    : params_1*
-    ;
-
-param
-    : kleene_star__annotType_1 Id optional__param_3 optional__param_5
-    ;
-
-param_2
-    : ':' paramType
-    ;
-
-optional__param_3
-    : param_2?
-    ;
-
-param_4
-    : '=' expr
-    ;
-
-optional__param_5
-    : param_4?
-    ;
-
-classParamClauses
-    : kleene_star__classParamClauses_1 optional__classParamClauses_4
-    ;
-
-kleene_star__classParamClauses_1
-    : classParamClause*
-    ;
-
-classParamClauses_3
-    : optional__refinement_1 '(' 'implicit' classParams ')'
-    ;
-
-optional__classParamClauses_4
-    : classParamClauses_3?
-    ;
-
-classParamClause
-    : optional__refinement_1 '(' optional__classParamClause_2 ')'
-    ;
-
-optional__classParamClause_2
-    : classParams?
-    ;
-
-classParams
-    : classParam kleene_star__classParams_2
-    ;
-
-classParams_1
-    : ',' classParam
-    ;
-
-kleene_star__classParams_2
-    : classParams_1*
-    ;
-
-classParam
-    : kleene_star__annotType_1 kleene_star__classParam_2 optional__classParam_4 Id ':' paramType optional__param_5
-    ;
-
-kleene_star__classParam_2
-    : modifier*
-    ;
-
-optional__classParam_4
-    : alternative__dcl_2?
-    ;
-
-modifier
-    : localModifier
-    | accessModifier
-    | 'override'
-    ;
-
-binding
-    : (Id | '_') optional__binding_2
-    ;
-
-optional__binding_2
-    : typeParam_8?
-    ;
-
-accessModifier
-    : ('private' | 'protected') optional__accessModifier_1
-    ;
-
-optional__accessModifier_1
-    : accessQualifier?
-    ;
-
-accessQualifier
-    : '[' (Id | 'this') ']'
-    ;
-
-constrAnnotation
-    : '@' simpleType argumentExprs
-    ;
-
-selfType
-    : alternative__selfType_3 '=>'
-    ;
-
-alternative__selfType_3
-    : 'this' ':' type_
-    | Id optional__binding_2
-    ;
-
-templateStat
-    : import_
-    | expr
-    | kleene_star__templateStat_3 kleene_star__classParam_2 alternative__templateStat_9
-    ;
-
-templateStat_2
-    : annotation optional__refinement_1
-    ;
-
-kleene_star__templateStat_3
-    : templateStat_2*
-    ;
-
-alternative__templateStat_9
-    : dcl
-    | def
-    ;
-
-importExpr
-    : stableId optional__importExpr_2
-    ;
-
-importExpr_1
-    : '.' (Id | '_' | importSelectors)
-    ;
-
-optional__importExpr_2
-    : importExpr_1?
-    ;
-
-importSelectors
-    : '{' kleene_star__importSelectors_2 (importSelector | '_') '}'
-    ;
-
-importSelectors_1
-    : importSelector ','
-    ;
-
-kleene_star__importSelectors_2
-    : importSelectors_1*
-    ;
-
-importSelector
-    : Id optional__importSelector_2
-    ;
-
-importSelector_1
-    : '=>' (Id | '_')
-    ;
-
-optional__importSelector_2
-    : importSelector_1?
-    ;
-
-funDcl
-    : funSig optional__binding_2
-    ;
-
-funSig
-    : Id optional__funSig_1 paramClauses
-    ;
-
-optional__funSig_1
-    : funTypeParamClause?
-    ;
-
-patVarDef
-    : 'val' patDef
-    | 'var' varDef
-    ;
-
-patDef
-    : pattern2 kleene_star__patDef_2 optional__binding_2 '=' expr
-    ;
-
-patDef_1
-    : ',' pattern2
-    ;
-
-kleene_star__patDef_2
-    : patDef_1*
-    ;
-
-varDef
-    : patDef
-    | ids ':' type_ '=' '_'
-    ;
-
-funDef
-    : funSig alternative__funDef_5
-    | 'this' paramClause paramClauses ('=' constrExpr | optional__refinement_1 constrBlock)
-    ;
-
-alternative__funDef_5
-    : optional__refinement_1 '{' block '}'
-    | optional__binding_2 '=' expr
-    ;
-
-constrExpr
-    : selfInvocation
-    | constrBlock
-    ;
-
-constrBlock
-    : '{' selfInvocation kleene_star__constrBlock_1 '}'
-    ;
-
-kleene_star__constrBlock_1
-    : blockStat*
-    ;
-
-classDef
-    : Id optional__typeDcl_1 kleene_star__classDef_2 optional__classDef_3 classParamClauses classTemplateOpt
-    ;
-
-kleene_star__classDef_2
-    : constrAnnotation*
-    ;
-
-optional__classDef_3
-    : accessModifier?
-    ;
-
-objectDef
-    : Id classTemplateOpt
-    ;
-
-traitDef
-    : Id optional__typeDcl_1 traitTemplateOpt
-    ;
-
-classTemplateOpt
-    : optional__classTemplateOpt_3
-    | 'extends' classTemplate
-    ;
-
-optional__classTemplateOpt_1
-    : 'extends'?
-    ;
-
-classTemplateOpt_2
-    : optional__classTemplateOpt_1 templateBody
-    ;
-
-optional__classTemplateOpt_3
-    : classTemplateOpt_2?
-    ;
-
-traitTemplateOpt
-    : optional__classTemplateOpt_3
-    | 'extends' traitTemplate
-    ;
-
-traitTemplate
-    : optional__classTemplate_1 traitParents optional__classTemplate_2
-    ;
-
-earlyDefs
-    : '{' kleene_plus__earlyDefs_1 '}' 'with'
-    ;
-
-kleene_plus__earlyDefs_1
-    : earlyDef+
-    ;
-
-classParents
-    : constr kleene_star__compoundType_2
-    ;
-
-traitParents
-    : annotType kleene_star__compoundType_2
-    ;
-
-constr
-    : annotType kleene_star__annotation_1
-    ;
-
-earlyDef
-    : kleene_star__templateStat_3 kleene_star__classParam_2 patVarDef
-    ;
-
-selfInvocation
-    : 'this' kleene_plus__selfInvocation_1
-    ;
-
-kleene_plus__selfInvocation_1
-    : argumentExprs+
-    ;
-
-topStatSeq
-    : kleene_plus__topStatSeq_1
-    ;
-
-kleene_plus__topStatSeq_1
-    : topStat+
-    ;
-
-topStat
-    : import_
-    | packaging
-    | packageObject
-    | kleene_star__templateStat_3 kleene_star__classParam_2 tmplDef
-    ;
-
-packaging
-    : 'package' qualId optional__refinement_1 '{' topStatSeq '}'
-    ;
-
-packageObject
-    : 'package' 'object' objectDef
-    ;
-
-compilationUnit
-    : kleene_star__compilationUnit_2 topStatSeq EOF
-    ;
-
-compilationUnit_1
-    : 'package' qualId
-    ;
-
-kleene_star__compilationUnit_2
-    : compilationUnit_1*
-    ;
-
 Id
     : Plainid
     | '`' (CharNoBackQuoteOrNewline | UnicodeEscape | CharEscapeSeq)+ '`'
@@ -1247,26 +75,22 @@ NL
     | '\r' '\n'?
     ;
 
-fragment
-CharNoBackQuoteOrNewline
+fragment CharNoBackQuoteOrNewline
     : [\u0020-\u0026\u0028-\u007E]
     ;
 
-fragment
-UnicodeEscape
+fragment UnicodeEscape
     : '\\' 'u' 'u'? HexDigit HexDigit HexDigit HexDigit
     ;
 
-fragment
-WhiteSpace
+fragment WhiteSpace
     : '\u0020'
     | '\u0009'
     | '\u000D'
     | '\u000A'
     ;
 
-fragment
-Opchar
+fragment Opchar
     : '!'
     | '#'
     | '%'
@@ -1286,122 +110,102 @@ Opchar
     | '~'
     ;
 
-fragment
-Op
+fragment Op
     : '/'? Opchar+
     ;
 
-fragment
-Idrest
+fragment Idrest
     : (Letter | Digit)* ('_' Op)?
     ;
 
-fragment
-StringElement
+fragment StringElement
     : '\u0020'
     | '\u0021'
     | '\u0023'..'\u007F'
     | CharEscapeSeq
     ;
 
-fragment
-MultiLineChars
+fragment MultiLineChars
     : (StringElement | NL)*
     ;
 
-fragment
-HexDigit
+fragment HexDigit
     : '0'..'9'
     | 'A'..'F'
     | 'a'..'f'
     ;
 
-fragment
-FloatType
+fragment FloatType
     : 'F'
     | 'f'
     | 'D'
     | 'd'
     ;
 
-fragment
-Upper
+fragment Upper
     : 'A'..'Z'
     | '$'
     | '_'
     | UnicodeClass_LU
     ;
 
-fragment
-Lower
+fragment Lower
     : 'a'..'z'
     | UnicodeClass_LL
     ;
 
-fragment
-Letter
+fragment Letter
     : Upper
     | Lower
     | UnicodeClass_LO
     | UnicodeClass_LT
     ;
 
-fragment
-ExponentPart
+fragment ExponentPart
     : ('E' | 'e') ('+' | '-')? Digit+
     ;
 
-fragment
-PrintableChar
+fragment PrintableChar
     : '\u0020'..'\u007F'
     ;
 
-fragment
-PrintableCharExceptWhitespace
+fragment PrintableCharExceptWhitespace
     : '\u0021'..'\u007F'
     ;
 
-fragment
-CharEscapeSeq
+fragment CharEscapeSeq
     : '\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | '\'' | '\\')
     ;
 
-fragment
-DecimalNumeral
+fragment DecimalNumeral
     : '0'
     | NonZeroDigit Digit*
     ;
 
-fragment
-HexNumeral
+fragment HexNumeral
     : '0' 'x' HexDigit HexDigit+
     ;
 
-fragment
-Digit
+fragment Digit
     : '0'
     | NonZeroDigit
     ;
 
-fragment
-NonZeroDigit
+fragment NonZeroDigit
     : '1'..'9'
     ;
 
-fragment
-VaridFragment
+fragment VaridFragment
     : Varid
     ;
 
-fragment
-Plainid
+fragment Plainid
     : Upper Idrest
     | Lower Idrest
     | Op
     ;
 
-fragment
-UnicodeLetter
+fragment UnicodeLetter
     : UnicodeClass_LU
     | UnicodeClass_LL
     | UnicodeClass_LT
@@ -1409,8 +213,7 @@ UnicodeLetter
     | UnicodeClass_LO
     ;
 
-fragment
-UnicodeClass_LU
+fragment UnicodeClass_LU
     : '\u0041'..'\u005a'
     | '\u00c0'..'\u00d6'
     | '\u00d8'..'\u00de'
@@ -1514,8 +317,7 @@ UnicodeClass_LU
     | '\uff21'..'\uff3a'
     ;
 
-fragment
-UnicodeClass_LL
+fragment UnicodeClass_LL
     : '\u0061'..'\u007A'
     | '\u00b5'..'\u00df'
     | '\u00e0'..'\u00f6'
@@ -1631,8 +433,7 @@ UnicodeClass_LL
     | '\uff41'..'\uff5a'
     ;
 
-fragment
-UnicodeClass_LT
+fragment UnicodeClass_LT
     : '\u01c5'..'\u01cb'
     | '\u01f2'..'\u1f88'
     | '\u1f89'..'\u1f8f'
@@ -1642,8 +443,7 @@ UnicodeClass_LT
     | '\u1ffc'..'\u1ffc'
     ;
 
-fragment
-UnicodeClass_LM
+fragment UnicodeClass_LM
     : '\u02b0'..'\u02c1'
     | '\u02c6'..'\u02d1'
     | '\u02e0'..'\u02e4'
@@ -1686,8 +486,7 @@ UnicodeClass_LM
     | '\uff9f'..'\uff9f'
     ;
 
-fragment
-UnicodeClass_LO
+fragment UnicodeClass_LO
     : '\u00aa'..'\u00ba'
     | '\u01bb'..'\u01c0'
     | '\u01c1'..'\u01c3'
@@ -1966,8 +765,7 @@ UnicodeClass_LO
     | '\uffda'..'\uffdc'
     ;
 
-fragment
-UnicodeDigit
+fragment UnicodeDigit
     : '\u0030'..'\u0039'
     | '\u0660'..'\u0669'
     | '\u06f0'..'\u06f9'
@@ -2025,5 +823,1554 @@ COMMENT
 LINE_COMMENT
     : '//' (~[\r\n])* -> skip
 
+    ;
+
+literal
+    : BooleanLiteral
+    | CharacterLiteral
+    | StringLiteral
+    | SymbolLiteral
+    | 'null'
+    | aux_rule__literal_4
+    ;
+
+qualId
+    : Id kleene_star__qualId_2
+    ;
+
+ids
+    : Id kleene_star__ids_2
+    ;
+
+classQualifier
+    : '[' Id ']'
+    ;
+
+type_
+    : aux_rule__type__2
+    | aux_rule__type__3
+    ;
+
+functionArgTypes
+    : infixType
+    | aux_rule__functionArgTypes_5
+    ;
+
+existentialClause
+    : 'forSome' '{' kleene_plus__existentialClause_1 '}'
+    ;
+
+existentialDcl
+    : aux_rule__existentialDcl_1
+    | aux_rule__existentialDcl_2
+    ;
+
+infixType
+    : compoundType kleene_star__infixType_2
+    ;
+
+compoundType
+    : aux_rule__compoundType_4
+    | refinement
+    ;
+
+annotType
+    : simpleType kleene_star__annotType_1
+    ;
+
+typeArgs
+    : '[' types ']'
+    ;
+
+types
+    : type_ kleene_star__types_2
+    ;
+
+refinement
+    : optional__refinement_1 '{' kleene_plus__refinement_2 '}'
+    ;
+
+refineStat
+    : dcl
+    | aux_rule__refineStat_1
+    ;
+
+typePat
+    : type_
+    ;
+
+ascription
+    : ':' altnt_block__ascription_2
+    ;
+
+expr
+    : aux_rule__expr_3
+    | expr1
+    ;
+
+expr1
+    : aux_rule__expr1_20
+    | aux_rule__expr1_21
+    | aux_rule__expr1_22
+    | aux_rule__expr1_23
+    | aux_rule__expr1_24
+    | aux_rule__expr1_25
+    ;
+
+prefixDef
+    : '-'
+    | '+'
+    | '~'
+    | '!'
+    ;
+
+postfixExpr
+    : infixExpr optional__postfixExpr_1 kleene_star__postfixExpr_3 optional__refinement_1
+    ;
+
+prefixExpr
+    : optional__prefixExpr_1 altnt_block__expr1_18
+    ;
+
+simpleExpr
+    : aux_rule__simpleExpr_2
+    | blockExpr
+    ;
+
+exprs
+    : expr kleene_star__exprs_2
+    ;
+
+argumentExprs
+    : aux_rule__argumentExprs_6
+    | aux_rule__argumentExprs_7
+    ;
+
+blockExpr
+    : '{' altnt_block__blockExpr_1 '}'
+    ;
+
+block
+    : kleene_plus__block_1 optional__block_2
+    ;
+
+blockStat
+    : import_
+    | expr1
+    | aux_rule__blockStat_7
+    ;
+
+resultExpr
+    : expr1
+    | aux_rule__resultExpr_4
+    ;
+
+enumerators
+    : generator+
+    ;
+
+generator
+    : pattern1 '<-' expr kleene_star__generator_2
+    ;
+
+caseClauses
+    : caseClause+
+    ;
+
+caseClause
+    : 'case' pattern optional__caseClause_1 '=>' block
+    ;
+
+guard
+    : 'if' postfixExpr
+    ;
+
+pattern
+    : pattern1 kleene_star__pattern_2
+    ;
+
+pattern1
+    : aux_rule__pattern1_2
+    | pattern2
+    ;
+
+pattern2
+    : aux_rule__pattern2_3
+    | pattern3
+    ;
+
+pattern3
+    : simplePattern optional__pattern3_4
+    ;
+
+simplePattern
+    : '_'
+    | Varid
+    | literal
+    | aux_rule__simplePattern_10
+    | aux_rule__simplePattern_11
+    ;
+
+patterns
+    : aux_rule__patterns_3
+    | aux_rule__patterns_4
+    ;
+
+typeParamClause
+    : '[' variantTypeParam kleene_star__typeParamClause_2 ']'
+    ;
+
+funTypeParamClause
+    : '[' typeParam kleene_star__funTypeParamClause_2 ']'
+    ;
+
+variantTypeParam
+    : kleene_star__annotType_1 optional__variantTypeParam_3 typeParam
+    ;
+
+typeParam
+    : altnt_block__typeParam_10 optional__typeDcl_1 optional__typeDcl_3 optional__typeDcl_5 kleene_star__typeParam_7 kleene_star__typeParam_9
+    ;
+
+paramClauses
+    : kleene_star__paramClauses_1 optional__paramClauses_4
+    ;
+
+paramClause
+    : optional__refinement_1 '(' optional__paramClause_2 ')'
+    ;
+
+params
+    : param kleene_star__params_2
+    ;
+
+param
+    : kleene_star__annotType_1 Id optional__param_3 optional__param_5
+    ;
+
+paramType
+    : aux_rule__paramType_2
+    | aux_rule__paramType_3
+    ;
+
+classParamClauses
+    : kleene_star__classParamClauses_1 optional__classParamClauses_4
+    ;
+
+classParamClause
+    : optional__refinement_1 '(' optional__classParamClause_2 ')'
+    ;
+
+classParams
+    : classParam kleene_star__classParams_2
+    ;
+
+classParam
+    : kleene_star__annotType_1 kleene_star__classParam_2 optional__classParam_4 Id ':' paramType optional__param_5
+    ;
+
+bindings
+    : '(' binding kleene_star__bindings_2 ')'
+    ;
+
+binding
+    : altnt_block__typeParam_10 optional__binding_2
+    ;
+
+modifier
+    : localModifier
+    | accessModifier
+    | 'override'
+    ;
+
+localModifier
+    : 'abstract'
+    | 'final'
+    | 'sealed'
+    | 'implicit'
+    | 'lazy'
+    ;
+
+accessModifier
+    : altnt_block__accessModifier_2 optional__accessModifier_1
+    ;
+
+accessQualifier
+    : '[' altnt_block__accessQualifier_1 ']'
+    ;
+
+annotation
+    : '@' simpleType kleene_star__annotation_1
+    ;
+
+constrAnnotation
+    : '@' simpleType argumentExprs
+    ;
+
+templateBody
+    : optional__refinement_1 '{' optional__templateBody_2 kleene_plus__templateBody_3 '}'
+    ;
+
+templateStat
+    : import_
+    | expr
+    | aux_rule__templateStat_10
+    ;
+
+selfType
+    : altnt_block__selfType_3 '=>'
+    ;
+
+import_
+    : 'import' importExpr kleene_star__import__2
+    ;
+
+importExpr
+    : stableId optional__importExpr_2
+    ;
+
+importSelectors
+    : '{' kleene_star__importSelectors_2 altnt_block__importSelectors_3 '}'
+    ;
+
+importSelector
+    : Id optional__importSelector_2
+    ;
+
+dcl
+    : aux_rule__dcl_3
+    | aux_rule__dcl_4
+    | aux_rule__dcl_5
+    ;
+
+valDcl
+    : ids ':' type_
+    ;
+
+funDcl
+    : funSig optional__binding_2
+    ;
+
+funSig
+    : Id optional__funSig_1 paramClauses
+    ;
+
+typeDcl
+    : Id optional__typeDcl_1 optional__typeDcl_3 optional__typeDcl_5
+    ;
+
+patVarDef
+    : aux_rule__patVarDef_1
+    | aux_rule__patVarDef_2
+    ;
+
+def
+    : patVarDef
+    | aux_rule__def_2
+    | aux_rule__def_3
+    | tmplDef
+    ;
+
+patDef
+    : pattern2 kleene_star__patDef_2 optional__binding_2 '=' expr
+    ;
+
+varDef
+    : patDef
+    | aux_rule__varDef_1
+    ;
+
+funDef
+    : aux_rule__funDef_7
+    | aux_rule__funDef_8
+    ;
+
+typeDef
+    : Id optional__typeDcl_1 '=' type_
+    ;
+
+tmplDef
+    : aux_rule__tmplDef_4
+    | aux_rule__tmplDef_5
+    ;
+
+classDef
+    : Id optional__typeDcl_1 kleene_star__classDef_2 optional__classDef_3 classParamClauses classTemplateOpt
+    ;
+
+traitDef
+    : Id optional__typeDcl_1 traitTemplateOpt
+    ;
+
+objectDef
+    : Id classTemplateOpt
+    ;
+
+classTemplateOpt
+    : aux_rule__classTemplateOpt_4
+    | optional__classTemplateOpt_3
+    ;
+
+traitTemplateOpt
+    : aux_rule__traitTemplateOpt_4
+    | optional__classTemplateOpt_3
+    ;
+
+classTemplate
+    : optional__classTemplate_1 classParents optional__classTemplate_2
+    ;
+
+traitTemplate
+    : optional__classTemplate_1 traitParents optional__classTemplate_2
+    ;
+
+classParents
+    : constr kleene_star__compoundType_2
+    ;
+
+traitParents
+    : annotType kleene_star__compoundType_2
+    ;
+
+constr
+    : annotType kleene_star__annotation_1
+    ;
+
+earlyDefs
+    : '{' kleene_plus__earlyDefs_1 '}' 'with'
+    ;
+
+earlyDef
+    : kleene_star__templateStat_3 kleene_star__classParam_2 patVarDef
+    ;
+
+constrExpr
+    : selfInvocation
+    | constrBlock
+    ;
+
+constrBlock
+    : '{' selfInvocation kleene_star__constrBlock_1 '}'
+    ;
+
+selfInvocation
+    : 'this' kleene_plus__selfInvocation_1
+    ;
+
+topStatSeq
+    : topStat+
+    ;
+
+topStat
+    : aux_rule__topStat_5
+    | import_
+    | packaging
+    | packageObject
+    ;
+
+packaging
+    : 'package' qualId optional__refinement_1 '{' topStatSeq '}'
+    ;
+
+packageObject
+    : 'package' 'object' objectDef
+    ;
+
+compilationUnit
+    : kleene_star__compilationUnit_2 topStatSeq EOF
+    ;
+
+optional__literal_1
+    : '-'?
+    ;
+
+aux_rule__qualId_1
+    : '.' Id
+    ;
+
+kleene_star__qualId_2
+    : aux_rule__qualId_1*
+    ;
+
+aux_rule__ids_1
+    : ',' Id
+    ;
+
+kleene_star__ids_2
+    : aux_rule__ids_1*
+    ;
+
+aux_rule__stableId_1
+    : Id '.'
+    ;
+
+optional__stableId_2
+    : aux_rule__stableId_1?
+    ;
+
+optional__stableId_3
+    : classQualifier?
+    ;
+
+optional__type__1
+    : existentialClause?
+    ;
+
+aux_rule__functionArgTypes_1
+    : ',' paramType
+    ;
+
+kleene_star__functionArgTypes_2
+    : aux_rule__functionArgTypes_1*
+    ;
+
+aux_rule__functionArgTypes_3
+    : paramType kleene_star__functionArgTypes_2
+    ;
+
+optional__functionArgTypes_4
+    : aux_rule__functionArgTypes_3?
+    ;
+
+kleene_plus__existentialClause_1
+    : existentialDcl+
+    ;
+
+aux_rule__infixType_1
+    : Id compoundType
+    ;
+
+kleene_star__infixType_2
+    : aux_rule__infixType_1*
+    ;
+
+aux_rule__compoundType_1
+    : 'with' annotType
+    ;
+
+kleene_star__compoundType_2
+    : aux_rule__compoundType_1*
+    ;
+
+optional__compoundType_3
+    : refinement?
+    ;
+
+kleene_star__annotType_1
+    : annotation*
+    ;
+
+aux_rule__simpleType_1
+    : '.' 'type'
+    ;
+
+optional__simpleType_2
+    : aux_rule__simpleType_1?
+    ;
+
+aux_rule__types_1
+    : ',' type_
+    ;
+
+kleene_star__types_2
+    : aux_rule__types_1*
+    ;
+
+optional__refinement_1
+    : NL?
+    ;
+
+kleene_plus__refinement_2
+    : refineStat+
+    ;
+
+kleene_plus__ascription_1
+    : annotation+
+    ;
+
+optional__expr_1
+    : 'implicit'?
+    ;
+
+aux_rule__expr1_2
+    : 'else' expr
+    ;
+
+optional__expr1_3
+    : aux_rule__expr1_2?
+    ;
+
+aux_rule__expr1_5
+    : 'catch' expr
+    ;
+
+optional__expr1_6
+    : aux_rule__expr1_5?
+    ;
+
+aux_rule__expr1_7
+    : 'finally' expr
+    ;
+
+optional__expr1_8
+    : aux_rule__expr1_7?
+    ;
+
+optional__expr1_9
+    : 'yield'?
+    ;
+
+optional__expr1_10
+    : expr?
+    ;
+
+optional__expr1_11
+    : '_'?
+    ;
+
+aux_rule__expr1_12
+    : altnt_block__expr1_18 '.'
+    ;
+
+optional__expr1_13
+    : aux_rule__expr1_12?
+    ;
+
+optional__expr1_14
+    : ascription?
+    ;
+
+optional__postfixExpr_1
+    : Id?
+    ;
+
+aux_rule__postfixExpr_2
+    : prefixDef simpleExpr1
+    ;
+
+kleene_star__postfixExpr_3
+    : aux_rule__postfixExpr_2*
+    ;
+
+optional__prefixExpr_1
+    : prefixDef?
+    ;
+
+optional__simpleExpr1_1
+    : exprs?
+    ;
+
+aux_rule__exprs_1
+    : ',' expr
+    ;
+
+kleene_star__exprs_2
+    : aux_rule__exprs_1*
+    ;
+
+aux_rule__argumentExprs_2
+    : exprs ','
+    ;
+
+optional__argumentExprs_3
+    : aux_rule__argumentExprs_2?
+    ;
+
+kleene_plus__block_1
+    : blockStat+
+    ;
+
+optional__block_2
+    : resultExpr?
+    ;
+
+aux_rule__blockStat_2
+    : 'implicit'
+    | 'lazy'
+    ;
+
+optional__blockStat_3
+    : aux_rule__blockStat_2?
+    ;
+
+kleene_star__blockStat_5
+    : localModifier*
+    ;
+
+aux_rule__generator_1
+    : guard
+    | aux_rule__generator_3
+    ;
+
+kleene_star__generator_2
+    : aux_rule__generator_1*
+    ;
+
+optional__caseClause_1
+    : guard?
+    ;
+
+aux_rule__pattern_1
+    : '|' pattern1
+    ;
+
+kleene_star__pattern_2
+    : aux_rule__pattern_1*
+    ;
+
+aux_rule__pattern2_1
+    : '@' pattern3
+    ;
+
+optional__pattern2_2
+    : aux_rule__pattern2_1?
+    ;
+
+aux_rule__pattern3_2
+    : Id optional__refinement_1 simplePattern
+    ;
+
+kleene_star__pattern3_3
+    : aux_rule__pattern3_2*
+    ;
+
+optional__simplePattern_1
+    : patterns?
+    ;
+
+aux_rule__simplePattern_2
+    : '(' optional__simplePattern_1 ')'
+    ;
+
+optional__simplePattern_3
+    : aux_rule__simplePattern_2?
+    ;
+
+aux_rule__simplePattern_4
+    : patterns ','
+    ;
+
+optional__simplePattern_5
+    : aux_rule__simplePattern_4?
+    ;
+
+aux_rule__simplePattern_6
+    : Id '@'
+    ;
+
+optional__simplePattern_7
+    : aux_rule__simplePattern_6?
+    ;
+
+aux_rule__patterns_1
+    : ',' patterns
+    ;
+
+optional__patterns_2
+    : aux_rule__patterns_1?
+    ;
+
+aux_rule__typeParamClause_1
+    : ',' variantTypeParam
+    ;
+
+kleene_star__typeParamClause_2
+    : aux_rule__typeParamClause_1*
+    ;
+
+aux_rule__funTypeParamClause_1
+    : ',' typeParam
+    ;
+
+kleene_star__funTypeParamClause_2
+    : aux_rule__funTypeParamClause_1*
+    ;
+
+aux_rule__variantTypeParam_2
+    : '+'
+    | '-'
+    ;
+
+optional__variantTypeParam_3
+    : aux_rule__variantTypeParam_2?
+    ;
+
+aux_rule__typeParam_6
+    : '<%' type_
+    ;
+
+kleene_star__typeParam_7
+    : aux_rule__typeParam_6*
+    ;
+
+aux_rule__typeParam_8
+    : ':' type_
+    ;
+
+kleene_star__typeParam_9
+    : aux_rule__typeParam_8*
+    ;
+
+kleene_star__paramClauses_1
+    : paramClause*
+    ;
+
+aux_rule__paramClauses_3
+    : optional__refinement_1 '(' 'implicit' params ')'
+    ;
+
+optional__paramClauses_4
+    : aux_rule__paramClauses_3?
+    ;
+
+optional__paramClause_2
+    : params?
+    ;
+
+aux_rule__params_1
+    : ',' param
+    ;
+
+kleene_star__params_2
+    : aux_rule__params_1*
+    ;
+
+aux_rule__param_2
+    : ':' paramType
+    ;
+
+optional__param_3
+    : aux_rule__param_2?
+    ;
+
+aux_rule__param_4
+    : '=' expr
+    ;
+
+optional__param_5
+    : aux_rule__param_4?
+    ;
+
+kleene_star__classParamClauses_1
+    : classParamClause*
+    ;
+
+aux_rule__classParamClauses_3
+    : optional__refinement_1 '(' 'implicit' classParams ')'
+    ;
+
+optional__classParamClauses_4
+    : aux_rule__classParamClauses_3?
+    ;
+
+optional__classParamClause_2
+    : classParams?
+    ;
+
+aux_rule__classParams_1
+    : ',' classParam
+    ;
+
+kleene_star__classParams_2
+    : aux_rule__classParams_1*
+    ;
+
+kleene_star__classParam_2
+    : modifier*
+    ;
+
+optional__classParam_4
+    : altnt_block__dcl_2?
+    ;
+
+aux_rule__bindings_1
+    : ',' binding
+    ;
+
+kleene_star__bindings_2
+    : aux_rule__bindings_1*
+    ;
+
+optional__binding_2
+    : aux_rule__typeParam_8?
+    ;
+
+optional__accessModifier_1
+    : accessQualifier?
+    ;
+
+kleene_star__annotation_1
+    : argumentExprs*
+    ;
+
+optional__templateBody_2
+    : selfType?
+    ;
+
+kleene_plus__templateBody_3
+    : templateStat+
+    ;
+
+aux_rule__templateStat_2
+    : annotation optional__refinement_1
+    ;
+
+kleene_star__templateStat_3
+    : aux_rule__templateStat_2*
+    ;
+
+aux_rule__import__1
+    : ',' importExpr
+    ;
+
+kleene_star__import__2
+    : aux_rule__import__1*
+    ;
+
+aux_rule__importExpr_1
+    : '.' altnt_block__importExpr_3
+    ;
+
+optional__importExpr_2
+    : aux_rule__importExpr_1?
+    ;
+
+aux_rule__importSelectors_1
+    : importSelector ','
+    ;
+
+kleene_star__importSelectors_2
+    : aux_rule__importSelectors_1*
+    ;
+
+aux_rule__importSelector_1
+    : '=>' altnt_block__typeParam_10
+    ;
+
+optional__importSelector_2
+    : aux_rule__importSelector_1?
+    ;
+
+kleene_star__dcl_1
+    : NL*
+    ;
+
+optional__funSig_1
+    : funTypeParamClause?
+    ;
+
+optional__typeDcl_1
+    : typeParamClause?
+    ;
+
+aux_rule__typeDcl_2
+    : '>:' type_
+    ;
+
+optional__typeDcl_3
+    : aux_rule__typeDcl_2?
+    ;
+
+aux_rule__typeDcl_4
+    : '<:' type_
+    ;
+
+optional__typeDcl_5
+    : aux_rule__typeDcl_4?
+    ;
+
+aux_rule__patDef_1
+    : ',' pattern2
+    ;
+
+kleene_star__patDef_2
+    : aux_rule__patDef_1*
+    ;
+
+optional__tmplDef_1
+    : 'case'?
+    ;
+
+kleene_star__classDef_2
+    : constrAnnotation*
+    ;
+
+optional__classDef_3
+    : accessModifier?
+    ;
+
+optional__classTemplateOpt_1
+    : 'extends'?
+    ;
+
+aux_rule__classTemplateOpt_2
+    : optional__classTemplateOpt_1 templateBody
+    ;
+
+optional__classTemplateOpt_3
+    : aux_rule__classTemplateOpt_2?
+    ;
+
+optional__classTemplate_1
+    : earlyDefs?
+    ;
+
+optional__classTemplate_2
+    : templateBody?
+    ;
+
+kleene_plus__earlyDefs_1
+    : earlyDef+
+    ;
+
+kleene_star__constrBlock_1
+    : blockStat*
+    ;
+
+kleene_plus__selfInvocation_1
+    : argumentExprs+
+    ;
+
+aux_rule__compilationUnit_1
+    : 'package' qualId
+    ;
+
+kleene_star__compilationUnit_2
+    : aux_rule__compilationUnit_1*
+    ;
+
+aux_rule__stableId_6
+    : Id
+    | aux_rule__stableId_8
+    ;
+
+stableId
+    : aux_rule__stableId_6 kleene_star__qualId_2
+    ;
+
+aux_rule__simpleType_4
+    : typeArgs
+    | aux_rule__simpleType_6
+    ;
+
+kleene_star__simpleType_3
+    : aux_rule__simpleType_4*
+    ;
+
+aux_rule__simpleType_5
+    : aux_rule__simpleType_7
+    | aux_rule__simpleType_8
+    ;
+
+simpleType
+    : aux_rule__simpleType_5 kleene_star__simpleType_3
+    ;
+
+aux_rule__simpleExpr1_5
+    : argumentExprs
+    | aux_rule__simpleExpr1_9
+    ;
+
+kleene_star__simpleExpr1_4
+    : aux_rule__simpleExpr1_5*
+    ;
+
+aux_rule__simpleExpr1_6
+    : literal
+    | stableId
+    | '_'
+    | aux_rule__simpleExpr1_10
+    | aux_rule__simpleExpr1_11
+    ;
+
+simpleExpr1
+    : aux_rule__simpleExpr1_6 kleene_star__simpleExpr1_4
+    ;
+
+aux_rule__infixExpr_3
+    : Id optional__refinement_1 infixExpr
+    ;
+
+kleene_star__infixExpr_2
+    : aux_rule__infixExpr_3*
+    ;
+
+infixExpr
+    : prefixExpr kleene_star__infixExpr_2
+    ;
+
+optional__paramType_1
+    : '=>'?
+    ;
+
+optional__pattern3_4
+    : kleene_star__pattern3_3?
+    ;
+
+altnt_block__ascription_2
+    : infixType
+    | kleene_plus__ascription_1
+    | aux_rule__ascription_3
+    ;
+
+altnt_block__expr1_15
+    : aux_rule__expr1_26
+    | aux_rule__expr1_27
+    | 'throw'
+    | aux_rule__expr1_28
+    ;
+
+altnt_block__expr1_16
+    : optional__expr1_14
+    | aux_rule__expr1_29
+    ;
+
+altnt_block__simpleExpr1_7
+    : aux_rule__simpleExpr1_12
+    | typeArgs
+    ;
+
+altnt_block__argumentExprs_5
+    : optional__simpleExpr1_1
+    | aux_rule__argumentExprs_8
+    ;
+
+altnt_block__blockExpr_1
+    : caseClauses
+    | block
+    ;
+
+altnt_block__simplePattern_9
+    : optional__simplePattern_3
+    | aux_rule__simplePattern_12
+    ;
+
+altnt_block__selfType_3
+    : aux_rule__selfType_4
+    | aux_rule__selfType_5
+    ;
+
+altnt_block__funDef_5
+    : aux_rule__funDef_9
+    | aux_rule__funDef_10
+    ;
+
+altnt_block__expr1_17
+    : aux_rule__expr1_30
+    | aux_rule__expr1_31
+    ;
+
+altnt_block__expr_2
+    : bindings
+    | aux_rule__expr_4
+    | '_'
+    ;
+
+altnt_block__simpleExpr_1
+    : classTemplate
+    | templateBody
+    ;
+
+altnt_block__resultExpr_2
+    : bindings
+    | aux_rule__resultExpr_5
+    ;
+
+altnt_block__pattern1_1
+    : BoundVarid
+    | '_'
+    | Id
+    ;
+
+altnt_block__typeParam_10
+    : Id
+    | '_'
+    ;
+
+altnt_block__accessModifier_2
+    : 'private'
+    | 'protected'
+    ;
+
+altnt_block__accessQualifier_1
+    : Id
+    | 'this'
+    ;
+
+altnt_block__importSelectors_3
+    : importSelector
+    | '_'
+    ;
+
+altnt_block__funDef_6
+    : aux_rule__funDef_11
+    | aux_rule__funDef_12
+    ;
+
+altnt_block__expr1_18
+    : simpleExpr
+    | aux_rule__expr1_32
+    ;
+
+altnt_block__importExpr_3
+    : Id
+    | '_'
+    | importSelectors
+    ;
+
+altnt_block__stableId_7
+    : 'this'
+    | aux_rule__stableId_9
+    ;
+
+altnt_block__expr1_19
+    : aux_rule__expr1_33
+    | aux_rule__expr1_34
+    ;
+
+altnt_block__literal_3
+    : IntegerLiteral
+    | FloatingPointLiteral
+    ;
+
+altnt_block__dcl_2
+    : 'val'
+    | 'var'
+    ;
+
+altnt_block__blockStat_6
+    : aux_rule__blockStat_8
+    | aux_rule__blockStat_9
+    ;
+
+altnt_block__tmplDef_3
+    : aux_rule__tmplDef_6
+    | aux_rule__tmplDef_7
+    ;
+
+altnt_block__templateStat_9
+    : def
+    | dcl
+    ;
+
+altnt_block__resultExpr_3
+    : aux_rule__resultExpr_6
+    | '_'
+    ;
+
+aux_rule__literal_4
+    : optional__literal_1 altnt_block__literal_3
+    ;
+
+aux_rule__type__2
+    : functionArgTypes '=>' type_
+    ;
+
+aux_rule__type__3
+    : infixType optional__type__1
+    ;
+
+aux_rule__functionArgTypes_5
+    : '(' optional__functionArgTypes_4 ')'
+    ;
+
+aux_rule__existentialDcl_1
+    : 'type' typeDcl
+    ;
+
+aux_rule__existentialDcl_2
+    : 'val' valDcl
+    ;
+
+aux_rule__compoundType_4
+    : annotType kleene_star__compoundType_2 optional__compoundType_3
+    ;
+
+aux_rule__refineStat_1
+    : 'type' typeDef
+    ;
+
+aux_rule__expr_3
+    : altnt_block__expr_2 '=>' expr
+    ;
+
+aux_rule__expr1_20
+    : 'if' '(' expr ')' kleene_star__dcl_1 expr optional__expr1_3
+    ;
+
+aux_rule__expr1_21
+    : 'try' expr optional__expr1_6 optional__expr1_8
+    ;
+
+aux_rule__expr1_22
+    : 'do' expr 'while' '(' expr ')'
+    ;
+
+aux_rule__expr1_23
+    : 'return' optional__expr1_10
+    ;
+
+aux_rule__expr1_24
+    : altnt_block__expr1_15 expr
+    ;
+
+aux_rule__expr1_25
+    : postfixExpr altnt_block__expr1_16
+    ;
+
+aux_rule__simpleExpr_2
+    : 'new' altnt_block__simpleExpr_1
+    ;
+
+aux_rule__argumentExprs_6
+    : optional__refinement_1 blockExpr
+    ;
+
+aux_rule__argumentExprs_7
+    : '(' altnt_block__argumentExprs_5 ')'
+    ;
+
+aux_rule__blockStat_7
+    : kleene_star__annotType_1 altnt_block__blockStat_6
+    ;
+
+aux_rule__resultExpr_4
+    : altnt_block__resultExpr_2 '=>' block
+    ;
+
+aux_rule__pattern1_2
+    : altnt_block__pattern1_1 ':' typePat
+    ;
+
+aux_rule__pattern2_3
+    : Id optional__pattern2_2
+    ;
+
+aux_rule__simplePattern_10
+    : '(' optional__simplePattern_1 ')'
+    ;
+
+aux_rule__simplePattern_11
+    : stableId altnt_block__simplePattern_9
+    ;
+
+aux_rule__patterns_3
+    : pattern optional__patterns_2
+    ;
+
+aux_rule__patterns_4
+    : '_' '*'
+    ;
+
+aux_rule__paramType_2
+    : optional__paramType_1 type_
+    ;
+
+aux_rule__paramType_3
+    : type_ '*'
+    ;
+
+aux_rule__templateStat_10
+    : kleene_star__templateStat_3 kleene_star__classParam_2 altnt_block__templateStat_9
+    ;
+
+aux_rule__dcl_3
+    : 'def' funDcl
+    ;
+
+aux_rule__dcl_4
+    : 'type' kleene_star__dcl_1 typeDcl
+    ;
+
+aux_rule__dcl_5
+    : altnt_block__dcl_2 valDcl
+    ;
+
+aux_rule__patVarDef_1
+    : 'val' patDef
+    ;
+
+aux_rule__patVarDef_2
+    : 'var' varDef
+    ;
+
+aux_rule__def_2
+    : 'def' funDef
+    ;
+
+aux_rule__def_3
+    : 'type' kleene_star__dcl_1 typeDef
+    ;
+
+aux_rule__varDef_1
+    : ids ':' type_ '=' '_'
+    ;
+
+aux_rule__funDef_7
+    : 'this' paramClause paramClauses altnt_block__funDef_6
+    ;
+
+aux_rule__funDef_8
+    : funSig altnt_block__funDef_5
+    ;
+
+aux_rule__tmplDef_4
+    : 'trait' traitDef
+    ;
+
+aux_rule__tmplDef_5
+    : optional__tmplDef_1 altnt_block__tmplDef_3
+    ;
+
+aux_rule__classTemplateOpt_4
+    : 'extends' classTemplate
+    ;
+
+aux_rule__traitTemplateOpt_4
+    : 'extends' traitTemplate
+    ;
+
+aux_rule__topStat_5
+    : kleene_star__templateStat_3 kleene_star__classParam_2 tmplDef
+    ;
+
+aux_rule__generator_3
+    : pattern1 '=' expr
+    ;
+
+aux_rule__stableId_8
+    : optional__stableId_2 altnt_block__stableId_7
+    ;
+
+aux_rule__simpleType_6
+    : '#' Id
+    ;
+
+aux_rule__simpleType_7
+    : stableId optional__simpleType_2
+    ;
+
+aux_rule__simpleType_8
+    : '(' types ')'
+    ;
+
+aux_rule__simpleExpr1_9
+    : optional__expr1_11 altnt_block__simpleExpr1_7
+    ;
+
+aux_rule__simpleExpr1_10
+    : '(' optional__simpleExpr1_1 ')'
+    ;
+
+aux_rule__simpleExpr1_11
+    : simpleExpr altnt_block__simpleExpr1_7
+    ;
+
+aux_rule__ascription_3
+    : '_' '*'
+    ;
+
+aux_rule__expr1_26
+    : 'while' '(' expr ')' kleene_star__dcl_1
+    ;
+
+aux_rule__expr1_27
+    : 'for' altnt_block__expr1_19 optional__expr1_9
+    ;
+
+aux_rule__expr1_28
+    : altnt_block__expr1_17 '='
+    ;
+
+aux_rule__expr1_29
+    : 'match' '{' caseClauses '}'
+    ;
+
+aux_rule__simpleExpr1_12
+    : '.' Id
+    ;
+
+aux_rule__argumentExprs_8
+    : optional__argumentExprs_3 postfixExpr ':' '_' '*'
+    ;
+
+aux_rule__simplePattern_12
+    : '(' optional__simplePattern_5 optional__simplePattern_7 '_' '*' ')'
+    ;
+
+aux_rule__selfType_4
+    : Id optional__binding_2
+    ;
+
+aux_rule__selfType_5
+    : 'this' ':' type_
+    ;
+
+aux_rule__funDef_9
+    : optional__binding_2 '=' expr
+    ;
+
+aux_rule__funDef_10
+    : optional__refinement_1 '{' block '}'
+    ;
+
+aux_rule__expr1_30
+    : optional__expr1_13 Id
+    ;
+
+aux_rule__expr1_31
+    : simpleExpr1 argumentExprs
+    ;
+
+aux_rule__expr_4
+    : optional__expr_1 Id
+    ;
+
+aux_rule__resultExpr_5
+    : altnt_block__resultExpr_3 ':' compoundType
+    ;
+
+aux_rule__funDef_11
+    : '=' constrExpr
+    ;
+
+aux_rule__funDef_12
+    : optional__refinement_1 constrBlock
+    ;
+
+aux_rule__expr1_32
+    : simpleExpr1 optional__expr1_11
+    ;
+
+aux_rule__stableId_9
+    : 'super' optional__stableId_3 '.' Id
+    ;
+
+aux_rule__expr1_33
+    : '(' enumerators ')'
+    ;
+
+aux_rule__expr1_34
+    : '{' enumerators '}'
+    ;
+
+aux_rule__blockStat_8
+    : optional__blockStat_3 def
+    ;
+
+aux_rule__blockStat_9
+    : kleene_star__blockStat_5 tmplDef
+    ;
+
+aux_rule__tmplDef_6
+    : 'class' classDef
+    ;
+
+aux_rule__tmplDef_7
+    : 'object' objectDef
+    ;
+
+aux_rule__resultExpr_6
+    : optional__expr_1 Id
     ;
 

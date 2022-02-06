@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,18 +16,18 @@
  */
 package org.perses.grammar.scala;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.perses.antlr.ParseTreeWithParser;
-import org.perses.grammar.AbstractDefaultParserFacade;
-
+import com.google.common.primitives.ImmutableIntArray;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.perses.antlr.ParseTreeWithParser;
+import org.perses.grammar.AbstractDefaultParserFacade;
 
 public final class PnfScalaParserFacade
     extends AbstractDefaultParserFacade<PnfScalaLexer, PnfScalaParser> {
@@ -35,11 +35,14 @@ public final class PnfScalaParserFacade
   public PnfScalaParserFacade() {
     super(
         LanguageScala.INSTANCE,
-        createCombinedAntlrGrammar("PnfScala.g4", PnfScalaParserFacade.class));
+        createCombinedAntlrGrammar("PnfScala.g4", PnfScalaParserFacade.class),
+        PnfScalaLexer.class,
+        PnfScalaParser.class,
+        ImmutableIntArray.of(PnfScalaLexer.Id, PnfScalaLexer.BoundVarid, PnfScalaLexer.Varid));
   }
 
   @Override
-  protected PnfScalaLexer createLexer(ANTLRInputStream inputStream) {
+  protected PnfScalaLexer createLexer(CharStream inputStream) {
     return new PnfScalaLexer(inputStream);
   }
 
@@ -53,9 +56,9 @@ public final class PnfScalaParserFacade
     return parser.compilationUnit();
   }
 
-  public ParseTreeWithParser parseWithOrigScalaParser(File file) throws IOException {
-    try (BufferedReader reader = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8)) {
-      return parseWithOrigScalaParser(reader, file.getPath());
+  public ParseTreeWithParser parseWithOrigScalaParser(Path file) throws IOException {
+    try (BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
+      return parseWithOrigScalaParser(reader, file.toString());
     }
   }
 
@@ -77,7 +80,7 @@ public final class PnfScalaParserFacade
     return parseReader(
         fileName,
         reader,
-        antlrInputStream -> new ScalaLexer(antlrInputStream),
+        charStream -> new ScalaLexer(charStream),
         commonTokenStream -> new ScalaParser(commonTokenStream),
         ScalaParser::compilationUnit);
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,8 +21,9 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import java.io.File
 import java.nio.charset.StandardCharsets
+import java.nio.file.Paths
+import kotlin.io.path.readText
 
 @RunWith(JUnit4::class)
 class DefaultLoggingConfigurationsTest {
@@ -36,8 +37,9 @@ class DefaultLoggingConfigurationsTest {
     assertThat(p["java.util.logging.ConsoleHandler.formatter"]).isEqualTo(
       "java.util.logging.SimpleFormatter"
     )
-    val goldenFormatString = File("test/org/perses/util/golden_SimpleFormatter.format.txt")
-      .readText(StandardCharsets.UTF_8).trim()
+    val goldenFormatString = Paths.get(
+      "test/org/perses/util/golden_SimpleFormatter.format.txt"
+    ).readText(StandardCharsets.UTF_8).trim()
     assertThat(p["java.util.logging.SimpleFormatter.format"]).isEqualTo(goldenFormatString)
   }
 

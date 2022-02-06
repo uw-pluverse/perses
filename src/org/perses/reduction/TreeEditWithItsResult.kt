@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,9 +16,9 @@
  */
 package org.perses.reduction
 
-import org.perses.tree.spar.AbstractSparTreeEdit
+import org.perses.spartree.AbstractSparTreeEdit
 
 data class TreeEditWithItsResult(
-  val edit: AbstractSparTreeEdit,
-  val testResult: TestScript.TestResult
+  val edit: AbstractSparTreeEdit<*>,
+  val testResult: PropertyTestResult
 )

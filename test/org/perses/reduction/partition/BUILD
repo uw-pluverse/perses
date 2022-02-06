@@ -6,11 +6,11 @@ java_test(
     data = ["//test_data/misc"],
     test_class = "org.perses.reduction.partition.SimpleLevelPartitionPolicyTest",
     deps = [
+        "//:truth",
         "//src/org/perses/reduction:reduction_level",
         "//src/org/perses/reduction/partition",
         "//src/org/perses/reduction/partition:level_partition_policy",
-        "//src/org/perses/tree/spar",
+        "//src/org/perses/spartree",
         "//test/org/perses:test_util",
-        "//test/org/perses:truth",
     ],
 )

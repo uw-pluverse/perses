@@ -1,0 +1,1 @@
+-parse -fileunit rtl/spi_clgen.v rtl/spi_shift.v rtl/spi_top.v +incdir+rtl/+. 

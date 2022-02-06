@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -82,8 +82,8 @@ class DoubleLinkedList<T> {
     node.prev = null
     node.next = null
 
-    prev!!.next = next
-    next!!.prev = prev
+    prev.next = next
+    next.prev = prev
     return node
   }
 

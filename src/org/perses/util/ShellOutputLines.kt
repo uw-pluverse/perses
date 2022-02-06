@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 University of Waterloo.
+ * Copyright (C) 2018-2022 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,11 +17,14 @@
 package org.perses.util
 
 import com.google.common.collect.ImmutableList
-import com.google.common.io.Files
-import java.io.File
-import java.nio.charset.StandardCharsets
+import java.nio.file.Path
+import kotlin.io.path.writeText
 
 data class ShellOutputLines(val lines: ImmutableList<String>) {
+
+  init {
+    assert(!lines.any { it.isNotEmpty() && it.last() == '\n' }) { lines }
+  }
 
   /**
    * Returns true if there is a line contains the string.
@@ -38,8 +41,8 @@ data class ShellOutputLines(val lines: ImmutableList<String>) {
     }.toString()
   }
 
-  fun writeToFile(file: File) {
-    Files.asCharSink(file, StandardCharsets.UTF_8).writeLines(lines, "\n")
+  fun writeToFile(file: Path) {
+    file.writeText(combinedLines)
   }
 
   companion object {
