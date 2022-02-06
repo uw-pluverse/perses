@@ -28,7 +28,7 @@ import kotlin.io.path.writeText
 object VersionClassGenerator {
 
   private const val MAJOR_VERSION = "1"
-  private const val MINOR_VERSION = "4"
+  private const val MINOR_VERSION = "5"
 
   @JvmStatic
   fun generate(args: Array<String>) {
