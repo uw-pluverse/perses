@@ -25,7 +25,8 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.perses.util.Shell;
+import org.perses.util.shell.CmdOutput;
+import org.perses.util.shell.ShellBasedOnApacheExec;
 
 public class DotGraph<T> {
 
@@ -45,11 +46,12 @@ public class DotGraph<T> {
     final String dot = this.dotifyToString(labelProvider);
     File dotFile = new File(file.getParentFile(), file.getName() + ".dot");
     Files.write(dot, dotFile, Charsets.UTF_8);
-    Shell.CmdOutput output =
-        Shell.run(
-            "dot -Tpdf " + dotFile.getAbsolutePath() + " -o " + file.getAbsolutePath(),
-            true,
-            Shell.getCURRENT_ENV());
+    CmdOutput output =
+        ShellBasedOnApacheExec.getSingleton()
+            .run(
+                "dot -Tpdf " + dotFile.getAbsolutePath() + " -o " + file.getAbsolutePath(),
+                true,
+                ShellBasedOnApacheExec.getCURRENT_ENV());
     System.out.println(output.getStderr());
   }
 

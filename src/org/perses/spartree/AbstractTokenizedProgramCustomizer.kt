@@ -19,9 +19,10 @@ package org.perses.spartree
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.util.Util.lazyAssert
 
 abstract class AbstractTokenizedProgramCustomizer protected constructor(
-  actionSet: AbstractActionSet<*>
+  actionSet: AbstractActionSet<*>,
 ) {
 
   protected val targets = actionSet.targets
@@ -37,23 +38,23 @@ abstract class AbstractTokenizedProgramCustomizer protected constructor(
     val beginToken = node.beginToken
     val endToken = node.endToken
     if (beginToken == null) {
-      assert(endToken == null)
+      lazyAssert { endToken == null }
     } else {
-      assert(endToken != null)
+      lazyAssert { endToken != null }
       val sentinel = endToken!!.next
       var i = beginToken
       while (i !== sentinel) {
-        assert(!i!!.isPermanentlyDeleted) {
+        lazyAssert({ !i!!.isPermanentlyDeleted }) {
           "The node has been deleted: $i"
         }
-        builder.add(i.token)
+        builder.add(i!!.token)
         i = i.next
       }
     }
   }
 
   private fun computePathsToRootExcludingTargets(
-    targets: ImmutableSet<AbstractSparTreeNode>
+    targets: ImmutableSet<AbstractSparTreeNode>,
   ): HashSet<AbstractSparTreeNode> {
     val result = HashSet<AbstractSparTreeNode>()
     for (target in targets) {

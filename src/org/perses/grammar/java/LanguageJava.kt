@@ -28,6 +28,6 @@ object LanguageJava : LanguageKind(
   allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.SINGLE_TOKEN_PER_LINE,
     EnumFormatControl.COMPACT_ORIG_FORMAT,
-    EnumFormatControl.ORIG_FORMAT
-  )
+    EnumFormatControl.ORIG_FORMAT,
+  ),
 )

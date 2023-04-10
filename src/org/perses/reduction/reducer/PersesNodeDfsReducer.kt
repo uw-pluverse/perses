@@ -24,42 +24,45 @@ import org.perses.reduction.ReducerContext
 import org.perses.reduction.partition.Partition
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.SparTree
+import org.perses.util.Util.lazyAssert
 import java.util.ArrayDeque
 import java.util.Queue
 
 /** Perses node reducer, with dfs delta debugging  */
 open class PersesNodeDfsReducer constructor(
   reducerAnnotation: ReducerAnnotation,
-  reducerContext: ReducerContext
+  reducerContext: ReducerContext,
 ) : AbstractPersesNodeReducer(reducerAnnotation, reducerContext) {
-  private val deltaDebugger = if (reducerContext.configuration.useRealDeltaDebugger)
+
+  private val deltaDebugger = if (reducerContext.configuration.useRealDeltaDebugger) {
     DeltaDebugger(
       reducerContext.listenerManager,
-      reducerContext.nodeActionSetCache
+      reducerContext.nodeActionSetCache,
     ) {
       testSparTreeEdit(it)
     }
-  else
+  } else {
     DfsDeltaDebugger(
       reducerContext.listenerManager,
-      reducerContext.nodeActionSetCache
+      reducerContext.nodeActionSetCache,
     ) {
       testSparTreeEdit(it)
     }
+  }
 
   init {
     logger.atConfig().log("Delta Debugger is %s", deltaDebugger.javaClass)
   }
 
   override fun createReductionQueue(): Queue<AbstractSparTreeNode> =
-    ArrayDeque<AbstractSparTreeNode>(DEFAULT_INITIAL_QUEUE_CAPACITY)
+    ArrayDeque(DEFAULT_INITIAL_QUEUE_CAPACITY)
 
   override fun performDelta(
     tree: SparTree,
     actionsDescription: String,
-    vararg startPartitions: Partition
+    vararg startPartitions: Partition,
   ) {
-    assert(startPartitions.isNotEmpty())
+    lazyAssert { startPartitions.isNotEmpty() }
     deltaDebugger.reduce(tree, actionsDescription, *startPartitions)
   }
 
@@ -68,7 +71,11 @@ open class PersesNodeDfsReducer constructor(
 
     @JvmField
     val META: ReducerAnnotation = object : ReducerAnnotation() {
-      override val deterministic = true
+      override val deterministic: Boolean
+        get() = true
+
+      override val reductionResultSizeTrend: ReductionResultSizeTrend
+        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
 
       override fun shortName(): String = NAME
 

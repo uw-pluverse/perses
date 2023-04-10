@@ -15,8 +15,12 @@ __location__ = os.path.realpath(
 
 INSTALLS = {
     "perses": os.path.join(__location__, "binaries", "update_perses.sh"),
+    "hdd": os.path.join(__location__, "binaries", "update_perses.sh"),
     "creduce": os.path.join(__location__, "binaries", "update_creduce.sh"),
     "chisel": os.path.join(__location__, "binaries", "update_chisel.sh"),
+    "perses-token-replacement": os.path.join(__location__, "binaries", "update_atn_perses_main.sh"),
+    "perses-token-pattern": os.path.join(__location__, "binaries", "update_atn_perses_main.sh"),
+    "atn-fine-tuning": os.path.join(__location__, "binaries", "update_atn_perses_main.sh")
 }
 
 REDUCERS = {
@@ -26,13 +30,14 @@ REDUCERS = {
     "hdd-fix": os.path.join(__location__, "binaries", "run_hdd_fix.sh"),
     "creduce": os.path.join(__location__, "binaries", "run_creduce.sh"),
     "chisel": os.path.join(__location__, "binaries", "run_chisel.sh"),
+    "atn-fine-tuning": os.path.join(__location__, "binaries", "run_atn_fine_tuning.sh"),
 }
 
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Runs the benchmark and output results in JSON")
-    parser.add_argument("-b", "--benches", nargs='+', default=[],
-                        help="Benchmark with specified bench(es), separated by spaces if more than one.")
+    parser.add_argument("-s", "--subjects", nargs='+', default=[],
+                        help="Benchmark with specified subject(s), separated by spaces if more than one.")
     parser.add_argument("-i", "--iterations", type=int, default=1,
                         help="Repeat the benchmark for the number of times specified")
     parser.add_argument("-ss", "--show-subprocess", action="store_true", default=False,
@@ -54,9 +59,9 @@ def parse_arguments():
 class Parameter:
     # Default field values
     benchmark_target: List[str]
-    iterations: int
-    show_subprocess: bool
     reducers: List[str]
+    show_subprocess: bool
+    iterations: int
     list_reducers: bool
     memory_profiler: bool
     output_dir: str
@@ -75,9 +80,9 @@ class Parameter:
         # validate parameters
         # benchmark_target
         if not self.benchmark_target:
-            raise Exception('Error: No Bench(es)')
-        for bench_name in self.benchmark_target:
-            folder_path = os.path.join(__location__, bench_name)
+            raise Exception('Error: No Subject(s)')
+        for subject_name in self.benchmark_target:
+            folder_path = os.path.join(__location__, subject_name)
             if not os.path.exists(folder_path):
                 raise Exception(f'Error: Folder path not found: {folder_path}')
         # iterations
@@ -94,7 +99,8 @@ class Parameter:
         # output directory
         if self.output_dir:
             self.output_dir = os.path.abspath(self.output_dir)
-            os.makedirs(self.output_dir)
+            if not os.path.exists(self.output_dir):
+                os.makedirs(self.output_dir)
         else:
             general_result_dir = "benchmark_results"
             general_result_subdir = f"benchmark_{datetime.now().strftime('%Y%m%d-%H%M%S')}"
@@ -110,7 +116,7 @@ def load_token_counter(subprocess_flag: bool):
         check=False,
         stdout=pipe,
         stderr=pipe,
-    )
+        )   
     return proc.returncode
 
 
@@ -129,12 +135,12 @@ def load_reducers(reducer_list: List[str], subprocess_flag: bool):
     return ret_code
 
 
-def extract_info_properties(bench_name: str) -> Tuple[str, str]:
-    """Extract script file and source file from a bench folder"""
+def extract_info_properties(subject_name: str) -> Tuple[str, str]:
+    """Extract script file and source file from a subject folder"""
     info_dict = dict()
 
     # validate info.properties path
-    info_properties_path = os.path.join(__location__, bench_name, "info.properties")
+    info_properties_path = os.path.join(__location__, subject_name, "info.properties")
     if not os.path.exists(info_properties_path):
         raise Exception(f'Error: info.properties not found: {info_properties_path}')
 
@@ -150,8 +156,8 @@ def extract_info_properties(bench_name: str) -> Tuple[str, str]:
     if "script_file" not in info_dict:
         raise Exception('Error: No script_file found in info.properties')
 
-    source_file_path = os.path.join(__location__, bench_name, info_dict["source_file"])
-    script_file_path = os.path.join(__location__, bench_name, info_dict["script_file"])
+    source_file_path = os.path.join(__location__, subject_name, info_dict["source_file"])
+    script_file_path = os.path.join(__location__, subject_name, info_dict["script_file"])
 
     if not os.path.exists(source_file_path):
         raise Exception('Error: source_file not found: {}'.format(source_file_path))
@@ -164,7 +170,9 @@ def extract_info_properties(bench_name: str) -> Tuple[str, str]:
 def count_token(source_file_path: str) -> int:
     try:
         token_counter_sh = os.path.join(__location__, "binaries", "run_token_counter.sh")
-        count = subprocess.check_output([token_counter_sh, source_file_path], stderr=subprocess.STDOUT)
+        count = subprocess.check_output(
+            [token_counter_sh, source_file_path], 
+            stderr=subprocess.STDOUT)
         return int(count)
     except Exception as err:
         print("Error counting token for " + source_file_path)
@@ -200,11 +208,11 @@ def environment_updater(memory_flag: bool, filename_log: str) -> Dict[str, str]:
         return environment
 
 
-def filename_generator(bench: str, reducer: str, iteration: int, timemark: str) -> Tuple[str, str]:
+def filename_generator(subject: str, reducer: str, iteration: int, timemark: str) -> Tuple[str, str]:
     """Generate proper names for report (and memory log if applicable)"""
-    bench = os.path.basename(bench)
-    filename_report = f"tmp_{bench}_{reducer}_{timemark}_itr{iteration}.json"
-    filename_log = f"tmp_{bench}_{reducer}_{timemark}_itr{iteration}.log"
+    subject = os.path.basename(subject)
+    filename_report = f"tmp_{subject}_{reducer}_{timemark}_itr{iteration}.json"
+    filename_log = f"tmp_{subject}_{reducer}_{timemark}_itr{iteration}.log"
 
     return filename_report, filename_log
 
@@ -217,10 +225,10 @@ def get_extra_flags(reducer: str) -> str:
         return flag if flag else "Default"
 
 
-def report_generator(bench, reducer, reducer_flags, token_count, iteration, run_result: list):
+def report_generator(subject, reducer, reducer_flags, token_count, iteration, run_result: list):
     """Report initialization"""
     report = dict()
-    report['Bench'] = bench
+    report['Subject'] = subject
     report['Reducer'] = reducer
     report["Environment"] = reducer_flags
     report["Origin token count"] = token_count
@@ -243,15 +251,14 @@ def output_manager(output_dir: str, filename_report: str, report: dict):
     print(f'Output path: {output_filepath}')
 
 
-
 def main():
     # parameter handler
     args = parse_arguments()
     parameter = Parameter(
-        args.benches,
-        args.iterations,
-        args.show_subprocess,
+        args.subjects,
         args.reducers,
+        args.show_subprocess,
+        args.iterations,
         args.list_reducers,
         args.memory_profiler,
         args.output_dir
@@ -263,16 +270,16 @@ def main():
     load_reducers(parameter.reducers, parameter.show_subprocess)
 
     # benchmark starts here
-    for bench_name in parameter.benchmark_target:
-        if bench_name[-1] == "/":
-            bench_name = bench_name[:-1]
+    for subject_name in parameter.benchmark_target:
+        if subject_name[-1] == "/":
+            subject_name = subject_name[:-1]
 
-        # extract bench information (source file & test script)
-        source_file_path, script_file_path = extract_info_properties(bench_name)
+        # extract subject information (source file & test script)
+        source_file_path, script_file_path = extract_info_properties(subject_name)
 
-        # count bench tokens
+        # count subject tokens
         token_count = count_token(source_file_path)
-        print(f"Bench {bench_name} has {token_count} original tokens")
+        print(f"Subject {subject_name} has {token_count} original tokens")
 
         # reduction
         for reducer in parameter.reducers:
@@ -286,10 +293,10 @@ def main():
                 print(f"***** Iteration: {iteration} *****")
 
                 # create report filename (and log filename if applicable)
-                filename_report, filename_log = filename_generator(bench_name, reducer, iteration, time)
+                filename_report, filename_log = filename_generator(subject_name, reducer, iteration, time)
 
                 # setup environment variables for subprocess
-                enviroment = environment_updater(parameter.memory_profiler, filename_log)
+                environment = environment_updater(parameter.memory_profiler, filename_log)
 
                 # tmp file for reducer's output
                 fd, fname = tempfile.mkstemp()
@@ -302,11 +309,12 @@ def main():
                     [REDUCERS[reducer],
                      script_file_path,
                      source_file_path,
+                     parameter.output_dir,
                      fname],
                     check=False,
                     stdout=pipe,
                     stderr=pipe,
-                    env=enviroment)
+                    env=environment)
 
                 # retrieve reduction results
                 with open(fname, "r") as output:
@@ -315,7 +323,7 @@ def main():
                         run_result = ["unknown", "unknown", "unknown", "failed", "failed", "failed", run_result]
                 os.remove(fname)
 
-                report = report_generator(bench_name, reducer, reducer_flags, token_count, iteration, run_result)
+                report = report_generator(subject_name, reducer, reducer_flags, token_count, iteration, run_result)
                 output_manager(parameter.output_dir, filename_report, report)
 
 

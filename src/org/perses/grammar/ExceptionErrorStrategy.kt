@@ -34,7 +34,10 @@ class ExceptionErrorStrategy : DefaultErrorStrategy() {
     var msg = "mismatched input " + getTokenErrorDisplay(e.offendingToken)
     msg += " expecting one of " + e.expectedTokens.toString(recognizer.tokenNames)
     val ex = RecognitionException(
-      msg, recognizer, recognizer.inputStream, recognizer.context
+      msg,
+      recognizer,
+      recognizer.inputStream,
+      recognizer.context,
     )
     ex.initCause(e)
     throw ex
@@ -51,7 +54,10 @@ class ExceptionErrorStrategy : DefaultErrorStrategy() {
         getTokenErrorDisplay(t)
       )
     throw RecognitionException(
-      msg, recognizer, recognizer.inputStream, recognizer.context
+      msg,
+      recognizer,
+      recognizer.inputStream,
+      recognizer.context,
     )
   }
 }

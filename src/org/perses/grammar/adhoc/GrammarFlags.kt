@@ -92,16 +92,34 @@ class GrammarFlags : ICommandLineFlags {
   )
   var existingLanguageKindClassFullName: String? = null
 
+  @Parameter(
+    names = ["--parser-base-file"],
+    description = "The file for the parse base",
+    required = false,
+    order = CommonCmdOptionGroupOrder.GRAMMAR_CONTROL + 800,
+  )
+  var parserBase: Path? = null
+
+  @Parameter(
+    names = ["--lexer-base-file"],
+    description = "The file for the lexer base",
+    required = false,
+    order = CommonCmdOptionGroupOrder.GRAMMAR_CONTROL + 900,
+  )
+  var lexerBase: Path? = null
+
   fun createAdhocGrammarConfiguration(): AdhocGrammarConfiguration {
     return AdhocGrammarConfiguration(
       parserFile = parserGrammar!!,
       lexerFile = lexerGrammar,
+      parserBase = parserBase,
+      lexerBase = lexerBase,
       packageName = packageName,
       parserFacadeClassSimpleName = parserFacadeClassSimpleName,
       languageKindYamlFile = languageKindYamlFile,
       existingLanguageKindClassFullName = existingLanguageKindClassFullName,
       startRuleName = startRuleName!!,
-      tokenNamesOfIdentifiers = tokenNamesOfIdentifiers
+      tokenNamesOfIdentifiers = tokenNamesOfIdentifiers,
     )
   }
 
@@ -129,6 +147,16 @@ class GrammarFlags : ICommandLineFlags {
         "The $lexerGrammar is not a file"
       }
     }
+    if (parserBase != null) {
+      check(Files.isRegularFile(parserBase)) {
+        "The $parserBase is not a file"
+      }
+    }
+    if (lexerBase != null) {
+      check(Files.isRegularFile(lexerBase)) {
+        "The $lexerBase is not a file"
+      }
+    }
     when {
       languageKindYamlFile != null -> {
         check(existingLanguageKindClassFullName == null)
@@ -142,7 +170,7 @@ class GrammarFlags : ICommandLineFlags {
       else -> {
         error(
           "Unreachable. You need to specify --language-kind-yaml-file or " +
-            "--existing-language-full-class-name"
+            "--existing-language-full-class-name",
         )
       }
     }

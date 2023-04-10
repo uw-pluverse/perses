@@ -5,9 +5,9 @@ package(default_visibility = [
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 kt_jvm_library(
-    name = "LanguageExtFlags",
+    name = "LanguageControlFlags",
     srcs = [
-        "LanguageExtFlags.kt",
+        "LanguageControlFlags.kt",
     ],
     deps = [
         "//src/org/perses/util/cmd",
@@ -20,7 +20,6 @@ kt_jvm_library(
         "CacheControlFlags.kt",
         "ExperimentFlags.kt",
         "InputFlags.kt",
-        "LanguageExtFlags.kt",
         "OutputFlags.kt",
         "OutputRefiningFlags.kt",
         "ProfilingFlags.kt",
@@ -28,14 +27,14 @@ kt_jvm_library(
         "ReductionControlFlags.kt",
     ],
     exports = [
-        ":LanguageExtFlags",
+        ":LanguageControlFlags",
     ],
     deps = [
         "//src/org/perses/program:enum_format_control",
         "//src/org/perses/reduction/cache:enum_query_caching_control",
         "//src/org/perses/reduction/cache:test_execution_cache_type",
         "//src/org/perses/util:percentage",
-        "//src/org/perses/util:shell",
         "//src/org/perses/util/cmd",
+        "//src/org/perses/util/shell",
     ],
 )

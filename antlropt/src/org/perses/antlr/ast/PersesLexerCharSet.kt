@@ -30,7 +30,7 @@ class PersesLexerCharSet(val text: String) : AbstractPersesTerminalAst() {
   override val tag = AstTag.LEXER_CHAR_SET
 
   override fun createWithNewChildren(
-    newChildren: List<AbstractPersesRuleElement>
+    newChildren: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     require(newChildren.isEmpty())
     return PersesLexerCharSet(text)

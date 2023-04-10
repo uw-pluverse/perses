@@ -29,6 +29,7 @@ import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.ChildHoistingAction
 import org.perses.spartree.SparTree
+import org.perses.util.Util.lazyAssert
 import java.io.IOException
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
@@ -38,7 +39,7 @@ import java.nio.file.StandardOpenOption
 /** The base class for reducers that perform level-based reduction.  */
 abstract class AbstractLevelBasedReducer protected constructor(
   reducerAnnotation: ReducerAnnotation,
-  reducerContext: ReducerContext
+  reducerContext: ReducerContext,
 ) : AbstractTokenReducer(reducerAnnotation, reducerContext) {
 
   private val partitionPolicy: AbstractLevelPartitionPolicy = SimpleLevelPartitionPolicy()
@@ -57,7 +58,7 @@ abstract class AbstractLevelBasedReducer protected constructor(
    * @return
    */
   protected fun moveToNextLevel(
-    level: ReductionLevel
+    level: ReductionLevel,
   ): ReductionLevel {
     val nextLevel = ReductionLevel(level.level + 1)
     // FIXME: need to make sure that single path cannot contain more than two nodes.
@@ -69,7 +70,7 @@ abstract class AbstractLevelBasedReducer protected constructor(
   protected fun reduceOneLevel(
     tree: SparTree,
     level: ReductionLevel,
-    levelStartEvent: LevelReductionStartEvent
+    levelStartEvent: LevelReductionStartEvent,
   ) {
     var maxNodesPerPartition = getInitialMaxNodesPerPartition(level)
     while (maxNodesPerPartition > 0) {
@@ -92,19 +93,21 @@ abstract class AbstractLevelBasedReducer protected constructor(
    */
   protected abstract fun createTreeEditListByDisablingPartition(
     partition: Partition,
-    tree: SparTree
+    tree: SparTree,
   ): List<AbstractSparTreeEdit<*>>
 
   private fun partitionLevelAndReduce(
     tree: SparTree,
     reductionLevel: ReductionLevel,
     maxNodesPerPartition: Int,
-    levelStartEvent: LevelReductionStartEvent
+    levelStartEvent: LevelReductionStartEvent,
   ) {
-    assert(maxNodesPerPartition > 0)
+    lazyAssert { maxNodesPerPartition > 0 }
     val oldTokenCount = tree.tokenCount
     val granularityReductionStartEvent = levelStartEvent.createGranularityReductionStartEvent(
-      System.currentTimeMillis(), maxNodesPerPartition, oldTokenCount
+      System.currentTimeMillis(),
+      maxNodesPerPartition,
+      oldTokenCount,
     )
     listenerManager.onLevelGranularityReductionStart(granularityReductionStartEvent)
     val partitions = partitionPolicy.partition(reductionLevel, maxNodesPerPartition)
@@ -127,7 +130,9 @@ abstract class AbstractLevelBasedReducer protected constructor(
     }
     val newTokenCount = tree.tokenCount
     val granularityReductionEndEvent = granularityReductionStartEvent.createEndEvent(
-      System.currentTimeMillis(), newTokenCount, maxNodesPerPartition
+      System.currentTimeMillis(),
+      newTokenCount,
+      maxNodesPerPartition,
     )
     listenerManager.onLevelGranularityReductionEnd(granularityReductionEndEvent)
     reductionLevel.cleanDeletedNodes()
@@ -138,7 +143,7 @@ abstract class AbstractLevelBasedReducer protected constructor(
       Paths.get("temp_empty_edits_dump.txt"),
       StandardCharsets.UTF_8,
       StandardOpenOption.APPEND,
-      StandardOpenOption.CREATE
+      StandardOpenOption.CREATE,
     ).use { sink ->
       sink.write("Empty partition: ")
       sink.write(partition.toString())
@@ -150,7 +155,7 @@ abstract class AbstractLevelBasedReducer protected constructor(
           """
             ${child.parent!!.printTreeStructure()}
   
-          """.trimIndent()
+          """.trimIndent(),
         )
       }
     }
@@ -161,15 +166,18 @@ abstract class AbstractLevelBasedReducer protected constructor(
     val initialRegion = getInitialRegion(tree)
     var currentLevel = initialRegion
     while (!currentLevel.isEmpty) {
-      assert(currentLevel.nodeCount > 0) { "The level cannot be empty." }
+      lazyAssert({ currentLevel.nodeCount > 0 }) { "The level cannot be empty." }
       val preSize = tree.tokenCount
       val levelStartEvent = fixpointReductionState
         .fixpointIterationStartEvent
         .createLevelReductionStartEvent(
-          System.currentTimeMillis(), preSize, currentLevel.level, currentLevel.nodeCount
+          System.currentTimeMillis(),
+          preSize,
+          currentLevel.level,
+          currentLevel.nodeCount,
         )
       listenerManager.onLevelReductionStart(levelStartEvent)
-      assert(!currentLevel.isEmpty)
+      lazyAssert { !currentLevel.isEmpty }
       try {
         reduceOneLevel(tree, currentLevel, levelStartEvent)
       } catch (e: IOException) {
@@ -177,7 +185,7 @@ abstract class AbstractLevelBasedReducer protected constructor(
       }
       val postSize = tree.tokenCount
       listenerManager.onLevelReductionEnd(
-        levelStartEvent.createEndEvent(System.currentTimeMillis(), postSize)
+        levelStartEvent.createEndEvent(System.currentTimeMillis(), postSize),
       )
       currentLevel = moveToNextLevel(currentLevel)
     }
@@ -186,7 +194,7 @@ abstract class AbstractLevelBasedReducer protected constructor(
   companion object {
     private fun isReplacingNodeAtTheLevel(
       level: ReductionLevel,
-      action: ChildHoistingAction
+      action: ChildHoistingAction,
     ): Boolean {
       return level.containsNode(action.targetNode)
     }

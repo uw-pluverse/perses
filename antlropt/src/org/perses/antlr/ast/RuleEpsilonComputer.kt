@@ -109,7 +109,7 @@ class RuleEpsilonComputer private constructor(grammar: ImmutableList<AbstractPer
   companion object {
     @JvmStatic
     fun computeEpsilonableRules(
-      grammar: ImmutableList<AbstractPersesRuleDefAst>
+      grammar: ImmutableList<AbstractPersesRuleDefAst>,
     ): EpsilonInfo {
       val computer = RuleEpsilonComputer(grammar)
       computer.compute()

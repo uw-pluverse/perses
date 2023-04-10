@@ -31,7 +31,7 @@ import org.perses.util.toImmutableList
 class TokenizedProgramFactoryTest {
 
   val factory = createAntlrTokens(
-    ImmutableList.of("a", "b", "c", "d", "e")
+    ImmutableList.of("a", "b", "c", "d", "e"),
   ).let {
     createFactory(it, LanguageC)
   }
@@ -59,11 +59,11 @@ class TokenizedProgramFactoryTest {
     val token = program.tokens.single()
     val copy = program.factory.tokenFactory.copyPersesTokenWithNewText(
       newText = "z",
-      token
+      token,
     )
     assertThat(copy.text).isEqualTo("z")
     assertThat(copy.position).isEqualTo(
-      token.position
+      token.position,
     )
   }
 

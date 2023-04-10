@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sleep 5 # sleep for three seconds to make this script slow.
+sleep 5 # sleep for five seconds to make this script slow.
 
 rm a.out temp.txt &> /dev/null
 

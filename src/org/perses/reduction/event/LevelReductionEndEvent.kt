@@ -20,7 +20,7 @@ class LevelReductionEndEvent internal constructor(
   startEvent: LevelReductionStartEvent,
   currentTimeMillis: Long,
   programSize: Int,
-  val level: Int
+  val level: Int,
 ) :
   AbstractEndEvent<LevelReductionStartEvent>(startEvent, currentTimeMillis, programSize) {
 

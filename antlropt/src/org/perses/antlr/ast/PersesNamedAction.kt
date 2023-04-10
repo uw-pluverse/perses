@@ -21,7 +21,7 @@ import java.io.PrintStream
 
 class PersesNamedAction(
   private val name: String,
-  private val body: String
+  private val body: String,
 ) : AbstractPersesAst() {
 
   override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {

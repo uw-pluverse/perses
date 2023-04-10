@@ -18,6 +18,7 @@ package org.perses.reduction
 
 import com.google.common.base.MoreObjects
 import org.perses.spartree.AbstractSparTreeNode
+import org.perses.util.Util.lazyAssert
 import org.perses.util.Util.removeElementsFromList
 
 /** Represents a level in a spar-tree.  */
@@ -29,13 +30,13 @@ class ReductionLevel(val level: Int) {
   }
 
   fun addNode(node: AbstractSparTreeNode) {
-    assert(!node.isPermanentlyDeleted) { "The node to add is already permanently deleted." }
+    lazyAssert({ !node.isPermanentlyDeleted }) { "The node to add is already permanently deleted." }
     nodes.add(node)
   }
 
   fun replaceNode(origNode: AbstractSparTreeNode, replacement: AbstractSparTreeNode) {
     val index = nodes.indexOf(origNode)
-    assert(index >= 0) { nodes }
+    lazyAssert({ index >= 0 }) { nodes }
     nodes[index] = replacement
   }
 

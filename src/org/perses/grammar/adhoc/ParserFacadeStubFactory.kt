@@ -26,13 +26,13 @@ class ParserFacadeStubFactory(
   val lexerFile: Path?,
   val languageKindSetting: AbstractLanguageKindSetting,
   val parserFacadeClassSimpleName: String,
-  val tokenNamesOfIdentifiers: List<String>
+  val tokenNamesOfIdentifiers: List<String>,
 ) : AbstractGrammarStubFactory() {
   override fun createStub(
     packageName: String,
     parserClassSimpleName: String,
     lexerClassSimpleName: String,
-    startRuleName: String
+    startRuleName: String,
   ): AbstractGrammarStub {
     return when (languageKindSetting) {
       is YamlLanguageKindSetting ->
@@ -59,7 +59,7 @@ class ParserFacadeStubFactory(
           lexerFile,
           languageKindSetting.content,
           parserFacadeClassSimpleName = parserFacadeClassSimpleName,
-          tokenNamesOfIdentifiers = tokenNamesOfIdentifiers
+          tokenNamesOfIdentifiers = tokenNamesOfIdentifiers,
         )
     }
   }

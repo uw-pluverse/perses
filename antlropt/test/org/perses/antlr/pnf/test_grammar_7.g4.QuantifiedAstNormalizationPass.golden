@@ -2,6 +2,8 @@
 // DO NOT MODIFY.
 grammar test_grammar_7;
 
+
+
 start
     : kleene_star__start_5 optional__start_6
     ;

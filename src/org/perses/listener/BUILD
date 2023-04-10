@@ -33,6 +33,5 @@ kt_jvm_library(
         "//src/org/perses/spartree",
         "//src/org/perses/util",
         "//src/org/perses/util:timeutil",
-        "@maven//:org_checkerframework_checker_qual",
     ],
 )

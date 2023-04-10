@@ -23,9 +23,11 @@ import org.perses.reduction.cache.QueryCacheType.CONFIG_BASED
 import org.perses.reduction.cache.QueryCacheType.CONTENT_LEXEME_LIST_BASE
 import org.perses.reduction.cache.QueryCacheType.CONTENT_SHA512
 import org.perses.reduction.cache.QueryCacheType.CONTENT_SHA512_FORMAT
+import org.perses.reduction.cache.QueryCacheType.CONTENT_ZIP
 import org.perses.reduction.cache.QueryCacheType.ORIG_CONTENT_STRING_BASED
 import org.perses.reduction.cache.QueryCacheType.PERSES_FAST_LINEAR_SCAN_NO_COMPRESSION
 import org.perses.reduction.cache.QueryCacheType.PERSES_LEXEME_ID
+import org.perses.reduction.cache.QueryCacheType.RCC_MEM_LIT
 
 object QueryCacheFactory {
 
@@ -34,46 +36,76 @@ object QueryCacheFactory {
     cacheType: QueryCacheType,
     tokenizedProgram: TokenizedProgram,
     profiler: AbstractQueryCacheProfiler,
-    configuration: QueryCacheConfiguration
+    configuration: QueryCacheConfiguration,
   ): AbstractQueryCache {
     return when (cacheType) {
       ORIG_CONTENT_STRING_BASED ->
         ContentStringBasedQueryCache(
-          tokenizedProgram, profiler, configuration
+          tokenizedProgram,
+          profiler,
+          configuration,
         )
       CONTENT_LEXEME_LIST_BASE ->
         ContentLexemeListQueryCache(
-          tokenizedProgram, profiler, configuration
+          tokenizedProgram,
+          profiler,
+          configuration,
         )
       CONFIG_BASED ->
         ConfigBasedQueryCache()
       PERSES_LEXEME_ID ->
         ContentLexemeIdQueryCache(
-          tokenizedProgram, profiler, configuration
+          tokenizedProgram,
+          profiler,
+          configuration,
         )
       COMPACT_QUERY_CACHE -> {
         CompactQueryCache(
-          tokenizedProgram, profiler, configuration
+          tokenizedProgram,
+          profiler,
+          configuration,
         )
       }
       COMPACT_QUERY_CACHE_FORMAT_SENSITIVE -> {
         CompactQueryCacheFormatSensitive(
-          tokenizedProgram, profiler, configuration
+          tokenizedProgram,
+          profiler,
+          configuration,
         )
       }
       PERSES_FAST_LINEAR_SCAN_NO_COMPRESSION -> {
         QueryCacheWithFastLinearScanWithoutCompression(
-          tokenizedProgram, profiler, configuration
+          tokenizedProgram,
+          profiler,
+          configuration,
         )
       }
       CONTENT_SHA512 -> {
         ContentSHA512BasedQueryCache(
-          tokenizedProgram, profiler, configuration
+          tokenizedProgram,
+          profiler,
+          configuration,
         )
       }
       CONTENT_SHA512_FORMAT -> {
         ContentSHA512BasedFormatQueryCache(
-          tokenizedProgram, profiler, configuration
+          tokenizedProgram,
+          profiler,
+          configuration,
+        )
+      }
+      CONTENT_ZIP -> {
+        ContentZipBasedQueryCache(
+          tokenizedProgram,
+          profiler,
+          configuration,
+        )
+      }
+      RCC_MEM_LIT -> {
+        RccMemLitQueryCache(
+          tokenizedProgram,
+          profiler,
+          configuration,
         )
       }
       else -> {

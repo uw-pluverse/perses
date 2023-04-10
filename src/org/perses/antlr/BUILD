@@ -14,26 +14,26 @@ java_library(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "antlr_grammar_util",
-    srcs = ["AntlrGrammarUtil.java"],
+    srcs = ["AntlrGrammarUtil.kt"],
     deps = [
+        "//:antlr_runtime",
+        "//:antlr_tool",
         "//:guava",
         "//antlropt/src/org/perses/antlr:enum_rule_type",
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
-        "@maven//:org_antlr_antlr4",
-        "@maven//:org_antlr_antlr4_runtime",
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "antlr_grammar_parser",
-    srcs = ["AntlrGrammarParser.java"],
+    srcs = ["AntlrGrammarParser.kt"],
     deps = [
+        "//:antlr_tool",
         "//:guava",
-        "@maven//:org_antlr_antlr4",
-        "@maven//:org_antlr_antlr_runtime",
+        "@maven//:org_antlr_antlr_runtime",  # This is the runtime v3, required for antlr tool v4. Cannot be deleted.
     ],
 )
 
@@ -42,19 +42,20 @@ kt_jvm_library(
     srcs = [
         "GrammarHierarchy.kt",
         "GrammarHierarchyBuilder.kt",
-        "RuleHierarchyInfo.kt",
+        "RuleHierarchyEntry.kt",
     ],
     deps = [
         ":antlr_grammar_info",
         ":antlr_grammar_util",
+        "//:antlr_runtime",
+        "//:antlr_tool",
         "//:flogger",
         "//:guava",
         "//antlropt/src/org/perses/antlr:enum_rule_type",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/ast:ast_builder",
         "//src/org/perses/antlr:antlr_grammar_parser",
-        "@maven//:org_antlr_antlr4",
-        "@maven//:org_antlr_antlr4_runtime",
+        "//src/org/perses/antlr/protobuf:grammar_hierarchy_java_proto",
         "@maven//:org_antlr_antlr_runtime",
     ],
 )
@@ -93,7 +94,7 @@ kt_jvm_library(
     name = "parse_tree_with_parser",
     srcs = ["ParseTreeWithParser.kt"],
     deps = [
-        "@maven//:org_antlr_antlr4_runtime",
+        "//:antlr_runtime",
     ],
 )
 
@@ -111,6 +112,6 @@ kt_jvm_library(
         "ParseTreeUtil.kt",
     ],
     deps = [
-        "@maven//:org_antlr_antlr4_runtime",
+        "//:antlr_runtime",
     ],
 )

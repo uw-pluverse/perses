@@ -17,23 +17,23 @@
 package org.perses.cmd
 
 import com.beust.jcommander.Parameter
-import org.perses.util.ShellCommandOnPath
 import org.perses.util.cmd.CommonCmdOptionGroupOrder
 import org.perses.util.cmd.ICommandLineFlags
+import org.perses.util.shell.ShellCommandOnPath
 
 class OutputRefiningFlags : ICommandLineFlags {
   @Parameter(
     names = ["--call-formatter"],
     description = "call a formatter on the final result",
     arity = 1,
-    order = CommonCmdOptionGroupOrder.OUTPUT_REFINING + 0
+    order = CommonCmdOptionGroupOrder.OUTPUT_REFINING + 0,
   )
   var callFormatter = false
 
   @Parameter(
     names = ["--format-cmd"],
     description = "the command to format the reduced source file",
-    order = CommonCmdOptionGroupOrder.OUTPUT_REFINING + 100
+    order = CommonCmdOptionGroupOrder.OUTPUT_REFINING + 100,
   )
   var formatCmd = ""
 
@@ -41,14 +41,14 @@ class OutputRefiningFlags : ICommandLineFlags {
     names = ["--call-creduce"],
     description = "call C-Reduce when Perses is done.",
     arity = 1,
-    order = CommonCmdOptionGroupOrder.OUTPUT_REFINING + 200
+    order = CommonCmdOptionGroupOrder.OUTPUT_REFINING + 200,
   )
   var callCReduce = false
 
   @Parameter(
     names = ["--creduce-cmd"],
     description = "the C-Reduce command name or path",
-    order = CommonCmdOptionGroupOrder.OUTPUT_REFINING + 300
+    order = CommonCmdOptionGroupOrder.OUTPUT_REFINING + 300,
   )
   var creduceCmd = "creduce"
 

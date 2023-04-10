@@ -23,7 +23,7 @@ import java.io.PrintStream
 
 abstract class AbstractPersesEnumAst protected constructor(
   private val enumName: String,
-  private val values: ImmutableList<String>
+  private val values: ImmutableList<String>,
 ) : AbstractPersesAst() {
 
   init {

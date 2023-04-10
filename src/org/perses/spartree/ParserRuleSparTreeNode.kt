@@ -16,13 +16,14 @@
  */
 package org.perses.spartree
 
-import org.perses.antlr.RuleHierarchyInfo
+import org.perses.antlr.RuleHierarchyEntry
 import org.perses.antlr.RuleType
+import org.perses.util.Util.lazyAssert
 
 /** A spar-tree node for a parser rule.  */
 class ParserRuleSparTreeNode internal constructor(
   nodeId: Int,
-  antlrRule: RuleHierarchyInfo?
+  antlrRule: RuleHierarchyEntry?,
 ) : AbstractSparTreeNode(nodeId, antlrRule) {
 
   init {
@@ -31,19 +32,19 @@ class ParserRuleSparTreeNode internal constructor(
 
   override fun deleteCurrentNode() {
     super.deleteCurrentNode()
-    assert(checkNodeIntegrity() == null) { checkNodeIntegrity()!! }
+    lazyAssert({ checkNodeIntegrity() == null }) { checkNodeIntegrity()!! }
   }
 
-  fun getKleeneElementRuleTypeOrThrow(): RuleHierarchyInfo {
-    assert(isKleenePlusRuleNode || isKleeneStarRuleNode) { this }
-    assert(childCount > 0) { this }
+  fun getKleeneElementRuleTypeOrThrow(): RuleHierarchyEntry {
+    lazyAssert({ isKleenePlusRuleNode || isKleeneStarRuleNode }) { this }
+    lazyAssert({ childCount > 0 }) { this }
     val elementTypeCandidates = children
       .asSequence()
       .map { it.payload!!.expectedAntlrRuleType }
       .filter { it != null }
       .distinct()
       .toList()
-    assert(elementTypeCandidates.size == 1) { elementTypeCandidates }
+    lazyAssert({ elementTypeCandidates.size == 1 }) { elementTypeCandidates }
     return elementTypeCandidates.first()!!
   }
 
@@ -57,10 +58,10 @@ class ParserRuleSparTreeNode internal constructor(
    */
   override fun addChild(
     child: AbstractSparTreeNode,
-    payload: AbstractNodePayload
+    payload: AbstractNodePayload,
   ) {
     super.addChild(child, payload)
-    assert(checkNodeIntegrity() == null) { checkNodeIntegrity()!! }
+    lazyAssert({ checkNodeIntegrity() == null }) { checkNodeIntegrity()!! }
   }
 
   override var beginToken: LexerRuleSparTreeNode? = null

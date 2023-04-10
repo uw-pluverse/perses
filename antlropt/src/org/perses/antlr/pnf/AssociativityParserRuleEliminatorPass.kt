@@ -24,8 +24,11 @@ import org.perses.antlr.ast.PersesSequenceAst
 class AssociativityParserRuleEliminatorPass :
   AbstractPnfPass() {
 
-  override fun process(grammar: PersesGrammar): PersesGrammar {
-    val mutable = MutableGrammar.createParserRulesFrom(grammar)
+  override fun processParserGrammar(
+    parserGrammar: PersesGrammar,
+    lexerGrammar: PersesGrammar?,
+  ): PersesGrammar {
+    val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     val ruleNamesCopy = getSortedRuleNames(mutable)
     for (ruleName in ruleNamesCopy) {
       val definitions = mutable.getAltBlock(ruleName)
@@ -44,12 +47,12 @@ class AssociativityParserRuleEliminatorPass :
       mutable.removeRule(ruleName)
       mutable.getAltBlock(ruleName).addAllIfInequivalent(newDefs)
     }
-    return grammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
+    return parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
   }
 
   companion object {
     fun containsAssociativityElementOptionDef(
-      defs: Iterable<AbstractPersesRuleElement>
+      defs: Iterable<AbstractPersesRuleElement>,
     ) =
       defs.asSequence().any { startsWithAssocElementOption(it) }
 

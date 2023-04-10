@@ -28,7 +28,7 @@ class StarRightIntroducerPass : AbstractStarIntroducerPass() {
     ruleName: RuleNameHandle,
     sequenceDef: PersesSequenceAst,
     nonRecursivePartsInRecursiveDef: ArrayList<AbstractPersesRuleElement>,
-    nonRecursiveDefs: LinkedHashSet<AbstractPersesRuleElement>
+    nonRecursiveDefs: LinkedHashSet<AbstractPersesRuleElement>,
   ) {
     val last = sequenceDef.lastChild
     val rest = sequenceDef.subsequence(0, sequenceDef.childCount - 1)
@@ -43,7 +43,7 @@ class StarRightIntroducerPass : AbstractStarIntroducerPass() {
 
   override fun constructNewSequenceDef(
     nonRecursiveDef: AbstractPersesRuleElement,
-    starRuleRef: PersesRuleReferenceAst
+    starRuleRef: PersesRuleReferenceAst,
   ): ImmutableList<AbstractPersesRuleElement> {
     return ImmutableList.of(starRuleRef, nonRecursiveDef)
   }

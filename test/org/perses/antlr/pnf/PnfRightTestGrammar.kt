@@ -37,7 +37,10 @@ open class PnfRightTestGrammar protected constructor() {
 
   init {
     grammar = createPersesGrammarFromString(
-      "a : c b | d;", "b : d a | c d;", "c : 'c';", "d : 'd';"
+      "a : c b | d;",
+      "b : d a | c d;",
+      "c : 'c';",
+      "d : 'd';",
     )
     val ruleNameRegistry = grammar.symbolTable.ruleNameRegistry
     a = ruleNameRegistry.getOrThrow("a")

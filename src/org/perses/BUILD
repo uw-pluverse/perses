@@ -3,6 +3,7 @@ package(default_visibility = [
 ])
 
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("//third_party/proguard:proguard.bzl", "proguard_strip")
 
 kt_jvm_library(
     name = "perses_contants",
@@ -18,15 +19,15 @@ kt_jvm_library(
     deps = [
         "//:flogger",
         "//:guava",
+        "//:jcommander",
         "//src/org/perses/cmd:reduction_flags",
         "//src/org/perses/grammar/adhoc:adhoc_grammar_configuration",
         "//src/org/perses/program:enum_format_control",
         "//src/org/perses/reduction/cache:enum_query_caching_control",
         "//src/org/perses/reduction/cache:test_execution_cache_type",
         "//src/org/perses/util:percentage",
-        "//src/org/perses/util:shell",
         "//src/org/perses/util/cmd",
-        "@maven//:com_beust_jcommander",
+        "//src/org/perses/util/shell",
     ],
 )
 
@@ -55,15 +56,16 @@ kt_jvm_library(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "perses_lib",
-    srcs = ["Main.java"],
+    srcs = ["Main.kt"],
     deps = [
         ":abstract_reduction_main",
         ":command_options",
         ":perses_contants",
         "//:antlr_tool",
         "//:guava",
+        "//:jcommander",
         "//:kotlin_stdib",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar/adhoc:adhoc_grammar_configuration",
@@ -92,7 +94,6 @@ java_library(
         "//src/org/perses/util:default_logging_configurations",
         "//src/org/perses/util/cmd",
         "//version/org/perses/version",
-        "@maven//:com_beust_jcommander",
     ],
 )
 
@@ -105,18 +106,46 @@ java_binary(
     ],
 )
 
+proguard_strip(
+    name = "strip_perses",
+    input_jar = "perses_deploy.jar",
+    main_class = "public class org.perses.Main",
+    output_jar = "stripped_perses.jar",
+)
+
+java_import(
+    name = "stripped_perses_lib",
+    jars = ["stripped_perses.jar"],
+)
+
+# FIXME: does not work.
+java_binary(
+    name = "stripped_perses_bin",
+    main_class = "org.perses.Main",
+    runtime_deps = [
+        ":stripped_perses_lib",
+    ],
+)
+
 java_binary(
     name = "token_counter",
-    srcs = ["TokenCounterMain.java"],
     jvm_flags = ["-ea"],
     main_class = "org.perses.TokenCounterMain",
     runtime_deps = [
+        ":token_counter_lib",
     ],
+)
+
+kt_jvm_library(
+    name = "token_counter_lib",
+    srcs = ["TokenCounterMain.kt"],
     deps = [
+        "//:antlr_runtime",
+        "//:antlr_tool",
         "//:guava",
         "//:jcommander",
         "//src/org/perses/antlr:parse_tree_with_parser",
-        "//src/org/perses/cmd:LanguageExtFlags",
+        "//src/org/perses/cmd:LanguageControlFlags",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/grammar/adhoc:adhoc_parser_facade_factory_util",
@@ -124,7 +153,12 @@ java_binary(
         "//src/org/perses/program:language_kind",
         "//src/org/perses/reduction:reducer_factory",
         "//src/org/perses/util/cmd",
-        "@maven//:org_antlr_antlr4",
-        "@maven//:org_antlr_antlr4_runtime",
     ],
+)
+
+proguard_strip(
+    name = "stripped_token_counter_deploy",
+    input_jar = "token_counter_deploy.jar",
+    main_class = "public class org.perses.TokenCounterMain",
+    output_jar = "stripped_token_counter_deploy.jar",
 )

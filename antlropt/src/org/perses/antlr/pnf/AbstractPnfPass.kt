@@ -26,7 +26,10 @@ import org.perses.util.Interval
 
 abstract class AbstractPnfPass {
 
-  abstract fun process(grammar: PersesGrammar): PersesGrammar
+  abstract fun processParserGrammar(
+    parserGrammar: PersesGrammar,
+    lexerGrammar: PersesGrammar?,
+  ): PersesGrammar
 
   companion object {
     @JvmStatic
@@ -38,7 +41,7 @@ abstract class AbstractPnfPass {
     protected fun replaceGapWithRuleReference(
       seq: PersesSequenceAst,
       gap: Interval,
-      gapReplacement: RuleNameHandle
+      gapReplacement: RuleNameHandle,
     ): AbstractPersesRuleElement {
       val ruleRefAst = PersesRuleReferenceAst.create(gapReplacement)
       return replaceGapInSequence(seq, gap, ruleRefAst)
@@ -47,7 +50,7 @@ abstract class AbstractPnfPass {
     @JvmStatic
     protected fun countRulesThatCallsRuleOfName(
       grammar: MutableGrammar,
-      ruleName: RuleNameHandle
+      ruleName: RuleNameHandle,
     ): Int {
       val counter = RuleRefCounterAstVisitor(ruleName)
       grammar.altSequence().forEach {

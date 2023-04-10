@@ -21,7 +21,7 @@ import org.perses.util.ast.Indent
 import java.io.PrintStream
 
 class PersesGrammarOptionsAst(
-  private val options: ImmutableList<Option>
+  private val options: ImmutableList<Option>,
 ) :
   AbstractPersesAst() {
 

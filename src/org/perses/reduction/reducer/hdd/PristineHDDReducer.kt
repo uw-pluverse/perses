@@ -25,7 +25,7 @@ import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.SparTreeSimplifier
 
 class PristineHDDReducer(
-  reducerContext: ReducerContext
+  reducerContext: ReducerContext,
 ) : AbstractTokenReducer(META, reducerContext) {
 
   /**
@@ -40,7 +40,7 @@ class PristineHDDReducer(
     while (currentLevel.isNotEmpty()) {
       val debugger = createPristineDeltaDebugger(
         input = currentLevel,
-        tree = tree
+        tree = tree,
       )
       debugger.reduce()
       val reducedCurrentLevel = debugger.best
@@ -55,7 +55,11 @@ class PristineHDDReducer(
     @JvmStatic
     val META = object : ReducerAnnotation() {
 
-      override val deterministic = true
+      override val deterministic: Boolean
+        get() = true
+
+      override val reductionResultSizeTrend: ReductionResultSizeTrend
+        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
 
       override fun shortName() = NAME
 
@@ -63,13 +67,13 @@ class PristineHDDReducer(
 
       override fun create(reducerContext: ReducerContext) = ImmutableList.of<AbstractTokenReducer>(
         PristineHDDReducer(
-          reducerContext
-        )
+          reducerContext,
+        ),
       )
     }
 
     fun moveToNextLevel(
-      current: ImmutableList<AbstractSparTreeNode>
+      current: ImmutableList<AbstractSparTreeNode>,
     ): ImmutableList<AbstractSparTreeNode> {
       val builder = ImmutableList.builder<AbstractSparTreeNode>()
       for (node in current) {

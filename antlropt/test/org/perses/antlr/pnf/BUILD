@@ -111,9 +111,8 @@ kt_jvm_library(
 
 java_binary(
     name = "pnf_pass_command_line",
-    srcs = ["PnfPassCommandLineMain.java"],
-    main_class = "org.perses.antlr.pnf.PnfPassCommandLineMain",
-    deps = [
+    main_class = "org.perses.antlr.pnf.PnfPassCommandLine",
+    runtime_deps = [
         ":PnfPassCommandLine",
     ],
 )
@@ -123,13 +122,13 @@ kt_jvm_test(
     srcs = ["PlusIntroducerLeftPassTest.kt"],
     data = ["//test_data/antlr_grammars"],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
         "//test/org/perses/antlr/pnf:PnfTestGrammar",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -137,13 +136,13 @@ kt_jvm_test(
     name = "InlineFragmentPassTest",
     srcs = ["InlineFragmentPassTest.kt"],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
         "//test/org/perses/antlr/pnf:PnfTestGrammar",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -151,13 +150,13 @@ kt_jvm_test(
     name = "ConvertAllAltToRuleReferenceOrTerminalPassTest",
     srcs = ["ConvertAllAltToRuleReferenceOrTerminalPassTest.kt"],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
         "//test/org/perses/antlr/pnf:PnfTestGrammar",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -166,13 +165,13 @@ kt_jvm_test(
     srcs = ["RuleRefRenamingEditTest.kt"],
     data = ["//test_data/antlr_grammars"],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
         "//test/org/perses/antlr/pnf:PnfTestGrammar",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -180,11 +179,11 @@ kt_jvm_test(
     name = "MutableRuleDefMapTest",
     srcs = ["MutableRuleDefMapTest.kt"],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -193,12 +192,12 @@ kt_jvm_test(
     srcs = ["MutableGrammarTest.kt"],
     deps = [
         ":AbstractMutableGrammarTest",
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -207,12 +206,12 @@ kt_jvm_test(
     srcs = ["MutableAltBlockTest.kt"],
     deps = [
         ":AbstractMutableGrammarTest",
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -220,12 +219,12 @@ kt_jvm_test(
     name = "MultiAltBlockExtractionPassTest",
     srcs = ["MultiAltBlockExtractionPassTest.kt"],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -233,12 +232,12 @@ kt_jvm_test(
     name = "PnfUtilTest",
     srcs = ["PnfUtilTest.kt"],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -247,12 +246,12 @@ kt_jvm_test(
     srcs = ["AltBlockExtractionPassTest.kt"],
     data = ["//test_data/antlr_grammars"],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -260,12 +259,12 @@ kt_jvm_test(
     name = "AbstractAltBlockExtractionPassTest",
     srcs = ["AbstractAltBlockExtractionPassTest.kt"],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -273,13 +272,13 @@ kt_jvm_test(
     name = "IndirectLeftRecursionEliminationPassTest",
     srcs = ["IndirectLeftRecursionEliminationPassTest.kt"],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
         "//test/org/perses/antlr/pnf:PnfTestGrammar",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -297,13 +296,13 @@ kt_jvm_test(
     name = "IndirectRightRecursionEliminationPassTest",
     srcs = ["IndirectRightRecursionEliminationPassTest.kt"],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
         "//test/org/perses/antlr/pnf:PnfTestGrammar",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -311,6 +310,7 @@ kt_jvm_test(
     name = "QuantifiedAstNormalizationPassTest",
     srcs = ["QuantifiedAstNormalizationPassTest.kt"],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
@@ -318,7 +318,6 @@ kt_jvm_test(
         "//antlropt/src/org/perses/antlr/pnf:pnf_grammar_checker",
         "//test/org/perses/antlr:GrammarTestingUtility",
         "//test/org/perses/antlr/pnf:PnfTestGrammar",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -326,6 +325,7 @@ kt_jvm_test(
     name = "OutlineAltBlockPassTest",
     srcs = ["OutlineAltBlockPassTest.kt"],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
@@ -333,7 +333,6 @@ kt_jvm_test(
         "//antlropt/src/org/perses/antlr/pnf:pnf_grammar_checker",
         "//test/org/perses/antlr:GrammarTestingUtility",
         "//test/org/perses/antlr/pnf:PnfTestGrammar",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 

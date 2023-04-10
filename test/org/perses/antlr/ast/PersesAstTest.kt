@@ -55,7 +55,7 @@ class PersesAstTest {
   @Test
   fun testBlockComment() {
     val grammar = createPersesGrammarFromString(
-      "BlockComment: '/*' .*? '*/' -> skip ;"
+      "BlockComment: '/*' .*? '*/' -> skip ;",
     )
     val body = grammar.getRuleDefinition("BlockComment")!!.body
     assertThat(body).isInstanceOf(PersesLexerCommandAst::class.java)
@@ -73,7 +73,7 @@ class PersesAstTest {
   @Test
   fun testPersesLexerCommandAstMultipleCommands() {
     val grammar = createPersesGrammarFromString(
-      "TOKEN: i -> popMode, skip;"
+      "TOKEN: i -> popMode, skip;",
     )
     assertThat(grammar.sourceCode).contains("i -> popMode, skip")
   }
@@ -83,7 +83,7 @@ class PersesAstTest {
     val grammar = createPersesGrammarFromString(
       """
       XMLDeclOpen : '<' -> pushMode(INSIDE) ;
-      """.trimIndent()
+      """.trimIndent(),
     )
     val body = grammar.getRuleDefinition("XMLDeclOpen")!!.body
     assertThat(body.sourceCode.trim()).isEqualTo("'<' -> pushMode(INSIDE)")
@@ -94,7 +94,7 @@ class PersesAstTest {
     val grammar = createPersesGrammarFromString(
       """
         tokens { INDENT, DEDENT }
-      """.trimIndent()
+      """.trimIndent(),
     )
     val code = grammar.sourceCode
     assertThat(code.trim().replace(Regex("\\s"), ""))

@@ -16,18 +16,19 @@
  */
 package org.perses.reduction.io.token
 
-import org.perses.program.AbstractTokenizedProgramPrinter
+import org.perses.program.AbstractReductionFile
 import org.perses.program.EnumFormatControl
 import org.perses.program.TokenizedProgram
+import org.perses.program.printer.AbstractTokenizedProgramPrinter
 import org.perses.program.printer.PrinterRegistry
 import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.ReductionFolder
 
 class RegularOutputManagerFactory(
-  val mainSourceFileName: String,
-  programFormatControl: EnumFormatControl
+  val origMainSourceFile: AbstractReductionFile<*, *>,
+  programFormatControl: EnumFormatControl,
 ) : AbstractTokenOutputManagerFactory(
-  programFormatControl
+  programFormatControl,
 ) {
 
   override fun createManagerFor(program: TokenizedProgram): AbstractOutputManager {
@@ -36,19 +37,19 @@ class RegularOutputManagerFactory(
 
   override fun createManagerFor(
     program: TokenizedProgram,
-    format: EnumFormatControl
+    format: EnumFormatControl,
   ): AbstractOutputManager {
     return OutputManager(program, PrinterRegistry.getPrinter(format))
   }
 
   inner class OutputManager(
     private val program: TokenizedProgram,
-    private val programPrinter: AbstractTokenizedProgramPrinter
+    private val programPrinter: AbstractTokenizedProgramPrinter,
   ) :
     AbstractOutputManager() {
 
     override fun write(folder: ReductionFolder) {
-      programPrinter.print(program).writeTo(folder.folder.resolve(mainSourceFileName))
+      programPrinter.print(program).writeTo(folder.computeAbsPathForOrigFile(origMainSourceFile))
     }
   }
 }

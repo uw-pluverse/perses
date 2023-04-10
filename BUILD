@@ -2,18 +2,7 @@ package(
     default_visibility = ["//visibility:public"],
 )
 
-###################################################################################################
-#
-# The following is copied from
-#        https://github.com/bazelbuild/buildtools/tree/master/buildifier
-#
-###################################################################################################
-load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "define_kt_toolchain")
-
-buildifier(
-    name = "buildifier",
-)
 
 alias(
     name = "antlr_tool",
@@ -26,8 +15,17 @@ alias(
 )
 
 alias(
+    name = "jgrapht",
+    actual = "@maven//:org_jgrapht_jgrapht_core",
+)
+
+java_library(
     name = "asm",
-    actual = "@maven//:org_ow2_asm_asm_all",
+    exports = [
+        "@maven//:org_ow2_asm_asm",
+        "@maven//:org_ow2_asm_asm_commons",
+        "@maven//:org_ow2_asm_asm_util",
+    ],
 )
 
 alias(
@@ -67,22 +65,15 @@ java_binary(
 alias(
     name = "guava",
     actual = "@maven//:com_google_guava_guava",
-    visibility = ["//visibility:public"],
 )
 
-java_library(
+alias(
     name = "flogger",
-    visibility = ["//visibility:public"],
-    exports = [
-        "//src/org/perses/util:flogger_kt_exts",
-        "@maven//:com_google_flogger_flogger",
-        "@maven//:com_google_flogger_flogger_system_backend",
-    ],
+    actual = "//src/org/perses/util:flogger_kt_exts",
 )
 
 java_library(
     name = "jackson",
-    visibility = ["//visibility:public"],
     exports = [
         "@maven//:com_fasterxml_jackson_core_jackson_annotations",
         "@maven//:com_fasterxml_jackson_core_jackson_core",
@@ -96,21 +87,30 @@ java_library(
 alias(
     name = "jcommander",
     actual = "@maven//:com_beust_jcommander",
-    visibility = ["//visibility:public"],
 )
 
 java_library(
     name = "truth",
-    visibility = ["//visibility:public"],
     exports = [
         "@maven//:com_google_truth_truth",
         "@maven//:com_googlecode_java_diff_utils_diffutils",
     ],
 )
 
+java_library(
+    name = "gumtree",
+    exports = [
+        "@maven//:com_github_gumtreediff_core",
+    ],
+)
+
 define_kt_toolchain(
     name = "kotlin_toolchain",
-    api_version = "1.5",
+    #   Can't upgrade to 1.7 because it is still experimental which has limited JSR223 compatibility
+    #   TODO(cnsun): upgrade when JSR is ready and revert back to 1.6
+    api_version = "1.6",
     jvm_target = "1.8",
-    language_version = "1.5",
+    language_version = "1.6",
 )
+
+exports_files(["README.md"])

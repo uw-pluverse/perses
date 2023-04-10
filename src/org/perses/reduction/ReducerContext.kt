@@ -16,6 +16,7 @@
  */
 package org.perses.reduction
 
+import org.perses.program.LanguageKind
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.cache.AbstractQueryCache
 import org.perses.reduction.io.token.TokenReductionIOManager
@@ -25,10 +26,11 @@ class ReducerContext(
   ioManager: TokenReductionIOManager,
   val configuration: ReductionConfiguration,
   executorService: TestScriptExecutorService,
-  val listenerManager: ReductionListenerManager,
+  val listenerManager: AsyncReductionListenerManager,
   val queryCache: AbstractQueryCache,
   val nodeActionSetCache: AbstractNodeActionSetCache,
-  val actionSetProfiler: AbstractActionSetProfiler
-) : AbstractReducerContext<TokenizedProgram, TokenReductionIOManager, ReducerContext>(
-  ioManager, executorService
+  val actionSetProfiler: AbstractActionSetProfiler,
+) : AbstractReducerContext<TokenizedProgram, LanguageKind, TokenReductionIOManager, ReducerContext>(
+  ioManager,
+  executorService,
 )

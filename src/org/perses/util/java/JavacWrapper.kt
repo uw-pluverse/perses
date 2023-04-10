@@ -17,6 +17,7 @@
 package org.perses.util.java
 
 import com.google.common.collect.ImmutableList
+import org.perses.util.toImmutableList
 import java.io.Closeable
 import java.io.File.pathSeparator
 import java.nio.charset.StandardCharsets
@@ -34,11 +35,11 @@ class JavacWrapper(val sourceFiles: ImmutableList<Path>) : Closeable {
   val manager = compiler.getStandardFileManager(
     diagnostics,
     /*local*/null,
-    StandardCharsets.UTF_8
+    StandardCharsets.UTF_8,
   )
 
   val sources = manager.getJavaFileObjectsFromFiles(
-    sourceFiles.map { it.toFile() }
+    sourceFiles.map { it.toFile() },
   )
 
   val options = ImmutableList
@@ -58,12 +59,12 @@ class JavacWrapper(val sourceFiles: ImmutableList<Path>) : Closeable {
       diagnostics,
       options,
       /*classes*/null,
-      sources
+      sources,
     )
     if (!task.call()) {
       throw RuntimeException(
         "compilation fail for $sourceFiles: \n" +
-          diagnostics.diagnostics.joinToString("\n")
+          diagnostics.diagnostics.joinToString("\n"),
       )
     }
   }
@@ -94,8 +95,7 @@ class JavacWrapper(val sourceFiles: ImmutableList<Path>) : Closeable {
         .distinct()
         .map { Paths.get(it).toAbsolutePath() }
         .filter { Files.isRegularFile(it) }
-        .fold(ImmutableList.builder<Path>()) { acc, path -> acc!!.add(path) }
-        .build()
+        .toImmutableList()
     }
   }
 }

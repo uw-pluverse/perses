@@ -146,7 +146,7 @@ class PnfGoParserFacadeTest {
       |
       |    assert(0 == complex(0, 12))
       |}
-    """.trimMargin()
+      """.trimMargin()
 
     testString(program, "<in memory>")
   }

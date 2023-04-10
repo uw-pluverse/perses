@@ -27,6 +27,7 @@ kt_jvm_library(
         ":token_output_manager_factory_interface",
         "//src/org/perses/reduction/io",
         "//src/org/perses/reduction/io:output_manager_interface",
+        "//src/org/perses/util:file_name_content_pair",
     ],
 )
 

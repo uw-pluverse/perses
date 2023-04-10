@@ -18,6 +18,7 @@ package org.perses.reduction
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
+import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -43,17 +44,17 @@ class ReductionFolderManagerTest {
   private val sourceFile = SourceFile(Paths.get("test_data/delta_1/t.c"), LanguageC)
   val reductionInputs = RegularReductionInputs(testScript, sourceFile)
   val outputManagerFactory = RegularOutputManagerFactory(
-    sourceFile.baseName,
-    EnumFormatControl.COMPACT_ORIG_FORMAT
+    sourceFile,
+    EnumFormatControl.COMPACT_ORIG_FORMAT,
   )
   private val outputDir = tempDir.file.resolve("perses_output_dir")
   val ioManager = TokenReductionIOManager(
     workingFolder = tempDir.file,
     reductionInputs = reductionInputs,
     outputManagerFactory = outputManagerFactory,
-    outputDirectory = outputDir
+    outputDirectory = outputDir,
   )
-  private val manager = ioManager.createReductionFolderManager()
+  private val manager = ioManager.lazilyInitializedReductionFolderManager
 
   @After
   fun teardown() {
@@ -81,10 +82,22 @@ class ReductionFolderManagerTest {
     assertThat(folder.folder.toFile().listFiles()!!).hasLength(3)
     folder.deleteAllOtherFiles()
     assertThat(
-      folder.folder.toFile().listFiles()!!.map { it.name }
+      folder.folder.toFile().listFiles()!!.map { it.name },
     ).containsExactly(
-      sourceFile.baseName, testScript.baseName
+      sourceFile.baseName,
+      testScript.baseName,
     )
+  }
+
+  @Test
+  fun testComputeAbsPathForOrigFile() {
+    val folder = manager.createNextFolder()
+    val path = folder.computeAbsPathForOrigFile(sourceFile)
+    assertThat(path).isEqualTo(folder.folder.resolve("t.c"))
+
+    Assert.assertThrows(Exception::class.java) {
+      folder.computeAbsPathForOrigFile(SourceFile(Paths.get("t.c"), LanguageC))
+    }
   }
 
   private fun testFolder(folder: ReductionFolder) {

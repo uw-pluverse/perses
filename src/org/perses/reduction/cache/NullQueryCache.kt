@@ -28,7 +28,7 @@ class NullQueryCache : AbstractQueryCache() {
 
   override fun addResult(
     program: AbstractCacheRetrievalResult.CacheMiss,
-    result: PropertyTestResult
+    result: PropertyTestResult,
   ) {
     require(program.owner === this)
   }

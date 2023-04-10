@@ -30,11 +30,11 @@ object AdhocParserFacadeFactoryUtil {
 }
 
 fun Sequence<AdhocGrammarConfiguration.ParserFacadeJarFile>
-.toParserFacadeFactory(): AbstractParserFacadeFactory =
+  .toParserFacadeFactory(): AbstractParserFacadeFactory =
   fold(SingleParserFacadeFactory.Builder()) { builder, e ->
     builder.add(
       e.languageKind,
       e::createParserFacade,
-      SingleParserFacadeFactory.IDENTITY_CUSTOMIZER
+      SingleParserFacadeFactory.IDENTITY_CUSTOMIZER,
     )
   }.build()

@@ -49,7 +49,7 @@ class SparTreeSimplifierTest {
         int b = a++ * a;
       """.trimIndent(),
       LanguageC,
-      simplifyTree = false
+      simplifyTree = false,
     )
     assertThrows(Exception::class.java) {
       SparTreeSimplifier.assertSingleEntrySingleExitPathProperty(tree.root)
@@ -80,7 +80,7 @@ class SparTreeSimplifierTest {
         int a = 1 + 2;
       """.trimIndent(),
       LanguageC,
-      simplifyTree = false
+      simplifyTree = false,
     )
     tree.printTreeStructureToStdout()
     val two = tree.getTokenNodeForText("2").single()
@@ -89,20 +89,20 @@ class SparTreeSimplifierTest {
     val typePlus = plus.payload!!
 
     assertThat(
-      two.payload
+      two.payload,
     ).isInstanceOf(SinglePayload::class.java)
     assertThat(
-      plus.payload
+      plus.payload,
     ).isInstanceOf(SinglePayload::class.java)
 
     val lowestCommonAncestor = AbstractTreeNode.findLowestAncestor(two, plus)
     val nodesBetweenLcaAndTwo = getNodesBetween(
       ancestor = lowestCommonAncestor,
-      descendant = two
+      descendant = two,
     ).map { it.payload!! }
     val nodesBetweenLcaAndPlus = getNodesBetween(
       ancestor = lowestCommonAncestor,
-      descendant = plus
+      descendant = plus,
     ).map { it.payload!! }
     assertThat(nodesBetweenLcaAndPlus).isNotEmpty()
     assertThat(nodesBetweenLcaAndTwo).isNotEmpty()
@@ -111,26 +111,26 @@ class SparTreeSimplifierTest {
     assertThat(
       getNodesBetween(
         ancestor = lowestCommonAncestor,
-        descendant = two
-      )
+        descendant = two,
+      ),
     ).isEmpty()
     assertThat(
       getNodesBetween(
         ancestor = lowestCommonAncestor,
-        descendant = plus
-      )
+        descendant = plus,
+      ),
     ).isEmpty()
 
     run {
       val payloadTwo = two.payload as CollapsingPayload
       assertThat(
-        payloadTwo.collapsedAncestorsFromTop
+        payloadTwo.collapsedAncestorsFromTop,
       ).hasSize(nodesBetweenLcaAndTwo.size + 1)
       assertThat(
-        payloadTwo.expectedAntlrRuleType
+        payloadTwo.expectedAntlrRuleType,
       ).isEqualTo(nodesBetweenLcaAndTwo.first().expectedAntlrRuleType)
       assertThat(
-        payloadTwo.actualAntlrRuleType
+        payloadTwo.actualAntlrRuleType,
       ).isEqualTo(typeTwo.expectedAntlrRuleType)
 
       payloadTwo.collapsedAncestorsFromTop.zip(nodesBetweenLcaAndTwo).forEach {
@@ -140,13 +140,13 @@ class SparTreeSimplifierTest {
     run {
       val payloadPlus = plus.payload as CollapsingPayload
       assertThat(
-        payloadPlus.collapsedAncestorsFromTop
+        payloadPlus.collapsedAncestorsFromTop,
       ).hasSize(nodesBetweenLcaAndPlus.size + 1)
       assertThat(
-        payloadPlus.expectedAntlrRuleType
+        payloadPlus.expectedAntlrRuleType,
       ).isEquivalentAccordingToCompareTo(nodesBetweenLcaAndPlus.first().expectedAntlrRuleType)
       assertThat(
-        payloadPlus.actualAntlrRuleType
+        payloadPlus.actualAntlrRuleType,
       ).isEquivalentAccordingToCompareTo(typePlus.expectedAntlrRuleType)
 
       payloadPlus.collapsedAncestorsFromTop.zip(nodesBetweenLcaAndPlus).forEach {
@@ -157,7 +157,7 @@ class SparTreeSimplifierTest {
 
   private fun getNodesBetween(
     ancestor: AbstractSparTreeNode,
-    descendant: AbstractSparTreeNode
+    descendant: AbstractSparTreeNode,
   ): ImmutableList<AbstractSparTreeNode> {
     val result = ArrayList<AbstractSparTreeNode>()
     var current = descendant.parent!!

@@ -29,16 +29,18 @@ class LanguageKindTestUtil {
   companion object {
     fun assertCodeFormatsDoNotProduceSyntacticallyInvalidPrograms(
       facade: AbstractParserFacade,
-      program: Path
+      program: Path,
     ) {
       val language = facade.language
       val parseTree = facade.parseFile(program)
       val tokenizedProgramFactory = createFactory(
         AbstractParserFacade.getTokens(parseTree.tree),
-        language
+        language,
       )
       val sparTreeBuilder = SparTreeBuilder(
-        facade.ruleHierarchy, tokenizedProgramFactory, parseTree
+        facade.ruleHierarchy,
+        tokenizedProgramFactory,
+        parseTree,
       )
       val sparTree = sparTreeBuilder.result
       val tokenizedProgram = sparTree.programSnapshot
@@ -46,20 +48,23 @@ class LanguageKindTestUtil {
       val allowedCodeFormatControl = language.allowedCodeFormatControl
       for (formatControl in allowedCodeFormatControl) {
         val tempFile = Files.createTempFile(
-          LanguageKindTestUtil::class.java.simpleName, ".test_file"
+          LanguageKindTestUtil::class.java.simpleName,
+          ".test_file",
         )
         try {
           val printer = PrinterRegistry.getPrinter(formatControl)
           printer.print(tokenizedProgram).writeTo(tempFile)
           val reconstructedParseTree = facade.parseFile(tempFile)
           val reconstructedSparTree = SparTreeBuilder(
-            facade.ruleHierarchy, tokenizedProgramFactory, reconstructedParseTree
+            facade.ruleHierarchy,
+            tokenizedProgramFactory,
+            reconstructedParseTree,
           ).result
           val reconstructedTokens = reconstructedSparTree.programSnapshot.tokens.map {
             it.text
           }
           assertThat(reconstructedTokens).containsExactlyElementsIn(
-            tokenizedProgram.tokens.map { it.text }
+            tokenizedProgram.tokens.map { it.text },
           )
         } finally {
           Files.delete(tempFile)

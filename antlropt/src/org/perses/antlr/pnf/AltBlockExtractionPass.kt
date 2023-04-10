@@ -60,22 +60,24 @@ class AltBlockExtractionPass : AbstractAltBlockExtractionPass() {
     @VisibleForTesting
     fun searchAssumingCommonPrefix(
       s1: PersesSequenceAst,
-      s2: PersesSequenceAst
+      s2: PersesSequenceAst,
     ): CommonPrefixCandidate? {
       val originalSequences = listOf(s1, s2)
       return selectBestCandidate(
-        computeCandidatesClosedPrefix(originalSequences), originalSequences
+        computeCandidatesClosedPrefix(originalSequences),
+        originalSequences,
       )
     }
 
     @VisibleForTesting
     fun searchAssumingCommonPostfix(
       s1: PersesSequenceAst,
-      s2: PersesSequenceAst
+      s2: PersesSequenceAst,
     ): CommonPostfixCandidate? {
       val originalSequences = listOf(s1, s2)
       return selectBestCandidate(
-        computeCandidatesClosedPostfix(originalSequences), originalSequences
+        computeCandidatesClosedPostfix(originalSequences),
+        originalSequences,
       )
     }
 
@@ -83,7 +85,7 @@ class AltBlockExtractionPass : AbstractAltBlockExtractionPass() {
     fun searchAssummingCommonPrefixAndPostfix(
       left: CommonPrefixCandidate?,
       right: CommonPostfixCandidate?,
-      originalSequences: List<PersesSequenceAst>
+      originalSequences: List<PersesSequenceAst>,
     ): InfixCandidate? {
       if (left == null) {
         return null

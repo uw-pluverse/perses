@@ -26,12 +26,13 @@ import java.util.Queue
 
 /** Perses node reducer, with dfs delta debugging  */
 class PersesNodePrioritizedDfsReducer(
-  reducerContext: ReducerContext
-) :
-  PersesNodeDfsReducer(META, reducerContext) {
+  reducerContext: ReducerContext,
+) : PersesNodeDfsReducer(META, reducerContext) {
+
   override fun createReductionQueue(): Queue<AbstractSparTreeNode> {
     return PriorityQueue(
-      DEFAULT_INITIAL_QUEUE_CAPACITY, TreeNodeComparatorInLeafTokenCount
+      DEFAULT_INITIAL_QUEUE_CAPACITY,
+      TreeNodeComparatorInLeafTokenCount,
     )
   }
 
@@ -40,7 +41,11 @@ class PersesNodePrioritizedDfsReducer(
 
     @JvmField
     val META = object : ReducerAnnotation() {
-      override val deterministic = true
+      override val deterministic: Boolean
+        get() = true
+
+      override val reductionResultSizeTrend: ReductionResultSizeTrend
+        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
 
       override fun shortName() = NAME
 

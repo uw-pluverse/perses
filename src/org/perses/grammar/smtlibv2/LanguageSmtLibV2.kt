@@ -28,7 +28,8 @@ object LanguageSmtLibV2 : LanguageKind(
   origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
   defaultFormatterCommands = ImmutableList.of(),
   allowedCodeFormatControl = ImmutableSet.of(
+    EnumFormatControl.SINGLE_TOKEN_PER_LINE,
     EnumFormatControl.COMPACT_ORIG_FORMAT,
-    EnumFormatControl.ORIG_FORMAT
-  )
+    EnumFormatControl.ORIG_FORMAT,
+  ),
 )

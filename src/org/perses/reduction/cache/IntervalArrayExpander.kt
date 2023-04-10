@@ -19,6 +19,7 @@ package org.perses.reduction.cache
 import com.google.common.collect.ImmutableList
 import it.unimi.dsi.fastutil.ints.IntIterator
 import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.util.Util.lazyAssert
 
 object IntervalArrayExpander {
 
@@ -51,7 +52,7 @@ object IntervalArrayExpander {
       var nextValue = currentIntervalStartValue
 
       init {
-        assert(currentIntervalEndValue > currentIntervalStartValue)
+        lazyAssert { currentIntervalEndValue > currentIntervalStartValue }
       }
 
       override fun hasNext(): Boolean {
@@ -62,7 +63,7 @@ object IntervalArrayExpander {
       }
 
       override fun nextInt(): Int {
-        assert(hasNext())
+        lazyAssert { hasNext() }
         val result = nextValue
         ++nextValue
         if (nextValue == currentIntervalEndValue) {
@@ -70,12 +71,12 @@ object IntervalArrayExpander {
           indexInArray += 2
           if (indexInArray >= size) {
             // The array is exhausted.
-            assert(!hasNext())
+            lazyAssert { !hasNext() }
             return result
           }
           currentIntervalStartValue = intervals[indexInArray]
           currentIntervalEndValue = intervals[indexInArray + 1]
-          assert(currentIntervalEndValue > currentIntervalStartValue)
+          lazyAssert { currentIntervalEndValue > currentIntervalStartValue }
           nextValue = currentIntervalStartValue
         }
         return result
@@ -91,7 +92,7 @@ object IntervalArrayExpander {
   @JvmStatic
   fun expand(
     intervals: IntArray,
-    tokensInOrigin: ImmutableList<PersesToken>
+    tokensInOrigin: ImmutableList<PersesToken>,
   ): Iterator<PersesToken> = object : Iterator<PersesToken> {
 
     private val iterator = expand(intervals)

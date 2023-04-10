@@ -27,6 +27,14 @@ import java.util.Random
 class PersesKtExtsTest {
 
   @Test
+  fun testTransformToImmutableList() {
+    assertThat(listOf("", "1").transformToImmutableList { it.length }).containsExactly(
+      0,
+      1,
+    ).inOrder()
+  }
+
+  @Test
   fun testImmutableListPlus() {
     val list1 = ImmutableList.of(1)
     val list2 = ImmutableList.of(2)
@@ -41,7 +49,7 @@ class PersesKtExtsTest {
     var gapCounter = 0
     list.forEachElementAndGap(
       elementVisitor = { ++elementCounter },
-      gapVisitor = { ++gapCounter }
+      gapVisitor = { ++gapCounter },
     )
     assertThat(elementCounter).isEqualTo(0)
     assertThat(gapCounter).isEqualTo(0)
@@ -54,7 +62,7 @@ class PersesKtExtsTest {
     var gapCounter = 0
     list.forEachElementAndGap(
       elementVisitor = { elements.add(it) },
-      gapVisitor = { ++gapCounter }
+      gapVisitor = { ++gapCounter },
     )
     assertThat(elements).containsExactly(1)
     assertThat(gapCounter).isEqualTo(0)
@@ -66,7 +74,7 @@ class PersesKtExtsTest {
     val sequence = StringBuilder()
     list.forEachElementAndGap(
       elementVisitor = { sequence.append(it) },
-      gapVisitor = { sequence.append(",") }
+      gapVisitor = { sequence.append(",") },
     )
     assertThat(sequence.toString()).isEqualTo("1,2,3")
   }
@@ -102,5 +110,22 @@ class PersesKtExtsTest {
     assertThat(" ".containsNoWhitespace()).isFalse()
     assertThat("\n".containsNoWhitespace()).isFalse()
     assertThat("".containsNoWhitespace()).isTrue()
+  }
+
+  @Test
+  fun testImmutableListExcludesRegion() {
+    val list = ImmutableList.of(1, 2, 3, 4, 5)
+    list.excludesRegion(0, 1).let {
+      assertThat(it).containsExactly(2, 3, 4, 5).inOrder()
+    }
+    list.excludesRegion(1, 2).let {
+      assertThat(it).containsExactly(1, 3, 4, 5).inOrder()
+    }
+    list.excludesRegion(1, 3).let {
+      assertThat(it).containsExactly(1, 4, 5).inOrder()
+    }
+    list.excludesRegion(2, 5).let {
+      assertThat(it).containsExactly(1, 2).inOrder()
+    }
   }
 }

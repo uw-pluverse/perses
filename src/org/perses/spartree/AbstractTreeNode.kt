@@ -17,9 +17,12 @@
 package org.perses.spartree
 
 import com.google.common.collect.ImmutableList
+import com.google.common.graph.SuccessorsFunction
+import com.google.common.graph.Traverser
 import org.perses.util.SimpleQueue
 import org.perses.util.SimpleStack
 import org.perses.util.Util
+import org.perses.util.Util.lazyAssert
 import java.util.function.Predicate
 
 abstract class AbstractTreeNode<T : AbstractTreeNode<T, Payload>, Payload>
@@ -82,11 +85,11 @@ protected constructor(val nodeId: Int) : Comparable<T> {
   }
 
   fun cleanDeletedImmediateChildren() {
-    assert(checkNodeIntegrity() == null) { checkNodeIntegrity()!! }
+    lazyAssert({ checkNodeIntegrity() == null }) { checkNodeIntegrity()!! }
     Util.removeElementsFromList(children) { _, element ->
       element.isPermanentlyDeleted
     }
-    assert(checkNodeIntegrity() == null) { checkNodeIntegrity()!! }
+    lazyAssert({ checkNodeIntegrity() == null }) { checkNodeIntegrity()!! }
   }
 
   /**
@@ -101,14 +104,14 @@ protected constructor(val nodeId: Int) : Comparable<T> {
       "The child ($child) is not a child of this node ($this)"
     }
     val index = children.indexOf(child)
-    assert(index >= 0) { index }
+    lazyAssert({ index >= 0 }) { index }
     val removedChild = children.removeAt(index)
-    assert(removedChild === child) {
+    lazyAssert({ removedChild === child }) {
       "The child is not in the child list of this node. Child:$child, This:$this"
     }
     child.resetParent()
     onChildRemoved(index, removedChild)
-    assert(checkNodeIntegrity() == null) { checkNodeIntegrity()!! }
+    lazyAssert({ checkNodeIntegrity() == null }) { checkNodeIntegrity()!! }
   }
 
   protected abstract fun onChildRemoved(index: Int, child: T)
@@ -139,7 +142,7 @@ protected constructor(val nodeId: Int) : Comparable<T> {
   }
 
   open fun addChild(child: T, payload: Payload) {
-    assert(child.parent == null) {
+    lazyAssert({ child.parent == null }) {
       "The parent of the parameter " + child + " is not null: " + child.parent
     }
     children.add(child)
@@ -147,8 +150,8 @@ protected constructor(val nodeId: Int) : Comparable<T> {
     child.parent = this as T
     child.payload = payload
 
-    assert(child.parent === this)
-    assert(child.payload === payload)
+    lazyAssert { child.parent === this }
+    lazyAssert { child.payload === payload }
   }
 
   override fun compareTo(other: T): Int {
@@ -188,23 +191,23 @@ protected constructor(val nodeId: Int) : Comparable<T> {
    * @param newChild, the new child to be added in the position of the old child.
    */
   fun replaceChild(oldChild: T, newChild: T, payload: Payload) {
-    assert(checkNodeIntegrity() == null) { checkNodeIntegrity()!! }
-    assert(newChild.parent == null)
-    assert(newChild.payload == null)
+    lazyAssert({ checkNodeIntegrity() == null }) { checkNodeIntegrity()!! }
+    lazyAssert { newChild.parent == null }
+    lazyAssert { newChild.payload == null }
 
     val currentNode = oldChild.parent
-    assert(currentNode === this) { "$currentNode, $this" }
+    lazyAssert({ currentNode === this }) { "$currentNode, $this" }
     oldChild.resetParent()
 
     val index = children.indexOf(oldChild)
-    assert(index >= 0) { index }
+    lazyAssert({ index >= 0 }) { index }
     children[index] = newChild
 
     newChild.parent = currentNode
     newChild.payload = payload
 
-    assert(newChild.parent === this)
-    assert(checkNodeIntegrity() == null) { checkNodeIntegrity()!! }
+    lazyAssert { newChild.parent === this }
+    lazyAssert({ checkNodeIntegrity() == null }) { checkNodeIntegrity()!! }
   }
 
   /**
@@ -218,26 +221,24 @@ protected constructor(val nodeId: Int) : Comparable<T> {
    */
   fun boundedBreadthFirstSearchForFirstQualifiedNodes(
     nodePredicate: Predicate<T>,
-    maxBfsDepth: Int
-  ): ArrayList<T> {
-    val resultNodes = ArrayList<T>()
+    maxBfsDepth: Int,
+  ) = sequence {
     boundedBFSChildren { node: T, currentDepth: Int ->
       if (currentDepth > maxBfsDepth) {
         return@boundedBFSChildren TreeNodeFilterResult.STOP
       }
       val predicateResult = nodePredicate.test(node)
       if (predicateResult) {
-        resultNodes.add(node)
+        yield(node)
         return@boundedBFSChildren TreeNodeFilterResult.STOP
       }
       if (currentDepth == maxBfsDepth) {
         return@boundedBFSChildren TreeNodeFilterResult.STOP
       } else {
-        assert(currentDepth < maxBfsDepth)
+        lazyAssert { currentDepth < maxBfsDepth }
         return@boundedBFSChildren TreeNodeFilterResult.CONTINUE
       }
     }
-    return resultNodes
   }
 
   inline fun boundedBFSChildren(visitor: (node: T, currentDepth: Int) -> TreeNodeFilterResult) {
@@ -253,7 +254,7 @@ protected constructor(val nodeId: Int) : Comparable<T> {
         if (filterResult === TreeNodeFilterResult.STOP) {
           continue
         }
-        assert(filterResult === TreeNodeFilterResult.CONTINUE)
+        lazyAssert { filterResult === TreeNodeFilterResult.CONTINUE }
         node.forEachChild { queue.add(it) }
       }
     }
@@ -279,29 +280,18 @@ protected constructor(val nodeId: Int) : Comparable<T> {
     }
   }
 
-  fun postOrderVisit(visitor: (node: T) -> Unit) {
-    val tempStack = SimpleStack<T>()
-    val postOrderStack = SimpleStack<T>()
+  fun postOrderVisit(
+    successorsFunction: SuccessorsFunction<T> = SuccessorsFunction {
+        node: T ->
+      node.immutableChildView
+    },
+    visitor: (node: T) -> Unit,
+  ) {
     @Suppress("UNCHECKED_CAST")
-    tempStack.add(this as T)
-
-    // Push and remove the tempSimpleStack to set up the structure of postOrderSimpleStack
-    while (tempStack.isNotEmpty()) {
-      val top = tempStack.remove()
-      postOrderStack.add(top)
-      val childrenToVisit: List<T> = top.children
-      val childCount = childrenToVisit.size
-      for (i in 0 until childCount) {
-        val child = childrenToVisit[i]
-        tempStack.add(child)
-      }
-    }
-
-    // Use postOrderSimpleStack to iterate
-    while (postOrderStack.isNotEmpty()) {
-      val top = postOrderStack.remove()
-      visitor(top)
-    }
+    Traverser
+      .forTree(successorsFunction)
+      .depthFirstPostOrder(this as T)
+      .forEach { visitor(it) }
   }
 
   open fun recursiveDeepCopy(): T {
@@ -325,12 +315,12 @@ protected constructor(val nodeId: Int) : Comparable<T> {
 
     @JvmStatic
     fun <T : AbstractTreeNode<T, Payload>, Payload> findLowestAncestor(
-      vararg descendants: T
+      vararg descendants: T,
     ) = findLowestAncestor(ImmutableList.copyOf(descendants))
 
     @JvmStatic
     fun <T : AbstractTreeNode<T, Payload>, Payload> findLowestAncestor(
-      descendants: ImmutableList<T>
+      descendants: ImmutableList<T>,
     ): T {
       require(descendants.isNotEmpty())
       val pathList = ArrayList<ArrayList<T>>()
@@ -356,7 +346,7 @@ protected constructor(val nodeId: Int) : Comparable<T> {
         if (maxPathCount > curSize) {
           maxPathCount = curSize
         }
-        assert(curSize > 0)
+        lazyAssert { curSize > 0 }
       }
 
       // assert that all the nodes come from the same tree
@@ -380,14 +370,16 @@ protected constructor(val nodeId: Int) : Comparable<T> {
         }
         lowestAncestor = if (check) {
           curNode
-        } else break
+        } else {
+          break
+        }
       }
       return lowestAncestor!!
     }
 
     fun <T : AbstractTreeNode<T, Payload>, Payload> findLowestAncestorPair(
       oneNode: T,
-      anotherNode: T
+      anotherNode: T,
     ): T {
       return findLowestAncestor(ImmutableList.of(oneNode, anotherNode))
     }

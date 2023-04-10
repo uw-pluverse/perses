@@ -16,6 +16,7 @@
  */
 package org.perses.spartree
 
+import com.google.common.base.MoreObjects
 import com.google.common.collect.ComparisonChain
 import org.perses.program.TokenizedProgram
 import java.util.concurrent.atomic.AtomicInteger
@@ -23,10 +24,16 @@ import java.util.concurrent.atomic.AtomicInteger
 // FIXME: this should be a sealed class.
 abstract class AbstractSparTreeEdit<T : AbstractTreeEditAction> protected constructor(
   val actionSet: AbstractActionSet<T>,
-  val program: TokenizedProgram
+  private val tree: SparTree,
 ) : Comparable<AbstractSparTreeEdit<*>> {
 
   private val id: Int = idGenerator.getAndIncrement()
+  private val treeSnapshotVersion = tree.version
+
+  val program by lazy {
+    check(tree.version == treeSnapshotVersion)
+    computeProgram(tree)
+  }
 
   fun asNodeDeleteEdit(): NodeDeletionTreeEdit {
     return this as NodeDeletionTreeEdit
@@ -54,24 +61,43 @@ abstract class AbstractSparTreeEdit<T : AbstractTreeEditAction> protected constr
       .result()
   }
 
+  abstract fun computeProgram(tree: SparTree): TokenizedProgram
+
+  override fun toString(): String {
+    return MoreObjects.toStringHelper(this)
+      .add("actions", actionSet).toString()
+  }
+
+  /**
+   * This method is marked internal, because we do not want this method to be called
+   * outside of SparTree. This method should be only called in SparTree so that we can
+   * track the edits to a spar tree.
+   */
+  internal fun applyToTree() {
+    check(tree.version == treeSnapshotVersion)
+    internalApplyToTree()
+  }
+
+  internal abstract fun internalApplyToTree()
+
   companion object {
     fun createDeletionSparTreeEdit(
       tree: SparTree,
-      actionSet: NodeDeletionActionSet
+      actionSet: NodeDeletionActionSet,
     ): NodeDeletionTreeEdit {
       return NodeDeletionTreeEdit(tree, actionSet)
     }
 
     fun createReplacementSparTreeEdit(
       tree: SparTree,
-      actionSet: ChildHoistingActionSet
+      actionSet: ChildHoistingActionSet,
     ): NodeReplacementTreeEdit {
       return NodeReplacementTreeEdit(tree, actionSet)
     }
 
     fun createAnyNodeReplacementTreeEdit(
       tree: SparTree,
-      actionSet: ChildHoistingActionSet
+      actionSet: ChildHoistingActionSet,
     ): AnyNodeReplacementTreeEdit {
       return AnyNodeReplacementTreeEdit(tree, actionSet)
     }

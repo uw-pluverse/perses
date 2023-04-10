@@ -21,7 +21,7 @@ class LevelReductionStartEvent internal constructor(
   currentTimeMillis: Long,
   programSize: Int,
   val level: Int,
-  val nodeCountOnLevel: Int
+  val nodeCountOnLevel: Int,
 ) :
   AbstractStartEvent(currentTimeMillis, programSize) {
 
@@ -34,20 +34,20 @@ class LevelReductionStartEvent internal constructor(
       startEvent = this,
       currentTimeMillis = currentTimeMillis,
       programSize = programSize,
-      level = level
+      level = level,
     )
   }
 
   fun createGranularityReductionStartEvent(
     currentTimeMillis: Long,
     programSize: Int,
-    maxNumOfNodesPerPartition: Int
+    maxNumOfNodesPerPartition: Int,
   ): LevelGranularityReductionStartEvent {
     return LevelGranularityReductionStartEvent(
       levelReductionStartEvent = this,
       currentTimeMillis = currentTimeMillis,
       programSize = programSize,
-      maxNumOfNodesPerPartition = maxNumOfNodesPerPartition
+      maxNumOfNodesPerPartition = maxNumOfNodesPerPartition,
     )
   }
 

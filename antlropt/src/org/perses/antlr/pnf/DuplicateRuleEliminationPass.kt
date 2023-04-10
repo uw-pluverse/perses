@@ -24,12 +24,15 @@ import org.perses.util.toImmutableList
 
 class DuplicateRuleEliminationPass(private val startRuleName: String) : AbstractPnfPass() {
 
-  override fun process(grammar: PersesGrammar): PersesGrammar {
-    val startRuleName = grammar
+  override fun processParserGrammar(
+    parserGrammar: PersesGrammar,
+    lexerGrammar: PersesGrammar?,
+  ): PersesGrammar {
+    val startRuleName = parserGrammar
       .symbolTable
       .ruleNameRegistry
       .getOrThrow(startRuleName)
-    return AstUtil.fixpoint(grammar) { grammar ->
+    return AstUtil.fixpoint(parserGrammar) { grammar ->
       val candidates = searchForCandidates(grammar)
       if (candidates.isEmpty()) {
         return@fixpoint grammar
@@ -64,7 +67,7 @@ class DuplicateRuleEliminationPass(private val startRuleName: String) : Abstract
 
   companion object {
     private fun searchForCandidates(
-      persesGrammar: PersesGrammar
+      persesGrammar: PersesGrammar,
     ): List<Set<AbstractPersesRuleDefAst>> {
       val map = LinkedHashMultimap.create<String, AbstractPersesRuleDefAst>()
       persesGrammar.flattenedAllRules

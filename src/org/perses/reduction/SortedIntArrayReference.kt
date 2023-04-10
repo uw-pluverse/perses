@@ -17,6 +17,7 @@
 package org.perses.reduction
 
 import com.google.common.collect.ImmutableList
+import org.perses.util.Util.lazyAssert
 import java.util.Arrays
 
 class SortedIntArrayReference(expectedSize: Int) {
@@ -24,11 +25,11 @@ class SortedIntArrayReference(expectedSize: Int) {
   private var array: AbstractSortedIntArray
 
   init {
-    assert(expectedSize > 0)
+    lazyAssert { expectedSize > 0 }
     array = if (expectedSize == 1) {
       SingleInteger()
     } else {
-      assert(expectedSize > 1)
+      lazyAssert { expectedSize > 1 }
       MultipleIntegers(expectedSize)
     }
   }
@@ -41,19 +42,19 @@ class SortedIntArrayReference(expectedSize: Int) {
     array.binarySearch(fromIndex, key)
 
   fun resetWithNewExpectedSize(newExpectedSize: Int) {
-    assert(newExpectedSize > 0)
+    lazyAssert { newExpectedSize > 0 }
     if (newExpectedSize == 1) {
       if (array is SingleInteger) {
         array.reset(newExpectedSize)
       } else {
-        assert(array is MultipleIntegers)
+        lazyAssert { array is MultipleIntegers }
         array = SingleInteger()
       }
     } else {
-      assert(newExpectedSize > 1)
+      lazyAssert { newExpectedSize > 1 }
       array.reset(newExpectedSize)
     }
-    assert(array.size() == 0)
+    lazyAssert { array.size() == 0 }
   }
 
   fun add(value: Int) {
@@ -94,7 +95,7 @@ class SortedIntArrayReference(expectedSize: Int) {
     override fun add(value: Int) {
       check(this.value == INVALID_INT)
       this.value = value
-      assert(this.value != INVALID_INT)
+      lazyAssert { this.value != INVALID_INT }
     }
 
     override fun isFull() = size() == 1
@@ -113,11 +114,11 @@ class SortedIntArrayReference(expectedSize: Int) {
         } else if (key < value) {
           return -1
         } else {
-          assert(key > value)
+          lazyAssert { key > value }
           return -1 - 1
         }
       } else {
-        assert(fromIndex > 0)
+        lazyAssert { fromIndex > 0 }
         return -1 - 1
       }
     }
@@ -156,8 +157,8 @@ class SortedIntArrayReference(expectedSize: Int) {
     override fun reset(newExpectedSize: Int) {
       val oldExpectedSize = expectedSize
       expectedSize = newExpectedSize
-      assert(newExpectedSize <= oldExpectedSize)
-      assert(newExpectedSize > 1)
+      lazyAssert { newExpectedSize <= oldExpectedSize }
+      lazyAssert { newExpectedSize > 1 }
 
       size = 0
       if (newExpectedSize + 3 < oldExpectedSize) {
@@ -165,7 +166,7 @@ class SortedIntArrayReference(expectedSize: Int) {
       } else {
         // Do nothing. Reuse the old array.
       }
-      assert(expectedSize == newExpectedSize)
+      lazyAssert { expectedSize == newExpectedSize }
     }
 
     override fun binarySearch(fromIndex: Int, key: Int): Int {
@@ -180,7 +181,7 @@ class SortedIntArrayReference(expectedSize: Int) {
     }
 
     override fun toList(): ImmutableList<Int> {
-      assert(isFull())
+      lazyAssert { isFull() }
       val builder = ImmutableList.builder<Int>()
       for (i in 0 until size) {
         builder.add(array[i])

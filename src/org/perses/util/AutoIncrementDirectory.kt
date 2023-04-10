@@ -20,7 +20,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 class AutoIncrementDirectory(
-  val defaultDirName: String
+  val defaultDirName: String,
 ) {
 
   private val dirNamePrefix = "${defaultDirName}_"

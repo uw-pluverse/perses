@@ -18,8 +18,8 @@ package org.perses.reduction.reducer.token
 
 import com.google.common.collect.ImmutableList
 import org.perses.reduction.AbstractTokenReducer
+import org.perses.reduction.EditTestPayload
 import org.perses.reduction.FixpointReductionState
-import org.perses.reduction.FutureExecutionResultInfo
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.reducer.token.TokenSlicer.Companion.createNodeDeletionActionSetReverse
@@ -31,7 +31,7 @@ import org.perses.spartree.SparTree
 class MassiveConcurrentTokenSlicer(
   reducerContext: ReducerContext,
   val minSlicingGranularity: Int,
-  val maxSlicingGranularity: Int
+  val maxSlicingGranularity: Int,
 ) : AbstractTokenReducer(META, reducerContext) {
 
   init {
@@ -49,7 +49,7 @@ class MassiveConcurrentTokenSlicer(
 
   private fun sliceTreeForGivenGranularity(
     fixpointReductionState: FixpointReductionState,
-    tokenSlicingGranularity: Int
+    tokenSlicingGranularity: Int,
   ) {
     val tree = fixpointReductionState.sparTree
     val tokens = extractLexerRuleNodes(tree)
@@ -58,7 +58,7 @@ class MassiveConcurrentTokenSlicer(
       .createTokenSlicingStartEvent(
         currentTimeMillis = System.currentTimeMillis(),
         programSize = tree.programSnapshot.tokenCount(),
-        tokenSlicingGranularity = tokenSlicingGranularity
+        tokenSlicingGranularity = tokenSlicingGranularity,
       )
     listenerManager.onSlicingTokensStart(slicingStartEvent)
     val slicingTasks = ImmutableList.builder<SlicingTask>().apply {
@@ -68,20 +68,20 @@ class MassiveConcurrentTokenSlicer(
             tokens,
             startIndex,
             tokenSlicingGranularity,
-            tree
-          )
+            tree,
+          ),
         )
       }
     }.build()
 
     SlicingTaskConcurrentExecutor<SlicingTask>(
       slicingTasks,
-      workingDequeExpectedSize = executorService.specifiedNumOfThreads + 2
+      workingDequeExpectedSize = executorService.specifiedNumOfThreads + 2,
     ).run()
 
     val slicingEndEvent = slicingStartEvent.createEndEvent(
       currentTimeMillis = System.currentTimeMillis(),
-      programSize = tree.programSnapshot.tokenCount()
+      programSize = tree.programSnapshot.tokenCount(),
     )
     listenerManager.onSlicingTokensEnd(slicingEndEvent)
   }
@@ -90,14 +90,14 @@ class MassiveConcurrentTokenSlicer(
     val tokens: ImmutableList<LexerRuleSparTreeNode>,
     val startIndex: Int,
     val tokenSlicingGranularity: Int,
-    tree: SparTree
+    tree: SparTree,
   ) : AbstractSlicingTask(
     tree,
     nodeActionSetCache,
     listenerManager,
     queryCache,
     configuration,
-    this@MassiveConcurrentTokenSlicer::testProgramAsynchronously
+    this@MassiveConcurrentTokenSlicer.executorService::testProgramAsync,
   ) {
 
     override fun tryAsyncRunPreconditionCheck(): Boolean {
@@ -106,12 +106,14 @@ class MassiveConcurrentTokenSlicer(
 
     override fun createNodeDeletionActionSet(): NodeDeletionActionSet {
       return createNodeDeletionActionSetReverse(
-        tokens, startIndex, tokenSlicingGranularity
+        tokens,
+        startIndex,
+        tokenSlicingGranularity,
       )
     }
 
     override fun analyzeResultsAndGetBest(
-      futureResult: List<FutureExecutionResultInfo>
+      futureResult: List<EditTestPayload>,
     ) =
       this@MassiveConcurrentTokenSlicer.analyzeResultsAndGetBest(futureResult)
   }
@@ -122,7 +124,14 @@ class MassiveConcurrentTokenSlicer(
 
     @JvmStatic
     val META = object : ReducerAnnotation() {
+
+      override val deterministic: Boolean
+        get() = true
+
       override fun shortName() = NAME
+
+      override val reductionResultSizeTrend: ReductionResultSizeTrend
+        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
 
       override fun description() = ""
 
@@ -130,8 +139,9 @@ class MassiveConcurrentTokenSlicer(
         ImmutableList.of<AbstractTokenReducer>(
           MassiveConcurrentTokenSlicer(
             reducerContext,
-            minSlicingGranularity = 1, maxSlicingGranularity = 14
-          )
+            minSlicingGranularity = 1,
+            maxSlicingGranularity = 14,
+          ),
         )
     }
   }

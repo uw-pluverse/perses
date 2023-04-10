@@ -33,8 +33,11 @@ import java.lang.RuntimeException
 
 class PnfCheckPass : AbstractPnfPass() {
 
-  override fun process(grammar: PersesGrammar): PersesGrammar {
-    for (rule in grammar.flattenedAllRules) {
+  override fun processParserGrammar(
+    parserGrammar: PersesGrammar,
+    lexerGrammar: PersesGrammar?,
+  ): PersesGrammar {
+    for (rule in parserGrammar.flattenedAllRules) {
       val name = rule.ruleNameHandle
       if (RuleType.isLexerRule(name.ruleName)) {
         continue
@@ -54,7 +57,7 @@ class PnfCheckPass : AbstractPnfPass() {
         throw RuntimeException("Checking $name failed.", e)
       }
     }
-    return grammar
+    return parserGrammar
   }
 
   private fun checkSequenceAst(body: AbstractPersesRuleElement) {

@@ -16,13 +16,17 @@
  */
 package org.perses.reduction
 
+import org.perses.program.AbstractDataKind
 import org.perses.reduction.io.AbstractReductionIOManager
 
-abstract class AbstractReducerContext
 // Cannot use the full name, e.g., Program, IOManager, or Self due to kotlin's bug.
-<P, M : AbstractReductionIOManager<P, M>, I : AbstractReducerContext<P, M, I>>(
+abstract class AbstractReducerContext<
+  P,
+  K : AbstractDataKind,
+  M : AbstractReductionIOManager<P, K, M>,
+  I : AbstractReducerContext<P, K, M, I>,>(
   val ioManager: M,
-  val executorService: TestScriptExecutorService
+  val executorService: TestScriptExecutorService,
 ) {
   private val piggybackPayload = HashMap<Any, Any>()
 

@@ -33,7 +33,7 @@ class LinearScanFormatSensitiveEncoderTest {
       int a;
       int a;
     """.trimIndent(),
-    LanguageC
+    LanguageC,
   )
   val tokens = origProgram.tokens
 
@@ -47,24 +47,26 @@ class LinearScanFormatSensitiveEncoderTest {
   // Two varaint programs.
   val firstLine = TokenizedProgram(
     ImmutableList.of(token_int1, token_a1, token_semi1),
-    origProgram.factory
+    origProgram.factory,
   )
   val secondLine = TokenizedProgram(
     ImmutableList.of(token_int2, token_a2, token_semi2),
-    origProgram.factory
+    origProgram.factory,
   )
   val multiLine = TokenizedProgram(
     ImmutableList.of(token_int1, token_a2, token_semi2),
-    origProgram.factory
+    origProgram.factory,
   )
   val singleSemi = TokenizedProgram(
     ImmutableList.of(token_semi2),
-    origProgram.factory
+    origProgram.factory,
   )
 
   // Construct a format sensitive encoder.
   val formatEncoder = LinearScanFormatSensitiveEncoder(
-    origProgram, AbstractQueryCacheProfiler.NULL_PROFILER, true
+    origProgram,
+    AbstractQueryCacheProfiler.NULL_PROFILER,
+    true,
   )
 
   val baseEncoding = formatEncoder.encode(origProgram)
@@ -76,24 +78,24 @@ class LinearScanFormatSensitiveEncoderTest {
   @Test
   fun testFormatSensitiveEncoder() {
     assertThat(
-      baseEncoding?.intervalsFromEncoding?.toList()
+      baseEncoding?.intervalsFromEncoding?.toList(),
     ).containsExactly(0, 6).inOrder()
 
     assertThat(
-      baseEncoding?.intervalsFromEncoding?.toList()
+      baseEncoding?.intervalsFromEncoding?.toList(),
     ).containsExactly(0, 6).inOrder() // [0,3,3,6] -> [0,6]
 
     assertThat(
-      firstLineEncoding?.intervalsFromEncoding?.toList()
+      firstLineEncoding?.intervalsFromEncoding?.toList(),
     ).containsExactly(0, 3).inOrder()
 
     // 2nd line still encodes with first applicable line; canonical.
     assertThat(
-      secondLineEncoding?.intervalsFromEncoding?.toList()
+      secondLineEncoding?.intervalsFromEncoding?.toList(),
     ).containsExactly(0, 3).inOrder()
 
     assertThat(
-      multiLineEncoding?.intervalsFromEncoding?.toList()
+      multiLineEncoding?.intervalsFromEncoding?.toList(),
     ).containsExactly(0, 1, 4, 6).inOrder()
   }
 

@@ -16,16 +16,17 @@
  */
 package org.perses.program.printer
 
-import org.perses.program.AbstractTokenizedProgramPrinter.AbstractTokenPlacementListener
-import org.perses.program.AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider
 import org.perses.program.PersesTokenFactory.PersesToken
 import org.perses.program.TokenizedProgram
+import org.perses.program.printer.AbstractTokenizedProgramPrinter.AbstractTokenPlacementListener
+import org.perses.program.printer.AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider
 import org.perses.util.FastStringBuilder
+import org.perses.util.Util.lazyAssert
 
 abstract class AbstractOrigFormatVisitor(
   val program: TokenizedProgram,
   protected val tokenPositionProvider: AbstractTokenPositionProvider,
-  protected val tokenPlacementListener: AbstractTokenPlacementListener?
+  protected val tokenPlacementListener: AbstractTokenPlacementListener?,
 ) {
 
   abstract fun isControlToken(token: PersesToken): Boolean
@@ -37,14 +38,6 @@ abstract class AbstractOrigFormatVisitor(
   protected open fun onVisitEnd() {}
 
   val result = FastStringBuilder(capacity = program.tokenCount() * 5)
-
-  protected fun getLine(token: PersesToken) = tokenPositionProvider.getPosition(token).line
-
-  protected fun getCharPositionInLine(token: PersesToken) =
-    tokenPositionProvider.getPosition(token).charPositionInLine
-
-  protected fun getPosition(token: PersesToken) =
-    tokenPositionProvider.getPosition(token)
 
   fun visit(): AbstractOrigFormatVisitor {
     val tokens = program.tokens
@@ -65,14 +58,14 @@ abstract class AbstractOrigFormatVisitor(
         currentLine.clear()
         continue
       }
-      val lineNo = tokenPositionProvider.getPosition(token).line
-      assert(lineNo > 0)
-      assert(currentLineNumber <= lineNo)
+      val lineNo = tokenPositionProvider.getLine(token)
+      lazyAssert { lineNo > 0 }
+      lazyAssert { currentLineNumber <= lineNo }
       if (currentLineNumber == lineNo) {
         currentLine.add(token)
       } else {
-        currentLineNumber = lineNo
         visitLine(currentLine)
+        currentLineNumber = lineNo
         currentLine.clear()
         currentLine.add(token)
       }

@@ -20,7 +20,7 @@ import org.perses.util.ast.Indent
 import java.io.PrintStream
 
 class PersesNotAst(
-  private val tokens: AbstractPersesRuleElement
+  private val tokens: AbstractPersesRuleElement,
 ) : AbstractPersesRuleElement() {
 
   override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
@@ -40,7 +40,7 @@ class PersesNotAst(
     get() = AstTag.NOT
 
   override fun createWithNewChildren(
-    newChildren: List<AbstractPersesRuleElement>
+    newChildren: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     require(newChildren.size == 1)
     return PersesNotAst(newChildren[0])

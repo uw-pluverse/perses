@@ -57,7 +57,7 @@ open class DefaultReductionListener : AbstractReductionListener() {
   override fun onNodeEditActionSetCacheHit(event: NodeEditActionSetCacheHitEvent) {}
   override fun onNodeActionSetCacheClearance(event: NodeEditActionSetCacheClearanceEvent) {}
   override fun onTestScriptExecutionCacheEntryEviction(
-    event: TestScriptExecutionCacheEntryEvictionEvent
+    event: TestScriptExecutionCacheEntryEvictionEvent,
   ) {
   }
 

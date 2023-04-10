@@ -27,6 +27,7 @@ import kotlin.test.assertFailsWith
 
 @RunWith(JUnit4::class)
 class AbstractProgramReductionDriverTest {
+
   @Test
   fun testComputeQueryCacheType() {
     AbstractProgramReductionDriver.computeQueryCacheType(
@@ -72,7 +73,7 @@ class AbstractProgramReductionDriverTest {
     }.let {
       assertThat(it.message).isEqualTo(
         "Cache type ${QueryCacheType.COMPACT_QUERY_CACHE_FORMAT_SENSITIVE} " +
-          "is not compatible with the code format ${EnumFormatControl.SINGLE_TOKEN_PER_LINE}"
+          "is not compatible with the code format ${EnumFormatControl.SINGLE_TOKEN_PER_LINE}",
       )
     }
   }

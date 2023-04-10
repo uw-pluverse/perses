@@ -26,6 +26,9 @@ import org.perses.antlr.ParseTreeWithParser
 import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.SingleParserFacadeFactory
 import org.perses.grammar.SingleParserFacadeFactory.Companion.IDENTITY_CUSTOMIZER
+import org.perses.grammar.adhoc.AdhocGrammarInstaller
+import org.perses.grammar.adhoc.CommandOptions
+import org.perses.grammar.adhoc.LanguageAdhoc
 import org.perses.grammar.c.CParserFacade
 import org.perses.grammar.c.LanguageC
 import org.perses.grammar.java.JavaParserFacade
@@ -232,7 +235,7 @@ object TestUtility {
   fun partitionAndGet(
     list: ImmutableList<Path>,
     numOfPartitions: Int,
-    ith: Int
+    ith: Int,
   ): ImmutableList<Path> {
     val counter = AtomicInteger()
     return list.stream()
@@ -286,13 +289,34 @@ object TestUtility {
     return parserFacadeFactory.createParserFacade(languageKind)
   }
 
+  fun getAdhocFacade(
+    combinedGrammerPath: Path,
+    startRule: String,
+    tokenNamesOfIdentifiers: List<String>,
+    workingDir: Path,
+  ): AbstractParserFacade {
+    val testPersesConstants = PersesConstants.createCustomizedConstants(workingDir)
+    val testOptions = CommandOptions()
+    testOptions.compulsoryFlags.parserGrammar = combinedGrammerPath
+    testOptions.compulsoryFlags.lexerGrammar = null
+    testOptions.compulsoryFlags.startRuleName = startRule
+    testOptions.compulsoryFlags.existingLanguageKindClassFullName =
+      LanguageAdhoc::class.java.canonicalName
+    testOptions.compulsoryFlags.tokenNamesOfIdentifiers = tokenNamesOfIdentifiers
+
+    testOptions.validate()
+    val installer = AdhocGrammarInstaller(testOptions, testPersesConstants)
+    val generatedJar = installer.run()
+    return generatedJar.loadMainClass().getConstructor().newInstance() as AbstractParserFacade
+  }
+
   fun parseFile(file: String): ParseTreeWithParser {
     return parseFile(Paths.get(file))
   }
 
   fun parseFile(file: Path): ParseTreeWithParser {
     val sourceFile = SourceFile(file, parserFacadeFactory.computeLanguageKindWithFileName(file)!!)
-    val facade = getFacade(sourceFile.languageKind)
+    val facade = getFacade(sourceFile.dataKind)
     return facade.parseFile(file)
   }
 
@@ -309,7 +333,7 @@ object TestUtility {
 
   fun createTokenizedProgramFromString(
     sourceCode: String,
-    languageKind: LanguageKind
+    languageKind: LanguageKind,
   ): TokenizedProgram {
     return createSparTreeFromString(sourceCode, languageKind).programSnapshot
   }
@@ -322,18 +346,19 @@ object TestUtility {
   fun createSparTreeFromString(
     sourceCode: String,
     languageKind: LanguageKind,
-    simplifyTree: Boolean = true
+    simplifyTree: Boolean = true,
   ): SparTree {
     val facade = getFacade(languageKind)
     val parseTreeWithParser = parseString(sourceCode, languageKind)
     val factory = createFactory(
-      AbstractParserFacade.getTokens(parseTreeWithParser.tree), languageKind
+      AbstractParserFacade.getTokens(parseTreeWithParser.tree),
+      languageKind,
     )
     return SparTreeBuilder(
       facade.ruleHierarchy,
       factory,
       parseTreeWithParser,
-      simplifyTree = simplifyTree
+      simplifyTree = simplifyTree,
     ).result
   }
 
@@ -342,14 +367,14 @@ object TestUtility {
     val (parseTree) = parseFile(file)
     val factory = createFactory(
       AbstractParserFacade.getTokens(parseTree),
-      parserFacadeFactory.computeLanguageKindWithFileName(file)!!
+      parserFacadeFactory.computeLanguageKindWithFileName(file)!!,
     )
     return createSparTreeFromFile(file, factory)
   }
 
   fun createSparTreeFromFile(file: Path, factory: TokenizedProgramFactory): SparTree {
     val sourceFile = SourceFile(file, parserFacadeFactory.computeLanguageKindWithFileName(file)!!)
-    val facade = getFacade(sourceFile.languageKind)
+    val facade = getFacade(sourceFile.dataKind)
     val parseTree = facade.parseFile(file)
     return SparTreeBuilder(facade.ruleHierarchy, factory, parseTree).result
   }
@@ -380,7 +405,7 @@ object TestUtility {
 
   private fun getFilesWithExtension(
     folder: Path,
-    fileExtension: String
+    fileExtension: String,
   ): ImmutableList<Path> {
     return try {
       Files.walk(folder)
@@ -419,7 +444,7 @@ object TestUtility {
   fun getNodeWithTokens(
     tree: SparTree,
     tokens: ImmutableList<String>,
-    ruleName: String
+    ruleName: String,
   ): AbstractSparTreeNode {
     val map = createNodeToTokensMap(tree)
     return map.getNode(tokens, ruleName)
@@ -444,7 +469,7 @@ object TestUtility {
 
   private fun recursiveCreateNodeToTokensMap(
     builder: HashMap<AbstractSparTreeNode, ImmutableList<String>>,
-    node: AbstractSparTreeNode
+    node: AbstractSparTreeNode,
   ) {
     if (node.isTokenNode) {
       val tokens = ImmutableList.of(node.asLexerRule().token.text)
@@ -475,7 +500,7 @@ object TestUtility {
   }
 
   class NodeToTokensMap(
-    private val map: ImmutableMap<AbstractSparTreeNode, ImmutableList<String>>
+    private val map: ImmutableMap<AbstractSparTreeNode, ImmutableList<String>>,
   ) {
     fun getTokens(node: AbstractSparTreeNode): ImmutableList<String> {
       return map[node]!!

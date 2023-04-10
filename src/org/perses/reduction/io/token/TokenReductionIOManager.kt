@@ -17,21 +17,27 @@
 package org.perses.reduction.io.token
 
 import com.google.common.collect.ImmutableList
+import org.perses.program.LanguageKind
+import org.perses.program.SourceFile
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.io.AbstractReductionIOManager
 import org.perses.reduction.io.AbstractSingleFileReductionInputs
 import org.perses.reduction.io.ReductionFolder
+import org.perses.util.FileNameContentPair
 import org.perses.util.toImmutableList
 import java.nio.file.Path
 import kotlin.io.path.readText
 
 class TokenReductionIOManager(
   workingFolder: Path,
-  reductionInputs: AbstractSingleFileReductionInputs,
+  reductionInputs: AbstractSingleFileReductionInputs<LanguageKind, SourceFile, *>,
   outputManagerFactory: AbstractTokenOutputManagerFactory,
-  outputDirectory: Path?
-) : AbstractReductionIOManager<TokenizedProgram, TokenReductionIOManager>(
-  workingFolder, reductionInputs, outputManagerFactory, outputDirectory
+  outputDirectory: Path?,
+) : AbstractReductionIOManager<TokenizedProgram, LanguageKind, TokenReductionIOManager>(
+  workingFolder,
+  reductionInputs,
+  outputManagerFactory,
+  outputDirectory,
 ) {
 
   private val concreteOutputManagerFactory: AbstractTokenOutputManagerFactory
@@ -39,19 +45,23 @@ class TokenReductionIOManager(
 
   fun updateBestResultInOrigFormat(program: TokenizedProgram) {
     concreteOutputManagerFactory.createManagerFor(
-      program, reductionInputs.mainLanguage.origCodeFormatControl
+      program,
+      reductionInputs.mainDataKind.origCodeFormatControl,
     ).write(resultFolder)
   }
 
-  fun readAndTrimAllBestFiles(): ImmutableList<String> {
+  fun readAndTrimAllBestFiles(): ImmutableList<FileNameContentPair> {
     return readAndTrimOutputFiles(resultFolder)
   }
 
-  fun readAndTrimOutputFiles(reductionFolder: ReductionFolder): ImmutableList<String> {
+  fun readAndTrimOutputFiles(reductionFolder: ReductionFolder): ImmutableList<FileNameContentPair> {
     return reductionInputs.orig2relativePathPairs
       .asSequence()
-      .map { reductionFolder.folder.resolve(it.relativePath).readText().trim() }
-      .toImmutableList().also { check(it.isNotEmpty()) }
+      .map {
+        FileNameContentPair.createFromFile(
+          file = reductionFolder.folder.resolve(it.relativePath),
+        )
+      }.toImmutableList().also { check(it.isNotEmpty()) }
   }
 
   fun readBestMainFile(): String {
@@ -62,7 +72,7 @@ class TokenReductionIOManager(
   fun getDefaultProgramFormat() = concreteOutputManagerFactory.defaultProgramFormatControl
 
   init {
-    val languageKind = reductionInputs.mainLanguage
+    val languageKind = reductionInputs.mainDataKind
     require(languageKind.isCodeFormatAllowed(getDefaultProgramFormat())) {
       "The language $languageKind requires format sensitivity, " +
         "but the reducer is not told to keep its original format. " +
@@ -70,7 +80,8 @@ class TokenReductionIOManager(
     }
   }
 
-  override fun getConcreteReductionInputs(): AbstractSingleFileReductionInputs {
-    return reductionInputs as AbstractSingleFileReductionInputs
+  override fun getConcreteReductionInputs(): AbstractSingleFileReductionInputs<
+    LanguageKind, SourceFile, *,> {
+    return reductionInputs as AbstractSingleFileReductionInputs<LanguageKind, SourceFile, *>
   }
 }

@@ -70,7 +70,7 @@ class OptionalIntroducerPassTest {
 
   fun processGrammar(vararg lines: String): PersesGrammar {
     val grammar = createPersesGrammarFromString(*lines)
-    return pass.process(grammar)
+    return pass.processParserGrammar(grammar, lexerGrammar = null)
   }
 
   @Test
@@ -122,7 +122,7 @@ class OptionalIntroducerPassTest {
   fun testFindGapInLongSequence_multiple_gaps_in_the_back() {
     val gapInLongSequence = findGapInSequences(
       arrayOf("a", "b", "c", "d", "e"),
-      arrayOf("a", "c", "d")
+      arrayOf("a", "c", "d"),
     )
     assertThat(gapInLongSequence).isNull()
   }
@@ -152,27 +152,27 @@ class OptionalIntroducerPassTest {
   companion object {
     private fun findGapBetweenSequenceAndTerminal(
       longSeqOfTerminals: Array<String>,
-      terminal: String
+      terminal: String,
     ): Interval? {
       val longSeq = createCandidateElement(
-        createSeqOfTerminals(*longSeqOfTerminals)
+        createSeqOfTerminals(*longSeqOfTerminals),
       )
         .asSequence()
       val shortSeq = createCandidateElement(
-        createTerminal(terminal)
+        createTerminal(terminal),
       )
       return findGapInLongSequence(longSeq, shortSeq)
     }
 
     private fun findGapInSequences(
       longSeqOfTerminals: Array<String>,
-      shortSeqOfTerminals: Array<String>
+      shortSeqOfTerminals: Array<String>,
     ): Interval? {
       val longSeq = createCandidateElement(
-        createSeqOfTerminals(*longSeqOfTerminals)
+        createSeqOfTerminals(*longSeqOfTerminals),
       ).asSequence()
       val shortSeq = createCandidateElement(
-        createSeqOfTerminals(*shortSeqOfTerminals)
+        createSeqOfTerminals(*shortSeqOfTerminals),
       )
       return findGapInLongSequence(longSeq, shortSeq)
     }

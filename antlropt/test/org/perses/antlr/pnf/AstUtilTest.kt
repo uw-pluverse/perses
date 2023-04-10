@@ -65,7 +65,7 @@ class AstUtilTest {
     val a = GrammarTestingUtility.createTerminal("a")
     val b = GrammarTestingUtility.createTerminal("b")
     val star = PersesStarAst.createGreedy(
-      GrammarTestingUtility.createSeqOfTerminals("a", "b")
+      GrammarTestingUtility.createSeqOfTerminals("a", "b"),
     )
     convertStarToPlus(listOf(a, b, star)).let { result ->
       assertThat(result).hasSize(1)

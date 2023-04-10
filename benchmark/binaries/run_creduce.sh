@@ -28,7 +28,7 @@ creduce --n "${THREADS}" "${TMP_TEST_SCRIPT}" "${TMP_SOURCE_FILE}"
 readonly RET_CODE="$?"
 readonly END_TIME=$(date +%s)
 
-summarize_results
+summarize_results "${TMP_SOURCE_FILE}"
 popd
 
 rm -rf "${CREDUCE_TMP_WORK}"

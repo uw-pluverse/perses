@@ -55,7 +55,7 @@ class TokenSlicerTest : AbstractReducerFunctionalTest() {
     val actionSet = TokenSlicer.createNodeDeletionActionSetReverse(
       tokens!!,
       inclusiveEndIndex = tokens!!.size - 1,
-      tokenCountToDelete = 1
+      tokenCountToDelete = 1,
     )
     assertThat(actionSet.actions).hasSize(1)
     assertThat(actionSet.actions.first().targetNode).isSameInstanceAs(tokens!!.last())
@@ -66,7 +66,7 @@ class TokenSlicerTest : AbstractReducerFunctionalTest() {
     val actionSet = TokenSlicer.createNodeDeletionActionSetReverse(
       tokens!!,
       inclusiveEndIndex = 0,
-      tokenCountToDelete = 1
+      tokenCountToDelete = 1,
     )
     assertThat(actionSet.actions).hasSize(1)
     assertThat(actionSet.actions.first().targetNode).isSameInstanceAs(tokens!!.first())
@@ -77,7 +77,7 @@ class TokenSlicerTest : AbstractReducerFunctionalTest() {
     val actionSet = TokenSlicer.createNodeDeletionActionSetReverse(
       tokens!!,
       inclusiveEndIndex = tokens!!.size - 1,
-      tokenCountToDelete = 2
+      tokenCountToDelete = 2,
     )
     assertThat(actionSet.actions).hasSize(2)
     assertThat(actionSet.actions.first().targetNode).isSameInstanceAs(tokens!!.last())
@@ -89,7 +89,7 @@ class TokenSlicerTest : AbstractReducerFunctionalTest() {
     val actionSet = TokenSlicer.createNodeDeletionActionSetReverse(
       tokens!!,
       inclusiveEndIndex = 1,
-      tokenCountToDelete = 2
+      tokenCountToDelete = 2,
     )
     assertThat(actionSet.actions).hasSize(2)
     assertThat(actionSet.actions.first().targetNode).isSameInstanceAs(tokens!![1])
@@ -106,7 +106,7 @@ class TokenSlicerTest : AbstractReducerFunctionalTest() {
         |int main() {
         |  printf("world\n");
         |}
-      """.trimMargin()
+      """.trimMargin(),
     )
   }
 
@@ -120,7 +120,7 @@ class TokenSlicerTest : AbstractReducerFunctionalTest() {
       | def main(args: Array[String]) =
       |   println("Hello, world")
       |}
-    """.trimMargin()
+      """.trimMargin(),
     )
   }
 }

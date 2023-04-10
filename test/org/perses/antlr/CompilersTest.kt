@@ -49,10 +49,10 @@ class CompilersTest : AbstractAntlrrdcTest() {
       startRuleName = "start",
       workingDirectory = workignDir,
       stubFactory = GrammarMainStubFactory(
-        testPrograms = ImmutableList.of(valid1, valid2)
+        testPrograms = ImmutableList.of(valid1, valid2),
       ),
       packageName = "org.perses.antlr",
-      jarFileCustomizer = {}
+      jarFileCustomizer = {},
     )
     val jarFile = compiler.run()
     valid1.writeText("junk")
@@ -70,10 +70,10 @@ class CompilersTest : AbstractAntlrrdcTest() {
       startRuleName = "start",
       workingDirectory = workignDir,
       stubFactory = GrammarMainStubFactory(
-        testPrograms = ImmutableList.of(valid1, valid2)
+        testPrograms = ImmutableList.of(valid1, valid2),
       ),
       packageName = "org.perses.antlr",
-      jarFileCustomizer = {}
+      jarFileCustomizer = {},
     )
     val jarFile = compiler.run()
 
@@ -88,7 +88,7 @@ class CompilersTest : AbstractAntlrrdcTest() {
         "org/perses/antlr/TestParser.java",
         "org/perses/antlr/TestParser.g4",
         "org/perses/antlr/TestParserMain.class",
-        "org/perses/antlr/TestParserMain.java"
+        "org/perses/antlr/TestParserMain.java",
       )
     }
     jarFile.expensiveTestParsable(valid1)
@@ -106,7 +106,7 @@ class CompilersTest : AbstractAntlrrdcTest() {
                return 'helloWorld';
              }
             }
-        """.trimIndent()
+        """.trimIndent(),
       )
     }
     val compiler = AntlrCompiler.createFromFiles(
@@ -115,10 +115,10 @@ class CompilersTest : AbstractAntlrrdcTest() {
       startRuleName = "sourceUnit",
       workingDirectory = workignDir,
       stubFactory = GrammarMainStubFactory(
-        testPrograms = ImmutableList.of(solidityProgramExample)
+        testPrograms = ImmutableList.of(solidityProgramExample),
       ),
       packageName = "org.perses.antlr",
-      jarFileCustomizer = {}
+      jarFileCustomizer = {},
     )
     val jarFile = compiler.run()
     jarFile.expensiveTestParsable(solidityProgramExample)
@@ -133,10 +133,10 @@ class CompilersTest : AbstractAntlrrdcTest() {
       startRuleName = "start",
       workingDirectory = workignDir,
       stubFactory = GrammarMainStubFactory(
-        testPrograms = ImmutableList.of(valid1, valid2)
+        testPrograms = ImmutableList.of(valid1, valid2),
       ),
       packageName = "org.perses.antlr",
-      jarFileCustomizer = {}
+      jarFileCustomizer = {},
     )
     val jarFile = compiler.run()
     jarFile.expensiveTestParsable(valid1)
@@ -156,13 +156,13 @@ class CompilersTest : AbstractAntlrrdcTest() {
         parserFile = combinedGrammarPath,
         lexerFile = null,
         languageKindSetting = ParserFacadeStubFactory.YamlLanguageKindSetting(
-          LanguageAdhoc.INSTANCE.toYamlString()
+          LanguageAdhoc.INSTANCE.toYamlString(),
         ),
         parserFacadeClassSimpleName = "TestCombinedAdhocParserFacade",
-        tokenNamesOfIdentifiers = listOf("ID")
+        tokenNamesOfIdentifiers = listOf("ID"),
       ),
       packageName = "org.perses.grammar.adhoc",
-      jarFileCustomizer = {}
+      jarFileCustomizer = {},
     )
     val jarFile = compiler.run()
     ZipFile(jarFile.path.toFile()).use { zipFile ->
@@ -175,7 +175,7 @@ class CompilersTest : AbstractAntlrrdcTest() {
         "org/perses/grammar/adhoc/TestCombinedParser\$StartContext.class",
         "org/perses/grammar/adhoc/TestCombinedParser.class",
         "org/perses/grammar/adhoc/TestCombinedParser.java",
-        "org/perses/grammar/adhoc/TestCombined.g4"
+        "org/perses/grammar/adhoc/TestCombined.g4",
       )
     }
   }
@@ -192,13 +192,13 @@ class CompilersTest : AbstractAntlrrdcTest() {
         parserFile = combinedGrammarPath,
         lexerFile = null,
         languageKindSetting = ParserFacadeStubFactory.YamlLanguageKindSetting(
-          LanguageAdhoc.INSTANCE.toYamlString()
+          LanguageAdhoc.INSTANCE.toYamlString(),
         ),
         parserFacadeClassSimpleName = "TestAdhocParserFacade",
-        tokenNamesOfIdentifiers = listOf("ID")
+        tokenNamesOfIdentifiers = listOf("ID"),
       ),
       packageName = "org.perses.grammar.adhoc",
-      jarFileCustomizer = {}
+      jarFileCustomizer = {},
     )
     val jarFile = compiler.run()
     ZipFile(jarFile.path.toFile()).use { zipFile ->

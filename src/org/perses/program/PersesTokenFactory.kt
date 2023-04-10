@@ -20,6 +20,9 @@ import com.google.common.base.MoreObjects
 import org.antlr.v4.runtime.CharStream
 import org.antlr.v4.runtime.Token
 import org.antlr.v4.runtime.TokenSource
+import org.antlr.v4.runtime.tree.pattern.RuleTagToken
+import org.antlr.v4.runtime.tree.pattern.TokenTagToken
+import org.perses.util.Util.lazyAssert
 
 class PersesTokenFactory {
 
@@ -29,27 +32,28 @@ class PersesTokenFactory {
 
   @Synchronized
   private fun getOrCreateLexeme(text: String): Lexeme {
-    var lexeme = lexemeMap.computeIfAbsent(text) {
+    val lexeme = lexemeMap.computeIfAbsent(text) {
       Lexeme(id = lexemeMap.size, text = it)
     }
-    assert(lexeme.text == text)
+    lazyAssert { lexeme.text == text }
     return lexeme
   }
 
   fun createPersesToken(token: Token): PersesToken {
     val lexeme = getOrCreateLexeme(token.text)
     return createFromAntlrToken(
-      lexeme, token
-    ).also { assert(it.text === lexeme.text) }
+      lexeme,
+      token,
+    ).also { lazyAssert { it.text === lexeme.text } }
   }
 
   fun copyPersesTokenWithNewText(
     newText: String,
-    existing: PersesToken
+    existing: PersesToken,
   ): PersesToken {
     val lexeme = getOrCreateLexeme(text = newText)
     return existing.copyWithNewLexeme(lexeme).also {
-      assert(it.text === lexeme.text)
+      lazyAssert { it.text === lexeme.text }
     }
   }
 
@@ -67,6 +71,14 @@ class PersesTokenFactory {
   }
 
   private fun createFromAntlrToken(lexeme: Lexeme, token: Token): PersesToken {
+    var persesTokenType = TokenType.CommonToken
+    if (token is RuleTagToken) {
+      persesTokenType = TokenType.RuleTagToken
+    }
+    if (token is TokenTagToken) {
+      persesTokenType = TokenType.TokenTagToken
+    }
+
     return PersesToken(
       lexeme = lexeme,
       type = token.type,
@@ -74,17 +86,23 @@ class PersesTokenFactory {
       channel = token.channel,
       tokenIndex = token.tokenIndex,
       startIndex = token.startIndex,
-      stopIndex = token.stopIndex
+      stopIndex = token.stopIndex,
+      tokenType = persesTokenType,
     )
   }
 
   data class TokenPosition(
     val line: Int,
-    val charPositionInLine: Int
+    val charPositionInLine: Int,
   ) {
     companion object {
       val INVALID = TokenPosition(line = Int.MIN_VALUE, charPositionInLine = Int.MIN_VALUE)
     }
+  }
+  enum class TokenType() {
+    RuleTagToken,
+    TokenTagToken,
+    CommonToken,
   }
 
   class PersesToken internal constructor(
@@ -94,7 +112,10 @@ class PersesTokenFactory {
     private val channel: Int,
     private val tokenIndex: Int,
     private val startIndex: Int,
-    private val stopIndex: Int
+    private val stopIndex: Int,
+    // ruleTagtoken representing an entire subtree matched by a parser rule
+    // tokenTagToken means this is a Token object representing a token of a particular type
+    val tokenType: Enum<TokenType>,
     /* Do not keep a reference to the token, as token might hold a reference to a large string.*/
   ) : Token {
 
@@ -138,7 +159,8 @@ class PersesTokenFactory {
         channel = channel,
         tokenIndex = tokenIndex,
         startIndex = startIndex,
-        stopIndex = stopIndex
+        stopIndex = stopIndex,
+        tokenType = tokenType,
       )
     }
 
@@ -150,7 +172,8 @@ class PersesTokenFactory {
         channel = Integer.MIN_VALUE,
         tokenIndex = Integer.MIN_VALUE,
         startIndex = Integer.MIN_VALUE,
-        stopIndex = Integer.MIN_VALUE
+        stopIndex = Integer.MIN_VALUE,
+        tokenType = TokenType.CommonToken,
       )
     }
   }

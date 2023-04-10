@@ -19,11 +19,12 @@ package org.perses.reduction.cache
 import it.unimi.dsi.fastutil.ints.IntArrayList
 import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
+import org.perses.util.Util.lazyAssert
 
 abstract class AbstractCompactProgramEncoder protected constructor(
   program: TokenizedProgram,
   profiler: AbstractQueryCacheProfiler,
-  private val enableCompression: Boolean
+  private val enableCompression: Boolean,
 ) : AbstractTokenizedProgramEncoder<CompactProgramEncoding>(program, profiler) {
 
   override fun encode(program: TokenizedProgram): CompactProgramEncoding? {
@@ -33,65 +34,81 @@ abstract class AbstractCompactProgramEncoder protected constructor(
     val optionalEncoding = encode(tokens.iterator(), tokenCount) ?: return null
     val endTime = AbstractQueryCacheProfiler.now()
     profiler.onEncodingProgram(baseProgram.tokens, program, startTime, endTime)
-    assert(assertEncodingIsCorrect(program, optionalEncoding))
+    lazyAssert { assertEncodingIsCorrect(program, optionalEncoding) }
     return optionalEncoding
   }
 
   protected fun encode(
     tokenIterator: Iterator<PersesTokenFactory.PersesToken>,
-    tokenCount: Int
+    tokenCount: Int,
   ): CompactProgramEncoding? {
-    val interval = encodeUncompressed(IteratorCursor(tokenIterator), tokenCount) ?: return null
-    assert(interval.size % 2 == 0)
-    return if (enableCompression) CompactProgramEncoding.createCompressedEncoding(
-      baseProgram, interval, tokenCount
-    ) else CompactProgramEncoding.createIntervalEncoding(
-      baseProgram, interval, tokenCount
-    )
+    val interval = encodeUncompressed(tokenIterator, tokenCount) ?: return null
+    lazyAssert { interval.size % 2 == 0 }
+    return if (enableCompression) {
+      CompactProgramEncoding.createCompressedEncoding(
+        baseProgram,
+        interval,
+        tokenCount,
+      )
+    } else {
+      CompactProgramEncoding.createIntervalEncoding(
+        baseProgram,
+        interval,
+        tokenCount,
+      )
+    }
   }
 
   override fun reEncode(
-    previousEncoding: CompactProgramEncoding
+    previousEncoding: CompactProgramEncoding,
   ): CompactProgramEncoding? {
     return encode(previousEncoding.tokenIterator(), previousEncoding.tokenCount)
   }
 
   protected abstract fun encodeUncompressed(
-    persesTokenIteratorCursor: IteratorCursor<PersesTokenFactory.PersesToken>,
-    tokenCount: Int
+    tokenIterator: Iterator<PersesTokenFactory.PersesToken>,
+    tokenCount: Int,
   ): IntArrayList?
 
-  class IteratorCursor<T> internal constructor(private val iterator: Iterator<T>) {
+  @JvmInline
+  value class IteratorCursor<T> (@PublishedApi internal val iterator: Iterator<T>) {
 
-    private var current: T? = null
-
-    fun has(): Boolean {
-      return current != null
+    @Suppress("NOTHING_TO_INLINE")
+    inline fun has(currentValueHolder: T?): Boolean {
+      return currentValueHolder != null
     }
 
-    fun get(): T? {
-      assert(current != null)
-      return current
+    @Suppress("NOTHING_TO_INLINE")
+    inline fun get(currentValueHolder: T?): T {
+      lazyAssert { currentValueHolder != null }
+      return currentValueHolder!!
     }
 
-    fun move() {
-      current = if (iterator.hasNext()) {
-        iterator.next()
-      } else {
-        null
-      }
+    inline fun move(currentValueHolderUpdate: (T?) -> Unit) {
+      currentValueHolderUpdate(
+        if (iterator.hasNext()) {
+          iterator.next()
+        } else {
+          null
+        },
+      )
     }
   }
 
   companion object {
     private fun assertEncodingIsCorrect(
       program: TokenizedProgram,
-      encoding: CompactProgramEncoding
+      encoding: CompactProgramEncoding,
     ): Boolean {
       val restored = encoding.restoreProgram()
       val origList = program.tokens
       val afterList = restored.tokens
-      check(origList.size == afterList.size)
+      check(origList.size == afterList.size) {
+        """
+        | origList  size = ${origList.size}
+        | afterList size = ${afterList.size}
+        """.trimMargin()
+      }
       val size = restored.tokenCount()
       for (i in 0 until size) {
         check(origList[i].persesLexemeId == afterList[i].persesLexemeId)

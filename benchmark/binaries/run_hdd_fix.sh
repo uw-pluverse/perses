@@ -29,7 +29,7 @@ java -jar "/tmp/binaries/perses_deploy.jar" \
 readonly RET_CODE="$?"
 readonly END_TIME=$(date +%s)
 
-summarize_results
+summarize_results "${TMP_SOURCE_FILE}"
 popd
 
 exit "${RET_CODE}"

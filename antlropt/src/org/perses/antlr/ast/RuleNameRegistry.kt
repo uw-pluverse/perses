@@ -62,7 +62,7 @@ class RuleNameRegistry {
   inner class RuleNameHandle internal constructor(
     val ruleName: String,
     val id: Int,
-    val origin: RuleNameHandle?
+    val origin: RuleNameHandle?,
   ) : Comparable<RuleNameHandle> {
 
     private var auxiliaryIdGenerator = 1
@@ -81,7 +81,9 @@ class RuleNameRegistry {
       val originCmp = Integer.compare(origin.id, otherOrigin.id)
       return if (originCmp != 0) {
         originCmp
-      } else Integer.compare(id, other.id)
+      } else {
+        Integer.compare(id, other.id)
+      }
     }
 
     override fun toString(): String {

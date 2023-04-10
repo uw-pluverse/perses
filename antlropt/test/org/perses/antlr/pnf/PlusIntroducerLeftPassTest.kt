@@ -37,21 +37,21 @@ class PlusIntroducerLeftPassTest : PnfLeftTestGrammar() {
     run {
       val grammar = createPersesGrammarFromString("start:C D a;", "a:(C D)*;")
       val pass = PlusIntroducerLeftPass()
-      val newGrammar = pass.process(grammar)
+      val newGrammar = pass.processParserGrammar(grammar, lexerGrammar = null)
       assertThat(newGrammar.getRuleDefinition("start")!!.body.sourceCode)
         .isEqualTo("kleene_plus__a_1")
       assertThat(
-        newGrammar.getRuleDefinition("kleene_plus__a_1")!!.body.sourceCode
+        newGrammar.getRuleDefinition("kleene_plus__a_1")!!.body.sourceCode,
       ).isEqualTo("(C D)+")
     }
     run {
       val grammar = createPersesGrammarFromString("start:a C D f;", "a:(C D)*;")
       val pass = PlusIntroducerLeftPass()
-      val newGrammar = pass.process(grammar)
+      val newGrammar = pass.processParserGrammar(grammar, lexerGrammar = null)
       assertThat(newGrammar.getRuleDefinition("start")!!.body.sourceCode)
         .isEqualTo("kleene_plus__a_1 f")
       assertThat(
-        newGrammar.getRuleDefinition("kleene_plus__a_1")!!.body.sourceCode
+        newGrammar.getRuleDefinition("kleene_plus__a_1")!!.body.sourceCode,
       ).isEqualTo("(C D)+")
     }
   }
@@ -103,7 +103,8 @@ class PlusIntroducerLeftPassTest : PnfLeftTestGrammar() {
       val registry = grammar.symbolTable.ruleNameRegistry
       val edit = PlusIntroducerLeftPass.PlusIntroducerEdit(grammar)
       val start = edit.internalApply(
-        grammar.getRuleDefinition("start")!!.body, isRoot = true
+        grammar.getRuleDefinition("start")!!.body,
+        isRoot = true,
       )
         as TransformDecision.Replace
       assertThat(start.newValue.sourceCode).isEqualTo("kleene_plus__a_1 f")
@@ -120,7 +121,8 @@ class PlusIntroducerLeftPassTest : PnfLeftTestGrammar() {
       val registry = grammar.symbolTable.ruleNameRegistry
       val edit = PlusIntroducerLeftPass.PlusIntroducerEdit(grammar)
       val start = edit.internalApply(
-        grammar.getRuleDefinition("start")!!.body, isRoot = true
+        grammar.getRuleDefinition("start")!!.body,
+        isRoot = true,
       )
         as TransformDecision.Replace
       assertThat(start.newValue.sourceCode).isEqualTo("kleene_plus__a_1 f")
@@ -133,7 +135,10 @@ class PlusIntroducerLeftPassTest : PnfLeftTestGrammar() {
   @Test
   fun testGetStarIfIsKlleneStarRule() {
     val grammar = createPersesGrammarFromString(
-      "r1 : a | b;", "r2 : a*;", "r3: a* b;", "r4: a+;"
+      "r1 : a | b;",
+      "r2 : a*;",
+      "r3: a* b;",
+      "r4: a+;",
     )
     val edit = PlusIntroducerLeftPass.PlusIntroducerEdit(grammar)
     val ruleNameRegistry = grammar.symbolTable.ruleNameRegistry

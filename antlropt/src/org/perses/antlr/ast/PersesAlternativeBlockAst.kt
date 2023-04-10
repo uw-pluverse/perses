@@ -22,7 +22,7 @@ import org.perses.util.toImmutableList
 import java.io.PrintStream
 
 class PersesAlternativeBlockAst(
-  val alternatives: ImmutableList<AbstractPersesRuleElement>
+  val alternatives: ImmutableList<AbstractPersesRuleElement>,
 ) : AbstractPersesRuleElement() {
 
   private val sortedAlternatives =
@@ -72,7 +72,7 @@ class PersesAlternativeBlockAst(
   override val tag = AstTag.ALTERNATIVE_BLOCK
 
   override fun createWithNewChildren(
-    newChildren: List<AbstractPersesRuleElement>
+    newChildren: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     return PersesAlternativeBlockAst(ImmutableList.copyOf(newChildren))
   }
@@ -99,7 +99,7 @@ class PersesAlternativeBlockAst(
                 for (alt in alternatives) {
                   append("  " + alt.sourceCode).append("\n")
                 }
-              }
+              },
             )
           }
           require(!prev.isEquivalent(current))

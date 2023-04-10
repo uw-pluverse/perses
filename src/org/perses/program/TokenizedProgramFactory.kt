@@ -19,21 +19,22 @@ package org.perses.program
 import com.google.common.collect.ImmutableList
 import com.google.common.primitives.ImmutableIntArray
 import org.antlr.v4.runtime.Token
+import org.perses.util.Util.lazyAssert
 import org.perses.util.toImmutableList
 
 class TokenizedProgramFactory private constructor(
   // TODO: build an inverted index for this original program.
   val tokenFactory: PersesTokenFactory,
   val tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
-  val languageKind: LanguageKind
+  val languageKind: LanguageKind,
 ) {
 
   val histogram = ImmutableIntArray.copyOf(
-    computeLexemeHistogram(tokenFactory, tokensInOrigin)
+    computeLexemeHistogram(tokenFactory, tokensInOrigin),
   )
 
   fun computeHistogramFor(program: TokenizedProgram): IntArray {
-    assert(program.factory === this)
+    lazyAssert { program.factory === this }
     return computeLexemeHistogram(tokenFactory, program.tokens)
   }
 
@@ -50,7 +51,7 @@ class TokenizedProgramFactory private constructor(
     @JvmStatic
     fun computeLexemeHistogram(
       tokenFactory: PersesTokenFactory,
-      tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>
+      tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
     ): IntArray {
       val histogram = IntArray(tokenFactory.numOfLexemes())
       for (token in tokensInOrigin) {
@@ -62,7 +63,7 @@ class TokenizedProgramFactory private constructor(
     @JvmStatic
     fun createFactory(
       originalProgram: List<Token>,
-      languageKind: LanguageKind
+      languageKind: LanguageKind,
     ): TokenizedProgramFactory {
       val tokenFactory = PersesTokenFactory()
       val persesTokens = originalProgram

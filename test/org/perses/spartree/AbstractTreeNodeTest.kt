@@ -77,10 +77,13 @@ class AbstractTreeNodeTest {
   @Test
   fun test_boundedBreadthFirstSearchForFirstQualifiedNodes_max_depth_1() {
     val result = root.boundedBreadthFirstSearchForFirstQualifiedNodes(
-      { true }, 1
-    )
+      { true },
+      1,
+    ).toList()
     assertThat(result).containsExactly(
-      l1_n1_root, l1_n2_root, l1_n3_root
+      l1_n1_root,
+      l1_n2_root,
+      l1_n3_root,
     ).inOrder()
   }
 
@@ -97,10 +100,16 @@ class AbstractTreeNodeTest {
   @Test
   fun test_boundedBreadthFirstSearchForFirstQualifiedNodes_max_depth_2() {
     val result = root.boundedBreadthFirstSearchForFirstQualifiedNodes(
-      { it !== l1_n1_root && it !== l1_n2_root && it !== l1_n3_root }, 2
-    )
+      { it !== l1_n1_root && it !== l1_n2_root && it !== l1_n3_root },
+      2,
+    ).toList()
     assertThat(result).containsExactly(
-      l2_n4_n1, l2_n5_n1, l2_n6_n2, l2_n7_n2, l2_n8_n3, l2_n9_n3
+      l2_n4_n1,
+      l2_n5_n1,
+      l2_n6_n2,
+      l2_n7_n2,
+      l2_n8_n3,
+      l2_n9_n3,
     ).inOrder()
   }
 
@@ -142,7 +151,7 @@ class AbstractTreeNodeTest {
       l2_n8_n3,
       l2_n9_n3,
       l3_n10_n9,
-      l3_n11_n9
+      l3_n11_n9,
     ).inOrder()
   }
 
@@ -164,7 +173,27 @@ class AbstractTreeNodeTest {
       l3_n11_n9,
       l2_n9_n3,
       l1_n3_root,
-      root
+      root,
+    ).inOrder()
+  }
+
+  @Test
+  fun testPostOrderVisitWithSuccessorFunction() {
+    val list = mutableListOf<Node>()
+    root.postOrderVisit({
+      if (it === root) {
+        root.immutableChildView
+      } else {
+        emptyList()
+      }
+    }) {
+      list.add(it)
+    }
+    assertThat(list).containsExactly(
+      l1_n1_root,
+      l1_n2_root,
+      l1_n3_root,
+      root,
     ).inOrder()
   }
 
@@ -210,7 +239,11 @@ class AbstractTreeNodeTest {
     assertThat(AbstractTreeNode.findLowestAncestor(immutableList1)).isSameInstanceAs(l1_n1_root)
 
     val immutableList2: ImmutableList<Node> = ImmutableList.of(
-      l2_n4_n1, l2_n5_n1, l2_n6_n2, l3_n10_n9, l2_n8_n3
+      l2_n4_n1,
+      l2_n5_n1,
+      l2_n6_n2,
+      l3_n10_n9,
+      l2_n8_n3,
     )
     assertThat(AbstractTreeNode.findLowestAncestor(immutableList2)).isSameInstanceAs(root)
 
@@ -232,10 +265,10 @@ class AbstractTreeNodeTest {
   @Test
   fun test_find_lowest_ancestor_pair() {
     assertThat(AbstractTreeNode.findLowestAncestorPair(l2_n4_n1, l2_n4_n1)).isSameInstanceAs(
-      l2_n4_n1
+      l2_n4_n1,
     )
     assertThat(AbstractTreeNode.findLowestAncestorPair(l2_n4_n1, l2_n5_n1)).isSameInstanceAs(
-      l1_n1_root
+      l1_n1_root,
     )
   }
 

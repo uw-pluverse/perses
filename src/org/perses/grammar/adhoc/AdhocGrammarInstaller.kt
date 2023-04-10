@@ -31,24 +31,26 @@ import kotlin.io.path.readText
 
 class AdhocGrammarInstaller(
   private val options: CommandOptions,
-  private val persesConstants: PersesConstants
+  private val persesConstants: PersesConstants,
 ) {
 
   private val configuration = options.computeAdhocGrammarConfiguration()
 
   fun run(): JarFile {
     val grammarRootFolder = createDirectoryForGrammar(
-      configuration, persesConstants
+      configuration,
+      persesConstants,
     )
     val grammarSourceFolder = createGrammarSourceFolder(
-      grammarRootFolder, configuration.packageName
+      grammarRootFolder,
+      configuration.packageName,
     )
     configuration.copyGrammarFilesToDirectory(grammarSourceFolder)
 
     val pnfGrammar = normalizePNF(grammarSourceFolder)
 
     val workingDirectory = Util.ensureDirExists(
-      grammarRootFolder.resolve("generate_jar")
+      grammarRootFolder.resolve("generate_jar"),
     )
 
     Util.clearDirectory(workingDirectory)
@@ -56,6 +58,8 @@ class AdhocGrammarInstaller(
     val compiler = AntlrCompiler.createFromFiles(
       parserFile = pnfGrammar,
       lexerFile = configuration.lexerFile,
+      parserBase = configuration.parserBase,
+      lexerBase = configuration.lexerBase,
       startRuleName = configuration.startRuleName,
       workingDirectory = workingDirectory,
       stubFactory = ParserFacadeStubFactory(
@@ -64,27 +68,27 @@ class AdhocGrammarInstaller(
         lexerFile = configuration.lexerFile,
         languageKindSetting = if (configuration.languageKindYamlFile != null) {
           ParserFacadeStubFactory.YamlLanguageKindSetting(
-            configuration.languageKindYamlFile!!.readText()
+            configuration.languageKindYamlFile!!.readText(),
           )
         } else {
           ParserFacadeStubFactory.ExistingLanguageKindSetting(
-            configuration.existingLanguageKindClassFullName!!
+            configuration.existingLanguageKindClassFullName!!,
           )
         },
         parserFacadeClassSimpleName = configuration.parserFacadeClassSimpleName,
-        tokenNamesOfIdentifiers = configuration.sortedDistinctTokenNamesOfIdentifiers
+        tokenNamesOfIdentifiers = configuration.sortedDistinctTokenNamesOfIdentifiers,
       ),
       packageName = configuration.packageName,
       jarFileCustomizer = { zipStream ->
         val zipEntry = ZipEntry(
-          AdhocGrammarConfiguration.ParserFacadeJarFile.LANGUAGE_INFO_FILE_PATH
+          AdhocGrammarConfiguration.ParserFacadeJarFile.LANGUAGE_INFO_FILE_PATH,
         )
         zipStream.putNextEntry(zipEntry)
         LanguageInfo(configuration.parserFacadeClassFullName).toYamlString().let {
           zipStream.write(it.toByteArray(StandardCharsets.UTF_8))
         }
         zipStream.closeEntry()
-      }
+      },
     )
     val jarFile = compiler.run()
     return if (options.outputFlags.output == null) {
@@ -96,7 +100,7 @@ class AdhocGrammarInstaller(
 
   private fun createGrammarSourceFolder(
     grammarRootFolder: Path,
-    packageName: String
+    packageName: String,
   ): Path {
     val sourceFolder = grammarRootFolder.resolve(packageName.replace(".", "/"))
     val result = Files.createDirectories(sourceFolder)
@@ -105,7 +109,7 @@ class AdhocGrammarInstaller(
   }
 
   private fun normalizePNF(
-    grammarSourceFolder: Path
+    grammarSourceFolder: Path,
   ): Path {
     val outputFile = grammarSourceFolder.resolve("Pnf" + configuration.parserFile.fileName)
 
@@ -113,7 +117,7 @@ class AdhocGrammarInstaller(
       configuration.parserFile,
       configuration.lexerFile,
       configuration.startRuleName,
-      outputFile
+      outputFile,
     ).run()
     return outputFile
   }
@@ -122,7 +126,7 @@ class AdhocGrammarInstaller(
 
     private fun createDirectoryForGrammar(
       grammarConfiguration: AdhocGrammarConfiguration,
-      persesConstants: PersesConstants
+      persesConstants: PersesConstants,
     ): Path {
       val result = grammarConfiguration.computeDirectoryForGrammar(persesConstants)
       Util.ensureDirExists(result)

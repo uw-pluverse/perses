@@ -20,11 +20,12 @@ import com.google.common.collect.ImmutableList
 import it.unimi.dsi.fastutil.ints.IntArrayList
 import org.perses.program.PersesTokenFactory.PersesToken
 import org.perses.program.TokenizedProgram
+import org.perses.util.Util.lazyAssert
 
 class LinearScanFormatSensitiveEncoder(
   baseProgram: TokenizedProgram,
   profiler: AbstractQueryCacheProfiler,
-  enableCompression: Boolean
+  enableCompression: Boolean,
 ) : AbstractLinearScanEncoder(baseProgram, profiler, enableCompression) {
 
   private var lineStartIndices = LogicalSizedArray.createWithSize(baseProgram.tokenCount())
@@ -36,34 +37,41 @@ class LinearScanFormatSensitiveEncoder(
   override fun updateEncoderMore(encoderBaseProgram: TokenizedProgram) {
     super.updateEncoderMore(encoderBaseProgram)
     lineStartIndices = shrinkLogicalArrayIfNecessary(
-      lineStartIndices, encoderBaseProgram, refreshThreshold
+      lineStartIndices,
+      encoderBaseProgram,
+      refreshThreshold,
     )
     fillLineStartIndexArray(encoderBaseProgram.tokens, lineStartIndices)
-    assert(encoderBaseProgram.tokenCount() >= lineStartIndices.logicalSize)
+    lazyAssert { encoderBaseProgram.tokenCount() >= lineStartIndices.logicalSize }
   }
 
   override fun encodeUncompressed(
-    tokenCursor: IteratorCursor<PersesToken>,
-    tokenCount: Int
+    tokenIterator: Iterator<PersesToken>,
+    tokenCount: Int,
   ): IntArrayList? {
+    var currentValueHolder: PersesToken? = null
+    val tokenCursor = IteratorCursor(tokenIterator)
     val intervals = IntArrayList()
     val origTokenCount = persesLexemeIdArray.logicalSize
     val lineCount = lineStartIndices.logicalSize
     val persesLexemeIdInOrigin = persesLexemeIdArray
     val persesLineStartInOrigin = lineStartIndices
-    assert(persesLexemeIdArray.maxLogicalSize >= baseProgram.tokens.size)
-    assert(persesLexemeIdArray.logicalSize == baseProgram.tokens.size)
-    tokenCursor.move()
+    lazyAssert { persesLexemeIdArray.maxLogicalSize >= baseProgram.tokens.size }
+    lazyAssert { persesLexemeIdArray.logicalSize == baseProgram.tokens.size }
+    tokenCursor.move { currentValueHolder = it }
     var currentLineInBase = 0
     val variantLine = IntArrayList()
     val tempEncoding = IntArrayList()
-    while (tokenCursor.has() && currentLineInBase < lineCount) {
+    while (tokenCursor.has(currentValueHolder) && currentLineInBase < lineCount) {
       // get a full variant line.
-      val lineNumber = tokenCursor.get()!!.position.line
+      val lineNumber = tokenCursor.get(currentValueHolder).position.line
       do {
-        variantLine.add(tokenCursor.get()!!.persesLexemeId)
-        tokenCursor.move()
-      } while (tokenCursor.has() && lineNumber == tokenCursor.get()!!.position.line)
+        variantLine.add(tokenCursor.get(currentValueHolder).persesLexemeId)
+        tokenCursor.move { currentValueHolder = it }
+      } while (tokenCursor.has(currentValueHolder) && lineNumber == tokenCursor.get(
+          currentValueHolder,
+        ).position.line
+      )
       val variantLineCount = variantLine.size
 
       // search for the applicable line in baseProgram.
@@ -82,7 +90,7 @@ class LinearScanFormatSensitiveEncoder(
             baseTokenPointer,
             lineStopExclusive,
             variantLine.getInt(variantTokenPointer),
-            persesLexemeIdInOrigin
+            persesLexemeIdInOrigin,
           )
           if (baseTokenPointer == NOT_FOUND) {
             ++currentLineInBase
@@ -117,7 +125,7 @@ class LinearScanFormatSensitiveEncoder(
         }
       }
     }
-    return if (!variantLine.isEmpty || tokenCursor.has()) {
+    return if (!variantLine.isEmpty || tokenCursor.has(currentValueHolder)) {
       // !variantLine.isEmpty()  ->  current variant line cannot be encoded
       // tokenCursor.has()      ->  variant has more lines than the base
       null // encoding not applicable; entry evicted.
@@ -129,10 +137,10 @@ class LinearScanFormatSensitiveEncoder(
   companion object {
     private fun fillLineStartIndexArray(
       tokens: ImmutableList<PersesToken>,
-      lineStartIndexArray: LogicalSizedArray
+      lineStartIndexArray: LogicalSizedArray,
     ) {
       val tokenCount = tokens.size
-      assert(lineStartIndexArray.maxLogicalSize >= tokenCount)
+      lazyAssert { lineStartIndexArray.maxLogicalSize >= tokenCount }
       // temporarily increase the size of the logical array.
       lineStartIndexArray.logicalSize = lineStartIndexArray.maxLogicalSize
       var currentLine = 0
@@ -144,7 +152,7 @@ class LinearScanFormatSensitiveEncoder(
           currentLine = tokenLine
         }
       }
-      assert(index <= lineStartIndexArray.logicalSize)
+      lazyAssert { index <= lineStartIndexArray.logicalSize }
       lineStartIndexArray.logicalSize = index
     }
   }

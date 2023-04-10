@@ -20,8 +20,8 @@ import com.google.common.annotations.VisibleForTesting
 import com.google.common.collect.ImmutableList
 import org.perses.program.printer.PrinterRegistry
 import org.perses.reduction.AbstractTokenReducer
+import org.perses.reduction.EditTestPayload
 import org.perses.reduction.FixpointReductionState
-import org.perses.reduction.FutureExecutionResultInfo
 import org.perses.reduction.PropertyTestResult
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
@@ -29,11 +29,12 @@ import org.perses.reduction.TestScriptExecutorService
 import org.perses.reduction.TestScriptExecutorService.Companion.IDENTITY_POST_CHECK
 import org.perses.spartree.LexerRuleSparTreeNode
 import org.perses.spartree.NodeDeletionActionSet
+import org.perses.util.Util.lazyAssert
 
 class TokenSlicer(
   reducerContext: ReducerContext,
   val minSlicingGranularity: Int,
-  val maxSlicingGranularity: Int
+  val maxSlicingGranularity: Int,
 ) : AbstractTokenReducer(META, reducerContext) {
 
   init {
@@ -52,7 +53,7 @@ class TokenSlicer(
         .createTokenSlicingStartEvent(
           currentTimeMillis = System.currentTimeMillis(),
           programSize = tree.programSnapshot.tokenCount(),
-          tokenSlicingGranularity = tokenSlicingGranularity
+          tokenSlicingGranularity = tokenSlicingGranularity,
         )
       listenerManager.onSlicingTokensStart(startEvent)
       for (startIndex in tokens.size - 1 downTo tokenSlicingGranularity - 1) {
@@ -60,7 +61,9 @@ class TokenSlicer(
           continue
         }
         val nodeDeletionActionSet = createNodeDeletionActionSetReverse(
-          tokens, startIndex, tokenSlicingGranularity
+          tokens,
+          startIndex,
+          tokenSlicingGranularity,
         )
         if (nodeActionSetCache.isCachedOrCacheIt(nodeDeletionActionSet)) {
           listenerManager.onNodeEditActionSetCacheHit(nodeDeletionActionSet)
@@ -71,17 +74,17 @@ class TokenSlicer(
         val cachedResult = queryCache.getCachedResult(testProgram)
         if (cachedResult.isHit()) {
           val testResult = cachedResult.asCacheHit().testResult
-          assert(testResult.isNotInteresting) { "Only failed programs can be cached." }
+          lazyAssert({ testResult.isNotInteresting }) { "Only failed programs can be cached." }
           listenerManager.onTestResultCacheHit(testResult, testProgram, treeEdit)
           continue
         }
         val parserFacade = configuration.parserFacade
-        val futureTestScriptExecutionTask = testProgramAsynchronously(
+        val future = executorService.testProgramAsync(
           if (testProgram.tokenCount() <= 150) { // TODO: need to tune the threshold.
             {
               if (parserFacade.isSourceCodeParsable(
                   PrinterRegistry.getPrinter(ioManager.getDefaultProgramFormat())
-                    .print(testProgram).sourceCode
+                    .print(testProgram).sourceCode,
                 )
               ) {
                 PropertyTestResult(exitCode = 0, elapsedMilliseconds = -1)
@@ -93,25 +96,20 @@ class TokenSlicer(
             TestScriptExecutorService.ALWAYS_TRUE_PRECHECK
           },
           IDENTITY_POST_CHECK,
-          ioManager.createOutputManager(testProgram)
+          ioManager.createOutputManager(testProgram),
+          EditTestPayload(treeEdit, cachedResult.asCacheMiss()),
         )
         val best = analyzeResultsAndGetBest(
-          listOf(
-            FutureExecutionResultInfo(
-              treeEdit,
-              cachedResult.asCacheMiss(),
-              futureTestScriptExecutionTask
-            )
-          )
+          listOf(future),
         )
         if (best != null) {
-          tree.applyEdit(best.edit)
+          tree.applyEdit(best.payload!!.edit)
         }
       }
 
       val endEvent = startEvent.createEndEvent(
         currentTimeMillis = System.currentTimeMillis(),
-        programSize = tree.programSnapshot.tokenCount()
+        programSize = tree.programSnapshot.tokenCount(),
       )
       listenerManager.onSlicingTokensEnd(endEvent)
     }
@@ -124,7 +122,12 @@ class TokenSlicer(
 
     @JvmStatic
     val META = object : ReducerAnnotation() {
-      override val deterministic = true
+      override val deterministic: Boolean
+        get() = true
+
+      override val reductionResultSizeTrend: ReductionResultSizeTrend
+        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
+
       override fun shortName() = NAME
 
       override fun description() = ""
@@ -133,8 +136,9 @@ class TokenSlicer(
         return ImmutableList.of(
           TokenSlicer(
             reducerContext,
-            minSlicingGranularity = 1, maxSlicingGranularity = 14
-          )
+            minSlicingGranularity = 1,
+            maxSlicingGranularity = 14,
+          ),
         )
       }
     }
@@ -146,17 +150,17 @@ class TokenSlicer(
     fun createNodeDeletionActionSetReverse(
       tokenList: List<LexerRuleSparTreeNode>,
       inclusiveEndIndex: Int,
-      tokenCountToDelete: Int
+      tokenCountToDelete: Int,
     ): NodeDeletionActionSet {
       val inclusiveStartIndex = inclusiveEndIndex - tokenCountToDelete + 1
       check(inclusiveStartIndex >= 0) { inclusiveStartIndex }
       val subList = tokenList.subList(inclusiveStartIndex, inclusiveEndIndex + 1)
       subList.forEach {
-        assert(!it.isPermanentlyDeleted) { it }
+        lazyAssert({ !it.isPermanentlyDeleted }) { it }
       }
       return NodeDeletionActionSet.createByDeletingNodes(
         subList,
-        "token slicer@$tokenCountToDelete"
+        "token slicer@$tokenCountToDelete",
       )
     }
   }

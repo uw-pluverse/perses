@@ -48,11 +48,14 @@ class AbstractAltBlockExtractionPassTest {
     val prefix = searchAssumingCommonPrefix(s1, s2)!!
     val postfix = searchAssumingCommonPostfix(s1, s2)!!
     val infix = searchAssummingCommonPrefixAndPostfix(
-      prefix, postfix, originalSequences
+      prefix,
+      postfix,
+      originalSequences,
     )!!
 
     val result = selectBestCandidate(
-      listOf(prefix, postfix, infix), originalSequences
+      listOf(prefix, postfix, infix),
+      originalSequences,
     )
     assertThat(result).isSameInstanceAs(infix)
   }
@@ -60,7 +63,7 @@ class AbstractAltBlockExtractionPassTest {
   private fun test_computeCandidatesClosedPrefix(
     s1: PersesSequenceAst,
     s2: PersesSequenceAst,
-    expectedLength: Int
+    expectedLength: Int,
   ): AbstractAltBlockExtractionPass.CommonPrefixCandidate {
     val candidates = computeCandidatesClosedPrefix(listOf(s1, s2))
     assertThat(candidates).hasSize(1)
@@ -73,7 +76,7 @@ class AbstractAltBlockExtractionPassTest {
   private fun test_computeCandidatesClosedPostfix(
     s1: PersesSequenceAst,
     s2: PersesSequenceAst,
-    expectedLength: Int
+    expectedLength: Int,
   ): AbstractAltBlockExtractionPass.CommonPostfixCandidate {
     val candidates = computeCandidatesClosedPostfix(listOf(s1, s2))
     assertThat(candidates).hasSize(1)

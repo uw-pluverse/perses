@@ -21,7 +21,7 @@ import java.io.PrintStream
 
 class PersesRangeAst(
   private val first: PersesTerminalAst,
-  private val second: PersesTerminalAst
+  private val second: PersesTerminalAst,
 ) : AbstractPersesRuleElement() {
 
   override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
@@ -44,7 +44,7 @@ class PersesRangeAst(
   override val tag = AstTag.LEXER_RANGE_OPERATOR
 
   override fun createWithNewChildren(
-    newChildren: List<AbstractPersesRuleElement>
+    newChildren: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     require(newChildren.size == 2)
     val first = newChildren[0]

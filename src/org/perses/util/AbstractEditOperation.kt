@@ -18,6 +18,7 @@ package org.perses.util
 
 import com.google.common.base.MoreObjects
 import com.google.common.base.Objects
+import org.perses.util.Util.lazyAssert
 
 abstract class AbstractEditOperation<T> {
   abstract val base: T?
@@ -57,5 +58,11 @@ abstract class AbstractEditOperation<T> {
 
   class Delete<T>(override val base: T) : AbstractEditOperation<T>() {
     override val revision: T? = null
+  }
+
+  class Replace<T>(override val base: T, override val revision: T) : AbstractEditOperation<T>() {
+    init {
+      lazyAssert { base != revision }
+    }
   }
 }

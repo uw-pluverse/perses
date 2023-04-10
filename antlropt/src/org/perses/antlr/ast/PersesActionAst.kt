@@ -41,7 +41,7 @@ class PersesActionAst(val body: String) : AbstractPersesRuleElement() {
     get() = AstTag.ACTION
 
   override fun createWithNewChildren(
-    newChildren: List<AbstractPersesRuleElement>
+    newChildren: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     return PersesActionAst(body)
   }

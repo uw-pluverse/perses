@@ -20,7 +20,7 @@ import com.google.common.collect.ImmutableSet
 
 class EpsilonInfo(
   val epsilonableRules: ImmutableSet<AbstractPersesRuleDefAst>,
-  private val epsilonableElements: ImmutableSet<AbstractPersesRuleElement>
+  private val epsilonableElements: ImmutableSet<AbstractPersesRuleElement>,
 ) {
 
   fun canBeEpsilon(ruleDef: AbstractPersesRuleDefAst): Boolean {

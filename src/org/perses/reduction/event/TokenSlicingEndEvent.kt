@@ -19,7 +19,7 @@ package org.perses.reduction.event
 class TokenSlicingEndEvent internal constructor(
   startEvent: TokenSlicingStartEvent,
   currentTimeMillis: Long,
-  programSize: Int
+  programSize: Int,
 ) :
   AbstractEndEvent<TokenSlicingStartEvent>(startEvent, currentTimeMillis, programSize) {
 

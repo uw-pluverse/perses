@@ -22,7 +22,7 @@ import org.perses.util.toImmutableList
 
 class ChildHoistingActionSet private constructor(
   childHoistingActions: ImmutableList<ChildHoistingAction>,
-  actionsDescription: String
+  actionsDescription: String,
 ) : AbstractActionSet<ChildHoistingAction>(childHoistingActions, actionsDescription) {
 
   init {
@@ -35,9 +35,8 @@ class ChildHoistingActionSet private constructor(
 
     fun replaceNode(
       targetNode: AbstractSparTreeNode,
-      replacement: AbstractSparTreeNode
+      replacement: AbstractSparTreeNode,
     ) {
-
       check(node2ReplacementMap.put(targetNode, replacement) == null)
     }
 
@@ -48,7 +47,7 @@ class ChildHoistingActionSet private constructor(
           .map { (key, value) -> ChildHoistingAction(key, value) }
           .sorted()
           .toImmutableList(),
-        actionsDescription
+        actionsDescription,
       )
     }
   }
@@ -65,17 +64,18 @@ class ChildHoistingActionSet private constructor(
     fun createByReplacingSingleNode(
       targetNode: AbstractSparTreeNode,
       replacingNode: AbstractSparTreeNode,
-      actionsDescription: String
+      actionsDescription: String,
     ): ChildHoistingActionSet {
       return createByReplacingSingleNode(
-        ChildHoistingAction(targetNode, replacingNode), actionsDescription
+        ChildHoistingAction(targetNode, replacingNode),
+        actionsDescription,
       )
     }
 
     @JvmStatic
     fun createByReplacingSingleNode(
       action: ChildHoistingAction,
-      actionsDescription: String
+      actionsDescription: String,
     ): ChildHoistingActionSet {
       return ChildHoistingActionSet(ImmutableList.of(action), actionsDescription)
     }

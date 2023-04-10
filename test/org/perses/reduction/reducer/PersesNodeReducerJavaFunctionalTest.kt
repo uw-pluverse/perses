@@ -35,7 +35,8 @@ class PersesNodeReducerJavaFunctionalTest : AbstractReducerFunctionalTest() {
         |       System.out.println ("helloworld");
         |   }
         |}
-        |""".trimMargin()
+        |
+      """.trimMargin(),
     )
   }
 }

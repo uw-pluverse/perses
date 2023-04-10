@@ -13,6 +13,8 @@ kt_jvm_test(
         "PhpParserFacadeTest.kt",
     ],
     deps = [
+        "//:antlr_runtime",
+        "//:antlr_tool",
         "//:flogger",
         "//:guava",
         "//:truth",
@@ -20,7 +22,5 @@ kt_jvm_test(
         "//src/org/perses/grammar/php:parser_facade",
         "//test/org/perses:test_util",
         "//test/org/perses/program:LanguageKindTestUtil",
-        "@maven//:org_antlr_antlr4",
-        "@maven//:org_antlr_antlr4_runtime",
     ],
 )

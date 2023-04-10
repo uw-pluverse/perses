@@ -23,6 +23,8 @@ kt_jvm_test(
     ],
     shard_count = 1,
     deps = [
+        "//:antlr_runtime",
+        "//:antlr_tool",
         "//:flogger",
         "//:guava",
         "//:truth",
@@ -30,8 +32,6 @@ kt_jvm_test(
         "//src/org/perses/grammar/c:parser_facade",
         "//test/org/perses:test_util",
         "//test/org/perses/program:LanguageKindTestUtil",
-        "@maven//:org_antlr_antlr4",
-        "@maven//:org_antlr_antlr4_runtime",
     ],
 )
 
@@ -47,7 +47,7 @@ kt_jvm_test(
 #    "//:truth",
 #    "//:flogger",
 #    "//:guava",
-#        "@maven//:org_antlr_antlr4",
-#        "@maven//:org_antlr_antlr4_runtime",
+#        "//:antlr_tool",
+#        "//:antlr_runtime",
 #    ],
 #)

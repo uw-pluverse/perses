@@ -27,6 +27,6 @@ object LanguageScala : LanguageKind(
   origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
   allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.COMPACT_ORIG_FORMAT,
-    EnumFormatControl.ORIG_FORMAT
-  )
+    EnumFormatControl.ORIG_FORMAT,
+  ),
 )

@@ -26,5 +26,5 @@ enum class Precedence(override val value: Int) : IPrecedence {
   LEXER_COMMAND(30),
   ALTERNATIVE(10),
   RULE(0),
-  NONE(Int.MIN_VALUE);
+  NONE(Int.MIN_VALUE),
 }

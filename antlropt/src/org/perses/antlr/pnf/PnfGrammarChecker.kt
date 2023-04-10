@@ -30,7 +30,7 @@ class PnfGrammarChecker {
       grammarAfter: PersesGrammar,
       passClass: Class<out AbstractPnfPass>,
       grammarBefore: PersesGrammar,
-      lexerGrammar: FileNameContentPair?
+      lexerGrammar: PersesGrammar?,
     ) {
       try {
         checkNoDuplicateDefs(grammarAfter)
@@ -52,13 +52,41 @@ class PnfGrammarChecker {
 
     private fun checkAntlrAcceptsTheGrammar(
       grammar: PersesGrammar,
-      lexerGrammar: FileNameContentPair?
+      lexerGrammar: PersesGrammar?,
     ) {
-      val antlrCheckingResult = doesAntlrAcceptGrammar(
-        FileNameContentPair(grammar.grammarName + ".g4", grammar.sourceCode),
-        lexerGrammar
+      val parserGrammar = FileNameContentPair.createFromString(
+        grammar.grammarName + ".g4",
+        grammar.sourceCode,
       )
-      check(antlrCheckingResult.accpeted) { "Antlr tool failed: ${antlrCheckingResult.message}" }
+      val lexerGrammar1 = lexerGrammar?.let {
+        FileNameContentPair.createFromString(it.grammarName + ".g4", it.sourceCode)
+      }
+      val antlrCheckingResult = doesAntlrAcceptGrammar(
+        parserGrammar,
+        lexerGrammar1,
+      )
+
+      check(antlrCheckingResult.accpeted) {
+        val message = """
+          ====Antlr tool failed==== 
+          ${antlrCheckingResult.message}
+          
+          ====parserGrammar=====
+          ${parserGrammar.fileName}
+          
+          ====parserGrammar====
+          ${parserGrammar.computeFileContent()}
+          
+          ====lexerGrammar====
+          ${lexerGrammar1?.fileName}
+          
+          ====lexerGrammar====
+          ${lexerGrammar1?.computeFileContent()}
+        """.trimIndent()
+
+        System.err.println(message)
+        message
+      }
     }
 
     @JvmStatic
@@ -67,7 +95,7 @@ class PnfGrammarChecker {
         val body = rule.body
         if (body is PersesAlternativeBlockAst) {
           PersesAlternativeBlockAst.checkNoDuplicatesAmongAlternatives(
-            body.alternatives
+            body.alternatives,
           )
         }
       }

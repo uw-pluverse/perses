@@ -2,6 +2,8 @@
 // DO NOT MODIFY.
 grammar test_grammar_5_PnfPassManager_output;
 
+
+
 start
     : optional__start_2 'c'
     ;

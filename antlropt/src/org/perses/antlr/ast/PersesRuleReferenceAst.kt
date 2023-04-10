@@ -22,7 +22,7 @@ import java.io.PrintStream
 
 class PersesRuleReferenceAst private constructor(
   val ruleNameHandle: RuleNameRegistry.RuleNameHandle,
-  val arguments: PersesActionAst?
+  val arguments: PersesActionAst?,
 ) : AbstractPersesRuleElement() {
 
   override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
@@ -53,7 +53,7 @@ class PersesRuleReferenceAst private constructor(
   }
 
   override fun createWithNewChildren(
-    newChildren: List<AbstractPersesRuleElement>
+    newChildren: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     return this
   }
@@ -66,7 +66,7 @@ class PersesRuleReferenceAst private constructor(
     @JvmStatic
     fun createWithArgs(
       ruleNameHandle: RuleNameRegistry.RuleNameHandle,
-      arguments: PersesActionAst?
+      arguments: PersesActionAst?,
     ): PersesRuleReferenceAst {
       return PersesRuleReferenceAst(ruleNameHandle, arguments)
     }

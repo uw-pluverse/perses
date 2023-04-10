@@ -24,7 +24,7 @@ class VerbosityFlags : ICommandLineFlags {
   @Parameter(
     names = ["--verbosity"],
     description = "verbosity of logging",
-    order = CommonCmdOptionGroupOrder.VERBOSITY_CONTROL + 10
+    order = CommonCmdOptionGroupOrder.VERBOSITY_CONTROL + 10,
   )
   var verbosity = "INFO"
 
@@ -33,7 +33,7 @@ class VerbosityFlags : ICommandLineFlags {
     names = ["--list-verbosity-levels"],
     description = "list all verbosity levels",
     help = true,
-    order = CommonCmdOptionGroupOrder.VERBOSITY_CONTROL + 20
+    order = CommonCmdOptionGroupOrder.VERBOSITY_CONTROL + 20,
   )
   var listVerbosity = false
 

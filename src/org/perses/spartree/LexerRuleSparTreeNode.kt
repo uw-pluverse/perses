@@ -17,13 +17,13 @@
 package org.perses.spartree
 
 import com.google.common.base.MoreObjects
-import org.perses.antlr.RuleHierarchyInfo
+import org.perses.antlr.RuleHierarchyEntry
 import org.perses.program.PersesTokenFactory.PersesToken
 
 class LexerRuleSparTreeNode internal constructor(
   nodeId: Int,
   val token: PersesToken,
-  antlrRule: RuleHierarchyInfo?
+  antlrRule: RuleHierarchyEntry?,
 ) : AbstractSparTreeNode(nodeId, antlrRule) {
 
   @PublishedApi

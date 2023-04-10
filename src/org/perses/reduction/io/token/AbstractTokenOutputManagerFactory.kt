@@ -23,7 +23,7 @@ import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.AbstractOutputManagerFactory
 
 abstract class AbstractTokenOutputManagerFactory(
-  val defaultProgramFormatControl: EnumFormatControl
+  val defaultProgramFormatControl: EnumFormatControl,
 ) : AbstractOutputManagerFactory<TokenizedProgram>() {
 
   protected val defaultProgramPrinter =
@@ -31,6 +31,6 @@ abstract class AbstractTokenOutputManagerFactory(
 
   abstract fun createManagerFor(
     program: TokenizedProgram,
-    format: EnumFormatControl
+    format: EnumFormatControl,
   ): AbstractOutputManager
 }

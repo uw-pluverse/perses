@@ -22,7 +22,7 @@ import org.perses.antlr.ast.PersesRuleReferenceAst
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 
 class RuleRefCounterAstVisitor(
-  private val target: RuleNameHandle
+  private val target: RuleNameHandle,
 ) : DefaultAstVisitor() {
 
   var count = 0

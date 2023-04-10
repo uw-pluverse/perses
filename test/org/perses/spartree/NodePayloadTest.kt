@@ -21,7 +21,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.antlr.GrammarHierarchy
-import org.perses.antlr.RuleHierarchyInfo
+import org.perses.antlr.RuleHierarchyEntry
 import org.perses.spartree.AbstractNodePayload.Companion.concatenatePaylods
 import org.perses.util.toImmutableList
 
@@ -37,15 +37,15 @@ class NodePayloadTest {
       d : 'd';
       e : 'e';
       f : 'f';
-    """.trimIndent()
+    """.trimIndent(),
   )
 
-  val ruleA = hierarchy.getRuleHierarchyInfoWithName("a")
-  val ruleB = hierarchy.getRuleHierarchyInfoWithName("b")
-  val ruleC = hierarchy.getRuleHierarchyInfoWithName("c")
-  val ruleD = hierarchy.getRuleHierarchyInfoWithName("d")
-  val ruleE = hierarchy.getRuleHierarchyInfoWithName("e")
-  val ruleF = hierarchy.getRuleHierarchyInfoWithName("f")
+  val ruleA = hierarchy.getRuleHierarchyEntryWithNameOrThrow("a")
+  val ruleB = hierarchy.getRuleHierarchyEntryWithNameOrThrow("b")
+  val ruleC = hierarchy.getRuleHierarchyEntryWithNameOrThrow("c")
+  val ruleD = hierarchy.getRuleHierarchyEntryWithNameOrThrow("d")
+  val ruleE = hierarchy.getRuleHierarchyEntryWithNameOrThrow("e")
+  val ruleF = hierarchy.getRuleHierarchyEntryWithNameOrThrow("f")
 
   @Test
   fun testConcatenatePayloadsNoOverlapping() {
@@ -64,27 +64,29 @@ class NodePayloadTest {
     test(
       createPayload(ruleA, ruleB, ruleE, ruleC),
       createPayload(ruleB, ruleC),
-      ruleA, ruleB, ruleC
+      ruleA,
+      ruleB,
+      ruleC,
     )
   }
 
   fun test(
     ancestor: AbstractNodePayload,
     descendant: AbstractNodePayload,
-    vararg expected: RuleHierarchyInfo
+    vararg expected: RuleHierarchyEntry,
   ) {
     assertThat(
-      concatenatePaylods(ancestor, descendant).asSinglePayloadList.map { it.expectedAntlrRuleType }
+      concatenatePaylods(ancestor, descendant).asSinglePayloadList.map { it.expectedAntlrRuleType },
     ).containsExactlyElementsIn(expected).inOrder()
   }
 
-  private fun createPayload(vararg rules: RuleHierarchyInfo): AbstractNodePayload {
+  private fun createPayload(vararg rules: RuleHierarchyEntry): AbstractNodePayload {
     require(rules.isNotEmpty())
     return AbstractNodePayload.create(
       rules
         .asSequence()
         .map { AbstractNodePayload.SinglePayload(it) }
-        .toImmutableList()
+        .toImmutableList(),
     )
   }
 }

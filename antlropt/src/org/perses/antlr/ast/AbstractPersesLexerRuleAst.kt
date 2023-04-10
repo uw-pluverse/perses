@@ -21,7 +21,7 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 
 abstract class AbstractPersesLexerRuleAst protected constructor(
   ruleNameHandle: RuleNameHandle,
-  body: AbstractPersesRuleElement
+  body: AbstractPersesRuleElement,
 ) : AbstractPersesRuleDefAst(ruleNameHandle, body) {
 
   init {
@@ -29,7 +29,7 @@ abstract class AbstractPersesLexerRuleAst protected constructor(
   }
 
   abstract override fun copyWithNewBody(
-    newBody: AbstractPersesRuleElement
+    newBody: AbstractPersesRuleElement,
   ): AbstractPersesLexerRuleAst
 
   override val isLexerRule: Boolean

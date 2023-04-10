@@ -31,7 +31,7 @@ class TokenizedProgramTest {
     val tokens = listOf("string", "a", "=", "\" \"", ";")
     val p = TestUtility.createTokenizedProgramFromString(
       tokens.joinToString(separator = " "),
-      LanguageC
+      LanguageC,
     )
     assertThat(p.countCharsOfAllTokens()).isEqualTo(tokens.sumOf { it.length })
   }

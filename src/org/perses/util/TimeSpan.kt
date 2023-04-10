@@ -16,7 +16,6 @@
  */
 package org.perses.util
 
-import com.google.common.annotations.VisibleForTesting
 import com.google.common.base.Joiner
 import com.google.common.base.MoreObjects
 import java.io.Serializable
@@ -45,12 +44,11 @@ class TimeSpan private constructor(startMillis: Long, endMillis: Long) : Seriali
       return formatSeconds(time)
     }
 
-  class Builder @VisibleForTesting internal constructor(val startMillis: Long) {
+  class Builder internal constructor(val startMillis: Long) {
     fun end(nowInMillis: Long): TimeSpan {
       return createTimeSpan(nowInMillis)
     }
 
-    @VisibleForTesting
     fun createTimeSpan(endMillis: Long): TimeSpan {
       return TimeSpan(startMillis, endMillis)
     }

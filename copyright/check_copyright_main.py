@@ -23,7 +23,7 @@ if __name__ == '__main__':
         copyright_text = file.readlines()
     copyright_checker = check_copyright.CopyrightChecker(copyright_text)
 
-    extensions = ['java', 'kt']
+    extensions = ['java', 'kt', "proto"]
     file_list = list()
     print('Checking files in folders:\n%s\n' % '\n'.join(flags.dirs))
     for folder in flags.dirs:

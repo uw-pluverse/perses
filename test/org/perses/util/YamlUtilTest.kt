@@ -47,7 +47,7 @@ class YamlUtilTest {
   @Test
   fun testYamlFile() {
     val file = tempDir.resolve("test.yaml")
-    val yaml = YamlUtil.toYamlFile(data, file)
+    YamlUtil.toYamlFile(data, file)
     val copy = YamlUtil.fromYamlFile(file, TestData::class.java)
     assertThat(data).isEqualTo(copy)
   }

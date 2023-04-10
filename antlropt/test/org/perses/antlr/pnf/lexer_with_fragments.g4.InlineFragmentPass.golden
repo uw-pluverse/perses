@@ -5,391 +5,294 @@ lexer grammar lexer_with_fragments;
 Auto
     : 'auto'
     ;
-
 Break
     : 'break'
     ;
-
 Case
     : 'case'
     ;
-
 Char
     : 'char'
     ;
-
 Const
     : 'const'
     ;
-
 Nonnull
     : '_Nonnull'
     ;
-
 Nullable
     : '_Nullable'
     ;
-
 Continue
     : 'continue'
     ;
-
 Default
     : 'default'
     ;
-
 Do
     : 'do'
     ;
-
 Double
     : 'double'
     ;
-
 Else
     : 'else'
     ;
-
 Enum
     : 'enum'
     ;
-
 Extern
     : 'extern'
     ;
-
 Float
     : 'float'
     ;
-
 For
     : 'for'
     ;
-
 Goto
     : 'goto'
     ;
-
 If
     : 'if'
     ;
-
 Inline
     : 'inline'
     ;
-
 Int
     : 'int'
     ;
-
 Long
     : 'long'
     ;
-
 Register
     : 'register'
     ;
-
 Restrict
     : 'restrict'
     ;
-
 Restrict_gcc
     : '__restrict__'
     ;
-
 Restrict_gcc2
     : '__restrict'
     ;
-
 Extension_gcc
     : '__extension__'
     ;
-
 Return
     : 'return'
     ;
-
 Short
     : 'short'
     ;
-
 Signed
     : 'signed'
     ;
-
 Sizeof
     : 'sizeof'
     ;
-
 Static
     : 'static'
     ;
-
 Struct
     : 'struct'
     ;
-
 Switch
     : 'switch'
     ;
-
 Typedef
     : 'typedef'
     ;
-
 Union
     : 'union'
     ;
-
 Unsigned
     : 'unsigned'
     ;
-
 Void
     : 'void'
     ;
-
 Volatile
     : 'volatile'
     ;
-
 While
     : 'while'
     ;
-
 Alignas
     : '_Alignas'
     ;
-
 Alignof
     : '_Alignof'
     ;
-
 Alignof_gcc
     : '__alignof__'
     ;
-
 Atomic
     : '_Atomic'
     ;
-
 Bool
     : '_Bool'
     ;
-
 Complex
     : '_Complex'
     ;
-
 Generic
     : '_Generic'
     ;
-
 Imaginary
     : '_Imaginary'
     ;
-
 Noreturn
     : '_Noreturn'
     ;
-
 StaticAssert
     : '_Static_assert'
     ;
-
 ThreadLocal
     : '_Thread_local'
     ;
-
 LeftParen
     : '('
     ;
-
 RightParen
     : ')'
     ;
-
 LeftBracket
     : '['
     ;
-
 RightBracket
     : ']'
     ;
-
 LeftBrace
     : '{'
     ;
-
 RightBrace
     : '}'
     ;
-
 Less
     : '<'
     ;
-
 LessEqual
     : '<='
     ;
-
 Greater
     : '>'
     ;
-
 GreaterEqual
     : '>='
     ;
-
 LeftShift
     : '<<'
     ;
-
 RightShift
     : '>>'
     ;
-
 Plus
     : '+'
     ;
-
 PlusPlus
     : '++'
     ;
-
 Minus
     : '-'
     ;
-
 MinusMinus
     : '--'
     ;
-
 Star
     : '*'
     ;
-
 Div
     : '/'
     ;
-
 Mod
     : '%'
     ;
-
 And
     : '&'
     ;
-
 Or
     : '|'
     ;
-
 AndAnd
     : '&&'
     ;
-
 OrOr
     : '||'
     ;
-
 Caret
     : '^'
     ;
-
 Not
     : '!'
     ;
-
 Tilde
     : '~'
     ;
-
 Question
     : '?'
     ;
-
 Colon
     : ':'
     ;
-
 Semi
     : ';'
     ;
-
 Comma
     : ','
     ;
-
 Assign
     : '='
     ;
-
 StarAssign
     : '*='
     ;
-
 DivAssign
     : '/='
     ;
-
 ModAssign
     : '%='
     ;
-
 PlusAssign
     : '+='
     ;
-
 MinusAssign
     : '-='
     ;
-
 LeftShiftAssign
     : '<<='
     ;
-
 RightShiftAssign
     : '>>='
     ;
-
 AndAssign
     : '&='
     ;
-
 XorAssign
     : '^='
     ;
-
 OrAssign
     : '|='
     ;
-
 Equal
     : '=='
     ;
-
 NotEqual
     : '!='
     ;
-
 Arrow
     : '->'
     ;
-
 Dot
     : '.'
     ;
-
 Ellipsis
     : '...'
     ;
-
 Identifier
     : ([a-zA-Z_] | '\\u' [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] | '\\U' [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F]) ([a-zA-Z_] | '\\u' [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] | '\\U' [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] | [0-9])*
     ;
-
 Constant
     : '0' [bB] [0-1]+
     | '0' [0-7]* ([uU] [lL]? | [uU] ('ll' | 'LL') | [lL] [uU]? | ('ll' | 'LL') [uU]?)?
@@ -404,61 +307,52 @@ Constant
     | 'u\'' (~['\\\r\n] | '\\' ['"?abfnrtv\\] | '\\' [0-7] | '\\' [0-7] [0-7] | '\\' [0-7] [0-7] [0-7] | '\\x' [0-9a-fA-F]+ | '\\u' [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] | '\\U' [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F])+ '\''
     | 'U\'' (~['\\\r\n] | '\\' ['"?abfnrtv\\] | '\\' [0-7] | '\\' [0-7] [0-7] | '\\' [0-7] [0-7] [0-7] | '\\x' [0-9a-fA-F]+ | '\\u' [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] | '\\U' [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F])+ '\''
     ;
-
 StringLiteral
     : ('u8' | 'u' | 'U' | 'L')? '"' (~["\\\r\n] | '\\' ['"?abfnrtv\\] | '\\u' [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] | '\\U' [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] | '\\' [0-7] | '\\' [0-7] [0-7] | '\\' [0-7] [0-7] [0-7] | '\\x' [0-9a-fA-F]+ | '\\\n' | '\\\r\n')* '"'
     ;
-
 ComplexDefine
     : '#' ([ \t]+ -> skip
 )? 'define' (~[#])* -> skip
 
     ;
-
 AsmBlock
     : 'asm' '{' (~[}])* '}' -> skip
 
     ;
-
 LineAfterPreprocessing
     : '#line' ([ \t]+ -> skip
 )* (~[\r\n])* -> skip
 
     ;
-
 LineDirective
     : '#' ([ \t]+ -> skip
 )? [1-9] [0-9]* ([ \t]+ -> skip
 )? ('u8' | 'u' | 'U' | 'L')? '"' (~["\\\r\n] | '\\' ['"?abfnrtv\\] | '\\u' [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] | '\\U' [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] | '\\' [0-7] | '\\' [0-7] [0-7] | '\\' [0-7] [0-7] [0-7] | '\\x' [0-9a-fA-F]+ | '\\\n' | '\\\r\n')* '"' (~[\r\n])* -> skip
 
     ;
-
 PragmaDirective
     : '#' ([ \t]+ -> skip
 )? 'pragma' ([ \t]+ -> skip
 ) (~[\r\n])* -> skip
 
     ;
-
 Whitespace
     : [ \t]+ -> skip
 
     ;
-
 Newline
     : ('\r' '\n'?
     | '\n')
  -> skip
 
     ;
-
 BlockComment
     : '/*' .*? '*/' -> skip
 
     ;
-
 LineComment
     : '//' (~[\r\n])* -> skip
 
     ;
+
 

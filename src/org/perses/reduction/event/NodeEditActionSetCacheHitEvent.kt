@@ -20,6 +20,6 @@ import org.perses.spartree.AbstractActionSet
 
 class NodeEditActionSetCacheHitEvent(
   currentTimeMillis: Long,
-  val query: AbstractActionSet<*>
+  val query: AbstractActionSet<*>,
 ) :
   AbstractReductionEvent(currentTimeMillis)

@@ -23,7 +23,7 @@ import java.io.PrintStream
 
 abstract class AbstractPersesRuleDefAst protected constructor(
   val ruleNameHandle: RuleNameHandle,
-  val body: AbstractPersesRuleElement
+  val body: AbstractPersesRuleElement,
 ) : AbstractPersesAst() {
 
   init {
@@ -45,7 +45,7 @@ abstract class AbstractPersesRuleDefAst protected constructor(
   override fun toSourceCode(
     stream: PrintStream,
     indent: Indent,
-    multiLineMode: Boolean
+    multiLineMode: Boolean,
   ) {
     stream.print(ruleNameHandle.ruleName)
     afterPrintRuleName(stream)

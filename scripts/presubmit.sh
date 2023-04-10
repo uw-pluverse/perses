@@ -11,7 +11,7 @@ source "./scripts/constants.sh" || exit 1
 bazel test ${ALL_BAZEL_BUILD_TARGETS_STRING} \
     //benchmark:run_benchmark_test\
     //benchmark:analyze_cache_profiling_test\
-    //benchmark:snapshot_generator_test || exit 1
+    //benchmark:convert_result_to_csv_test || exit 1
 
 # Run the build later, because test takes more time and needs parallelism.
 # Note that `bazel build` builds more targets than `bazel test`

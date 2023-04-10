@@ -42,7 +42,7 @@ protected constructor(
   grammar: AbstractAntlrGrammar,
   override val lexerClass: Class<LEXER>,
   override val parserClass: Class<PARSER>,
-  identifierTokenTypes: ImmutableIntArray
+  identifierTokenTypes: ImmutableIntArray,
 ) : AbstractParserFacade(languageKind, grammar, identifierTokenTypes) {
 
   protected abstract fun createLexer(inputStream: CharStream): LEXER
@@ -66,8 +66,16 @@ protected constructor(
       fileName,
       reader,
       { inputStream: CharStream -> createLexerWithoutCache(inputStream) },
-      { tokens: CommonTokenStream -> createParserWithoutCache(tokens) }
+      { tokens: CommonTokenStream -> createParserWithoutCache(tokens) },
     ) { parser: PARSER -> startParsing(parser) }
+  }
+
+  override fun transformLiteralIntoSingleToken(literal: String): Token {
+    val lexer = createLexerWithoutCache(CharStreams.fromString(literal))
+    val result = lexer.nextToken()
+    val next = lexer.nextToken()
+    check(next.type == Token.EOF) { next }
+    return result
   }
 
   override fun tokenize(fileName: String, reader: Reader): ImmutableList<Token> {
@@ -93,7 +101,7 @@ protected constructor(
           lexer,
           lexer.atn,
           lexer.interpreter.decisionToDFA,
-          PredictionContextCache()
+          PredictionContextCache(),
         )
       }
       return lexer
@@ -108,7 +116,7 @@ protected constructor(
           parser,
           parser.atn,
           parser.interpreter.decisionToDFA,
-          PredictionContextCache()
+          PredictionContextCache(),
         )
         parser.interpreter.predictionMode = PredictionMode.LL
       }
@@ -121,7 +129,7 @@ protected constructor(
       reader: Reader,
       lexerCreator: Function<CharStream, L>,
       parserCreator: Function<CommonTokenStream, P>,
-      parseFunction: Function<P, ParseTree>
+      parseFunction: Function<P, ParseTree>,
     ): ParseTreeWithParser {
       val listener = FailOnErrorAntlrErrorListener(fileName)
       val lexer = lexerCreator.apply(CharStreams.fromReader(reader))
@@ -134,7 +142,7 @@ protected constructor(
           parser,
           parser.atn,
           parser.interpreter.decisionToDFA,
-          PredictionContextCache()
+          PredictionContextCache(),
         )
       }
       parser.removeErrorListeners()

@@ -54,11 +54,11 @@ kt_jvm_library(
         "TransformDecision.kt",
     ],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//antlropt/src/org/perses/antlr:enum_rule_type",
-        "//src/org/perses/util:perses_kt_exts",
+        "//src/org/perses/util",
         "//src/org/perses/util/ast",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -69,12 +69,12 @@ kt_jvm_library(
     ],
     deps = [
         ":ast",
+        "//:antlr_runtime",
+        "//:antlr_tool",
         "//:guava",
         "//antlropt/src/org/perses/antlr:enum_rule_type",
         "//src/org/perses/antlr:antlr_grammar_parser",
-        "//src/org/perses/util:perses_kt_exts",
-        "@maven//:org_antlr_antlr4",
-        "@maven//:org_antlr_antlr4_runtime",
+        "//src/org/perses/util",
     ],
 )
 

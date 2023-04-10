@@ -29,7 +29,7 @@ import org.perses.antlr.ast.PersesSequenceAst
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 
 class RuleTransitionGraph private constructor(
-  val graph: Graph<RuleNameHandle, AbstractPersesRuleElement>
+  val graph: Graph<RuleNameHandle, AbstractPersesRuleElement>,
 ) {
 
   fun computeSccSet(): List<Graph<RuleNameHandle, AbstractPersesRuleElement>> {
@@ -38,9 +38,8 @@ class RuleTransitionGraph private constructor(
   }
 
   fun duplicateGraph(
-    scc: Graph<RuleNameHandle, AbstractPersesRuleElement>
+    scc: Graph<RuleNameHandle, AbstractPersesRuleElement>,
   ): DirectedMultigraph<RuleNameHandle, AbstractPersesRuleElement> {
-
     val subgraph = createGraph()
     val vertices = scc.vertexSet()
     for (node in vertices) {
@@ -70,9 +69,8 @@ class RuleTransitionGraph private constructor(
 
     private fun create(
       grammar: PersesGrammar,
-      childSelector: (PersesSequenceAst) -> AbstractPersesRuleElement
+      childSelector: (PersesSequenceAst) -> AbstractPersesRuleElement,
     ): RuleTransitionGraph {
-
       val graph = createGraph()
       grammar.parserRules.forEach {
         graph.addVertex(it.ruleNameHandle)
@@ -93,7 +91,7 @@ class RuleTransitionGraph private constructor(
       ruleName: RuleNameHandle,
       edgeLabel: AbstractPersesRuleElement,
       ast: AbstractPersesRuleElement,
-      childSelector: (PersesSequenceAst) -> AbstractPersesRuleElement
+      childSelector: (PersesSequenceAst) -> AbstractPersesRuleElement,
     ) {
       when (ast.tag) {
         AstTag.ALTERNATIVE_BLOCK -> ast.childSequence().forEach { child ->

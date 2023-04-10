@@ -19,7 +19,12 @@ package org.perses.reduction.io
 import com.google.common.annotations.VisibleForTesting
 import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
+import com.google.common.io.MoreFiles
+import com.google.common.io.RecursiveDeleteOption
+import org.perses.program.AbstractReductionFile
+import org.perses.reduction.PropertyTestResult
 import org.perses.util.Util
+import org.perses.util.Util.lazyAssert
 import java.io.IOException
 import java.nio.file.FileVisitResult
 import java.nio.file.Files
@@ -29,21 +34,35 @@ import java.nio.file.attribute.BasicFileAttributes
 
 // TODO: save the test result in the folder.
 class ReductionFolder(
-  private val reductionInputs: AbstractReductionInputs,
-  val folder: Path
+  private val reductionInputs: AbstractReductionInputs<*, *>,
+  val folder: Path,
 ) {
+
+  private var inUse = true
+
   @VisibleForTesting
   val testScript = reductionInputs.writeTestScriptTo(folder)
 
-  fun runTestScript() = testScript.test()
+  fun runTestScript(): PropertyTestResult {
+    checkThisFolderIsStillInUse()
+    return testScript.test()
+  }
 
-  fun checkFileExistence(baseName: String) = Files.exists(folder.resolve(baseName))
+  fun checkFileExistence(baseName: String): Boolean {
+    checkThisFolderIsStillInUse()
+    return Files.exists(folder.resolve(baseName))
+  }
+
+  fun computeAbsPathForOrigFile(origFile: AbstractReductionFile<*, *>): Path {
+    return reductionInputs.computeAbsPathWrt(origFile, folder)
+  }
 
   fun deleteAllOtherFiles() {
+    checkThisFolderIsStillInUse()
     val fileToKeep = ImmutableList
       .builder<Path>()
       .add(testScript.scriptFile)
-      .addAll(reductionInputs.computeAbsolutePathListWRT(folder))
+      .addAll(reductionInputs.computeAbsPathListWrt(folder))
       .build()
     Files.walkFileTree(
       folder,
@@ -61,8 +80,18 @@ class ReductionFolder(
           }
           return super.postVisitDirectory(dir, exc)
         }
-      }
+      },
     )
+  }
+
+  fun deleteThisDirectoryRecursively() {
+    checkThisFolderIsStillInUse()
+    inUse = false
+    MoreFiles.deleteRecursively(folder, RecursiveDeleteOption.ALLOW_INSECURE)
+  }
+
+  private fun checkThisFolderIsStillInUse() {
+    check(inUse) { "This reduction folder is deleted permanently. $this" }
   }
 
   override fun toString(): String {
@@ -70,10 +99,10 @@ class ReductionFolder(
   }
 
   init {
-    assert(Files.isRegularFile(testScript.scriptFile)) {
+    lazyAssert({ Files.isRegularFile(testScript.scriptFile) }) {
       "The test script file ${testScript.scriptFile} does not exist"
     }
-    assert(Files.isExecutable(testScript.scriptFile)) {
+    lazyAssert({ Files.isExecutable(testScript.scriptFile) }) {
       "The test script file $testScript"
     }
   }

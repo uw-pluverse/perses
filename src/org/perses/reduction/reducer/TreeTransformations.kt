@@ -16,13 +16,11 @@
  */
 package org.perses.reduction.reducer
 
-import com.google.common.collect.ImmutableList
 import org.perses.reduction.partition.Partition
 import org.perses.spartree.AbstractSparTreeNode
-import org.perses.spartree.ChildHoistingAction
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.TreeNodeFilterResult
-import org.perses.util.toImmutableList
+import org.perses.util.Util.lazyAssert
 
 /** Various tree transformations.  */
 object TreeTransformations {
@@ -32,48 +30,38 @@ object TreeTransformations {
    * @return all possible replacements.
    */
   @JvmStatic
-  fun replaceNodeWithCompatibleChildren(
+  fun findCompatibleDescendants(
     currentNode: AbstractSparTreeNode,
     stopAtFirstCompatible: Boolean,
-    maxNodeToCollect: Int,
-    maxBfsDepth: Int
-  ): ImmutableList<ChildHoistingAction> {
-    assert(maxNodeToCollect > 0) {
-      "The max number of nodes to collect should be positive: $maxNodeToCollect"
-    }
-    assert(maxBfsDepth > 0) { "The max BFS depth must be positive: $maxBfsDepth" }
+    maxBfsDepth: Int,
+  ): Sequence<AbstractSparTreeNode> {
+    lazyAssert({ maxBfsDepth > 0 }) { "The max BFS depth must be positive: $maxBfsDepth" }
     val antlrRuleForTheChild = currentNode.payload!!.expectedAntlrRuleType
-    assert(antlrRuleForTheChild != null) { currentNode.printTreeStructure() }
+    lazyAssert({ antlrRuleForTheChild != null }) { currentNode.printTreeStructure() }
     val expectedSuperRuleType = antlrRuleForTheChild!!
 
-    val collectedNodes = ArrayList<AbstractSparTreeNode>()
-    currentNode.boundedBFSChildren { node, currentDepth ->
-      if (currentDepth > maxBfsDepth) {
-        return@boundedBFSChildren TreeNodeFilterResult.STOP
-      }
-      if (collectedNodes.size >= maxNodeToCollect) {
-        return@boundedBFSChildren TreeNodeFilterResult.STOP
-      }
-      val nodeRule = node.antlrRule
-        ?: return@boundedBFSChildren TreeNodeFilterResult.CONTINUE
-      val matched = expectedSuperRuleType.isEqualToOrSuperOf(nodeRule)
-      if (matched) {
-        collectedNodes.add(node)
-        return@boundedBFSChildren if (stopAtFirstCompatible) {
-          TreeNodeFilterResult.STOP
-        } else {
-          TreeNodeFilterResult.CONTINUE
+    return sequence {
+      currentNode.boundedBFSChildren { node, currentDepth ->
+        if (currentDepth > maxBfsDepth) {
+          return@boundedBFSChildren TreeNodeFilterResult.STOP
         }
+        val nodeRule = node.antlrRule
+          ?: return@boundedBFSChildren TreeNodeFilterResult.CONTINUE
+        val matched = expectedSuperRuleType.isEqualToOrSuperOf(nodeRule)
+        if (matched) {
+          yield(node)
+          return@boundedBFSChildren if (stopAtFirstCompatible) {
+            TreeNodeFilterResult.STOP
+          } else {
+            TreeNodeFilterResult.CONTINUE
+          }
+        }
+        if (currentDepth == maxBfsDepth) {
+          return@boundedBFSChildren TreeNodeFilterResult.STOP
+        }
+        return@boundedBFSChildren TreeNodeFilterResult.CONTINUE
       }
-      if (currentDepth == maxBfsDepth) {
-        return@boundedBFSChildren TreeNodeFilterResult.STOP
-      }
-      return@boundedBFSChildren TreeNodeFilterResult.CONTINUE
     }
-    return collectedNodes
-      .asSequence()
-      .map { ChildHoistingAction(currentNode, it) }
-      .toImmutableList()
   }
 
   /**
@@ -83,22 +71,26 @@ object TreeTransformations {
    * @return all possible replacements
    */
   @JvmStatic
-  fun replaceKleeneQualifiedNodeWithKleeneQualifiedChildren(
-    currentNode: AbstractSparTreeNode,
-    maxBfsDepth: Int
-  ): ImmutableList<ChildHoistingAction> {
-    assert(maxBfsDepth > 0) { "The max BFS depth must be positive: $maxBfsDepth" }
-    val parent = currentNode.parent
-      ?: error("The current node is a root node: ${currentNode.printTreeStructure()}")
+  fun findCompatibleKleeneDescendantsForKleeneQuantifiedNode(
+    kleeneQuantifiedCurrentNode: AbstractSparTreeNode,
+    maxBfsDepth: Int,
+  ): Sequence<AbstractSparTreeNode> {
+    lazyAssert({ maxBfsDepth > 0 }) { "The max BFS depth must be positive: $maxBfsDepth" }
+    val parent = kleeneQuantifiedCurrentNode.parent
+      ?: error(
+        "The current node is a root node: ${kleeneQuantifiedCurrentNode.printTreeStructure()}",
+      )
     if (!parent.isKleeneStarRuleNode && !parent.isKleenePlusRuleNode) {
-      return ImmutableList.of()
+      return emptySequence()
     }
-    assert(parent.isKleeneStarRuleNode || parent.isKleenePlusRuleNode) {
-      "The current node must be Kleene-qualified. ${currentNode.printTreeStructure()}"
+    lazyAssert({ parent.isKleeneStarRuleNode || parent.isKleenePlusRuleNode }) {
+      "The current node must be Kleene-qualified. " +
+        kleeneQuantifiedCurrentNode.printTreeStructure()
     }
-    val kleeneElementRule = currentNode.payload!!.expectedAntlrRuleType!!
+    val kleeneElementRule = kleeneQuantifiedCurrentNode
+      .payload!!.expectedAntlrRuleType!!
 
-    val replacementList = currentNode.boundedBreadthFirstSearchForFirstQualifiedNodes(
+    return kleeneQuantifiedCurrentNode.boundedBreadthFirstSearchForFirstQualifiedNodes(
       { node: AbstractSparTreeNode ->
         if (!node.isKleeneStarRuleNode && !node.isKleenePlusRuleNode) {
           return@boundedBreadthFirstSearchForFirstQualifiedNodes false
@@ -109,20 +101,14 @@ object TreeTransformations {
         val childRule = node.asParserRule().getKleeneElementRuleTypeOrThrow()
         kleeneElementRule.isEqualToOrSuperOf(childRule)
       },
-      maxBfsDepth
+      maxBfsDepth,
     )
-    return if (replacementList.isEmpty()) {
-      ImmutableList.of()
-    } else replacementList
-      .asSequence()
-      .map { ChildHoistingAction(currentNode, it) }
-      .toImmutableList()
   }
 
   @JvmStatic
   fun createNodeDeletionActionSetFor(
     partition: Partition,
-    actionsDescription: String
+    actionsDescription: String,
   ): NodeDeletionActionSet {
     val actionSet = NodeDeletionActionSet.Builder(actionsDescription)
     partition.forEach { actionSet.deleteNode(it) }

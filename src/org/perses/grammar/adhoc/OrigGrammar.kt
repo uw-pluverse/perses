@@ -23,7 +23,7 @@ import kotlin.io.path.readText
 
 class OrigGrammar private constructor(
   val origGrammarFile: Path,
-  val persesGrammar: PersesGrammar
+  val persesGrammar: PersesGrammar,
 ) {
 
   val hash = AdhocGrammarUtil.computeHash(origGrammarFile)
@@ -32,7 +32,7 @@ class OrigGrammar private constructor(
 
     fun create(origGrammarFile: Path) = OrigGrammar(
       origGrammarFile = origGrammarFile,
-      persesGrammar = PersesAstBuilder.loadGrammarFromString(origGrammarFile.readText())
+      persesGrammar = PersesAstBuilder.loadGrammarFromString(origGrammarFile.readText()),
     )
   }
 }

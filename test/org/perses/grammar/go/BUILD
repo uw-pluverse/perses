@@ -15,13 +15,13 @@ kt_jvm_test(
     shard_count = 7,
     test_class = "org.perses.grammar.go.PnfGoParserFacadeTest",
     deps = [
+        "//:antlr_runtime",
+        "//:antlr_tool",
         "//:flogger",
         "//:guava",
         "//:truth",
         "//src/org/perses/antlr:antlr_grammar_util",
         "//src/org/perses/grammar/go:parser_facade",
         "//test/org/perses:test_util",
-        "@maven//:org_antlr_antlr4",
-        "@maven//:org_antlr_antlr4_runtime",
     ],
 )

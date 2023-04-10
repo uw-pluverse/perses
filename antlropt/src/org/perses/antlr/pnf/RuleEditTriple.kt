@@ -22,7 +22,7 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 class RuleEditTriple(
   val name: RuleNameHandle,
   val oldDef: AbstractPersesRuleElement,
-  val newDef: AbstractPersesRuleElement
+  val newDef: AbstractPersesRuleElement,
 ) {
   init {
     require(newDef != oldDef) { "new=$newDef, old=$oldDef" }

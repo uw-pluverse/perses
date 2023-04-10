@@ -17,32 +17,44 @@
 package org.perses.reduction
 
 import com.google.common.flogger.FluentLogger
+import com.google.common.io.Closer
+import org.perses.program.AbstractDataKind
 import org.perses.reduction.io.AbstractReductionIOManager
 import org.perses.util.TimeUtil.formatDateForDisplay
 import org.perses.util.ktInfo
+import java.io.Closeable
 import java.nio.file.Files
 import java.nio.file.Path
 
-abstract class AbstractReductionDriver
-<Program, IOManager : AbstractReductionIOManager<Program, IOManager>>(
+abstract class AbstractReductionDriver<Program,
+  Kind : AbstractDataKind,
+  IOManager : AbstractReductionIOManager<Program, Kind, IOManager>,>(
   protected val ioManager: IOManager,
   specifiedNumOfThreads: Int,
-  scriptExecutionMonitorIntervalMillis: Int
+  scriptExecutionTimeoutInSeconds: Long,
+  keepWaitingAfterScriptTimeout: Boolean,
 ) : IReductionDriver {
 
+  private val closer = Closer.create()
+
   protected val executorService = TestScriptExecutorService(
-    ioManager.createReductionFolderManager(),
+    ioManager.lazilyInitializedReductionFolderManager,
     specifiedNumOfThreads,
-    scriptExecutionMonitorIntervalMillis
-  )
+    scriptExecutionTimeoutInSeconds,
+    keepWaitingAfterScriptTimeout,
+  ).also { closer.register(it) }
 
   override fun close() {
     try {
-      executorService.close()
+      closer.close()
     } catch (e: Throwable) {
       // ignore.
       e.printStackTrace()
     }
+  }
+
+  protected fun <T : Closeable> registerToClose(toBeClosed: T): T {
+    return closer.register(toBeClosed)
   }
 
   protected fun printStartTime() {
@@ -62,15 +74,29 @@ abstract class AbstractReductionDriver
      *     (2) use the spar-tree. This ensures the Antlr parser works correctly.
      *
      */
-    val future = executorService.testProgramAsync(
-      preChecke = TestScriptExecutorService.ALWAYS_TRUE_PRECHECK,
-      postCheck = TestScriptExecutorService.IDENTITY_POST_CHECK,
-      ioManager.createOutputManager(program)
-    )
-    check(future.get().isInteresting) {
-      val cmdOutput = future.reductionFolder.testScript.runAndCaptureOutput()
+    val sanityChecker = {
+      executorService.testProgramAsyncWithoutPayload(
+        preCheck = TestScriptExecutorService.ALWAYS_TRUE_PRECHECK,
+        postCheck = TestScriptExecutorService.IDENTITY_POST_CHECK,
+        ioManager.createOutputManager(program),
+      )
+    }
+    val future = sanityChecker.invoke()
+    check(future.getWithTimeoutWarnings().isInteresting) {
+      val flakinessChecker = PropertyFlakinessChecker(
+        numberOfTrials = 5,
+        initialNumOfUninteresting = 1,
+        sanityChecker,
+      )
+      logger.ktInfo { "The initial sanity check failed." }
+      logger.ktInfo {
+        "Checking whether the script is flaky. #trials=${flakinessChecker.numberOfTrials}"
+      }
+      val flakinessCheckResult = flakinessChecker.run().computeResult()
+
+      val cmdOutput = future.workingDirectory.testScript.runAndCaptureOutput()
       logger.atFine().log("The initial sanity check failed. Folder: %s", future.workingDirectory)
-      val tempDir = copyFilesToTempDir(future.workingDirectory)
+      val tempDir = copyFilesToTempDir(future.workingDirectory.folder)
       val message = """The initial sanity check failed. 
         
         ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
@@ -78,7 +104,7 @@ abstract class AbstractReductionDriver
         * The script exit code is ${cmdOutput.exitCode} 
         * The files have been saved, and you can check them at:
         *     $tempDir
-        *
+        * ${flakinessCheckResult.describeResult()}
         ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
         
         ============= stderr =============
@@ -89,6 +115,61 @@ abstract class AbstractReductionDriver
       """.lineSequence().map { it.trimStart() }.joinToString("\n")
 
       message
+    }
+  }
+
+  class PropertyFlakinessChecker(
+    val numberOfTrials: Int,
+    val initialNumOfUninteresting: Int,
+    private val sanityChecker: () -> TestScriptExecResult<Any>,
+  ) {
+
+    private val results = mutableListOf<PropertyTestResult>()
+
+    init {
+      require(numberOfTrials > 0) { numberOfTrials }
+    }
+
+    fun run(): PropertyFlakinessChecker {
+      check(results.isEmpty()) { "This method can only be called once." }
+      (1..numberOfTrials).forEach { _ ->
+        results.add(sanityChecker.invoke().getWithTimeoutWarnings())
+      }
+      check(results.size == numberOfTrials)
+      return this
+    }
+
+    fun computeResult() = Result(
+      numOfInteresting = results.count { it.isInteresting },
+      numOfUninteresting = results.count { it.isNotInteresting } + initialNumOfUninteresting,
+    )
+
+    data class Result(
+      val numOfInteresting: Int,
+      val numOfUninteresting: Int,
+    ) {
+
+      init {
+        require(numOfInteresting >= 0)
+        require(numOfUninteresting >= 0)
+      }
+
+      val totalNumber: Int
+        get() = numOfInteresting + numOfUninteresting
+
+      val isFlaky = numOfInteresting != 0 && numOfUninteresting != 0
+
+      fun describeResult(): String {
+        return buildString {
+          append("The property test is")
+          if (!isFlaky) {
+            append(" not")
+          }
+          append(" flaky. ")
+          append("#total runs: $totalNumber")
+          append(", #interesting: $numOfInteresting, #uninteresting: $numOfUninteresting")
+        }
+      }
     }
   }
 

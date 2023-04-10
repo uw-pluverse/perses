@@ -86,7 +86,8 @@ class ReductionProfileListener(textualFile: Path) : DefaultReductionListener(), 
 
   override fun onFixpointIterationStart(event: FixpointIterationStartEvent) {
     val fixpointEvent = IProfileEvent.FixpointIterationEvent(
-      event.programSize, true
+      event.programSize,
+      true,
     )
     saveEvent(fixpointEvent)
   }
@@ -97,29 +98,33 @@ class ReductionProfileListener(textualFile: Path) : DefaultReductionListener(), 
 
   override fun onLevelReductionStart(event: LevelReductionStartEvent) {
     saveEvent(
-      IProfileEvent.LevelReductionEvent(event.programSize, true, event.level)
+      IProfileEvent.LevelReductionEvent(event.programSize, true, event.level),
     )
   }
 
   override fun onLevelReductionEnd(event: LevelReductionEndEvent) {
     saveEvent(
-      IProfileEvent.LevelReductionEvent(event.programSize, false, event.level)
+      IProfileEvent.LevelReductionEvent(event.programSize, false, event.level),
     )
   }
 
   override fun onLevelGranularityReductionStart(event: LevelGranularityReductionStartEvent) {
     saveEvent(
       IProfileEvent.GranularityEvent(
-        event.programSize, true, event.maxNumOfNodesPerPartition
-      )
+        event.programSize,
+        true,
+        event.maxNumOfNodesPerPartition,
+      ),
     )
   }
 
   override fun onLevelGranularityReductionEnd(event: LevelGranularityReductionEndEvent) {
     saveEvent(
       IProfileEvent.GranularityEvent(
-        event.programSize, false, event.maxNumOfNodesPerPartition
-      )
+        event.programSize,
+        false,
+        event.maxNumOfNodesPerPartition,
+      ),
     )
   }
 
@@ -140,7 +145,7 @@ class ReductionProfileListener(textualFile: Path) : DefaultReductionListener(), 
     try {
       textualWriter = Files.newBufferedWriter(textualFile)
       eventStream = ObjectOutputStream(
-        textualFile.parent.resolve(textualFile.name + ".event").outputStream()
+        textualFile.parent.resolve(textualFile.name + ".event").outputStream(),
       )
     } catch (e: IOException) {
       throw UncheckedIOException(e)

@@ -44,7 +44,7 @@ class QueryCacheTimeProfiler(file: Path) : AbstractQueryCacheProfiler(), AutoClo
   override fun onCreatingEncoder(
     tokensInOrigin: ImmutableList<PersesToken>,
     startTime: Long,
-    endTime: Long
+    endTime: Long,
   ) {
     try {
       writer!!
@@ -66,7 +66,7 @@ class QueryCacheTimeProfiler(file: Path) : AbstractQueryCacheProfiler(), AutoClo
     tokensInOrigin: ImmutableList<PersesToken>,
     encoding: CompactProgramEncoding,
     startTime: Long,
-    endTime: Long
+    endTime: Long,
   ) {
     try {
       writer!!
@@ -94,7 +94,7 @@ class QueryCacheTimeProfiler(file: Path) : AbstractQueryCacheProfiler(), AutoClo
     tokensInOrigin: ImmutableList<PersesToken>,
     program: TokenizedProgram,
     startTime: Long,
-    endTime: Long
+    endTime: Long,
   ) {
     try {
       writer!!
@@ -121,7 +121,7 @@ class QueryCacheTimeProfiler(file: Path) : AbstractQueryCacheProfiler(), AutoClo
     numOfEntriesInCacheBefore: Int,
     numOfEntriesInCacheAfter: Int,
     startTime: Long,
-    endTime: Long
+    endTime: Long,
   ) {
     try {
       writer!!

@@ -27,7 +27,7 @@ import org.perses.spartree.SparTree
 import java.util.ArrayDeque
 
 class TreeSlicer(
-  reducerContext: ReducerContext
+  reducerContext: ReducerContext,
 ) : AbstractNodeReducer(META, reducerContext) {
 
   override fun createReductionQueue() =
@@ -35,7 +35,7 @@ class TreeSlicer(
 
   override fun reduceOneNode(
     tree: SparTree,
-    node: AbstractSparTreeNode
+    node: AbstractSparTreeNode,
   ): ImmutableList<AbstractSparTreeNode> {
     val actionSet = NodeDeletionActionSet.createByDeleteSingleNode(node, NAME)
 
@@ -48,9 +48,9 @@ class TreeSlicer(
     val parserFacade = configuration.parserFacade
     if (testProgram.tokenCount() <= 150 &&
       !parserFacade.isSourceCodeParsable(
-          PrinterRegistry.getPrinter(ioManager.getDefaultProgramFormat())
-            .print(testProgram).sourceCode
-        )
+        PrinterRegistry.getPrinter(ioManager.getDefaultProgramFormat())
+          .print(testProgram).sourceCode,
+      )
     ) {
       // TODO: dynamically change the threshold, rather than this hard coded 150.
       return node.copyAndReverseChildren()
@@ -71,12 +71,18 @@ class TreeSlicer(
 
     @JvmStatic
     val META = object : ReducerAnnotation() {
-      override val deterministic = true
+      override val deterministic: Boolean
+        get() = true
+
+      override val reductionResultSizeTrend: ReductionResultSizeTrend
+        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
 
       override fun shortName() = NAME
+
       override fun description() = ""
+
       override fun create(
-        reducerContext: ReducerContext
+        reducerContext: ReducerContext,
       ): ImmutableList<AbstractTokenReducer> = ImmutableList.of(TreeSlicer(reducerContext))
     }
   }

@@ -28,8 +28,11 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 import org.perses.antlr.pnf.OptionalExtractionUtil.searchForCandidate
 
 class OptionalIntroducerPass : AbstractPnfPass() {
-  override fun process(grammar: PersesGrammar): PersesGrammar {
-    val mutable = MutableGrammar.createParserRulesFrom(grammar)
+  override fun processParserGrammar(
+    parserGrammar: PersesGrammar,
+    lexerGrammar: PersesGrammar?,
+  ): PersesGrammar {
+    val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     // To make the process deterministic.
     val ruleNameList = getSortedRuleNames(mutable)
     for (ruleName in ruleNameList) {
@@ -38,13 +41,13 @@ class OptionalIntroducerPass : AbstractPnfPass() {
         mergeTwoSeqs(ruleName, mutable, candidate)
       }
     }
-    return grammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
+    return parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
   }
 
   private fun mergeTwoSeqs(
     ruleName: RuleNameHandle,
     mutable: MutableGrammar,
-    candidate: OptionalExtractionUtil.Candidate
+    candidate: OptionalExtractionUtil.Candidate,
   ) {
     val originalGapAst = candidate.getGapAst()
     mutable.getAltBlock(ruleName).removeAlt(candidate.shortSeq.ast)
@@ -62,7 +65,7 @@ class OptionalIntroducerPass : AbstractPnfPass() {
       AstTag.PLUS -> {
         val starRuleName = ruleName.createAuxiliaryRuleName(RuleType.KLEENE_STAR)
         mutable.getAltBlock(starRuleName).addIfInequivalent(
-          (processedGapAst as PersesPlusAst).let { PersesStarAst(it.body, it.isGreedy) }
+          (processedGapAst as PersesPlusAst).let { PersesStarAst(it.body, it.isGreedy) },
         )
         starRuleName
       }
@@ -70,7 +73,7 @@ class OptionalIntroducerPass : AbstractPnfPass() {
         val optionalRuleName = ruleName
           .createAuxiliaryRuleName(RuleType.OPTIONAL)
         mutable.getAltBlock(optionalRuleName).addIfInequivalent(
-          PersesOptionalAst.createGreedy(processedGapAst)
+          PersesOptionalAst.createGreedy(processedGapAst),
         )
         optionalRuleName
       }
@@ -79,7 +82,7 @@ class OptionalIntroducerPass : AbstractPnfPass() {
         mutable.getAltBlock(wrapperRuleName).addIfInequivalent(processedGapAst)
         val optionalRuleName = ruleName.createAuxiliaryRuleName(RuleType.OPTIONAL)
         mutable.getAltBlock(optionalRuleName).addIfInequivalent(
-          PersesOptionalAst.createGreedy(PersesRuleReferenceAst.create(wrapperRuleName))
+          PersesOptionalAst.createGreedy(PersesRuleReferenceAst.create(wrapperRuleName)),
         )
         optionalRuleName
       }
@@ -87,8 +90,10 @@ class OptionalIntroducerPass : AbstractPnfPass() {
     mutable.getAltBlock(ruleName).replace(
       candidate.longSeq.ast,
       replaceGapWithRuleReference(
-        candidate.longSeq.ast, candidate.gapInLongSequence, gapAstReplacement
-      )
+        candidate.longSeq.ast,
+        candidate.gapInLongSequence,
+        gapAstReplacement,
+      ),
     )
   }
 }

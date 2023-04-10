@@ -10,7 +10,7 @@ DEFAULT_DEPS = [
     "//test/org/perses/antlr:GrammarTestingUtility",
     "//:guava",
     "//:truth",
-    "@maven//:org_antlr_antlr4",
+    "//:antlr_tool",
 ]
 
 kt_jvm_test(

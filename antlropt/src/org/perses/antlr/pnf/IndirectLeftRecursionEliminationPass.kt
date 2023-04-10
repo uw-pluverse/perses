@@ -32,7 +32,7 @@ class IndirectLeftRecursionEliminationPass : AbstractIndirectRecursionEliminatio
 
   @VisibleForTesting
   public override fun getRuleRefToInline(
-    def: AbstractPersesRuleElement
+    def: AbstractPersesRuleElement,
   ): RuleNameHandle? {
     require(def.tag !== AstTag.ALTERNATIVE_BLOCK)
     return getFirstOrLastRuleRef(def, /*seekingFirst=*/true)
@@ -41,7 +41,7 @@ class IndirectLeftRecursionEliminationPass : AbstractIndirectRecursionEliminatio
   override fun inlineRuleRefIntoSequence(
     originalSequence: PersesSequenceAst,
     toInline: AbstractPersesRuleElement,
-    newSeqBuilder: ImmutableList.Builder<AbstractPersesRuleElement>
+    newSeqBuilder: ImmutableList.Builder<AbstractPersesRuleElement>,
   ) {
     check(originalSequence.firstChild.tag === AstTag.RULE_REF)
     when {

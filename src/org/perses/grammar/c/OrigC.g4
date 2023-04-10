@@ -192,7 +192,7 @@ declarationSpecifiers2
 
 declarationSpecifier
     :   storageClassSpecifier
-    |   typeSpecifier
+    |   typeSpecifierWithAttrList
     |   typeQualifier
     |   functionSpecifier
     |   alignmentSpecifier
@@ -218,7 +218,7 @@ storageClassSpecifier
     ;
 
 typeSpecifier
-    :   ('void'
+    :   'void'
     |   'char'
     |   'short'
     |   'int'
@@ -231,13 +231,17 @@ typeSpecifier
     |   '_Complex'
     |   '__m128'
     |   '__m128d'
-    |   '__m128i')
+    |   '__m128i'
     |   '__extension__' '(' ('__m128' | '__m128d' | '__m128i') ')'
     |   atomicTypeSpecifier
     |   structOrUnionSpecifier
     |   enumSpecifier
     |   typedefName
     |   '__typeof__' '(' constantExpression ')' // GCC extension
+    ;
+
+typeSpecifierWithAttrList
+    : typeSpecifier gccAttributeSpecifier?
     ;
 
 structOrUnionSpecifier
@@ -261,7 +265,7 @@ structDeclaration
     ;
 
 specifierQualifierList
-    :   typeSpecifier specifierQualifierList?
+    :   typeSpecifierWithAttrList specifierQualifierList?
     |   typeQualifier specifierQualifierList?
     ;
 
@@ -331,7 +335,7 @@ alignmentSpecifier
 
 directDeclarator
     :   Identifier
-    |   '(' declarator ')'
+    |   '(' gccAttributeSpecifier? declarator ')'
     |   directDeclarator '[' typeQualifierList? assignmentExpression? ']'
     |   directDeclarator '[' 'static' typeQualifierList? assignmentExpression ']'
     |   directDeclarator '[' typeQualifierList 'static' assignmentExpression ']'
@@ -378,8 +382,7 @@ pointer
     ;
 
 typeQualifierList
-    :   typeQualifier
-    |   typeQualifierList typeQualifier
+    :   (typeQualifier | gccAttributeSpecifier)+
     ;
 
 parameterTypeList

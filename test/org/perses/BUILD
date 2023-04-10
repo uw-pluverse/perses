@@ -20,11 +20,16 @@ kt_jvm_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
+        "//:antlr_runtime",
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
+        "//src/org/perses/grammar/adhoc:adhoc_grammar_inaller_lib",
+        "//src/org/perses/grammar/adhoc:command_options",
+        "//src/org/perses/grammar/adhoc:language_kind",
         "//src/org/perses/grammar/c:language_kind",
         "//src/org/perses/grammar/c:optc_parser_facade",
         "//src/org/perses/grammar/java:language_kind",
@@ -38,8 +43,6 @@ kt_jvm_library(
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
         "//src/org/perses/spartree",
-        "@maven//:org_antlr_antlr4",
-        "@maven//:org_antlr_antlr4_runtime",
     ],
 )
 
@@ -128,6 +131,21 @@ kt_jvm_test(
         "//:guava",
         "//:truth",
         "//src/org/perses:perses_contants",
+    ],
+)
+
+kt_jvm_test(
+    name = "ReadmeTest",
+    srcs = ["ReadmeTest.kt"],
+    associates = [
+        "//src/org/perses/grammar:facade_factory",
+    ],
+    data = [
+        "//:README.md",
+    ],
+    deps = [
+        "//:guava",
+        "//:truth",
     ],
 )
 

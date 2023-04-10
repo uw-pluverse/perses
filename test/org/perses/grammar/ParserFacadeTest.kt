@@ -32,7 +32,6 @@ import org.perses.program.EnumFormatControl
 import org.perses.program.PersesTokenFactory.PersesToken
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.PrinterRegistry
-import java.io.IOException
 import java.nio.file.Paths
 
 @RunWith(JUnit4::class)
@@ -59,12 +58,11 @@ class ParserFacadeTest {
       |        println
       |        println("Hello world")
       |}
-    """.trimMargin()
+      """.trimMargin()
     scalaProgram = createSparTreeFromString(scalaSourceCode, LanguageScala).programSnapshot
   }
 
   @Test
-  @Throws(IOException::class)
   fun testTokenize() {
     val tokens = cFacade.parseIntoTokens(Paths.get("test_data/misc/t1.c"))
     val tokenTexts = tokens.stream().map { it.text }.collect(ImmutableList.toImmutableList())
@@ -74,17 +72,23 @@ class ParserFacadeTest {
   }
 
   @Test
+  fun testTransformLiteralIntoSingleToken() {
+    val token = cFacade.transformLiteralIntoSingleToken(";")
+    assertThat(token.text).isEqualTo(";")
+  }
+
+  @Test
   fun testIsParsableForScala_true_case() {
     val program = scalaProgram!!
     assertThat(
       scalaFacade.isSourceCodeParsable(
-        printerOrig.print(program).sourceCode
-      )
+        printerOrig.print(program).sourceCode,
+      ),
     ).isTrue()
     assertThat(
       scalaFacade.isSourceCodeParsable(
-        printerCompact.print(program).sourceCode
-      )
+        printerCompact.print(program).sourceCode,
+      ),
     ).isTrue()
   }
 
@@ -96,8 +100,8 @@ class ParserFacadeTest {
       assertThat(invalidProgram.tokens).hasSize(3)
       assertThat(
         scalaFacade.isSourceCodeParsable(
-          printerCompact.print(invalidProgram).sourceCode
-        )
+          printerCompact.print(invalidProgram).sourceCode,
+        ),
       ).isFalse()
     }
   }
@@ -107,26 +111,26 @@ class ParserFacadeTest {
     val program = createSparTreeFromFile("test_data/misc/t1.c").programSnapshot
     assertThat(
       cFacade.isSourceCodeParsable(
-        printerOrig.print(program).sourceCode
-      )
+        printerOrig.print(program).sourceCode,
+      ),
     )
       .isTrue()
     assertThat(
       pnfcFacade.isSourceCodeParsable(
-        printerOrig.print(program).sourceCode
-      )
+        printerOrig.print(program).sourceCode,
+      ),
     )
       .isTrue()
     val invalidProgram = deriveInvalidProgram(program)
     assertThat(
       cFacade.isSourceCodeParsable(
-        printerOrig.print(invalidProgram).sourceCode
-      )
+        printerOrig.print(invalidProgram).sourceCode,
+      ),
     ).isFalse()
     assertThat(
       pnfcFacade.isSourceCodeParsable(
-        printerOrig.print(invalidProgram).sourceCode
-      )
+        printerOrig.print(invalidProgram).sourceCode,
+      ),
     ).isFalse()
   }
 
@@ -137,7 +141,7 @@ class ParserFacadeTest {
 
     private fun projectProgram(
       program: TokenizedProgram,
-      vararg lexemes: String
+      vararg lexemes: String,
     ): TokenizedProgram {
       val builder = ImmutableList.builder<PersesToken>()
       var index = 0

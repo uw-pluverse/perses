@@ -2538,6 +2538,16 @@ Failed to reduce node 100
 
 // edit action set type: token slicer@1
     object Hello {
+        def main(args: Array[String]) =
+            println(              )
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: token slicer@1
+    object Hello {
         def main(args: Array[String])
             println("Hello, world")
     }
@@ -4807,9 +4817,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=========Cache hit for the following program: fail==========
 
-// edit action set type: [kleene_star]dd@1
     object Hello {
         def main(args: Array[String]) =
             println(              )
@@ -6613,6 +6622,6 @@ Failed to reduce node 95
 
 #test success = 4
 #test failure = 211
-#test result cache hits = 210
+#test result cache hits = 211
 #test execution cancelled = 2
 #node edit action set cache hits = 17

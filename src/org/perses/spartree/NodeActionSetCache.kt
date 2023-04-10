@@ -16,28 +16,21 @@
  */
 package org.perses.spartree
 
-import java.util.concurrent.ConcurrentHashMap
+import org.perses.util.Util
 
 class NodeActionSetCache : AbstractNodeActionSetCache() {
 
   // For thread-safety.
-  private val delectionCache = ConcurrentHashMap.newKeySet<NodeDeletionActionSet>()
-  private val replacementCache = ConcurrentHashMap.newKeySet<ChildHoistingActionSet>()
+  private val cache = Util.createConcurrentSet<AbstractActionSet<*>>()
 
-  override fun isCachedOrCacheIt(actionSet: NodeDeletionActionSet): Boolean {
-    return !delectionCache.add(actionSet)
-  }
-
-  override fun isCachedOrCacheIt(actionSet: ChildHoistingActionSet): Boolean {
-    return !replacementCache.add(actionSet)
+  override fun isCachedOrCacheIt(actionSet: AbstractActionSet<*>): Boolean {
+    return !cache.add(actionSet)
   }
 
   override fun clear() {
-    delectionCache.clear()
-    replacementCache.clear()
+    cache.clear()
   }
 
-  override fun size(): Int {
-    return delectionCache.size + replacementCache.size
-  }
+  override val size: Int
+    get() = cache.size
 }

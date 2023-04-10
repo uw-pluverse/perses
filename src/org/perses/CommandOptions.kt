@@ -19,7 +19,7 @@ package org.perses
 import org.perses.cmd.CacheControlFlags
 import org.perses.cmd.ExperimentFlags
 import org.perses.cmd.InputFlags
-import org.perses.cmd.LanguageExtFlags
+import org.perses.cmd.LanguageControlFlags
 import org.perses.cmd.OutputFlags
 import org.perses.cmd.OutputRefiningFlags
 import org.perses.cmd.ProfilingFlags
@@ -35,11 +35,11 @@ open class CommandOptions(defaultReductionAlgorithm: String) : AbstractCommandOp
   val reductionControlFlags = registerFlags(ReductionControlFlags())
   val outputRefiningFlags = registerFlags(OutputRefiningFlags())
   val algorithmControlFlags = registerFlags(
-    ReductionAlgorithmControlFlags(defaultReductionAlgorithm)
+    ReductionAlgorithmControlFlags(defaultReductionAlgorithm),
   )
   val cacheControlFlags = registerFlags(CacheControlFlags())
   val profilingFlags = registerFlags(ProfilingFlags())
   val experimentFlags = registerFlags(ExperimentFlags())
-  val languageExtFlags = registerFlags(LanguageExtFlags())
+  val languageControlFlags = registerFlags(LanguageControlFlags())
   open fun createInputFlags() = InputFlags()
 }

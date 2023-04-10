@@ -31,7 +31,7 @@ class PnfCppParserFacadeTest {
   @Test
   fun test() {
     val tree = facade.parseFile(
-      Paths.get("test/org/perses/benchmark_toys/cpp_print/t.cpp")
+      Paths.get("test/org/perses/benchmark_toys/cpp_print/t.cpp"),
     )
     val tokenizedProgram = AntlrGrammarUtil.convertParseTreeToProgram(tree.tree, facade.language)
     assertThat(tokenizedProgram.tokens).isNotEmpty()

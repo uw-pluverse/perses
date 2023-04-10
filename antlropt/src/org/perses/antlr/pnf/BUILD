@@ -79,6 +79,7 @@ kt_jvm_library(
 kt_jvm_library(
     name = "pnf_pass_manager",
     srcs = [
+        "Main.kt",
         "PnfPassManager.kt",
     ],
     deps = [
@@ -88,7 +89,9 @@ kt_jvm_library(
         ":pnf_passes",
         "//:flogger",
         "//:guava",
+        "//:jcommander",
         "//antlropt/src/org/perses/antlr/ast",
+        "//antlropt/src/org/perses/antlr/util",
         "//antlropt/src/org/perses/antlr/util:antlr_tool_wrapper",
         "//src/org/perses/util:file_name_content_pair",
     ],
@@ -125,11 +128,11 @@ kt_jvm_library(
         ":pnf_pass_interface",
         "//:flogger",
         "//:guava",
+        "//:jgrapht",
         "//antlropt/src/org/perses/antlr:enum_rule_type",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/ast:ast_builder",
         "//src/org/perses/util:simple_stack_and_queue",
-        "@maven//:org_jgrapht_jgrapht_core",
     ],
 )
 
@@ -145,17 +148,16 @@ java_library(
 
 java_binary(
     name = "pnf_main",
-    srcs = ["Main.java"],
     jvm_flags = ["-ea"],
     main_class = "org.perses.antlr.pnf.Main",
-    deps = [
+    runtime_deps = [
         ":pnf",
         "//:guava",
+        "//:jcommander",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/ast:ast_builder",
         "//antlropt/src/org/perses/antlr/util",
         "//src/org/perses/util",
         "//src/org/perses/util:file_name_content_pair",
-        "@maven//:com_beust_jcommander",
     ],
 )

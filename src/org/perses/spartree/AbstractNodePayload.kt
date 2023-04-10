@@ -17,7 +17,7 @@
 package org.perses.spartree
 
 import com.google.common.collect.ImmutableList
-import org.perses.antlr.RuleHierarchyInfo
+import org.perses.antlr.RuleHierarchyEntry
 import org.perses.util.toImmutableList
 
 /**
@@ -38,8 +38,8 @@ import org.perses.util.toImmutableList
  */
 abstract class AbstractNodePayload {
 
-  abstract val expectedAntlrRuleType: RuleHierarchyInfo?
-  abstract val actualAntlrRuleType: RuleHierarchyInfo?
+  abstract val expectedAntlrRuleType: RuleHierarchyEntry?
+  abstract val actualAntlrRuleType: RuleHierarchyEntry?
 
   abstract fun label(): String
 
@@ -55,10 +55,10 @@ abstract class AbstractNodePayload {
   }
 
   data class SinglePayload(
-    override val expectedAntlrRuleType: RuleHierarchyInfo?
+    override val expectedAntlrRuleType: RuleHierarchyEntry?,
   ) : AbstractNodePayload() {
 
-    override val actualAntlrRuleType: RuleHierarchyInfo?
+    override val actualAntlrRuleType: RuleHierarchyEntry?
       get() = expectedAntlrRuleType
 
     override val asSinglePayloadList = ImmutableList.of(this)
@@ -69,17 +69,17 @@ abstract class AbstractNodePayload {
   }
 
   data class CollapsingPayload(
-    val collapsedAncestorsFromTop: ImmutableList<SinglePayload>
+    val collapsedAncestorsFromTop: ImmutableList<SinglePayload>,
   ) : AbstractNodePayload() {
 
     init {
       require(collapsedAncestorsFromTop.size > 1)
     }
 
-    override val expectedAntlrRuleType: RuleHierarchyInfo?
+    override val expectedAntlrRuleType: RuleHierarchyEntry?
       get() = collapsedAncestorsFromTop.first().expectedAntlrRuleType
 
-    override val actualAntlrRuleType: RuleHierarchyInfo?
+    override val actualAntlrRuleType: RuleHierarchyEntry?
       get() = collapsedAncestorsFromTop.last().expectedAntlrRuleType
 
     override val asSinglePayloadList = collapsedAncestorsFromTop
@@ -108,7 +108,7 @@ abstract class AbstractNodePayload {
 
     fun concatenatePaylods(
       ancestor: AbstractNodePayload,
-      descendant: AbstractNodePayload
+      descendant: AbstractNodePayload,
     ): AbstractNodePayload {
       // TODO(cnsun): this needs more thoughts.
       val ancestorTopToBottom = ancestor.asSinglePayloadList
@@ -119,7 +119,7 @@ abstract class AbstractNodePayload {
           ImmutableList.builder<AbstractNodePayload.SinglePayload>()
             .addAll(ancestorTopToBottom.subList(0, match.index + 1))
             .addAll(descendantTopToBottom.subList(desc.index + 1, descendantTopToBottom.size))
-            .build()
+            .build(),
         )
       }
       return ancestor.createByAppending(descendantTopToBottom.last())

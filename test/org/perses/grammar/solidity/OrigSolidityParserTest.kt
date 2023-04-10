@@ -38,7 +38,7 @@ class OrigSolidityParserTest {
   fun test_helloworld() {
     testProgram(
       Paths.get("test/org/perses/benchmark_toys/solidity/hello.sol"),
-      enableException = true
+      enableException = true,
     )
   }
 
@@ -46,7 +46,7 @@ class OrigSolidityParserTest {
   fun test() {
     val parsableFiles = Files.readLines(
       Paths.get("test/org/perses/grammar/solidity/parsable_solidity_programs.txt").toFile(),
-      StandardCharsets.UTF_8
+      StandardCharsets.UTF_8,
     )
     for (program in parsableFiles) {
       assertThat(testProgram(Paths.get(program), enableException = true)).isTrue()

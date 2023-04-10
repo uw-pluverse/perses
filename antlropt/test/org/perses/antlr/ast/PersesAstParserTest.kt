@@ -16,10 +16,14 @@
  */
 package org.perses.antlr.ast
 
+import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.util.toImmutableList
+import java.nio.file.Paths
+import kotlin.io.path.readText
 
 @RunWith(JUnit4::class)
 class PersesAstParserTest {
@@ -30,7 +34,7 @@ class PersesAstParserTest {
       """
       lexer gramar Test;
       ID: 'i' -> popMode, skip, more, pushMode(TT), more, popMode, pushMode(TT);
-      """.trimIndent()
+      """.trimIndent(),
     )
     assertThat(grammar.flattenedAllRules).hasSize(1)
     assertThat(grammar.flattenedAllRules.first().body.sourceCode)
@@ -43,7 +47,7 @@ class PersesAstParserTest {
       """
       lexer grammar Test;
       OPEN: '[' -> popMode;
-      """.trimIndent()
+      """.trimIndent(),
     )
     assertThat(grammar.sourceCode).contains("'[' -> popMode")
   }
@@ -54,7 +58,7 @@ class PersesAstParserTest {
       """
       lexer grammar Test;
       OPEN: '[' -> skip;
-      """.trimIndent()
+      """.trimIndent(),
     )
     assertThat(grammar.sourceCode).contains("'[' -> skip")
   }
@@ -65,7 +69,7 @@ class PersesAstParserTest {
       """
       lexer grammar Test;
       OPEN: '[' -> pushMode(CODE_MODE);
-      """.trimIndent()
+      """.trimIndent(),
     )
     assertThat(grammar.sourceCode).contains("'[' -> pushMode(CODE_MODE)")
   }
@@ -76,17 +80,16 @@ class PersesAstParserTest {
       """
       lexer grammar Test;
       OPEN: '[' -> channel(SKIP);
-      """.trimIndent()
+      """.trimIndent(),
     )
     assertThat(grammar.sourceCode).contains("'[' -> channel(SKIP)")
   }
 
   @Test
   fun test_lexer_modes() {
-    val grammar = PersesAstBuilder.loadGrammarFromString(
-      """
+    // A lexer grammar has to have lexer rules in the default mode.
+    val grammarContent = """
       lexer grammar Test;
-      // A lexer grammar has to have lexer rules in the default mode.
       ID: 'id';
       
       mode M1;
@@ -104,8 +107,8 @@ class PersesAstParserTest {
       mode M4;
       A_m4: 'a_m4';
       B_m4: 'b_m4';
-      """.trimIndent()
-    )
+    """.trimIndent()
+    val grammar = PersesAstBuilder.loadGrammarFromString(grammarContent)
     val lexerRules = grammar.lexerRules
     val defaultModeLexerRules = lexerRules.defaultModeLexerRules
     assertThat(defaultModeLexerRules).hasSize(1)
@@ -133,5 +136,38 @@ class PersesAstParserTest {
     assertThat(m4.lexerRules[0].body.sourceCode).isEqualTo("'a_m4'")
     assertThat(m4.lexerRules[1].ruleNameHandle.ruleName).isEqualTo("B_m4")
     assertThat(m4.lexerRules[1].body.sourceCode).isEqualTo("'b_m4'")
+
+    assertThat(
+      normalizeGrammarString(grammar.sourceCode),
+    ).isEqualTo(
+      normalizeGrammarString(grammarContent),
+    )
+  }
+
+  private fun normalizeGrammarString(grammar: String): ImmutableList<String> {
+    return grammar.splitToSequence("\n")
+      .map { it.trim() }
+      .filter { it.isNotBlank() }
+      .filter { !it.startsWith("//") }
+      .joinToString(separator = "\n")
+      .splitToSequence(";")
+      .map { it.replace(Regex("\\s+"), "") }
+      .toImmutableList()
+  }
+
+  @Test
+  fun testPnpLexer() {
+    val file = Paths.get("src/org/perses/grammar/php/PhpLexer.g4")
+    val content = file.readText()
+    val grammar = PersesAstBuilder.loadGrammarFromString(content)
+    val sourceCode = grammar.sourceCode
+    assertThat(
+      sourceCode.splitToSequence("\n")
+        .map { it.trim() }
+        .filter { it.startsWith("mode ") }
+        .toImmutableList(),
+    ).contains(
+      "mode XML;",
+    )
   }
 }

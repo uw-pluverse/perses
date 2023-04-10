@@ -22,25 +22,33 @@ import org.perses.antlr.GrammarHierarchy
 import org.perses.program.PersesTokenFactory.PersesToken
 import org.perses.program.TokenizedProgram
 import org.perses.program.TokenizedProgramFactory
+import org.perses.util.Util.lazyAssert
 import org.perses.util.toImmutableList
 
 /** A spar-tree, the primary data structure for the Perses program reduction.  */
 class SparTree internal constructor(
   override val root: AbstractSparTreeNode,
   val grammarHierarchy: GrammarHierarchy,
-  val tokenizedProgramFactory: TokenizedProgramFactory
+  val tokenizedProgramFactory: TokenizedProgramFactory,
 ) : AbstractUnmodifiableSparTree() {
 
   val treeId: Int = ++globalTreeIdGenerator
 
+  internal var version = 0
+    private set
+
   @PublishedApi
   internal val dummyTokenHead = LexerRuleSparTreeNode(
-    Int.MIN_VALUE, PersesToken.INVALID_TOKEN, antlrRule = null
+    Int.MIN_VALUE,
+    PersesToken.INVALID_TOKEN,
+    antlrRule = null,
   )
 
   @PublishedApi
   internal val dummyTokenTail = LexerRuleSparTreeNode(
-    Int.MIN_VALUE, PersesToken.INVALID_TOKEN, antlrRule = null
+    Int.MIN_VALUE,
+    PersesToken.INVALID_TOKEN,
+    antlrRule = null,
   )
   private var program: TokenizedProgram
   private val editListeners = ArrayList<AbstractSparTreeEditListener>()
@@ -54,18 +62,16 @@ class SparTree internal constructor(
     root.endToken?.next = dummyTokenTail
 
     program = computeTokenizedProgram()
-    registerSparTreeEditListener(
-      object : AbstractSparTreeEditListener() {
-        override fun onAfterSparTreeEditApplied(event: SparTreeEditEvent) {
-          program = event.program
-          assert(program.tokens == computeTokenizedProgram().tokens) {
-            """
-              passed-in program: ${program.tokens}
-              computed program:  ${computeTokenizedProgram().tokens}
-            """.trimIndent()
-          }
-        }
-      })
+  }
+
+  fun hasTheSameEditListeners(listeners: Iterable<AbstractSparTreeEditListener>): Boolean {
+    val copy = ArrayList<AbstractSparTreeEditListener>().apply {
+      addAll(listeners)
+    }
+    editListeners.forEach {
+      copy.removeIf { c -> c === it }
+    }
+    return copy.isEmpty()
   }
 
   /**
@@ -73,20 +79,20 @@ class SparTree internal constructor(
    * tree.
    */
   fun createNodeDeletionEdit(
-    actionSet: NodeDeletionActionSet
+    actionSet: NodeDeletionActionSet,
   ): NodeDeletionTreeEdit {
-    assert(!actionSet.isEmpty)
+    lazyAssert { !actionSet.isEmpty }
     return AbstractSparTreeEdit.createDeletionSparTreeEdit(this, actionSet)
   }
 
   fun createNodeReplacementEdit(
-    actionSet: ChildHoistingActionSet
+    actionSet: ChildHoistingActionSet,
   ): NodeReplacementTreeEdit {
     return AbstractSparTreeEdit.createReplacementSparTreeEdit(this, actionSet)
   }
 
   fun createAnyNodeReplacementEdit(
-    actionSet: ChildHoistingActionSet
+    actionSet: ChildHoistingActionSet,
   ): AnyNodeReplacementTreeEdit {
     return AbstractSparTreeEdit.createAnyNodeReplacementTreeEdit(this, actionSet)
   }
@@ -94,138 +100,35 @@ class SparTree internal constructor(
   @Synchronized
   fun applyEdit(treeEdit: AbstractSparTreeEdit<*>) {
     val programSizeBefore = program.tokenCount()
-    when (treeEdit) {
-      is NodeReplacementTreeEdit -> {
-        applyNodeReplacementTreeEdit(treeEdit.asNodeReplacementEdit())
-      }
-      is AnyNodeReplacementTreeEdit -> {
-        applyAnyNodeReplacementTreeEdit(treeEdit)
-      }
-      is NodeDeletionTreeEdit -> {
-        applyNodeDeletionTreeEdit(treeEdit.asNodeDeleteEdit())
-      }
-      else -> error("Unhandled tree edit. $treeEdit")
-    }
+    treeEdit.applyToTree()
     val event = AbstractSparTreeEditListener.SparTreeEditEvent(
-      programSizeBefore, treeEdit
+      programSizeBefore,
+      treeEdit,
     )
+    program = event.program
+    lazyAssert({ program.tokens == computeTokenizedProgram().tokens }) {
+      """|passed-in program: ${program.tokens}
+         |computed program:  ${computeTokenizedProgram().tokens}
+         |
+      """.trimMargin()
+    }
     editListeners.forEach { it.onAfterSparTreeEditApplied(event) }
-  }
-
-  private fun applyNodeDeletionTreeEdit(deletionEdit: NodeDeletionTreeEdit) {
-    val actions = deletionEdit.actionSet.actions
-    val parents = HashSet<AbstractSparTreeNode>()
-    for (action in actions) {
-      val targetNode = action.targetNode
-      targetNode.delete()
-      fixLeafLinkByDeleting(targetNode.beginToken!!, targetNode.endToken!!.next!!)
-      if (targetNode.parent != null) {
-        parents.add(targetNode.parent!!)
-      }
-    }
-    for (parent in parents) {
-      parent.cleanDeletedImmediateChildren()
-    }
-    var changed: Boolean
-    do {
-      changed = false
-      for (parent in parents) {
-        if (updateTokenIntervalUpToRoot(parent)) {
-          changed = true
-        }
-      }
-    } while (changed)
-  }
-
-  private fun applyNodeReplacementTreeEdit(replacement: NodeReplacementTreeEdit) {
-    val action = replacement.actionSet.actions.single()
-    val targetNode = action.targetNode
-    val childToHoist = action.replacingChild
-    childToHoist.parent!!.removeChild(childToHoist)
-    assert(childToHoist.parent == null)
-    var payload = AbstractNodePayload.concatenatePaylods(
-      targetNode.payload!!,
-      childToHoist.payload!!
-    )
-    childToHoist.resetPayload()
-    targetNode.parent!!.replaceChild(
-      targetNode, childToHoist, payload
-    )
-    assert(targetNode.parent == null)
-    targetNode.delete()
-    fixLeafLinkByDeleting(targetNode.beginToken!!, childToHoist.beginToken!!)
-    fixLeafLinkByDeleting(childToHoist.endToken!!.next!!, targetNode.endToken!!.next!!)
-    childToHoist.parent?.let { updateTokenIntervalUpToRoot(it) }
-  }
-
-  private fun applyAnyNodeReplacementTreeEdit(replacement: AnyNodeReplacementTreeEdit) {
-    replacement.actionSet.actions.forEach { action ->
-      val targetNode = action.targetNode
-      val parentNode = targetNode.parent!!
-      val replacingNode = action.replacingChild
-      assert(replacingNode.parent == null)
-      val payload = targetNode.payload!!
-      replacingNode.resetPayload()
-      parentNode.replaceChild(
-        targetNode, replacingNode, payload
-      )
-      assert(targetNode.parent == null)
-      targetNode.delete()
-
-      // maintain leaf list
-      val targetNodePre = if (targetNode is LexerRuleSparTreeNode)
-        targetNode.prev else targetNode.beginToken?.prev
-      val targetNodeNext = if (targetNode is LexerRuleSparTreeNode)
-        targetNode.next else targetNode.endToken?.next
-
-      if (targetNodePre != null) {
-        targetNodePre.next = replacingNode.beginToken
-        replacingNode.beginToken?.prev = targetNodePre
-      }
-
-      if (targetNodeNext != null) {
-        targetNodeNext.prev = replacingNode.endToken
-        replacingNode.endToken?.next = targetNodeNext
-      }
-      updateTokenIntervalUpToRoot(parentNode)
-    }
-  }
-
-  private fun updateTokenIntervalUpToRoot(
-    startNode: AbstractSparTreeNode
-  ): Boolean {
-    var nodeInfo: AbstractSparTreeNode? = startNode
-    var globalChanged = false
-    while (nodeInfo != null) {
-      val node = nodeInfo.asParserRule()
-      var changed = false
-      val leftmostToken = node.leftmostToken
-      if (node.beginToken !== leftmostToken) {
-        node.beginToken = leftmostToken
-        changed = true
-      }
-      val rightmostToken = node.rightmostToken
-      if (node.endToken !== rightmostToken) {
-        node.endToken = rightmostToken
-        changed = true
-      }
-      if (!changed) {
-        break
-      }
-      globalChanged = true
-      nodeInfo = node.parent
-    }
-    return globalChanged
+    ++version
   }
 
   fun registerSparTreeEditListeners(
-    listeners: List<AbstractSparTreeEditListener>
+    listeners: List<AbstractSparTreeEditListener>,
   ) {
     listeners.forEach { registerSparTreeEditListener(it) }
   }
 
+  fun copyListenersFrom(other: SparTree) {
+    check(editListeners.isEmpty()) { "Can only copy listeners for tress without listeners." }
+    registerSparTreeEditListeners(other.editListeners)
+  }
+
   fun registerSparTreeEditListener(
-    listener: AbstractSparTreeEditListener
+    listener: AbstractSparTreeEditListener,
   ) {
     require(!editListeners.contains(listener))
     editListeners.add(listener)
@@ -265,7 +168,7 @@ class SparTree internal constructor(
    */
   @VisibleForTesting
   fun getNodeByTreeScanForId(
-    id: Int
+    id: Int,
   ): AbstractSparTreeNode? {
     val result = ArrayList<AbstractSparTreeNode>(1)
     root.preOrderVisit {
@@ -277,7 +180,7 @@ class SparTree internal constructor(
       }
     }
     check(result.size < 2)
-    return if (result.isEmpty()) null else result.first()
+    return if (result.isEmpty()) null else result.single()
   }
 
   fun getTokenNodeForText(text: String): ImmutableList<LexerRuleSparTreeNode> {
@@ -289,7 +192,7 @@ class SparTree internal constructor(
   /** The returned program might be stale if this tree is modified later.  */
   override val programSnapshot: TokenizedProgram
     get() {
-      assert(program.tokens == computeTokenizedProgram().tokens)
+      lazyAssert { program.tokens == computeTokenizedProgram().tokens }
       return program
     }
 
@@ -317,7 +220,7 @@ class SparTree internal constructor(
   private fun computeTokenizedProgram(): TokenizedProgram {
     return TokenizedProgram(
       leafNodeSequence().map { it.token }.toImmutableList(),
-      tokenizedProgramFactory
+      tokenizedProgramFactory,
     )
   }
 
@@ -329,7 +232,7 @@ class SparTree internal constructor(
       }
     }
     val leafNodesFromLinkedList = leafNodeSequence().toImmutableList()
-    assert(leafNodes == leafNodesFromLinkedList) {
+    lazyAssert({ leafNodes == leafNodesFromLinkedList }) {
       """
         leaf nodes from the root: $leafNodes
         leaf nodes from the linked leaves: $leafNodesFromLinkedList
@@ -341,9 +244,36 @@ class SparTree internal constructor(
   companion object {
     private var globalTreeIdGenerator = 0
 
-    private fun fixLeafLinkByDeleting(
+    internal fun updateTokenIntervalUpToRoot(
+      startNode: AbstractSparTreeNode,
+    ): Boolean {
+      var nodeInfo: AbstractSparTreeNode? = startNode
+      var globalChanged = false
+      while (nodeInfo != null) {
+        val node = nodeInfo.asParserRule()
+        var changed = false
+        val leftmostToken = node.leftmostToken
+        if (node.beginToken !== leftmostToken) {
+          node.beginToken = leftmostToken
+          changed = true
+        }
+        val rightmostToken = node.rightmostToken
+        if (node.endToken !== rightmostToken) {
+          node.endToken = rightmostToken
+          changed = true
+        }
+        if (!changed) {
+          break
+        }
+        globalChanged = true
+        nodeInfo = node.parent
+      }
+      return globalChanged
+    }
+
+    internal fun fixLeafLinkByDeleting(
       leftInclusive: LexerRuleSparTreeNode,
-      rightExclusive: LexerRuleSparTreeNode
+      rightExclusive: LexerRuleSparTreeNode,
     ) {
       if (leftInclusive === rightExclusive) {
         return

@@ -18,9 +18,11 @@ package org.perses.reduction
 
 import com.google.common.flogger.FluentLogger
 import org.perses.program.ScriptFile
-import org.perses.util.Shell
 import org.perses.util.TimeSpan
 import org.perses.util.Util
+import org.perses.util.shell.AbstractShell.Companion.CURRENT_ENV
+import org.perses.util.shell.AbstractShell.Companion.singleton
+import org.perses.util.shell.CmdOutput
 import java.nio.file.Files
 import java.nio.file.Path
 
@@ -31,11 +33,11 @@ class TestScript(val scriptFile: Path, private val scriptTemplate: ScriptFile) {
    */
   fun test(): PropertyTestResult {
     val timeSpanBuilder = TimeSpan.Builder.start(System.currentTimeMillis())
-    val output = Shell.run(
+    val output = singleton.run(
       "${scriptTemplate.shebang}  ${scriptFile.fileName}",
       scriptFile.parent,
       captureOutput = false,
-      environment = Shell.CURRENT_ENV
+      environment = CURRENT_ENV,
     )
     logger.atFine().log("test script stdout: %s", output.stdout)
     logger.atFine().log("test script stderr: %s", output.stderr)
@@ -43,12 +45,12 @@ class TestScript(val scriptFile: Path, private val scriptTemplate: ScriptFile) {
     return PropertyTestResult(output.exitCode, timeSpan.elapsedTimeInMillis)
   }
 
-  fun runAndCaptureOutput(): Shell.CmdOutput {
-    return Shell.run(
+  fun runAndCaptureOutput(): CmdOutput {
+    return singleton.run(
       "${scriptTemplate.shebang}  ${scriptFile.fileName}",
       scriptFile.parent,
       captureOutput = true,
-      environment = Shell.CURRENT_ENV
+      environment = CURRENT_ENV,
     )
   }
 

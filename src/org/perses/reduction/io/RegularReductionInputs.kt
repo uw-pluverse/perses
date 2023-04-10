@@ -17,14 +17,15 @@
 package org.perses.reduction.io
 
 import com.google.common.collect.ImmutableList
+import org.perses.program.LanguageKind
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
 
 class RegularReductionInputs(
   testScript: ScriptFile,
-  mainFile: SourceFile
-) : AbstractSingleFileReductionInputs(
+  mainFile: SourceFile,
+) : AbstractSingleFileReductionInputs<LanguageKind, SourceFile, RegularReductionInputs>(
   testScript,
   mainFile,
-  files = ImmutableList.of(mainFile)
+  files = ImmutableList.of(mainFile),
 )

@@ -12,7 +12,7 @@ __location__ = os.path.realpath(
 TIME: Final = 0
 TOTAL: Final = -5
 USED: Final = -3
-BENCH: Final = -4
+SUBJECT: Final = -4
 REDUCER: Final = -3
 TIMEMARK: Final = -2
 
@@ -93,7 +93,7 @@ def get_gc_number(last_line: str) -> int:
 def analyze_json_file(filepath: str, statistics: dict) -> dict:
     # decode filename
     elements = filepath.split('_')
-    bench = elements[BENCH]
+    subject = elements[SUBJECT]
     reducer = elements[REDUCER]
     timemark = elements[TIMEMARK]
     reducer_at_timemark = f"{reducer}@{timemark}"
@@ -103,9 +103,9 @@ def analyze_json_file(filepath: str, statistics: dict) -> dict:
         json_dict = json.load(f)
 
     # trim redundant information
-    if bench not in json_dict:
-        raise Exception(f"Error: File name and content inconsistent: BENCH. Please check {filepath}")
-    json_dict.pop(bench)
+    if subject not in json_dict:
+        raise Exception(f"Error: File name and content inconsistent: subject. Please check {filepath}")
+    json_dict.pop(subject)
     if reducer not in json_dict:
         raise Exception(f"Error: File name and content inconsistent: REDUCER. Please check {filepath}")
     json_dict.pop(reducer)
@@ -117,26 +117,26 @@ def analyze_json_file(filepath: str, statistics: dict) -> dict:
     KEY_ITERATION: Final = "Iteration"
 
     # append any new data to statistics report
-    if bench not in statistics:
-        statistics[bench] = dict()
-    if reducer_at_timemark not in statistics[bench]:
-        statistics[bench][reducer_at_timemark] = json_dict
+    if subject not in statistics:
+        statistics[subject] = dict()
+    if reducer_at_timemark not in statistics[subject]:
+        statistics[subject][reducer_at_timemark] = json_dict
     else:
         # average if existing already
-        statistics[bench][reducer_at_timemark][KEY_QUERY] += json_dict[KEY_QUERY]
-        statistics[bench][reducer_at_timemark][KEY_QUERY] //= 2
-        statistics[bench][reducer_at_timemark][KEY_TIME] += json_dict[KEY_TIME]
-        statistics[bench][reducer_at_timemark][KEY_TIME] //= 2
-        statistics[bench][reducer_at_timemark][KEY_TOKEN_REMAINING] += json_dict[KEY_TOKEN_REMAINING]
-        statistics[bench][reducer_at_timemark][KEY_TOKEN_REMAINING] //= 2
-        if statistics[bench][reducer_at_timemark][KEY_ITERATION] < json_dict[KEY_ITERATION]:
-            statistics[bench][reducer_at_timemark][KEY_ITERATION] = json_dict[KEY_ITERATION]
+        statistics[subject][reducer_at_timemark][KEY_QUERY] += json_dict[KEY_QUERY]
+        statistics[subject][reducer_at_timemark][KEY_QUERY] //= 2
+        statistics[subject][reducer_at_timemark][KEY_TIME] += json_dict[KEY_TIME]
+        statistics[subject][reducer_at_timemark][KEY_TIME] //= 2
+        statistics[subject][reducer_at_timemark][KEY_TOKEN_REMAINING] += json_dict[KEY_TOKEN_REMAINING]
+        statistics[subject][reducer_at_timemark][KEY_TOKEN_REMAINING] //= 2
+        if statistics[subject][reducer_at_timemark][KEY_ITERATION] < json_dict[KEY_ITERATION]:
+            statistics[subject][reducer_at_timemark][KEY_ITERATION] = json_dict[KEY_ITERATION]
 
 
 def analyze_log_file(filepath: str, statistics: dict):
     # decode filename
     elements = filepath.split('_')
-    bench = elements[BENCH]
+    subject = elements[SUBJECT]
     reducer = elements[REDUCER]
     timemark = elements[TIMEMARK]
     reducer_at_timemark = f"{reducer}@{timemark}"
@@ -172,21 +172,21 @@ def analyze_log_file(filepath: str, statistics: dict):
     log_dict[KEY_HEAP_ACQUIRED] = total[-1]
     log_dict[KEY_GC_NUMBER] = get_gc_number(lines[-1])
 
-    if "peak_memory_before_gc" not in statistics[bench][reducer_at_timemark]:
-        statistics[bench][reducer_at_timemark].update(log_dict)
+    if "peak_memory_before_gc" not in statistics[subject][reducer_at_timemark]:
+        statistics[subject][reducer_at_timemark].update(log_dict)
     else:
-        statistics[bench][reducer_at_timemark][KEY_PEAK_BEFORE_GC] += log_dict[KEY_PEAK_BEFORE_GC]
-        statistics[bench][reducer_at_timemark][KEY_PEAK_BEFORE_GC] //= 2
-        statistics[bench][reducer_at_timemark][KEY_PEAK_AFTER_GC] += log_dict[KEY_PEAK_AFTER_GC]
-        statistics[bench][reducer_at_timemark][KEY_PEAK_AFTER_GC] //= 2
-        statistics[bench][reducer_at_timemark][KEY_AVERAGE_MEMORY_USAGE] += log_dict[KEY_AVERAGE_MEMORY_USAGE]
-        statistics[bench][reducer_at_timemark][KEY_AVERAGE_MEMORY_USAGE] //= 2
-        statistics[bench][reducer_at_timemark][KEY_AVERAGE_MEMORY_USAGE_AFTER_GC] += log_dict[KEY_AVERAGE_MEMORY_USAGE_AFTER_GC]
-        statistics[bench][reducer_at_timemark][KEY_AVERAGE_MEMORY_USAGE_AFTER_GC] //= 2
-        statistics[bench][reducer_at_timemark][KEY_HEAP_ACQUIRED] += log_dict[KEY_HEAP_ACQUIRED]
-        statistics[bench][reducer_at_timemark][KEY_HEAP_ACQUIRED] //= 2
-        statistics[bench][reducer_at_timemark][KEY_GC_NUMBER] += log_dict[KEY_GC_NUMBER]
-        statistics[bench][reducer_at_timemark][KEY_GC_NUMBER] //= 2
+        statistics[subject][reducer_at_timemark][KEY_PEAK_BEFORE_GC] += log_dict[KEY_PEAK_BEFORE_GC]
+        statistics[subject][reducer_at_timemark][KEY_PEAK_BEFORE_GC] //= 2
+        statistics[subject][reducer_at_timemark][KEY_PEAK_AFTER_GC] += log_dict[KEY_PEAK_AFTER_GC]
+        statistics[subject][reducer_at_timemark][KEY_PEAK_AFTER_GC] //= 2
+        statistics[subject][reducer_at_timemark][KEY_AVERAGE_MEMORY_USAGE] += log_dict[KEY_AVERAGE_MEMORY_USAGE]
+        statistics[subject][reducer_at_timemark][KEY_AVERAGE_MEMORY_USAGE] //= 2
+        statistics[subject][reducer_at_timemark][KEY_AVERAGE_MEMORY_USAGE_AFTER_GC] += log_dict[KEY_AVERAGE_MEMORY_USAGE_AFTER_GC]
+        statistics[subject][reducer_at_timemark][KEY_AVERAGE_MEMORY_USAGE_AFTER_GC] //= 2
+        statistics[subject][reducer_at_timemark][KEY_HEAP_ACQUIRED] += log_dict[KEY_HEAP_ACQUIRED]
+        statistics[subject][reducer_at_timemark][KEY_HEAP_ACQUIRED] //= 2
+        statistics[subject][reducer_at_timemark][KEY_GC_NUMBER] += log_dict[KEY_GC_NUMBER]
+        statistics[subject][reducer_at_timemark][KEY_GC_NUMBER] //= 2
 
 
 def validate_existence(filepath: str):

@@ -27,7 +27,8 @@ readonly SUBMODULE_BAZEL_DIRS=(
   "atn"
   "ebtrans"
   "shadow"
-  "perses-fuzzer"
+  "perses-fuzzer/src"
+  "perses-fuzzer/test"
   "pigen/ast"
   "pigen/chaoty"
 )

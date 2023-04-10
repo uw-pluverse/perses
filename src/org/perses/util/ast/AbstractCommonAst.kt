@@ -29,7 +29,7 @@ abstract class AbstractCommonAst<Self : AbstractCommonAst<Self>> :
       toSourceCode(
         it,
         Indent.createEmptyIndent(numOfSpacesPerIndent = INDENT_INCREAMENT),
-        multiLineMode = true
+        multiLineMode = true,
       )
     }
     baos.toString()

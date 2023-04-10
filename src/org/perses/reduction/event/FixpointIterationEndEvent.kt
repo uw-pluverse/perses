@@ -20,7 +20,7 @@ class FixpointIterationEndEvent internal constructor(
   startEvent: FixpointIterationStartEvent,
   currentTimeMillis: Long,
   programSize: Int,
-  val countOfTestScriptExecutions: Int
+  val countOfTestScriptExecutions: Int,
 ) :
   AbstractEndEvent<FixpointIterationStartEvent>(startEvent, currentTimeMillis, programSize) {
 

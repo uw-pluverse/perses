@@ -79,12 +79,16 @@ class MutableAltBlockTest : AbstractMutableGrammarTest() {
     block.addIfInequivalent(refC)
 
     assertThat(block.asIterable()).containsExactly(
-      refA, refB, refC
+      refA,
+      refB,
+      refC,
     ).inOrder()
 
     block.replace(refB, refD)
     assertThat(block.asIterable()).containsExactly(
-      refA, refD, refC
+      refA,
+      refD,
+      refC,
     ).inOrder()
   }
 }

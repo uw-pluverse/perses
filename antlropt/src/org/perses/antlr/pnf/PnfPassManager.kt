@@ -21,7 +21,6 @@ import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
 import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.pnf.PnfGrammarChecker.Companion.validateIntermediateGrammar
-import org.perses.util.FileNameContentPair
 import org.perses.util.ktInfo
 import java.util.concurrent.TimeUnit
 
@@ -36,8 +35,8 @@ class PnfPassManager {
   fun process(
     origGrammar: PersesGrammar,
     startRuleName: String,
-    lexerGramamr: FileNameContentPair?,
-    vararg listeners: Listener
+    lexerGramamr: PersesGrammar?,
+    vararg listeners: Listener,
   ): PersesGrammar {
     var currentGrammar = origGrammar
     val allListeners = ImmutableList
@@ -54,10 +53,13 @@ class PnfPassManager {
         }
 
         val grammarBefore = currentGrammar
-        currentGrammar = pass.process(currentGrammar)
+        currentGrammar = pass.processParserGrammar(currentGrammar, lexerGramamr)
 
         validateIntermediateGrammar(
-          currentGrammar, pass.javaClass, grammarBefore, lexerGramamr
+          currentGrammar,
+          pass.javaClass,
+          grammarBefore,
+          lexerGramamr,
         )
         for (listener in allListeners) {
           listener.afterPass(currentGrammar, pass.javaClass, i)
@@ -70,9 +72,9 @@ class PnfPassManager {
     // The following passes are intended to run only once.
     sequenceOf(
       ConvertAllAltToRuleReferenceOrTerminalPass(),
-      PnfCheckPass()
+      PnfCheckPass(),
     ).forEach { pass ->
-      currentGrammar = pass.process(currentGrammar)
+      currentGrammar = pass.processParserGrammar(currentGrammar, lexerGramamr)
     }
     // TODO: enable the following passes when pnd refactoring is done.
     //    final NormalizeRuleNamePass renamingPass = new NormalizeRuleNamePass(startRuleName);

@@ -47,7 +47,7 @@ class OutputFlags : ICommandLineFlags {
     names = ["--print-language-kind-yaml-example"],
     description = "Print an example of a language kind",
     required = false,
-    help = true
+    help = true,
   )
   var printLanguageKindExample = false
 

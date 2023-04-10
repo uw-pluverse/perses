@@ -7,6 +7,7 @@ def reduce(
         source_file,
         test_script,
         output_dir = None,
+        names_of_other_files_in_output_dir = None,
         enable_query_caching = None,
         enable_edit_caching = None,
         statistics_file = None,
@@ -23,6 +24,8 @@ def reduce(
         fail("The source file should be in the current folder.")
     if "/" in test_script:
         fail("The test script should be in the current folder.")
+    if output_dir == None and names_of_other_files_in_output_dir != None:
+        fail("output_dir cannot be None if names_of_other_files_in_output_dir is not None.")
 
     thread_count = thread_count or 1  # for determinism
     stdout_file = "%s.stdout.txt" % name
@@ -52,9 +55,13 @@ def reduce(
         outs.append(statistics_file)
 
     if output_dir != None:
-        result_file = "%s/%s" % (output_dir, source_file)
-        outs.append(result_file)
-        args.append("--output-dir $$(dirname $(location %s))" % result_file)
+        main_result_file = "%s/%s" % (output_dir, source_file)
+        args.append("--output-dir $$(dirname $(location %s))" % main_result_file)
+        outs.append(main_result_file)
+        if names_of_other_files_in_output_dir:
+            for file_name in names_of_other_files_in_output_dir:
+                outs.append("%s/%s" % (output_dir, file_name))
+
     if (verbosity):
         args.append("--verbosity %s" % verbosity)
     if (log_file):

@@ -6,7 +6,10 @@ load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 kt_jvm_library(
     name = "util",
-    srcs = ["Util.kt"],
+    srcs = [
+        "PersesKtExts.kt",
+        "Util.kt",
+    ],
     deps = [
         "//:flogger",
         "//:guava",
@@ -52,7 +55,7 @@ kt_jvm_library(
         "PersesDiffUtil.kt",
     ],
     deps = [
-        ":perses_kt_exts",
+        ":util",
         "//:guava",
         "@maven//:com_googlecode_java_diff_utils_diffutils",
     ],
@@ -84,30 +87,13 @@ kt_jvm_library(
     name = "fast_string_builder",
     srcs = ["FastStringBuilder.kt"],
     deps = [
-        "@maven//:it_unimi_dsi_fastutil",
+        "//:fastutil",
     ],
 )
 
 sh_binary(
     name = "migrate_from_maven_jar",
     srcs = [":migrate_from_maven_jar.sh"],
-)
-
-kt_jvm_library(
-    name = "shell",
-    srcs = [
-        "Shell.kt",
-        "ShellCommandOnPath.kt",
-        "ShellOutputLines.kt",
-        "ShellOutputStream.kt",
-    ],
-    deps = [
-        ":perses_kt_exts",
-        ":util",
-        "//:flogger",
-        "//:guava",
-        "@maven//:org_apache_commons_commons_exec",
-    ],
 )
 
 kt_jvm_library(
@@ -128,16 +114,8 @@ kt_jvm_library(
 kt_jvm_library(
     name = "daemon_thread_pool",
     srcs = ["DaemonThreadPool.kt"],
-)
-
-kt_jvm_library(
-    name = "performance_monitor",
-    srcs = ["PerformanceMonitor.kt"],
     deps = [
-        ":daemon_thread_pool",
-        "//:flogger",
         "//:guava",
-        "@maven//:it_unimi_dsi_fastutil",
     ],
 )
 
@@ -168,9 +146,13 @@ kt_jvm_library(
 
 kt_jvm_library(
     name = "flogger_kt_exts",
-    srcs = ["flogger_kt_exts.kt"],
+    srcs = ["FloggerKtExts.kt"],
     visibility = [
         "//:__pkg__",
+    ],
+    exports = [
+        "@maven//:com_google_flogger_flogger",
+        "@maven//:com_google_flogger_flogger_system_backend",
     ],
     deps = [
         "@maven//:com_google_flogger_flogger",
@@ -184,14 +166,5 @@ kt_jvm_library(
     deps = [
         "//:guava",
         "//:kotlin_stdib",
-    ],
-)
-
-kt_jvm_library(
-    name = "perses_kt_exts",
-    srcs = ["perses_kt_exts.kt"],
-    deps = [
-        "//:flogger",
-        "//:guava",
     ],
 )

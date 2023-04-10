@@ -35,7 +35,7 @@ class ConfigBasedTestScriptExecutionCacheTest {
     """
       int a, b, c, d;
     """.trimIndent(),
-    LanguageC
+    LanguageC,
   )
   val factory = origProgram.factory
   val tokens = origProgram.tokens
@@ -48,19 +48,19 @@ class ConfigBasedTestScriptExecutionCacheTest {
 
   val emptyProgram = TokenizedProgram(
     ImmutableList.of(),
-    origProgram.factory
+    origProgram.factory,
   )
   val oneTokenProgram = TokenizedProgram(
     ImmutableList.of(token_a),
-    origProgram.factory
+    origProgram.factory,
   )
   val twoTokenProgram = TokenizedProgram(
     ImmutableList.of(token_a, token_b),
-    origProgram.factory
+    origProgram.factory,
   )
   val threeTokenProgram = TokenizedProgram(
     ImmutableList.of(token_a, token_b, token_c),
-    origProgram.factory
+    origProgram.factory,
   )
   val testResult = PropertyTestResult(exitCode = 1, elapsedMilliseconds = 1)
 

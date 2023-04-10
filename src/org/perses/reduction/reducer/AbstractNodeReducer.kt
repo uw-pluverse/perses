@@ -29,11 +29,12 @@ import org.perses.spartree.NodeDeletionTreeEdit
 import org.perses.spartree.NodeReplacementTreeEdit
 import org.perses.spartree.SparTree
 import org.perses.spartree.SparTreeSimplifier
+import org.perses.util.Util.lazyAssert
 import java.util.Queue
 
 abstract class AbstractNodeReducer(
   reducerAnnotation: ReducerAnnotation,
-  reducerContext: ReducerContext
+  reducerContext: ReducerContext,
 ) : AbstractTokenReducer(reducerAnnotation, reducerContext) {
 
   final override fun internalReduce(fixpointReductionState: FixpointReductionState) {
@@ -44,38 +45,39 @@ abstract class AbstractNodeReducer(
           System.currentTimeMillis(),
           tree.tokenCount,
           tree = tree,
-          message = "The spar-tree is not parsable."
-        )
+          message = "The spar-tree is not parsable.",
+        ),
       )
       return
     }
     val tree = fixpointReductionState.sparTree.getParsableTreeOrFail()
     val root = tree.root
-    assert(SparTreeSimplifier.assertSingleEntrySingleExitPathProperty(root))
+    lazyAssert { SparTreeSimplifier.assertSingleEntrySingleExitPathProperty(root) }
     val queue = createReductionQueue()
-    queue.addAll(root.immutableChildView)
+    initializeReductionQueue(queue, tree)
     while (!queue.isEmpty()) {
       val node = queue.poll()
-      val oldTokenCount = tree.tokenCount
       val nodeReductionStartEvent =
         fixpointReductionState.fixpointIterationStartEvent.createNodeReductionStartEvent(
           System.currentTimeMillis(),
-          programSize = oldTokenCount,
-          tree = tree,
-          node = node
+          program = tree.programSnapshot,
+          node = node,
         )
       listenerManager.onNodeReductionStart(nodeReductionStartEvent)
       val pendingNodes = reduceOneNode(tree, node)
-      val newTokenCount = tree.tokenCount
       listenerManager.onNodeReductionEnd(
         nodeReductionStartEvent.createEndEvent(
           currentTimeMillis = System.currentTimeMillis(),
           remainingQueueSize = queue.size,
-          programSize = newTokenCount
-        )
+          program = tree.programSnapshot,
+        ),
       )
       queue.addAll(pendingNodes)
     }
+  }
+
+  protected open fun initializeReductionQueue(queue: Queue<AbstractSparTreeNode>, tree: SparTree) {
+    queue.addAll(tree.root.immutableChildView)
   }
 
   protected abstract fun requiresParsableTree(): Boolean
@@ -84,54 +86,54 @@ abstract class AbstractNodeReducer(
 
   protected abstract fun reduceOneNode(
     tree: SparTree,
-    node: AbstractSparTreeNode
+    node: AbstractSparTreeNode,
   ): ImmutableList<AbstractSparTreeNode>
 
   protected fun testSparTreeEdit(edit: AbstractSparTreeEdit<*>) =
     testAllTreeEditsAndReturnTheBest(ImmutableList.of(edit))
 
-  protected fun addDeletionEditToEditListAndLog(
+  protected fun optionallyCreateDeletionEditAndLog(
     actionSet: NodeDeletionActionSet,
-    editList: MutableList<in AbstractSparTreeEdit<*>>,
-    tree: SparTree
-  ) {
-    if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
+    tree: SparTree,
+  ): NodeDeletionTreeEdit? {
+    return if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
       listenerManager.onNodeEditActionSetCacheHit(actionSet)
+      null
     } else {
-      editList.add(tree.createNodeDeletionEdit(actionSet))
+      tree.createNodeDeletionEdit(actionSet)
     }
   }
 
-  protected fun addEditToEditListAndLog(
+  protected fun optionallyCreateReplacementEditAndLog(
     actionSet: ChildHoistingActionSet,
-    editList: MutableList<in AbstractSparTreeEdit<*>>,
-    tree: SparTree
-  ) {
-    if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
+    tree: SparTree,
+  ): NodeReplacementTreeEdit? {
+    return if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
       listenerManager.onNodeEditActionSetCacheHit(actionSet)
+      null
     } else {
-      editList.add(tree.createNodeReplacementEdit(actionSet))
+      tree.createNodeReplacementEdit(actionSet)
     }
   }
 
   protected fun computePendingNodes(
     currentNode: AbstractSparTreeNode,
-    bestEdit: AbstractSparTreeEdit<*>
+    bestEdit: AbstractSparTreeEdit<*>,
   ): ImmutableList<AbstractSparTreeNode> {
     if (!currentNode.isPermanentlyDeleted) { // Children are changed, so work on the children later.
       return ImmutableList.copyOf(currentNode.immutableChildView)
     }
     return if (bestEdit is NodeDeletionTreeEdit) {
       val nodeDeletionTreeEdit = bestEdit.asNodeDeleteEdit()
-      assert(nodeDeletionTreeEdit.isNodeATarget(currentNode))
-      assert(nodeDeletionTreeEdit.numberOfActions == 1)
+      lazyAssert { nodeDeletionTreeEdit.isNodeATarget(currentNode) }
+      lazyAssert { nodeDeletionTreeEdit.numberOfActions == 1 }
       ImmutableList.of()
     } else if (bestEdit is NodeReplacementTreeEdit) {
       val nodeReplacementTreeEdit = bestEdit.asNodeReplacementEdit()
       if (nodeReplacementTreeEdit.isNodeATarget(currentNode)) {
-        assert(nodeReplacementTreeEdit.numberOfActions == 1)
+        lazyAssert { nodeReplacementTreeEdit.numberOfActions == 1 }
         val onlyReplacementNode = nodeReplacementTreeEdit.onlyReplacementNode
-        assert(!onlyReplacementNode.isPermanentlyDeleted) {
+        lazyAssert({ !onlyReplacementNode.isPermanentlyDeleted }) {
           onlyReplacementNode.printTreeStructure()
         }
         ImmutableList.of(onlyReplacementNode)

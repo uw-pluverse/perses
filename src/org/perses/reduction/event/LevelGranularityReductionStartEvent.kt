@@ -20,7 +20,7 @@ class LevelGranularityReductionStartEvent(
   val levelReductionStartEvent: LevelReductionStartEvent,
   currentTimeMillis: Long,
   programSize: Int,
-  val maxNumOfNodesPerPartition: Int
+  val maxNumOfNodesPerPartition: Int,
 ) :
   AbstractStartEvent(currentTimeMillis, programSize) {
 
@@ -29,7 +29,7 @@ class LevelGranularityReductionStartEvent(
   fun createEndEvent(
     currentTimeMillis: Long,
     programSize: Int,
-    maxNumOfNodesPerPartition: Int
+    maxNumOfNodesPerPartition: Int,
   ): LevelGranularityReductionEndEvent {
     check(!ended)
     ended = true
@@ -37,7 +37,7 @@ class LevelGranularityReductionStartEvent(
       startEvent = this,
       currentTimeMillis = currentTimeMillis,
       programSize = programSize,
-      maxNumOfNodesPerPartition = maxNumOfNodesPerPartition
+      maxNumOfNodesPerPartition = maxNumOfNodesPerPartition,
     )
   }
 

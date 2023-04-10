@@ -15,8 +15,8 @@ kt_jvm_library(
         "VersionFlags.kt",
     ],
     deps = [
+        "//:jcommander",
         "//src/org/perses/util:default_logging_configurations",
         "//version/org/perses/version",
-        "@maven//:com_beust_jcommander",
     ],
 )

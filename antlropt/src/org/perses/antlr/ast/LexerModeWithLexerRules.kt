@@ -23,7 +23,7 @@ import java.io.PrintStream
 /** TODO: test  */
 class LexerModeWithLexerRules(
   val modeName: String,
-  val lexerRules: ImmutableList<AbstractPersesLexerRuleAst>
+  val lexerRules: ImmutableList<AbstractPersesLexerRuleAst>,
 ) : AbstractPersesAst() {
 
   override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
@@ -42,7 +42,7 @@ class LexerModeWithLexerRules(
   }
 
   fun copyWithNewLexerRules(
-    newLexerRules: ImmutableList<AbstractPersesLexerRuleAst>
+    newLexerRules: ImmutableList<AbstractPersesLexerRuleAst>,
   ): LexerModeWithLexerRules {
     return LexerModeWithLexerRules(modeName, newLexerRules)
   }

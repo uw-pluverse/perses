@@ -9,13 +9,14 @@ kt_jvm_library(
     srcs = ["SortedIntArrayReference.kt"],
     deps = [
         "//:guava",
+        "//src/org/perses/util",
     ],
 )
 
 kt_jvm_library(
     name = "future_execution_result_triple",
     srcs = [
-        "FutureExecutionResultInfo.kt",
+        "EditTestPayload.kt",
     ],
     deps = [
         ":test_script_executor_service",
@@ -31,7 +32,7 @@ kt_jvm_library(
     ],
     deps = [
         "//:flogger",
-        "//src/org/perses/util:perses_kt_exts",
+        "//src/org/perses/util",
     ],
 )
 
@@ -58,8 +59,8 @@ kt_jvm_library(
         "//:flogger",
         "//src/org/perses/program:source_file",
         "//src/org/perses/util",
-        "//src/org/perses/util:shell",
         "//src/org/perses/util:timeutil",
+        "//src/org/perses/util/shell",
         "@maven//:org_apache_commons_commons_exec",
     ],
 )
@@ -87,7 +88,6 @@ kt_jvm_library(
         "//src/org/perses/reduction/io",
         "//src/org/perses/util",
         "//src/org/perses/util:timeutil",
-        "@maven//:org_checkerframework_checker_qual",
     ],
 )
 
@@ -132,10 +132,10 @@ kt_jvm_library(
     srcs = [
         "AbstractReductionListener.kt",
         "AbstractTokenReducer.kt",
+        "AsyncReductionListenerManager.kt",
         "FixpointReductionState.kt",
         "ReducerAnnotation.kt",
         "ReducerContext.kt",
-        "ReductionListenerManager.kt",
         "SparTreeWithParsability.kt",
     ],
     deps = [
@@ -162,6 +162,8 @@ kt_jvm_library(
 kt_jvm_library(
     name = "test_script_executor_service",
     srcs = [
+        "RestrictedFuture.kt",
+        "TestScriptExecResult.kt",
         "TestScriptExecutorService.kt",
     ],
     deps = [
@@ -172,7 +174,7 @@ kt_jvm_library(
         "//src/org/perses/reduction/cache:query_cache",
         "//src/org/perses/reduction/io",
         "//src/org/perses/util",
-        "//src/org/perses/util:performance_monitor",
+        "//src/org/perses/util:daemon_thread_pool",
         "//src/org/perses/util:timeutil",
     ],
 )
@@ -215,6 +217,7 @@ kt_jvm_library(
     name = "reduction_driver",
     srcs = [
         "AbstractProgramReductionDriver.kt",
+        "ReducerScheduler.kt",
         "RegularProgramReductionDriver.kt",
     ],
     deps = [
@@ -224,6 +227,8 @@ kt_jvm_library(
         ":reduction_configuration",
         ":reduction_driver_interface",
         ":test_script_executor_service",
+        "//:antlr_runtime",
+        "//:antlr_tool",
         "//:flogger",
         "//:guava",
         "//src/org/perses:command_options",
@@ -231,6 +236,7 @@ kt_jvm_library(
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/listener:listeners",
         "//src/org/perses/program",
+        "//src/org/perses/reduction/cache:PassLevelCache",
         "//src/org/perses/reduction/cache:enum_query_caching_control",
         "//src/org/perses/reduction/cache:query_cache",
         "//src/org/perses/reduction/cache:query_cache_factory",
@@ -242,8 +248,5 @@ kt_jvm_library(
         "//src/org/perses/spartree",
         "//src/org/perses/util",
         "//src/org/perses/util:timeutil",
-        "@maven//:org_antlr_antlr4",
-        "@maven//:org_antlr_antlr4_runtime",
-        "@maven//:org_checkerframework_checker_qual",
     ],
 )

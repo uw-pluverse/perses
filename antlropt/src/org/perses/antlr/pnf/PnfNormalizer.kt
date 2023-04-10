@@ -18,7 +18,6 @@ package org.perses.antlr.pnf
 
 import org.perses.antlr.ast.PersesAstBuilder
 import org.perses.antlr.util.Util
-import org.perses.util.FileNameContentPair
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.readText
@@ -28,7 +27,7 @@ class PnfNormalizer(
   source: Path,
   lexer: Path?,
   private val startRuleName: String,
-  private val outputFile: Path
+  private val outputFile: Path,
 ) {
   init {
     require(Files.isRegularFile(source)) {
@@ -43,7 +42,11 @@ class PnfNormalizer(
     PersesAstBuilder.loadGrammarFromString(sourceAntlrFileContent)
       .copyWithNewName(Util.extractGrammarNameFromGrammarFileName(outputFile.toString()))
 
-  private val lexerGrammar = lexer?.let { FileNameContentPair.createFromFile(it) }
+  private val lexerGrammar = lexer?.let {
+    PersesAstBuilder.loadGrammarFromFile(it).also { grammar ->
+      check(grammar.grammarName + ".g4" == it.fileName.toString())
+    }
+  }
 
   fun run() {
     val passes = PnfPassManager()

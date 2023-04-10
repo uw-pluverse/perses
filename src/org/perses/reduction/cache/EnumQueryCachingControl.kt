@@ -19,7 +19,8 @@ package org.perses.reduction.cache
 enum class EnumQueryCachingControl {
   TRUE,
   FALSE,
-  AUTO;
+  AUTO,
+  ;
 
   companion object {
     fun convert(string: String): EnumQueryCachingControl? {

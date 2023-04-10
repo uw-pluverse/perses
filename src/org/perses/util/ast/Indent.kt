@@ -20,7 +20,7 @@ import java.io.PrintStream
 
 data class Indent private constructor(
   val numOfIndents: Int,
-  private val numOfSpacesPerIndent: Int
+  private val numOfSpacesPerIndent: Int,
 ) {
 
   init {
@@ -31,14 +31,14 @@ data class Indent private constructor(
   val increasedIndent: Indent by lazy {
     Indent(
       numOfIndents = numOfIndents + 1,
-      numOfSpacesPerIndent
+      numOfSpacesPerIndent,
     )
   }
 
   val decreasedIndent: Indent by lazy {
     Indent(
       numOfIndents = numOfIndents - 1,
-      numOfSpacesPerIndent
+      numOfSpacesPerIndent,
     )
   }
 
@@ -54,7 +54,7 @@ data class Indent private constructor(
       require(numOfSpacesPerIndent >= 0)
       return Indent(
         numOfIndents = 0,
-        numOfSpacesPerIndent = numOfSpacesPerIndent
+        numOfSpacesPerIndent = numOfSpacesPerIndent,
       )
     }
 

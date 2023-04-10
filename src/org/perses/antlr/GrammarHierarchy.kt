@@ -19,19 +19,28 @@ package org.perses.antlr
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
 import org.perses.antlr.ast.PersesAstBuilder
+import org.perses.antlr.protobuf.GrammarHierarchyOuterClass
 
 /** This is the rule hierarchy, which can be used as an approximation of the class hierarchy.  */
 class GrammarHierarchy internal constructor(
-  val ruleList: ImmutableList<RuleHierarchyInfo>,
-  private val nameToRuleMap: ImmutableMap<String, RuleHierarchyInfo>
+  val ruleList: ImmutableList<RuleHierarchyEntry>,
+  private val nameToRuleMap: ImmutableMap<String, RuleHierarchyEntry>,
 ) {
 
-  fun getTokenRule(tokenRuleName: String): RuleHierarchyInfo? {
+  fun getRuleHierarchyEntryOrNull(tokenRuleName: String): RuleHierarchyEntry? {
     return nameToRuleMap[tokenRuleName]
   }
 
-  fun getRuleHierarchyInfoWithName(ruleName: String): RuleHierarchyInfo {
+  fun getRuleHierarchyEntryWithNameOrThrow(ruleName: String): RuleHierarchyEntry {
     return nameToRuleMap[ruleName] ?: error("Does not exist a rule for the name $ruleName")
+  }
+
+  fun toProtoMessage(): GrammarHierarchyOuterClass.GrammarHierarchy {
+    return ruleList.fold(
+      GrammarHierarchyOuterClass.GrammarHierarchy.newBuilder(),
+    ) { acc, ele ->
+      acc.addEntries(ele.toProtoRuleHierarchyEntry())
+    }.build()
   }
 
   companion object {
@@ -40,7 +49,7 @@ class GrammarHierarchy internal constructor(
       val rawAst = AntlrGrammarParser.parseRawGrammarASTFromString(content)
       val persesGrammar = PersesAstBuilder(rawAst).grammar
       return createFromCombinedAntlrGrammar(
-        AbstractAntlrGrammar.CombinedAntlrGrammar(persesGrammar)
+        AbstractAntlrGrammar.CombinedAntlrGrammar(persesGrammar),
       )
     }
 
@@ -54,13 +63,13 @@ class GrammarHierarchy internal constructor(
     }
 
     private fun createFromCombinedAntlrGrammar(
-      grammar: AbstractAntlrGrammar.CombinedAntlrGrammar
+      grammar: AbstractAntlrGrammar.CombinedAntlrGrammar,
     ): GrammarHierarchy {
       return GrammarHierarchyBuilder(grammar).build()
     }
 
     private fun createFromSeparateAntlrGrammar(
-      grammar: AbstractAntlrGrammar.SeparateAntlrGrammar
+      grammar: AbstractAntlrGrammar.SeparateAntlrGrammar,
     ): GrammarHierarchy {
       return GrammarHierarchyBuilder(grammar).build()
     }

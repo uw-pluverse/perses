@@ -3,78 +3,78 @@
 The spar tree is the following.
 translationUnit {id=1}
 |___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
-    |___aux_rule__declaration_3 {id=338,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
-    |   |___(+) {id=339,slot_type=declarationSpecifiers}
-    |   |   |___Token:int {id=377,slot_type=[declarationSpecifier,typeSpecifier,Int]}
-    |   |___(?) {id=340,slot_type=optional__declaration_2}
-    |   |   |___directDeclarator {id=345,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
-    |   |       |___Token:printf {id=374,slot_type=[aux_rule__directDeclarator_8,Identifier]}
-    |   |       |___(*) {id=347,slot_type=kleene_star__directDeclarator_6}
-    |   |           |___aux_rule__directDeclarator_14 {id=349,slot_type=[aux_rule__directDeclarator_7,aux_rule__directDeclarator_14]}
-    |   |               |___Token:( {id=350,slot_type=LeftParen}
-    |   |               |___parameterTypeList {id=353,slot_type=[altnt_block__directDeclarator_10,parameterTypeList]}
-    |   |               |   |___parameterDeclaration {id=359,slot_type=[parameterList,parameterDeclaration]}
-    |   |               |   |   |___(+) {id=360,slot_type=declarationSpecifiers}
-    |   |               |   |   |   |___Token:const {id=373,slot_type=[declarationSpecifier,typeQualifier,Const]}
-    |   |               |   |   |   |___Token:char {id=371,slot_type=[declarationSpecifier,typeSpecifier,Char]}
-    |   |               |   |   |___(?) {id=362,slot_type=[altnt_block__parameterDeclaration_2,optional__typeName_1]}
-    |   |               |   |       |___Token:* {id=367,slot_type=[abstractDeclarator,pointer,altnt_block__pointer_8,Star]}
-    |   |               |   |___(?) {id=355,slot_type=optional__parameterTypeList_2}
-    |   |               |       |___aux_rule__parameterTypeList_1 {id=356,slot_type=aux_rule__parameterTypeList_1}
-    |   |               |           |___Token:, {id=357,slot_type=Comma}
-    |   |               |           |___Token:... {id=358,slot_type=Ellipsis}
-    |   |               |___Token:) {id=352,slot_type=RightParen}
-    |   |___Token:; {id=341,slot_type=Semi}
+    |___aux_rule__declaration_3 {id=344,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+    |   |___(+) {id=345,slot_type=declarationSpecifiers}
+    |   |   |___Token:int {id=385,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+    |   |___(?) {id=346,slot_type=optional__declaration_2}
+    |   |   |___directDeclarator {id=351,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
+    |   |       |___Token:printf {id=381,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+    |   |       |___(*) {id=353,slot_type=kleene_star__directDeclarator_7}
+    |   |           |___aux_rule__directDeclarator_15 {id=355,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+    |   |               |___Token:( {id=356,slot_type=LeftParen}
+    |   |               |___parameterTypeList {id=359,slot_type=[altnt_block__directDeclarator_11,parameterTypeList]}
+    |   |               |   |___parameterDeclaration {id=365,slot_type=[parameterList,parameterDeclaration]}
+    |   |               |   |   |___(+) {id=366,slot_type=declarationSpecifiers}
+    |   |               |   |   |   |___Token:const {id=380,slot_type=[declarationSpecifier,typeQualifier,Const]}
+    |   |               |   |   |   |___Token:char {id=378,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
+    |   |               |   |   |___(?) {id=368,slot_type=[altnt_block__parameterDeclaration_2,optional__typeName_1]}
+    |   |               |   |       |___Token:* {id=373,slot_type=[abstractDeclarator,pointer,altnt_block__pointer_8,Star]}
+    |   |               |   |___(?) {id=361,slot_type=optional__parameterTypeList_2}
+    |   |               |       |___aux_rule__parameterTypeList_1 {id=362,slot_type=aux_rule__parameterTypeList_1}
+    |   |               |           |___Token:, {id=363,slot_type=Comma}
+    |   |               |           |___Token:... {id=364,slot_type=Ellipsis}
+    |   |               |___Token:) {id=358,slot_type=RightParen}
+    |   |___Token:; {id=347,slot_type=Semi}
     |___functionDefinition {id=5,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
         |___(?) {id=6,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=333,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=336,slot_type=[declarationSpecifier,typeSpecifier,Int]}
-        |___directDeclarator {id=286,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=332,slot_type=[aux_rule__directDeclarator_8,Identifier]}
-        |   |___(*) {id=288,slot_type=kleene_star__directDeclarator_6}
-        |       |___aux_rule__directDeclarator_14 {id=290,slot_type=[aux_rule__directDeclarator_7,aux_rule__directDeclarator_14]}
-        |           |___Token:( {id=291,slot_type=LeftParen}
-        |           |___parameterList {id=295,slot_type=[altnt_block__directDeclarator_10,parameterTypeList,parameterList]}
-        |           |   |___(+) {id=323,slot_type=[parameterDeclaration,declarationSpecifiers]}
-        |           |   |   |___Token:int {id=331,slot_type=[declarationSpecifier,typeSpecifier,Int]}
-        |           |   |   |___Token:argc {id=329,slot_type=[declarationSpecifier,typeSpecifier,typedefName,Identifier]}
-        |           |   |___(*) {id=297,slot_type=kleene_star__parameterList_1}
-        |           |       |___aux_rule__parameterList_2 {id=298,slot_type=aux_rule__parameterList_2}
-        |           |           |___Token:, {id=299,slot_type=Comma}
-        |           |           |___parameterDeclaration {id=300,slot_type=parameterDeclaration}
-        |           |               |___(+) {id=301,slot_type=declarationSpecifiers}
-        |           |               |   |___Token:char {id=322,slot_type=[declarationSpecifier,typeSpecifier,Char]}
-        |           |               |___declarator {id=303,slot_type=[altnt_block__parameterDeclaration_2,declarator]}
-        |           |                   |___(?) {id=304,slot_type=optional__declarator_1}
-        |           |                   |   |___Token:* {id=319,slot_type=[pointer,altnt_block__pointer_8,Star]}
-        |           |                   |___directDeclarator {id=305,slot_type=directDeclarator}
-        |           |                       |___Token:argv {id=315,slot_type=[aux_rule__directDeclarator_8,Identifier]}
-        |           |                       |___(*) {id=307,slot_type=kleene_star__directDeclarator_6}
-        |           |                           |___aux_rule__directDeclarator_13 {id=309,slot_type=[aux_rule__directDeclarator_7,aux_rule__directDeclarator_13]}
-        |           |                               |___Token:[ {id=310,slot_type=LeftBracket}
-        |           |                               |___Token:] {id=312,slot_type=RightBracket}
-        |           |___Token:) {id=293,slot_type=RightParen}
+        |   |___(+) {id=338,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=342,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=288,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=337,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=290,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=292,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=293,slot_type=LeftParen}
+        |           |___parameterList {id=297,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList]}
+        |           |   |___(+) {id=326,slot_type=[parameterDeclaration,declarationSpecifiers]}
+        |           |   |   |___Token:int {id=336,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |           |   |   |___Token:argc {id=333,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |           |   |___(*) {id=299,slot_type=kleene_star__parameterList_1}
+        |           |       |___aux_rule__parameterList_2 {id=300,slot_type=aux_rule__parameterList_2}
+        |           |           |___Token:, {id=301,slot_type=Comma}
+        |           |           |___parameterDeclaration {id=302,slot_type=parameterDeclaration}
+        |           |               |___(+) {id=303,slot_type=declarationSpecifiers}
+        |           |               |   |___Token:char {id=325,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
+        |           |               |___declarator {id=305,slot_type=[altnt_block__parameterDeclaration_2,declarator]}
+        |           |                   |___(?) {id=306,slot_type=optional__declarator_1}
+        |           |                   |   |___Token:* {id=321,slot_type=[pointer,altnt_block__pointer_8,Star]}
+        |           |                   |___directDeclarator {id=307,slot_type=directDeclarator}
+        |           |                       |___Token:argv {id=317,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |           |                       |___(*) {id=309,slot_type=kleene_star__directDeclarator_7}
+        |           |                           |___aux_rule__directDeclarator_14 {id=311,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_14]}
+        |           |                               |___Token:[ {id=312,slot_type=LeftBracket}
+        |           |                               |___Token:] {id=314,slot_type=RightBracket}
+        |           |___Token:) {id=295,slot_type=RightParen}
         |___compoundStatement {id=8,slot_type=compoundStatement}
             |___Token:{ {id=9,slot_type=LeftBrace}
             |___(?) {id=10,slot_type=optional__compoundStatement_1}
             |   |___(+) {id=13,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___aux_rule__declaration_3 {id=252,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=253,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=285,slot_type=[declarationSpecifier,typeSpecifier,Int]}
-            |       |   |___(?) {id=254,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=257,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:a {id=282,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_8,Identifier]}
-            |       |   |       |___(?) {id=259,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=260,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=261,slot_type=Assign}
-            |       |   |               |___Token:1 {id=279,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=255,slot_type=Semi}
+            |       |___aux_rule__declaration_3 {id=253,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=254,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=287,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=255,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=258,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:a {id=283,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=260,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=261,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=262,slot_type=Assign}
+            |       |   |               |___Token:1 {id=280,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=256,slot_type=Semi}
             |       |___aux_rule__declaration_3 {id=207,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
             |       |   |___(+) {id=208,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=250,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+            |       |   |   |___Token:int {id=251,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
             |       |   |___(?) {id=209,slot_type=optional__declaration_2}
             |       |   |   |___initDeclarator {id=212,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:b {id=247,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_8,Identifier]}
+            |       |   |       |___Token:b {id=247,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
             |       |   |       |___(?) {id=214,slot_type=optional__initDeclarator_2}
             |       |   |           |___aux_rule__initDeclarator_1 {id=215,slot_type=aux_rule__initDeclarator_1}
             |       |   |               |___Token:= {id=216,slot_type=Assign}
@@ -429,7 +429,7 @@ Succeeded to reduce node 13 from 56 to 29
 ------------------------------------------------------------
 
 
-=================Reducing node 286, size=29=================
+=================Reducing node 288, size=29=================
 
 The current best program is the following
 
@@ -462,11 +462,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 286
+Failed to reduce node 288
 ------------------------------------------------------------
 
 
-=================Reducing node 338, size=29=================
+=================Reducing node 344, size=29=================
 
 The current best program is the following
 
@@ -488,11 +488,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 338
+Failed to reduce node 344
 ------------------------------------------------------------
 
 
-=================Reducing node 288, size=29=================
+=================Reducing node 290, size=29=================
 
 The current best program is the following
 
@@ -514,11 +514,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 288
+Failed to reduce node 290
 ------------------------------------------------------------
 
 
-=================Reducing node 290, size=29=================
+=================Reducing node 292, size=29=================
 
 The current best program is the following
 
@@ -531,17 +531,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=290}
+    NodeDeletionAction{target_node=292}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 290
+Failed to reduce node 292
 ------------------------------------------------------------
 
 
-=================Reducing node 340, size=29=================
+=================Reducing node 346, size=29=================
 
 The current best program is the following
 
@@ -564,11 +564,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 340
+Failed to reduce node 346
 ------------------------------------------------------------
 
 
-=================Reducing node 345, size=29=================
+=================Reducing node 351, size=29=================
 
 The current best program is the following
 
@@ -581,7 +581,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=345}
+    NodeDeletionAction{target_node=351}
 ------------------------------------------------------------
 
 
@@ -597,11 +597,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 345
+Failed to reduce node 351
 ------------------------------------------------------------
 
 
-=================Reducing node 295, size=29=================
+=================Reducing node 297, size=29=================
 
 The current best program is the following
 
@@ -680,11 +680,11 @@ It took less than 1 second to cancel the task.
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 295 from 29 to 21
+Succeeded to reduce node 297 from 29 to 21
 ------------------------------------------------------------
 
 
-=================Reducing node 347, size=21=================
+=================Reducing node 353, size=21=================
 
 The current best program is the following
 
@@ -707,11 +707,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 347
+Failed to reduce node 353
 ------------------------------------------------------------
 
 
-=================Reducing node 349, size=21=================
+=================Reducing node 355, size=21=================
 
 The current best program is the following
 
@@ -724,17 +724,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=349}
+    NodeDeletionAction{target_node=355}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 349
+Failed to reduce node 355
 ------------------------------------------------------------
 
 
-=================Reducing node 353, size=21=================
+=================Reducing node 359, size=21=================
 
 The current best program is the following
 
@@ -777,7 +777,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 353
+Failed to reduce node 359
 ------------------------------------------------------------
 
 
@@ -877,7 +877,7 @@ Failed to reduce node 64
 ------------------------------------------------------------
 
 
-=================Reducing node 359, size=21=================
+=================Reducing node 365, size=21=================
 
 The current best program is the following
 
@@ -900,7 +900,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 359
+Failed to reduce node 365
 ------------------------------------------------------------
 
 
@@ -953,7 +953,7 @@ Failed to reduce node 68
 ------------------------------------------------------------
 
 
-=================Reducing node 360, size=21=================
+=================Reducing node 366, size=21=================
 
 The current best program is the following
 
@@ -976,7 +976,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=371}
+    NodeDeletionAction{target_node=378}
 ------------------------------------------------------------
 
 
@@ -992,11 +992,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 360
+Failed to reduce node 366
 ------------------------------------------------------------
 
 
-=================Reducing node 355, size=21=================
+=================Reducing node 361, size=21=================
 
 The current best program is the following
 
@@ -1018,11 +1018,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 355
+Failed to reduce node 361
 ------------------------------------------------------------
 
 
-=================Reducing node 356, size=21=================
+=================Reducing node 362, size=21=================
 
 The current best program is the following
 
@@ -1035,17 +1035,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=356}
+    NodeDeletionAction{target_node=362}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 356
+Failed to reduce node 362
 ------------------------------------------------------------
 
 
-=================Reducing node 374, size=21=================
+=================Reducing node 381, size=21=================
 
 The current best program is the following
 
@@ -1058,11 +1058,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 374
+Failed to reduce node 381
 ------------------------------------------------------------
 
 
-=================Reducing node 373, size=21=================
+=================Reducing node 380, size=21=================
 
 The current best program is the following
 
@@ -1075,11 +1075,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 373
+Failed to reduce node 380
 ------------------------------------------------------------
 
 
-=================Reducing node 371, size=21=================
+=================Reducing node 378, size=21=================
 
 The current best program is the following
 
@@ -1092,11 +1092,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 371
+Failed to reduce node 378
 ------------------------------------------------------------
 
 
-=================Reducing node 362, size=21=================
+=================Reducing node 368, size=21=================
 
 The current best program is the following
 
@@ -1118,11 +1118,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 362
+Failed to reduce node 368
 ------------------------------------------------------------
 
 
-=================Reducing node 367, size=21=================
+=================Reducing node 373, size=21=================
 
 The current best program is the following
 
@@ -1135,7 +1135,41 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 367
+Failed to reduce node 373
+------------------------------------------------------------
+
+
+=================Reducing node 364, size=21=================
+
+The current best program is the following
+
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 364
+------------------------------------------------------------
+
+
+=================Reducing node 363, size=21=================
+
+The current best program is the following
+
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 363
 ------------------------------------------------------------
 
 
@@ -1156,7 +1190,7 @@ Failed to reduce node 358
 ------------------------------------------------------------
 
 
-=================Reducing node 357, size=21=================
+=================Reducing node 356, size=21=================
 
 The current best program is the following
 
@@ -1169,11 +1203,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 357
+Failed to reduce node 356
 ------------------------------------------------------------
 
 
-=================Reducing node 352, size=21=================
+=================Reducing node 347, size=21=================
 
 The current best program is the following
 
@@ -1186,11 +1220,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 352
+Failed to reduce node 347
 ------------------------------------------------------------
 
 
-=================Reducing node 350, size=21=================
+=================Reducing node 345, size=21=================
 
 The current best program is the following
 
@@ -1203,11 +1237,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 350
+Failed to reduce node 345
 ------------------------------------------------------------
 
 
-=================Reducing node 341, size=21=================
+=================Reducing node 385, size=21=================
 
 The current best program is the following
 
@@ -1220,11 +1254,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 341
+Failed to reduce node 385
 ------------------------------------------------------------
 
 
-=================Reducing node 339, size=21=================
+=================Reducing node 337, size=21=================
 
 The current best program is the following
 
@@ -1237,11 +1271,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 339
+Failed to reduce node 337
 ------------------------------------------------------------
 
 
-=================Reducing node 377, size=21=================
+=================Reducing node 295, size=21=================
 
 The current best program is the following
 
@@ -1254,24 +1288,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 377
-------------------------------------------------------------
-
-
-=================Reducing node 332, size=21=================
-
-The current best program is the following
-
-    int printf(const char*, ...);
-    int main (                      ) {
-     printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 332
+Failed to reduce node 295
 ------------------------------------------------------------
 
 
@@ -1289,23 +1306,6 @@ The current best program is the following
 ===================Node reduction is done===================
 
 Failed to reduce node 293
-------------------------------------------------------------
-
-
-=================Reducing node 291, size=21=================
-
-The current best program is the following
-
-    int printf(const char*, ...);
-    int main (                      ) {
-     printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 291
 ------------------------------------------------------------
 
 
@@ -1505,7 +1505,7 @@ Failed to reduce node 6
 ------------------------------------------------------------
 
 
-=================Reducing node 333, size=21=================
+=================Reducing node 338, size=21=================
 
 The current best program is the following
 
@@ -1518,17 +1518,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=333}
+    NodeDeletionAction{target_node=338}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 333
+Failed to reduce node 338
 ------------------------------------------------------------
 
 
-=================Reducing node 336, size=21=================
+=================Reducing node 342, size=21=================
 
 The current best program is the following
 
@@ -1541,7 +1541,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 336
+Failed to reduce node 342
 ------------------------------------------------------------
 
 
@@ -1606,7 +1606,7 @@ Failed to reduce node 5
 ------------------------------------------------------------
 
 
-=================Reducing node 76, size=21==================
+=================Reducing node 77, size=21==================
 
 The current best program is the following
 
@@ -1619,17 +1619,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=76}
+    NodeDeletionAction{target_node=77}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 76
+Failed to reduce node 77
 ------------------------------------------------------------
 
 
-=================Reducing node 78, size=21==================
+=================Reducing node 79, size=21==================
 
 The current best program is the following
 
@@ -1652,11 +1652,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 78
+Failed to reduce node 79
 ------------------------------------------------------------
 
 
-=================Reducing node 83, size=21==================
+=================Reducing node 84, size=21==================
 
 The current best program is the following
 
@@ -1669,7 +1669,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=83}
+    NodeDeletionAction{target_node=84}
 ------------------------------------------------------------
 
 
@@ -1684,11 +1684,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 83
+Failed to reduce node 84
 ------------------------------------------------------------
 
 
-=================Reducing node 85, size=21==================
+=================Reducing node 86, size=21==================
 
 The current best program is the following
 
@@ -1710,11 +1710,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 85
+Failed to reduce node 86
 ------------------------------------------------------------
 
 
-=================Reducing node 87, size=21==================
+=================Reducing node 88, size=21==================
 
 The current best program is the following
 
@@ -1727,13 +1727,13 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=87}
+    NodeDeletionAction{target_node=88}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 87
+Failed to reduce node 88
 ------------------------------------------------------------
 
 
@@ -1754,7 +1754,7 @@ Failed to reduce node 8
 ------------------------------------------------------------
 
 
-=================Reducing node 91, size=21==================
+=================Reducing node 92, size=21==================
 
 The current best program is the following
 
@@ -1794,7 +1794,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 91
+Failed to reduce node 92
 ------------------------------------------------------------
 
 
@@ -1938,7 +1938,7 @@ Failed to reduce node 34
 ------------------------------------------------------------
 
 
-=================Reducing node 97, size=21==================
+=================Reducing node 98, size=21==================
 
 The current best program is the following
 
@@ -1960,7 +1960,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 97
+Failed to reduce node 98
 ------------------------------------------------------------
 
 
@@ -2039,7 +2039,7 @@ Failed to reduce node 38
 ------------------------------------------------------------
 
 
-=================Reducing node 98, size=21==================
+=================Reducing node 99, size=21==================
 
 The current best program is the following
 
@@ -2061,7 +2061,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=109}
+    NodeDeletionAction{target_node=111}
 ------------------------------------------------------------
 
 
@@ -2076,11 +2076,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 98
+Failed to reduce node 99
 ------------------------------------------------------------
 
 
-=================Reducing node 93, size=21==================
+=================Reducing node 94, size=21==================
 
 The current best program is the following
 
@@ -2102,11 +2102,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 93
+Failed to reduce node 94
 ------------------------------------------------------------
 
 
-=================Reducing node 94, size=21==================
+=================Reducing node 95, size=21==================
 
 The current best program is the following
 
@@ -2119,13 +2119,13 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=94}
+    NodeDeletionAction{target_node=95}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 94
+Failed to reduce node 95
 ------------------------------------------------------------
 
 
@@ -2178,7 +2178,7 @@ Failed to reduce node 66
 ------------------------------------------------------------
 
 
-=================Reducing node 112, size=21=================
+=================Reducing node 114, size=21=================
 
 The current best program is the following
 
@@ -2191,7 +2191,24 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 112
+Failed to reduce node 114
+------------------------------------------------------------
+
+
+=================Reducing node 113, size=21=================
+
+The current best program is the following
+
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 113
 ------------------------------------------------------------
 
 
@@ -2212,24 +2229,7 @@ Failed to reduce node 111
 ------------------------------------------------------------
 
 
-=================Reducing node 109, size=21=================
-
-The current best program is the following
-
-    int printf(const char*, ...);
-    int main (                      ) {
-     printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 109
-------------------------------------------------------------
-
-
-=================Reducing node 100, size=21=================
+=================Reducing node 101, size=21=================
 
 The current best program is the following
 
@@ -2251,11 +2251,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 100
+Failed to reduce node 101
 ------------------------------------------------------------
 
 
-=================Reducing node 105, size=21=================
+=================Reducing node 106, size=21=================
 
 The current best program is the following
 
@@ -2268,7 +2268,24 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 105
+Failed to reduce node 106
+------------------------------------------------------------
+
+
+=================Reducing node 97, size=21==================
+
+The current best program is the following
+
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 97
 ------------------------------------------------------------
 
 
@@ -2289,7 +2306,7 @@ Failed to reduce node 96
 ------------------------------------------------------------
 
 
-=================Reducing node 95, size=21==================
+=================Reducing node 91, size=21==================
 
 The current best program is the following
 
@@ -2302,11 +2319,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 95
+Failed to reduce node 91
 ------------------------------------------------------------
 
 
-=================Reducing node 90, size=21==================
+=================Reducing node 89, size=21==================
 
 The current best program is the following
 
@@ -2319,11 +2336,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 90
+Failed to reduce node 89
 ------------------------------------------------------------
 
 
-=================Reducing node 88, size=21==================
+=================Reducing node 80, size=21==================
 
 The current best program is the following
 
@@ -2336,11 +2353,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 88
+Failed to reduce node 80
 ------------------------------------------------------------
 
 
-=================Reducing node 79, size=21==================
+=================Reducing node 78, size=21==================
 
 The current best program is the following
 
@@ -2353,11 +2370,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 79
+Failed to reduce node 78
 ------------------------------------------------------------
 
 
-=================Reducing node 77, size=21==================
+=================Reducing node 118, size=21=================
 
 The current best program is the following
 
@@ -2370,24 +2387,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 77
-------------------------------------------------------------
-
-
-=================Reducing node 115, size=21=================
-
-The current best program is the following
-
-    int printf(const char*, ...);
-    int main (                      ) {
-     printf("world\n");
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 115
+Failed to reduce node 118
 ------------------------------------------------------------
 
 
@@ -2659,7 +2659,7 @@ Failed to reduce node 71
 ------------------------------------------------------------
 
 
-=================Reducing node 74, size=21==================
+=================Reducing node 75, size=21==================
 
 The current best program is the following
 
@@ -2672,7 +2672,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 74
+Failed to reduce node 75
 ------------------------------------------------------------
 
 

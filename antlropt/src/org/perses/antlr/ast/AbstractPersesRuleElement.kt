@@ -31,7 +31,7 @@ abstract class AbstractPersesRuleElement : AbstractPersesAst() {
   }
 
   abstract fun createWithNewChildren(
-    newChildren: List<AbstractPersesRuleElement>
+    newChildren: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement
 
   fun deepCopyTreeStructure(): AbstractPersesRuleElement {
@@ -64,7 +64,7 @@ abstract class AbstractPersesRuleElement : AbstractPersesAst() {
     // Note that all Perses ASTs should normalize to a single form.
     for (i in 0 until size) {
       if (!getChildForEquivalenceChecking(i)
-        .isEquivalent(other.getChildForEquivalenceChecking(i))
+          .isEquivalent(other.getChildForEquivalenceChecking(i))
       ) {
         return false
       }

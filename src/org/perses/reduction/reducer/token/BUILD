@@ -8,7 +8,11 @@ kt_jvm_library(
     name = "token_slicer",
     srcs = [
         "AbstractConcurrentTokenSlicer.kt",
+        "AbstractStateBasedConcurrentReducer.kt",
         "AbstractTokenSlicerReducer.kt",
+        "ConcurrentStateBasedDeltaReducer.kt",
+        "ConcurrentStateBasedLineSlicer.kt",
+        "ConcurrentStateBasedTokenSlicer.kt",
         "ConcurrentTokenSlicer.kt",
         "ConcurrentTokenSlicerTaskDesc.kt",
         "DeltaDebuggingReducer.kt",
@@ -23,7 +27,6 @@ kt_jvm_library(
         "//src/org/perses/reduction/partition",
         "//src/org/perses/reduction/reducer:tree_transforms",
         "//src/org/perses/spartree",
-        "@maven//:org_checkerframework_checker_qual",
     ],
 )
 
@@ -38,6 +41,7 @@ kt_jvm_library(
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction:future_execution_result_triple",
         "//src/org/perses/reduction:reduction_configuration",
+        "//src/org/perses/reduction/cache:program_encoding_interface",
         "//src/org/perses/spartree",
     ],
 )

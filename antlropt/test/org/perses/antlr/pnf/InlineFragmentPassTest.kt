@@ -34,9 +34,9 @@ class InlineFragmentPassTest {
       fragment F2 : 'a' ;
       fragment F1 : F2 ;
       T1 : F1 ;  
-      """.trimIndent()
+      """.trimIndent(),
     )
-    val rules = pass.process(g).flattenedAllRules
+    val rules = pass.processParserGrammar(g, lexerGrammar = null).flattenedAllRules
     assertThat(rules).hasSize(1)
     val rule = rules.single()
     assertThat(rule.ruleNameHandle.ruleName).isEqualTo("T1")
@@ -56,9 +56,9 @@ class InlineFragmentPassTest {
         StringLiteral 
           : EncodingPrefix? '"' SCharSequence?  '"' ;
        
-      """.trimIndent()
+      """.trimIndent(),
     )
-    val rules = pass.process(g).flattenedAllRules
+    val rules = pass.processParserGrammar(g, lexerGrammar = null).flattenedAllRules
     assertThat(rules).hasSize(1)
     val rule = rules.single()
     assertThat(rule.ruleNameHandle.ruleName).isEqualTo("StringLiteral")

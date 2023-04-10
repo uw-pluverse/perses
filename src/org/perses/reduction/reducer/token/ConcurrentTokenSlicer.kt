@@ -18,9 +18,10 @@ package org.perses.reduction.reducer.token
 
 import com.google.common.collect.ImmutableList
 import org.perses.reduction.AbstractTokenReducer
-import org.perses.reduction.FutureExecutionResultInfo
+import org.perses.reduction.EditTestPayload
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
+import org.perses.reduction.TestScriptExecResult
 import org.perses.spartree.LexerRuleSparTreeNode
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.SparTree
@@ -29,20 +30,21 @@ import org.perses.util.toImmutableList
 
 class ConcurrentTokenSlicer(
   reducerContext: ReducerContext,
-  reducerAnnotation: ConcurrentTokenSlicerAnnotation
+  reducerAnnotation: ConcurrentTokenSlicerAnnotation,
 ) : AbstractConcurrentTokenSlicer(
-  reducerAnnotation, reducerContext
+  reducerAnnotation,
+  reducerContext,
 ) {
 
   override fun createSlicingTask(
     tokenSlicingGranularity: Int,
-    tree: SparTree
+    tree: SparTree,
   ): ImmutableList<AbstractSlicingTask> {
     val tokens = tree.remainingLexerRuleNodes
     return ImmutableList.builder<AbstractSlicingTask>().apply {
       Util.slideResverseIfSlidable(
         tokens,
-        slidingWindowSize = tokenSlicingGranularity
+        slidingWindowSize = tokenSlicingGranularity,
       ) { add(TokenSlicingTask(tokens, it, tree)) }
     }.build()
   }
@@ -50,7 +52,7 @@ class ConcurrentTokenSlicer(
   inner class TokenSlicingTask(
     val tokens: ImmutableList<LexerRuleSparTreeNode>,
     val interval: Util.NonEmptyInternal,
-    tree: SparTree
+    tree: SparTree,
   ) : AbstractSlicingTask(
     tree,
     nodeActionSetCache,
@@ -58,7 +60,7 @@ class ConcurrentTokenSlicer(
     queryCache,
     ioManager,
     configuration,
-    this@ConcurrentTokenSlicer::testProgramAsynchronously
+    this@ConcurrentTokenSlicer.executorService::testProgramAsync,
   ) {
 
     override fun tryAsyncRunPreconditionCheck(): Boolean {
@@ -68,12 +70,12 @@ class ConcurrentTokenSlicer(
     override fun createNodeDeletionActionSet(): NodeDeletionActionSet {
       return NodeDeletionActionSet.createByDeletingNodes(
         tokens.subList(interval.inclusiveStart, interval.exclusiveEnd),
-        "token slicer@${interval.size()}"
+        "token slicer@${interval.size()}",
       )
     }
 
     override fun analyzeResultsAndGetBest(
-      futureResult: List<FutureExecutionResultInfo>
+      futureResult: List<TestScriptExecResult<EditTestPayload>>,
     ) =
       this@ConcurrentTokenSlicer.analyzeResultsAndGetBest(futureResult)
   }
@@ -93,7 +95,11 @@ class ConcurrentTokenSlicer(
 
     val COMPOSITE_REDUCER = object : ReducerAnnotation() {
 
-      override val deterministic = true
+      override val deterministic: Boolean
+        get() = true
+
+      override val reductionResultSizeTrend: ReductionResultSizeTrend
+        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
 
       override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
         return REDUCER_ANNOTATIONS

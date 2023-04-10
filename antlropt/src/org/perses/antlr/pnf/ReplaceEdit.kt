@@ -25,12 +25,12 @@ import org.perses.antlr.ast.TransformDecision
 
 open class ReplaceEdit(
   val oldPredicate: (AbstractPersesRuleElement) -> Boolean,
-  val newValue: AbstractPersesRuleElement
+  val newValue: AbstractPersesRuleElement,
 ) : AstEdit() {
 
   override fun internalApply(
     element: AbstractPersesRuleElement,
-    isRoot: Boolean
+    isRoot: Boolean,
   ): TransformDecision.NonDeleteTransformDecision {
     return if (!oldPredicate(element)) {
       TransformDecision.Keep(element)
@@ -42,7 +42,7 @@ open class ReplaceEdit(
   override fun internalApplyWithNewChildren(
     element: AbstractPersesRuleElement,
     children: ImmutableList<AbstractPersesRuleElement>,
-    isRoot: Boolean
+    isRoot: Boolean,
   ): AbstractPersesRuleElement {
     if (element.tag != AstTag.SEQUENCE) {
       return super.internalApplyWithNewChildren(element, children, isRoot)

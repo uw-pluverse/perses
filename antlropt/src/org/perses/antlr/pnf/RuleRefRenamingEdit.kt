@@ -26,7 +26,7 @@ import org.perses.antlr.ast.TransformDecision
 
 class RuleRefRenamingEdit(
   private val oldName: RuleNameHandle,
-  private val newName: RuleNameHandle
+  private val newName: RuleNameHandle,
 ) : AstEdit() {
 
   init {
@@ -37,7 +37,7 @@ class RuleRefRenamingEdit(
 
   override fun internalApply(
     element: AbstractPersesRuleElement,
-    isRoot: Boolean
+    isRoot: Boolean,
   ): TransformDecision.NonDeleteTransformDecision {
     if (element.tag !== AstTag.RULE_REF) {
       return TransformDecision.Keep(element)
@@ -49,7 +49,7 @@ class RuleRefRenamingEdit(
     } else {
       TransformDecision.Replace(
         oldValue = element,
-        newValue = createWithArgs(newName, ref.arguments)
+        newValue = createWithArgs(newName, ref.arguments),
       )
     }
   }
@@ -59,7 +59,7 @@ class RuleRefRenamingEdit(
     fun renameDefMap(
       defMap: MutableGrammar,
       oldName: RuleNameHandle,
-      newName: RuleNameHandle
+      newName: RuleNameHandle,
     ) {
       val edit = RuleRefRenamingEdit(oldName, newName)
       val ruleEditTriples = ArrayList<RuleEditTriple>()
@@ -67,7 +67,7 @@ class RuleRefRenamingEdit(
         when (val decision = edit.apply(alt)) {
           is TransformDecision.Keep -> Unit // Do nothing
           is TransformDecision.Replace -> ruleEditTriples.add(
-            RuleEditTriple(ruleName, alt, decision.newValue)
+            RuleEditTriple(ruleName, alt, decision.newValue),
           )
           else -> TODO(decision.toString())
         }

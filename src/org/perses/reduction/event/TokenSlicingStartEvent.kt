@@ -20,7 +20,7 @@ class TokenSlicingStartEvent internal constructor(
   val fixpointIterationStartEvent: FixpointIterationStartEvent,
   currentTimeMillis: Long,
   programSize: Int,
-  val tokenSliceGranularity: Int
+  val tokenSliceGranularity: Int,
 ) :
   AbstractStartEvent(currentTimeMillis, programSize) {
 
@@ -32,7 +32,7 @@ class TokenSlicingStartEvent internal constructor(
     return TokenSlicingEndEvent(
       startEvent = this,
       currentTimeMillis = currentTimeMillis,
-      programSize = programSize
+      programSize = programSize,
     )
   }
 

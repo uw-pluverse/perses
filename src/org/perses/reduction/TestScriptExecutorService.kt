@@ -17,137 +17,148 @@
 package org.perses.reduction
 
 import com.google.common.flogger.FluentLogger
+import com.google.common.util.concurrent.ListenableFuture
+import org.perses.reduction.TestScriptExecutorService.AbstractOutputManagerCreatorResult.ProceedResult
 import org.perses.reduction.io.AbstractOutputManager
-import org.perses.reduction.io.ReductionFolder
 import org.perses.reduction.io.ReductionFolderManager
 import org.perses.util.DaemonThreadPool
-import org.perses.util.PerformanceMonitor
-import org.perses.util.PerformanceMonitor.IActionOnLongRunningTask
-import org.perses.util.TimeUtil
 import java.io.Closeable
-import java.nio.file.Path
 import java.util.concurrent.Callable
-import java.util.concurrent.FutureTask
+import java.util.concurrent.CancellationException
 import java.util.concurrent.atomic.AtomicInteger
 
 /** An execution service for test script runs.  */
 class TestScriptExecutorService(
   private val reductionFolderManager: ReductionFolderManager,
   val specifiedNumOfThreads: Int,
-  scriptExecutionMonitorIntervalMillis: Int
+  private val scriptExecutionTimeoutInSeconds: Long,
+  private val scriptExecutionKeepTryingAfterTimeout: Boolean = true,
 ) : Closeable {
 
   val statistics = Statistics()
 
-  private var executorService = DaemonThreadPool.create(specifiedNumOfThreads)
-  private var scriptExecutionMonitor:
-    PerformanceMonitor<ReductionTestScriptExecutorCallback>?
+  private val scriptExecutorService = DaemonThreadPool.create(specifiedNumOfThreads)
+  private val outputManagerCreatorService = DaemonThreadPool.create(specifiedNumOfThreads)
+  private val genericThreadPool = DaemonThreadPool.create(specifiedNumOfThreads)
 
   init {
     require(specifiedNumOfThreads > 0) {
       "The number of threads must be positive: $specifiedNumOfThreads"
     }
-
-    val action = object : IActionOnLongRunningTask<ReductionTestScriptExecutorCallback> {
-      override fun onLongRunningTask(
-        task: ReductionTestScriptExecutorCallback,
-        duration: Int,
-        threshold: Int
-      ) {
-        if (logger.atWarning().isEnabled) {
-          TimeUtil.formatDateForDisplay(duration.toLong())
-          logger.atWarning().log(
-            "%s: %s",
-            MSG_SCRIPT_RUN_TOO_LONG,
-            TimeUtil.formatDateForDisplay(duration.toLong())
-          )
-        }
-      }
-    }
-    scriptExecutionMonitor = PerformanceMonitor(
-      sleepIntervalMillis = scriptExecutionMonitorIntervalMillis,
-      actionOnLongRunningTask = action
-    )
   }
 
   fun createNamedReductionFolder(folderName: String) =
     reductionFolderManager.createNamedFolder(folderName)
 
+  fun <T> submitGenericTask(task: () -> T) = genericThreadPool.submit(task)
+
   @Override
   override fun close() {
-    executorService.shutdown()
+    DaemonThreadPool.shutdownOrThrow(scriptExecutorService)
+    DaemonThreadPool.shutdownOrThrow(outputManagerCreatorService)
     reductionFolderManager.deleteRootFolder()
-    scriptExecutionMonitor!!.close()
-
-    scriptExecutionMonitor = null
   }
 
-  fun finalize() {
-    check(scriptExecutionMonitor == null) {
-      "This $this has not been closed."
+  fun interface IPostCheck<Payload> {
+    fun perform(currentResult: PropertyTestResult, payload: Payload): PropertyTestResult
+  }
+
+  fun interface IPreCheck<Payload : Any> {
+    fun perform(payload: Payload): PropertyTestResult
+  }
+
+  fun <Payload : Any> testProgramAsync(
+    preCheck: IPreCheck<Payload>,
+    postCheck: IPostCheck<Payload>,
+    outputManager: AbstractOutputManager,
+    payload: Payload,
+  ): TestScriptExecResult<Payload> {
+    return testProgramAsync(preCheck, postCheck) {
+      ProceedResult(outputManager, payload)
     }
   }
 
-  /**
-   * FIXME: make this method blocking if there is no available tasks.
-   */
-  fun testProgramAsync(
-    preChecke: () -> PropertyTestResult,
-    postCheck: (currentResult: PropertyTestResult) -> PropertyTestResult,
-    outputManager: AbstractOutputManager
-  ): FutureTestScriptExecutionTask {
-    statistics.onSubmitTest()
-    val workingFolder = reductionFolderManager.createNextFolder()
-    val result = FutureTestScriptExecutionTask(
-      ReductionTestScriptExecutorCallback(
-        workingFolder,
-        preChecke,
-        postCheck,
-        outputManager,
-        statistics,
-        scriptExecutionMonitor!!
-      )
+  fun testProgramAsyncWithoutPayload(
+    preCheck: IPreCheck<Any>,
+    postCheck: IPostCheck<Any>,
+    outputManager: AbstractOutputManager,
+  ): TestScriptExecResult<Any> {
+    return testProgramAsync(preCheck, postCheck) {
+      ProceedResult(outputManager, DUMMY_PAYLOAD)
+    }
+  }
+
+  sealed class AbstractOutputManagerCreatorResult<Payload : Any> {
+
+    class EmptyResult<Payload : Any> : AbstractOutputManagerCreatorResult<Payload>()
+
+    class ProceedResult<Payload : Any>(
+      val outputManager: AbstractOutputManager,
+      val payload: Payload,
+    ) : AbstractOutputManagerCreatorResult<Payload>()
+
+    class StopResult<Payload : Any>(
+      val payload: Payload,
+    ) : AbstractOutputManagerCreatorResult<Payload>()
+  }
+
+  fun <Payload : Any> testProgramAsync(
+    preCheck: IPreCheck<Payload>,
+    postCheck: IPostCheck<Payload>,
+    outputManagerCreator: () -> AbstractOutputManagerCreatorResult<Payload>,
+  ): TestScriptExecResult<Payload> {
+    val outputManagerCreatorFuture = createRestrictedFuture(
+      outputManagerCreatorService.submit(
+        Callable { outputManagerCreator() },
+      ),
     )
-    executorService.submit(result)
-    return result
+
+    statistics.onSubmitTest()
+    val workingDirectory = reductionFolderManager.createNextFolder()
+    val testScriptExecFuture = createRestrictedFuture(
+      scriptExecutorService.submit(
+        Callable<PropertyTestResult?> {
+          if (outputManagerCreatorFuture.isCancelled()) {
+            return@Callable null
+          }
+          val outputManagerWithPayload = try {
+            when (val t = outputManagerCreatorFuture.getWithTimeoutWarnings()) {
+              is ProceedResult -> t
+              else -> return@Callable null
+            }
+          } catch (e: Exception) {
+            when (e) {
+              is CancellationException, is InterruptedException -> return@Callable null
+              else -> throw e
+            }
+          }
+          statistics.onRunPrecheck()
+          preCheck.perform(outputManagerWithPayload.payload).let {
+            if (it.isNotInteresting) {
+              return@Callable it
+            }
+          }
+          statistics.onExecuteScript()
+          outputManagerWithPayload.outputManager.write(workingDirectory)
+          val result = workingDirectory.runTestScript()
+          workingDirectory.deleteAllOtherFiles()
+          return@Callable postCheck.perform(result, outputManagerWithPayload.payload)
+        },
+      ),
+    )
+    return TestScriptExecResult(
+      workingDirectory,
+      outputManagerCreatorFuture = outputManagerCreatorFuture,
+      testScriptExecFuture = testScriptExecFuture,
+    )
   }
 
-  class FutureTestScriptExecutionTask(
-    private val callable: ReductionTestScriptExecutorCallback
-  ) : FutureTask<PropertyTestResult>(callable) {
-    val workingDirectory: Path
-      get() = callable.workingDirectory.folder
-
-    val reductionFolder: ReductionFolder
-      get() = callable.workingDirectory
-  }
-
-  /** The test script runner for future.  */
-  class ReductionTestScriptExecutorCallback(
-    val workingDirectory: ReductionFolder,
-    private val preChecker: () -> PropertyTestResult,
-    private val postChecker: (currentResult: PropertyTestResult) -> PropertyTestResult,
-    private val outputManager: AbstractOutputManager,
-    private val statistics: Statistics,
-    private val runtimePerformanceMonitor:
-      PerformanceMonitor<ReductionTestScriptExecutorCallback>
-  ) : Callable<PropertyTestResult> {
-
-    override fun call(): PropertyTestResult {
-      statistics.onRunPrecheck()
-      preChecker().let {
-        if (it.isNotInteresting) {
-          return it
-        }
-      }
-      statistics.onExecuteScript()
-      runtimePerformanceMonitor.onTaskStart(this)
-      outputManager.write(workingDirectory)
-      val result = workingDirectory.runTestScript()
-      workingDirectory.deleteAllOtherFiles()
-      runtimePerformanceMonitor.onTaskEnd(this)
-      return postChecker(result)
-    }
+  private fun <T> createRestrictedFuture(future: ListenableFuture<T>): RestrictedFuture<T> {
+    return RestrictedFuture(
+      future,
+      defaultTimeoutInSeconds = scriptExecutionTimeoutInSeconds,
+      defaultKeepTrying = scriptExecutionKeepTryingAfterTimeout,
+    )
   }
 
   class Statistics {
@@ -173,9 +184,15 @@ class TestScriptExecutorService(
   }
 
   companion object {
-    val ALWAYS_TRUE_PRECHECK = { PropertyTestResult(exitCode = 0, elapsedMilliseconds = 0) }
-    val IDENTITY_POST_CHECK: (currentResult: PropertyTestResult) -> PropertyTestResult = { it }
+    val ALWAYS_TRUE_PRECHECK = { _: Any ->
+      PropertyTestResult(exitCode = 0, elapsedMilliseconds = 0)
+    }
+    val IDENTITY_POST_CHECK = { currentResult: PropertyTestResult, _: Any ->
+      currentResult
+    }
     val logger = FluentLogger.forEnclosingClass()
     const val MSG_SCRIPT_RUN_TOO_LONG = "One script execution took too much time"
+
+    val DUMMY_PAYLOAD = object {}
   }
 }

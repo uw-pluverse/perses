@@ -21,7 +21,7 @@ import org.perses.util.ktInfo
 
 class ListenableReductionState<Entity>(
   initialEntity: Entity,
-  private val listenerOnUpdate: (Entity) -> Unit
+  private val listenerOnUpdate: (Entity) -> Unit,
 ) {
 
   var bestEntity: Entity = initialEntity

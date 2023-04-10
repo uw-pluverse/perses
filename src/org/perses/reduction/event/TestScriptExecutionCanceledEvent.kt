@@ -23,6 +23,6 @@ class TestScriptExecutionCanceledEvent(
   currentTimeMillis: Long,
   val millisToCancelTheTask: Int,
   val program: TokenizedProgram,
-  val edit: AbstractSparTreeEdit<*>
+  val edit: AbstractSparTreeEdit<*>,
 ) :
   AbstractReductionEvent(currentTimeMillis)

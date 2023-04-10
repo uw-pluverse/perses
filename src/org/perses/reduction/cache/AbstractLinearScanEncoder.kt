@@ -19,11 +19,12 @@ package org.perses.reduction.cache
 import com.google.common.collect.ImmutableList
 import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
+import org.perses.util.Util.lazyAssert
 
 abstract class AbstractLinearScanEncoder protected constructor(
   baseProgram: TokenizedProgram,
   profiler: AbstractQueryCacheProfiler,
-  enableCompression: Boolean
+  enableCompression: Boolean,
 ) : AbstractCompactProgramEncoder(baseProgram, profiler, enableCompression) {
 
   internal var persesLexemeIdArray = LogicalSizedArray.createWithSize(baseProgram.tokenCount())
@@ -32,7 +33,7 @@ abstract class AbstractLinearScanEncoder protected constructor(
   init {
     val startTime = AbstractQueryCacheProfiler.now()
     fillLexemeIdArray(baseProgram.tokens, persesLexemeIdArray)
-    assert(persesLexemeIdArray.logicalSize == baseProgram.tokenCount())
+    lazyAssert { persesLexemeIdArray.logicalSize == baseProgram.tokenCount() }
     val endTime = AbstractQueryCacheProfiler.now()
     profiler.onCreatingEncoder(baseProgram.tokens, startTime, endTime)
   }
@@ -41,7 +42,7 @@ abstract class AbstractLinearScanEncoder protected constructor(
     startIndexInclusive: Int,
     stopIndexExclusive: Int,
     targetLexemeId: Int,
-    persesLexemeIdInOrigin: LogicalSizedArray
+    persesLexemeIdInOrigin: LogicalSizedArray,
   ): Int {
     for (i in startIndexInclusive until stopIndexExclusive) {
       if (persesLexemeIdInOrigin[i] == targetLexemeId) {
@@ -53,32 +54,35 @@ abstract class AbstractLinearScanEncoder protected constructor(
 
   override fun updateEncoderMore(encoderBaseProgram: TokenizedProgram) {
     persesLexemeIdArray = shrinkLogicalArrayIfNecessary(
-      persesLexemeIdArray, encoderBaseProgram, refreshThreshold
+      persesLexemeIdArray,
+      encoderBaseProgram,
+      refreshThreshold,
     )
     fillLexemeIdArray(encoderBaseProgram.tokens, persesLexemeIdArray)
-    assert(encoderBaseProgram.tokenCount() == persesLexemeIdArray.logicalSize)
+    lazyAssert { encoderBaseProgram.tokenCount() == persesLexemeIdArray.logicalSize }
   }
 
   companion object {
-    var NOT_FOUND = Int.MIN_VALUE
+    const val NOT_FOUND = Int.MIN_VALUE
 
     private fun fillLexemeIdArray(
       tokens: ImmutableList<PersesTokenFactory.PersesToken>,
       persesLexemeIdArray: LogicalSizedArray,
     ) {
       val tokenCount = tokens.size
-      assert(persesLexemeIdArray.maxLogicalSize >= tokenCount)
+      lazyAssert { persesLexemeIdArray.maxLogicalSize >= tokenCount }
       persesLexemeIdArray.logicalSize = tokenCount
       for (i in 0 until tokenCount) {
         persesLexemeIdArray[i] = tokens[i].persesLexemeId
       }
     }
 
+    @Suppress("NOTHING_TO_INLINE")
     @JvmStatic
     protected inline fun shrinkLogicalArrayIfNecessary(
       array: LogicalSizedArray,
       baseProgram: TokenizedProgram,
-      refreshThreshold: Int
+      refreshThreshold: Int,
     ): LogicalSizedArray {
       val tokenCount = baseProgram.tokenCount()
       return if (array.maxLogicalSize - tokenCount >= refreshThreshold) {

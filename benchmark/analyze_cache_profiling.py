@@ -9,7 +9,7 @@ __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file
 
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(description="Summarize benchmark results")
+    parser = argparse.ArgumentParser(description="Summarize benchmark results (in Byte)")
     parser.add_argument("files", nargs='+', default=[], help="Json and log files should be paired")
     return parser.parse_args()
 
@@ -58,7 +58,7 @@ def analyze_json_file(filepath: str, statistics_handle: dict):
     # decode filename
     base = os. path. basename(filepath)
     base = os.path.splitext(base)[0]
-    buf, bench, reducer, timemark = base.split('_')
+    buf, subject, reducer, timemark, iter = base.split('_')
     reducer_t = f"{reducer}@{timemark}"
 
     # read json file to a map
@@ -66,9 +66,9 @@ def analyze_json_file(filepath: str, statistics_handle: dict):
         json_dict = json.load(f)
 
     # trim redundant information
-    if bench != json_dict['Bench']:
-        raise Exception(f"Error: File name and content inconsistent: BENCH. Please check {filepath}")
-    json_dict.pop('Bench')
+    if subject != json_dict['subject']:
+        raise Exception(f"Error: File name and content inconsistent: Subject. Please check {filepath}")
+    json_dict.pop('subject')
     if reducer != json_dict['Reducer']:
         raise Exception(f"Error: File name and content inconsistent: REDUCER. Please check {filepath}")
     json_dict.pop('Reducer')
@@ -79,13 +79,13 @@ def analyze_json_file(filepath: str, statistics_handle: dict):
     TOKEN_R: Final = "Token_remaining"
 
     # append any new data to statistics report
-    if bench not in statistics_handle:
-        statistics_handle[bench] = dict()
-    if reducer_t not in statistics_handle[bench]:
-        statistics_handle[bench][reducer_t] = json_dict
+    if subject not in statistics_handle:
+        statistics_handle[subject] = dict()
+    if reducer_t not in statistics_handle[subject]:
+        statistics_handle[subject][reducer_t] = json_dict
     else:
         # average if existing already
-        sub_dict = statistics_handle[bench][reducer_t]
+        sub_dict = statistics_handle[subject][reducer_t]
         average_dict_item(sub_dict, json_dict, QUERY)
         average_dict_item(sub_dict, json_dict, TIME)
         average_dict_item(sub_dict, json_dict, TOKEN_R)
@@ -95,7 +95,7 @@ def analyze_log_file(filepath: str, statistics: dict):
     # decode filename
     base = os. path. basename(filepath)
     base = os.path.splitext(base)[0]
-    buf, bench, reducer, timemark = base.split('_')
+    buf, subject, reducer, timemark, iter = base.split('_')
     reducer_t = f"{reducer}@{timemark}"
 
     # read log file to a list
@@ -116,10 +116,10 @@ def analyze_log_file(filepath: str, statistics: dict):
     log_dict[AVG] = average_usage(timestamp, cache)
     log_dict[NUM_SAMPLES] = len(lines)
 
-    if PEAK not in statistics[bench][reducer_t]:
-        statistics[bench][reducer_t].update(log_dict)
+    if PEAK not in statistics[subject][reducer_t]:
+        statistics[subject][reducer_t].update(log_dict)
     else:
-        sub_dict = statistics[bench][reducer_t]
+        sub_dict = statistics[subject][reducer_t]
         average_dict_item(sub_dict, log_dict, PEAK)
         average_dict_item(sub_dict, log_dict, AVG)
         average_dict_item(sub_dict, log_dict, NUM_SAMPLES)
@@ -142,6 +142,16 @@ def pair_files(file_list: List[str]) -> Dict[str, str]:
             files_paired[file] = log_file
     return files_paired
 
+def print_json_as_csv(statistics):
+    print("Subject,Entry_peak_cache,Average_cache,Entry_environment")
+
+    for subject in statistics.keys():
+        entries = statistics[subject]
+        for key in entries.keys():
+            entry_environment = entries[key]["Environment"].replace("--query-cache-type ", "")
+            entry_peak_cache = entries[key]["peak_cache_size"]
+            average_cache = entries[key]["average_memory_usage"]
+            print(f"{subject},{entry_peak_cache},{average_cache},{entry_environment}")
 
 def main():
     args = parse_arguments()
@@ -156,6 +166,8 @@ def main():
 
     json_object = json.dumps(statistics, indent=4)
     print(json_object)
+
+    print_json_as_csv(statistics=statistics)
 
 
 if __name__ == "__main__":

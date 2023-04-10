@@ -28,6 +28,9 @@ import org.perses.reduction.io.AbstractReductionIOManager.Companion.getTempRootF
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.time.LocalDateTime
+import kotlin.io.path.isDirectory
+import kotlin.io.path.listDirectoryEntries
+import kotlin.io.path.name
 import kotlin.io.path.readText
 
 @RunWith(JUnit4::class)
@@ -41,57 +44,49 @@ class ReductionIOManagerTest : CommonReductionIOManagerData(ReductionIOManagerTe
   @Test
   fun testBackupBinaryFile() {
     Files.write(sourceFile.file, byteArrayOf(1))
-    Files.list(workingDir).filter { t -> t.fileName.toString().endsWith(".orig") }.use {
-      assertThat(it.findFirst().isPresent).isFalse()
-    }
+    val getOrigFiles = { workingDir.listDirectoryEntries("*.orig") }
+    assertThat(getOrigFiles()).isEmpty()
     ioManager.backupMainFile()
-    Files.list(workingDir).filter { t -> t.fileName.toString().endsWith(".orig") }.use {
-      val newBackup = it.findAny()
-      assertThat(newBackup.isPresent).isTrue()
-      assertThat(Files.readAllBytes(newBackup.get())).isEqualTo(Files.readAllBytes(sourceFile.file))
-    }
+    val backupFile = getOrigFiles().single()
+    assertThat(Files.readAllBytes(backupFile)).isEqualTo(Files.readAllBytes(sourceFile.file))
+  }
+
+  @Test
+  fun testCreateCurrentBestResultFolder() {
+    val folder = ioManager.createCurrentBestResultFolder()
+    assertThat(folder.folder.name).contains("_best_result_snapshot_")
   }
 
   @Test
   fun testCreateReductionFolderManager() {
-    Files.list(workingDir).use {
-      assertThat(it.findFirst().isPresent).isFalse()
-    }
-    ioManager.createReductionFolderManager()
-    Files.list(workingDir).use {
-      val firstFile = it.findFirst()
-      assertThat(firstFile.isPresent).isTrue()
-      assertThat(firstFile.get().fileName.toString()).startsWith("PersesTempRoot_t.c_r.sh_")
-    }
+    assertThat(workingDir.listDirectoryEntries()).isEmpty()
+    ioManager.lazilyInitializedReductionFolderManager
+    assertThat(
+      workingDir.listDirectoryEntries().single().name,
+    ).startsWith("PersesTempRoot_t.c_r.sh_")
   }
 
   @Test
   fun testWriteProgramToReductionFolder() {
-    val manager = ioManager.createReductionFolderManager()
-    Files.list(manager.rootFolder).use {
-      assertThat(it.findFirst().isPresent).isFalse()
-    }
+    val manager = ioManager.lazilyInitializedReductionFolderManager
+    val listDirEntries = { manager.rootFolder.listDirectoryEntries() }
+    assertThat(listDirEntries()).isEmpty()
     val folder = manager.createNextFolder()
-    Files.list(manager.rootFolder).use {
-      assertThat(it.findFirst().isPresent).isTrue()
-    }
+    assertThat(listDirEntries()).hasSize(1)
+
     val realFolder = folder.folder
-    Files.list(realFolder).use {
-      val scriptFile = it.findFirst()
-      assertThat(scriptFile.isPresent).isTrue()
-      assertThat(scriptFile.get().fileName.toString()).isEqualTo("r.sh")
-      assertThat(Files.isExecutable(scriptFile.get()))
-    }
+    val scriptFile = realFolder.listDirectoryEntries().single()
+    assertThat(scriptFile.fileName.toString()).isEqualTo("r.sh")
+    assertThat(Files.isExecutable(scriptFile))
 
     outputManagerFactory.createManagerFor(
-      TestUtility.createTokenizedProgramFromString("int a;", LanguageC)
+      TestUtility.createTokenizedProgramFromString("int a;", LanguageC),
     ).write(folder)
-    Files.list(realFolder).sorted().use {
-      val sourceFile = it.skip(1).findFirst().get()
-      assertThat(sourceFile.fileName.toString()).isEqualTo("t.c")
-      assertThat(sourceFile.readText()).contains("int")
-      assertThat(sourceFile.readText()).contains("a")
-    }
+    assertThat(realFolder.listDirectoryEntries()).hasSize(2)
+    val sourceFile = realFolder.resolve("t.c")
+    assertThat(sourceFile.fileName.toString()).isEqualTo("t.c")
+    assertThat(sourceFile.readText()).contains("int")
+    assertThat(sourceFile.readText()).contains("a")
   }
 
   @Test
@@ -99,16 +94,12 @@ class ReductionIOManagerTest : CommonReductionIOManagerData(ReductionIOManagerTe
     val folder = root.resolve("tmp").apply {
       Files.createDirectory(this)
     }
-    Files.list(folder).use {
-      assertThat(it.findAny().isPresent).isFalse()
-    }
+    assertThat(folder.listDirectoryEntries()).isEmpty()
     ioManager.reductionInputs.writeTestScriptTo(folder)
-    Files.list(folder).use {
-      val firstFile = it.findFirst()
-      assertThat(firstFile.isPresent).isTrue()
-      assertThat(firstFile.get().endsWith("r.sh")).isTrue()
-      assertThat(Files.isExecutable(firstFile.get())).isTrue()
-    }
+
+    val firstFile = folder.listDirectoryEntries().single()
+    assertThat(firstFile.endsWith("r.sh")).isTrue()
+    assertThat(Files.isExecutable(firstFile)).isTrue()
   }
 
   @Test
@@ -128,7 +119,7 @@ class ReductionIOManagerTest : CommonReductionIOManagerData(ReductionIOManagerTe
 
   @Test
   fun testGetSingleSourceFileBaseName() {
-    val manager = ioManager.createReductionFolderManager()
+    val manager = ioManager.lazilyInitializedReductionFolderManager
     val folder = manager.createNextFolder()
     val program = TestUtility.createTokenizedProgramFromString("int a;", LanguageC)
     outputManagerFactory.createManagerFor(program).write(folder)
@@ -138,7 +129,7 @@ class ReductionIOManagerTest : CommonReductionIOManagerData(ReductionIOManagerTe
 
   @Test
   fun testGetScriptFileBaseNameIn() {
-    val manager = ioManager.createReductionFolderManager()
+    val manager = ioManager.lazilyInitializedReductionFolderManager
     val folder = manager.createNextFolder()
     assertThat(ioManager.getScriptFileBaseNameIn(folder)).isEqualTo("r.sh")
   }
@@ -149,9 +140,13 @@ class ReductionIOManagerTest : CommonReductionIOManagerData(ReductionIOManagerTe
     assertThat(Files.exists(bestFile)).isFalse()
 
     ioManager.updateBestResult(
-      TestUtility.createTokenizedProgramFromString("int a;", LanguageC)
+      TestUtility.createTokenizedProgramFromString("int a;", LanguageC),
     )
     assertThat(bestFile.readText().trim()).isEqualTo("int a;")
+    // Assert that the best result snapshot folder should be deleted.
+    assertThat(
+      root.listDirectoryEntries().filter { it.isDirectory() },
+    ).containsExactly(outputDir, workingDir)
   }
 
   private fun getBestFile() = outputDir.resolve(sourceFile.baseName)

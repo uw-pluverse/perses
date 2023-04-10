@@ -18,7 +18,7 @@ package org.perses.spartree
 
 import com.google.common.annotations.VisibleForTesting
 import com.google.common.base.MoreObjects
-import org.perses.antlr.RuleHierarchyInfo
+import org.perses.antlr.RuleHierarchyEntry
 import org.perses.antlr.RuleType
 import org.perses.antlr.pnf.AstUtil.computeNodeType
 import java.io.IOError
@@ -28,7 +28,7 @@ import java.io.Writer
 
 abstract class AbstractSparTreeNode internal constructor(
   nodeId: Int,
-  val antlrRule: RuleHierarchyInfo?
+  val antlrRule: RuleHierarchyEntry?,
 ) : AbstractTreeNode<AbstractSparTreeNode, AbstractNodePayload>(nodeId) {
 
   val nodeType: RuleType = computeNodeType(antlrRule)
@@ -172,7 +172,7 @@ abstract class AbstractSparTreeNode internal constructor(
     private fun outputPrefix(
       writer: Writer,
       prefix: ArrayList<String>,
-      additionalPrefix: String
+      additionalPrefix: String,
     ): Writer {
       for (p in prefix) {
         writer.append(p)
@@ -184,7 +184,7 @@ abstract class AbstractSparTreeNode internal constructor(
     fun printTreeStructure(
       root: AbstractSparTreeNode,
       writer: Writer,
-      prefix: ArrayList<String>
+      prefix: ArrayList<String>,
     ) {
       val childCount = root.childCount
       if (childCount == 0) {
@@ -214,7 +214,7 @@ abstract class AbstractSparTreeNode internal constructor(
     }
 
     @VisibleForTesting
-    fun computeNodeType(antlrRule: RuleHierarchyInfo?): RuleType {
+    fun computeNodeType(antlrRule: RuleHierarchyEntry?): RuleType {
       if (antlrRule == null) {
         return RuleType.TOKEN
       }

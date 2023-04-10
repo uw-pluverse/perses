@@ -28,7 +28,7 @@ internal class NullQueryCacheProfiler : AbstractQueryCacheProfiler() {
     tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
     program: TokenizedProgram,
     startTime: Long,
-    endTime: Long
+    endTime: Long,
   ) {
   }
 
@@ -36,14 +36,14 @@ internal class NullQueryCacheProfiler : AbstractQueryCacheProfiler() {
     tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
     encoding: CompactProgramEncoding,
     startTime: Long,
-    endTime: Long
+    endTime: Long,
   ) {
   }
 
   override fun onCreatingEncoder(
     tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
     startTime: Long,
-    endTime: Long
+    endTime: Long,
   ) {
   }
 
@@ -53,7 +53,7 @@ internal class NullQueryCacheProfiler : AbstractQueryCacheProfiler() {
     numOfEntriesInCacheBefore: Int,
     numOfEntriesInCacheAfter: Int,
     startTime: Long,
-    endTime: Long
+    endTime: Long,
   ) {
   }
 }

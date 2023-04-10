@@ -17,22 +17,25 @@
 package org.perses.reduction.io
 
 import com.google.common.collect.ImmutableList
+import org.perses.program.AbstractDataKind
+import org.perses.program.AbstractReductionFile
 import org.perses.program.ScriptFile
-import org.perses.program.SourceFile
 
-abstract class AbstractSingleFileReductionInputs(
+abstract class AbstractSingleFileReductionInputs<K : AbstractDataKind,
+  F : AbstractReductionFile<K, F>,
+  S : AbstractSingleFileReductionInputs<K, F, S>,>(
   testScript: ScriptFile,
-  val mainFile: SourceFile,
-  files: ImmutableList<SourceFile>
-) : AbstractReductionInputs(
+  val mainFile: F,
+  files: ImmutableList<AbstractReductionFile<*, *>>,
+) : AbstractReductionInputs<K, S>(
   testScript,
-  mainLanguage = mainFile.languageKind,
+  mainDataKind = mainFile.dataKind,
   rootDirectory = mainFile.parentFile,
-  files
+  files,
 ) {
 
   init {
-    require(files.any { it === mainFile })
+    require(files.singleOrNull { it === mainFile } != null)
   }
 
   val relativePathForMainFile = getRelativePathForOrigFile(mainFile)

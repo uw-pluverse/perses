@@ -32,7 +32,7 @@ abstract class AbstractAstVisitor {
   }
 
   fun preorderGrammar(
-    rules: Iterable<Map.Entry<RuleNameHandle, AbstractPersesRuleElement>>
+    rules: Iterable<Map.Entry<RuleNameHandle, AbstractPersesRuleElement>>,
   ) {
     for ((_, value) in rules) {
       preorder(value)

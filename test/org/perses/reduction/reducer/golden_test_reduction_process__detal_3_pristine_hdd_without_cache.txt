@@ -5,24 +5,24 @@ translationUnit {id=1}
 |___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
     |___functionDefinition {id=4,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
         |___(?) {id=5,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=94,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=97,slot_type=[declarationSpecifier,typeSpecifier,Int]}
-        |___directDeclarator {id=85,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=93,slot_type=[aux_rule__directDeclarator_8,Identifier]}
-        |   |___(*) {id=87,slot_type=kleene_star__directDeclarator_6}
-        |       |___aux_rule__directDeclarator_14 {id=89,slot_type=[aux_rule__directDeclarator_7,aux_rule__directDeclarator_14]}
-        |           |___Token:( {id=90,slot_type=LeftParen}
-        |           |___Token:) {id=92,slot_type=RightParen}
+        |   |___(+) {id=95,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=99,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=86,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=94,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=88,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=90,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=91,slot_type=LeftParen}
+        |           |___Token:) {id=93,slot_type=RightParen}
         |___compoundStatement {id=7,slot_type=compoundStatement}
             |___Token:{ {id=8,slot_type=LeftBrace}
             |___(?) {id=9,slot_type=optional__compoundStatement_1}
             |   |___(+) {id=12,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
             |       |___aux_rule__declaration_3 {id=51,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
             |       |   |___(+) {id=52,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=84,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+            |       |   |   |___Token:int {id=85,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
             |       |   |___(?) {id=53,slot_type=optional__declaration_2}
             |       |   |   |___initDeclarator {id=56,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:a {id=81,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_8,Identifier]}
+            |       |   |       |___Token:a {id=81,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
             |       |   |       |___(?) {id=58,slot_type=optional__initDeclarator_2}
             |       |   |           |___aux_rule__initDeclarator_1 {id=59,slot_type=aux_rule__initDeclarator_1}
             |       |   |               |___Token:= {id=60,slot_type=Assign}

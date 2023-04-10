@@ -74,7 +74,7 @@ class RubyParserFacadeTest {
       .isEqualTo(
         program.splitToSequence('\n')
           .map { it.removeWhitespaces() }
-          .joinToString(separator = "\n")
+          .joinToString(separator = "\n"),
       )
   }
 }

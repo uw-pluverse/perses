@@ -17,13 +17,15 @@ kt_jvm_library(
 kt_jvm_test(
     name = "ReductionIOManagerTest",
     srcs = ["ReductionIOManagerTest.kt"],
+    associates = [
+        "//src/org/perses/reduction/io/token:token_reduction_io_manager",
+    ],
     deps = [
         ":CommonReductionIOManagerData",
         "//:kotlin_stdib",
         "//:truth",
         "//src/org/perses/reduction/io",
         "//src/org/perses/reduction/io/token:regular_output_manager_factory",
-        "//src/org/perses/reduction/io/token:token_reduction_io_manager",
         "//test/org/perses:test_util",
     ],
 )

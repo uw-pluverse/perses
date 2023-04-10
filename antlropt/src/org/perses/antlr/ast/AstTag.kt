@@ -41,7 +41,8 @@ enum class AstTag(val precedence: Precedence) {
   LEXER_CHAR_SET(Precedence.UNIT),
   LEXER_RANGE_OPERATOR(Precedence.UNIT),
   UNKNOWN_TERMINAL_WITH_UNIT_PRECEDENCE(Precedence.UNIT),
-  EPSILON(Precedence.NONE);
+  EPSILON(Precedence.NONE),
+  ;
 
   fun isQuantifier(): Boolean {
     return this == STAR || this == PLUS || this == OPTIONAL

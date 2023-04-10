@@ -30,7 +30,7 @@ abstract class AbstractCommandOptions {
     names = ["--help", "-h"],
     description = "print help message",
     help = true,
-    order = CommonCmdOptionGroupOrder.HELP
+    order = CommonCmdOptionGroupOrder.HELP,
   )
   var help = false
 

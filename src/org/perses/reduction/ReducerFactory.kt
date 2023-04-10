@@ -28,10 +28,14 @@ import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
 import org.perses.reduction.reducer.TreeSlicer
 import org.perses.reduction.reducer.hdd.HDDReducer
 import org.perses.reduction.reducer.hdd.PristineHDDReducer
+import org.perses.reduction.reducer.token.ConcurrentStateBasedDeltaReducer
+import org.perses.reduction.reducer.token.ConcurrentStateBasedLineSlicer
+import org.perses.reduction.reducer.token.ConcurrentStateBasedTokenSlicer
 import org.perses.reduction.reducer.token.ConcurrentTokenSlicer
 import org.perses.reduction.reducer.token.DeltaDebuggingReducer
 import org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer
 import org.perses.reduction.reducer.token.TokenSlicer
+import org.perses.util.Util.lazyAssert
 
 /** Factory to create various reducers.  */
 object ReducerFactory {
@@ -44,6 +48,11 @@ object ReducerFactory {
     .add(ConcurrentTokenSlicer.COMPOSITE_REDUCER)
     .addAll(LineBasedConcurrentTokenSlicer.REDUCER_ANNOTATIONS)
     .add(LineBasedConcurrentTokenSlicer.COMPOSITE_REDUCER)
+    .add(ConcurrentStateBasedDeltaReducer.META)
+    .addAll(ConcurrentStateBasedLineSlicer.REDUCER_ANNOTATIONS)
+    .add(ConcurrentStateBasedLineSlicer.COMPOSITE_REDUCER)
+    .addAll(ConcurrentStateBasedTokenSlicer.REDUCER_ANNOTATIONS)
+    .add(ConcurrentStateBasedTokenSlicer.COMPOSITE_REDUCER)
     .add(TreeSlicer.META)
     .add(PersesNodeBfsReducer.META)
     .add(PersesNodePrioritizedBfsReducer.META)
@@ -56,15 +65,15 @@ object ReducerFactory {
     .collect(
       ImmutableMap.toImmutableMap(
         { obj: ReducerAnnotation -> obj.shortName() },
-        Functions.identity()
-      )
+        Functions.identity(),
+      ),
     )
 
   @JvmStatic
   val defaultReductionAlgName: String
     get() {
       val defaultAlgName = PersesNodePrioritizedDfsReducer.NAME
-      assert(isValidReducerName(defaultAlgName))
+      lazyAssert { isValidReducerName(defaultAlgName) }
       return defaultAlgName
     }
 

@@ -147,9 +147,7 @@ public class TokenizedProgramEncoderTest {
   }
 
   private IntArrayList getIntervalsInOrigin(TokenizedProgram p) {
-    return encoder.encodeUncompressed(
-        new LinearScanTokenizedProgramEncoder.IteratorCursor<>(p.getTokens().iterator()),
-        p.tokenCount());
+    return encoder.encodeUncompressed(p.getTokens().iterator(), p.tokenCount());
   }
 
   private TokenizedProgram restore(List<Integer> intervals) {

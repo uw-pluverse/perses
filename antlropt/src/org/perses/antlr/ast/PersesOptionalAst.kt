@@ -18,7 +18,7 @@ package org.perses.antlr.ast
 
 class PersesOptionalAst(
   body: AbstractPersesRuleElement,
-  isGreedy: Boolean
+  isGreedy: Boolean,
 ) : AbstractPersesQuantifiedAst(body, isGreedy) {
 
   override val operator: String
@@ -27,11 +27,12 @@ class PersesOptionalAst(
     get() = AstTag.OPTIONAL
 
   override fun createWithNewChildren(
-    newChildren: List<AbstractPersesRuleElement>
+    newChildren: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     require(newChildren.size == 1)
     return SmartAstConstructor.createForOptional(
-      newChildren.single(), isGreedy
+      newChildren.single(),
+      isGreedy,
     )
   }
 

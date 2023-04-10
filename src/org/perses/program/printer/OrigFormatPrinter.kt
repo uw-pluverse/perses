@@ -17,21 +17,25 @@
 package org.perses.program.printer
 
 import org.perses.program.AbstractLazySourceCode
-import org.perses.program.AbstractTokenizedProgramPrinter
 import org.perses.program.TokenizedProgram
 import org.perses.util.FastStringBuilder
 
-class OrigFormatPrinter private constructor(val keepBlankLines: Boolean) :
+class OrigFormatPrinter private constructor(
+  val keepBlankLines: Boolean,
+  val tokenPositionProvider: AbstractTokenPositionProvider,
+) :
   AbstractTokenizedProgramPrinter() {
 
   override fun print(
     program: TokenizedProgram,
-    tokenPositionProvider: AbstractTokenPositionProvider,
-    tokenPlacementListener: AbstractTokenPlacementListener?
+    tokenPlacementListener: AbstractTokenPlacementListener?,
   ) = object : AbstractLazySourceCode() {
     override fun computeStringBuilder(): FastStringBuilder {
       return OrigFormatPrintingVisitor(
-        program, keepBlankLines, tokenPositionProvider, tokenPlacementListener
+        program,
+        keepBlankLines,
+        tokenPositionProvider,
+        tokenPlacementListener,
       ).visit().result
     }
   }
@@ -48,7 +52,9 @@ class OrigFormatPrinter private constructor(val keepBlankLines: Boolean) :
   }
 
   companion object {
-    val ORIG_FORMAT = OrigFormatPrinter(keepBlankLines = true)
-    val COMPACT_ORIG_FORMAT = OrigFormatPrinter(keepBlankLines = false)
+    fun getOrigFormat(tokenPositionProvider: AbstractTokenPositionProvider) =
+      OrigFormatPrinter(keepBlankLines = true, tokenPositionProvider)
+    fun getCompactOrigFormat(tokenPositionProvider: AbstractTokenPositionProvider) =
+      OrigFormatPrinter(keepBlankLines = false, tokenPositionProvider)
   }
 }

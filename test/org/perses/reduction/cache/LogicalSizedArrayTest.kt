@@ -17,6 +17,7 @@
 package org.perses.reduction.cache
 
 import com.google.common.truth.Truth.assertThat
+import com.google.common.truth.Truth.assertWithMessage
 import org.junit.Assert
 import org.junit.Assert.assertThrows
 import org.junit.Test
@@ -97,15 +98,17 @@ class LogicalSizedArrayTest {
     PrintWriter(stringWriter).use {
       ClassReader(this::class.java.canonicalName).accept(
         TraceClassVisitor(nullClassVisitor, Textifier(), it),
-        flags
+        flags,
       )
     }
-    val assembly = stringWriter.toString().lines().filter {
+    val classContent = stringWriter.toString()
+    val assembly = classContent.lines().filter {
       it.trim().lowercase().startsWith("invoke")
     }.filter {
-      it.contains(LogicalSizedArray::class.java.simpleName)
+      // make sure no calls to any methods in LogicalSizedArray.
+      it.contains(Regex("\\b" + LogicalSizedArray::class.java.simpleName + "\\b"))
     }.distinct()
-    assertThat(assembly).hasSize(1)
-    assertThat(assembly.first()).contains(".constructor")
+    assertWithMessage(classContent).that(assembly).hasSize(1)
+    assertWithMessage(classContent).that(assembly.single()).contains(".constructor")
   }
 }

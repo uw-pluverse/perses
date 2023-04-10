@@ -19,10 +19,11 @@ package org.perses.reduction.cache
 import com.google.common.collect.ImmutableList
 import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
+import org.perses.util.Util.lazyAssert
 
 abstract class AbstractTokenizedProgramEncoder<Encoding> protected constructor(
   protected var baseProgram: TokenizedProgram,
-  protected val profiler: AbstractQueryCacheProfiler
+  protected val profiler: AbstractQueryCacheProfiler,
 ) {
 
   abstract fun encode(program: TokenizedProgram): Encoding?
@@ -30,7 +31,7 @@ abstract class AbstractTokenizedProgramEncoder<Encoding> protected constructor(
   abstract fun reEncode(previousEncoding: Encoding): Encoding?
 
   fun updateEncoder(newBaseProgram: TokenizedProgram) {
-    assert(newBaseProgram.factory == baseProgram.factory)
+    lazyAssert { newBaseProgram.factory == baseProgram.factory }
     baseProgram = newBaseProgram
     updateEncoderMore(baseProgram)
   }

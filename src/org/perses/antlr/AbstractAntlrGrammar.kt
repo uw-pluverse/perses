@@ -58,7 +58,7 @@ abstract class AbstractAntlrGrammar {
     init {
       require(
         parserGrammar.grammarType == PersesGrammar.GrammarType.PARSER ||
-          parserGrammar.grammarType == PersesGrammar.GrammarType.COMBINED
+          parserGrammar.grammarType == PersesGrammar.GrammarType.COMBINED,
       ) {
         parserGrammar.grammarType
       }

@@ -22,7 +22,7 @@ import org.perses.util.toImmutableList
 object SmartAstConstructor {
 
   fun createForAlternatives(
-    origAlternatives: List<AbstractPersesRuleElement>
+    origAlternatives: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     val alternatives = deduplicate(origAlternatives)
     require(alternatives.isNotEmpty())
@@ -51,7 +51,7 @@ object SmartAstConstructor {
   }
 
   fun createForSequence(
-    sequence: Iterable<AbstractPersesRuleElement>
+    sequence: Iterable<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     val nonEpsilon = sequence
       .asSequence()
@@ -66,7 +66,7 @@ object SmartAstConstructor {
   }
 
   private fun removeRedundantQuantifiedNodesInPlace(
-    sequence: MutableList<AbstractPersesRuleElement>
+    sequence: MutableList<AbstractPersesRuleElement>,
   ) {
     while (true) {
       val candidate = sequence.withIndex()
@@ -86,14 +86,14 @@ object SmartAstConstructor {
 
   fun areMergeableQuantifiedNodesInSequence(
     first: AbstractPersesRuleElement,
-    second: AbstractPersesRuleElement
+    second: AbstractPersesRuleElement,
   ): Boolean {
     return tryToMergeQuantifiedNodesInSequence(first, second) != null
   }
 
   fun tryToMergeQuantifiedNodesInSequence(
     first: AbstractPersesRuleElement,
-    second: AbstractPersesRuleElement
+    second: AbstractPersesRuleElement,
   ): AbstractPersesQuantifiedAst? {
     if (first !is AbstractPersesQuantifiedAst ||
       second !is AbstractPersesQuantifiedAst ||
@@ -103,10 +103,12 @@ object SmartAstConstructor {
     }
     return when (first.tag to second.tag) {
       AstTag.STAR to AstTag.STAR,
-      AstTag.STAR to AstTag.OPTIONAL -> first as PersesStarAst
+      AstTag.STAR to AstTag.OPTIONAL,
+      -> first as PersesStarAst
       AstTag.STAR to AstTag.PLUS -> second as PersesPlusAst
       AstTag.PLUS to AstTag.STAR,
-      AstTag.PLUS to AstTag.OPTIONAL -> first as PersesPlusAst
+      AstTag.PLUS to AstTag.OPTIONAL,
+      -> first as PersesPlusAst
       AstTag.OPTIONAL to AstTag.STAR -> second as PersesStarAst
       AstTag.OPTIONAL to AstTag.PLUS -> second as PersesPlusAst
       else -> null
@@ -115,7 +117,7 @@ object SmartAstConstructor {
 
   fun createForStar(
     body: AbstractPersesRuleElement,
-    isGreedy: Boolean
+    isGreedy: Boolean,
   ): AbstractPersesRuleElement {
     return when (body.tag) {
       AstTag.STAR -> body
@@ -133,7 +135,7 @@ object SmartAstConstructor {
 
   fun createForOptional(
     optionalBody: AbstractPersesRuleElement,
-    isGreedy: Boolean
+    isGreedy: Boolean,
   ): AbstractPersesRuleElement {
     return when (optionalBody.tag) {
       AstTag.STAR, AstTag.OPTIONAL -> optionalBody
@@ -151,7 +153,7 @@ object SmartAstConstructor {
 
   fun createWithNewChildren(
     elementToCopy: AbstractPersesRuleElement,
-    children: List<AbstractPersesRuleElement>
+    children: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     return when (elementToCopy.tag) {
       AstTag.ALTERNATIVE_BLOCK -> createForAlternatives(children)
@@ -161,7 +163,7 @@ object SmartAstConstructor {
   }
 
   fun deduplicate(
-    alternatives: List<AbstractPersesRuleElement>
+    alternatives: List<AbstractPersesRuleElement>,
   ): ImmutableList<AbstractPersesRuleElement> {
     val result = ArrayList<AbstractPersesRuleElement>()
     alternatives.forEach { alt ->

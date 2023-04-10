@@ -18,12 +18,14 @@ package org.perses.reduction.reducer.token
 
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.PrinterRegistry
-import org.perses.reduction.FutureExecutionResultInfo
+import org.perses.reduction.AsyncReductionListenerManager
+import org.perses.reduction.EditTestPayload
 import org.perses.reduction.PropertyTestResult
 import org.perses.reduction.ReductionConfiguration
-import org.perses.reduction.ReductionListenerManager
+import org.perses.reduction.TestScriptExecResult
 import org.perses.reduction.TestScriptExecutorService
 import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
+import org.perses.reduction.cache.AbstractProgramEncoding
 import org.perses.reduction.cache.AbstractQueryCache
 import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.token.TokenReductionIOManager
@@ -34,35 +36,44 @@ import org.perses.spartree.SparTree
 abstract class AbstractSlicingTask(
   val tree: SparTree,
   private val nodeActionSetCache: AbstractNodeActionSetCache,
-  private val listenerManager: ReductionListenerManager,
+  private val listenerManager: AsyncReductionListenerManager,
   private val queryCache: AbstractQueryCache,
   private val ioManager: TokenReductionIOManager,
   private val configuration: ReductionConfiguration,
   private val methodToTestProgramAsynchronously: (
-    preCheck: () -> PropertyTestResult,
-    postCheck: (existingResult: PropertyTestResult) -> PropertyTestResult,
-    outputManager: AbstractOutputManager
-  ) -> TestScriptExecutorService.FutureTestScriptExecutionTask
+    preCheck: TestScriptExecutorService.IPreCheck<EditTestPayload>,
+    postCheck: TestScriptExecutorService.IPostCheck<EditTestPayload>,
+    outputManager: AbstractOutputManager,
+    payload: EditTestPayload,
+  ) -> TestScriptExecResult<EditTestPayload>,
 ) {
 
-  protected var futureResult: FutureExecutionResultInfo? = null
+  protected var future: TestScriptExecResult<EditTestPayload>? = null
 
   abstract fun tryAsyncRunPreconditionCheck(): Boolean
 
   abstract fun createNodeDeletionActionSet(): NodeDeletionActionSet
 
-  fun tryAsyncRun(): Boolean {
-    check(futureResult == null)
+  enum class EnumAsyncRunResult {
+    PRECONDITION_FAIL,
+    CACHE_HIT,
+    TEST_SUBMITTED,
+  }
+
+  fun tryAsyncRun(
+    visitedCacheKeys: HashSet<AbstractProgramEncoding<*>>,
+  ): EnumAsyncRunResult {
+    check(future == null)
 
     if (!tryAsyncRunPreconditionCheck()) {
-      return false
+      return EnumAsyncRunResult.PRECONDITION_FAIL
     }
 
     val nodeDeletionActionSet = createNodeDeletionActionSet()
 
     if (nodeActionSetCache.isCachedOrCacheIt(nodeDeletionActionSet)) {
       listenerManager.onNodeEditActionSetCacheHit(nodeDeletionActionSet)
-      return false
+      return EnumAsyncRunResult.CACHE_HIT
     }
 
     val treeEdit = tree.createNodeDeletionEdit(nodeDeletionActionSet)
@@ -72,33 +83,34 @@ abstract class AbstractSlicingTask(
       val testResult = cachedResult.asCacheHit().testResult
       check(testResult.isNotInteresting) { "Only failed programs can be cached." }
       listenerManager.onTestResultCacheHit(testResult, testProgram, treeEdit)
-      return false
+      return EnumAsyncRunResult.CACHE_HIT
     }
 
-    val future = methodToTestProgramAsynchronously(
+    if (cachedResult.hasEncoding() && !visitedCacheKeys.add(cachedResult.getEncodingOrFail())) {
+      // the same program was submitted to async test already.
+      return EnumAsyncRunResult.CACHE_HIT
+    }
+
+    check(future == null)
+    future = methodToTestProgramAsynchronously(
       ALWAYS_TRUE_PRECHECK,
       createParsabilityPostCheck(testProgram),
-      ioManager.createOutputManager(testProgram)
+      ioManager.createOutputManager(testProgram),
+      EditTestPayload(treeEdit, cachedResult.asCacheMiss()),
     )
-    check(futureResult == null)
-    futureResult = FutureExecutionResultInfo(
-      treeEdit,
-      cachedResult.asCacheMiss(),
-      future
-    )
-    return true
+    return EnumAsyncRunResult.TEST_SUBMITTED
   }
 
   private fun createParsabilityPostCheck(
-    testProgram: TokenizedProgram
-  ): (existingResult: PropertyTestResult) -> PropertyTestResult =
-    { existing ->
+    testProgram: TokenizedProgram,
+  ): (existingResult: PropertyTestResult, payload: EditTestPayload) -> PropertyTestResult =
+    { existing, _ ->
       if (existing.isNotInteresting || isProgramParsable(testProgram)) {
         existing
       } else {
         PropertyTestResult(
           exitCode = INVALID_SYNTAX_EXIT_CODE,
-          elapsedMilliseconds = -1
+          elapsedMilliseconds = -1,
         )
       }
     }
@@ -106,27 +118,27 @@ abstract class AbstractSlicingTask(
   private fun isProgramParsable(testProgram: TokenizedProgram) =
     configuration.parserFacade.isSourceCodeParsable(
       PrinterRegistry.getPrinter(ioManager.getDefaultProgramFormat())
-        .print(testProgram).sourceCode
+        .print(testProgram).sourceCode,
     )
 
   fun cancel() {
-    if (futureResult != null) {
-      futureResult!!.cancel()
-      futureResult = null
+    future?.let {
+      it.cancelWithInterruption()
+      future = null
     }
   }
 
   fun waitAndApplyEditIfSuccess(): Boolean {
-    check(futureResult != null)
-    val best = analyzeResultsAndGetBest(listOf(futureResult!!)) ?: return false
-    tree.applyEdit(best.edit)
-    futureResult = null
+    check(future != null)
+    val best = analyzeResultsAndGetBest(listOf(future!!)) ?: return false
+    tree.applyEdit(best.payload!!.edit)
+    future = null
     return true
   }
 
   abstract fun analyzeResultsAndGetBest(
-    futureResult: List<FutureExecutionResultInfo>
-  ): FutureExecutionResultInfo?
+    futureResult: List<TestScriptExecResult<EditTestPayload>>,
+  ): TestScriptExecResult<EditTestPayload>?
 
   companion object {
     val INVALID_SYNTAX_EXIT_CODE = 99

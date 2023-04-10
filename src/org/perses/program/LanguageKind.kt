@@ -19,17 +19,17 @@ package org.perses.program
 import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
-import org.perses.util.ShellCommandOnPath
+import org.perses.util.shell.ShellCommandOnPath
 import org.perses.util.toImmutableList
 
 abstract class LanguageKind(
-  val name: String,
-  val extensions: ImmutableSet<String>,
+  name: String,
+  extensions: ImmutableSet<String>,
   val defaultCodeFormatControl: EnumFormatControl,
   val origCodeFormatControl: EnumFormatControl,
   val allowedCodeFormatControl: ImmutableSet<EnumFormatControl>,
-  val defaultFormatterCommands: ImmutableList<ShellCommandOnPath> = ImmutableList.of()
-) {
+  val defaultFormatterCommands: ImmutableList<ShellCommandOnPath> = ImmutableList.of(),
+) : AbstractDataKind(name, extensions) {
 
   init {
     check(defaultCodeFormatControl in allowedCodeFormatControl) {
@@ -37,11 +37,6 @@ abstract class LanguageKind(
     }
     check(origCodeFormatControl in allowedCodeFormatControl) {
       "The orig code format $origCodeFormatControl is not in $allowedCodeFormatControl"
-    }
-    extensions.forEach {
-      require(it.isNotBlank() && it.first() != '.') {
-        "File extension $it should not start with '.'"
-      }
     }
   }
 
@@ -53,29 +48,12 @@ abstract class LanguageKind(
     }
   }
 
-  override fun equals(other: Any?): Boolean {
-    if (other === this) {
-      return true
-    }
-    if (other == null) {
-      return false
-    }
-    if (other::class.java != this::class.java) {
-      return false
-    }
+  override fun onEquals(other: Any) {
     check(other is LanguageKind)
-    if (name != other.name) {
-      return false
-    }
     check(other.extensions == extensions)
     check(other.defaultCodeFormatControl == defaultCodeFormatControl)
     check(other.origCodeFormatControl == origCodeFormatControl)
     check(other.allowedCodeFormatControl == allowedCodeFormatControl)
-    return true
-  }
-
-  override fun hashCode(): Int {
-    return name.hashCode()
   }
 
   fun getAllDefaultFormatterCommandStrings() = defaultFormatterCommands

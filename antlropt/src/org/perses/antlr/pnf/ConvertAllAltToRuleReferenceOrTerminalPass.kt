@@ -23,8 +23,11 @@ import org.perses.antlr.ast.PersesTerminalAst
 
 class ConvertAllAltToRuleReferenceOrTerminalPass : AbstractPnfPass() {
 
-  override fun process(grammar: PersesGrammar): PersesGrammar {
-    val mutable = MutableGrammar.createParserRulesFrom(grammar)
+  override fun processParserGrammar(
+    parserGrammar: PersesGrammar,
+    lexerGrammar: PersesGrammar?,
+  ): PersesGrammar {
+    val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     mutable.nonEmptyAltBlockSequence()
       .toList() // Materialize the sequence to avoid concurrent modification exception
       .forEach { (name, altBlock) ->
@@ -39,6 +42,6 @@ class ConvertAllAltToRuleReferenceOrTerminalPass : AbstractPnfPass() {
             altBlock.replace(seq, PersesRuleReferenceAst.create(ruleName))
           }
       }
-    return grammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
+    return parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
   }
 }

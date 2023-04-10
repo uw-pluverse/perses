@@ -16,18 +16,16 @@
  */
 package org.perses.reduction.event
 
+import org.perses.program.TokenizedProgram
 import org.perses.spartree.AbstractSparTreeNode
-import org.perses.spartree.AbstractUnmodifiableSparTree
 
 class NodeReductionEndEvent internal constructor(
   startEvent: NodeReductionStartEvent,
   currentTimeMillis: Long,
-  programSize: Int,
-  val tree: AbstractUnmodifiableSparTree,
+  program: TokenizedProgram,
   val node: AbstractSparTreeNode,
-  val remainingQueueSize: Int
-) :
-  AbstractEndEvent<NodeReductionStartEvent>(startEvent, currentTimeMillis, programSize) {
+  val remainingQueueSize: Int,
+) : AbstractEndEvent<NodeReductionStartEvent>(startEvent, currentTimeMillis, program.tokenCount()) {
 
   val iteration = startEvent.iteration
 

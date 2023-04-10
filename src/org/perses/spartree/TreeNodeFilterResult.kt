@@ -18,5 +18,5 @@ package org.perses.spartree
 
 enum class TreeNodeFilterResult {
   CONTINUE,
-  STOP;
+  STOP,
 }

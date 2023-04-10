@@ -16,7 +16,7 @@
  */
 package org.perses.reduction.reducer
 
-import org.perses.reduction.ReductionListenerManager
+import org.perses.reduction.AsyncReductionListenerManager
 import org.perses.reduction.TreeEditWithItsResult
 import org.perses.reduction.partition.Partition
 import org.perses.spartree.AbstractNodeActionSetCache
@@ -24,14 +24,14 @@ import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.spartree.SparTree
 
 abstract class AbstractDeltaDebugger protected constructor(
-  protected val listenerManager: ReductionListenerManager,
+  protected val listenerManager: AsyncReductionListenerManager,
   protected val nodeActionSetCache: AbstractNodeActionSetCache,
-  protected val treeEditTester: (AbstractSparTreeEdit<*>) -> TreeEditWithItsResult?
+  protected val treeEditTester: (AbstractSparTreeEdit<*>) -> TreeEditWithItsResult?,
 ) {
 
   abstract fun reduce(
     tree: SparTree,
     actionsDescription: String,
-    vararg startPartitions: Partition
+    vararg startPartitions: Partition,
   )
 }

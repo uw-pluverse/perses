@@ -22,13 +22,13 @@ import org.perses.reduction.event.FixpointIterationStartEvent
 /** This is the information passed between different reduction passes.  */
 class FixpointReductionState(
   val fixpointIterationStartEvent: FixpointIterationStartEvent,
-  val sparTree: SparTreeWithParsability
+  val sparTree: SparTreeWithParsability,
 ) {
 
   override fun toString(): String {
     return MoreObjects.toStringHelper(this).add(
       "tree-id",
-      sparTree.getTreeRegardlessOfParsability().treeId
+      sparTree.getTreeRegardlessOfParsability().treeId,
     )
       .toString()
   }

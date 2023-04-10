@@ -26,7 +26,7 @@ class OutputFlags : ICommandLineFlags {
   @Parameter(
     names = ["--output-dir", "-o"],
     description = "The output directory to save the reduced result.",
-    order = CommonCmdOptionGroupOrder.RESULT_OUTPUT + 1
+    order = CommonCmdOptionGroupOrder.RESULT_OUTPUT + 1,
   )
   var outputDir: Path? = null
 

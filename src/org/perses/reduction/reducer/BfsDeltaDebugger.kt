@@ -16,7 +16,7 @@
  */
 package org.perses.reduction.reducer
 
-import org.perses.reduction.ReductionListenerManager
+import org.perses.reduction.AsyncReductionListenerManager
 import org.perses.reduction.TreeEditWithItsResult
 import org.perses.reduction.partition.Partition
 import org.perses.spartree.AbstractNodeActionSetCache
@@ -24,9 +24,9 @@ import org.perses.spartree.AbstractSparTreeEdit
 import java.util.ArrayDeque
 
 class BfsDeltaDebugger constructor(
-  listenerManager: ReductionListenerManager,
+  listenerManager: AsyncReductionListenerManager,
   nodeActionSetCache: AbstractNodeActionSetCache,
-  treeEditTester: (AbstractSparTreeEdit<*>) -> TreeEditWithItsResult?
+  treeEditTester: (AbstractSparTreeEdit<*>) -> TreeEditWithItsResult?,
 ) : AbstractSpecialDeltaDebugger(listenerManager, nodeActionSetCache, treeEditTester) {
 
   override fun pollFromWorklist(worklist: ArrayDeque<Partition>): Partition {

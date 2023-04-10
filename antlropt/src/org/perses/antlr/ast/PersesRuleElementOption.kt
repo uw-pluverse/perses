@@ -23,7 +23,7 @@ import java.io.PrintStream
 
 class PersesRuleElementOption(
   val key: String,
-  val value: String
+  val value: String,
 ) : AbstractPersesRuleElement() {
 
   override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
@@ -42,7 +42,7 @@ class PersesRuleElementOption(
     get() = AstTag.RULE_ELEMENT_OPTION
 
   override fun createWithNewChildren(
-    newChildren: List<AbstractPersesRuleElement>
+    newChildren: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     require(newChildren.isEmpty())
     return PersesRuleElementOption(key, value)

@@ -36,7 +36,7 @@ import java.nio.file.Path
 
 /** Note that this listener will NOT close the stream. The client needs to close it manually.  */
 class ProgressMonitorForNodeReducer private constructor(
-  private val resultFile: Path?
+  private val resultFile: Path?,
 ) : DefaultReductionListener() {
   private var beforeSize = 0
   private var stream: PrintStream? = null
@@ -80,13 +80,14 @@ class ProgressMonitorForNodeReducer private constructor(
     val edit = event.edit
     printBegin("Testing the following program: " + if (result.isInteresting) "pass" else "fail")
     stream!!.printf(
-      "// edit action set type: %s\n", event.edit.actionSet.actionsDescription
+      "// edit action set type: %s\n",
+      event.edit.actionSet.actionsDescription,
     )
     printCode(
       printToString(
         edit.program,
-        edit.program.factory.languageKind.origCodeFormatControl
-      ).trim()
+        edit.program.factory.languageKind.origCodeFormatControl,
+      ).trim(),
     )
     printEnd()
     if (result.isInteresting) {
@@ -116,7 +117,7 @@ class ProgressMonitorForNodeReducer private constructor(
   override fun onTestResultCacheHit(event: TestResultCacheHitEvent) {
     val result = event.result
     printBegin(
-      "Cache hit for the following program: " + if (result.isInteresting) "pass" else "fail"
+      "Cache hit for the following program: " + if (result.isInteresting) "pass" else "fail",
     )
     printCode(
       printToString(
@@ -126,8 +127,8 @@ class ProgressMonitorForNodeReducer private constructor(
           .program
           .factory
           .languageKind
-          .origCodeFormatControl
-      ).trim()
+          .origCodeFormatControl,
+      ).trim(),
     )
     printEnd()
     ++testResultCacheHitCount
@@ -137,13 +138,13 @@ class ProgressMonitorForNodeReducer private constructor(
     printBegin("Test script execution is cancelled.")
     stream!!.printf(
       "It took %s than 1 second to cancel the task.\n\n",
-      if (event.millisToCancelTheTask <= 1000) "less" else "more"
+      if (event.millisToCancelTheTask <= 1000) "less" else "more",
     )
     printCode(
       printToString(
         event.program,
-        event.program.factory.languageKind.origCodeFormatControl
-      ).trim()
+        event.program.factory.languageKind.origCodeFormatControl,
+      ).trim(),
     )
     printEnd()
     ++testExcecutionCancelled
@@ -152,15 +153,15 @@ class ProgressMonitorForNodeReducer private constructor(
   override fun onNodeReductionStart(event: NodeReductionStartEvent) {
     val node = event.node
     val programSize = event.programSize
-    val tree = event.tree
+    val program = event.program
     printBegin(String.format("Reducing node %d, size=%d", node.nodeId, programSize))
     beforeSize = programSize
     stream!!.println("The current best program is the following\n")
     printCode(
       printToString(
-        tree.programSnapshot,
-        tree.programSnapshot.factory.languageKind.origCodeFormatControl
-      ).trim()
+        program,
+        program.factory.languageKind.origCodeFormatControl,
+      ).trim(),
     )
     printEnd()
   }
@@ -172,7 +173,9 @@ class ProgressMonitorForNodeReducer private constructor(
     if (beforeSize > programSize) {
       stream!!.printf(
         "Succeeded to reduce node %d from %d to %d\n",
-        node.nodeId, beforeSize, programSize
+        node.nodeId,
+        beforeSize,
+        programSize,
       )
     } else {
       stream!!.printf("Failed to reduce node %d\n", node.nodeId)
@@ -181,12 +184,14 @@ class ProgressMonitorForNodeReducer private constructor(
   }
 
   override fun onTestScriptExecutionCacheEntryEviction(
-    event: TestScriptExecutionCacheEntryEvictionEvent
+    event: TestScriptExecutionCacheEntryEvictionEvent,
   ) {
     printBegin("TestScriptExecutionCacheEntryEviction")
     stream!!.printf(
       "%d entries are removed: %d --> %d.\n",
-      event.sizeBefore - event.sizeAfter, event.sizeBefore, event.sizeAfter
+      event.sizeBefore - event.sizeAfter,
+      event.sizeBefore,
+      event.sizeAfter,
     )
     printEnd()
   }

@@ -33,7 +33,7 @@ class IntervalArrayExpanderTest {
     """
     int a, b, c, d;
     """.trimIndent(),
-    LanguageC
+    LanguageC,
   ).tokens
 
   @Test

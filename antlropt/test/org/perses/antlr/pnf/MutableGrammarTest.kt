@@ -107,7 +107,9 @@ class MutableGrammarTest : AbstractMutableGrammarTest() {
     MutableGrammar().let { grammar ->
       grammar.getAltBlock(nameTop).decomposeAltBlockAndAddIfInequivalent(blockTop)
       assertThat(grammar.getAltBlock(nameTop)).containsExactly(
-        refA, refB, refC
+        refA,
+        refB,
+        refC,
       ).inOrder()
     }
 
@@ -115,7 +117,9 @@ class MutableGrammarTest : AbstractMutableGrammarTest() {
       grammar.getAltBlock(nameTop).addIfInequivalent(refC)
       grammar.getAltBlock(nameTop).decomposeAltBlockAndAddIfInequivalent(blockTop)
       assertThat(grammar.getAltBlock(nameTop)).containsExactly(
-        refC, refA, refB
+        refC,
+        refA,
+        refB,
       ).inOrder()
     }
   }

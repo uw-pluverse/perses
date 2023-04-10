@@ -21,7 +21,7 @@ import com.google.common.collect.ComparisonChain
 
 class ChildHoistingAction(
   targetNode: AbstractSparTreeNode,
-  val replacingChild: AbstractSparTreeNode
+  val replacingChild: AbstractSparTreeNode,
 ) : AbstractTreeEditAction(targetNode) {
 
   override fun internalCompareTo(o: AbstractTreeEditAction): Int {

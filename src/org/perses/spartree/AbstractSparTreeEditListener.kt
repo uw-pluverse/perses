@@ -18,7 +18,10 @@ package org.perses.spartree
 
 abstract class AbstractSparTreeEditListener {
 
-  class SparTreeEditEvent(val programSizeBefore: Int, edit: AbstractSparTreeEdit<*>) {
+  class SparTreeEditEvent(
+    val programSizeBefore: Int,
+    edit: AbstractSparTreeEdit<*>,
+  ) {
     val program = edit.program
   }
 

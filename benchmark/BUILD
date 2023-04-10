@@ -18,8 +18,8 @@ py_binary(
 )
 
 py_binary(
-    name = "snapshot_generator",
-    srcs = ["snapshot_generator.py"],
+    name = "convert_result_to_csv",
+    srcs = ["convert_result_to_csv.py"],
 )
 
 py_test(
@@ -35,7 +35,7 @@ py_test(
 )
 
 py_test(
-    name = "snapshot_generator_test",
-    srcs = ["snapshot_generator_test.py"],
-    deps = ["snapshot_generator"],
+    name = "convert_result_to_csv_test",
+    srcs = ["convert_result_to_csv_test.py"],
+    deps = ["convert_result_to_csv"],
 )

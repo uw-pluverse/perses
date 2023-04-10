@@ -22,17 +22,18 @@ import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.PropertyTestResult
 import org.perses.reduction.cache.AbstractCacheRetrievalResult.Companion.create
+import org.perses.util.Util.lazyAssert
 import org.perses.util.ktWarning
 import java.util.ArrayList
 import java.util.HashMap
 
 abstract class AbstractRealQueryCache<
   Encoding : AbstractProgramEncoding<Encoding>,
-  Encoder : AbstractTokenizedProgramEncoder<Encoding>
+  Encoder : AbstractTokenizedProgramEncoder<Encoding>,
   > protected constructor(
   tokenizedProgram: TokenizedProgram,
   private val profiler: AbstractQueryCacheProfiler,
-  private val configuration: QueryCacheConfiguration
+  private val configuration: QueryCacheConfiguration,
 ) : AbstractQueryCache() {
 
   private val cache = HashMap<Encoding, PropertyTestResult>()
@@ -47,29 +48,33 @@ abstract class AbstractRealQueryCache<
   override fun getCachedResult(program: TokenizedProgram): AbstractCacheRetrievalResult {
     val encoding = encoder.encode(program)
     return create(
-      this, program, encoding, cache[encoding]
+      this,
+      program,
+      encoding,
+      cache[encoding],
     )
   }
 
   @Synchronized
   override fun addResult(
     program: AbstractCacheRetrievalResult.CacheMiss,
-    result: PropertyTestResult
+    result: PropertyTestResult,
   ) {
     check(program.owner === this)
     check(result.isNotInteresting)
-    val key = (program.getEncodingOrFail() as Encoding)
+    @Suppress("UNCHECKED_CAST")
+    val key = program.getEncodingOrFail() as Encoding
     val oldValue = cache.put(key, result)
     if (oldValue != null) {
       logger.ktWarning { "A query cache item was created before. This is unexpected." }
-      assert(oldValue.isInteresting == result.isInteresting)
+      lazyAssert { oldValue.isInteresting == result.isInteresting }
     }
     profiler.afterAddProgram(this)
   }
 
   private fun needsHeavyWeightCleanup(
     programInEncoder: ImmutableList<PersesTokenFactory.PersesToken>,
-    currentBestProgram: TokenizedProgram
+    currentBestProgram: TokenizedProgram,
   ): Boolean {
     val oldSize = programInEncoder.size
     val newSize = currentBestProgram.tokenCount()
@@ -91,8 +96,8 @@ abstract class AbstractRealQueryCache<
   }
 
   protected abstract fun createEncoder(
-    tokenizedProgram: TokenizedProgram,
-    profiler: AbstractQueryCacheProfiler
+    baseProgram: TokenizedProgram,
+    profiler: AbstractQueryCacheProfiler,
   ): Encoder
 
   fun heavyweightCleanup(best: TokenizedProgram) {
@@ -118,7 +123,7 @@ abstract class AbstractRealQueryCache<
         iter.remove()
         continue
       }
-      if (optionalNewEncoding.equals(oldEncoding)) {
+      if (optionalNewEncoding == oldEncoding) {
         // Keep the old encoding, as it is the same as the new one.
         continue
       } else {
@@ -128,14 +133,19 @@ abstract class AbstractRealQueryCache<
         newValues.add(value)
       }
     }
-    assert(newKeys.size == newValues.size)
+    lazyAssert { newKeys.size == newValues.size }
     val newKeySize = newKeys.size
     for (i in 0 until newKeySize) {
       cache[newKeys[i]] = newValues[i]
     }
     val endTime = AbstractQueryCacheProfiler.now()
     profiler.onHeavyweightCacheRefreshing(
-      oldTokensInOrigin, best.tokens, cacheSizeBefore, cache.size, startTime, endTime
+      oldTokensInOrigin,
+      best.tokens,
+      cacheSizeBefore,
+      cache.size,
+      startTime,
+      endTime,
     )
   }
 

@@ -32,15 +32,15 @@ class EliminateUnreachableRulePassTest {
     Truth.assertThat(
       grammar.parserRuleNameList.stream()
         .map(RuleNameRegistry.RuleNameHandle::ruleName)
-        .collect(Collectors.toList())
+        .collect(Collectors.toList()),
     )
       .containsExactly("start", "a", "b")
     val pass = EliminateUnreachableRulePass("start")
-    val processedMap = pass.process(grammar)
+    val processedMap = pass.processParserGrammar(grammar, lexerGrammar = null)
     Truth.assertThat(
       processedMap.parserRuleNameList.stream()
         .map(RuleNameRegistry.RuleNameHandle::ruleName)
-        .collect(Collectors.toList())
+        .collect(Collectors.toList()),
     )
       .containsExactly("start", "a")
   }

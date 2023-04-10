@@ -22,7 +22,7 @@ import java.io.PrintStream
 
 abstract class AbstractPersesQuantifiedAst(
   val body: AbstractPersesRuleElement,
-  val isGreedy: Boolean
+  val isGreedy: Boolean,
 ) : AbstractPersesRuleElement() {
 
   init {
@@ -30,7 +30,7 @@ abstract class AbstractPersesQuantifiedAst(
       AstTag.EPSILON, AstTag.STAR, AstTag.PLUS, AstTag.OPTIONAL ->
         error(
           "Kleene node is disallowed in a quantified node: " +
-            "${body::class.java}, current=${this::class.java}"
+            "${body::class.java}, current=${this::class.java}",
         )
       else -> Unit
     }

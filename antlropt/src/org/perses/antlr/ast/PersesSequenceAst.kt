@@ -23,7 +23,7 @@ import org.perses.util.toImmutableList
 import java.io.PrintStream
 
 class PersesSequenceAst(
-  val children: ImmutableList<AbstractPersesRuleElement>
+  val children: ImmutableList<AbstractPersesRuleElement>,
 ) : AbstractPersesRuleElement() {
 
   init {
@@ -40,7 +40,7 @@ class PersesSequenceAst(
   }
 
   override fun createWithNewChildren(
-    newChildren: List<AbstractPersesRuleElement>
+    newChildren: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     return PersesSequenceAst(ImmutableList.copyOf(newChildren))
   }
@@ -108,7 +108,7 @@ class PersesSequenceAst(
   }
 
   fun deleteElements(
-    toBeDeleted: Collection<AbstractPersesRuleElement?>
+    toBeDeleted: Collection<AbstractPersesRuleElement?>,
   ): AbstractPersesRuleElement {
     val remaining = children
       .asSequence()
@@ -122,7 +122,7 @@ class PersesSequenceAst(
     // TODO: need tests.
     @JvmStatic
     fun flatten(
-      children: List<AbstractPersesRuleElement>
+      children: List<AbstractPersesRuleElement>,
     ): ImmutableList<AbstractPersesRuleElement> {
       return ImmutableList.builderWithExpectedSize<AbstractPersesRuleElement>(children.size)
         .apply { children.forEach { flatten(it, this) } }
@@ -131,12 +131,10 @@ class PersesSequenceAst(
 
     private fun flatten(
       child: AbstractPersesRuleElement,
-      builder: ImmutableList.Builder<AbstractPersesRuleElement>
+      builder: ImmutableList.Builder<AbstractPersesRuleElement>,
     ) {
       if (child.tag === AstTag.SEQUENCE) {
-        child.foreachChildRuleElement { child ->
-          flatten(child, builder)
-        }
+        child.foreachChildRuleElement { flatten(it, builder) }
       } else {
         builder.add(child)
       }

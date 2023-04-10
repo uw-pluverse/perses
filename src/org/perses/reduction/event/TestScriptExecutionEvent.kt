@@ -24,6 +24,6 @@ class TestScriptExecutionEvent(
   currentTimeMillis: Long,
   val result: PropertyTestResult,
   val program: TokenizedProgram,
-  val edit: AbstractSparTreeEdit<*>
+  val edit: AbstractSparTreeEdit<*>,
 ) :
   AbstractReductionEvent(currentTimeMillis)

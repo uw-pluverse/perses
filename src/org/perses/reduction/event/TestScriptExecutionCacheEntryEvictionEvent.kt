@@ -19,6 +19,6 @@ package org.perses.reduction.event
 class TestScriptExecutionCacheEntryEvictionEvent(
   currentTimeMillis: Long,
   val sizeBefore: Int,
-  val sizeAfter: Int
+  val sizeAfter: Int,
 ) :
   AbstractReductionEvent(currentTimeMillis)

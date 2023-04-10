@@ -2,6 +2,8 @@
 // DO NOT MODIFY.
 grammar test_grammar_4;
 
+
+
 a
     : (b c | d)?
     ;

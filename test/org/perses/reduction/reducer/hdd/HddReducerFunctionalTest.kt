@@ -29,25 +29,27 @@ class HddReducerFunctionalTest : AbstractReducerFunctionalTest() {
       |int printf();
       |int main(){
       |  printf("world\n");
-      |}""".trimMargin()
+      |}
+  """.trimMargin()
 
   // Note that, since we remove --ensureAntlrValidity, we no longer check whether the reduced
   // program conforms to the grammar. Therefore, it is possible to reduce some invalid programs,
   // accepted by the compiler, but not the grammar used by Perses.
   @Test
   fun testReduceDelta1_hdd() {
-
     runCTestSubject(
-      "test_data/delta_1", HDDReducer.META,
-      expectedForDelta1
+      "test_data/delta_1",
+      HDDReducer.META,
+      expectedForDelta1,
     )
   }
 
   @Test
   fun testReduceDelta1_pristine_hdd() {
     runCTestSubject(
-      "test_data/delta_1", PristineHDDReducer.META,
-      expectedForDelta1
+      "test_data/delta_1",
+      PristineHDDReducer.META,
+      expectedForDelta1,
     )
   }
 
@@ -61,14 +63,15 @@ class HddReducerFunctionalTest : AbstractReducerFunctionalTest() {
         |      System.out.println("hello world");
         |    }
         |  }
-        |}""".trimMargin()
+        |}
+  """.trimMargin()
 
   @Test
   fun testJavaFunctionalTest_hdd() {
     runJavaTestSubject(
       "test_data/java_helloworld",
       HDDReducer.META,
-      expectedForJavaHelloWorld
+      expectedForJavaHelloWorld,
     )
   }
 
@@ -77,7 +80,7 @@ class HddReducerFunctionalTest : AbstractReducerFunctionalTest() {
     runJavaTestSubject(
       "test_data/java_helloworld",
       PristineHDDReducer.META,
-      expectedForJavaHelloWorld
+      expectedForJavaHelloWorld,
     )
   }
 }

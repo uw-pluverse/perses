@@ -20,5 +20,5 @@ import org.perses.spartree.AbstractSparTreeEdit
 
 data class TreeEditWithItsResult(
   val edit: AbstractSparTreeEdit<*>,
-  val testResult: PropertyTestResult
+  val testResult: PropertyTestResult,
 )

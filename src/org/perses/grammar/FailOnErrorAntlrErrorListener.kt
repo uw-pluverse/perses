@@ -32,7 +32,7 @@ class FailOnErrorAntlrErrorListener(private val sourceFile: String) : ANTLRError
     line: Int,
     charPositionInLine: Int,
     msg: String?,
-    e: RecognitionException?
+    e: RecognitionException?,
   ) {
     val details = StringBuilder()
     details.append("recognizer: ").append(recognizer).append('\n')
@@ -50,7 +50,7 @@ class FailOnErrorAntlrErrorListener(private val sourceFile: String) : ANTLRError
     i1: Int,
     b: Boolean,
     bitSet: BitSet?,
-    atnConfigSet: ATNConfigSet?
+    atnConfigSet: ATNConfigSet?,
   ) {
   }
 
@@ -60,7 +60,7 @@ class FailOnErrorAntlrErrorListener(private val sourceFile: String) : ANTLRError
     i: Int,
     i1: Int,
     bitSet: BitSet?,
-    atnConfigSet: ATNConfigSet?
+    atnConfigSet: ATNConfigSet?,
   ) {
   }
 
@@ -70,7 +70,7 @@ class FailOnErrorAntlrErrorListener(private val sourceFile: String) : ANTLRError
     i: Int,
     i1: Int,
     i2: Int,
-    atnConfigSet: ATNConfigSet?
+    atnConfigSet: ATNConfigSet?,
   ) {
   }
 }

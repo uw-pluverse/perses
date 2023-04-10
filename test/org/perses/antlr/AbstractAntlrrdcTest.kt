@@ -34,7 +34,7 @@ abstract class AbstractAntlrrdcTest {
           tokenVocab=TestLexer;
       }
       start : ID ID ID + EOF;
-    """.trimIndent()
+    """.trimIndent(),
   )
 
   val parserWithActions = createFile(
@@ -47,7 +47,7 @@ abstract class AbstractAntlrrdcTest {
     start : ID 
             (ID |{System.out.println("");}) 
             (ID {System.out.println("");}) + {System.out.println("action");} EOF ; 
-    """.trimIndent()
+    """.trimIndent(),
   )
 
   val parserWithSemanticPredicate: Path = createFile(
@@ -58,7 +58,7 @@ abstract class AbstractAntlrrdcTest {
       tokenVocab=TestLexer;
     }
     start : {true}? ID ID ID + EOF ; 
-    """.trimIndent()
+    """.trimIndent(),
   )
 
   val parserWithReturns = createFile(
@@ -69,7 +69,7 @@ abstract class AbstractAntlrrdcTest {
       tokenVocab=TestLexer;
     }
     start returns [int result] :  ID ID ID + {${'$'}result = 0;} EOF ;       
-    """.trimIndent()
+    """.trimIndent(),
   )
 
   val parserWithArguments = createFile(
@@ -81,7 +81,7 @@ abstract class AbstractAntlrrdcTest {
     }
     start :  sub[1] EOF ; 
     sub[int i]: ID ID ID +; 
-    """.trimIndent()
+    """.trimIndent(),
   )
 
   val parserWithLabels = createFile(
@@ -93,7 +93,7 @@ abstract class AbstractAntlrrdcTest {
     }
     start :  sub[1] EOF ; 
     sub[int i]: arguments=ID (second+=ID)? (name=ID) +; 
-    """.trimIndent()
+    """.trimIndent(),
   )
 
   val parserWithLocals = createFile(
@@ -104,7 +104,7 @@ abstract class AbstractAntlrrdcTest {
       tokenVocab=TestLexer;
     }
     start locals[boolean a = false, boolean b = false]: ID ID ID + EOF ; 
-    """.trimIndent()
+    """.trimIndent(),
   )
 
   val lexerGrammarPath = createFile(
@@ -115,7 +115,7 @@ abstract class AbstractAntlrrdcTest {
       
       Whitespace : [ \t]+ -> skip;
       
-    """.trimIndent()
+    """.trimIndent(),
   )
 
   val combinedGrammarPath = createFile(
@@ -125,7 +125,7 @@ abstract class AbstractAntlrrdcTest {
       start : ID;
       ID : 'a';
       Whitespace : [ \t]+ -> skip;
-    """.trimIndent()
+    """.trimIndent(),
   )
 
   val valid1 = createFile("valid_1.input", "a a a")

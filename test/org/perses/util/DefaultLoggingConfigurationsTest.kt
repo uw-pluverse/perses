@@ -35,10 +35,10 @@ class DefaultLoggingConfigurationsTest {
     assertThat(p["java.util.logging.ConsoleHandler.level"]).isEqualTo("INFO")
     assertThat(p["handlers"]).isEqualTo("java.util.logging.ConsoleHandler")
     assertThat(p["java.util.logging.ConsoleHandler.formatter"]).isEqualTo(
-      "java.util.logging.SimpleFormatter"
+      "java.util.logging.SimpleFormatter",
     )
     val goldenFormatString = Paths.get(
-      "test/org/perses/util/golden_SimpleFormatter.format.txt"
+      "test/org/perses/util/golden_SimpleFormatter.format.txt",
     ).readText(StandardCharsets.UTF_8).trim()
     assertThat(p["java.util.logging.SimpleFormatter.format"]).isEqualTo(goldenFormatString)
   }

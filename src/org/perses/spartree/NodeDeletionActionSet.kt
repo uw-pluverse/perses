@@ -21,7 +21,7 @@ import org.perses.util.toImmutableList
 
 class NodeDeletionActionSet private constructor(
   actions: ImmutableList<NodeDeletionAction>,
-  actionsDescription: String
+  actionsDescription: String,
 ) : AbstractActionSet<NodeDeletionAction>(actions, actionsDescription) {
 
   class Builder(private val actionsDescription: String) {
@@ -42,7 +42,7 @@ class NodeDeletionActionSet private constructor(
           .sortedBy { it.nodeId }
           .map { NodeDeletionAction(it) }
           .toImmutableList(),
-        actionsDescription
+        actionsDescription,
       )
     }
 
@@ -55,16 +55,17 @@ class NodeDeletionActionSet private constructor(
     @JvmStatic
     fun createByDeleteSingleNode(
       node: AbstractSparTreeNode,
-      actionsDescription: String
+      actionsDescription: String,
     ): NodeDeletionActionSet {
       return NodeDeletionActionSet(
-        ImmutableList.of(NodeDeletionAction(node)), actionsDescription
+        ImmutableList.of(NodeDeletionAction(node)),
+        actionsDescription,
       )
     }
 
     fun createByDeletingNodes(
       nodes: Iterable<AbstractSparTreeNode>,
-      actionsDescription: String
+      actionsDescription: String,
     ): NodeDeletionActionSet {
       return Builder(actionsDescription).deleteNodes(nodes).build()
     }

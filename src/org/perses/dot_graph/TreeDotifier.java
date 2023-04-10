@@ -80,7 +80,7 @@ public class TreeDotifier {
           new SourceFile(
               sourceFile.toPath(), factory.computeLanguageKindWithFileName(sourceFile.toPath()));
       final ParseTreeWithParser root =
-          factory.createParserFacade(source.getLanguageKind()).parseFile(sourceFile.toPath());
+          factory.createParserFacade(source.getDataKind()).parseFile(sourceFile.toPath());
       convertTreeToDotGraph(root.getTree())
           .dotify(pdfFile, DEFAULT_ANTLR_PARSE_TREE_LABEL_PROVIDER);
     } catch (Exception e) {

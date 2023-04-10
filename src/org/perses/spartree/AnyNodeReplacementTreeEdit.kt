@@ -16,14 +16,51 @@
  */
 package org.perses.spartree
 
-import com.google.common.base.MoreObjects
+import org.perses.util.Util.lazyAssert
 
 class AnyNodeReplacementTreeEdit internal constructor(
   tree: SparTree,
-  actionSet: ChildHoistingActionSet
-) : AbstructNodeReplacementTreeEdit(tree, actionSet) {
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this)
-      .add("actions", actionSet).toString()
+  actionSet: ChildHoistingActionSet,
+) : AbstractNodeReplacementTreeEdit(tree, actionSet) {
+
+  override fun internalApplyToTree() {
+    actionSet.actions.forEach { action ->
+      val targetNode = action.targetNode
+      val parentNode = targetNode.parent!!
+      val replacingNode = action.replacingChild
+      lazyAssert { replacingNode.parent == null }
+      val payload = targetNode.payload!!
+      replacingNode.resetPayload()
+      parentNode.replaceChild(
+        targetNode,
+        replacingNode,
+        payload,
+      )
+      lazyAssert { targetNode.parent == null }
+      targetNode.delete()
+
+      // maintain leaf list
+      val targetNodePre = if (targetNode is LexerRuleSparTreeNode) {
+        targetNode.prev
+      } else {
+        targetNode.beginToken?.prev
+      }
+      val targetNodeNext = if (targetNode is LexerRuleSparTreeNode) {
+        targetNode.next
+      } else {
+        targetNode.endToken?.next
+      }
+
+      if (targetNodePre != null) {
+        targetNodePre.next = replacingNode.beginToken
+        replacingNode.beginToken?.prev = targetNodePre
+      }
+
+      if (targetNodeNext != null) {
+        targetNodeNext.prev = replacingNode.endToken
+        replacingNode.endToken?.next = targetNodeNext
+      }
+      SparTree.updateTokenIntervalUpToRoot(parentNode)
+    }
   }
 }

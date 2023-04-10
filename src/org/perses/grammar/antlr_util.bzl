@@ -55,7 +55,7 @@ def _antlr_codegen(
         srcs = names_of_java_files_to_keep + additional_source_files,
         exports = deps,
         resources = grammar_files,
-        deps = ["@maven//:org_antlr_antlr4_runtime"] + deps,
+        deps = ["//:antlr_runtime"] + deps,
     )
 
 def antlr_codegen_lexer(

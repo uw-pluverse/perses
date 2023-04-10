@@ -22,6 +22,7 @@ import com.google.common.collect.ImmutableList
 import org.perses.reduction.event.FixpointIterationEndEvent
 import org.perses.reduction.event.FixpointIterationStartEvent
 import org.perses.reduction.event.ReductionEndEvent
+import org.perses.util.Util.lazyAssert
 import java.io.IOException
 import java.io.PrintWriter
 import java.nio.charset.StandardCharsets
@@ -38,16 +39,15 @@ class StatisticsListener(resultFile: Path) : DefaultReductionListener() {
     val newStat = ReductionIterationStatistics(
       event.iteration.toString(),
       event.programSize,
-      event.currentTimeMillis
+      event.currentTimeMillis,
     )
     iterations.add(newStat)
   }
 
   override fun onFixpointIterationEnd(event: FixpointIterationEndEvent) {
-    assert(iterations.isNotEmpty()) { "The iterations list is empty." }
+    lazyAssert({ iterations.isNotEmpty() }) { "The iterations list is empty." }
     val currrentStat = iterations[iterations.size - 1]
-    assert(currrentStat.iteration == event.startEvent.iteration.toString()) {
-
+    lazyAssert({ currrentStat.iteration == event.startEvent.iteration.toString() }) {
       "The current iteration statistics does not match the current iteration: iteration in stat=" +
         currrentStat.iteration +
         ", current iteration=" +
@@ -66,19 +66,28 @@ class StatisticsListener(resultFile: Path) : DefaultReductionListener() {
         writer.printf("iterations=%d\n", iterations.size)
         for (iteration in iterations) {
           writeProperty(
-            writer, "program_size_before", iteration.iteration, iteration.beforeProgramSize.toLong()
+            writer,
+            "program_size_before",
+            iteration.iteration,
+            iteration.beforeProgramSize.toLong(),
           )
           writeProperty(
-            writer, "program_size_after", iteration.iteration, iteration.afterProgramSize.toLong()
+            writer,
+            "program_size_after",
+            iteration.iteration,
+            iteration.afterProgramSize.toLong(),
           )
           writeProperty(
-            writer, "elapsed_time_millis", iteration.iteration, iteration.elapsedTimeMillis()
+            writer,
+            "elapsed_time_millis",
+            iteration.iteration,
+            iteration.elapsedTimeMillis(),
           )
           writeProperty(
             writer,
             "count_test_script_executions",
             iteration.iteration,
-            iteration.countOfTestScriptExecutions.toLong()
+            iteration.countOfTestScriptExecutions.toLong(),
           )
           writer.println()
         }
@@ -97,7 +106,7 @@ class StatisticsListener(resultFile: Path) : DefaultReductionListener() {
         iteration.beforeProgramSize,
         iteration.afterProgramSize,
         iteration.elapsedTimeMillis(),
-        iteration.countOfTestScriptExecutions
+        iteration.countOfTestScriptExecutions,
       )
     }
     val totalStatistics = computeTotal()
@@ -108,7 +117,7 @@ class StatisticsListener(resultFile: Path) : DefaultReductionListener() {
         it.beforeProgramSize,
         it.afterProgramSize,
         it.elapsedTimeMillis(),
-        it.countOfTestScriptExecutions
+        it.countOfTestScriptExecutions,
       )
     }
   }
@@ -139,17 +148,17 @@ class StatisticsListener(resultFile: Path) : DefaultReductionListener() {
   class ReductionIterationStatistics(
     val iteration: String,
     val beforeProgramSize: Int,
-    val startTimeMillis: Long
+    val startTimeMillis: Long,
   ) {
     var endTimeMillis: Long = 0
     var afterProgramSize = Int.MIN_VALUE
       set(value) {
-        assert(field == Int.MIN_VALUE) { "can only set once" }
+        lazyAssert({ field == Int.MIN_VALUE }) { "can only set once" }
         field = value
       }
     var countOfTestScriptExecutions = Int.MIN_VALUE
       set(value) {
-        assert(field == Int.MIN_VALUE) { "can only set once." }
+        lazyAssert({ field == Int.MIN_VALUE }) { "can only set once." }
         field = value
       }
 
@@ -160,19 +169,24 @@ class StatisticsListener(resultFile: Path) : DefaultReductionListener() {
 
   companion object {
     private val COLUMN_NAMES = ImmutableList.of(
-      "iteration", "before_size", "after_size", "removed_tokens", "time(ms)", "queries"
+      "iteration",
+      "before_size",
+      "after_size",
+      "removed_tokens",
+      "time(ms)",
+      "queries",
     )
     private val COLUMN_FORMAT = buildColumnFormat(
       COLUMN_NAMES.stream().mapToInt { obj: String -> obj.length }
         .max().asInt,
-      COLUMN_NAMES.size
+      COLUMN_NAMES.size,
     )
 
     private fun writeProperty(
       writer: PrintWriter,
       name: String,
       iterationName: String,
-      value: Long
+      value: Long,
     ) {
       writer.printf("%s.%s=%d\n", name, iterationName, value)
     }
@@ -185,7 +199,7 @@ class StatisticsListener(resultFile: Path) : DefaultReductionListener() {
         COLUMN_NAMES[2],
         COLUMN_NAMES[3],
         COLUMN_NAMES[4],
-        COLUMN_NAMES[5]
+        COLUMN_NAMES[5],
       )
     }
 
@@ -195,7 +209,7 @@ class StatisticsListener(resultFile: Path) : DefaultReductionListener() {
       beforeSize: Int,
       afterSize: Int,
       timeMillis: Long,
-      queries: Int
+      queries: Int,
     ) {
       writer.printf(
         COLUMN_FORMAT,
@@ -204,13 +218,13 @@ class StatisticsListener(resultFile: Path) : DefaultReductionListener() {
         afterSize.toString(),
         (beforeSize - afterSize).toString(),
         timeMillis.toString(),
-        queries.toString()
+        queries.toString(),
       )
     }
 
     private fun buildColumnFormat(columnWidth: Int, columnCount: Int): String {
-      assert(columnWidth > 0)
-      assert(columnCount > 0)
+      lazyAssert { columnWidth > 0 }
+      lazyAssert { columnCount > 0 }
       val builder = StringBuilder()
       builder.append("# ")
       var isFirst = true
@@ -230,7 +244,7 @@ class StatisticsListener(resultFile: Path) : DefaultReductionListener() {
   init {
     Preconditions.checkArgument(
       this.resultFile.parent.exists(),
-      "The folder of the result file does not exist. ${this.resultFile.parent}"
+      "The folder of the result file does not exist. ${this.resultFile.parent}",
     )
   }
 }

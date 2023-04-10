@@ -38,7 +38,7 @@ class ListAlignmentTest {
     assertThat(alignment).containsExactly(
       Pair(null, 'c'),
       Pair('a', 'a'),
-      Pair('b', 'b')
+      Pair('b', 'b'),
     ).inOrder()
   }
 
@@ -48,7 +48,7 @@ class ListAlignmentTest {
     assertThat(alignment).containsExactly(
       Pair('a', 'a'),
       Pair(null, 'b'),
-      Pair('c', 'c')
+      Pair('c', 'c'),
     ).inOrder()
   }
 
@@ -58,7 +58,7 @@ class ListAlignmentTest {
     assertThat(alignment).containsExactly(
       Pair('a', 'a'),
       Pair('b', 'b'),
-      Pair(null, 'c')
+      Pair(null, 'c'),
     ).inOrder()
   }
 
@@ -66,7 +66,7 @@ class ListAlignmentTest {
   fun test_insert_into_empty() {
     val diff = create("", "a")
     assertThat(diff).containsExactly(
-      Pair(null, 'a')
+      Pair(null, 'a'),
     ).inOrder()
   }
 
@@ -75,7 +75,7 @@ class ListAlignmentTest {
     val diff = create("ab", "b")
     assertThat(diff).containsExactly(
       Pair('a', null),
-      Pair('b', 'b')
+      Pair('b', 'b'),
     ).inOrder()
   }
 
@@ -84,7 +84,7 @@ class ListAlignmentTest {
     val diff = create("ab", "a")
     assertThat(diff).containsExactly(
       Pair('a', 'a'),
-      Pair('b', null)
+      Pair('b', null),
     ).inOrder()
   }
 
@@ -95,7 +95,7 @@ class ListAlignmentTest {
       Pair('a', 'a'),
       Pair('b', null),
       Pair('c', null),
-      Pair('d', 'd')
+      Pair('d', 'd'),
     ).inOrder()
   }
 
@@ -104,7 +104,7 @@ class ListAlignmentTest {
     val diff = create("ab", "")
     assertThat(diff).containsExactly(
       Pair('a', null),
-      Pair('b', null)
+      Pair('b', null),
     ).inOrder()
   }
 
@@ -113,7 +113,7 @@ class ListAlignmentTest {
     val diff = create("a", "b")
     assertThat(diff).containsExactly(
       Pair('a', null),
-      Pair(null, 'b')
+      Pair(null, 'b'),
     ).inOrder()
   }
 
@@ -123,7 +123,7 @@ class ListAlignmentTest {
     assertThat(diff).containsExactly(
       Pair('a', null),
       Pair('b', 'b'),
-      Pair(null, 'b')
+      Pair(null, 'b'),
     ).inOrder()
   }
 
@@ -133,7 +133,7 @@ class ListAlignmentTest {
     assertThat(diff).containsExactly(
       Pair('a', 'a'),
       Pair('b', null),
-      Pair(null, 'c')
+      Pair(null, 'c'),
     ).inOrder()
   }
 
@@ -145,7 +145,7 @@ class ListAlignmentTest {
       Pair('b', null),
       Pair(null, 'd'),
       Pair(null, 'e'),
-      Pair('c', 'c')
+      Pair('c', 'c'),
     ).inOrder()
   }
 
@@ -299,6 +299,127 @@ class ListAlignmentTest {
     Assert.assertThrows(RuntimeException::class.java) {
       alignment.computeRevision("e".toList())
     }
+  }
+
+  @Test
+  fun testDiff() {
+    val alignment = ListAlignment.create("abc".toList(), "abd".toList(), equalizer)
+
+    assertThat(alignment.alignment.size).isEqualTo(4)
+    assertThat(alignment.onlyDiffs.get(0).base).isEqualTo('c')
+    assertThat(alignment.onlyDiffs.get(1).revision).isEqualTo('d')
+  }
+
+  @Test
+  fun testInsert() {
+    val alignment = ListAlignment.create("ab".toList(), "abc".toList(), equalizer)
+
+    assertThat(alignment.alignment.size).isEqualTo(3)
+    assertThat(alignment.onlyInserts.get(0).revision).isEqualTo('c')
+  }
+
+  @Test
+  fun testDelete() {
+    val alignment = ListAlignment.create("abc".toList(), "a".toList(), equalizer)
+
+    assertThat(alignment.alignment.size).isEqualTo(3)
+    assertThat(alignment.onlyDeletes.get(0).base).isEqualTo('b')
+    assertThat(alignment.onlyDeletes.get(1).base).isEqualTo('c')
+  }
+
+  @Test
+  fun testKeep() {
+    val alignment = ListAlignment.create("abcd".toList(), "ad".toList(), equalizer)
+
+    assertThat(alignment.alignment.size).isEqualTo(4)
+    assertThat(alignment.onlyKeeps.get(0).base).isEqualTo('a')
+    assertThat(alignment.onlyKeeps.get(1).base).isEqualTo('d')
+  }
+
+  @Test
+  fun testMergeIntoReplace() {
+    val alignment1 = ListAlignment.create("abcd".toList(), "aBcd".toList(), equalizer)
+    val alignmentWithReplace1 = ListAlignment.mergeIntoReplace(alignment1)
+
+    assertThat(alignmentWithReplace1.alignment.size).isEqualTo(4)
+    assertThat(alignmentWithReplace1.onlyKeeps.size).isEqualTo(3)
+    assertThat(alignmentWithReplace1.onlyDiffs.size).isEqualTo(1)
+    assertThat(alignmentWithReplace1.onlyReplaces.size).isEqualTo(1)
+    assertThat(alignmentWithReplace1.onlyKeeps.get(0).base).isEqualTo('a')
+    assertThat(alignmentWithReplace1.onlyKeeps.get(1).base).isEqualTo('c')
+    assertThat(alignmentWithReplace1.onlyKeeps.get(2).base).isEqualTo('d')
+    assertThat(alignmentWithReplace1.onlyReplaces.get(0).base).isEqualTo('b')
+    assertThat(alignmentWithReplace1.onlyReplaces.get(0).revision).isEqualTo('B')
+
+    val alignment2 = ListAlignment.create("abcdefg".toList(), "abefg".toList(), equalizer)
+    val alignmentWithReplace2 = ListAlignment.mergeIntoReplace(alignment2)
+
+    assertThat(alignmentWithReplace2.alignment.size).isEqualTo(7)
+    assertThat(alignmentWithReplace2.onlyKeeps.size).isEqualTo(5)
+    assertThat(alignmentWithReplace2.onlyDiffs.size).isEqualTo(2)
+    assertThat(alignmentWithReplace2.onlyInserts.size).isEqualTo(0)
+    assertThat(alignmentWithReplace2.onlyDeletes.size).isEqualTo(2)
+    assertThat(alignmentWithReplace2.onlyReplaces.size).isEqualTo(0)
+    assertThat(alignmentWithReplace2.onlyKeeps.get(0).base).isEqualTo('a')
+    assertThat(alignmentWithReplace2.onlyKeeps.get(1).base).isEqualTo('b')
+    assertThat(alignmentWithReplace2.onlyKeeps.get(2).base).isEqualTo('e')
+    assertThat(alignmentWithReplace2.onlyKeeps.get(3).base).isEqualTo('f')
+    assertThat(alignmentWithReplace2.onlyKeeps.get(4).base).isEqualTo('g')
+    assertThat(alignmentWithReplace2.onlyDeletes.get(0).base).isEqualTo('c')
+    assertThat(alignmentWithReplace2.onlyDeletes.get(1).base).isEqualTo('d')
+
+    val alignment3 = ListAlignment.create("abc".toList(), "abd".toList(), equalizer)
+    val alignmentWithReplace3 = ListAlignment.mergeIntoReplace(alignment3)
+
+    assertThat(alignmentWithReplace3.alignment.size).isEqualTo(4)
+    assertThat(alignmentWithReplace3.onlyKeeps.size).isEqualTo(2)
+    assertThat(alignmentWithReplace3.onlyDiffs.size).isEqualTo(2)
+    assertThat(alignmentWithReplace3.onlyInserts.size).isEqualTo(1)
+    assertThat(alignmentWithReplace3.onlyDeletes.size).isEqualTo(1)
+    assertThat(alignmentWithReplace3.onlyReplaces.size).isEqualTo(0)
+    assertThat(alignmentWithReplace3.onlyKeeps.get(0).base).isEqualTo('a')
+    assertThat(alignmentWithReplace3.onlyKeeps.get(1).base).isEqualTo('b')
+    assertThat(alignmentWithReplace3.onlyDeletes.get(0).base).isEqualTo('c')
+    assertThat(alignmentWithReplace3.onlyInserts.get(0).revision).isEqualTo('d')
+  }
+
+  @Test
+  fun testSplitReplace() {
+    val alignment1 = ListAlignment.create("abcd".toList(), "aBcd".toList(), equalizer)
+    val alignmentWithReplace1 = ListAlignment.mergeIntoReplace(alignment1)
+    val alignmentWithoutReplace1 = ListAlignment.splitReplace(alignmentWithReplace1)
+
+    assertThat(alignmentWithoutReplace1.alignment.size).isEqualTo(5)
+    assertThat(alignmentWithoutReplace1.onlyKeeps.size).isEqualTo(3)
+    assertThat(alignmentWithoutReplace1.onlyDiffs.size).isEqualTo(2)
+    assertThat(alignmentWithoutReplace1.onlyReplaces.size).isEqualTo(0)
+    assertThat(alignmentWithoutReplace1.onlyKeeps.get(0).base).isEqualTo('a')
+    assertThat(alignmentWithoutReplace1.onlyKeeps.get(1).base).isEqualTo('c')
+    assertThat(alignmentWithoutReplace1.onlyKeeps.get(2).base).isEqualTo('d')
+    assertThat(alignmentWithoutReplace1.onlyDeletes.get(0).base).isEqualTo('b')
+    assertThat(alignmentWithoutReplace1.onlyInserts.get(0).revision).isEqualTo('B')
+
+    val alignmentManual = ListAlignment(
+      ImmutableList.of(
+        AbstractEditOperation.Replace('a', 'A'),
+        AbstractEditOperation.Replace('b', 'B'),
+        AbstractEditOperation.Replace('c', 'C'),
+      ),
+    )
+    val alignmentManualWithoutReplace = ListAlignment.splitReplace(alignmentManual)
+
+    assertThat(alignmentManualWithoutReplace.alignment.size).isEqualTo(6)
+    assertThat(alignmentManualWithoutReplace.onlyKeeps.size).isEqualTo(0)
+    assertThat(alignmentManualWithoutReplace.onlyDiffs.size).isEqualTo(6)
+    assertThat(alignmentManualWithoutReplace.onlyInserts.size).isEqualTo(3)
+    assertThat(alignmentManualWithoutReplace.onlyDeletes.size).isEqualTo(3)
+    assertThat(alignmentManualWithoutReplace.onlyReplaces.size).isEqualTo(0)
+    assertThat(alignmentManualWithoutReplace.alignment.get(0).base).isEqualTo('a')
+    assertThat(alignmentManualWithoutReplace.alignment.get(1).revision).isEqualTo('A')
+    assertThat(alignmentManualWithoutReplace.alignment.get(2).base).isEqualTo('b')
+    assertThat(alignmentManualWithoutReplace.alignment.get(3).revision).isEqualTo('B')
+    assertThat(alignmentManualWithoutReplace.alignment.get(4).base).isEqualTo('c')
+    assertThat(alignmentManualWithoutReplace.alignment.get(5).revision).isEqualTo('C')
   }
 
   private fun createRevision(alignment: ListAlignment<Char>, newBase: String): String {

@@ -39,9 +39,9 @@ class AltBlockExtractionPassTest {
     val origGrammar = createPersesGrammarFromString(
       """
       s : a c d | a b d;
-      """.trimIndent()
+      """.trimIndent(),
     )
-    val processedGrammar = pass.process(origGrammar)
+    val processedGrammar = pass.processParserGrammar(origGrammar, lexerGrammar = null)
     val auxRuleName = computeAltblockRuleName("s_1")
     /*
      * DO NOT MODIFY THE ORDER OF ALTERNATIVES.
@@ -54,11 +54,11 @@ class AltBlockExtractionPassTest {
       """
       s : a $auxRuleName d;
       $auxRuleName : c | b; 
-      """.trimIndent()
+      """.trimIndent(),
     )
     GrammarTestingUtility.checkWithGoldenGrammar(
       processedGrammar.sourceCode,
-      goldenGrammar.sourceCode
+      goldenGrammar.sourceCode,
     )
   }
 
@@ -70,7 +70,7 @@ class AltBlockExtractionPassTest {
     assertThat(a.sourceCode)
       .isEqualTo("a ${computeAltblockRuleName("a_1")} d")
     val alternative__a_1 = processed.getRuleDefinition(
-      computeAltblockRuleName("a_1")
+      computeAltblockRuleName("a_1"),
     )!!.body
     check(alternative__a_1 is PersesAlternativeBlockAst) { alternative__a_1 }
     assertThat(alternative__a_1.alternatives).hasSize(2)
@@ -78,7 +78,7 @@ class AltBlockExtractionPassTest {
       alternative__a_1.alternatives
         .asSequence()
         .map { it.sourceCode }
-        .toImmutableList()
+        .toImmutableList(),
     )
       .containsExactly("b", "c")
     assertThat(processed.flattenedAllRules).hasSize(2)
@@ -86,7 +86,7 @@ class AltBlockExtractionPassTest {
 
   private fun process(vararg grammarLines: String): PersesGrammar {
     val grammar = GrammarTestingUtility.createPersesGrammarFromString(*grammarLines)
-    return pass.process(grammar)
+    return pass.processParserGrammar(grammar, lexerGrammar = null)
   }
 
   @Test

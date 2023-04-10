@@ -21,7 +21,7 @@ import com.google.common.collect.ImmutableList
 class ConcurrentTokenSlicerTaskDesc<T>(
   private val tokens: ImmutableList<T>,
   val startIndex: Int,
-  val slicingGranularity: Int
+  val slicingGranularity: Int,
 ) {
 
   init {
@@ -41,7 +41,7 @@ class ConcurrentTokenSlicerTaskDesc<T>(
       return ConcurrentTokenSlicerTaskDesc(
         tokens,
         startIndex = newStartIndex,
-        slicingGranularity = slicingGranularity
+        slicingGranularity = slicingGranularity,
       )
     }
     val newGranularity = slicingGranularity - 1
@@ -51,7 +51,7 @@ class ConcurrentTokenSlicerTaskDesc<T>(
     return ConcurrentTokenSlicerTaskDesc(
       tokens,
       startIndex = 0,
-      slicingGranularity = newGranularity
+      slicingGranularity = newGranularity,
     )
   }
 }

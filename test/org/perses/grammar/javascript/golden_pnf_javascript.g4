@@ -6,6 +6,8 @@ options {
     tokenVocab=JavaScriptLexer;
     superClass=JavaScriptParserBase;
 }
+
+
 program
     : optional__program_1 optional__program_2 EOF
     ;

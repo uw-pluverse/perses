@@ -46,7 +46,7 @@ class TimeUtilTest {
     val epochMillis = 1569287074745L
     val time = TimeUtil.converToLocalDateTime(
       epochMillis,
-      ZoneId.of("America/Indiana/Indianapolis")
+      ZoneId.of("America/Indiana/Indianapolis"),
     )
     assertThat(time.toString()).isEqualTo("2019-09-23T21:04:34.745")
   }

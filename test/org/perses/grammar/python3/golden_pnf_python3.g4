@@ -5,6 +5,8 @@ parser grammar PnfPython3Parser;
 options {
     tokenVocab=Python3Lexer;
 }
+
+
 file_input
     : kleene_star__file_input_2 EOF
     ;

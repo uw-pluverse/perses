@@ -34,7 +34,7 @@ class MutableRuleDefMapTest {
       start : s1;
       s1: s2;
       s2: 'a';
-      """.trimIndent()
+      """.trimIndent(),
     )
     val mutable = MutableGrammar.createParserRulesFrom(grammar)
     val startRuleName = grammar.getRuleNameHandleOrThrow("start")

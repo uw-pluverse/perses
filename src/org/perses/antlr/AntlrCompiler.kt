@@ -26,6 +26,7 @@ import org.perses.util.Util
 import org.perses.util.java.JarFile
 import org.perses.util.java.JarPackager
 import org.perses.util.java.JavacWrapper
+import org.perses.util.toImmutableList
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
@@ -36,11 +37,13 @@ import kotlin.io.path.writeText
 class AntlrCompiler(
   val parser: PersesGrammar,
   val lexer: FileNameContentPair?,
+  val parserBase: FileNameContentPair?,
+  val lexerBase: FileNameContentPair?,
   val startRuleName: String,
   val workingDirectory: Path,
   val stubFactory: AbstractGrammarStubFactory,
   val packageName: String,
-  val jarFileCustomizer: (ZipOutputStream) -> Unit
+  val jarFileCustomizer: (ZipOutputStream) -> Unit,
 ) {
 
   init {
@@ -56,14 +59,13 @@ class AntlrCompiler(
     writeText(parser.sourceCode)
   }
 
-  val lexerFile = if (lexer == null) null else
-    workingDirectory.resolve(lexer.fileName).apply {
-      writeText(lexer.content)
-    }
+  val lexerFile = lexer?.writeToDirectory(workingDirectory)
 
-  val lexerClassSimpleName: String = if (lexer == null)
+  val lexerClassSimpleName: String = if (lexer == null) {
     parser.grammarName + "Lexer"
-  else getNameWithoutExtension(lexer.fileName)
+  } else {
+    getNameWithoutExtension(lexer.fileName)
+  }
 
   val parserClassSimpleName = when (parser.grammarType) {
     PersesGrammar.GrammarType.COMBINED -> parser.grammarName + "Parser"
@@ -74,13 +76,24 @@ class AntlrCompiler(
     packageName = packageName,
     parserClassSimpleName = parserClassSimpleName,
     lexerClassSimpleName = lexerClassSimpleName,
-    startRuleName = startRuleName
+    startRuleName = startRuleName,
   )
   val outputFolder: Path = workingDirectory.resolve(packageName.replace('.', '/'))
 
   private val parserJavaFile: Path = outputFolder.resolve("$parserClassSimpleName.java")
   private val lexerJavaFile: Path = outputFolder.resolve("$lexerClassSimpleName.java")
   private val mainJavaFile: Path = outputFolder.resolve(mainStub.classSimpleName() + ".java")
+  private val parserBaseFile: Path? = if (parserBase == null) {
+    null
+  } else {
+    outputFolder.resolve(parserBase.fileName)
+  }
+  private val lexerBaseFile: Path? = if (lexerBase == null) {
+    null
+  } else {
+    outputFolder.resolve(lexerBase.fileName)
+  }
+
   val jarFile: Path = outputFolder.resolve(parser.grammarName + ".jar")
 
   private fun generateJavaCode() {
@@ -88,7 +101,7 @@ class AntlrCompiler(
       packageName = packageName,
       parserFile = parserFile,
       lexerFile = lexerFile,
-      outputDir = outputFolder.toString()
+      outputDir = outputFolder.toString(),
     ).call()
 
     mainStub.writeTo(mainJavaFile)
@@ -97,6 +110,12 @@ class AntlrCompiler(
     }
     lexerFile?.let {
       Files.move(it, outputFolder.resolve(it.fileName), StandardCopyOption.REPLACE_EXISTING)
+    }
+    parserBaseFile?.let {
+      it.writeText("package $packageName;" + checkNotNull(parserBase).computeFileContent())
+    }
+    lexerBaseFile?.let {
+      it.writeText("package $packageName;" + checkNotNull(lexerBase).computeFileContent())
     }
     check(Files.isRegularFile(parserJavaFile)) {
       "$parserJavaFile is not successfully generated."
@@ -110,12 +129,22 @@ class AntlrCompiler(
   }
 
   private fun compileJavaCode() {
+    val compileTargets: MutableList<Path> = ArrayList<Path>(
+      ImmutableList.of(lexerJavaFile, parserJavaFile),
+    )
+
+    if (lexerBaseFile != null) {
+      compileTargets.add(lexerBaseFile)
+    }
+
+    if (parserBaseFile != null) {
+      compileTargets.add(parserBaseFile)
+    }
+
+    compileTargets.add(mainJavaFile)
+
     JavacWrapper(
-      ImmutableList.of(
-        lexerJavaFile,
-        parserJavaFile,
-        mainJavaFile
-      )
+      compileTargets.toImmutableList(),
     ).use { it.compile() }
   }
 
@@ -126,7 +155,7 @@ class AntlrCompiler(
       { file ->
         file.endsWith(".java") || file.endsWith(".class") || file.endsWith(".g4")
       },
-      jarFileCustomizer
+      jarFileCustomizer,
     )
     packager.createJarFile(destination)
   }
@@ -139,7 +168,7 @@ class AntlrCompiler(
     createJarFile(jarFile)
     return JarFile(
       path = jarFile,
-      mainClassFullName = mainStub.classFullName()
+      mainClassFullName = mainStub.classFullName(),
     )
   }
 
@@ -151,37 +180,71 @@ class AntlrCompiler(
       workingDirectory: Path,
       stubFactory: AbstractGrammarStubFactory,
       packageName: String,
-      jarFileCustomizer: (ZipOutputStream) -> Unit
+      jarFileCustomizer: (ZipOutputStream) -> Unit,
+      parserBase: Path? = null,
+      lexerBase: Path? = null,
     ) = AntlrCompiler(
       parser = PersesAstBuilder.loadGrammarFromString(
-        Files.readAllBytes(parserFile).toString(StandardCharsets.UTF_8)
+        Files.readAllBytes(parserFile).toString(StandardCharsets.UTF_8),
       ),
-      lexer = if (lexerFile == null) null else
-        FileNameContentPair.createFromFile(lexerFile),
+      lexer = if (lexerFile == null) {
+        null
+      } else {
+        FileNameContentPair.createFromFile(lexerFile)
+      },
+      parserBase = if (parserBase == null) {
+        null
+      } else {
+        FileNameContentPair.createFromFile(parserBase)
+      },
+      lexerBase = if (lexerBase == null) {
+        null
+      } else {
+        FileNameContentPair.createFromFile(lexerBase)
+      },
       startRuleName = startRuleName,
       workingDirectory = workingDirectory,
       stubFactory = stubFactory,
       packageName = packageName,
-      jarFileCustomizer = jarFileCustomizer
+      jarFileCustomizer = jarFileCustomizer,
     )
 
     fun createFromStrings(
       parserCode: String,
       lexerFileName: String,
       lexerCode: String,
+      parserBaseFileName: String?,
+      parserBaseCode: String?,
+      lexerBaseFileName: String?,
+      lexerBaseCode: String?,
       startRuleName: String,
       workingDirectory: Path,
       stubFactory: AbstractGrammarStubFactory,
       packageName: String,
-      jarFileCustomizer: (ZipOutputStream) -> Unit
+      jarFileCustomizer: (ZipOutputStream) -> Unit,
     ) = AntlrCompiler(
       parser = PersesAstBuilder.loadGrammarFromString(parserCode),
-      lexer = FileNameContentPair(lexerFileName, lexerCode),
+      lexer = FileNameContentPair.createFromString(lexerFileName, lexerCode),
+      parserBase = if (parserBaseFileName == null) {
+        null
+      } else {
+        FileNameContentPair.createFromString(parserBaseFileName, checkNotNull(parserBaseCode))
+      },
+      lexerBase = if (lexerBaseFileName == null) {
+        null
+      } else {
+        FileNameContentPair.createFromString(
+          lexerBaseFileName,
+          checkNotNull(
+            lexerBaseCode,
+          ),
+        )
+      },
       startRuleName = startRuleName,
       workingDirectory = workingDirectory,
       stubFactory = stubFactory,
       packageName = packageName,
-      jarFileCustomizer = jarFileCustomizer
+      jarFileCustomizer = jarFileCustomizer,
     )
   }
 }

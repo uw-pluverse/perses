@@ -16,11 +16,9 @@
  */
 package org.perses.antlr
 
-import com.google.common.collect.HashMultimap
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableSet
-import com.google.common.collect.Multimap
 import com.google.common.graph.EndpointPair
 import com.google.common.graph.GraphBuilder
 import org.perses.antlr.ast.AbstractPersesQuantifiedAst
@@ -33,73 +31,111 @@ import org.perses.antlr.ast.PersesRuleReferenceAst
 import org.perses.antlr.ast.PersesSequenceAst
 import org.perses.antlr.ast.PersesTerminalAst
 import org.perses.antlr.ast.RuleEpsilonComputer.Companion.computeEpsilonableRules
-import org.perses.util.exhaustive
 import org.perses.util.toImmutableList
 import java.util.ArrayDeque
 import java.util.function.Consumer
 
-class GrammarHierarchyBuilder(private val grammar: AbstractAntlrGrammar) {
-  private val epsilonInfo: EpsilonInfo
-  private val indexToRuleMap: ImmutableList<RuleHierarchyInfo>
-  private val nameToRuleMap: ImmutableMap<String, RuleHierarchyInfo>
+class GrammarHierarchyBuilder(grammar: AbstractAntlrGrammar) {
+  private val combinedRules = grammar.getCombinedRules()
+  private val epsilonInfo: EpsilonInfo = computeEpsilonableRules(combinedRules)
+  private val indexToRuleMap = combinedRules.asSequence()
+    .map { extractRuleHierarchyInfo(it) }
+    .toImmutableList()
+  private val nameToRuleMap: ImmutableMap<String, RuleHierarchyEntry> =
+    buildNameToRuleMap(indexToRuleMap)
 
   private fun extractRuleHierarchyInfo(
-    ruleDefinition: AbstractPersesRuleDefAst
-  ): RuleHierarchyInfo {
+    ruleDefinition: AbstractPersesRuleDefAst,
+  ): RuleHierarchyEntry {
     val immediateSubRules = extractImmediateSubRules(ruleDefinition)
-    return RuleHierarchyInfo(
-      ruleDefinition, immediateSubRules, epsilonInfo.canBeEpsilon(ruleDefinition)
+    return RuleHierarchyEntry(
+      ruleDefinition,
+      immediateSubRules.ruleNames,
+      immediateSubRules.literals,
+      epsilonInfo.canBeEpsilon(ruleDefinition),
     )
   }
 
-  private fun extractImmediateSubRules(rule: AbstractPersesRuleDefAst): ImmutableSet<String> {
+  private data class RulesAndLiterals(
+    val ruleNames: ImmutableSet<String>,
+    val literals: ImmutableSet<String>,
+  )
+
+  private fun extractImmediateSubRules(rule: AbstractPersesRuleDefAst): RulesAndLiterals {
     if (rule.isLexerRule) {
-      return ImmutableSet.of()
+      val body = rule.body
+      val literals: ImmutableSet<String> =
+        if (body is PersesTerminalAst && body.isStringLiteral()) {
+          ImmutableSet.of(body.getStringLiteralOrThrow())
+        } else {
+          ImmutableSet.of()
+        }
+      return RulesAndLiterals(
+        ruleNames = ImmutableSet.of(),
+        literals,
+      )
+    } else {
+      val ruleNameCollector = HashSet<String>()
+      val literalCollector = HashSet<String>()
+      extractImmediateSubrulesFromBlockAST(rule.body, ruleNameCollector, literalCollector)
+      return RulesAndLiterals(
+        ruleNames = ImmutableSet.copyOf(ruleNameCollector),
+        literals = ImmutableSet.copyOf(literalCollector),
+      )
     }
-    val result = HashSet<String>()
-    extractImmediateSubrulesFromBlockAST(rule.body, result)
-    return ImmutableSet.copyOf(result)
   }
 
   // FIXME: need to support lex rules.
   private fun extractImmediateSubrulesFromBlockAST(
     ruleBody: AbstractPersesRuleElement,
-    result: HashSet<String>
+    ruleNameCollector: HashSet<String>,
+    literalCollector: HashSet<String>,
   ) {
     when (ruleBody.tag) {
       AstTag.ALTERNATIVE_BLOCK ->
         (ruleBody as PersesAlternativeBlockAst).foreachChildRuleElement {
-          extractImmediateSubrulesFromBlockAST(it, result)
+          extractImmediateSubrulesFromBlockAST(it, ruleNameCollector, literalCollector)
         }
       AstTag.TERMINAL -> {
         val terminal = ruleBody as PersesTerminalAst
-        if (terminal.isEOF() || terminal.isStringLiteral()) {
-          return
+        when {
+          terminal.isEOF() -> {}
+          terminal.isStringLiteral() -> literalCollector.add(terminal.getStringLiteralOrThrow())
+          else -> ruleNameCollector.add(terminal.text)
         }
-        result.add(terminal.text)
       }
       AstTag.RULE_REF -> {
-        result.add((ruleBody as PersesRuleReferenceAst).ruleNameHandle.ruleName)
+        ruleNameCollector.add((ruleBody as PersesRuleReferenceAst).ruleNameHandle.ruleName)
       }
       AstTag.STAR, AstTag.PLUS, AstTag.OPTIONAL -> {
-        extractImmediateSubrulesFromBlockAST((ruleBody as AbstractPersesQuantifiedAst).body, result)
+        extractImmediateSubrulesFromBlockAST(
+          (ruleBody as AbstractPersesQuantifiedAst).body,
+          ruleNameCollector,
+          literalCollector,
+        )
       }
       AstTag.SEQUENCE -> {
         val seq = ruleBody as PersesSequenceAst
         val unremovableChildren = seq
           .childSequence().filter { !epsilonInfo.canBeEpsilon(it) }.toImmutableList()
         when (unremovableChildren.size) {
-          0 -> {
-            seq.foreachChildRuleElement { extractImmediateSubrulesFromBlockAST(it, result) }
+          0 -> seq.foreachChildRuleElement {
+            extractImmediateSubrulesFromBlockAST(
+              it,
+              ruleNameCollector,
+              literalCollector,
+            )
           }
-          1 -> {
-            extractImmediateSubrulesFromBlockAST(unremovableChildren.first(), result)
-          }
+          1 -> extractImmediateSubrulesFromBlockAST(
+            unremovableChildren.single(),
+            ruleNameCollector,
+            literalCollector,
+          )
+          else -> {}
         }
-        return
       }
-      else -> Unit
-    }.exhaustive
+      else -> {}
+    }
   }
 
   fun build(): GrammarHierarchy {
@@ -108,8 +144,8 @@ class GrammarHierarchyBuilder(private val grammar: AbstractAntlrGrammar) {
   }
 
   private fun buildTransitiveSubtypingRule() {
-    val graph = GraphBuilder.directed().allowsSelfLoops(false).build<RuleHierarchyInfo?>()
-    indexToRuleMap.forEach { node: RuleHierarchyInfo ->
+    val graph = GraphBuilder.directed().allowsSelfLoops(false).build<RuleHierarchyEntry?>()
+    indexToRuleMap.forEach { node: RuleHierarchyEntry ->
       graph.addNode(node) // This is necessary, as it can have no immediate subrules.
       for (subruleName in node.immediateSubRuleNames) {
         val subrule = nameToRuleMap[subruleName]
@@ -122,7 +158,7 @@ class GrammarHierarchyBuilder(private val grammar: AbstractAntlrGrammar) {
       }
     }
 
-    val worklist = ArrayDeque<RuleHierarchyInfo?>(indexToRuleMap.size * 2)
+    val worklist = ArrayDeque<RuleHierarchyEntry?>(indexToRuleMap.size * 2)
     for (rule in indexToRuleMap) {
       if (graph.outDegree(rule) == 0) {
         worklist.addFirst(rule) // Put leaves at the head.
@@ -134,7 +170,7 @@ class GrammarHierarchyBuilder(private val grammar: AbstractAntlrGrammar) {
       val workitem = worklist.pollFirst()!! // Always prefer the leaves.
       val subrules = graph.successors(workitem)
       val prevSize = subrules.size
-      val newEdges = ArrayList<EndpointPair<RuleHierarchyInfo>>()
+      val newEdges = ArrayList<EndpointPair<RuleHierarchyEntry>>()
       for (subrule in subrules) {
         for (subsubrule in graph.successors(subrule)) {
           if (!graph.hasEdgeConnecting(workitem, subsubrule)) {
@@ -154,46 +190,18 @@ class GrammarHierarchyBuilder(private val grammar: AbstractAntlrGrammar) {
     }
     graph
       .nodes()
-      .forEach { it.transitiveSubRules = ImmutableSet.copyOf(graph.successors(it)) }
-  }
-
-  private fun reverseMultiMap(
-    map: Multimap<RuleHierarchyInfo, RuleHierarchyInfo>
-  ): Multimap<RuleHierarchyInfo, RuleHierarchyInfo> {
-    val inverseDependencies: Multimap<RuleHierarchyInfo, RuleHierarchyInfo> = HashMultimap.create()
-    map.entries().forEach {
-      inverseDependencies.put(it.value, it.key)
-    }
-    return inverseDependencies
-  }
-
-  private fun buildInitialSubruleGraph(): Multimap<RuleHierarchyInfo, RuleHierarchyInfo> {
-    val initialSubruleGraph: Multimap<RuleHierarchyInfo, RuleHierarchyInfo> = HashMultimap.create()
-    for (rule in indexToRuleMap) {
-      for (subrule in rule.immediateSubRuleNames) {
-        assert(nameToRuleMap[subrule] != null) { subrule!! }
-        initialSubruleGraph.put(rule, nameToRuleMap[subrule])
+      .forEach {
+        it.transitiveSubRules = ImmutableSet.copyOf(graph.successors(it))
       }
-    }
-    return initialSubruleGraph
   }
 
   companion object {
     private fun buildNameToRuleMap(
-      rules: ImmutableList<RuleHierarchyInfo>
-    ): ImmutableMap<String, RuleHierarchyInfo> {
-      val builder = ImmutableMap.builder<String?, RuleHierarchyInfo?>()
-      rules.forEach(Consumer { rule: RuleHierarchyInfo -> builder.put(rule.ruleName, rule) })
+      rules: ImmutableList<RuleHierarchyEntry>,
+    ): ImmutableMap<String, RuleHierarchyEntry> {
+      val builder = ImmutableMap.builder<String?, RuleHierarchyEntry?>()
+      rules.forEach(Consumer { rule: RuleHierarchyEntry -> builder.put(rule.ruleName, rule) })
       return builder.build()
     }
-  }
-
-  init {
-    val combinedRules = grammar.getCombinedRules()
-    epsilonInfo = computeEpsilonableRules(combinedRules)
-    indexToRuleMap = combinedRules.stream()
-      .map { ruleDefinition: AbstractPersesRuleDefAst -> extractRuleHierarchyInfo(ruleDefinition) }
-      .collect(ImmutableList.toImmutableList())
-    nameToRuleMap = buildNameToRuleMap(indexToRuleMap)
   }
 }

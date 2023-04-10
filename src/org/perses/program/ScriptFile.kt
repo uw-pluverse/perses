@@ -19,11 +19,26 @@ package org.perses.program
 import com.google.common.base.MoreObjects
 import java.nio.file.Path
 
-class ScriptFile(file: Path) : AbstractSourceFile(file) {
-  val shebang = extractShebang(fileContent).trim()
+class ScriptFile(file: Path) {
+
+  val fileWithContent = FileWithContent(file)
+
+  val shebang = extractShebang(fileWithContent.textualFileContent).trim()
+
+  val file by fileWithContent::file
+
+  val baseName by fileWithContent::baseName
+
+  val fileContent by fileWithContent::textualFileContent
+
+  val parentFile by fileWithContent::parentFile
 
   init {
     check(shebang.isNotBlank()) { "Empty shebang in file $file" }
+  }
+
+  fun writeTo(path: Path) {
+    fileWithContent.writeTo(path)
   }
 
   private fun extractShebang(fileContent: String): String {
@@ -46,6 +61,6 @@ class ScriptFile(file: Path) : AbstractSourceFile(file) {
   }
 
   override fun toString(): String {
-    return MoreObjects.toStringHelper(this).add("file", file).toString()
+    return MoreObjects.toStringHelper(this).add("file", fileWithContent.file).toString()
   }
 }

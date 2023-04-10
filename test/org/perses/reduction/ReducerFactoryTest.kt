@@ -31,6 +31,9 @@ import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
 import org.perses.reduction.reducer.TreeSlicer
 import org.perses.reduction.reducer.hdd.HDDReducer
 import org.perses.reduction.reducer.hdd.PristineHDDReducer
+import org.perses.reduction.reducer.token.ConcurrentStateBasedDeltaReducer
+import org.perses.reduction.reducer.token.ConcurrentStateBasedLineSlicer
+import org.perses.reduction.reducer.token.ConcurrentStateBasedTokenSlicer
 import org.perses.reduction.reducer.token.ConcurrentTokenSlicer
 import org.perses.reduction.reducer.token.DeltaDebuggingReducer
 import org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer
@@ -76,13 +79,20 @@ class ReducerFactoryTest {
         PersesNodeBfsReducer.NAME,
         PersesNodeDfsReducer.NAME,
         PersesNodePrioritizedBfsReducer.NAME,
-        PersesNodePrioritizedDfsReducer.NAME
+        PersesNodePrioritizedDfsReducer.NAME,
+        ConcurrentStateBasedDeltaReducer.NAME,
       )
     assertThat(names).containsAtLeastElementsIn(
-      ConcurrentTokenSlicer.REDUCER_ANNOTATIONS.map { it.shortName() }.toList()
+      ConcurrentTokenSlicer.REDUCER_ANNOTATIONS.map { it.shortName() }.toList(),
     )
     assertThat(names).containsAtLeastElementsIn(
-      LineBasedConcurrentTokenSlicer.REDUCER_ANNOTATIONS.map { it.shortName() }.toList()
+      LineBasedConcurrentTokenSlicer.REDUCER_ANNOTATIONS.map { it.shortName() }.toList(),
+    )
+    assertThat(names).containsAtLeastElementsIn(
+      ConcurrentStateBasedTokenSlicer.REDUCER_ANNOTATIONS.map { it.shortName() }.toList(),
+    )
+    assertThat(names).containsAtLeastElementsIn(
+      ConcurrentStateBasedLineSlicer.REDUCER_ANNOTATIONS.map { it.shortName() }.toList(),
     )
   }
 

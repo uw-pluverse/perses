@@ -19,5 +19,5 @@ package org.perses.reduction.reducer
 import org.perses.reduction.TestScriptExecutorService
 
 class BinaryTreeConcurrentEvaluator<TASK>(
-  private val executorService: TestScriptExecutorService
+  private val executorService: TestScriptExecutorService,
 )

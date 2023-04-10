@@ -33,12 +33,14 @@ import kotlin.io.path.readText
 class AdhocGrammarConfiguration(
   val parserFile: Path,
   val lexerFile: Path?,
+  val parserBase: Path?,
+  val lexerBase: Path?,
   packageName: String?,
   parserFacadeClassSimpleName: String?,
   val languageKindYamlFile: Path?,
   val existingLanguageKindClassFullName: String?,
   val startRuleName: String,
-  tokenNamesOfIdentifiers: List<String>
+  tokenNamesOfIdentifiers: List<String>,
 ) {
 
   val parserGrammar = readAntlrGrammar(parserFile)
@@ -63,16 +65,18 @@ class AdhocGrammarConfiguration(
     }
     require(languageKindYamlFile == null || Files.isRegularFile(languageKindYamlFile))
     require(existingLanguageKindClassFullName != null || languageKindYamlFile != null)
+    require(parserBase == null || Files.isRegularFile(parserBase))
+    require(lexerBase == null || Files.isRegularFile(lexerBase))
   }
 
   fun computeDirectoryForGrammar(
-    persesConstants: PersesConstants
+    persesConstants: PersesConstants,
   ): Path {
     val adhocGrammarRoot = persesConstants
       .getPersesRootFolderOrCreate().getPersesAdhocRootOrCreate()
     val hash = computeContentHashCode()
     return adhocGrammarRoot.file.resolve(
-      "${parserGrammar.grammarName}/$hash"
+      "${parserGrammar.grammarName}/$hash",
     )
   }
 
@@ -105,19 +109,35 @@ class AdhocGrammarConfiguration(
     }
     return Hashing.sha256().hashString(
       combinedParserLexer,
-      StandardCharsets.UTF_8
+      StandardCharsets.UTF_8,
     ).toString()
   }
 
   fun copyGrammarFilesToDirectory(dir: Path) {
     Files.copy(
-      parserFile, dir.resolve(parserFile.fileName),
-      StandardCopyOption.REPLACE_EXISTING
+      parserFile,
+      dir.resolve(parserFile.fileName),
+      StandardCopyOption.REPLACE_EXISTING,
     )
     lexerFile?.let {
       Files.copy(
-        lexerFile, dir.resolve(lexerFile.fileName),
-        StandardCopyOption.REPLACE_EXISTING
+        lexerFile,
+        dir.resolve(lexerFile.fileName),
+        StandardCopyOption.REPLACE_EXISTING,
+      )
+    }
+    parserBase?.let {
+      Files.copy(
+        parserBase,
+        dir.resolve(parserBase.fileName),
+        StandardCopyOption.REPLACE_EXISTING,
+      )
+    }
+    lexerBase?.let {
+      Files.copy(
+        lexerBase,
+        dir.resolve(lexerBase.fileName),
+        StandardCopyOption.REPLACE_EXISTING,
       )
     }
   }
@@ -146,7 +166,7 @@ class AdhocGrammarConfiguration(
 
       fun from(path: Path): ParserFacadeJarFile {
         return ParserFacadeJarFile(
-          JarFile(path, readLanguageInfoOrNull(path)!!.parserFacadeClassFullName)
+          JarFile(path, readLanguageInfoOrNull(path)!!.parserFacadeClassFullName),
         )
       }
 
@@ -157,7 +177,8 @@ class AdhocGrammarConfiguration(
       private fun readLanguageInfoOrNull(path: Path): LanguageInfo? {
         return try {
           val yaml = JarFile.readTextFileInZipFile(
-            path, LANGUAGE_INFO_FILE_PATH
+            path,
+            LANGUAGE_INFO_FILE_PATH,
           )
           return YamlUtil.fromYamlString(yaml, LanguageInfo::class.java)
         } catch (e: Exception) {

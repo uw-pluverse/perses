@@ -47,20 +47,20 @@ open class CommonReductionIOManagerData(val testClass: Class<*>) : AutoCloseable
       writeText(
         """#!/usr/bin/env bash
       test
-        """.trimIndent()
+        """.trimIndent(),
       )
-    }
+    },
   )
   val sourceFile = SourceFile(
     root.resolve("t.c").apply {
       Files.createFile(this)
       this.writeText("int a;")
     },
-    LanguageC
+    LanguageC,
   )
   val inputs = RegularReductionInputs(
     testScript = script,
-    mainFile = sourceFile
+    mainFile = sourceFile,
   )
   val outputDir = root.resolve("output_dir").apply {
     Files.createDirectory(this)
@@ -69,23 +69,23 @@ open class CommonReductionIOManagerData(val testClass: Class<*>) : AutoCloseable
     Files.createDirectory(this)
   }
   val outputManagerFactory = RegularOutputManagerFactory(
-    sourceFile.baseName,
-    EnumFormatControl.ORIG_FORMAT
+    sourceFile,
+    EnumFormatControl.ORIG_FORMAT,
   )
   val ioManager = TokenReductionIOManager(
     workingFolder = workingDir,
     reductionInputs = inputs,
     outputManagerFactory = outputManagerFactory,
-    outputDirectory = outputDir
+    outputDirectory = outputDir,
   )
 
   // This field has to be lazy, because the constructor has side effects, and creates files
   // in the workingFolder.
   private val executorServiceDelegate = lazy {
     TestScriptExecutorService(
-      ioManager.createReductionFolderManager(),
+      ioManager.lazilyInitializedReductionFolderManager,
       specifiedNumOfThreads = 1,
-      scriptExecutionMonitorIntervalMillis = 1000
+      scriptExecutionTimeoutInSeconds = 600L,
     )
   }
   val executorService: TestScriptExecutorService by executorServiceDelegate

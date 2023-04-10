@@ -23,39 +23,39 @@ import org.perses.program.TokenizedProgram
 class ContentLexemeListQueryCache(
   tokenizedProgram: TokenizedProgram,
   profiler: AbstractQueryCacheProfiler,
-  configuration: QueryCacheConfiguration
+  configuration: QueryCacheConfiguration,
 ) : AbstractRealQueryCache<
   ContentLexemeListQueryCache.ContentLexemeListEncoding,
-  ContentLexemeListQueryCache.ContentLexemeListEncoder
+  ContentLexemeListQueryCache.ContentLexemeListEncoder,
   >(
   tokenizedProgram,
   profiler,
-  configuration
+  configuration,
 ) {
 
   override fun createEncoder(
-    tokenizedProgram: TokenizedProgram,
-    profiler: AbstractQueryCacheProfiler
+    baseProgram: TokenizedProgram,
+    profiler: AbstractQueryCacheProfiler,
   ): ContentLexemeListEncoder {
-    return ContentLexemeListEncoder(tokenizedProgram, profiler)
+    return ContentLexemeListEncoder(baseProgram, profiler)
   }
 
   class ContentLexemeListEncoder(
     tokenizedProgram: TokenizedProgram,
-    profiler: AbstractQueryCacheProfiler
+    profiler: AbstractQueryCacheProfiler,
   ) : AbstractTokenizedProgramEncoder<ContentLexemeListEncoding>(tokenizedProgram, profiler) {
 
     override fun encode(program: TokenizedProgram): ContentLexemeListEncoding? {
       return encode(
         program.tokens.stream().map { obj: PersesTokenFactory.PersesToken -> obj.text }
           .iterator(),
-        program.tokenCount()
+        program.tokenCount(),
       )
     }
 
     private fun encode(
       lexemeIterator: Iterator<String>,
-      tokenCount: Int
+      tokenCount: Int,
     ): ContentLexemeListEncoding? {
       val baseTokens: ImmutableList<PersesTokenFactory.PersesToken> = tokensInBaseProgram
       val baseSize = baseTokens.size
@@ -82,7 +82,7 @@ class ContentLexemeListQueryCache(
     }
 
     override fun reEncode(
-      previousEncoding: ContentLexemeListEncoding
+      previousEncoding: ContentLexemeListEncoding,
     ): ContentLexemeListEncoding? {
       return encode(previousEncoding.tokens.iterator(), previousEncoding.tokenCount)
     }

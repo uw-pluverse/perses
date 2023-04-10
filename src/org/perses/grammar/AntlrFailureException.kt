@@ -22,5 +22,5 @@ class AntlrFailureException(cause: Throwable?, file: String, details: String) : 
   "Error in parsing file: $file\nDetails: $details",
   cause, /*enableSuppression=*/
   false, /*writableStackTrace=*/
-  false
+  false,
 )

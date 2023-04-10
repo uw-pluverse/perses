@@ -51,7 +51,7 @@ class JarFileTest {
     }
     val value = JarFile.readTextFileInZipFile(
       zipFile,
-      entryName
+      entryName,
     )
     assertThat(value).isEqualTo(content)
   }

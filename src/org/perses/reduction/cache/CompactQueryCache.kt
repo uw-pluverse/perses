@@ -21,16 +21,16 @@ import org.perses.program.TokenizedProgram
 class CompactQueryCache(
   tokenizedProgram: TokenizedProgram,
   profiler: AbstractQueryCacheProfiler,
-  configuration: QueryCacheConfiguration
+  configuration: QueryCacheConfiguration,
 ) : AbstractRealQueryCache<CompactProgramEncoding, LinearScanTokenizedProgramEncoder>(
   tokenizedProgram,
   profiler,
-  configuration
+  configuration,
 ) {
   override fun createEncoder(
     baseProgram: TokenizedProgram,
-    profiler: AbstractQueryCacheProfiler
+    profiler: AbstractQueryCacheProfiler,
   ): LinearScanTokenizedProgramEncoder {
-    return LinearScanTokenizedProgramEncoder(baseProgram, profiler, /*enableCompression*/true)
+    return LinearScanTokenizedProgramEncoder(baseProgram, profiler, enableCompression = true)
   }
 }

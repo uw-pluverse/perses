@@ -45,6 +45,7 @@ kt_jvm_library(
     srcs = [
         "AdhocGrammarInfo.kt",
         "AdhocGrammarInstaller.kt",
+        "InstallerMain.kt",
         "OrigGrammar.kt",
     ],
     deps = [
@@ -98,10 +99,9 @@ kt_jvm_library(
 
 java_binary(
     name = "perses_adhoc_installer",
-    srcs = ["InstallerMain.java"],
     jvm_flags = ["-ea"],
     main_class = "org.perses.grammar.adhoc.InstallerMain",
-    deps = [
+    runtime_deps = [
         ":adhoc_grammar_inaller_lib",
         ":command_options",
         ":language_kind",

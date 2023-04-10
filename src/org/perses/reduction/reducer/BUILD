@@ -1,4 +1,6 @@
 package(default_visibility = [
+    "//ebtrans/src/org/perses/reduction/reducer/ebtrans:__subpackages__",
+    "//shadow/src/org/perses/ppr/diff:__subpackages__",
     "//src/org/perses/reduction:__subpackages__",
     "//test/org/perses:__subpackages__",
 ])
@@ -59,6 +61,5 @@ kt_jvm_library(
         "//src/org/perses/reduction:tree_edit_with_its_program",
         "//src/org/perses/reduction/partition",
         "//src/org/perses/spartree",
-        "@maven//:org_checkerframework_checker_qual",
     ],
 )

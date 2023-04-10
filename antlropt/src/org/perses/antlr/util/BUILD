@@ -11,33 +11,14 @@ kt_jvm_library(
     ],
 )
 
-#java_library(
-#    name = "lexer_parser_combiner",
-#    srcs = ["LexerParserCombiner.java"],
-#    deps = [
-#        ":util",
-#        "//antlropt/src/org/perses/antlr/ast",
-#        "@maven//:com_beust_jcommander",
-#
-#    "//:guava",
-#    ],
-#)
-
-#java_binary(
-#    name = "combine_lexer_parser_bin",
-#    jvm_flags = ["-ea"],
-#    main_class = "org.perses.antlr.util.LexerParserCombiner",
-#    runtime_deps = [":lexer_parser_combiner"],
-#)
-
 kt_jvm_library(
     name = "antlr_tool_wrapper",
     srcs = ["AntlrToolWrapper.kt"],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//src/org/perses/util",
         "//src/org/perses/util:auto_deltable_folder",
         "//src/org/perses/util:file_name_content_pair",
-        "@maven//:org_antlr_antlr4",
     ],
 )

@@ -16,6 +16,7 @@
  */
 package org.perses.util
 
+import com.google.common.collect.Interners
 import com.google.common.io.MoreFiles
 import com.google.common.io.RecursiveDeleteOption
 import com.google.common.truth.Truth.assertThat
@@ -23,6 +24,9 @@ import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.util.FileNameContentPair.Companion.locateFirstNonBlankLine
+import org.perses.util.FileNameContentPair.Companion.locateLastNonBlankLine
+import org.perses.util.FileNameContentPair.Companion.trimWhitespaces
 import java.nio.file.Files
 import kotlin.io.path.readText
 import kotlin.io.path.writeText
@@ -38,8 +42,69 @@ class FileNameContentPairTest {
   }
 
   @Test
+  fun testLocateFirstNonBlankLine() {
+    assertThat(locateFirstNonBlankLine(listOf())).isEqualTo(0)
+    assertThat(locateFirstNonBlankLine(listOf("   ", "a"))).isEqualTo(1)
+    assertThat(locateFirstNonBlankLine(listOf(" ", "", "", "a"))).isEqualTo(3)
+    assertThat(locateFirstNonBlankLine(listOf("", " a"))).isEqualTo(1)
+  }
+
+  @Test
+  fun testLocateLastNonBlankLineFromRear() {
+    assertThat(locateLastNonBlankLine(listOf())).isEqualTo(-1)
+    assertThat(locateLastNonBlankLine(listOf(""))).isEqualTo(-1)
+    assertThat(locateLastNonBlankLine(listOf("a", ""))).isEqualTo(0)
+    assertThat(locateLastNonBlankLine(listOf("", "a", ""))).isEqualTo(1)
+  }
+
+  @Test
+  fun testTrimWhitespaces() {
+    assertThat(trimWhitespaces(listOf())).isEmpty()
+    assertThat(trimWhitespaces(listOf(" a "))).containsExactly("a").inOrder()
+    assertThat(trimWhitespaces(listOf("", " a ", ""))).containsExactly("a").inOrder()
+    assertThat(
+      trimWhitespaces(listOf("", " a", "", "b ", "")),
+    ).containsExactly("a", "", "b").inOrder()
+  }
+
+  @Test
+  fun testEquality() {
+    val p1 = FileNameContentPair.createFromString(fileName = "a.txt", content = "a")
+    val p2 = FileNameContentPair.createFromString(fileName = "a.txt", content = "a")
+    assertThat(p1).isEqualTo(p2)
+
+    val map = HashSet<FileNameContentPair>()
+    map.add(p1)
+    map.add(p2)
+    assertThat(map).containsExactly(p1)
+    assertThat(map).containsExactly(p2)
+    assertThat(map).hasSize(1)
+  }
+
+  @Test
+  fun testIntern() {
+    val interner = Interners.newWeakInterner<String>()
+    val orig = FileNameContentPair.createFromString(fileName = "a", content = "b")
+    val copy1 = orig.createInternedCopy(interner)
+    val copy2 = orig.createInternedCopy(interner)
+    assertThat(orig).isEqualTo(copy1)
+    assertThat(orig).isEqualTo(copy2)
+    assertThat(copy1.fileName).isSameInstanceAs(copy2.fileName)
+    assertThat(copy1.lines.first()).isSameInstanceAs(copy2.lines.first())
+  }
+
+  @Test
+  fun testInequality() {
+    val p1 = FileNameContentPair.createFromString("a.txt", content = "a")
+    val p2 = FileNameContentPair.createFromString("a.txt", "b")
+    assertThat(p1).isNotEqualTo(p2)
+    val p3 = FileNameContentPair.createFromString("b.txt", "a")
+    assertThat(p1).isNotEqualTo(p3)
+  }
+
+  @Test
   fun testWrite() {
-    val pair = FileNameContentPair("a.txt", "b")
+    val pair = FileNameContentPair.createFromString("a.txt", "b")
     val path = tempDir.resolve("subdir")
     Files.createDirectories(path)
     pair.writeToDirectory(path)
@@ -54,6 +119,6 @@ class FileNameContentPairTest {
     file.writeText("b")
     val pair = FileNameContentPair.createFromFile(file)
     assertThat(pair.fileName).isEqualTo("a.txt")
-    assertThat(pair.content).isEqualTo("b")
+    assertThat(pair.lines).containsExactly("b").inOrder()
   }
 }

@@ -41,21 +41,21 @@ class ParserFacadeFactoryTest {
 
   val pnfBuilintFactory = CompositeParserFacadeFactory(
     builtinFactory = pnfFactory,
-    extFactory = optFactory
+    extFactory = optFactory,
   )
 
   val optBuiltinFactory = CompositeParserFacadeFactory(
     builtinFactory = optFactory,
-    extFactory = pnfFactory
+    extFactory = pnfFactory,
   )
 
   @Test
   fun testCompositeFactoryForCreatingFacade() {
     assertThat(pnfBuilintFactory.createParserFacade(LanguageC)).isInstanceOf(
-      CParserFacade::class.java
+      CParserFacade::class.java,
     )
     assertThat(optBuiltinFactory.createParserFacade(LanguageC)).isInstanceOf(
-      PnfCParserFacade::class.java
+      PnfCParserFacade::class.java,
     )
   }
 
@@ -63,7 +63,7 @@ class ParserFacadeFactoryTest {
   fun testComputeLanguageKindWithLanguageNameIgnoreCases() {
     for (name in listOf("c", "C")) {
       assertThat(
-        optFactory.computeLanguageKindWithLanguageNameIgnoreCase(name)
+        optFactory.computeLanguageKindWithLanguageNameIgnoreCase(name),
       ).isSameInstanceAs(LanguageC)
     }
   }

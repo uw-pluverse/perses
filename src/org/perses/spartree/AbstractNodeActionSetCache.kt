@@ -17,8 +17,7 @@
 package org.perses.spartree
 
 abstract class AbstractNodeActionSetCache {
-  abstract fun isCachedOrCacheIt(actionSet: NodeDeletionActionSet): Boolean
-  abstract fun isCachedOrCacheIt(actionSet: ChildHoistingActionSet): Boolean
+  abstract fun isCachedOrCacheIt(actionSet: AbstractActionSet<*>): Boolean
   abstract fun clear()
-  abstract fun size(): Int
+  abstract val size: Int
 }

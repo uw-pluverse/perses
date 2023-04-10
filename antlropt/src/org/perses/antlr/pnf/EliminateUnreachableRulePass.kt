@@ -22,25 +22,28 @@ import org.perses.util.SimpleStack
 
 class EliminateUnreachableRulePass(val startRuleName: String) : AbstractPnfPass() {
 
-  override fun process(grammar: PersesGrammar): PersesGrammar {
-    val usedRuleNames = computeUsedRuleNames(grammar)
+  override fun processParserGrammar(
+    parserGrammar: PersesGrammar,
+    lexerGrammar: PersesGrammar?,
+  ): PersesGrammar {
+    val usedRuleNames = computeUsedRuleNames(parserGrammar)
     if (usedRuleNames.isEmpty()) {
-      return grammar
+      return parserGrammar
     }
-    val grammarWithOnlyUsedParserRules = MutableGrammar.createParserRulesFrom(grammar)
+    val grammarWithOnlyUsedParserRules = MutableGrammar.createParserRulesFrom(parserGrammar)
       .let { mutableGrammar ->
         mutableGrammar.ruleNameSequence()
           .filter { ruleName ->
             ruleName !in usedRuleNames
           }.toList() // Materialize the rule names to avoid concurrent modification exception
           .forEach { mutableGrammar.removeRule(it) }
-        grammar.copyWithNewParserRuleDefs(mutableGrammar.toParserRuleAstList())
+        parserGrammar.copyWithNewParserRuleDefs(mutableGrammar.toParserRuleAstList())
       }
     return grammarWithOnlyUsedParserRules
   }
 
   private fun computeUsedRuleNames(
-    grammar: PersesGrammar
+    grammar: PersesGrammar,
   ): LinkedHashSet<RuleNameHandle> {
     val ruleNameRegistry = grammar.symbolTable.ruleNameRegistry
     val rootRuleName = ruleNameRegistry.getOrThrow(startRuleName)

@@ -30,20 +30,20 @@ object OptionalExtractionUtil {
   class Candidate(
     val longSeq: CandidateElement<PersesSequenceAst>,
     val shortSeq: CandidateElement<AbstractPersesRuleElement>,
-    val gapInLongSequence: Interval
+    val gapInLongSequence: Interval,
   ) {
 
     fun getGapAst(): AbstractPersesRuleElement {
       return longSeq.ast.subsequence(
         gapInLongSequence.leftInclusive,
-        gapInLongSequence.rightExclusive
+        gapInLongSequence.rightExclusive,
       )
     }
   }
 
   class CandidateElement<T : AbstractPersesRuleElement>(
     val ast: T,
-    val listRepresentation: ImmutableList<AbstractPersesRuleElement>
+    val listRepresentation: ImmutableList<AbstractPersesRuleElement>,
   ) {
 
     fun size(): Int {
@@ -61,13 +61,14 @@ object OptionalExtractionUtil {
 
     companion object {
       fun create(
-        e: AbstractPersesRuleElement
+        e: AbstractPersesRuleElement,
       ): CandidateElement<AbstractPersesRuleElement> {
         assert(isSeqOrRuleRefOrTerminal(e))
         return when (e.tag) {
           AstTag.RULE_REF,
           AstTag.TERMINAL,
-          AstTag.UNKNOWN_TERMINAL_WITH_UNIT_PRECEDENCE -> CandidateElement(e, ImmutableList.of(e))
+          AstTag.UNKNOWN_TERMINAL_WITH_UNIT_PRECEDENCE,
+          -> CandidateElement(e, ImmutableList.of(e))
           AstTag.SEQUENCE -> CandidateElement(e, (e as PersesSequenceAst).children)
           else -> error("Cannot reach here")
         }
@@ -76,7 +77,7 @@ object OptionalExtractionUtil {
   }
 
   fun rewriteAltBlockByExtractingOptionals(
-    alternatives: List<AbstractPersesRuleElement>
+    alternatives: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     val mutableAltBlock = MutableAltBlock()
     alternatives.forEach {
@@ -90,7 +91,9 @@ object OptionalExtractionUtil {
       val replacement = SmartAstConstructor.createForOptional(gapAst, isGreedy = true)
       assert(replacement.tag == AstTag.OPTIONAL || replacement.tag == AstTag.STAR)
       val newAlt = AstUtil.replaceGapInSequence(
-        candidate.longSeq.ast, candidate.gapInLongSequence, replacement
+        candidate.longSeq.ast,
+        candidate.gapInLongSequence,
+        replacement,
       )
       if (!newAlt.isEquivalent(candidate.longSeq.ast)) {
         newBlock.replace(candidate.longSeq.ast, newAlt)
@@ -100,7 +103,7 @@ object OptionalExtractionUtil {
   }
 
   fun searchForCandidate(
-    alternatives: Iterable<AbstractPersesRuleElement>
+    alternatives: Iterable<AbstractPersesRuleElement>,
   ): Candidate? {
     val sortedSequenceDefs = alternatives
       .asSequence()
@@ -127,7 +130,7 @@ object OptionalExtractionUtil {
 
   private fun getLongSequence(
     a: CandidateElement<AbstractPersesRuleElement>,
-    b: CandidateElement<AbstractPersesRuleElement>
+    b: CandidateElement<AbstractPersesRuleElement>,
   ): CandidateElement<PersesSequenceAst> {
     assert(a.size() != b.size())
     return (if (a.size() > b.size()) a else b).asSequence()
@@ -135,7 +138,7 @@ object OptionalExtractionUtil {
 
   private fun getShortSequence(
     a: CandidateElement<AbstractPersesRuleElement>,
-    b: CandidateElement<AbstractPersesRuleElement>
+    b: CandidateElement<AbstractPersesRuleElement>,
   ): CandidateElement<AbstractPersesRuleElement> {
     assert(a.size() != b.size())
     return if (a.size() < b.size()) a else b
@@ -143,7 +146,7 @@ object OptionalExtractionUtil {
 
   fun findGapInLongSequence(
     longSeq: CandidateElement<PersesSequenceAst>,
-    shortSeq: CandidateElement<AbstractPersesRuleElement>
+    shortSeq: CandidateElement<AbstractPersesRuleElement>,
   ): Interval? {
     val longSize = longSeq.size()
     val shortSize = shortSeq.size()
@@ -161,7 +164,7 @@ object OptionalExtractionUtil {
     val intervalEnd = shortIndex + longSize - shortSize
     while (shortIndex < shortSize) {
       if (!longSeq.getChild(shortIndex + longSize - shortSize)
-        .isEquivalent(shortSeq.getChild(shortIndex))
+          .isEquivalent(shortSeq.getChild(shortIndex))
       ) {
         return null
       }

@@ -22,7 +22,7 @@ import kotlin.io.path.isRegularFile
 
 class AdhocGrammarInfo(
   val adhocGrammarRoot: PersesConstants.AdhocGrammarRoot,
-  val origGrammar: OrigGrammar
+  val origGrammar: OrigGrammar,
 ) {
 
   val grammarHashFolder = computeGrammarHashFolder(adhocGrammarRoot, origGrammar)
@@ -39,7 +39,7 @@ class AdhocGrammarInfo(
 
     fun computeGrammarHashFolder(
       adhocGrammarRoot: PersesConstants.AdhocGrammarRoot,
-      origGrammar: OrigGrammar
+      origGrammar: OrigGrammar,
     ): Path {
       val thisGrammarRoot = adhocGrammarRoot.file.resolve(origGrammar.persesGrammar.grammarName)
       return thisGrammarRoot.resolve(origGrammar.hash)

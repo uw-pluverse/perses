@@ -35,7 +35,7 @@ class AbstractSparTreeNodeTest {
     assertThat(tokens).hasSize(1)
 
     val edit = tree.createNodeDeletionEdit(
-      NodeDeletionActionSet.createByDeleteSingleNode(tokens.first(), "dummy")
+      NodeDeletionActionSet.createByDeleteSingleNode(tokens.first(), "dummy"),
     )
     tree.applyEdit(edit)
 
@@ -68,8 +68,8 @@ class AbstractSparTreeNodeTest {
     tree.createNodeDeletionEdit(
       NodeDeletionActionSet.createByDeleteSingleNode(
         tree.getTokenNodeForText("b").single(),
-        "dummy"
-      )
+        "dummy",
+      ),
     ).let {
       tree.applyEdit(it)
     }

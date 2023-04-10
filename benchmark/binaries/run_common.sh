@@ -9,10 +9,14 @@ fi
 #command line arguments
 readonly TEST_SCRIPT=$1
 readonly SOURCE_FILE=$2
-readonly COMPLETE_STAT_FILE=${3:-}
-readonly SCRIPT_NAME=$(basename "${TEST_SCRIPT}")
-readonly SOURCE_NAME=$(basename "${SOURCE_FILE}")
-readonly THREADS=1
+readonly OUTPUT_DIR=$3
+readonly COMPLETE_STAT_FILE=${4:-}
+SCRIPT_NAME=$(basename "${TEST_SCRIPT}")
+readonly SCRIPT_NAME
+SOURCE_NAME=$(basename "${SOURCE_FILE}")
+readonly SOURCE_NAME
+THREADS=1
+readonly THREADS
 
 #set up temp file
 readonly TMP=$(mktemp -d)
@@ -30,13 +34,14 @@ export REDUCTION_STAT_FILE
 
 
 summarize_results () {
-  REDUCED_TOKEN_COUNT=$("${BINARY_DIR}/run_token_counter.sh" "${TMP_SOURCE_FILE}")
+  local -r reduced_file=$1
+  local -r reduced_token_count=$("${BINARY_DIR}/run_token_counter.sh" "${reduced_file}")
 
   if [ -z "${COMPLETE_STAT_FILE}" ]; then
     echo "${REDUCTION_STAT_FILE} ${TEST_SCRIPT} ${SOURCE_FILE}" \
       "'$(wc -l < "${REDUCTION_STAT_FILE}" | sed -e 's/^[ \t]*//') quary'" \
       "'$((END_TIME - START_TIME)) s' '${RET_CODE} code'" \
-      "'${REDUCED_TOKEN_COUNT} tokens'"
+      "'${reduced_token_count} tokens'"
   else
     echo "${REDUCTION_STAT_FILE}" >> "${COMPLETE_STAT_FILE}"
     echo "${TEST_SCRIPT}" >> "${COMPLETE_STAT_FILE}"
@@ -44,8 +49,15 @@ summarize_results () {
     echo "$(wc -l < "${REDUCTION_STAT_FILE}" | sed -e 's/^[ \t]*//')" \
       >> "${COMPLETE_STAT_FILE}"
     echo "$((END_TIME - START_TIME))" >> "${COMPLETE_STAT_FILE}"
-    echo "${REDUCED_TOKEN_COUNT}" >> "${COMPLETE_STAT_FILE}"
+    echo "${reduced_token_count}" >> "${COMPLETE_STAT_FILE}"
     echo "${RET_CODE}" >> "${COMPLETE_STAT_FILE}"
+  fi
+
+  if [ -e $OUTPUT_DIR ]; then
+    cp ${reduced_file} $OUTPUT_DIR
+    cp ${TMP_TEST_SCRIPT} $OUTPUT_DIR
+  else
+    echo "Reduced file failed to move (directory not exist)"
   fi
 
   rm -f "${REDUCTION_STAT_FILE}"

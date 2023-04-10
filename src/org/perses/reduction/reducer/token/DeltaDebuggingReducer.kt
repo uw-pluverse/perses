@@ -25,7 +25,7 @@ import org.perses.spartree.AbstractSparTreeNode
 import org.perses.util.toImmutableList
 
 class DeltaDebuggingReducer(
-  reducerContext: ReducerContext
+  reducerContext: ReducerContext,
 ) : AbstractTokenSlicerReducer(META, reducerContext) {
 
   override fun internalReduce(fixpointReductionState: FixpointReductionState) {
@@ -38,7 +38,7 @@ class DeltaDebuggingReducer(
 
     val deltaDebugger = createPristineDeltaDebugger(
       originalInput,
-      tree
+      tree,
     )
     deltaDebugger.reduce()
   }
@@ -49,7 +49,11 @@ class DeltaDebuggingReducer(
 
     @JvmStatic
     val META = object : ReducerAnnotation() {
-      override val deterministic = true
+      override val deterministic: Boolean
+        get() = true
+
+      override val reductionResultSizeTrend: ReductionResultSizeTrend
+        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
 
       override fun shortName() = NAME
 
@@ -58,8 +62,8 @@ class DeltaDebuggingReducer(
       override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
         return ImmutableList.of(
           DeltaDebuggingReducer(
-            reducerContext
-          )
+            reducerContext,
+          ),
         )
       }
     }

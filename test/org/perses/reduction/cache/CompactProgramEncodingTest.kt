@@ -29,7 +29,7 @@ class CompactProgramEncodingTest {
 
   private val program = TestUtility.createTokenizedProgramFromString(
     "int a, b;",
-    LanguageC
+    LanguageC,
   )
 
   @Test

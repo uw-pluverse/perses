@@ -17,87 +17,65 @@
 package org.perses.delta
 
 import com.google.common.collect.ImmutableList
-import org.perses.reduction.PropertyTestResult
-import java.util.IdentityHashMap
-
-interface IPropertyTest<T, Payload> {
-  fun testProperty(
-    currentBest: ImmutableList<T>,
-    candidate: ImmutableList<T>
-  ): AbstractPropertyTestResultWithPayload<Payload>
-}
-
-abstract class AbstractPropertyTestResultWithPayload<Payload> {
-
-  abstract fun needsSkip(): Boolean
-
-  abstract val result: PropertyTestResult
-
-  abstract val payload: Payload
-}
-
-class SkipPropertyTestResult<Payload> : AbstractPropertyTestResultWithPayload<Payload>() {
-  override fun needsSkip() = true
-
-  override val result: PropertyTestResult
-    get() = TODO("Not yet implemented")
-
-  override val payload: Payload
-    get() = TODO("Not yet implemented")
-}
-
-data class PropertyTestResultWithPayload<Payload>(
-  override val result: PropertyTestResult,
-  override val payload: Payload
-) : AbstractPropertyTestResultWithPayload<Payload>() {
-
-  override fun needsSkip() = false
-}
+import com.google.common.collect.Sets
 
 abstract class AbstractDeltaDebugger<T, PropertyPayload>(
   input: ImmutableList<T>,
-  val propertyTest: IPropertyTest<T, PropertyPayload>,
-  val onBestUpdateHandler: (ImmutableList<T>, PropertyPayload) -> Unit
+  val propertyTester: IPropertyTester<T, PropertyPayload>,
+  val onBestUpdateHandler: (ImmutableList<T>, PropertyPayload) -> Unit,
 ) {
 
   var best: ImmutableList<T> = input
     private set
 
+  init {
+    val uniqueObjects = input.fold(
+      Sets.newIdentityHashSet<T>(),
+    ) { acc, element ->
+      acc.add(element)
+      acc
+    }
+    require(uniqueObjects.size == input.size) {
+      "The elements in input have to be distinct objects. $input"
+    }
+  }
+
   protected fun updateBest(
     newBest: ImmutableList<T>,
-    payload: PropertyPayload
+    payload: PropertyPayload,
   ) {
     best = newBest
     onBestUpdateHandler(newBest, payload)
   }
 
-  abstract fun reduce()
-
-  init {
-    val uniqueObjects = input.fold(
-      IdentityHashMap<T, T>(),
-      { acc, element ->
-        acc.put(element, element)
-        acc
+  fun reduce() {
+    // test whether the entire input can be deleted.
+    run {
+      val empty = ImmutableList.of<T>()
+      propertyTester.testProperty(best, empty).let {
+        if (!it.needsSkip() && it.result.isInteresting) {
+          updateBest(empty, it.payload)
+          return
+        }
       }
-    )
-    require(uniqueObjects.size == input.size) {
-      "The elements in input have to be distinct objects. $input"
     }
+    reduceNonEmptyInput()
   }
+
+  protected abstract fun reduceNonEmptyInput()
 
   companion object {
 
     @JvmStatic
     fun <T> partition(
       list: ImmutableList<T>,
-      numOfPartitions: Int
-    ): ImmutableList<Partition<T>> {
+      numOfPartitions: Int,
+    ): PartitionList<T> {
       val length = list.size
       require(length >= numOfPartitions)
       val partitionSize: Int = computePartitionSize(length, numOfPartitions)
       var remainder = length % numOfPartitions
-      val result = ImmutableList.builder<Partition<T>>()
+      val builder = PartitionList.Builder(list)
       var start = 0
       while (start < length) {
         var end = start + partitionSize
@@ -108,10 +86,10 @@ abstract class AbstractDeltaDebugger<T, PropertyPayload>(
         if (end > length) {
           end = length
         }
-        result.add(Partition(list, start, end))
+        builder.createPartition(start, end)
         start = end
       }
-      return result.build()
+      return builder.build()
     }
 
     @JvmStatic

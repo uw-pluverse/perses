@@ -21,7 +21,7 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 
 class ProjectedHashMultimap(
   private val grammar: MutableGrammar,
-  projectedKeySet: Collection<RuleNameHandle>
+  projectedKeySet: Collection<RuleNameHandle>,
 ) {
 
   private val projectedKeySet = LinkedHashSet(projectedKeySet)

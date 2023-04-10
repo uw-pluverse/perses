@@ -17,20 +17,24 @@
 package org.perses.program.printer
 
 import org.perses.grammar.python3.Python3Lexer
-import org.perses.program.AbstractTokenizedProgramPrinter.AbstractTokenPlacementListener
-import org.perses.program.AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider
 import org.perses.program.PersesTokenFactory.PersesToken
 import org.perses.program.TokenizedProgram
+import org.perses.program.printer.AbstractTokenizedProgramPrinter.AbstractTokenPlacementListener
+import org.perses.program.printer.AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider
 import org.perses.util.FastStringBuilder
+import org.perses.util.Util.lazyAssert
 
 class PythonFormatPrintingVisitor(
   program: TokenizedProgram,
   keepBlankLines: Boolean,
   val numSpacesPerIndent: Int,
   tokenPositionProvider: AbstractTokenPositionProvider,
-  tokenPlacementListener: AbstractTokenPlacementListener?
+  tokenPlacementListener: AbstractTokenPlacementListener?,
 ) : AbstractOrigFormatPrintingVisitor(
-  program, keepBlankLines, tokenPositionProvider, tokenPlacementListener
+  program,
+  keepBlankLines,
+  tokenPositionProvider,
+  tokenPlacementListener,
 ) {
 
   init {
@@ -40,21 +44,25 @@ class PythonFormatPrintingVisitor(
   private var indentLevel = 0
 
   override fun printNonEmptyLine(line: List<PersesToken>, builder: FastStringBuilder) {
-    assert(line.isNotEmpty())
+    lazyAssert { line.isNotEmpty() }
     printIndent(builder)
     printNonEmptyLine(
-      startPositionInLine = getCharPositionInLine(line.first()),
+      startPositionInLine = tokenPositionProvider.getCharPositionInLine(
+        line.first(),
+        currentCursorPositionInLine = 0,
+        previousToken = null,
+      ),
       line = line,
-      builder = builder
+      builder = builder,
     )
   }
 
   private fun printIndent(builder: FastStringBuilder) {
-    assert(indentLevel >= 0)
+    lazyAssert { indentLevel >= 0 }
     if (indentLevel == 0) {
       return
     }
-    assert(builder.lastChar() == '\n') { builder }
+    lazyAssert({ builder.lastChar() == '\n' }) { builder }
     val spaceCount = indentLevel * numSpacesPerIndent
     for (i in 1..spaceCount) {
       builder.append(' ')

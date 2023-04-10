@@ -22,7 +22,6 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.c.LanguageC
-import org.perses.program.AbstractTokenizedProgramPrinter
 import org.perses.program.PersesTokenFactory.PersesToken
 
 @RunWith(JUnit4::class)
@@ -35,13 +34,13 @@ class AbstractOrigFormatVisitorTest {
       |
       |int c;
     """.trimMargin(),
-    LanguageC
+    LanguageC,
   )
 
   val visitor = object : AbstractOrigFormatVisitor(
     program,
     AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider.DefaultProvider,
-    tokenPlacementListener = null
+    tokenPlacementListener = null,
   ) {
 
     override fun isControlToken(token: PersesToken): Boolean {

@@ -27,7 +27,7 @@ class VersionFlags : ICommandLineFlags {
     names = ["--version"],
     description = "print the version",
     help = true,
-    order = CommonCmdOptionGroupOrder.HELP + 1
+    order = CommonCmdOptionGroupOrder.HELP + 1,
   )
   var version = false
 

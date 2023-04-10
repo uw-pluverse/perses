@@ -34,7 +34,7 @@ object DefaultLoggingConfigurations {
     Level.CONFIG,
     Level.FINE,
     Level.FINER,
-    Level.FINEST
+    Level.FINEST,
   ).asSequence().map { it.name }.toList()
 
   @JvmStatic

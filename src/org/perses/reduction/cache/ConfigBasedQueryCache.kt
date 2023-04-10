@@ -19,6 +19,7 @@ package org.perses.reduction.cache
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.PropertyTestResult
 import org.perses.reduction.cache.AbstractCacheRetrievalResult.Companion.create
+import org.perses.util.Util.lazyAssert
 import java.util.HashMap
 
 class ConfigBasedQueryCache : AbstractQueryCache() {
@@ -35,14 +36,14 @@ class ConfigBasedQueryCache : AbstractQueryCache() {
         return create(this, program, null, null)
       }
     }
-    assert(node != null)
+    lazyAssert { node != null }
     return create(this, program, null, node!!.result)
   }
 
   @Synchronized
   override fun addResult(
     program: AbstractCacheRetrievalResult.CacheMiss,
-    result: PropertyTestResult
+    result: PropertyTestResult,
   ) {
     check(program.owner === this)
     val tokens = program.program.tokens
@@ -55,7 +56,7 @@ class ConfigBasedQueryCache : AbstractQueryCache() {
       ++size
       node.result = result
     }
-    assert(!node.isResultEmpty)
+    lazyAssert { !node.isResultEmpty }
   }
 
   override fun size(): Int {
@@ -74,7 +75,7 @@ class ConfigBasedQueryCache : AbstractQueryCache() {
       set(value) {
         check(this.result == null)
         field = value
-        assert(this.result != null)
+        lazyAssert { this.result != null }
       }
 
     private val children = HashMap<String, CacheNode>()
@@ -85,7 +86,7 @@ class ConfigBasedQueryCache : AbstractQueryCache() {
         child = CacheNode()
         children[lexeme] = child
       }
-      assert(children[lexeme] == child)
+      lazyAssert { children[lexeme] == child }
       return child
     }
 

@@ -39,9 +39,8 @@ abstract class AbstractReducerFunctionalTest {
     sourceFile: String,
     algorithmType: ReducerAnnotation,
     cmdCustomizer: Consumer<CommandOptions>,
-    expected: String
+    expected: String,
   ) {
-
     AutoDeletableFolder(Files.createTempDirectory(javaClass.simpleName))
       .use { folder ->
         val cmd = CommandOptions("")
@@ -61,7 +60,7 @@ abstract class AbstractReducerFunctionalTest {
         RegularProgramReductionDriver.create(
           cmd,
           builderWithBuiltinLanguages().build(),
-          ImmutableList.of(progressMonitor)
+          ImmutableList.of(progressMonitor),
         )
           .use { driver ->
             val bestFile = outputDir.resolve(tempSourceFile.fileName)
@@ -80,7 +79,7 @@ abstract class AbstractReducerFunctionalTest {
     reductionFolder: String,
     algorithmType: ReducerAnnotation,
     cmdCustomizer: Consumer<CommandOptions>,
-    expected: String
+    expected: String,
   ) {
     test(reductionFolder, "r.sh", "small.c", algorithmType, cmdCustomizer, expected)
   }
@@ -88,7 +87,7 @@ abstract class AbstractReducerFunctionalTest {
   protected fun runCTestSubject(
     reductionFolder: String,
     algorithmType: ReducerAnnotation,
-    expected: String
+    expected: String,
   ) {
     runCTestSubject(reductionFolder, algorithmType, { }, expected)
   }
@@ -97,7 +96,7 @@ abstract class AbstractReducerFunctionalTest {
     reductionFolder: String,
     algorithmType: ReducerAnnotation,
     cmdCustomizer: Consumer<CommandOptions>,
-    expected: String
+    expected: String,
   ) {
     test(reductionFolder, "r.sh", "t.c", algorithmType, cmdCustomizer, expected)
   }
@@ -105,7 +104,7 @@ abstract class AbstractReducerFunctionalTest {
   protected fun runJavaTestSubject(
     reductionFolder: String,
     algorithmType: ReducerAnnotation,
-    expected: String
+    expected: String,
   ) {
     test(reductionFolder, "r.sh", "t.java", algorithmType, { }, expected)
   }
@@ -113,7 +112,7 @@ abstract class AbstractReducerFunctionalTest {
   protected fun runScalaTestSubject(
     reductionFolder: String,
     algorithmType: ReducerAnnotation,
-    expected: String
+    expected: String,
   ) {
     test(reductionFolder, "r.sh", "t.sc", algorithmType, { }, expected)
   }

@@ -12,7 +12,7 @@ kt_jvm_library(
         "FailOnErrorAntlrErrorListener.kt",
     ],
     deps = [
-        "@maven//:org_antlr_antlr4_runtime",
+        "//:antlr_runtime",
     ],
 )
 
@@ -24,6 +24,8 @@ kt_jvm_library(
     ],
     deps = [
         ":antlr_exception_strategy",
+        "//:antlr_runtime",
+        "//:antlr_tool",
         "//:flogger",
         "//:guava",
         "//antlropt/src/org/perses/antlr/ast",
@@ -35,8 +37,6 @@ kt_jvm_library(
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
-        "@maven//:org_antlr_antlr4",
-        "@maven//:org_antlr_antlr4_runtime",
     ],
 )
 
@@ -74,5 +74,5 @@ java_binary(
     name = "antlr_tool",
     main_class = "org.antlr.v4.Tool",
     visibility = ["//visibility:public"],
-    runtime_deps = ["@maven//:org_antlr_antlr4"],
+    runtime_deps = ["//:antlr_tool"],
 )

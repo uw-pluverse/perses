@@ -19,6 +19,7 @@ package org.perses.reduction.partition
 import com.google.common.base.MoreObjects
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.util.Util
+import org.perses.util.Util.lazyAssert
 import java.util.stream.Stream
 
 /**
@@ -28,7 +29,7 @@ import java.util.stream.Stream
 class Partition(private val nodes: ArrayList<AbstractSparTreeNode>) {
 
   init {
-    assert(nodes.size > 0) { "A partition cannot be empty." }
+    lazyAssert({ nodes.size > 0 }) { "A partition cannot be empty." }
   }
 
   val first: AbstractSparTreeNode
@@ -65,7 +66,7 @@ class Partition(private val nodes: ArrayList<AbstractSparTreeNode>) {
   fun split(): Array<Partition> {
     val nodes = nodes
     val size = nodes.size
-    assert(size > 0)
+    lazyAssert { size > 0 }
     if (size <= 1) {
       return EMPTY_PARTITION_ARRAY
     }
@@ -85,7 +86,7 @@ class Partition(private val nodes: ArrayList<AbstractSparTreeNode>) {
     return MoreObjects.toStringHelper(Partition::class.java)
       .add(
         "nodes",
-        nodes.asSequence().map { it.nodeId }.sorted().asSequence()
+        nodes.asSequence().map { it.nodeId }.sorted().asSequence(),
       )
       .toString()
   }
@@ -94,7 +95,7 @@ class Partition(private val nodes: ArrayList<AbstractSparTreeNode>) {
   class Builder(capacity: Int) {
     private var nodes: ArrayList<AbstractSparTreeNode>? = ArrayList(capacity)
     fun addNode(node: AbstractSparTreeNode) {
-      assert(nodes != null) { "This builder has been used" }
+      lazyAssert({ nodes != null }) { "This builder has been used" }
       nodes!!.add(node)
     }
 
@@ -104,7 +105,7 @@ class Partition(private val nodes: ArrayList<AbstractSparTreeNode>) {
 
     /** This method builds a partition, and the current builder becomes invalid.  */
     fun build(): Partition {
-      assert(nodes != null) { "The builder has been used." }
+      lazyAssert({ nodes != null }) { "The builder has been used." }
       val result = Partition(nodes!!)
       nodes = null
       return result

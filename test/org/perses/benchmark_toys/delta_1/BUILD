@@ -10,17 +10,34 @@ sanity_test(
     test_script = "r.sh",
 )
 
+LOG_FILE = "reduction_golden_test.log"
+
 reduction_golden_test(
     name = "reduction_golden_test",
     enable_edit_caching = True,
     enable_query_caching = True,
     golden_progress_file = "golden_reduction_progress.txt",
     golden_reduced_file = "golden_reduced_t.c",
-    log_file = "reduction_golden_test.log",
+    log_file = LOG_FILE,
     progress_dump_file = "reduction_progress.txt",
     reduction_algorithm = "perses_node_priority_with_dfs_delta",
     source_file = "t.c",
     test_script = "r.sh",
+)
+
+GREPPED_CACHE_SETTING_FILE = "grepped_query_cache_setting.txt"
+
+genrule(
+    name = "grep_cache_setting",
+    srcs = [LOG_FILE],
+    outs = [GREPPED_CACHE_SETTING_FILE],
+    cmd = "grep --only-matching 'Cache setting:.*' $(location %s) > $(location %s)" % (LOG_FILE, GREPPED_CACHE_SETTING_FILE),
+)
+
+golden_test(
+    name = "grep_cache_setting_golden_test",
+    golden_file = "golden_grepped_query_cache_setting.txt",
+    test_file = GREPPED_CACHE_SETTING_FILE,
 )
 
 # Note that token slicer checks syntactical validity when
@@ -78,6 +95,42 @@ reduction_golden_test(
     source_file = "t.c",
     test_script = "r.sh",
     thread_count = 3,
+)
+
+reduction_golden_test(
+    name = "reduction_concurrent_state_token_slicer_golden_test",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    golden_reduced_file = "golden_concurrent_state_token_slicer_reduced_t.c",
+    log_file = "reduction_concurrent_state_token_slicer_golden_test.log",
+    reduction_algorithm = "concurrent_state_token_slicer",
+    source_file = "t.c",
+    test_script = "r.sh",
+    thread_count = 5,
+)
+
+reduction_golden_test(
+    name = "reduction_concurrent_ddmin_golden_test",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    golden_reduced_file = "golden_concurrent_ddmin_reduced_t.c",
+    log_file = "reduction_concurrent_ddmin_golden_test.log",
+    reduction_algorithm = "concurrent_state_ddmin",
+    source_file = "t.c",
+    test_script = "r.sh",
+    thread_count = 5,
+)
+
+reduction_golden_test(
+    name = "reduction_ddmin_golden_test",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    golden_reduced_file = "golden_ddmin_reduced_t.c",
+    log_file = "reduction_ddmin_golden_test.log",
+    reduction_algorithm = "ddmin",
+    source_file = "t.c",
+    test_script = "r.sh",
+    thread_count = 1,
 )
 
 sh_test(

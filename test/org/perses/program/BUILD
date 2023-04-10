@@ -20,13 +20,12 @@ kt_jvm_test(
     deps = DEFAULT_DEPS,
 )
 
-java_test(
+kt_jvm_test(
     name = "SourceFileTest",
-    srcs = ["SourceFileTest.java"],
+    srcs = ["SourceFileTest.kt"],
     data = [
         "//test_data/delta_1",
     ],
-    test_class = "org.perses.program.SourceFileTest",
     deps = DEFAULT_DEPS + [
         "//src/org/perses/grammar/c:language_kind",
         "//src/org/perses/program:language_kind",
@@ -59,7 +58,7 @@ kt_jvm_test(
     name = "TokenizedProgramFactoryTest",
     srcs = ["TokenizedProgramFactoryTest.kt"],
     deps = DEFAULT_DEPS + [
-        "@maven//:org_antlr_antlr4_runtime",
+        "//:antlr_runtime",
         "//src/org/perses/grammar/c:language_kind",
     ],
 )

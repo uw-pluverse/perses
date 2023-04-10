@@ -33,20 +33,20 @@ import java.util.stream.Collectors
 class ContentStringBasedQueryCache(
   tokenizedProgram: TokenizedProgram,
   profiler: AbstractQueryCacheProfiler,
-  configuration: QueryCacheConfiguration
+  configuration: QueryCacheConfiguration,
 ) : AbstractRealQueryCache<
   ContentStringBasedQueryCache.ContentStringEncoding,
-  ContentStringBasedQueryCache.ContentStringEncoder
+  ContentStringBasedQueryCache.ContentStringEncoder,
   >(
   tokenizedProgram,
   profiler,
-  configuration
+  configuration,
 ) {
   override fun createEncoder(
-    tokenizedProgram: TokenizedProgram,
-    profiler: AbstractQueryCacheProfiler
+    baseProgram: TokenizedProgram,
+    profiler: AbstractQueryCacheProfiler,
   ): ContentStringEncoder {
-    return ContentStringEncoder(tokenizedProgram, profiler)
+    return ContentStringEncoder(baseProgram, profiler)
   }
 
   @Synchronized
@@ -58,7 +58,7 @@ class ContentStringBasedQueryCache(
 
   class ContentStringEncoder(
     tokenizedProgram: TokenizedProgram,
-    profiler: AbstractQueryCacheProfiler
+    profiler: AbstractQueryCacheProfiler,
   ) : AbstractTokenizedProgramEncoder<ContentStringEncoding>(tokenizedProgram, profiler) {
 
     override fun encode(program: TokenizedProgram): ContentStringEncoding {
@@ -66,12 +66,12 @@ class ContentStringBasedQueryCache(
         program.tokens.stream()
           .map { obj: PersesTokenFactory.PersesToken -> obj.text }
           .collect(Collectors.joining("\n")),
-        program.tokenCount()
+        program.tokenCount(),
       )
     }
 
     override fun reEncode(
-      previousEncoding: ContentStringEncoding
+      previousEncoding: ContentStringEncoding,
     ): ContentStringEncoding? {
       throw UnsupportedOperationException()
     }
@@ -81,7 +81,8 @@ class ContentStringBasedQueryCache(
 
   class ContentStringEncoding(private val content: String, tokenCount: Int) :
     AbstractProgramEncoding<ContentStringEncoding>(
-      content.hashCode(), tokenCount
+      content.hashCode(),
+      tokenCount,
     ) {
     override fun extraEquals(other: ContentStringEncoding): Boolean {
       return content == other.content

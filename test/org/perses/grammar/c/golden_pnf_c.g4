@@ -5,642 +5,496 @@ grammar PnfC;
 IncludeDirective
     : '#' 'include' (~[\n])*
     ;
-
 Auto
     : 'auto'
     ;
-
 Break
     : 'break'
     ;
-
 Case
     : 'case'
     ;
-
 Char
     : 'char'
     ;
-
 Const
     : 'const'
     ;
-
 Nonnull
     : '_Nonnull'
     ;
-
 Nullable
     : '_Nullable'
     ;
-
 Continue
     : 'continue'
     ;
-
 Default
     : 'default'
     ;
-
 Do
     : 'do'
     ;
-
 Double
     : 'double'
     ;
-
 Else
     : 'else'
     ;
-
 Enum
     : 'enum'
     ;
-
 Extern
     : 'extern'
     ;
-
 Float
     : 'float'
     ;
-
 For
     : 'for'
     ;
-
 Goto
     : 'goto'
     ;
-
 If
     : 'if'
     ;
-
 Inline
     : 'inline'
     ;
-
 Int
     : 'int'
     ;
-
 Long
     : 'long'
     ;
-
 Register
     : 'register'
     ;
-
 Restrict
     : 'restrict'
     ;
-
 Restrict_gcc
     : '__restrict__'
     ;
-
 Restrict_gcc2
     : '__restrict'
     ;
-
 Extension_gcc
     : '__extension__'
     ;
-
 Return
     : 'return'
     ;
-
 Short
     : 'short'
     ;
-
 Signed
     : 'signed'
     ;
-
 Sizeof
     : 'sizeof'
     ;
-
 Static
     : 'static'
     ;
-
 Struct
     : 'struct'
     ;
-
 Switch
     : 'switch'
     ;
-
 Typedef
     : 'typedef'
     ;
-
 Union
     : 'union'
     ;
-
 Unsigned
     : 'unsigned'
     ;
-
 Void
     : 'void'
     ;
-
 Volatile
     : 'volatile'
     ;
-
 While
     : 'while'
     ;
-
 Alignas
     : '_Alignas'
     ;
-
 Alignof
     : '_Alignof'
     ;
-
 Alignof_gcc
     : '__alignof__'
     ;
-
 Atomic
     : '_Atomic'
     ;
-
 Bool
     : '_Bool'
     ;
-
 Complex
     : '_Complex'
     ;
-
 Generic
     : '_Generic'
     ;
-
 Imaginary
     : '_Imaginary'
     ;
-
 Noreturn
     : '_Noreturn'
     ;
-
 StaticAssert
     : '_Static_assert'
     ;
-
 ThreadLocal
     : '_Thread_local'
     ;
-
 LeftParen
     : '('
     ;
-
 RightParen
     : ')'
     ;
-
 LeftBracket
     : '['
     ;
-
 RightBracket
     : ']'
     ;
-
 LeftBrace
     : '{'
     ;
-
 RightBrace
     : '}'
     ;
-
 Less
     : '<'
     ;
-
 LessEqual
     : '<='
     ;
-
 Greater
     : '>'
     ;
-
 GreaterEqual
     : '>='
     ;
-
 LeftShift
     : '<<'
     ;
-
 RightShift
     : '>>'
     ;
-
 Plus
     : '+'
     ;
-
 PlusPlus
     : '++'
     ;
-
 Minus
     : '-'
     ;
-
 MinusMinus
     : '--'
     ;
-
 Star
     : '*'
     ;
-
 Div
     : '/'
     ;
-
 Mod
     : '%'
     ;
-
 And
     : '&'
     ;
-
 Or
     : '|'
     ;
-
 AndAnd
     : '&&'
     ;
-
 OrOr
     : '||'
     ;
-
 Caret
     : '^'
     ;
-
 Not
     : '!'
     ;
-
 Tilde
     : '~'
     ;
-
 Question
     : '?'
     ;
-
 Colon
     : ':'
     ;
-
 Semi
     : ';'
     ;
-
 Comma
     : ','
     ;
-
 Assign
     : '='
     ;
-
 StarAssign
     : '*='
     ;
-
 DivAssign
     : '/='
     ;
-
 ModAssign
     : '%='
     ;
-
 PlusAssign
     : '+='
     ;
-
 MinusAssign
     : '-='
     ;
-
 LeftShiftAssign
     : '<<='
     ;
-
 RightShiftAssign
     : '>>='
     ;
-
 AndAssign
     : '&='
     ;
-
 XorAssign
     : '^='
     ;
-
 OrAssign
     : '|='
     ;
-
 Equal
     : '=='
     ;
-
 NotEqual
     : '!='
     ;
-
 Arrow
     : '->'
     ;
-
 Dot
     : '.'
     ;
-
 Ellipsis
     : '...'
     ;
-
 Identifier
     : IdentifierNondigit (IdentifierNondigit | Digit)*
     ;
-
 fragment IdentifierNondigit
     : Nondigit
     | UniversalCharacterName
     ;
-
 fragment Nondigit
     : [a-zA-Z_]
     ;
-
 fragment Digit
     : [0-9]
     ;
-
 fragment UniversalCharacterName
     : '\\u' HexQuad
     | '\\U' HexQuad HexQuad
     ;
-
 fragment HexQuad
     : HexadecimalDigit HexadecimalDigit HexadecimalDigit HexadecimalDigit
     ;
-
 Constant
     : IntegerConstant
     | FloatingConstant
     | CharacterConstant
     ;
-
 fragment IntegerConstant
     : DecimalConstant IntegerSuffix?
     | OctalConstant IntegerSuffix?
     | HexadecimalConstant IntegerSuffix?
     | BinaryConstant
     ;
-
 fragment BinaryConstant
     : '0' [bB] [0-1]+
     ;
-
 fragment DecimalConstant
     : NonzeroDigit Digit*
     ;
-
 fragment OctalConstant
     : '0' OctalDigit*
     ;
-
 fragment HexadecimalConstant
     : HexadecimalPrefix HexadecimalDigit+
     ;
-
 fragment HexadecimalPrefix
     : '0' [xX]
     ;
-
 fragment NonzeroDigit
     : [1-9]
     ;
-
 fragment OctalDigit
     : [0-7]
     ;
-
 fragment HexadecimalDigit
     : [0-9a-fA-F]
     ;
-
 fragment IntegerSuffix
     : UnsignedSuffix LongSuffix?
     | UnsignedSuffix LongLongSuffix
     | LongSuffix UnsignedSuffix?
     | LongLongSuffix UnsignedSuffix?
     ;
-
 fragment UnsignedSuffix
     : [uU]
     ;
-
 fragment LongSuffix
     : [lL]
     ;
-
 fragment LongLongSuffix
     : 'll'
     | 'LL'
     ;
-
 fragment FloatingConstant
     : DecimalFloatingConstant
     | HexadecimalFloatingConstant
     ;
-
 fragment DecimalFloatingConstant
     : FractionalConstant ExponentPart? FloatingSuffix?
     | DigitSequence ExponentPart FloatingSuffix?
     ;
-
 fragment HexadecimalFloatingConstant
     : HexadecimalPrefix HexadecimalFractionalConstant BinaryExponentPart FloatingSuffix?
     | HexadecimalPrefix HexadecimalDigitSequence BinaryExponentPart FloatingSuffix?
     ;
-
 fragment FractionalConstant
     : DigitSequence? '.' DigitSequence
     | DigitSequence '.'
     ;
-
 fragment ExponentPart
     : 'e' Sign? DigitSequence
     | 'E' Sign? DigitSequence
     ;
-
 fragment Sign
     : '+'
     | '-'
     ;
-
 fragment DigitSequence
     : Digit+
     ;
-
 fragment HexadecimalFractionalConstant
     : HexadecimalDigitSequence? '.' HexadecimalDigitSequence
     | HexadecimalDigitSequence '.'
     ;
-
 fragment BinaryExponentPart
     : 'p' Sign? DigitSequence
     | 'P' Sign? DigitSequence
     ;
-
 fragment HexadecimalDigitSequence
     : HexadecimalDigit+
     ;
-
 fragment FloatingSuffix
     : 'f'
     | 'l'
     | 'F'
     | 'L'
     ;
-
 fragment CharacterConstant
     : '\'' CCharSequence '\''
     | 'L\'' CCharSequence '\''
     | 'u\'' CCharSequence '\''
     | 'U\'' CCharSequence '\''
     ;
-
 fragment CCharSequence
     : CChar+
     ;
-
 fragment CChar
     : ~['\\\r\n]
     | EscapeSequence
     ;
-
 fragment EscapeSequence
     : SimpleEscapeSequence
     | OctalEscapeSequence
     | HexadecimalEscapeSequence
     | UniversalCharacterName
     ;
-
 fragment SimpleEscapeSequence
     : '\\' ['"?abfnrtv\\]
     ;
-
 fragment OctalEscapeSequence
     : '\\' OctalDigit
     | '\\' OctalDigit OctalDigit
     | '\\' OctalDigit OctalDigit OctalDigit
     ;
-
 fragment HexadecimalEscapeSequence
     : '\\x' HexadecimalDigit+
     ;
-
 StringLiteral
     : EncodingPrefix? '"' SCharSequence? '"'
     ;
-
 fragment EncodingPrefix
     : 'u8'
     | 'u'
     | 'U'
     | 'L'
     ;
-
 fragment SCharSequence
     : SChar+
     ;
-
 fragment SChar
     : ~["\\\r\n]
     | EscapeSequence
     | '\\\n'
     | '\\\r\n'
     ;
-
 ComplexDefine
     : '#' Whitespace? 'define' (~[#])* -> skip
 
     ;
-
 AsmBlock
     : 'asm' '{' (~[}])* '}' -> skip
 
     ;
-
 LineAfterPreprocessing
     : '#line' Whitespace* (~[\r\n])* -> skip
 
     ;
-
 LineDirective
     : '#' Whitespace? DecimalConstant Whitespace? StringLiteral (~[\r\n])* -> skip
 
     ;
-
 PragmaDirective
     : '#' Whitespace? 'pragma' Whitespace (~[\r\n])* -> skip
 
     ;
-
 Whitespace
     : [ \t]+ -> skip
 
     ;
-
 Newline
     : ('\r' '\n'?
     | '\n')
  -> skip
 
     ;
-
 BlockComment
     : '/*' .*? '*/' -> skip
 
     ;
-
 LineComment
     : '//' (~[\r\n])* -> skip
 
     ;
+
 
 genericSelection
     : '_Generic' '(' assignmentExpression ',' genericAssocList ')'
@@ -735,6 +589,10 @@ typeSpecifier
     | aux_rule__typeSpecifier_3
     ;
 
+typeSpecifierWithAttrList
+    : typeSpecifier optional__typeSpecifierWithAttrList_1
+    ;
+
 structOrUnionSpecifier
     : structOrUnion altnt_block__structOrUnionSpecifier_2
     ;
@@ -809,6 +667,10 @@ gccAttribute
 
 pointer
     : altnt_block__pointer_8 altnt_block__pointer_5
+    ;
+
+typeQualifierList
+    : aux_rule__typeQualifierList_1+
     ;
 
 parameterTypeList
@@ -901,6 +763,10 @@ optional__declaration_2
     : initDeclaratorList?
     ;
 
+optional__typeSpecifierWithAttrList_1
+    : gccAttributeSpecifier?
+    ;
+
 optional__structOrUnionSpecifier_1
     : Identifier?
     ;
@@ -925,11 +791,11 @@ kleene_star__declarator_2
     : gccDeclaratorExtension*
     ;
 
-optional__directDeclarator_2
+optional__directDeclarator_3
     : assignmentExpression?
     ;
 
-optional__directDeclarator_5
+optional__directDeclarator_6
     : identifierList?
     ;
 
@@ -959,6 +825,11 @@ aux_rule__gccAttribute_4
 
 optional__pointer_1
     : typeQualifierList?
+    ;
+
+aux_rule__typeQualifierList_1
+    : typeQualifier
+    | gccAttributeSpecifier
     ;
 
 optional__typeName_1
@@ -1242,30 +1113,22 @@ enumeratorList
     : enumerator kleene_star__enumeratorList_1
     ;
 
-aux_rule__directDeclarator_7
-    : aux_rule__directDeclarator_13
-    | aux_rule__directDeclarator_14
-    ;
-
-kleene_star__directDeclarator_6
-    : aux_rule__directDeclarator_7*
-    ;
-
 aux_rule__directDeclarator_8
-    : Identifier
+    : aux_rule__directDeclarator_14
     | aux_rule__directDeclarator_15
     ;
 
+kleene_star__directDeclarator_7
+    : aux_rule__directDeclarator_8*
+    ;
+
+aux_rule__directDeclarator_9
+    : Identifier
+    | aux_rule__directDeclarator_16
+    ;
+
 directDeclarator
-    : aux_rule__directDeclarator_8 kleene_star__directDeclarator_6
-    ;
-
-aux_rule__typeQualifierList_2
-    : typeQualifier
-    ;
-
-typeQualifierList
-    : kleene_plus__typeQualifierList_3
+    : aux_rule__directDeclarator_9 kleene_star__directDeclarator_7
     ;
 
 aux_rule__identifierList_2
@@ -1332,10 +1195,6 @@ declarationList
 
 kleene_plus__structDeclarationList_3
     : aux_rule__structDeclarationList_2+
-    ;
-
-kleene_plus__typeQualifierList_3
-    : aux_rule__typeQualifierList_2+
     ;
 
 kleene_plus__designatorList_3
@@ -1442,14 +1301,14 @@ altnt_block__equalityExpression_3
     | '!='
     ;
 
-altnt_block__typeSpecifier_1
-    : aux_rule__typeSpecifier_4
-    | aux_rule__typeSpecifier_5
-    ;
-
 altnt_block__alignmentSpecifier_1
     : typeName
     | constantExpression
+    ;
+
+altnt_block__typeSpecifier_1
+    : aux_rule__typeSpecifier_4
+    | aux_rule__typeSpecifier_5
     ;
 
 altnt_block__structOrUnionSpecifier_2
@@ -1466,14 +1325,14 @@ altnt_block__pointer_5
     : optional__pointer_1 optional__declarator_1
     ;
 
-altnt_block__directDeclarator_9
-    : aux_rule__directDeclarator_16
-    | aux_rule__directDeclarator_17
+altnt_block__directDeclarator_10
+    : aux_rule__directDeclarator_17
+    | aux_rule__directDeclarator_18
     ;
 
-altnt_block__directDeclarator_10
+altnt_block__directDeclarator_11
     : parameterTypeList
-    | optional__directDeclarator_5
+    | optional__directDeclarator_6
     ;
 
 altnt_block__directAbstractDeclarator_15
@@ -1503,9 +1362,9 @@ altnt_block__enumSpecifier_4
     : optional__structOrUnionSpecifier_1 '{' enumeratorList optional__postfixExpression_5
     ;
 
-altnt_block__directDeclarator_11
-    : aux_rule__directDeclarator_18
-    | aux_rule__directDeclarator_19
+altnt_block__directDeclarator_12
+    : aux_rule__directDeclarator_19
+    | aux_rule__directDeclarator_20
     ;
 
 altnt_block__iterationStatement_7
@@ -1533,7 +1392,7 @@ declarationSpecifier
     | '_Thread_local'
     | 'auto'
     | 'register'
-    | typeSpecifier
+    | typeSpecifierWithAttrList
     | typeQualifier
     | 'inline'
     | '_Noreturn'
@@ -1594,7 +1453,7 @@ altnt_block__typeSpecifier_2
     ;
 
 altnt_block__specifierQualifierList_3
-    : typeSpecifier
+    : typeSpecifierWithAttrList
     | typeQualifier
     ;
 
@@ -1603,8 +1462,8 @@ altnt_block__pointer_8
     | '^'
     ;
 
-altnt_block__directDeclarator_12
-    : optional__directDeclarator_2
+altnt_block__directDeclarator_13
+    : optional__directDeclarator_3
     | '*'
     ;
 
@@ -1693,16 +1552,16 @@ aux_rule__postfixExpression_12
     : altnt_block__postfixExpression_7 Identifier
     ;
 
-aux_rule__directDeclarator_13
-    : '[' altnt_block__directDeclarator_9 ']'
-    ;
-
 aux_rule__directDeclarator_14
-    : '(' altnt_block__directDeclarator_10 ')'
+    : '[' altnt_block__directDeclarator_10 ']'
     ;
 
 aux_rule__directDeclarator_15
-    : '(' declarator ')'
+    : '(' altnt_block__directDeclarator_11 ')'
+    ;
+
+aux_rule__directDeclarator_16
+    : '(' optional__typeSpecifierWithAttrList_1 declarator ')'
     ;
 
 aux_rule__directAbstractDeclarator_21
@@ -1761,20 +1620,20 @@ aux_rule__enumSpecifier_6
     : altnt_block__enumSpecifier_4 '}'
     ;
 
-aux_rule__directDeclarator_16
-    : altnt_block__directDeclarator_11 assignmentExpression
+aux_rule__directDeclarator_17
+    : altnt_block__directDeclarator_12 assignmentExpression
     ;
 
-aux_rule__directDeclarator_17
-    : optional__pointer_1 altnt_block__directDeclarator_12
+aux_rule__directDeclarator_18
+    : optional__pointer_1 altnt_block__directDeclarator_13
     ;
 
 aux_rule__directAbstractDeclarator_25
-    : optional__pointer_1 optional__directDeclarator_2
+    : optional__pointer_1 optional__directDeclarator_3
     ;
 
 aux_rule__directAbstractDeclarator_26
-    : altnt_block__directDeclarator_11 assignmentExpression
+    : altnt_block__directDeclarator_12 assignmentExpression
     ;
 
 aux_rule__labeledStatement_2
@@ -1789,11 +1648,11 @@ aux_rule__jumpStatement_5
     : 'goto' altnt_block__jumpStatement_3
     ;
 
-aux_rule__directDeclarator_18
+aux_rule__directDeclarator_19
     : 'static' optional__pointer_1
     ;
 
-aux_rule__directDeclarator_19
+aux_rule__directDeclarator_20
     : typeQualifierList 'static'
     ;
 

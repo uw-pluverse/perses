@@ -31,7 +31,7 @@ class PnfSolidityParserFacadeTest {
   fun test() {
     // Does not crash.
     facade.parseFile(
-      Paths.get("test/org/perses/benchmark_toys/solidity/hello.sol")
+      Paths.get("test/org/perses/benchmark_toys/solidity/hello.sol"),
     )
   }
 }

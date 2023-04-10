@@ -40,9 +40,9 @@ class MultiAltBlockExtractionPassTest {
                 '**' 'test' | 
                 '*' 'test' 
                 ;
-      """.trimIndent()
+      """.trimIndent(),
     )
-    val processedGrammar = pass.process(origGrammar)
+    val processedGrammar = pass.processParserGrammar(origGrammar, lexerGrammar = null)
     val alts = processedGrammar.parserRules.find {
       it.ruleNameHandle.ruleName == "altnt_block__argument_1"
     }!!.body as PersesAlternativeBlockAst
@@ -58,9 +58,9 @@ class MultiAltBlockExtractionPassTest {
     val origGrammar = createPersesGrammarFromString(
       """
       s : a c d | a b d | a e d;
-      """.trimIndent()
+      """.trimIndent(),
     )
-    val processedGrammar = pass.process(origGrammar)
+    val processedGrammar = pass.processParserGrammar(origGrammar, lexerGrammar = null)
     val auxRuleName = computeAltblockRuleName("s_1")
     /*
      * DO NOT MODIFY THE ORDER OF ALTERNATIVES.
@@ -73,11 +73,11 @@ class MultiAltBlockExtractionPassTest {
       """
       s : a $auxRuleName d;
       $auxRuleName : c | b | e; 
-      """.trimIndent()
+      """.trimIndent(),
     )
     GrammarTestingUtility.checkWithGoldenGrammar(
       processedGrammar.sourceCode,
-      goldenGrammar.sourceCode
+      goldenGrammar.sourceCode,
     )
   }
 }

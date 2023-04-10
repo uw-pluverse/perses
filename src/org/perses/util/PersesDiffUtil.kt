@@ -23,6 +23,6 @@ object PersesDiffUtil {
   fun <T> diff(
     main: List<T>,
     other: List<T>,
-    equalizer: (T, T) -> Boolean
+    equalizer: (T, T) -> Boolean,
   ) = DiffUtils.diff(main, other, equalizer)
 }

@@ -2,6 +2,8 @@
 // DO NOT MODIFY.
 grammar test_grammar_9;
 
+
+
 start
     : ('A' | 'B') kleene_plus__start_1 kleene_star__start_2 optional__start_4
     ;

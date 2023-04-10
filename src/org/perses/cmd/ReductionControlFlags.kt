@@ -17,9 +17,11 @@
 package org.perses.cmd
 
 import com.beust.jcommander.Parameter
+import com.google.common.flogger.FluentLogger
 import org.perses.program.EnumFormatControl
 import org.perses.util.cmd.CommonCmdOptionGroupOrder
 import org.perses.util.cmd.ICommandLineFlags
+import org.perses.util.ktWarning
 
 class ReductionControlFlags : ICommandLineFlags {
   @JvmField
@@ -27,14 +29,14 @@ class ReductionControlFlags : ICommandLineFlags {
     names = ["--fixpoint"],
     description = "iterative reduction till fixpoint",
     arity = 1,
-    order = CommonCmdOptionGroupOrder.REDUCTION_CONTROL + 0
+    order = CommonCmdOptionGroupOrder.REDUCTION_CONTROL + 0,
   )
   var fixpoint = true
 
   @Parameter(
     names = ["--threads"],
     description = "Number of reduction threads: a positive integer, or 'auto'.",
-    order = CommonCmdOptionGroupOrder.REDUCTION_CONTROL + 1
+    order = CommonCmdOptionGroupOrder.REDUCTION_CONTROL + 1,
   )
   private var numOfThreads = "auto"
 
@@ -42,21 +44,40 @@ class ReductionControlFlags : ICommandLineFlags {
     names = ["--code-format"],
     description = "The format of the reduced program.",
     arity = 1,
-    order = CommonCmdOptionGroupOrder.REDUCTION_CONTROL + 2
+    order = CommonCmdOptionGroupOrder.REDUCTION_CONTROL + 2,
   )
   var codeFormat: EnumFormatControl? = null
 
+  @Parameter(
+    names = ["--non-deletion-iteration-limit"],
+    description = "The maximum number of continuous non-deletion iterations allowed",
+    hidden = true,
+  )
+  var nonDeletionIterationLimit = 1000
+
   override fun validate() {
     if ("auto" != numOfThreads) {
-      check(numOfThreads.toInt() > 0) { numOfThreads }
+      val num = numOfThreads.toInt()
+      check(num > 0) { numOfThreads }
+      if (num > AVAILABLE_PROCESSORS) {
+        logger.ktWarning {
+          "The num of threads $num is greater than the available processors $AVAILABLE_PROCESSORS."
+        }
+      }
     }
   }
 
   fun getNumOfThreads(): Int {
     return if ("auto" == numOfThreads) {
-      Runtime.getRuntime().availableProcessors()
+      AVAILABLE_PROCESSORS
     } else {
       numOfThreads.toInt()
     }
+  }
+
+  companion object {
+    val logger = FluentLogger.forEnclosingClass()
+
+    private val AVAILABLE_PROCESSORS = Runtime.getRuntime().availableProcessors()
   }
 }

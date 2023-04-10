@@ -38,7 +38,7 @@ class YamlParserFacadeStubTemplate(
   grammarName,
   parserFile,
   lexerFile,
-  parserFacadeClassSimpleName, tokenNamesOfIdentifiers
+  parserFacadeClassSimpleName, tokenNamesOfIdentifiers,
 ) {
 
   override fun createLanguageKind(): String {

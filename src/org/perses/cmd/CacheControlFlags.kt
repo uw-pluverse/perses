@@ -30,7 +30,7 @@ class CacheControlFlags : ICommandLineFlags {
     description = "Enable query caching for test script executions.",
     arity = 1,
     converter = QueryCachingControlConverter::class,
-    order = CommonCmdOptionGroupOrder.CACHE_CONTROL + 0
+    order = CommonCmdOptionGroupOrder.CACHE_CONTROL + 0,
   )
   var queryCaching = EnumQueryCachingControl.AUTO
 
@@ -39,7 +39,7 @@ class CacheControlFlags : ICommandLineFlags {
     description = "Enable caching for edits performed between two successful reductions.",
     arity = 1,
     order = CommonCmdOptionGroupOrder.CACHE_CONTROL + 1,
-    hidden = true
+    hidden = true,
   )
   var nodeActionSetCaching = true
 
@@ -53,7 +53,7 @@ class CacheControlFlags : ICommandLineFlags {
       "Refresh threshold requires an integer input ranging [0, 100]. " +
       "e.g. 0 represents 0%, 85 represents 85%.",
     order = CommonCmdOptionGroupOrder.CACHE_CONTROL + 2,
-    hidden = true
+    hidden = true,
   )
   var queryCacheRefreshThreshold = 0 // Represent 0/100 = 0%
 
@@ -87,7 +87,7 @@ class CacheControlFlags : ICommandLineFlags {
     override fun convert(flagValue: String?): EnumQueryCachingControl {
       return EnumQueryCachingControl.convert(flagValue!!)
         ?: throw ParameterException(
-          "Cannot convert '$flagValue' to an instanceof ${EnumQueryCachingControl::class}"
+          "Cannot convert '$flagValue' to an instanceof ${EnumQueryCachingControl::class}",
         )
     }
   }

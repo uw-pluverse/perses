@@ -32,7 +32,7 @@ class IndirectRightRecursionEliminationPass : AbstractIndirectRecursionEliminati
 
   @VisibleForTesting
   public override fun getRuleRefToInline(
-    def: AbstractPersesRuleElement
+    def: AbstractPersesRuleElement,
   ): RuleNameHandle? {
     return getFirstOrLastRuleRef(def, /*seekingFirst=*/false)
   }
@@ -40,7 +40,7 @@ class IndirectRightRecursionEliminationPass : AbstractIndirectRecursionEliminati
   override fun inlineRuleRefIntoSequence(
     originalSequence: PersesSequenceAst,
     toInline: AbstractPersesRuleElement,
-    newSeqBuilder: ImmutableList.Builder<AbstractPersesRuleElement>
+    newSeqBuilder: ImmutableList.Builder<AbstractPersesRuleElement>,
   ) {
     check(originalSequence.lastChild.tag === AstTag.RULE_REF)
     val size = originalSequence.childCount

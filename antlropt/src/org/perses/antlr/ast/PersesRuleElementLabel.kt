@@ -26,7 +26,7 @@ import java.io.PrintStream
 class PersesRuleElementLabel(
   private val label: String,
   private val operator: String,
-  private val child: AbstractPersesRuleElement
+  private val child: AbstractPersesRuleElement,
 ) : AbstractPersesRuleElement() {
 
   init {
@@ -50,7 +50,7 @@ class PersesRuleElementLabel(
   override val tag = AstTag.RULE_ELEMENT_LABEL
 
   override fun createWithNewChildren(
-    newChildren: List<AbstractPersesRuleElement>
+    newChildren: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     check(newChildren.size == 1)
     return PersesRuleElementLabel(label, operator, newChildren[0])

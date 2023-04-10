@@ -31,7 +31,7 @@ class HDDReducer(reducerContext: ReducerContext) :
 
   override fun createTreeEditListByDisablingPartition(
     partition: Partition,
-    tree: SparTree
+    tree: SparTree,
   ): List<AbstractSparTreeEdit<*>> {
     val actionSet = createNodeDeletionActionSetFor(partition, "HDD")
     if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
@@ -47,7 +47,11 @@ class HDDReducer(reducerContext: ReducerContext) :
     @JvmField
     val META: ReducerAnnotation = object : ReducerAnnotation() {
 
-      override val deterministic = true
+      override val deterministic: Boolean
+        get() = true
+
+      override val reductionResultSizeTrend: ReductionResultSizeTrend
+        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
 
       override fun shortName(): String {
         return NAME

@@ -42,7 +42,7 @@ object GrammarTestingUtility {
   @JvmStatic
   fun loadGrammarFromString(antlrGrammarContent: String): PersesGrammar {
     return PersesAstBuilder(
-      AntlrGrammarParser.parseRawGrammarASTFromString(antlrGrammarContent)
+      AntlrGrammarParser.parseRawGrammarASTFromString(antlrGrammarContent),
     ).grammar
   }
 
@@ -50,15 +50,15 @@ object GrammarTestingUtility {
   fun loadGrammarFromFile(filenameInTestDataAntlrGrammarFolder: String): PersesGrammar {
     return PersesAstBuilder(
       AntlrGrammarParser.parseRawGrammarASTFromString(
-        readAntlrFileToString(filenameInTestDataAntlrGrammarFolder)
-      )
+        readAntlrFileToString(filenameInTestDataAntlrGrammarFolder),
+      ),
     ).grammar
   }
 
   @JvmStatic
   fun loadGrammarFromFile(path: Path): PersesGrammar {
     return PersesAstBuilder(
-      AntlrGrammarParser.parseRawGrammarASTFromString(path.readText())
+      AntlrGrammarParser.parseRawGrammarASTFromString(path.readText()),
     ).grammar
   }
 
@@ -122,7 +122,7 @@ object GrammarTestingUtility {
 
   @JvmStatic
   fun getSortedSccList(
-    graph: RuleTransitionGraph
+    graph: RuleTransitionGraph,
   ): List<Graph<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement>> {
     return graph.computeSccSet().asSequence().sortedWith(GraphOrder()).toList()
   }
@@ -135,7 +135,7 @@ object GrammarTestingUtility {
   }
 
   fun toSortedVertices(
-    vertices: Set<RuleNameRegistry.RuleNameHandle>
+    vertices: Set<RuleNameRegistry.RuleNameHandle>,
   ): List<RuleNameRegistry.RuleNameHandle> {
     return vertices.stream()
       .sorted(Comparator.comparingInt(RuleNameRegistry.RuleNameHandle::id))
@@ -145,7 +145,7 @@ object GrammarTestingUtility {
   class GraphOrder : Comparator<Graph<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement>> {
     override fun compare(
       o1: Graph<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement>,
-      o2: Graph<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement>
+      o2: Graph<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement>,
     ): Int {
       val v1 = toSortedVertices(o1.vertexSet())
       val v2 = toSortedVertices(o2.vertexSet())
@@ -174,10 +174,10 @@ object GrammarTestingUtility {
     companion object {
       private fun compareVertices(
         v1: List<RuleNameRegistry.RuleNameHandle>,
-        v2: List<RuleNameRegistry.RuleNameHandle>
+        v2: List<RuleNameRegistry.RuleNameHandle>,
       ): Int {
         return Comparators.lexicographical(
-          Comparator.comparingInt(RuleNameRegistry.RuleNameHandle::id)
+          Comparator.comparingInt(RuleNameRegistry.RuleNameHandle::id),
         )
           .compare(v1, v2)
       }

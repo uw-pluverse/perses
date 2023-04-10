@@ -18,6 +18,8 @@ kt_jvm_test(
     shard_count = 7,
     test_class = "org.perses.grammar.rust.PnfRustParserFacadeTest",
     deps = [
+        "//:antlr_runtime",
+        "//:antlr_tool",
         "//:flogger",
         "//:guava",
         "//:kotlin_stdib",
@@ -26,8 +28,6 @@ kt_jvm_test(
         "//src/org/perses/grammar/rust:parser_facade",
         "//test/org/perses:test_util",
         "//test/org/perses/program:LanguageKindTestUtil",
-        "@maven//:org_antlr_antlr4",
-        "@maven//:org_antlr_antlr4_runtime",
     ],
 )
 

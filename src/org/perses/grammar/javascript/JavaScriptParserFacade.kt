@@ -26,11 +26,13 @@ import org.perses.grammar.AbstractDefaultParserFacade
 class JavaScriptParserFacade : AbstractDefaultParserFacade<JavaScriptLexer, PnfJavaScriptParser>(
   LanguageJavaScript,
   createSeparateAntlrGrammar(
-    "PnfJavaScriptParser.g4", "JavaScriptLexer.g4", JavaScriptParserFacade::class.java
+    "PnfJavaScriptParser.g4",
+    "JavaScriptLexer.g4",
+    JavaScriptParserFacade::class.java,
   ),
   JavaScriptLexer::class.java,
   PnfJavaScriptParser::class.java,
-  ImmutableIntArray.of(JavaScriptLexer.Identifier)
+  ImmutableIntArray.of(JavaScriptLexer.Identifier),
 ) {
 
   override fun createLexer(inputStream: CharStream): JavaScriptLexer {

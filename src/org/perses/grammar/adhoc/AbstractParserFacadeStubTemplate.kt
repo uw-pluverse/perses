@@ -28,12 +28,12 @@ abstract class AbstractParserFacadeStubTemplate(
   val parserFile: Path,
   val lexerFile: Path?,
   val parserFacadeClassSimpleName: String,
-  tokenNamesOfIdentifiers: List<String>
+  tokenNamesOfIdentifiers: List<String>,
 ) : AbstractGrammarStub(
   packageName,
   parserClassSimpleName,
   lexerClassSimpleName,
-  startRuleName
+  startRuleName,
 ) {
 
   override fun classSimpleName() = parserFacadeClassSimpleName

@@ -18,6 +18,7 @@ package org.perses.spartree
 
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
+import org.perses.util.Util.lazyAssert
 import org.perses.util.toImmutableMap
 
 abstract class AbstractActionSet<ACTION : AbstractTreeEditAction>
@@ -29,8 +30,8 @@ protected constructor(val actions: ImmutableList<ACTION>, val actionsDescription
 
   init {
     checkSortedAndDistinct(actions)
-    assert(actions.size == targetToActionMap.size)
-    assert(actions.size > 0)
+    lazyAssert { actions.size == targetToActionMap.size }
+    lazyAssert { actions.size > 0 }
   }
 
   val targets: ImmutableSet<AbstractSparTreeNode>

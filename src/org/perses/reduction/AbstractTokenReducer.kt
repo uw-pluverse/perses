@@ -19,12 +19,15 @@ package org.perses.reduction
 import com.google.common.collect.ImmutableList
 import org.perses.antlr.RuleType
 import org.perses.delta.AbstractPropertyTestResultWithPayload
-import org.perses.delta.IPropertyTest
+import org.perses.delta.IPropertyTester
 import org.perses.delta.PristineDeltaDebugger
 import org.perses.delta.PropertyTestResultWithPayload
 import org.perses.delta.SkipPropertyTestResult
+import org.perses.program.LanguageKind
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.PrinterRegistry
+import org.perses.reduction.TestScriptExecutorService.AbstractOutputManagerCreatorResult.EmptyResult
+import org.perses.reduction.TestScriptExecutorService.AbstractOutputManagerCreatorResult.ProceedResult
 import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
 import org.perses.reduction.TestScriptExecutorService.Companion.IDENTITY_POST_CHECK
 import org.perses.reduction.cache.AbstractCacheRetrievalResult
@@ -38,6 +41,7 @@ import org.perses.spartree.NodeDeletionTreeEdit
 import org.perses.spartree.SparTree
 import org.perses.spartree.SparTreeSimplifier
 import org.perses.util.Util
+import org.perses.util.Util.lazyAssert
 import java.util.LinkedList
 
 /** The base class for reducer. Both hdd and perses algorithms extend this class.
@@ -47,10 +51,10 @@ import java.util.LinkedList
  */
 abstract class AbstractTokenReducer protected constructor(
   val redcucerAnnotation: ReducerAnnotation,
-  reducerContext: ReducerContext
-) : AbstractReducer<TokenizedProgram, TokenReductionIOManager>(
+  reducerContext: ReducerContext,
+) : AbstractReducer<TokenizedProgram, LanguageKind, TokenReductionIOManager>(
   reducerContext.ioManager,
-  reducerContext.executorService
+  reducerContext.executorService,
 ) {
 
   @JvmField
@@ -66,118 +70,17 @@ abstract class AbstractTokenReducer protected constructor(
   @JvmField
   protected val actionSetProfiler = reducerContext.actionSetProfiler
 
-  protected fun testAllTreeEditsAndReturnTheBest(
-    editList: List<AbstractSparTreeEdit<*>>
-  ): TreeEditWithItsResult? {
-    if (editList.isEmpty()) {
-      return null
-    }
-    val futureList = asyncApplyEditsInOrderOfProgramSizeFromLeast(editList)
-    val best = analyzeResultsAndGetBest(futureList)
-    assert(
-      best == null ||
-        configuration.parserFacade.isSourceCodeParsable(
-          PrinterRegistry.getPrinter(
-            ioManager.getDefaultProgramFormat()
-          ).print(best.edit.program).sourceCode
-        )
-    )
-    return best?.let { TreeEditWithItsResult(it.edit, it.result) }
-  }
-
-  private fun isFutureListSortedFromLeastProgramSizeToGreatest(
-    futureList: List<FutureExecutionResultInfo>
-  ): Boolean {
-    val size = futureList.size
-    if (size < 2) {
-      return true
-    }
-    for (i in 1 until size) {
-      val prev = futureList[i - 1]
-      val current = futureList[i]
-      if (prev.program.program.tokenCount() > current.program.program.tokenCount()) {
-        return false
-      }
-    }
-    return true
-  }
-
-  protected fun analyzeResultsAndGetBest(
-    futureList: List<FutureExecutionResultInfo>
-  ): FutureExecutionResultInfo? {
-    assert(isFutureListSortedFromLeastProgramSizeToGreatest(futureList)) { futureList }
-    var best: FutureExecutionResultInfo? = null
-    for (executionResultInfo in futureList) {
-      if (best != null) {
-        // The best is already found, then it is safe to cancel all the remaining testing tasks, as
-        // none of these tasks will beat the current best one. Moreover, the tasks are not useful
-        // for future cache testing, as all future programs will be smaller than the programs
-        // represented by these tasks.
-        val start = System.currentTimeMillis()
-        executionResultInfo.cancel()
-        val duration = (System.currentTimeMillis() - start).toInt()
-        listenerManager.onTestScriptExecutionCancelled(
-          executionResultInfo.program.program, executionResultInfo.edit, duration
-        )
-        continue
-      }
-      val testResult = executionResultInfo.result
-      cacheTestResultIfNotInteresting(executionResultInfo.program, executionResultInfo.result)
-      listenerManager.onTestScriptExecution(
-        testResult, executionResultInfo.program.program, executionResultInfo.edit
-      )
-      if (testResult.isInteresting) {
-        best = executionResultInfo
-      }
-    }
-    return best
-  }
-
-  private fun cacheTestResultIfNotInteresting(
-    program: AbstractCacheRetrievalResult.CacheMiss,
-    result: PropertyTestResult
-  ) {
-    if (result.isNotInteresting) {
-      queryCache.addResult(program, result)
-    }
-  }
-
-  private fun asyncApplyEditsInOrderOfProgramSizeFromLeast(
-    editList: List<AbstractSparTreeEdit<*>>
-  ): ArrayList<FutureExecutionResultInfo> {
-    val futureList = ArrayList<FutureExecutionResultInfo>(editList.size)
-    val visitedCacheKeys = HashSet<AbstractProgramEncoding<*>>()
-    editList.asSequence().sorted().forEach { edit: AbstractSparTreeEdit<*> ->
-      val outputManager = ioManager.createOutputManager(edit.program)
-      val program = edit.program
-      val cachedResult = queryCache.getCachedResult(program)
-      if (cachedResult.hasEncoding() && !visitedCacheKeys.add(cachedResult.getEncodingOrFail())) {
-        // This program has been added before.
-        return@forEach
-      }
-      if (cachedResult.isHit()) {
-        val testResult = cachedResult.asCacheHit().testResult
-        assert(!testResult.isInteresting) { "It should be failure all the time." }
-        listenerManager.onTestResultCacheHit(testResult, program, edit)
-        return@forEach
-      }
-      val future = testProgramAsynchronously(
-        ALWAYS_TRUE_PRECHECK,
-        IDENTITY_POST_CHECK,
-        outputManager
-      )
-      futureList.add(FutureExecutionResultInfo(edit, cachedResult.asCacheMiss(), future))
-    }
-    return futureList
-  }
+  private var used = false
 
   fun reduce(state: FixpointReductionState) {
+    check(!used) { "A reducer is not designed to be reused." }
+    used = true
     val sparTree = state.sparTree
-    assert(
+    lazyAssert {
       SparTreeSimplifier.assertSingleEntrySingleExitPathProperty(
-        sparTree.getTreeRegardlessOfParsability().root
+        sparTree.getTreeRegardlessOfParsability().root,
       )
-    )
+    }
     state.fixpointIterationStartEvent
 
     val loggingListener = object : AbstractSparTreeEditListener() {
@@ -186,8 +89,8 @@ abstract class AbstractTokenReducer protected constructor(
           state.fixpointIterationStartEvent.createBestProgramUpdatedEvent(
             currentTimeMillis = System.currentTimeMillis(),
             programSizeBefore = event.programSizeBefore,
-            programSizeAfter = event.program.tokenCount()
-          )
+            programSizeAfter = event.program.tokenCount(),
+          ),
         )
       }
     }
@@ -200,6 +103,131 @@ abstract class AbstractTokenReducer protected constructor(
   }
 
   protected abstract fun internalReduce(fixpointReductionState: FixpointReductionState)
+
+  protected fun testAllTreeEditsAndReturnTheBest(
+    editList: List<AbstractSparTreeEdit<*>>,
+  ): TreeEditWithItsResult? {
+    if (editList.isEmpty()) {
+      return null
+    }
+    val futureList = asyncApplyEditsInOrderOfProgramSizeFromLeast(editList)
+    val best = analyzeResultsAndGetBest(futureList)
+    lazyAssert {
+      best == null ||
+        configuration.parserFacade.isSourceCodeParsable(
+          PrinterRegistry.getPrinter(
+            ioManager.getDefaultProgramFormat(),
+          ).print(best.payload!!.edit.program).sourceCode,
+        )
+    }
+    return best?.let { TreeEditWithItsResult(it.payload!!.edit, it.getWithTimeoutWarnings()) }
+  }
+
+  private fun isFutureListSortedFromLeastProgramSizeToGreatest(
+    futureList: List<TestScriptExecResult<EditTestPayload>>,
+  ): Boolean {
+    val size = futureList.size
+    if (size < 2) {
+      return true
+    }
+    var prevTokenCount = Integer.MIN_VALUE
+    futureList.forEach {
+      it.payload?.let { current ->
+        val curTokenCount = current.program.program.tokenCount()
+        if (prevTokenCount > curTokenCount) {
+          return false
+        }
+        prevTokenCount = curTokenCount
+      }
+    }
+    return true
+  }
+
+  protected fun analyzeResultsAndGetBest(
+    futureList: List<TestScriptExecResult<EditTestPayload>>,
+  ): TestScriptExecResult<EditTestPayload>? {
+    lazyAssert({ isFutureListSortedFromLeastProgramSizeToGreatest(futureList) }) { futureList }
+    var best: TestScriptExecResult<EditTestPayload>? = null
+    val iterator = futureList.iterator()
+    while (iterator.hasNext()) {
+      lazyAssert { best == null }
+      val future = iterator.next()
+      val testResult = future.getWithTimeoutWarnings()
+      future.payload?.let { payload ->
+        cacheTestResultIfNotInteresting(payload.program, testResult)
+        listenerManager.onTestScriptExecution(
+          testResult,
+          payload.program.program,
+          payload.edit,
+        )
+      }
+      if (testResult.isInteresting) {
+        best = future
+        break
+      }
+    }
+    while (iterator.hasNext()) {
+      val future = iterator.next()
+      lazyAssert { best != null }
+      // The best is already found, then it is safe to cancel all the remaining testing tasks, as
+      // none of these tasks will beat the current best one. Moreover, the tasks are not useful
+      // for future cache testing, as all future programs will be smaller than the programs
+      // represented by these tasks.
+      val start = System.currentTimeMillis()
+      future.cancelWithInterruption()
+      val duration = (System.currentTimeMillis() - start).toInt()
+      future.payload?.let { payload ->
+        listenerManager.onTestScriptExecutionCancelled(
+          payload.program.program,
+          payload.edit,
+          duration,
+        )
+      }
+    }
+    return best
+  }
+
+  private fun cacheTestResultIfNotInteresting(
+    program: AbstractCacheRetrievalResult.CacheMiss,
+    result: PropertyTestResult,
+  ) {
+    if (result.isNotInteresting) {
+      queryCache.addResult(program, result)
+    }
+  }
+
+  private fun asyncApplyEditsInOrderOfProgramSizeFromLeast(
+    editList: List<AbstractSparTreeEdit<*>>,
+  ): List<TestScriptExecResult<EditTestPayload>> {
+    val visitedCacheKeys = Util.createConcurrentSet<AbstractProgramEncoding<*>>()
+    return editList
+      .asSequence()
+      .sorted()
+      .map { edit ->
+        executorService.testProgramAsync(
+          ALWAYS_TRUE_PRECHECK,
+          IDENTITY_POST_CHECK,
+        ) {
+          val program = edit.program
+          val cachedResult = queryCache.getCachedResult(program)
+          if (cachedResult.hasEncoding() &&
+            !visitedCacheKeys.add(cachedResult.getEncodingOrFail())
+          ) {
+            // This program has been added before.
+            EmptyResult()
+          } else if (cachedResult.isHit()) {
+            val testResult = cachedResult.asCacheHit().testResult
+            lazyAssert({ !testResult.isInteresting }) { "It should be failure all the time." }
+            listenerManager.onTestResultCacheHit(testResult, program, edit)
+            // TODO(cnsun): need to use StopResult here.
+            EmptyResult()
+          } else {
+            val outputManager = ioManager.createOutputManager(program)
+            ProceedResult(outputManager, EditTestPayload(edit, cachedResult.asCacheMiss()))
+          }
+        }
+      }.toList()
+  }
 
   protected fun canBeEpsilon(nodeForTest: AbstractSparTreeNode): Boolean {
     var node: AbstractSparTreeNode? = nodeForTest
@@ -225,7 +253,7 @@ abstract class AbstractTokenReducer protected constructor(
         when (parentNodeType) {
           RuleType.KLEENE_PLUS, RuleType.KLEENE_STAR -> true
           RuleType.OPTIONAL -> throw RuntimeException(
-            "Optional should have a single child. " + node.printTreeStructure()
+            "Optional should have a single child. " + node.printTreeStructure(),
           )
           else -> false
         }
@@ -239,14 +267,13 @@ abstract class AbstractTokenReducer protected constructor(
   protected class Payload(
     val tree: SparTree,
     val edit: NodeDeletionTreeEdit,
-    val cacheResult: AbstractCacheRetrievalResult
+    val cacheResult: AbstractCacheRetrievalResult,
   )
 
   protected fun createPristineDeltaDebugger(
     input: ImmutableList<AbstractSparTreeNode>,
-    tree: SparTree
+    tree: SparTree,
   ): PristineDeltaDebugger<AbstractSparTreeNode, Payload> {
-
     val onBestUpdateHandler =
       { _: ImmutableList<AbstractSparTreeNode>, payload: Payload ->
         payload.tree.applyEdit(payload.edit)
@@ -254,56 +281,52 @@ abstract class AbstractTokenReducer protected constructor(
 
     fun createNodeDeletionActionSetReverse(
       originalInput: ImmutableList<AbstractSparTreeNode>,
-      input: ImmutableList<AbstractSparTreeNode>
+      input: ImmutableList<AbstractSparTreeNode>,
     ): NodeDeletionActionSet {
       val actionSetBuilder =
         NodeDeletionActionSet.Builder("delta debugger@${input.size}")
       Util.visitDifference(superList = originalInput, subList = input) {
-        assert(!it.isPermanentlyDeleted)
+        lazyAssert { !it.isPermanentlyDeleted }
         actionSetBuilder.deleteNode(it)
       }
       return actionSetBuilder.build()
     }
 
-    val propertyTest = object : IPropertyTest<AbstractSparTreeNode, Payload> {
+    val propertyTest = object : IPropertyTester<AbstractSparTreeNode, Payload> {
 
       override fun testProperty(
         currentBest: ImmutableList<AbstractSparTreeNode>,
-        candidate: ImmutableList<AbstractSparTreeNode>
+        candidate: ImmutableList<AbstractSparTreeNode>,
       ): AbstractPropertyTestResultWithPayload<Payload> {
-
         val actionSet = createNodeDeletionActionSetReverse(
-          currentBest, candidate
+          currentBest,
+          candidate,
         )
         val treeEdit = tree.createNodeDeletionEdit(actionSet)
         val testProgram = treeEdit.program
         val cachedResult = queryCache.getCachedResult(testProgram)
         if (cachedResult.isHit()) {
           val testResult = cachedResult.asCacheHit().testResult
-          assert(testResult.isNotInteresting) { "Only failed programs can be cached." }
+          lazyAssert({ testResult.isNotInteresting }) { "Only failed programs can be cached." }
           listenerManager.onTestResultCacheHit(testResult, testProgram, treeEdit)
           return SkipPropertyTestResult()
         }
         val payload = Payload(tree, treeEdit, cachedResult)
-        val testTask = testProgramAsynchronously(
+        val testTask = executorService.testProgramAsync(
           ALWAYS_TRUE_PRECHECK,
           IDENTITY_POST_CHECK,
-          ioManager.createOutputManager(testProgram)
-        )
-        val executionResultInfo = FutureExecutionResultInfo(
-          treeEdit,
-          cachedResult.asCacheMiss(),
-          testTask
+          ioManager.createOutputManager(testProgram),
+          EditTestPayload(treeEdit, cachedResult.asCacheMiss()),
         )
         // result is ignored, and will be handled by the delta debugger.
-        analyzeResultsAndGetBest(listOf(executionResultInfo))
-        return PropertyTestResultWithPayload(executionResultInfo.result, payload)
+        analyzeResultsAndGetBest(listOf(testTask))
+        return PropertyTestResultWithPayload(testTask.getWithTimeoutWarnings(), payload)
       }
     }
     return PristineDeltaDebugger(
       input,
       propertyTest,
-      onBestUpdateHandler
+      onBestUpdateHandler,
     )
   }
 

@@ -12,13 +12,22 @@ search space by avoiding generating syntactically invalid programs.
 
 Currently, Perses supports reduction for the following programming languages:
 
-+ C
-+ Rust
-+ Java 8
-+ Go
-+ System Verilog
++ C: [c]
++ Cpp: [cc, cpp, cxx]
++ Rust: [rs]
++ Scala: [scala, sc]
++ Java: [java]
++ JavaScript: [javascript, js]
++ Python3: [py, py3]
++ Go: [go]
++ PHP: [php]
++ Ruby: [rb]
++ SQLite: [sqlite]
++ Solidity: [sol]
++ System_Verilog: [v, sv]
++ SMTLIBv2: [smt2]
 
-Support for other languages is comming soon. 
+Support for other languages is coming soon. 
 
 ### Obtain and Run ###
 

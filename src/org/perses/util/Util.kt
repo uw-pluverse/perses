@@ -17,9 +17,11 @@
 package org.perses.util
 
 import com.google.common.collect.ImmutableList
+import com.google.common.hash.HashCode
 import com.google.common.hash.Hashing
 import com.google.common.io.MoreFiles
 import com.google.common.io.RecursiveDeleteOption
+import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
 import java.nio.charset.StandardCharsets
@@ -33,7 +35,11 @@ import java.nio.file.attribute.BasicFileAttributes
 import java.nio.file.attribute.PosixFilePermission
 import java.util.IdentityHashMap
 import java.util.LinkedList
+import java.util.concurrent.ConcurrentHashMap
 import java.util.function.Predicate
+import java.util.zip.Deflater
+import java.util.zip.DeflaterOutputStream
+import java.util.zip.InflaterOutputStream
 import kotlin.io.path.writeText
 
 object Util {
@@ -46,7 +52,7 @@ object Util {
   @JvmStatic
   fun <T> removeElementsFromLinkedList(
     list: LinkedList<T>?,
-    removalCondition: Predicate<T>
+    removalCondition: Predicate<T>,
   ) {
     if (list == null || list.isEmpty()) {
       return
@@ -67,6 +73,9 @@ object Util {
   }
 
   @JvmStatic
+  fun <T> createConcurrentSet() = ConcurrentHashMap.newKeySet<T>()
+
+  @JvmStatic
   fun <T> removeElementBySwappingLastElement(list: ArrayList<T>, index: Int) {
     require(list.size > 0)
     val last = list.size - 1
@@ -79,7 +88,7 @@ object Util {
   @JvmStatic
   inline fun <T> removeElementsFromList(
     list: ArrayList<T>,
-    criterion: (index: Int, value: T) -> Boolean
+    criterion: (index: Int, value: T) -> Boolean,
   ) {
     if (list.isEmpty()) {
       return
@@ -102,7 +111,7 @@ object Util {
   @JvmStatic
   fun <T> mergeContinuousElementsIntoRegions(
     list: List<T>,
-    equalizer: (T, T) -> Boolean
+    equalizer: (T, T) -> Boolean,
   ): ImmutableList<ImmutableList<T>> {
     if (list.isEmpty()) {
       return ImmutableList.of()
@@ -131,10 +140,10 @@ object Util {
 
   data class NonEmptyInternal(
     val inclusiveStart: Int,
-    val exclusiveEnd: Int
+    val exclusiveEnd: Int,
   ) {
     init {
-      assert(inclusiveStart < exclusiveEnd) {
+      lazyAssert({ inclusiveStart < exclusiveEnd }) {
         "$inclusiveStart, $exclusiveEnd"
       }
     }
@@ -148,12 +157,12 @@ object Util {
   inline fun <T> slideResverseIfSlidable(
     list: List<T>,
     slidingWindowSize: Int,
-    visitor: (NonEmptyInternal) -> Unit
+    visitor: (NonEmptyInternal) -> Unit,
   ) {
     require(slidingWindowSize > 0) { slidingWindowSize }
     for (exclusiveEndIndex in list.size downTo slidingWindowSize) {
       val inclusiveStartIndex = exclusiveEndIndex - slidingWindowSize
-      assert(exclusiveEndIndex > inclusiveStartIndex)
+      lazyAssert({ exclusiveEndIndex > inclusiveStartIndex })
       visitor(NonEmptyInternal(inclusiveStartIndex, exclusiveEndIndex))
     }
   }
@@ -242,7 +251,7 @@ object Util {
       object : SimpleFileVisitor<Path>() {
         override fun preVisitDirectory(
           dir: Path,
-          attrs: BasicFileAttributes
+          attrs: BasicFileAttributes,
         ): FileVisitResult {
           Files.createDirectories(target.resolve(source.relativize(dir)))
           return FileVisitResult.CONTINUE
@@ -253,7 +262,7 @@ object Util {
           Files.copy(file, target.resolve(source.relativize(file)), *options)
           return FileVisitResult.CONTINUE
         }
-      }
+      },
     )
   }
 
@@ -275,7 +284,7 @@ object Util {
 
   private fun globWithFilter(
     dir: Path,
-    regualrFileFilter: (Path) -> Boolean
+    regualrFileFilter: (Path) -> Boolean,
   ): ImmutableList<Path> {
     return Files
       .walk(dir)
@@ -295,8 +304,8 @@ object Util {
 
   @JvmStatic
   fun <T> visitDifference(superList: List<T>, subList: List<T>, visitor: (T) -> Unit) {
-    assert(countDistinctObjects(superList) == superList.size)
-    assert(countDistinctObjects(subList) == subList.size)
+    lazyAssert { countDistinctObjects(superList) == superList.size }
+    lazyAssert { countDistinctObjects(subList) == subList.size }
     var subIndex = 0
     val subSize = subList.size
     for (element in superList) {
@@ -324,9 +333,41 @@ object Util {
     return map.size
   }
 
+  data class SHA512HashCode private constructor(
+    val length: Int,
+    val digest: HashCode,
+  ) {
+    companion object {
+      fun createFromString(string: String) = SHA512HashCode(
+        length = string.length,
+        digest = Hashing.sha512().hashString(string, StandardCharsets.UTF_8),
+      )
+    }
+  }
+
   @JvmStatic
-  fun computeSHA512(string: String): String {
-    return Hashing.sha512().hashString(string, StandardCharsets.UTF_8).toString()
+  fun zipCompress(text: String): ByteArray {
+    val bArray = text.toByteArray(Charsets.UTF_8)
+    val compressor = Deflater(Deflater.BEST_COMPRESSION)
+    val output = ByteArrayOutputStream().use { output ->
+      DeflaterOutputStream(output, compressor).use { dos ->
+        dos.write(bArray)
+        dos.finish()
+      }
+      output.toByteArray()
+    }
+    return output
+  }
+
+  @JvmStatic
+  fun zipDecompress(bArray: ByteArray): ByteArray {
+    return ByteArrayOutputStream().use { output ->
+      InflaterOutputStream(output).use { ios ->
+        ios.write(bArray)
+        ios.finish()
+      }
+      output.toByteArray()
+    }
   }
 
   @JvmStatic
@@ -356,7 +397,7 @@ object Util {
   @JvmStatic
   fun openResourceAsStream(
     resourceName: String,
-    klassUnderSamePkg: Class<*>
+    klassUnderSamePkg: Class<*>,
   ): InputStream {
     val result = klassUnderSamePkg.getResourceAsStream(resourceName)
     return requireNotNull(result) {
@@ -368,12 +409,25 @@ object Util {
   fun copyResource(
     resourceName: String,
     klassUnderSamePkg: Class<*>,
-    destination: Path
+    destination: Path,
   ) {
     openResourceAsStream(resourceName, klassUnderSamePkg).use { resource ->
       Files.newOutputStream(destination).use { output ->
         resource.copyTo(output)
       }
+    }
+  }
+
+  @JvmField
+  val ASSERTION_ENABLED = Util::class.java.desiredAssertionStatus()
+
+  inline fun lazyAssert(test: () -> Boolean) {
+    lazyAssert(test) { "" }
+  }
+
+  inline fun lazyAssert(test: () -> Boolean, message: () -> Any) {
+    if (ASSERTION_ENABLED) {
+      check(test()) { message() }
     }
   }
 }

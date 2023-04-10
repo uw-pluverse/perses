@@ -20,7 +20,7 @@ import org.perses.util.Fraction
 
 data class QueryCacheConfiguration(
   val refreshStepFraction: Fraction,
-  val enableLightweightRefreshing: Boolean
+  val enableLightweightRefreshing: Boolean,
 ) {
 
   companion object {

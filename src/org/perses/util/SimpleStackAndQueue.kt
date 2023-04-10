@@ -19,7 +19,7 @@ package org.perses.util
 import com.google.common.base.MoreObjects
 
 abstract class AbstractStackOrQueue<T, Self : AbstractStackOrQueue<T, Self>>(
-  initialCapacity: Int
+  initialCapacity: Int,
 ) {
 
   protected val deque = if (initialCapacity > 0) {
@@ -56,7 +56,7 @@ abstract class AbstractStackOrQueue<T, Self : AbstractStackOrQueue<T, Self>>(
 }
 
 class SimpleStack<T>(
-  initialCapacity: Int = 0
+  initialCapacity: Int = 0,
 ) : AbstractStackOrQueue<T, SimpleStack<T>>(initialCapacity) {
 
   override fun add(element: T): SimpleStack<T> {
@@ -74,7 +74,7 @@ class SimpleStack<T>(
 }
 
 class SimpleQueue<T>(
-  initialCapacity: Int = 0
+  initialCapacity: Int = 0,
 ) : AbstractStackOrQueue<T, SimpleQueue<T>>(initialCapacity) {
 
   override fun add(element: T): SimpleQueue<T> {

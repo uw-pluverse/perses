@@ -17,6 +17,7 @@
 package org.perses.spartree
 
 import org.perses.util.SimpleStack
+import org.perses.util.Util.lazyAssert
 
 /**
  * A utility class to simplify a spar-tree, e.g., removing empty rule node path, shrink
@@ -71,14 +72,14 @@ object SparTreeSimplifier {
         continue
       }
 
-      assert(current.childCount == 1 && !current.isQuantifierNode)
+      lazyAssert { current.childCount == 1 && !current.isQuantifierNode }
       val parent = current.parent!!
       // Collapsing the SESE path.
       do {
-        assert(isSESENode(current))
+        lazyAssert { isSESENode(current) }
         val childOfCurrent = current.getChild(0)
         val payload = current.payload!!.createByAppending(
-          childOfCurrent.payload!!
+          childOfCurrent.payload!!,
         )
         childOfCurrent.resetParent()
         childOfCurrent.resetPayload()
@@ -87,7 +88,7 @@ object SparTreeSimplifier {
       } while (isSESENode(current))
       worklist.add(current) // The child becomes the frontier.
     }
-    assert(assertSingleEntrySingleExitPathProperty(root)) { root.printTreeStructure() }
+    lazyAssert({ assertSingleEntrySingleExitPathProperty(root) }) { root.printTreeStructure() }
   }
 
   private fun isSESENode(node: AbstractSparTreeNode): Boolean {
@@ -106,7 +107,7 @@ object SparTreeSimplifier {
   }
 
   fun assertSingleEntrySingleExitPathProperty(
-    root: AbstractSparTreeNode
+    root: AbstractSparTreeNode,
   ): Boolean {
     root.forEachChild { immediateChild: AbstractSparTreeNode ->
       immediateChild.preOrderVisit { node: AbstractSparTreeNode ->

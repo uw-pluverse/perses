@@ -23,13 +23,13 @@ import java.io.PrintStream
 class PersesParserRuleAst(
   ruleNameHandle: RuleNameHandle,
   body: AbstractPersesRuleElement,
-  val attributes: ParserRuleAttributes
+  val attributes: ParserRuleAttributes,
 ) : AbstractPersesRuleDefAst(ruleNameHandle, body) {
 
   class ParserRuleAttributes(
     val arguments: PersesActionAst?,
     val returns: PersesActionAst?,
-    val locals: PersesActionAst?
+    val locals: PersesActionAst?,
   ) {
 
     fun toSourceCode(stream: PrintStream?) {

@@ -23,10 +23,10 @@ import java.lang.ref.WeakReference
 class ReductionStartEvent(
   currentTimeMillis: Long,
   val tree: WeakReference<AbstractUnmodifiableSparTree>,
-  programSize: Int
+  programSize: Int,
 ) : AbstractStartEvent(
   currentTimeMillis,
-  programSize
+  programSize,
 ) {
 
   private var currentIteration = 0
@@ -35,7 +35,7 @@ class ReductionStartEvent(
 
   fun nextFixpointIteration(
     programSize: Int,
-    reducerClass: AbstractReducerNameAndDesc
+    reducerClass: AbstractReducerNameAndDesc,
   ): FixpointIterationStartEvent {
     check(!ended)
     return FixpointIterationStartEvent(
@@ -43,7 +43,7 @@ class ReductionStartEvent(
       currentTimeMillis = System.currentTimeMillis(),
       programSize = programSize,
       iteration = ++currentIteration,
-      reducerClass = reducerClass
+      reducerClass = reducerClass,
     )
   }
 
@@ -54,7 +54,7 @@ class ReductionStartEvent(
       startEvent = this,
       currentTimeMillis = System.currentTimeMillis(),
       programSize = programSize,
-      countOfTestScriptExecutions = countOfTestScriptExecutions
+      countOfTestScriptExecutions = countOfTestScriptExecutions,
     )
   }
 }

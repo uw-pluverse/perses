@@ -13,10 +13,22 @@ kt_jvm_test(
     ],
 )
 
+kt_jvm_test(
+    name = "RestrictedFutureTest",
+    srcs = [
+        "RestrictedFutureTest.kt",
+    ],
+    deps = [
+        "//:truth",
+        "//src/org/perses/reduction:test_script_executor_service",
+    ],
+)
+
 kt_jvm_library(
     name = "reducer_functional_test_base",
     srcs = ["AbstractReducerFunctionalTest.kt"],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//src/org/perses:command_options",
@@ -26,7 +38,6 @@ kt_jvm_library(
         "//src/org/perses/reduction:reduction_driver",
         "//src/org/perses/util",
         "//src/org/perses/util:auto_deltable_folder",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -105,6 +116,7 @@ genrule(
     ],
     outs = ["query_cache_memory_usage.log"],
     cmd = "java -javaagent:$(location //third_party/memory_measurer:object_explorer) " +
+          " --add-opens java.base/jdk.internal.ref=ALL-UNNAMED " +  # For java 11 and above. Java 8 is not supported.
           " -jar $(location //src/org/perses:perses_deploy.jar) " +
           " --test-script test_data/delta_1/r.sh " +
           " --input-file test_data/delta_1/t.c " +
@@ -132,6 +144,9 @@ java_test(
 kt_jvm_test(
     name = "RegularProgramReductionDriverTest",
     srcs = ["RegularProgramReductionDriverTest.kt"],
+    associates = [
+        "//src/org/perses/reduction:reduction_driver",
+    ],
     data = [
         "//test_data/delta_1",
     ],
@@ -147,7 +162,6 @@ kt_jvm_test(
         "//src/org/perses/program:language_kind",
         "//src/org/perses/reduction:reducer_factory",
         "//src/org/perses/reduction:reduction_configuration",
-        "//src/org/perses/reduction:reduction_driver",
         "//src/org/perses/reduction:test_script",
         "//src/org/perses/reduction:test_script_executor_service",
         "//src/org/perses/reduction/cache:enum_query_caching_control",

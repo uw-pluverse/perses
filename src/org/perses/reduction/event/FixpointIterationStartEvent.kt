@@ -16,6 +16,7 @@
  */
 package org.perses.reduction.event
 
+import org.perses.program.TokenizedProgram
 import org.perses.reduction.AbstractReducerNameAndDesc
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.AbstractUnmodifiableSparTree
@@ -25,13 +26,13 @@ class FixpointIterationStartEvent internal constructor(
   currentTimeMillis: Long,
   programSize: Int,
   val iteration: Int,
-  val reducerClass: AbstractReducerNameAndDesc
+  val reducerClass: AbstractReducerNameAndDesc,
 ) : AbstractStartEvent(currentTimeMillis, programSize) {
 
   fun createEndEvent(
     currentTimeMillis: Long,
     programSize: Int,
-    countOfTestScriptExecutions: Int
+    countOfTestScriptExecutions: Int,
   ): FixpointIterationEndEvent {
     check(!ended)
     ended = true
@@ -39,21 +40,21 @@ class FixpointIterationStartEvent internal constructor(
       startEvent = this,
       currentTimeMillis = currentTimeMillis,
       programSize = programSize,
-      countOfTestScriptExecutions = countOfTestScriptExecutions
+      countOfTestScriptExecutions = countOfTestScriptExecutions,
     )
   }
 
   fun createBestProgramUpdatedEvent(
     currentTimeMillis: Long,
     programSizeBefore: Int,
-    programSizeAfter: Int
+    programSizeAfter: Int,
   ): BestProgramUpdateEvent {
     check(!ended)
     return BestProgramUpdateEvent(
       currentFixpointIteration = this,
       currentTimeMillis = currentTimeMillis,
       programSizeBefore = programSizeBefore,
-      programSizeAfter = programSizeAfter
+      programSizeAfter = programSizeAfter,
     )
   }
 
@@ -61,7 +62,7 @@ class FixpointIterationStartEvent internal constructor(
     currentTimeMillis: Long,
     programSize: Int,
     level: Int,
-    nodeCountOnLevel: Int
+    nodeCountOnLevel: Int,
   ): LevelReductionStartEvent {
     check(!ended)
 
@@ -70,23 +71,21 @@ class FixpointIterationStartEvent internal constructor(
       currentTimeMillis = currentTimeMillis,
       programSize = programSize,
       level = level,
-      nodeCountOnLevel = nodeCountOnLevel
+      nodeCountOnLevel = nodeCountOnLevel,
     )
   }
 
   fun createNodeReductionStartEvent(
     currentTimeMillis: Long,
-    programSize: Int,
-    tree: AbstractUnmodifiableSparTree,
-    node: AbstractSparTreeNode
+    program: TokenizedProgram,
+    node: AbstractSparTreeNode,
   ): NodeReductionStartEvent {
     check(!ended)
     return NodeReductionStartEvent(
       currentFixpointIteration = this,
       currentTimeMillis = currentTimeMillis,
-      programSize = programSize,
-      tree = tree,
-      node = node
+      program = program,
+      node = node,
     )
   }
 
@@ -94,7 +93,7 @@ class FixpointIterationStartEvent internal constructor(
     currentTimeMillis: Long,
     programSize: Int,
     tree: AbstractUnmodifiableSparTree,
-    message: String
+    message: String,
   ): ReductionSkippedEvent {
     check(!ended)
     return ReductionSkippedEvent(
@@ -102,7 +101,7 @@ class FixpointIterationStartEvent internal constructor(
       currentTimeMillis = currentTimeMillis,
       programSize = programSize,
       tree = tree,
-      message = message
+      message = message,
     )
   }
 
@@ -113,14 +112,14 @@ class FixpointIterationStartEvent internal constructor(
   fun createTokenSlicingStartEvent(
     currentTimeMillis: Long,
     programSize: Int,
-    tokenSlicingGranularity: Int
+    tokenSlicingGranularity: Int,
   ): TokenSlicingStartEvent {
     check(!ended)
     return TokenSlicingStartEvent(
       fixpointIterationStartEvent = this,
       currentTimeMillis = currentTimeMillis,
       programSize = programSize,
-      tokenSliceGranularity = tokenSlicingGranularity
+      tokenSliceGranularity = tokenSlicingGranularity,
     )
   }
 }

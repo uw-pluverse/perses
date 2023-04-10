@@ -50,37 +50,37 @@ abstract class AbstractReductionListener {
 
   /** Called on the end of a fixpoint iteration  */
   abstract fun onFixpointIterationEnd(
-    event: FixpointIterationEndEvent
+    event: FixpointIterationEndEvent,
   )
 
   abstract fun onLevelReductionStart(event: LevelReductionStartEvent)
   abstract fun onLevelReductionEnd(event: LevelReductionEndEvent)
   abstract fun onLevelGranularityReductionStart(
-    event: LevelGranularityReductionStartEvent
+    event: LevelGranularityReductionStartEvent,
   )
 
   abstract fun onLevelGranularityReductionEnd(
-    event: LevelGranularityReductionEndEvent
+    event: LevelGranularityReductionEndEvent,
   )
 
   abstract fun onNodeReductionStart(event: NodeReductionStartEvent)
   abstract fun onNodeReductionEnd(event: NodeReductionEndEvent)
   abstract fun onTestScriptExecutionCacheEntryEviction(
-    event: TestScriptExecutionCacheEntryEvictionEvent
+    event: TestScriptExecutionCacheEntryEvictionEvent,
   )
 
   abstract fun onNodeActionSetCacheClearance(
-    event: NodeEditActionSetCacheClearanceEvent
+    event: NodeEditActionSetCacheClearanceEvent,
   )
 
   abstract fun onTestScriptExecution(event: TestScriptExecutionEvent)
   abstract fun onTestResultCacheHit(event: TestResultCacheHitEvent)
   abstract fun onNodeEditActionSetCacheHit(
-    event: NodeEditActionSetCacheHitEvent
+    event: NodeEditActionSetCacheHitEvent,
   )
 
   abstract fun onTestScriptExecutionCancelled(
-    event: TestScriptExecutionCanceledEvent
+    event: TestScriptExecutionCanceledEvent,
   )
 
   abstract fun onSlicingTokensStart(event: TokenSlicingStartEvent)

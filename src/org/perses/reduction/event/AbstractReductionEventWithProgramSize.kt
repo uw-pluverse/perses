@@ -18,18 +18,16 @@ package org.perses.reduction.event
 
 abstract class AbstractReductionEventWithProgramSize(
   currentTimeMillis: Long,
-  val programSize: Int
-) :
-  AbstractReductionEvent(currentTimeMillis) {
+  val programSize: Int,
+) : AbstractReductionEvent(currentTimeMillis) {
 
   abstract fun initialProgramSize(): Int
 }
 
 abstract class AbstractStartEvent(
   currentTimeMillis: Long,
-  programSize: Int
-) :
-  AbstractReductionEventWithProgramSize(currentTimeMillis, programSize) {
+  programSize: Int,
+) : AbstractReductionEventWithProgramSize(currentTimeMillis, programSize) {
 
   protected var ended: Boolean = false
     set(value) {
@@ -41,6 +39,5 @@ abstract class AbstractStartEvent(
 abstract class AbstractEndEvent<StartEventType : AbstractStartEvent>(
   val startEvent: StartEventType,
   currentTimeMillis: Long,
-  programSize: Int
-) :
-  AbstractReductionEventWithProgramSize(currentTimeMillis, programSize)
+  programSize: Int,
+) : AbstractReductionEventWithProgramSize(currentTimeMillis, programSize)

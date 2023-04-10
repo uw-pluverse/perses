@@ -15,6 +15,7 @@ kt_jvm_library(
         "//src/org/perses/grammar:antlr_exception_strategy",
     ],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//antlropt/src/org/perses/antlr/util:antlr_tool_wrapper",
         "//src/org/perses/grammar:antlr_exception_strategy",
@@ -23,6 +24,5 @@ kt_jvm_library(
         "//src/org/perses/program:source_file",
         "//src/org/perses/util",
         "//src/org/perses/util:file_name_content_pair",
-        "@maven//:org_antlr_antlr4",
     ],
 )

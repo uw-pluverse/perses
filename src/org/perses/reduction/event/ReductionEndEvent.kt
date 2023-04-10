@@ -20,7 +20,7 @@ class ReductionEndEvent internal constructor(
   val startEvent: ReductionStartEvent,
   currentTimeMillis: Long,
   programSize: Int,
-  val countOfTestScriptExecutions: Int
+  val countOfTestScriptExecutions: Int,
 ) :
   AbstractReductionEventWithProgramSize(currentTimeMillis, programSize) {
 

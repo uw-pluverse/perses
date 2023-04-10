@@ -32,12 +32,12 @@ java_library(
         ":language_kind",
         ":opt_c_grammar",
         ":orig_c_grammar",
+        "//:antlr_runtime",
         "//:flogger",
         "//:guava",
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/program:language_kind",
-        "@maven//:org_antlr_antlr4_runtime",
     ],
 )
 
@@ -62,12 +62,12 @@ java_library(
     deps = [
         ":language_kind",
         ":pnf_c_grammar",
+        "//:antlr_runtime",
         "//:flogger",
         "//:guava",
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/program:language_kind",
-        "@maven//:org_antlr_antlr4_runtime",
     ],
 )
 

@@ -18,7 +18,7 @@ package org.perses.util.cmd
 
 import org.perses.util.DefaultLoggingConfigurations
 
-abstract class AbstractMain <Cmd : AbstractCommandOptions>(args: Array<String>) {
+abstract class AbstractMain<Cmd : AbstractCommandOptions>(args: Array<String>) {
   companion object {
     init {
       DefaultLoggingConfigurations.configureLogManager("INFO")

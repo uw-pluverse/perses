@@ -25,16 +25,16 @@ import java.nio.file.Path
 import java.util.concurrent.atomic.AtomicInteger
 
 class ReductionFolderManager internal constructor(
-  private val reductionInputs: AbstractReductionInputs,
-  val rootFolder: Path
+  private val reductionInputs: AbstractReductionInputs<*, *>,
+  val rootFolder: Path,
 ) {
   private val sequenceGenerator = AtomicInteger()
 
-  fun createNextFolder(): ReductionFolder {
+  fun createNextFolder(prefix: String = "", postfix: String = ""): ReductionFolder {
     check(!isRootFolderDeleted()) { "The root folder has been deleted." }
     val folderId = sequenceGenerator.getAndIncrement()
     val folderName = Strings.padStart(folderId.toString(), FOLDER_NAME_MIN_LENGTH, '0')
-    return createNamedFolder(folderName)
+    return createNamedFolder(prefix + folderName + postfix)
   }
 
   fun createNamedFolder(folderName: String): ReductionFolder {

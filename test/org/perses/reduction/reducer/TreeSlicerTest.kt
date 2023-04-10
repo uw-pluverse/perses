@@ -35,7 +35,7 @@ class TreeSlicerTest : AbstractReducerFunctionalTest() {
         |int main() {
         |  printf("world\n");
         |}
-      """.trimMargin()
+      """.trimMargin(),
     )
   }
 
@@ -49,7 +49,7 @@ class TreeSlicerTest : AbstractReducerFunctionalTest() {
       | def main(args: Array[String]) =
       |   println("Hello, world")
       |}
-    """.trimMargin()
+      """.trimMargin(),
     )
   }
 }

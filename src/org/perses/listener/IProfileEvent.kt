@@ -23,7 +23,7 @@ interface IProfileEvent : Serializable {
 
   abstract class AbstractProfileEvent protected constructor(
     val programSize: Int,
-    val isStartEvent: Boolean
+    val isStartEvent: Boolean,
   ) :
     IProfileEvent {
     val eventId: Int = ++EVENT_ID_SEQ

@@ -31,10 +31,10 @@ import org.perses.util.toImmutableList
 class AbstractDeltaDebuggerTest {
 
   companion object {
-    val dummyPropertyTest = object : IPropertyTest<String, String> {
+    val dummyPropertyTest = object : IPropertyTester<String, String> {
       override fun testProperty(
         currentBest: ImmutableList<String>,
-        candidate: ImmutableList<String>
+        candidate: ImmutableList<String>,
       ): AbstractPropertyTestResultWithPayload<String> {
         return PropertyTestResultWithPayload(PropertyTestResult.INTERESTING_RESULT, "dummy")
       }
@@ -44,16 +44,15 @@ class AbstractDeltaDebuggerTest {
   }
 
   class DummyDeltaDebugger(
-    input: ImmutableList<String>
-  ) :
-    AbstractDeltaDebugger<String, String>(input, dummyPropertyTest, dummyHandler) {
-    override fun reduce() {
+    input: ImmutableList<String>,
+  ) : AbstractDeltaDebugger<String, String>(input, dummyPropertyTest, dummyHandler) {
+    override fun reduceNonEmptyInput() {
       TODO("Not yet implemented")
     }
   }
 
   @Test
-  fun test_throw_on_invalid_input() {
+  fun testThrowOnInvalidInput() {
     val string = "s"
     Assert.assertThrows(Exception::class.java) {
       DummyDeltaDebugger(ImmutableList.of(string, string))
@@ -61,14 +60,60 @@ class AbstractDeltaDebuggerTest {
   }
 
   @Test
-  fun test_partitionSize() {
+  fun testPartitionSize() {
     assertThat(computePartitionSize(listSize = 2, numberOfPartitions = 2)).isEqualTo(1)
     assertThat(computePartitionSize(listSize = 4, numberOfPartitions = 2)).isEqualTo(2)
     assertThat(computePartitionSize(listSize = 4, numberOfPartitions = 3)).isEqualTo(1)
   }
 
   @Test
-  fun test_partition_2_partitions() {
+  fun testToList() {
+    val base = ImmutableList.of("a", "b", "c")
+
+    PartitionList.Builder(base)
+      .createPartition(0, 1)
+      .createPartition(1, 3)
+      .build().let { list ->
+        list.partitions.first().let {
+          assertThat(it.elements).containsExactly("a")
+          assertThat(list.computeComplementFor(it)).containsExactly("b", "c")
+        }
+      }
+
+    PartitionList.Builder(base)
+      .createPartition(0, 2)
+      .createPartition(2, 3)
+      .build().let { list ->
+        list.partitions.first().let {
+          assertThat(it.elements).containsExactly("a", "b")
+          assertThat(list.computeComplementFor(it)).containsExactly("c")
+        }
+      }
+
+    PartitionList.Builder(base)
+      .createPartition(0, 1)
+      .createPartition(1, 2)
+      .createPartition(2, 3)
+      .build().let { list ->
+        list.partitions[1].let {
+          assertThat(it.elements).containsExactly("b")
+          assertThat(list.computeComplementFor(it)).containsExactly("a", "c")
+        }
+      }
+
+    PartitionList.Builder(base)
+      .createPartition(0, 2)
+      .createPartition(2, 3)
+      .build().let { list ->
+        list.partitions.last().let {
+          assertThat(it.elements).containsExactly("c")
+          assertThat(list.computeComplementFor(it)).containsExactly("a", "b")
+        }
+      }
+  }
+
+  @Test
+  fun testPartition2Partitions() {
     partition("ab", 2).let {
       assertThat(it).containsExactly("a", "b").inOrder()
     }
@@ -84,16 +129,16 @@ class AbstractDeltaDebuggerTest {
   }
 
   private fun partition(s: String, numOfPartitions: Int): ImmutableList<String> {
-    val partitions = partition(s.asSequence().toImmutableList(), numOfPartitions)
-    return partitions
-      .asSequence()
-      .map { it.toList() }
+    val partitionsList = partition(s.asSequence().toImmutableList(), numOfPartitions)
+    return partitionsList
+      .partitions
+      .map { it.elements }
       .map { it.joinToString(separator = "") }
       .toImmutableList()
   }
 
   @Test
-  fun test_partition_3_partitions() {
+  fun testPartition3Partitions() {
     partition("abc", 3).let {
       assertThat(it).containsExactly("a", "b", "c").inOrder()
     }
@@ -106,7 +151,7 @@ class AbstractDeltaDebuggerTest {
   }
 
   @Test
-  fun test_partition_4_partitions() {
+  fun testPartition4Partitions() {
     partition("abcd", 4).let {
       assertThat(it).containsExactly("a", "b", "c", "d").inOrder()
     }
@@ -118,6 +163,22 @@ class AbstractDeltaDebuggerTest {
     }
     partition("abcdefg", 4).let {
       assertThat(it).containsExactly("ab", "cd", "ef", "g").inOrder()
+    }
+  }
+
+  @Test
+  fun testConfigurationEqual() {
+    ConfigurationBasedOnElementSystemIdentity(ImmutableList.of("a")).let {
+      assertThat(it).isEqualTo(it)
+    }
+    ConfigurationBasedOnElementSystemIdentity(ImmutableList.of(String())).let { a ->
+      val b = ConfigurationBasedOnElementSystemIdentity(ImmutableList.of(String()))
+      assertThat(a).isNotEqualTo(b)
+    }
+    val element = String()
+    ConfigurationBasedOnElementSystemIdentity(ImmutableList.of(element)).let { a ->
+      val b = ConfigurationBasedOnElementSystemIdentity(ImmutableList.of(element))
+      assertThat(a).isEqualTo(b)
     }
   }
 }

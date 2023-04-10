@@ -15,6 +15,7 @@ kt_jvm_test(
     data = ["//test_data/java_helloworld"],
     test_class = "org.perses.reduction.reducer.hdd.HddReducerFunctionalTest",
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//src/org/perses/program",
@@ -29,7 +30,6 @@ kt_jvm_test(
         "//test/org/perses:test_util",
         "//test/org/perses/reduction:AbstractPersesReducerTest",
         "//test/org/perses/reduction:reducer_functional_test_base",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -40,6 +40,7 @@ kt_jvm_test(
         "//test_data/delta_3",
     ],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//src/org/perses/program",
@@ -55,6 +56,5 @@ kt_jvm_test(
         "//test/org/perses:test_util",
         "//test/org/perses/reduction:AbstractPersesReducerTest",
         "//test/org/perses/reduction:reducer_functional_test_base",
-        "@maven//:org_antlr_antlr4",
     ],
 )

@@ -19,7 +19,7 @@ package org.perses.antlr.ast
 import com.google.common.collect.ImmutableList
 
 class PersesTokenSpecificationAst(
-  imaginaryTokenNames: ImmutableList<String>
+  imaginaryTokenNames: ImmutableList<String>,
 ) : AbstractPersesEnumAst(KEYWORD_TOKENS, imaginaryTokenNames) {
 
   companion object {

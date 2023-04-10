@@ -24,7 +24,7 @@ abstract class AbstractGrammarStub(
   protected val packageName: String,
   protected val parserClassSimpleName: String,
   protected val lexerClassSimpleName: String,
-  protected val startRuleName: String
+  protected val startRuleName: String,
 ) {
   init {
     require(!packageName.isEmpty() && packageName.trim().equals(packageName)) {
@@ -33,21 +33,21 @@ abstract class AbstractGrammarStub(
 
     require(
       !parserClassSimpleName.isEmpty() &&
-        parserClassSimpleName.trim().equals(parserClassSimpleName)
+        parserClassSimpleName.trim().equals(parserClassSimpleName),
     ) {
       "parserClassSimpleName must non-empty with no trailing/leading spaces"
     }
 
     require(
       !lexerClassSimpleName.isEmpty() &&
-        lexerClassSimpleName.trim().equals(lexerClassSimpleName)
+        lexerClassSimpleName.trim().equals(lexerClassSimpleName),
     ) {
       "lexerClassSimpleName name must non-empty with no trailing/leading spaces"
     }
 
     require(
       !startRuleName.isEmpty() &&
-        startRuleName.trim().equals(startRuleName)
+        startRuleName.trim().equals(startRuleName),
     ) {
       "startRuleName name must non-empty with no trailing/leading spaces"
     }

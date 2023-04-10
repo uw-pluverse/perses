@@ -50,7 +50,7 @@ enum class RuleType(val signaturePrefix: String, val isLexerRule: Boolean) {
   TOKEN("AUX_TOKEN__", isLexerRule = true),
 
   /** The other rules  */
-  OTHER_RULE("aux_rule__", isLexerRule = false);
+  OTHER_RULE("aux_rule__", isLexerRule = false), ;
 
   val isParserRule: Boolean
     get() = !isLexerRule

@@ -1,8 +1,12 @@
-# Files in this directory
+# Benchmark Utility
 
-## benchmark.py
+## run_benchmark.py
 
-Runs the benchmark 
+A tool to benchmark multiple benchmark subjects with multiple reducers,
+and save the result (json format) to `benchmark_results` folder, 
+including performance metrics:
+#queries, runtime, #tokens before/after reduction.
+
 
 ### How to run
 
@@ -13,9 +17,15 @@ cd perses/benchmark
 cd perses/benchmark
 ./init_docker.sh
 ```
-In the docker container, running benchmark.py will build and install different reducers and run reductions 
+Note:
+Ensure the `bazel --version` does not output `0.29.1`.  
+If it does, then `bazel` is not properly installed.  
+Try to trace the stdout for error messages.
+
+
+In the docker container, running `benchmark.py` will automatically build and install different reducers and run reductions 
 ```shell
-./run_benchmark.py
+./run_benchmark.py [args]
 ```
 
 Note: To avoid conflicts on resources, do not use Bazel to compile the project 
@@ -25,7 +35,7 @@ in both host and virtual machine simultaneously.
 Run ```./benchmark.py --help``` for a list of all the arguments
 
 #### --subjects
-Run benchmark(s) on specified bench(es). 
+Run benchmark(s) on specified subject(s). 
 ```
 --subjects clang-27137 gcc-59903
 ```
@@ -61,11 +71,38 @@ Currently the reducers are ran in the following order
 * Chisel
 
 ### Environment Variables
-Perses allows additional environment variables for testing flexibilities.
+Perses allows additional environment variables for testing flexibilities.  
 
-### PERSES_EXTRA_FLAGS
-Provide additional command line arguments to Perses. If not specified, Perses would run default settings.
+##### JVM_FLAGS
+Users can pass in JVM options with `JVM_FLAGS` env variable.  
+Example of setting max heap size,
 ```
-PERSES_EXTRA_FLAGS="--query-caching false --edit-caching false" ./benchmark.py ...
+JVM_FLAGS="-Xmx32G" ./benchmark.py ...
 ```
 
+##### PERSES_FLAGS
+Provide additional command line arguments to Perses. If not specified, Perses would run default settings.  
+Example of disabling caching.
+```
+PERSES_FLAGS="--query-caching false --edit-caching false" ./benchmark.py ...
+```
+
+Note: Both environment variables can be set at the same time.
+```
+JVM_FLAGS="..." PERSES_FLAGS="..." ./benchmark.py ...
+```
+
+## convert_result_to_csv.py
+A tool to convert benchmarking results to `.csv` file for further analysis.
+### How to run
+```shell
+./convert_result_to_csv.py [args]
+```
+### Arguments
+#### --input-directory INPUT_DIRECTORY
+Input directory containing the benchmark results in the type of '*.json'.
+#### --output-flag OUTPUT_FLAG
+Extra flag to append to output csv file name for distinguishing purposes.
+
+
+More details see `./convert_result_to_csv.py --help`j

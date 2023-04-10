@@ -38,7 +38,7 @@ class PhpSparTreeBuildTest {
       echo "finish", "\n";
       ?>
       """.trimIndent(),
-      LanguagePhp
+      LanguagePhp,
     )
     Truth.assertThat(tree.programSnapshot.tokens).isNotEmpty()
   }

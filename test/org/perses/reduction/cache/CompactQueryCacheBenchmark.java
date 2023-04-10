@@ -30,13 +30,19 @@ public class CompactQueryCacheBenchmark {
   public static final int MAX_ITERATIONS = 80;
   final Random random = new Random(1999);
 
-  private void run() throws IOException {
+  private void run() {
     System.out.println("parsing the base program.");
     final TokenizedProgram baseProgram =
         TestUtility.createTokenizedProgramFromFile("test/org/perses/reduction/cache/clang-22704.c");
 
-    final CompactQueryCache cache =
+    final CompactQueryCache rcc =
         new CompactQueryCache(
+            baseProgram,
+            new NullQueryCacheProfiler(),
+            QueryCacheConfiguration.withLightweightRefreshing(new Fraction(0, 100)));
+
+    final RccMemLitQueryCache rccLit =
+        new RccMemLitQueryCache(
             baseProgram,
             new NullQueryCacheProfiler(),
             QueryCacheConfiguration.withLightweightRefreshing(new Fraction(0, 100)));
@@ -52,14 +58,19 @@ public class CompactQueryCacheBenchmark {
       System.out.println("A new iteration..." + totalIterations);
       for (int i = 0; i < 1000; ++i) {
         TokenizedProgram program = randomDelete(currentBaseProgram, random, 200);
-        AbstractCacheRetrievalResult cachedResult = cache.getCachedResult(program);
-        if (cachedResult.isHit()) {
+
+        AbstractCacheRetrievalResult rccCacheResult = rcc.getCachedResult(program);
+        if (rccCacheResult.isHit()) {
           continue;
         }
-        cache.addResult(cachedResult.asCacheMiss(), new PropertyTestResult(1, 0));
+        rcc.addResult(rccCacheResult.asCacheMiss(), new PropertyTestResult(1, 0));
+
+        AbstractCacheRetrievalResult rcclitCacheResult = rccLit.getCachedResult(program);
+        rccLit.addResult(rcclitCacheResult.asCacheMiss(), new PropertyTestResult(1, 0));
       }
       currentBaseProgram = randomDelete(currentBaseProgram, random, 50);
-      cache.evictEntriesLargerThan(currentBaseProgram);
+      rcc.evictEntriesLargerThan(currentBaseProgram);
+      rccLit.evictEntriesLargerThan(currentBaseProgram);
       System.out.println("evict entries....");
     }
     final long end = System.currentTimeMillis();

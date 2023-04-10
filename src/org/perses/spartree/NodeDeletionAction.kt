@@ -19,7 +19,7 @@ package org.perses.spartree
 import com.google.common.base.MoreObjects
 
 class NodeDeletionAction(
-  targetNode: AbstractSparTreeNode
+  targetNode: AbstractSparTreeNode,
 ) : AbstractTreeEditAction(targetNode) {
 
   override fun internalCompareTo(o: AbstractTreeEditAction): Int {

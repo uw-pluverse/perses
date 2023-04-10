@@ -16,7 +16,6 @@
  */
 package org.perses.program
 
-import com.google.common.base.MoreObjects
 import java.nio.file.Path
 
 /**
@@ -24,12 +23,14 @@ import java.nio.file.Path
  * loads the content of the passed-in file. So when you create an object of this class, the file
  * must already exist.
  */
-class SourceFile(file: Path, val languageKind: LanguageKind) : AbstractSourceFile(file) {
+class SourceFile(
+  file: Path,
+  languageKind: LanguageKind,
+) : AbstractReductionFile<LanguageKind, SourceFile>(languageKind, file) {
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this)
-      .add("file", file)
-      .add("lang", languageKind)
-      .toString()
-  }
+  @Deprecated(
+    message = "This should not be called.",
+    replaceWith = ReplaceWith("dataKind"),
+  )
+  val fileContent by fileWithContent::textualFileContent
 }

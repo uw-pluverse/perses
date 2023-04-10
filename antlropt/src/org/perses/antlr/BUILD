@@ -8,7 +8,7 @@ kt_jvm_library(
         "RuleType.kt",
     ],
     deps = [
-        "//src/org/perses/util:perses_kt_exts",
-        "@maven//:org_antlr_antlr4",
+        "//:antlr_tool",
+        "//src/org/perses/util",
     ],
 )

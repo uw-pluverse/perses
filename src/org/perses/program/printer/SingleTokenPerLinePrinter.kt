@@ -17,7 +17,6 @@
 package org.perses.program.printer
 
 import org.perses.program.AbstractLazySourceCode
-import org.perses.program.AbstractTokenizedProgramPrinter
 import org.perses.program.TokenizedProgram
 import org.perses.util.FastStringBuilder
 
@@ -25,11 +24,10 @@ object SingleTokenPerLinePrinter : AbstractTokenizedProgramPrinter() {
 
   override fun print(
     program: TokenizedProgram,
-    tokenPositionProvider: AbstractTokenPositionProvider,
-    tokenPlacementListener: AbstractTokenPlacementListener?
+    tokenPlacementListener: AbstractTokenPlacementListener?,
   ) = object : AbstractLazySourceCode() {
     override fun computeStringBuilder() = program.tokens.fold(
-      FastStringBuilder(program.tokenCount() * 5)
+      FastStringBuilder(program.tokenCount() * 5),
     ) { builder, token -> builder.append(token.text).append('\n') }
   }
 

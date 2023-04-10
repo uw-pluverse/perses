@@ -24,7 +24,7 @@ import java.io.PrintStream
 
 class PersesTerminalAst(
   val text: String,
-  val tokenType: Int
+  val tokenType: Int,
 ) : AbstractPersesTerminalAst() {
 
   init {
@@ -35,7 +35,7 @@ class PersesTerminalAst(
     get() = tokenType == ANTLRParser.TOKEN_REF
 
   override fun createWithNewChildren(
-    newChildren: List<AbstractPersesRuleElement>
+    newChildren: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     require(newChildren.isEmpty()) { newChildren }
     return PersesTerminalAst(text, tokenType)
@@ -49,6 +49,11 @@ class PersesTerminalAst(
     val result = text[0] == '\''
     check(!result || text[text.length - 1] == '\'')
     return result
+  }
+
+  fun getStringLiteralOrThrow(): String {
+    check(isStringLiteral()) { text }
+    return text.substring(1, endIndex = text.length - 1)
   }
 
   fun isEOF(): Boolean {

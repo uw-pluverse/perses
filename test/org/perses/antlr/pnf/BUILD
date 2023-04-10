@@ -11,8 +11,8 @@ DEFAULT_DEPS = [
     "//test/org/perses:test_util",
     "//:guava",
     "//:truth",
-    "@maven//:org_antlr_antlr4",
-    "@maven//:org_jgrapht_jgrapht_core",
+    "//:antlr_tool",
+    "//:jgrapht",
     "//test/org/perses/antlr:GrammarTestingUtility",
     "//src/org/perses/util:file_name_content_pair",
 ]
@@ -29,7 +29,19 @@ kt_jvm_library(
     visibility = [
         "//antlropt/test:__subpackages__",
     ],
-    deps = DEFAULT_DEPS,
+    deps = [
+        "//:antlr_tool",
+        "//:guava",
+        "//:jgrapht",
+        "//:truth",
+        "//antlropt/src/org/perses/antlr/ast",
+        "//antlropt/src/org/perses/antlr/pnf",
+        "//src/org/perses/antlr:antlr_grammar_parser",
+        "//src/org/perses/grammar/c:optc_parser_facade",
+        "//src/org/perses/grammar/java:parser_facade",
+        "//src/org/perses/util:file_name_content_pair",
+        "//test/org/perses/antlr:GrammarTestingUtility",
+    ],
 )
 
 kt_jvm_test(

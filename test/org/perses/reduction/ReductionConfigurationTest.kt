@@ -58,16 +58,16 @@ class ReductionConfigurationTest {
       workingDirectory,
       RegularReductionInputs(
         testScript = testScript,
-        mainFile = sourceFile
+        mainFile = sourceFile,
       ),
       outputManagerFactory = RegularOutputManagerFactory(
-        sourceFile.baseName,
-        ORIG_FORMAT
+        sourceFile,
+        ORIG_FORMAT,
       ),
-      outputDirectory = outputDir
+      outputDirectory = outputDir,
     )
     val configuration = ReductionConfiguration(
-      languageKind = ioManager.reductionInputs.mainLanguage,
+      languageKind = ioManager.reductionInputs.mainDataKind,
       statisticsFile = null,
       progressDumpFile = null,
       fixpointReduction = true,
@@ -78,8 +78,8 @@ class ReductionConfigurationTest {
       persesNodeReducerConfig = ReductionConfiguration.PersesNodeReducerConfiguration(
         maxEditCountForRegularRuleNode = 100,
         maxBfsDepthForRegularRuleNode = 5,
-        stopAtFirstCompatibleChildren = true
-      )
+        stopAtFirstCompatibleChildren = true,
+      ),
     )
     val mainFile = (ioManager.reductionInputs as RegularReductionInputs).mainFile
     assertThat(mainFile.file).isEqualTo(sourceFile.file)

@@ -5,9 +5,9 @@ kt_jvm_test(
     name = "RuleTypeTest",
     srcs = ["RuleTypeTest.kt"],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr:enum_rule_type",
-        "@maven//:org_antlr_antlr4",
     ],
 )

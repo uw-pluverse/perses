@@ -12,8 +12,8 @@ DEFAULT_DEPS = [
     "//test/org/perses:test_util",
     "//:truth",
     "//:guava",
-    "@maven//:org_antlr_antlr4",
-    "@maven//:org_antlr_antlr4_runtime",
+    "//:antlr_tool",
+    "//:antlr_runtime",
 ]
 
 kt_jvm_test(
@@ -40,31 +40,29 @@ kt_jvm_test(
     deps = DEFAULT_DEPS,
 )
 
-java_test(
+kt_jvm_test(
     name = "NodeDeletionActionSetTest",
-    srcs = ["NodeDeletionActionSetTest.java"],
+    srcs = ["NodeDeletionActionSetTest.kt"],
     data = [
         "//test_data/misc",
         "//test_data/parentheses",
     ],
-    test_class = "org.perses.spartree.NodeDeletionActionSetTest",
     deps = DEFAULT_DEPS,
 )
 
-java_test(
+kt_jvm_test(
     name = "NodeReplacementActionSetTest",
-    srcs = ["NodeReplacementActionSetTest.java"],
+    srcs = ["NodeReplacementActionSetTest.kt"],
     data = [
         "//test_data/misc",
         "//test_data/parentheses",
     ],
-    test_class = "org.perses.spartree.NodeReplacementActionSetTest",
     deps = DEFAULT_DEPS,
 )
 
-java_test(
+kt_jvm_test(
     name = "JavaSparTreeBuilderTest",
-    srcs = ["JavaSparTreeBuildTest.java"],
+    srcs = ["JavaSparTreeBuildTest.kt"],
     data = [
         "//test_data/java_helloworld",
     ],

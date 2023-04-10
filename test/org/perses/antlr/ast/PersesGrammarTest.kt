@@ -253,7 +253,7 @@ class PersesGrammarTest {
       arg [boolean t]
           : 't'
           ;
-      """.trimIndent()
+      """.trimIndent(),
     )
   }
 

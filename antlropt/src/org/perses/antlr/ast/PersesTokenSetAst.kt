@@ -22,7 +22,7 @@ import org.perses.util.toImmutableList
 import java.io.PrintStream
 
 class PersesTokenSetAst(
-  private val terminals: ImmutableList<AbstractPersesTerminalAst>
+  private val terminals: ImmutableList<AbstractPersesTerminalAst>,
 ) : AbstractPersesRuleElement() {
 
   private val sortedTerminals =
@@ -60,13 +60,13 @@ class PersesTokenSetAst(
     get() = AstTag.TOKEN_SET
 
   override fun createWithNewChildren(
-    newChildren: List<AbstractPersesRuleElement>
+    newChildren: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     return PersesTokenSetAst(
       newChildren
         .asSequence()
         .map { it as AbstractPersesTerminalAst }
-        .toImmutableList()
+        .toImmutableList(),
     )
   }
 }

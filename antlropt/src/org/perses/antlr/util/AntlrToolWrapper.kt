@@ -27,7 +27,7 @@ class AntlrToolWrapper(
   packageName: String,
   parserFile: Path,
   lexerFile: Path?,
-  outputDir: String
+  outputDir: String,
 ) {
   val arguments = ImmutableList.builder<String>().apply {
     add("-no-listener")
@@ -45,19 +45,18 @@ class AntlrToolWrapper(
   internal val antlr = Tool(arguments.toTypedArray())
 
   fun call() {
-
     antlr.processGrammarsOnCommandLine()
     if (antlr.errMgr.numErrors != 0) {
       throw AntlrException(
         "Error in Antlr code generation.",
-        antlr.errMgr
+        antlr.errMgr,
       )
     }
   }
 
   class AntlrException(
     msg: String,
-    val errorManager: ErrorManager
+    val errorManager: ErrorManager,
   ) : RuntimeException(msg)
 
   data class AntlrAcceptanceResult(val accpeted: Boolean, val message: String?)
@@ -67,10 +66,10 @@ class AntlrToolWrapper(
   companion object {
     fun doesAntlrAcceptGrammar(
       parserGrammar: FileNameContentPair,
-      lexerGrammar: FileNameContentPair? = null
+      lexerGrammar: FileNameContentPair? = null,
     ): AntlrAcceptanceResult {
       AutoDeletableFolder.createTempDir(
-        AntlrToolWrapper::class.java.simpleName
+        AntlrToolWrapper::class.java.simpleName,
       ).use {
         val dir = it.file
         val parserFile = parserGrammar.writeToDirectory(dir)
@@ -81,7 +80,7 @@ class AntlrToolWrapper(
           packageName,
           parserFile,
           lexerFile,
-          outputDir.toString()
+          outputDir.toString(),
         )
         try {
           antlrTool.call()

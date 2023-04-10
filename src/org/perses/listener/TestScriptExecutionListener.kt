@@ -36,8 +36,10 @@ class TestScriptExecutionListener(summaryFile: Path) : DefaultReductionListener(
     val program = event.program
     statisticsList.add(
       ExecutionStatistics(
-        result.elapsedMilliseconds, result.isInteresting, program.tokenCount()
-      )
+        result.elapsedMilliseconds,
+        result.isInteresting,
+        program.tokenCount(),
+      ),
     )
   }
 
@@ -71,7 +73,7 @@ class TestScriptExecutionListener(summaryFile: Path) : DefaultReductionListener(
               stream,
               statistics.milliSeconds,
               statistics.result,
-              statistics.programSize
+              statistics.programSize,
             )
           }
         statisticsList.stream()
@@ -81,7 +83,7 @@ class TestScriptExecutionListener(summaryFile: Path) : DefaultReductionListener(
               stream,
               statistics.milliSeconds,
               statistics.result,
-              statistics.programSize
+              statistics.programSize,
             )
           }
       }
@@ -93,7 +95,7 @@ class TestScriptExecutionListener(summaryFile: Path) : DefaultReductionListener(
   private class ExecutionStatistics(
     val milliSeconds: Long,
     val result: Boolean,
-    val programSize: Int
+    val programSize: Int,
   )
 
   companion object {
@@ -115,7 +117,7 @@ class TestScriptExecutionListener(summaryFile: Path) : DefaultReductionListener(
     Preconditions.checkArgument(
       Files.exists(this.summaryFile.parent),
       "The folder of the file %s does not exist.",
-      summaryFile
+      summaryFile,
     )
   }
 }

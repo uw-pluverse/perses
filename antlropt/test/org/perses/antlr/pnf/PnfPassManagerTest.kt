@@ -23,14 +23,13 @@ import org.junit.runners.JUnit4
 import org.perses.antlr.GrammarTestingUtility
 import org.perses.antlr.GrammarTestingUtility.loadGrammarFromFile
 import org.perses.antlr.ast.PersesGrammar
-import org.perses.util.FileNameContentPair
 import java.nio.file.Paths
 
 @RunWith(JUnit4::class)
 class PnfPassManagerTest : PnfLeftTestGrammar() {
   private val manager = PnfPassManager()
 
-  private val nullLexer: FileNameContentPair? = null
+  private val nullLexer: PersesGrammar? = null
 
   private val listener: PnfPassManager.Listener = object : PnfPassManager.Listener() {
     override fun start(grammar: PersesGrammar, startRuleName: String) {
@@ -56,7 +55,7 @@ class PnfPassManagerTest : PnfLeftTestGrammar() {
     val grammar = GrammarTestingUtility.createPersesGrammarFromString(
       "start : A c | A d;",
       "c : B;",
-      "d : B;"
+      "d : B;",
     )
     val processed = manager.process(grammar, "start", nullLexer)
     println(processed.sourceCode)
@@ -67,7 +66,7 @@ class PnfPassManagerTest : PnfLeftTestGrammar() {
     val grammar = GrammarTestingUtility.createPersesGrammarFromString(
       """
       start : <assoc=right> 'a';
-      """.trimIndent()
+      """.trimIndent(),
     )
     val processed = manager.process(grammar, "start", nullLexer)
     assertThat(processed.flattenedAllRules).hasSize(1)
@@ -83,11 +82,11 @@ class PnfPassManagerTest : PnfLeftTestGrammar() {
 
   @Test
   fun testConvertPhp() {
-    val lexer = FileNameContentPair.createFromFile(
-      Paths.get("src/org/perses/grammar/php/PhpLexer.g4")
+    val lexer = loadGrammarFromFile(
+      Paths.get("src/org/perses/grammar/php/PhpLexer.g4"),
     )
-    val grammar = GrammarTestingUtility.loadGrammarFromFile(
-      Paths.get("src/org/perses/grammar/php/PhpParser.g4")
+    val grammar = loadGrammarFromFile(
+      Paths.get("src/org/perses/grammar/php/PhpParser.g4"),
     )
     val processed = manager.process(grammar, "htmlDocument", lexer)
     println(processed.sourceCode)
@@ -95,11 +94,11 @@ class PnfPassManagerTest : PnfLeftTestGrammar() {
 
   @Test
   fun testConvertSystemVerilog() {
-    val lexer = FileNameContentPair.createFromFile(
-      Paths.get("antlropt/test/org/perses/antlr/pnf/grammars/SystemVerilogLexer.g4")
+    val lexer = loadGrammarFromFile(
+      Paths.get("antlropt/test/org/perses/antlr/pnf/grammars/SystemVerilogLexer.g4"),
     )
-    val grammar = GrammarTestingUtility.loadGrammarFromFile(
-      Paths.get("antlropt/test/org/perses/antlr/pnf/grammars/SystemVerilogParser.g4")
+    val grammar = loadGrammarFromFile(
+      Paths.get("antlropt/test/org/perses/antlr/pnf/grammars/SystemVerilogParser.g4"),
     )
     val processed = manager.process(grammar, "source_text", lexer)
     println(processed.sourceCode)

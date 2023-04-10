@@ -22,7 +22,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 class PersesConstants private constructor(
-  val userHomeFolder: Path
+  val userHomeFolder: Path,
 ) {
 
   init {
@@ -30,7 +30,7 @@ class PersesConstants private constructor(
   }
 
   fun getPersesRootFolderOrCreate() = PersesRoot(
-    Util.ensureDirExists(userHomeFolder.resolve(".perses"))
+    Util.ensureDirExists(userHomeFolder.resolve(".perses")),
   )
 
   data class PersesRoot(val file: Path) {
@@ -42,8 +42,8 @@ class PersesConstants private constructor(
 
     fun getPersesAdhocRootOrCreate() = AdhocGrammarRoot(
       Util.ensureDirExists(
-        file.resolve("installed_adhoc_languages")
-      )
+        file.resolve("installed_adhoc_languages"),
+      ),
     )
   }
 

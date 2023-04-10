@@ -17,7 +17,7 @@ kt_jvm_library(
     deps = [
         "//src/org/perses/program",
         "//src/org/perses/reduction:test_script",
-        "//src/org/perses/util:perses_kt_exts",
+        "//src/org/perses/util",
     ],
 )
 

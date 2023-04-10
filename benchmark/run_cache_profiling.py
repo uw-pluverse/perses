@@ -13,54 +13,9 @@ from typing import List, Dict, Tuple
 __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
-
-def parse_arguments():
-    parser = argparse.ArgumentParser(description="Runs the benchmark and output results in JSON")
-    parser.add_argument("-b", "--benches", nargs='+', default=[], help="Benchmark with specified bench(es)")
-    parser.add_argument("-r", "--reducers", nargs='+', default=[], help="Specify reducers for benchmarking.")
-    parser.add_argument("-m", "--monitor-interval",
-                        help="Cache consumption monitor interval in millisecond. Default is 5 min (5 * 60 * 1000)")
-    parser.add_argument("-ss", "--show-subprocess", action="store_true", default=False,
-                        help="Show all pipe stdout and stderr from reducers")
-    return parser.parse_args()
-
-
-@dataclass
-class Parameter:
-    benchmark_target: List[str]
-    reducers: List[str]
-    monitor_interval: int
-    show_subprocess: bool
-    output_dir: str = None
-
-    def __post_init__(self):
-        # set output dir
-        general_result_dir = "benchmark_memory_results"
-        general_result_subdir = f"benchmark_{datetime.now().strftime('%Y%m%d-%H%M%S')}"
-        self.output_dir = os.path.join(__location__, general_result_dir, general_result_subdir)
-        os.makedirs(self.output_dir)
-
-    def validate(self):
-        # validate parameters
-        # benchmark_target
-        if not self.benchmark_target:
-            raise Exception('Error: No Bench(es)')
-        for bench_name in self.benchmark_target:
-            folder_path = os.path.join(__location__, bench_name)
-            if not os.path.exists(folder_path):
-                raise Exception(f'Error: Folder path not found: {folder_path}')
-        # reducers
-        if not self.reducers:
-            raise Exception('Error: No reducers detected')
-        if len(self.reducers) != len(set(self.reducers)):
-            raise Exception('Error: Duplicated reducers detected')
-        for reducer in self.reducers:
-            if reducer not in REDUCERS:
-                raise Exception(f'Error: Unknown reducer: {reducer}')
-
-
 INSTALLS = {
     "perses": os.path.join(__location__, "binaries", "update_perses.sh"),
+    "hdd": os.path.join(__location__, "binaries", "update_perses.sh"),
     "creduce": os.path.join(__location__, "binaries", "update_creduce.sh"),
     "chisel": os.path.join(__location__, "binaries", "update_chisel.sh"),
 }
@@ -74,26 +29,81 @@ REDUCERS = {
     "chisel": os.path.join(__location__, "binaries", "run_chisel.sh"),
 }
 
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Runs the benchmark and output results in JSON")
+    parser.add_argument("-s", "--subjects", nargs='+', default=[], help="Benchmark with specified subject(s)")
+    parser.add_argument("-r", "--reducers", nargs='+', default=[], help="Specify reducers for benchmarking.")
+    parser.add_argument("-m", "--monitor-interval",
+                        help="Cache consumption monitor interval in millisecond. Default is 5 min (5 * 60 * 1000)")
+    parser.add_argument("-ss", "--show-subprocess", action="store_true", default=False,
+                        help="Show all pipe stdout and stderr from reducers")
+    parser.add_argument("-o", "--output_dir", type=str,
+                        help="output folder")
+    parser.add_argument("-i", "--iterations", type=int, default=1,
+                        help="Repeat the benchmark for the number of times specified")
+    return parser.parse_args()
+
+
+@dataclass
+class Parameter:
+    benchmark_target: List[str]
+    reducers: List[str]
+    show_subprocess: bool
+    iterations: int
+    monitor_interval: int
+    output_dir: str = None
+
+    def __post_init__(self):
+        self.validate()
+        # set output dir
+        if self.output_dir is None:
+            general_result_dir = "benchmark_memory_results"
+            general_result_subdir = f"benchmark_{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+            self.output_dir = os.path.join(__location__, general_result_dir, general_result_subdir)
+            os.makedirs(self.output_dir, exist_ok=True)
+        else:
+            self.output_dir = os.path.abspath(self.output_dir)
+            if not os.path.exists(self.output_dir):
+                os.makedirs(self.output_dir)
+
+    def validate(self):
+        # validate parameters
+        # benchmark_target
+        if not self.benchmark_target:
+            raise Exception('Error: No Subject(s)')
+        for subject_name in self.benchmark_target:
+            folder_path = os.path.join(__location__, subject_name)
+            if not os.path.exists(folder_path):
+                raise Exception(f'Error: Folder path not found: {folder_path}')
+        # reducers
+        if not self.reducers:
+            raise Exception('Error: No reducers detected')
+        if len(self.reducers) != len(set(self.reducers)):
+            raise Exception('Error: Duplicated reducers detected')
+        for reducer in self.reducers:
+            if reducer not in REDUCERS:
+                raise Exception(f'Error: Unknown reducer: {reducer}')
+        # iterations
+        if self.iterations < 1:
+            raise Exception('Error: Invalid ITERATIONS value')
+
 
 def load_token_counter(subprocess_flag: bool):
     print("Loading token counter ...")
-    pipe = subprocess.DEVNULL
-    if subprocess_flag:
-        pipe = None
+    pipe = None if subprocess_flag else subprocess.DEVNULL
     subprocess.run(
         [os.path.join(__location__, "binaries", "update_token_counter.sh")],
         check=False,
         stdout=pipe,
-        stderr=pipe)
+        stderr=pipe,
+        )
 
 
 def load_reducers(reducer_list: List[str], subprocess_flag: bool):
     print("Loading reducer programs ...")
     for reducer in reducer_list:
         if reducer in INSTALLS:
-            pipe = subprocess.DEVNULL
-            if subprocess_flag:
-                pipe = None
+            pipe = None if subprocess_flag else subprocess.DEVNULL
             subprocess.run(
                 [INSTALLS[reducer]],
                 check=False,
@@ -102,11 +112,12 @@ def load_reducers(reducer_list: List[str], subprocess_flag: bool):
             print(" Reducer: {} loaded".format(reducer))
 
 
-def extract_info_properties(bench_name: str) -> Tuple[str, str]:
+def extract_info_properties(subject_name: str) -> Tuple[str, str]:
+    """Extract script file and source file from a subject folder"""
     info_dict = dict()
 
     # validate info.properties path
-    info_properties_path = os.path.join(__location__, bench_name, "info.properties")
+    info_properties_path = os.path.join(__location__, subject_name, "info.properties")
     if not os.path.exists(info_properties_path):
         raise Exception(f'Error: info.properties not found: {info_properties_path}')
 
@@ -122,8 +133,8 @@ def extract_info_properties(bench_name: str) -> Tuple[str, str]:
     if "script_file" not in info_dict:
         raise Exception('Error: No script_file found in info.properties')
 
-    source_file_path = os.path.join(__location__, bench_name, info_dict["source_file"])
-    script_file_path = os.path.join(__location__, bench_name, info_dict["script_file"])
+    source_file_path = os.path.join(__location__, subject_name, info_dict["source_file"])
+    script_file_path = os.path.join(__location__, subject_name, info_dict["script_file"])
 
     if not os.path.exists(source_file_path):
         raise Exception('Error: source_file not found: {}'.format(source_file_path))
@@ -135,23 +146,21 @@ def extract_info_properties(bench_name: str) -> Tuple[str, str]:
 
 def count_token(source_file_path: str) -> int:
     try:
-        process = subprocess.Popen(
-            [os.path.join(__location__, "binaries", "run_token_counter.sh"),
-             source_file_path],
-            stderr=subprocess.DEVNULL,
-            stdout=subprocess.PIPE)
-        count = process.communicate()[0]
+        token_counter_sh = os.path.join(__location__, "binaries", "run_token_counter.sh")
+        count = subprocess.check_output(
+            [token_counter_sh, source_file_path], 
+            stderr=subprocess.STDOUT)
         return int(count)
     except Exception as err:
         print("Error counting token for " + source_file_path)
         raise err
 
 
-def filename_generator(bench: str, reducer: str, timemark: str) -> Tuple[str, str]:
+def filename_generator(subject: str, reducer: str, iteration: int, timemark: str) -> Tuple[str, str]:
     # generate proper names for report (and memory log if applicable)
-    bench = os.path.basename(bench)
-    filename_report = f"tmp_{bench}_{reducer}_{timemark}.json"
-    filename_log = f"tmp_{bench}_{reducer}_{timemark}.log"
+    subject = os.path.basename(subject)
+    filename_report = f"tmp_{subject}_{reducer}_{timemark}_itr{iteration}.json"
+    filename_log = f"tmp_{subject}_{reducer}_{timemark}_itr{iteration}.log"
 
     return filename_report, filename_log
 
@@ -172,6 +181,7 @@ def environment_updater(parameter, filename_log: str) -> tuple:
     else:
         enviroment['JVM_FLAGS'] = f'{jvm_caching_flag}'
 
+    constant_caching_flag = f''
     perses_caching_flag = f'--profile-query-cache-memory {os.path.join(output_dir, filename_log)}'
     perses_flags = os.environ.get('PERSES_FLAGS')
     if perses_flags:
@@ -185,10 +195,10 @@ def environment_updater(parameter, filename_log: str) -> tuple:
     return enviroment, perses_flags
 
 
-def report_generator(bench, reducer, reducer_flags, token_count, iteration, run_result: list):
+def report_generator(subject, reducer, reducer_flags, token_count, iteration, run_result: list):
     """Report initialization"""
     report = dict()
-    report['Bench'] = bench
+    report['Subject'] = subject
     report['Reducer'] = reducer
     report["Environment"] = reducer_flags
     report["Origin token count"] = token_count
@@ -215,12 +225,13 @@ def main():
     # parameter handler
     args = parse_arguments()
     parameter = Parameter(
-        args.benches,
+        args.subjects,
         args.reducers,
-        args.monitor_interval,
         args.show_subprocess,
+        args.iterations,
+        args.monitor_interval,
+        args.output_dir
     )
-    parameter.validate()
     print(parameter)
 
     # install token counter
@@ -230,17 +241,17 @@ def main():
     load_reducers(parameter.reducers, parameter.show_subprocess)
 
     # benchmark starts here
-    for bench_name in parameter.benchmark_target:
-        # prettify bench name
-        if bench_name[-1] == "/":
-            bench_name = bench_name[:-1]
+    for subject_name in parameter.benchmark_target:
+        # prettify subject name
+        if subject_name[-1] == "/":
+            subject_name = subject_name[:-1]
 
-        # extract test bench information (source file & test script)
-        source_file_path, script_file_path = extract_info_properties(bench_name)
+        # extract test subject information (source file & test script)
+        source_file_path, script_file_path = extract_info_properties(subject_name)
 
-        # count bench tokens
+        # count subject tokens
         token_count = count_token(source_file_path)
-        print(f"Bench {bench_name} has {token_count} original tokens")
+        print(f"Subject {subject_name} has {token_count} original tokens")
 
         # reduction
         for reducer in parameter.reducers:
@@ -248,37 +259,40 @@ def main():
             # unique time mark distinguishes different settings
             time = datetime.now().strftime("%Y%m%d-%H%M%S")
 
-            # create report filename (and log filename if applicable)
-            filename_report, filename_log = filename_generator(bench_name, reducer, time)
-            # setup environment variables for subprocess
-            environment, reducer_flags = environment_updater(parameter, filename_log)
+            for iteration in range(parameter.iterations):
+                print(f"***** Iteration: {iteration} *****")
+                # create report filename (and log filename if applicable)
+                filename_report, filename_log = filename_generator(subject_name, reducer, iteration, time)
+                # setup environment variables for subprocess
+                environment, reducer_flags = environment_updater(parameter, filename_log)
 
-            # tmp file for reducer's output
-            fd, fname = tempfile.mkstemp()
-            os.close(fd)
+                # tmp file for reducer's output
+                fd, fname = tempfile.mkstemp()
+                os.close(fd)
 
-            # run reduce scripts
-            pipe = None if parameter.show_subprocess else subprocess.DEVNULL
+                # run reduce scripts
+                pipe = None if parameter.show_subprocess else subprocess.DEVNULL
 
-            subprocess.run(
-                [REDUCERS[reducer],
-                 script_file_path,
-                 source_file_path,
-                 fname],
-                check=False,
-                stdout=pipe,
-                stderr=pipe,
-                env=environment)
+                subprocess.run(
+                    [REDUCERS[reducer],
+                     script_file_path,
+                     source_file_path,
+                     parameter.output_dir,
+                     fname],
+                    check=False,
+                    stdout=pipe,
+                    stderr=pipe,
+                    env=environment)
 
-            # retrieve reduction results
-            with open(fname, "r") as output:
-                run_result = output.read().strip().split("\n")
-                if len(run_result) != 7:
-                    run_result = ["unknown", "unknown", "unknown", "failed", "failed", "failed", run_result]
-            os.remove(fname)
+                # retrieve reduction results
+                with open(fname, "r") as output:
+                    run_result = output.read().strip().split("\n")
+                    if len(run_result) != 7:
+                        run_result = ["unknown", "unknown", "unknown", "failed", "failed", "failed", run_result]
+                os.remove(fname)
 
-            report = report_generator(bench_name, reducer, reducer_flags, token_count, 0, run_result)
-            output_manager(parameter.output_dir, filename_report, report)
+                report = report_generator(subject_name, reducer, reducer_flags, token_count, iteration, run_result)
+                output_manager(parameter.output_dir, filename_report, report)
 
 
 if __name__ == "__main__":

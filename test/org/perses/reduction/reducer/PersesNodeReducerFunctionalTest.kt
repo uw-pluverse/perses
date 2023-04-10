@@ -33,7 +33,8 @@ class PersesNodeReducerFunctionalTest : AbstractReducerFunctionalTest() {
         |int printf();
         |int main() {
         |    printf("world\n"); 
-        |}""".trimMargin()
+        |}
+      """.trimMargin(),
     )
   }
 
@@ -53,7 +54,7 @@ class PersesNodeReducerFunctionalTest : AbstractReducerFunctionalTest() {
         | int main() {
         |     printf("world\n");
         | }
-      """.trimMargin()
+      """.trimMargin(),
     )
   }
 
@@ -64,7 +65,7 @@ class PersesNodeReducerFunctionalTest : AbstractReducerFunctionalTest() {
       {},
       "typedeflongllong;test1char8(c){}" +
         "typedefllongvllong1__attribute__((__vector_size__(sizeof(llong))));" +
-        "vllong1test2llong1(p){llongc=test1char8;vllong1v={c};returnv;}main(){}"
+        "vllong1test2llong1(p){llongc=test1char8;vllong1v={c};returnv;}main(){}",
     )
   }
 

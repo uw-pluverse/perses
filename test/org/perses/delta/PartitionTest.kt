@@ -25,52 +25,82 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class PartitionTest {
 
-  val baseList = ImmutableList.of(0, 1, 2, 3)
+  private val baseList: ImmutableList<Int> = ImmutableList.of(0, 1, 2, 3)
 
   @Test
-  fun test_partition_size_1() {
-    Partition(baseList, startIndex = 0, endIndexExclusive = 1).let {
-      assertThat(it.toList()).containsExactly(0).inOrder()
-      assertThat(it.computeComplement()).containsExactly(1, 2, 3).inOrder()
+  fun testPartitionSize1() {
+    val listBuilder = PartitionList.Builder<Int>(baseList)
+    listBuilder.createPartition(0, 1)
+    listBuilder.createPartition(1, 2)
+    listBuilder.createPartition(2, 3)
+    listBuilder.createPartition(3, 4)
+    val partitionList = listBuilder.build()
+    partitionList.partitions[0].let {
+      assertThat(it.elements).containsExactly(0).inOrder()
+      assertThat(partitionList.computeComplementFor(it)).containsExactly(1, 2, 3).inOrder()
     }
 
-    Partition(baseList, startIndex = 1, endIndexExclusive = 2).let {
-      assertThat(it.toList()).containsExactly(1).inOrder()
-      assertThat(it.computeComplement()).containsExactly(0, 2, 3).inOrder()
+    partitionList.partitions[1].let {
+      assertThat(it.elements).containsExactly(1).inOrder()
+      assertThat(partitionList.computeComplementFor(it)).containsExactly(0, 2, 3).inOrder()
     }
 
-    Partition(baseList, startIndex = 2, endIndexExclusive = 3).let {
-      assertThat(it.toList()).containsExactly(2).inOrder()
-      assertThat(it.computeComplement()).containsExactly(0, 1, 3).inOrder()
+    partitionList.partitions[2].let {
+      assertThat(it.elements).containsExactly(2).inOrder()
+      assertThat(partitionList.computeComplementFor(it)).containsExactly(0, 1, 3).inOrder()
     }
 
-    Partition(baseList, startIndex = 3, endIndexExclusive = 4).let {
-      assertThat(it.toList()).containsExactly(3).inOrder()
-      assertThat(it.computeComplement()).containsExactly(0, 1, 2).inOrder()
+    partitionList.partitions[3].let {
+      assertThat(it.elements).containsExactly(3).inOrder()
+      assertThat(partitionList.computeComplementFor(it)).containsExactly(0, 1, 2).inOrder()
     }
   }
 
   @Test
-  fun test_partition_size_full() {
-    Partition(baseList, startIndex = 0, endIndexExclusive = 4).let {
-      assertThat(it.toList()).containsExactly(0, 1, 2, 3).inOrder()
-      assertThat(it.computeComplement()).isEmpty()
+  fun testPartitionSizeFull() {
+    val listBuilder = PartitionList.Builder<Int>(baseList)
+    listBuilder.createPartition(0, 4)
+    val list = listBuilder.build()
+    list.partitions.single().let {
+      assertThat(it.elements).containsExactly(0, 1, 2, 3).inOrder()
+      assertThat(list.computeComplementFor(it)).isEmpty()
     }
   }
 
   @Test
-  fun test_partition_size_2() {
-    Partition(baseList, startIndex = 0, endIndexExclusive = 2).let {
-      assertThat(it.toList()).containsExactly(0, 1).inOrder()
-      assertThat(it.computeComplement()).containsExactly(2, 3).inOrder()
-    }
-    Partition(baseList, startIndex = 1, endIndexExclusive = 3).let {
-      assertThat(it.toList()).containsExactly(1, 2).inOrder()
-      assertThat(it.computeComplement()).containsExactly(0, 3).inOrder()
-    }
-    Partition(baseList, startIndex = 2, endIndexExclusive = 4).let {
-      assertThat(it.toList()).containsExactly(2, 3).inOrder()
-      assertThat(it.computeComplement()).containsExactly(0, 1).inOrder()
-    }
+  fun testPartitionSize2() {
+    val listBuilder = PartitionList.Builder(baseList)
+    listBuilder.createPartition(0, 2)
+    PartitionList.Builder(baseList)
+      .createPartition(0, 2)
+      .createPartition(2, 4)
+      .build()
+      .let { list ->
+        list.partitions.first().let {
+          assertThat(it.elements).containsExactly(0, 1).inOrder()
+          assertThat(list.computeComplementFor(it)).containsExactly(2, 3).inOrder()
+        }
+      }
+
+    PartitionList.Builder(baseList)
+      .createPartition(0, 1)
+      .createPartition(1, 3)
+      .createPartition(3, 4)
+      .build().let { list ->
+        list.partitions[1].let {
+          assertThat(it.elements).containsExactly(1, 2).inOrder()
+          assertThat(list.computeComplementFor(it)).containsExactly(0, 3).inOrder()
+        }
+      }
+
+    PartitionList.Builder(baseList)
+      .createPartition(0, 2)
+      .createPartition(2, 4)
+      .build().let { list ->
+        list.partitions.last().let {
+          assertThat(it.elements).containsExactly(2, 3).inOrder()
+          assertThat(list.computeComplementFor(it)).containsExactly(0, 1).inOrder()
+        }
+      }
   }
 }

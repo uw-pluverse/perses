@@ -18,20 +18,23 @@ package org.perses.reduction.cache
 
 import org.perses.program.TokenizedProgram
 import org.perses.util.Util
+import org.perses.util.Util.SHA512HashCode
 
 class ContentSHA512BasedQueryCache(
   tokenizedProgram: TokenizedProgram,
   profiler: AbstractQueryCacheProfiler,
-  configuration: QueryCacheConfiguration
+  configuration: QueryCacheConfiguration,
 ) : AbstractRealQueryCache<ContentSHA512Encoding, ContentSHA512Encoder>(
-  tokenizedProgram, profiler, configuration
+  tokenizedProgram,
+  profiler,
+  configuration,
 ) {
 
   override fun createEncoder(
-    tokenizedProgram: TokenizedProgram,
-    profiler: AbstractQueryCacheProfiler
+    baseProgram: TokenizedProgram,
+    profiler: AbstractQueryCacheProfiler,
   ): ContentSHA512Encoder {
-    return ContentSHA512Encoder(tokenizedProgram, profiler, enableFormat = false)
+    return ContentSHA512Encoder(baseProgram, profiler, enableFormat = false)
   }
 
   @Synchronized
@@ -45,16 +48,18 @@ class ContentSHA512BasedQueryCache(
 class ContentSHA512BasedFormatQueryCache(
   tokenizedProgram: TokenizedProgram,
   profiler: AbstractQueryCacheProfiler,
-  configuration: QueryCacheConfiguration
+  configuration: QueryCacheConfiguration,
 ) : AbstractRealQueryCache<ContentSHA512Encoding, ContentSHA512Encoder>(
-  tokenizedProgram, profiler, configuration
+  tokenizedProgram,
+  profiler,
+  configuration,
 ) {
 
   override fun createEncoder(
-    tokenizedProgram: TokenizedProgram,
-    profiler: AbstractQueryCacheProfiler
+    baseProgram: TokenizedProgram,
+    profiler: AbstractQueryCacheProfiler,
   ): ContentSHA512Encoder {
-    return ContentSHA512Encoder(tokenizedProgram, profiler, enableFormat = true)
+    return ContentSHA512Encoder(baseProgram, profiler, enableFormat = true)
   }
 
   @Synchronized
@@ -64,7 +69,7 @@ class ContentSHA512BasedFormatQueryCache(
 class ContentSHA512Encoder(
   tokenizedProgram: TokenizedProgram,
   profiler: AbstractQueryCacheProfiler,
-  private val enableFormat: Boolean
+  private val enableFormat: Boolean,
 ) : AbstractTokenizedProgramEncoder<ContentSHA512Encoding>(tokenizedProgram, profiler) {
 
   override fun encode(program: TokenizedProgram): ContentSHA512Encoding {
@@ -73,17 +78,17 @@ class ContentSHA512Encoder(
     } else {
       convertProgramToRawString(program)
     }
-    val sha512 = Util.computeSHA512(rawContent)
+    val sha512 = Util.SHA512HashCode.createFromString(rawContent)
     return ContentSHA512Encoding(sha512, program.tokenCount())
   }
 
-  private fun convertProgramToRawString(program: TokenizedProgram): String {
+  internal fun convertProgramToRawString(program: TokenizedProgram): String {
     return program.tokens.asSequence()
       .map { it.text }
       .joinToString("\n")
   }
 
-  private fun convertProgramToRawStringWithFormat(program: TokenizedProgram): String {
+  internal fun convertProgramToRawStringWithFormat(program: TokenizedProgram): String {
     if (program.tokens.isEmpty()) { return "" }
     var curLine = program.tokens[0].position.line
     return program.tokens.asSequence().map {
@@ -91,13 +96,13 @@ class ContentSHA512Encoder(
         it.text + " "
       } else {
         curLine = it.position.line
-        "\n" + it.text
+        "\n" + it.text + " "
       }
     }.joinToString("")
   }
 
   override fun reEncode(
-    previousEncoding: ContentSHA512Encoding
+    previousEncoding: ContentSHA512Encoding,
   ): ContentSHA512Encoding? {
     throw UnsupportedOperationException()
   }
@@ -105,7 +110,7 @@ class ContentSHA512Encoder(
   override fun updateEncoderMore(encoderBaseProgram: TokenizedProgram) {}
 }
 
-class ContentSHA512Encoding(private val sha512: String, tokenCount: Int) :
+class ContentSHA512Encoding(private val sha512: SHA512HashCode, tokenCount: Int) :
   AbstractProgramEncoding<ContentSHA512Encoding>(sha512.hashCode(), tokenCount) {
   override fun extraEquals(other: ContentSHA512Encoding): Boolean {
     return sha512 == other.sha512

@@ -25,7 +25,7 @@ abstract class AbstractQueryCache {
 
   abstract fun addResult(
     program: AbstractCacheRetrievalResult.CacheMiss,
-    result: PropertyTestResult
+    result: PropertyTestResult,
   )
 
   abstract fun size(): Int

@@ -1,6 +1,23 @@
 package(default_visibility = ["//test/org/perses:__subpackages__"])
 
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
+load(
+    "@io_bazel_rules_kotlin//kotlin:jvm.bzl",
+    "kt_jvm_binary",
+    "kt_jvm_library",
+    "kt_jvm_test",
+)
+
+kt_jvm_test(
+    name = "PassLevelCacheTest",
+    srcs = [
+        "PassLevelCacheTest.kt",
+    ],
+    deps = [
+        "//:truth",
+        "//src/org/perses/reduction/cache:PassLevelCache",
+        "//src/org/perses/reduction/reducer:node_based_reducer",
+    ],
+)
 
 kt_jvm_test(
     name = "LogicalSizedArrayTest",
@@ -49,6 +66,9 @@ java_binary(
     data = [
         "clang-22704.c",
     ],
+    jvm_flags = [
+        "-da",
+    ],
     main_class = "org.perses.reduction.cache.CompactQueryCacheBenchmark",
     deps = [
         "//:guava",
@@ -60,6 +80,22 @@ java_binary(
         "//src/org/perses/reduction/cache:query_cache_configuration",
         "//src/org/perses/reduction/cache:query_cache_interface",
         "//src/org/perses/util:percentage",
+        "//test/org/perses:test_util",
+    ],
+)
+
+kt_jvm_test(
+    name = "ContentSHA512BasedQueryCacheTest",
+    srcs = [
+        "ContentSHA512BasedQueryCacheTest.kt",
+    ],
+    associates = [
+        "//src/org/perses/reduction/cache:sha512_cache",
+    ],
+    deps = [
+        "//:antlr_runtime",
+        "//:guava",
+        "//src/org/perses/reduction/cache:query_cache",
         "//test/org/perses:test_util",
     ],
 )
@@ -108,6 +144,7 @@ java_test(
     test_class = "org.perses.reduction.cache.TokenizedProgramEncoderTest",
     deps = [
         "//:antlr_runtime",
+        "//:fastutil",
         "//:guava",
         "//:truth",
         "//src/org/perses/grammar:facade_factory",
@@ -123,7 +160,6 @@ java_test(
         "//src/org/perses/reduction/cache:query_cache",
         "//src/org/perses/spartree",
         "//test/org/perses:test_util",
-        "@maven//:it_unimi_dsi_fastutil",
     ],
 )
 
@@ -147,7 +183,10 @@ kt_jvm_test(
     deps = [
         "//:guava",
         "//:truth",
+        "//src/org/perses/reduction/cache:content_based_cache",
+        "//src/org/perses/reduction/cache:linear_scan_cache",
         "//src/org/perses/reduction/cache:query_cache_memory_profiler",
+        "//src/org/perses/reduction/cache:sha512_cache",
         "//src/org/perses/util",
         "//test/org/perses:test_util",
         "//third_party/memory_measurer:object_explorer",

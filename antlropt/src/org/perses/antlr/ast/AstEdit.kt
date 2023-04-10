@@ -28,7 +28,7 @@ abstract class AstEdit {
 
   private fun apply(
     ast: AbstractPersesRuleElement,
-    isRoot: Boolean
+    isRoot: Boolean,
   ): NonDeleteTransformDecision {
     val size = ast.childCount
     val newChildren = ImmutableList.builder<AbstractPersesRuleElement>()
@@ -50,7 +50,7 @@ abstract class AstEdit {
     return if (childrenChanged) {
       TransformDecision.Replace(
         oldValue = ast,
-        newValue = internalApplyWithNewChildren(ast, newChildren.build(), isRoot)
+        newValue = internalApplyWithNewChildren(ast, newChildren.build(), isRoot),
       )
     } else {
       internalApply(ast, isRoot)
@@ -59,13 +59,13 @@ abstract class AstEdit {
 
   protected abstract fun internalApply(
     element: AbstractPersesRuleElement,
-    isRoot: Boolean
+    isRoot: Boolean,
   ): NonDeleteTransformDecision
 
   protected open fun internalApplyWithNewChildren(
     element: AbstractPersesRuleElement,
     children: ImmutableList<AbstractPersesRuleElement>,
-    isRoot: Boolean
+    isRoot: Boolean,
   ): AbstractPersesRuleElement {
     val newElement = SmartAstConstructor.createWithNewChildren(element, children)
     return when (val decision = internalApply(newElement, isRoot)) {

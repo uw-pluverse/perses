@@ -32,7 +32,7 @@ class LexerParserCombinerTest {
       | fragment DECIMALS
       |  : [0-9]+
       |  ;
-    """.trimMargin()
+      """.trimMargin()
 
     val parserDef =
       """parser grammar ToyParser;
@@ -42,10 +42,10 @@ class LexerParserCombinerTest {
       | }
       | 
       | start: BREAK NIL_LIT;
-    """.trimMargin()
+      """.trimMargin()
 
     val combined = removeWhitespaces(
-      LexerParserCombiner.combineLexerAndParser(lexerDef, parserDef, "Toy")
+      LexerParserCombiner.combineLexerAndParser(lexerDef, parserDef, "Toy"),
     )
 
     val expected = removeWhitespaces(
@@ -56,7 +56,7 @@ class LexerParserCombinerTest {
       NIL_LIT : 'nil' ;
       fragment DECIMALS : [0-9]+;
       start : BREAK NIL_LIT ;
-      """.trimIndent()
+      """.trimIndent(),
     )
     Truth.assertThat(combined).isEqualTo(expected)
   }

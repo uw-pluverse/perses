@@ -26,7 +26,7 @@ import org.perses.reduction.cache.IntervalArrayExpander.expand
 abstract class CompactProgramEncoding private constructor(
   private val baseProgram: TokenizedProgram,
   protected val encoding: IntArray,
-  tokenCount: Int
+  tokenCount: Int,
 ) : AbstractProgramEncoding<CompactProgramEncoding>(encoding.contentHashCode(), tokenCount) {
 
   fun encodingSize(): Int {
@@ -41,10 +41,13 @@ abstract class CompactProgramEncoding private constructor(
   fun restoreProgram(): TokenizedProgram {
     val expectedTokenCount = tokenCount
     val builder =
-      if (expectedTokenCount <= 0) ImmutableList.builder()
-      else ImmutableList.builderWithExpectedSize<PersesToken>(
-        expectedTokenCount
-      )
+      if (expectedTokenCount <= 0) {
+        ImmutableList.builder()
+      } else {
+        ImmutableList.builderWithExpectedSize<PersesToken>(
+          expectedTokenCount,
+        )
+      }
     val iter = tokenIterator()
     while (iter.hasNext()) {
       val value = iter.next()
@@ -66,11 +69,13 @@ abstract class CompactProgramEncoding private constructor(
     fun createCompressedEncoding(
       baseProgram: TokenizedProgram,
       intervals: IntArrayList,
-      tokenCount: Int
+      tokenCount: Int,
     ): CompactProgramEncoding {
       check(intervals.size % 2 == 0)
       return object : CompactProgramEncoding(
-        baseProgram, COMPRESSOR.compress(intervals), tokenCount
+        baseProgram,
+        COMPRESSOR.compress(intervals),
+        tokenCount,
       ) {
         override val intervalsFromEncoding: IntArray
           get() = COMPRESSOR.uncompress(encoding)
@@ -81,7 +86,7 @@ abstract class CompactProgramEncoding private constructor(
     fun createIntervalEncoding(
       baseProgram: TokenizedProgram,
       intervals: IntArrayList,
-      tokenCount: Int
+      tokenCount: Int,
     ): CompactProgramEncoding {
       check(intervals.size % 2 == 0)
       return object : CompactProgramEncoding(baseProgram, intervals.toIntArray(), tokenCount) {

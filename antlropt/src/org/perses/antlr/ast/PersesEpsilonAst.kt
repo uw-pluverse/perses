@@ -43,7 +43,7 @@ class PersesEpsilonAst() : AbstractPersesRuleElement() {
   }
 
   override fun createWithNewChildren(
-    newChildren: List<AbstractPersesRuleElement>
+    newChildren: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     require(newChildren.isEmpty())
     return PersesEpsilonAst()

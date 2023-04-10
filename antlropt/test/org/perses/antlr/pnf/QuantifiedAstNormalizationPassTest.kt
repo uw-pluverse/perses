@@ -35,22 +35,22 @@ class QuantifiedAstNormalizationPassTest {
     | ('C' | 'D' | 'E')*
     | ('F' | 'G' | another)*
     ;
-    """.trimIndent()
+    """.trimIndent(),
   )
 
   @Test
   fun testQuantifiedAstNormalizationPass_idempotency_nested_quantified() {
     val persesGrammar = loadGrammarFromFile("nested_quantified.g4")
     val pass = QuantifiedAstNormalizationPass()
-    val firstRound = pass.process(persesGrammar)
-    val secondRound = pass.process(firstRound)
+    val firstRound = pass.processParserGrammar(persesGrammar, lexerGrammar = null)
+    val secondRound = pass.processParserGrammar(firstRound, lexerGrammar = null)
     assertThat(firstRound.parserRules.map { it.ruleNameHandle })
       .containsExactlyElementsIn(secondRound.parserRules.map { it.ruleNameHandle })
     for (ruleName in firstRound.parserRules.map { it.ruleNameHandle }) {
       assertThat(
         firstRound.getRuleDefinition(ruleName)!!.body.isEquivalent(
-          secondRound.getRuleDefinition(ruleName)!!.body
-        )
+          secondRound.getRuleDefinition(ruleName)!!.body,
+        ),
       ).isTrue()
     }
   }
@@ -58,9 +58,9 @@ class QuantifiedAstNormalizationPassTest {
   @Test
   fun testNormalizingStar() {
     val pass = QuantifiedAstNormalizationPass()
-    val newGrammar = pass.process(starGrammar)
+    val newGrammar = pass.processParserGrammar(starGrammar, lexerGrammar = null)
     val sourceCode = newGrammar.sourceCode
     println(sourceCode)
-    PnfCheckPass().process(newGrammar)
+    PnfCheckPass().processParserGrammar(newGrammar, lexerGrammar = null)
   }
 }

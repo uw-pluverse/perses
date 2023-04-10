@@ -34,12 +34,13 @@ class SerializableLanguageKindTest {
       defaultCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
       origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
       allowedCodeFormatControl = ImmutableSet.of(
-        EnumFormatControl.ORIG_FORMAT, EnumFormatControl.COMPACT_ORIG_FORMAT
+        EnumFormatControl.ORIG_FORMAT,
+        EnumFormatControl.COMPACT_ORIG_FORMAT,
       ),
       defaultFormatterCommands = ImmutableList.of(
         SerializableLanguageKind.ShellCommandData("ls", ImmutableList.of("-a")),
         SerializableLanguageKind.ShellCommandData("wc", ImmutableList.of("-l")),
-      )
+      ),
     )
 
     val language = SerializableLanguageKind.fromYamlString(data.toYamlString())

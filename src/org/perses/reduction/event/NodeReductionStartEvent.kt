@@ -16,17 +16,15 @@
  */
 package org.perses.reduction.event
 
+import org.perses.program.TokenizedProgram
 import org.perses.spartree.AbstractSparTreeNode
-import org.perses.spartree.AbstractUnmodifiableSparTree
 
 class NodeReductionStartEvent internal constructor(
   val currentFixpointIteration: FixpointIterationStartEvent,
   currentTimeMillis: Long,
-  programSize: Int,
-  val tree: AbstractUnmodifiableSparTree,
-  val node: AbstractSparTreeNode
-) :
-  AbstractStartEvent(currentTimeMillis, programSize) {
+  val program: TokenizedProgram,
+  val node: AbstractSparTreeNode,
+) : AbstractStartEvent(currentTimeMillis, programSize = program.tokenCount()) {
 
   val iteration = currentFixpointIteration.iteration
 
@@ -34,18 +32,17 @@ class NodeReductionStartEvent internal constructor(
 
   fun createEndEvent(
     currentTimeMillis: Long,
-    programSize: Int,
-    remainingQueueSize: Int
+    program: TokenizedProgram,
+    remainingQueueSize: Int,
   ): NodeReductionEndEvent {
     check(!ended)
     ended = true
     return NodeReductionEndEvent(
       startEvent = this,
       currentTimeMillis = currentTimeMillis,
-      programSize = programSize,
-      tree = tree,
+      program = program,
       node = node,
-      remainingQueueSize = remainingQueueSize
+      remainingQueueSize = remainingQueueSize,
     )
   }
 

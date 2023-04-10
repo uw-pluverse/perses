@@ -36,7 +36,7 @@ class ReductionConfiguration(
   val useRealDeltaDebugger: Boolean,
   val numOfReductionThreads: Int,
   parserFacadeFactory: AbstractParserFacadeFactory,
-  val persesNodeReducerConfig: PersesNodeReducerConfiguration
+  val persesNodeReducerConfig: PersesNodeReducerConfiguration,
 ) {
   /** The parser facade.  */
   val parserFacade: AbstractParserFacade
@@ -69,7 +69,7 @@ class ReductionConfiguration(
   class PersesNodeReducerConfiguration(
     val maxEditCountForRegularRuleNode: Int,
     val maxBfsDepthForRegularRuleNode: Int,
-    val stopAtFirstCompatibleChildren: Boolean
+    val stopAtFirstCompatibleChildren: Boolean,
   ) {
     init {
       require(maxEditCountForRegularRuleNode > 0)

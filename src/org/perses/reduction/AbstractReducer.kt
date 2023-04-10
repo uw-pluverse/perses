@@ -16,22 +16,13 @@
  */
 package org.perses.reduction
 
-import org.perses.reduction.io.AbstractOutputManager
+import org.perses.program.AbstractDataKind
 import org.perses.reduction.io.AbstractReductionIOManager
 
-abstract class AbstractReducer
-<Program, IOManager : AbstractReductionIOManager<Program, IOManager>>(
+abstract class AbstractReducer<
+  Program,
+  K : AbstractDataKind,
+  IOManager : AbstractReductionIOManager<Program, K, IOManager>,>(
   protected val ioManager: IOManager,
-  protected val executorService: TestScriptExecutorService
-) {
-
-  protected fun testProgramAsynchronously(
-    preCheck: () -> PropertyTestResult,
-    postCheck: (existingResult: PropertyTestResult) -> PropertyTestResult,
-    outputManager: AbstractOutputManager
-  ) = executorService.testProgramAsync(
-    preChecke = preCheck,
-    postCheck = postCheck,
-    outputManager = outputManager
-  )
-}
+  protected val executorService: TestScriptExecutorService,
+)

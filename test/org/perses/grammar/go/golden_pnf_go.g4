@@ -6,6 +6,8 @@ options {
     tokenVocab=GoLexer;
     superClass=GoParserBase;
 }
+
+
 sourceFile
     : aux_rule__sourceFile_6
     | EOF

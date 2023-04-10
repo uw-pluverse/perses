@@ -26,7 +26,7 @@ abstract class AbstractQueryCacheProfiler : Closeable {
     tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
     program: TokenizedProgram,
     startTime: Long,
-    endTime: Long
+    endTime: Long,
   ) {
   }
 
@@ -34,14 +34,14 @@ abstract class AbstractQueryCacheProfiler : Closeable {
     tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
     encoding: CompactProgramEncoding,
     startTime: Long,
-    endTime: Long
+    endTime: Long,
   ) {
   }
 
   open fun onCreatingEncoder(
     tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
     startTime: Long,
-    endTime: Long
+    endTime: Long,
   ) {
   }
 
@@ -51,7 +51,7 @@ abstract class AbstractQueryCacheProfiler : Closeable {
     numOfEntriesInCacheBefore: Int,
     numOfEntriesInCacheAfter: Int,
     startTime: Long,
-    endTime: Long
+    endTime: Long,
   ) {
   }
 

@@ -17,13 +17,16 @@
 package org.perses.reduction.reducer.token
 
 import com.google.common.collect.ImmutableList
+import org.perses.reduction.cache.AbstractProgramEncoding
+import org.perses.reduction.reducer.token.AbstractSlicingTask.EnumAsyncRunResult
 import java.util.ArrayDeque
 
 class SlicingTaskConcurrentExecutor<TASK : AbstractSlicingTask>(
   tasks: ImmutableList<TASK>,
-  private val workingDequeExpectedSize: Int
+  private val workingDequeExpectedSize: Int,
 ) {
   private val workingDeque = ArrayDeque<TASK>()
+  private val respawnDeque = ArrayDeque<TASK>()
   private val pendingDeque = ArrayDeque(tasks)
 
   init {
@@ -31,42 +34,61 @@ class SlicingTaskConcurrentExecutor<TASK : AbstractSlicingTask>(
   }
 
   fun run() {
+    val visitedCacheKeys = HashSet<AbstractProgramEncoding<*>>()
     while (true) {
-      val next = nextTask() ?: return
+      val next = nextTask(visitedCacheKeys) ?: return
       val bestFound = next.waitAndApplyEditIfSuccess()
       if (bestFound) {
         cancelTasks()
+        visitedCacheKeys.clear()
       }
-      populateTasks()
+      populateTasks(visitedCacheKeys)
     }
   }
 
-  private fun nextTask(): AbstractSlicingTask? {
-    populateTasks()
+  private fun nextTask(
+    visitedCacheKeys: HashSet<AbstractProgramEncoding<*>>,
+  ): AbstractSlicingTask? {
+    populateTasks(visitedCacheKeys)
     if (workingDeque.isEmpty()) {
       return null
     }
     val result = workingDeque.removeFirst()
-    populateTasks()
+    populateTasks(visitedCacheKeys)
     return result
   }
 
-  private fun populateTasks() {
+  private fun populateTasks(
+    visitedCacheKeys: HashSet<AbstractProgramEncoding<*>>,
+  ) {
     while (workingDeque.size < workingDequeExpectedSize && pendingDeque.isNotEmpty()) {
       val newTask = pendingDeque.removeFirst()
-      if (newTask.tryAsyncRun()) {
-        workingDeque.addLast(newTask)
+      when (newTask.tryAsyncRun(visitedCacheKeys)) {
+        EnumAsyncRunResult.PRECONDITION_FAIL -> {
+          // this task will be deleted forever
+        }
+        EnumAsyncRunResult.CACHE_HIT -> {
+          // reusable when best found within current granularity
+          respawnDeque.addLast(newTask)
+        }
+        EnumAsyncRunResult.TEST_SUBMITTED -> {
+          // task submitted to test service
+          workingDeque.addLast(newTask)
+        }
       }
     }
   }
 
   private fun cancelTasks() {
-    val iterator = workingDeque.descendingIterator()
-    while (iterator.hasNext()) {
-      val task = iterator.next()
+    while (workingDeque.isNotEmpty()) {
+      val task = workingDeque.removeLast()
       task.cancel()
       pendingDeque.addFirst(task)
     }
-    workingDeque.clear()
+
+    // add tasks to pendingDeque in the order of slicing interval.
+    while (respawnDeque.isNotEmpty()) {
+      pendingDeque.addFirst(respawnDeque.removeLast())
+    }
   }
 }

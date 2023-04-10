@@ -22,5 +22,5 @@ import org.perses.reduction.ReducerContext
 
 abstract class AbstractTokenSlicerReducer(
   meta: ReducerAnnotation,
-  reducerContext: ReducerContext
+  reducerContext: ReducerContext,
 ) : AbstractTokenReducer(meta, reducerContext)

@@ -11,10 +11,10 @@ MODE=("-m32")
 #MODE=-m64
 
 readonly GOODCC=("gcc-4.8.0 -m32 -O0")
- 
-readonly TIMEOUTCC=10
-readonly TIMEOUTEXE=2
-readonly TIMEOUTCCOMP=10
+
+readonly TIMEOUTCC=20
+readonly TIMEOUTEXE=5
+readonly TIMEOUTCCOMP=20
 # flag to control whether to use CompCert to validate the test program.
 readonly USE_COMPCERT=true
 readonly CFILE=small.c
@@ -136,13 +136,13 @@ fi
 for ((i=0; i < ${#GOODCC[@]} ; ++i )) ; do
   cc=${GOODCC[$i]}
   rm -f ./t ./out1.txt
-  
+
   timeout -s 9 $TIMEOUTCC $cc $CFLAG $CFILE >& /dev/null
   ret=$?
   if [ $ret != 0 ] ; then
     exit 1
   fi
-  
+
   # execute
   (timeout -s 9 $TIMEOUTEXE ./t >out1.txt 2>&1) >&/dev/null
   ret=$?
@@ -150,11 +150,11 @@ for ((i=0; i < ${#GOODCC[@]} ; ++i )) ; do
     exit 1
   fi
 
-  if [[ "$i" == 0 ]] ; then 
+  if [[ "$i" == 0 ]] ; then
     mv out1.txt out0.txt
     continue
   fi
-  
+
   # compare with reference: out0.txt
   if ! diff -q out0.txt out1.txt >/dev/null ; then
     exit 1
@@ -168,12 +168,12 @@ done
 for cc in "${BADCC1[@]}" ; do
   for mode in "${MODE[@]}" ; do
     rm -f ./t ./out2.txt
-    
+
     # compile
     (timeout -s 9 $TIMEOUTCC $cc $CFLAG $mode $CFILE >out2.txt 2>&1) >& /dev/null
     if ! grep -q 'internal compiler error' out2.txt && \
     ! grep -q 'PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT' out2.txt && \
-    ! grep -q 'clang: error: linker command failed with exit code 1 (use -v to see invocation)' out2.txt 
+    ! grep -q 'clang: error: linker command failed with exit code 1 (use -v to see invocation)' out2.txt
     then
       exit 1
     fi
@@ -183,14 +183,14 @@ done
 for cc in "${BADCC2[@]}" ; do
   for mode in "${MODE[@]}" ; do
     rm -f ./t ./out2.txt
-    
+
     # compile
     timeout -s 9 $TIMEOUTCC $cc $CFLAG $mode $CFILE >& /dev/null
     ret=$?
     if [ $ret -ne 0 ] ; then
       exit 1
     fi
-    
+
     # execute
     (timeout -s 9 $TIMEOUTEXE ./t >out2.txt 2>&1) >&/dev/null
     ret=$?
@@ -203,21 +203,21 @@ done
 for cc in "${BADCC3[@]}" ; do
   for mode in "${MODE[@]}" ; do
     rm -f ./t ./out2.txt
-    
+
     # compile
     timeout -s 9 $TIMEOUTCC $cc $CFLAG $mode $CFILE >& /dev/null
     ret=$?
     if [ $ret != 0 ] ; then
       exit 1
     fi
-    
+
     # execute
     (timeout -s 9 $TIMEOUTEXE ./t >out2.txt 2>&1) >&/dev/null
     ret=$?
     if [ $ret != 0 ] ; then
       exit 1
     fi
-    
+
     # compare with reference: out0.txt
     if diff -q out0.txt out2.txt >/dev/null ; then
       exit 1

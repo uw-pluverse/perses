@@ -3,54 +3,54 @@
 The spar tree is the following.
 translationUnit {id=1}
 |___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=175,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-    |   |___(?) {id=176,slot_type=optional__functionDefinition_2}
-    |   |   |___(+) {id=227,slot_type=declarationSpecifiers}
-    |   |       |___Token:void {id=230,slot_type=[declarationSpecifier,typeSpecifier,Void]}
-    |   |___directDeclarator {id=181,slot_type=[declarator,directDeclarator]}
-    |   |   |___Token:fun {id=226,slot_type=[aux_rule__directDeclarator_8,Identifier]}
-    |   |   |___(*) {id=183,slot_type=kleene_star__directDeclarator_6}
-    |   |       |___aux_rule__directDeclarator_14 {id=185,slot_type=[aux_rule__directDeclarator_7,aux_rule__directDeclarator_14]}
-    |   |           |___Token:( {id=186,slot_type=LeftParen}
-    |   |           |___parameterList {id=190,slot_type=[altnt_block__directDeclarator_10,parameterTypeList,parameterList]}
-    |   |           |   |___(+) {id=217,slot_type=[parameterDeclaration,declarationSpecifiers]}
-    |   |           |   |   |___Token:int {id=225,slot_type=[declarationSpecifier,typeSpecifier,Int]}
-    |   |           |   |   |___Token:a {id=223,slot_type=[declarationSpecifier,typeSpecifier,typedefName,Identifier]}
-    |   |           |   |___(*) {id=192,slot_type=kleene_star__parameterList_1}
-    |   |           |       |___aux_rule__parameterList_2 {id=193,slot_type=aux_rule__parameterList_2}
-    |   |           |       |   |___Token:, {id=206,slot_type=Comma}
-    |   |           |       |   |___(+) {id=208,slot_type=[parameterDeclaration,declarationSpecifiers]}
-    |   |           |       |       |___Token:int {id=216,slot_type=[declarationSpecifier,typeSpecifier,Int]}
-    |   |           |       |       |___Token:b {id=214,slot_type=[declarationSpecifier,typeSpecifier,typedefName,Identifier]}
-    |   |           |       |___aux_rule__parameterList_2 {id=194,slot_type=aux_rule__parameterList_2}
-    |   |           |           |___Token:, {id=195,slot_type=Comma}
-    |   |           |           |___(+) {id=197,slot_type=[parameterDeclaration,declarationSpecifiers]}
-    |   |           |               |___Token:int {id=205,slot_type=[declarationSpecifier,typeSpecifier,Int]}
-    |   |           |               |___Token:c {id=203,slot_type=[declarationSpecifier,typeSpecifier,typedefName,Identifier]}
-    |   |           |___Token:) {id=188,slot_type=RightParen}
-    |   |___compoundStatement {id=178,slot_type=compoundStatement}
-    |       |___Token:{ {id=179,slot_type=LeftBrace}
-    |       |___Token:} {id=180,slot_type=RightBrace}
+    |___functionDefinition {id=177,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+    |   |___(?) {id=178,slot_type=optional__functionDefinition_2}
+    |   |   |___(+) {id=235,slot_type=declarationSpecifiers}
+    |   |       |___Token:void {id=239,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
+    |   |___directDeclarator {id=183,slot_type=[declarator,directDeclarator]}
+    |   |   |___Token:fun {id=234,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+    |   |   |___(*) {id=185,slot_type=kleene_star__directDeclarator_7}
+    |   |       |___aux_rule__directDeclarator_15 {id=187,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+    |   |           |___Token:( {id=188,slot_type=LeftParen}
+    |   |           |___parameterList {id=192,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList]}
+    |   |           |   |___(+) {id=223,slot_type=[parameterDeclaration,declarationSpecifiers]}
+    |   |           |   |   |___Token:int {id=233,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+    |   |           |   |   |___Token:a {id=230,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+    |   |           |   |___(*) {id=194,slot_type=kleene_star__parameterList_1}
+    |   |           |       |___aux_rule__parameterList_2 {id=195,slot_type=aux_rule__parameterList_2}
+    |   |           |       |   |___Token:, {id=210,slot_type=Comma}
+    |   |           |       |   |___(+) {id=212,slot_type=[parameterDeclaration,declarationSpecifiers]}
+    |   |           |       |       |___Token:int {id=222,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+    |   |           |       |       |___Token:b {id=219,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+    |   |           |       |___aux_rule__parameterList_2 {id=196,slot_type=aux_rule__parameterList_2}
+    |   |           |           |___Token:, {id=197,slot_type=Comma}
+    |   |           |           |___(+) {id=199,slot_type=[parameterDeclaration,declarationSpecifiers]}
+    |   |           |               |___Token:int {id=209,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+    |   |           |               |___Token:c {id=206,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+    |   |           |___Token:) {id=190,slot_type=RightParen}
+    |   |___compoundStatement {id=180,slot_type=compoundStatement}
+    |       |___Token:{ {id=181,slot_type=LeftBrace}
+    |       |___Token:} {id=182,slot_type=RightBrace}
     |___functionDefinition {id=5,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
         |___(?) {id=6,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=171,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=174,slot_type=[declarationSpecifier,typeSpecifier,Int]}
-        |___directDeclarator {id=162,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=170,slot_type=[aux_rule__directDeclarator_8,Identifier]}
-        |   |___(*) {id=164,slot_type=kleene_star__directDeclarator_6}
-        |       |___aux_rule__directDeclarator_14 {id=166,slot_type=[aux_rule__directDeclarator_7,aux_rule__directDeclarator_14]}
-        |           |___Token:( {id=167,slot_type=LeftParen}
-        |           |___Token:) {id=169,slot_type=RightParen}
+        |   |___(+) {id=172,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=176,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=163,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=171,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=165,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=167,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=168,slot_type=LeftParen}
+        |           |___Token:) {id=170,slot_type=RightParen}
         |___compoundStatement {id=8,slot_type=compoundStatement}
             |___Token:{ {id=9,slot_type=LeftBrace}
             |___(?) {id=10,slot_type=optional__compoundStatement_1}
             |   |___(+) {id=13,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
             |       |___aux_rule__declaration_3 {id=128,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
             |       |   |___(+) {id=129,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=161,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+            |       |   |   |___Token:int {id=162,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
             |       |   |___(?) {id=130,slot_type=optional__declaration_2}
             |       |   |   |___initDeclarator {id=133,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:var {id=158,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_8,Identifier]}
+            |       |   |       |___Token:var {id=158,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
             |       |   |       |___(?) {id=135,slot_type=optional__initDeclarator_2}
             |       |   |           |___aux_rule__initDeclarator_1 {id=136,slot_type=aux_rule__initDeclarator_1}
             |       |   |               |___Token:= {id=137,slot_type=Assign}
@@ -307,7 +307,7 @@ Failed to reduce node 13
 ------------------------------------------------------------
 
 
-=================Reducing node 175, size=37=================
+=================Reducing node 177, size=37=================
 
 The current best program is the following
 
@@ -334,11 +334,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 175
+Failed to reduce node 177
 ------------------------------------------------------------
 
 
-=================Reducing node 181, size=37=================
+=================Reducing node 183, size=37=================
 
 The current best program is the following
 
@@ -380,11 +380,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 181
+Failed to reduce node 183
 ------------------------------------------------------------
 
 
-=================Reducing node 183, size=37=================
+=================Reducing node 185, size=37=================
 
 The current best program is the following
 
@@ -413,11 +413,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 183
+Failed to reduce node 185
 ------------------------------------------------------------
 
 
-=================Reducing node 185, size=37=================
+=================Reducing node 187, size=37=================
 
 The current best program is the following
 
@@ -446,7 +446,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 185
+Failed to reduce node 187
 ------------------------------------------------------------
 
 
@@ -482,7 +482,7 @@ Failed to reduce node 43
 ------------------------------------------------------------
 
 
-=================Reducing node 190, size=37=================
+=================Reducing node 192, size=37=================
 
 The current best program is the following
 
@@ -607,7 +607,7 @@ It took less than 1 second to cancel the task.
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 190 from 37 to 29
+Succeeded to reduce node 192 from 37 to 29
 ------------------------------------------------------------
 
 
@@ -932,7 +932,7 @@ Succeeded to reduce node 69 from 29 to 25
 ------------------------------------------------------------
 
 
-=================Reducing node 162, size=25=================
+=================Reducing node 163, size=25=================
 
 The current best program is the following
 
@@ -961,7 +961,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 162
+Failed to reduce node 163
 ------------------------------------------------------------
 
 
@@ -1076,7 +1076,7 @@ Failed to reduce node 18
 ------------------------------------------------------------
 
 
-=================Reducing node 178, size=25=================
+=================Reducing node 180, size=25=================
 
 The current best program is the following
 
@@ -1092,11 +1092,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 178
+Failed to reduce node 180
 ------------------------------------------------------------
 
 
-=================Reducing node 164, size=25=================
+=================Reducing node 165, size=25=================
 
 The current best program is the following
 
@@ -1125,11 +1125,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 164
+Failed to reduce node 165
 ------------------------------------------------------------
 
 
-=================Reducing node 166, size=25=================
+=================Reducing node 167, size=25=================
 
 The current best program is the following
 
@@ -1158,7 +1158,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 166
+Failed to reduce node 167
 ------------------------------------------------------------
 
 
@@ -1248,7 +1248,7 @@ Failed to reduce node 21
 ------------------------------------------------------------
 
 
-=================Reducing node 226, size=25=================
+=================Reducing node 234, size=25=================
 
 The current best program is the following
 
@@ -1264,7 +1264,27 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 226
+Failed to reduce node 234
+------------------------------------------------------------
+
+
+=================Reducing node 190, size=25=================
+
+The current best program is the following
+
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 190
 ------------------------------------------------------------
 
 
@@ -1288,7 +1308,7 @@ Failed to reduce node 188
 ------------------------------------------------------------
 
 
-=================Reducing node 186, size=25=================
+=================Reducing node 182, size=25=================
 
 The current best program is the following
 
@@ -1304,11 +1324,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 186
+Failed to reduce node 182
 ------------------------------------------------------------
 
 
-=================Reducing node 180, size=25=================
+=================Reducing node 181, size=25=================
 
 The current best program is the following
 
@@ -1324,31 +1344,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 180
+Failed to reduce node 181
 ------------------------------------------------------------
 
 
-=================Reducing node 179, size=25=================
-
-The current best program is the following
-
-    void fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 179
-------------------------------------------------------------
-
-
-=================Reducing node 176, size=25=================
+=================Reducing node 178, size=25=================
 
 The current best program is the following
 
@@ -1389,7 +1389,27 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 176 from 25 to 24
+Succeeded to reduce node 178 from 25 to 24
+------------------------------------------------------------
+
+
+=================Reducing node 171, size=24=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 171
 ------------------------------------------------------------
 
 
@@ -1413,7 +1433,7 @@ Failed to reduce node 170
 ------------------------------------------------------------
 
 
-=================Reducing node 169, size=24=================
+=================Reducing node 168, size=24=================
 
 The current best program is the following
 
@@ -1429,27 +1449,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 169
-------------------------------------------------------------
-
-
-=================Reducing node 167, size=24=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 167
+Failed to reduce node 168
 ------------------------------------------------------------
 
 
@@ -1553,7 +1553,7 @@ Failed to reduce node 129
 ------------------------------------------------------------
 
 
-=================Reducing node 161, size=24=================
+=================Reducing node 162, size=24=================
 
 The current best program is the following
 
@@ -1569,7 +1569,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 161
+Failed to reduce node 162
 ------------------------------------------------------------
 
 
@@ -2082,7 +2082,7 @@ Failed to reduce node 12
 ------------------------------------------------------------
 
 
-=================Reducing node 106, size=23=================
+=================Reducing node 108, size=23=================
 
 The current best program is the following
 
@@ -2109,11 +2109,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 106
+Failed to reduce node 108
 ------------------------------------------------------------
 
 
-=================Reducing node 63, size=23==================
+=================Reducing node 64, size=23==================
 
 The current best program is the following
 
@@ -2141,7 +2141,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 63
+Failed to reduce node 64
 ------------------------------------------------------------
 
 
@@ -2177,7 +2177,7 @@ Failed to reduce node 42
 ------------------------------------------------------------
 
 
-=================Reducing node 111, size=23=================
+=================Reducing node 113, size=23=================
 
 The current best program is the following
 
@@ -2206,11 +2206,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 111
+Failed to reduce node 113
 ------------------------------------------------------------
 
 
-=================Reducing node 97, size=23==================
+=================Reducing node 99, size=23==================
 
 The current best program is the following
 
@@ -2239,11 +2239,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 97
+Failed to reduce node 99
 ------------------------------------------------------------
 
 
-=================Reducing node 65, size=23==================
+=================Reducing node 66, size=23==================
 
 The current best program is the following
 
@@ -2272,11 +2272,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 65
+Failed to reduce node 66
 ------------------------------------------------------------
 
 
-=================Reducing node 68, size=23==================
+=================Reducing node 69, size=23==================
 
 The current best program is the following
 
@@ -2318,7 +2318,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 68
+Failed to reduce node 69
 ------------------------------------------------------------
 
 
@@ -2433,39 +2433,6 @@ Failed to reduce node 17
 ------------------------------------------------------------
 
 
-=================Reducing node 113, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star]dd@1
-    fun                      {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 113
-------------------------------------------------------------
-
-
 =================Reducing node 115, size=23=================
 
 The current best program is the following
@@ -2482,7 +2449,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [regular_node]can be epsilon
+// edit action set type: [kleene_star]dd@1
     fun                      {
     }
         main() {
@@ -2499,60 +2466,7 @@ Failed to reduce node 115
 ------------------------------------------------------------
 
 
-=================Reducing node 108, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 108
-------------------------------------------------------------
-
-
-=================Reducing node 99, size=23==================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star]dd@1
-    fun(                   ) {
-    }
-        main   {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 99
-------------------------------------------------------------
-
-
-=================Reducing node 101, size=23=================
+=================Reducing node 117, size=23=================
 
 The current best program is the following
 
@@ -2569,93 +2483,7 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
-    fun(                   ) {
-    }
-        main   {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 101
-------------------------------------------------------------
-
-
-=================Reducing node 70, size=23==================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star]dd@1
-    fun(                   ) {
-    }
-        main() {
-      int var     ;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 70
-------------------------------------------------------------
-
-
-=================Reducing node 71, size=23==================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    fun(                   ) {
-    }
-        main() {
-      int var     ;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 71
-------------------------------------------------------------
-
-
-=================Reducing node 20, size=23==================
-
-The current best program is the following
-
-    fun(                   ) {
+    fun                      {
     }
         main() {
       int var = 99;
@@ -2667,67 +2495,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 20
-------------------------------------------------------------
-
-
-=================Reducing node 119, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 119
-------------------------------------------------------------
-
-
-=================Reducing node 118, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 118
-------------------------------------------------------------
-
-
-=================Reducing node 116, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 116
+Failed to reduce node 117
 ------------------------------------------------------------
 
 
@@ -2751,7 +2519,139 @@ Failed to reduce node 110
 ------------------------------------------------------------
 
 
-=================Reducing node 109, size=23=================
+=================Reducing node 101, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    fun(                   ) {
+    }
+        main   {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 101
+------------------------------------------------------------
+
+
+=================Reducing node 103, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    fun(                   ) {
+    }
+        main   {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 103
+------------------------------------------------------------
+
+
+=================Reducing node 71, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    fun(                   ) {
+    }
+        main() {
+      int var     ;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 71
+------------------------------------------------------------
+
+
+=================Reducing node 72, size=23==================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    fun(                   ) {
+    }
+        main() {
+      int var     ;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 72
+------------------------------------------------------------
+
+
+=================Reducing node 20, size=23==================
 
 The current best program is the following
 
@@ -2767,11 +2667,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 109
+Failed to reduce node 20
 ------------------------------------------------------------
 
 
-=================Reducing node 105, size=23=================
+=================Reducing node 121, size=23=================
 
 The current best program is the following
 
@@ -2787,7 +2687,127 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 105
+Failed to reduce node 121
+------------------------------------------------------------
+
+
+=================Reducing node 120, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 120
+------------------------------------------------------------
+
+
+=================Reducing node 118, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 118
+------------------------------------------------------------
+
+
+=================Reducing node 112, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 112
+------------------------------------------------------------
+
+
+=================Reducing node 111, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 111
+------------------------------------------------------------
+
+
+=================Reducing node 107, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 107
+------------------------------------------------------------
+
+
+=================Reducing node 106, size=23=================
+
+The current best program is the following
+
+    fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 106
 ------------------------------------------------------------
 
 
@@ -2811,7 +2831,7 @@ Failed to reduce node 104
 ------------------------------------------------------------
 
 
-=================Reducing node 102, size=23=================
+=================Reducing node 94, size=23==================
 
 The current best program is the following
 
@@ -2827,11 +2847,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 102
+Failed to reduce node 94
 ------------------------------------------------------------
 
 
-=================Reducing node 93, size=23==================
+=================Reducing node 91, size=23==================
 
 The current best program is the following
 
@@ -2847,11 +2867,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 93
+Failed to reduce node 91
 ------------------------------------------------------------
 
 
-=================Reducing node 90, size=23==================
+=================Reducing node 73, size=23==================
 
 The current best program is the following
 
@@ -2867,11 +2887,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 90
+Failed to reduce node 73
 ------------------------------------------------------------
 
 
-=================Reducing node 72, size=23==================
+=================Reducing node 67, size=23==================
 
 The current best program is the following
 
@@ -2887,11 +2907,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 72
+Failed to reduce node 67
 ------------------------------------------------------------
 
 
-=================Reducing node 66, size=23==================
+=================Reducing node 65, size=23==================
 
 The current best program is the following
 
@@ -2907,11 +2927,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 66
+Failed to reduce node 65
 ------------------------------------------------------------
 
 
-=================Reducing node 64, size=23==================
+=================Reducing node 98, size=23==================
 
 The current best program is the following
 
@@ -2927,27 +2947,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 64
-------------------------------------------------------------
-
-
-=================Reducing node 96, size=23==================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 96
+Failed to reduce node 98
 ------------------------------------------------------------
 
 
@@ -3051,7 +3051,7 @@ Failed to reduce node 43
 ------------------------------------------------------------
 
 
-=================Reducing node 61, size=23==================
+=================Reducing node 62, size=23==================
 
 The current best program is the following
 
@@ -3067,7 +3067,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 61
+Failed to reduce node 62
 ------------------------------------------------------------
 
 

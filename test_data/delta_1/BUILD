@@ -49,6 +49,18 @@ reduce(
 )
 
 reduce(
+    name = "reduce_delta_1_with_content_zip_based_caching",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    log_file = "reduce_delta_1_with_content_zip_based_caching_reduction_log.txt",
+    progress_dump_file = "progress_dump_t_with_content_zip_based_cache_process.log",
+    query_cache_type = "CONTENT_ZIP",
+    reduction_algorithm = "perses_node_with_dfs_delta",
+    source_file = "t.c",
+    test_script = "r.sh",
+)
+
+reduce(
     name = "reduce_delta_1_with_content_lexeme_list_caching",
     enable_edit_caching = True,
     enable_query_caching = True,
@@ -109,6 +121,18 @@ reduce(
 )
 
 reduce(
+    name = "reduce_delta_1_with_rcc_mem_lit",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    log_file = "reduce_delta_1_with_rcc_mem_lit_query_cache_reduction_log.txt",
+    progress_dump_file = "progress_dump_t_with_rcc_mem_lit_cache_process.log",
+    query_cache_type = "RCC_MEM_LIT",
+    reduction_algorithm = "perses_node_with_dfs_delta",
+    source_file = "t.c",
+    test_script = "r.sh",
+)
+
+reduce(
     name = "reduce_delta_1_wo_caching",
     enable_edit_caching = False,
     enable_query_caching = False,
@@ -150,6 +174,11 @@ filegroup(
 )
 
 filegroup(
+    name = "progress_dump_t_with_content_zip_based_cache_process",
+    srcs = ["progress_dump_t_with_content_zip_based_cache_process.log"],
+)
+
+filegroup(
     name = "progress_dump_t_with_content_lexeme_list_cache_process",
     srcs = ["progress_dump_t_with_content_lexeme_list_cache_process.log"],
 )
@@ -157,4 +186,9 @@ filegroup(
 filegroup(
     name = "progress_dump_t_with_config_based_cache_process",
     srcs = ["progress_dump_t_with_config_based_cache_process.log"],
+)
+
+filegroup(
+    name = "progress_dump_t_with_rcc_mem_lit_cache_process",
+    srcs = ["progress_dump_t_with_rcc_mem_lit_cache_process.log"],
 )

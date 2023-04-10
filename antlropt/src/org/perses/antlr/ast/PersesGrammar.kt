@@ -33,7 +33,7 @@ class PersesGrammar(
   val namedActions: ImmutableList<PersesNamedAction>,
   val lexerRules: LexerRuleList,
   val parserRules: ImmutableList<PersesParserRuleAst>,
-  val symbolTable: SymbolTable
+  val symbolTable: SymbolTable,
 ) : AbstractPersesAst() {
 
   enum class GrammarType {
@@ -76,7 +76,7 @@ class PersesGrammar(
     .asSequence()
     .toImmutableMap(
       keyFunc = { it.ruleNameHandle },
-      valueFunc = { it }
+      valueFunc = { it },
     )
 
   fun getRuleNameHandleOrThrow(ruleName: String): RuleNameHandle {
@@ -93,12 +93,12 @@ class PersesGrammar(
       namedActions,
       lexerRules,
       parserRules,
-      symbolTable
+      symbolTable,
     )
   }
 
   fun copyWithNewLexerRuleDefs(
-    newLexerRules: LexerRuleList
+    newLexerRules: LexerRuleList,
   ): PersesGrammar {
     return PersesGrammar(
       grammarType,
@@ -109,12 +109,12 @@ class PersesGrammar(
       namedActions,
       newLexerRules,
       parserRules,
-      symbolTable
+      symbolTable,
     )
   }
 
   fun copyWithNewParserRuleDefs(
-    newParserRules: ImmutableList<PersesParserRuleAst>
+    newParserRules: ImmutableList<PersesParserRuleAst>,
   ): PersesGrammar {
     return PersesGrammar(
       grammarType,
@@ -125,7 +125,7 @@ class PersesGrammar(
       namedActions,
       lexerRules,
       newParserRules,
-      symbolTable
+      symbolTable,
     )
   }
 
@@ -149,7 +149,7 @@ class PersesGrammar(
       namedActions,
       lexerRules,
       newParserRules,
-      symbolTable
+      symbolTable,
     )
   }
 
@@ -179,10 +179,8 @@ class PersesGrammar(
     for (action in namedActions) {
       action.toSourceCode(stream, emptyIndent, SINGLE_LINE_MODE)
     }
-    for (lexerRule in lexerRules.defaultModeLexerRules) {
-      lexerRule.toSourceCode(stream, emptyIndent, MULTI_LINE_MODE)
-      stream.print('\n')
-    }
+    lexerRules.toSourceCode(stream, emptyIndent, MULTI_LINE_MODE)
+    stream.println("\n")
     for (rule in parserRules) {
       rule.toSourceCode(stream, emptyIndent, MULTI_LINE_MODE)
       stream.print('\n')
@@ -207,8 +205,8 @@ class PersesGrammar(
     }
     for (ruleNameHandle in ruleNameToRuleMap.keys) {
       if (!ruleNameToRuleMap[ruleNameHandle]!!
-        .body
-        .isEquivalent(other.ruleNameToRuleMap[ruleNameHandle]!!.body)
+          .body
+          .isEquivalent(other.ruleNameToRuleMap[ruleNameHandle]!!.body)
       ) {
         return false
       }

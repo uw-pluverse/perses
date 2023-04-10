@@ -20,7 +20,7 @@ import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
-import org.perses.util.ShellCommandOnPath
+import org.perses.util.shell.ShellCommandOnPath
 
 object LanguageCpp : LanguageKind(
   name = "cpp",
@@ -30,12 +30,12 @@ object LanguageCpp : LanguageKind(
   defaultFormatterCommands = createPotentialCodeFormatterList(
     ShellCommandOnPath.tryCreating(
       "clang-format",
-      ImmutableList.of(/*in-place formatting*/"-i")
-    )
+      ImmutableList.of(/*in-place formatting*/"-i"),
+    ),
   ),
   allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.SINGLE_TOKEN_PER_LINE,
     EnumFormatControl.COMPACT_ORIG_FORMAT,
-    EnumFormatControl.ORIG_FORMAT
-  )
+    EnumFormatControl.ORIG_FORMAT,
+  ),
 )

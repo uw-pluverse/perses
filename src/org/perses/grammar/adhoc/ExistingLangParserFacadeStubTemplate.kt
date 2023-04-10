@@ -38,7 +38,7 @@ class ExistingLangParserFacadeStubTemplate(
   parserFile,
   lexerFile,
   parserFacadeClassSimpleName,
-  tokenNamesOfIdentifiers
+  tokenNamesOfIdentifiers,
 ) {
 
   override fun createLanguageKind(): String {

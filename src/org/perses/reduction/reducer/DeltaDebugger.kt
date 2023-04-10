@@ -16,27 +16,27 @@
  */
 package org.perses.reduction.reducer
 
-import org.perses.reduction.ReductionListenerManager
+import org.perses.reduction.AsyncReductionListenerManager
 import org.perses.reduction.TreeEditWithItsResult
 import org.perses.reduction.partition.Partition
 import org.perses.reduction.reducer.TreeTransformations.createNodeDeletionActionSetFor
 import org.perses.spartree.AbstractNodeActionSetCache
 import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.spartree.SparTree
+import org.perses.util.Util.lazyAssert
 import java.util.LinkedList
 
 class DeltaDebugger constructor(
-  listenerManager: ReductionListenerManager,
+  listenerManager: AsyncReductionListenerManager,
   nodeActionSetCache: AbstractNodeActionSetCache,
-  treeEditTester: (AbstractSparTreeEdit<*>) -> TreeEditWithItsResult?
+  treeEditTester: (AbstractSparTreeEdit<*>) -> TreeEditWithItsResult?,
 ) : AbstractDeltaDebugger(listenerManager, nodeActionSetCache, treeEditTester) {
 
   override fun reduce(
     tree: SparTree,
     actionsDescription: String,
-    vararg startPartitions: Partition
+    vararg startPartitions: Partition,
   ) {
-
     var worklist = LinkedList<Partition>()
     for (i in startPartitions.size - 1 downTo 0) {
       worklist.add(startPartitions[i])
@@ -49,7 +49,8 @@ class DeltaDebugger constructor(
         while (iterator.hasNext()) {
           val partition = iterator.next()
           val actionSet = createNodeDeletionActionSetFor(
-            partition, actionsDescription + "@" + partition.size()
+            partition,
+            actionsDescription + "@" + partition.size(),
           )
           if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
             listenerManager.onNodeEditActionSetCacheHit(actionSet)
@@ -66,7 +67,7 @@ class DeltaDebugger constructor(
       } while (shouldContinue)
       val copy = worklist
       worklist = LinkedList()
-      assert(worklist !== copy)
+      lazyAssert { worklist !== copy }
       for (partition in copy) {
         val splits = partition.split()
         for (split in splits) {

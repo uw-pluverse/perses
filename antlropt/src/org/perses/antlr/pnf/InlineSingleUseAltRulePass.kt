@@ -28,13 +28,16 @@ class InlineSingleUseAltRulePass : AbstractPnfPass() {
    * Note that this method is intentionally written in this way, to make sure the new def keeps the
    * original order of alternatives, to avoid ambiguity.
    *
-   * @param grammar
+   * @param parserGrammar
    * @return
    *
    * FIXME(cnsun): this needs to be rewritten with the current [MutableGrammar].
    */
-  override fun process(grammar: PersesGrammar): PersesGrammar {
-    val mutableGrammar = MutableGrammar.createParserRulesFrom(grammar)
+  override fun processParserGrammar(
+    parserGrammar: PersesGrammar,
+    lexerGrammar: PersesGrammar?,
+  ): PersesGrammar {
+    val mutableGrammar = MutableGrammar.createParserRulesFrom(parserGrammar)
     val ruleNameList = getSortedRuleNames(mutableGrammar)
     for (ruleName in ruleNameList) {
       val origAlternatives = mutableGrammar.getAltBlock(ruleName).toImmutableList()
@@ -46,7 +49,7 @@ class InlineSingleUseAltRulePass : AbstractPnfPass() {
       // order.
       mutableGrammar.removeRule(ruleName)
       val oldAltToNewAlts = LinkedHashMap<
-        AbstractPersesRuleElement, ArrayList<AbstractPersesRuleElement>>()
+        AbstractPersesRuleElement, ArrayList<AbstractPersesRuleElement>,>()
       for (alternative in origAlternatives) {
         val list = ArrayList<AbstractPersesRuleElement>()
         list.add(alternative)
@@ -70,18 +73,18 @@ class InlineSingleUseAltRulePass : AbstractPnfPass() {
         mutableGrammar.getAltBlock(ruleName).addIfInequivalent(alt)
       }
     }
-    return grammar.copyWithNewParserRuleDefs(mutableGrammar.toParserRuleAstList())
+    return parserGrammar.copyWithNewParserRuleDefs(mutableGrammar.toParserRuleAstList())
   }
 
   private class Candidate(
     val orig: AbstractPersesRuleElement,
-    val replacements: ImmutableList<AbstractPersesRuleElement>
+    val replacements: ImmutableList<AbstractPersesRuleElement>,
   )
 
   companion object {
     private fun computeCandidates(
       mutable: MutableGrammar,
-      alternatives: Collection<AbstractPersesRuleElement>
+      alternatives: Collection<AbstractPersesRuleElement>,
     ): ImmutableList<Candidate> {
       if (alternatives.isEmpty()) {
         return ImmutableList.of()
@@ -114,7 +117,7 @@ class InlineSingleUseAltRulePass : AbstractPnfPass() {
 
     private fun isEquivalentToAny(
       element: AbstractPersesRuleElement,
-      list: Iterable<AbstractPersesRuleElement>
+      list: Iterable<AbstractPersesRuleElement>,
     ): Boolean {
       for (listEle in list) {
         if (listEle.isEquivalent(element)) {

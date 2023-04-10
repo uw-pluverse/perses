@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 class MutableGrammar(
   private val parserRuleAttributesMap: ImmutableMap<RuleNameHandle, ParserRuleAttributes> =
-    ImmutableMap.of()
+    ImmutableMap.of(),
 ) {
 
   // [LinkedHashMap] is for deterministic iteration order.
@@ -104,9 +104,10 @@ class MutableGrammar(
   fun toParserRuleAstList(): ImmutableList<PersesParserRuleAst> {
     return nonEmptyAltBlockSequence()
       .map { (name, altBlock) ->
-        val parserRuleAttributes = parserRuleAttributesMap.getOrDefault(
-          name, ParserRuleAttributes.EMPTY
-        )
+        val parserRuleAttributes: ParserRuleAttributes = parserRuleAttributesMap.getOrDefault(
+          name,
+          ParserRuleAttributes.EMPTY,
+        )!!
         PersesParserRuleAst(name, altBlock.asRuleBody(), parserRuleAttributes)
       }.toImmutableList()
   }
@@ -146,7 +147,7 @@ class MutableGrammar(
 
   // TODO: need test
   fun transform(
-    transformer: (RuleNameHandle, AbstractPersesRuleElement) -> TransformDecision
+    transformer: (RuleNameHandle, AbstractPersesRuleElement) -> TransformDecision,
   ): MutableGrammar {
     val copy = MutableGrammar()
     ruleNameAltPairSequence().forEach { (ruleName, oldDef) ->
@@ -155,6 +156,7 @@ class MutableGrammar(
         is TransformDecision.Delete -> Unit // do nothing.
         is TransformDecision.Replace -> copy.getAltBlock(ruleName)
           .addIfInequivalent(decision.newValue)
+        else -> error("Unhandled case $decision")
       }
     }
     return copy
@@ -163,7 +165,7 @@ class MutableGrammar(
   fun duplicateByReplacing(
     ruleName: RuleNameHandle,
     oldDef: AbstractPersesRuleElement,
-    newDef: AbstractPersesRuleElement
+    newDef: AbstractPersesRuleElement,
   ): MutableGrammar {
     val found = AtomicBoolean(false)
     val newGrammar = transform { name, existingDef ->
@@ -194,7 +196,7 @@ class MutableGrammar(
     fun createRulesFrom(
       rules: Iterable<AbstractPersesRuleDefAst>,
       parserRuleAttributesMap: ImmutableMap<RuleNameHandle, ParserRuleAttributes> =
-        ImmutableMap.of()
+        ImmutableMap.of(),
     ): MutableGrammar {
       val result = MutableGrammar(parserRuleAttributesMap)
       rules.forEach { rule ->

@@ -27,8 +27,11 @@ import org.perses.antlr.ast.TransformDecision
 
 class EliminateEpsilonPass : AbstractPnfPass() {
 
-  override fun process(grammar: PersesGrammar): PersesGrammar {
-    val epsilonList = grammar.parserRules
+  override fun processParserGrammar(
+    parserGrammar: PersesGrammar,
+    lexerGrammar: PersesGrammar?,
+  ): PersesGrammar {
+    val epsilonList = parserGrammar.parserRules
       .asSequence()
       .filter {
         val body = it.body
@@ -42,9 +45,9 @@ class EliminateEpsilonPass : AbstractPnfPass() {
       .distinct()
       .toList()
     if (epsilonList.isEmpty()) {
-      return grammar
+      return parserGrammar
     }
-    val mutable = MutableGrammar.createParserRulesFrom(grammar)
+    val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     // TODO: need to introduce a fixpoint loop, and delete epsilon from sequences.
     val singleEpsilonRuleList = ArrayList<RuleNameHandle>()
     epsilonList.forEach { ruleName ->
@@ -61,8 +64,8 @@ class EliminateEpsilonPass : AbstractPnfPass() {
       altBlock.clear()
       altBlock.addIfInequivalent(
         PersesOptionalAst.createGreedy(
-          AstUtil.createAltBlockIfNecessary(remaining)
-        )
+          AstUtil.createAltBlockIfNecessary(remaining),
+        ),
       )
     }
     val edits = ArrayList<RuleEditTriple>()
@@ -75,7 +78,7 @@ class EliminateEpsilonPass : AbstractPnfPass() {
             is TransformDecision.Keep -> Unit // do nothing.
             is TransformDecision.Replace ->
               edits.add(
-                RuleEditTriple(name = it.key, oldDef = it.value, newDef = decision.newValue)
+                RuleEditTriple(name = it.key, oldDef = it.value, newDef = decision.newValue),
               )
             else -> TODO(decision.toString())
           }
@@ -84,6 +87,6 @@ class EliminateEpsilonPass : AbstractPnfPass() {
     }
     edits.forEach { it.applyTo(mutable) }
 
-    return grammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
+    return parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
   }
 }

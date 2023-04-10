@@ -16,32 +16,59 @@
  */
 package org.perses.program.printer
 
+import com.google.common.annotations.VisibleForTesting
+import org.antlr.v4.runtime.Lexer
 import org.perses.program.EnumFormatControl
 import org.perses.program.TokenizedProgram
 
 object PrinterRegistry {
 
-  fun getPrinter(format: EnumFormatControl) =
+  fun getPrinter(
+    format: EnumFormatControl,
+    lexerClass: Class<out Lexer>? = null,
+  ): AbstractTokenizedProgramPrinter {
+    val tokenPositionProvider = if (lexerClass == null) {
+      AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider.DefaultProvider
+    } else {
+      AbstractTokenizedProgramPrinter.DeducedPositionProvider(lexerClass)
+    }
+    return getPrinter(format, tokenPositionProvider)
+  }
+
+  @VisibleForTesting
+  fun getPrinter(
+    format: EnumFormatControl,
+    tokenPositionProvider: AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider,
+  ): AbstractTokenizedProgramPrinter =
     when (format) {
       EnumFormatControl.SINGLE_TOKEN_PER_LINE -> SingleTokenPerLinePrinter
-      EnumFormatControl.COMPACT_ORIG_FORMAT -> OrigFormatPrinter.COMPACT_ORIG_FORMAT
-      EnumFormatControl.ORIG_FORMAT -> OrigFormatPrinter.ORIG_FORMAT
-      EnumFormatControl.PYTHON3_FORMAT -> PythonPrinter.ORIG_FORMAT
-      EnumFormatControl.COMPACT_PYTHON3_FORMAT -> PythonPrinter.COMPACT_ORIG_FORMAT
+      EnumFormatControl.COMPACT_ORIG_FORMAT ->
+        OrigFormatPrinter.getCompactOrigFormat(tokenPositionProvider)
+      EnumFormatControl.ORIG_FORMAT ->
+        OrigFormatPrinter.getOrigFormat(tokenPositionProvider)
+      EnumFormatControl.PYTHON3_FORMAT ->
+        PythonPrinter.getOrigFormat(tokenPositionProvider)
+      EnumFormatControl.COMPACT_PYTHON3_FORMAT ->
+        PythonPrinter.getCompactOrigFormat(tokenPositionProvider)
     }
 
-  fun printToString(program: TokenizedProgram, format: EnumFormatControl) =
-    getPrinter(format).print(program).sourceCode
+  fun printToString(
+    program: TokenizedProgram,
+    format: EnumFormatControl,
+    lexerClass: Class<out Lexer>? = null,
+  ) = getPrinter(format, lexerClass).print(program).sourceCode
 
-  fun printToStringInOrigFormat(program: TokenizedProgram) =
-    printToString(program, EnumFormatControl.ORIG_FORMAT)
+  fun printToStringInOrigFormat(program: TokenizedProgram, lexerClass: Class<out Lexer>? = null) =
+    printToString(program, EnumFormatControl.ORIG_FORMAT, lexerClass)
 
-  fun printToStringInCompactFormat(program: TokenizedProgram) =
-    printToString(program, EnumFormatControl.COMPACT_ORIG_FORMAT)
+  fun printToStringInCompactFormat(
+    program: TokenizedProgram,
+    lexerClass: Class<out Lexer>? = null,
+  ) = printToString(program, EnumFormatControl.COMPACT_ORIG_FORMAT, lexerClass)
 
   fun printToStringInSingleLineFormat(program: TokenizedProgram) =
     printToString(program, EnumFormatControl.SINGLE_TOKEN_PER_LINE)
 
-  fun printToStringInPythonFormat(program: TokenizedProgram) =
-    printToString(program, EnumFormatControl.PYTHON3_FORMAT)
+  fun printToStringInPythonFormat(program: TokenizedProgram, lexerClass: Class<out Lexer>? = null) =
+    printToString(program, EnumFormatControl.PYTHON3_FORMAT, lexerClass)
 }

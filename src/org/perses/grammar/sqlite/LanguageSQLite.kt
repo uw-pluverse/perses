@@ -20,7 +20,7 @@ import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
-import org.perses.util.ShellCommandOnPath
+import org.perses.util.shell.ShellCommandOnPath
 
 object LanguageSQLite : LanguageKind(
   name = "sqlite",
@@ -30,9 +30,9 @@ object LanguageSQLite : LanguageKind(
   allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.SINGLE_TOKEN_PER_LINE,
     EnumFormatControl.COMPACT_ORIG_FORMAT,
-    EnumFormatControl.ORIG_FORMAT
+    EnumFormatControl.ORIG_FORMAT,
   ),
   defaultFormatterCommands = createPotentialCodeFormatterList(
-    ShellCommandOnPath.tryCreating("clang-format", defaultFlags = ImmutableList.of("-i"))
-  )
+    ShellCommandOnPath.tryCreating("clang-format", defaultFlags = ImmutableList.of("-i")),
+  ),
 )

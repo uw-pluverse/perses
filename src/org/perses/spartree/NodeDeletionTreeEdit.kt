@@ -17,22 +17,52 @@
 package org.perses.spartree
 
 import org.perses.program.TokenizedProgram
+import org.perses.util.Util.lazyAssert
 
 class NodeDeletionTreeEdit internal constructor(
   tree: SparTree,
-  actionSet: NodeDeletionActionSet
-) : AbstractSparTreeEdit<NodeDeletionAction>(actionSet, computeProgram(tree, actionSet)) {
+  actionSet: NodeDeletionActionSet,
+) : AbstractSparTreeEdit<NodeDeletionAction>(actionSet, tree) {
 
   init {
     require(!actionSet.isEmpty)
   }
 
+  override fun internalApplyToTree() {
+    val actions = actionSet.actions
+    val parents = HashSet<AbstractSparTreeNode>()
+    for (action in actions) {
+      val targetNode = action.targetNode
+      targetNode.delete()
+      SparTree.fixLeafLinkByDeleting(targetNode.beginToken!!, targetNode.endToken!!.next!!)
+      if (targetNode.parent != null) {
+        parents.add(targetNode.parent!!)
+      }
+    }
+    for (parent in parents) {
+      parent.cleanDeletedImmediateChildren()
+    }
+    var changed: Boolean
+    do {
+      changed = false
+      for (parent in parents) {
+        if (SparTree.updateTokenIntervalUpToRoot(parent)) {
+          changed = true
+        }
+      }
+    } while (changed)
+  }
+
+  override fun computeProgram(tree: SparTree): TokenizedProgram {
+    return tree.customizeProgram(TokenizedProgramConstructor(actionSet))
+  }
+
   private class TokenizedProgramConstructor(
-    actionSet: NodeDeletionActionSet
+    actionSet: AbstractActionSet<NodeDeletionAction>,
   ) : AbstractTokenizedProgramCustomizer(actionSet) {
 
     override fun visit(node: AbstractSparTreeNode): List<AbstractSparTreeNode> {
-      assert(!node.isPermanentlyDeleted)
+      lazyAssert { !node.isPermanentlyDeleted }
       if (node.isPermanentlyDeleted) {
         return emptyList()
       }
@@ -44,15 +74,6 @@ class NodeDeletionTreeEdit internal constructor(
       }
       addTokenIntervalToResult(node)
       return emptyList()
-    }
-  }
-
-  companion object {
-    private fun computeProgram(
-      tree: SparTree,
-      actionSet: NodeDeletionActionSet
-    ): TokenizedProgram {
-      return tree.customizeProgram(TokenizedProgramConstructor(actionSet))
     }
   }
 }

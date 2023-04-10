@@ -16,3 +16,14 @@ py_test(
     srcs = ["sanity_failure_msg_should_be_pretty_printed.py"],
     data = ["sanity_failure_log.txt"],
 )
+
+sh_test(
+    name = "flaky_msg_should_be_printed",
+    srcs = ["flaky_property_should_be_detected.sh"],
+    args = [
+        "$(location //src/org/perses)",
+    ],
+    data = [
+        "//src/org/perses",
+    ],
+)

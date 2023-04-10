@@ -36,9 +36,9 @@ class ConvertAllAltToRuleReferenceOrTerminalPassTest {
         start: 'a' 'b' 
              | 'c' 'd'
              ;
-      """.trimIndent()
+      """.trimIndent(),
     )
-    val processed = pass.process(orig)
+    val processed = pass.processParserGrammar(orig, lexerGrammar = null)
     val body = processed.getRuleDefinition("start")!!.body
     assertThat(body).isInstanceOf(PersesAlternativeBlockAst::class.java)
     assertThat(body.childCount).isEqualTo(2)

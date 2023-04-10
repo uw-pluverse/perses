@@ -42,6 +42,11 @@ Usage: org.perses.Main [options]
       Enable line slicer after syntax-guided reduction, and before token 
       slicer 
       Default: false
+    --list-langs
+      List all the supported langauges.
+    --lang
+      The language to be used to parse the input program
+      Default: auto
     --language-ext-jars
       A list of JAR files to support new languages
       Default: []
@@ -62,10 +67,13 @@ Usage: org.perses.Main [options]
     --profile
       profile the reduction process for analysis
       Default: false
-    --script-monitoring-interval-millis
-      the interval in milliseconds to monitor the performance of test script 
-      executions 
-      Default: 300000
+    --script-execution-timeout-in-seconds
+      the interval in seconds to timeout the test script executions. the 
+      default timeout is 600 seconds.
+      Default: 600
+    --script-execution-keep-waiting-after-timeout
+      keep trying even after the script execution timeouts.
+      Default: true
     --verbosity
       verbosity of logging
       Default: INFO

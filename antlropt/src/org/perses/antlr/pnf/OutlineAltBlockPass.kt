@@ -25,8 +25,11 @@ import org.perses.antlr.ast.PersesRuleReferenceAst
 
 class OutlineAltBlockPass : AbstractPnfPass() {
 
-  override fun process(grammar: PersesGrammar): PersesGrammar {
-    val mutable = MutableGrammar.createParserRulesFrom(grammar)
+  override fun processParserGrammar(
+    parserGrammar: PersesGrammar,
+    lexerGrammar: PersesGrammar?,
+  ): PersesGrammar {
+    val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     mutable.nonEmptyAltBlockSequence()
       .toList()
       .forEach { (name, altBlock) ->
@@ -52,6 +55,6 @@ class OutlineAltBlockPass : AbstractPnfPass() {
           }
         }
       }
-    return grammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
+    return parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
   }
 }

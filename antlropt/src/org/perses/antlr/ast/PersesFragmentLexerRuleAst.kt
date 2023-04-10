@@ -21,7 +21,7 @@ import java.io.PrintStream
 
 class PersesFragmentLexerRuleAst(
   ruleNameHandle: RuleNameRegistry.RuleNameHandle,
-  body: AbstractPersesRuleElement
+  body: AbstractPersesRuleElement,
 ) : AbstractPersesLexerRuleAst(ruleNameHandle, body) {
 
   override fun copyWithNewBody(newBody: AbstractPersesRuleElement): PersesFragmentLexerRuleAst {

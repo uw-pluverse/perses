@@ -34,9 +34,9 @@ class LanguageAdhoc {
       defaultFormatterCommands = ImmutableList.of(
         SerializableLanguageKind.ShellCommandData(
           "clang-format",
-          ImmutableList.of("-i")
-        )
-      )
+          ImmutableList.of("-i"),
+        ),
+      ),
     ).toLanguageKind()
   }
 }

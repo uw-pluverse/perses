@@ -16,7 +16,39 @@
  */
 package org.perses.spartree
 
+import org.perses.util.Util.lazyAssert
+
 class NodeReplacementTreeEdit internal constructor(
   tree: SparTree,
-  actionSet: ChildHoistingActionSet
-) : AbstructNodeReplacementTreeEdit(tree, actionSet)
+  actionSet: ChildHoistingActionSet,
+) : AbstractNodeReplacementTreeEdit(tree, actionSet) {
+
+  init {
+    require(actionSet.actions.size == 1) {
+      "Only single action is allowed for not."
+    }
+  }
+
+  override fun internalApplyToTree() {
+    val action = actionSet.actions.single()
+    val targetNode = action.targetNode
+    val childToHoist = action.replacingChild
+    childToHoist.parent!!.removeChild(childToHoist)
+    lazyAssert { childToHoist.parent == null }
+    val payload = AbstractNodePayload.concatenatePaylods(
+      targetNode.payload!!,
+      childToHoist.payload!!,
+    )
+    childToHoist.resetPayload()
+    targetNode.parent!!.replaceChild(
+      targetNode,
+      childToHoist,
+      payload,
+    )
+    lazyAssert { targetNode.parent == null }
+    targetNode.delete()
+    SparTree.fixLeafLinkByDeleting(targetNode.beginToken!!, childToHoist.beginToken!!)
+    SparTree.fixLeafLinkByDeleting(childToHoist.endToken!!.next!!, targetNode.endToken!!.next!!)
+    childToHoist.parent?.let { SparTree.updateTokenIntervalUpToRoot(it) }
+  }
+}

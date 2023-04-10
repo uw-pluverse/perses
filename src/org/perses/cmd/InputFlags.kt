@@ -29,7 +29,7 @@ open class InputFlags : ICommandLineFlags {
     names = ["--test-script", "--test", "-t"],
     required = true,
     description = "The test script to specify the property the reducer needs to preserve.",
-    order = CommonCmdOptionGroupOrder.COMPULSORY + 0
+    order = CommonCmdOptionGroupOrder.COMPULSORY + 0,
   )
   var testScript: String? = null
 
@@ -38,7 +38,7 @@ open class InputFlags : ICommandLineFlags {
     names = ["--input-file", "--input", "-i"],
     required = true,
     description = "The input file to reduce",
-    order = CommonCmdOptionGroupOrder.COMPULSORY + 1
+    order = CommonCmdOptionGroupOrder.COMPULSORY + 1,
   )
   var inputFile: String? = null
 

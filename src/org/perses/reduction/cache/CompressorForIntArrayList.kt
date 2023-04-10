@@ -30,7 +30,8 @@ import me.lemire.integercompression.differential.SkippableIntegratedIntegerCODEC
 class CompressorForIntArrayList {
 
   private val codec: SkippableIntegratedIntegerCODEC = SkippableIntegratedComposition(
-    IntegratedBinaryPacking(), IntegratedVariableByte()
+    IntegratedBinaryPacking(),
+    IntegratedVariableByte(),
   )
 
   fun compress(intArrayList: IntArrayList): IntArray {
@@ -55,7 +56,7 @@ class CompressorForIntArrayList {
       decompressed,
       IntWrapper(0),
       decompressed.size,
-      IntWrapper(0)
+      IntWrapper(0),
     )
     return decompressed
   }

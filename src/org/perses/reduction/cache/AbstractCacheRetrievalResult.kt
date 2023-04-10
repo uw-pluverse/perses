@@ -22,7 +22,7 @@ import org.perses.reduction.PropertyTestResult
 abstract class AbstractCacheRetrievalResult private constructor(
   val owner: Any,
   val program: TokenizedProgram,
-  private val encodingField: AbstractProgramEncoding<*>?
+  private val encodingField: AbstractProgramEncoding<*>?,
 ) {
 
   fun hasEncoding() = encodingField != null
@@ -41,14 +41,14 @@ abstract class AbstractCacheRetrievalResult private constructor(
     owner: Any,
     program: TokenizedProgram,
     encoding: AbstractProgramEncoding<*>?,
-    val testResult: PropertyTestResult
+    val testResult: PropertyTestResult,
   ) :
     AbstractCacheRetrievalResult(owner, program, encoding)
 
   class CacheMiss(
     owner: Any,
     program: TokenizedProgram,
-    encoding: AbstractProgramEncoding<*>?
+    encoding: AbstractProgramEncoding<*>?,
   ) : AbstractCacheRetrievalResult(owner, program, encoding)
 
   companion object {
@@ -56,7 +56,7 @@ abstract class AbstractCacheRetrievalResult private constructor(
       owner: Any,
       program: TokenizedProgram,
       encoding: AbstractProgramEncoding<*>?,
-      testResult: PropertyTestResult?
+      testResult: PropertyTestResult?,
     ): AbstractCacheRetrievalResult {
       return if (testResult == null) {
         CacheMiss(owner, program, encoding)

@@ -66,7 +66,7 @@ class IndirectRightRecursionEliminationPassTest : PnfRightTestGrammar() {
   @Test
   fun test_transformRightForScc() {
     val grammars: List<Set<RuleNameRegistry.RuleNameHandle>> = getSortedSccList(
-      createForRightmostTransition(grammar)
+      createForRightmostTransition(grammar),
     ).asSequence()
       .map { it.vertexSet() }
       .toList()

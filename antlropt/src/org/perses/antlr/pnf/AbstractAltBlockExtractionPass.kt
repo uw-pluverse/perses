@@ -29,8 +29,11 @@ import org.perses.util.Interval
 
 abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
 
-  final override fun process(grammar: PersesGrammar): PersesGrammar {
-    val mutable = MutableGrammar.createParserRulesFrom(grammar)
+  final override fun processParserGrammar(
+    parserGrammar: PersesGrammar,
+    lexerGrammar: PersesGrammar?,
+  ): PersesGrammar {
+    val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     var changed: Boolean
     do {
       changed = false
@@ -47,13 +50,13 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
         }
       }
     } while (changed)
-    return grammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
+    return parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
   }
 
   abstract fun searchForCandidate(sequences: List<PersesSequenceAst>): AbstractCandidate?
 
   abstract class AbstractCandidate(
-    val sequences: List<PersesSequenceAst>
+    val sequences: List<PersesSequenceAst>,
   ) {
 
     init {
@@ -63,7 +66,7 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
     fun apply(ruleName: RuleNameHandle, grammar: MutableGrammar) {
       sequences.forEach { grammar.getAltBlock(ruleName).removeAlt(it) }
       val alternatives = AstUtil.flattenAndDeduplicateAlternatives(
-        getGapsToDelete()
+        getGapsToDelete(),
       )
       check(alternatives.size > 1)
       val altBlockName = ruleName.createAuxiliaryRuleName(RuleType.ALT_BLOCKS)
@@ -90,7 +93,7 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
 
   class CommonPrefixCandidate(
     sequences: List<PersesSequenceAst>,
-    val prefixLength: Int
+    val prefixLength: Int,
   ) : AbstractCandidate(sequences) {
 
     init {
@@ -104,7 +107,7 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
 
   class CommonPostfixCandidate(
     sequences: List<PersesSequenceAst>,
-    val postfixLength: Int
+    val postfixLength: Int,
   ) : AbstractCandidate(sequences) {
 
     init {
@@ -119,7 +122,7 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
   class InfixCandidate(
     sequences: List<PersesSequenceAst>,
     val prefixLength: Int,
-    val postfixLength: Int
+    val postfixLength: Int,
   ) : AbstractCandidate(sequences) {
     init {
       require(prefixLength > 0)
@@ -135,7 +138,7 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
 
     fun getAllSequences(
       defMap: MutableGrammar,
-      ruleName: RuleNameRegistry.RuleNameHandle
+      ruleName: RuleNameRegistry.RuleNameHandle,
     ): List<PersesSequenceAst> {
       return defMap.getAltBlock(ruleName)
         .asSequence()
@@ -147,11 +150,11 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
     private val candidateTypePreferenceGreatestToLeast = ImmutableList.of(
       InfixCandidate::class.java,
       CommonPrefixCandidate::class.java,
-      CommonPostfixCandidate::class.java
+      CommonPostfixCandidate::class.java,
     )
 
     private fun createCandidateComparator(
-      tiebreaker: ImmutableMap<AbstractCandidate, TieBreaker>
+      tiebreaker: ImmutableMap<AbstractCandidate, TieBreaker>,
     ) = compareByDescending<AbstractCandidate> {
       it.sequences.size
     }.thenComparingInt {
@@ -163,7 +166,7 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
 
     fun <T : AbstractCandidate> selectBestCandidate(
       candidates: List<T>,
-      originalSequences: List<PersesSequenceAst>
+      originalSequences: List<PersesSequenceAst>,
     ): T? {
       if (candidates.isEmpty()) {
         return null
@@ -177,7 +180,7 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
 
     private data class TieBreaker(
       val minIndex: Int,
-      val continuity: Int
+      val continuity: Int,
     ) : Comparable<TieBreaker> {
 
       override fun compareTo(other: TieBreaker): Int {
@@ -187,7 +190,7 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
 
     private fun createTieBreakers(
       candidates: List<AbstractCandidate>,
-      originalSequences: List<PersesSequenceAst>
+      originalSequences: List<PersesSequenceAst>,
     ): ImmutableMap<AbstractCandidate, TieBreaker> {
       val builder = ImmutableMap.builder<AbstractCandidate, TieBreaker>()
       candidates.forEach { candidate ->
@@ -224,7 +227,7 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
     private class PrefixSequenceEntry(
       prefix: AbstractPersesRuleElement,
       sequence: PersesSequenceAst,
-      val direction: AbstractDirection
+      val direction: AbstractDirection,
     ) {
 
       private val prefix = ArrayList<AbstractPersesRuleElement>().apply {
@@ -260,7 +263,7 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
         val minSequenceLength = sequences.map { it.childCount }.minOrNull()!!
         while (i < minSequenceLength) {
           val equivalentClasses = AstUtil.findEquivalenceAst(
-            sequences.map { direction.getElement(it, i) }.toList()
+            sequences.map { direction.getElement(it, i) }.toList(),
           )
           ++i
           if (equivalentClasses.size == 1) {
@@ -276,7 +279,8 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
       sequences: List<PersesSequenceAst>,
     ): List<CommonPrefixCandidate> {
       return computeCandidatesClosedPrefixOrPostfix(
-        sequences, FORWARD_DIRECTION
+        sequences,
+        FORWARD_DIRECTION,
       ) { sequencesList, lengthOfPrefix ->
         CommonPrefixCandidate(sequencesList, lengthOfPrefix)
       }
@@ -286,7 +290,8 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
       sequences: List<PersesSequenceAst>,
     ): List<CommonPostfixCandidate> {
       return computeCandidatesClosedPrefixOrPostfix(
-        sequences, BACKWARD_DIRECTION
+        sequences,
+        BACKWARD_DIRECTION,
       ) { sequencesList, lengthOfPrefix ->
         CommonPostfixCandidate(sequencesList, lengthOfPrefix)
       }
@@ -295,7 +300,7 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
     fun computeCandidateInfix(
       prefixCandidates: List<CommonPrefixCandidate>,
       postfixCandidates: List<CommonPostfixCandidate>,
-      originalSequences: List<PersesSequenceAst>
+      originalSequences: List<PersesSequenceAst>,
     ): InfixCandidate? {
       val bestPrefixCandidate =
         selectBestCandidate(prefixCandidates, originalSequences) ?: return null
@@ -305,7 +310,7 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
         InfixCandidate(
           bestPrefixCandidate.sequences,
           prefixLength = bestPrefixCandidate.prefixLength,
-          postfixLength = bestPostfixCandidate.postfixLength
+          postfixLength = bestPostfixCandidate.postfixLength,
         )
       } else {
         null
@@ -315,7 +320,7 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
     private fun <T : AbstractCandidate> computeCandidatesClosedPrefixOrPostfix(
       sequences: List<PersesSequenceAst>,
       direction: AbstractDirection,
-      candidateCreator: (List<PersesSequenceAst>, Int) -> T
+      candidateCreator: (List<PersesSequenceAst>, Int) -> T,
     ): List<T> {
       val firstBatch = ArrayList<PrefixSequenceEntry>()
       sequences.forEach { s ->

@@ -26,7 +26,7 @@ class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
   @Parameter(
     names = ["--alg"],
     description = "reduction algorithm: use --list-algs to list all available algorithms",
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 0
+    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 0,
   )
   var reductionAlgorithm: String? = null
 
@@ -35,7 +35,7 @@ class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
     names = ["--list-algs"],
     description = "list all the reduction algorithms.",
     help = true,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 1
+    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 1,
   )
   var listAllReductionAlgorithms = false
 
@@ -44,7 +44,7 @@ class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
     description = "Reparse the program before the start of each fixpoint iteration.",
     arity = 1,
     hidden = true,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 2
+    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 2,
   )
   var rebuildParseTreeEachIteration = true
 
@@ -52,7 +52,7 @@ class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
     names = ["--enable-token-slicer"],
     description = "Enable token slicer after syntax-guided reduction is done. Maybe slow.",
     arity = 1,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 3
+    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 3,
   )
   var enableTokenSlicer = false
 
@@ -60,7 +60,7 @@ class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
     names = ["--enable-tree-slicer"],
     description = "Enable tree slicer after syntax-guided reduction, and before token slicer",
     arity = 1,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 4
+    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 4,
   )
   var enableTreeSlicer = false
 
@@ -68,7 +68,7 @@ class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
     names = ["--enable-line-slicer"],
     description = "Enable line slicer after syntax-guided reduction, and before token slicer",
     arity = 1,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 5
+    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 5,
   )
   var enableLineSlicer = false
 
@@ -77,7 +77,7 @@ class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
     description = "Whether to use the real delta debugging algorithm to reduce kleene nodes.",
     arity = 1,
     hidden = true,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 6
+    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 6,
   )
   var useRealDeltaDebugger = false
 
@@ -87,7 +87,7 @@ class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
     description = "Use the OptC parser to construct the spar-tree.",
     arity = 1,
     hidden = true,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 7
+    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 7,
   )
   var useOptCParser = false
 
@@ -97,7 +97,7 @@ class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
     description = "The max count of edit candidates for reducing a regular rule node.",
     arity = 1,
     hidden = true,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 9
+    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 9,
   )
   var maxEditCountForRegularRuleNode = 100
 
@@ -107,7 +107,7 @@ class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
     description = "The max count of edit candidates for reducing a regular rule node.",
     arity = 1,
     hidden = true,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 10
+    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 10,
   )
   var maxBfsDepthForRegularRuleNode = 5
 
@@ -117,7 +117,7 @@ class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
     description = "The max count of edit candidates for reducing a regular rule node.",
     arity = 1,
     hidden = true,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 11
+    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 11,
   )
   var stopAtFirstCompatibleChildForRegularRuleNode = false
 

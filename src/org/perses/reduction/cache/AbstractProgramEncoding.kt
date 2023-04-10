@@ -18,7 +18,7 @@ package org.perses.reduction.cache
 
 abstract class AbstractProgramEncoding<T : AbstractProgramEncoding<T>>(
   protected val hashcode: Int,
-  val tokenCount: Int // TODO: check if tokenCount needs to be 'internal'
+  val tokenCount: Int, // TODO: check if tokenCount needs to be 'internal'
 ) {
 
   override fun hashCode(): Int {
@@ -32,7 +32,8 @@ abstract class AbstractProgramEncoding<T : AbstractProgramEncoding<T>>(
     if (other == null || javaClass != other.javaClass) {
       return false
     }
-    @Suppress("UNCHECKED_CAST") val that = other as T
+    @Suppress("UNCHECKED_CAST")
+    val that = other as T
     return hashcode == that.hashcode && tokenCount == that.tokenCount && extraEquals(that)
   }
 

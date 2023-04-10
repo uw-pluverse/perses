@@ -36,7 +36,7 @@ object AstUtil {
     initial: T,
     stopCriterion: (prev: T, transformed: T) -> Boolean =
       { prev, transformed -> prev != transformed },
-    transform: (T) -> T
+    transform: (T) -> T,
   ): T {
     var current = initial
     var changed: Boolean
@@ -53,7 +53,9 @@ object AstUtil {
       AstTag.SEQUENCE,
       AstTag.RULE_REF,
       AstTag.TERMINAL,
-      AstTag.UNKNOWN_TERMINAL_WITH_UNIT_PRECEDENCE -> return true
+      AstTag.UNKNOWN_TERMINAL_WITH_UNIT_PRECEDENCE,
+      -> return true
+      else -> {}
     }
     if (e is AbstractPersesTerminalAst) {
       return true
@@ -106,14 +108,14 @@ object AstUtil {
   }
 
   fun concatenateByIgnoringEpsilon(
-    elements: List<AbstractPersesRuleElement>
+    elements: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     val children = normalizeElementList(elements)
     return SmartAstConstructor.createForSequence(children)
   }
 
   private fun normalizeElementList(
-    elements: List<AbstractPersesRuleElement>
+    elements: List<AbstractPersesRuleElement>,
   ): ImmutableList<AbstractPersesRuleElement> {
     // TODO: convert 'a a*' into a+
     var changed = true
@@ -132,7 +134,7 @@ object AstUtil {
   }
 
   internal fun convertStarToPlus(
-    list: List<AbstractPersesRuleElement>
+    list: List<AbstractPersesRuleElement>,
   ): ImmutableList<AbstractPersesRuleElement> {
     return fixpoint(ImmutableList.copyOf(list)) { current ->
       val starList = current.withIndex()
@@ -174,28 +176,28 @@ object AstUtil {
   private fun doesBodyAppearAfterStar(
     quantifiedElements: ImmutableList<AbstractPersesRuleElement>,
     index: Int,
-    current: List<AbstractPersesRuleElement>
+    current: List<AbstractPersesRuleElement>,
   ) =
     quantifiedElements.size + index < current.size &&
       areEquivalent(
         quantifiedElements,
-        current.subList(index + 1, quantifiedElements.size + index + 1)
+        current.subList(index + 1, quantifiedElements.size + index + 1),
       )
 
   private fun doesBodyAppearBeforeStar(
     quantifiedElements: ImmutableList<AbstractPersesRuleElement>,
     index: Int,
-    list: List<AbstractPersesRuleElement>
+    list: List<AbstractPersesRuleElement>,
   ) =
     quantifiedElements.size <= index &&
       areEquivalent(
         quantifiedElements,
-        list.subList(index - quantifiedElements.size, index)
+        list.subList(index - quantifiedElements.size, index),
       )
 
   private fun areEquivalent(
     list1: List<AbstractPersesRuleElement>,
-    list2: List<AbstractPersesRuleElement>
+    list2: List<AbstractPersesRuleElement>,
   ): Boolean {
     require(list1.size == list2.size) {
       "Two lists should have the same length"
@@ -206,7 +208,7 @@ object AstUtil {
   }
 
   private fun removeEpsilon(
-    list: ImmutableList<AbstractPersesRuleElement>
+    list: ImmutableList<AbstractPersesRuleElement>,
   ): ImmutableList<AbstractPersesRuleElement> {
     return list.asSequence()
       .filter { it.tag != AstTag.EPSILON }
@@ -216,7 +218,7 @@ object AstUtil {
   fun replaceGapInSequence(
     seq: PersesSequenceAst,
     gap: Interval,
-    replacement: AbstractPersesRuleElement
+    replacement: AbstractPersesRuleElement,
   ): PersesSequenceAst {
     require(gap.length > 0)
     require(gap.length < seq.childCount)
@@ -239,7 +241,7 @@ object AstUtil {
 
   // TODO: needs tests
   fun createAltBlockIfNecessary(
-    alternatives: Collection<AbstractPersesRuleElement>
+    alternatives: Collection<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     val flattened = flattenAndDeduplicateAlternatives(alternatives)
     require(flattened.isNotEmpty())
@@ -256,14 +258,15 @@ object AstUtil {
       assert(nonEpsilonAlternatives.isNotEmpty())
       return if (nonEpsilonAlternatives.size == 1) {
         SmartAstConstructor.createForOptional(
-          nonEpsilonAlternatives.single(), isGreedy = true
+          nonEpsilonAlternatives.single(),
+          isGreedy = true,
         )
       } else {
         SmartAstConstructor.createForOptional(
           OptionalExtractionUtil.rewriteAltBlockByExtractingOptionals(
-            nonEpsilonAlternatives
+            nonEpsilonAlternatives,
           ),
-          isGreedy = true
+          isGreedy = true,
         )
       }
     } else {
@@ -273,7 +276,7 @@ object AstUtil {
 
   @JvmStatic
   fun flattenAndDeduplicateAlternatives(
-    alternatives: Collection<AbstractPersesRuleElement>
+    alternatives: Collection<AbstractPersesRuleElement>,
   ): List<AbstractPersesRuleElement> {
     val flattened = flattenAltBlocks(alternatives)
     val size = flattened.size
@@ -285,7 +288,7 @@ object AstUtil {
   }
 
   private fun flattenAltBlocks(
-    alternatives: Collection<AbstractPersesRuleElement>
+    alternatives: Collection<AbstractPersesRuleElement>,
   ): ArrayList<AbstractPersesRuleElement> {
     val result = ArrayList<AbstractPersesRuleElement>()
     for (alternative in alternatives) {
@@ -296,7 +299,7 @@ object AstUtil {
 
   private fun flatten(
     element: AbstractPersesRuleElement,
-    result: ArrayList<AbstractPersesRuleElement>
+    result: ArrayList<AbstractPersesRuleElement>,
   ) {
     if (element is PersesAlternativeBlockAst) {
       for (blockAlternative in element.alternatives) {

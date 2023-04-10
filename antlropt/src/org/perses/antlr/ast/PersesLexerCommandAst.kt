@@ -22,7 +22,7 @@ import java.io.PrintStream
 
 class PersesLexerCommandAst(
   val commands: ImmutableList<AbstractLexerCommand>,
-  val body: AbstractPersesRuleElement
+  val body: AbstractPersesRuleElement,
 ) : AbstractPersesRuleElement() {
 
   init {
@@ -38,7 +38,7 @@ class PersesLexerCommandAst(
     get() = AstTag.LEXER_COMMAND
 
   override fun createWithNewChildren(
-    newChildren: List<AbstractPersesRuleElement>
+    newChildren: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     require(newChildren.size == 1)
     return PersesLexerCommandAst(commands, newChildren[0])

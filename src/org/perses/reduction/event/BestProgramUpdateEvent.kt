@@ -20,12 +20,13 @@ class BestProgramUpdateEvent(
   val currentFixpointIteration: FixpointIterationStartEvent,
   currentTimeMillis: Long,
   val programSizeBefore: Int,
-  programSizeAfter: Int
+  programSizeAfter: Int,
 ) : AbstractReductionEventWithProgramSize(currentTimeMillis, programSizeAfter) {
 
   init {
     // FIXME: this also needs to check the num of chars of tokens in the case of ==.
-    check(programSizeBefore >= programSizeAfter)
+    //   FIXME(cnsun): fix this assertion
+    //   check(programSizeBefore >= programSizeAfter)
   }
 
   override fun initialProgramSize() = currentFixpointIteration.initialProgramSize()

@@ -2,6 +2,8 @@
 // DO NOT MODIFY.
 grammar test_grammar_1;
 
+
+
 s
     : a
     | aux_rule__s_1

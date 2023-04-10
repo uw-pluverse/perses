@@ -5,6 +5,8 @@ parser grammar PnfPhpParser;
 options {
     tokenVocab=PhpLexer;
 }
+
+
 htmlDocument
     : optional__htmlDocument_1 kleene_star__htmlDocument_3 EOF
     ;

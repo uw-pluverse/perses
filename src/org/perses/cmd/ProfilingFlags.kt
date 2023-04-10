@@ -24,35 +24,35 @@ class ProfilingFlags : ICommandLineFlags {
   @Parameter(
     names = ["--progress-dump-file"],
     description = "The file to record the reduction process. The dump file can be large..",
-    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 0
+    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 0,
   )
   var progressDumpFile: String? = null
 
   @Parameter(
     names = ["--stat-dump-file"],
     description = "The file to save the statistics collected during reduction.",
-    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 10
+    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 10,
   )
   var statDumpFile: String? = null
 
   @Parameter(
     names = ["--profile-query-cache"],
     description = "The file to save the profiling data of the query cache.",
-    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 20
+    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 20,
   )
   var profileQueryCacheTime: String? = null
 
   @Parameter(
     names = ["--profile-query-cache-memory"],
     description = "The file to save the profiling data of the query cache.",
-    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 30
+    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 30,
   )
   var profileQueryCacheMemory: String? = null
 
   @Parameter(
     names = ["--profile-actionset"],
     description = "The file to save information of all the created edit action sets.",
-    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 40
+    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 40,
   )
   var actionSetProfiler: String? = null
 
@@ -60,20 +60,29 @@ class ProfilingFlags : ICommandLineFlags {
     names = ["--profile"],
     description = "profile the reduction process for analysis",
     arity = 1,
-    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 50
+    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 50,
   )
   var profile = false
 
   @Parameter(
-    names = ["--script-monitoring-interval-millis"],
-    description = "the interval in milliseconds to monitor " +
-      "the performance of test script executions",
-    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 60
+    names = ["--script-execution-timeout-in-seconds"],
+    description = "the interval in seconds to timeout " +
+      "the test script executions. the default timeout is 600 seconds.",
+    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 60,
   )
-  var testScriptExecutionPerformanceMonitorIntervalMillis = 1000 * 60 * 5
+  var testScriptExecutionTimeoutInSeconds: Long = 600L
+
+  @Parameter(
+    names = ["--script-execution-keep-waiting-after-timeout"],
+    description = "keep trying even after " +
+      "the script execution timeouts.",
+    arity = 1,
+    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 70,
+  )
+  var testScriptExecutionKeepWaitingAfterTimeout: Boolean = true
 
   override fun validate() {
-    check(testScriptExecutionPerformanceMonitorIntervalMillis > 0)
+    check(testScriptExecutionTimeoutInSeconds > 0)
     check(profileQueryCacheMemory == null || profileQueryCacheTime == null) {
       "Only at most one flag can be enabled."
     }

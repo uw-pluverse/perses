@@ -34,7 +34,7 @@ class DeltaDebuggingReducerTest : AbstractReducerFunctionalTest() {
         |  int a = 99;
         |  return a;
         |}
-      """.trimMargin()
+      """.trimMargin(),
     )
   }
 }

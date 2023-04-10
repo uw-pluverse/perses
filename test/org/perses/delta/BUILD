@@ -13,7 +13,7 @@ kt_jvm_test(
         "//:guava",
         "//:truth",
         "//src/org/perses/delta",
-        "//src/org/perses/util:perses_kt_exts",
+        "//src/org/perses/util",
     ],
 )
 
@@ -24,7 +24,7 @@ kt_jvm_test(
         "//:guava",
         "//:truth",
         "//src/org/perses/delta",
-        "//src/org/perses/util:perses_kt_exts",
+        "//src/org/perses/util",
     ],
 )
 
@@ -35,6 +35,6 @@ kt_jvm_test(
         "//:guava",
         "//:truth",
         "//src/org/perses/delta",
-        "//src/org/perses/util:perses_kt_exts",
+        "//src/org/perses/util",
     ],
 )

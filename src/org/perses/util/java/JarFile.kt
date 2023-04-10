@@ -30,7 +30,7 @@ import java.util.zip.ZipFile
 
 class JarFile(
   val path: Path,
-  val mainClassFullName: String
+  val mainClassFullName: String,
 ) : AutoCloseable {
 
   private val lazyClassLoader = lazy {
@@ -56,10 +56,12 @@ class JarFile(
 
   fun readTextFile(
     pathInZip: String,
-    charset: Charset = StandardCharsets.UTF_8
+    charset: Charset = StandardCharsets.UTF_8,
   ): String {
     return readTextFileInZipFile(
-      path, pathInZip, charset
+      path,
+      pathInZip,
+      charset,
     )
   }
 
@@ -103,7 +105,7 @@ class JarFile(
     fun readTextFileInZipFile(
       zipFilePath: Path,
       pathInZip: String,
-      charset: Charset = StandardCharsets.UTF_8
+      charset: Charset = StandardCharsets.UTF_8,
     ): String {
       ZipFile(zipFilePath.toFile()).use { zipFile ->
         val entry: ZipEntry = zipFile.getEntry(pathInZip)

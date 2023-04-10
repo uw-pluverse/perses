@@ -23,6 +23,7 @@ import com.google.common.primitives.ImmutableIntArray
 import org.antlr.v4.runtime.Lexer
 import org.antlr.v4.runtime.Parser
 import org.antlr.v4.runtime.Token
+import org.antlr.v4.runtime.Token.DEFAULT_CHANNEL
 import org.antlr.v4.runtime.tree.ParseTree
 import org.antlr.v4.runtime.tree.TerminalNode
 import org.perses.antlr.AbstractAntlrGrammar
@@ -32,6 +33,7 @@ import org.perses.antlr.ParseTreeWithParser
 import org.perses.antlr.ast.PersesAstBuilder.Companion.loadGrammarFromString
 import org.perses.program.LanguageKind
 import org.perses.util.Util
+import org.perses.util.Util.lazyAssert
 import java.io.IOException
 import java.io.Reader
 import java.io.StringReader
@@ -45,7 +47,7 @@ import java.util.ArrayDeque
 abstract class AbstractParserFacade protected constructor(
   val language: LanguageKind,
   val antlrGrammar: AbstractAntlrGrammar,
-  val identifierTokenTypes: ImmutableIntArray
+  val identifierTokenTypes: ImmutableIntArray,
 ) {
 
   val ruleHierarchy: GrammarHierarchy = createFromAntlrGrammar(antlrGrammar)
@@ -70,12 +72,14 @@ abstract class AbstractParserFacade protected constructor(
   ): ImmutableList<Token> {
     Files.newBufferedReader(file, StandardCharsets.UTF_8).use {
       return tokenize(file.toString(), it).also { tokens ->
-        assert(tokens.map { it.channel }.distinct().single() == Token.DEFAULT_CHANNEL) {
+        lazyAssert({ tokens.map { it.channel }.distinct().single() == DEFAULT_CHANNEL }) {
           tokens.joinToString()
         }
       }
     }
   }
+
+  abstract fun transformLiteralIntoSingleToken(literal: String): Token
 
   fun parseString(string: String, filename: String = "<in memory>"): ParseTreeWithParser {
     val reader = StringReader(string)
@@ -116,7 +120,7 @@ abstract class AbstractParserFacade protected constructor(
     @JvmStatic
     fun readAntlrGrammarContent(
       antlrGrammarFileName: String,
-      classUnderSamePkg: Class<*>
+      classUnderSamePkg: Class<*>,
     ): String {
       Util.openResourceAsStream(antlrGrammarFileName, classUnderSamePkg).use { stream ->
         return String(ByteStreams.toByteArray(stream), StandardCharsets.UTF_8)
@@ -127,14 +131,14 @@ abstract class AbstractParserFacade protected constructor(
     protected fun createSeparateAntlrGrammar(
       antlrParserGrammarFileName: String,
       antlrLexerGrammarFileName: String,
-      classUnderSamePkg: Class<*>
+      classUnderSamePkg: Class<*>,
     ): AbstractAntlrGrammar.SeparateAntlrGrammar {
       return try {
         val persesGrammar = loadGrammarFromString(
-          readAntlrGrammarContent(antlrParserGrammarFileName, classUnderSamePkg)
+          readAntlrGrammarContent(antlrParserGrammarFileName, classUnderSamePkg),
         )
         val lexerGrammar = loadGrammarFromString(
-          readAntlrGrammarContent(antlrLexerGrammarFileName, classUnderSamePkg)
+          readAntlrGrammarContent(antlrLexerGrammarFileName, classUnderSamePkg),
         )
         AbstractAntlrGrammar.SeparateAntlrGrammar(persesGrammar, lexerGrammar)
       } catch (e: IOException) {
@@ -145,7 +149,7 @@ abstract class AbstractParserFacade protected constructor(
     @JvmStatic
     protected fun createCombinedAntlrGrammar(
       antlrGrammarFileName: String,
-      classUnderSamePkg: Class<*>
+      classUnderSamePkg: Class<*>,
     ): AbstractAntlrGrammar.CombinedAntlrGrammar {
       return try {
         val content = readAntlrGrammarContent(antlrGrammarFileName, classUnderSamePkg)

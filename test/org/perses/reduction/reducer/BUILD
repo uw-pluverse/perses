@@ -15,6 +15,7 @@ kt_jvm_test(
         "//test_data/creduce_example",
     ],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//src/org/perses/program",
@@ -29,7 +30,6 @@ kt_jvm_test(
         "//test/org/perses:test_util",
         "//test/org/perses/reduction:AbstractPersesReducerTest",
         "//test/org/perses/reduction:reducer_functional_test_base",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -39,6 +39,7 @@ kt_jvm_test(
     data = ["//test_data/java_helloworld"],
     test_class = "org.perses.reduction.reducer.PersesNodeReducerJavaFunctionalTest",
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//src/org/perses/program",
@@ -53,7 +54,6 @@ kt_jvm_test(
         "//test/org/perses:test_util",
         "//test/org/perses/reduction:AbstractPersesReducerTest",
         "//test/org/perses/reduction:reducer_functional_test_base",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -66,6 +66,7 @@ kt_jvm_test(
         "//test_data/scala_helloworld",
     ],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//src/org/perses/program",
@@ -81,7 +82,6 @@ kt_jvm_test(
         "//test/org/perses:test_util",
         "//test/org/perses/reduction:AbstractPersesReducerTest",
         "//test/org/perses/reduction:reducer_functional_test_base",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -90,6 +90,7 @@ java_test(
     srcs = ["PersesNodeReducerTest.java"],
     test_class = "org.perses.reduction.reducer.PersesNodeReducerTest",
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//src/org/perses/program",
@@ -104,7 +105,6 @@ java_test(
         "//test/org/perses:test_util",
         "//test/org/perses/reduction:AbstractPersesReducerTest",
         "//test/org/perses/reduction:reducer_functional_test_base",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -136,6 +136,18 @@ cross_folder_golden_test(
     name = "golden_test_delta_1_with_content_sha512_based_caching",
     golden_file = "golden_progress_dump_t_with_content_sha512_based_cache_process.txt",
     test_file_in_other_folders = "//test_data/delta_1:progress_dump_t_with_content_sha512_based_cache_process",
+)
+
+cross_folder_golden_test(
+    name = "golden_test_delta_1_with_rcc_mem_caching",
+    golden_file = "golden_progress_dump_t_with_fast_linear_scan_cache_process.txt",
+    test_file_in_other_folders = "//test_data/delta_1:progress_dump_t_with_rcc_mem_lit_cache_process",
+)
+
+cross_folder_golden_test(
+    name = "golden_test_delta_1_with_content_zip_based_caching",
+    golden_file = "golden_progress_dump_t_with_content_zip_based_cache_process.txt",
+    test_file_in_other_folders = "//test_data/delta_1:progress_dump_t_with_content_zip_based_cache_process",
 )
 
 cross_folder_golden_test(

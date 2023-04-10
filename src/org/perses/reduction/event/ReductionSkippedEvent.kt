@@ -23,7 +23,7 @@ class ReductionSkippedEvent(
   currentTimeMillis: Long,
   programSize: Int,
   val tree: AbstractUnmodifiableSparTree,
-  val message: String
+  val message: String,
 ) : AbstractReductionEventWithProgramSize(currentTimeMillis, programSize) {
 
   override fun initialProgramSize(): Int {

@@ -20,7 +20,7 @@ import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
-import org.perses.util.ShellCommandOnPath
+import org.perses.util.shell.ShellCommandOnPath
 import org.perses.util.toImmutableList
 
 object LanguageRust : LanguageKind(
@@ -30,7 +30,7 @@ object LanguageRust : LanguageKind(
   origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
   allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.COMPACT_ORIG_FORMAT,
-    EnumFormatControl.ORIG_FORMAT
+    EnumFormatControl.ORIG_FORMAT,
   ),
   defaultFormatterCommands = sequence {
     val rustFmtName = "rustfmt"
@@ -38,7 +38,7 @@ object LanguageRust : LanguageKind(
     for (versionString in allStableVersionStrings) {
       yield(ShellCommandOnPath.tryCreating(rustFmtName, "+$versionString"))
     }
-  }.filter { it != null }.map { it!! }.toImmutableList()
+  }.filter { it != null }.map { it!! }.toImmutableList(),
 ) {
 
   private val firstWorkingFormatter = defaultFormatterCommands.firstOrNull {

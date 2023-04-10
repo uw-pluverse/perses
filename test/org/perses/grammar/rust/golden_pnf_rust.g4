@@ -387,7 +387,6 @@ fragment XID_Start
     | '\ud869' '\u8000'..'\u82d5'
     | '\ud87e' '\ud400'..'\ud61c'
     ;
-
 fragment XID_Continue
     : '\u0030'..'\u0039'
     | '\u0041'..'\u005a'
@@ -859,31 +858,24 @@ fragment XID_Continue
     | '\ud87e' '\ud400'..'\ud61c'
     | '\udb40' '\udd00'..'\uddee'
     ;
-
 CashMoney
     : '$'
     ;
-
 RawIdentifier
     : 'r#' IDENT
     ;
-
 fragment IDENT
     : XID_Start XID_Continue*
     ;
-
 Lifetime
     : ['] IDENT
     ;
-
 Ident
     : IDENT
     ;
-
 fragment SIMPLE_ESCAPE
     : '\\' [0nrt'"\\]
     ;
-
 fragment CHAR
     : ~['"\r\n\\\ud800-\udfff]
     | [\ud800-\udbff] [\udc00-\udfff]
@@ -891,38 +883,31 @@ fragment CHAR
     | '\\x' [0-7] [0-9a-fA-F]
     | '\\u{' [0-9a-fA-F]+ '}'
     ;
-
 CharLit
     : '\'' (CHAR | '"') '\''
     ;
-
 fragment OTHER_STRING_ELEMENT
     : '\''
     | '\\' '\r'? '\n' [ \t]*
     | '\r'
     | '\n'
     ;
-
 fragment STRING_ELEMENT
     : CHAR
     | OTHER_STRING_ELEMENT
     ;
-
 fragment RAW_CHAR
     : ~[\ud800-\udfff]
     | [\ud800-\udbff] [\udc00-\udfff]
     ;
-
 fragment RAW_STRING_BODY
     : '"' RAW_CHAR*? '"'
     | '#' RAW_STRING_BODY '#'
     ;
-
 StringLit
     : '"' STRING_ELEMENT* '"'
     | 'r' RAW_STRING_BODY
     ;
-
 fragment BYTE
     : ' '
     | '!'
@@ -934,54 +919,43 @@ fragment BYTE
     | SIMPLE_ESCAPE
     | '\\x' [0-9a-fA-F] [0-9a-fA-F]
     ;
-
 ByteLit
     : 'b\'' (BYTE | '"') '\''
     ;
-
 fragment BYTE_STRING_ELEMENT
     : BYTE
     | OTHER_STRING_ELEMENT
     ;
-
 fragment RAW_BYTE_STRING_BODY
     : '"' [\t\r\n -~]*? '"'
     | '#' RAW_BYTE_STRING_BODY '#'
     ;
-
 ByteStringLit
     : 'b"' BYTE_STRING_ELEMENT* '"'
     | 'br' RAW_BYTE_STRING_BODY
     ;
-
 fragment DEC_DIGITS
     : [0-9] [0-9_]*
     ;
-
 BareIntLit
     : DEC_DIGITS
     ;
-
 fragment INT_SUFFIX
     : [ui] ('8' | '16' | '32' | '64' | '128' | 'size')
     ;
-
 FullIntLit
     : DEC_DIGITS INT_SUFFIX?
     | '0x' '_'* [0-9a-fA-F] [0-9a-fA-F_]* INT_SUFFIX?
     | '0o' '_'* [0-7] [0-7_]* INT_SUFFIX?
     | '0b' '_'* [01] [01_]* INT_SUFFIX?
     ;
-
 fragment EXPONENT
     : [Ee] [+-]? 'd_'* [0-9] [0-9_]*
     ;
-
 fragment FLOAT_SUFFIX
     : 'f32'
     | 'f64'
     ;
-
 FloatLit
     : (DEC_DIGITS '.' [0-9] [0-9_]* EXPONENT? FLOAT_SUFFIX? | DEC_DIGITS '.' {
         /* dot followed by another dot is a range, not a float */
@@ -992,26 +966,23 @@ FloatLit
         !(_input.LA(1) >= 'A' && _input.LA(1) <= 'Z')
       }? | DEC_DIGITS EXPONENT FLOAT_SUFFIX? | DEC_DIGITS FLOAT_SUFFIX) { lastToken == null || !".".equals(lastToken.getText()) }?
     ;
-
 Whitespace
     : [ \t\r\n]+ -> skip
 
     ;
-
 LineComment
     : '//' (~[\r\n])* -> skip
 
     ;
-
 BlockComment
     : '/*' (~[*/] | '/'* BlockComment | '/'+ ~[*/] | '*'+ ~[*/])* '*'+ '/' -> skip
 
     ;
-
 Shebang
     : '#!/' (~[\r\n])* -> skip
 
     ;
+
 
 crate
     : mod_body EOF

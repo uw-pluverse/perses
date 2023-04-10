@@ -38,7 +38,10 @@ abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
     val nonRecursiveDefs = LinkedHashSet<AbstractPersesRuleElement>()
     val ruleDef = rules.getAltBlock(ruleName)
     classifyDefsAndExtractNonrecursiveParts(
-      ruleName, ruleDef, nonRecursivePartsInRecursiveDef, nonRecursiveDefs
+      ruleName,
+      ruleDef,
+      nonRecursivePartsInRecursiveDef,
+      nonRecursiveDefs,
     )
     AstUtil.inPlaceFlattenAltBlocks(nonRecursivePartsInRecursiveDef)
     for (nonRecursivePart in nonRecursivePartsInRecursiveDef) {
@@ -54,7 +57,7 @@ abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
     val starRuleName = ruleName.createAuxiliaryRuleName(RuleType.KLEENE_STAR)
     val quantifiedRuleName = ruleName.createAuxiliaryRuleName(RuleType.OTHER_RULE)
     val quantifiedBodyRule = AstUtil.flattenAndDeduplicateAlternatives(
-      nonRecursivePartsInRecursiveDef
+      nonRecursivePartsInRecursiveDef,
     )
     rules.getAltBlock(quantifiedRuleName).addAllIfInequivalent(quantifiedBodyRule)
     val starRule = createGreedy(create(quantifiedRuleName))
@@ -63,7 +66,7 @@ abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
     if (nonRecursiveDefs.size == 1) {
       val nonRecursiveDef = nonRecursiveDefs.single()
       rules.getAltBlock(ruleName).addIfInequivalent(
-        combineIntoSequence(constructNewSequenceDef(nonRecursiveDef, starRuleRef))
+        combineIntoSequence(constructNewSequenceDef(nonRecursiveDef, starRuleRef)),
       )
     } else {
       val altBlock = AstUtil.flattenAndDeduplicateAlternatives(nonRecursiveDefs)
@@ -71,7 +74,7 @@ abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
       val altBlockRuleName = ruleName.createAuxiliaryRuleName(RuleType.OTHER_RULE)
       rules.getAltBlock(altBlockRuleName).addAllIfInequivalent(altBlock)
       rules.getAltBlock(ruleName).addIfInequivalent(
-        combineIntoSequence(constructNewSequenceDef(create(altBlockRuleName), starRuleRef))
+        combineIntoSequence(constructNewSequenceDef(create(altBlockRuleName), starRuleRef)),
       )
     }
   }
@@ -80,7 +83,7 @@ abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
     ruleName: RuleNameHandle,
     definitions: Iterable<AbstractPersesRuleElement>,
     nonRecursivePartsInRecursiveDef: ArrayList<AbstractPersesRuleElement>,
-    nonRecursiveDefs: LinkedHashSet<AbstractPersesRuleElement>
+    nonRecursiveDefs: LinkedHashSet<AbstractPersesRuleElement>,
   ) {
     for (def in definitions) {
       val tag = def.tag
@@ -90,12 +93,15 @@ abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
       check(
         tag !== AstTag.RULE_REF ||
           ruleName
-          .ruleName != (def as PersesRuleReferenceAst).ruleNameHandle.ruleName
+            .ruleName != (def as PersesRuleReferenceAst).ruleNameHandle.ruleName,
       )
       if (tag === AstTag.SEQUENCE) {
         val seq = def as PersesSequenceAst
         classifyAndExtractPartsFromSequenceDef(
-          ruleName, seq, nonRecursivePartsInRecursiveDef, nonRecursiveDefs
+          ruleName,
+          seq,
+          nonRecursivePartsInRecursiveDef,
+          nonRecursiveDefs,
         )
       } else {
         nonRecursiveDefs.add(def)
@@ -105,24 +111,27 @@ abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
 
   protected abstract fun constructNewSequenceDef(
     nonRecursiveDef: AbstractPersesRuleElement,
-    starRuleRef: PersesRuleReferenceAst
+    starRuleRef: PersesRuleReferenceAst,
   ): ImmutableList<AbstractPersesRuleElement>
 
   protected abstract fun classifyAndExtractPartsFromSequenceDef(
     ruleName: RuleNameHandle,
     sequenceDef: PersesSequenceAst,
     nonRecursivePartsInRecursiveDef: ArrayList<AbstractPersesRuleElement>,
-    nonRecursiveDefs: LinkedHashSet<AbstractPersesRuleElement>
+    nonRecursiveDefs: LinkedHashSet<AbstractPersesRuleElement>,
   )
 
-  override fun process(grammar: PersesGrammar): PersesGrammar {
-    val mutable = MutableGrammar.createParserRulesFrom(grammar)
+  override fun processParserGrammar(
+    parserGrammar: PersesGrammar,
+    lexerGrammar: PersesGrammar?,
+  ): PersesGrammar {
+    val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     mutable.ruleNameSequence()
       .sorted()
       .toList() // Materialize the elements to avoid concurrent modification to mutable.
       .forEach { ruleName ->
         introduceStars(mutable, ruleName)
       }
-    return grammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
+    return parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
   }
 }

@@ -8,6 +8,8 @@ java_test(
     shard_count = 1,
     test_class = "org.perses.grammar.c.OptCParserTest",
     deps = [
+        "//:antlr_runtime",
+        "//:antlr_tool",
         "//:flogger",
         "//:guava",
         "//:truth",
@@ -16,8 +18,6 @@ java_test(
         "//src/org/perses/grammar/c:optc_parser_facade",
         "//src/org/perses/grammar/c:parser_facade",
         "//test/org/perses:test_util",
-        "@maven//:org_antlr_antlr4",
-        "@maven//:org_antlr_antlr4_runtime",
     ],
 )
 
@@ -48,6 +48,8 @@ kt_jvm_test(
         "//test_data/delta_1",
     ],
     deps = [
+        "//:antlr_runtime",
+        "//:antlr_tool",
         "//:flogger",
         "//:guava",
         "//:kotlin_stdib",
@@ -56,8 +58,6 @@ kt_jvm_test(
         "//src/org/perses/grammar/c:parser_facade",
         "//test/org/perses:test_util",
         "//test/org/perses/program:LanguageKindTestUtil",
-        "@maven//:org_antlr_antlr4",
-        "@maven//:org_antlr_antlr4_runtime",
     ],
 )
 
@@ -67,13 +67,13 @@ kt_jvm_test(
     data = ["//test_data/c_programs/preprocessed_files"],
     test_class = "org.perses.grammar.c.PreprocessedCFileParserTest",
     deps = [
+        "//:antlr_runtime",
+        "//:antlr_tool",
         "//:flogger",
         "//:guava",
         "//:truth",
         "//src/org/perses/antlr:antlr_grammar_util",
         "//src/org/perses/grammar/c:parser_facade",
         "//test/org/perses:test_util",
-        "@maven//:org_antlr_antlr4",
-        "@maven//:org_antlr_antlr4_runtime",
     ],
 )

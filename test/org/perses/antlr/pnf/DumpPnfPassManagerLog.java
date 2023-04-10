@@ -24,7 +24,6 @@ import java.nio.charset.StandardCharsets;
 import org.perses.antlr.GrammarTestingUtility;
 import org.perses.antlr.ast.PersesGrammar;
 import org.perses.grammar.c.CParserFacade;
-import org.perses.util.FileNameContentPair;
 
 public class DumpPnfPassManagerLog {
 
@@ -38,7 +37,7 @@ public class DumpPnfPassManagerLog {
     PersesGrammar grammar = GrammarTestingUtility.loadGrammarFromString(antlrGrammarContent);
     PnfPassManager manager = new PnfPassManager();
     try (PassListener listener = new PassListener(output)) {
-      final FileNameContentPair lexerGrammar = null;
+      final PersesGrammar lexerGrammar = null;
       manager.process(grammar, "compilationUnit", lexerGrammar, listener);
     }
   }

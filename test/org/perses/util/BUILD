@@ -12,6 +12,19 @@ kt_jvm_library(
 )
 
 kt_jvm_test(
+    name = "AssertionCanBeDisabledTest",
+    srcs = ["AssertionCanBeDisabledTest.kt"],
+    jvm_flags = [
+        "-da",
+    ],
+    deps = [
+        "//:truth",
+        "//src/org/perses/util",
+        "//src/org/perses/util:mutable_int",
+    ],
+)
+
+kt_jvm_test(
     name = "UtilTest",
     srcs = ["UtilTest.kt"],
     deps = [
@@ -53,7 +66,7 @@ kt_jvm_test(
     ],
     deps = [
         "//:truth",
-        "//src/org/perses/util:perses_kt_exts",
+        "//src/org/perses/util",
     ],
 )
 
@@ -107,7 +120,7 @@ kt_jvm_test(
     deps = [
         "//:guava",
         "//:truth",
-        "//src/org/perses/util:perses_kt_exts",
+        "//src/org/perses/util",
     ],
 )
 
@@ -152,13 +165,14 @@ kt_jvm_test(
     ],
 )
 
-java_test(
+kt_jvm_test(
     name = "TimeSpanTest",
-    srcs = ["TimeSpanTest.java"],
-    test_class = "org.perses.util.TimeSpanTest",
+    srcs = ["TimeSpanTest.kt"],
+    associates = [
+        "//src/org/perses/util:timeutil",
+    ],
     deps = [
         "//:truth",
-        "//src/org/perses/util:timeutil",
     ],
 )
 
@@ -171,10 +185,9 @@ kt_jvm_test(
     ],
 )
 
-java_test(
+kt_jvm_test(
     name = "PercentageTest",
-    srcs = ["PercentageTest.java"],
-    test_class = "org.perses.util.PercentageTest",
+    srcs = ["PercentageTest.kt"],
     deps = [
         "//:truth",
         "//src/org/perses/util:percentage",
@@ -199,57 +212,5 @@ kt_jvm_test(
         "//:kotlin_stdib",
         "//:truth",
         "//src/org/perses/util:default_logging_configurations",
-    ],
-)
-
-kt_jvm_test(
-    name = "ShellTest",
-    srcs = ["ShellTest.kt"],
-    data = ["fake_creduce.sh"],
-    deps = [
-        "//:kotlin_stdib",
-        "//:truth",
-        "//src/org/perses/util:shell",
-    ],
-)
-
-kt_jvm_test(
-    name = "ShellCommandOnPathTest",
-    srcs = ["ShellCommandOnPathTest.kt"],
-    associates = [
-        "//src/org/perses/util:shell",
-    ],
-    data = ["fake_executable.sh"],
-    test_class = "org.perses.util.ShellCommandOnPathTest",
-    deps = [
-        "//:truth",
-    ],
-)
-
-kt_jvm_test(
-    name = "ShellOutputStreamTest",
-    srcs = ["ShellOutputStreamTest.kt"],
-    deps = [
-        "//:truth",
-        "//src/org/perses/util:shell",
-    ],
-)
-
-kt_jvm_test(
-    name = "ShellOutputLinesTest",
-    srcs = ["ShellOutputLinesTest.kt"],
-    deps = [
-        "//:kotlin_stdib",
-        "//:truth",
-        "//src/org/perses/util:shell",
-    ],
-)
-
-kt_jvm_test(
-    name = "PerformanceMonitorTest",
-    srcs = ["PerformanceMonitorTest.kt"],
-    deps = [
-        "//:truth",
-        "//src/org/perses/util:performance_monitor",
     ],
 )

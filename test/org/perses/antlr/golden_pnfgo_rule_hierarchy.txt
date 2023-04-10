@@ -1,1670 +1,2472 @@
-altnt_block__arguments_7
-    epsilonable: false
-    immediate sub-rule names:
-        aux_rule__arguments_8
-        expressionList
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        arrayType
-        aux_rule__arguments_8
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__type__1
-        aux_rule__unaryExpr_2
-        channelType
-        compositeLit
-        conversion
-        expression
-        expressionList
-        functionLit
-        functionType
-        interfaceType
-        mapType
-        methodExpr
-        pointerType
-        primaryExpr
-        qualifiedIdent
-        sliceType
-        string_
-        structType
-        typeName
-        type_
-        unaryExpr
-altnt_block__channelType_1
-    epsilonable: false
-    immediate sub-rule names:
-        aux_rule__channelType_3
-        aux_rule__channelType_4
-    transitive sub-rule names:
-        aux_rule__channelType_3
-        aux_rule__channelType_4
-altnt_block__commCase_1
-    epsilonable: false
-    immediate sub-rule names:
-        recvStmt
-        sendStmt
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        expression
-        functionLit
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        recvStmt
-        sendStmt
-        string_
-        typeName
-        unaryExpr
-altnt_block__constDecl_3
-    epsilonable: false
-    immediate sub-rule names:
-        aux_rule__constDecl_4
-        constSpec
-    transitive sub-rule names:
-        IDENTIFIER
-        aux_rule__constDecl_4
-        constSpec
-        identifierList
-altnt_block__fieldDecl_2
-    epsilonable: false
-    immediate sub-rule names:
-        anonymousField
-        aux_rule__fieldDecl_3
-    transitive sub-rule names:
-        IDENTIFIER
-        anonymousField
-        aux_rule__fieldDecl_3
-        qualifiedIdent
-        typeName
-altnt_block__ifStmt_5
-    epsilonable: false
-    immediate sub-rule names:
-        block
-        ifStmt
-    transitive sub-rule names:
-        block
-        ifStmt
-altnt_block__importDecl_3
-    epsilonable: false
-    immediate sub-rule names:
-        aux_rule__importDecl_4
-        importSpec
-    transitive sub-rule names:
-        INTERPRETED_STRING_LIT
-        RAW_STRING_LIT
-        aux_rule__importDecl_4
-        importPath
-        importSpec
-        string_
-altnt_block__incDecStmt_1
-    epsilonable: false
-    immediate sub-rule names:
-        MINUS_MINUS
-        PLUS_PLUS
-    transitive sub-rule names:
-        MINUS_MINUS
-        PLUS_PLUS
-altnt_block__slice_5
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__slice_6
-        optional__exprSwitchStmt_3
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__slice_6
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        expression
-        functionLit
-        methodExpr
-        optional__exprSwitchStmt_3
-        primaryExpr
-        qualifiedIdent
-        string_
-        typeName
-        unaryExpr
-altnt_block__sourceFile_5
-    epsilonable: false
-    immediate sub-rule names:
-        declaration
-        functionDecl
-        methodDecl
-    transitive sub-rule names:
-        constDecl
-        declaration
-        functionDecl
-        methodDecl
-        typeDecl
-        varDecl
-altnt_block__typeDecl_3
-    epsilonable: false
-    immediate sub-rule names:
-        aux_rule__typeDecl_4
-        typeSpec
-    transitive sub-rule names:
-        aux_rule__typeDecl_4
-        typeSpec
-altnt_block__typeList_3
-    epsilonable: false
-    immediate sub-rule names:
-        NIL_LIT
-        type_
-    transitive sub-rule names:
-        IDENTIFIER
-        NIL_LIT
-        arrayType
-        aux_rule__type__1
-        channelType
-        functionType
-        interfaceType
-        mapType
-        pointerType
-        qualifiedIdent
-        sliceType
-        structType
-        typeName
-        type_
-altnt_block__varDecl_3
-    epsilonable: false
-    immediate sub-rule names:
-        aux_rule__varDecl_4
-        varSpec
-    transitive sub-rule names:
-        aux_rule__varDecl_4
-        varSpec
-altnt_block__varSpec_3
-    epsilonable: false
-    immediate sub-rule names:
-        aux_rule__varSpec_4
-        aux_rule__varSpec_5
-    transitive sub-rule names:
-        IDENTIFIER
-        arrayType
-        aux_rule__type__1
-        aux_rule__varSpec_4
-        aux_rule__varSpec_5
-        channelType
-        functionType
-        interfaceType
-        mapType
-        pointerType
-        qualifiedIdent
-        sliceType
-        structType
-        typeName
-        type_
-anonymousField
-    epsilonable: false
-    immediate sub-rule names:
-        typeName
-    transitive sub-rule names:
-        IDENTIFIER
-        qualifiedIdent
-        typeName
-aux_rule__arguments_5
-    epsilonable: false
-    immediate sub-rule names:
-        altnt_block__arguments_7
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        altnt_block__arguments_7
-        arrayType
-        aux_rule__arguments_8
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__type__1
-        aux_rule__unaryExpr_2
-        channelType
-        compositeLit
-        conversion
-        expression
-        expressionList
-        functionLit
-        functionType
-        interfaceType
-        mapType
-        methodExpr
-        pointerType
-        primaryExpr
-        qualifiedIdent
-        sliceType
-        string_
-        structType
-        typeName
-        type_
-        unaryExpr
-aux_rule__arguments_8
-    epsilonable: false
-    immediate sub-rule names:
-        type_
-    transitive sub-rule names:
-        IDENTIFIER
-        arrayType
-        aux_rule__type__1
-        channelType
-        functionType
-        interfaceType
-        mapType
-        pointerType
-        qualifiedIdent
-        sliceType
-        structType
-        typeName
-        type_
-aux_rule__forStmt_1
-    epsilonable: false
-    immediate sub-rule names:
-        expression
-        forClause
-        rangeClause
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        expression
-        forClause
-        functionLit
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        rangeClause
-        string_
-        typeName
-        unaryExpr
-aux_rule__importSpec_1
-    epsilonable: false
-    immediate sub-rule names:
-        IDENTIFIER
-    transitive sub-rule names:
-        IDENTIFIER
-aux_rule__literalValue_2
-    epsilonable: false
-    immediate sub-rule names:
-        elementList
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        element
-        elementList
-        expression
-        functionLit
-        keyedElement
-        literalValue
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        string_
-        typeName
-        unaryExpr
-aux_rule__parameters_4
-    epsilonable: false
-    immediate sub-rule names:
-        parameterDecl
-    transitive sub-rule names:
-        IDENTIFIER
-        arrayType
-        aux_rule__type__1
-        channelType
-        functionType
-        interfaceType
-        mapType
-        parameterDecl
-        pointerType
-        qualifiedIdent
-        sliceType
-        structType
-        typeName
-        type_
-aux_rule__primaryExpr_2
-    epsilonable: false
-    immediate sub-rule names:
-        arguments
-        aux_rule__primaryExpr_4
-        index
-        slice
-        typeAssertion
-    transitive sub-rule names:
-        arguments
-        aux_rule__primaryExpr_4
-        index
-        slice
-        typeAssertion
-aux_rule__primaryExpr_3
-    epsilonable: false
-    immediate sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IMAGINARY_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RUNE_LIT
-        aux_rule__primaryExpr_5
-        compositeLit
-        conversion
-        functionLit
-        methodExpr
-        string_
-        typeName
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        aux_rule__primaryExpr_5
-        compositeLit
-        conversion
-        functionLit
-        methodExpr
-        qualifiedIdent
-        string_
-        typeName
-aux_rule__recvStmt_1
-    epsilonable: false
-    immediate sub-rule names:
-        aux_rule__recvStmt_3
-        aux_rule__recvStmt_4
-    transitive sub-rule names:
-        aux_rule__recvStmt_3
-        aux_rule__recvStmt_4
-aux_rule__statementList_1
-    epsilonable: false
-    immediate sub-rule names:
-        aux_rule__statementList_2
-    transitive sub-rule names:
-        aux_rule__statementList_2
-aux_rule__varSpec_4
-    epsilonable: false
-    immediate sub-rule names:
-        type_
-    transitive sub-rule names:
-        IDENTIFIER
-        arrayType
-        aux_rule__type__1
-        channelType
-        functionType
-        interfaceType
-        mapType
-        pointerType
-        qualifiedIdent
-        sliceType
-        structType
-        typeName
-        type_
-commCase
-    epsilonable: false
-    immediate sub-rule names:
-        aux_rule__commCase_2
-    transitive sub-rule names:
-        aux_rule__commCase_2
-constSpec
-    epsilonable: false
-    immediate sub-rule names:
-        identifierList
-    transitive sub-rule names:
-        IDENTIFIER
-        identifierList
-declaration
-    epsilonable: false
-    immediate sub-rule names:
-        constDecl
-        typeDecl
-        varDecl
-    transitive sub-rule names:
-        constDecl
-        typeDecl
-        varDecl
-element
-    epsilonable: false
-    immediate sub-rule names:
-        expression
-        literalValue
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        expression
-        functionLit
-        literalValue
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        string_
-        typeName
-        unaryExpr
-elementList
-    epsilonable: false
-    immediate sub-rule names:
-        keyedElement
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        element
-        expression
-        functionLit
-        keyedElement
-        literalValue
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        string_
-        typeName
-        unaryExpr
-elementType
-    epsilonable: false
-    immediate sub-rule names:
-        type_
-    transitive sub-rule names:
-        IDENTIFIER
-        arrayType
-        aux_rule__type__1
-        channelType
-        functionType
-        interfaceType
-        mapType
-        pointerType
-        qualifiedIdent
-        sliceType
-        structType
-        typeName
-        type_
-eos
-    epsilonable: false
-    immediate sub-rule names:
-        aux_rule__eos_1
-        aux_rule__eos_2
-    transitive sub-rule names:
-        aux_rule__eos_1
-        aux_rule__eos_2
-exprSwitchCase
-    epsilonable: false
-    immediate sub-rule names:
-        aux_rule__exprSwitchCase_1
-    transitive sub-rule names:
-        aux_rule__exprSwitchCase_1
-expression
-    epsilonable: false
-    immediate sub-rule names:
-        unaryExpr
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        functionLit
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        string_
-        typeName
-        unaryExpr
-expressionList
-    epsilonable: false
-    immediate sub-rule names:
-        expression
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        expression
-        functionLit
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        string_
-        typeName
-        unaryExpr
-expressionStmt
-    epsilonable: false
-    immediate sub-rule names:
-        expression
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        expression
-        functionLit
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        string_
-        typeName
-        unaryExpr
-fieldDecl
-    epsilonable: false
-    immediate sub-rule names:
-        altnt_block__fieldDecl_2
-    transitive sub-rule names:
-        IDENTIFIER
-        altnt_block__fieldDecl_2
-        anonymousField
-        aux_rule__fieldDecl_3
-        qualifiedIdent
-        typeName
-identifierList
-    epsilonable: false
-    immediate sub-rule names:
-        IDENTIFIER
-    transitive sub-rule names:
-        IDENTIFIER
-importPath
-    epsilonable: false
-    immediate sub-rule names:
-        string_
-    transitive sub-rule names:
-        INTERPRETED_STRING_LIT
-        RAW_STRING_LIT
-        string_
-importSpec
-    epsilonable: false
-    immediate sub-rule names:
-        importPath
-    transitive sub-rule names:
-        INTERPRETED_STRING_LIT
-        RAW_STRING_LIT
-        importPath
-        string_
-key
-    epsilonable: false
-    immediate sub-rule names:
-        IDENTIFIER
-        expression
-        literalValue
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        expression
-        functionLit
-        literalValue
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        string_
-        typeName
-        unaryExpr
-keyedElement
-    epsilonable: false
-    immediate sub-rule names:
-        element
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        element
-        expression
-        functionLit
-        literalValue
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        string_
-        typeName
-        unaryExpr
-kleene_star__constDecl_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__constDecl_1
-    transitive sub-rule names:
-        aux_rule__constDecl_1
-kleene_star__elementList_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__elementList_1
-    transitive sub-rule names:
-        aux_rule__elementList_1
-kleene_star__exprSwitchStmt_4
-    epsilonable: true
-    immediate sub-rule names:
-        exprCaseClause
-    transitive sub-rule names:
-        exprCaseClause
-kleene_star__expressionList_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__expressionList_1
-    transitive sub-rule names:
-        aux_rule__expressionList_1
-kleene_star__expression_1
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__expression_2
-    transitive sub-rule names:
-        aux_rule__expression_2
-kleene_star__identifierList_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__identifierList_1
-    transitive sub-rule names:
-        aux_rule__identifierList_1
-kleene_star__importDecl_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__importDecl_1
-    transitive sub-rule names:
-        aux_rule__importDecl_1
-kleene_star__interfaceType_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__interfaceType_1
-    transitive sub-rule names:
-        aux_rule__interfaceType_1
-kleene_star__parameters_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__parameters_1
-    transitive sub-rule names:
-        aux_rule__parameters_1
-kleene_star__primaryExpr_1
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__primaryExpr_2
-    transitive sub-rule names:
-        arguments
-        aux_rule__primaryExpr_2
-        aux_rule__primaryExpr_4
-        index
-        slice
-        typeAssertion
-kleene_star__selectStmt_1
-    epsilonable: true
-    immediate sub-rule names:
-        commClause
-    transitive sub-rule names:
-        commClause
-kleene_star__sourceFile_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__sourceFile_1
-    transitive sub-rule names:
-        aux_rule__sourceFile_1
-kleene_star__sourceFile_4
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__sourceFile_3
-    transitive sub-rule names:
-        aux_rule__sourceFile_3
-kleene_star__structType_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__structType_1
-    transitive sub-rule names:
-        aux_rule__structType_1
-kleene_star__typeDecl_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__typeDecl_1
-    transitive sub-rule names:
-        aux_rule__typeDecl_1
-kleene_star__typeList_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__typeList_1
-    transitive sub-rule names:
-        aux_rule__typeList_1
-kleene_star__typeSwitchStmt_3
-    epsilonable: true
-    immediate sub-rule names:
-        typeCaseClause
-    transitive sub-rule names:
-        typeCaseClause
-kleene_star__varDecl_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__varDecl_1
-    transitive sub-rule names:
-        aux_rule__varDecl_1
-literalType
-    epsilonable: false
-    immediate sub-rule names:
-        arrayType
-        aux_rule__literalType_1
-        mapType
-        sliceType
-        structType
-        typeName
-    transitive sub-rule names:
-        IDENTIFIER
-        arrayType
-        aux_rule__literalType_1
-        mapType
-        qualifiedIdent
-        sliceType
-        structType
-        typeName
-methodSpec
-    epsilonable: false
-    immediate sub-rule names:
-        aux_rule__methodSpec_2
-        typeName
-    transitive sub-rule names:
-        IDENTIFIER
-        aux_rule__methodSpec_2
-        qualifiedIdent
-        typeName
-optional__arguments_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__arguments_1
-    transitive sub-rule names:
-        aux_rule__arguments_1
-optional__arguments_6
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__arguments_5
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        altnt_block__arguments_7
-        arrayType
-        aux_rule__arguments_5
-        aux_rule__arguments_8
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__type__1
-        aux_rule__unaryExpr_2
-        channelType
-        compositeLit
-        conversion
-        expression
-        expressionList
-        functionLit
-        functionType
-        interfaceType
-        mapType
-        methodExpr
-        pointerType
-        primaryExpr
-        qualifiedIdent
-        sliceType
-        string_
-        structType
-        typeName
-        type_
-        unaryExpr
-optional__assign_op_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__assign_op_1
-    transitive sub-rule names:
-        aux_rule__assign_op_1
-optional__block_1
-    epsilonable: true
-    immediate sub-rule names:
-        statementList
-    transitive sub-rule names:
-        aux_rule__statementList_1
-        aux_rule__statementList_2
-        statementList
-optional__breakStmt_1
-    epsilonable: true
-    immediate sub-rule names:
-        IDENTIFIER
-    transitive sub-rule names:
-        IDENTIFIER
-optional__constSpec_1
-    epsilonable: true
-    immediate sub-rule names:
-        type_
-    transitive sub-rule names:
-        IDENTIFIER
-        arrayType
-        aux_rule__type__1
-        channelType
-        functionType
-        interfaceType
-        mapType
-        pointerType
-        qualifiedIdent
-        sliceType
-        structType
-        typeName
-        type_
-optional__constSpec_3
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__constSpec_2
-    transitive sub-rule names:
-        aux_rule__constSpec_2
-optional__exprSwitchStmt_3
-    epsilonable: true
-    immediate sub-rule names:
-        expression
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        expression
-        functionLit
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        string_
-        typeName
-        unaryExpr
-optional__fieldDecl_1
-    epsilonable: true
-    immediate sub-rule names:
-        string_
-    transitive sub-rule names:
-        INTERPRETED_STRING_LIT
-        RAW_STRING_LIT
-        string_
-optional__forClause_1
-    epsilonable: true
-    immediate sub-rule names:
-        simpleStmt
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        assignment
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        expression
-        expressionStmt
-        functionLit
-        incDecStmt
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        realSimpleStmt
-        sendStmt
-        shortVarDecl
-        simpleStmt
-        string_
-        typeName
-        unaryExpr
-optional__forStmt_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__forStmt_1
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        aux_rule__forStmt_1
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        expression
-        forClause
-        functionLit
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        rangeClause
-        string_
-        typeName
-        unaryExpr
-optional__functionDecl_1
-    epsilonable: true
-    immediate sub-rule names:
-        block
-    transitive sub-rule names:
-        block
-optional__ifStmt_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__ifStmt_1
-    transitive sub-rule names:
-        aux_rule__ifStmt_1
-optional__ifStmt_4
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__ifStmt_3
-    transitive sub-rule names:
-        aux_rule__ifStmt_3
-optional__importSpec_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__importSpec_1
-    transitive sub-rule names:
-        IDENTIFIER
-        aux_rule__importSpec_1
-optional__keyedElement_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__keyedElement_1
-    transitive sub-rule names:
-        aux_rule__keyedElement_1
-optional__literalValue_3
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__literalValue_2
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        aux_rule__literalValue_2
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        element
-        elementList
-        expression
-        functionLit
-        keyedElement
-        literalValue
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        string_
-        typeName
-        unaryExpr
-optional__parameterDecl_1
-    epsilonable: true
-    immediate sub-rule names:
-        identifierList
-    transitive sub-rule names:
-        IDENTIFIER
-        identifierList
-optional__parameters_3
-    epsilonable: true
-    immediate sub-rule names:
-        COMMA
-    transitive sub-rule names:
-        COMMA
-optional__parameters_5
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__parameters_4
-    transitive sub-rule names:
-        IDENTIFIER
-        arrayType
-        aux_rule__parameters_4
-        aux_rule__type__1
-        channelType
-        functionType
-        interfaceType
-        mapType
-        parameterDecl
-        pointerType
-        qualifiedIdent
-        sliceType
-        structType
-        typeName
-        type_
-optional__recvStmt_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__recvStmt_1
-    transitive sub-rule names:
-        aux_rule__recvStmt_1
-        aux_rule__recvStmt_3
-        aux_rule__recvStmt_4
-optional__returnStmt_1
-    epsilonable: true
-    immediate sub-rule names:
-        expressionList
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        expression
-        expressionList
-        functionLit
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        string_
-        typeName
-        unaryExpr
-optional__signature_1
-    epsilonable: true
-    immediate sub-rule names:
-        result
-    transitive sub-rule names:
-        IDENTIFIER
-        arrayType
-        aux_rule__type__1
-        channelType
-        functionType
-        interfaceType
-        mapType
-        parameters
-        pointerType
-        qualifiedIdent
-        result
-        sliceType
-        structType
-        typeName
-        type_
-optional__typeSpec_1
-    epsilonable: true
-    immediate sub-rule names:
-        ASSIGN
-    transitive sub-rule names:
-        ASSIGN
-optional__typeSwitchGuard_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__typeSwitchGuard_1
-    transitive sub-rule names:
-        aux_rule__typeSwitchGuard_1
-optional__varSpec_2
-    epsilonable: true
-    immediate sub-rule names:
-        aux_rule__varSpec_1
-    transitive sub-rule names:
-        aux_rule__varSpec_1
-parameterDecl
-    epsilonable: false
-    immediate sub-rule names:
-        type_
-    transitive sub-rule names:
-        IDENTIFIER
-        arrayType
-        aux_rule__type__1
-        channelType
-        functionType
-        interfaceType
-        mapType
-        pointerType
-        qualifiedIdent
-        sliceType
-        structType
-        typeName
-        type_
-primaryExpr
-    epsilonable: false
-    immediate sub-rule names:
-        aux_rule__primaryExpr_3
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        compositeLit
-        conversion
-        functionLit
-        methodExpr
-        qualifiedIdent
-        string_
-        typeName
-realSimpleStmt
-    epsilonable: false
-    immediate sub-rule names:
-        assignment
-        expressionStmt
-        incDecStmt
-        sendStmt
-        shortVarDecl
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        assignment
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        expression
-        expressionStmt
-        functionLit
-        incDecStmt
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        sendStmt
-        shortVarDecl
-        string_
-        typeName
-        unaryExpr
-realStatement
-    epsilonable: false
-    immediate sub-rule names:
-        block
-        breakStmt
-        continueStmt
-        declaration
-        deferStmt
-        exprSwitchStmt
-        fallthroughStmt
-        forStmt
-        goStmt
-        gotoStmt
-        ifStmt
-        labeledStmt
-        realSimpleStmt
-        returnStmt
-        selectStmt
-        typeSwitchStmt
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        assignment
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        block
-        breakStmt
-        compositeLit
-        constDecl
-        continueStmt
-        conversion
-        declaration
-        deferStmt
-        exprSwitchStmt
-        expression
-        expressionStmt
-        fallthroughStmt
-        forStmt
-        functionLit
-        goStmt
-        gotoStmt
-        ifStmt
-        incDecStmt
-        labeledStmt
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        realSimpleStmt
-        returnStmt
-        selectStmt
-        sendStmt
-        shortVarDecl
-        string_
-        typeDecl
-        typeName
-        typeSwitchStmt
-        unaryExpr
-        varDecl
-receiver
-    epsilonable: false
-    immediate sub-rule names:
-        parameters
-    transitive sub-rule names:
-        parameters
-recvStmt
-    epsilonable: false
-    immediate sub-rule names:
-        expression
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        expression
-        functionLit
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        string_
-        typeName
-        unaryExpr
-result
-    epsilonable: false
-    immediate sub-rule names:
-        parameters
-        type_
-    transitive sub-rule names:
-        IDENTIFIER
-        arrayType
-        aux_rule__type__1
-        channelType
-        functionType
-        interfaceType
-        mapType
-        parameters
-        pointerType
-        qualifiedIdent
-        sliceType
-        structType
-        typeName
-        type_
-signature
-    epsilonable: false
-    immediate sub-rule names:
-        parameters
-    transitive sub-rule names:
-        parameters
-simpleStmt
-    epsilonable: true
-    immediate sub-rule names:
-        realSimpleStmt
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        assignment
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        expression
-        expressionStmt
-        functionLit
-        incDecStmt
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        realSimpleStmt
-        sendStmt
-        shortVarDecl
-        string_
-        typeName
-        unaryExpr
-sourceFile
-    epsilonable: false
-    immediate sub-rule names:
-        aux_rule__sourceFile_6
-    transitive sub-rule names:
-        aux_rule__sourceFile_6
-statement
-    epsilonable: true
-    immediate sub-rule names:
-        realStatement
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        assignment
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        block
-        breakStmt
-        compositeLit
-        constDecl
-        continueStmt
-        conversion
-        declaration
-        deferStmt
-        exprSwitchStmt
-        expression
-        expressionStmt
-        fallthroughStmt
-        forStmt
-        functionLit
-        goStmt
-        gotoStmt
-        ifStmt
-        incDecStmt
-        labeledStmt
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        realSimpleStmt
-        realStatement
-        returnStmt
-        selectStmt
-        sendStmt
-        shortVarDecl
-        string_
-        typeDecl
-        typeName
-        typeSwitchStmt
-        unaryExpr
-        varDecl
-statementList
-    epsilonable: false
-    immediate sub-rule names:
-        aux_rule__statementList_1
-    transitive sub-rule names:
-        aux_rule__statementList_1
-        aux_rule__statementList_2
-string_
-    epsilonable: false
-    immediate sub-rule names:
-        INTERPRETED_STRING_LIT
-        RAW_STRING_LIT
-    transitive sub-rule names:
-        INTERPRETED_STRING_LIT
-        RAW_STRING_LIT
-typeList
-    epsilonable: false
-    immediate sub-rule names:
-        altnt_block__typeList_3
-    transitive sub-rule names:
-        IDENTIFIER
-        NIL_LIT
-        altnt_block__typeList_3
-        arrayType
-        aux_rule__type__1
-        channelType
-        functionType
-        interfaceType
-        mapType
-        pointerType
-        qualifiedIdent
-        sliceType
-        structType
-        typeName
-        type_
-typeName
-    epsilonable: false
-    immediate sub-rule names:
-        IDENTIFIER
-        qualifiedIdent
-    transitive sub-rule names:
-        IDENTIFIER
-        qualifiedIdent
-typeSwitchCase
-    epsilonable: false
-    immediate sub-rule names:
-        aux_rule__typeSwitchCase_1
-    transitive sub-rule names:
-        aux_rule__typeSwitchCase_1
-type_
-    epsilonable: false
-    immediate sub-rule names:
-        arrayType
-        aux_rule__type__1
-        channelType
-        functionType
-        interfaceType
-        mapType
-        pointerType
-        sliceType
-        structType
-        typeName
-    transitive sub-rule names:
-        IDENTIFIER
-        arrayType
-        aux_rule__type__1
-        channelType
-        functionType
-        interfaceType
-        mapType
-        pointerType
-        qualifiedIdent
-        sliceType
-        structType
-        typeName
-unaryExpr
-    epsilonable: false
-    immediate sub-rule names:
-        aux_rule__unaryExpr_2
-        primaryExpr
-    transitive sub-rule names:
-        DECIMAL_LIT
-        FLOAT_LIT
-        HEX_LIT
-        IDENTIFIER
-        IMAGINARY_LIT
-        INTERPRETED_STRING_LIT
-        NIL_LIT
-        OCTAL_LIT
-        RAW_STRING_LIT
-        RUNE_LIT
-        aux_rule__primaryExpr_3
-        aux_rule__primaryExpr_5
-        aux_rule__unaryExpr_2
-        compositeLit
-        conversion
-        functionLit
-        methodExpr
-        primaryExpr
-        qualifiedIdent
-        string_
-        typeName
+entries {
+  ruleName: "BREAK"
+  immediateStringLiterals: "break"
+  transitiveStringLiterals: "break"
+}
+entries {
+  ruleName: "DEFAULT"
+  immediateStringLiterals: "default"
+  transitiveStringLiterals: "default"
+}
+entries {
+  ruleName: "FUNC"
+  immediateStringLiterals: "func"
+  transitiveStringLiterals: "func"
+}
+entries {
+  ruleName: "INTERFACE"
+  immediateStringLiterals: "interface"
+  transitiveStringLiterals: "interface"
+}
+entries {
+  ruleName: "SELECT"
+  immediateStringLiterals: "select"
+  transitiveStringLiterals: "select"
+}
+entries {
+  ruleName: "CASE"
+  immediateStringLiterals: "case"
+  transitiveStringLiterals: "case"
+}
+entries {
+  ruleName: "DEFER"
+  immediateStringLiterals: "defer"
+  transitiveStringLiterals: "defer"
+}
+entries {
+  ruleName: "GO"
+  immediateStringLiterals: "go"
+  transitiveStringLiterals: "go"
+}
+entries {
+  ruleName: "MAP"
+  immediateStringLiterals: "map"
+  transitiveStringLiterals: "map"
+}
+entries {
+  ruleName: "STRUCT"
+  immediateStringLiterals: "struct"
+  transitiveStringLiterals: "struct"
+}
+entries {
+  ruleName: "CHAN"
+  immediateStringLiterals: "chan"
+  transitiveStringLiterals: "chan"
+}
+entries {
+  ruleName: "ELSE"
+  immediateStringLiterals: "else"
+  transitiveStringLiterals: "else"
+}
+entries {
+  ruleName: "GOTO"
+  immediateStringLiterals: "goto"
+  transitiveStringLiterals: "goto"
+}
+entries {
+  ruleName: "PACKAGE"
+  immediateStringLiterals: "package"
+  transitiveStringLiterals: "package"
+}
+entries {
+  ruleName: "SWITCH"
+  immediateStringLiterals: "switch"
+  transitiveStringLiterals: "switch"
+}
+entries {
+  ruleName: "CONST"
+  immediateStringLiterals: "const"
+  transitiveStringLiterals: "const"
+}
+entries {
+  ruleName: "FALLTHROUGH"
+  immediateStringLiterals: "fallthrough"
+  transitiveStringLiterals: "fallthrough"
+}
+entries {
+  ruleName: "IF"
+  immediateStringLiterals: "if"
+  transitiveStringLiterals: "if"
+}
+entries {
+  ruleName: "RANGE"
+  immediateStringLiterals: "range"
+  transitiveStringLiterals: "range"
+}
+entries {
+  ruleName: "TYPE"
+  immediateStringLiterals: "type"
+  transitiveStringLiterals: "type"
+}
+entries {
+  ruleName: "CONTINUE"
+  immediateStringLiterals: "continue"
+  transitiveStringLiterals: "continue"
+}
+entries {
+  ruleName: "FOR"
+  immediateStringLiterals: "for"
+  transitiveStringLiterals: "for"
+}
+entries {
+  ruleName: "IMPORT"
+  immediateStringLiterals: "import"
+  transitiveStringLiterals: "import"
+}
+entries {
+  ruleName: "RETURN"
+  immediateStringLiterals: "return"
+  transitiveStringLiterals: "return"
+}
+entries {
+  ruleName: "VAR"
+  immediateStringLiterals: "var"
+  transitiveStringLiterals: "var"
+}
+entries {
+  ruleName: "NIL_LIT"
+  immediateStringLiterals: "nil"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "IDENTIFIER"
+}
+entries {
+  ruleName: "L_PAREN"
+  immediateStringLiterals: "("
+  transitiveStringLiterals: "("
+}
+entries {
+  ruleName: "R_PAREN"
+  immediateStringLiterals: ")"
+  transitiveStringLiterals: ")"
+}
+entries {
+  ruleName: "L_CURLY"
+  immediateStringLiterals: "{"
+  transitiveStringLiterals: "{"
+}
+entries {
+  ruleName: "R_CURLY"
+  immediateStringLiterals: "}"
+  transitiveStringLiterals: "}"
+}
+entries {
+  ruleName: "L_BRACKET"
+  immediateStringLiterals: "["
+  transitiveStringLiterals: "["
+}
+entries {
+  ruleName: "R_BRACKET"
+  immediateStringLiterals: "]"
+  transitiveStringLiterals: "]"
+}
+entries {
+  ruleName: "ASSIGN"
+  immediateStringLiterals: "="
+  transitiveStringLiterals: "="
+}
+entries {
+  ruleName: "COMMA"
+  immediateStringLiterals: ","
+  transitiveStringLiterals: ","
+}
+entries {
+  ruleName: "SEMI"
+  immediateStringLiterals: ";"
+  transitiveStringLiterals: ";"
+}
+entries {
+  ruleName: "COLON"
+  immediateStringLiterals: ":"
+  transitiveStringLiterals: ":"
+}
+entries {
+  ruleName: "DOT"
+  immediateStringLiterals: "."
+  transitiveStringLiterals: "."
+}
+entries {
+  ruleName: "PLUS_PLUS"
+  immediateStringLiterals: "++"
+  transitiveStringLiterals: "++"
+}
+entries {
+  ruleName: "MINUS_MINUS"
+  immediateStringLiterals: "--"
+  transitiveStringLiterals: "--"
+}
+entries {
+  ruleName: "DECLARE_ASSIGN"
+  immediateStringLiterals: ":="
+  transitiveStringLiterals: ":="
+}
+entries {
+  ruleName: "ELLIPSIS"
+  immediateStringLiterals: "..."
+  transitiveStringLiterals: "..."
+}
+entries {
+  ruleName: "LOGICAL_OR"
+  immediateStringLiterals: "||"
+  transitiveStringLiterals: "||"
+}
+entries {
+  ruleName: "LOGICAL_AND"
+  immediateStringLiterals: "&&"
+  transitiveStringLiterals: "&&"
+}
+entries {
+  ruleName: "EQUALS"
+  immediateStringLiterals: "=="
+  transitiveStringLiterals: "=="
+}
+entries {
+  ruleName: "NOT_EQUALS"
+  immediateStringLiterals: "!="
+  transitiveStringLiterals: "!="
+}
+entries {
+  ruleName: "LESS"
+  immediateStringLiterals: "<"
+  transitiveStringLiterals: "<"
+}
+entries {
+  ruleName: "LESS_OR_EQUALS"
+  immediateStringLiterals: "<="
+  transitiveStringLiterals: "<="
+}
+entries {
+  ruleName: "GREATER"
+  immediateStringLiterals: ">"
+  transitiveStringLiterals: ">"
+}
+entries {
+  ruleName: "GREATER_OR_EQUALS"
+  immediateStringLiterals: ">="
+  transitiveStringLiterals: ">="
+}
+entries {
+  ruleName: "OR"
+  immediateStringLiterals: "|"
+  transitiveStringLiterals: "|"
+}
+entries {
+  ruleName: "DIV"
+  immediateStringLiterals: "/"
+  transitiveStringLiterals: "/"
+}
+entries {
+  ruleName: "MOD"
+  immediateStringLiterals: "%"
+  transitiveStringLiterals: "%"
+}
+entries {
+  ruleName: "LSHIFT"
+  immediateStringLiterals: "<<"
+  transitiveStringLiterals: "<<"
+}
+entries {
+  ruleName: "RSHIFT"
+  immediateStringLiterals: ">>"
+  transitiveStringLiterals: ">>"
+}
+entries {
+  ruleName: "BIT_CLEAR"
+  immediateStringLiterals: "&^"
+  transitiveStringLiterals: "&^"
+}
+entries {
+  ruleName: "EXCLAMATION"
+  immediateStringLiterals: "!"
+  transitiveStringLiterals: "!"
+}
+entries {
+  ruleName: "PLUS"
+  immediateStringLiterals: "+"
+  transitiveStringLiterals: "+"
+}
+entries {
+  ruleName: "MINUS"
+  immediateStringLiterals: "-"
+  transitiveStringLiterals: "-"
+}
+entries {
+  ruleName: "CARET"
+  immediateStringLiterals: "^"
+  transitiveStringLiterals: "^"
+}
+entries {
+  ruleName: "STAR"
+  immediateStringLiterals: "*"
+  transitiveStringLiterals: "*"
+}
+entries {
+  ruleName: "AMPERSAND"
+  immediateStringLiterals: "&"
+  transitiveStringLiterals: "&"
+}
+entries {
+  ruleName: "RECEIVE"
+  immediateStringLiterals: "<-"
+  transitiveStringLiterals: "<-"
+}
+entries {
+  ruleName: "DECIMAL_LIT"
+}
+entries {
+  ruleName: "OCTAL_LIT"
+}
+entries {
+  ruleName: "HEX_LIT"
+}
+entries {
+  ruleName: "FLOAT_LIT"
+}
+entries {
+  ruleName: "IMAGINARY_LIT"
+}
+entries {
+  ruleName: "RUNE_LIT"
+}
+entries {
+  ruleName: "RAW_STRING_LIT"
+}
+entries {
+  ruleName: "INTERPRETED_STRING_LIT"
+}
+entries {
+  ruleName: "WS"
+}
+entries {
+  ruleName: "COMMENT"
+}
+entries {
+  ruleName: "TERMINATOR"
+}
+entries {
+  ruleName: "LINE_COMMENT"
+}
+entries {
+  ruleName: "ESCAPED_VALUE"
+}
+entries {
+  ruleName: "DECIMALS"
+}
+entries {
+  ruleName: "OCTAL_DIGIT"
+}
+entries {
+  ruleName: "HEX_DIGIT"
+}
+entries {
+  ruleName: "EXPONENT"
+}
+entries {
+  ruleName: "LETTER"
+}
+entries {
+  ruleName: "UNICODE_DIGIT"
+}
+entries {
+  ruleName: "UNICODE_LETTER"
+}
+entries {
+  ruleName: "sourceFile"
+  immediateSubRuleNames: "aux_rule__sourceFile_6"
+  transitiveSubRuleNames: "aux_rule__sourceFile_6"
+}
+entries {
+  ruleName: "packageClause"
+}
+entries {
+  ruleName: "importDecl"
+}
+entries {
+  ruleName: "importSpec"
+  immediateSubRuleNames: "importPath"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "importPath"
+  transitiveSubRuleNames: "string_"
+}
+entries {
+  ruleName: "importPath"
+  immediateSubRuleNames: "string_"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "string_"
+}
+entries {
+  ruleName: "declaration"
+  immediateSubRuleNames: "constDecl"
+  immediateSubRuleNames: "typeDecl"
+  immediateSubRuleNames: "varDecl"
+  transitiveSubRuleNames: "constDecl"
+  transitiveSubRuleNames: "typeDecl"
+  transitiveSubRuleNames: "varDecl"
+}
+entries {
+  ruleName: "constDecl"
+}
+entries {
+  ruleName: "constSpec"
+  immediateSubRuleNames: "identifierList"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "identifierList"
+}
+entries {
+  ruleName: "identifierList"
+  immediateSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IDENTIFIER"
+}
+entries {
+  ruleName: "expressionList"
+  immediateSubRuleNames: "expression"
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "typeDecl"
+}
+entries {
+  ruleName: "typeSpec"
+}
+entries {
+  ruleName: "functionDecl"
+}
+entries {
+  ruleName: "methodDecl"
+}
+entries {
+  ruleName: "receiver"
+  immediateSubRuleNames: "parameters"
+  transitiveSubRuleNames: "parameters"
+}
+entries {
+  ruleName: "varDecl"
+}
+entries {
+  ruleName: "varSpec"
+}
+entries {
+  ruleName: "block"
+}
+entries {
+  ruleName: "statementList"
+  immediateSubRuleNames: "aux_rule__statementList_1"
+  transitiveSubRuleNames: "aux_rule__statementList_1"
+  transitiveSubRuleNames: "aux_rule__statementList_2"
+  transitiveStringLiterals: ";"
+}
+entries {
+  ruleName: "statement"
+  immediateSubRuleNames: "realStatement"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "assignment"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "block"
+  transitiveSubRuleNames: "breakStmt"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "constDecl"
+  transitiveSubRuleNames: "continueStmt"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "declaration"
+  transitiveSubRuleNames: "deferStmt"
+  transitiveSubRuleNames: "exprSwitchStmt"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "expressionStmt"
+  transitiveSubRuleNames: "fallthroughStmt"
+  transitiveSubRuleNames: "forStmt"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "goStmt"
+  transitiveSubRuleNames: "gotoStmt"
+  transitiveSubRuleNames: "ifStmt"
+  transitiveSubRuleNames: "incDecStmt"
+  transitiveSubRuleNames: "labeledStmt"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "realSimpleStmt"
+  transitiveSubRuleNames: "realStatement"
+  transitiveSubRuleNames: "returnStmt"
+  transitiveSubRuleNames: "selectStmt"
+  transitiveSubRuleNames: "sendStmt"
+  transitiveSubRuleNames: "shortVarDecl"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeDecl"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "typeSwitchStmt"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveSubRuleNames: "varDecl"
+  transitiveStringLiterals: "break"
+  transitiveStringLiterals: "continue"
+  transitiveStringLiterals: "fallthrough"
+  transitiveStringLiterals: "nil"
+  transitiveStringLiterals: "return"
+}
+entries {
+  ruleName: "simpleStmt"
+  immediateSubRuleNames: "realSimpleStmt"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "assignment"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "expressionStmt"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "incDecStmt"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "realSimpleStmt"
+  transitiveSubRuleNames: "sendStmt"
+  transitiveSubRuleNames: "shortVarDecl"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "realSimpleStmt"
+  immediateSubRuleNames: "assignment"
+  immediateSubRuleNames: "expressionStmt"
+  immediateSubRuleNames: "incDecStmt"
+  immediateSubRuleNames: "sendStmt"
+  immediateSubRuleNames: "shortVarDecl"
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "assignment"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "expressionStmt"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "incDecStmt"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "sendStmt"
+  transitiveSubRuleNames: "shortVarDecl"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "expressionStmt"
+  immediateSubRuleNames: "expression"
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "sendStmt"
+}
+entries {
+  ruleName: "incDecStmt"
+}
+entries {
+  ruleName: "assignment"
+}
+entries {
+  ruleName: "assign_op"
+  immediateStringLiterals: "="
+  transitiveStringLiterals: "="
+}
+entries {
+  ruleName: "shortVarDecl"
+}
+entries {
+  ruleName: "labeledStmt"
+}
+entries {
+  ruleName: "returnStmt"
+  immediateStringLiterals: "return"
+  transitiveStringLiterals: "return"
+}
+entries {
+  ruleName: "breakStmt"
+  immediateStringLiterals: "break"
+  transitiveStringLiterals: "break"
+}
+entries {
+  ruleName: "continueStmt"
+  immediateStringLiterals: "continue"
+  transitiveStringLiterals: "continue"
+}
+entries {
+  ruleName: "gotoStmt"
+}
+entries {
+  ruleName: "fallthroughStmt"
+  immediateStringLiterals: "fallthrough"
+  transitiveStringLiterals: "fallthrough"
+}
+entries {
+  ruleName: "deferStmt"
+}
+entries {
+  ruleName: "ifStmt"
+}
+entries {
+  ruleName: "exprSwitchStmt"
+}
+entries {
+  ruleName: "exprCaseClause"
+}
+entries {
+  ruleName: "exprSwitchCase"
+  immediateSubRuleNames: "aux_rule__exprSwitchCase_1"
+  immediateStringLiterals: "default"
+  transitiveSubRuleNames: "aux_rule__exprSwitchCase_1"
+  transitiveStringLiterals: "default"
+}
+entries {
+  ruleName: "typeSwitchStmt"
+}
+entries {
+  ruleName: "typeSwitchGuard"
+}
+entries {
+  ruleName: "typeCaseClause"
+}
+entries {
+  ruleName: "typeSwitchCase"
+  immediateSubRuleNames: "aux_rule__typeSwitchCase_1"
+  immediateStringLiterals: "default"
+  transitiveSubRuleNames: "aux_rule__typeSwitchCase_1"
+  transitiveStringLiterals: "default"
+}
+entries {
+  ruleName: "typeList"
+  immediateSubRuleNames: "altnt_block__typeList_3"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "altnt_block__typeList_3"
+  transitiveSubRuleNames: "arrayType"
+  transitiveSubRuleNames: "aux_rule__type__1"
+  transitiveSubRuleNames: "channelType"
+  transitiveSubRuleNames: "functionType"
+  transitiveSubRuleNames: "interfaceType"
+  transitiveSubRuleNames: "mapType"
+  transitiveSubRuleNames: "pointerType"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "sliceType"
+  transitiveSubRuleNames: "structType"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "type_"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "selectStmt"
+}
+entries {
+  ruleName: "commClause"
+}
+entries {
+  ruleName: "commCase"
+  immediateSubRuleNames: "aux_rule__commCase_2"
+  immediateStringLiterals: "default"
+  transitiveSubRuleNames: "aux_rule__commCase_2"
+  transitiveStringLiterals: "default"
+}
+entries {
+  ruleName: "recvStmt"
+  immediateSubRuleNames: "expression"
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "forStmt"
+}
+entries {
+  ruleName: "forClause"
+}
+entries {
+  ruleName: "rangeClause"
+}
+entries {
+  ruleName: "goStmt"
+}
+entries {
+  ruleName: "typeName"
+  immediateSubRuleNames: "IDENTIFIER"
+  immediateSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "qualifiedIdent"
+}
+entries {
+  ruleName: "arrayType"
+}
+entries {
+  ruleName: "elementType"
+  immediateSubRuleNames: "type_"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "arrayType"
+  transitiveSubRuleNames: "aux_rule__type__1"
+  transitiveSubRuleNames: "channelType"
+  transitiveSubRuleNames: "functionType"
+  transitiveSubRuleNames: "interfaceType"
+  transitiveSubRuleNames: "mapType"
+  transitiveSubRuleNames: "pointerType"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "sliceType"
+  transitiveSubRuleNames: "structType"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "type_"
+}
+entries {
+  ruleName: "pointerType"
+}
+entries {
+  ruleName: "interfaceType"
+}
+entries {
+  ruleName: "sliceType"
+}
+entries {
+  ruleName: "mapType"
+}
+entries {
+  ruleName: "channelType"
+}
+entries {
+  ruleName: "methodSpec"
+  immediateSubRuleNames: "aux_rule__methodSpec_2"
+  immediateSubRuleNames: "typeName"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "aux_rule__methodSpec_2"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "typeName"
+}
+entries {
+  ruleName: "functionType"
+}
+entries {
+  ruleName: "signature"
+  immediateSubRuleNames: "parameters"
+  transitiveSubRuleNames: "parameters"
+}
+entries {
+  ruleName: "result"
+  immediateSubRuleNames: "parameters"
+  immediateSubRuleNames: "type_"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "arrayType"
+  transitiveSubRuleNames: "aux_rule__type__1"
+  transitiveSubRuleNames: "channelType"
+  transitiveSubRuleNames: "functionType"
+  transitiveSubRuleNames: "interfaceType"
+  transitiveSubRuleNames: "mapType"
+  transitiveSubRuleNames: "parameters"
+  transitiveSubRuleNames: "pointerType"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "sliceType"
+  transitiveSubRuleNames: "structType"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "type_"
+}
+entries {
+  ruleName: "parameters"
+}
+entries {
+  ruleName: "parameterDecl"
+  immediateSubRuleNames: "type_"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "arrayType"
+  transitiveSubRuleNames: "aux_rule__type__1"
+  transitiveSubRuleNames: "channelType"
+  transitiveSubRuleNames: "functionType"
+  transitiveSubRuleNames: "interfaceType"
+  transitiveSubRuleNames: "mapType"
+  transitiveSubRuleNames: "pointerType"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "sliceType"
+  transitiveSubRuleNames: "structType"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "type_"
+}
+entries {
+  ruleName: "unaryExpr"
+  immediateSubRuleNames: "aux_rule__unaryExpr_2"
+  immediateSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "conversion"
+}
+entries {
+  ruleName: "qualifiedIdent"
+}
+entries {
+  ruleName: "compositeLit"
+}
+entries {
+  ruleName: "literalType"
+  immediateSubRuleNames: "arrayType"
+  immediateSubRuleNames: "aux_rule__literalType_1"
+  immediateSubRuleNames: "mapType"
+  immediateSubRuleNames: "sliceType"
+  immediateSubRuleNames: "structType"
+  immediateSubRuleNames: "typeName"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "arrayType"
+  transitiveSubRuleNames: "aux_rule__literalType_1"
+  transitiveSubRuleNames: "mapType"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "sliceType"
+  transitiveSubRuleNames: "structType"
+  transitiveSubRuleNames: "typeName"
+}
+entries {
+  ruleName: "literalValue"
+}
+entries {
+  ruleName: "elementList"
+  immediateSubRuleNames: "keyedElement"
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "element"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "keyedElement"
+  transitiveSubRuleNames: "literalValue"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "keyedElement"
+  immediateSubRuleNames: "element"
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "element"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "literalValue"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "key"
+  immediateSubRuleNames: "IDENTIFIER"
+  immediateSubRuleNames: "expression"
+  immediateSubRuleNames: "literalValue"
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "literalValue"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "element"
+  immediateSubRuleNames: "expression"
+  immediateSubRuleNames: "literalValue"
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "literalValue"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "structType"
+}
+entries {
+  ruleName: "fieldDecl"
+  immediateSubRuleNames: "altnt_block__fieldDecl_2"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "altnt_block__fieldDecl_2"
+  transitiveSubRuleNames: "anonymousField"
+  transitiveSubRuleNames: "aux_rule__fieldDecl_3"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "typeName"
+}
+entries {
+  ruleName: "string_"
+  immediateSubRuleNames: "INTERPRETED_STRING_LIT"
+  immediateSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+}
+entries {
+  ruleName: "anonymousField"
+  immediateSubRuleNames: "typeName"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "typeName"
+}
+entries {
+  ruleName: "functionLit"
+}
+entries {
+  ruleName: "index"
+}
+entries {
+  ruleName: "slice"
+}
+entries {
+  ruleName: "typeAssertion"
+}
+entries {
+  ruleName: "arguments"
+}
+entries {
+  ruleName: "methodExpr"
+}
+entries {
+  ruleName: "eos"
+  immediateSubRuleNames: "aux_rule__eos_1"
+  immediateSubRuleNames: "aux_rule__eos_2"
+  immediateStringLiterals: ";"
+  transitiveSubRuleNames: "aux_rule__eos_1"
+  transitiveSubRuleNames: "aux_rule__eos_2"
+  transitiveStringLiterals: ";"
+}
+entries {
+  ruleName: "aux_rule__sourceFile_1"
+}
+entries {
+  ruleName: "kleene_star__sourceFile_2"
+  immediateSubRuleNames: "aux_rule__sourceFile_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__sourceFile_1"
+}
+entries {
+  ruleName: "aux_rule__sourceFile_3"
+}
+entries {
+  ruleName: "kleene_star__sourceFile_4"
+  immediateSubRuleNames: "aux_rule__sourceFile_3"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__sourceFile_3"
+}
+entries {
+  ruleName: "aux_rule__importDecl_1"
+}
+entries {
+  ruleName: "kleene_star__importDecl_2"
+  immediateSubRuleNames: "aux_rule__importDecl_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__importDecl_1"
+}
+entries {
+  ruleName: "aux_rule__importSpec_1"
+  immediateSubRuleNames: "IDENTIFIER"
+  immediateStringLiterals: "."
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveStringLiterals: "."
+}
+entries {
+  ruleName: "optional__importSpec_2"
+  immediateSubRuleNames: "aux_rule__importSpec_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "aux_rule__importSpec_1"
+  transitiveStringLiterals: "."
+}
+entries {
+  ruleName: "aux_rule__constDecl_1"
+}
+entries {
+  ruleName: "kleene_star__constDecl_2"
+  immediateSubRuleNames: "aux_rule__constDecl_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__constDecl_1"
+}
+entries {
+  ruleName: "optional__constSpec_1"
+  immediateSubRuleNames: "type_"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "arrayType"
+  transitiveSubRuleNames: "aux_rule__type__1"
+  transitiveSubRuleNames: "channelType"
+  transitiveSubRuleNames: "functionType"
+  transitiveSubRuleNames: "interfaceType"
+  transitiveSubRuleNames: "mapType"
+  transitiveSubRuleNames: "pointerType"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "sliceType"
+  transitiveSubRuleNames: "structType"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "type_"
+}
+entries {
+  ruleName: "aux_rule__constSpec_2"
+}
+entries {
+  ruleName: "optional__constSpec_3"
+  immediateSubRuleNames: "aux_rule__constSpec_2"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__constSpec_2"
+}
+entries {
+  ruleName: "aux_rule__identifierList_1"
+}
+entries {
+  ruleName: "kleene_star__identifierList_2"
+  immediateSubRuleNames: "aux_rule__identifierList_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__identifierList_1"
+}
+entries {
+  ruleName: "aux_rule__expressionList_1"
+}
+entries {
+  ruleName: "kleene_star__expressionList_2"
+  immediateSubRuleNames: "aux_rule__expressionList_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__expressionList_1"
+}
+entries {
+  ruleName: "aux_rule__typeDecl_1"
+}
+entries {
+  ruleName: "kleene_star__typeDecl_2"
+  immediateSubRuleNames: "aux_rule__typeDecl_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__typeDecl_1"
+}
+entries {
+  ruleName: "optional__typeSpec_1"
+  immediateSubRuleNames: "ASSIGN"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "ASSIGN"
+  transitiveStringLiterals: "="
+}
+entries {
+  ruleName: "optional__functionDecl_1"
+  immediateSubRuleNames: "block"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "block"
+}
+entries {
+  ruleName: "aux_rule__varDecl_1"
+}
+entries {
+  ruleName: "kleene_star__varDecl_2"
+  immediateSubRuleNames: "aux_rule__varDecl_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__varDecl_1"
+}
+entries {
+  ruleName: "aux_rule__varSpec_1"
+}
+entries {
+  ruleName: "optional__varSpec_2"
+  immediateSubRuleNames: "aux_rule__varSpec_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__varSpec_1"
+}
+entries {
+  ruleName: "optional__block_1"
+  immediateSubRuleNames: "statementList"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__statementList_1"
+  transitiveSubRuleNames: "aux_rule__statementList_2"
+  transitiveSubRuleNames: "statementList"
+  transitiveStringLiterals: ";"
+}
+entries {
+  ruleName: "aux_rule__statementList_1"
+  immediateSubRuleNames: "aux_rule__statementList_2"
+  immediateStringLiterals: ";"
+  transitiveSubRuleNames: "aux_rule__statementList_2"
+  transitiveStringLiterals: ";"
+}
+entries {
+  ruleName: "aux_rule__assign_op_1"
+  immediateStringLiterals: "%"
+  immediateStringLiterals: "&"
+  immediateStringLiterals: "&^"
+  immediateStringLiterals: "*"
+  immediateStringLiterals: "+"
+  immediateStringLiterals: "-"
+  immediateStringLiterals: "/"
+  immediateStringLiterals: "<<"
+  immediateStringLiterals: ">>"
+  immediateStringLiterals: "^"
+  immediateStringLiterals: "|"
+  transitiveStringLiterals: "%"
+  transitiveStringLiterals: "&"
+  transitiveStringLiterals: "&^"
+  transitiveStringLiterals: "*"
+  transitiveStringLiterals: "+"
+  transitiveStringLiterals: "-"
+  transitiveStringLiterals: "/"
+  transitiveStringLiterals: "<<"
+  transitiveStringLiterals: ">>"
+  transitiveStringLiterals: "^"
+  transitiveStringLiterals: "|"
+}
+entries {
+  ruleName: "optional__assign_op_2"
+  immediateSubRuleNames: "aux_rule__assign_op_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__assign_op_1"
+  transitiveStringLiterals: "%"
+  transitiveStringLiterals: "&"
+  transitiveStringLiterals: "&^"
+  transitiveStringLiterals: "*"
+  transitiveStringLiterals: "+"
+  transitiveStringLiterals: "-"
+  transitiveStringLiterals: "/"
+  transitiveStringLiterals: "<<"
+  transitiveStringLiterals: ">>"
+  transitiveStringLiterals: "^"
+  transitiveStringLiterals: "|"
+}
+entries {
+  ruleName: "optional__returnStmt_1"
+  immediateSubRuleNames: "expressionList"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "expressionList"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "optional__breakStmt_1"
+  immediateSubRuleNames: "IDENTIFIER"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "IDENTIFIER"
+}
+entries {
+  ruleName: "aux_rule__ifStmt_1"
+  immediateStringLiterals: ";"
+  transitiveStringLiterals: ";"
+}
+entries {
+  ruleName: "optional__ifStmt_2"
+  immediateSubRuleNames: "aux_rule__ifStmt_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__ifStmt_1"
+  transitiveStringLiterals: ";"
+}
+entries {
+  ruleName: "aux_rule__ifStmt_3"
+}
+entries {
+  ruleName: "optional__ifStmt_4"
+  immediateSubRuleNames: "aux_rule__ifStmt_3"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__ifStmt_3"
+}
+entries {
+  ruleName: "optional__exprSwitchStmt_3"
+  immediateSubRuleNames: "expression"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "kleene_star__exprSwitchStmt_4"
+  immediateSubRuleNames: "exprCaseClause"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "exprCaseClause"
+}
+entries {
+  ruleName: "kleene_star__typeSwitchStmt_3"
+  immediateSubRuleNames: "typeCaseClause"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "typeCaseClause"
+}
+entries {
+  ruleName: "aux_rule__typeSwitchGuard_1"
+}
+entries {
+  ruleName: "optional__typeSwitchGuard_2"
+  immediateSubRuleNames: "aux_rule__typeSwitchGuard_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__typeSwitchGuard_1"
+}
+entries {
+  ruleName: "aux_rule__typeList_1"
+}
+entries {
+  ruleName: "kleene_star__typeList_2"
+  immediateSubRuleNames: "aux_rule__typeList_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__typeList_1"
+}
+entries {
+  ruleName: "kleene_star__selectStmt_1"
+  immediateSubRuleNames: "commClause"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "commClause"
+}
+entries {
+  ruleName: "aux_rule__recvStmt_1"
+  immediateSubRuleNames: "aux_rule__recvStmt_3"
+  immediateSubRuleNames: "aux_rule__recvStmt_4"
+  transitiveSubRuleNames: "aux_rule__recvStmt_3"
+  transitiveSubRuleNames: "aux_rule__recvStmt_4"
+}
+entries {
+  ruleName: "optional__recvStmt_2"
+  immediateSubRuleNames: "aux_rule__recvStmt_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__recvStmt_1"
+  transitiveSubRuleNames: "aux_rule__recvStmt_3"
+  transitiveSubRuleNames: "aux_rule__recvStmt_4"
+}
+entries {
+  ruleName: "aux_rule__forStmt_1"
+  immediateSubRuleNames: "expression"
+  immediateSubRuleNames: "forClause"
+  immediateSubRuleNames: "rangeClause"
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "forClause"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "rangeClause"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "optional__forStmt_2"
+  immediateSubRuleNames: "aux_rule__forStmt_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "aux_rule__forStmt_1"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "forClause"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "rangeClause"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "optional__forClause_1"
+  immediateSubRuleNames: "simpleStmt"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "assignment"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "expressionStmt"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "incDecStmt"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "realSimpleStmt"
+  transitiveSubRuleNames: "sendStmt"
+  transitiveSubRuleNames: "shortVarDecl"
+  transitiveSubRuleNames: "simpleStmt"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "aux_rule__interfaceType_1"
+}
+entries {
+  ruleName: "kleene_star__interfaceType_2"
+  immediateSubRuleNames: "aux_rule__interfaceType_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__interfaceType_1"
+}
+entries {
+  ruleName: "aux_rule__parameters_1"
+}
+entries {
+  ruleName: "kleene_star__parameters_2"
+  immediateSubRuleNames: "aux_rule__parameters_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__parameters_1"
+}
+entries {
+  ruleName: "optional__parameters_3"
+  immediateSubRuleNames: "COMMA"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "COMMA"
+  transitiveStringLiterals: ","
+}
+entries {
+  ruleName: "aux_rule__parameters_4"
+  immediateSubRuleNames: "parameterDecl"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "arrayType"
+  transitiveSubRuleNames: "aux_rule__type__1"
+  transitiveSubRuleNames: "channelType"
+  transitiveSubRuleNames: "functionType"
+  transitiveSubRuleNames: "interfaceType"
+  transitiveSubRuleNames: "mapType"
+  transitiveSubRuleNames: "parameterDecl"
+  transitiveSubRuleNames: "pointerType"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "sliceType"
+  transitiveSubRuleNames: "structType"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "type_"
+}
+entries {
+  ruleName: "optional__parameters_5"
+  immediateSubRuleNames: "aux_rule__parameters_4"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "arrayType"
+  transitiveSubRuleNames: "aux_rule__parameters_4"
+  transitiveSubRuleNames: "aux_rule__type__1"
+  transitiveSubRuleNames: "channelType"
+  transitiveSubRuleNames: "functionType"
+  transitiveSubRuleNames: "interfaceType"
+  transitiveSubRuleNames: "mapType"
+  transitiveSubRuleNames: "parameterDecl"
+  transitiveSubRuleNames: "pointerType"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "sliceType"
+  transitiveSubRuleNames: "structType"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "type_"
+}
+entries {
+  ruleName: "optional__parameterDecl_1"
+  immediateSubRuleNames: "identifierList"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "identifierList"
+}
+entries {
+  ruleName: "optional__parameterDecl_2"
+  immediateStringLiterals: "..."
+  canBeEpsilon: true
+  transitiveStringLiterals: "..."
+}
+entries {
+  ruleName: "optional__conversion_1"
+  immediateStringLiterals: ","
+  canBeEpsilon: true
+  transitiveStringLiterals: ","
+}
+entries {
+  ruleName: "aux_rule__literalValue_2"
+  immediateSubRuleNames: "elementList"
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "element"
+  transitiveSubRuleNames: "elementList"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "keyedElement"
+  transitiveSubRuleNames: "literalValue"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "optional__literalValue_3"
+  immediateSubRuleNames: "aux_rule__literalValue_2"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "aux_rule__literalValue_2"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "element"
+  transitiveSubRuleNames: "elementList"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "keyedElement"
+  transitiveSubRuleNames: "literalValue"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "aux_rule__elementList_1"
+}
+entries {
+  ruleName: "kleene_star__elementList_2"
+  immediateSubRuleNames: "aux_rule__elementList_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__elementList_1"
+}
+entries {
+  ruleName: "aux_rule__keyedElement_1"
+}
+entries {
+  ruleName: "optional__keyedElement_2"
+  immediateSubRuleNames: "aux_rule__keyedElement_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__keyedElement_1"
+}
+entries {
+  ruleName: "aux_rule__structType_1"
+}
+entries {
+  ruleName: "kleene_star__structType_2"
+  immediateSubRuleNames: "aux_rule__structType_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__structType_1"
+}
+entries {
+  ruleName: "optional__fieldDecl_1"
+  immediateSubRuleNames: "string_"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "string_"
+}
+entries {
+  ruleName: "optional__anonymousField_1"
+  immediateStringLiterals: "*"
+  canBeEpsilon: true
+  transitiveStringLiterals: "*"
+}
+entries {
+  ruleName: "aux_rule__arguments_1"
+}
+entries {
+  ruleName: "optional__arguments_2"
+  immediateSubRuleNames: "aux_rule__arguments_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__arguments_1"
+}
+entries {
+  ruleName: "aux_rule__arguments_5"
+  immediateSubRuleNames: "altnt_block__arguments_7"
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "altnt_block__arguments_7"
+  transitiveSubRuleNames: "arrayType"
+  transitiveSubRuleNames: "aux_rule__arguments_8"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__type__1"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "channelType"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "expressionList"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "functionType"
+  transitiveSubRuleNames: "interfaceType"
+  transitiveSubRuleNames: "mapType"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "pointerType"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "sliceType"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "structType"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "type_"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "optional__arguments_6"
+  immediateSubRuleNames: "aux_rule__arguments_5"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "altnt_block__arguments_7"
+  transitiveSubRuleNames: "arrayType"
+  transitiveSubRuleNames: "aux_rule__arguments_5"
+  transitiveSubRuleNames: "aux_rule__arguments_8"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__type__1"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "channelType"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "expressionList"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "functionType"
+  transitiveSubRuleNames: "interfaceType"
+  transitiveSubRuleNames: "mapType"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "pointerType"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "sliceType"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "structType"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "type_"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "aux_rule__expression_2"
+}
+entries {
+  ruleName: "kleene_star__expression_1"
+  immediateSubRuleNames: "aux_rule__expression_2"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__expression_2"
+}
+entries {
+  ruleName: "expression"
+  immediateSubRuleNames: "unaryExpr"
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "aux_rule__primaryExpr_2"
+  immediateSubRuleNames: "arguments"
+  immediateSubRuleNames: "aux_rule__primaryExpr_4"
+  immediateSubRuleNames: "index"
+  immediateSubRuleNames: "slice"
+  immediateSubRuleNames: "typeAssertion"
+  transitiveSubRuleNames: "arguments"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_4"
+  transitiveSubRuleNames: "index"
+  transitiveSubRuleNames: "slice"
+  transitiveSubRuleNames: "typeAssertion"
+}
+entries {
+  ruleName: "kleene_star__primaryExpr_1"
+  immediateSubRuleNames: "aux_rule__primaryExpr_2"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "arguments"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_2"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_4"
+  transitiveSubRuleNames: "index"
+  transitiveSubRuleNames: "slice"
+  transitiveSubRuleNames: "typeAssertion"
+}
+entries {
+  ruleName: "primaryExpr"
+  immediateSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "optional__signature_1"
+  immediateSubRuleNames: "result"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "arrayType"
+  transitiveSubRuleNames: "aux_rule__type__1"
+  transitiveSubRuleNames: "channelType"
+  transitiveSubRuleNames: "functionType"
+  transitiveSubRuleNames: "interfaceType"
+  transitiveSubRuleNames: "mapType"
+  transitiveSubRuleNames: "parameters"
+  transitiveSubRuleNames: "pointerType"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "result"
+  transitiveSubRuleNames: "sliceType"
+  transitiveSubRuleNames: "structType"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "type_"
+}
+entries {
+  ruleName: "altnt_block__expression_3"
+  immediateStringLiterals: "!="
+  immediateStringLiterals: "%"
+  immediateStringLiterals: "&"
+  immediateStringLiterals: "&&"
+  immediateStringLiterals: "&^"
+  immediateStringLiterals: "*"
+  immediateStringLiterals: "+"
+  immediateStringLiterals: "-"
+  immediateStringLiterals: "/"
+  immediateStringLiterals: "<"
+  immediateStringLiterals: "<<"
+  immediateStringLiterals: "<="
+  immediateStringLiterals: "=="
+  immediateStringLiterals: ">"
+  immediateStringLiterals: ">="
+  immediateStringLiterals: ">>"
+  immediateStringLiterals: "^"
+  immediateStringLiterals: "|"
+  immediateStringLiterals: "||"
+  transitiveStringLiterals: "!="
+  transitiveStringLiterals: "%"
+  transitiveStringLiterals: "&"
+  transitiveStringLiterals: "&&"
+  transitiveStringLiterals: "&^"
+  transitiveStringLiterals: "*"
+  transitiveStringLiterals: "+"
+  transitiveStringLiterals: "-"
+  transitiveStringLiterals: "/"
+  transitiveStringLiterals: "<"
+  transitiveStringLiterals: "<<"
+  transitiveStringLiterals: "<="
+  transitiveStringLiterals: "=="
+  transitiveStringLiterals: ">"
+  transitiveStringLiterals: ">="
+  transitiveStringLiterals: ">>"
+  transitiveStringLiterals: "^"
+  transitiveStringLiterals: "|"
+  transitiveStringLiterals: "||"
+}
+entries {
+  ruleName: "type_"
+  immediateSubRuleNames: "arrayType"
+  immediateSubRuleNames: "aux_rule__type__1"
+  immediateSubRuleNames: "channelType"
+  immediateSubRuleNames: "functionType"
+  immediateSubRuleNames: "interfaceType"
+  immediateSubRuleNames: "mapType"
+  immediateSubRuleNames: "pointerType"
+  immediateSubRuleNames: "sliceType"
+  immediateSubRuleNames: "structType"
+  immediateSubRuleNames: "typeName"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "arrayType"
+  transitiveSubRuleNames: "aux_rule__type__1"
+  transitiveSubRuleNames: "channelType"
+  transitiveSubRuleNames: "functionType"
+  transitiveSubRuleNames: "interfaceType"
+  transitiveSubRuleNames: "mapType"
+  transitiveSubRuleNames: "pointerType"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "sliceType"
+  transitiveSubRuleNames: "structType"
+  transitiveSubRuleNames: "typeName"
+}
+entries {
+  ruleName: "realStatement"
+  immediateSubRuleNames: "block"
+  immediateSubRuleNames: "breakStmt"
+  immediateSubRuleNames: "continueStmt"
+  immediateSubRuleNames: "declaration"
+  immediateSubRuleNames: "deferStmt"
+  immediateSubRuleNames: "exprSwitchStmt"
+  immediateSubRuleNames: "fallthroughStmt"
+  immediateSubRuleNames: "forStmt"
+  immediateSubRuleNames: "goStmt"
+  immediateSubRuleNames: "gotoStmt"
+  immediateSubRuleNames: "ifStmt"
+  immediateSubRuleNames: "labeledStmt"
+  immediateSubRuleNames: "realSimpleStmt"
+  immediateSubRuleNames: "returnStmt"
+  immediateSubRuleNames: "selectStmt"
+  immediateSubRuleNames: "typeSwitchStmt"
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "assignment"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "block"
+  transitiveSubRuleNames: "breakStmt"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "constDecl"
+  transitiveSubRuleNames: "continueStmt"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "declaration"
+  transitiveSubRuleNames: "deferStmt"
+  transitiveSubRuleNames: "exprSwitchStmt"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "expressionStmt"
+  transitiveSubRuleNames: "fallthroughStmt"
+  transitiveSubRuleNames: "forStmt"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "goStmt"
+  transitiveSubRuleNames: "gotoStmt"
+  transitiveSubRuleNames: "ifStmt"
+  transitiveSubRuleNames: "incDecStmt"
+  transitiveSubRuleNames: "labeledStmt"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "realSimpleStmt"
+  transitiveSubRuleNames: "returnStmt"
+  transitiveSubRuleNames: "selectStmt"
+  transitiveSubRuleNames: "sendStmt"
+  transitiveSubRuleNames: "shortVarDecl"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeDecl"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "typeSwitchStmt"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveSubRuleNames: "varDecl"
+  transitiveStringLiterals: "break"
+  transitiveStringLiterals: "continue"
+  transitiveStringLiterals: "fallthrough"
+  transitiveStringLiterals: "nil"
+  transitiveStringLiterals: "return"
+}
+entries {
+  ruleName: "altnt_block__importDecl_3"
+  immediateSubRuleNames: "aux_rule__importDecl_4"
+  immediateSubRuleNames: "importSpec"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "aux_rule__importDecl_4"
+  transitiveSubRuleNames: "importPath"
+  transitiveSubRuleNames: "importSpec"
+  transitiveSubRuleNames: "string_"
+}
+entries {
+  ruleName: "altnt_block__constDecl_3"
+  immediateSubRuleNames: "aux_rule__constDecl_4"
+  immediateSubRuleNames: "constSpec"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "aux_rule__constDecl_4"
+  transitiveSubRuleNames: "constSpec"
+  transitiveSubRuleNames: "identifierList"
+}
+entries {
+  ruleName: "altnt_block__typeDecl_3"
+  immediateSubRuleNames: "aux_rule__typeDecl_4"
+  immediateSubRuleNames: "typeSpec"
+  transitiveSubRuleNames: "aux_rule__typeDecl_4"
+  transitiveSubRuleNames: "typeSpec"
+}
+entries {
+  ruleName: "altnt_block__varDecl_3"
+  immediateSubRuleNames: "aux_rule__varDecl_4"
+  immediateSubRuleNames: "varSpec"
+  transitiveSubRuleNames: "aux_rule__varDecl_4"
+  transitiveSubRuleNames: "varSpec"
+}
+entries {
+  ruleName: "altnt_block__varSpec_3"
+  immediateSubRuleNames: "aux_rule__varSpec_4"
+  immediateSubRuleNames: "aux_rule__varSpec_5"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "arrayType"
+  transitiveSubRuleNames: "aux_rule__type__1"
+  transitiveSubRuleNames: "aux_rule__varSpec_4"
+  transitiveSubRuleNames: "aux_rule__varSpec_5"
+  transitiveSubRuleNames: "channelType"
+  transitiveSubRuleNames: "functionType"
+  transitiveSubRuleNames: "interfaceType"
+  transitiveSubRuleNames: "mapType"
+  transitiveSubRuleNames: "pointerType"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "sliceType"
+  transitiveSubRuleNames: "structType"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "type_"
+}
+entries {
+  ruleName: "altnt_block__incDecStmt_1"
+  immediateSubRuleNames: "MINUS_MINUS"
+  immediateSubRuleNames: "PLUS_PLUS"
+  transitiveSubRuleNames: "MINUS_MINUS"
+  transitiveSubRuleNames: "PLUS_PLUS"
+  transitiveStringLiterals: "++"
+  transitiveStringLiterals: "--"
+}
+entries {
+  ruleName: "altnt_block__typeList_3"
+  immediateSubRuleNames: "NIL_LIT"
+  immediateSubRuleNames: "type_"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "arrayType"
+  transitiveSubRuleNames: "aux_rule__type__1"
+  transitiveSubRuleNames: "channelType"
+  transitiveSubRuleNames: "functionType"
+  transitiveSubRuleNames: "interfaceType"
+  transitiveSubRuleNames: "mapType"
+  transitiveSubRuleNames: "pointerType"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "sliceType"
+  transitiveSubRuleNames: "structType"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "type_"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "altnt_block__commCase_1"
+  immediateSubRuleNames: "recvStmt"
+  immediateSubRuleNames: "sendStmt"
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "recvStmt"
+  transitiveSubRuleNames: "sendStmt"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "altnt_block__channelType_1"
+  immediateSubRuleNames: "aux_rule__channelType_3"
+  immediateSubRuleNames: "aux_rule__channelType_4"
+  transitiveSubRuleNames: "aux_rule__channelType_3"
+  transitiveSubRuleNames: "aux_rule__channelType_4"
+  transitiveStringLiterals: "chan"
+}
+entries {
+  ruleName: "altnt_block__unaryExpr_1"
+  immediateStringLiterals: "!"
+  immediateStringLiterals: "&"
+  immediateStringLiterals: "*"
+  immediateStringLiterals: "+"
+  immediateStringLiterals: "-"
+  immediateStringLiterals: "<-"
+  immediateStringLiterals: "^"
+  transitiveStringLiterals: "!"
+  transitiveStringLiterals: "&"
+  transitiveStringLiterals: "*"
+  transitiveStringLiterals: "+"
+  transitiveStringLiterals: "-"
+  transitiveStringLiterals: "<-"
+  transitiveStringLiterals: "^"
+}
+entries {
+  ruleName: "altnt_block__fieldDecl_2"
+  immediateSubRuleNames: "anonymousField"
+  immediateSubRuleNames: "aux_rule__fieldDecl_3"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "anonymousField"
+  transitiveSubRuleNames: "aux_rule__fieldDecl_3"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "typeName"
+}
+entries {
+  ruleName: "altnt_block__slice_4"
+  immediateStringLiterals: ":"
+  transitiveStringLiterals: ":"
+}
+entries {
+  ruleName: "altnt_block__sourceFile_5"
+  immediateSubRuleNames: "declaration"
+  immediateSubRuleNames: "functionDecl"
+  immediateSubRuleNames: "methodDecl"
+  transitiveSubRuleNames: "constDecl"
+  transitiveSubRuleNames: "declaration"
+  transitiveSubRuleNames: "functionDecl"
+  transitiveSubRuleNames: "methodDecl"
+  transitiveSubRuleNames: "typeDecl"
+  transitiveSubRuleNames: "varDecl"
+}
+entries {
+  ruleName: "altnt_block__ifStmt_5"
+  immediateSubRuleNames: "block"
+  immediateSubRuleNames: "ifStmt"
+  transitiveSubRuleNames: "block"
+  transitiveSubRuleNames: "ifStmt"
+}
+entries {
+  ruleName: "altnt_block__arguments_7"
+  immediateSubRuleNames: "aux_rule__arguments_8"
+  immediateSubRuleNames: "expressionList"
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "arrayType"
+  transitiveSubRuleNames: "aux_rule__arguments_8"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__type__1"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "channelType"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "expressionList"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "functionType"
+  transitiveSubRuleNames: "interfaceType"
+  transitiveSubRuleNames: "mapType"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "pointerType"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "sliceType"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "structType"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "type_"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "optional__channelType_2"
+  immediateStringLiterals: "<-"
+  canBeEpsilon: true
+  transitiveStringLiterals: "<-"
+}
+entries {
+  ruleName: "altnt_block__slice_5"
+  immediateSubRuleNames: "aux_rule__slice_6"
+  immediateSubRuleNames: "optional__exprSwitchStmt_3"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_3"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "aux_rule__slice_6"
+  transitiveSubRuleNames: "aux_rule__unaryExpr_2"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "expression"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "optional__exprSwitchStmt_3"
+  transitiveSubRuleNames: "primaryExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "unaryExpr"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "aux_rule__primaryExpr_3"
+  immediateSubRuleNames: "DECIMAL_LIT"
+  immediateSubRuleNames: "FLOAT_LIT"
+  immediateSubRuleNames: "HEX_LIT"
+  immediateSubRuleNames: "IMAGINARY_LIT"
+  immediateSubRuleNames: "NIL_LIT"
+  immediateSubRuleNames: "OCTAL_LIT"
+  immediateSubRuleNames: "RUNE_LIT"
+  immediateSubRuleNames: "aux_rule__primaryExpr_5"
+  immediateSubRuleNames: "compositeLit"
+  immediateSubRuleNames: "conversion"
+  immediateSubRuleNames: "functionLit"
+  immediateSubRuleNames: "methodExpr"
+  immediateSubRuleNames: "string_"
+  immediateSubRuleNames: "typeName"
+  transitiveSubRuleNames: "DECIMAL_LIT"
+  transitiveSubRuleNames: "FLOAT_LIT"
+  transitiveSubRuleNames: "HEX_LIT"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "IMAGINARY_LIT"
+  transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
+  transitiveSubRuleNames: "NIL_LIT"
+  transitiveSubRuleNames: "OCTAL_LIT"
+  transitiveSubRuleNames: "RAW_STRING_LIT"
+  transitiveSubRuleNames: "RUNE_LIT"
+  transitiveSubRuleNames: "aux_rule__primaryExpr_5"
+  transitiveSubRuleNames: "compositeLit"
+  transitiveSubRuleNames: "conversion"
+  transitiveSubRuleNames: "functionLit"
+  transitiveSubRuleNames: "methodExpr"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "string_"
+  transitiveSubRuleNames: "typeName"
+  transitiveStringLiterals: "nil"
+}
+entries {
+  ruleName: "aux_rule__sourceFile_6"
+}
+entries {
+  ruleName: "aux_rule__exprSwitchCase_1"
+}
+entries {
+  ruleName: "aux_rule__typeSwitchCase_1"
+}
+entries {
+  ruleName: "aux_rule__commCase_2"
+}
+entries {
+  ruleName: "aux_rule__methodSpec_2"
+}
+entries {
+  ruleName: "aux_rule__unaryExpr_2"
+}
+entries {
+  ruleName: "aux_rule__literalType_1"
+}
+entries {
+  ruleName: "aux_rule__eos_1"
+}
+entries {
+  ruleName: "aux_rule__eos_2"
+}
+entries {
+  ruleName: "aux_rule__statementList_2"
+}
+entries {
+  ruleName: "aux_rule__recvStmt_3"
+}
+entries {
+  ruleName: "aux_rule__recvStmt_4"
+}
+entries {
+  ruleName: "aux_rule__primaryExpr_4"
+}
+entries {
+  ruleName: "aux_rule__type__1"
+}
+entries {
+  ruleName: "aux_rule__importDecl_4"
+}
+entries {
+  ruleName: "aux_rule__constDecl_4"
+}
+entries {
+  ruleName: "aux_rule__typeDecl_4"
+}
+entries {
+  ruleName: "aux_rule__varDecl_4"
+}
+entries {
+  ruleName: "aux_rule__varSpec_4"
+  immediateSubRuleNames: "type_"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "arrayType"
+  transitiveSubRuleNames: "aux_rule__type__1"
+  transitiveSubRuleNames: "channelType"
+  transitiveSubRuleNames: "functionType"
+  transitiveSubRuleNames: "interfaceType"
+  transitiveSubRuleNames: "mapType"
+  transitiveSubRuleNames: "pointerType"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "sliceType"
+  transitiveSubRuleNames: "structType"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "type_"
+}
+entries {
+  ruleName: "aux_rule__varSpec_5"
+}
+entries {
+  ruleName: "aux_rule__channelType_3"
+}
+entries {
+  ruleName: "aux_rule__channelType_4"
+  immediateStringLiterals: "chan"
+  transitiveStringLiterals: "chan"
+}
+entries {
+  ruleName: "aux_rule__fieldDecl_3"
+}
+entries {
+  ruleName: "aux_rule__arguments_8"
+  immediateSubRuleNames: "type_"
+  transitiveSubRuleNames: "IDENTIFIER"
+  transitiveSubRuleNames: "arrayType"
+  transitiveSubRuleNames: "aux_rule__type__1"
+  transitiveSubRuleNames: "channelType"
+  transitiveSubRuleNames: "functionType"
+  transitiveSubRuleNames: "interfaceType"
+  transitiveSubRuleNames: "mapType"
+  transitiveSubRuleNames: "pointerType"
+  transitiveSubRuleNames: "qualifiedIdent"
+  transitiveSubRuleNames: "sliceType"
+  transitiveSubRuleNames: "structType"
+  transitiveSubRuleNames: "typeName"
+  transitiveSubRuleNames: "type_"
+}
+entries {
+  ruleName: "aux_rule__slice_6"
+}
+entries {
+  ruleName: "aux_rule__primaryExpr_5"
+}

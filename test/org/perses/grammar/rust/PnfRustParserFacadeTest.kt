@@ -133,7 +133,6 @@ class PnfRustParserFacadeTest {
 
   @Test
   fun basicTest() {
-
     val program =
       """
     |fn main() {
@@ -142,7 +141,7 @@ class PnfRustParserFacadeTest {
     |  // Print text to the console
     |  println!("Hello World!");
     |}
-    """.trimMargin()
+      """.trimMargin()
 
     val file = workingDir.resolve("test.rs")
     file.writeText(program)
@@ -154,7 +153,7 @@ class PnfRustParserFacadeTest {
   fun testLanguageRustCodeFormat() {
     LanguageKindTestUtil.assertCodeFormatsDoNotProduceSyntacticallyInvalidPrograms(
       facade,
-      Paths.get("test_data/rust_programs/rust/compiler/rustc_ast/src/mut_visit.rs")
+      Paths.get("test_data/rust_programs/rust/compiler/rustc_ast/src/mut_visit.rs"),
     )
   }
 
@@ -167,38 +166,38 @@ class PnfRustParserFacadeTest {
     compareOrigAndPnfParsers(Paths.get("$compilerFolder/rustc_ast/src/tokenstream.rs"))
     compareOrigAndPnfParsers(Paths.get("$compilerFolder/rustc_ast/src/attr/mod.rs"))
     compareOrigAndPnfParsers(
-      Paths.get("$compilerFolder/rustc_builtin_macros/src/deriving/mod.rs")
+      Paths.get("$compilerFolder/rustc_builtin_macros/src/deriving/mod.rs"),
     )
     compareOrigAndPnfParsers(
-      Paths.get("$compilerFolder/rustc_data_structures/src/sip128/tests.rs")
+      Paths.get("$compilerFolder/rustc_data_structures/src/sip128/tests.rs"),
     )
     compareOrigAndPnfParsers(
-      Paths.get("$compilerFolder/rustc_data_structures/src/tagged_ptr/copy.rs")
+      Paths.get("$compilerFolder/rustc_data_structures/src/tagged_ptr/copy.rs"),
     )
     compareOrigAndPnfParsers(Paths.get("$compilerFolder/rustc_index/src/bit_set.rs"))
     compareOrigAndPnfParsers(
-      Paths.get("$compilerFolder/rustc_mir/src/borrow_check/diagnostics/conflict_errors.rs")
+      Paths.get("$compilerFolder/rustc_mir/src/borrow_check/diagnostics/conflict_errors.rs"),
     )
     compareOrigAndPnfParsers(
-      Paths.get("$compilerFolder/rustc_mir/src/borrow_check/diagnostics/region_errors.rs")
+      Paths.get("$compilerFolder/rustc_mir/src/borrow_check/diagnostics/region_errors.rs"),
     )
     compareOrigAndPnfParsers(Paths.get("$compilerFolder/rustc_mir/src/borrow_check/nll.rs"))
     compareOrigAndPnfParsers(Paths.get("$compilerFolder/rustc_mir/src/borrow_check/nll.rs"))
     compareOrigAndPnfParsers(
-      Paths.get("$compilerFolder/rustc_mir/src/borrow_check/region_infer/mod.rs")
+      Paths.get("$compilerFolder/rustc_mir/src/borrow_check/region_infer/mod.rs"),
     )
     compareOrigAndPnfParsers(
-      Paths.get("$compilerFolder/rustc_mir/src/borrow_check/region_infer/opaque_types.rs")
+      Paths.get("$compilerFolder/rustc_mir/src/borrow_check/region_infer/opaque_types.rs"),
     )
     compareOrigAndPnfParsers(
-      Paths.get("$compilerFolder/rustc_mir/src/borrow_check/type_check/free_region_relations.rs")
+      Paths.get("$compilerFolder/rustc_mir/src/borrow_check/type_check/free_region_relations.rs"),
     )
     compareOrigAndPnfParsers(
-      Paths.get("$compilerFolder/rustc_mir/src/borrow_check/type_check/mod.rs")
+      Paths.get("$compilerFolder/rustc_mir/src/borrow_check/type_check/mod.rs"),
     )
     compareOrigAndPnfParsers(Paths.get("$compilerFolder/rustc_mir_build/src/build/into.rs"))
     compareOrigAndPnfParsers(
-      Paths.get("$compilerFolder/rustc_mir/src/borrow_check/diagnostics/explain_borrow.rs")
+      Paths.get("$compilerFolder/rustc_mir/src/borrow_check/diagnostics/explain_borrow.rs"),
     )
     compareOrigAndPnfParsers(Paths.get("$libraryFolder/std/src/os/android/fs.rs"))
     compareOrigAndPnfParsers(Paths.get("$libraryFolder/std/src/os/dragonfly/fs.rs"))
@@ -214,13 +213,13 @@ class PnfRustParserFacadeTest {
     compareOrigAndPnfParsers(Paths.get("$libraryFolder/std/src/os/redox/fs.rs"))
     compareOrigAndPnfParsers(Paths.get("$libraryFolder/std/src/os/solaris/fs.rs"))
     compareOrigAndPnfParsers(
-      Paths.get("$libraryFolder/std/src/sys/sgx/abi/usercalls/alloc.rs")
+      Paths.get("$libraryFolder/std/src/sys/sgx/abi/usercalls/alloc.rs"),
     )
     compareOrigAndPnfParsers(
-      Paths.get("$compilerFolder/rustc_data_structures/src/tagged_ptr.rs")
+      Paths.get("$compilerFolder/rustc_data_structures/src/tagged_ptr.rs"),
     )
     compareOrigAndPnfParsers(
-      Paths.get("$compilerFolder/rustc_middle/src/mir/interpret/pointer.rs")
+      Paths.get("$compilerFolder/rustc_middle/src/mir/interpret/pointer.rs"),
     )
   }
 

@@ -16,18 +16,20 @@
  */
 package org.perses.program.printer
 
-import org.perses.program.AbstractTokenizedProgramPrinter
 import org.perses.program.PersesTokenFactory.PersesToken
 import org.perses.program.TokenizedProgram
 import org.perses.util.FastStringBuilder
+import org.perses.util.Util.lazyAssert
 
 abstract class AbstractOrigFormatPrintingVisitor(
   program: TokenizedProgram,
   private val keepBlankLines: Boolean,
   tokenPositionProvider: AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider,
-  tokenPlacementListener: AbstractTokenizedProgramPrinter.AbstractTokenPlacementListener?
+  tokenPlacementListener: AbstractTokenizedProgramPrinter.AbstractTokenPlacementListener?,
 ) : AbstractOrigFormatVisitor(
-  program, tokenPositionProvider, tokenPlacementListener
+  program,
+  tokenPositionProvider,
+  tokenPlacementListener,
 ) {
 
   private var currentLineNumber = 1
@@ -37,8 +39,12 @@ abstract class AbstractOrigFormatPrintingVisitor(
       return
     }
 
-    val lineNumber = tokenPositionProvider.getPosition(line.first()).line
-    assert(line.asSequence().map { getLine(it) }.distinct().count() == 1) {
+    val lineNumber = tokenPositionProvider.getLine(line.first())
+    lazyAssert({
+      line.asSequence().map {
+        tokenPositionProvider.getLine(it)
+      }.distinct().count() == 1
+    }) {
       line
     }
     val builder = result
@@ -58,19 +64,26 @@ abstract class AbstractOrigFormatPrintingVisitor(
   protected fun printNonEmptyLine(
     startPositionInLine: Int,
     line: List<PersesToken>,
-    builder: FastStringBuilder
+    builder: FastStringBuilder,
   ) {
     var positionInLineCurrent = startPositionInLine
+    var previousTokenInLine: PersesToken? = null
     line.forEach { token ->
-      val tokenPositionInLine = getCharPositionInLine(token)
+      var tokenPositionInLine = tokenPositionProvider
+        .getCharPositionInLine(token, positionInLineCurrent, null)
+      // Only deduce a proper position when the position extracted from token is unavailable
+      if (positionInLineCurrent > tokenPositionInLine) {
+        tokenPositionInLine = tokenPositionProvider
+          .getCharPositionInLine(token, positionInLineCurrent, previousTokenInLine)
+      }
       check(positionInLineCurrent <= tokenPositionInLine) {
         """This printing algorithm is designed for program reduction only.
             |token: $token
-            |  position: ${getCharPositionInLine(token)}
+            |  positionInLineCurrent: $positionInLineCurrent
             |  tokenPositionInLine: $tokenPositionInLine
             |program:
             |${program.tokens.joinToString("\n") { it.text + ":" + it.type }}
-          """.trimMargin()
+        """.trimMargin()
       }
       while (positionInLineCurrent < tokenPositionInLine) {
         ++positionInLineCurrent
@@ -79,10 +92,11 @@ abstract class AbstractOrigFormatPrintingVisitor(
       tokenPlacementListener?.onTokenPlacement(
         token,
         builder.currentLineNo,
-        builder.charPositionInLine
+        builder.charPositionInLine,
       )
       builder.append(token.text)
       positionInLineCurrent += token.text.length
+      previousTokenInLine = token
     }
   }
 }

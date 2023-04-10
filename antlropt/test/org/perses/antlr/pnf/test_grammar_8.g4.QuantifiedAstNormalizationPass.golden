@@ -2,6 +2,8 @@
 // DO NOT MODIFY.
 grammar test_grammar_8;
 
+
+
 start
     : aux_rule__start_10?
     ;

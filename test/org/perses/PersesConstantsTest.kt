@@ -30,7 +30,7 @@ class PersesConstantsTest {
 
   val workingDir = Files.createTempDirectory("PersesConstantsTest_")
   val constants = PersesConstants.createCustomizedConstants(
-    userHomeFolder = workingDir
+    userHomeFolder = workingDir,
   )
 
   @After
@@ -44,9 +44,9 @@ class PersesConstantsTest {
     assertThat(homeDir.userHomeFolder.startsWith(Util.getUserHomeDirectory())).isTrue()
   }
 
-  @Test
   // This test is tricky, as it modifies a global variable. Be careful of using
   // the system property.
+  @Test
   fun testCreateDefaultPersesConstants_AtSystemProperty() {
     try {
       System.setProperty(HOME_DIR_PROPERTY_NAME, workingDir.toString())
@@ -68,7 +68,7 @@ class PersesConstantsTest {
   fun testAdhodLanguageRoot() {
     val root = constants.getPersesRootFolderOrCreate().getPersesAdhocRootOrCreate()
     assertThat(root.file.parent.toAbsolutePath()).isEqualTo(
-      constants.getPersesRootFolderOrCreate().file.toAbsolutePath()
+      constants.getPersesRootFolderOrCreate().file.toAbsolutePath(),
     )
     assertThat(Files.isDirectory(root.file)).isTrue()
   }

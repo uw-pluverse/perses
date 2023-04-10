@@ -26,6 +26,7 @@ import org.perses.antlr.ParseTreeUtil.getTokenName
 import org.perses.antlr.ParseTreeWithParser
 import org.perses.program.TokenizedProgramFactory
 import org.perses.util.SimpleStack
+import org.perses.util.Util.lazyAssert
 
 /** Build a spar-tree from an Antlr [ParseTree] node.  */
 class SparTreeBuilder(
@@ -44,7 +45,7 @@ class SparTreeBuilder(
     val spar2antlrMap = HashMap<AbstractSparTreeNode, ParseTree>()
     val stack = SimpleStack<AbstractSparTreeNode>()
     val root = createSparTreeNode(rootParseTree)
-    assert(!spar2antlrMap.containsKey(root))
+    lazyAssert { !spar2antlrMap.containsKey(root) }
     spar2antlrMap[root] = rootParseTree
     stack.add(root)
     while (stack.isNotEmpty()) {
@@ -57,13 +58,13 @@ class SparTreeBuilder(
           continue
         }
         val sparChild = createSparTreeNode(child)
-        assert(!spar2antlrMap.containsKey(sparChild))
+        lazyAssert { !spar2antlrMap.containsKey(sparChild) }
         spar2antlrMap[sparChild] = child
         node.addChild(sparChild, AbstractNodePayload.SinglePayload(sparChild.antlrRule))
         stack.add(sparChild)
       }
     }
-    assert(areNodeIdsUnique(root))
+    lazyAssert { areNodeIdsUnique(root) }
     if (simplifyTree) {
       SparTreeSimplifier.simplify(root)
     }
@@ -84,11 +85,11 @@ class SparTreeBuilder(
       return LexerRuleSparTreeNode(
         nodeId,
         persesToken,
-        tokenRuleName?.let { antlrRuleHierarchy.getTokenRule(tokenRuleName) }
+        tokenRuleName?.let { antlrRuleHierarchy.getRuleHierarchyEntryOrNull(tokenRuleName) },
       )
     }
-    val rule = antlrRuleHierarchy.getRuleHierarchyInfoWithName(
-      getRuleName((parseTree as RuleNode), parseTreeWithParser.parser)
+    val rule = antlrRuleHierarchy.getRuleHierarchyEntryWithNameOrThrow(
+      getRuleName((parseTree as RuleNode), parseTreeWithParser.parser),
     )
     return ParserRuleSparTreeNode(nodeId, rule)
   }
@@ -103,19 +104,19 @@ class SparTreeBuilder(
     }
 
     private fun isRuleNode(node: ParseTree): Boolean {
-      assert(node is RuleNode != node is TerminalNode)
+      lazyAssert { node is RuleNode != node is TerminalNode }
       return node is RuleNode
     }
 
     private fun isTokenNode(node: ParseTree): Boolean {
-      assert(node is RuleNode != node is TerminalNode)
+      lazyAssert { node is RuleNode != node is TerminalNode }
       return node is TerminalNode
     }
 
     private fun areNodeIdsUnique(root: AbstractSparTreeNode): Boolean {
       val visited = HashSet<Int>()
       root.preOrderVisit { node: AbstractSparTreeNode ->
-        assert(!visited.contains(node.nodeId)) { "Duplicate node ids: " + node.nodeId }
+        lazyAssert({ !visited.contains(node.nodeId) }) { "Duplicate node ids: " + node.nodeId }
         visited.add(node.nodeId)
         node.immutableChildView
       }

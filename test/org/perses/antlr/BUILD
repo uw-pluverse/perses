@@ -15,10 +15,10 @@ kt_jvm_test(
         "ParseTreeUtilTest.kt",
     ],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//src/org/perses/antlr:parse_tree_util",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -26,11 +26,11 @@ kt_jvm_test(
     name = "AntlrToolWrapperTest",
     srcs = ["AntlrToolWrapperTest.kt"],
     deps = [
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/util:antlr_tool_wrapper",
         "//src/org/perses/util",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -50,16 +50,16 @@ kt_jvm_test(
     ],
 )
 
-java_test(
+kt_jvm_test(
     name = "GrammarHierarchyTest",
-    srcs = ["GrammarHierarchyTest.java"],
+    srcs = ["GrammarHierarchyTest.kt"],
     data = [
         "//test_data/antlr_grammars",
         "//test_data/antlr_grammars:c_grammar",
     ],
-    test_class = "org.perses.antlr.GrammarHierarchyTest",
     deps = [
         ":GrammarTestingUtility",
+        "//:antlr_tool",
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
@@ -67,7 +67,6 @@ java_test(
         "//src/org/perses/antlr:antlr_hierarchy",
         "//src/org/perses/grammar/c:optc_parser_facade",
         "//test/org/perses:test_util",
-        "@maven//:org_antlr_antlr4",
     ],
 )
 
@@ -75,7 +74,9 @@ kt_jvm_library(
     name = "GrammarTestingUtility",
     srcs = ["GrammarTestingUtility.kt"],
     deps = [
+        "//:antlr_tool",
         "//:guava",
+        "//:jgrapht",
         "//:kotlin_stdib",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
@@ -83,8 +84,6 @@ kt_jvm_library(
         "//antlropt/src/org/perses/antlr/pnf",
         "//src/org/perses/antlr:antlr_grammar_parser",
         "//src/org/perses/util",
-        "@maven//:org_antlr_antlr4",
-        "@maven//:org_jgrapht_jgrapht_core",
     ],
 )
 
@@ -95,7 +94,9 @@ java_binary(
     main_class = "org.perses.antlr.GrammarHierarchyDumpMain",
     deps = [
         ":GrammarTestingUtility",
+        "//:antlr_tool",
         "//:guava",
+        "//:jcommander",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
         "//src/org/perses/antlr:antlr_grammar_parser",
@@ -105,8 +106,7 @@ java_binary(
         "//src/org/perses/grammar/go:parser_facade",
         "//src/org/perses/grammar/scala:parser_facade",
         "//test/org/perses:test_util",
-        "@maven//:com_beust_jcommander",
-        "@maven//:org_antlr_antlr4",
+        "@com_google_protobuf//:protobuf_java",
     ],
 )
 

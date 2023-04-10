@@ -54,15 +54,14 @@ class LoggingListener : DefaultReductionListener() {
       "Reduction ended at ${formatDateForDisplay(timeSpan.endTimeMillis)}"
     }
     logger.ktInfo { "Elapsed time is ${timeSpan.formattedElaspedTime}" }
-    val delta = event.startEvent.programSize - finalProgramSize
     val initialProgramSize = event.startEvent.programSize
     logger.ktInfo {
       "Removed %s tokens. reduction ratio is " +
         "$finalProgramSize/$initialProgramSize=${
-        computePercentage(
-          finalProgramSize,
-          initialProgramSize
-        )
+          computePercentage(
+            finalProgramSize,
+            initialProgramSize,
+          )
         }"
     }
     logger.ktInfo {
@@ -87,7 +86,7 @@ class LoggingListener : DefaultReductionListener() {
     }
     val builder = createStingBuilderWithPrefix(
       event.startEvent.reducerClass.shortName(),
-      event.startEvent.iteration
+      event.startEvent.iteration,
     )
     builder.append(": Fixpoint iteration finished, ")
     printNumOfDeletedTokens(builder, event)
@@ -103,7 +102,7 @@ class LoggingListener : DefaultReductionListener() {
     }
     val builder = createStingBuilderWithPrefix(
       event.currentFixpointIteration.reducerClass.shortName(),
-      event.currentFixpointIteration.iteration
+      event.currentFixpointIteration.iteration,
     )
     builder
       .append("Reduction at level ")
@@ -119,7 +118,7 @@ class LoggingListener : DefaultReductionListener() {
     }
     val builder = createStingBuilderWithPrefix(
       event.startEvent.currentFixpointIteration.reducerClass.shortName(),
-      event.iteration
+      event.iteration,
     )
     builder.append(":Reduction on level ").append(event.level)
     builder.append(": ")
@@ -142,7 +141,7 @@ class LoggingListener : DefaultReductionListener() {
         .currentFixpointIteration
         .reducerClass
         .shortName(),
-      event.iteration
+      event.iteration,
     )
     builder.append(": Delta with granularity ").append(event.maxNumOfNodesPerPartition)
     builder.append(": ")
@@ -186,7 +185,8 @@ class LoggingListener : DefaultReductionListener() {
     }
     val fixpointIteration = event.startEvent.currentFixpointIteration
     val builder = createStingBuilderWithPrefix(
-      fixpointIteration.reducerClass.shortName(), fixpointIteration.iteration
+      fixpointIteration.reducerClass.shortName(),
+      fixpointIteration.iteration,
     )
     builder
       .append(": Delta node (#leaves=")
@@ -207,7 +207,8 @@ class LoggingListener : DefaultReductionListener() {
     }
     val fixpointIteration = event.currentFixpointIteration
     val builder = createStingBuilderWithPrefix(
-      fixpointIteration.reducerClass.shortName(), fixpointIteration.iteration
+      fixpointIteration.reducerClass.shortName(),
+      fixpointIteration.iteration,
     )
     builder.append(": Reduction is skipped. Cause:  ").append(event.message)
     info.log(builder.toString())
@@ -220,7 +221,8 @@ class LoggingListener : DefaultReductionListener() {
     }
     val fixpointIteration = event.currentFixpointIteration
     val builder = createStingBuilderWithPrefix(
-      fixpointIteration.reducerClass.shortName(), fixpointIteration.iteration
+      fixpointIteration.reducerClass.shortName(),
+      fixpointIteration.iteration,
     )
     builder.append(": New minimal, ")
     printNumOfDeletedTokens(builder, event.programSizeBefore, event.programSize)
@@ -231,7 +233,7 @@ class LoggingListener : DefaultReductionListener() {
 
   private fun createStingBuilderWithPrefix(
     reducerName: String,
-    fixpointIteration: Int
+    fixpointIteration: Int,
   ): StringBuilder {
     val builder = StringBuilder(150)
     builder.append("Fixpoint[").append(fixpointIteration).append("]")
@@ -241,7 +243,7 @@ class LoggingListener : DefaultReductionListener() {
 
   private fun printNumOfDeletedTokens(
     builder: StringBuilder,
-    endEvent: AbstractEndEvent<out AbstractStartEvent>
+    endEvent: AbstractEndEvent<out AbstractStartEvent>,
   ): StringBuilder {
     val programSizeBefore = endEvent.startEvent.programSize
     val programSizeAfter = endEvent.programSize
@@ -251,14 +253,14 @@ class LoggingListener : DefaultReductionListener() {
   private fun printNumOfDeletedTokens(
     builder: StringBuilder,
     programSizeBefore: Int,
-    programSizeAfter: Int
+    programSizeAfter: Int,
   ): StringBuilder {
     return builder.append("delete ").append(programSizeBefore - programSizeAfter).append(" tokens")
   }
 
   private fun printReductionSizeRatio(
     builder: StringBuilder,
-    endEvent: AbstractEndEvent<out AbstractStartEvent>
+    endEvent: AbstractEndEvent<out AbstractStartEvent>,
   ): StringBuilder {
     val newProgramSize = endEvent.programSize
     val initialProgramSize = endEvent.initialProgramSize()
@@ -268,7 +270,7 @@ class LoggingListener : DefaultReductionListener() {
   private fun printReductionSizeRatio(
     builder: StringBuilder,
     initialProgramSize: Int,
-    newProgramSize: Int
+    newProgramSize: Int,
   ): StringBuilder {
     return builder
       .append("ratio=")

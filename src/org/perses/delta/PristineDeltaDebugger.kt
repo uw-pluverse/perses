@@ -17,64 +17,78 @@
 package org.perses.delta
 
 import com.google.common.collect.ImmutableList
+import org.perses.util.Util.lazyAssert
 
 class PristineDeltaDebugger<T, PropertyPayload>(
   input: ImmutableList<T>,
-  propertyTest: IPropertyTest<T, PropertyPayload>,
-  onBestUpdateHandler: (ImmutableList<T>, PropertyPayload) -> Unit
-) : AbstractDeltaDebugger<T, PropertyPayload>(input, propertyTest, onBestUpdateHandler) {
+  propertyTester: IPropertyTester<T, PropertyPayload>,
+  onBestUpdateHandler: (ImmutableList<T>, PropertyPayload) -> Unit,
+  enableCache: Boolean = false,
+  enableCacheRefresh: Boolean = false,
+) : AbstractDeltaDebugger<T, PropertyPayload>(input, propertyTester, onBestUpdateHandler) {
 
-  override fun reduce() {
-    // test whether the entire input can be deleted.
-    run {
-      val empty = ImmutableList.of<T>()
-      propertyTest.testProperty(best, empty).let {
-        if (!it.needsSkip() && it.result.isInteresting) {
-          updateBest(empty, it.payload)
-          return
-        }
-      }
-    }
+  private val cache: AbstractConfigCache<T> = if (enableCache) {
+    ConfigCache(enableCacheRefresh)
+  } else {
+    NullConfigCache()
+  }
 
+  override fun reduceNonEmptyInput() {
     var numOfPartitions = 2
-    outerloop@ while (best.size > 1 && best.size >= numOfPartitions) {
-      assert(best.size >= numOfPartitions) { "$best, $numOfPartitions" }
-      assert(numOfPartitions > 1)
-      val partitions = partition(best, numOfPartitions)
+    outerLoop@ while (best.size > 1 && best.size >= numOfPartitions) {
+      lazyAssert({ best.size >= numOfPartitions }) { "$best, $numOfPartitions" }
+      lazyAssert { numOfPartitions > 1 }
+      val partitionList = partition(best, numOfPartitions)
 
-      assert(partitions.size != 1 || partitions.first().toList() == best)
+      lazyAssert {
+        partitionList.partitions.size != 1 || partitionList.partitions.single().elements == best
+      }
 
-      for (partition in partitions) {
-        val asList = partition.toList()
-        assert(asList.isNotEmpty())
-        val propertyTestResult = propertyTest.testProperty(best, candidate = asList)
+      for (partition in partitionList.partitions) {
+        val elements = partition.elements
+        lazyAssert { elements.isNotEmpty() }
+        val config = ConfigurationBasedOnElementSystemIdentity(elements)
+        if (cache.contains(config)) {
+          continue
+        }
+        cache.add(config)
+        val propertyTestResult = propertyTester.testProperty(best, candidate = elements)
+
         // TODO: this needs test.
         if (propertyTestResult.needsSkip()) {
           continue
         }
         if (propertyTestResult.result.isInteresting) {
-          updateBest(asList, propertyTestResult.payload)
-          numOfPartitions = Math.min(2, best.size)
-          continue@outerloop
+          cache.deleteStaleConfigs(elements.size)
+          updateBest(elements, propertyTestResult.payload)
+          numOfPartitions = 2.coerceAtMost(best.size)
+          continue@outerLoop
         }
       }
 
-      for (partition in partitions) {
-        val complement = partition.computeComplement()
-        val propertyTestResult = propertyTest.testProperty(best, candidate = complement)
+      for (partition in partitionList.partitions) {
+        val complement = partitionList.computeComplementFor(partition)
+        val config = ConfigurationBasedOnElementSystemIdentity(complement)
+        if (cache.contains(config)) {
+          continue
+        }
+        cache.add(config)
+        val propertyTestResult = propertyTester.testProperty(best, candidate = complement)
+
         if (propertyTestResult.needsSkip()) {
           continue
         }
         if (propertyTestResult.result.isInteresting) {
+          cache.deleteStaleConfigs(complement.size)
           updateBest(complement, propertyTestResult.payload)
-          numOfPartitions = Math.min(numOfPartitions - 1, best.size)
-          continue@outerloop
+          numOfPartitions = (numOfPartitions - 1).coerceAtMost(best.size)
+          continue@outerLoop
         }
       }
       if (best.size == numOfPartitions) {
         break
       } else {
-        numOfPartitions = Math.min(2 * numOfPartitions, best.size)
+        numOfPartitions = (2 * numOfPartitions).coerceAtMost(best.size)
       }
     }
   }

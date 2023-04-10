@@ -32,7 +32,7 @@ import java.nio.file.Paths
 class SparTreeTest {
 
   private val tree = TestUtility.createSparTreeFromFile(
-    Paths.get("test_data/parentheses/t.c")
+    Paths.get("test_data/parentheses/t.c"),
   )
 
   private val nodeToTokensMap = TestUtility.createNodeToTokensMap(tree)
@@ -43,7 +43,7 @@ class SparTreeTest {
       """
       int c;
       """.trimIndent(),
-      LanguageC
+      LanguageC,
     )
     tree.remainingLexerRuleNodes
       .asSequence()
@@ -61,7 +61,7 @@ class SparTreeTest {
         int a;
         int b;
       """.trimIndent(),
-      LanguageC
+      LanguageC,
     )
     tree.printTreeStructureToStdout()
     print('\n')
@@ -70,24 +70,28 @@ class SparTreeTest {
     val tokenA = tree.getTokenNodeForText("a").single()
     val tokenB = tree.getTokenNodeForText("b").single()
     val firstDecl = AbstractTreeNode.findLowestAncestor(
-      firstInt, firstSemicolon, tokenA
+      firstInt,
+      firstSemicolon,
+      tokenA,
     )
     val secondDecl = AbstractTreeNode.findLowestAncestor(
-      secondInt, secondSemicolon, tokenB
+      secondInt,
+      secondSemicolon,
+      tokenB,
     )
     assertThat(
-      firstDecl.payload!!.expectedAntlrRuleType!!
+      firstDecl.payload!!.expectedAntlrRuleType!!,
     ).isEqualTo(
-      secondDecl.payload!!.expectedAntlrRuleType!!
+      secondDecl.payload!!.expectedAntlrRuleType!!,
     )
     val kleene = AbstractTreeNode.findLowestAncestor(firstDecl, secondDecl)
     val kleeneRuleDef = kleene.antlrRule!!.ruleDef.body
     assertThat(kleeneRuleDef).isInstanceOf(PersesPlusAst::class.java)
-    val kleeneElementType = tree.grammarHierarchy.getRuleHierarchyInfoWithName(
-      (kleeneRuleDef.getChild(0) as PersesRuleReferenceAst).ruleNameHandle.ruleName
+    val kleeneElementType = tree.grammarHierarchy.getRuleHierarchyEntryWithNameOrThrow(
+      (kleeneRuleDef.getChild(0) as PersesRuleReferenceAst).ruleNameHandle.ruleName,
     )
     assertThat(
-      firstDecl.payload!!.expectedAntlrRuleType!!
+      firstDecl.payload!!.expectedAntlrRuleType!!,
     ).isEqualTo(kleeneElementType)
   }
 
@@ -110,21 +114,23 @@ class SparTreeTest {
       "}",
       "}",
       "}",
-      "}"
+      "}",
     )
     val node1 = nodeToTokensMap.getNode(node1Key, "compoundStatement")
     val node2Key = ImmutableList.of(
-      "{", "printf", "(", "(", "\"hello world\\n\"", ")", ")", ";", "}"
+      "{", "printf", "(", "(", "\"hello world\\n\"", ")", ")", ";", "}",
     )
     val node2 = nodeToTokensMap.getNode(node2Key, "compoundStatement")
     val edit = tree.createNodeReplacementEdit(
       ChildHoistingActionSet.createByReplacingSingleNode(
-        node1, node2, "[test]replacement"
-      )
+        node1,
+        node2,
+        "[test]replacement",
+      ),
     )
     val programByEdit = edit.program
     assertThat(
-      PrinterRegistry.printToStringInOrigFormat(programByEdit).replace("\\s+".toRegex(), "")
+      PrinterRegistry.printToStringInOrigFormat(programByEdit).replace("\\s+".toRegex(), ""),
     )
       .isEqualTo("intmain(){printf((\"helloworld\\n\"));}")
     tree.applyEdit(edit)
@@ -153,7 +159,7 @@ class SparTreeTest {
       "}",
       "}",
       "}",
-      "}"
+      "}",
     )
 
     val expectedInput =
@@ -165,7 +171,7 @@ class SparTreeTest {
 
     val node1 = nodeToTokensMap.getNode(node1Key, "compoundStatement")
     val node2Key = ImmutableList.of(
-      "{", "printf", "(", "(", "\"hello world\\n\"", ")", ")", ";", "}"
+      "{", "printf", "(", "(", "\"hello world\\n\"", ")", ")", ";", "}",
     )
     val node2 = nodeToTokensMap.getNode(node2Key, "compoundStatement")
 
@@ -180,12 +186,14 @@ class SparTreeTest {
 
     val edit = tree.createAnyNodeReplacementEdit(
       ChildHoistingActionSet.createByReplacingSingleNode(
-        node1, replacingNode, "[test]replacement"
-      )
+        node1,
+        replacingNode,
+        "[test]replacement",
+      ),
     )
     val programByEdit = edit.program
     assertThat(
-      PrinterRegistry.printToStringInOrigFormat(programByEdit).replace("\\s+".toRegex(), "")
+      PrinterRegistry.printToStringInOrigFormat(programByEdit).replace("\\s+".toRegex(), ""),
     ).isEqualTo(expectedInput)
     tree.applyEdit(edit)
     val programByTree = tree.programSnapshot
@@ -197,7 +205,7 @@ class SparTreeTest {
   @Test
   fun testSingleUntypesArgInCFunction() {
     val tree = TestUtility.createSparTreeFromFile(
-      Paths.get("test_data/misc/main_with_1_arg.c")
+      Paths.get("test_data/misc/main_with_1_arg.c"),
     )
     tree.printTreeStructureToStdout()
   }

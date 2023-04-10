@@ -55,7 +55,7 @@ class RuleDefMapTest {
       val persesGrammar = loadGrammarFromFile(antlrFileName)
       val mutableGrammar = createParserRulesFrom(persesGrammar)
       val grammarRoundback = persesGrammar.copyWithNewParserRuleDefs(
-        mutableGrammar.toParserRuleAstList()
+        mutableGrammar.toParserRuleAstList(),
       )
       val originalDefs = persesGrammar.flattenedAllRules.stream()
         .sorted(Comparator.comparing(AbstractPersesRuleDefAst::ruleNameHandle))
@@ -66,12 +66,12 @@ class RuleDefMapTest {
       Truth.assertThat(
         originalDefs.stream()
           .map(AbstractPersesRuleDefAst::ruleNameHandle)
-          .collect(Collectors.toList())
+          .collect(Collectors.toList()),
       )
         .containsExactlyElementsIn(
           afterDefs.stream()
             .map(AbstractPersesRuleDefAst::ruleNameHandle)
-            .collect(Collectors.toList())
+            .collect(Collectors.toList()),
         )
         .inOrder()
       var i = 0

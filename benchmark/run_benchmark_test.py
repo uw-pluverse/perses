@@ -7,7 +7,7 @@ from run_benchmark import *
 class BenchmarkTest(unittest.TestCase):
 
     tmp_dir = None
-    bench = 'clang-22382'
+    subjects = 'clang-22382'
 
     def setUp(self) -> None:
         self.tmp_dir = tempfile.mkdtemp()
@@ -16,7 +16,7 @@ class BenchmarkTest(unittest.TestCase):
         rmtree(self.tmp_dir)
 
     def test_extract_info_properties(self):
-        src, script = extract_info_properties(bench_name=self.bench)
+        src, script = extract_info_properties(subject_name=self.subjects)
         self.assertEqual(os.path.basename(src), 'small.c')
         self.assertEqual(os.path.basename(script), 'r.sh')
 

@@ -23,13 +23,13 @@ kt_jvm_test(
         "//test/org/perses/benchmark_toys/solidity:solidity_program",
     ],
     deps = [
+        "//:antlr_runtime",
         "//:guava",
         "//:truth",
         "//src/org/perses/grammar/solidity/preprocessed:orig_solidity_parser",
         "//src/org/perses/grammar/solidity/preprocessed:parser_facade",
         "//src/org/perses/grammar/solidity/preprocessed:solidity_lexer",
         "//test/org/perses:test_util",
-        "@maven//:org_antlr_antlr4_runtime",
     ],
 )
 
@@ -44,11 +44,11 @@ kt_jvm_test(
         "//test_data/solidity_programs",
     ],
     deps = [
+        "//:antlr_runtime",
         "//:guava",
         "//:truth",
         "//src/org/perses/grammar/solidity/preprocessed:orig_solidity_parser",
         "//src/org/perses/grammar/solidity/preprocessed:solidity_lexer",
         "//test/org/perses:test_util",
-        "@maven//:org_antlr_antlr4_runtime",
     ],
 )

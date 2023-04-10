@@ -17,6 +17,7 @@
 package org.perses.reduction.cache
 
 import com.google.common.truth.Truth.assertThat
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -25,6 +26,7 @@ import org.perses.grammar.c.LanguageC
 import org.perses.program.TokenizedProgramFactory
 import org.perses.reduction.cache.AbstractLinearScanEncoder.Companion.NOT_FOUND
 import org.perses.reduction.cache.AbstractQueryCacheProfiler.Companion.NULL_PROFILER
+import kotlin.system.measureTimeMillis
 
 @RunWith(JUnit4::class)
 class LinearScanEncoderTest {
@@ -43,9 +45,38 @@ class LinearScanEncoderTest {
   private val encoder = LinearScanTokenizedProgramEncoder(
     baseProgram,
     NULL_PROFILER,
-    /*enableCompression*/true
+    enableCompression = true,
   )
   private val lexemeIdArray = encoder.persesLexemeIdArray
+
+  @Ignore("disabled by default.")
+  @Test
+  fun benchmarkEncoding() {
+    val minToken = 0
+    val maxToken = 2000000
+    val antlrTokens = TestUtility.createAntlrToknesFromList(
+      (minToken..maxToken).map { it.toString() }.toList(),
+    )
+    val factory = TokenizedProgramFactory.createFactory(antlrTokens, LanguageC)
+    val baseProgram = factory.create(antlrTokens)
+    val encoder = LinearScanTokenizedProgramEncoder(
+      baseProgram,
+      NULL_PROFILER,
+      enableCompression = true,
+    )
+
+    val middleIndex = antlrTokens.size / 2
+    val testProgram = factory.create(
+      antlrTokens.subList(0, middleIndex) + antlrTokens.subList(middleIndex + 2, antlrTokens.size),
+    )
+    val repetitions = 20
+    val time = measureTimeMillis {
+      (1..repetitions).forEach { _ ->
+        encoder.encode(testProgram)
+      }
+    }
+    assertThat(time / repetitions).isEqualTo(0)
+  }
 
   @Test
   fun testRefreshlargearray() {
@@ -57,7 +88,7 @@ class LinearScanEncoderTest {
     val encoder = LinearScanTokenizedProgramEncoder(
       baseProgram,
       NULL_PROFILER,
-      /*enableCompression*/true
+      /*enableCompression*/true,
     )
     assertThat(encoder.persesLexemeIdArray.maxLogicalSize).isEqualTo(initialSize)
     encoder.updateEncoder(factory.create(listOf(antlrTokens[0], antlrTokens[1])))
@@ -67,35 +98,35 @@ class LinearScanEncoderTest {
   @Test
   fun testSearchforlexemeid() {
     assertThat(
-      encoder.searchForLexemeId(0, tokens.size, token_a1.persesLexemeId, lexemeIdArray)
+      encoder.searchForLexemeId(0, tokens.size, token_a1.persesLexemeId, lexemeIdArray),
     ).isEqualTo(0)
 
     assertThat(
-      encoder.searchForLexemeId(0, tokens.size, token_b1.persesLexemeId, lexemeIdArray)
+      encoder.searchForLexemeId(0, tokens.size, token_b1.persesLexemeId, lexemeIdArray),
     ).isEqualTo(1)
 
     assertThat(
-      encoder.searchForLexemeId(3, tokens.size, token_a1.persesLexemeId, lexemeIdArray)
+      encoder.searchForLexemeId(3, tokens.size, token_a1.persesLexemeId, lexemeIdArray),
     ).isEqualTo(3)
 
     assertThat(
-      encoder.searchForLexemeId(3, tokens.size, token_c2.persesLexemeId, lexemeIdArray)
+      encoder.searchForLexemeId(3, tokens.size, token_c2.persesLexemeId, lexemeIdArray),
     ).isEqualTo(5)
 
     assertThat(
-      encoder.searchForLexemeId(4, tokens.size, token_a1.persesLexemeId, lexemeIdArray)
+      encoder.searchForLexemeId(4, tokens.size, token_a1.persesLexemeId, lexemeIdArray),
     ).isEqualTo(NOT_FOUND)
 
     assertThat(
-      encoder.searchForLexemeId(0, 3, token_a1.persesLexemeId, lexemeIdArray)
+      encoder.searchForLexemeId(0, 3, token_a1.persesLexemeId, lexemeIdArray),
     ).isEqualTo(0)
 
     assertThat(
-      encoder.searchForLexemeId(1, 3, token_a1.persesLexemeId, lexemeIdArray)
+      encoder.searchForLexemeId(1, 3, token_a1.persesLexemeId, lexemeIdArray),
     ).isEqualTo(NOT_FOUND)
 
     assertThat(
-      encoder.searchForLexemeId(1, tokens.size, token_a1.persesLexemeId, lexemeIdArray)
+      encoder.searchForLexemeId(1, tokens.size, token_a1.persesLexemeId, lexemeIdArray),
     ).isEqualTo(3)
   }
 }

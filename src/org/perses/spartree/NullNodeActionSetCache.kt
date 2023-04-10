@@ -18,11 +18,10 @@ package org.perses.spartree
 
 class NullNodeActionSetCache : AbstractNodeActionSetCache() {
 
-  override fun isCachedOrCacheIt(actionSet: NodeDeletionActionSet) = false
-
-  override fun isCachedOrCacheIt(actionSet: ChildHoistingActionSet) = false
+  override fun isCachedOrCacheIt(actionSet: AbstractActionSet<*>) = false
 
   override fun clear() {}
 
-  override fun size() = 0
+  override val size: Int
+    get() = 0
 }

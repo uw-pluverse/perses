@@ -48,7 +48,7 @@ open class PnfLeftTestGrammar {
       d
           : 'd'
           ;
-    """.trimIndent()
+    """.trimIndent(),
   )
 
   protected val graph = createForLeftmostTransition(grammar)

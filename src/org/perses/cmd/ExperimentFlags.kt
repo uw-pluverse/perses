@@ -28,7 +28,7 @@ class ExperimentFlags : ICommandLineFlags {
     names = ["--query-cache-type"],
     description = "the algorithm of the query cache",
     hidden = true,
-    order = CommonCmdOptionGroupOrder.EXPERIMENT + 1
+    order = CommonCmdOptionGroupOrder.EXPERIMENT + 1,
   )
   var cacheType: QueryCacheType = QueryCacheType.COMPACT_QUERY_CACHE
 
@@ -38,7 +38,7 @@ class ExperimentFlags : ICommandLineFlags {
     description = "the list of reducer classes to be called after the main reduction",
     hidden = true,
     order = CommonCmdOptionGroupOrder.EXPERIMENT + 100,
-    converter = ClassConverter::class
+    converter = ClassConverter::class,
   )
   var onDemandReducerClasses: List<Class<*>>? = null
 

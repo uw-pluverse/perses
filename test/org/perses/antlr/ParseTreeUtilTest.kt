@@ -43,7 +43,7 @@ class ParseTreeUtilTest {
           B : 'b' ;
           C : 'c' ;
           D : 'd' ;
-      """.trimIndent()
+      """.trimIndent(),
     )
     val parserGrammar = Grammar(
       """
@@ -52,7 +52,7 @@ class ParseTreeUtilTest {
       other: (A|B)* d ;
       d: 'd' ;
       """.trimIndent(),
-      lexerGrammar
+      lexerGrammar,
     )
     val lexEngine = lexerGrammar.createLexerInterpreter(CharStreams.fromString("a b d c"))
     val tokens = CommonTokenStream(lexEngine)

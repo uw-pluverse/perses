@@ -16,7 +16,6 @@
  */
 package org.perses.reduction
 
-import com.google.common.collect.ImmutableList
 import org.perses.spartree.ChildHoistingAction
 import java.io.BufferedWriter
 import java.io.IOException
@@ -25,23 +24,23 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 abstract class AbstractActionSetProfiler {
-  abstract fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedChildren(
-    kleeneReplacements: ImmutableList<ChildHoistingAction>
+  abstract fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant(
+    kleeneDescendant: ChildHoistingAction,
   )
 
-  abstract fun onReplaceNodeWithNearestCompatibleChildren(
-    replacements: ImmutableList<ChildHoistingAction>
+  abstract fun onReplaceNodeWithNearestCompatibleDescendant(
+    replacement: ChildHoistingAction,
   )
 
   class ActionSetProfiler(file: Path) : AbstractActionSetProfiler(), AutoCloseable {
     private var writer: BufferedWriter?
-    override fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedChildren(
-      kleeneReplacements: ImmutableList<ChildHoistingAction>
+    override fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant(
+      kleeneDescendant: ChildHoistingAction,
     ) {
       try {
         writer!!
-          .append("onReplaceKleeneQualifiedNodeWithKleeneQualifiedChildren: size=")
-          .append(kleeneReplacements.size.toString())
+          .append("onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant: ")
+          .append("1")
           .append('\n')
           .flush()
       } catch (e: IOException) {
@@ -49,13 +48,13 @@ abstract class AbstractActionSetProfiler {
       }
     }
 
-    override fun onReplaceNodeWithNearestCompatibleChildren(
-      replacements: ImmutableList<ChildHoistingAction>
+    override fun onReplaceNodeWithNearestCompatibleDescendant(
+      replacement: ChildHoistingAction,
     ) {
       try {
         writer!!
-          .append("onReplaceNodeWithNearestCompatibleChildren: size=")
-          .append(replacements.size.toString())
+          .append("onReplaceNodeWithNearestCompatibleDescendant: size=")
+          .append("1")
           .append('\n')
           .flush()
       } catch (e: IOException) {
@@ -81,13 +80,13 @@ abstract class AbstractActionSetProfiler {
 
   companion object {
     val NULL_PROFILER = object : AbstractActionSetProfiler() {
-      override fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedChildren(
-        kleeneReplacements: ImmutableList<ChildHoistingAction>
+      override fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant(
+        kleeneDescendant: ChildHoistingAction,
       ) {
       }
 
-      override fun onReplaceNodeWithNearestCompatibleChildren(
-        replacements: ImmutableList<ChildHoistingAction>
+      override fun onReplaceNodeWithNearestCompatibleDescendant(
+        replacement: ChildHoistingAction,
       ) {
       }
     }

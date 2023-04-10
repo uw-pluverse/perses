@@ -57,10 +57,54 @@ class PnfCParserFacadeTest {
   }
 
   @Test
+  fun testParsingAttributesDoesNotCrash() {
+    facade.parseString(
+      """
+      extern __attribute__ ((access (read_only, 1))) int (puts) (const char*);
+      """,
+    )
+
+    facade.parseString(
+      """
+      extern __attribute__((__nothrow__)) void *
+      (__attribute__((__leaf__)) malloc)
+      (size_t __size) __attribute__(( __malloc__ ));
+      """.trimMargin(),
+    )
+
+    facade.parseString("int (__attribute__((common)) a );")
+
+    facade.parseString(
+      """
+      table * __attribute__((__pure__))
+      lookup_zone(parser_control const *pc, char const *name);
+      """,
+    )
+
+    facade.parseString("char *__attribute__((aligned(8))) *f;")
+    facade.parseString("void (__attribute__((noreturn)) ****f) (void);")
+    facade.parseString(
+      """
+      static table const *__attribute__((__pure__))
+      lookup_zone(parser_control const *pc, char const *name);
+    """,
+    )
+    facade.parseString("typedef int more_aligned_int __attribute__ ((aligned (8)));")
+    facade.parseString("int f() { return ((int __attribute__((__pure__)))0); }")
+    facade.parseString(
+      """
+      int f() { 
+        return ((unsigned long long __attribute__((__pure__)))0);
+      }
+      """,
+    )
+  }
+
+  @Test
   fun testCodeFormats() {
     LanguageKindTestUtil.assertCodeFormatsDoNotProduceSyntacticallyInvalidPrograms(
       facade,
-      Paths.get("test_data/delta_1/t.c")
+      Paths.get("test_data/delta_1/t.c"),
     )
   }
 

@@ -53,7 +53,7 @@ class Python3ParserFacadeTest {
       System.err.println(
         it.text + ": " +
           ParseTreeUtil.getTokenName(it, origParseTree.lexer) +
-          "  @" + it.line + ":" + it.charPositionInLine
+          "  @" + it.line + ":" + it.charPositionInLine,
       )
     }
 

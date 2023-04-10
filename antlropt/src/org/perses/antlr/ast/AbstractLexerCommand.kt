@@ -26,7 +26,7 @@ abstract class AbstractLexerCommand protected constructor(protected val commandN
 
   class LexerCommandWithArg(
     commandName: String,
-    private val arg: String
+    private val arg: String,
   ) : AbstractLexerCommand(commandName) {
     override fun toSourceCode(): String {
       return "$commandName($arg)"

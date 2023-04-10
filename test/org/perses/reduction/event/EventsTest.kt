@@ -35,36 +35,35 @@ class EventsTest {
   private val reductionStartEvent = ReductionStartEvent(
     currentTimeMillis = System.currentTimeMillis(),
     tree = WeakReference(tree),
-    programSize = INITIAL_PROGRAM_SIZE
+    programSize = INITIAL_PROGRAM_SIZE,
   )
 
   val firstIterationStart = reductionStartEvent.nextFixpointIteration(
     programSize = 2,
-    reducerClass = ConcurrentTokenSlicer.getAnnotationForGranularity(granularity = 1)
+    reducerClass = ConcurrentTokenSlicer.getAnnotationForGranularity(granularity = 1),
   )
 
   val nodeReductionStartEvent = firstIterationStart.createNodeReductionStartEvent(
     currentTimeMillis = System.currentTimeMillis(),
-    programSize = 2,
-    tree = tree,
-    node = tree.root
+    program = tree.programSnapshot,
+    node = tree.root,
   )
 
   val nodeReductionEndEvent = nodeReductionStartEvent.createEndEvent(
     currentTimeMillis = System.currentTimeMillis(),
-    programSize = 2,
-    remainingQueueSize = 1000
+    program = tree.programSnapshot,
+    remainingQueueSize = 1000,
   )
 
   val firstIterationEnd = firstIterationStart.createEndEvent(
     currentTimeMillis = System.currentTimeMillis(),
     programSize = 2,
-    countOfTestScriptExecutions = 100
+    countOfTestScriptExecutions = 100,
   )
 
   val reductionEndEvent = reductionStartEvent.createEndEvent(
     programSize = 1,
-    countOfTestScriptExecutions = 100
+    countOfTestScriptExecutions = 100,
   )
 
   @Test

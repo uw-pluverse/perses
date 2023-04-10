@@ -16,19 +16,22 @@
  */
 package org.perses.program.printer
 
-import org.perses.program.AbstractTokenizedProgramPrinter.AbstractTokenPlacementListener
-import org.perses.program.AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider
 import org.perses.program.PersesTokenFactory.PersesToken
 import org.perses.program.TokenizedProgram
+import org.perses.program.printer.AbstractTokenizedProgramPrinter.AbstractTokenPlacementListener
+import org.perses.program.printer.AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider
 import org.perses.util.FastStringBuilder
 
 open class OrigFormatPrintingVisitor(
   program: TokenizedProgram,
   keepBlankLines: Boolean,
   tokenPositionProvider: AbstractTokenPositionProvider,
-  tokenPlacementListener: AbstractTokenPlacementListener?
+  tokenPlacementListener: AbstractTokenPlacementListener?,
 ) : AbstractOrigFormatPrintingVisitor(
-  program, keepBlankLines, tokenPositionProvider, tokenPlacementListener
+  program,
+  keepBlankLines,
+  tokenPositionProvider,
+  tokenPlacementListener,
 ) {
 
   override fun isControlToken(token: PersesToken) = false
@@ -41,7 +44,7 @@ open class OrigFormatPrintingVisitor(
     printNonEmptyLine(
       startPositionInLine = 0,
       line = line,
-      builder = builder
+      builder = builder,
     )
   }
 }

@@ -25,26 +25,26 @@ import java.util.PrimitiveIterator
 class ContentLexemeIdQueryCache(
   tokenizedProgram: TokenizedProgram,
   profiler: AbstractQueryCacheProfiler,
-  configuration: QueryCacheConfiguration
+  configuration: QueryCacheConfiguration,
 ) : AbstractRealQueryCache<
   ContentLexemeIdQueryCache.ContentLexemeIdEncoding,
-  ContentLexemeIdQueryCache.ContentLexemeIdEncoder
+  ContentLexemeIdQueryCache.ContentLexemeIdEncoder,
   >(
   tokenizedProgram,
   profiler,
-  configuration
+  configuration,
 ) {
 
   override fun createEncoder(
-    tokenizedProgram: TokenizedProgram,
-    profiler: AbstractQueryCacheProfiler
+    baseProgram: TokenizedProgram,
+    profiler: AbstractQueryCacheProfiler,
   ): ContentLexemeIdEncoder {
-    return ContentLexemeIdEncoder(tokenizedProgram, profiler)
+    return ContentLexemeIdEncoder(baseProgram, profiler)
   }
 
   class ContentLexemeIdEncoder(
     program: TokenizedProgram,
-    profiler: AbstractQueryCacheProfiler
+    profiler: AbstractQueryCacheProfiler,
   ) : AbstractTokenizedProgramEncoder<ContentLexemeIdEncoding>(program, profiler) {
 
     private var persesLexemeIdInOrigin: ImmutableIntArray
@@ -52,13 +52,13 @@ class ContentLexemeIdQueryCache(
     override fun encode(program: TokenizedProgram): ContentLexemeIdEncoding? {
       return encode(
         program.tokens.stream().mapToInt(PersesTokenFactory.PersesToken::persesLexemeId).iterator(),
-        program.tokenCount()
+        program.tokenCount(),
       )
     }
 
     private fun encode(
       lexemeIterator: PrimitiveIterator.OfInt,
-      tokenCount: Int
+      tokenCount: Int,
     ): ContentLexemeIdEncoding? {
       val baseTokens = persesLexemeIdInOrigin
       val baseSize = baseTokens.length()
@@ -85,11 +85,11 @@ class ContentLexemeIdQueryCache(
     }
 
     override fun reEncode(
-      previousEncoding: ContentLexemeIdEncoding
+      previousEncoding: ContentLexemeIdEncoding,
     ): ContentLexemeIdEncoding? {
       return encode(
         previousEncoding.persesLexemeIdArray.stream().iterator(),
-        previousEncoding.tokenCount
+        previousEncoding.tokenCount,
       )
     }
 
@@ -99,7 +99,7 @@ class ContentLexemeIdQueryCache(
 
     companion object {
       private fun computeLexemeIdInOrig(
-        tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>
+        tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
       ): ImmutableIntArray {
         val size = tokensInOrigin.size
         val builder = ImmutableIntArray.builder(size)

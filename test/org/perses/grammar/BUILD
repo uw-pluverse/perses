@@ -9,6 +9,7 @@ kt_jvm_test(
     ],
     test_class = "org.perses.grammar.ParserFacadeTest",
     deps = [
+        "//:antlr_runtime",
         "//:guava",
         "//:truth",
         "//src/org/perses/antlr:parse_tree_with_parser",
@@ -19,7 +20,6 @@ kt_jvm_test(
         "//src/org/perses/program/printer",
         "//src/org/perses/spartree",
         "//test/org/perses:test_util",
-        "@maven//:org_antlr_antlr4_runtime",
     ],
 )
 

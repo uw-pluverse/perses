@@ -18,7 +18,7 @@ package org.perses.antlr.ast
 
 class PersesStarAst(
   body: AbstractPersesRuleElement,
-  isGreedy: Boolean
+  isGreedy: Boolean,
 ) : AbstractPersesQuantifiedAst(body, isGreedy) {
 
   init {
@@ -36,7 +36,7 @@ class PersesStarAst(
     get() = AstTag.STAR
 
   override fun createWithNewChildren(
-    newChildren: List<AbstractPersesRuleElement>
+    newChildren: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     check(newChildren.size == 1)
     return PersesStarAst(newChildren[0], isGreedy)

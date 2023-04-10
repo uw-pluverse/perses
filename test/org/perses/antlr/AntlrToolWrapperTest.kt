@@ -48,7 +48,7 @@ class AntlrToolWrapperTest {
         """
         grammar CombinedGrammar;
         start : 'a';
-        """.trimIndent()
+        """.trimIndent(),
       )
     }
 
@@ -56,7 +56,7 @@ class AntlrToolWrapperTest {
       packageName = packageName,
       parserFile = parserFile,
       lexerFile = null,
-      outputDir = outputDir.toString()
+      outputDir = outputDir.toString(),
     )
     assertThat(Files.exists(outputDir)).isFalse()
     wrapper.call()
@@ -75,7 +75,7 @@ class AntlrToolWrapperTest {
             tokenVocab=Lexer;
         }
         start: ID;
-        """.trimIndent()
+        """.trimIndent(),
       )
     }
     val lexerFile = tempDir.resolve("Lexer.g4").apply {
@@ -83,7 +83,7 @@ class AntlrToolWrapperTest {
         """
         lexer grammar Lexer;
         ID: 'a';
-        """.trimIndent()
+        """.trimIndent(),
       )
     }
 
@@ -91,7 +91,7 @@ class AntlrToolWrapperTest {
       packageName,
       parserFile,
       lexerFile,
-      outputDir.toString()
+      outputDir.toString(),
     )
     assertThat(Files.exists(outputDir)).isFalse()
     wrapper.call()
@@ -103,13 +103,13 @@ class AntlrToolWrapperTest {
   @Test
   fun testAcceptingCombinedParser_accept() {
     AntlrToolWrapper.doesAntlrAcceptGrammar(
-      FileNameContentPair(
+      FileNameContentPair.createFromString(
         fileName = "Test",
         content = """
         grammar Test;
         start:'a';
-        """.trimIndent()
-      )
+        """.trimIndent(),
+      ),
     ).let {
       assertWithMessage(it.message).that(it.accpeted).isTrue()
     }
@@ -118,13 +118,13 @@ class AntlrToolWrapperTest {
   @Test
   fun testAcceptingCombinedParser_reject() {
     AntlrToolWrapper.doesAntlrAcceptGrammar(
-      FileNameContentPair(
+      FileNameContentPair.createFromString(
         fileName = "Test",
         content = """
         grammar Test;
         start
-        """.trimIndent()
-      )
+        """.trimIndent(),
+      ),
     ).let {
       assertWithMessage(it.message).that(it.accpeted).isFalse()
     }
@@ -133,7 +133,7 @@ class AntlrToolWrapperTest {
   @Test
   fun testAcceptingSeparateGrammar_accept() {
     AntlrToolWrapper.doesAntlrAcceptGrammar(
-      parserGrammar = FileNameContentPair(
+      parserGrammar = FileNameContentPair.createFromString(
         fileName = "Parser",
         content = """
           parser grammar Parser;
@@ -141,15 +141,15 @@ class AntlrToolWrapperTest {
               tokenVocab=Lexer;
           }
           start: ID;
-        """.trimIndent()
+        """.trimIndent(),
       ),
-      lexerGrammar = FileNameContentPair(
+      lexerGrammar = FileNameContentPair.createFromString(
         fileName = "Lexer",
         content = """
           lexer grammar Lexer;
           ID: 'a';
-        """.trimIndent()
-      )
+        """.trimIndent(),
+      ),
     ).let {
       assertWithMessage(it.message).that(it.accpeted).isTrue()
     }
@@ -158,7 +158,7 @@ class AntlrToolWrapperTest {
   @Test
   fun testAcceptingSeparateGrammar_reject() {
     AntlrToolWrapper.doesAntlrAcceptGrammar(
-      parserGrammar = FileNameContentPair(
+      parserGrammar = FileNameContentPair.createFromString(
         fileName = "Parser",
         content = """
           parser grammar Parser;
@@ -166,15 +166,15 @@ class AntlrToolWrapperTest {
               tokenVocab=Lexer;
           }
           start: ID;
-        """.trimIndent()
+        """.trimIndent(),
       ),
-      lexerGrammar = FileNameContentPair(
+      lexerGrammar = FileNameContentPair.createFromString(
         fileName = "Lexer",
         content = """
           lexer grammar Lexer;
           ID;
-        """.trimIndent()
-      )
+        """.trimIndent(),
+      ),
     ).let {
       assertWithMessage(it.message).that(it.accpeted).isFalse()
     }

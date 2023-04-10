@@ -29,7 +29,7 @@ class ListAlignment<T>(val alignment: ImmutableList<AbstractEditOperation<T>>) {
         .map { it.base }
         .filter { it != null }
         .map { it!! }
-        .asIterable()
+        .asIterable(),
     )
   }
 
@@ -84,6 +84,26 @@ class ListAlignment<T>(val alignment: ImmutableList<AbstractEditOperation<T>>) {
     }
   }
 
+  val onlyDiffs by lazy {
+    alignment.filter { it !is AbstractEditOperation.Keep }
+  }
+
+  val onlyInserts by lazy {
+    alignment.filter { it is AbstractEditOperation.Insert }
+  }
+
+  val onlyDeletes by lazy {
+    alignment.filter { it is AbstractEditOperation.Delete }
+  }
+
+  val onlyKeeps by lazy {
+    alignment.filter { it is AbstractEditOperation.Keep }
+  }
+
+  val onlyReplaces by lazy {
+    alignment.filter { it is AbstractEditOperation.Replace }
+  }
+
   abstract class Edit {
     abstract override fun equals(other: Any?): Boolean
     abstract override fun hashCode(): Int
@@ -124,7 +144,7 @@ class ListAlignment<T>(val alignment: ImmutableList<AbstractEditOperation<T>>) {
     fun <T> create(
       baseList: List<T>,
       revisionList: List<T>,
-      equalizer: (T, T) -> Boolean
+      equalizer: (T, T) -> Boolean,
     ): ListAlignment<T> {
       val patch = PersesDiffUtil.diff(baseList, revisionList, equalizer)
       val deltas = patch.deltas
@@ -160,6 +180,77 @@ class ListAlignment<T>(val alignment: ImmutableList<AbstractEditOperation<T>>) {
         result.add(AbstractEditOperation.Keep(original))
       }
       return ListAlignment(result.build())
+    }
+
+    // Use a sliding window to convert every pairs of INSERT and DELETE surrounded by KEEP
+    // to a REPLACE.
+    // For example, (KEEP, DELETE, INSERT, KEEP) -> (KEEP, REPLACE, KEEP)
+    // (KEEP, INSERT, DELETE, KEEP) -> (KEEP, REPLACE, KEEP)
+    fun <T> mergeIntoReplace(
+      listAlignment: ListAlignment<T>,
+    ): ListAlignment<T> {
+      val alignment = listAlignment.alignment
+      var index = 0
+      val alignmentWithReplace = ImmutableList.builder<AbstractEditOperation<T>>()
+
+      while (index < alignment.size) {
+        val firstOp = alignment[index]
+        if (index < alignment.size - 3) {
+          val secondOp = alignment[index + 1]
+          val thirdOp = alignment[index + 2]
+          val fourthOp = alignment[index + 3]
+
+          if (firstOp is AbstractEditOperation.Keep &&
+            secondOp is AbstractEditOperation.Delete &&
+            thirdOp is AbstractEditOperation.Insert &&
+            fourthOp is AbstractEditOperation.Keep
+          ) {
+            alignmentWithReplace.add(firstOp)
+            alignmentWithReplace.add(
+              AbstractEditOperation.Replace(secondOp.base, thirdOp.revision),
+            )
+            alignmentWithReplace.add(fourthOp)
+            index += 4
+          } else if (firstOp is AbstractEditOperation.Keep &&
+            secondOp is AbstractEditOperation.Insert &&
+            thirdOp is AbstractEditOperation.Delete &&
+            fourthOp is AbstractEditOperation.Keep
+          ) {
+            alignmentWithReplace.add(firstOp)
+            alignmentWithReplace.add(
+              AbstractEditOperation.Replace(thirdOp.base, secondOp.revision),
+            )
+            alignmentWithReplace.add(fourthOp)
+            index += 4
+          } else {
+            alignmentWithReplace.add(firstOp)
+            index += 1
+          }
+        }
+        // sliding window exceeds the list
+        else {
+          alignmentWithReplace.add(firstOp)
+          index += 1
+        }
+      }
+      return ListAlignment(alignmentWithReplace.build())
+    }
+
+    fun <T> splitReplace(
+      listAlignmentWithReplace: ListAlignment<T>,
+    ): ListAlignment<T> {
+      val alignmentWithReplace = listAlignmentWithReplace.alignment
+      val alignmentWithoutReplace = ImmutableList.builder<AbstractEditOperation<T>>()
+
+      for (op in alignmentWithReplace) {
+        if (op is AbstractEditOperation.Replace) {
+          alignmentWithoutReplace.add(AbstractEditOperation.Delete(op.base))
+          alignmentWithoutReplace.add(AbstractEditOperation.Insert(op.revision))
+        } else {
+          alignmentWithoutReplace.add(op)
+        }
+      }
+      return ListAlignment(alignmentWithoutReplace.build())
     }
   }
 }

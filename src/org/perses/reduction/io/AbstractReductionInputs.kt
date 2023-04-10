@@ -17,32 +17,35 @@
 package org.perses.reduction.io
 
 import com.google.common.collect.ImmutableList
-import org.perses.program.LanguageKind
+import org.perses.program.AbstractDataKind
+import org.perses.program.AbstractReductionFile
 import org.perses.program.ScriptFile
-import org.perses.program.SourceFile
 import org.perses.reduction.TestScript
 import org.perses.util.toImmutableList
 import java.nio.file.Files
 import java.nio.file.Path
 
-abstract class AbstractReductionInputs(
+abstract class AbstractReductionInputs<K : AbstractDataKind, S : AbstractReductionInputs<K, S>>(
   val testScript: ScriptFile,
-  val mainLanguage: LanguageKind,
+  val mainDataKind: K,
   val rootDirectory: Path,
-  files: ImmutableList<SourceFile>
+  files: ImmutableList<out AbstractReductionFile<*, *>>,
 ) {
 
-  val absoluteRootDirectory = rootDirectory.toAbsolutePath()
+  val absoluteRootDirectory: Path = rootDirectory.toAbsolutePath()
   val orig2relativePathPairs: ImmutableList<OrigAndRelativePathPair>
 
   init {
-    check(files.any { it.languageKind == mainLanguage }) { files }
+    check(files.any { it.dataKind == mainDataKind }) { files }
     orig2relativePathPairs = files.asSequence()
       .map { it to it.file.toAbsolutePath() }
       .onEach { check(it.second.startsWith(absoluteRootDirectory)) }
       .map {
         OrigAndRelativePathPair(it.first, absoluteRootDirectory.relativize(it.second))
       }.toImmutableList()
+    check(orig2relativePathPairs.size < 5) {
+      "Consider using a hash map for many elements. $orig2relativePathPairs"
+    }
   }
 
   fun writeTestScriptTo(folder: Path): TestScript {
@@ -52,15 +55,22 @@ abstract class AbstractReductionInputs(
     val script = testScript
     return TestScript(
       scriptFile = folder.resolve(script.baseName),
-      scriptTemplate = script
+      scriptTemplate = script,
     )
   }
 
-  fun computeAbsolutePathListWRT(newFolder: Path): Iterable<Path> {
+  fun computeAbsPathListWrt(newFolder: Path): Iterable<Path> {
     return orig2relativePathPairs
       .asSequence()
       .map { newFolder.resolve(it.relativePath) }
       .asIterable()
+  }
+
+  fun computeAbsPathWrt(
+    origFile: AbstractReductionFile<*, *>,
+    newFolder: Path,
+  ): Path {
+    return newFolder.resolve(orig2relativePathPairs.first { it.origFile == origFile }.relativePath)
   }
 
   fun relativePathSequence(): Sequence<Path> {
@@ -69,12 +79,12 @@ abstract class AbstractReductionInputs(
       .map { it.relativePath }
   }
 
-  fun getRelativePathForOrigFile(origFile: SourceFile): Path {
-    return orig2relativePathPairs.first { it.origFile === origFile }.relativePath
+  fun getRelativePathForOrigFile(origFile: AbstractReductionFile<*, *>): Path {
+    return orig2relativePathPairs.single { it.origFile === origFile }.relativePath
   }
 
   data class OrigAndRelativePathPair(
-    val origFile: SourceFile,
-    val relativePath: Path
+    val origFile: AbstractReductionFile<*, *>,
+    val relativePath: Path,
   )
 }

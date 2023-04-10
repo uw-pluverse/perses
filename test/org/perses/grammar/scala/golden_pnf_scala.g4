@@ -6,45 +6,36 @@ Id
     : Plainid
     | '`' (CharNoBackQuoteOrNewline | UnicodeEscape | CharEscapeSeq)+ '`'
     ;
-
 BooleanLiteral
     : 'true'
     | 'false'
     ;
-
 CharacterLiteral
     : '\'' (PrintableChar | CharEscapeSeq) '\''
     ;
-
 SymbolLiteral
     : '\'' Plainid
     ;
-
 IntegerLiteral
     : (DecimalNumeral | HexNumeral) ('L' | 'l')?
     ;
-
 StringLiteral
     : '"' StringElement* '"'
     | '"""' MultiLineChars '"""'
     ;
-
 FloatingPointLiteral
     : Digit+ '.' Digit+ ExponentPart? FloatType?
     | '.' Digit+ ExponentPart? FloatType?
     | Digit ExponentPart FloatType?
     | Digit+ ExponentPart? FloatType
     ;
-
 Varid
     : Lower Idrest
     ;
-
 BoundVarid
     : Varid
     | '`' Varid '`'
     ;
-
 Paren
     : '('
     | ')'
@@ -53,7 +44,6 @@ Paren
     | '{'
     | '}'
     ;
-
 Delim
     : '`'
     | '\''
@@ -62,34 +52,28 @@ Delim
     | ';'
     | ','
     ;
-
 Semi
     : (';'
     | NL+)
  -> skip
 
     ;
-
 NL
     : '\n'
     | '\r' '\n'?
     ;
-
 fragment CharNoBackQuoteOrNewline
     : [\u0020-\u0026\u0028-\u007E]
     ;
-
 fragment UnicodeEscape
     : '\\' 'u' 'u'? HexDigit HexDigit HexDigit HexDigit
     ;
-
 fragment WhiteSpace
     : '\u0020'
     | '\u0009'
     | '\u000D'
     | '\u000A'
     ;
-
 fragment Opchar
     : '!'
     | '#'
@@ -109,102 +93,82 @@ fragment Opchar
     | '|'
     | '~'
     ;
-
 fragment Op
     : '/'? Opchar+
     ;
-
 fragment Idrest
     : (Letter | Digit)* ('_' Op)?
     ;
-
 fragment StringElement
     : '\u0020'
     | '\u0021'
     | '\u0023'..'\u007F'
     | CharEscapeSeq
     ;
-
 fragment MultiLineChars
     : (StringElement | NL)*
     ;
-
 fragment HexDigit
     : '0'..'9'
     | 'A'..'F'
     | 'a'..'f'
     ;
-
 fragment FloatType
     : 'F'
     | 'f'
     | 'D'
     | 'd'
     ;
-
 fragment Upper
     : 'A'..'Z'
     | '$'
     | '_'
     | UnicodeClass_LU
     ;
-
 fragment Lower
     : 'a'..'z'
     | UnicodeClass_LL
     ;
-
 fragment Letter
     : Upper
     | Lower
     | UnicodeClass_LO
     | UnicodeClass_LT
     ;
-
 fragment ExponentPart
     : ('E' | 'e') ('+' | '-')? Digit+
     ;
-
 fragment PrintableChar
     : '\u0020'..'\u007F'
     ;
-
 fragment PrintableCharExceptWhitespace
     : '\u0021'..'\u007F'
     ;
-
 fragment CharEscapeSeq
     : '\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | '\'' | '\\')
     ;
-
 fragment DecimalNumeral
     : '0'
     | NonZeroDigit Digit*
     ;
-
 fragment HexNumeral
     : '0' 'x' HexDigit HexDigit+
     ;
-
 fragment Digit
     : '0'
     | NonZeroDigit
     ;
-
 fragment NonZeroDigit
     : '1'..'9'
     ;
-
 fragment VaridFragment
     : Varid
     ;
-
 fragment Plainid
     : Upper Idrest
     | Lower Idrest
     | Op
     ;
-
 fragment UnicodeLetter
     : UnicodeClass_LU
     | UnicodeClass_LL
@@ -212,7 +176,6 @@ fragment UnicodeLetter
     | UnicodeClass_LM
     | UnicodeClass_LO
     ;
-
 fragment UnicodeClass_LU
     : '\u0041'..'\u005a'
     | '\u00c0'..'\u00d6'
@@ -316,7 +279,6 @@ fragment UnicodeClass_LU
     | '\ua7b0'..'\ua7b1'
     | '\uff21'..'\uff3a'
     ;
-
 fragment UnicodeClass_LL
     : '\u0061'..'\u007A'
     | '\u00b5'..'\u00df'
@@ -432,7 +394,6 @@ fragment UnicodeClass_LL
     | '\ufb13'..'\ufb17'
     | '\uff41'..'\uff5a'
     ;
-
 fragment UnicodeClass_LT
     : '\u01c5'..'\u01cb'
     | '\u01f2'..'\u1f88'
@@ -442,7 +403,6 @@ fragment UnicodeClass_LT
     | '\u1fbc'..'\u1fcc'
     | '\u1ffc'..'\u1ffc'
     ;
-
 fragment UnicodeClass_LM
     : '\u02b0'..'\u02c1'
     | '\u02c6'..'\u02d1'
@@ -485,7 +445,6 @@ fragment UnicodeClass_LM
     | '\uff70'..'\uff9e'
     | '\uff9f'..'\uff9f'
     ;
-
 fragment UnicodeClass_LO
     : '\u00aa'..'\u00ba'
     | '\u01bb'..'\u01c0'
@@ -764,7 +723,6 @@ fragment UnicodeClass_LO
     | '\uffd2'..'\uffd7'
     | '\uffda'..'\uffdc'
     ;
-
 fragment UnicodeDigit
     : '\u0030'..'\u0039'
     | '\u0660'..'\u0669'
@@ -804,26 +762,23 @@ fragment UnicodeDigit
     | '\uabf0'..'\uabf9'
     | '\uff10'..'\uff19'
     ;
-
 NEWLINE
     : NL+ -> skip
 
     ;
-
 WS
     : WhiteSpace+ -> skip
 
     ;
-
 COMMENT
     : '/*' .*? '*/' -> skip
 
     ;
-
 LINE_COMMENT
     : '//' (~[\r\n])* -> skip
 
     ;
+
 
 literal
     : BooleanLiteral

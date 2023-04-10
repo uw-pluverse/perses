@@ -41,7 +41,7 @@ abstract class AbstractConcurrentTokenSlicer(
 
   private fun sliceTreeForGivenGranularity(
     fixpointReductionState: FixpointReductionState,
-    tokenSlicingGranularity: Int
+    tokenSlicingGranularity: Int,
   ) {
     val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
     val slicingStartEvent = fixpointReductionState
@@ -49,39 +49,43 @@ abstract class AbstractConcurrentTokenSlicer(
       .createTokenSlicingStartEvent(
         currentTimeMillis = System.currentTimeMillis(),
         programSize = tree.programSnapshot.tokenCount(),
-        tokenSlicingGranularity = tokenSlicingGranularity
+        tokenSlicingGranularity = tokenSlicingGranularity,
       )
     listenerManager.onSlicingTokensStart(slicingStartEvent)
     val slicingTasks = createSlicingTask(tokenSlicingGranularity, tree)
 
     SlicingTaskConcurrentExecutor(
       slicingTasks,
-      workingDequeExpectedSize = executorService.specifiedNumOfThreads + 2
+      workingDequeExpectedSize = executorService.specifiedNumOfThreads + 2,
     ).run()
 
     val slicingEndEvent = slicingStartEvent.createEndEvent(
       currentTimeMillis = System.currentTimeMillis(),
-      programSize = tree.programSnapshot.tokenCount()
+      programSize = tree.programSnapshot.tokenCount(),
     )
     listenerManager.onSlicingTokensEnd(slicingEndEvent)
   }
 
   abstract fun createSlicingTask(
     tokenSlicingGranularity: Int,
-    tree: SparTree
+    tree: SparTree,
   ): ImmutableList<AbstractSlicingTask>
 
   // TODO: testing
   abstract class AbstractTokenSlicerAnnotation(
     val namePrefix: String,
-    val granularity: Int
+    val granularity: Int,
   ) : ReducerAnnotation() {
 
     init {
       require(granularity > 0)
     }
 
-    override val deterministic = true
+    override val deterministic: Boolean
+      get() = true
+
+    override val reductionResultSizeTrend: ReductionResultSizeTrend
+      get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
 
     private val name = "$namePrefix@$granularity"
 

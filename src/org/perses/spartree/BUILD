@@ -19,6 +19,7 @@ kt_jvm_library(
         "AbstractActionSet.kt",
         "AbstractNodeActionSetCache.kt",
         "AbstractNodePayload.kt",
+        "AbstractNodeReplacementTreeEdit.kt",
         "AbstractSparTreeEdit.kt",
         "AbstractSparTreeEditListener.kt",
         "AbstractSparTreeNode.kt",
@@ -26,7 +27,6 @@ kt_jvm_library(
         "AbstractTreeEditAction.kt",
         "AbstractTreeNode.kt",
         "AbstractUnmodifiableSparTree.kt",
-        "AbstructNodeReplacementTreeEdit.kt",
         "AnyNodeReplacementTreeEdit.kt",
         "ChildHoistingAction.kt",
         "ChildHoistingActionSet.kt",
@@ -45,6 +45,7 @@ kt_jvm_library(
     ],
     deps = [
         ":tree_node_filter_result",
+        "//:antlr_runtime",
         "//:guava",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf:mutable_ast_and_util",
@@ -56,7 +57,5 @@ kt_jvm_library(
         "//src/org/perses/util",
         "//src/org/perses/util:mutable_int",
         "//src/org/perses/util:simple_stack_and_queue",
-        "@maven//:org_antlr_antlr4_runtime",
-        "@maven//:org_checkerframework_checker_qual",
     ],
 )

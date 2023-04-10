@@ -23,7 +23,7 @@ import org.perses.program.LanguageKind
  */
 class CompositeParserFacadeFactory(
   private val builtinFactory: AbstractParserFacadeFactory,
-  private val extFactory: AbstractParserFacadeFactory
+  private val extFactory: AbstractParserFacadeFactory,
 ) : AbstractParserFacadeFactory() {
 
   override fun createParserFacade(languageKind: LanguageKind): AbstractParserFacade {

@@ -32,6 +32,7 @@ import org.perses.util.Util.computePercentage
 import org.perses.util.Util.ensureDirExists
 import org.perses.util.Util.globWithFileNameExts
 import org.perses.util.Util.isEmptyDirectory
+import org.perses.util.Util.lazyAssert
 import org.perses.util.Util.mergeContinuousElementsIntoRegions
 import org.perses.util.Util.removeElementBySwappingLastElement
 import org.perses.util.Util.removeElementsFromLinkedList
@@ -322,7 +323,9 @@ class UtilTest {
 
     Util.globWithRegex(tempDir, Regex("^.*\\.java${"$"}")).let {
       assertThat(it.map { it.fileName.toString() }).containsExactly(
-        "a.java", "dir1.java", "dir2.java"
+        "a.java",
+        "dir1.java",
+        "dir2.java",
       )
     }
   }
@@ -344,11 +347,19 @@ class UtilTest {
   @Test
   fun test_compute_sha512() {
     val string = "hello"
-    val sha512 = Util.computeSHA512(string)
-    assertThat(sha512).isEqualTo(
+    val sha512 = Util.SHA512HashCode.createFromString(string)
+    assertThat(sha512.length).isEqualTo(string.length)
+    assertThat(sha512.digest.toString()).isEqualTo(
       "9b71d224bd62f3785d96d46ad3ea3d73319bfbc2890caa" +
-        "dae2dff72519673ca72323c3d99ba5c11d7c7acc6e14b8c5da0c4663475c2e5c3adef46f73bcdec043"
+        "dae2dff72519673ca72323c3d99ba5c11d7c7acc6e14b8c5da0c4663475c2e5c3adef46f73bcdec043",
     )
+  }
+
+  @Test
+  fun testComputeZIP() {
+    val input = "int\n".repeat(100000) // mimic large input
+    val zipBArray = Util.zipCompress(input)
+    assertThat(String(Util.zipDecompress(zipBArray), Charsets.UTF_8)).isEqualTo(input)
   }
 
   @Test
@@ -377,7 +388,7 @@ class UtilTest {
 
   private fun testmergeContinuousElementsIntoRegions(
     list: List<Int>,
-    vararg expected: ImmutableList<Int>
+    vararg expected: ImmutableList<Int>,
   ) {
     assertThat(mergeContinuousElementsIntoRegions(list, euqalizer))
       .containsExactly(*expected).inOrder()
@@ -388,7 +399,10 @@ class UtilTest {
     testmergeContinuousElementsIntoRegions(listOf(1), ImmutableList.of(1))
     testmergeContinuousElementsIntoRegions(listOf(1, 2), ImmutableList.of(1), ImmutableList.of(2))
     testmergeContinuousElementsIntoRegions(
-      listOf(1, 2, 3), ImmutableList.of(1), ImmutableList.of(2), ImmutableList.of(3)
+      listOf(1, 2, 3),
+      ImmutableList.of(1),
+      ImmutableList.of(2),
+      ImmutableList.of(3),
     )
   }
 
@@ -396,21 +410,27 @@ class UtilTest {
   fun test_mergeContinuousElementsIntoRegions_duplicate() {
     testmergeContinuousElementsIntoRegions(listOf(1, 1), ImmutableList.of(1, 1))
     testmergeContinuousElementsIntoRegions(
-      listOf(1, 1, 2), ImmutableList.of(1, 1), ImmutableList.of(2)
+      listOf(1, 1, 2),
+      ImmutableList.of(1, 1),
+      ImmutableList.of(2),
     )
     testmergeContinuousElementsIntoRegions(
       listOf(1, 1, 2, 2, 1, 1),
-      ImmutableList.of(1, 1), ImmutableList.of(2, 2), ImmutableList.of(1, 1)
+      ImmutableList.of(1, 1),
+      ImmutableList.of(2, 2),
+      ImmutableList.of(1, 1),
     )
     testmergeContinuousElementsIntoRegions(
-      listOf(1, 2, 2), ImmutableList.of(1), ImmutableList.of(2, 2)
+      listOf(1, 2, 2),
+      ImmutableList.of(1),
+      ImmutableList.of(2, 2),
     )
   }
 
   private fun testSlideReverse(
     list: List<Int>,
     slidingWindowSize: Int,
-    vararg expected: NonEmptyInternal
+    vararg expected: NonEmptyInternal,
   ) {
     val copy = ArrayList<NonEmptyInternal>()
     slideResverseIfSlidable(list, slidingWindowSize) {
@@ -445,13 +465,22 @@ class UtilTest {
   fun test_slideReverse_size_3() {
     val list = listOf(1, 2, 3)
     testSlideReverse(
-      list, 1, NonEmptyInternal(2, 3), NonEmptyInternal(1, 2), NonEmptyInternal(0, 1)
+      list,
+      1,
+      NonEmptyInternal(2, 3),
+      NonEmptyInternal(1, 2),
+      NonEmptyInternal(0, 1),
     )
     testSlideReverse(
-      list, 2, NonEmptyInternal(1, 3), NonEmptyInternal(0, 2)
+      list,
+      2,
+      NonEmptyInternal(1, 3),
+      NonEmptyInternal(0, 2),
     )
     testSlideReverse(
-      list, 3, NonEmptyInternal(0, 3)
+      list,
+      3,
+      NonEmptyInternal(0, 3),
     )
     testSlideReverse(list, 4)
   }
@@ -471,5 +500,17 @@ class UtilTest {
     Util.copyResource("test_data.txt", DummyClassWithResource::class.java, dest)
     assertThat(Files.isRegularFile(dest)).isTrue()
     assertThat(dest.readText()).isEqualTo("test")
+  }
+
+  @Test
+  fun lazyAssertionShouldThrow() {
+    assertThrows(Throwable::class.java) {
+      lazyAssert { false }
+    }
+    val goldenMessage = "this is the golden message"
+    val exception = assertThrows(Throwable::class.java) {
+      lazyAssert({ false }) { goldenMessage }
+    }
+    assertThat(exception.message).contains(goldenMessage)
   }
 }

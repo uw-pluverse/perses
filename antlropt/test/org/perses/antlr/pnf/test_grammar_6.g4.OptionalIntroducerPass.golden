@@ -2,6 +2,8 @@
 // DO NOT MODIFY.
 grammar test_grammar_6;
 
+
+
 enumerator
     : typedefName optional__enumerator_2
     ;

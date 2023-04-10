@@ -19,44 +19,51 @@ package org.perses.reduction.cache
 import it.unimi.dsi.fastutil.ints.IntArrayList
 import org.perses.program.PersesTokenFactory.PersesToken
 import org.perses.program.TokenizedProgram
+import org.perses.util.Util.lazyAssert
 
 class LinearScanTokenizedProgramEncoder(
   baseProgram: TokenizedProgram,
   profiler: AbstractQueryCacheProfiler,
-  enableCompression: Boolean
+  enableCompression: Boolean,
 ) : AbstractLinearScanEncoder(baseProgram, profiler, enableCompression) {
 
   override fun encodeUncompressed(
-    tokenCursor: IteratorCursor<PersesToken>,
-    tokenCount: Int
+    tokenIterator: Iterator<PersesToken>,
+    tokenCount: Int,
   ): IntArrayList? {
     val intervals = IntArrayList(DEFAULT_INTERVAL_CAPACITY)
     val origTokenCount = persesLexemeIdArray.logicalSize
     val persesLexemeIdInOrigin = persesLexemeIdArray
-    assert(persesLexemeIdArray.maxLogicalSize >= baseProgram.tokens.size)
-    assert(persesLexemeIdArray.logicalSize == baseProgram.tokens.size)
-    tokenCursor.move()
+    lazyAssert { persesLexemeIdArray.maxLogicalSize >= baseProgram.tokens.size }
+    lazyAssert { persesLexemeIdArray.logicalSize == baseProgram.tokens.size }
+
+    val tokenCursor = IteratorCursor(tokenIterator)
+    var currentTokenHolder: PersesToken? = null
+    tokenCursor.move { currentTokenHolder = it }
     var origIndex = 0
-    while (tokenCursor.has()) {
-      val currentPersesLexemeId = tokenCursor.get()!!.persesLexemeId
+    while (tokenCursor.has(currentTokenHolder)) {
+      val currentPersesLexemeId = tokenCursor.get(currentTokenHolder).persesLexemeId
       // Search for start of the internal.
       origIndex = searchForLexemeId(
-        origIndex, origTokenCount, currentPersesLexemeId, persesLexemeIdInOrigin
+        origIndex,
+        origTokenCount,
+        currentPersesLexemeId,
+        persesLexemeIdInOrigin,
       )
       if (origIndex == NOT_FOUND) {
         return null
       }
-      assert(currentPersesLexemeId == persesLexemeIdInOrigin[origIndex])
+      lazyAssert { currentPersesLexemeId == persesLexemeIdInOrigin[origIndex] }
       intervals.add(origIndex)
       // Search for the end of the interval.
       do {
-        tokenCursor.move()
+        tokenCursor.move { currentTokenHolder = it }
         ++origIndex
-      } while (tokenCursor.has() &&
+      } while (tokenCursor.has(currentTokenHolder) &&
         origIndex < origTokenCount &&
-        tokenCursor.get()!!.persesLexemeId == persesLexemeIdInOrigin[origIndex]
+        tokenCursor.get(currentTokenHolder).persesLexemeId == persesLexemeIdInOrigin[origIndex]
       )
-      if (origIndex == origTokenCount && tokenCursor.has()) {
+      if (origIndex == origTokenCount && tokenCursor.has(currentTokenHolder)) {
         return null
       }
       intervals.add(origIndex)
@@ -72,6 +79,6 @@ class LinearScanTokenizedProgramEncoder(
      *
      * Pre-allocating a large array is costly.
      */
-    private const val DEFAULT_INTERVAL_CAPACITY = 8
+    const val DEFAULT_INTERVAL_CAPACITY = 8
   }
 }

@@ -16,19 +16,21 @@
  */
 package org.perses.reduction.cache
 
+import org.perses.util.Util.lazyAssert
+
 /**
  * Note that the entire class will be inlined. If you need to add new methods, you need to
  * mark them 'inline' too.
  */
 @JvmInline
 value class LogicalSizedArray @PublishedApi internal constructor(
-  @PublishedApi internal val array: IntArray
+  @PublishedApi internal val array: IntArray,
 ) {
 
   inline var logicalSize: Int
     get() = array[indexOfLogicalSize]
     set(value) {
-      assert(value <= maxLogicalSize)
+      lazyAssert { value <= maxLogicalSize }
       array[indexOfLogicalSize] = value
     }
 
@@ -39,13 +41,15 @@ value class LogicalSizedArray @PublishedApi internal constructor(
   internal inline val indexOfLogicalSize: Int
     get() = array.size - 1
 
+  @Suppress("NOTHING_TO_INLINE")
   inline operator fun get(index: Int): Int {
-    assert(index < logicalSize)
+    lazyAssert { index < logicalSize }
     return array[index]
   }
 
+  @Suppress("NOTHING_TO_INLINE")
   inline operator fun set(index: Int, value: Int) {
-    assert(index < logicalSize)
+    lazyAssert { index < logicalSize }
     array[index] = value
   }
 
@@ -55,6 +59,7 @@ value class LogicalSizedArray @PublishedApi internal constructor(
   }
 
   companion object {
+    @Suppress("NOTHING_TO_INLINE")
     inline fun createWithSize(size: Int): LogicalSizedArray {
       require(size >= 0)
       return LogicalSizedArray(IntArray(size + 1))

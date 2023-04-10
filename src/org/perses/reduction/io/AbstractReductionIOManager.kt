@@ -20,8 +20,8 @@ import com.google.common.annotations.VisibleForTesting
 import com.google.common.base.Joiner
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
-import com.google.common.io.MoreFiles
-import com.google.common.io.RecursiveDeleteOption
+import org.perses.program.AbstractDataKind
+import org.perses.program.LanguageKind
 import org.perses.program.SourceFile
 import org.perses.util.AutoIncrementDirectory
 import org.perses.util.TimeUtil
@@ -31,25 +31,27 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardCopyOption
 import java.time.LocalDateTime
-import java.util.concurrent.atomic.AtomicInteger
+import kotlin.io.path.name
 
-abstract class AbstractReductionIOManager
-<P, Self : AbstractReductionIOManager<P, Self>>(
-  protected val workingFolder: Path,
-  val reductionInputs: AbstractReductionInputs,
+abstract class AbstractReductionIOManager<
+  P,
+  K : AbstractDataKind,
+  Self : AbstractReductionIOManager<P, K, Self>,>(
+  private val workingFolder: Path,
+  val reductionInputs: AbstractReductionInputs<K, *>,
   val outputManagerFactory: AbstractOutputManagerFactory<P>,
-  outputDirectory: Path?
+  outputDirectory: Path?,
 ) {
 
-  val tempRootFolder = workingFolder.resolve(
+  val tempRootFolder: Path = workingFolder.resolve(
     getTempRootFolderName(
       reductionInputs.relativePathSequence().asIterable(),
       reductionInputs.testScript.file.fileName.toString(),
-      LocalDateTime.now()
-    )
+      LocalDateTime.now(),
+    ),
   )
 
-  abstract fun getConcreteReductionInputs(): AbstractReductionInputs
+  abstract fun getConcreteReductionInputs(): AbstractReductionInputs<*, *>
 
   protected val resultFolder = if (outputDirectory == null) {
     val dir = AutoIncrementDirectory(DEFAULT_PERSES_BEST_DIR_NAME)
@@ -68,25 +70,39 @@ abstract class AbstractReductionIOManager
   fun updateBestResult(program: P) {
     /*
      * We try to make the writing-best-resut operation atomic.
+     *
+     * https://github.com/uw-pluverse/perses/issues/9
+     *
+     * https://github.com/chengniansun/perses-private/issues/508
      */
-    val tempDirectory = createTempResultFolder()
+    val tempDirectory = createCurrentBestResultFolder()
     createOutputManager(program).write(tempDirectory)
     Util.copyDirectory(
       tempDirectory.folder,
       resultFolder.folder,
-      StandardCopyOption.REPLACE_EXISTING
+      StandardCopyOption.REPLACE_EXISTING,
     )
-    MoreFiles.deleteRecursively(tempDirectory.folder, RecursiveDeleteOption.ALLOW_INSECURE)
+    tempDirectory.deleteThisDirectoryRecursively()
   }
 
-  private val tempFolderCounter = AtomicInteger(0)
-  fun createTempResultFolder(): ReductionFolder {
-    val tempRootFolder = materializeTempRootFolder()
-    val tempResultFolder = tempRootFolder.resolve(
-      "temp_${tempFolderCounter.getAndIncrement()}_${System.currentTimeMillis()}"
+  private var snapshotCounter = 0
+  internal fun createCurrentBestResultFolder(): ReductionFolder {
+    // create the result folder besides the resultFolder
+    val timestamp = TimeUtil.formatDateForFileName(System.currentTimeMillis())
+    val path = resultFolder.folder.parent.resolve(
+      resultFolder.folder.name + "_best_result_snapshot_${++snapshotCounter}_at_" + timestamp,
     )
-    Files.createDirectory(tempResultFolder)
-    return ReductionFolder(reductionInputs, tempResultFolder)
+    check(!Files.exists(path))
+    Files.createDirectories(path)
+    check(Files.isDirectory(path)) { path }
+    return ReductionFolder(reductionInputs, path)
+  }
+
+  fun createTempResultFolder(): ReductionFolder {
+    return lazilyInitializedReductionFolderManager.createNextFolder(
+      prefix = "temp_",
+      postfix = System.currentTimeMillis().toString(),
+    )
   }
 
   fun createOutputManager(program: P): AbstractOutputManager {
@@ -100,28 +116,26 @@ abstract class AbstractReductionIOManager
   }
 
   fun getSingleSourceFileBaseName(folder: ReductionFolder): String {
-    val fileNames = reductionInputs.relativePathSequence().toList()
-    check(fileNames.size == 1)
-    val baseName = fileNames.first().toString()
+    val baseName = reductionInputs.relativePathSequence().single().toString()
     check(folder.checkFileExistence(baseName))
     return baseName
   }
 
   inline fun <T> visitMainSourceFileIn(
     reductionFolder: ReductionFolder,
-    visitor: (SourceFile) -> T
+    visitor: (SourceFile) -> T,
   ): T {
     return visitor.invoke(
       SourceFile(
         reductionFolder.folder.resolve(getSingleSourceFileBaseName(reductionFolder)),
-        reductionInputs.mainLanguage
-      )
+        reductionInputs.mainDataKind as LanguageKind,
+      ),
     )
   }
 
   fun getProfileFile() = workingFolder.resolve(
     getCompactNameForFileList(reductionInputs.relativePathSequence().asIterable()) + "." +
-      TimeUtil.formatDateForFileName(System.currentTimeMillis()) + ".profile.txt"
+      TimeUtil.formatDateForFileName(System.currentTimeMillis()) + ".profile.txt",
   )
 
   fun backupMainFile(): ImmutableList<Path> {
@@ -132,7 +146,7 @@ abstract class AbstractReductionIOManager
         val fileToReduce = it.origFile
         val relativePath = it.relativePath
         val backupFile = workingFolder.resolve(
-          "$relativePath.$formatDateForFileName.orig"
+          "$relativePath.$formatDateForFileName.orig",
         )
         check(!Files.exists(backupFile)) {
           "The backup file $backupFile exists."
@@ -143,7 +157,15 @@ abstract class AbstractReductionIOManager
       }.toImmutableList()
   }
 
-  fun materializeTempRootFolder(): Path {
+  val lazilyInitializedReductionFolderManager by lazy {
+    materializeTempRootFolder()
+    ReductionFolderManager(
+      reductionInputs = reductionInputs,
+      rootFolder = tempRootFolder,
+    )
+  }
+
+  private fun materializeTempRootFolder(): Path {
     if (!Files.exists(tempRootFolder)) {
       Files.createDirectory(tempRootFolder)
     }
@@ -151,14 +173,6 @@ abstract class AbstractReductionIOManager
       "The temp root folder is not a directory: $tempRootFolder"
     }
     return tempRootFolder
-  }
-
-  fun createReductionFolderManager(): ReductionFolderManager {
-    materializeTempRootFolder()
-    return ReductionFolderManager(
-      reductionInputs = reductionInputs,
-      rootFolder = tempRootFolder
-    )
   }
 
   companion object {
@@ -184,7 +198,7 @@ abstract class AbstractReductionIOManager
     fun getTempRootFolderName(
       fileNameForReduction: Iterable<Path>,
       testScriptName: String?,
-      time: LocalDateTime
+      time: LocalDateTime,
     ): String {
       val separator = "_"
       val fileListString = getCompactNameForFileList(fileNameForReduction)
@@ -193,7 +207,7 @@ abstract class AbstractReductionIOManager
           PERSES_TEMP_ROOT_PREFIX,
           fileListString,
           testScriptName,
-          TimeUtil.formatDateForFileName(time)
+          TimeUtil.formatDateForFileName(time),
         )
     }
   }

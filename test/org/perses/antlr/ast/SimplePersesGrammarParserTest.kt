@@ -32,7 +32,7 @@ class SimplePersesGrammarParserTest {
       Paths.get("src/org/perses/grammar/sysverilog/SV3_1aParser.g4").readText()
 
     val grammar = PersesAstBuilder(
-      AntlrGrammarParser.parseRawGrammarASTFromString(string)
+      AntlrGrammarParser.parseRawGrammarASTFromString(string),
     ).grammar // does not crash.
     println(grammar.sourceCode)
   }

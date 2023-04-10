@@ -241,7 +241,7 @@ class SparTreeNodeTest {
   @Test
   fun testClang00052IsUTF8() {
     testSparTreeCanReconstructOriginalPrograms(
-      Paths.get("test_data/c_programs/clang_testsuite/00052.c")
+      Paths.get("test_data/c_programs/clang_testsuite/00052.c"),
     )
   }
 
@@ -252,7 +252,7 @@ class SparTreeNodeTest {
       int a = 0;
       int b = 0;
       """.trimIndent(),
-      LanguageC
+      LanguageC,
     )
     val root = tree.root
     assertThat(root.childCount).isEqualTo(1)
@@ -277,7 +277,7 @@ class SparTreeNodeTest {
     val program = tree.programSnapshot
     val originalProgram = AntlrGrammarUtil.convertParseTreeToProgram(
       parseTree.tree,
-      cParserFacade.language
+      cParserFacade.language,
     )
     assertThat(toAntlrTokens(program.tokens))
       .containsExactlyElementsIn(toAntlrTokens(originalProgram.tokens))

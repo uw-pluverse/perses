@@ -16,34 +16,36 @@
  */
 package org.perses.reduction.reducer
 
-import org.perses.reduction.ReductionListenerManager
+import org.perses.reduction.AsyncReductionListenerManager
 import org.perses.reduction.TreeEditWithItsResult
 import org.perses.reduction.partition.Partition
 import org.perses.reduction.reducer.TreeTransformations.createNodeDeletionActionSetFor
 import org.perses.spartree.AbstractNodeActionSetCache
 import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.spartree.SparTree
+import org.perses.util.Util.lazyAssert
 import java.util.ArrayDeque
 
 abstract class AbstractSpecialDeltaDebugger protected constructor(
-  listenerManager: ReductionListenerManager,
+  listenerManager: AsyncReductionListenerManager,
   nodeActionSetCache: AbstractNodeActionSetCache,
-  treeEditTester: (AbstractSparTreeEdit<*>) -> TreeEditWithItsResult?
+  treeEditTester: (AbstractSparTreeEdit<*>) -> TreeEditWithItsResult?,
 ) : AbstractDeltaDebugger(listenerManager, nodeActionSetCache, treeEditTester) {
 
   override fun reduce(
     tree: SparTree,
     actionsDescription: String,
-    vararg startPartitions: Partition
+    vararg startPartitions: Partition,
   ) {
-    assert(startPartitions.isNotEmpty())
+    lazyAssert { startPartitions.isNotEmpty() }
     val worklist = ArrayDeque<Partition>()
     addToWorklist(worklist, startPartitions)
-    assert(!worklist.isEmpty())
+    lazyAssert { !worklist.isEmpty() }
     while (!worklist.isEmpty()) {
       val partition = pollFromWorklist(worklist)
       val actionSet = createNodeDeletionActionSetFor(
-        partition, actionsDescription + "@" + partition.size()
+        partition,
+        actionsDescription + "@" + partition.size(),
       )
       if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
         listenerManager.onNodeEditActionSetCacheHit(actionSet)
@@ -60,11 +62,11 @@ abstract class AbstractSpecialDeltaDebugger protected constructor(
   }
 
   protected abstract fun pollFromWorklist(
-    worklist: ArrayDeque<Partition>
+    worklist: ArrayDeque<Partition>,
   ): Partition
 
   protected abstract fun addToWorklist(
     worklist: ArrayDeque<Partition>,
-    partitions: Array<out Partition>
+    partitions: Array<out Partition>,
   )
 }

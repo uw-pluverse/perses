@@ -37,9 +37,12 @@ import org.perses.util.exhaustive
 import org.perses.util.toImmutableList
 
 class PlusIntroducerLeftPass : AbstractPnfPass() {
-  override fun process(grammar: PersesGrammar): PersesGrammar {
-    val mutable = MutableGrammar.createParserRulesFrom(grammar)
-    val edit = PlusIntroducerEdit(grammar)
+  override fun processParserGrammar(
+    parserGrammar: PersesGrammar,
+    lexerGrammar: PersesGrammar?,
+  ): PersesGrammar {
+    val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
+    val edit = PlusIntroducerEdit(parserGrammar)
     val toUpdate = ArrayList<RuleEditTriple>()
     mutable.ruleNameAltPairSequence().forEach { (name, oldDef) ->
       check(oldDef.tag !== AstTag.ALTERNATIVE_BLOCK)
@@ -55,7 +58,7 @@ class PlusIntroducerLeftPass : AbstractPnfPass() {
     edit.toAdd.forEach { key, value ->
       mutable.getAltBlock(key).addIfInequivalent(value)
     }
-    return grammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
+    return parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
   }
 
   @VisibleForTesting
@@ -67,9 +70,8 @@ class PlusIntroducerLeftPass : AbstractPnfPass() {
 
     public override fun internalApply(
       element: AbstractPersesRuleElement,
-      isRoot: Boolean
+      isRoot: Boolean,
     ): TransformDecision.NonDeleteTransformDecision {
-
       val tag = element.tag
       if (tag !== AstTag.SEQUENCE) {
         return TransformDecision.Keep(element)
@@ -128,7 +130,7 @@ class PlusIntroducerLeftPass : AbstractPnfPass() {
       newChildren: ArrayList<AbstractPersesRuleElement?>,
       bodyToMatch: AbstractPersesRuleElement,
       starRuleName: RuleNameHandle,
-      starAst: PersesStarAst
+      starAst: PersesStarAst,
     ): Int {
       val bodySequence = if (bodyToMatch.tag === AstTag.SEQUENCE) {
         (bodyToMatch as PersesSequenceAst).children
@@ -162,7 +164,12 @@ class PlusIntroducerLeftPass : AbstractPnfPass() {
           return currentIndexOfStar
         }
         return transformStarToPlus(
-          element, currentIndexOfStar, newChildren, ruleDef.body, starRuleName, starAst
+          element,
+          currentIndexOfStar,
+          newChildren,
+          ruleDef.body,
+          starRuleName,
+          starAst,
         )
       }
       return currentIndexOfStar
@@ -170,13 +177,13 @@ class PlusIntroducerLeftPass : AbstractPnfPass() {
 
     private fun mergeStarIntoPlus(
       starRuleName: RuleNameHandle,
-      starAst: PersesStarAst
+      starAst: PersesStarAst,
     ): PersesRuleReferenceAst {
       val plusRuleName = starRuleName.createAuxiliaryRuleName(RuleType.KLEENE_PLUS)
       //      toRemove.put(starRuleName, starAst);
       toAdd.put(
         plusRuleName,
-        if (starAst.isGreedy) createGreedy(starAst.body) else createNonGreedy(starAst.body)
+        if (starAst.isGreedy) createGreedy(starAst.body) else createNonGreedy(starAst.body),
       )
       return create(plusRuleName)
     }
@@ -198,7 +205,7 @@ class PlusIntroducerLeftPass : AbstractPnfPass() {
       fun reverseMatch(
         sequence: PersesSequenceAst,
         startIndex: Int,
-        toMatchList: ImmutableList<AbstractPersesRuleElement>
+        toMatchList: ImmutableList<AbstractPersesRuleElement>,
       ): Boolean {
         val length = toMatchList.size
         return match(sequence, startIndex - length + 1, toMatchList)
@@ -209,7 +216,7 @@ class PlusIntroducerLeftPass : AbstractPnfPass() {
       fun match(
         sequence: PersesSequenceAst,
         startIndex: Int,
-        toMatchList: ImmutableList<AbstractPersesRuleElement>
+        toMatchList: ImmutableList<AbstractPersesRuleElement>,
       ): Boolean {
         if (startIndex < 0 || startIndex >= sequence.childCount) {
           return false

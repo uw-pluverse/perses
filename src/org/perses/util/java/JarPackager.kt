@@ -25,7 +25,7 @@ class JarPackager(
   val dir: Path,
   val packageName: String,
   val fileAcceptor: (fileName: String) -> Boolean,
-  val customizer: (ZipOutputStream) -> Unit
+  val customizer: (ZipOutputStream) -> Unit,
 ) {
 
   fun createJarFile(destination: Path) {

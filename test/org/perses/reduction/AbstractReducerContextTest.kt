@@ -21,13 +21,14 @@ import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.program.LanguageKind
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.io.CommonReductionIOManagerData
 import org.perses.reduction.io.token.TokenReductionIOManager
 
 @RunWith(JUnit4::class)
 class AbstractReducerContextTest : CommonReductionIOManagerData(
-  AbstractReducerContextTest::class.java
+  AbstractReducerContextTest::class.java,
 ) {
 
   @After
@@ -37,14 +38,16 @@ class AbstractReducerContextTest : CommonReductionIOManagerData(
 
   class DummyReducerContext(
     ioManager: TokenReductionIOManager,
-    executorService: TestScriptExecutorService
+    executorService: TestScriptExecutorService,
   ) : AbstractReducerContext<
-    TokenizedProgram, TokenReductionIOManager, DummyReducerContext>(
-    ioManager, executorService
+    TokenizedProgram, LanguageKind, TokenReductionIOManager, DummyReducerContext,>(
+    ioManager,
+    executorService,
   )
 
   val dummy = DummyReducerContext(
-    ioManager, executorService
+    ioManager,
+    executorService,
   )
 
   @Test
@@ -55,7 +58,7 @@ class AbstractReducerContextTest : CommonReductionIOManagerData(
       Pair(key, payload)
     }
     assertThat(value).isInstanceOf(Pair::class.java)
-    val pair = value as Pair<Any, Any>
+    val pair = value as Pair<*, *>
     assertThat(pair.first).isSameInstanceAs(this::class.java)
     assertThat(pair.second).isSameInstanceAs(payload)
   }

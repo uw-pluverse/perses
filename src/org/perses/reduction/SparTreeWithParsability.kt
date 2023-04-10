@@ -21,7 +21,7 @@ import org.perses.spartree.SparTree
 
 class SparTreeWithParsability(
   private val sparTree: SparTree,
-  val parsable: Boolean
+  val parsable: Boolean,
 ) {
 
   fun getTreeRegardlessOfParsability() = sparTree

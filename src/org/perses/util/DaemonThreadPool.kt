@@ -16,18 +16,40 @@
  */
 package org.perses.util
 
+import com.google.common.util.concurrent.ListeningExecutorService
+import com.google.common.util.concurrent.MoreExecutors
+import java.time.Duration
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 object DaemonThreadPool {
 
-  fun create(numThreads: Int): ExecutorService {
-    return Executors.newFixedThreadPool(
-      numThreads
-    ) { runnable ->
-      val thread = Executors.defaultThreadFactory().newThread(runnable)
-      thread.isDaemon = true
-      thread
+  fun create(numThreads: Int): ListeningExecutorService {
+    return MoreExecutors.listeningDecorator(
+      Executors.newFixedThreadPool(
+        numThreads,
+      ) { runnable ->
+        val thread = Executors.defaultThreadFactory().newThread(runnable)
+        thread.isDaemon = true
+        thread
+      },
+    )
+  }
+
+  fun createSingleThreadPool() = create(numThreads = 1)
+
+  private val DEFAULT_SHUTDOWN_DURATION: Duration = Duration.ofMinutes(2)
+
+  fun shutdownOrThrow(
+    executorService: ExecutorService,
+    shutdownDuration: Duration = DEFAULT_SHUTDOWN_DURATION,
+  ) {
+    check(MoreExecutors.shutdownAndAwaitTermination(executorService, shutdownDuration)) {
+      "Fail to shutdown executor service within $shutdownDuration"
     }
+  }
+
+  fun waitInfinitelyToShutdown(executorService: ExecutorService) {
+    shutdownOrThrow(executorService, Duration.ofDays(99))
   }
 }

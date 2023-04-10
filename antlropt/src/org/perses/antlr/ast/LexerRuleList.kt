@@ -24,7 +24,7 @@ import java.io.PrintStream
 // TODO: test
 class LexerRuleList(
   val defaultModeLexerRules: ImmutableList<AbstractPersesLexerRuleAst>,
-  val nonDefaultModes: ImmutableList<LexerModeWithLexerRules>
+  val nonDefaultModes: ImmutableList<LexerModeWithLexerRules>,
 ) : AbstractPersesAst() {
 
   init {

@@ -22,7 +22,7 @@ import com.google.common.collect.ImmutableList
 /** A program represented by a list of tokens.  */
 class TokenizedProgram(
   val tokens: ImmutableList<PersesTokenFactory.PersesToken>,
-  val factory: TokenizedProgramFactory
+  val factory: TokenizedProgramFactory,
 ) {
 
   fun tokenCount() = tokens.size

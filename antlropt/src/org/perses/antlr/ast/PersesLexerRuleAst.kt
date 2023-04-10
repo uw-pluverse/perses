@@ -18,7 +18,7 @@ package org.perses.antlr.ast
 
 class PersesLexerRuleAst(
   ruleNameHandle: RuleNameRegistry.RuleNameHandle,
-  body: AbstractPersesRuleElement
+  body: AbstractPersesRuleElement,
 ) : AbstractPersesLexerRuleAst(ruleNameHandle, body) {
 
   override fun copyWithNewBody(newBody: AbstractPersesRuleElement): PersesLexerRuleAst {

@@ -5,6 +5,16 @@ package(default_visibility = [
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 kt_jvm_library(
+    name = "zip_cache",
+    srcs = [
+        "ContentZipBasedQueryCache.kt",
+    ],
+    deps = [
+        ":query_cache",
+    ],
+)
+
+kt_jvm_library(
     name = "sha512_cache",
     srcs = [
         "ContentSHA512BasedQueryCache.kt",
@@ -53,11 +63,12 @@ kt_jvm_library(
         "QueryCacheFactory.kt",
     ],
     deps = [
-        ":content_based_cahce",
+        ":content_based_cache",
         ":linear_scan_cache",
         ":query_cache",
         ":sha512_cache",
         ":test_execution_cache_type",
+        ":zip_cache",
     ],
 )
 
@@ -91,6 +102,9 @@ kt_jvm_library(
     srcs = [
         "LogicalSizedArray.kt",
     ],
+    deps = [
+        "//src/org/perses/util",
+    ],
 )
 
 kt_jvm_library(
@@ -111,6 +125,7 @@ kt_jvm_library(
         ":program_encoding_interface",
         ":query_cache_configuration",
         ":query_cache_interface",
+        "//:fastutil",
         "//:flogger",
         "//:guava",
         "//src/org/perses/program",
@@ -118,7 +133,6 @@ kt_jvm_library(
         "//src/org/perses/reduction:test_script",
         "//src/org/perses/util:percentage",
         "@maven//:com_google_errorprone_error_prone_annotations",
-        "@maven//:it_unimi_dsi_fastutil",
     ],
 )
 
@@ -128,13 +142,13 @@ kt_jvm_library(
         "CompressorForIntArrayList.kt",
     ],
     deps = [
-        "@maven//:it_unimi_dsi_fastutil",
+        "//:fastutil",
         "@maven//:me_lemire_integercompression_JavaFastPFOR",
     ],
 )
 
 kt_jvm_library(
-    name = "content_based_cahce",
+    name = "content_based_cache",
     srcs = [
         "ContentLexemeIdQueryCache.kt",
         "ContentLexemeListQueryCache.kt",
@@ -150,6 +164,18 @@ kt_jvm_library(
 )
 
 kt_jvm_library(
+    name = "PassLevelCache",
+    srcs = [
+        "PassLevelCache.kt",
+    ],
+    deps = [
+        "//:guava",
+        "//src/org/perses/reduction:abstract_reducer",
+        "//src/org/perses/util:file_name_content_pair",
+    ],
+)
+
+kt_jvm_library(
     name = "linear_scan_cache",
     srcs = [
         "AbstractLinearScanEncoder.kt",
@@ -158,14 +184,16 @@ kt_jvm_library(
         "LinearScanFormatSensitiveEncoder.kt",
         "LinearScanTokenizedProgramEncoder.kt",
         "QueryCacheWithFastLinearScanWithoutCompression.kt",
+        "RccMemLitQueryCache.kt",
+        "RccMemoryLitProgramEncoder.kt",
     ],
     deps = [
         ":LogicalSizedArray",
         ":query_cache",
         ":query_cache_configuration",
+        "//:fastutil",
         "//:guava",
         "//src/org/perses/program",
-        "@maven//:it_unimi_dsi_fastutil",
     ],
 )
 

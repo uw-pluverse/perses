@@ -130,7 +130,7 @@ class IndirectLeftRecursionEliminationPassTest : PnfLeftTestGrammar() {
           .getAltBlock(d)
           .asSequence()
           .map { it.sourceCode }
-          .toList()
+          .toList(),
       )
         .containsExactly("'d'")
     }

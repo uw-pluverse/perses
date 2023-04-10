@@ -62,11 +62,11 @@ class AdhocGrammarInstallerTest : AbstractAntlrrdcTest() {
       workingDir.resolve(
         ".perses/installed_adhoc_languages/TestParser/" +
           testOptions.compulsoryFlags.createAdhocGrammarConfiguration().computeContentHashCode() +
-          "/perses_adhoc_language_support.jar"
-      ).toString()
+          "/perses_adhoc_language_support.jar",
+      ).toString(),
     )
     assertThat(generatedJar.mainClassFullName).isEqualTo(
-      "org.perses.grammar.adhoc.testparser.TestParserAdhocParserFacade"
+      "org.perses.grammar.adhoc.testparser.TestParserAdhocParserFacade",
     )
 
     ZipFile(generatedJar.path.toFile()).use { zipFile ->
@@ -82,13 +82,13 @@ class AdhocGrammarInstallerTest : AbstractAntlrrdcTest() {
         "org/perses/grammar/adhoc/testparser/TestLexer.java",
         "org/perses/grammar/adhoc/testparser/TestLexer.g4",
         "org/perses/grammar/adhoc/testparser/TestParserAdhocParserFacade.class",
-        "org/perses/grammar/adhoc/testparser/TestParserAdhocParserFacade.java"
+        "org/perses/grammar/adhoc/testparser/TestParserAdhocParserFacade.java",
       )
     }
     val facade = generatedJar.loadMainClass().getConstructor().newInstance() as AbstractParserFacade
     val language = facade.language
     assertThat(SerializableLanguageKind.LanguageKindData.from(language)).isEqualTo(
-      SerializableLanguageKind.LanguageKindData.from(LanguageAdhoc.INSTANCE)
+      SerializableLanguageKind.LanguageKindData.from(LanguageAdhoc.INSTANCE),
     )
   }
 
@@ -109,11 +109,11 @@ class AdhocGrammarInstallerTest : AbstractAntlrrdcTest() {
       workingDir.resolve(
         ".perses/installed_adhoc_languages/TestCombined/" +
           testOptions.compulsoryFlags.createAdhocGrammarConfiguration().computeContentHashCode() +
-          "/perses_adhoc_language_support.jar"
-      ).toString()
+          "/perses_adhoc_language_support.jar",
+      ).toString(),
     )
     assertThat(generatedJar.mainClassFullName).isEqualTo(
-      "org.perses.grammar.adhoc.testcombined.TestCombinedAdhocParserFacade"
+      "org.perses.grammar.adhoc.testcombined.TestCombinedAdhocParserFacade",
     )
 
     ZipFile(generatedJar.path.toFile()).use { zipFile ->
@@ -127,7 +127,7 @@ class AdhocGrammarInstallerTest : AbstractAntlrrdcTest() {
         "org/perses/grammar/adhoc/testcombined/PnfTestCombinedLexer.java",
         "org/perses/grammar/adhoc/testcombined/PnfTestCombined.g4",
         "org/perses/grammar/adhoc/testcombined/TestCombinedAdhocParserFacade.class",
-        "org/perses/grammar/adhoc/testcombined/TestCombinedAdhocParserFacade.java"
+        "org/perses/grammar/adhoc/testcombined/TestCombinedAdhocParserFacade.java",
       )
     }
   }

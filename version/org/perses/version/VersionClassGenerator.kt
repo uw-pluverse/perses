@@ -28,7 +28,7 @@ import kotlin.io.path.writeText
 object VersionClassGenerator {
 
   private const val MAJOR_VERSION = "1"
-  private const val MINOR_VERSION = "5"
+  private const val MINOR_VERSION = "6"
 
   @JvmStatic
   fun generate(args: Array<String>) {
@@ -67,8 +67,8 @@ object VersionClassGenerator {
       |  @JvmStatic
       |  val BUILD_TIME = "$timestamp"
       |}
-    """.trimMargin(),
-      StandardCharsets.UTF_8
+      """.trimMargin(),
+      StandardCharsets.UTF_8,
     )
   }
 

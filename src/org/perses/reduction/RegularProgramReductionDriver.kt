@@ -38,20 +38,20 @@ class RegularProgramReductionDriver private constructor(
   ioManager: TokenReductionIOManager,
   tree: SparTreeWithParsability,
   configuration: ReductionConfiguration,
-  extraListeners: ImmutableList<AbstractReductionListener>
+  extraListeners: ImmutableList<AbstractReductionListener>,
 ) : AbstractProgramReductionDriver(
   cmd,
   ioManager,
   tree,
   configuration,
-  extraListeners
+  extraListeners,
 ) {
 
   companion object {
 
     fun createReductionInputs(
       parserFacadeFactory: AbstractParserFacadeFactory,
-      inputFlags: InputFlags
+      inputFlags: InputFlags,
     ): RegularReductionInputs {
       val absoluteSourceFilePath: Path = inputFlags.getSourceFile().toAbsolutePath()
       val languageKind = parserFacadeFactory.computeLanguageKindOrThrow(absoluteSourceFilePath)
@@ -68,10 +68,10 @@ class RegularProgramReductionDriver private constructor(
     fun createIOManager(
       reductionInputs: RegularReductionInputs,
       reductionControlFlags: ReductionControlFlags,
-      outputFlags: OutputFlags
+      outputFlags: OutputFlags,
     ): TokenReductionIOManager {
       val workingDirectory = reductionInputs.mainFile.parentFile
-      val languageKind = reductionInputs.mainFile.languageKind
+      val languageKind = reductionInputs.mainFile.dataKind
       val programFormatControl = reductionControlFlags.codeFormat.let { codeFormat ->
         if (codeFormat != null) {
           check(languageKind.isCodeFormatAllowed(codeFormat)) {
@@ -86,38 +86,44 @@ class RegularProgramReductionDriver private constructor(
         workingDirectory,
         reductionInputs,
         outputManagerFactory = RegularOutputManagerFactory(
-          reductionInputs.mainFile.baseName,
-          programFormatControl
+          reductionInputs.mainFile,
+          programFormatControl,
         ),
-        outputDirectory = outputFlags.outputDir
+        outputDirectory = outputFlags.outputDir,
       )
     }
 
     fun create(
       cmd: CommandOptions,
       parserFacadeFactory: AbstractParserFacadeFactory,
-      extraListeners: ImmutableList<AbstractReductionListener> = ImmutableList.of()
+      extraListeners: ImmutableList<AbstractReductionListener> = ImmutableList.of(),
     ): RegularProgramReductionDriver {
       val reductionInputs = createReductionInputs(
-        parserFacadeFactory, cmd.inputFlags
+        parserFacadeFactory,
+        cmd.inputFlags,
       )
       val ioManager = createIOManager(
         reductionInputs,
         cmd.reductionControlFlags,
-        cmd.resultOutputFlags
+        cmd.resultOutputFlags,
       )
       val reductionConfiguration = createConfiguration(
-        cmd, parserFacadeFactory,
-        reductionInputs.mainLanguage,
-        ioManager.getDefaultProgramFormat()
+        cmd,
+        parserFacadeFactory,
+        reductionInputs.mainDataKind,
+        ioManager.getDefaultProgramFormat(),
       )
       val tree = createSparTree(
         reductionInputs.mainFile,
-        reductionConfiguration.parserFacade
+        reductionConfiguration.parserFacade,
       )
 
       return RegularProgramReductionDriver(
-        cmd, ioManager, tree, reductionConfiguration, extraListeners
+        cmd,
+        ioManager,
+        tree,
+        reductionConfiguration,
+        extraListeners,
       )
     }
   }

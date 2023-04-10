@@ -38,12 +38,12 @@ abstract class AbstractMain<Cmd : AbstractCommandOptions>(args: Array<String>) :
     val extFacadeFactory = createExtFacadeFactory()
     parserFacadeFactory = CompositeParserFacadeFactory(
       builtinFactory = builtinFacadeFactory,
-      extFactory = extFacadeFactory
+      extFactory = extFacadeFactory,
     )
   }
 
   protected abstract fun createReductionDriver(
-    facadeFactory: AbstractParserFacadeFactory
+    facadeFactory: AbstractParserFacadeFactory,
   ): IReductionDriver
 
   private fun createBuiltinParserFacadeFactory(): AbstractParserFacadeFactory {

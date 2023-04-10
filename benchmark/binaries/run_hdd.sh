@@ -15,20 +15,21 @@ set -o errexit
 
 readonly BINARY_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${BINARY_DIR}/run_common.sh"
-readonly REDUCED_TOKEN_FILE="${TMP}/reduced.c"
 
 pushd "${TMP}"
 readonly START_TIME=$(date +%s)
-java -jar "/tmp/binaries/perses_deploy.jar" \
-  --alg hdd \
+java ${JVM_FLAGS:=''} -jar "/tmp/binaries/perses_deploy.jar" ${PERSES_FLAGS:=''} \
+  --alg pristine_hdd \
+  --use-optc-parser true \
   --test-script "${TMP_TEST_SCRIPT}" \
   --input-file "${TMP_SOURCE_FILE}" \
-  --output-file "${REDUCED_TOKEN_FILE}" \
+  --output-dir "${TMP}" \
   --threads "${THREADS}"
+
 readonly RET_CODE="$?"
 readonly END_TIME=$(date +%s)
 
-summarize_results
+summarize_results "${TMP_SOURCE_FILE}"
 popd
 
 exit "${RET_CODE}"

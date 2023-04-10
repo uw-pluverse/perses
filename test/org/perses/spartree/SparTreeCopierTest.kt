@@ -32,7 +32,7 @@ class SparTreeCopierTest {
       int a = b;
       int c = d;
     """.trimIndent(),
-    LanguageC
+    LanguageC,
   )
 
   val copy = original.deepCopy()
