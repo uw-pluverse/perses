@@ -1,3 +1,11 @@
+# Check Terminal Condition
+def CheckCondition(elements):
+    for i in len(elements):
+        if e[i][1] != 0.0 or e[i][1] != 1.0: # If neither 0 nor 1, terminal condition is false (= 0).
+            return 0
+    
+    return 1
+
 # "elements" is the list of elements to be reduced.
 # "targets" is the list of element indices that are excluded subsequence.
 # "result" is the test outcome if it satisfied the test or not with exclusion.
@@ -22,7 +30,7 @@ def probDD(sequence, test_function):
     # current optimal solution
     next_test_sequence = sequence.copy()
 
-    while CheckCondition(probabilities) is False:
+    while CheckCondition(elements) == 0:
         # calculate gain and find the next test to run
 
         # run the test
