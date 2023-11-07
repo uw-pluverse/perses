@@ -17,8 +17,6 @@
 package org.perses.util
 
 import com.google.common.collect.Interners
-import com.google.common.io.MoreFiles
-import com.google.common.io.RecursiveDeleteOption
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Test
@@ -28,6 +26,7 @@ import org.perses.util.FileNameContentPair.Companion.locateFirstNonBlankLine
 import org.perses.util.FileNameContentPair.Companion.locateLastNonBlankLine
 import org.perses.util.FileNameContentPair.Companion.trimWhitespaces
 import java.nio.file.Files
+import kotlin.io.path.deleteRecursively
 import kotlin.io.path.readText
 import kotlin.io.path.writeText
 
@@ -38,7 +37,7 @@ class FileNameContentPairTest {
 
   @After
   fun teardown() {
-    MoreFiles.deleteRecursively(tempDir, RecursiveDeleteOption.ALLOW_INSECURE)
+    tempDir.deleteRecursively()
   }
 
   @Test

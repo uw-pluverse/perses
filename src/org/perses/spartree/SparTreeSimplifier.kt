@@ -29,9 +29,10 @@ object SparTreeSimplifier {
     simplify(tree.root)
   }
 
-  fun simplify(root: AbstractSparTreeNode) {
+  fun simplify(root: AbstractSparTreeNode): AbstractSparTreeNode {
     removeEmptyAndDeletedRuleNodes(root)
     simplifySingleEntrySingleExitPath(root)
+    return root
   }
 
   /** Remove empty rule nodes and deleted sub-trees from the given tree.  */

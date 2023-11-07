@@ -71,6 +71,7 @@ kt_jvm_library(
         "//:fastutil",
         "//:flogger",
         "//:guava",
+        "//src/org/perses/antlr:antlr_type_wrappers",
         "//src/org/perses/util",
         "//src/org/perses/util:fast_string_builder",
         "//src/org/perses/util:tiny_list_map",

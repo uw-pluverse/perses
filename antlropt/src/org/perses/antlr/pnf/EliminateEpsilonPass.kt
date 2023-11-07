@@ -20,17 +20,16 @@ import com.google.common.collect.ImmutableList
 import org.perses.antlr.ast.AstTag
 import org.perses.antlr.ast.PersesAlternativeBlockAst
 import org.perses.antlr.ast.PersesEpsilonAst
-import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.ast.PersesOptionalAst
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 import org.perses.antlr.ast.TransformDecision
 
 class EliminateEpsilonPass : AbstractPnfPass() {
 
-  override fun processParserGrammar(
-    parserGrammar: PersesGrammar,
-    lexerGrammar: PersesGrammar?,
-  ): PersesGrammar {
+  override fun processGrammar(
+    grammar: GrammarPair,
+  ): GrammarPair {
+    val parserGrammar = grammar.parserGrammar ?: return grammar
     val epsilonList = parserGrammar.parserRules
       .asSequence()
       .filter {
@@ -45,7 +44,7 @@ class EliminateEpsilonPass : AbstractPnfPass() {
       .distinct()
       .toList()
     if (epsilonList.isEmpty()) {
-      return parserGrammar
+      return grammar
     }
     val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     // TODO: need to introduce a fixpoint loop, and delete epsilon from sequences.
@@ -62,7 +61,7 @@ class EliminateEpsilonPass : AbstractPnfPass() {
       check(altBlock.removeAltIf { it.tag == AstTag.EPSILON })
       val remaining = ImmutableList.copyOf(altBlock.asIterable())
       altBlock.clear()
-      altBlock.addIfInequivalent(
+      altBlock.addIfNotEquivalent(
         PersesOptionalAst.createGreedy(
           AstUtil.createAltBlockIfNecessary(remaining),
         ),
@@ -87,6 +86,8 @@ class EliminateEpsilonPass : AbstractPnfPass() {
     }
     edits.forEach { it.applyTo(mutable) }
 
-    return parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
+    return grammar.withNewParserGrammar(
+      parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList()),
+    )
   }
 }

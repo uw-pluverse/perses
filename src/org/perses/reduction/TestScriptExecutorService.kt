@@ -22,6 +22,7 @@ import org.perses.reduction.TestScriptExecutorService.AbstractOutputManagerCreat
 import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.ReductionFolderManager
 import org.perses.util.DaemonThreadPool
+import org.perses.util.shell.ExitCode
 import java.io.Closeable
 import java.util.concurrent.Callable
 import java.util.concurrent.CancellationException
@@ -33,6 +34,8 @@ class TestScriptExecutorService(
   val specifiedNumOfThreads: Int,
   private val scriptExecutionTimeoutInSeconds: Long,
   private val scriptExecutionKeepTryingAfterTimeout: Boolean = true,
+  externalTestScriptExecutionCachePolicyCreator:
+  () -> AbstractExternalTestScriptExecutionCachePolicy,
 ) : Closeable {
 
   val statistics = Statistics()
@@ -40,6 +43,7 @@ class TestScriptExecutorService(
   private val scriptExecutorService = DaemonThreadPool.create(specifiedNumOfThreads)
   private val outputManagerCreatorService = DaemonThreadPool.create(specifiedNumOfThreads)
   private val genericThreadPool = DaemonThreadPool.create(specifiedNumOfThreads)
+  private val externalTestScriptExecutionCache = externalTestScriptExecutionCachePolicyCreator()
 
   init {
     require(specifiedNumOfThreads > 0) {
@@ -47,16 +51,17 @@ class TestScriptExecutorService(
     }
   }
 
-  fun createNamedReductionFolder(folderName: String) =
-    reductionFolderManager.createNamedFolder(folderName)
+  fun createReductionFolder(prefix: String, suffix: String) =
+    reductionFolderManager.createNextFolder(prefix, suffix)
 
-  fun <T> submitGenericTask(task: () -> T) = genericThreadPool.submit(task)
+  fun <T> submitGenericTask(task: () -> T): ListenableFuture<T> = genericThreadPool.submit(task)
 
   @Override
   override fun close() {
     DaemonThreadPool.shutdownOrThrow(scriptExecutorService)
     DaemonThreadPool.shutdownOrThrow(outputManagerCreatorService)
     reductionFolderManager.deleteRootFolder()
+    externalTestScriptExecutionCache.close()
   }
 
   fun interface IPostCheck<Payload> {
@@ -123,7 +128,7 @@ class TestScriptExecutorService(
           }
           val outputManagerWithPayload = try {
             when (val t = outputManagerCreatorFuture.getWithTimeoutWarnings()) {
-              is ProceedResult -> t
+              is ProceedResult<Payload> -> t
               else -> return@Callable null
             }
           } catch (e: Exception) {
@@ -139,8 +144,24 @@ class TestScriptExecutorService(
             }
           }
           statistics.onExecuteScript()
-          outputManagerWithPayload.outputManager.write(workingDirectory)
-          val result = workingDirectory.runTestScript()
+          // TODO(cnsun): add the execution history here.
+          // Note that we still write the files to the folder, for debugging purpose only.
+          val outputManager = outputManagerWithPayload.outputManager
+          outputManager.write(workingDirectory)
+          val externalCachedResult = externalTestScriptExecutionCache.getCachedResultOrCompute(
+            outputManager,
+          )
+          val result = if (externalCachedResult == null) {
+            val result = workingDirectory.runTestScript()
+            externalTestScriptExecutionCache.cacheTestScriptResult(outputManager, result)
+            result
+          } else {
+            statistics.onExternalCacheHit()
+            PropertyTestResult(
+              externalCachedResult.exitCode,
+              externalCachedResult.ellapsedMillies.toLong(),
+            )
+          }
           workingDirectory.deleteAllOtherFiles()
           return@Callable postCheck.perform(result, outputManagerWithPayload.payload)
         },
@@ -165,9 +186,14 @@ class TestScriptExecutorService(
     private val submittedTestCounter = AtomicInteger()
     private val preCheckCounterCounter = AtomicInteger()
     private val scriptExecutionCounter = AtomicInteger()
+    private val externalCacheHitCounter = AtomicInteger()
 
     internal fun onSubmitTest() {
       submittedTestCounter.incrementAndGet()
+    }
+
+    internal fun onExternalCacheHit() {
+      externalCacheHitCounter.incrementAndGet()
     }
 
     internal fun onRunPrecheck() {
@@ -178,14 +204,20 @@ class TestScriptExecutorService(
       scriptExecutionCounter.incrementAndGet()
     }
 
-    fun getSubmittedTestNumber() = submittedTestCounter.get()
-    fun getPrecheckExecutionNumber() = preCheckCounterCounter.get()
-    fun getScriptExecutionNumber() = scriptExecutionCounter.get()
+    val submittedTestNumber: Int
+      get() = submittedTestCounter.get()
+    val precheckExecutionNumber: Int
+      get() = preCheckCounterCounter.get()
+    val scriptExecutionNumber: Int
+      get() = scriptExecutionCounter.get()
+
+    val externalCacheHitNumber: Int
+      get() = externalCacheHitCounter.get()
   }
 
   companion object {
     val ALWAYS_TRUE_PRECHECK = { _: Any ->
-      PropertyTestResult(exitCode = 0, elapsedMilliseconds = 0)
+      PropertyTestResult(exitCode = ExitCode.ZERO, elapsedMilliseconds = 0)
     }
     val IDENTITY_POST_CHECK = { currentResult: PropertyTestResult, _: Any ->
       currentResult

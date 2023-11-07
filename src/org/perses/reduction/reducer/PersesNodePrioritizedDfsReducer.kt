@@ -25,7 +25,7 @@ import java.util.PriorityQueue
 import java.util.Queue
 
 /** Perses node reducer, with dfs delta debugging  */
-class PersesNodePrioritizedDfsReducer(
+open class PersesNodePrioritizedDfsReducer(
   reducerContext: ReducerContext,
 ) : PersesNodeDfsReducer(META, reducerContext) {
 

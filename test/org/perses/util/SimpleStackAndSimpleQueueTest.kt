@@ -24,6 +24,9 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class SimpleStackAndSimpleQueueTest {
 
+  val stack = SimpleStack.of(1).add(2).add(3)
+  val queue = SimpleQueue.of(1).add(2).add(3)
+
   @Test
   fun testStackIsEmpty() {
     val stack = SimpleStack<Int>()
@@ -46,8 +49,6 @@ class SimpleStackAndSimpleQueueTest {
 
   @Test
   fun testStackPushPopPeek() {
-    val stack = SimpleStack<Int>()
-    stack.add(1).add(2).add(3)
     assertThat(stack.peek()).isEqualTo(3)
     assertThat(stack.remove()).isEqualTo(3)
     assertThat(stack.peek()).isEqualTo(2)
@@ -59,8 +60,6 @@ class SimpleStackAndSimpleQueueTest {
 
   @Test
   fun testQueueAddRemove() {
-    val queue = SimpleQueue<Int>()
-    queue.add(1).add(2).add(3)
     assertThat(queue.peek()).isEqualTo(1)
     assertThat(queue.remove()).isEqualTo(1)
     assertThat(queue.peek()).isEqualTo(2)
@@ -68,5 +67,83 @@ class SimpleStackAndSimpleQueueTest {
     assertThat(queue.peek()).isEqualTo(3)
     assertThat(queue.remove()).isEqualTo(3)
     assertThat(queue.isEmpty()).isTrue()
+  }
+
+  @Test
+  fun testStackContains() {
+    assertThat(stack.contains(1)).isTrue()
+    assertThat(stack.contains(2)).isTrue()
+    assertThat(stack.contains(3)).isTrue()
+    assertThat(stack.contains(4)).isFalse()
+  }
+
+  @Test
+  fun testStackAsSequence() {
+    stack.sequenceFromTop().toList().let {
+      assertThat(it).containsExactly(3, 2, 1).inOrder()
+    }
+    stack.sequenceFromBottom().toList().let {
+      assertThat(it).containsExactly(1, 2, 3).inOrder()
+    }
+  }
+
+  @Test
+  fun testStackCounts() {
+    assertThat(stack.count(1)).isEqualTo(1)
+    assertThat(stack.count(2)).isEqualTo(1)
+    assertThat(stack.count(3)).isEqualTo(1)
+    assertThat(stack.count(4)).isEqualTo(0)
+
+    stack.add(1)
+    assertThat(stack.count(1)).isEqualTo(2)
+  }
+
+  @Test
+  fun testStackPeek() {
+    assertThat(stack.peekBottom()).isEqualTo(1)
+    assertThat(stack.peek()).isEqualTo(3)
+    assertThat(stack.size).isEqualTo(3)
+  }
+
+  @Test
+  fun testEqualStack() {
+    assertThat(stack).isEqualTo(stack)
+    assertThat(stack).isNotEqualTo(Object())
+    assertThat(stack).isNotEqualTo(SimpleStack.of(1).add(2).add(4))
+    assertThat(stack).isNotEqualTo(SimpleStack.of(2).add(4))
+    assertThat(stack).isEqualTo(SimpleStack.of(1).add(2).add(3))
+    assertThat(stack).isNotEqualTo(queue)
+  }
+
+  @Test
+  fun testEqualQueue() {
+    assertThat(queue).isNotEqualTo(SimpleQueue<Int>())
+    assertThat(queue).isEqualTo(queue)
+    assertThat(queue).isNotEqualTo(stack)
+    assertThat(queue).isNotEqualTo(SimpleQueue.of(1))
+    assertThat(queue).isNotEqualTo(SimpleQueue.of(1).add(2))
+    assertThat(queue).isEqualTo(SimpleQueue.of(1).add(2).add(3))
+  }
+
+  @Test
+  fun testHashStack() {
+    SimpleStack.of(1).add(2).add(3).let {
+      assertThat(it.hashCode()).isEqualTo(stack.hashCode())
+    }
+  }
+
+  @Test
+  fun testHashQueue() {
+    SimpleQueue.of(1).add(2).add(3).let {
+      assertThat(it.hashCode()).isEqualTo(queue.hashCode())
+    }
+  }
+
+  @Test
+  fun testCopyStack() {
+    val copy = stack.copy()
+    assertThat(copy.size).isEqualTo(stack.size)
+    assertThat(copy).isEqualTo(stack)
+    assertThat(copy).isNotEqualTo(queue)
   }
 }

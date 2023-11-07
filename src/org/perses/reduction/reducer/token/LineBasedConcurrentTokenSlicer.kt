@@ -37,17 +37,21 @@ class LineBasedConcurrentTokenSlicer(
   reducerContext,
 ) {
 
-  override fun createSlicingTask(
+  override fun createSequenceOfIndependentSlicingTasks(
     tokenSlicingGranularity: Int,
     tree: SparTree,
-  ): ImmutableList<AbstractSlicingTask> {
+  ): Sequence<IndependentSlicingTasks> {
     val lines = computeLines(tree.remainingLexerRuleNodes)
-    return ImmutableList.builder<AbstractSlicingTask>().apply {
-      Util.slideResverseIfSlidable(
-        lines,
-        slidingWindowSize = tokenSlicingGranularity,
-      ) { add(LineSlicingTask(lines, it, tree)) }
-    }.build()
+    return sequenceOf(
+      IndependentSlicingTasks(
+        ImmutableList.builder<AbstractSlicingTask>().apply {
+          Util.slideResverseIfSlidable(
+            lines,
+            slidingWindowSize = tokenSlicingGranularity,
+          ) { add(LineSlicingTask(lines, it, tree)) }
+        }.build(),
+      ),
+    )
   }
 
   inner class LineSlicingTask(

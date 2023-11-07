@@ -17,6 +17,7 @@
 package org.perses.program
 
 import com.google.common.base.MoreObjects
+import java.nio.file.Files
 import java.nio.file.Path
 
 abstract class AbstractReductionFile<K : AbstractDataKind, Self : AbstractReductionFile<K, Self>>(
@@ -33,6 +34,13 @@ abstract class AbstractReductionFile<K : AbstractDataKind, Self : AbstractReduct
   val parentFile by fileWithContent::parentFile
 
   fun writeTo(path: Path) = fileWithContent.writeTo(path)
+
+  fun writeToDirectory(directory: Path): Path {
+    check(Files.isDirectory(directory))
+    val path = directory.resolve(baseName)
+    writeTo(path)
+    return path
+  }
 
   final override fun toString(): String {
     return MoreObjects.toStringHelper(this)

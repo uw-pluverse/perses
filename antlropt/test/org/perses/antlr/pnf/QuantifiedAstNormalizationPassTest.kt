@@ -42,14 +42,16 @@ class QuantifiedAstNormalizationPassTest {
   fun testQuantifiedAstNormalizationPass_idempotency_nested_quantified() {
     val persesGrammar = loadGrammarFromFile("nested_quantified.g4")
     val pass = QuantifiedAstNormalizationPass()
-    val firstRound = pass.processParserGrammar(persesGrammar, lexerGrammar = null)
-    val secondRound = pass.processParserGrammar(firstRound, lexerGrammar = null)
-    assertThat(firstRound.parserRules.map { it.ruleNameHandle })
-      .containsExactlyElementsIn(secondRound.parserRules.map { it.ruleNameHandle })
-    for (ruleName in firstRound.parserRules.map { it.ruleNameHandle }) {
+    val firstRound = pass.processGrammar(GrammarPair(persesGrammar, lexerGrammar = null))
+    val firstRoundParserGrammar = firstRound.parserGrammar!!
+    val secondRound = pass.processGrammar(firstRound)
+    val secondRoundParserGrammar = secondRound.parserGrammar!!
+    assertThat(firstRoundParserGrammar.parserRules.map { it.ruleNameHandle })
+      .containsExactlyElementsIn(secondRoundParserGrammar.parserRules.map { it.ruleNameHandle })
+    for (ruleName in firstRoundParserGrammar.parserRules.map { it.ruleNameHandle }) {
       assertThat(
-        firstRound.getRuleDefinition(ruleName)!!.body.isEquivalent(
-          secondRound.getRuleDefinition(ruleName)!!.body,
+        firstRoundParserGrammar.getRuleDefinition(ruleName)!!.body.isEquivalent(
+          secondRoundParserGrammar.getRuleDefinition(ruleName)!!.body,
         ),
       ).isTrue()
     }
@@ -58,9 +60,9 @@ class QuantifiedAstNormalizationPassTest {
   @Test
   fun testNormalizingStar() {
     val pass = QuantifiedAstNormalizationPass()
-    val newGrammar = pass.processParserGrammar(starGrammar, lexerGrammar = null)
-    val sourceCode = newGrammar.sourceCode
+    val newGrammar = pass.processGrammar(GrammarPair(starGrammar, lexerGrammar = null))
+    val sourceCode = newGrammar.parserGrammar!!.sourceCode
     println(sourceCode)
-    PnfCheckPass().processParserGrammar(newGrammar, lexerGrammar = null)
+    PnfCheckPass().processGrammar(newGrammar)
   }
 }

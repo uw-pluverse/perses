@@ -18,7 +18,9 @@ package org.perses.antlr
 
 import com.google.common.base.Strings
 import com.google.common.collect.ImmutableList
+import org.antlr.v4.runtime.Lexer
 import org.antlr.v4.runtime.Token
+import org.antlr.v4.runtime.atn.ATN
 import org.antlr.v4.runtime.tree.ParseTree
 import org.antlr.v4.runtime.tree.TerminalNode
 import org.antlr.v4.tool.Grammar
@@ -32,6 +34,10 @@ import java.io.Writer
 
 /** Utility class to process Antlr grammars.  */
 object AntlrGrammarUtil {
+
+  fun <T : Lexer> getAtnFromLexer(lexerClass: Class<T>): ATN {
+    return lexerClass.getField("_ATN").get(null) as ATN
+  }
 
   fun printAstTree(grammar: Grammar) {
     printAstTree(grammar.ast)
@@ -51,15 +57,15 @@ object AntlrGrammarUtil {
     }
   }
 
-  /** TODO: can be optimzied by converting to an iterative algorithm.  */
+  /** TODO: can be optimized by converting to an iterative algorithm.  */
   fun convertParseTreeToProgram(
     root: ParseTree,
-    languageKind: LanguageKind?,
+    languageKind: LanguageKind,
   ): TokenizedProgram {
     val builder = ImmutableList.builder<Token>()
     convertParseTreeToProgram(root, builder)
     val tokens = builder.build()
-    return createFactory(tokens, languageKind!!).create(tokens)
+    return createFactory(tokens, languageKind).create(tokens)
   }
 
   private fun convertParseTreeToProgram(

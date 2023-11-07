@@ -7,7 +7,6 @@ kt_jvm_test(
         "//test_data/misc",
         "//test_data/scala_helloworld",
     ],
-    test_class = "org.perses.grammar.ParserFacadeTest",
     deps = [
         "//:antlr_runtime",
         "//:guava",

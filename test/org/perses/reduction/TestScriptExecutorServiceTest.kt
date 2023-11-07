@@ -17,30 +17,32 @@
 package org.perses.reduction
 
 import com.google.common.base.Stopwatch
-import com.google.common.io.MoreFiles
-import com.google.common.io.RecursiveDeleteOption
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
+import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.grammar.c.LanguageC
+import org.perses.grammar.c.PnfCLexer
 import org.perses.program.EnumFormatControl.ORIG_FORMAT
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
+import org.perses.reduction.AbstractExternalTestScriptExecutionCachePolicy.NullExternalTestScriptExecutionCachePolicy
 import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
 import org.perses.reduction.TestScriptExecutorService.Companion.IDENTITY_POST_CHECK
 import org.perses.reduction.io.RegularReductionInputs
 import org.perses.reduction.io.token.RegularOutputManagerFactory
 import org.perses.reduction.io.token.TokenReductionIOManager
+import org.perses.util.shell.ExitCode
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.concurrent.TimeUnit
-import java.util.function.Consumer
+import kotlin.io.path.deleteRecursively
 
 /** Test for [TestScriptExecutorService]  */
 @RunWith(JUnit4::class)
@@ -55,12 +57,18 @@ class TestScriptExecutorServiceTest {
   private val slowTestScript = ScriptFile(Paths.get(FOLDER, "slow_r.sh"))
   private val program = TestUtility.createSparTreeFromFile(sourceFile.file).programSnapshot
   private val dummyPayload = "dummy payload"
+  private val lexerAtnWrapper = LexerAtnWrapper(PnfCLexer::class.java)
+  private val reductionInputs = RegularReductionInputs(
+    testScript,
+    sourceFile,
+  )
 
   private val workingDirectory =
     TestUtility.createCleanWorkingDirectory(TestScriptExecutorServiceTest::class.java)
   private val outputManagerFactory = RegularOutputManagerFactory(
-    sourceFile,
+    reductionInputs,
     ORIG_FORMAT,
+    lexerAtnWrapper,
   )
 
   private val outputDir = workingDirectory.resolve("perses_output_dir")
@@ -69,10 +77,7 @@ class TestScriptExecutorServiceTest {
   fun teardown() {
     if (Files.exists(workingDirectory)) {
       // Just to make sure to release the resources.
-      MoreFiles.deleteRecursively(
-        workingDirectory,
-        RecursiveDeleteOption.ALLOW_INSECURE,
-      )
+      workingDirectory.deleteRecursively()
     }
   }
 
@@ -93,7 +98,7 @@ class TestScriptExecutorServiceTest {
     val byteArrayOutputStream = ByteArrayOutputStream()
     val newOut = PrintStream(
       byteArrayOutputStream,
-      /*auto_flush=*/true,
+      true, // auto_flush
       StandardCharsets.UTF_8.name(),
     )
     System.setOut(newOut)
@@ -110,6 +115,9 @@ class TestScriptExecutorServiceTest {
         ioManager.lazilyInitializedReductionFolderManager,
         1,
         scriptExecutionTimeoutInSeconds = 1L,
+        externalTestScriptExecutionCachePolicyCreator = {
+          NullExternalTestScriptExecutionCachePolicy()
+        },
       ).use {
         it.testProgramAsync(
           ALWAYS_TRUE_PRECHECK,
@@ -129,13 +137,13 @@ class TestScriptExecutorServiceTest {
 
   private fun testTestScriptExecutor(threadCount: Int) {
     val stopwatch = Stopwatch.createStarted()
-    val reductionInputs = RegularReductionInputs(testScript, sourceFile)
     val ioManager = TokenReductionIOManager(
       workingDirectory,
       reductionInputs,
       outputManagerFactory = RegularOutputManagerFactory(
-        sourceFile,
+        reductionInputs,
         ORIG_FORMAT,
+        lexerAtnWrapper,
       ),
       outputDirectory = outputDir,
     )
@@ -143,6 +151,9 @@ class TestScriptExecutorServiceTest {
       ioManager.lazilyInitializedReductionFolderManager,
       threadCount,
       scriptExecutionTimeoutInSeconds = 4 * 60L,
+      externalTestScriptExecutionCachePolicyCreator = {
+        NullExternalTestScriptExecutionCachePolicy()
+      },
     ).use {
       // TODO: refine this test.
       testPassing(it)
@@ -164,7 +175,7 @@ class TestScriptExecutorServiceTest {
       futureList.add(
         service.testProgramAsync(
           ALWAYS_TRUE_PRECHECK,
-          { _, _ -> PropertyTestResult(exitCode = 0, elapsedMilliseconds = 1) },
+          { _, _ -> PropertyTestResult(exitCode = ExitCode.ZERO, elapsedMilliseconds = 1) },
           outputManagerFactory.createManagerFor(invalidProgram),
           dummyPayload,
         ),
@@ -182,7 +193,7 @@ class TestScriptExecutorServiceTest {
     for (i in 0..49) {
       futureList.add(
         service.testProgramAsync(
-          { PropertyTestResult(exitCode = 1, elapsedMilliseconds = 1) },
+          { PropertyTestResult(exitCode = ExitCode.ONE, elapsedMilliseconds = 1) },
           IDENTITY_POST_CHECK,
           outputManagerFactory.createManagerFor(invalidProgram),
           dummyPayload,
@@ -208,15 +219,13 @@ class TestScriptExecutorServiceTest {
         ),
       )
     }
-    futureList.forEach(
-      Consumer {
-        try {
-          assertThat(it.getWithTimeoutWarnings().isInteresting).isFalse()
-        } catch (e: Throwable) {
-          throw AssertionError(e)
-        }
-      },
-    )
+    futureList.forEach {
+      try {
+        assertThat(it.getWithTimeoutWarnings().isInteresting).isFalse()
+      } catch (e: Throwable) {
+        throw AssertionError(e)
+      }
+    }
   }
 
   private fun testPassing(service: TestScriptExecutorService) {
@@ -231,14 +240,12 @@ class TestScriptExecutorServiceTest {
         ),
       )
     }
-    futureList.forEach(
-      Consumer {
-        try {
-          assertThat(it.getWithTimeoutWarnings().isInteresting).isTrue()
-        } catch (e: Throwable) {
-          throw AssertionError(e)
-        }
-      },
-    )
+    futureList.forEach {
+      try {
+        assertThat(it.getWithTimeoutWarnings().isInteresting).isTrue()
+      } catch (e: Throwable) {
+        throw AssertionError(e)
+      }
+    }
   }
 }

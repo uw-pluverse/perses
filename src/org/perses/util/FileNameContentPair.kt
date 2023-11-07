@@ -71,8 +71,8 @@ data class FileNameContentPair @PublishedApi internal constructor(
 
     @JvmStatic
     fun trimWhitespaces(lines: List<String>): ImmutableList<String> {
-      var start = locateFirstNonBlankLine(lines)
-      var end = locateLastNonBlankLine(lines)
+      val start = locateFirstNonBlankLine(lines)
+      val end = locateLastNonBlankLine(lines)
       if (start == end) {
         return ImmutableList.of(lines[start].trim())
       }

@@ -6,7 +6,17 @@ load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 kt_jvm_library(
     name = "nfa",
-    srcs = glob(["*.kt"]),
+    srcs = [
+        "ATNConstructorFromRegex.kt",
+        "ATNDummyState.kt",
+        "AbstractNFA.kt",
+        "AbstractNFABasedOnJGraphT.kt",
+        "ImmutableNFA.kt",
+        "MutableNFA.kt",
+        "NonRegexException.kt",
+        "PersesATNState.kt",
+        "PersesTransitionAst.kt",
+    ],
     deps = [
         "//:antlr_runtime",
         "//:antlr_tool",

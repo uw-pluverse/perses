@@ -22,17 +22,23 @@ import org.perses.antlr.GrammarHierarchy
 import org.perses.program.PersesTokenFactory.PersesToken
 import org.perses.program.TokenizedProgram
 import org.perses.program.TokenizedProgramFactory
+import org.perses.spartree.AbstractTreeNode.NodeIdCopyStrategy
 import org.perses.util.Util.lazyAssert
 import org.perses.util.toImmutableList
 
 /** A spar-tree, the primary data structure for the Perses program reduction.  */
 class SparTree internal constructor(
   override val root: AbstractSparTreeNode,
-  val grammarHierarchy: GrammarHierarchy,
-  val tokenizedProgramFactory: TokenizedProgramFactory,
+  val sparTreeNodeFactory: SparTreeNodeFactory,
 ) : AbstractUnmodifiableSparTree() {
 
   val treeId: Int = ++globalTreeIdGenerator
+
+  val grammarHierarchy: GrammarHierarchy
+    get() = sparTreeNodeFactory.grammarHierarchy
+
+  val tokenizedProgramFactory: TokenizedProgramFactory
+    get() = sparTreeNodeFactory.tokenizedProgramFactory
 
   internal var version = 0
     private set
@@ -97,6 +103,12 @@ class SparTree internal constructor(
     return AbstractSparTreeEdit.createAnyNodeReplacementTreeEdit(this, actionSet)
   }
 
+  fun createLatraGeneralEdit(
+    actionSet: LatraGeneralActionSet,
+  ): LatraGeneralTreeEdit {
+    return AbstractSparTreeEdit.createLatraGeneralTreeEdit(this, actionSet)
+  }
+
   @Synchronized
   fun applyEdit(treeEdit: AbstractSparTreeEdit<*>) {
     val programSizeBefore = program.tokenCount()
@@ -151,7 +163,11 @@ class SparTree internal constructor(
     }
   }
 
-  fun getNthLeafNode(index: Int): LexerRuleSparTreeNode {
+  /**
+   * This method is expensive, because each time it scans all the leaf nodes
+   * until the i-th one is found.
+   */
+  fun getLatestNthLeafNodeCostly(index: Int): LexerRuleSparTreeNode {
     return leafNodeSequence().elementAt(index)
   }
 
@@ -213,8 +229,8 @@ class SparTree internal constructor(
     return root.printTreeStructure()
   }
 
-  fun deepCopy(): SparTree {
-    return SparTree(root.recursiveDeepCopy(), grammarHierarchy, tokenizedProgramFactory)
+  fun deepCopy(nodeIdCopyStrategy: NodeIdCopyStrategy): SparTree {
+    return SparTree(root.recursiveDeepCopy(nodeIdCopyStrategy), sparTreeNodeFactory)
   }
 
   private fun computeTokenizedProgram(): TokenizedProgram {

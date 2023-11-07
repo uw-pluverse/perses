@@ -9,3 +9,12 @@ kt_jvm_test(
         "//src/org/perses/util/cmd",
     ],
 )
+
+kt_jvm_test(
+    name = "CommandOptionTest",
+    srcs = ["CommandOptionTest.kt"],
+    deps = [
+        "//:truth",
+        "//src/org/perses/util/cmd",
+    ],
+)

@@ -18,6 +18,7 @@ package org.perses.antlr.ast
 
 import com.google.common.collect.ImmutableList
 import org.perses.util.ast.Indent
+import org.perses.util.plus
 import org.perses.util.toImmutableList
 import java.io.PrintStream
 
@@ -42,14 +43,14 @@ class LexerRuleList(
     .addAll(nonDefaultModes)
     .build()
 
-  fun flattern(): ImmutableList<AbstractPersesLexerRuleAst> {
+  val flattenedLexerRules: ImmutableList<AbstractPersesLexerRuleAst> by lazy {
     val builder = ImmutableList.builder<AbstractPersesLexerRuleAst>()
     builder.addAll(defaultModeLexerRules)
     nonDefaultModes
       .asSequence()
       .map { it.lexerRules }
       .forEach { builder.addAll(it) }
-    return builder.build()
+    builder.build()
   }
 
   override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
@@ -59,6 +60,19 @@ class LexerRuleList(
     for (modeRules in nonDefaultModes) {
       modeRules.toSourceCode(stream, indent, multiLineMode)
     }
+  }
+
+  fun copyAndPrepend(extraLexerRules: List<PersesLexerRuleAst>): LexerRuleList {
+    require(nonDefaultModes.isEmpty()) { "Does not support multi-modes." }
+    return LexerRuleList(
+      ImmutableList
+        .builderWithExpectedSize<AbstractPersesLexerRuleAst>(
+          extraLexerRules.size + defaultModeLexerRules.size,
+        ).addAll(extraLexerRules)
+        .addAll(defaultModeLexerRules)
+        .build(),
+      nonDefaultModes,
+    )
   }
 
   override val childCount: Int

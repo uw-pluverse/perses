@@ -1,6 +1,12 @@
-======================Reduction starts======================
+=====================Reduction starts.======================
 
-The spar tree is the following.
+The initial program size is 36
+------------------------------------------------------------
+
+
+=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+
+The spar-tree is the following.
 file_input {id=1}
 |___(*) {id=2,slot_type=kleene_star__file_input_2}
     |___Token:
@@ -975,7 +981,51 @@ Failed to reduce node 20
 ------------------------------------------------------------
 
 
-==================Reducing node 2, size=18==================
+=Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
+
+The spar-tree is the following.
+file_input {id=220}
+|___(*) {id=221,slot_type=kleene_star__file_input_2}
+    |___Token:
+ {id=319,slot_type=[aux_rule__file_input_1,NEWLINE]}
+    |___funcdef {id=255,slot_type=[aux_rule__file_input_1,stmt,funcdef]}
+    |   |___Token:def {id=256,slot_type=DEF}
+    |   |___Token:main {id=257,slot_type=NAME}
+    |   |___parameters {id=258,slot_type=parameters}
+    |   |   |___Token:( {id=317,slot_type=OPEN_PAREN}
+    |   |   |___Token:) {id=318,slot_type=CLOSE_PAREN}
+    |   |___Token:: {id=259,slot_type=COLON}
+    |   |___aux_rule__suite_2 {id=261,slot_type=[suite,aux_rule__suite_2]}
+    |       |___Token:  {id=262,slot_type=NEWLINE}
+    |       |___Token:     {id=263,slot_type=Token}
+    |       |___(+) {id=264,slot_type=kleene_plus__suite_1}
+    |       |   |___simple_stmt {id=267,slot_type=[stmt,simple_stmt]}
+    |       |       |___atom_expr {id=287,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+    |       |       |   |___Token:print {id=316,slot_type=[atom,NAME]}
+    |       |       |   |___(*) {id=289,slot_type=kleene_star__atom_expr_2}
+    |       |       |       |___aux_rule__trailer_2 {id=291,slot_type=[trailer,aux_rule__trailer_2]}
+    |       |       |           |___Token:( {id=292,slot_type=OPEN_PAREN}
+    |       |       |           |___(?) {id=293,slot_type=optional__decorator_1}
+    |       |       |           |   |___(+) {id=314,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
+    |       |       |           |       |___Token:"hello world" {id=315,slot_type=STRING}
+    |       |       |           |___Token:) {id=294,slot_type=CLOSE_PAREN}
+    |       |       |___Token:
+ {id=269,slot_type=NEWLINE}
+    |       |___Token:
+ {id=265,slot_type=Token}
+    |___simple_stmt {id=226,slot_type=[aux_rule__file_input_1,stmt,simple_stmt]}
+        |___atom_expr {id=246,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+        |   |___Token:main {id=253,slot_type=[atom,NAME]}
+        |   |___(*) {id=248,slot_type=kleene_star__atom_expr_2}
+        |       |___aux_rule__trailer_2 {id=250,slot_type=[trailer,aux_rule__trailer_2]}
+        |           |___Token:( {id=251,slot_type=OPEN_PAREN}
+        |           |___Token:) {id=252,slot_type=CLOSE_PAREN}
+        |___Token:
+ {id=228,slot_type=NEWLINE}
+------------------------------------------------------------
+
+
+=================Reducing node 221, size=18=================
 
 The current best program is the following
 
@@ -1036,11 +1086,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 2 from 18 to 17
+Succeeded to reduce node 221 from 18 to 17
 ------------------------------------------------------------
 
 
-=================Reducing node 36, size=17==================
+=================Reducing node 255, size=17=================
 
 The current best program is the following
 
@@ -1089,11 +1139,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 36
+Failed to reduce node 255
 ------------------------------------------------------------
 
 
-=================Reducing node 42, size=17==================
+=================Reducing node 261, size=17=================
 
 The current best program is the following
 
@@ -1114,11 +1164,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 42
+Failed to reduce node 261
 ------------------------------------------------------------
 
 
-=================Reducing node 45, size=17==================
+=================Reducing node 264, size=17=================
 
 The current best program is the following
 
@@ -1130,11 +1180,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 45
+Failed to reduce node 264
 ------------------------------------------------------------
 
 
-=================Reducing node 48, size=17==================
+=================Reducing node 267, size=17=================
 
 The current best program is the following
 
@@ -1146,11 +1196,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 48
+Failed to reduce node 267
 ------------------------------------------------------------
 
 
-=================Reducing node 68, size=17==================
+=================Reducing node 287, size=17=================
 
 The current best program is the following
 
@@ -1189,11 +1239,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 68
+Failed to reduce node 287
 ------------------------------------------------------------
 
 
-==================Reducing node 7, size=17==================
+=================Reducing node 226, size=17=================
 
 The current best program is the following
 
@@ -1221,11 +1271,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 7
+Failed to reduce node 226
 ------------------------------------------------------------
 
 
-=================Reducing node 70, size=17==================
+=================Reducing node 289, size=17=================
 
 The current best program is the following
 
@@ -1246,11 +1296,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 70
+Failed to reduce node 289
 ------------------------------------------------------------
 
 
-=================Reducing node 72, size=17==================
+=================Reducing node 291, size=17=================
 
 The current best program is the following
 
@@ -1271,11 +1321,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 72
+Failed to reduce node 291
 ------------------------------------------------------------
 
 
-=================Reducing node 27, size=17==================
+=================Reducing node 246, size=17=================
 
 The current best program is the following
 
@@ -1296,11 +1346,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 27
+Failed to reduce node 246
 ------------------------------------------------------------
 
 
-=================Reducing node 39, size=17==================
+=================Reducing node 258, size=17=================
 
 The current best program is the following
 
@@ -1312,11 +1362,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 39
+Failed to reduce node 258
 ------------------------------------------------------------
 
 
-=================Reducing node 29, size=17==================
+=================Reducing node 248, size=17=================
 
 The current best program is the following
 
@@ -1337,11 +1387,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 29
+Failed to reduce node 248
 ------------------------------------------------------------
 
 
-=================Reducing node 31, size=17==================
+=================Reducing node 250, size=17=================
 
 The current best program is the following
 
@@ -1362,11 +1412,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 31
+Failed to reduce node 250
 ------------------------------------------------------------
 
 
-=================Reducing node 99, size=17==================
+=================Reducing node 318, size=17=================
 
 The current best program is the following
 
@@ -1378,11 +1428,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 99
+Failed to reduce node 318
 ------------------------------------------------------------
 
 
-=================Reducing node 98, size=17==================
+=================Reducing node 317, size=17=================
 
 The current best program is the following
 
@@ -1394,11 +1444,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 98
+Failed to reduce node 317
 ------------------------------------------------------------
 
 
-=================Reducing node 97, size=17==================
+=================Reducing node 316, size=17=================
 
 The current best program is the following
 
@@ -1410,11 +1460,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 97
+Failed to reduce node 316
 ------------------------------------------------------------
 
 
-=================Reducing node 75, size=17==================
+=================Reducing node 294, size=17=================
 
 The current best program is the following
 
@@ -1426,11 +1476,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 75
+Failed to reduce node 294
 ------------------------------------------------------------
 
 
-=================Reducing node 74, size=17==================
+=================Reducing node 293, size=17=================
 
 The current best program is the following
 
@@ -1451,11 +1501,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 74
+Failed to reduce node 293
 ------------------------------------------------------------
 
 
-=================Reducing node 95, size=17==================
+=================Reducing node 314, size=17=================
 
 The current best program is the following
 
@@ -1476,11 +1526,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 95
+Failed to reduce node 314
 ------------------------------------------------------------
 
 
-=================Reducing node 96, size=17==================
+=================Reducing node 315, size=17=================
 
 The current best program is the following
 
@@ -1492,11 +1542,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 96
+Failed to reduce node 315
 ------------------------------------------------------------
 
 
-=================Reducing node 73, size=17==================
+=================Reducing node 292, size=17=================
 
 The current best program is the following
 
@@ -1508,11 +1558,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 73
+Failed to reduce node 292
 ------------------------------------------------------------
 
 
-=================Reducing node 50, size=17==================
+=================Reducing node 269, size=17=================
 
 The current best program is the following
 
@@ -1524,11 +1574,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 50
+Failed to reduce node 269
 ------------------------------------------------------------
 
 
-=================Reducing node 46, size=17==================
+=================Reducing node 265, size=17=================
 
 The current best program is the following
 
@@ -1540,11 +1590,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 46
+Failed to reduce node 265
 ------------------------------------------------------------
 
 
-=================Reducing node 44, size=17==================
+=================Reducing node 263, size=17=================
 
 The current best program is the following
 
@@ -1556,11 +1606,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 44
+Failed to reduce node 263
 ------------------------------------------------------------
 
 
-=================Reducing node 43, size=17==================
+=================Reducing node 262, size=17=================
 
 The current best program is the following
 
@@ -1572,11 +1622,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 43
+Failed to reduce node 262
 ------------------------------------------------------------
 
 
-=================Reducing node 40, size=17==================
+=================Reducing node 259, size=17=================
 
 The current best program is the following
 
@@ -1588,11 +1638,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 40
+Failed to reduce node 259
 ------------------------------------------------------------
 
 
-=================Reducing node 38, size=17==================
+=================Reducing node 257, size=17=================
 
 The current best program is the following
 
@@ -1604,11 +1654,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 38
+Failed to reduce node 257
 ------------------------------------------------------------
 
 
-=================Reducing node 37, size=17==================
+=================Reducing node 256, size=17=================
 
 The current best program is the following
 
@@ -1620,11 +1670,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 37
+Failed to reduce node 256
 ------------------------------------------------------------
 
 
-=================Reducing node 34, size=17==================
+=================Reducing node 253, size=17=================
 
 The current best program is the following
 
@@ -1636,11 +1686,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 34
+Failed to reduce node 253
 ------------------------------------------------------------
 
 
-=================Reducing node 33, size=17==================
+=================Reducing node 252, size=17=================
 
 The current best program is the following
 
@@ -1652,11 +1702,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 33
+Failed to reduce node 252
 ------------------------------------------------------------
 
 
-=================Reducing node 32, size=17==================
+=================Reducing node 251, size=17=================
 
 The current best program is the following
 
@@ -1668,11 +1718,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 32
+Failed to reduce node 251
 ------------------------------------------------------------
 
 
-==================Reducing node 9, size=17==================
+=================Reducing node 228, size=17=================
 
 The current best program is the following
 
@@ -1684,7 +1734,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 9
+Failed to reduce node 228
 ------------------------------------------------------------
 
 
@@ -1693,3 +1743,4 @@ Failed to reduce node 9
 #test result cache hits = 0
 #test execution cancelled = 1
 #node edit action set cache hits = 0
+#external test execution cache hits = 0

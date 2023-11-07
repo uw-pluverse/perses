@@ -1,6 +1,7 @@
 package(default_visibility = [
-    "//ebtrans/src/org/perses/reduction/reducer/ebtrans:__subpackages__",
-    "//shadow/src/org/perses/ppr/diff:__subpackages__",
+    "//fision/src:__subpackages__",
+    "//latra/src/org/perses/reduction/reducer/latra:__subpackages__",
+    "//ppr/src/org/perses/ppr/diff:__subpackages__",
     "//src/org/perses/reduction:__subpackages__",
     "//test/org/perses:__subpackages__",
 ])
@@ -41,7 +42,6 @@ kt_jvm_library(
         "//src/org/perses/reduction:test_script_executor_service",
         "//src/org/perses/reduction:tree_edit_with_its_program",
         "//src/org/perses/reduction/partition",
-        "//src/org/perses/reduction/partition:level_partition_policy",
         "//src/org/perses/spartree",
     ],
 )

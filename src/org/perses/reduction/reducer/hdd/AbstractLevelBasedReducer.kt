@@ -27,7 +27,7 @@ import org.perses.reduction.partition.Partition
 import org.perses.reduction.partition.SimpleLevelPartitionPolicy
 import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.spartree.AbstractSparTreeNode
-import org.perses.spartree.ChildHoistingAction
+import org.perses.spartree.NodeReplacementAction
 import org.perses.spartree.SparTree
 import org.perses.util.Util.lazyAssert
 import java.io.IOException
@@ -123,10 +123,10 @@ abstract class AbstractLevelBasedReducer protected constructor(
       val (treeEdit) = testAllTreeEditsAndReturnTheBest(editList) ?: continue
       tree.applyEdit(treeEdit)
       treeEdit.actionSet.actions.asSequence()
-        .filter { it is ChildHoistingAction }
-        .map { it as ChildHoistingAction }
+        .filter { it is NodeReplacementAction }
+        .map { it as NodeReplacementAction }
         .filter { isReplacingNodeAtTheLevel(reductionLevel, it) }
-        .forEach { reductionLevel.replaceNode(it.targetNode, it.replacingChild) }
+        .forEach { reductionLevel.replaceNode(it.targetNode, it.replacingNode) }
     }
     val newTokenCount = tree.tokenCount
     val granularityReductionEndEvent = granularityReductionStartEvent.createEndEvent(
@@ -194,7 +194,7 @@ abstract class AbstractLevelBasedReducer protected constructor(
   companion object {
     private fun isReplacingNodeAtTheLevel(
       level: ReductionLevel,
-      action: ChildHoistingAction,
+      action: NodeReplacementAction,
     ): Boolean {
       return level.containsNode(action.targetNode)
     }

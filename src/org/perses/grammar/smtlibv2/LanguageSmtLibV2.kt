@@ -16,7 +16,6 @@
  */
 package org.perses.grammar.smtlibv2
 
-import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
@@ -26,7 +25,6 @@ object LanguageSmtLibV2 : LanguageKind(
   extensions = ImmutableSet.of("smt2"),
   defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT,
   origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-  defaultFormatterCommands = ImmutableList.of(),
   allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.SINGLE_TOKEN_PER_LINE,
     EnumFormatControl.COMPACT_ORIG_FORMAT,

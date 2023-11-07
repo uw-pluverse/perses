@@ -22,7 +22,8 @@ import org.perses.reduction.io.AbstractReductionIOManager
 abstract class AbstractReducer<
   Program,
   K : AbstractDataKind,
-  IOManager : AbstractReductionIOManager<Program, K, IOManager>,>(
+  IOManager : AbstractReductionIOManager<Program, K, IOManager>,
+  >(
   protected val ioManager: IOManager,
   protected val executorService: TestScriptExecutorService,
 )

@@ -18,11 +18,26 @@ package org.perses.util.cmd
 
 import com.beust.jcommander.JCommander
 import com.beust.jcommander.Parameter
+import com.google.common.collect.ImmutableMap
+import com.google.common.flogger.FluentLogger
+import org.perses.util.ktSevere
+import org.perses.util.toImmutableMap
 
 abstract class AbstractCommandOptions {
 
-  interface CmdUsagePrinter {
-    fun print()
+  class CmdUsagePrinter(private val jCommander: JCommander) {
+    fun print() = jCommander.usage()
+
+    fun getFlagNameValueMap(): ImmutableMap<String, String> {
+      val result = ImmutableMap.builder<String, String>()
+      for (field in jCommander.fields) {
+        val description = field.value
+        val optionNames = description.names ?: continue
+        val value = description.parameterized[description.`object`] ?: continue
+        result.put(optionNames, value.toString())
+      }
+      return result.build().entries.asSequence().sortedBy { it.key }.toImmutableMap()
+    }
   }
 
   @JvmField
@@ -60,11 +75,18 @@ abstract class AbstractCommandOptions {
     builder.addObject(this)
     builder.addObject(allFlags)
     val commander = builder.build()
-    commander.parse(*args)
-    return object : CmdUsagePrinter {
-      override fun print() {
-        commander.usage()
+    try {
+      commander.parse(*args)
+    } catch (e: Throwable) {
+      logger.ktSevere {
+        "Fail to parse the flags ${args.toList()}"
       }
+      throw e
     }
+    return CmdUsagePrinter(commander)
+  }
+
+  companion object {
+    val logger: FluentLogger = FluentLogger.forEnclosingClass()
   }
 }

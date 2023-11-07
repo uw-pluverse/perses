@@ -16,10 +16,8 @@
  */
 package org.perses.util
 
-import com.google.common.base.Joiner
 import com.google.common.base.MoreObjects
 import java.io.Serializable
-import java.util.ArrayList
 
 /** Representation of a time span.  */
 class TimeSpan private constructor(startMillis: Long, endMillis: Long) : Serializable {
@@ -80,27 +78,27 @@ class TimeSpan private constructor(startMillis: Long, endMillis: Long) : Seriali
       }
       val builder = StringBuilder()
       builder.append(seconds).append(" seconds (")
-      val components = ArrayList<String?>( /*initialCapacity=*/5)
+      val components = ArrayList<String>(5) // initialCopacity
       val days = seconds / (24 * 3600)
       if (days > 0) {
         components.add(formatTimeComponent(days, "day"))
       }
-      var seconds = seconds
-      seconds %= (24 * 3600).toLong()
-      val hours = seconds / 3600
+      var mutableSeconds = seconds
+      mutableSeconds %= (24 * 3600).toLong()
+      val hours = mutableSeconds / 3600
       if (hours > 0) {
         components.add(formatTimeComponent(hours, "hour"))
       }
-      seconds %= 3600
-      val minutes = seconds / 60
+      mutableSeconds %= 3600
+      val minutes = mutableSeconds / 60
       if (minutes > 0) {
         components.add(formatTimeComponent(minutes, "minute"))
       }
-      seconds %= 60
-      if (seconds > 0) {
-        components.add(formatTimeComponent(seconds, "second"))
+      mutableSeconds %= 60
+      if (mutableSeconds > 0) {
+        components.add(formatTimeComponent(mutableSeconds, "second"))
       }
-      builder.append(Joiner.on(' ').join(components))
+      components.joinTo(builder, separator = " ")
       builder.append(")")
       return builder.toString()
     }

@@ -30,6 +30,10 @@ import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.antlr.TokenType
+import org.perses.antlr.atn.LexerAtnWrapper.TokenTypePair
+import org.perses.antlr.atn.LexerAtnWrapper.TokenTypePair.Companion.toTokenTypePair
+import org.perses.antlr.atn.nfa.MutableNFA
 import org.perses.antlr.atn.simulator.ast.AbstractASTSimulator
 import org.perses.antlr.atn.simulator.transition.PrintableCharacters
 import org.perses.antlr.atn.tdtree.AbstractTDTreeNode
@@ -38,6 +42,7 @@ import org.perses.antlr.atn.tdtree.CharTDTreeNode
 import org.perses.antlr.atn.tdtree.OptionalTDTreeNode
 import org.perses.antlr.atn.tdtree.StarTDTreeNode
 import org.perses.antlr.atn.tdtree.TDTree
+import org.perses.antlr.toTokenType
 import org.perses.util.SimpleStack
 
 @RunWith(JUnit4::class)
@@ -54,21 +59,27 @@ class AtnTest {
   @Test
   fun testIdentifierNFAShouldRejectInvalidIdentiers() {
     val exception = Assert.assertThrows(java.lang.Exception::class.java) {
-      atnC.findATNPathForLexeme(ruleType = OrigCLexer.Identifier, lexeme = "A0\"\\x00\\u0p0")
+      atnC.findATNPathForLexeme(
+        ruleType = OrigCLexer.Identifier.toTokenType(),
+        lexeme = "A0\"\\x00\\u0p0",
+      )
     }
     assertThat(exception).hasMessageThat().contains("#paths=0")
   }
 
   @Test
   fun testStringLiteralNFAShouldAcceptUnicode() {
-    val path = atnC.findATNPathForLexeme(ruleType = OrigCLexer.StringLiteral, lexeme = "\"\u00a5\"")
+    val path = atnC.findATNPathForLexeme(
+      ruleType = OrigCLexer.StringLiteral.toTokenType(),
+      lexeme = "\"\u00a5\"",
+    )
     assertThat(path.stateSequence.first()).isInstanceOf(RuleStartState::class.java)
     assertThat(path.stateSequence.last()).isInstanceOf(RuleStopState::class.java)
   }
 
   @Test
   fun testSimulatingRegexTreeForIdentifier() {
-    val regex = atnC.getNormalizedAtn(OrigCLexer.Identifier).second
+    val regex = atnC.getNormalizedAtn(OrigCLexer.Identifier.toTokenType()).second
     val simulator = AbstractASTSimulator.create(regex)
     val tdtree = simulator.simulate(AbstractDecisionMaker.DefaultDecisionMaker(seed = 1L))
     // FIXME: need a better test here.
@@ -77,41 +88,41 @@ class AtnTest {
 
   @Test
   fun testParsingIdentifierSingleChar() {
-    atnC.createTDTree("a", OrigCLexer.Identifier).let { tree ->
+    atnC.createTDTree("a", OrigCLexer.Identifier.toTokenType()).let { tree ->
       assertThat(tree.toLexeme()).isEqualTo("a")
     }
   }
 
   @Test
   fun testParsingIdentifierTwoChars() {
-    atnC.createTDTree("a9", OrigCLexer.Identifier).let { tree ->
+    atnC.createTDTree("a9", OrigCLexer.Identifier.toTokenType()).let { tree ->
       assertThat(tree.toLexeme()).isEqualTo("a9")
     }
   }
 
   @Test
   fun testRuleIndicesAreCorrect() {
-    val info = testAtn.tokenInformation.getTokenInfoWithName("Long")
-    assertThat(info.tokenType).isEqualTo(TestLexer.Long)
+    val info = testAtn.metaTokenInfoDB.getTokenInfoWithName("Long")!!
+    assertThat(info.tokenType).isEqualTo(TestLexer.Long.toTokenType())
   }
 
   @Test
   fun testRuleNamesAndTypes() {
-    val tokenTypeSingleChar = TestLexer.SingleChar
-    val tokenTypeCharSet = TestLexer.CharSet
+    val tokenTypeSingleChar = TestLexer.SingleChar.toTokenType()
+    val tokenTypeCharSet = TestLexer.CharSet.toTokenType()
     val ruleNameCharSet = "CharSet"
     val ruleNameSingleChar = "SingleChar"
 
-    val info = testAtn.tokenInformation
-    assertThat(info.getTokenInfoWithName(ruleNameSingleChar).tokenType).isEqualTo(
+    val info = testAtn.metaTokenInfoDB
+    assertThat(info.getTokenInfoWithName(ruleNameSingleChar)!!.tokenType).isEqualTo(
       tokenTypeSingleChar,
     )
-    assertThat(info.getTokenInfoWithName(ruleNameCharSet).tokenType).isEqualTo(tokenTypeCharSet)
+    assertThat(info.getTokenInfoWithName(ruleNameCharSet)!!.tokenType).isEqualTo(tokenTypeCharSet)
   }
 
   @Test
   fun testSimulatingSingleChar() {
-    val result = testAtn.simulateRule(TestLexer.SingleChar, emptyRandom).toLexeme()
+    val result = testAtn.simulateRule(TestLexer.SingleChar.toTokenType(), emptyRandom).toLexeme()
     assertThat(result).isEqualTo("A")
   }
 
@@ -121,7 +132,9 @@ class AtnTest {
       listOf(),
       listOf(0, 1),
     )
-    val generator: () -> String = { testAtn.simulateRule(TestLexer.CharSet, random).toLexeme() }
+    val generator: () -> String = {
+      testAtn.simulateRule(TestLexer.CharSet.toTokenType(), random).toLexeme()
+    }
     generator().let { result ->
       assertThat(result).isEqualTo("a")
     }
@@ -132,7 +145,7 @@ class AtnTest {
 
   @Test
   fun testSimulatingTwoChars() {
-    val result = testAtn.simulateRule(TestLexer.TwoChars, emptyRandom).toLexeme()
+    val result = testAtn.simulateRule(TestLexer.TwoChars.toTokenType(), emptyRandom).toLexeme()
     assertThat(result).isEqualTo("AB")
   }
 
@@ -143,7 +156,7 @@ class AtnTest {
       listOf(0, ' '.code),
     )
     val generator: () -> String = {
-      testAtn.simulateRule(TestLexer.NotADigit, random).toLexeme()
+      testAtn.simulateRule(TestLexer.NotADigit.toTokenType(), random).toLexeme()
     }
     generator().let {
       assertThat(it).isEqualTo(' '.toString())
@@ -160,14 +173,14 @@ class AtnTest {
       listOf(true, true, false, false, true, false),
       listOf(),
     )
-    val result = testAtn.simulateRule(TestLexer.KleenePlusOnSingleChar, random)
+    val result = testAtn.simulateRule(TestLexer.KleenePlusOnSingleChar.toTokenType(), random)
     assertThat(result.toLexeme()).matches("a+")
   }
 
   @Test
   fun testSimulatingWildcard() {
     val result = testAtn.simulateRule(
-      TestLexer.Wildcard,
+      TestLexer.Wildcard.toTokenType(),
       DecisionMakerMock(
         listOf(),
         listOf(1),
@@ -185,7 +198,12 @@ class AtnTest {
       listOf(true, false, true, true, true, false, false, false, true, false),
       listOf(),
     )
-    val generator: () -> TDTree = { testAtn.simulateRule(TestLexer.KleeneStar, random) }
+    val generator: () -> TDTree = {
+      testAtn.simulateRule(
+        TestLexer.KleeneStar.toTokenType(),
+        random,
+      )
+    }
     val result = ArrayList<TDTree>()
     result.add(generator())
     result.add(generator())
@@ -219,7 +237,7 @@ class AtnTest {
       listOf(),
       listOf(0, 1),
     )
-    val ruleType = TestLexer.Alt
+    val ruleType = TestLexer.Alt.toTokenType()
     val generator: () -> String = {
       testAtn.simulateRule(ruleType, random).toLexeme()
     }
@@ -238,7 +256,12 @@ class AtnTest {
       listOf(true, false),
       listOf(),
     )
-    val generator: () -> TDTree = { testAtn.simulateRule(TestLexer.OptionalChar, random) }
+    val generator: () -> TDTree = {
+      testAtn.simulateRule(
+        TestLexer.OptionalChar.toTokenType(),
+        random,
+      )
+    }
     val result = ArrayList<TDTree>()
     result.add(generator())
     result.add(generator())
@@ -259,7 +282,9 @@ class AtnTest {
       listOf(true, false),
       listOf(),
     )
-    val generator: () -> TDTree = { testAtn.simulateRule(TestLexer.OptionalSequence, random) }
+    val generator: () -> TDTree = {
+      testAtn.simulateRule(TestLexer.OptionalSequence.toTokenType(), random)
+    }
     val result = ArrayList<TDTree>()
     result.add(generator())
     result.add(generator())
@@ -274,28 +299,28 @@ class AtnTest {
 
   @Test
   fun testGetPathForSingleChar() {
-    val path = testAtn.findATNPathForLexeme("A", TestLexer.SingleChar)
+    val path = testAtn.findATNPathForLexeme("A", TestLexer.SingleChar.toTokenType())
     assertThat(path.stateSequence.first()).isInstanceOf(RuleStartState::class.java)
     assertThat(path.stateSequence.last()).isInstanceOf(RuleStopState::class.java)
   }
 
   @Test
   fun testConstructTreeForSingleChar() {
-    val tree = testAtn.createTDTree("A", TestLexer.SingleChar)
+    val tree = testAtn.createTDTree("A", TestLexer.SingleChar.toTokenType())
     assertThat(tree.toLexeme()).isEqualTo("A")
   }
 
   @Test
   fun testConstructTreeForKleenePlusOnSingleChar() {
     val lexeme = "aaaaaaa"
-    val tree = testAtn.createTDTree(lexeme, TestLexer.KleenePlusOnSingleChar)
+    val tree = testAtn.createTDTree(lexeme, TestLexer.KleenePlusOnSingleChar.toTokenType())
     assertThat(tree.toLexeme()).isEqualTo(lexeme)
   }
 
   @Test
   fun testFragmentOfNatualNumber() {
     val lexeme = testAtn.simulateRule(
-      TestLexer.NaturalNumber,
+      TestLexer.NaturalNumber.toTokenType(),
       DecisionMakerMock(listOf(false), listOf(0)),
     ).toLexeme()
     assertThat(lexeme).isEqualTo("0")
@@ -304,7 +329,7 @@ class AtnTest {
   @Test
   fun testFragmentOfLong() {
     val lexeme = testAtn.simulateRule(
-      TestLexer.Long,
+      TestLexer.Long.toTokenType(),
       DecisionMakerMock(listOf(true, true, true, false), listOf(1, 2, 3, 4)),
     ).toLexeme()
     assertThat(lexeme).isEqualTo("1234L")
@@ -313,10 +338,10 @@ class AtnTest {
   @Ignore("cannot pass now")
   @Test
   fun testSimulatingConstant() {
-    val regex = atnC.getNormalizedAtn(OrigCLexer.Constant).second
+    val regex = atnC.getNormalizedAtn(OrigCLexer.Constant.toTokenType()).second
     println(regex.sourceCode)
     val lexeme = atnC.simulateRule(
-      OrigCLexer.Constant,
+      OrigCLexer.Constant.toTokenType(),
       AbstractDecisionMaker.DefaultDecisionMaker(seed = 1L),
     ).toLexeme()
     assertThat(lexeme).isEqualTo("")
@@ -338,11 +363,11 @@ class AtnTest {
     atn: LexerAtnWrapper<T>,
     excluded: Set<String> = setOf(),
   ) {
-    val tokens = atn.tokenInformation.asSequence().toList()
+    val tokens = atn.metaTokenInfoDB.asSequence().toList()
     assertThat(tokens).isNotEmpty()
     val random = defaultRandom
     tokens.forEach { tokenInfo ->
-      if (excluded.contains(tokenInfo.tokenName)) {
+      if (excluded.contains(tokenInfo.symbolicName)) {
         return@forEach
       }
       System.err.println("Testing $tokenInfo")
@@ -356,7 +381,7 @@ class AtnTest {
 
   private fun testSimulationAndTDTreeReconstruction(
     atnWrapper: LexerAtnWrapper<*>,
-    ruleType: Int,
+    ruleType: TokenType,
     decisionMaker: AbstractDecisionMaker.DefaultDecisionMaker,
   ) {
     val origTree = atnWrapper.simulateRule(ruleType, decisionMaker)
@@ -366,7 +391,7 @@ class AtnTest {
     assertWithMessage(ruleType.toString()).that(lexeme).isEqualTo(reconstructedTree.toLexeme())
   }
 
-  private fun assertIsomorphic(ruleType: Int, t1: TDTree, t2: TDTree) {
+  private fun assertIsomorphic(ruleType: TokenType, t1: TDTree, t2: TDTree) {
     val stack = SimpleStack<Pair<AbstractTDTreeNode, AbstractTDTreeNode>>()
     assertWithMessage(ruleType.toString()).that(t1.root::class.java).isEqualTo(t2.root::class.java)
     stack.add(Pair(t1.root, t2.root))
@@ -404,11 +429,12 @@ class AtnTest {
     listOf(
       Pair(OrigCLexer.Identifier, OrigCLexer.PlusPlus),
       Pair(OrigCLexer.LessEqual, OrigCLexer.Less),
-    ).forEach {
-      assertWithMessage(it.toString()).that(
-        atnC.canBeConcatWithoutSpace(it.first, it.second),
-      )
-    }
+    ).map { it.first.toTokenType() to it.second.toTokenType() }
+      .forEach {
+        assertWithMessage(it.toString()).that(
+          atnC.canBeConcatWithoutSpace(it.first, it.second),
+        )
+      }
   }
 
   @Test
@@ -430,24 +456,25 @@ class AtnTest {
     listOf(
       Pair(OrigCLexer.Int, OrigCLexer.Identifier), // 'Int' is the keyword 'int'
       Pair(OrigCLexer.Identifier, OrigCLexer.PlusPlus),
-    ).forEach {
-      entryCounter += 1
-      val firstResult = newAtnC.canBeConcatWithoutSpace(it.first, it.second)
-      assertThat(
-        newAtnC.tokenTypePairToNecessityOfWhiteSpaceForConcat.contains(it.first, it.second),
-      ).isTrue()
-      assertThat(newAtnC.tokenTypePairToNecessityOfWhiteSpaceForConcat.size())
-        .isEqualTo(entryCounter)
+    ).map { it.first.toTokenType() to it.second.toTokenType() }
+      .forEach {
+        entryCounter += 1
+        val firstResult = newAtnC.canBeConcatWithoutSpace(it.first, it.second)
+        assertThat(
+          newAtnC.tokenTypePairToNecessityOfWhiteSpaceForConcat.containsKey(it.toTokenTypePair()),
+        ).isTrue()
+        assertThat(newAtnC.tokenTypePairToNecessityOfWhiteSpaceForConcat.size)
+          .isEqualTo(entryCounter)
 
-      val secondResult = newAtnC.canBeConcatWithoutSpace(it.first, it.second)
-      assertThat(
-        newAtnC.tokenTypePairToNecessityOfWhiteSpaceForConcat.contains(it.first, it.second),
-      ).isTrue()
-      assertThat(newAtnC.tokenTypePairToNecessityOfWhiteSpaceForConcat.size())
-        .isEqualTo(entryCounter)
+        val secondResult = newAtnC.canBeConcatWithoutSpace(it.first, it.second)
+        assertThat(
+          newAtnC.tokenTypePairToNecessityOfWhiteSpaceForConcat.containsKey(it.toTokenTypePair()),
+        ).isTrue()
+        assertThat(newAtnC.tokenTypePairToNecessityOfWhiteSpaceForConcat.size)
+          .isEqualTo(entryCounter)
 
-      assertThat(firstResult).isEqualTo(secondResult)
-    }
+        assertThat(firstResult).isEqualTo(secondResult)
+      }
   }
 
   @Test
@@ -455,17 +482,22 @@ class AtnTest {
     listOf(
       Pair(OrigCLexer.Int, OrigCLexer.Identifier), // 'Int' is the keyword 'int'
       Pair(OrigCLexer.Identifier, OrigCLexer.Identifier),
-    ).forEach {
-      assertWithMessage(it.toString()).that(
-        atnC.canBeConcatWithoutSpace(it.first, it.second),
-      ).isFalse()
-    }
+    ).map { it.first.toTokenType() to it.second.toTokenType() }
+      .forEach {
+        assertWithMessage(it.toString()).that(
+          atnC.canBeConcatWithoutSpace(it.first, it.second),
+        ).isFalse()
+      }
   }
 
   @Test
   fun testNfaCanBeSubsumed() {
     listOf(
-      Triple(OrigCLexer.LessEqual, OrigCLexer.Less, OrigCLexer.Assign),
+      Triple(
+        OrigCLexer.LessEqual.toTokenType(),
+        OrigCLexer.Less.toTokenType(),
+        OrigCLexer.Assign.toTokenType(),
+      ),
     ).forEach {
       assertWithMessage(it.toString()).that(
         atnC.canBeSubsumed(it.first, it.second, it.third),
@@ -476,17 +508,22 @@ class AtnTest {
   @Test
   fun testNfaCanNotBeSubsumed() {
     assertThat(
-      atnC.canBeSubsumed(OrigCLexer.StringLiteral, OrigCLexer.Identifier, OrigCLexer.PlusPlus),
+      atnC.canBeSubsumed(
+        OrigCLexer.StringLiteral.toTokenType(),
+        OrigCLexer.Identifier.toTokenType(),
+        OrigCLexer.PlusPlus.toTokenType(),
+      ),
     ).isFalse()
   }
 
   @Test
   fun testGetReachableStatesWithNonEpsilonTransition() {
     var id = 0
-    val start = BasicState().apply { stateNumber = id++ }
+    val start = RuleStartState().apply { stateNumber = id++ }
     val state1 = BasicState().apply { stateNumber = id++ }
     val state2 = BasicState().apply { stateNumber = id++ }
-    val end = BasicState().apply { stateNumber = id++ }
+    val end = RuleStopState().apply { stateNumber = id++ }
+    start.stopState = end
 
     val epsilonToState1 = EpsilonTransition(state1)
     start.addTransition(epsilonToState1)
@@ -497,7 +534,41 @@ class AtnTest {
     val epsilonToEnd = EpsilonTransition(end)
     state1.addTransition(epsilonToEnd)
 
-    val result = atnC.getReachableStatesWithNonEpsilonTransition(start).toSet()
-    assertThat(result).containsExactly(state1, end)
+    val nfa = MutableNFA.copyOf(start)
+
+    val result = LexerAtnWrapper.getReachableStatesWithNonEpsilonOutgoingTransition(
+      nfa.createNFAState { it.startState },
+    ).map {
+      it.state.stateNumber
+    }
+    assertThat(result).containsExactly(state1.stateNumber, end.stateNumber)
+  }
+
+  @Test
+  fun testApproximateOf() {
+    val regex = testAtn.getNormalizedAtn(TestLexer.NonRegexToken.toTokenType()).second.sourceCode
+    val readableRegex = regex.replace(Regex("\\d+")) { match ->
+      val number = match.value.toInt()
+      if (number in 32..126) {
+        val character = number.toChar()
+        character.toString()
+      } else {
+        match.value
+      }
+    }
+    assertThat(readableRegex).isEqualTo(
+      """
+        # (# (# a # # # | a # #) | a #)
+        | a
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun testEqualityAndHashCodeOfTokenTypePair() {
+    val first = TokenTypePair(TokenType(1), TokenType(2))
+    val second = TokenTypePair(TokenType(1), TokenType(2))
+    assertThat(first).isEqualTo(second)
+    assertThat(first.hashCode()).isEqualTo(second.hashCode())
   }
 }

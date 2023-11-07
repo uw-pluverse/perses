@@ -22,7 +22,7 @@ import org.perses.util.toImmutableList
 class NodeDeletionActionSet private constructor(
   actions: ImmutableList<NodeDeletionAction>,
   actionsDescription: String,
-) : AbstractActionSet<NodeDeletionAction>(actions, actionsDescription) {
+) : AbstractActionSet<NodeDeletionAction>(actions, actionsDescription, canBeSorted = true) {
 
   class Builder(private val actionsDescription: String) {
     private val nodesToDelete = LinkedHashSet<AbstractSparTreeNode>()

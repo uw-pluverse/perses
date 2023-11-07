@@ -50,7 +50,10 @@ class PnfNormalizer(
 
   fun run() {
     val passes = PnfPassManager()
-    val processedGrammar = passes.process(origGrammar, startRuleName, lexerGrammar)
+    val processedGrammar = passes.process(
+      GrammarPair(parserGrammar = origGrammar, lexerGrammar = lexerGrammar),
+      startRuleName,
+    ).parserGrammar!!
     val output = processedGrammar.sourceCode
     outputFile.writeText(output)
   }

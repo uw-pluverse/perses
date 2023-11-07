@@ -17,15 +17,16 @@
 package org.perses.reduction
 
 import com.google.common.io.MoreFiles
-import com.google.common.io.RecursiveDeleteOption
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
+import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.grammar.SingleParserFacadeFactory
 import org.perses.grammar.c.LanguageC
+import org.perses.grammar.c.PnfCLexer
 import org.perses.program.EnumFormatControl.ORIG_FORMAT
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
@@ -35,6 +36,7 @@ import org.perses.reduction.io.token.TokenReductionIOManager
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Paths
+import kotlin.io.path.deleteRecursively
 
 /** Test for [ReductionConfiguration]  */
 @RunWith(JUnit4::class)
@@ -44,10 +46,15 @@ class ReductionConfigurationTest {
     TestUtility.createCleanWorkingDirectory(ReductionConfigurationTest::class.java)
   private val sourceFile = SourceFile(Paths.get(FOLDER, "t.c"), LanguageC)
   private val outputDir = workingDirectory.resolve("perses_output_dir")
+  private val lexerAtnWrapper = LexerAtnWrapper(PnfCLexer::class.java)
+  private val reductionInputs = RegularReductionInputs(
+    testScript = testScript,
+    mainFile = sourceFile,
+  )
 
   @After
   fun teardown() {
-    MoreFiles.deleteRecursively(workingDirectory, RecursiveDeleteOption.ALLOW_INSECURE)
+    workingDirectory.deleteRecursively()
   }
 
   @Test
@@ -56,34 +63,39 @@ class ReductionConfigurationTest {
     val numOfReductionThreads = 2
     val ioManager = TokenReductionIOManager(
       workingDirectory,
-      RegularReductionInputs(
-        testScript = testScript,
-        mainFile = sourceFile,
-      ),
+      reductionInputs,
       outputManagerFactory = RegularOutputManagerFactory(
-        sourceFile,
+        reductionInputs,
         ORIG_FORMAT,
+        lexerAtnWrapper,
       ),
       outputDirectory = outputDir,
     )
+    val languageKind = ioManager.reductionInputs.mainDataKind
+    val parserFacade = SingleParserFacadeFactory
+      .builderWithBuiltinLanguages().build().createParserFacade(languageKind)
     val configuration = ReductionConfiguration(
-      languageKind = ioManager.reductionInputs.mainDataKind,
       statisticsFile = null,
       progressDumpFile = null,
       fixpointReduction = true,
       enableTestScriptExecutionCaching = true,
       useRealDeltaDebugger = false,
       numOfReductionThreads = numOfReductionThreads,
-      parserFacadeFactory = SingleParserFacadeFactory.builderWithBuiltinLanguages().build(),
+      parserFacade = parserFacade,
       persesNodeReducerConfig = ReductionConfiguration.PersesNodeReducerConfiguration(
         maxEditCountForRegularRuleNode = 100,
         maxBfsDepthForRegularRuleNode = 5,
         stopAtFirstCompatibleChildren = true,
       ),
+      vulcanConfig = ReductionConfiguration.VulcanConfig(
+        nonDeletionIterationLimit = 10,
+        windowSizeForLocalExhaustivePatternReduction = 4,
+        vulcanFixpoint = false,
+      ),
     )
     val mainFile = (ioManager.reductionInputs as RegularReductionInputs).mainFile
     assertThat(mainFile.file).isEqualTo(sourceFile.file)
-    assertThat(mainFile.fileContent)
+    assertThat(mainFile.textualFileContent)
       .isEqualTo(MoreFiles.asCharSource(sourceFile.file, StandardCharsets.UTF_8).read())
     assertThat(configuration.numOfReductionThreads).isEqualTo(numOfReductionThreads)
     val profileFile = ioManager.getProfileFile()

@@ -18,12 +18,14 @@ package org.perses.reduction.io
 
 import com.google.common.annotations.VisibleForTesting
 import com.google.common.base.Joiner
+import com.google.common.base.Strings
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
 import org.perses.program.AbstractDataKind
 import org.perses.program.LanguageKind
 import org.perses.program.SourceFile
 import org.perses.util.AutoIncrementDirectory
+import org.perses.util.GlobalSequenceGenerator
 import org.perses.util.TimeUtil
 import org.perses.util.Util
 import org.perses.util.toImmutableList
@@ -31,12 +33,15 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardCopyOption
 import java.time.LocalDateTime
+import java.util.concurrent.atomic.AtomicInteger
+import kotlin.io.path.listDirectoryEntries
 import kotlin.io.path.name
 
 abstract class AbstractReductionIOManager<
   P,
   K : AbstractDataKind,
-  Self : AbstractReductionIOManager<P, K, Self>,>(
+  Self : AbstractReductionIOManager<P, K, Self>,
+  >(
   private val workingFolder: Path,
   val reductionInputs: AbstractReductionInputs<K, *>,
   val outputManagerFactory: AbstractOutputManagerFactory<P>,
@@ -53,7 +58,7 @@ abstract class AbstractReductionIOManager<
 
   abstract fun getConcreteReductionInputs(): AbstractReductionInputs<*, *>
 
-  protected val resultFolder = if (outputDirectory == null) {
+  val resultFolder = if (outputDirectory == null) {
     val dir = AutoIncrementDirectory(DEFAULT_PERSES_BEST_DIR_NAME)
       .computeAndCreate(workingFolder)
     ReductionFolder(reductionInputs, dir)
@@ -121,13 +126,29 @@ abstract class AbstractReductionIOManager<
     return baseName
   }
 
+  fun getAllSourceFileBaseNamesIn(folder: ReductionFolder): ImmutableList<String> {
+    val baseNameList = reductionInputs.relativePathSequence().map {
+      val baseName = it.toString()
+      check(folder.checkFileExistence(baseName))
+      baseName
+    }.toImmutableList()
+    return baseNameList
+  }
+
+  fun getMainSourceFileBaseName(): String {
+    check(reductionInputs is AbstractSingleFileReductionInputs<*, *, *>) {
+      "We currently only support AbstractSingleFileReductionInputs."
+    }
+    return reductionInputs.mainFile.baseName
+  }
+
   inline fun <T> visitMainSourceFileIn(
     reductionFolder: ReductionFolder,
     visitor: (SourceFile) -> T,
   ): T {
     return visitor.invoke(
       SourceFile(
-        reductionFolder.folder.resolve(getSingleSourceFileBaseName(reductionFolder)),
+        reductionFolder.folder.resolve(getMainSourceFileBaseName()),
         reductionInputs.mainDataKind as LanguageKind,
       ),
     )
@@ -140,16 +161,27 @@ abstract class AbstractReductionIOManager<
 
   fun backupMainFile(): ImmutableList<Path> {
     val formatDateForFileName = TimeUtil.formatDateForFileName(System.currentTimeMillis())
+    val globalId = GlobalSequenceGenerator.nextWithPadding(paddingLength = 2, paddingChar = '0')
     return reductionInputs.orig2relativePathPairs
       .asSequence()
       .map {
         val fileToReduce = it.origFile
         val relativePath = it.relativePath
         val backupFile = workingFolder.resolve(
-          "$relativePath.$formatDateForFileName.orig",
+          "$relativePath.${formatDateForFileName}_$globalId.orig",
         )
         check(!Files.exists(backupFile)) {
-          "The backup file $backupFile exists."
+          buildString {
+            append(
+              "The backup file ${backupFile.fileName} exists in directory ${backupFile.parent}",
+            )
+            append('\n')
+            append("The directory currently has the following children.")
+            workingFolder.listDirectoryEntries().forEach { fileInWorkingFolder ->
+              append('\n')
+              append("    ${fileInWorkingFolder.fileName}")
+            }
+          }
         }
         // Note that a file can be a binary file, so it is good to copy the file directly.
         Files.copy(fileToReduce.file, backupFile)
@@ -180,6 +212,7 @@ abstract class AbstractReductionIOManager<
 
     protected const val PERSES_TEMP_ROOT_PREFIX = "PersesTempRoot"
     protected const val DEFAULT_PERSES_BEST_DIR_NAME = "perses_result"
+    protected val idGenerator = AtomicInteger(0)
 
     fun getCompactNameForFileList(fileList: Iterable<Path>): String {
       return fileList
@@ -208,6 +241,7 @@ abstract class AbstractReductionIOManager<
           fileListString,
           testScriptName,
           TimeUtil.formatDateForFileName(time),
+          Strings.padStart(idGenerator.getAndIncrement().toString(), 2, '0'),
         )
     }
   }

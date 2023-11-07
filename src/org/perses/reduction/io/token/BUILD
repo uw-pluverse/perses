@@ -1,5 +1,5 @@
 package(default_visibility = [
-    "//shadow/src/org/perses:__subpackages__",
+    "//ppr/src/org/perses:__subpackages__",
     "//src/org/perses:__subpackages__",
     "//test/org/perses:__subpackages__",
 ])

@@ -42,7 +42,9 @@ class MultiAltBlockExtractionPassTest {
                 ;
       """.trimIndent(),
     )
-    val processedGrammar = pass.processParserGrammar(origGrammar, lexerGrammar = null)
+    val processedGrammar = pass.processGrammar(
+      GrammarPair(parserGrammar = origGrammar, lexerGrammar = null),
+    ).parserGrammar!!
     val alts = processedGrammar.parserRules.find {
       it.ruleNameHandle.ruleName == "altnt_block__argument_1"
     }!!.body as PersesAlternativeBlockAst
@@ -60,7 +62,9 @@ class MultiAltBlockExtractionPassTest {
       s : a c d | a b d | a e d;
       """.trimIndent(),
     )
-    val processedGrammar = pass.processParserGrammar(origGrammar, lexerGrammar = null)
+    val processedGrammar = pass.processGrammar(
+      GrammarPair(parserGrammar = origGrammar, lexerGrammar = null),
+    ).parserGrammar!!
     val auxRuleName = computeAltblockRuleName("s_1")
     /*
      * DO NOT MODIFY THE ORDER OF ALTERNATIVES.

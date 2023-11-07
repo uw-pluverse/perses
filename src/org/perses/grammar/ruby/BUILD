@@ -8,7 +8,7 @@ load(
     "antlr_codegen_lexer",
     "antlr_codegen_parser",
 )
-load("//src/org/perses/grammar/adhoc:adhoc_grammar.bzl", "parser_facade_library")
+load("//src/org/perses/grammar/adhoc:adhoc_grammar.bzl", "pnf_parser_facade_library")
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 pnf_convert(
@@ -19,7 +19,7 @@ pnf_convert(
     start_rule_name = "compilation_unit",
 )
 
-parser_facade_library(
+pnf_parser_facade_library(
     name = "parser_facade",
     java_package_name = "org.perses.grammar.ruby",
     language_kind_full_name = "org.perses.grammar.ruby.LanguageRuby",

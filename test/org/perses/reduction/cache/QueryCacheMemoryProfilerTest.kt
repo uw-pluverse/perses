@@ -16,6 +16,7 @@
  */
 package org.perses.reduction.cache
 
+import com.google.common.primitives.ImmutableIntArray
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -73,12 +74,14 @@ class QueryCacheMemoryProfilerTest {
   @Test
   fun testShaQueryCache() {
     testCache(
-      expectedByteCount = 1040,
+      expectedByteCount = 1280,
       extraIncludedClasses = setOf(
         ByteArray::class.java.name,
         Util.SHA512HashCode::class.java.name,
         ContentSHA512Encoding::class.java.name,
         "com.google.common.hash.HashCode${'$'}BytesHashCode",
+        IntArray::class.java.name,
+        ImmutableIntArray::class.java.name,
       ),
     ) { baseProgram ->
       ContentSHA512BasedQueryCache(
@@ -139,7 +142,6 @@ class QueryCacheMemoryProfilerTest {
       }
     }
     val result = computeMemoryInBytes(cache)
-    assertThat(result.bytes.toInt()).isEqualTo(expectedByteCount)
     assertThat(result.includedClasses.map { it.name }).containsExactlyElementsIn(
       (
         extraIncludedClasses + setOf(
@@ -163,6 +165,7 @@ class QueryCacheMemoryProfilerTest {
         ContentStringBasedQueryCache.ContentStringEncoder::class.java,
       ),
     ).containsAtLeastElementsIn(result.excludedClasses)
+    assertThat(result.bytes.toInt()).isEqualTo(expectedByteCount)
   }
 
   private fun createSubprograms(program: TokenizedProgram): List<TokenizedProgram> {

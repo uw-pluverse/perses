@@ -36,6 +36,8 @@ class ReductionStartEvent(
   fun nextFixpointIteration(
     programSize: Int,
     reducerClass: AbstractReducerNameAndDesc,
+    sparTree: AbstractUnmodifiableSparTree,
+    testScriptStatistics: TestScriptExecutorServiceStatisticsSnapshot,
   ): FixpointIterationStartEvent {
     check(!ended)
     return FixpointIterationStartEvent(
@@ -44,17 +46,22 @@ class ReductionStartEvent(
       programSize = programSize,
       iteration = ++currentIteration,
       reducerClass = reducerClass,
+      outdatedTree = WeakReference(sparTree),
+      testScriptStatistics = testScriptStatistics,
     )
   }
 
-  fun createEndEvent(programSize: Int, countOfTestScriptExecutions: Int): ReductionEndEvent {
+  fun createEndEvent(
+    programSize: Int,
+    testScriptStatistics: TestScriptExecutorServiceStatisticsSnapshot,
+  ): ReductionEndEvent {
     check(!ended)
     ended = true
     return ReductionEndEvent(
       startEvent = this,
       currentTimeMillis = System.currentTimeMillis(),
       programSize = programSize,
-      countOfTestScriptExecutions = countOfTestScriptExecutions,
+      testScriptExecutorServiceStatistics = testScriptStatistics,
     )
   }
 }

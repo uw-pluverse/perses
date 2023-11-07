@@ -25,7 +25,13 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.TestUtility.createTokenizedProgramFromString
+import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.grammar.c.LanguageC
+import org.perses.grammar.c.PnfCLexer
+import org.perses.grammar.rust.LanguageRust
+import org.perses.grammar.rust.PnfRustLexer
+import org.perses.grammar.smtlibv2.LanguageSmtLibV2
+import org.perses.grammar.smtlibv2.PnfSMTLIBv2Lexer
 import org.perses.program.EnumFormatControl
 import org.perses.program.PersesTokenFactory
 import org.perses.program.PersesTokenFactory.PersesToken
@@ -37,6 +43,10 @@ import kotlin.io.path.readText
 
 @RunWith(JUnit4::class)
 class TokenizedProgramPrinterTest {
+
+  private val lexerAtnWrapperForC = LexerAtnWrapper(PnfCLexer::class.java)
+  private val lexerAtnWrapperForRust = LexerAtnWrapper(PnfRustLexer::class.java)
+  private val lexerAtnWrapperForSmtLibV2 = LexerAtnWrapper(PnfSMTLIBv2Lexer::class.java)
 
   @Test
   fun testCodeFormatRemains() {
@@ -77,7 +87,7 @@ class TokenizedProgramPrinterTest {
   }
 
   @Test
-  fun testDeducedSourceCode() {
+  fun testDeducedPositionProviderWithCCode() {
     val sourceCode = """
       int a, long_var, longlong_var ;
       
@@ -93,7 +103,6 @@ class TokenizedProgramPrinterTest {
     val tokenLongLongVar = tokens[5]
     val tokenFirstSemicolon = tokens[6]
     val tokenSecondSemicolon = tokens[7]
-    val lexerClass = TestUtility.getFacade(LanguageC).lexerClass
     val newProgram = TokenizedProgram(
       ImmutableList.of(
         tokenInt,
@@ -108,13 +117,121 @@ class TokenizedProgramPrinterTest {
       program.factory,
     )
     assertThat(
-      PrinterRegistry.getPrinter(EnumFormatControl.ORIG_FORMAT, lexerClass)
+      PrinterRegistry.getPrinter(EnumFormatControl.ORIG_FORMAT, lexerAtnWrapperForC)
         .print(newProgram).sourceCode.trim(),
     ).isEqualTo(
       """
         int              longlong_var,a,long_var;
     
         ;
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun testDeducedPositionProviderWithRustCode() {
+    val sourceCode = """
+      fn main() {
+        let var = 0; let long_var = 0;
+      }
+    """.trimIndent()
+    val program = createTokenizedProgramFromString(sourceCode, LanguageRust)
+    val tokens = program.tokens
+    val tokenFn = tokens[0]
+    val tokenMain = tokens[1]
+    val tokenLeftParen = tokens[2]
+    val tokenRightParen = tokens[3]
+    val tokenLeftBrace = tokens[4]
+    val tokenLet = tokens[5]
+    val tokenVar = tokens[6]
+    val tokenEqual = tokens[7]
+    val tokenZero = tokens[8]
+    val tokenSemicolon = tokens[9]
+    val tokenLet2 = tokens[10]
+    val tokenLongVar = tokens[11]
+    val tokenEqual2 = tokens[12]
+    val tokenZero2 = tokens[13]
+    val tokenSemicolon2 = tokens[14]
+    val tokenRightBrace = tokens[15]
+    val newProgram = TokenizedProgram(
+      ImmutableList.of(
+        tokenFn,
+        tokenMain,
+        tokenLeftParen,
+        tokenRightParen,
+        tokenLeftBrace,
+        tokenLet2,
+        tokenLongVar,
+        tokenEqual2,
+        tokenZero2,
+        tokenSemicolon2,
+        tokenLet,
+        tokenVar,
+        tokenEqual,
+        tokenZero,
+        tokenSemicolon,
+        tokenRightBrace,
+      ),
+      program.factory,
+    )
+    assertThat(
+      PrinterRegistry.getPrinter(EnumFormatControl.ORIG_FORMAT, lexerAtnWrapperForRust)
+        .print(newProgram).sourceCode.trim(),
+    ).isEqualTo(
+      """
+        fn main() {
+                       let long_var = 0;let var=0;
+        }
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun testDeducedPositionProviderWithSmtCode() {
+    val sourceCode = """
+      (declare-fun val () Int) (declare-fun long_val () Int)
+    """.trimIndent()
+    val program = createTokenizedProgramFromString(sourceCode, LanguageSmtLibV2)
+    val tokens = program.tokens
+    val tokenLeftParen = tokens[0]
+    val tokenDeclareFun = tokens[1]
+    val tokenVal = tokens[2]
+    val tokenLeftParen2 = tokens[3]
+    val tokenRightParen2 = tokens[4]
+    val tokenInt = tokens[5]
+    val tokenRightParen = tokens[6]
+    val tokenLeftParen3 = tokens[7]
+    val tokenDeclareFun2 = tokens[8]
+    val tokenLongVal = tokens[9]
+    val tokenLeftParen4 = tokens[10]
+    val tokenRightParen4 = tokens[11]
+    val tokenInt2 = tokens[12]
+    val tokenRightParen3 = tokens[13]
+    val newProgram = TokenizedProgram(
+      ImmutableList.of(
+        tokenLeftParen,
+        tokenDeclareFun,
+        tokenLongVal,
+        tokenLeftParen2,
+        tokenRightParen2,
+        tokenInt,
+        tokenRightParen,
+        tokenLeftParen3,
+        tokenDeclareFun2,
+        tokenVal,
+        tokenLeftParen4,
+        tokenRightParen4,
+        tokenInt2,
+        tokenRightParen3,
+      ),
+      program.factory,
+    )
+    assertThat(
+      PrinterRegistry.getPrinter(EnumFormatControl.ORIG_FORMAT, lexerAtnWrapperForSmtLibV2)
+        .print(newProgram).sourceCode.trim(),
+    ).isEqualTo(
+      """
+        (declare-fun                          long_val()Int)(declare-fun val()Int)
       """.trimIndent(),
     )
   }
@@ -248,13 +365,12 @@ class TokenizedProgramPrinterTest {
     val sourceCode = "int a, long_var, longlong_var ;"
     val program = createTokenizedProgramFromString(sourceCode, LanguageC)
     val tokens = program.tokens
-    val lexerClass = TestUtility.getFacade(LanguageC).lexerClass
     val newProgram = TokenizedProgram(
       ImmutableList.of(tokens[0], tokens[5], tokens[2], tokens[1], tokens[4], tokens[3], tokens[6]),
       program.factory,
     )
     assertThat(
-      PrinterRegistry.getPrinter(EnumFormatControl.ORIG_FORMAT, lexerClass)
+      PrinterRegistry.getPrinter(EnumFormatControl.ORIG_FORMAT, lexerAtnWrapperForC)
         .print(
           newProgram,
         ).sourceCode,

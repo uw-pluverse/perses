@@ -27,7 +27,7 @@ class LinearScanTokenizedProgramEncoder(
   enableCompression: Boolean,
 ) : AbstractLinearScanEncoder(baseProgram, profiler, enableCompression) {
 
-  override fun encodeUncompressed(
+  public override fun encodeUncompressed(
     tokenIterator: Iterator<PersesToken>,
     tokenCount: Int,
   ): IntArrayList? {

@@ -1,6 +1,12 @@
-======================Reduction starts======================
+=====================Reduction starts.======================
 
-The spar tree is the following.
+The initial program size is 27
+------------------------------------------------------------
+
+
+=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+
+The spar-tree is the following.
 compilation_unit {id=1}
 |___statement_list_terms {id=2,slot_type=statement_list_terms}
     |___aux_rule__statement_list_terms_3 {id=3,slot_type=aux_rule__statement_list_terms_3}
@@ -16,26 +22,26 @@ compilation_unit {id=1}
     |   |       |   |___statement_list_terms {id=76,slot_type=statement_list_terms}
     |   |       |       |___aux_rule__statement_list_terms_3 {id=77,slot_type=aux_rule__statement_list_terms_3}
     |   |       |       |   |___(?) {id=127,slot_type=optional__statement_list_terms_4}
-    |   |       |       |   |   |___aux_rule__expr_44 {id=134,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_44]}
+    |   |       |       |   |   |___aux_rule__expr_45 {id=134,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
     |   |       |       |   |       |___Token:puts {id=150,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
-    |   |       |       |   |       |___(+) {id=145,slot_type=[altnt_block__expr_23,aux_rule__expr_46,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+    |   |       |       |   |       |___(+) {id=145,slot_type=[altnt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
     |   |       |       |   |           |___Token:"start" {id=146,slot_type=String}
     |   |       |       |   |___(+) {id=128,slot_type=terms}
     |   |       |       |       |___Token:
  {id=130,slot_type=[term,CRLF]}
     |   |       |       |___(*) {id=78,slot_type=kleene_star__statement_list_terms_1}
     |   |       |           |___aux_rule__statement_list_terms_2 {id=79,slot_type=aux_rule__statement_list_terms_2}
-    |   |       |           |   |___aux_rule__expr_44 {id=110,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_44]}
+    |   |       |           |   |___aux_rule__expr_45 {id=110,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
     |   |       |           |   |   |___Token:puts {id=126,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
-    |   |       |           |   |   |___(+) {id=121,slot_type=[altnt_block__expr_23,aux_rule__expr_46,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+    |   |       |           |   |   |___(+) {id=121,slot_type=[altnt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
     |   |       |           |   |       |___Token:"hello world" {id=122,slot_type=String}
     |   |       |           |   |___(+) {id=105,slot_type=terms}
     |   |       |           |       |___Token:
  {id=107,slot_type=[term,CRLF]}
     |   |       |           |___aux_rule__statement_list_terms_2 {id=80,slot_type=aux_rule__statement_list_terms_2}
-    |   |       |               |___aux_rule__expr_44 {id=87,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_44]}
+    |   |       |               |___aux_rule__expr_45 {id=87,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
     |   |       |               |   |___Token:puts {id=103,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
-    |   |       |               |   |___(+) {id=98,slot_type=[altnt_block__expr_23,aux_rule__expr_46,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+    |   |       |               |   |___(+) {id=98,slot_type=[altnt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
     |   |       |               |       |___Token:"finish" {id=99,slot_type=String}
     |   |       |               |___(+) {id=82,slot_type=terms}
     |   |       |                   |___Token:
@@ -50,15 +56,15 @@ compilation_unit {id=1}
  {id=66,slot_type=[term,CRLF]}
     |___(*) {id=4,slot_type=kleene_star__statement_list_terms_1}
         |___aux_rule__statement_list_terms_2 {id=5,slot_type=aux_rule__statement_list_terms_2}
-            |___aux_rule__expr_41 {id=14,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_41]}
+            |___aux_rule__expr_42 {id=14,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_42]}
             |   |___aux_rule__primary_53 {id=17,slot_type=[altnt_block__primary_44,aux_rule__primary_53]}
             |   |   |___Token:if {id=18,slot_type=IF}
             |   |   |___aux_rule__primary_57 {id=20,slot_type=[altnt_block__primary_45,aux_rule__primary_57]}
             |   |       |___expr {id=21,slot_type=expr}
             |   |       |   |___Token:__FILE__ {id=60,slot_type=[aux_rule__expr_16,variable_path,aux_rule__variable_path_3,identifier,Identifier]}
             |   |       |   |___(*) {id=41,slot_type=kleene_star__expr_14}
-            |   |       |       |___aux_rule__expr_29 {id=43,slot_type=[aux_rule__expr_15,aux_rule__expr_29]}
-            |   |       |           |___Token:== {id=56,slot_type=[altnt_block__expr_17,aux_rule__expr_35,altnt_block__expr_25,equalsOperator,EQUAL]}
+            |   |       |       |___aux_rule__expr_33 {id=43,slot_type=[aux_rule__expr_15,aux_rule__expr_33]}
+            |   |       |           |___Token:== {id=56,slot_type=[altnt_block__expr_20,aux_rule__expr_36,altnt_block__expr_29,equalsOperator,EQUAL]}
             |   |       |           |___aux_rule__identifier_1 {id=50,slot_type=[expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,identifier,aux_rule__identifier_1]}
             |   |       |               |___Token:$ {id=51,slot_type=DOLLAR}
             |   |       |               |___Token:0 {id=52,slot_type=Integer}
@@ -489,7 +495,31 @@ Failed to reduce node 107
 ------------------------------------------------------------
 
 
-==================Reducing node 2, size=6===================
+=Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
+
+The spar-tree is the following.
+compilation_unit {id=160}
+|___statement_list_terms {id=161,slot_type=statement_list_terms}
+    |___(+) {id=190,slot_type=[aux_rule__statement_list_terms_3,terms]}
+    |   |___Token:
+ {id=194,slot_type=[term,CRLF]}
+    |   |___Token:
+ {id=193,slot_type=[term,CRLF]}
+    |___(*) {id=163,slot_type=kleene_star__statement_list_terms_1}
+        |___aux_rule__statement_list_terms_2 {id=164,slot_type=aux_rule__statement_list_terms_2}
+            |___aux_rule__expr_45 {id=173,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
+            |   |___Token:puts {id=189,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
+            |   |___(+) {id=184,slot_type=[altnt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+            |       |___Token:"hello world" {id=185,slot_type=String}
+            |___(+) {id=166,slot_type=terms}
+                |___Token:
+ {id=170,slot_type=[term,CRLF]}
+                |___Token:
+ {id=169,slot_type=[term,CRLF]}
+------------------------------------------------------------
+
+
+=================Reducing node 161, size=6==================
 
 The current best program is the following
 
@@ -535,11 +565,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 2
+Failed to reduce node 161
 ------------------------------------------------------------
 
 
-==================Reducing node 4, size=6===================
+=================Reducing node 163, size=6==================
 
 The current best program is the following
 
@@ -555,11 +585,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 4
+Failed to reduce node 163
 ------------------------------------------------------------
 
 
-==================Reducing node 5, size=6===================
+=================Reducing node 164, size=6==================
 
 The current best program is the following
 
@@ -575,11 +605,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 5
+Failed to reduce node 164
 ------------------------------------------------------------
 
 
-==================Reducing node 31, size=6==================
+=================Reducing node 190, size=6==================
 
 The current best program is the following
 
@@ -608,11 +638,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 31 from 6 to 5
+Succeeded to reduce node 190 from 6 to 5
 ------------------------------------------------------------
 
 
-==================Reducing node 14, size=5==================
+=================Reducing node 173, size=5==================
 
 The current best program is the following
 
@@ -643,11 +673,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 14
+Failed to reduce node 173
 ------------------------------------------------------------
 
 
-==================Reducing node 7, size=5===================
+=================Reducing node 166, size=5==================
 
 The current best program is the following
 
@@ -676,11 +706,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 7 from 5 to 4
+Succeeded to reduce node 166 from 5 to 4
 ------------------------------------------------------------
 
 
-==================Reducing node 35, size=4==================
+=================Reducing node 194, size=4==================
 
 The current best program is the following
 
@@ -690,11 +720,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 35
+Failed to reduce node 194
 ------------------------------------------------------------
 
 
-==================Reducing node 30, size=4==================
+=================Reducing node 189, size=4==================
 
 The current best program is the following
 
@@ -704,11 +734,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 30
+Failed to reduce node 189
 ------------------------------------------------------------
 
 
-==================Reducing node 25, size=4==================
+=================Reducing node 184, size=4==================
 
 The current best program is the following
 
@@ -718,11 +748,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25
+Failed to reduce node 184
 ------------------------------------------------------------
 
 
-==================Reducing node 26, size=4==================
+=================Reducing node 185, size=4==================
 
 The current best program is the following
 
@@ -732,11 +762,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26
+Failed to reduce node 185
 ------------------------------------------------------------
 
 
-==================Reducing node 11, size=4==================
+=================Reducing node 170, size=4==================
 
 The current best program is the following
 
@@ -746,7 +776,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 11
+Failed to reduce node 170
 ------------------------------------------------------------
 
 
@@ -755,3 +785,4 @@ Failed to reduce node 11
 #test result cache hits = 0
 #test execution cancelled = 2
 #node edit action set cache hits = 0
+#external test execution cache hits = 0

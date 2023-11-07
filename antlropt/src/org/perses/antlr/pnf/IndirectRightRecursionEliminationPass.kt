@@ -34,7 +34,7 @@ class IndirectRightRecursionEliminationPass : AbstractIndirectRecursionEliminati
   public override fun getRuleRefToInline(
     def: AbstractPersesRuleElement,
   ): RuleNameHandle? {
-    return getFirstOrLastRuleRef(def, /*seekingFirst=*/false)
+    return getFirstOrLastRuleRef(def, seekingFirst = false)
   }
 
   override fun inlineRuleRefIntoSequence(

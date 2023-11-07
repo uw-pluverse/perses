@@ -1,4 +1,4 @@
-load("//src/org/perses/grammar/adhoc:adhoc_grammar.bzl", "parser_facade_library")
+load("//src/org/perses/grammar/adhoc:adhoc_grammar.bzl", "pnf_parser_facade_library")
 load("//benchmark:benchmark.bzl", "reduction_golden_test", "sanity_test")
 load(
     "//src/org/perses:reduction.bzl",
@@ -15,7 +15,7 @@ sanity_test(
     test_script = "r.sh",
 )
 
-parser_facade_library(
+pnf_parser_facade_library(
     name = "parser_facade",
     java_package_name = "org.perses.test.grammar.adhoc.c",
     language_kind_yaml_file = "language_kind.yaml",

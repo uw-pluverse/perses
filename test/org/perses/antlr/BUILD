@@ -8,6 +8,7 @@ package(
 
 load("//test/org/perses:test.bzl", "golden_test")
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
+load("//:perses.bzl", "kt_binary_for_genrule")
 
 kt_jvm_test(
     name = "ParseTreeUtilTest",
@@ -18,7 +19,7 @@ kt_jvm_test(
         "//:antlr_tool",
         "//:guava",
         "//:truth",
-        "//src/org/perses/antlr:parse_tree_util",
+        "//src/org/perses/antlr:util",
     ],
 )
 
@@ -70,6 +71,21 @@ kt_jvm_test(
     ],
 )
 
+kt_jvm_test(
+    name = "MetaTokenInfoDbTest",
+    srcs = [
+        "MetaTokenInfoDbTest.kt",
+    ],
+    associates = [
+        "//src/org/perses/antlr:meta_token_info_db",
+    ],
+    deps = [
+        "//:truth",
+        "//src/org/perses/grammar/c:pnf_c_grammar",
+        "//test/org/perses:test_util",
+    ],
+)
+
 kt_jvm_library(
     name = "GrammarTestingUtility",
     srcs = ["GrammarTestingUtility.kt"],
@@ -87,9 +103,9 @@ kt_jvm_library(
     ],
 )
 
-java_binary(
+kt_binary_for_genrule(
     name = "GrammarHierarchyDumpMain",
-    srcs = ["GrammarHierarchyDumpMain.java"],
+    srcs = ["GrammarHierarchyDumpMain.kt"],
     jvm_flags = ["-ea"],
     main_class = "org.perses.antlr.GrammarHierarchyDumpMain",
     deps = [

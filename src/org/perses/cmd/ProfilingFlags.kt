@@ -19,6 +19,7 @@ package org.perses.cmd
 import com.beust.jcommander.Parameter
 import org.perses.util.cmd.CommonCmdOptionGroupOrder
 import org.perses.util.cmd.ICommandLineFlags
+import java.nio.file.Path
 
 class ProfilingFlags : ICommandLineFlags {
   @Parameter(
@@ -26,14 +27,22 @@ class ProfilingFlags : ICommandLineFlags {
     description = "The file to record the reduction process. The dump file can be large..",
     order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 0,
   )
-  var progressDumpFile: String? = null
+  var progressDumpFile: Path? = null
+
+  @Parameter(
+    names = ["--append-to-progress-dump-file"],
+    description = "Whether to append the reduction progress to the progress dump file",
+    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 5,
+    arity = 1,
+  )
+  var appendToProgressDumpFile = false
 
   @Parameter(
     names = ["--stat-dump-file"],
     description = "The file to save the statistics collected during reduction.",
     order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 10,
   )
-  var statDumpFile: String? = null
+  var statDumpFile: Path? = null
 
   @Parameter(
     names = ["--profile-query-cache"],
@@ -54,7 +63,7 @@ class ProfilingFlags : ICommandLineFlags {
     description = "The file to save information of all the created edit action sets.",
     order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 40,
   )
-  var actionSetProfiler: String? = null
+  var actionSetProfiler: Path? = null
 
   @Parameter(
     names = ["--profile"],

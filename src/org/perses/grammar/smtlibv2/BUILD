@@ -5,6 +5,11 @@ package(default_visibility = [
 load("//src/org/perses/grammar:antlr_util.bzl", "antlr_codegen_combined")
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 load("//antlropt/src/org/perses/antlr/pnf:pnf.bzl", "pnf_convert")
+load(
+    "//src/org/perses/grammar/adhoc:adhoc_grammar.bzl",
+    "orig_parser_facade_library",
+    "pnf_parser_facade_library",
+)
 
 pnf_convert(
     name = "normalize_smtlibv2_to_pnf",
@@ -29,17 +34,30 @@ kt_jvm_library(
     ],
 )
 
-java_library(
+pnf_parser_facade_library(
     name = "parser_facade",
-    srcs = ["SmtLibV2ParserFacade.java"],
+    java_package_name = "org.perses.grammar.smtlibv2",
+    language_kind_full_name = "org.perses.grammar.smtlibv2.LanguageSmtLibV2",
+    output_jar_file_name = "parser_facade.jar",
+    parser_facade_class_simple_name = "SmtLibV2ParserFacade",
+    parser_file_name = "SMTLIBv2.g4",
+    start_rule_name = "start",
+    token_names_of_identifiers = ["UndefinedSymbol"],
     deps = [
         ":language_kind",
-        ":pnf_smtlibv2_grammar",
-        "//:antlr_runtime",
-        "//:flogger",
-        "//:guava",
-        "//src/org/perses/antlr:parse_tree_with_parser",
-        "//src/org/perses/grammar:grammar_facade",
-        "//src/org/perses/program:language_kind",
+    ],
+)
+
+orig_parser_facade_library(
+    name = "orig_parser_facade",
+    java_package_name = "org.perses.grammar.smtlibv2",
+    language_kind_full_name = "org.perses.grammar.smtlibv2.LanguageSmtLibV2",
+    output_jar_file_name = "orig_parser_facade.jar",
+    parser_facade_class_simple_name = "OrigSmtLibV2ParserFacade",
+    parser_file_name = "SMTLIBv2.g4",
+    start_rule_name = "start",
+    token_names_of_identifiers = ["UndefinedSymbol"],
+    deps = [
+        ":language_kind",
     ],
 )

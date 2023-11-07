@@ -49,4 +49,37 @@ class SerializableLanguageKindTest {
     assertThat(language.toYamlString()).isEqualTo(copy.toYamlString())
     assertThat(data).isEqualTo(SerializableLanguageKind.LanguageKindData.from(copy))
   }
+
+  @Test
+  fun testNullFormatterCommand() {
+    val data = SerializableLanguageKind.LanguageKindData(
+      name = "test",
+      extensions = ImmutableSet.of("cp", "c"),
+      defaultCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
+      origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
+      allowedCodeFormatControl = ImmutableSet.of(
+        EnumFormatControl.ORIG_FORMAT,
+        EnumFormatControl.COMPACT_ORIG_FORMAT,
+      ),
+    )
+
+    val result = SerializableLanguageKind.LanguageKindData(
+      name = "test",
+      extensions = ImmutableSet.of("cp", "c"),
+      defaultCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
+      origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
+      allowedCodeFormatControl = ImmutableSet.of(
+        EnumFormatControl.ORIG_FORMAT,
+        EnumFormatControl.COMPACT_ORIG_FORMAT,
+      ),
+      defaultFormatterCommands = ImmutableList.of(),
+    )
+
+    val language = SerializableLanguageKind.fromYamlString(data.toYamlString())
+
+    val yamlString = language.toYamlString()
+    val copy = SerializableLanguageKind.fromYamlString(yamlString)
+    assertThat(language.toYamlString()).isEqualTo(copy.toYamlString())
+    assertThat(result).isEqualTo(SerializableLanguageKind.LanguageKindData.from(copy))
+  }
 }

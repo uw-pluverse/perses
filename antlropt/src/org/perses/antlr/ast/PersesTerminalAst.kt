@@ -19,6 +19,7 @@ package org.perses.antlr.ast
 import com.google.common.base.MoreObjects
 import org.antlr.v4.parse.ANTLRLexer
 import org.antlr.v4.parse.ANTLRParser
+import org.perses.antlr.RuleType
 import org.perses.util.ast.Indent
 import java.io.PrintStream
 
@@ -47,8 +48,12 @@ class PersesTerminalAst(
 
   fun isStringLiteral(): Boolean {
     val result = text[0] == '\''
-    check(!result || text[text.length - 1] == '\'')
+    check(!result || (text.length > 1 && text[text.length - 1] == '\''))
     return result
+  }
+
+  fun isWildcardDot(): Boolean {
+    return text == "."
   }
 
   fun getStringLiteralOrThrow(): String {
@@ -74,5 +79,13 @@ class PersesTerminalAst(
   override fun extraEquivalenceTest(other: AbstractPersesRuleElement): Boolean {
     val ast = other as PersesTerminalAst
     return text == ast.text && tokenType == ast.tokenType
+  }
+
+  companion object {
+
+    fun createTokenReference(lexerRuleName: String): PersesTerminalAst {
+      require(RuleType.isLexerRule(lexerRuleName)) { lexerRuleName }
+      return PersesTerminalAst(lexerRuleName, tokenType = ANTLRParser.TOKEN_REF)
+    }
   }
 }

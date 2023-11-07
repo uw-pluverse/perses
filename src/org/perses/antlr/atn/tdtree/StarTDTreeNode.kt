@@ -24,7 +24,7 @@ class StarTDTreeNode(nodeId: Int) : AbstractTDTreeNode(nodeId) {
     return null
   }
 
-  override fun copyCurrentNode(): AbstractTDTreeNode {
-    return StarTDTreeNode(nodeId)
+  override fun internalCopyCurrentNode(computedNewNodeId: Int): AbstractTDTreeNode {
+    return StarTDTreeNode(computedNewNodeId)
   }
 }

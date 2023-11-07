@@ -33,8 +33,8 @@ class QueryCacheWithFastLinearScanWithoutCompression(
   ): LinearScanTokenizedProgramEncoder {
     return LinearScanTokenizedProgramEncoder(
       baseProgram,
-      profiler, /*enableCompression*/
-      false,
+      profiler,
+      enableCompression = false,
     )
   }
 }

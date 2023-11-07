@@ -7,13 +7,13 @@ If you have any question, feel free to create an issue in this repo.
 ## Implementation
 
 The RCC, i.e., Refreshable Compact Caching, is integrated in [Perses](https://github.com/uw-pluverse/perses).
-To understand its implementation, we suggest starting it from [here](https://github.com/uw-pluverse/perses/blob/master/src/org/perses/reduction/cache/CompactQueryCache.kt).
+To understand its implementation, we suggest starting it from [here](../src/org/perses/reduction/cache/CompactQueryCache.kt).
 
-Similarly, other caching schemes are also available at [here](https://github.com/uw-pluverse/perses/blob/master/src/org/perses/reduction/cache),
-such as [ZIP](https://github.com/uw-pluverse/perses/blob/master/src/org/perses/reduction/cache/ContentSHA512BasedQueryCache.kt),
-[SHA](https://github.com/uw-pluverse/perses/blob/master/src/org/perses/reduction/cache/ContentZipBasedQueryCache.kt),
+Similarly, other caching schemes are also available at [here](../src/org/perses/reduction/cache),
+such as [ZIP](../src/org/perses/reduction/cache/ContentSHA512BasedQueryCache.kt),
+[SHA](../src/org/perses/reduction/cache/ContentZipBasedQueryCache.kt),
 and 
-[STR](https://github.com/uw-pluverse/perses/blob/master/src/org/perses/reduction/cache/ContentStringBasedQueryCache.kt).
+[STR](../src/org/perses/reduction/cache/ContentStringBasedQueryCache.kt).
 
 
 ## Reproduction

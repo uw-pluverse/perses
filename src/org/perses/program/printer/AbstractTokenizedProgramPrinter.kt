@@ -67,8 +67,9 @@ abstract class AbstractTokenizedProgramPrinter {
     }
   }
 
-  class DeducedPositionProvider(lexerClass: Class<out Lexer>) : AbstractTokenPositionProvider() {
-    private val lexerAtnWrapper = LexerAtnWrapper(lexerClass)
+  class DeducedPositionProvider(
+    val lexerAtnWrapper: LexerAtnWrapper<out Lexer>,
+  ) : AbstractTokenPositionProvider() {
 
     override fun getLine(token: PersesTokenFactory.PersesToken): Int {
       return token.position.line

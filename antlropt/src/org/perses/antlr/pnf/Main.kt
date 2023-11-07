@@ -16,50 +16,40 @@
  */
 package org.perses.antlr.pnf
 
-import com.beust.jcommander.JCommander
 import com.beust.jcommander.Parameter
 import org.perses.antlr.ast.PersesAstBuilder.Companion.loadGrammarFromFile
-import org.perses.antlr.ast.PersesAstBuilder.Companion.loadGrammarFromString
 import org.perses.antlr.util.Util.extractGrammarNameFromGrammarFileName
+import org.perses.util.cmd.AbstractCommandOptions
+import org.perses.util.cmd.AbstractMain
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
-import kotlin.io.path.readText
 import kotlin.io.path.writeText
 
-object Main {
+class Main(args: Array<String>) : AbstractMain<Main.Options>(args) {
+  override fun createCommandOptions() = Options()
 
-  @JvmStatic
-  fun main(args: Array<String>) {
-    val cmd = Options()
-    val commander = JCommander(cmd)
-    commander.parse(*args)
-    if (cmd.help) {
-      commander.usage()
-      return
-    }
-    val sourceFile = Paths.get(cmd.sourceFile)
-    require(Files.exists(sourceFile)) { sourceFile }
-    require(Files.isRegularFile(sourceFile)) { sourceFile }
-    val sourceAntlrFileContent = sourceFile.readText()
-    val origGrammar = loadGrammarFromString(sourceAntlrFileContent)
+  override fun internalRun() {
+    val parserGrammar = loadGrammarFromFile(cmd.sourceFile!!)
       .copyWithNewName(extractGrammarNameFromGrammarFileName(cmd.outputFile!!))
     val lexerGrammar = cmd.lexerFile?.let {
       loadGrammarFromFile(it)
     }
+    val origGrammar = GrammarPair(parserGrammar, lexerGrammar)
     val passes = PnfPassManager()
-    val processedGrammar = passes.process(origGrammar, cmd.startRuleName!!, lexerGrammar)
-    val output = processedGrammar.sourceCode
-    Paths.get(cmd.outputFile).writeText(output)
+    val processedGrammar = passes.process(origGrammar, cmd.startRuleName!!)
+    processedGrammar.parserGrammar?.let {
+      Paths.get(cmd.outputFile!!).writeText(it.sourceCode)
+    }
   }
 
-  class Options {
+  class Options : AbstractCommandOptions() {
     @Parameter(
       names = ["--source"],
       required = true,
       description = "The Antlr grammar file for processing.",
     )
-    var sourceFile: String? = null
+    var sourceFile: Path? = null
 
     @Parameter(names = ["--lexer"], description = "The lexer definition for the parser grammar.")
     var lexerFile: Path? = null
@@ -78,7 +68,17 @@ object Main {
     )
     var startRuleName: String? = null
 
-    @Parameter(names = ["--help"], description = "print help message", help = true)
-    var help = false
+    override fun validateExtra() {
+      check(sourceFile != null)
+      check(Files.isRegularFile(sourceFile!!))
+      check(outputFile != null)
+    }
+  }
+
+  companion object {
+    @JvmStatic
+    fun main(args: Array<String>) {
+      Main(args).run()
+    }
   }
 }

@@ -1,9 +1,11 @@
-java_library(
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
+kt_jvm_library(
     name = "level_reduction_speed_analysis",
     srcs = [
-        "AbstractHddPerformanceAnalysis.java",
-        "LabeledXYSeriesCollection.java",
-        "LevelReductionSpeedAnalysis.java",
+        "AbstractHddPerformanceAnalysis.kt",
+        "LabeledXYSeriesCollection.kt",
+        "LevelReductionSpeedAnalysis.kt",
     ],
     deps = [
         "//:flogger",

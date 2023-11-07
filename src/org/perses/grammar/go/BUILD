@@ -65,9 +65,9 @@ antlr_codegen_parser(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "parser_facade",
-    srcs = ["PnfGoParserFacade.java"],
+    srcs = ["PnfGoParserFacade.kt"],
     deps = [
         ":go_lexer",
         ":language_kind",

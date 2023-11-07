@@ -2,7 +2,7 @@ package(
     default_visibility = ["//visibility:public"],
 )
 
-load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "define_kt_toolchain")
+load("@io_bazel_rules_kotlin//kotlin:core.bzl", "define_kt_toolchain", "kt_kotlinc_options")
 
 alias(
     name = "antlr_tool",
@@ -28,9 +28,12 @@ java_library(
     ],
 )
 
-alias(
+java_library(
     name = "kotlin_stdib",
-    actual = "@maven//:org_jetbrains_kotlin_kotlin_stdlib_jdk8",
+    exports = [
+        "@maven//:org_jetbrains_kotlin_kotlin_reflect",
+        "@maven//:org_jetbrains_kotlin_kotlin_stdlib_jdk8",
+    ],
 )
 
 alias(
@@ -85,6 +88,11 @@ java_library(
 )
 
 alias(
+    name = "netty",
+    actual = "@maven//:io_netty_netty_all",
+)
+
+alias(
     name = "jcommander",
     actual = "@maven//:com_beust_jcommander",
 )
@@ -104,13 +112,24 @@ java_library(
     ],
 )
 
+# https://bazelbuild.github.io/rules_kotlin/kotlin#kt_kotlinc_options
+kt_kotlinc_options(
+    name = "perses_kotlinc_options",
+    warn = "error",  # Any warning should be fixed for compilation.
+    x_no_call_assertions = True,
+    x_no_param_assertions = True,
+    x_no_receiver_assertions = True,
+    x_optin = [
+        "kotlin.io.path.ExperimentalPathApi",
+    ],
+)
+
 define_kt_toolchain(
     name = "kotlin_toolchain",
-    #   Can't upgrade to 1.7 because it is still experimental which has limited JSR223 compatibility
-    #   TODO(cnsun): upgrade when JSR is ready and revert back to 1.6
-    api_version = "1.6",
+    api_version = "1.8",
     jvm_target = "1.8",
-    language_version = "1.6",
+    kotlinc_options = ":perses_kotlinc_options",
+    language_version = "1.8",
 )
 
 exports_files(["README.md"])

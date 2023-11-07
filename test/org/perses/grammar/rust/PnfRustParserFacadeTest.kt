@@ -68,7 +68,7 @@ class PnfRustParserFacadeTest {
   }
 
   fun compareOrigAndPnfParsers(file: Path) {
-    val parseTreeFromOrigParser = facade.parseWithOrigRustParser(file)
+    val parseTreeFromOrigParser = OrigRustParserFacade().parseFile(file)
     val tokensByOrigParser = TestUtility.extractTokenTexts(parseTreeFromOrigParser.tree)
 
     val parseTreeWithPnfParser = facade.parseFile(file)

@@ -56,6 +56,9 @@ Usage: org.perses.Main [options]
       Possible Values: [TRUE, FALSE, AUTO]
     --progress-dump-file
       The file to record the reduction process. The dump file can be large..
+    --append-to-progress-dump-file
+      Whether to append the reduction progress to the progress dump file
+      Default: false
     --stat-dump-file
       The file to save the statistics collected during reduction.
     --profile-query-cache
@@ -79,6 +82,20 @@ Usage: org.perses.Main [options]
       Default: INFO
     --list-verbosity-levels
       list all verbosity levels
+    --enable-vulcan
+      Enable vulcan (using auxiliary reducers to help produce smaller 
+      reduction output).
+      Default: false
+    --non-deletion-iteration-limit
+      The maximum number of continuous non-deletion iterations allowed.
+      Default: 10
+    --window-size
+      The window size used to perform local exhaustive pattern reduction.
+      Default: 4
+    --vulcan-fixpoint
+      Enable vulcan fixpoint iteratively using auxiliary reducers until no 
+      progress can be made
+      Default: false
     --help, -h
       print help message
     --version

@@ -20,9 +20,9 @@ import com.google.common.flogger.FluentLogger
 import org.perses.program.ScriptFile
 import org.perses.util.TimeSpan
 import org.perses.util.Util
-import org.perses.util.shell.AbstractShell.Companion.CURRENT_ENV
-import org.perses.util.shell.AbstractShell.Companion.singleton
 import org.perses.util.shell.CmdOutput
+import org.perses.util.shell.Shells.Companion.CURRENT_ENV
+import org.perses.util.shell.Shells.Companion.singleton
 import java.nio.file.Files
 import java.nio.file.Path
 

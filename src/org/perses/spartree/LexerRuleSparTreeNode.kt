@@ -32,9 +32,6 @@ class LexerRuleSparTreeNode internal constructor(
   @PublishedApi
   internal var next: LexerRuleSparTreeNode? = null
 
-  override val isTokenNode: Boolean
-    get() = true
-
   override val labelPrefix: String
     get() = "Token:" + token.text
 
@@ -42,12 +39,8 @@ class LexerRuleSparTreeNode internal constructor(
     // do nothing
   }
 
-  override fun copyCurrentNode(): LexerRuleSparTreeNode {
-    return LexerRuleSparTreeNode(nodeId, token, antlrRule)
-  }
-
-  fun copyWithNewToken(newToken: PersesToken): LexerRuleSparTreeNode {
-    return LexerRuleSparTreeNode(nodeId, newToken, antlrRule)
+  override fun internalCopyCurrentNode(computedNewNodeId: Int): LexerRuleSparTreeNode {
+    return LexerRuleSparTreeNode(computedNewNodeId, token, antlrRule)
   }
 
   override fun addChild(child: AbstractSparTreeNode, payload: AbstractNodePayload) {
@@ -57,8 +50,6 @@ class LexerRuleSparTreeNode internal constructor(
   override fun asLexerRule(): LexerRuleSparTreeNode {
     return this
   }
-
-  override fun checkNodeIntegrity(): ErrorMessage? = null
 
   override fun onChildRemoved(index: Int, child: AbstractSparTreeNode) {
     error("Cannot call this method on a token node.")

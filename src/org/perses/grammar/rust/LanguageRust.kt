@@ -32,20 +32,23 @@ object LanguageRust : LanguageKind(
     EnumFormatControl.COMPACT_ORIG_FORMAT,
     EnumFormatControl.ORIG_FORMAT,
   ),
-  defaultFormatterCommands = sequence {
+  defaultFormatterCommandCreators = sequence {
     val rustFmtName = "rustfmt"
-    yield(ShellCommandOnPath.tryCreating(rustFmtName))
+    yield(
+      ShellCommandOnPath.IShellCommandOnPathCreator { ShellCommandOnPath.tryCreating(rustFmtName) },
+    )
     for (versionString in allStableVersionStrings) {
-      yield(ShellCommandOnPath.tryCreating(rustFmtName, "+$versionString"))
+      yield(
+        ShellCommandOnPath.IShellCommandOnPathCreator {
+          ShellCommandOnPath.tryCreating(
+            rustFmtName,
+            "+$versionString",
+          )
+        },
+      )
     }
-  }.filter { it != null }.map { it!! }.toImmutableList(),
+  }.toImmutableList(),
 ) {
-
-  private val firstWorkingFormatter = defaultFormatterCommands.firstOrNull {
-    it.runWith(ImmutableList.of("--help")).exitCode == 0
-  }
-
-  override fun getDefaultWorkingFormatter() = firstWorkingFormatter
 
   val stableVersionStrings: ImmutableList<String> = allStableVersionStrings
 }

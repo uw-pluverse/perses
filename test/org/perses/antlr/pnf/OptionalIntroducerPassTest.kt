@@ -70,7 +70,7 @@ class OptionalIntroducerPassTest {
 
   fun processGrammar(vararg lines: String): PersesGrammar {
     val grammar = createPersesGrammarFromString(*lines)
-    return pass.processParserGrammar(grammar, lexerGrammar = null)
+    return pass.processGrammar(GrammarPair(grammar, lexerGrammar = null)).parserGrammar!!
   }
 
   @Test

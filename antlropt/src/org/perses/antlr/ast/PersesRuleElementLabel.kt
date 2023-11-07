@@ -26,7 +26,7 @@ import java.io.PrintStream
 class PersesRuleElementLabel(
   private val label: String,
   private val operator: String,
-  private val child: AbstractPersesRuleElement,
+  val child: AbstractPersesRuleElement,
 ) : AbstractPersesRuleElement() {
 
   init {
@@ -36,7 +36,17 @@ class PersesRuleElementLabel(
 
   override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
     stream.append(label).append(operator)
+    val needParentheses = when (child.tag) {
+      AstTag.ALTERNATIVE_BLOCK, AstTag.SEQUENCE -> true
+      else -> false
+    }
+    if (needParentheses) {
+      stream.append('(')
+    }
     child.toSourceCode(stream, indent, false)
+    if (needParentheses) {
+      stream.append(')')
+    }
   }
 
   override val childCount: Int

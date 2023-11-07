@@ -28,6 +28,9 @@ import org.perses.antlr.ParseTreeWithParser;
 import org.perses.grammar.SingleParserFacadeFactory;
 import org.perses.program.SourceFile;
 import org.perses.spartree.AbstractSparTreeNode;
+import org.perses.spartree.LexerRuleSparTreeNode;
+import org.perses.spartree.ParserRuleSparTreeNode;
+import org.perses.spartree.PlaceholderSparTreeNode;
 
 public class TreeDotifier {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
@@ -46,22 +49,30 @@ public class TreeDotifier {
           new DotGraph.NodeLabelProvider<AbstractSparTreeNode>() {
             @Override
             protected String computeNodeLabel(AbstractSparTreeNode node) {
-              switch (node.getNodeType()) {
-                case KLEENE_PLUS:
-                  return "(+)";
-                case KLEENE_STAR:
-                  return "(*)";
-                case OPTIONAL:
-                  return "(?)";
-                case ALT_BLOCKS:
-                  return "(|)" + node.getAntlrRule().getRuleName();
-                case TOKEN:
-                  return node.asLexerRule().getToken().getText();
-                case OTHER_RULE:
-                  assert node.getAntlrRule() != null;
-                  return node.getAntlrRule().getRuleName();
-                default:
-                  throw new AssertionError("Cannot reach here");
+              if (node instanceof LexerRuleSparTreeNode) {
+                return node.asLexerRule().getToken().getText();
+              } else if (node instanceof ParserRuleSparTreeNode) {
+                ParserRuleSparTreeNode parserNode = (ParserRuleSparTreeNode) node;
+                switch (parserNode.getRuleType()) {
+                  case KLEENE_PLUS:
+                    return "(+)";
+                  case KLEENE_STAR:
+                    return "(*)";
+                  case OPTIONAL:
+                    return "(?)";
+                  case ALT_BLOCKS:
+                    return "(|)" + node.getAntlrRule().getRuleName();
+                  case OTHER_RULE:
+                    assert node.getAntlrRule() != null;
+                    return node.getAntlrRule().getRuleName();
+                  default:
+                    throw new AssertionError("Cannot reach here");
+                }
+              } else if (node instanceof PlaceholderSparTreeNode) {
+                PlaceholderSparTreeNode placeholder = (PlaceholderSparTreeNode) node;
+                return "placeholder";
+              } else {
+                throw new RuntimeException("unreachable.");
               }
             }
           };
@@ -73,9 +84,7 @@ public class TreeDotifier {
   public static void dotifyAntlrParseTree(File sourceFile, File pdfFile) {
     try {
       SingleParserFacadeFactory factory =
-          SingleParserFacadeFactory.builderWithBuiltinLanguages(
-                  SingleParserFacadeFactory.IDENTITY_CUSTOMIZER)
-              .build();
+          SingleParserFacadeFactory.builderWithBuiltinLanguages().build();
       final SourceFile source =
           new SourceFile(
               sourceFile.toPath(), factory.computeLanguageKindWithFileName(sourceFile.toPath()));

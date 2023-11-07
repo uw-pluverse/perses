@@ -29,6 +29,8 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardCopyOption
 import kotlin.io.path.readText
+import kotlin.reflect.KClass
+import kotlin.reflect.full.createInstance
 
 class AdhocGrammarConfiguration(
   val parserFile: Path,
@@ -59,7 +61,6 @@ class AdhocGrammarConfiguration(
   init {
     require(Files.isRegularFile(parserFile))
     require(lexerFile == null || Files.isRegularFile(lexerFile))
-    require(this.sortedDistinctTokenNamesOfIdentifiers.isNotEmpty())
     requireNotNull(parserGrammar.getRuleDefinition(startRuleName)) {
       "Cannot find the start rule witht he name $startRuleName"
     }
@@ -154,10 +155,10 @@ class AdhocGrammarConfiguration(
     jarFile: JarFile,
   ) {
     @Suppress("UNCHECKED_CAST")
-    val klass = jarFile.loadMainClass() as Class<out AbstractParserFacade>
-    val languageKind = klass.getField("LANGUAGE").get(null) as LanguageKind
+    val klass = jarFile.loadMainClass().kotlin as KClass<out AbstractParserFacade>
+    val languageKind = klass.java.getField("LANGUAGE").get(null) as LanguageKind
     fun createParserFacade(): AbstractParserFacade {
-      return klass.getConstructor().newInstance()
+      return klass.createInstance()
     }
 
     companion object {

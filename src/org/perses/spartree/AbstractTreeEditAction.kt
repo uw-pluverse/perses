@@ -17,12 +17,20 @@
 package org.perses.spartree
 
 /** The base class for editing a tree.  */
-abstract class AbstractTreeEditAction protected constructor(
+sealed class AbstractTreeEditAction(
   val targetNode: AbstractSparTreeNode,
 ) : Comparable<AbstractTreeEditAction> {
 
   override fun compareTo(other: AbstractTreeEditAction): Int {
-    return internalCompareTo(other)
+    val classCmp = compareBy<AbstractTreeEditAction> {
+      it::class.java.canonicalName
+    }.compare(this, other)
+    return if (classCmp != 0) {
+      classCmp
+    } else {
+      check(this::class.java == other::class.java)
+      internalCompareTo(other)
+    }
   }
 
   protected abstract fun internalCompareTo(o: AbstractTreeEditAction): Int
@@ -57,4 +65,13 @@ abstract class AbstractTreeEditAction protected constructor(
   }
 
   protected abstract fun specificHashCode(): Int
+
+  private var used = false
+  fun apply() {
+    check(!used)
+    used = true
+    internalApply()
+  }
+
+  abstract fun internalApply()
 }

@@ -17,8 +17,6 @@
 package org.perses.util.shell
 
 import com.google.common.collect.ImmutableList
-import com.google.common.io.MoreFiles
-import com.google.common.io.RecursiveDeleteOption
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Assert
@@ -30,6 +28,7 @@ import java.nio.file.Files.createFile
 import java.nio.file.Files.createTempDirectory
 import java.nio.file.Paths
 import kotlin.io.path.createSymbolicLinkPointingTo
+import kotlin.io.path.deleteRecursively
 
 // TODO: add more tests for the other methods.
 @RunWith(JUnit4::class)
@@ -39,21 +38,21 @@ class ShellCommandOnPathTest {
 
   @After
   fun teardown() {
-    MoreFiles.deleteRecursively(tempDir, RecursiveDeleteOption.ALLOW_INSECURE)
+    tempDir.deleteRecursively()
   }
 
   @Test
   fun testCmdOnPath() {
     val cmd = ShellCommandOnPath("gcc")
     assertThat(cmd.fileName).isEqualTo("gcc")
-    assertThat(cmd.runWith(ImmutableList.of("--version")).exitCode).isEqualTo(0)
+    assertThat(cmd.runWith(ImmutableList.of("--version")).exitCode.intValue).isEqualTo(0)
   }
 
   @Test
   fun testCmdWithDefaultArguments() {
     val cmd = ShellCommandOnPath("gcc", defaultFlags = ImmutableList.of("--version"))
     val cmdOutput = cmd.runWith()
-    assertThat(cmdOutput.exitCode).isEqualTo(0)
+    assertThat(cmdOutput.exitCode.intValue).isEqualTo(0)
   }
 
   @Test
@@ -61,7 +60,7 @@ class ShellCommandOnPathTest {
     val cmd = ShellCommandOnPath("test/org/perses/util/shell/fake_executable.sh")
     assertThat(cmd.fileName).isEqualTo("fake_executable.sh")
     val output = cmd.runWith(ImmutableList.of(), captureOutput = true)
-    assertThat(output.exitCode).isEqualTo(0)
+    assertThat(output.exitCode.intValue).isEqualTo(0)
     assertThat(Paths.get(cmd.normalizedCommand).isAbsolute).isTrue()
   }
 

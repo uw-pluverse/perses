@@ -17,7 +17,6 @@
 package org.perses.antlr.pnf
 
 import org.perses.antlr.ast.AbstractPersesRuleElement
-import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.ast.PersesRuleReferenceAst
 import org.perses.antlr.ast.PersesSequenceAst
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
@@ -26,10 +25,9 @@ import org.perses.util.Interval
 
 abstract class AbstractPnfPass {
 
-  abstract fun processParserGrammar(
-    parserGrammar: PersesGrammar,
-    lexerGrammar: PersesGrammar?,
-  ): PersesGrammar
+  abstract fun processGrammar(
+    grammar: GrammarPair,
+  ): GrammarPair
 
   companion object {
     @JvmStatic
@@ -53,7 +51,7 @@ abstract class AbstractPnfPass {
       ruleName: RuleNameHandle,
     ): Int {
       val counter = RuleRefCounterAstVisitor(ruleName)
-      grammar.altSequence().forEach {
+      grammar.alternativeSequence().forEach {
         counter.preorder(it)
       }
       return counter.count

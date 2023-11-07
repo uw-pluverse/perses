@@ -40,7 +40,7 @@ class FailOnErrorAntlrErrorListener(private val sourceFile: String) : ANTLRError
     details.append("line: ").append(line).append('\n')
     details.append("column: ").append(charPositionInLine).append('\n')
     details.append("msg: ").append(msg).append('\n')
-    throw AntlrFailureException(e, sourceFile, details.toString())
+    throw AntlrFailureException(e!!, sourceFile, details.toString())
   }
 
   override fun reportAmbiguity(

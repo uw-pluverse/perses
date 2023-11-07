@@ -26,7 +26,7 @@ class ExistingLangParserFacadeStubTemplate(
   grammarName: String,
   parserFile: Path,
   lexerFile: Path?,
-  val existingLanguageFullClassName: String,
+  private val existingLanguageFullClassName: String,
   parserFacadeClassSimpleName: String,
   tokenNamesOfIdentifiers: List<String>,
 ) : AbstractParserFacadeStubTemplate(
@@ -43,17 +43,16 @@ class ExistingLangParserFacadeStubTemplate(
 
   override fun createLanguageKind(): String {
     return """
-      
      
-    static {
-      try {
-        $fieldNameLanguage = (LanguageKind)Class.forName("$existingLanguageFullClassName")
-        .getField("INSTANCE").get(null);
-      } catch(Exception e) {
-        throw new RuntimeException(e); 
-      }
-    } 
-    
-    """.trimIndent()
+  static {
+    try {
+      $fieldNameLanguage = (LanguageKind)Class.forName("$existingLanguageFullClassName")
+      .getField("INSTANCE").get(null);
+    } catch(Exception e) {
+      throw new RuntimeException(e); 
+    }
+  } 
+  
+    """
   }
 }

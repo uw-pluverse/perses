@@ -1,15 +1,16 @@
 package(default_visibility = ["//test/org/perses:__subpackages__"])
 
-java_test(
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
+
+kt_jvm_test(
     name = "SimpleLevelPartitionPolicyTest",
-    srcs = ["SimpleLevelPartitionPolicyTest.java"],
+    srcs = ["SimpleLevelPartitionPolicyTest.kt"],
     data = ["//test_data/misc"],
     test_class = "org.perses.reduction.partition.SimpleLevelPartitionPolicyTest",
     deps = [
         "//:truth",
         "//src/org/perses/reduction:reduction_level",
         "//src/org/perses/reduction/partition",
-        "//src/org/perses/reduction/partition:level_partition_policy",
         "//src/org/perses/spartree",
         "//test/org/perses:test_util",
     ],

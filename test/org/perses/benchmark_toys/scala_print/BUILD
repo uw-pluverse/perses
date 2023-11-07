@@ -31,6 +31,37 @@ reduce(
     test_script = "r.sh",
 )
 
+reduce(
+    name = "reduce_with_global_cache",
+    enable_edit_caching = False,
+    enable_query_caching = False,
+    extra_output_files = ["updated_global_cache.csv"],
+    other_flags = {
+        "--global-cache-file": "$(location golden_global_cache.csv)",
+        "--path-to-save-updated-global-cache": "$(location updated_global_cache.csv)",
+    },
+    output_dir = "output_dir_reduce_with_global_cache",
+    progress_dump_file = "progress_dump_reduced_with_global_cache.txt",
+    reduction_algorithm = "perses_node_with_dfs_delta",
+    source_file = "Hello.sc",
+    test_script = "r.sh",
+    deps = [
+        "golden_global_cache.csv",
+    ],
+)
+
+golden_test(
+    name = "golden_test_global_cache",
+    golden_file = "golden_global_cache.csv",
+    test_file = "updated_global_cache.csv",
+)
+
+golden_test(
+    name = "golden_test_progress_dump_reduced_with_global_cache",
+    golden_file = "golden_progress_dump_reduced_with_global_cache.txt",
+    test_file = "progress_dump_reduced_with_global_cache.txt",
+)
+
 reduction_golden_test(
     name = "reduction_golden_test",
     enable_query_caching = True,

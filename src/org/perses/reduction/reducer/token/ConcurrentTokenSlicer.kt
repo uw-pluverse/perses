@@ -36,17 +36,21 @@ class ConcurrentTokenSlicer(
   reducerContext,
 ) {
 
-  override fun createSlicingTask(
+  override fun createSequenceOfIndependentSlicingTasks(
     tokenSlicingGranularity: Int,
     tree: SparTree,
-  ): ImmutableList<AbstractSlicingTask> {
+  ): Sequence<IndependentSlicingTasks> {
     val tokens = tree.remainingLexerRuleNodes
-    return ImmutableList.builder<AbstractSlicingTask>().apply {
-      Util.slideResverseIfSlidable(
-        tokens,
-        slidingWindowSize = tokenSlicingGranularity,
-      ) { add(TokenSlicingTask(tokens, it, tree)) }
-    }.build()
+    return sequenceOf(
+      IndependentSlicingTasks(
+        ImmutableList.builder<AbstractSlicingTask>().apply {
+          Util.slideResverseIfSlidable(
+            tokens,
+            slidingWindowSize = tokenSlicingGranularity,
+          ) { add(TokenSlicingTask(tokens, it, tree)) }
+        }.build(),
+      ),
+    )
   }
 
   inner class TokenSlicingTask(

@@ -16,8 +16,8 @@
  */
 package org.perses.util.shell
 
-data class CmdOutput constructor(
-  val exitCode: Int,
+data class CmdOutput(
+  val exitCode: ExitCode,
   val stdout: ShellOutputLines,
   val stderr: ShellOutputLines,
 )

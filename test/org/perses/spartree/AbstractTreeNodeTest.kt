@@ -22,6 +22,7 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.spartree.AbstractTreeNode.NodeIdCopyStrategy.ReuseNodeIdStrategy
 
 @RunWith(JUnit4::class)
 class AbstractTreeNodeTest {
@@ -43,8 +44,8 @@ class AbstractTreeNodeTest {
     override fun onChildRemoved(index: Int, child: Node) {
     }
 
-    override fun copyCurrentNode(): Node {
-      return Node(nodeId)
+    override fun internalCopyCurrentNode(computedNewNodeId: Int): Node {
+      return Node(computedNewNodeId)
     }
   }
 
@@ -69,7 +70,7 @@ class AbstractTreeNodeTest {
   @Test
   fun testDeepCopy() {
     val node = l3_n11_n9
-    val copy = node.recursiveDeepCopy()
+    val copy = node.recursiveDeepCopy(ReuseNodeIdStrategy)
     assertThat(copy).isNotSameInstanceAs(node)
     assertThat(node.nodeId).isEqualTo(copy.nodeId)
   }

@@ -33,7 +33,8 @@ class ConcurrentStateBasedLineSlicer(
   reducerContext: ReducerContext,
   private val slicerAnnotation: ConcurrentStateLineSlicerAnnotation,
 ) : AbstractStateBasedConcurrentReducer<
-  ConcurrentLineSlicingState, Line,
+  ConcurrentLineSlicingState,
+  Line,
   >(
   slicerAnnotation,
   reducerContext,

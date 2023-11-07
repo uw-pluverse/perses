@@ -16,25 +16,31 @@
  */
 package org.perses.grammar.smtlibv2
 
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
+import org.perses.antlr.ParseTreeWithParser
 
 @RunWith(JUnit4::class)
 class PnfSmtLibv2ParserFacadeTest {
-  val facade = SmtLibV2ParserFacade()
 
   @Test
   fun test() {
+    val pnfFacade = SmtLibV2ParserFacade()
+    val origFacade = OrigSmtLibV2ParserFacade()
     val programs = TestUtility.smtTestFiles
     for (program in programs) {
-      val origParseTree = facade.parseFile(program)
-      val origTokens = TestUtility.extractTokenTexts(origParseTree.tree)
+      val parseTree = pnfFacade.parseFile(program)
+      val pnfTokens = TestUtility.extractTokenTexts(parseTree.tree)
       val programFromFile = TestUtility.createSparTreeFromFile(program.fileName)
-      Truth.assertThat(origTokens).isNotEmpty()
-      Truth.assertThat(programFromFile).isNotNull()
+      assertThat(pnfTokens).isNotEmpty()
+      assertThat(programFromFile).isNotNull()
+
+      val origParseTree: ParseTreeWithParser = origFacade.parseFile(program)
+      val origTokens = TestUtility.extractTokenTexts(origParseTree.tree)
+      assertThat(origTokens).isEqualTo(pnfTokens)
     }
   }
 }

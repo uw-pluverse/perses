@@ -1341,29 +1341,40 @@ altnt_block__ifStatement_5
     ;
 
 altnt_block__expression_11
-    : aux_rule__expression_20
-    | aux_rule__expression_21
-    | aux_rule__expression_22
-    | aux_rule__expression_23
-    | aux_rule__expression_24
-    | aux_rule__expression_25
-    | aux_rule__expression_26
-    | aux_rule__expression_27
-    | aux_rule__expression_28
-    | aux_rule__expression_29
-    | aux_rule__expression_30
-    | aux_rule__expression_31
-    | aux_rule__expression_32
-    | aux_rule__expression_33
-    | aux_rule__expression_34
-    | aux_rule__expression_35
-    | aux_rule__expression_36
+    : '**'
+    | '*'
+    | Divide
+    | '%'
+    | '+'
+    | '-'
+    | '.'
+    | '<<'
+    | '>>'
+    | Less
+    | '<='
+    | Greater
+    | '>='
+    | '==='
+    | '!=='
+    | '=='
+    | IsNotEq
+    | '&'
+    | '^'
+    | '|'
+    | '&&'
+    | '||'
+    | aux_rule__expression_20
+    | '??'
+    | '<=>'
+    | LogicalAnd
+    | LogicalXor
+    | LogicalOr
     ;
 
 altnt_block__expression_13
-    : aux_rule__expression_37
-    | aux_rule__expression_38
-    | aux_rule__expression_39
+    : aux_rule__expression_21
+    | aux_rule__expression_22
+    | aux_rule__expression_23
     ;
 
 altnt_block__globalVar_1
@@ -1373,9 +1384,9 @@ altnt_block__globalVar_1
 
 aux_rule__expression_8
     : newExpr
-    | aux_rule__expression_40
-    | aux_rule__expression_41
-    | aux_rule__expression_42
+    | aux_rule__expression_24
+    | aux_rule__expression_25
+    | aux_rule__expression_26
     | constant
     | string
     | Label
@@ -1383,12 +1394,12 @@ aux_rule__expression_8
     | parentheses
     | arrayCreation
     | Yield
-    | aux_rule__expression_43
-    | aux_rule__expression_44
+    | aux_rule__expression_27
+    | aux_rule__expression_28
     | matchExpr
-    | aux_rule__expression_45
-    | aux_rule__expression_46
-    | aux_rule__expression_47
+    | aux_rule__expression_29
+    | aux_rule__expression_30
+    | aux_rule__expression_31
     ;
 
 altnt_block__namespaceDeclaration_3
@@ -1544,22 +1555,22 @@ altnt_block__foreachStatement_11
     ;
 
 altnt_block__expression_16
-    : aux_rule__expression_48
+    : aux_rule__expression_32
     | Clone
-    | aux_rule__expression_49
+    | aux_rule__expression_33
     | '~'
     | '@'
     | '!'
     | '+'
     | '-'
     | Print
-    | aux_rule__expression_50
+    | aux_rule__expression_34
     | Include
     | IncludeOnce
     | Require
     | RequireOnce
     | Throw
-    | aux_rule__expression_51
+    | aux_rule__expression_35
     ;
 
 constant
@@ -1729,82 +1740,18 @@ aux_rule__ifStatement_7
     ;
 
 aux_rule__expression_20
-    : op='**'
+    : QuestionMark optional__breakStatement_1 ':'
     ;
 
 aux_rule__expression_21
-    : op='*' | Divide | '%'
-    ;
-
-aux_rule__expression_22
-    : op='+' | '-' | '.'
-    ;
-
-aux_rule__expression_23
-    : op='<<' | '>>'
-    ;
-
-aux_rule__expression_24
-    : op=Less | '<=' | Greater | '>='
-    ;
-
-aux_rule__expression_25
-    : op='===' | '!==' | '==' | IsNotEq
-    ;
-
-aux_rule__expression_26
-    : op='&'
-    ;
-
-aux_rule__expression_27
-    : op='^'
-    ;
-
-aux_rule__expression_28
-    : op='|'
-    ;
-
-aux_rule__expression_29
-    : op='&&'
-    ;
-
-aux_rule__expression_30
-    : op='||'
-    ;
-
-aux_rule__expression_31
-    : op=QuestionMark optional__breakStatement_1 ':'
-    ;
-
-aux_rule__expression_32
-    : op='??'
-    ;
-
-aux_rule__expression_33
-    : op='<=>'
-    ;
-
-aux_rule__expression_34
-    : op=LogicalAnd
-    ;
-
-aux_rule__expression_35
-    : op=LogicalXor
-    ;
-
-aux_rule__expression_36
-    : op=LogicalOr
-    ;
-
-aux_rule__expression_37
     : IsSet '(' chainList
     ;
 
-aux_rule__expression_38
+aux_rule__expression_22
     : Empty '(' chain
     ;
 
-aux_rule__expression_39
+aux_rule__expression_23
     : Eval '(' expression
     ;
 
@@ -1812,35 +1759,35 @@ aux_rule__globalVar_3
     : OpenCurlyBracket expression CloseCurlyBracket
     ;
 
-aux_rule__expression_40
+aux_rule__expression_24
     : stringConstant '[' expression ']'
     ;
 
-aux_rule__expression_41
+aux_rule__expression_25
     : optional__expression_10 chain
     ;
 
-aux_rule__expression_42
+aux_rule__expression_26
     : chain altnt_block__expression_9
     ;
 
-aux_rule__expression_43
+aux_rule__expression_27
     : Exit optional__expression_2
     ;
 
-aux_rule__expression_44
+aux_rule__expression_28
     : optional__lambdaFunctionExpr_1 Function_ optional__functionDeclaration_2 '(' formalParameterList ')' optional__lambdaFunctionExpr_3 optional__lambdaFunctionExpr_5 blockStatement
     ;
 
-aux_rule__expression_45
+aux_rule__expression_29
     : assignable Eq optional__functionDeclaration_1 '&' altnt_block__expression_15
     ;
 
-aux_rule__expression_46
+aux_rule__expression_30
     : altnt_block__expression_13 ')'
     ;
 
-aux_rule__expression_47
+aux_rule__expression_31
     : altnt_block__expression_16 expression
     ;
 
@@ -1956,19 +1903,19 @@ aux_rule__foreachStatement_16
     : List '(' assignmentList ')'
     ;
 
-aux_rule__expression_48
+aux_rule__expression_32
     : LambdaFn '(' formalParameterList ')' '=>'
     ;
 
-aux_rule__expression_49
+aux_rule__expression_33
     : '(' castOperation ')'
     ;
 
-aux_rule__expression_50
+aux_rule__expression_34
     : List '(' assignmentList ')' Eq
     ;
 
-aux_rule__expression_51
+aux_rule__expression_35
     : assignable assignmentOperator optional__functionDeclaration_1
     ;
 

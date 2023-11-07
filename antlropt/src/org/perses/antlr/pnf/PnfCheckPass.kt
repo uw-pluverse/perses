@@ -22,7 +22,6 @@ import org.perses.antlr.ast.AbstractPersesRuleElement
 import org.perses.antlr.ast.AstTag
 import org.perses.antlr.ast.DefaultAstVisitor
 import org.perses.antlr.ast.PersesAlternativeBlockAst
-import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.ast.PersesOptionalAst
 import org.perses.antlr.ast.PersesPlusAst
 import org.perses.antlr.ast.PersesRuleReferenceAst
@@ -33,11 +32,10 @@ import java.lang.RuntimeException
 
 class PnfCheckPass : AbstractPnfPass() {
 
-  override fun processParserGrammar(
-    parserGrammar: PersesGrammar,
-    lexerGrammar: PersesGrammar?,
-  ): PersesGrammar {
-    for (rule in parserGrammar.flattenedAllRules) {
+  override fun processGrammar(
+    grammar: GrammarPair,
+  ): GrammarPair {
+    for (rule in grammar.flattenedAllRuleSequence()) {
       val name = rule.ruleNameHandle
       if (RuleType.isLexerRule(name.ruleName)) {
         continue
@@ -57,7 +55,7 @@ class PnfCheckPass : AbstractPnfPass() {
         throw RuntimeException("Checking $name failed.", e)
       }
     }
-    return parserGrammar
+    return grammar
   }
 
   private fun checkSequenceAst(body: AbstractPersesRuleElement) {

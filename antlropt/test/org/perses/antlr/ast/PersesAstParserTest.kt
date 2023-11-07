@@ -29,7 +29,7 @@ import kotlin.io.path.readText
 class PersesAstParserTest {
 
   @Test
-  fun test_multipleLexerActions() {
+  fun testMultipleLexerActions() {
     val grammar = PersesAstBuilder.loadGrammarFromString(
       """
       lexer gramar Test;
@@ -42,7 +42,7 @@ class PersesAstParserTest {
   }
 
   @Test
-  fun test_popMode() {
+  fun testPopMode() {
     val grammar = PersesAstBuilder.loadGrammarFromString(
       """
       lexer grammar Test;
@@ -53,7 +53,7 @@ class PersesAstParserTest {
   }
 
   @Test
-  fun test_skip() {
+  fun testSkip() {
     val grammar = PersesAstBuilder.loadGrammarFromString(
       """
       lexer grammar Test;
@@ -64,7 +64,7 @@ class PersesAstParserTest {
   }
 
   @Test
-  fun test_pushMode() {
+  fun testPushMode() {
     val grammar = PersesAstBuilder.loadGrammarFromString(
       """
       lexer grammar Test;
@@ -75,7 +75,7 @@ class PersesAstParserTest {
   }
 
   @Test
-  fun test_channel() {
+  fun testChannel() {
     val grammar = PersesAstBuilder.loadGrammarFromString(
       """
       lexer grammar Test;
@@ -86,7 +86,7 @@ class PersesAstParserTest {
   }
 
   @Test
-  fun test_lexer_modes() {
+  fun testLexerModes() {
     // A lexer grammar has to have lexer rules in the default mode.
     val grammarContent = """
       lexer grammar Test;
@@ -153,6 +153,33 @@ class PersesAstParserTest {
       .splitToSequence(";")
       .map { it.replace(Regex("\\s+"), "") }
       .toImmutableList()
+  }
+
+  @Test
+  fun testLabel() {
+    val grammar = PersesAstBuilder.loadGrammarFromString(
+      """
+      grammar Test;
+      start : label=(A | B) ;
+      A: 'a';
+      B: 'b';
+      """.trimIndent(),
+    )
+    assertThat(grammar.flattenedAllRules).hasSize(3)
+    assertThat(grammar.getRuleDefinition("start")!!.body.sourceCode).isEqualTo("label=(A | B)")
+  }
+
+  @Test
+  fun testWildcardDot() {
+    val grammar = PersesAstBuilder.loadGrammarFromString(
+      """
+      grammar T;
+      start: .;
+      """.trimIndent(),
+    )
+    val rule = grammar.flattenedAllRules.single().body as PersesTerminalAst
+    assertThat(rule).isInstanceOf(PersesTerminalAst::class.java)
+    assertThat(rule.isWildcardDot()).isTrue()
   }
 
   @Test

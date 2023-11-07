@@ -34,7 +34,9 @@ class OutlineAltBlockPassTest {
               ;
       """.trimIndent(),
     )
-    val processed = pass.processParserGrammar(orig, lexerGrammar = null)
+    val processed = pass.processGrammar(
+      GrammarPair(orig, lexerGrammar = null),
+    ).parserGrammar!!
     val body = processed.getRuleDefinition("start")!!.body
     assertThat(body).isInstanceOf(PersesSequenceAst::class.java)
     assertThat(body.childCount).isEqualTo(3)

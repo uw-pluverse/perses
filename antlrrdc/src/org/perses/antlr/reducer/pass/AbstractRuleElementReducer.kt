@@ -58,7 +58,7 @@ abstract class AbstractRuleElementReducer(
       // To make sure the order of alternatives is preserved.
       mutableGrammar.removeRule(ruleName)
       for ((_, value) in old2NewRules.entries) {
-        check(mutableGrammar.getAltBlock(ruleName).addIfInequivalent(value))
+        check(mutableGrammar.getAltBlock(ruleName).addIfNotEquivalent(value))
       }
       state.updateBestProgram(
         program.copyWithNewParserRuleDefs(mutableGrammar.toParserRuleAstList()),

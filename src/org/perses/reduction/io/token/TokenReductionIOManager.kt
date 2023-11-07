@@ -81,7 +81,11 @@ class TokenReductionIOManager(
   }
 
   override fun getConcreteReductionInputs(): AbstractSingleFileReductionInputs<
-    LanguageKind, SourceFile, *,> {
+    LanguageKind,
+    SourceFile,
+    *,
+    > {
+    @Suppress("UNCHECKED_CAST")
     return reductionInputs as AbstractSingleFileReductionInputs<LanguageKind, SourceFile, *>
   }
 }

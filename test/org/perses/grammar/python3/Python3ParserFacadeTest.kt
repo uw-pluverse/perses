@@ -21,7 +21,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
-import org.perses.antlr.ParseTreeUtil
+import org.perses.antlr.toTokenType
 import org.perses.program.printer.PrinterRegistry
 
 @RunWith(JUnit4::class)
@@ -52,7 +52,7 @@ class Python3ParserFacadeTest {
     antlrTokens.forEach {
       System.err.println(
         it.text + ": " +
-          ParseTreeUtil.getTokenName(it, origParseTree.lexer) +
+          facade.metaTokenInfoDb.getTokenInfoWithType(it.type.toTokenType())?.symbolicName +
           "  @" + it.line + ":" + it.charPositionInLine,
       )
     }

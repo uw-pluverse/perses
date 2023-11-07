@@ -115,8 +115,11 @@ abstract class AbstractStateBasedConcurrentReducer<
 
   private fun peekAtActiveFuturesForBest(): Boolean {
     var bestFound = false
-    val doneFutures = ArrayList<TestScriptExecResult<
-      ConcurrentStateEditTestPayload<ConcurrentState>,>,>()
+    val doneFutures = ArrayList<
+      TestScriptExecResult<
+        ConcurrentStateEditTestPayload<ConcurrentState>,
+        >,
+      >()
     activeFutures.forEach { future ->
       if (!future.isDone()) {
         return@forEach
@@ -258,7 +261,7 @@ interface IConcurrentState<T> {
     such that no tokens are skipped.
     for ddmin, it updates the field, tokenSize, which is used
     to calculate when to increase the granularity.
-  */
+   */
   fun advance(): T?
   fun advanceOnSuccess(newSequenceSize: Int): T?
 }

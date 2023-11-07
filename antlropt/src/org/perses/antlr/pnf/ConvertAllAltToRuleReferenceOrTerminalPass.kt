@@ -17,16 +17,15 @@
 package org.perses.antlr.pnf
 
 import org.perses.antlr.RuleType
-import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.ast.PersesRuleReferenceAst
 import org.perses.antlr.ast.PersesTerminalAst
 
 class ConvertAllAltToRuleReferenceOrTerminalPass : AbstractPnfPass() {
 
-  override fun processParserGrammar(
-    parserGrammar: PersesGrammar,
-    lexerGrammar: PersesGrammar?,
-  ): PersesGrammar {
+  override fun processGrammar(
+    grammar: GrammarPair,
+  ): GrammarPair {
+    val parserGrammar = grammar.parserGrammar ?: return grammar
     val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     mutable.nonEmptyAltBlockSequence()
       .toList() // Materialize the sequence to avoid concurrent modification exception
@@ -38,10 +37,12 @@ class ConvertAllAltToRuleReferenceOrTerminalPass : AbstractPnfPass() {
           .filter { it !is PersesRuleReferenceAst && it !is PersesTerminalAst }
           .forEach { seq ->
             val ruleName = name.createAuxiliaryRuleName(RuleType.OTHER_RULE)
-            mutable.getAltBlock(ruleName).addIfInequivalent(seq)
+            mutable.getAltBlock(ruleName).addIfNotEquivalent(seq)
             altBlock.replace(seq, PersesRuleReferenceAst.create(ruleName))
           }
       }
-    return parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
+    return grammar.withNewParserGrammar(
+      parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList()),
+    )
   }
 }

@@ -23,7 +23,6 @@ import org.perses.reduction.event.FixpointIterationEndEvent
 import org.perses.reduction.event.FixpointIterationStartEvent
 import org.perses.reduction.event.ReductionEndEvent
 import org.perses.util.Util.lazyAssert
-import java.io.IOException
 import java.io.PrintWriter
 import java.nio.charset.StandardCharsets
 import java.nio.file.Path
@@ -34,7 +33,7 @@ import kotlin.io.path.exists
 class StatisticsListener(resultFile: Path) : DefaultReductionListener() {
   private val iterations = ArrayList<ReductionIterationStatistics>()
 
-  internal val resultFile: Path = resultFile.absolute()
+  private val resultFile: Path = resultFile.absolute()
   override fun onFixpointIterationStart(event: FixpointIterationStartEvent) {
     val newStat = ReductionIterationStatistics(
       event.iteration.toString(),
@@ -46,54 +45,50 @@ class StatisticsListener(resultFile: Path) : DefaultReductionListener() {
 
   override fun onFixpointIterationEnd(event: FixpointIterationEndEvent) {
     lazyAssert({ iterations.isNotEmpty() }) { "The iterations list is empty." }
-    val currrentStat = iterations[iterations.size - 1]
-    lazyAssert({ currrentStat.iteration == event.startEvent.iteration.toString() }) {
+    val currentStat = iterations.last()
+    lazyAssert({ currentStat.iteration == event.startEvent.iteration.toString() }) {
       "The current iteration statistics does not match the current iteration: iteration in stat=" +
-        currrentStat.iteration +
+        currentStat.iteration +
         ", current iteration=" +
         event.startEvent.iteration
     }
-    currrentStat.endTimeMillis = event.currentTimeMillis
-    currrentStat.afterProgramSize = event.programSize
-    currrentStat.countOfTestScriptExecutions = event.countOfTestScriptExecutions
+    currentStat.endTimeMillis = event.currentTimeMillis
+    currentStat.afterProgramSize = event.programSize
+    currentStat.countOfTestScriptExecutions = event.countOfTestScriptExecutions
   }
 
   override fun onReductionEnd(event: ReductionEndEvent) {
-    try {
-      PrintWriter(resultFile.toFile(), StandardCharsets.UTF_8.name()).use { writer ->
-        printHumanReadableResult(writer)
+    PrintWriter(resultFile.toFile(), StandardCharsets.UTF_8.name()).use { writer ->
+      printHumanReadableResult(writer)
+      writer.println()
+      writer.printf("iterations=%d\n", iterations.size)
+      for (iteration in iterations) {
+        writeProperty(
+          writer,
+          "program_size_before",
+          iteration.iteration,
+          iteration.beforeProgramSize.toLong(),
+        )
+        writeProperty(
+          writer,
+          "program_size_after",
+          iteration.iteration,
+          iteration.afterProgramSize.toLong(),
+        )
+        writeProperty(
+          writer,
+          "elapsed_time_millis",
+          iteration.iteration,
+          iteration.elapsedTimeMillis(),
+        )
+        writeProperty(
+          writer,
+          "count_test_script_executions",
+          iteration.iteration,
+          iteration.countOfTestScriptExecutions.toLong(),
+        )
         writer.println()
-        writer.printf("iterations=%d\n", iterations.size)
-        for (iteration in iterations) {
-          writeProperty(
-            writer,
-            "program_size_before",
-            iteration.iteration,
-            iteration.beforeProgramSize.toLong(),
-          )
-          writeProperty(
-            writer,
-            "program_size_after",
-            iteration.iteration,
-            iteration.afterProgramSize.toLong(),
-          )
-          writeProperty(
-            writer,
-            "elapsed_time_millis",
-            iteration.iteration,
-            iteration.elapsedTimeMillis(),
-          )
-          writeProperty(
-            writer,
-            "count_test_script_executions",
-            iteration.iteration,
-            iteration.countOfTestScriptExecutions.toLong(),
-          )
-          writer.println()
-        }
       }
-    } catch (e: IOException) {
-      throw RuntimeException(e)
     }
   }
 

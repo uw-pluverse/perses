@@ -27,10 +27,10 @@ class TransitionASTSimulator(
 ) : AbstractASTSimulator<PersesTransitionAst>(ast) {
 
   init {
-    require(!ast.transition.isEpsilon) { ast.transition.toString() }
+    require(!ast.atnTransition.isEpsilon) { ast.atnTransition.toString() }
   }
 
-  private val simulator = TransitionSimulatorRegistry.createSimulatorFor(ast.transition)
+  private val simulator = TransitionSimulatorRegistry.createSimulatorFor(ast.atnTransition)
 
   override fun simulate(
     decisionMaker: AbstractDecisionMaker,

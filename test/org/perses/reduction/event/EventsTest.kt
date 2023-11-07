@@ -41,6 +41,11 @@ class EventsTest {
   val firstIterationStart = reductionStartEvent.nextFixpointIteration(
     programSize = 2,
     reducerClass = ConcurrentTokenSlicer.getAnnotationForGranularity(granularity = 1),
+    tree,
+    TestScriptExecutorServiceStatisticsSnapshot(
+      scriptExecutionNumber = 1,
+      externalCacheHitNumber = 0,
+    ),
   )
 
   val nodeReductionStartEvent = firstIterationStart.createNodeReductionStartEvent(
@@ -58,12 +63,18 @@ class EventsTest {
   val firstIterationEnd = firstIterationStart.createEndEvent(
     currentTimeMillis = System.currentTimeMillis(),
     programSize = 2,
-    countOfTestScriptExecutions = 100,
+    testScriptStatistics = TestScriptExecutorServiceStatisticsSnapshot(
+      scriptExecutionNumber = 2,
+      externalCacheHitNumber = 2,
+    ),
   )
 
   val reductionEndEvent = reductionStartEvent.createEndEvent(
     programSize = 1,
-    countOfTestScriptExecutions = 100,
+    testScriptStatistics = TestScriptExecutorServiceStatisticsSnapshot(
+      scriptExecutionNumber = 100 + 2,
+      externalCacheHitNumber = 2,
+    ),
   )
 
   @Test
@@ -85,7 +96,9 @@ class EventsTest {
   @Test
   fun testReductionEndEvent() {
     assertThat(reductionEndEvent.initialProgramSize()).isEqualTo(INITIAL_PROGRAM_SIZE)
-    assertThat(reductionEndEvent.countOfTestScriptExecutions).isEqualTo(100)
+    assertThat(
+      reductionEndEvent.testScriptExecutorServiceStatistics.scriptExecutionNumber,
+    ).isEqualTo(102)
     assertThat(reductionEndEvent.startEvent).isSameInstanceAs(reductionStartEvent)
   }
 

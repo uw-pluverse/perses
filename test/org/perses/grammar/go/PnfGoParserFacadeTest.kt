@@ -30,7 +30,7 @@ class PnfGoParserFacadeTest {
   val facade = PnfGoParserFacade()
 
   // Collection for keeping track of the shards of tests we need to run
-  private companion object testData {
+  private companion object TestData {
     val shard1 = mutableListOf<Path>()
     val shard2 = mutableListOf<Path>()
     val shard3 = mutableListOf<Path>()
@@ -86,42 +86,42 @@ class PnfGoParserFacadeTest {
 
   @Test
   fun testShard1() {
-    for (file in testData.shard1) {
+    for (file in shard1) {
       testSingleFile(file)
     }
   }
 
   @Test
   fun testShard2() {
-    for (file in testData.shard2) {
+    for (file in shard2) {
       testSingleFile(file)
     }
   }
 
   @Test
   fun testShard3() {
-    for (file in testData.shard3) {
+    for (file in shard3) {
       testSingleFile(file)
     }
   }
 
   @Test
   fun testShard4() {
-    for (file in testData.shard4) {
+    for (file in shard4) {
       testSingleFile(file)
     }
   }
 
   @Test
   fun testShard5() {
-    for (file in testData.shard5) {
+    for (file in shard5) {
       testSingleFile(file)
     }
   }
 
   @Test
   fun testShard6() {
-    for (file in testData.shard6) {
+    for (file in shard6) {
       testSingleFile(file)
     }
   }

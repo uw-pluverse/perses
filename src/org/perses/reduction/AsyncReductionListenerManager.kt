@@ -17,6 +17,8 @@
 package org.perses.reduction
 
 import com.google.common.collect.ImmutableList
+import com.google.common.flogger.FluentLogger
+import com.google.common.util.concurrent.ListenableFuture
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.event.BestProgramUpdateEvent
 import org.perses.reduction.event.FixpointIterationEndEvent
@@ -41,6 +43,7 @@ import org.perses.reduction.event.TokenSlicingStartEvent
 import org.perses.spartree.AbstractActionSet
 import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.util.DaemonThreadPool
+import org.perses.util.ktSevere
 import java.io.Closeable
 
 class AsyncReductionListenerManager(
@@ -53,10 +56,17 @@ class AsyncReductionListenerManager(
     DaemonThreadPool.shutdownOrThrow(executorService)
   }
 
-  private fun submitEvent(action: (AbstractReductionListener) -> Unit) {
-    executorService.submit {
-      for (listener in listeners) {
-        action(listener)
+  private fun submitEvent(action: (AbstractReductionListener) -> Unit): ListenableFuture<*> {
+    return executorService.submit {
+      try {
+        for (listener in listeners) {
+          action(listener)
+        }
+      } catch (e: Throwable) {
+        // Note this exception handling is necessary, because
+        logger.ktSevere {
+          "An exception has been thrown during the execution of the events. $e"
+        }
       }
     }
   }
@@ -74,9 +84,13 @@ class AsyncReductionListenerManager(
   }
 
   fun onFixpointIterationStart(event: FixpointIterationStartEvent) {
-    submitEvent { listener ->
+    val future = submitEvent { listener ->
       listener.onFixpointIterationStart(event)
     }
+    // Need to wait for the future to complete, because the event points
+    // to the spartree that can be modified by reducers. We need to make sure
+    // that the spartree is used before it is changed.
+    future.get()
   }
 
   fun onFixpointIterationEnd(event: FixpointIterationEndEvent) {
@@ -224,5 +238,9 @@ class AsyncReductionListenerManager(
     submitEvent { listener ->
       listener.onReductionSkipped(event)
     }
+  }
+
+  companion object {
+    val logger = FluentLogger.forEnclosingClass()
   }
 }

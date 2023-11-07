@@ -41,3 +41,13 @@ kt_jvm_test(
         "//src/org/perses/util/shell",
     ],
 )
+
+kt_jvm_test(
+    name = "ExitCodeTest",
+    srcs = [":ExitCodeTest.kt"],
+    deps = [
+        "//:kotlin_stdib",
+        "//:truth",
+        "//src/org/perses/util/shell:ExitCode",
+    ],
+)

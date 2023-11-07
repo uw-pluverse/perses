@@ -16,14 +16,17 @@
  */
 package org.perses.util
 
+import com.google.common.base.Strings
 import com.google.common.collect.ImmutableList
 import com.google.common.hash.HashCode
 import com.google.common.hash.Hashing
-import com.google.common.io.MoreFiles
-import com.google.common.io.RecursiveDeleteOption
+import com.google.common.primitives.ImmutableIntArray
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
+import java.io.OutputStream
+import java.io.PrintStream
+import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 import java.nio.file.CopyOption
 import java.nio.file.FileVisitResult
@@ -31,18 +34,48 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.SimpleFileVisitor
+import java.nio.file.StandardCopyOption
+import java.nio.file.StandardOpenOption
 import java.nio.file.attribute.BasicFileAttributes
 import java.nio.file.attribute.PosixFilePermission
 import java.util.IdentityHashMap
 import java.util.LinkedList
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.atomic.AtomicInteger
 import java.util.function.Predicate
 import java.util.zip.Deflater
 import java.util.zip.DeflaterOutputStream
 import java.util.zip.InflaterOutputStream
+import kotlin.io.path.deleteRecursively
+import kotlin.io.path.outputStream
 import kotlin.io.path.writeText
 
 object Util {
+
+  object ExceptionOutputStream : OutputStream() {
+    override fun write(p0: Int) {
+      error("This output stream should not be used.")
+    }
+  }
+
+  object ExceptionPrintStream : PrintStream(ExceptionOutputStream)
+
+  fun createAppendablePrintStream(
+    path: Path,
+    autoFlush: Boolean = false,
+    charset: Charset = StandardCharsets.UTF_8,
+  ): PrintStream {
+    val outputStream = path.outputStream(StandardOpenOption.CREATE, StandardOpenOption.APPEND)
+    return PrintStream(outputStream, autoFlush, charset.name())
+  }
+
+  fun createNonAppendablePrintStream(
+    path: Path,
+    autoFlush: Boolean = false,
+    charset: Charset = StandardCharsets.UTF_8,
+  ): PrintStream {
+    return PrintStream(path.outputStream(), autoFlush, charset.name())
+  }
 
   @JvmStatic
   fun computePercentage(numerator: Int, denominator: Int): String {
@@ -54,7 +87,7 @@ object Util {
     list: LinkedList<T>?,
     removalCondition: Predicate<T>,
   ) {
-    if (list == null || list.isEmpty()) {
+    if (list.isNullOrEmpty()) {
       return
     }
     val iterator = list.iterator()
@@ -73,7 +106,7 @@ object Util {
   }
 
   @JvmStatic
-  fun <T> createConcurrentSet() = ConcurrentHashMap.newKeySet<T>()
+  fun <T> createConcurrentSet(): MutableSet<T> = ConcurrentHashMap.newKeySet()
 
   @JvmStatic
   fun <T> removeElementBySwappingLastElement(list: ArrayList<T>, index: Int) {
@@ -189,6 +222,7 @@ object Util {
       try {
         Files.createDirectories(dir)
       } catch (e: IOException) {
+        // Ignore the exception intentionally.
       }
       check(Files.isDirectory(dir)) { "Failed to create a directory named $dir" }
     }
@@ -234,7 +268,7 @@ object Util {
   @JvmStatic
   fun clearDirectory(directory: Path) {
     require(Files.isDirectory(directory))
-    MoreFiles.deleteRecursively(directory, RecursiveDeleteOption.ALLOW_INSECURE)
+    directory.deleteRecursively()
     Files.createDirectory(directory)
   }
 
@@ -257,13 +291,22 @@ object Util {
           return FileVisitResult.CONTINUE
         }
 
-        override fun visitFile(file: Path, attrs: BasicFileAttributes):
-          FileVisitResult {
+        override fun visitFile(file: Path, attrs: BasicFileAttributes): FileVisitResult {
           Files.copy(file, target.resolve(source.relativize(file)), *options)
           return FileVisitResult.CONTINUE
         }
       },
     )
+  }
+
+  @JvmStatic
+  fun copyFileToDirectory(srcFilePath: Path, destDir: Path): Path {
+    val destFilePath = destDir.resolve(srcFilePath.fileName)
+    require(!srcFilePath.toAbsolutePath().equals(destFilePath.toAbsolutePath())) {
+      "Destination path cannot be the same as the original path."
+    }
+    Files.copy(srcFilePath, destFilePath, StandardCopyOption.REPLACE_EXISTING)
+    return destFilePath
   }
 
   @JvmStatic
@@ -334,16 +377,35 @@ object Util {
   }
 
   data class SHA512HashCode private constructor(
-    val length: Int,
+    private val stringLengths: ImmutableIntArray,
     val digest: HashCode,
   ) {
+
+    val numOfStrings: Int
+      get() = stringLengths.length()
+
+    fun getLengthOfString(index: Int) = stringLengths[index]
+
     companion object {
       fun createFromString(string: String) = SHA512HashCode(
-        length = string.length,
+        stringLengths = ImmutableIntArray.of(string.length),
         digest = Hashing.sha512().hashString(string, StandardCharsets.UTF_8),
+      )
+
+      fun createFromListOfStrings(strings: List<String>) = SHA512HashCode(
+        stringLengths = ImmutableIntArray.builder(strings.size).apply {
+          strings.forEach { s -> add(s.length) }
+        }.build(),
+        digest = hashListOfStrings(strings),
       )
     }
   }
+
+  @JvmStatic
+  fun hashListOfStrings(list: List<String>) = Hashing.sha512().hashObject(
+    list,
+    StringListToByteFunnel,
+  )
 
   @JvmStatic
   fun zipCompress(text: String): ByteArray {
@@ -428,6 +490,25 @@ object Util {
   inline fun lazyAssert(test: () -> Boolean, message: () -> Any) {
     if (ASSERTION_ENABLED) {
       check(test()) { message() }
+    }
+  }
+
+  class AtomicSequenceGenerator(start: Int = 1, private val minLengthForPadding: Int) {
+    init {
+      require(minLengthForPadding > 0)
+    }
+    private val generator = AtomicInteger(start)
+
+    fun next(): String {
+      return Strings.padStart(generator.getAndIncrement().toString(), minLengthForPadding, '0')
+    }
+  }
+  data class SpaceSize(val bytes: Int) {
+
+    companion object {
+      fun megaBytes(mb: Int): SpaceSize = kiloBytes(kb = mb * 1000)
+
+      fun kiloBytes(kb: Int) = SpaceSize(bytes = kb * 1000)
     }
   }
 }

@@ -29,10 +29,11 @@ class NodeReplacementTreeEdit internal constructor(
     }
   }
 
+//  TODO: merge this into AnyNodeReplacement
   override fun internalApplyToTree() {
     val action = actionSet.actions.single()
     val targetNode = action.targetNode
-    val childToHoist = action.replacingChild
+    val childToHoist = action.replacingNode
     childToHoist.parent!!.removeChild(childToHoist)
     lazyAssert { childToHoist.parent == null }
     val payload = AbstractNodePayload.concatenatePaylods(

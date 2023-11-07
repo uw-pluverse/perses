@@ -44,9 +44,9 @@ antlr_codegen_parser(
     parser_java_file_name = "PnfSolidityParser.java",
 )
 
-java_library(
+kt_jvm_library(
     name = "parser_facade",
-    srcs = ["PnfSolidityParserFacade.java"],
+    srcs = ["PnfSolidityParserFacade.kt"],
     deps = [
         ":orig_solidity_parser",
         ":pnf_solidity_grammar",

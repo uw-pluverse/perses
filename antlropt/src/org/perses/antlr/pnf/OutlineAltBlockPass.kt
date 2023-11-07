@@ -20,15 +20,14 @@ import com.google.common.collect.ImmutableList
 import org.perses.antlr.RuleType
 import org.perses.antlr.ast.AbstractPersesRuleElement
 import org.perses.antlr.ast.AstTag
-import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.ast.PersesRuleReferenceAst
 
 class OutlineAltBlockPass : AbstractPnfPass() {
 
-  override fun processParserGrammar(
-    parserGrammar: PersesGrammar,
-    lexerGrammar: PersesGrammar?,
-  ): PersesGrammar {
+  override fun processGrammar(
+    grammar: GrammarPair,
+  ): GrammarPair {
+    val parserGrammar = grammar.parserGrammar ?: return grammar
     val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     mutable.nonEmptyAltBlockSequence()
       .toList()
@@ -41,7 +40,7 @@ class OutlineAltBlockPass : AbstractPnfPass() {
               if (it.tag == AstTag.ALTERNATIVE_BLOCK) {
                 val ruleName = name.createAuxiliaryRuleName(RuleType.ALT_BLOCKS)
                 it.foreachChildRuleElement { alt ->
-                  mutable.getAltBlock(ruleName).addIfInequivalent(alt)
+                  mutable.getAltBlock(ruleName).addIfNotEquivalent(alt)
                 }
                 newChildren.add(PersesRuleReferenceAst.create(ruleName))
                 childrenChanged = true
@@ -55,6 +54,8 @@ class OutlineAltBlockPass : AbstractPnfPass() {
           }
         }
       }
-    return parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
+    return grammar.withNewParserGrammar(
+      parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList()),
+    )
   }
 }

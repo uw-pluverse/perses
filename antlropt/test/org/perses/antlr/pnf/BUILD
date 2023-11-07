@@ -16,12 +16,13 @@ pnf_pass_golden_test(
     pnf_pass_name = "org.perses.antlr.pnf.ConvertAllAltToRuleReferenceOrTerminalPass",
 )
 
-pnf_pass_golden_test(
-    name = "lexer_with_fragments_InlineFragmentPass",
-    golden_file = "lexer_with_fragments.g4.InlineFragmentPass.golden",
-    input_file = "lexer_with_fragments.g4",
-    pnf_pass_name = "org.perses.antlr.pnf.InlineFragmentPass",
-)
+# We should delete this pass in the future.
+#pnf_pass_golden_test(
+#    name = "lexer_with_fragments_InlineFragmentPass",
+#    golden_file = "lexer_with_fragments.g4.InlineFragmentPass.golden",
+#    input_file = "lexer_with_fragments.g4",
+#    pnf_pass_name = "org.perses.antlr.pnf.InlineFragmentPass",
+#)
 
 pnf_pass_golden_test(
     name = "test_grammar_2",
@@ -114,6 +115,35 @@ java_binary(
     main_class = "org.perses.antlr.pnf.PnfPassCommandLine",
     runtime_deps = [
         ":PnfPassCommandLine",
+    ],
+)
+
+kt_jvm_test(
+    name = "GrammarPairTest",
+    srcs = [
+        "GrammarPairTest.kt",
+    ],
+    deps = [
+        "//:truth",
+        "//antlropt/src/org/perses/antlr/pnf:pnf_pass_interface",
+        "//test/org/perses/antlr:GrammarTestingUtility",
+    ],
+)
+
+kt_jvm_test(
+    name = "OutlineImplicitTokenDefPassTest",
+    srcs = [
+        "OutlineImplicitTokenDefPassTest.kt",
+    ],
+    associates = [
+        "//antlropt/src/org/perses/antlr/pnf:pnf_passes",
+    ],
+    data = [
+        "//src/org/perses/grammar/c:OrigC.g4",
+    ],
+    deps = [
+        "//:truth",
+        "//test/org/perses/antlr:GrammarTestingUtility",
     ],
 )
 
@@ -366,5 +396,16 @@ kt_jvm_test(
         "//antlropt/src/org/perses/antlr/pnf:pnf_pass_manager",
         "//test/org/perses/antlr:GrammarTestingUtility",
         "//test/org/perses/antlr/pnf:PnfTestGrammar",
+    ],
+)
+
+kt_jvm_test(
+    name = "RemoveUnusedLabelPassTest",
+    srcs = [
+        "RemoveUnusedLabelPassTest.kt",
+    ],
+    deps = [
+        "//:truth",
+        "//antlropt/src/org/perses/antlr/pnf:pnf_passes",
     ],
 )

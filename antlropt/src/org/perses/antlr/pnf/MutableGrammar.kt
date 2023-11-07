@@ -50,7 +50,7 @@ class MutableGrammar(
       }
   }
 
-  fun altSequence(): Sequence<AbstractPersesRuleElement> {
+  fun alternativeSequence(): Sequence<AbstractPersesRuleElement> {
     return map.values
       .asSequence()
       .flatMap { it.asSequence() }
@@ -114,7 +114,7 @@ class MutableGrammar(
 
   fun copyFrom(defMap: Multimap<RuleNameHandle, AbstractPersesRuleElement>): MutableGrammar {
     defMap.forEach { key, value ->
-      getAltBlock(key).addIfInequivalent(value)
+      getAltBlock(key).addIfNotEquivalent(value)
     }
     return this
   }
@@ -152,10 +152,10 @@ class MutableGrammar(
     val copy = MutableGrammar()
     ruleNameAltPairSequence().forEach { (ruleName, oldDef) ->
       when (val decision = transformer.invoke(ruleName, oldDef)) {
-        is TransformDecision.Keep -> copy.getAltBlock(ruleName).addIfInequivalent(oldDef)
+        is TransformDecision.Keep -> copy.getAltBlock(ruleName).addIfNotEquivalent(oldDef)
         is TransformDecision.Delete -> Unit // do nothing.
         is TransformDecision.Replace -> copy.getAltBlock(ruleName)
-          .addIfInequivalent(decision.newValue)
+          .addIfNotEquivalent(decision.newValue)
         else -> error("Unhandled case $decision")
       }
     }
@@ -206,10 +206,10 @@ class MutableGrammar(
         val body = rule.body
         if (body is PersesAlternativeBlockAst) {
           body.foreachChildRuleElement { alt ->
-            altBlock.addIfInequivalent(alt)
+            altBlock.addIfNotEquivalent(alt)
           }
         } else {
-          altBlock.addIfInequivalent(body)
+          altBlock.addIfNotEquivalent(body)
         }
       }
       return result

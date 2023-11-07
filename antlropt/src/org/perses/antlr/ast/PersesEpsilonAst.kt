@@ -22,7 +22,7 @@ import org.antlr.v4.tool.ast.GrammarAST
 import org.perses.util.ast.Indent
 import java.io.PrintStream
 
-class PersesEpsilonAst() : AbstractPersesRuleElement() {
+class PersesEpsilonAst : AbstractPersesRuleElement() {
 
   override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
     stream.print("/* Epsilon. */")

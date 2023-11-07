@@ -33,7 +33,6 @@ import org.perses.antlr.ast.PersesTerminalAst
 import org.perses.antlr.ast.RuleEpsilonComputer.Companion.computeEpsilonableRules
 import org.perses.util.toImmutableList
 import java.util.ArrayDeque
-import java.util.function.Consumer
 
 class GrammarHierarchyBuilder(grammar: AbstractAntlrGrammar) {
   private val combinedRules = grammar.getCombinedRules()
@@ -54,6 +53,13 @@ class GrammarHierarchyBuilder(grammar: AbstractAntlrGrammar) {
       immediateSubRules.literals,
       epsilonInfo.canBeEpsilon(ruleDefinition),
     )
+  }
+
+  private fun printCombinedRules() {
+    combinedRules.joinToString(separator = "\n") { it.sourceCode }.let {
+      println("The rules are:")
+      println(it)
+    }
   }
 
   private data class RulesAndLiterals(
@@ -96,17 +102,21 @@ class GrammarHierarchyBuilder(grammar: AbstractAntlrGrammar) {
         (ruleBody as PersesAlternativeBlockAst).foreachChildRuleElement {
           extractImmediateSubrulesFromBlockAST(it, ruleNameCollector, literalCollector)
         }
+
       AstTag.TERMINAL -> {
         val terminal = ruleBody as PersesTerminalAst
         when {
-          terminal.isEOF() -> {}
+          terminal.isEOF() -> Unit
           terminal.isStringLiteral() -> literalCollector.add(terminal.getStringLiteralOrThrow())
+          terminal.isWildcardDot() -> Unit
           else -> ruleNameCollector.add(terminal.text)
         }
       }
+
       AstTag.RULE_REF -> {
         ruleNameCollector.add((ruleBody as PersesRuleReferenceAst).ruleNameHandle.ruleName)
       }
+
       AstTag.STAR, AstTag.PLUS, AstTag.OPTIONAL -> {
         extractImmediateSubrulesFromBlockAST(
           (ruleBody as AbstractPersesQuantifiedAst).body,
@@ -114,6 +124,7 @@ class GrammarHierarchyBuilder(grammar: AbstractAntlrGrammar) {
           literalCollector,
         )
       }
+
       AstTag.SEQUENCE -> {
         val seq = ruleBody as PersesSequenceAst
         val unremovableChildren = seq
@@ -126,14 +137,17 @@ class GrammarHierarchyBuilder(grammar: AbstractAntlrGrammar) {
               literalCollector,
             )
           }
+
           1 -> extractImmediateSubrulesFromBlockAST(
             unremovableChildren.single(),
             ruleNameCollector,
             literalCollector,
           )
+
           else -> {}
         }
       }
+
       else -> {}
     }
   }
@@ -150,9 +164,9 @@ class GrammarHierarchyBuilder(grammar: AbstractAntlrGrammar) {
       for (subruleName in node.immediateSubRuleNames) {
         val subrule = nameToRuleMap[subruleName]
         requireNotNull(subrule) {
-          "No subrule for node '$subruleName'. " +
-            "Node='${node.ruleName}'. " +
-            "Check if there is a definition for '$subruleName'"
+          "No subrule for node '$subruleName', Node='${node.ruleName}'. " +
+            "Check if there is a definition for '$subruleName'\n\n" +
+            combinedRules.joinToString(separator = "\n") { it.sourceCode }
         }
         graph.putEdge(node, subrule)
       }
@@ -200,7 +214,7 @@ class GrammarHierarchyBuilder(grammar: AbstractAntlrGrammar) {
       rules: ImmutableList<RuleHierarchyEntry>,
     ): ImmutableMap<String, RuleHierarchyEntry> {
       val builder = ImmutableMap.builder<String?, RuleHierarchyEntry?>()
-      rules.forEach(Consumer { rule: RuleHierarchyEntry -> builder.put(rule.ruleName, rule) })
+      rules.forEach { builder.put(it.ruleName, it) }
       return builder.build()
     }
   }

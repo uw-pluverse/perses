@@ -25,7 +25,7 @@ abstract class AbstractMain<Cmd : AbstractCommandOptions>(args: Array<String>) {
     }
   }
 
-  private val commander: AbstractCommandOptions.CmdUsagePrinter
+  protected val commander: AbstractCommandOptions.CmdUsagePrinter
 
   @JvmField
   protected val cmd: Cmd

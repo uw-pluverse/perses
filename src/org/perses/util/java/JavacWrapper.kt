@@ -34,7 +34,7 @@ class JavacWrapper(val sourceFiles: ImmutableList<Path>) : Closeable {
   val diagnostics = DiagnosticCollector<JavaFileObject>()
   val manager = compiler.getStandardFileManager(
     diagnostics,
-    /*local*/null,
+    null, // local
     StandardCharsets.UTF_8,
   )
 
@@ -54,11 +54,11 @@ class JavacWrapper(val sourceFiles: ImmutableList<Path>) : Closeable {
 
   fun compile() {
     val task = compiler.getTask(
-      /*out*/null,
+      null, // out
       manager,
       diagnostics,
       options,
-      /*classes*/null,
+      null, // classes
       sources,
     )
     if (!task.call()) {

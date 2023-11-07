@@ -46,9 +46,9 @@ antlr_codegen_parser(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "parser_facade",
-    srcs = ["Python3ParserFacade.java"],
+    srcs = ["Python3ParserFacade.kt"],
     deps = [
         ":language_kind",
         ":pnf_python3_parser",

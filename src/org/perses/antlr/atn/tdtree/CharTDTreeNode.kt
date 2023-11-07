@@ -25,10 +25,6 @@ class CharTDTreeNode(
   val char: Char,
 ) : AbstractTDTreeNode(nodeId) {
 
-  override fun addChild(child: AbstractTDTreeNode, payload: Any) {
-    error("cannot add children.")
-  }
-
   override fun checkNodeIntegrity(): ErrorMessage {
     val builder = ImmutableList.builder<String>()
     if (childCount != 0) {
@@ -37,8 +33,8 @@ class CharTDTreeNode(
     return ErrorMessage(builder.build())
   }
 
-  override fun copyCurrentNode(): AbstractTDTreeNode {
-    return CharTDTreeNode(nodeId, char)
+  override fun internalCopyCurrentNode(computedNewNodeId: Int): AbstractTDTreeNode {
+    return CharTDTreeNode(computedNewNodeId, char)
   }
 
   override fun toString(): String {

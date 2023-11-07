@@ -40,9 +40,17 @@ class PersesGrammar(
     LEXER, PARSER, COMBINED
   }
 
+  init {
+    when (grammarType) {
+      GrammarType.LEXER -> require(parserRules.isEmpty())
+      GrammarType.PARSER -> require(lexerRules.flattenedLexerRules.isEmpty())
+      else -> Unit
+    }
+  }
+
   val flattenedAllRules: ImmutableList<AbstractPersesRuleDefAst> = ImmutableList
     .builder<AbstractPersesRuleDefAst>()
-    .addAll(lexerRules.flattern())
+    .addAll(lexerRules.flattenedLexerRules)
     .addAll(parserRules)
     .build()
 
@@ -213,6 +221,8 @@ class PersesGrammar(
     }
     return true
   }
+
+  fun computeAntlrBaseFileName() = "$grammarName.g4"
 
   companion object {
     private const val SINGLE_LINE_MODE = false

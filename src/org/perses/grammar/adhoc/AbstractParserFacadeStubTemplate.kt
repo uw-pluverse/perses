@@ -43,10 +43,9 @@ abstract class AbstractParserFacadeStubTemplate(
     """createCombinedAntlrGrammar("${parserFile.fileName}", ${classSimpleName()}.class)"""
   } else {
     """createSeparateAntlrGrammar(
-      |"${parserFile.fileName}", 
-      |"${lexerFile.fileName}", 
-      |${classSimpleName()}.class) 
-    """.trimMargin()
+        "${parserFile.fileName}", 
+        "${lexerFile.fileName}", 
+        ${classSimpleName()}.class)"""
   }
 
   private val identifierTokens = tokenNamesOfIdentifiers
@@ -60,47 +59,51 @@ abstract class AbstractParserFacadeStubTemplate(
 
   override fun generateCode(): String {
     return """
-    package $packageName;
+package $packageName;
+
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import com.google.common.io.BaseEncoding;
+import org.perses.program.LanguageKind;
+import org.perses.program.SerializableLanguageKind;
+import org.perses.grammar.AbstractDefaultParserFacade;
   
-    import org.antlr.v4.runtime.CharStream;
-    import org.antlr.v4.runtime.CommonTokenStream;
-    import org.antlr.v4.runtime.tree.ParseTree;
-    import com.google.common.io.BaseEncoding;
-    import org.perses.program.LanguageKind;
-    import org.perses.program.SerializableLanguageKind;
-    import org.perses.grammar.AbstractDefaultParserFacade;
   
+public final class ${classSimpleName()}
+  extends AbstractDefaultParserFacade<$lexerClassSimpleName, $parserClassSimpleName> {
+  public ${classSimpleName()}() {
+    super(
+        LANGUAGE,
+        $createAntlrGrammar,
+        CLASS_LEXER,
+        CLASS_PARSER,
+        $identifierTokens);
+  }
+
+  @Override
+  protected $lexerClassSimpleName createLexer(CharStream inputStream) {
+    return new $lexerClassSimpleName(inputStream);
+  }
+
+  @Override
+  protected $parserClassSimpleName createParser(CommonTokenStream tokens) {
+    return new $parserClassSimpleName(tokens);
+  }
+
+  @Override
+  protected ParseTree startParsing($parserClassSimpleName parser) {
+    return parser.$startRuleName();
+  }
+ 
+  public static LanguageKind $fieldNameLanguage;
   
-    public final class ${classSimpleName()}
-      extends AbstractDefaultParserFacade<$lexerClassSimpleName, $parserClassSimpleName> {
-      public ${classSimpleName()}() {
-        super(
-            LANGUAGE,
-            $createAntlrGrammar,
-            $lexerClassSimpleName.class,
-            $parserClassSimpleName.class,
-            $identifierTokens);
-      }
+  ${createLanguageKind()}
   
-      @Override
-      protected $lexerClassSimpleName createLexer(CharStream inputStream) {
-        return new $lexerClassSimpleName(inputStream);
-      }
+  public static final Class<$lexerClassSimpleName> CLASS_LEXER = $lexerClassSimpleName.class;
   
-      @Override
-      protected $parserClassSimpleName createParser(CommonTokenStream tokens) {
-        return new $parserClassSimpleName(tokens);
-      }
-  
-      @Override
-      protected ParseTree startParsing($parserClassSimpleName parser) {
-        return parser.$startRuleName();
-      }
-     
-      public static LanguageKind $fieldNameLanguage;
-      
-      ${createLanguageKind()}
-    }
+  public static final Class<$parserClassSimpleName> CLASS_PARSER = $parserClassSimpleName.class;
+}
     """
   }
 

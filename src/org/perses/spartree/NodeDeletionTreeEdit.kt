@@ -29,28 +29,9 @@ class NodeDeletionTreeEdit internal constructor(
   }
 
   override fun internalApplyToTree() {
-    val actions = actionSet.actions
-    val parents = HashSet<AbstractSparTreeNode>()
-    for (action in actions) {
-      val targetNode = action.targetNode
-      targetNode.delete()
-      SparTree.fixLeafLinkByDeleting(targetNode.beginToken!!, targetNode.endToken!!.next!!)
-      if (targetNode.parent != null) {
-        parents.add(targetNode.parent!!)
-      }
+    actionSet.actions.forEach { action ->
+      action.apply()
     }
-    for (parent in parents) {
-      parent.cleanDeletedImmediateChildren()
-    }
-    var changed: Boolean
-    do {
-      changed = false
-      for (parent in parents) {
-        if (SparTree.updateTokenIntervalUpToRoot(parent)) {
-          changed = true
-        }
-      }
-    } while (changed)
   }
 
   override fun computeProgram(tree: SparTree): TokenizedProgram {

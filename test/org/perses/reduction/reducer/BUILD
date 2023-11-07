@@ -22,7 +22,6 @@ kt_jvm_test(
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction:reduction_level",
         "//src/org/perses/reduction/partition",
-        "//src/org/perses/reduction/partition:level_partition_policy",
         "//src/org/perses/reduction/reducer:node_based_reducer",
         "//src/org/perses/reduction/reducer/hdd:level_based_reducers",
         "//src/org/perses/spartree",
@@ -46,7 +45,6 @@ kt_jvm_test(
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction:reduction_level",
         "//src/org/perses/reduction/partition",
-        "//src/org/perses/reduction/partition:level_partition_policy",
         "//src/org/perses/reduction/reducer:node_based_reducer",
         "//src/org/perses/reduction/reducer/hdd:level_based_reducers",
         "//src/org/perses/spartree",
@@ -73,7 +71,6 @@ kt_jvm_test(
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction:reduction_level",
         "//src/org/perses/reduction/partition",
-        "//src/org/perses/reduction/partition:level_partition_policy",
         "//src/org/perses/reduction/reducer:node_based_reducer",
         "//src/org/perses/reduction/reducer/hdd:level_based_reducers",
         "//src/org/perses/reduction/reducer/token:token_slicer",
@@ -85,9 +82,9 @@ kt_jvm_test(
     ],
 )
 
-java_test(
+kt_jvm_test(
     name = "PersesNodeReducerTest",
-    srcs = ["PersesNodeReducerTest.java"],
+    srcs = ["PersesNodeReducerTest.kt"],
     test_class = "org.perses.reduction.reducer.PersesNodeReducerTest",
     deps = [
         "//:antlr_tool",
@@ -97,7 +94,6 @@ java_test(
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction:reduction_level",
         "//src/org/perses/reduction/partition",
-        "//src/org/perses/reduction/partition:level_partition_policy",
         "//src/org/perses/reduction/reducer:node_based_reducer",
         "//src/org/perses/reduction/reducer/hdd:level_based_reducers",
         "//src/org/perses/spartree",

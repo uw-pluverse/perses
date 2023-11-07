@@ -27,7 +27,7 @@ import java.lang.RuntimeException
 class VerbosityFlagsTest {
 
   @Test
-  fun test_invalid_value_triggers_exception() {
+  fun testInvalidValueTriggersException() {
     val flags = VerbosityFlags()
     flags.verbosity = "invalid"
     Assert.assertThrows(RuntimeException::class.java) {

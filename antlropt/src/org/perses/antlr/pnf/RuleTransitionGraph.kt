@@ -110,7 +110,8 @@ class RuleTransitionGraph private constructor(
           val seq = ast as PersesSequenceAst
           addEdge(graph, ruleName, edgeLabel, childSelector(seq), childSelector)
         }
-        else -> { /* do nothing */
+        else -> {
+          /* do nothing */
         }
       }
     }

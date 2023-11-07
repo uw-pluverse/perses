@@ -8,20 +8,20 @@ cross_folder_golden_test(
 )
 
 kt_jvm_test(
-    name = "PnfSmtlibv2ParserFacadeTest",
+    name = "PnfSmtLibv2ParserFacadeTest",
     srcs = ["PnfSmtLibv2ParserFacadeTest.kt"],
     data = [
         "//test_data/smtlibv2_programs",
     ],
     shard_count = 1,
-    test_class = "org.perses.grammar.smtlibv2.PnfSmtLibv2ParserFacadeTest",
     deps = [
         "//:antlr_runtime",
         "//:antlr_tool",
         "//:flogger",
         "//:guava",
         "//:truth",
-        "//src/org/perses/antlr:antlr_grammar_util",
+        "//src/org/perses/antlr:util",
+        "//src/org/perses/grammar/smtlibv2:orig_parser_facade",
         "//src/org/perses/grammar/smtlibv2:parser_facade",
         "//test/org/perses:test_util",
         "//test/org/perses/program:LanguageKindTestUtil",

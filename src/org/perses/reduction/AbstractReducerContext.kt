@@ -24,7 +24,8 @@ abstract class AbstractReducerContext<
   P,
   K : AbstractDataKind,
   M : AbstractReductionIOManager<P, K, M>,
-  I : AbstractReducerContext<P, K, M, I>,>(
+  I : AbstractReducerContext<P, K, M, I>,
+  >(
   val ioManager: M,
   val executorService: TestScriptExecutorService,
 ) {

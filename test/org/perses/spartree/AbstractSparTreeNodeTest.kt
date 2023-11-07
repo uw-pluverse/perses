@@ -17,17 +17,27 @@
 package org.perses.spartree
 
 import com.google.common.truth.Truth.assertThat
+import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.c.LanguageC
+import org.perses.program.TokenizedProgramFactory
+import org.perses.util.toImmutableList
 
 @RunWith(JUnit4::class)
 class AbstractSparTreeNodeTest {
 
+  val facade = TestUtility.getFacade(LanguageC)
+  val nodeFactory = SparTreeNodeFactory(
+    facade.metaTokenInfoDb,
+    TokenizedProgramFactory.createEmptyFactory(LanguageC),
+    facade.ruleHierarchy,
+  )
+
   @Test
-  fun test_updateLeafTokenCount_single_statement() {
+  fun testUpdateLeafTokenCountSingleStatement() {
     val tree = TestUtility.createSparTreeFromString("int a;", LanguageC)
     tree.updateLeafTokenCount()
     assertThat(tree.root.leafTokenCount).isEqualTo(3)
@@ -50,7 +60,38 @@ class AbstractSparTreeNodeTest {
   }
 
   @Test
-  fun test_updateLeafTokenCount_two_statements() {
+  fun testEmptyLeafNodeSequence() {
+    val node = nodeFactory.createParserRuleSparTreeNode("statement")
+    node.updateLeafTokenCount()
+    node.leafNodeSequence().toImmutableList().let {
+      assertThat(it).isEmpty()
+    }
+    assertThat(node.leafTokenCount).isEqualTo(0)
+  }
+
+  @Test
+  fun testNonEmptyLeafNodeSequence() {
+    val token = facade.transformLiteralIntoSingleToken(";")
+    val tokenNode = nodeFactory.createLexerRuleSparTreeNode(token)
+    val ruleNode = nodeFactory.createParserRuleSparTreeNode("expressionStatement")
+    ruleNode.addChild(
+      tokenNode,
+      AbstractNodePayload.SinglePayload(
+        facade.ruleHierarchy.getRuleHierarchyEntryWithNameOrThrow("statement"),
+      ),
+    )
+    val exception = Assert.assertThrows(Exception::class.java) {
+      ruleNode.leafNodeSequence()
+    }
+    assertThat(exception.message).contains("leaf node links are not updated")
+    ruleNode.buildTokenIntervalInfoRecursive()
+    assertThat(ruleNode.leafNodeSequence().toImmutableList()).containsExactly(
+      tokenNode,
+    )
+  }
+
+  @Test
+  fun testUpdateLeafTokenCountTwoStatements() {
     val tree = TestUtility.createSparTreeFromString("int a; int b=0;", LanguageC)
     tree.updateLeafTokenCount()
     assertThat(tree.root.leafTokenCount).isEqualTo(8)

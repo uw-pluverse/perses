@@ -16,8 +16,6 @@
  */
 package org.perses.antlr
 
-import com.google.common.io.MoreFiles
-import com.google.common.io.RecursiveDeleteOption
 import com.google.common.truth.Truth.assertThat
 import com.google.common.truth.Truth.assertWithMessage
 import org.junit.After
@@ -27,6 +25,7 @@ import org.junit.runners.JUnit4
 import org.perses.antlr.util.AntlrToolWrapper
 import org.perses.util.FileNameContentPair
 import java.nio.file.Files
+import kotlin.io.path.deleteRecursively
 import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
@@ -38,7 +37,7 @@ class AntlrToolWrapperTest {
 
   @After
   fun teardown() {
-    MoreFiles.deleteRecursively(tempDir, RecursiveDeleteOption.ALLOW_INSECURE)
+    tempDir.deleteRecursively()
   }
 
   @Test

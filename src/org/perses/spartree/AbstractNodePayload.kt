@@ -61,7 +61,7 @@ abstract class AbstractNodePayload {
     override val actualAntlrRuleType: RuleHierarchyEntry?
       get() = expectedAntlrRuleType
 
-    override val asSinglePayloadList = ImmutableList.of(this)
+    override val asSinglePayloadList: ImmutableList<SinglePayload> = ImmutableList.of(this)
 
     override fun label(): String {
       return expectedAntlrRuleType?.ruleName ?: "Token"

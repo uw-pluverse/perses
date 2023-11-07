@@ -23,7 +23,7 @@ class ImageSuperpixelTreeNode(
   val superpixel: Superpixel,
 ) : AbstractImageTreeNode(nodeId) {
 
-  override fun copyCurrentNode(): AbstractImageTreeNode {
-    return ImageSuperpixelTreeNode(nodeId, superpixel)
+  override fun internalCopyCurrentNode(computedNewNodeId: Int): AbstractImageTreeNode {
+    return ImageSuperpixelTreeNode(computedNewNodeId, superpixel)
   }
 }

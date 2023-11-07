@@ -34,7 +34,6 @@ import org.perses.program.LanguageKind
 import org.perses.program.SourceFile
 import org.perses.reduction.AbstractReductionDriver
 import org.perses.reduction.ListenableReductionState
-import org.perses.util.FileNameContentPair
 import org.perses.util.Util
 import org.perses.util.ktInfo
 import java.nio.file.Path
@@ -56,7 +55,7 @@ class GrammarReductionDriver private constructor(
 ) {
 
   val originalProgram = PersesAstBuilder.loadGrammarFromString(
-    ioManager.getConcreteReductionInputs().parserFile.fileContent,
+    ioManager.getConcreteReductionInputs().parserFile.textualFileContent,
   )
 
   override fun reduce() {
@@ -129,17 +128,16 @@ class GrammarReductionDriver private constructor(
       )
       val lexerFile = setup.lexerFile
 
-      val input = SeparateGrammarReductionInput(
+      val reductionInputs = SeparateGrammarReductionInput(
         testScript = setup.testScript,
         parserFile = parserFile,
         lexerFile = SourceFile(lexerFile, LanguageAntlr),
       )
       return GrammarReductionIOManager(
         workingDir = setup.workingDir,
-        reductionInputs = input,
+        reductionInputs = reductionInputs,
         outputManagerFactory = GrammarOutputManagerFactory(
-          lexer = FileNameContentPair.createFromFile(lexerFile),
-          mainSourceFile = input.parserFile,
+          reductionInputs,
           startRuleName = setup.startRuleName,
           jarFileName = setup.jarFile.path.fileName.toString(),
           testPrograms = testPrograms,

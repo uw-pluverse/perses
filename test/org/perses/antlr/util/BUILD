@@ -1,8 +1,8 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
 
-java_test(
+kt_jvm_test(
     name = "UtilTest",
-    srcs = ["UtilTest.java"],
+    srcs = ["UtilTest.kt"],
     test_class = "org.perses.antlr.util.UtilTest",
     deps = [
         "//:truth",

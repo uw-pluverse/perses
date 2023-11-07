@@ -19,6 +19,7 @@ package org.perses.reduction
 import com.google.common.flogger.FluentLogger
 import com.google.common.io.Closer
 import org.perses.program.AbstractDataKind
+import org.perses.reduction.AbstractExternalTestScriptExecutionCachePolicy.NullExternalTestScriptExecutionCachePolicy
 import org.perses.reduction.io.AbstractReductionIOManager
 import org.perses.util.TimeUtil.formatDateForDisplay
 import org.perses.util.ktInfo
@@ -26,13 +27,19 @@ import java.io.Closeable
 import java.nio.file.Files
 import java.nio.file.Path
 
-abstract class AbstractReductionDriver<Program,
+abstract class AbstractReductionDriver<
+  Program,
   Kind : AbstractDataKind,
-  IOManager : AbstractReductionIOManager<Program, Kind, IOManager>,>(
+  IOManager : AbstractReductionIOManager<Program, Kind, IOManager>,
+  >(
   protected val ioManager: IOManager,
   specifiedNumOfThreads: Int,
   scriptExecutionTimeoutInSeconds: Long,
   keepWaitingAfterScriptTimeout: Boolean,
+  externalTestScriptExecutionCachePolicyCreator:
+  () -> AbstractExternalTestScriptExecutionCachePolicy = {
+    NullExternalTestScriptExecutionCachePolicy()
+  },
 ) : IReductionDriver {
 
   private val closer = Closer.create()
@@ -42,6 +49,7 @@ abstract class AbstractReductionDriver<Program,
     specifiedNumOfThreads,
     scriptExecutionTimeoutInSeconds,
     keepWaitingAfterScriptTimeout,
+    externalTestScriptExecutionCachePolicyCreator,
   ).also { closer.register(it) }
 
   override fun close() {
@@ -112,7 +120,9 @@ abstract class AbstractReductionDriver<Program,
          
         ============= stdout =============
         ${cmdOutput.stdout.combinedLines.let { it.ifBlank { "<empty>" } }} 
-      """.lineSequence().map { it.trimStart() }.joinToString("\n")
+      """.lineSequence().map {
+        it.trimStart()
+      }.joinToString("\n")
 
       message
     }

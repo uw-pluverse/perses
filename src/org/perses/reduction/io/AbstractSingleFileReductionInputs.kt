@@ -21,9 +21,11 @@ import org.perses.program.AbstractDataKind
 import org.perses.program.AbstractReductionFile
 import org.perses.program.ScriptFile
 
-abstract class AbstractSingleFileReductionInputs<K : AbstractDataKind,
+abstract class AbstractSingleFileReductionInputs<
+  K : AbstractDataKind,
   F : AbstractReductionFile<K, F>,
-  S : AbstractSingleFileReductionInputs<K, F, S>,>(
+  S : AbstractSingleFileReductionInputs<K, F, S>,
+  >(
   testScript: ScriptFile,
   val mainFile: F,
   files: ImmutableList<AbstractReductionFile<*, *>>,

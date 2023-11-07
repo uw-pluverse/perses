@@ -1,6 +1,12 @@
-======================Reduction starts======================
+=====================Reduction starts.======================
 
-The spar tree is the following.
+The initial program size is 29
+------------------------------------------------------------
+
+
+=Fixpoint iteration 1. Reducer: perses_node_with_dfs_delta==
+
+The spar-tree is the following.
 compilationUnit {id=1}
 |___(+) {id=2,slot_type=topStatSeq}
     |___aux_rule__tmplDef_7 {id=8,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
@@ -1435,7 +1441,58 @@ Failed to reduce node 164
 ------------------------------------------------------------
 
 
-==================Reducing node 2, size=20==================
+=Fixpoint iteration 2. Reducer: perses_node_with_dfs_delta==
+
+The spar-tree is the following.
+compilationUnit {id=181}
+|___(+) {id=182,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=188,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=189,slot_type=Token}
+        |___objectDef {id=190,slot_type=objectDef}
+            |___Token:Hello {id=191,slot_type=Id}
+            |___(?) {id=193,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=195,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=196,slot_type=Token}
+                    |___(+) {id=197,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=203,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=204,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=206,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=207,slot_type=funSig}
+                    |           |   |___Token:main {id=252,slot_type=Id}
+                    |           |   |___(*) {id=254,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=255,slot_type=paramClause}
+                    |           |           |___Token:( {id=256,slot_type=Token}
+                    |           |           |___(?) {id=257,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=260,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=261,slot_type=Id}
+                    |           |           |       |___(?) {id=262,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=263,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=264,slot_type=Token}
+                    |           |           |               |___simpleType {id=273,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=296,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=275,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=277,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=278,slot_type=Token}
+                    |           |           |                           |___Token:String {id=292,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=280,slot_type=Token}
+                    |           |           |___Token:) {id=258,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=209,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=210,slot_type=Token}
+                    |               |___infixExpr {id=216,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr]}
+                    |                   |___Token:println {id=251,slot_type=[prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=218,slot_type=kleene_star__infixExpr_2}
+                    |                       |___aux_rule__infixExpr_3 {id=219,slot_type=aux_rule__infixExpr_3}
+                    |                           |___Token:println {id=220,slot_type=Id}
+                    |                           |___aux_rule__simpleExpr1_10 {id=227,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                               |___Token:( {id=228,slot_type=Token}
+                    |                               |___(?) {id=229,slot_type=optional__simpleExpr1_1}
+                    |                               |   |___Token:"Hello, world" {id=244,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                               |___Token:) {id=230,slot_type=Token}
+                    |___Token:} {id=198,slot_type=Token}
+------------------------------------------------------------
+
+
+=================Reducing node 182, size=20=================
 
 The current best program is the following
 
@@ -1449,11 +1506,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 2
+Failed to reduce node 182
 ------------------------------------------------------------
 
 
-==================Reducing node 8, size=20==================
+=================Reducing node 188, size=20=================
 
 The current best program is the following
 
@@ -1467,11 +1524,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 8
+Failed to reduce node 188
 ------------------------------------------------------------
 
 
-==================Reducing node 9, size=20==================
+=================Reducing node 189, size=20=================
 
 The current best program is the following
 
@@ -1485,11 +1542,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 9
+Failed to reduce node 189
 ------------------------------------------------------------
 
 
-=================Reducing node 10, size=20==================
+=================Reducing node 190, size=20=================
 
 The current best program is the following
 
@@ -1509,11 +1566,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 10
+Failed to reduce node 190
 ------------------------------------------------------------
 
 
-=================Reducing node 11, size=20==================
+=================Reducing node 191, size=20=================
 
 The current best program is the following
 
@@ -1527,11 +1584,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 11
+Failed to reduce node 191
 ------------------------------------------------------------
 
 
-=================Reducing node 13, size=20==================
+=================Reducing node 193, size=20=================
 
 The current best program is the following
 
@@ -1551,11 +1608,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 13
+Failed to reduce node 193
 ------------------------------------------------------------
 
 
-=================Reducing node 15, size=20==================
+=================Reducing node 195, size=20=================
 
 The current best program is the following
 
@@ -1569,17 +1626,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=15}
+    NodeDeletionAction{target_node=195}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 15
+Failed to reduce node 195
 ------------------------------------------------------------
 
 
-=================Reducing node 16, size=20==================
+=================Reducing node 196, size=20=================
 
 The current best program is the following
 
@@ -1593,11 +1650,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 16
+Failed to reduce node 196
 ------------------------------------------------------------
 
 
-=================Reducing node 17, size=20==================
+=================Reducing node 197, size=20=================
 
 The current best program is the following
 
@@ -1611,11 +1668,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 17
+Failed to reduce node 197
 ------------------------------------------------------------
 
 
-=================Reducing node 18, size=20==================
+=================Reducing node 198, size=20=================
 
 The current best program is the following
 
@@ -1629,11 +1686,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 18
+Failed to reduce node 198
 ------------------------------------------------------------
 
 
-=================Reducing node 23, size=20==================
+=================Reducing node 203, size=20=================
 
 The current best program is the following
 
@@ -1674,11 +1731,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 23
+Failed to reduce node 203
 ------------------------------------------------------------
 
 
-=================Reducing node 24, size=20==================
+=================Reducing node 204, size=20=================
 
 The current best program is the following
 
@@ -1692,11 +1749,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 24
+Failed to reduce node 204
 ------------------------------------------------------------
 
 
-=================Reducing node 26, size=20==================
+=================Reducing node 206, size=20=================
 
 The current best program is the following
 
@@ -1710,11 +1767,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26
+Failed to reduce node 206
 ------------------------------------------------------------
 
 
-=================Reducing node 27, size=20==================
+=================Reducing node 207, size=20=================
 
 The current best program is the following
 
@@ -1750,11 +1807,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 27
+Failed to reduce node 207
 ------------------------------------------------------------
 
 
-=================Reducing node 29, size=20==================
+=================Reducing node 209, size=20=================
 
 The current best program is the following
 
@@ -1768,11 +1825,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 29
+Failed to reduce node 209
 ------------------------------------------------------------
 
 
-=================Reducing node 72, size=20==================
+=================Reducing node 252, size=20=================
 
 The current best program is the following
 
@@ -1786,11 +1843,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 72
+Failed to reduce node 252
 ------------------------------------------------------------
 
 
-=================Reducing node 74, size=20==================
+=================Reducing node 254, size=20=================
 
 The current best program is the following
 
@@ -1814,11 +1871,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 74
+Failed to reduce node 254
 ------------------------------------------------------------
 
 
-=================Reducing node 30, size=20==================
+=================Reducing node 210, size=20=================
 
 The current best program is the following
 
@@ -1832,11 +1889,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 30
+Failed to reduce node 210
 ------------------------------------------------------------
 
 
-=================Reducing node 36, size=20==================
+=================Reducing node 216, size=20=================
 
 The current best program is the following
 
@@ -1878,11 +1935,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 36
+Failed to reduce node 216
 ------------------------------------------------------------
 
 
-=================Reducing node 75, size=20==================
+=================Reducing node 255, size=20=================
 
 The current best program is the following
 
@@ -1896,17 +1953,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=75}
+    NodeDeletionAction{target_node=255}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 75
+Failed to reduce node 255
 ------------------------------------------------------------
 
 
-=================Reducing node 71, size=20==================
+=================Reducing node 251, size=20=================
 
 The current best program is the following
 
@@ -1920,11 +1977,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 71
+Failed to reduce node 251
 ------------------------------------------------------------
 
 
-=================Reducing node 38, size=20==================
+=================Reducing node 218, size=20=================
 
 The current best program is the following
 
@@ -1947,11 +2004,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 38
+Failed to reduce node 218
 ------------------------------------------------------------
 
 
-=================Reducing node 76, size=20==================
+=================Reducing node 256, size=20=================
 
 The current best program is the following
 
@@ -1965,11 +2022,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 76
+Failed to reduce node 256
 ------------------------------------------------------------
 
 
-=================Reducing node 77, size=20==================
+=================Reducing node 257, size=20=================
 
 The current best program is the following
 
@@ -1994,11 +2051,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 77
+Failed to reduce node 257
 ------------------------------------------------------------
 
 
-=================Reducing node 78, size=20==================
+=================Reducing node 258, size=20=================
 
 The current best program is the following
 
@@ -2012,11 +2069,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 78
+Failed to reduce node 258
 ------------------------------------------------------------
 
 
-=================Reducing node 39, size=20==================
+=================Reducing node 219, size=20=================
 
 The current best program is the following
 
@@ -2030,17 +2087,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=39}
+    NodeDeletionAction{target_node=219}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 39
+Failed to reduce node 219
 ------------------------------------------------------------
 
 
-=================Reducing node 80, size=20==================
+=================Reducing node 260, size=20=================
 
 The current best program is the following
 
@@ -2054,7 +2111,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=80}
+    NodeDeletionAction{target_node=260}
 ------------------------------------------------------------
 
 
@@ -2081,11 +2138,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 80
+Failed to reduce node 260
 ------------------------------------------------------------
 
 
-=================Reducing node 40, size=20==================
+=================Reducing node 220, size=20=================
 
 The current best program is the following
 
@@ -2099,11 +2156,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 40
+Failed to reduce node 220
 ------------------------------------------------------------
 
 
-=================Reducing node 47, size=20==================
+=================Reducing node 227, size=20=================
 
 The current best program is the following
 
@@ -2127,11 +2184,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 47
+Failed to reduce node 227
 ------------------------------------------------------------
 
 
-=================Reducing node 81, size=20==================
+=================Reducing node 261, size=20=================
 
 The current best program is the following
 
@@ -2145,11 +2202,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 81
+Failed to reduce node 261
 ------------------------------------------------------------
 
 
-=================Reducing node 82, size=20==================
+=================Reducing node 262, size=20=================
 
 The current best program is the following
 
@@ -2173,11 +2230,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 82
+Failed to reduce node 262
 ------------------------------------------------------------
 
 
-=================Reducing node 48, size=20==================
+=================Reducing node 228, size=20=================
 
 The current best program is the following
 
@@ -2191,11 +2248,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 48
+Failed to reduce node 228
 ------------------------------------------------------------
 
 
-=================Reducing node 49, size=20==================
+=================Reducing node 229, size=20=================
 
 The current best program is the following
 
@@ -2219,11 +2276,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 49
+Failed to reduce node 229
 ------------------------------------------------------------
 
 
-=================Reducing node 50, size=20==================
+=================Reducing node 230, size=20=================
 
 The current best program is the following
 
@@ -2237,11 +2294,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 50
+Failed to reduce node 230
 ------------------------------------------------------------
 
 
-=================Reducing node 83, size=20==================
+=================Reducing node 263, size=20=================
 
 The current best program is the following
 
@@ -2255,17 +2312,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=83}
+    NodeDeletionAction{target_node=263}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 83
+Failed to reduce node 263
 ------------------------------------------------------------
 
 
-=================Reducing node 64, size=20==================
+=================Reducing node 244, size=20=================
 
 The current best program is the following
 
@@ -2279,11 +2336,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 64
+Failed to reduce node 244
 ------------------------------------------------------------
 
 
-=================Reducing node 84, size=20==================
+=================Reducing node 264, size=20=================
 
 The current best program is the following
 
@@ -2297,11 +2354,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 84
+Failed to reduce node 264
 ------------------------------------------------------------
 
 
-=================Reducing node 93, size=20==================
+=================Reducing node 273, size=20=================
 
 The current best program is the following
 
@@ -2335,11 +2392,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 93
+Failed to reduce node 273
 ------------------------------------------------------------
 
 
-=================Reducing node 116, size=20=================
+=================Reducing node 296, size=20=================
 
 The current best program is the following
 
@@ -2353,11 +2410,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 116
+Failed to reduce node 296
 ------------------------------------------------------------
 
 
-=================Reducing node 95, size=20==================
+=================Reducing node 275, size=20=================
 
 The current best program is the following
 
@@ -2381,11 +2438,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 95
+Failed to reduce node 275
 ------------------------------------------------------------
 
 
-=================Reducing node 97, size=20==================
+=================Reducing node 277, size=20=================
 
 The current best program is the following
 
@@ -2399,17 +2456,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=97}
+    NodeDeletionAction{target_node=277}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 97
+Failed to reduce node 277
 ------------------------------------------------------------
 
 
-=================Reducing node 98, size=20==================
+=================Reducing node 278, size=20=================
 
 The current best program is the following
 
@@ -2423,11 +2480,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 98
+Failed to reduce node 278
 ------------------------------------------------------------
 
 
-=================Reducing node 112, size=20=================
+=================Reducing node 292, size=20=================
 
 The current best program is the following
 
@@ -2441,11 +2498,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 112
+Failed to reduce node 292
 ------------------------------------------------------------
 
 
-=================Reducing node 100, size=20=================
+=================Reducing node 280, size=20=================
 
 The current best program is the following
 
@@ -2459,13 +2516,64 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 100
+Failed to reduce node 280
+------------------------------------------------------------
+
+
+==Fixpoint iteration 3. Reducer: concurrent_token_slicer@1==
+
+The spar-tree is the following.
+compilationUnit {id=181}
+|___(+) {id=182,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=188,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=189,slot_type=Token}
+        |___objectDef {id=190,slot_type=objectDef}
+            |___Token:Hello {id=191,slot_type=Id}
+            |___(?) {id=193,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=195,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=196,slot_type=Token}
+                    |___(+) {id=197,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=203,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=204,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=206,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=207,slot_type=funSig}
+                    |           |   |___Token:main {id=252,slot_type=Id}
+                    |           |   |___(*) {id=254,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=255,slot_type=paramClause}
+                    |           |           |___Token:( {id=256,slot_type=Token}
+                    |           |           |___(?) {id=257,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=260,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=261,slot_type=Id}
+                    |           |           |       |___(?) {id=262,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=263,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=264,slot_type=Token}
+                    |           |           |               |___simpleType {id=273,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=296,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=275,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=277,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=278,slot_type=Token}
+                    |           |           |                           |___Token:String {id=292,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=280,slot_type=Token}
+                    |           |           |___Token:) {id=258,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=209,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=210,slot_type=Token}
+                    |               |___infixExpr {id=216,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr]}
+                    |                   |___Token:println {id=251,slot_type=[prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=218,slot_type=kleene_star__infixExpr_2}
+                    |                       |___aux_rule__infixExpr_3 {id=219,slot_type=aux_rule__infixExpr_3}
+                    |                           |___Token:println {id=220,slot_type=Id}
+                    |                           |___aux_rule__simpleExpr1_10 {id=227,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                               |___Token:( {id=228,slot_type=Token}
+                    |                               |___(?) {id=229,slot_type=optional__simpleExpr1_1}
+                    |                               |   |___Token:"Hello, world" {id=244,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                               |___Token:) {id=230,slot_type=Token}
+                    |___Token:} {id=198,slot_type=Token}
 ------------------------------------------------------------
 
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=64}
+    NodeDeletionAction{target_node=244}
 ------------------------------------------------------------
 
 
@@ -2684,6 +2792,55 @@ Failed to reduce node 100
 ------------------------------------------------------------
 
 
+==Fixpoint iteration 4. Reducer: concurrent_token_slicer@2==
+
+The spar-tree is the following.
+compilationUnit {id=181}
+|___(+) {id=182,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=188,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=189,slot_type=Token}
+        |___objectDef {id=190,slot_type=objectDef}
+            |___Token:Hello {id=191,slot_type=Id}
+            |___(?) {id=193,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=195,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=196,slot_type=Token}
+                    |___(+) {id=197,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=203,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=204,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=206,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=207,slot_type=funSig}
+                    |           |   |___Token:main {id=252,slot_type=Id}
+                    |           |   |___(*) {id=254,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=255,slot_type=paramClause}
+                    |           |           |___Token:( {id=256,slot_type=Token}
+                    |           |           |___(?) {id=257,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=260,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=261,slot_type=Id}
+                    |           |           |       |___(?) {id=262,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=263,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=264,slot_type=Token}
+                    |           |           |               |___simpleType {id=273,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=296,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=275,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=277,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=278,slot_type=Token}
+                    |           |           |                           |___Token:String {id=292,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=280,slot_type=Token}
+                    |           |           |___Token:) {id=258,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=209,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=210,slot_type=Token}
+                    |               |___(*) {id=218,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,kleene_star__infixExpr_2]}
+                    |                   |___aux_rule__infixExpr_3 {id=219,slot_type=aux_rule__infixExpr_3}
+                    |                       |___Token:println {id=220,slot_type=Id}
+                    |                       |___aux_rule__simpleExpr1_10 {id=227,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                           |___Token:( {id=228,slot_type=Token}
+                    |                           |___(?) {id=229,slot_type=optional__simpleExpr1_1}
+                    |                           |   |___Token:"Hello, world" {id=244,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=230,slot_type=Token}
+                    |___Token:} {id=198,slot_type=Token}
+------------------------------------------------------------
+
+
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@2
@@ -2863,6 +3020,55 @@ Failed to reduce node 100
 ------------------------------------------------------------
 
 
+==Fixpoint iteration 5. Reducer: concurrent_token_slicer@3==
+
+The spar-tree is the following.
+compilationUnit {id=181}
+|___(+) {id=182,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=188,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=189,slot_type=Token}
+        |___objectDef {id=190,slot_type=objectDef}
+            |___Token:Hello {id=191,slot_type=Id}
+            |___(?) {id=193,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=195,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=196,slot_type=Token}
+                    |___(+) {id=197,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=203,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=204,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=206,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=207,slot_type=funSig}
+                    |           |   |___Token:main {id=252,slot_type=Id}
+                    |           |   |___(*) {id=254,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=255,slot_type=paramClause}
+                    |           |           |___Token:( {id=256,slot_type=Token}
+                    |           |           |___(?) {id=257,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=260,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=261,slot_type=Id}
+                    |           |           |       |___(?) {id=262,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=263,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=264,slot_type=Token}
+                    |           |           |               |___simpleType {id=273,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=296,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=275,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=277,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=278,slot_type=Token}
+                    |           |           |                           |___Token:String {id=292,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=280,slot_type=Token}
+                    |           |           |___Token:) {id=258,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=209,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=210,slot_type=Token}
+                    |               |___(*) {id=218,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,kleene_star__infixExpr_2]}
+                    |                   |___aux_rule__infixExpr_3 {id=219,slot_type=aux_rule__infixExpr_3}
+                    |                       |___Token:println {id=220,slot_type=Id}
+                    |                       |___aux_rule__simpleExpr1_10 {id=227,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                           |___Token:( {id=228,slot_type=Token}
+                    |                           |___(?) {id=229,slot_type=optional__simpleExpr1_1}
+                    |                           |   |___Token:"Hello, world" {id=244,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=230,slot_type=Token}
+                    |___Token:} {id=198,slot_type=Token}
+------------------------------------------------------------
+
+
 =========Cache hit for the following program: fail==========
 
     object Hello {
@@ -3030,6 +3236,55 @@ Failed to reduce node 100
 ------------------------------------------------------------
 
 
+==Fixpoint iteration 6. Reducer: concurrent_token_slicer@4==
+
+The spar-tree is the following.
+compilationUnit {id=181}
+|___(+) {id=182,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=188,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=189,slot_type=Token}
+        |___objectDef {id=190,slot_type=objectDef}
+            |___Token:Hello {id=191,slot_type=Id}
+            |___(?) {id=193,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=195,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=196,slot_type=Token}
+                    |___(+) {id=197,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=203,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=204,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=206,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=207,slot_type=funSig}
+                    |           |   |___Token:main {id=252,slot_type=Id}
+                    |           |   |___(*) {id=254,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=255,slot_type=paramClause}
+                    |           |           |___Token:( {id=256,slot_type=Token}
+                    |           |           |___(?) {id=257,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=260,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=261,slot_type=Id}
+                    |           |           |       |___(?) {id=262,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=263,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=264,slot_type=Token}
+                    |           |           |               |___simpleType {id=273,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=296,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=275,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=277,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=278,slot_type=Token}
+                    |           |           |                           |___Token:String {id=292,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=280,slot_type=Token}
+                    |           |           |___Token:) {id=258,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=209,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=210,slot_type=Token}
+                    |               |___(*) {id=218,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,kleene_star__infixExpr_2]}
+                    |                   |___aux_rule__infixExpr_3 {id=219,slot_type=aux_rule__infixExpr_3}
+                    |                       |___Token:println {id=220,slot_type=Id}
+                    |                       |___aux_rule__simpleExpr1_10 {id=227,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                           |___Token:( {id=228,slot_type=Token}
+                    |                           |___(?) {id=229,slot_type=optional__simpleExpr1_1}
+                    |                           |   |___Token:"Hello, world" {id=244,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=230,slot_type=Token}
+                    |___Token:} {id=198,slot_type=Token}
+------------------------------------------------------------
+
+
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@4
@@ -3187,6 +3442,55 @@ Failed to reduce node 100
 ------------------------------------------------------------
 
 
+==Fixpoint iteration 7. Reducer: concurrent_token_slicer@5==
+
+The spar-tree is the following.
+compilationUnit {id=181}
+|___(+) {id=182,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=188,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=189,slot_type=Token}
+        |___objectDef {id=190,slot_type=objectDef}
+            |___Token:Hello {id=191,slot_type=Id}
+            |___(?) {id=193,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=195,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=196,slot_type=Token}
+                    |___(+) {id=197,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=203,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=204,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=206,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=207,slot_type=funSig}
+                    |           |   |___Token:main {id=252,slot_type=Id}
+                    |           |   |___(*) {id=254,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=255,slot_type=paramClause}
+                    |           |           |___Token:( {id=256,slot_type=Token}
+                    |           |           |___(?) {id=257,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=260,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=261,slot_type=Id}
+                    |           |           |       |___(?) {id=262,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=263,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=264,slot_type=Token}
+                    |           |           |               |___simpleType {id=273,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=296,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=275,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=277,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=278,slot_type=Token}
+                    |           |           |                           |___Token:String {id=292,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=280,slot_type=Token}
+                    |           |           |___Token:) {id=258,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=209,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=210,slot_type=Token}
+                    |               |___(*) {id=218,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,kleene_star__infixExpr_2]}
+                    |                   |___aux_rule__infixExpr_3 {id=219,slot_type=aux_rule__infixExpr_3}
+                    |                       |___Token:println {id=220,slot_type=Id}
+                    |                       |___aux_rule__simpleExpr1_10 {id=227,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                           |___Token:( {id=228,slot_type=Token}
+                    |                           |___(?) {id=229,slot_type=optional__simpleExpr1_1}
+                    |                           |   |___Token:"Hello, world" {id=244,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=230,slot_type=Token}
+                    |___Token:} {id=198,slot_type=Token}
+------------------------------------------------------------
+
+
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@5
@@ -3333,6 +3637,55 @@ Failed to reduce node 100
 ------------------------------------------------------------
 
 
+==Fixpoint iteration 8. Reducer: concurrent_token_slicer@6==
+
+The spar-tree is the following.
+compilationUnit {id=181}
+|___(+) {id=182,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=188,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=189,slot_type=Token}
+        |___objectDef {id=190,slot_type=objectDef}
+            |___Token:Hello {id=191,slot_type=Id}
+            |___(?) {id=193,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=195,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=196,slot_type=Token}
+                    |___(+) {id=197,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=203,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=204,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=206,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=207,slot_type=funSig}
+                    |           |   |___Token:main {id=252,slot_type=Id}
+                    |           |   |___(*) {id=254,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=255,slot_type=paramClause}
+                    |           |           |___Token:( {id=256,slot_type=Token}
+                    |           |           |___(?) {id=257,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=260,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=261,slot_type=Id}
+                    |           |           |       |___(?) {id=262,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=263,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=264,slot_type=Token}
+                    |           |           |               |___simpleType {id=273,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=296,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=275,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=277,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=278,slot_type=Token}
+                    |           |           |                           |___Token:String {id=292,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=280,slot_type=Token}
+                    |           |           |___Token:) {id=258,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=209,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=210,slot_type=Token}
+                    |               |___(*) {id=218,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,kleene_star__infixExpr_2]}
+                    |                   |___aux_rule__infixExpr_3 {id=219,slot_type=aux_rule__infixExpr_3}
+                    |                       |___Token:println {id=220,slot_type=Id}
+                    |                       |___aux_rule__simpleExpr1_10 {id=227,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                           |___Token:( {id=228,slot_type=Token}
+                    |                           |___(?) {id=229,slot_type=optional__simpleExpr1_1}
+                    |                           |   |___Token:"Hello, world" {id=244,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=230,slot_type=Token}
+                    |___Token:} {id=198,slot_type=Token}
+------------------------------------------------------------
+
+
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@6
@@ -3469,6 +3822,55 @@ Failed to reduce node 100
 ------------------------------------------------------------
 
 
+==Fixpoint iteration 9. Reducer: concurrent_token_slicer@7==
+
+The spar-tree is the following.
+compilationUnit {id=181}
+|___(+) {id=182,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=188,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=189,slot_type=Token}
+        |___objectDef {id=190,slot_type=objectDef}
+            |___Token:Hello {id=191,slot_type=Id}
+            |___(?) {id=193,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=195,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=196,slot_type=Token}
+                    |___(+) {id=197,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=203,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=204,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=206,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=207,slot_type=funSig}
+                    |           |   |___Token:main {id=252,slot_type=Id}
+                    |           |   |___(*) {id=254,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=255,slot_type=paramClause}
+                    |           |           |___Token:( {id=256,slot_type=Token}
+                    |           |           |___(?) {id=257,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=260,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=261,slot_type=Id}
+                    |           |           |       |___(?) {id=262,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=263,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=264,slot_type=Token}
+                    |           |           |               |___simpleType {id=273,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=296,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=275,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=277,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=278,slot_type=Token}
+                    |           |           |                           |___Token:String {id=292,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=280,slot_type=Token}
+                    |           |           |___Token:) {id=258,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=209,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=210,slot_type=Token}
+                    |               |___(*) {id=218,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,kleene_star__infixExpr_2]}
+                    |                   |___aux_rule__infixExpr_3 {id=219,slot_type=aux_rule__infixExpr_3}
+                    |                       |___Token:println {id=220,slot_type=Id}
+                    |                       |___aux_rule__simpleExpr1_10 {id=227,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                           |___Token:( {id=228,slot_type=Token}
+                    |                           |___(?) {id=229,slot_type=optional__simpleExpr1_1}
+                    |                           |   |___Token:"Hello, world" {id=244,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=230,slot_type=Token}
+                    |___Token:} {id=198,slot_type=Token}
+------------------------------------------------------------
+
+
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@7
@@ -3595,6 +3997,55 @@ Failed to reduce node 100
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 10. Reducer: concurrent_token_slicer@8==
+
+The spar-tree is the following.
+compilationUnit {id=181}
+|___(+) {id=182,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=188,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=189,slot_type=Token}
+        |___objectDef {id=190,slot_type=objectDef}
+            |___Token:Hello {id=191,slot_type=Id}
+            |___(?) {id=193,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=195,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=196,slot_type=Token}
+                    |___(+) {id=197,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=203,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=204,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=206,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=207,slot_type=funSig}
+                    |           |   |___Token:main {id=252,slot_type=Id}
+                    |           |   |___(*) {id=254,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=255,slot_type=paramClause}
+                    |           |           |___Token:( {id=256,slot_type=Token}
+                    |           |           |___(?) {id=257,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=260,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=261,slot_type=Id}
+                    |           |           |       |___(?) {id=262,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=263,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=264,slot_type=Token}
+                    |           |           |               |___simpleType {id=273,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=296,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=275,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=277,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=278,slot_type=Token}
+                    |           |           |                           |___Token:String {id=292,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=280,slot_type=Token}
+                    |           |           |___Token:) {id=258,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=209,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=210,slot_type=Token}
+                    |               |___(*) {id=218,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,kleene_star__infixExpr_2]}
+                    |                   |___aux_rule__infixExpr_3 {id=219,slot_type=aux_rule__infixExpr_3}
+                    |                       |___Token:println {id=220,slot_type=Id}
+                    |                       |___aux_rule__simpleExpr1_10 {id=227,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                           |___Token:( {id=228,slot_type=Token}
+                    |                           |___(?) {id=229,slot_type=optional__simpleExpr1_1}
+                    |                           |   |___Token:"Hello, world" {id=244,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=230,slot_type=Token}
+                    |___Token:} {id=198,slot_type=Token}
+------------------------------------------------------------
+
+
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@8
@@ -3711,6 +4162,55 @@ Failed to reduce node 100
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 11. Reducer: concurrent_token_slicer@9==
+
+The spar-tree is the following.
+compilationUnit {id=181}
+|___(+) {id=182,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=188,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=189,slot_type=Token}
+        |___objectDef {id=190,slot_type=objectDef}
+            |___Token:Hello {id=191,slot_type=Id}
+            |___(?) {id=193,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=195,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=196,slot_type=Token}
+                    |___(+) {id=197,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=203,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=204,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=206,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=207,slot_type=funSig}
+                    |           |   |___Token:main {id=252,slot_type=Id}
+                    |           |   |___(*) {id=254,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=255,slot_type=paramClause}
+                    |           |           |___Token:( {id=256,slot_type=Token}
+                    |           |           |___(?) {id=257,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=260,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=261,slot_type=Id}
+                    |           |           |       |___(?) {id=262,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=263,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=264,slot_type=Token}
+                    |           |           |               |___simpleType {id=273,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=296,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=275,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=277,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=278,slot_type=Token}
+                    |           |           |                           |___Token:String {id=292,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=280,slot_type=Token}
+                    |           |           |___Token:) {id=258,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=209,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=210,slot_type=Token}
+                    |               |___(*) {id=218,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,kleene_star__infixExpr_2]}
+                    |                   |___aux_rule__infixExpr_3 {id=219,slot_type=aux_rule__infixExpr_3}
+                    |                       |___Token:println {id=220,slot_type=Id}
+                    |                       |___aux_rule__simpleExpr1_10 {id=227,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                           |___Token:( {id=228,slot_type=Token}
+                    |                           |___(?) {id=229,slot_type=optional__simpleExpr1_1}
+                    |                           |   |___Token:"Hello, world" {id=244,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=230,slot_type=Token}
+                    |___Token:} {id=198,slot_type=Token}
+------------------------------------------------------------
+
+
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@9
@@ -3817,6 +4317,55 @@ Failed to reduce node 100
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 12. Reducer: concurrent_token_slicer@10=
+
+The spar-tree is the following.
+compilationUnit {id=181}
+|___(+) {id=182,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=188,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=189,slot_type=Token}
+        |___objectDef {id=190,slot_type=objectDef}
+            |___Token:Hello {id=191,slot_type=Id}
+            |___(?) {id=193,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=195,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=196,slot_type=Token}
+                    |___(+) {id=197,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=203,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=204,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=206,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=207,slot_type=funSig}
+                    |           |   |___Token:main {id=252,slot_type=Id}
+                    |           |   |___(*) {id=254,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=255,slot_type=paramClause}
+                    |           |           |___Token:( {id=256,slot_type=Token}
+                    |           |           |___(?) {id=257,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=260,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=261,slot_type=Id}
+                    |           |           |       |___(?) {id=262,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=263,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=264,slot_type=Token}
+                    |           |           |               |___simpleType {id=273,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=296,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=275,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=277,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=278,slot_type=Token}
+                    |           |           |                           |___Token:String {id=292,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=280,slot_type=Token}
+                    |           |           |___Token:) {id=258,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=209,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=210,slot_type=Token}
+                    |               |___(*) {id=218,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,kleene_star__infixExpr_2]}
+                    |                   |___aux_rule__infixExpr_3 {id=219,slot_type=aux_rule__infixExpr_3}
+                    |                       |___Token:println {id=220,slot_type=Id}
+                    |                       |___aux_rule__simpleExpr1_10 {id=227,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                           |___Token:( {id=228,slot_type=Token}
+                    |                           |___(?) {id=229,slot_type=optional__simpleExpr1_1}
+                    |                           |   |___Token:"Hello, world" {id=244,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=230,slot_type=Token}
+                    |___Token:} {id=198,slot_type=Token}
+------------------------------------------------------------
+
+
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@10
@@ -3913,6 +4462,55 @@ Failed to reduce node 100
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 13. Reducer: concurrent_token_slicer@11=
+
+The spar-tree is the following.
+compilationUnit {id=181}
+|___(+) {id=182,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=188,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=189,slot_type=Token}
+        |___objectDef {id=190,slot_type=objectDef}
+            |___Token:Hello {id=191,slot_type=Id}
+            |___(?) {id=193,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=195,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=196,slot_type=Token}
+                    |___(+) {id=197,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=203,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=204,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=206,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=207,slot_type=funSig}
+                    |           |   |___Token:main {id=252,slot_type=Id}
+                    |           |   |___(*) {id=254,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=255,slot_type=paramClause}
+                    |           |           |___Token:( {id=256,slot_type=Token}
+                    |           |           |___(?) {id=257,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=260,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=261,slot_type=Id}
+                    |           |           |       |___(?) {id=262,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=263,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=264,slot_type=Token}
+                    |           |           |               |___simpleType {id=273,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=296,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=275,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=277,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=278,slot_type=Token}
+                    |           |           |                           |___Token:String {id=292,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=280,slot_type=Token}
+                    |           |           |___Token:) {id=258,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=209,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=210,slot_type=Token}
+                    |               |___(*) {id=218,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,kleene_star__infixExpr_2]}
+                    |                   |___aux_rule__infixExpr_3 {id=219,slot_type=aux_rule__infixExpr_3}
+                    |                       |___Token:println {id=220,slot_type=Id}
+                    |                       |___aux_rule__simpleExpr1_10 {id=227,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                           |___Token:( {id=228,slot_type=Token}
+                    |                           |___(?) {id=229,slot_type=optional__simpleExpr1_1}
+                    |                           |   |___Token:"Hello, world" {id=244,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=230,slot_type=Token}
+                    |___Token:} {id=198,slot_type=Token}
+------------------------------------------------------------
+
+
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@11
@@ -3998,6 +4596,55 @@ Failed to reduce node 100
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 14. Reducer: concurrent_token_slicer@12=
+
+The spar-tree is the following.
+compilationUnit {id=181}
+|___(+) {id=182,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=188,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=189,slot_type=Token}
+        |___objectDef {id=190,slot_type=objectDef}
+            |___Token:Hello {id=191,slot_type=Id}
+            |___(?) {id=193,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=195,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=196,slot_type=Token}
+                    |___(+) {id=197,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=203,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=204,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=206,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=207,slot_type=funSig}
+                    |           |   |___Token:main {id=252,slot_type=Id}
+                    |           |   |___(*) {id=254,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=255,slot_type=paramClause}
+                    |           |           |___Token:( {id=256,slot_type=Token}
+                    |           |           |___(?) {id=257,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=260,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=261,slot_type=Id}
+                    |           |           |       |___(?) {id=262,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=263,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=264,slot_type=Token}
+                    |           |           |               |___simpleType {id=273,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=296,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=275,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=277,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=278,slot_type=Token}
+                    |           |           |                           |___Token:String {id=292,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=280,slot_type=Token}
+                    |           |           |___Token:) {id=258,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=209,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=210,slot_type=Token}
+                    |               |___(*) {id=218,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,kleene_star__infixExpr_2]}
+                    |                   |___aux_rule__infixExpr_3 {id=219,slot_type=aux_rule__infixExpr_3}
+                    |                       |___Token:println {id=220,slot_type=Id}
+                    |                       |___aux_rule__simpleExpr1_10 {id=227,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                           |___Token:( {id=228,slot_type=Token}
+                    |                           |___(?) {id=229,slot_type=optional__simpleExpr1_1}
+                    |                           |   |___Token:"Hello, world" {id=244,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=230,slot_type=Token}
+                    |___Token:} {id=198,slot_type=Token}
+------------------------------------------------------------
+
+
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@12
@@ -4072,6 +4719,55 @@ Failed to reduce node 100
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 15. Reducer: concurrent_token_slicer@13=
+
+The spar-tree is the following.
+compilationUnit {id=181}
+|___(+) {id=182,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=188,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=189,slot_type=Token}
+        |___objectDef {id=190,slot_type=objectDef}
+            |___Token:Hello {id=191,slot_type=Id}
+            |___(?) {id=193,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=195,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=196,slot_type=Token}
+                    |___(+) {id=197,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=203,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=204,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=206,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=207,slot_type=funSig}
+                    |           |   |___Token:main {id=252,slot_type=Id}
+                    |           |   |___(*) {id=254,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=255,slot_type=paramClause}
+                    |           |           |___Token:( {id=256,slot_type=Token}
+                    |           |           |___(?) {id=257,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=260,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=261,slot_type=Id}
+                    |           |           |       |___(?) {id=262,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=263,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=264,slot_type=Token}
+                    |           |           |               |___simpleType {id=273,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=296,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=275,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=277,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=278,slot_type=Token}
+                    |           |           |                           |___Token:String {id=292,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=280,slot_type=Token}
+                    |           |           |___Token:) {id=258,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=209,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=210,slot_type=Token}
+                    |               |___(*) {id=218,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,kleene_star__infixExpr_2]}
+                    |                   |___aux_rule__infixExpr_3 {id=219,slot_type=aux_rule__infixExpr_3}
+                    |                       |___Token:println {id=220,slot_type=Id}
+                    |                       |___aux_rule__simpleExpr1_10 {id=227,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                           |___Token:( {id=228,slot_type=Token}
+                    |                           |___(?) {id=229,slot_type=optional__simpleExpr1_1}
+                    |                           |   |___Token:"Hello, world" {id=244,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=230,slot_type=Token}
+                    |___Token:} {id=198,slot_type=Token}
+------------------------------------------------------------
+
+
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@13
@@ -4135,6 +4831,55 @@ Failed to reduce node 100
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 16. Reducer: concurrent_token_slicer@14=
+
+The spar-tree is the following.
+compilationUnit {id=181}
+|___(+) {id=182,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=188,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=189,slot_type=Token}
+        |___objectDef {id=190,slot_type=objectDef}
+            |___Token:Hello {id=191,slot_type=Id}
+            |___(?) {id=193,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=195,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=196,slot_type=Token}
+                    |___(+) {id=197,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=203,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=204,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=206,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=207,slot_type=funSig}
+                    |           |   |___Token:main {id=252,slot_type=Id}
+                    |           |   |___(*) {id=254,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=255,slot_type=paramClause}
+                    |           |           |___Token:( {id=256,slot_type=Token}
+                    |           |           |___(?) {id=257,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=260,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=261,slot_type=Id}
+                    |           |           |       |___(?) {id=262,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=263,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=264,slot_type=Token}
+                    |           |           |               |___simpleType {id=273,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=296,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=275,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=277,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=278,slot_type=Token}
+                    |           |           |                           |___Token:String {id=292,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=280,slot_type=Token}
+                    |           |           |___Token:) {id=258,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=209,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=210,slot_type=Token}
+                    |               |___(*) {id=218,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,kleene_star__infixExpr_2]}
+                    |                   |___aux_rule__infixExpr_3 {id=219,slot_type=aux_rule__infixExpr_3}
+                    |                       |___Token:println {id=220,slot_type=Id}
+                    |                       |___aux_rule__simpleExpr1_10 {id=227,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                           |___Token:( {id=228,slot_type=Token}
+                    |                           |___(?) {id=229,slot_type=optional__simpleExpr1_1}
+                    |                           |   |___Token:"Hello, world" {id=244,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=230,slot_type=Token}
+                    |___Token:} {id=198,slot_type=Token}
+------------------------------------------------------------
+
+
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@14
@@ -4187,7 +4932,56 @@ Failed to reduce node 100
 ------------------------------------------------------------
 
 
-==================Reducing node 2, size=19==================
+=Fixpoint iteration 17. Reducer: perses_node_with_dfs_delta=
+
+The spar-tree is the following.
+compilationUnit {id=297}
+|___(+) {id=298,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=304,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=305,slot_type=Token}
+        |___objectDef {id=306,slot_type=objectDef}
+            |___Token:Hello {id=307,slot_type=Id}
+            |___(?) {id=309,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=311,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=312,slot_type=Token}
+                    |___(+) {id=313,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=319,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=320,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=322,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=323,slot_type=funSig}
+                    |           |   |___Token:main {id=363,slot_type=Id}
+                    |           |   |___(*) {id=365,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=366,slot_type=paramClause}
+                    |           |           |___Token:( {id=367,slot_type=Token}
+                    |           |           |___(?) {id=368,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=371,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=372,slot_type=Id}
+                    |           |           |       |___(?) {id=373,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=374,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=375,slot_type=Token}
+                    |           |           |               |___simpleType {id=384,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=407,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=386,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=388,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=389,slot_type=Token}
+                    |           |           |                           |___Token:String {id=403,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=391,slot_type=Token}
+                    |           |           |___Token:) {id=369,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=325,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=326,slot_type=Token}
+                    |               |___simpleExpr1 {id=336,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
+                    |                   |___Token:println {id=362,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=338,slot_type=kleene_star__simpleExpr1_4}
+                    |                       |___aux_rule__argumentExprs_7 {id=341,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
+                    |                           |___Token:( {id=342,slot_type=Token}
+                    |                           |___(?) {id=345,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
+                    |                           |   |___Token:"Hello, world" {id=359,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=344,slot_type=Token}
+                    |___Token:} {id=314,slot_type=Token}
+------------------------------------------------------------
+
+
+=================Reducing node 298, size=19=================
 
 The current best program is the following
 
@@ -4200,11 +4994,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 2
+Failed to reduce node 298
 ------------------------------------------------------------
 
 
-==================Reducing node 8, size=19==================
+=================Reducing node 304, size=19=================
 
 The current best program is the following
 
@@ -4217,11 +5011,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 8
+Failed to reduce node 304
 ------------------------------------------------------------
 
 
-==================Reducing node 9, size=19==================
+=================Reducing node 305, size=19=================
 
 The current best program is the following
 
@@ -4234,11 +5028,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 9
+Failed to reduce node 305
 ------------------------------------------------------------
 
 
-=================Reducing node 10, size=19==================
+=================Reducing node 306, size=19=================
 
 The current best program is the following
 
@@ -4257,11 +5051,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 10
+Failed to reduce node 306
 ------------------------------------------------------------
 
 
-=================Reducing node 11, size=19==================
+=================Reducing node 307, size=19=================
 
 The current best program is the following
 
@@ -4274,11 +5068,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 11
+Failed to reduce node 307
 ------------------------------------------------------------
 
 
-=================Reducing node 13, size=19==================
+=================Reducing node 309, size=19=================
 
 The current best program is the following
 
@@ -4297,11 +5091,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 13
+Failed to reduce node 309
 ------------------------------------------------------------
 
 
-=================Reducing node 15, size=19==================
+=================Reducing node 311, size=19=================
 
 The current best program is the following
 
@@ -4314,17 +5108,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=15}
+    NodeDeletionAction{target_node=311}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 15
+Failed to reduce node 311
 ------------------------------------------------------------
 
 
-=================Reducing node 16, size=19==================
+=================Reducing node 312, size=19=================
 
 The current best program is the following
 
@@ -4337,11 +5131,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 16
+Failed to reduce node 312
 ------------------------------------------------------------
 
 
-=================Reducing node 17, size=19==================
+=================Reducing node 313, size=19=================
 
 The current best program is the following
 
@@ -4354,11 +5148,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 17
+Failed to reduce node 313
 ------------------------------------------------------------
 
 
-=================Reducing node 18, size=19==================
+=================Reducing node 314, size=19=================
 
 The current best program is the following
 
@@ -4371,11 +5165,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 18
+Failed to reduce node 314
 ------------------------------------------------------------
 
 
-=================Reducing node 23, size=19==================
+=================Reducing node 319, size=19=================
 
 The current best program is the following
 
@@ -4412,11 +5206,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 23
+Failed to reduce node 319
 ------------------------------------------------------------
 
 
-=================Reducing node 24, size=19==================
+=================Reducing node 320, size=19=================
 
 The current best program is the following
 
@@ -4429,11 +5223,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 24
+Failed to reduce node 320
 ------------------------------------------------------------
 
 
-=================Reducing node 26, size=19==================
+=================Reducing node 322, size=19=================
 
 The current best program is the following
 
@@ -4446,11 +5240,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26
+Failed to reduce node 322
 ------------------------------------------------------------
 
 
-=================Reducing node 27, size=19==================
+=================Reducing node 323, size=19=================
 
 The current best program is the following
 
@@ -4482,11 +5276,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 27
+Failed to reduce node 323
 ------------------------------------------------------------
 
 
-=================Reducing node 29, size=19==================
+=================Reducing node 325, size=19=================
 
 The current best program is the following
 
@@ -4499,11 +5293,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 29
+Failed to reduce node 325
 ------------------------------------------------------------
 
 
-=================Reducing node 67, size=19==================
+=================Reducing node 363, size=19=================
 
 The current best program is the following
 
@@ -4516,11 +5310,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 67
+Failed to reduce node 363
 ------------------------------------------------------------
 
 
-=================Reducing node 69, size=19==================
+=================Reducing node 365, size=19=================
 
 The current best program is the following
 
@@ -4542,11 +5336,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 69
+Failed to reduce node 365
 ------------------------------------------------------------
 
 
-=================Reducing node 30, size=19==================
+=================Reducing node 326, size=19=================
 
 The current best program is the following
 
@@ -4559,11 +5353,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 30
+Failed to reduce node 326
 ------------------------------------------------------------
 
 
-=================Reducing node 40, size=19==================
+=================Reducing node 336, size=19=================
 
 The current best program is the following
 
@@ -4594,11 +5388,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 40
+Failed to reduce node 336
 ------------------------------------------------------------
 
 
-=================Reducing node 70, size=19==================
+=================Reducing node 366, size=19=================
 
 The current best program is the following
 
@@ -4611,17 +5405,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=70}
+    NodeDeletionAction{target_node=366}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 70
+Failed to reduce node 366
 ------------------------------------------------------------
 
 
-=================Reducing node 66, size=19==================
+=================Reducing node 362, size=19=================
 
 The current best program is the following
 
@@ -4634,11 +5428,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 66
+Failed to reduce node 362
 ------------------------------------------------------------
 
 
-=================Reducing node 42, size=19==================
+=================Reducing node 338, size=19=================
 
 The current best program is the following
 
@@ -4660,11 +5454,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 42
+Failed to reduce node 338
 ------------------------------------------------------------
 
 
-=================Reducing node 71, size=19==================
+=================Reducing node 367, size=19=================
 
 The current best program is the following
 
@@ -4677,11 +5471,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 71
+Failed to reduce node 367
 ------------------------------------------------------------
 
 
-=================Reducing node 72, size=19==================
+=================Reducing node 368, size=19=================
 
 The current best program is the following
 
@@ -4703,11 +5497,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 72
+Failed to reduce node 368
 ------------------------------------------------------------
 
 
-=================Reducing node 73, size=19==================
+=================Reducing node 369, size=19=================
 
 The current best program is the following
 
@@ -4720,11 +5514,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 73
+Failed to reduce node 369
 ------------------------------------------------------------
 
 
-=================Reducing node 45, size=19==================
+=================Reducing node 341, size=19=================
 
 The current best program is the following
 
@@ -4737,17 +5531,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=45}
+    NodeDeletionAction{target_node=341}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 45
+Failed to reduce node 341
 ------------------------------------------------------------
 
 
-=================Reducing node 75, size=19==================
+=================Reducing node 371, size=19=================
 
 The current best program is the following
 
@@ -4760,7 +5554,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=75}
+    NodeDeletionAction{target_node=371}
 ------------------------------------------------------------
 
 
@@ -4785,11 +5579,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 75
+Failed to reduce node 371
 ------------------------------------------------------------
 
 
-=================Reducing node 46, size=19==================
+=================Reducing node 342, size=19=================
 
 The current best program is the following
 
@@ -4802,11 +5596,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 46
+Failed to reduce node 342
 ------------------------------------------------------------
 
 
-=================Reducing node 49, size=19==================
+=================Reducing node 345, size=19=================
 
 The current best program is the following
 
@@ -4828,11 +5622,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 49
+Failed to reduce node 345
 ------------------------------------------------------------
 
 
-=================Reducing node 48, size=19==================
+=================Reducing node 344, size=19=================
 
 The current best program is the following
 
@@ -4845,11 +5639,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 48
+Failed to reduce node 344
 ------------------------------------------------------------
 
 
-=================Reducing node 76, size=19==================
+=================Reducing node 372, size=19=================
 
 The current best program is the following
 
@@ -4862,11 +5656,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 76
+Failed to reduce node 372
 ------------------------------------------------------------
 
 
-=================Reducing node 77, size=19==================
+=================Reducing node 373, size=19=================
 
 The current best program is the following
 
@@ -4888,11 +5682,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 77
+Failed to reduce node 373
 ------------------------------------------------------------
 
 
-=================Reducing node 63, size=19==================
+=================Reducing node 359, size=19=================
 
 The current best program is the following
 
@@ -4905,11 +5699,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 63
+Failed to reduce node 359
 ------------------------------------------------------------
 
 
-=================Reducing node 78, size=19==================
+=================Reducing node 374, size=19=================
 
 The current best program is the following
 
@@ -4922,17 +5716,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=78}
+    NodeDeletionAction{target_node=374}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 78
+Failed to reduce node 374
 ------------------------------------------------------------
 
 
-=================Reducing node 79, size=19==================
+=================Reducing node 375, size=19=================
 
 The current best program is the following
 
@@ -4945,11 +5739,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 79
+Failed to reduce node 375
 ------------------------------------------------------------
 
 
-=================Reducing node 88, size=19==================
+=================Reducing node 384, size=19=================
 
 The current best program is the following
 
@@ -4981,11 +5775,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 88
+Failed to reduce node 384
 ------------------------------------------------------------
 
 
-=================Reducing node 111, size=19=================
+=================Reducing node 407, size=19=================
 
 The current best program is the following
 
@@ -4998,11 +5792,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 111
+Failed to reduce node 407
 ------------------------------------------------------------
 
 
-=================Reducing node 90, size=19==================
+=================Reducing node 386, size=19=================
 
 The current best program is the following
 
@@ -5024,11 +5818,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 90
+Failed to reduce node 386
 ------------------------------------------------------------
 
 
-=================Reducing node 92, size=19==================
+=================Reducing node 388, size=19=================
 
 The current best program is the following
 
@@ -5041,17 +5835,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=92}
+    NodeDeletionAction{target_node=388}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 92
+Failed to reduce node 388
 ------------------------------------------------------------
 
 
-=================Reducing node 93, size=19==================
+=================Reducing node 389, size=19=================
 
 The current best program is the following
 
@@ -5064,11 +5858,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 93
+Failed to reduce node 389
 ------------------------------------------------------------
 
 
-=================Reducing node 107, size=19=================
+=================Reducing node 403, size=19=================
 
 The current best program is the following
 
@@ -5081,11 +5875,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 107
+Failed to reduce node 403
 ------------------------------------------------------------
 
 
-=================Reducing node 95, size=19==================
+=================Reducing node 391, size=19=================
 
 The current best program is the following
 
@@ -5098,13 +5892,62 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 95
+Failed to reduce node 391
+------------------------------------------------------------
+
+
+=Fixpoint iteration 18. Reducer: concurrent_token_slicer@1==
+
+The spar-tree is the following.
+compilationUnit {id=297}
+|___(+) {id=298,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=304,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=305,slot_type=Token}
+        |___objectDef {id=306,slot_type=objectDef}
+            |___Token:Hello {id=307,slot_type=Id}
+            |___(?) {id=309,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=311,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=312,slot_type=Token}
+                    |___(+) {id=313,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=319,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=320,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=322,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=323,slot_type=funSig}
+                    |           |   |___Token:main {id=363,slot_type=Id}
+                    |           |   |___(*) {id=365,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=366,slot_type=paramClause}
+                    |           |           |___Token:( {id=367,slot_type=Token}
+                    |           |           |___(?) {id=368,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=371,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=372,slot_type=Id}
+                    |           |           |       |___(?) {id=373,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=374,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=375,slot_type=Token}
+                    |           |           |               |___simpleType {id=384,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=407,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=386,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=388,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=389,slot_type=Token}
+                    |           |           |                           |___Token:String {id=403,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=391,slot_type=Token}
+                    |           |           |___Token:) {id=369,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=325,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=326,slot_type=Token}
+                    |               |___simpleExpr1 {id=336,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
+                    |                   |___Token:println {id=362,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=338,slot_type=kleene_star__simpleExpr1_4}
+                    |                       |___aux_rule__argumentExprs_7 {id=341,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
+                    |                           |___Token:( {id=342,slot_type=Token}
+                    |                           |___(?) {id=345,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
+                    |                           |   |___Token:"Hello, world" {id=359,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=344,slot_type=Token}
+                    |___Token:} {id=314,slot_type=Token}
 ------------------------------------------------------------
 
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=63}
+    NodeDeletionAction{target_node=359}
 ------------------------------------------------------------
 
 
@@ -5272,6 +6115,55 @@ Failed to reduce node 95
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 19. Reducer: concurrent_token_slicer@2==
+
+The spar-tree is the following.
+compilationUnit {id=297}
+|___(+) {id=298,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=304,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=305,slot_type=Token}
+        |___objectDef {id=306,slot_type=objectDef}
+            |___Token:Hello {id=307,slot_type=Id}
+            |___(?) {id=309,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=311,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=312,slot_type=Token}
+                    |___(+) {id=313,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=319,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=320,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=322,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=323,slot_type=funSig}
+                    |           |   |___Token:main {id=363,slot_type=Id}
+                    |           |   |___(*) {id=365,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=366,slot_type=paramClause}
+                    |           |           |___Token:( {id=367,slot_type=Token}
+                    |           |           |___(?) {id=368,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=371,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=372,slot_type=Id}
+                    |           |           |       |___(?) {id=373,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=374,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=375,slot_type=Token}
+                    |           |           |               |___simpleType {id=384,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=407,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=386,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=388,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=389,slot_type=Token}
+                    |           |           |                           |___Token:String {id=403,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=391,slot_type=Token}
+                    |           |           |___Token:) {id=369,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=325,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=326,slot_type=Token}
+                    |               |___simpleExpr1 {id=336,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
+                    |                   |___Token:println {id=362,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=338,slot_type=kleene_star__simpleExpr1_4}
+                    |                       |___aux_rule__argumentExprs_7 {id=341,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
+                    |                           |___Token:( {id=342,slot_type=Token}
+                    |                           |___(?) {id=345,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
+                    |                           |   |___Token:"Hello, world" {id=359,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=344,slot_type=Token}
+                    |___Token:} {id=314,slot_type=Token}
+------------------------------------------------------------
+
+
 =========Cache hit for the following program: fail==========
 
     object Hello {
@@ -5433,6 +6325,55 @@ Failed to reduce node 95
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 20. Reducer: concurrent_token_slicer@3==
+
+The spar-tree is the following.
+compilationUnit {id=297}
+|___(+) {id=298,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=304,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=305,slot_type=Token}
+        |___objectDef {id=306,slot_type=objectDef}
+            |___Token:Hello {id=307,slot_type=Id}
+            |___(?) {id=309,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=311,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=312,slot_type=Token}
+                    |___(+) {id=313,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=319,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=320,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=322,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=323,slot_type=funSig}
+                    |           |   |___Token:main {id=363,slot_type=Id}
+                    |           |   |___(*) {id=365,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=366,slot_type=paramClause}
+                    |           |           |___Token:( {id=367,slot_type=Token}
+                    |           |           |___(?) {id=368,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=371,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=372,slot_type=Id}
+                    |           |           |       |___(?) {id=373,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=374,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=375,slot_type=Token}
+                    |           |           |               |___simpleType {id=384,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=407,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=386,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=388,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=389,slot_type=Token}
+                    |           |           |                           |___Token:String {id=403,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=391,slot_type=Token}
+                    |           |           |___Token:) {id=369,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=325,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=326,slot_type=Token}
+                    |               |___simpleExpr1 {id=336,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
+                    |                   |___Token:println {id=362,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=338,slot_type=kleene_star__simpleExpr1_4}
+                    |                       |___aux_rule__argumentExprs_7 {id=341,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
+                    |                           |___Token:( {id=342,slot_type=Token}
+                    |                           |___(?) {id=345,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
+                    |                           |   |___Token:"Hello, world" {id=359,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=344,slot_type=Token}
+                    |___Token:} {id=314,slot_type=Token}
+------------------------------------------------------------
+
+
 =========Cache hit for the following program: fail==========
 
     object Hello {
@@ -5584,6 +6525,55 @@ Failed to reduce node 95
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 21. Reducer: concurrent_token_slicer@4==
+
+The spar-tree is the following.
+compilationUnit {id=297}
+|___(+) {id=298,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=304,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=305,slot_type=Token}
+        |___objectDef {id=306,slot_type=objectDef}
+            |___Token:Hello {id=307,slot_type=Id}
+            |___(?) {id=309,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=311,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=312,slot_type=Token}
+                    |___(+) {id=313,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=319,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=320,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=322,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=323,slot_type=funSig}
+                    |           |   |___Token:main {id=363,slot_type=Id}
+                    |           |   |___(*) {id=365,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=366,slot_type=paramClause}
+                    |           |           |___Token:( {id=367,slot_type=Token}
+                    |           |           |___(?) {id=368,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=371,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=372,slot_type=Id}
+                    |           |           |       |___(?) {id=373,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=374,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=375,slot_type=Token}
+                    |           |           |               |___simpleType {id=384,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=407,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=386,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=388,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=389,slot_type=Token}
+                    |           |           |                           |___Token:String {id=403,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=391,slot_type=Token}
+                    |           |           |___Token:) {id=369,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=325,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=326,slot_type=Token}
+                    |               |___simpleExpr1 {id=336,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
+                    |                   |___Token:println {id=362,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=338,slot_type=kleene_star__simpleExpr1_4}
+                    |                       |___aux_rule__argumentExprs_7 {id=341,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
+                    |                           |___Token:( {id=342,slot_type=Token}
+                    |                           |___(?) {id=345,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
+                    |                           |   |___Token:"Hello, world" {id=359,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=344,slot_type=Token}
+                    |___Token:} {id=314,slot_type=Token}
+------------------------------------------------------------
+
+
 =========Cache hit for the following program: fail==========
 
     object Hello {
@@ -5725,6 +6715,55 @@ Failed to reduce node 95
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 22. Reducer: concurrent_token_slicer@5==
+
+The spar-tree is the following.
+compilationUnit {id=297}
+|___(+) {id=298,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=304,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=305,slot_type=Token}
+        |___objectDef {id=306,slot_type=objectDef}
+            |___Token:Hello {id=307,slot_type=Id}
+            |___(?) {id=309,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=311,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=312,slot_type=Token}
+                    |___(+) {id=313,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=319,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=320,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=322,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=323,slot_type=funSig}
+                    |           |   |___Token:main {id=363,slot_type=Id}
+                    |           |   |___(*) {id=365,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=366,slot_type=paramClause}
+                    |           |           |___Token:( {id=367,slot_type=Token}
+                    |           |           |___(?) {id=368,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=371,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=372,slot_type=Id}
+                    |           |           |       |___(?) {id=373,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=374,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=375,slot_type=Token}
+                    |           |           |               |___simpleType {id=384,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=407,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=386,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=388,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=389,slot_type=Token}
+                    |           |           |                           |___Token:String {id=403,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=391,slot_type=Token}
+                    |           |           |___Token:) {id=369,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=325,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=326,slot_type=Token}
+                    |               |___simpleExpr1 {id=336,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
+                    |                   |___Token:println {id=362,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=338,slot_type=kleene_star__simpleExpr1_4}
+                    |                       |___aux_rule__argumentExprs_7 {id=341,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
+                    |                           |___Token:( {id=342,slot_type=Token}
+                    |                           |___(?) {id=345,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
+                    |                           |   |___Token:"Hello, world" {id=359,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=344,slot_type=Token}
+                    |___Token:} {id=314,slot_type=Token}
+------------------------------------------------------------
+
+
 =========Cache hit for the following program: fail==========
 
     object Hello {
@@ -5856,6 +6895,55 @@ Failed to reduce node 95
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 23. Reducer: concurrent_token_slicer@6==
+
+The spar-tree is the following.
+compilationUnit {id=297}
+|___(+) {id=298,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=304,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=305,slot_type=Token}
+        |___objectDef {id=306,slot_type=objectDef}
+            |___Token:Hello {id=307,slot_type=Id}
+            |___(?) {id=309,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=311,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=312,slot_type=Token}
+                    |___(+) {id=313,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=319,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=320,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=322,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=323,slot_type=funSig}
+                    |           |   |___Token:main {id=363,slot_type=Id}
+                    |           |   |___(*) {id=365,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=366,slot_type=paramClause}
+                    |           |           |___Token:( {id=367,slot_type=Token}
+                    |           |           |___(?) {id=368,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=371,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=372,slot_type=Id}
+                    |           |           |       |___(?) {id=373,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=374,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=375,slot_type=Token}
+                    |           |           |               |___simpleType {id=384,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=407,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=386,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=388,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=389,slot_type=Token}
+                    |           |           |                           |___Token:String {id=403,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=391,slot_type=Token}
+                    |           |           |___Token:) {id=369,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=325,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=326,slot_type=Token}
+                    |               |___simpleExpr1 {id=336,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
+                    |                   |___Token:println {id=362,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=338,slot_type=kleene_star__simpleExpr1_4}
+                    |                       |___aux_rule__argumentExprs_7 {id=341,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
+                    |                           |___Token:( {id=342,slot_type=Token}
+                    |                           |___(?) {id=345,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
+                    |                           |   |___Token:"Hello, world" {id=359,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=344,slot_type=Token}
+                    |___Token:} {id=314,slot_type=Token}
+------------------------------------------------------------
+
+
 =========Cache hit for the following program: fail==========
 
     object Hello {
@@ -5978,6 +7066,55 @@ Failed to reduce node 95
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 24. Reducer: concurrent_token_slicer@7==
+
+The spar-tree is the following.
+compilationUnit {id=297}
+|___(+) {id=298,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=304,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=305,slot_type=Token}
+        |___objectDef {id=306,slot_type=objectDef}
+            |___Token:Hello {id=307,slot_type=Id}
+            |___(?) {id=309,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=311,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=312,slot_type=Token}
+                    |___(+) {id=313,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=319,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=320,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=322,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=323,slot_type=funSig}
+                    |           |   |___Token:main {id=363,slot_type=Id}
+                    |           |   |___(*) {id=365,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=366,slot_type=paramClause}
+                    |           |           |___Token:( {id=367,slot_type=Token}
+                    |           |           |___(?) {id=368,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=371,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=372,slot_type=Id}
+                    |           |           |       |___(?) {id=373,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=374,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=375,slot_type=Token}
+                    |           |           |               |___simpleType {id=384,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=407,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=386,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=388,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=389,slot_type=Token}
+                    |           |           |                           |___Token:String {id=403,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=391,slot_type=Token}
+                    |           |           |___Token:) {id=369,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=325,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=326,slot_type=Token}
+                    |               |___simpleExpr1 {id=336,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
+                    |                   |___Token:println {id=362,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=338,slot_type=kleene_star__simpleExpr1_4}
+                    |                       |___aux_rule__argumentExprs_7 {id=341,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
+                    |                           |___Token:( {id=342,slot_type=Token}
+                    |                           |___(?) {id=345,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
+                    |                           |   |___Token:"Hello, world" {id=359,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=344,slot_type=Token}
+                    |___Token:} {id=314,slot_type=Token}
+------------------------------------------------------------
+
+
 =========Cache hit for the following program: fail==========
 
     object Hello {
@@ -6091,6 +7228,55 @@ Failed to reduce node 95
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 25. Reducer: concurrent_token_slicer@8==
+
+The spar-tree is the following.
+compilationUnit {id=297}
+|___(+) {id=298,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=304,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=305,slot_type=Token}
+        |___objectDef {id=306,slot_type=objectDef}
+            |___Token:Hello {id=307,slot_type=Id}
+            |___(?) {id=309,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=311,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=312,slot_type=Token}
+                    |___(+) {id=313,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=319,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=320,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=322,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=323,slot_type=funSig}
+                    |           |   |___Token:main {id=363,slot_type=Id}
+                    |           |   |___(*) {id=365,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=366,slot_type=paramClause}
+                    |           |           |___Token:( {id=367,slot_type=Token}
+                    |           |           |___(?) {id=368,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=371,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=372,slot_type=Id}
+                    |           |           |       |___(?) {id=373,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=374,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=375,slot_type=Token}
+                    |           |           |               |___simpleType {id=384,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=407,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=386,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=388,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=389,slot_type=Token}
+                    |           |           |                           |___Token:String {id=403,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=391,slot_type=Token}
+                    |           |           |___Token:) {id=369,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=325,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=326,slot_type=Token}
+                    |               |___simpleExpr1 {id=336,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
+                    |                   |___Token:println {id=362,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=338,slot_type=kleene_star__simpleExpr1_4}
+                    |                       |___aux_rule__argumentExprs_7 {id=341,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
+                    |                           |___Token:( {id=342,slot_type=Token}
+                    |                           |___(?) {id=345,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
+                    |                           |   |___Token:"Hello, world" {id=359,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=344,slot_type=Token}
+                    |___Token:} {id=314,slot_type=Token}
+------------------------------------------------------------
+
+
 =========Cache hit for the following program: fail==========
 
     object Hello {
@@ -6195,6 +7381,55 @@ Failed to reduce node 95
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 26. Reducer: concurrent_token_slicer@9==
+
+The spar-tree is the following.
+compilationUnit {id=297}
+|___(+) {id=298,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=304,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=305,slot_type=Token}
+        |___objectDef {id=306,slot_type=objectDef}
+            |___Token:Hello {id=307,slot_type=Id}
+            |___(?) {id=309,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=311,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=312,slot_type=Token}
+                    |___(+) {id=313,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=319,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=320,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=322,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=323,slot_type=funSig}
+                    |           |   |___Token:main {id=363,slot_type=Id}
+                    |           |   |___(*) {id=365,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=366,slot_type=paramClause}
+                    |           |           |___Token:( {id=367,slot_type=Token}
+                    |           |           |___(?) {id=368,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=371,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=372,slot_type=Id}
+                    |           |           |       |___(?) {id=373,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=374,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=375,slot_type=Token}
+                    |           |           |               |___simpleType {id=384,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=407,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=386,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=388,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=389,slot_type=Token}
+                    |           |           |                           |___Token:String {id=403,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=391,slot_type=Token}
+                    |           |           |___Token:) {id=369,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=325,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=326,slot_type=Token}
+                    |               |___simpleExpr1 {id=336,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
+                    |                   |___Token:println {id=362,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=338,slot_type=kleene_star__simpleExpr1_4}
+                    |                       |___aux_rule__argumentExprs_7 {id=341,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
+                    |                           |___Token:( {id=342,slot_type=Token}
+                    |                           |___(?) {id=345,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
+                    |                           |   |___Token:"Hello, world" {id=359,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=344,slot_type=Token}
+                    |___Token:} {id=314,slot_type=Token}
+------------------------------------------------------------
+
+
 =========Cache hit for the following program: fail==========
 
     object Hello {
@@ -6290,6 +7525,55 @@ Failed to reduce node 95
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 27. Reducer: concurrent_token_slicer@10=
+
+The spar-tree is the following.
+compilationUnit {id=297}
+|___(+) {id=298,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=304,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=305,slot_type=Token}
+        |___objectDef {id=306,slot_type=objectDef}
+            |___Token:Hello {id=307,slot_type=Id}
+            |___(?) {id=309,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=311,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=312,slot_type=Token}
+                    |___(+) {id=313,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=319,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=320,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=322,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=323,slot_type=funSig}
+                    |           |   |___Token:main {id=363,slot_type=Id}
+                    |           |   |___(*) {id=365,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=366,slot_type=paramClause}
+                    |           |           |___Token:( {id=367,slot_type=Token}
+                    |           |           |___(?) {id=368,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=371,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=372,slot_type=Id}
+                    |           |           |       |___(?) {id=373,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=374,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=375,slot_type=Token}
+                    |           |           |               |___simpleType {id=384,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=407,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=386,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=388,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=389,slot_type=Token}
+                    |           |           |                           |___Token:String {id=403,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=391,slot_type=Token}
+                    |           |           |___Token:) {id=369,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=325,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=326,slot_type=Token}
+                    |               |___simpleExpr1 {id=336,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
+                    |                   |___Token:println {id=362,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=338,slot_type=kleene_star__simpleExpr1_4}
+                    |                       |___aux_rule__argumentExprs_7 {id=341,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
+                    |                           |___Token:( {id=342,slot_type=Token}
+                    |                           |___(?) {id=345,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
+                    |                           |   |___Token:"Hello, world" {id=359,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=344,slot_type=Token}
+                    |___Token:} {id=314,slot_type=Token}
+------------------------------------------------------------
+
+
 =========Cache hit for the following program: fail==========
 
     object Hello {
@@ -6376,6 +7660,55 @@ Failed to reduce node 95
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 28. Reducer: concurrent_token_slicer@11=
+
+The spar-tree is the following.
+compilationUnit {id=297}
+|___(+) {id=298,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=304,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=305,slot_type=Token}
+        |___objectDef {id=306,slot_type=objectDef}
+            |___Token:Hello {id=307,slot_type=Id}
+            |___(?) {id=309,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=311,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=312,slot_type=Token}
+                    |___(+) {id=313,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=319,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=320,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=322,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=323,slot_type=funSig}
+                    |           |   |___Token:main {id=363,slot_type=Id}
+                    |           |   |___(*) {id=365,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=366,slot_type=paramClause}
+                    |           |           |___Token:( {id=367,slot_type=Token}
+                    |           |           |___(?) {id=368,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=371,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=372,slot_type=Id}
+                    |           |           |       |___(?) {id=373,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=374,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=375,slot_type=Token}
+                    |           |           |               |___simpleType {id=384,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=407,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=386,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=388,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=389,slot_type=Token}
+                    |           |           |                           |___Token:String {id=403,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=391,slot_type=Token}
+                    |           |           |___Token:) {id=369,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=325,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=326,slot_type=Token}
+                    |               |___simpleExpr1 {id=336,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
+                    |                   |___Token:println {id=362,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=338,slot_type=kleene_star__simpleExpr1_4}
+                    |                       |___aux_rule__argumentExprs_7 {id=341,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
+                    |                           |___Token:( {id=342,slot_type=Token}
+                    |                           |___(?) {id=345,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
+                    |                           |   |___Token:"Hello, world" {id=359,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=344,slot_type=Token}
+                    |___Token:} {id=314,slot_type=Token}
+------------------------------------------------------------
+
+
 =========Cache hit for the following program: fail==========
 
     object Hello {
@@ -6452,6 +7785,55 @@ Failed to reduce node 95
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 29. Reducer: concurrent_token_slicer@12=
+
+The spar-tree is the following.
+compilationUnit {id=297}
+|___(+) {id=298,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=304,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=305,slot_type=Token}
+        |___objectDef {id=306,slot_type=objectDef}
+            |___Token:Hello {id=307,slot_type=Id}
+            |___(?) {id=309,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=311,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=312,slot_type=Token}
+                    |___(+) {id=313,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=319,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=320,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=322,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=323,slot_type=funSig}
+                    |           |   |___Token:main {id=363,slot_type=Id}
+                    |           |   |___(*) {id=365,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=366,slot_type=paramClause}
+                    |           |           |___Token:( {id=367,slot_type=Token}
+                    |           |           |___(?) {id=368,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=371,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=372,slot_type=Id}
+                    |           |           |       |___(?) {id=373,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=374,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=375,slot_type=Token}
+                    |           |           |               |___simpleType {id=384,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=407,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=386,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=388,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=389,slot_type=Token}
+                    |           |           |                           |___Token:String {id=403,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=391,slot_type=Token}
+                    |           |           |___Token:) {id=369,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=325,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=326,slot_type=Token}
+                    |               |___simpleExpr1 {id=336,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
+                    |                   |___Token:println {id=362,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=338,slot_type=kleene_star__simpleExpr1_4}
+                    |                       |___aux_rule__argumentExprs_7 {id=341,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
+                    |                           |___Token:( {id=342,slot_type=Token}
+                    |                           |___(?) {id=345,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
+                    |                           |   |___Token:"Hello, world" {id=359,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=344,slot_type=Token}
+                    |___Token:} {id=314,slot_type=Token}
+------------------------------------------------------------
+
+
 =========Cache hit for the following program: fail==========
 
     object Hello {
@@ -6518,6 +7900,55 @@ Failed to reduce node 95
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 30. Reducer: concurrent_token_slicer@13=
+
+The spar-tree is the following.
+compilationUnit {id=297}
+|___(+) {id=298,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=304,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=305,slot_type=Token}
+        |___objectDef {id=306,slot_type=objectDef}
+            |___Token:Hello {id=307,slot_type=Id}
+            |___(?) {id=309,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=311,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=312,slot_type=Token}
+                    |___(+) {id=313,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=319,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=320,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=322,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=323,slot_type=funSig}
+                    |           |   |___Token:main {id=363,slot_type=Id}
+                    |           |   |___(*) {id=365,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=366,slot_type=paramClause}
+                    |           |           |___Token:( {id=367,slot_type=Token}
+                    |           |           |___(?) {id=368,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=371,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=372,slot_type=Id}
+                    |           |           |       |___(?) {id=373,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=374,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=375,slot_type=Token}
+                    |           |           |               |___simpleType {id=384,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=407,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=386,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=388,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=389,slot_type=Token}
+                    |           |           |                           |___Token:String {id=403,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=391,slot_type=Token}
+                    |           |           |___Token:) {id=369,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=325,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=326,slot_type=Token}
+                    |               |___simpleExpr1 {id=336,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
+                    |                   |___Token:println {id=362,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=338,slot_type=kleene_star__simpleExpr1_4}
+                    |                       |___aux_rule__argumentExprs_7 {id=341,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
+                    |                           |___Token:( {id=342,slot_type=Token}
+                    |                           |___(?) {id=345,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
+                    |                           |   |___Token:"Hello, world" {id=359,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=344,slot_type=Token}
+                    |___Token:} {id=314,slot_type=Token}
+------------------------------------------------------------
+
+
 =========Cache hit for the following program: fail==========
 
     object Hello {
@@ -6574,6 +8005,55 @@ Failed to reduce node 95
 ------------------------------------------------------------
 
 
+=Fixpoint iteration 31. Reducer: concurrent_token_slicer@14=
+
+The spar-tree is the following.
+compilationUnit {id=297}
+|___(+) {id=298,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=304,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=305,slot_type=Token}
+        |___objectDef {id=306,slot_type=objectDef}
+            |___Token:Hello {id=307,slot_type=Id}
+            |___(?) {id=309,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=311,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=312,slot_type=Token}
+                    |___(+) {id=313,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=319,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=320,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=322,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=323,slot_type=funSig}
+                    |           |   |___Token:main {id=363,slot_type=Id}
+                    |           |   |___(*) {id=365,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=366,slot_type=paramClause}
+                    |           |           |___Token:( {id=367,slot_type=Token}
+                    |           |           |___(?) {id=368,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=371,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=372,slot_type=Id}
+                    |           |           |       |___(?) {id=373,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=374,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=375,slot_type=Token}
+                    |           |           |               |___simpleType {id=384,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=407,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=386,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=388,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=389,slot_type=Token}
+                    |           |           |                           |___Token:String {id=403,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=391,slot_type=Token}
+                    |           |           |___Token:) {id=369,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=325,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=326,slot_type=Token}
+                    |               |___simpleExpr1 {id=336,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
+                    |                   |___Token:println {id=362,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=338,slot_type=kleene_star__simpleExpr1_4}
+                    |                       |___aux_rule__argumentExprs_7 {id=341,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
+                    |                           |___Token:( {id=342,slot_type=Token}
+                    |                           |___(?) {id=345,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
+                    |                           |   |___Token:"Hello, world" {id=359,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=344,slot_type=Token}
+                    |___Token:} {id=314,slot_type=Token}
+------------------------------------------------------------
+
+
 =========Cache hit for the following program: fail==========
 
     object Hello {
@@ -6625,3 +8105,4 @@ Failed to reduce node 95
 #test result cache hits = 211
 #test execution cancelled = 2
 #node edit action set cache hits = 17
+#external test execution cache hits = 0

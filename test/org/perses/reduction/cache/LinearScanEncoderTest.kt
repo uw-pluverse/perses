@@ -88,7 +88,7 @@ class LinearScanEncoderTest {
     val encoder = LinearScanTokenizedProgramEncoder(
       baseProgram,
       NULL_PROFILER,
-      /*enableCompression*/true,
+      enableCompression = true,
     )
     assertThat(encoder.persesLexemeIdArray.maxLogicalSize).isEqualTo(initialSize)
     encoder.updateEncoder(factory.create(listOf(antlrTokens[0], antlrTokens[1])))

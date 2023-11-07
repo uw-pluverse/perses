@@ -1,0 +1,58 @@
+
+package org.fake.package;
+
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import com.google.common.io.BaseEncoding;
+import org.perses.program.LanguageKind;
+import org.perses.program.SerializableLanguageKind;
+import org.perses.grammar.AbstractDefaultParserFacade;
+  
+  
+public final class FakeParserFacade
+  extends AbstractDefaultParserFacade<FakeLexer, FakeParser> {
+  public FakeParserFacade() {
+    super(
+        LANGUAGE,
+        createCombinedAntlrGrammar("Parser.g4", FakeParserFacade.class),
+        CLASS_LEXER,
+        CLASS_PARSER,
+        com.google.common.primitives.ImmutableIntArray.of(FakeLexer.Identifier));
+  }
+
+  @Override
+  protected FakeLexer createLexer(CharStream inputStream) {
+    return new FakeLexer(inputStream);
+  }
+
+  @Override
+  protected FakeParser createParser(CommonTokenStream tokens) {
+    return new FakeParser(tokens);
+  }
+
+  @Override
+  protected ParseTree startParsing(FakeParser parser) {
+    return parser.start_rule();
+  }
+ 
+  public static LanguageKind LANGUAGE;
+  
+  
+     
+  static {
+    try {
+      LANGUAGE = (LanguageKind)Class.forName("org.fake.package.LanguageFake")
+      .getField("INSTANCE").get(null);
+    } catch(Exception e) {
+      throw new RuntimeException(e); 
+    }
+  } 
+  
+    
+  
+  public static final Class<FakeLexer> CLASS_LEXER = FakeLexer.class;
+  
+  public static final Class<FakeParser> CLASS_PARSER = FakeParser.class;
+}
+    

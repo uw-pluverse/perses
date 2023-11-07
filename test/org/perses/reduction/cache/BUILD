@@ -6,6 +6,7 @@ load(
     "kt_jvm_library",
     "kt_jvm_test",
 )
+load("//:perses.bzl", "kt_binary_for_genrule")
 
 kt_jvm_test(
     name = "PassLevelCacheTest",
@@ -60,9 +61,9 @@ kt_jvm_test(
     ],
 )
 
-java_binary(
+kt_binary_for_genrule(
     name = "CompactQueryCacheBenchmark",
-    srcs = ["CompactQueryCacheBenchmark.java"],
+    srcs = ["CompactQueryCacheBenchmark.kt"],
     data = [
         "clang-22704.c",
     ],
@@ -132,9 +133,9 @@ kt_jvm_test(
     ],
 )
 
-java_test(
+kt_jvm_test(
     name = "TokenizedProgramEncoderTest",
-    srcs = ["TokenizedProgramEncoderTest.java"],
+    srcs = ["TokenizedProgramEncoderTest.kt"],
     data = [
         "clang-22704.c",
         "//test_data/delta_1",

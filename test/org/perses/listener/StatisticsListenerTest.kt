@@ -26,6 +26,7 @@ import org.perses.reduction.event.FixpointIterationEndEvent
 import org.perses.reduction.event.FixpointIterationStartEvent
 import org.perses.reduction.event.ReductionEndEvent
 import org.perses.reduction.event.ReductionStartEvent
+import org.perses.reduction.event.TestScriptExecutorServiceStatisticsSnapshot
 import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
 import java.lang.ref.WeakReference
 import java.nio.charset.StandardCharsets
@@ -50,21 +51,66 @@ class StatisticsListenerTest {
   fun test() {
     val reducer = PersesNodePrioritizedDfsReducer.META
     val startEvent = ReductionStartEvent(300, WeakReference(null), 100)
-    val event = FixpointIterationStartEvent(startEvent, 300, 100, 1, reducer)
-    val firstIterationStart = FixpointIterationStartEvent(startEvent, 300, 100, 1, reducer)
+    val firstIterationStart = FixpointIterationStartEvent(
+      startEvent,
+      300,
+      100,
+      1,
+      reducer,
+      WeakReference(null),
+      testScriptStatistics = TestScriptExecutorServiceStatisticsSnapshot(
+        scriptExecutionNumber = 0,
+        externalCacheHitNumber = 0,
+      ),
+    )
     listener.onFixpointIterationStart(firstIterationStart)
     val firstTestExecutions = 100
     listener.onFixpointIterationEnd(
-      FixpointIterationEndEvent(firstIterationStart, 500, 50, firstTestExecutions),
+      FixpointIterationEndEvent(
+        firstIterationStart,
+        500,
+        50,
+        testScriptStatistics = TestScriptExecutorServiceStatisticsSnapshot(
+          scriptExecutionNumber = firstTestExecutions,
+          externalCacheHitNumber = 0,
+        ),
+      ),
     )
-    val secondIterationStart = FixpointIterationStartEvent(startEvent, 500, 50, 2, reducer)
+    val secondIterationStart = FixpointIterationStartEvent(
+      startEvent,
+      500,
+      50,
+      2,
+      reducer,
+      WeakReference(null),
+      testScriptStatistics = TestScriptExecutorServiceStatisticsSnapshot(
+        scriptExecutionNumber = firstTestExecutions,
+        externalCacheHitNumber = 0,
+      ),
+    )
     listener.onFixpointIterationStart(secondIterationStart)
     val secondTestExecutions = 150
     listener.onFixpointIterationEnd(
-      FixpointIterationEndEvent(secondIterationStart, 700, 25, secondTestExecutions),
+      FixpointIterationEndEvent(
+        secondIterationStart,
+        700,
+        25,
+        testScriptStatistics = TestScriptExecutorServiceStatisticsSnapshot(
+          scriptExecutionNumber = secondTestExecutions + firstTestExecutions,
+          externalCacheHitNumber = 0,
+        ),
+      ),
     )
     val endEvent =
-      ReductionEndEvent(startEvent, 1000, 25, firstTestExecutions + secondTestExecutions)
+      ReductionEndEvent(
+        startEvent,
+        currentTimeMillis = 1000,
+        programSize = 25,
+        TestScriptExecutorServiceStatisticsSnapshot(
+          scriptExecutionNumber = firstTestExecutions + secondTestExecutions,
+          externalCacheHitNumber = 0,
+        ),
+      )
     listener.onReductionEnd(endEvent)
     Files.newBufferedReader(resultFile, StandardCharsets.UTF_8).use { reader ->
       val p = Properties()

@@ -34,23 +34,20 @@ class PnfPassCommandLine(
   }
 
   override fun internalRun() {
-    try {
-      val input = loadGrammarFromFile(cmd.flags.input!!)
+    val parserGramamr = loadGrammarFromFile(cmd.flags.input!!)
 
-      @Suppress("UNCHECKED_CAST")
-      val passClass = Class.forName(cmd.flags.pass) as Class<AbstractPnfPass>
-      val startRuleName = cmd.flags.startRuleName
-      val pass = if (Strings.isNullOrEmpty(startRuleName)) {
-        passClass.getConstructor().newInstance()
-      } else {
-        passClass.getConstructor(String::class.java).newInstance(startRuleName)
-      }
-      val output = pass.processParserGrammar(input, lexerGrammar = null)
-      cmd.flags.output!!.writeText(output.sourceCode)
-    } catch (e: RuntimeException) {
-      throw e
-    } catch (e: Throwable) {
-      throw RuntimeException(e)
+    @Suppress("UNCHECKED_CAST")
+    val passClass = Class.forName(cmd.flags.pass) as Class<AbstractPnfPass>
+    val startRuleName = cmd.flags.startRuleName
+    val pass = if (Strings.isNullOrEmpty(startRuleName)) {
+      passClass.getConstructor().newInstance()
+    } else {
+      passClass.getConstructor(String::class.java).newInstance(startRuleName)
+    }
+    val grammar = GrammarPair(parserGramamr, lexerGrammar = null)
+    val output = pass.processGrammar(grammar)
+    output.parserGrammar?.let {
+      cmd.flags.output!!.writeText(it.sourceCode)
     }
   }
 

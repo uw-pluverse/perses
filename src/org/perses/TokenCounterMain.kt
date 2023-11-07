@@ -23,25 +23,31 @@ import org.perses.TokenCounterMain.CommandOptions
 import org.perses.cmd.LanguageControlFlags
 import org.perses.grammar.AbstractParserFacadeFactory
 import org.perses.grammar.CompositeParserFacadeFactory
-import org.perses.grammar.SingleParserFacadeFactory
 import org.perses.grammar.SingleParserFacadeFactory.Companion.builderWithBuiltinLanguages
 import org.perses.grammar.adhoc.AdhocParserFacadeFactoryUtil.createParserFacadeFactory
 import org.perses.program.SourceFile
 import org.perses.util.cmd.AbstractCommandOptions
 import org.perses.util.cmd.AbstractMain
 import org.perses.util.cmd.ICommandLineFlags
+import java.io.OutputStream
+import java.io.PrintStream
 import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.properties.Delegates
 
-class TokenCounterMain(args: Array<String>) : AbstractMain<CommandOptions>(args) {
+class TokenCounterMain(
+  args: Array<String>,
+  private val printStream: PrintStream,
+) : AbstractMain<CommandOptions>(args) {
+
+  private var tokenCount by Delegates.notNull<Int>()
+
   override fun createCommandOptions(): CommandOptions {
     return CommandOptions()
   }
 
   private fun createParserFacadeFactory(): CompositeParserFacadeFactory {
-    val builtin = builderWithBuiltinLanguages(
-      SingleParserFacadeFactory.IDENTITY_CUSTOMIZER,
-    ).build()
+    val builtin = builderWithBuiltinLanguages().build()
     val ext = createParserFacadeFactory(
       cmd.extFlags.languageJarFiles,
     )
@@ -49,9 +55,16 @@ class TokenCounterMain(args: Array<String>) : AbstractMain<CommandOptions>(args)
   }
 
   override fun internalRun() {
-    val file = cmd.flags.file
+    tokenCount = countToken()
+    printStream.println()
+    printStream.printf("The number of tokens in file '%s' is:\n", cmd.flags.file)
+    printStream.println(tokenCount)
+  }
+
+  private fun countToken(): Int {
+    val file = cmd.flags.file!!
     val parserFacadeFactory: AbstractParserFacadeFactory = createParserFacadeFactory()
-    val language = parserFacadeFactory.computeLanguageKindWithFileName(file!!)
+    val language = parserFacadeFactory.computeLanguageKindWithFileName(file)
     val sourceFile = SourceFile(file, language!!)
     val parserFacade = parserFacadeFactory.createParserFacade(sourceFile.dataKind)
     val tokens = parserFacade.parseIntoTokens(sourceFile.file)
@@ -61,9 +74,7 @@ class TokenCounterMain(args: Array<String>) : AbstractMain<CommandOptions>(args)
         ++count
       }
     }
-    println()
-    System.out.printf("The number of tokens in file '%s' is:\n", file)
-    println(count)
+    return count
   }
 
   class CommandOptions : AbstractCommandOptions() {
@@ -81,10 +92,18 @@ class TokenCounterMain(args: Array<String>) : AbstractMain<CommandOptions>(args)
   }
 
   companion object {
+    @JvmStatic
+    fun countTokensOfFile(file: Path): Int {
+      val args = arrayOf(file.toString())
+      return TokenCounterMain(args, PrintStream(OutputStream.nullOutputStream())).let {
+        it.run()
+        it.tokenCount
+      }
+    }
 
     @JvmStatic
     fun main(args: Array<String>) {
-      TokenCounterMain(args).run()
+      TokenCounterMain(args, System.out).run()
     }
   }
 }

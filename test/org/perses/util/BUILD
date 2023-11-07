@@ -135,6 +135,18 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
+    name = "StringListToByteFunnelTest",
+    srcs = [
+        "StringListToByteFunnelTest.kt",
+    ],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/util",
+    ],
+)
+
+kt_jvm_test(
     name = "ListAlignmentTest",
     srcs = ["ListAlignmentTest.kt"],
     deps = [

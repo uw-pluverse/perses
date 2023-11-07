@@ -66,7 +66,7 @@ class AbstractProgramReductionDriverTest {
     }
 
     assertFailsWith<IllegalArgumentException> {
-      val type6 = AbstractProgramReductionDriver.computeQueryCacheType(
+      AbstractProgramReductionDriver.computeQueryCacheType(
         QueryCacheType.COMPACT_QUERY_CACHE_FORMAT_SENSITIVE,
         EnumFormatControl.SINGLE_TOKEN_PER_LINE,
       )

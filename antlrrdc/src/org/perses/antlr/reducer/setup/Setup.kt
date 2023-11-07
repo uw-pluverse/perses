@@ -28,7 +28,7 @@ import org.perses.util.Util
 import org.perses.util.java.JarFile
 import org.perses.util.java.JavacWrapper
 import org.perses.util.ktInfo
-import org.perses.util.shell.AbstractShell
+import org.perses.util.shell.Shells
 import java.nio.file.Files
 import java.nio.file.Path
 
@@ -90,15 +90,15 @@ class Setup(
   ).also {
     logger.ktInfo { "About to test the generated test script ${it.file}" }
     val startTime = System.currentTimeMillis()
-    val result = AbstractShell.singleton.run(
+    val result = Shells.singleton.run(
       "${it.shebang} ${it.file.fileName}",
       it.parentFile,
       captureOutput = false,
-      environment = AbstractShell.CURRENT_ENV,
+      environment = Shells.CURRENT_ENV,
     )
     val endTime = System.currentTimeMillis()
     logger.ktInfo { "${(endTime - startTime) / 1000} seconds spent by the script." }
-    check(result.exitCode == 0) { result }
+    check(result.exitCode.isZero()) { result }
   }
 
   companion object {

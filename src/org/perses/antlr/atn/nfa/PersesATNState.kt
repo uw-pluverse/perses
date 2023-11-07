@@ -16,28 +16,7 @@
  */
 package org.perses.antlr.atn.nfa
 
-import org.antlr.v4.runtime.atn.ATNState
-import org.antlr.v4.runtime.atn.Transition
-
-class PersesATNState : ATNState {
-  constructor(stateNumber: Int) : super() {
-    this.stateNumber = stateNumber
-  }
-
-  override fun getStateType(): Int {
-    return -1
-  }
-
-  @Deprecated("getTransisitons clones the transitions, which might be costly")
-  override fun getTransitions(): Array<Transition> {
-    return super.getTransitions()
-  }
-
-  override fun hashCode(): Int {
-    return System.identityHashCode(this)
-  }
-
-  override fun equals(other: Any?): Boolean {
-    return this === other
-  }
-}
+/**
+ * Not a data class because we need system identity hashing.
+ */
+class PersesATNState(val stateNumber: Int)

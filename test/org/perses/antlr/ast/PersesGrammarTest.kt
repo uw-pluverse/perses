@@ -31,7 +31,7 @@ import kotlin.io.path.readText
 @RunWith(JUnit4::class)
 class PersesGrammarTest {
   @Test
-  fun test_getGrammarName() {
+  fun testGetGrammarName() {
     val cGrammar = CParserFacade().antlrGrammar.asCombined().grammar
     assertThat(cGrammar.grammarName).isEqualTo("OptC")
     val ruleNames = cGrammar.flattenedAllRules.stream()
@@ -44,7 +44,7 @@ class PersesGrammarTest {
   }
 
   @Test
-  fun test_toSourceCode_c_grammar() {
+  fun testToSourceCodeCgrammar() {
     val cGrammar = CParserFacade().antlrGrammar.asCombined().grammar
     val grammarRoundback = PersesAstBuilder.loadGrammarFromString(cGrammar.sourceCode)
     testGrammar(grammarRoundback)
@@ -75,6 +75,12 @@ class PersesGrammarTest {
   }
 
   @Test
+  fun testComputeAntlrBaseFileName() {
+    val grammar = createAndTest("lexer_member.g4")
+    assertThat(grammar.computeAntlrBaseFileName()).isEqualTo("lexer_member.g4")
+  }
+
+  @Test
   fun testLexerSemanticPredicate() {
     val grammar = createAndTest("lexer_semantic_predicate.g4")
     val code = grammar.sourceCode
@@ -82,27 +88,27 @@ class PersesGrammarTest {
   }
 
   @Test
-  fun test_PersesEpsilonAst() {
+  fun testPersesEpsilonAst() {
     createAndTest("epsilon.g4")
   }
 
   @Test
-  fun test_PersesTerminalAst() {
+  fun testPersesTerminalAst() {
     createAndTest("terminal.g4")
   }
 
   @Test
-  fun test_PersesRuleRefAst() {
+  fun testPersesRuleRefAst() {
     createAndTest("rule_ref.g4")
   }
 
   @Test
-  fun test_PersesTokenSetAst() {
+  fun testPersesTokenSetAst() {
     createAndTest("token_set.g4")
   }
 
   @Test
-  fun test_PersesNotAst() {
+  fun testPersesNotAst() {
     createAndTest("not.g4")
   }
 
@@ -112,22 +118,22 @@ class PersesGrammarTest {
   }
 
   @Test
-  fun test_PersesAlternativeAst() {
+  fun testPersesAlternativeAst() {
     createAndTest("alternative.g4")
   }
 
   @Test
-  fun test_PersesOptionalAst() {
+  fun testPersesOptionalAst() {
     createAndTest("optional.g4")
   }
 
   @Test
-  fun test_PersesStarAst() {
+  fun testPersesStarAst() {
     createAndTest("star.g4")
   }
 
   @Test
-  fun test_PersesPlusAst() {
+  fun testPersesPlusAst() {
     createAndTest("plus.g4")
   }
 
@@ -213,7 +219,7 @@ class PersesGrammarTest {
   }
 
   @Test
-  fun test_lexer_fragment() {
+  fun testLexerFragment() {
     val grammar = createAndTest("lexer_fragment.g4")
     val sourceCode = grammar.getChild(0).sourceCode
     assertThat(sourceCode).contains("fragment")
@@ -221,14 +227,14 @@ class PersesGrammarTest {
   }
 
   @Test
-  fun test_action() {
+  fun testAction() {
     val grammar = createAndTest("action.g4")
     val sourceCode = grammar.sourceCode
     assertThat(sourceCode).contains("{System.out.println(\"found a decl\");}")
   }
 
   @Test
-  fun test_rule_attribute() {
+  fun testRuleAttribute() {
     val grammar = createAndTest("rule_attribute_args.g4")
     val sourceCode = grammar.sourceCode
     assertThat(sourceCode)
@@ -236,7 +242,7 @@ class PersesGrammarTest {
   }
 
   @Test
-  fun test_rule_arguments() {
+  fun testRuleArguments() {
     val grammar = createAndTest("rule_arguments.g4")
     val sourceCode = grammar.sourceCode
     GrammarTestingUtility.checkWithGoldenGrammar(

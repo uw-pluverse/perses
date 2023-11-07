@@ -29,10 +29,10 @@ import org.perses.util.toImmutableList
 
 abstract class AbstractIndirectRecursionEliminationPass : AbstractPnfPass() {
 
-  override fun processParserGrammar(
-    parserGrammar: PersesGrammar,
-    lexerGrammar: PersesGrammar?,
-  ): PersesGrammar {
+  override fun processGrammar(
+    grammar: GrammarPair,
+  ): GrammarPair {
+    val parserGrammar = grammar.parserGrammar ?: return grammar
     val ruleTransitionGraph = createRuleTransitionGraph(parserGrammar)
     val sccs: List<Set<RuleNameHandle>> = ruleTransitionGraph.computeSccSet()
       .asSequence()
@@ -45,7 +45,9 @@ abstract class AbstractIndirectRecursionEliminationPass : AbstractPnfPass() {
       transformForScc(ProjectedHashMultimap(ruleMap, scc))
       ruleMap.validate()
     }
-    return parserGrammar.copyWithNewParserRuleDefs(ruleMap.toParserRuleAstList())
+    return grammar.withNewParserGrammar(
+      parserGrammar.copyWithNewParserRuleDefs(ruleMap.toParserRuleAstList()),
+    )
   }
 
   @VisibleForTesting

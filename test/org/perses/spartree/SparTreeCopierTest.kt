@@ -23,6 +23,8 @@ import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.c.LanguageC
 import org.perses.program.printer.PrinterRegistry
+import org.perses.spartree.AbstractTreeNode.NodeIdCopyStrategy.ReuseNodeIdStrategy
+import org.perses.util.SimpleStack
 
 @RunWith(JUnit4::class)
 class SparTreeCopierTest {
@@ -35,13 +37,33 @@ class SparTreeCopierTest {
     LanguageC,
   )
 
-  val copy = original.deepCopy()
+  val copy = original.deepCopy(ReuseNodeIdStrategy)
 
   @Test
   fun testOutputtingProgramInOrigFormat() {
     val origProgram = PrinterRegistry.printToStringInOrigFormat(original.programSnapshot)
     val copyProgram = PrinterRegistry.printToStringInOrigFormat(copy.programSnapshot)
     assertThat(origProgram).isEqualTo(copyProgram)
+  }
+
+  @Test
+  fun testDeepCopyWithSparTreeNodeFactoryAsNodeIdCopyStrategy() {
+    val anotherCopy = original.deepCopy(original.sparTreeNodeFactory)
+    val stack = SimpleStack.of(Pair(copy.root, anotherCopy.root))
+    while (stack.isNotEmpty()) {
+      val (a, b) = stack.remove()
+      assertThat(a::class.java).isSameInstanceAs(b::class.java)
+      if (a is LexerRuleSparTreeNode && b is LexerRuleSparTreeNode) {
+        assertThat(a.token.text).isEqualTo(b.token.text)
+      }
+      assertThat(a.nodeId).isNotEqualTo(b.nodeId)
+      assertThat(a.antlrRule).isSameInstanceAs(b.antlrRule)
+      assertThat(a.childCount).isEqualTo(b.childCount)
+      val childCount = a.childCount
+      (0 until childCount).forEach {
+        stack.add(Pair(a.getChild(it), b.getChild(it)))
+      }
+    }
   }
 
   @Test
@@ -73,7 +95,13 @@ class SparTreeCopierTest {
       assertThat(it.first.antlrRule).isSameInstanceAs(it.second.antlrRule)
       assertThat(it.first.isQuantifierNode).isEqualTo(it.second.isQuantifierNode)
       assertThat(it.first.isTokenNode).isEqualTo(it.second.isTokenNode)
-      assertThat(it.first.nodeType).isEqualTo(it.second.nodeType)
+      assertThat(it.first::class).isEqualTo(it.second::class)
+      if (it.first is ParserRuleSparTreeNode) {
+        check(it.second is ParserRuleSparTreeNode)
+        assertThat(
+          (it.first as ParserRuleSparTreeNode).ruleType,
+        ).isEqualTo((it.second as ParserRuleSparTreeNode).ruleType)
+      }
       assertThat(it.first.ruleName).isEqualTo(it.second.ruleName)
       assertThat(it.first.childCount).isEqualTo(it.second.childCount)
     }

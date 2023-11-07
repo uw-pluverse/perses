@@ -28,7 +28,7 @@ kt_jvm_test(
         "//:flogger",
         "//:guava",
         "//:truth",
-        "//src/org/perses/antlr:antlr_grammar_util",
+        "//src/org/perses/antlr:util",
         "//src/org/perses/grammar/c:parser_facade",
         "//test/org/perses:test_util",
         "//test/org/perses/program:LanguageKindTestUtil",
@@ -41,7 +41,7 @@ kt_jvm_test(
 #    data = ["//test_data/c_programs/preprocessed_files"],
 #    test_class = "org.perses.grammar.c.PreprocessedCFileParserTest",
 #    deps = [
-#        "//src/org/perses/antlr:antlr_grammar_util",
+#        "//src/org/perses/antlr:util",
 #        "//src/org/perses/grammar/c:pnfc_parser_facade",
 #        "//test/org/perses:test_util",
 #    "//:truth",

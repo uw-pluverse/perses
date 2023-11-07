@@ -8,7 +8,12 @@ readonly FILE="t.c"
 readonly OUTPUT="temp.txt"
 readonly EXE="./temp.out"
 
-gcc "${FILE}" -o "${EXE}" || exit 1
+gcc "${FILE}" -Wall -Wextra -o "${EXE}" > "${OUTPUT}" 2>&1 || exit 1
+
+if grep "uninitialized" "${OUTPUT}" ; then
+  exit 1
+fi
+
 "${EXE}" > "${OUTPUT}" 2>&1
 if [[ "$?" != 99 ]] ; then
   exit 1

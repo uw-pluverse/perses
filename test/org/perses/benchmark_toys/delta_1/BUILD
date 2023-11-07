@@ -40,6 +40,36 @@ golden_test(
     test_file = GREPPED_CACHE_SETTING_FILE,
 )
 
+GREPPED_CMD_KEY_VALUE_PAIRS_FILE = "grepped_cmd_key_value_pairs.txt"
+
+genrule(
+    name = "grep_command_line_option_key_value_pairs",
+    srcs = [LOG_FILE],
+    outs = [GREPPED_CMD_KEY_VALUE_PAIRS_FILE],
+    cmd = "grep --only-matching 'The command-line options are:.*' $(location %s) > $(location %s)" % (LOG_FILE, GREPPED_CMD_KEY_VALUE_PAIRS_FILE),
+)
+
+golden_test(
+    name = "grep_cmd_option_key_value_pairs_golden_test",
+    golden_file = "golden_grepped_cmd_option_key_value_pairs.txt",
+    test_file = GREPPED_CMD_KEY_VALUE_PAIRS_FILE,
+)
+
+GREPPED_NUMBER_OF_REMOVED_TOKENS = "grepped_number_of_removed_tokens.txt"
+
+genrule(
+    name = "grep_number_of_removed_tokens",
+    srcs = [LOG_FILE],
+    outs = [GREPPED_NUMBER_OF_REMOVED_TOKENS],
+    cmd = "grep --only-matching 'Removed.*$$' $(location %s) > $(location %s)" % (LOG_FILE, GREPPED_NUMBER_OF_REMOVED_TOKENS),
+)
+
+golden_test(
+    name = "grep_number_of_removed_tokens_golden_test",
+    golden_file = "golden_grepped_number_of_removed_tokens.txt",
+    test_file = GREPPED_NUMBER_OF_REMOVED_TOKENS,
+)
+
 # Note that token slicer checks syntactical validity when
 # the program being reduced is small. So, it is not possible
 # to get the 'world\n' as the final result.

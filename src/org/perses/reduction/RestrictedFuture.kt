@@ -28,7 +28,7 @@ class RestrictedFuture<T>(
   private val defaultKeepTrying: Boolean,
 ) {
 
-  fun cancelWithInterruption() = future.cancel(/*mayInterruptIfRunning*/true)
+  fun cancelWithInterruption() = future.cancel(true) // true means mayInterruptIfRunning
 
   fun getWithTimeoutWarnings(
     timeoutInSeconds: Long = defaultTimeoutInSeconds,

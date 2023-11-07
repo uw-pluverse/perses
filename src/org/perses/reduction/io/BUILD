@@ -1,7 +1,7 @@
 package(default_visibility = [
     "//antlrrdc:__subpackages__",
     "//buildopt:__subpackages__",
-    "//shadow/src/org/perses:__subpackages__",
+    "//ppr/src/org/perses:__subpackages__",
     "//src/org/perses:__subpackages__",
     "//test/org/perses:__subpackages__",
 ])

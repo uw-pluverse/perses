@@ -53,6 +53,6 @@ class ProjectedHashMultimap(
 
   fun put(key: RuleNameHandle, value: AbstractPersesRuleElement) {
     projectedKeySet.add(key)
-    grammar.getAltBlock(key).addIfInequivalent(value)
+    grammar.getAltBlock(key).addIfNotEquivalent(value)
   }
 }

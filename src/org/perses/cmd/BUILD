@@ -25,6 +25,7 @@ kt_jvm_library(
         "ProfilingFlags.kt",
         "ReductionAlgorithmControlFlags.kt",
         "ReductionControlFlags.kt",
+        "VulcanFlags.kt",
     ],
     exports = [
         ":LanguageControlFlags",

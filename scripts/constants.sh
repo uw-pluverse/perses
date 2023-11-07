@@ -21,12 +21,16 @@ BAZEL_DIRS=(
 )
 
 readonly SUBMODULE_BAZEL_DIRS=(
-  "arabica"
   "antlrrdc"
-  "buildopt"
+  "arabica"
   "atn"
-  "ebtrans"
-  "shadow"
+  "buildopt"
+  "global_cache/src"
+  "global_cache/test"
+  "latra"
+  "ppr"
+  "fision/src"
+  "fision/test"
   "perses-fuzzer/src"
   "perses-fuzzer/test"
   "pigen/ast"

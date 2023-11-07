@@ -66,14 +66,14 @@ class NodeReplacementActionSetTest {
   fun testActionsAreSortedAndDistinct() {
     assertThat(
       actionSet.actions.stream()
-        .map(ChildHoistingAction::targetNode)
+        .map(NodeReplacementAction::targetNode)
         .collect(Collectors.toList()),
     )
       .containsExactly(node5, node46)
       .inOrder()
     assertThat(
       actionSet2.actions.stream()
-        .map(ChildHoistingAction::targetNode)
+        .map(NodeReplacementAction::targetNode)
         .collect(Collectors.toList()),
     )
       .containsExactly(node5, node46)

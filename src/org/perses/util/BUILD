@@ -7,7 +7,10 @@ load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 kt_jvm_library(
     name = "util",
     srcs = [
+        "DaemonThreadPool.kt",
+        "GlobalSequenceGenerator.kt",
         "PersesKtExts.kt",
+        "StringListToByteFunnel.kt",
         "Util.kt",
     ],
     deps = [
@@ -112,14 +115,6 @@ kt_jvm_library(
 )
 
 kt_jvm_library(
-    name = "daemon_thread_pool",
-    srcs = ["DaemonThreadPool.kt"],
-    deps = [
-        "//:guava",
-    ],
-)
-
-kt_jvm_library(
     name = "timeutil",
     srcs = [
         "TimeSpan.kt",
@@ -147,9 +142,6 @@ kt_jvm_library(
 kt_jvm_library(
     name = "flogger_kt_exts",
     srcs = ["FloggerKtExts.kt"],
-    visibility = [
-        "//:__pkg__",
-    ],
     exports = [
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_flogger_flogger_system_backend",

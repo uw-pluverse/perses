@@ -63,6 +63,10 @@ class PersesParserRuleAst(
       return locals != null
     }
 
+    fun isNotEmpty() = hasReturn() || hasArguments() || hasLocals()
+
+    fun isEmpty() = !isNotEmpty()
+
     fun copyWithNewLocals(newLocals: PersesActionAst?): ParserRuleAttributes {
       return ParserRuleAttributes(arguments, returns, newLocals)
     }

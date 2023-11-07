@@ -38,6 +38,8 @@ kt_jvm_library(
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar/cpp:language_kind",
         "//src/org/perses/grammar/cpp:parser_facade",
+        "//src/org/perses/grammar/glsl:language_kind",
+        "//src/org/perses/grammar/glsl:parser_facade",
         "//src/org/perses/grammar/go:language_kind",
         "//src/org/perses/grammar/go:parser_facade",
         "//src/org/perses/grammar/java:language_kind",
@@ -91,6 +93,7 @@ kt_jvm_library(
         "//src/org/perses/reduction:reducer_factory",
         "//src/org/perses/reduction:reduction_driver",
         "//src/org/perses/reduction:reduction_driver_interface",
+        "//src/org/perses/reduction/reducer/vulcan",
         "//src/org/perses/util:default_logging_configurations",
         "//src/org/perses/util/cmd",
         "//version/org/perses/version",
@@ -106,26 +109,26 @@ java_binary(
     ],
 )
 
-proguard_strip(
-    name = "strip_perses",
-    input_jar = "perses_deploy.jar",
-    main_class = "public class org.perses.Main",
-    output_jar = "stripped_perses.jar",
-)
-
-java_import(
-    name = "stripped_perses_lib",
-    jars = ["stripped_perses.jar"],
-)
-
-# FIXME: does not work.
-java_binary(
-    name = "stripped_perses_bin",
-    main_class = "org.perses.Main",
-    runtime_deps = [
-        ":stripped_perses_lib",
-    ],
-)
+#proguard_strip(
+#    name = "strip_perses",
+#    input_jar = "perses_deploy.jar",
+#    main_class = "public class org.perses.Main",
+#    output_jar = "stripped_perses.jar",
+#)
+#
+#java_import(
+#    name = "stripped_perses_lib",
+#    jars = ["stripped_perses.jar"],
+#)
+#
+## FIXME: does not work.
+#java_binary(
+#    name = "stripped_perses_bin",
+#    main_class = "org.perses.Main",
+#    runtime_deps = [
+#        ":stripped_perses_lib",
+#    ],
+#)
 
 java_binary(
     name = "token_counter",
@@ -156,9 +159,9 @@ kt_jvm_library(
     ],
 )
 
-proguard_strip(
-    name = "stripped_token_counter_deploy",
-    input_jar = "token_counter_deploy.jar",
-    main_class = "public class org.perses.TokenCounterMain",
-    output_jar = "stripped_token_counter_deploy.jar",
-)
+#proguard_strip(
+#    name = "stripped_token_counter_deploy",
+#    input_jar = "token_counter_deploy.jar",
+#    main_class = "public class org.perses.TokenCounterMain",
+#    output_jar = "stripped_token_counter_deploy.jar",
+#)

@@ -37,4 +37,18 @@ class NodeDeletionAction(
   override fun specificHashCode(): Int {
     return 0
   }
+
+  override fun internalApply() {
+    // TODO: Move this check to deletion action set
+    if (targetNode.isPermanentlyDeleted) {
+      return
+    }
+    targetNode.delete()
+    SparTree.fixLeafLinkByDeleting(targetNode.beginToken!!, targetNode.endToken!!.next!!)
+    val parentNode = targetNode.parent
+    if (parentNode != null) {
+      parentNode.cleanDeletedImmediateChildren()
+      SparTree.updateTokenIntervalUpToRoot(parentNode)
+    }
+  }
 }

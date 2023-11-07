@@ -28,9 +28,5 @@ class SourceFile(
   languageKind: LanguageKind,
 ) : AbstractReductionFile<LanguageKind, SourceFile>(languageKind, file) {
 
-  @Deprecated(
-    message = "This should not be called.",
-    replaceWith = ReplaceWith("dataKind"),
-  )
-  val fileContent by fileWithContent::textualFileContent
+  val textualFileContent by fileWithContent::textualFileContent
 }

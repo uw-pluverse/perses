@@ -19,8 +19,6 @@ package org.perses.reduction.io
 import com.google.common.annotations.VisibleForTesting
 import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
-import com.google.common.io.MoreFiles
-import com.google.common.io.RecursiveDeleteOption
 import org.perses.program.AbstractReductionFile
 import org.perses.reduction.PropertyTestResult
 import org.perses.util.Util
@@ -30,7 +28,9 @@ import java.nio.file.FileVisitResult
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.SimpleFileVisitor
+import java.nio.file.StandardCopyOption
 import java.nio.file.attribute.BasicFileAttributes
+import kotlin.io.path.deleteRecursively
 
 // TODO: save the test result in the folder.
 class ReductionFolder(
@@ -87,11 +87,15 @@ class ReductionFolder(
   fun deleteThisDirectoryRecursively() {
     checkThisFolderIsStillInUse()
     inUse = false
-    MoreFiles.deleteRecursively(folder, RecursiveDeleteOption.ALLOW_INSECURE)
+    folder.deleteRecursively()
   }
 
   private fun checkThisFolderIsStillInUse() {
     check(inUse) { "This reduction folder is deleted permanently. $this" }
+  }
+
+  fun copyTo(destFolder: ReductionFolder) {
+    Util.copyDirectory(folder, destFolder.folder, StandardCopyOption.REPLACE_EXISTING)
   }
 
   override fun toString(): String {

@@ -18,16 +18,18 @@ package org.perses.spartree
 
 import org.perses.antlr.RuleHierarchyEntry
 import org.perses.antlr.RuleType
+import org.perses.antlr.pnf.AstUtil
 import org.perses.util.Util.lazyAssert
 
 /** A spar-tree node for a parser rule.  */
 class ParserRuleSparTreeNode internal constructor(
   nodeId: Int,
-  antlrRule: RuleHierarchyEntry?,
+  antlrRule: RuleHierarchyEntry,
 ) : AbstractSparTreeNode(nodeId, antlrRule) {
 
+  val ruleType = AstUtil.computeNodeType(antlrRule.ruleDef)
   init {
-    require(nodeType != RuleType.TOKEN) { nodeType }
+    require(ruleType.isParserRule) { ruleType }
   }
 
   override fun deleteCurrentNode() {
@@ -48,30 +50,11 @@ class ParserRuleSparTreeNode internal constructor(
     return elementTypeCandidates.first()!!
   }
 
-  /**
-   * This method should be only called when a spar-tree is constructed from a Antlr parse tree. Add
-   * a child to the current node.
-   *
-   * Note that the child's parent should be null.
-   *
-   * @param child, a tree node whose parent is null.
-   */
-  override fun addChild(
-    child: AbstractSparTreeNode,
-    payload: AbstractNodePayload,
-  ) {
-    super.addChild(child, payload)
-    lazyAssert({ checkNodeIntegrity() == null }) { checkNodeIntegrity()!! }
-  }
-
   override var beginToken: LexerRuleSparTreeNode? = null
 
   override var endToken: LexerRuleSparTreeNode? = null
 
   override fun onChildRemoved(index: Int, child: AbstractSparTreeNode) = Unit
-
-  override val isTokenNode: Boolean
-    get() = false
 
   override fun buildTokenIntervalInfoForCurrentNode() {
     beginToken = leftmostToken
@@ -79,7 +62,7 @@ class ParserRuleSparTreeNode internal constructor(
   }
 
   override val labelPrefix: String
-    get() = when (nodeType) {
+    get() = when (ruleType) {
       RuleType.KLEENE_PLUS -> "(+)"
       RuleType.KLEENE_STAR -> "(*)"
       RuleType.OPTIONAL -> "(?)"
@@ -117,11 +100,7 @@ class ParserRuleSparTreeNode internal constructor(
       return null
     }
 
-  override fun checkNodeIntegrity(): ErrorMessage? {
-    return null
-  }
-
-  override fun copyCurrentNode(): ParserRuleSparTreeNode {
-    return ParserRuleSparTreeNode(nodeId, antlrRule)
+  override fun internalCopyCurrentNode(computedNewNodeId: Int): ParserRuleSparTreeNode {
+    return ParserRuleSparTreeNode(computedNewNodeId, antlrRule!!)
   }
 }

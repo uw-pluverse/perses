@@ -23,7 +23,7 @@ import org.perses.spartree.AbstractNodeActionSetCache
 import org.perses.spartree.AbstractSparTreeEdit
 import java.util.ArrayDeque
 
-class BfsDeltaDebugger constructor(
+class BfsDeltaDebugger(
   listenerManager: AsyncReductionListenerManager,
   nodeActionSetCache: AbstractNodeActionSetCache,
   treeEditTester: (AbstractSparTreeEdit<*>) -> TreeEditWithItsResult?,

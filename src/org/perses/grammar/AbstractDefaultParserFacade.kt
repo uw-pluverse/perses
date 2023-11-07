@@ -40,10 +40,10 @@ abstract class AbstractDefaultParserFacade<LEXER : Lexer, PARSER : Parser>
 protected constructor(
   languageKind: LanguageKind,
   grammar: AbstractAntlrGrammar,
-  override val lexerClass: Class<LEXER>,
-  override val parserClass: Class<PARSER>,
+  lexerClass: Class<LEXER>,
+  parserClass: Class<PARSER>,
   identifierTokenTypes: ImmutableIntArray,
-) : AbstractParserFacade(languageKind, grammar, identifierTokenTypes) {
+) : AbstractParserFacade(languageKind, grammar, identifierTokenTypes, lexerClass, parserClass) {
 
   protected abstract fun createLexer(inputStream: CharStream): LEXER
   private fun createLexerWithoutCache(inputStream: CharStream): LEXER {

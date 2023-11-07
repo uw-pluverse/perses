@@ -1,0 +1,1 @@
+select * from A where a="hello" and b=a;

@@ -8,6 +8,10 @@ load(
     "antlr_codegen_lexer",
     "antlr_codegen_parser",
 )
+load(
+    "//src/org/perses/grammar/adhoc:adhoc_grammar.bzl",
+    "pnf_parser_facade_library",
+)
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 antlr_codegen_lexer(
@@ -36,19 +40,18 @@ antlr_codegen_parser(
     ],
 )
 
-java_library(
+pnf_parser_facade_library(
     name = "parser_facade",
-    srcs = ["PnfCppParserFacade.java"],
+    java_package_name = "org.perses.grammar.cpp",
+    language_kind_full_name = "org.perses.grammar.cpp.LanguageCpp",
+    lexer_file_name = "CPP14Lexer.g4",
+    output_jar_file_name = "parser_facade.jar",
+    parser_facade_class_simple_name = "PnfCppParserFacade",
+    parser_file_name = "CPP14Parser.g4",
+    start_rule_name = "translationUnit",
+    token_names_of_identifiers = ["Identifier"],
     deps = [
-        ":cpp_lexer",
-        ":cpp_parser",
         ":language_kind",
-        "//:antlr_runtime",
-        "//:flogger",
-        "//:guava",
-        "//src/org/perses/antlr:parse_tree_with_parser",
-        "//src/org/perses/grammar:grammar_facade",
-        "//src/org/perses/program:language_kind",
     ],
 )
 

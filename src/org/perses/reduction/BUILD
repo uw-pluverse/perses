@@ -49,6 +49,9 @@ kt_jvm_library(
 kt_jvm_library(
     name = "property_test_result",
     srcs = ["PropertyTestResult.kt"],
+    deps = [
+        "//src/org/perses/util/shell:ExitCode",
+    ],
 )
 
 kt_jvm_library(
@@ -167,6 +170,7 @@ kt_jvm_library(
         "TestScriptExecutorService.kt",
     ],
     deps = [
+        ":external_test_script_execution_cache",
         ":test_script",
         "//:guava",
         "//src/org/perses/grammar:grammar_facade",
@@ -174,7 +178,6 @@ kt_jvm_library(
         "//src/org/perses/reduction/cache:query_cache",
         "//src/org/perses/reduction/io",
         "//src/org/perses/util",
-        "//src/org/perses/util:daemon_thread_pool",
         "//src/org/perses/util:timeutil",
     ],
 )
@@ -193,11 +196,34 @@ kt_jvm_library(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "reduction_level_sequence",
-    srcs = ["IReductionLevelSequence.java"],
+    srcs = ["IReductionLevelSequence.kt"],
     deps = [
         "//:guava",
+    ],
+)
+
+kt_jvm_library(
+    name = "TestScriptHistory",
+    srcs = [
+        "TestScriptHistory.kt",
+    ],
+    deps = [
+        "//src/org/perses/util",
+        "//src/org/perses/util/shell:ExitCode",
+        "@maven//:org_apache_commons_commons_csv",
+    ],
+)
+
+kt_jvm_library(
+    name = "external_test_script_execution_cache",
+    srcs = [
+        "AbstractExternalTestScriptExecutionCachePolicy.kt",
+    ],
+    deps = [
+        "//src/org/perses/reduction:TestScriptHistory",
+        "//src/org/perses/reduction/io:output_manager_interface",
     ],
 )
 
@@ -245,6 +271,7 @@ kt_jvm_library(
         "//src/org/perses/reduction/io/token:regular_output_manager_factory",
         "//src/org/perses/reduction/io/token:token_output_manager_factory_interface",
         "//src/org/perses/reduction/io/token:token_reduction_io_manager",
+        "//src/org/perses/reduction/reducer/vulcan",
         "//src/org/perses/spartree",
         "//src/org/perses/util",
         "//src/org/perses/util:timeutil",

@@ -22,7 +22,7 @@ class SequenceTDTreeNode(nodeId: Int) : AbstractTDTreeNode(nodeId) {
 
   override fun checkNodeIntegrity(): ErrorMessage? = null
 
-  override fun copyCurrentNode(): AbstractTDTreeNode {
-    return SequenceTDTreeNode(nodeId)
+  override fun internalCopyCurrentNode(computedNewNodeId: Int): AbstractTDTreeNode {
+    return SequenceTDTreeNode(computedNewNodeId)
   }
 }

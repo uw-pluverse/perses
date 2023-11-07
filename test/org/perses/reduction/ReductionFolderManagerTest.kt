@@ -22,7 +22,9 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.grammar.c.LanguageC
+import org.perses.grammar.c.PnfCLexer
 import org.perses.program.EnumFormatControl
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
@@ -38,14 +40,16 @@ import java.nio.file.Paths
 class ReductionFolderManagerTest {
 
   private val tempDir =
-    AutoDeletableFolder(Files.createTempDirectory("ReductionFolderManagerTest_"))
+    AutoDeletableFolder.createTempDirWithClassNameAsPrefix(this)
 
   private val testScript = ScriptFile(Paths.get("test_data/delta_1/r.sh"))
   private val sourceFile = SourceFile(Paths.get("test_data/delta_1/t.c"), LanguageC)
+  private val lexerAtnWrapper = LexerAtnWrapper(PnfCLexer::class.java)
   val reductionInputs = RegularReductionInputs(testScript, sourceFile)
   val outputManagerFactory = RegularOutputManagerFactory(
-    sourceFile,
+    reductionInputs,
     EnumFormatControl.COMPACT_ORIG_FORMAT,
+    lexerAtnWrapper,
   )
   private val outputDir = tempDir.file.resolve("perses_output_dir")
   val ioManager = TokenReductionIOManager(

@@ -51,9 +51,7 @@ class ContentStringBasedQueryCache(
 
   @Synchronized
   override fun evictEntriesLargerThan(best: TokenizedProgram) {
-        /*
-     * No eviction in content-string-based caching.
-     */
+    // No eviction in content-string-based caching.
   }
 
   class ContentStringEncoder(

@@ -24,7 +24,6 @@ kt_jvm_library(
         "//src/org/perses/reduction:tree_edit_with_its_program",
         "//src/org/perses/reduction/event",
         "//src/org/perses/reduction/partition",
-        "//src/org/perses/reduction/partition:level_partition_policy",
         "//src/org/perses/reduction/reducer:tree_transforms",
         "//src/org/perses/spartree",
     ],

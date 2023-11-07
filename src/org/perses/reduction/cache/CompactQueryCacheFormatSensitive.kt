@@ -31,6 +31,6 @@ class CompactQueryCacheFormatSensitive(
     baseProgram: TokenizedProgram,
     profiler: AbstractQueryCacheProfiler,
   ): LinearScanFormatSensitiveEncoder {
-    return LinearScanFormatSensitiveEncoder(baseProgram, profiler, /*enableCompression*/true)
+    return LinearScanFormatSensitiveEncoder(baseProgram, profiler, enableCompression = true)
   }
 }

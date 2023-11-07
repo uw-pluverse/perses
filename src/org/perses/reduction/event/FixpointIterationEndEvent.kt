@@ -20,11 +20,14 @@ class FixpointIterationEndEvent internal constructor(
   startEvent: FixpointIterationStartEvent,
   currentTimeMillis: Long,
   programSize: Int,
-  val countOfTestScriptExecutions: Int,
-) :
-  AbstractEndEvent<FixpointIterationStartEvent>(startEvent, currentTimeMillis, programSize) {
+  val testScriptStatistics: TestScriptExecutorServiceStatisticsSnapshot,
+) : AbstractEndEvent<FixpointIterationStartEvent>(startEvent, currentTimeMillis, programSize) {
 
   val iteration = startEvent.iteration
 
   override fun initialProgramSize() = startEvent.initialProgramSize()
+
+  val countOfTestScriptExecutions: Int
+    get() = testScriptStatistics.scriptExecutionNumber -
+      startEvent.testScriptStatistics.scriptExecutionNumber
 }

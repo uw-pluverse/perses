@@ -20,10 +20,17 @@ import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
 import org.perses.util.toImmutableList
 
+/**
+ * TODO(gaosen): not sure whether we should rename this class to NodeReplacementActionSet.
+ */
 class ChildHoistingActionSet private constructor(
-  childHoistingActions: ImmutableList<ChildHoistingAction>,
+  childHoistingActions: ImmutableList<NodeReplacementAction>,
   actionsDescription: String,
-) : AbstractActionSet<ChildHoistingAction>(childHoistingActions, actionsDescription) {
+) : AbstractActionSet<NodeReplacementAction>(
+  childHoistingActions,
+  actionsDescription,
+  canBeSorted = true,
+) {
 
   init {
     require(childHoistingActions.isNotEmpty())
@@ -44,7 +51,7 @@ class ChildHoistingActionSet private constructor(
       return ChildHoistingActionSet(
         node2ReplacementMap.entries
           .asSequence()
-          .map { (key, value) -> ChildHoistingAction(key, value) }
+          .map { (key, value) -> NodeReplacementAction(key, value) }
           .sorted()
           .toImmutableList(),
         actionsDescription,
@@ -67,14 +74,14 @@ class ChildHoistingActionSet private constructor(
       actionsDescription: String,
     ): ChildHoistingActionSet {
       return createByReplacingSingleNode(
-        ChildHoistingAction(targetNode, replacingNode),
+        NodeReplacementAction(targetNode, replacingNode),
         actionsDescription,
       )
     }
 
     @JvmStatic
     fun createByReplacingSingleNode(
-      action: ChildHoistingAction,
+      action: NodeReplacementAction,
       actionsDescription: String,
     ): ChildHoistingActionSet {
       return ChildHoistingActionSet(ImmutableList.of(action), actionsDescription)

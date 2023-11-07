@@ -19,25 +19,31 @@ package org.perses.antlr.pnf
 import com.google.common.base.Stopwatch
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
-import org.perses.antlr.ast.PersesGrammar
+import org.perses.antlr.pnf.PnfGrammarChecker.Companion.checkAntlrAcceptsTheGrammar
 import org.perses.antlr.pnf.PnfGrammarChecker.Companion.validateIntermediateGrammar
 import org.perses.util.ktInfo
 import java.util.concurrent.TimeUnit
 
-class PnfPassManager {
+class PnfPassManager(
+  val repetitivePassCreator: (
+    startRuleName: String,
+  ) -> ImmutableList<AbstractPnfPass> = ::createDefaultRepetitivePasses,
+  val finalizingPassCreator: () -> ImmutableList<AbstractPnfPass> = ::createDefaultFinalizingPasses,
+) {
 
   abstract class Listener {
-    open fun start(grammar: PersesGrammar, startRuleName: String) {}
-    open fun beforePass(grammar: PersesGrammar, passClass: Class<*>, iteration: Int) {}
-    open fun afterPass(grammar: PersesGrammar, passClass: Class<*>, iteration: Int) {}
+    open fun start(grammar: GrammarPair, startRuleName: String) {}
+    open fun beforePass(grammar: GrammarPair, passClass: Class<*>, iteration: Int) {}
+    open fun afterPass(grammar: GrammarPair, passClass: Class<*>, iteration: Int) {}
   }
 
   fun process(
-    origGrammar: PersesGrammar,
+    origGrammar: GrammarPair,
     startRuleName: String,
-    lexerGramamr: PersesGrammar?,
     vararg listeners: Listener,
-  ): PersesGrammar {
+  ): GrammarPair {
+    logger.ktInfo { "Checking whether the original grammar can be accepted by Antlr." }
+    checkAntlrAcceptsTheGrammar(origGrammar)
     var currentGrammar = origGrammar
     val allListeners = ImmutableList
       .builder<Listener>()
@@ -47,34 +53,30 @@ class PnfPassManager {
     allListeners.forEach { it.start(origGrammar, startRuleName) }
     for (i in 0..19) {
       val iterationBefore = currentGrammar
-      for (pass in createPasses(startRuleName)) {
+      for (pass in repetitivePassCreator(startRuleName)) {
         for (listener in allListeners) {
           listener.beforePass(currentGrammar, pass.javaClass, i)
         }
 
         val grammarBefore = currentGrammar
-        currentGrammar = pass.processParserGrammar(currentGrammar, lexerGramamr)
+        currentGrammar = pass.processGrammar(currentGrammar)
 
         validateIntermediateGrammar(
           currentGrammar,
           pass.javaClass,
           grammarBefore,
-          lexerGramamr,
         )
         for (listener in allListeners) {
           listener.afterPass(currentGrammar, pass.javaClass, i)
         }
       }
-      if (currentGrammar.isEquivalent(iterationBefore)) {
+      if (currentGrammar.isEquivalentTo(iterationBefore)) {
         break
       }
     }
     // The following passes are intended to run only once.
-    sequenceOf(
-      ConvertAllAltToRuleReferenceOrTerminalPass(),
-      PnfCheckPass(),
-    ).forEach { pass ->
-      currentGrammar = pass.processParserGrammar(currentGrammar, lexerGramamr)
+    finalizingPassCreator().forEach { pass ->
+      currentGrammar = pass.processGrammar(currentGrammar)
     }
     // TODO: enable the following passes when pnd refactoring is done.
     //    final NormalizeRuleNamePass renamingPass = new NormalizeRuleNamePass(startRuleName);
@@ -84,49 +86,59 @@ class PnfPassManager {
     return currentGrammar
   }
 
-  private fun createPasses(startRuleName: String): ArrayList<AbstractPnfPass> {
-    val result = ArrayList<AbstractPnfPass>()
-    result.add(AssociativityParserRuleEliminatorPass())
-    result.add(QuantifiedAstNormalizationPass())
-    result.add(IndirectLeftRecursionEliminationPass())
-    result.add(StarLeftIntroducerPass())
-    result.add(PlusIntroducerLeftPass())
-    result.add(OptionalIntroducerPass())
-    result.add(MultiAltBlockExtractionPass())
-    result.add(InlineSingleUseAltRulePass())
-    result.add(EliminateEpsilonPass())
-    // TODO: need to study why right recursion is hard to eliminate. Currently this is toooo slow.
-    //    result.add(new IndirectRightRecursionEliminationPass());
-    //    result.add(new StarRightIntroducerPass());
-    //    result.add(new PlusIntroducerLeftPass());
-    //    result.add(new OptionalIntroducerPass());
-    result.add(EliminateUnreachableRulePass(startRuleName))
-    result.add(DuplicateRuleEliminationPass(startRuleName))
-    result.add(OutlineAltBlockPass())
-    return result
-  }
-
   private class LoggingListener : Listener() {
 
     private val stopwatch = Stopwatch.createUnstarted()
 
-    override fun start(grammar: PersesGrammar, startRuleName: String) {
+    override fun start(grammar: GrammarPair, startRuleName: String) {
       logger.ktInfo {
-        "Starting to process grammar ${grammar.grammarName} with start rule $startRuleName"
+        val grammarName = grammar.grammarSequence().joinToString(separator = ",") {
+          it.grammarName
+        }
+        "Starting to process grammar $grammarName with start rule $startRuleName"
       }
     }
 
-    override fun beforePass(grammar: PersesGrammar, passClass: Class<*>, iteration: Int) {
+    override fun beforePass(grammar: GrammarPair, passClass: Class<*>, iteration: Int) {
       stopwatch.reset().start()
       logger.ktInfo { "Pass $passClass at iteration $iteration" }
     }
 
-    override fun afterPass(grammar: PersesGrammar, passClass: Class<*>, iteration: Int) {
+    override fun afterPass(grammar: GrammarPair, passClass: Class<*>, iteration: Int) {
       logger.ktInfo { "Pass $passClass takes ${stopwatch.elapsed(TimeUnit.SECONDS)} seconds." }
     }
   }
 
   companion object {
     private val logger = FluentLogger.forEnclosingClass()
+
+    fun createDefaultFinalizingPasses(): ImmutableList<AbstractPnfPass> {
+      return ImmutableList.of(
+        ConvertAllAltToRuleReferenceOrTerminalPass(),
+        PnfCheckPass(),
+      )
+    }
+    fun createDefaultRepetitivePasses(startRuleName: String): ImmutableList<AbstractPnfPass> {
+      val result = ImmutableList.builder<AbstractPnfPass>()
+      result.add(RemoveUnusedLabelPass())
+      result.add(AssociativityParserRuleEliminatorPass())
+      result.add(QuantifiedAstNormalizationPass())
+      result.add(IndirectLeftRecursionEliminationPass())
+      result.add(StarLeftIntroducerPass())
+      result.add(PlusIntroducerLeftPass())
+      result.add(OptionalIntroducerPass())
+      result.add(MultiAltBlockExtractionPass())
+      result.add(InlineSingleUseAltRulePass())
+      result.add(EliminateEpsilonPass())
+      // TODO: need to study why right recursion is hard to eliminate. Currently this is toooo slow.
+      //    result.add(new IndirectRightRecursionEliminationPass());
+      //    result.add(new StarRightIntroducerPass());
+      //    result.add(new PlusIntroducerLeftPass());
+      //    result.add(new OptionalIntroducerPass());
+      result.add(EliminateUnreachableRulePass(startRuleName))
+      result.add(DuplicateRuleEliminationPass(startRuleName))
+      result.add(OutlineAltBlockPass())
+      return result.build()
+    }
   }
 }

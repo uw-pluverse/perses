@@ -32,22 +32,22 @@ class PnfPassManagerTest : PnfLeftTestGrammar() {
   private val nullLexer: PersesGrammar? = null
 
   private val listener: PnfPassManager.Listener = object : PnfPassManager.Listener() {
-    override fun start(grammar: PersesGrammar, startRuleName: String) {
+    override fun start(grammar: GrammarPair, startRuleName: String) {
       System.err.println("Starting...")
-      System.err.println(grammar.sourceCode)
+      System.err.println(grammar.parserGrammar!!.sourceCode)
     }
 
-    override fun afterPass(grammar: PersesGrammar, passClass: Class<*>, iteration: Int) {
+    override fun afterPass(grammar: GrammarPair, passClass: Class<*>, iteration: Int) {
       System.err.println("After pass $passClass")
-      System.err.println(grammar.sourceCode)
+      System.err.println(grammar.parserGrammar!!.sourceCode)
     }
   }
 
   @Test
-  fun test_assoc_right_recursive() {
+  fun testAssocRightRecursive() {
     val grammar = loadGrammarFromFile("assoc_right_2.g4")
-    val processed = manager.process(grammar, "start", nullLexer)
-    println(processed.sourceCode)
+    val processed = manager.process(GrammarPair(grammar, nullLexer), "start")
+    println(processed.parserGrammar!!.sourceCode)
   }
 
   @Test
@@ -57,7 +57,7 @@ class PnfPassManagerTest : PnfLeftTestGrammar() {
       "c : B;",
       "d : B;",
     )
-    val processed = manager.process(grammar, "start", nullLexer)
+    val processed = manager.process(GrammarPair(grammar, nullLexer), "start").parserGrammar!!
     println(processed.sourceCode)
   }
 
@@ -68,7 +68,7 @@ class PnfPassManagerTest : PnfLeftTestGrammar() {
       start : <assoc=right> 'a';
       """.trimIndent(),
     )
-    val processed = manager.process(grammar, "start", nullLexer)
+    val processed = manager.process(GrammarPair(grammar, nullLexer), "start").parserGrammar!!
     assertThat(processed.flattenedAllRules).hasSize(1)
     assertThat(processed.flattenedAllRules.first().body.sourceCode).isEqualTo("'a'")
   }
@@ -76,7 +76,10 @@ class PnfPassManagerTest : PnfLeftTestGrammar() {
   @Test
   fun testConvertC() {
     val grammar = loadGrammarFromFile("C.g4")
-    val processed = manager.process(grammar, "compilationUnit", nullLexer)
+    val processed = manager.process(
+      GrammarPair(grammar, nullLexer),
+      "compilationUnit",
+    ).parserGrammar!!
     println(processed.sourceCode)
   }
 
@@ -88,7 +91,7 @@ class PnfPassManagerTest : PnfLeftTestGrammar() {
     val grammar = loadGrammarFromFile(
       Paths.get("src/org/perses/grammar/php/PhpParser.g4"),
     )
-    val processed = manager.process(grammar, "htmlDocument", lexer)
+    val processed = manager.process(GrammarPair(grammar, lexer), "htmlDocument").parserGrammar!!
     println(processed.sourceCode)
   }
 
@@ -100,14 +103,18 @@ class PnfPassManagerTest : PnfLeftTestGrammar() {
     val grammar = loadGrammarFromFile(
       Paths.get("antlropt/test/org/perses/antlr/pnf/grammars/SystemVerilogParser.g4"),
     )
-    val processed = manager.process(grammar, "source_text", lexer)
+    val processed = manager.process(GrammarPair(grammar, lexer), "source_text").parserGrammar!!
     println(processed.sourceCode)
   }
 
   @Test
   fun testConvertPrimaryExprOfGo_shouldNotCrash() {
     val grammar = loadGrammarFromFile("nested_alt_block_from_go.g4")
-    val processed = manager.process(grammar, "primaryExpr", nullLexer, listener)
+    val processed = manager.process(
+      GrammarPair(grammar, nullLexer),
+      "primaryExpr",
+      listener,
+    ).parserGrammar!!
     val sourceCode = processed.sourceCode
     System.err.println(sourceCode)
   }

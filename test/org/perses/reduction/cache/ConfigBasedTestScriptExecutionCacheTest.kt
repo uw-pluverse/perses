@@ -62,7 +62,7 @@ class ConfigBasedTestScriptExecutionCacheTest {
     ImmutableList.of(token_a, token_b, token_c),
     origProgram.factory,
   )
-  val testResult = PropertyTestResult(exitCode = 1, elapsedMilliseconds = 1)
+  val testResult = PropertyTestResult.of(exitCode = 1, elapsedMilliseconds = 1)
 
   @Test
   fun test_cache_miss_for_single_token_program() {

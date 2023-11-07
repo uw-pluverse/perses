@@ -38,7 +38,7 @@ class RuleNameRegistry {
   }
 
   fun createOrThrow(ruleName: String): RuleNameHandle {
-    return createOrThrow(ruleName, /*origin=*/null)
+    return createOrThrow(ruleName, origin = null)
   }
 
   private fun createOrThrow(ruleName: String, origin: RuleNameHandle?): RuleNameHandle {

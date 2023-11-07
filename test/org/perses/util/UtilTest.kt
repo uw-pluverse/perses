@@ -17,20 +17,21 @@
 package org.perses.util
 
 import com.google.common.collect.ImmutableList
-import com.google.common.io.MoreFiles
-import com.google.common.io.RecursiveDeleteOption
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
-import org.junit.Assert
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.util.Util.NonEmptyInternal
+import org.perses.util.Util.SpaceSize
 import org.perses.util.Util.computeDifference
 import org.perses.util.Util.computePercentage
+import org.perses.util.Util.createAppendablePrintStream
+import org.perses.util.Util.createNonAppendablePrintStream
 import org.perses.util.Util.ensureDirExists
 import org.perses.util.Util.globWithFileNameExts
+import org.perses.util.Util.hashListOfStrings
 import org.perses.util.Util.isEmptyDirectory
 import org.perses.util.Util.lazyAssert
 import org.perses.util.Util.mergeContinuousElementsIntoRegions
@@ -40,11 +41,15 @@ import org.perses.util.Util.removeElementsFromList
 import org.perses.util.Util.removeNullFromList
 import org.perses.util.Util.setExecutable
 import org.perses.util.Util.slideResverseIfSlidable
+import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.LinkedList
 import java.util.function.Predicate
+import kotlin.io.path.deleteRecursively
+import kotlin.io.path.exists
 import kotlin.io.path.readText
+import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class UtilTest {
@@ -53,7 +58,33 @@ class UtilTest {
 
   @After
   fun teardown() {
-    MoreFiles.deleteRecursively(tempDir, RecursiveDeleteOption.ALLOW_INSECURE)
+    tempDir.deleteRecursively()
+  }
+
+  @Test
+  fun testExceptionOutputStream() {
+    assertThrows(Throwable::class.java) {
+      Util.ExceptionOutputStream.write(1)
+    }
+    assertThrows(Throwable::class.java) {
+      Util.ExceptionPrintStream.println()
+    }
+  }
+
+  @Test
+  fun testCreateAppendablePrintStream() {
+    val file = tempDir.resolve("a.txt")
+    createAppendablePrintStream(file).use { it.print("a") }
+    createAppendablePrintStream(file).use { it.print("b") }
+    assertThat(file.readText()).isEqualTo("ab")
+  }
+
+  @Test
+  fun testCreateNonAppendablePrintStream() {
+    val file = tempDir.resolve("a.txt")
+    createNonAppendablePrintStream(file).use { it.print("a") }
+    createNonAppendablePrintStream(file).use { it.print("b") }
+    assertThat(file.readText()).isEqualTo("b")
   }
 
   @Test
@@ -61,19 +92,19 @@ class UtilTest {
     run {
       val list = ArrayList<Int?>()
       removeNullFromList(list)
-      Assert.assertEquals(0, list.size.toLong())
+      assertThat(list.size).isEqualTo(0)
       list.add(1)
       removeNullFromList(list)
-      Assert.assertEquals(1, list.size.toLong())
+      assertThat(list.size).isEqualTo(1)
       list.add(null)
       removeNullFromList(list)
-      Assert.assertEquals(1, list.size.toLong())
+      assertThat(list.size).isEqualTo(1)
       list.add(null)
       removeNullFromList(list)
-      Assert.assertEquals(1, list.size.toLong())
+      assertThat(list.size).isEqualTo(1)
       list[0] = null
       removeNullFromList(list)
-      Assert.assertEquals(0, list.size.toLong())
+      assertThat(list.size).isEqualTo(0)
     }
     run {
       val list = ArrayList<Int?>()
@@ -82,10 +113,10 @@ class UtilTest {
       list.add(3)
       list.add(4)
       removeNullFromList(list)
-      Assert.assertEquals(4, list.size.toLong())
+      assertThat(list.size).isEqualTo(4)
       list[1] = null
       removeNullFromList(list)
-      Assert.assertEquals(3, list.size.toLong())
+      assertThat(list.size).isEqualTo(3)
     }
   }
 
@@ -96,23 +127,23 @@ class UtilTest {
       list.clear()
       list.add(1)
       removeElementBySwappingLastElement(list, 0)
-      Assert.assertEquals(0, list.size.toLong())
+      assertThat(list.size).isEqualTo(0)
     }
     run {
       list.clear()
       list.add(1)
       list.add(2)
       removeElementBySwappingLastElement(list, 0)
-      Assert.assertEquals(1, list.size.toLong())
-      Assert.assertEquals(2, list[0].toLong())
+      assertThat(list.size).isEqualTo(1)
+      assertThat(list[0]).isEqualTo(2)
     }
     run {
       list.clear()
       list.add(1)
       list.add(2)
       removeElementBySwappingLastElement(list, 1)
-      Assert.assertEquals(1, list.size.toLong())
-      Assert.assertEquals(1, list[0].toLong())
+      assertThat(list.size).isEqualTo(1)
+      assertThat(list[0]).isEqualTo(1)
     }
   }
 
@@ -123,15 +154,15 @@ class UtilTest {
       list.clear()
       list.add(1)
       removeElementsFromLinkedList(list, Predicate { i: Int -> i == 1 })
-      Assert.assertEquals(0, list.size.toLong())
+      assertThat(list.size).isEqualTo(0)
     }
     run {
       list.clear()
       list.add(1)
       list.add(2)
       removeElementsFromLinkedList(list, Predicate { i: Int -> i == 1 })
-      Assert.assertEquals(1, list.size.toLong())
-      Assert.assertEquals(list[0].toLong(), 2)
+      assertThat(list.size).isEqualTo(1)
+      assertThat(list[0]).isEqualTo(2)
     }
     run {
       list.clear()
@@ -139,20 +170,8 @@ class UtilTest {
       list.add(2)
       list.add(1)
       removeElementsFromLinkedList(list, Predicate { i: Int -> i == 1 })
-      Assert.assertEquals(1, list.size.toLong())
-      Assert.assertEquals(list[0].toLong(), 2)
-    }
-    run {
-      list.clear()
-      list.add(1)
-      list.add(2)
-      list.add(1)
-      list.add(1)
-      list.add(1)
-      list.add(1)
-      removeElementsFromLinkedList(list, Predicate { i: Int -> i == 1 })
-      Assert.assertEquals(1, list.size.toLong())
-      Assert.assertEquals(list[0].toLong(), 2)
+      assertThat(list.size).isEqualTo(1)
+      assertThat(list[0]).isEqualTo(2)
     }
     run {
       list.clear()
@@ -163,8 +182,20 @@ class UtilTest {
       list.add(1)
       list.add(1)
       removeElementsFromLinkedList(list, Predicate { i: Int -> i == 1 })
-      Assert.assertEquals(1, list.size.toLong())
-      Assert.assertEquals(list[0].toLong(), 2)
+      assertThat(list.size).isEqualTo(1)
+      assertThat(list[0]).isEqualTo(2)
+    }
+    run {
+      list.clear()
+      list.add(1)
+      list.add(2)
+      list.add(1)
+      list.add(1)
+      list.add(1)
+      list.add(1)
+      removeElementsFromLinkedList(list, Predicate { i: Int -> i == 1 })
+      assertThat(list.size).isEqualTo(1)
+      assertThat(list[0]).isEqualTo(2)
     }
     run {
       list.clear()
@@ -176,9 +207,9 @@ class UtilTest {
       list.add(1)
       list.add(1)
       removeElementsFromLinkedList(list, Predicate { i: Int -> i == 1 })
-      Assert.assertEquals(2, list.size.toLong())
-      Assert.assertEquals(list[0].toLong(), 2)
-      Assert.assertEquals(list[1].toLong(), 2)
+      assertThat(list.size).isEqualTo(2)
+      assertThat(list[0]).isEqualTo(2)
+      assertThat(list[1]).isEqualTo(2)
     }
   }
 
@@ -189,15 +220,15 @@ class UtilTest {
       list.clear()
       list.add(1)
       removeElementsFromList(list) { _, element -> element == 1 }
-      Assert.assertEquals(0, list.size.toLong())
+      assertThat(list.size).isEqualTo(0)
     }
     run {
       list.clear()
       list.add(1)
       list.add(2)
       removeElementsFromList(list) { _, i -> i == 1 }
-      Assert.assertEquals(1, list.size.toLong())
-      Assert.assertEquals(list[0].toLong(), 2)
+      assertThat(list.size).isEqualTo(1)
+      assertThat(list[0]).isEqualTo(2)
     }
     run {
       list.clear()
@@ -205,20 +236,8 @@ class UtilTest {
       list.add(2)
       list.add(1)
       removeElementsFromList(list) { _, i -> i == 1 }
-      Assert.assertEquals(1, list.size.toLong())
-      Assert.assertEquals(list[0].toLong(), 2)
-    }
-    run {
-      list.clear()
-      list.add(1)
-      list.add(2)
-      list.add(1)
-      list.add(1)
-      list.add(1)
-      list.add(1)
-      removeElementsFromList(list) { _, i -> i == 1 }
-      Assert.assertEquals(1, list.size.toLong())
-      Assert.assertEquals(list[0].toLong(), 2)
+      assertThat(list.size).isEqualTo(1)
+      assertThat(list[0]).isEqualTo(2)
     }
     run {
       list.clear()
@@ -229,8 +248,20 @@ class UtilTest {
       list.add(1)
       list.add(1)
       removeElementsFromList(list) { _, i -> i == 1 }
-      Assert.assertEquals(1, list.size.toLong())
-      Assert.assertEquals(list[0].toLong(), 2)
+      assertThat(list.size).isEqualTo(1)
+      assertThat(list[0]).isEqualTo(2)
+    }
+    run {
+      list.clear()
+      list.add(1)
+      list.add(2)
+      list.add(1)
+      list.add(1)
+      list.add(1)
+      list.add(1)
+      removeElementsFromList(list) { _, i -> i == 1 }
+      assertThat(list.size).isEqualTo(1)
+      assertThat(list[0]).isEqualTo(2)
     }
     run {
       list.clear()
@@ -242,9 +273,9 @@ class UtilTest {
       list.add(1)
       list.add(1)
       removeElementsFromList(list) { _, i -> i == 1 }
-      Assert.assertEquals(2, list.size.toLong())
-      Assert.assertEquals(list[0].toLong(), 2)
-      Assert.assertEquals(list[1].toLong(), 2)
+      assertThat(list.size).isEqualTo(2)
+      assertThat(list[0]).isEqualTo(2)
+      assertThat(list[1]).isEqualTo(2)
     }
   }
 
@@ -274,12 +305,10 @@ class UtilTest {
   fun testEnsureDirExistsExceptionCase() {
     Files.createFile(tempDir.resolve("a"))
     val folder = tempDir.resolve("a")
-    try {
+    val exception = assertThrows(Exception::class.java) {
       ensureDirExists(folder)
-      Assert.fail()
-    } catch (e: IllegalStateException) {
-      assertThat(e.message).startsWith("Fail")
     }
+    assertThat(exception.message).startsWith("Fail")
   }
 
   @Test
@@ -291,7 +320,7 @@ class UtilTest {
   }
 
   @Test
-  fun test_glob_files() {
+  fun testGlobFiles() {
     Files.createFile(tempDir.resolve("a.c"))
     Files.createFile(tempDir.resolve("b.c"))
     Files.createFile(tempDir.resolve("a.java"))
@@ -331,28 +360,45 @@ class UtilTest {
   }
 
   @Test
-  fun test_replace_file_ext_single_file_name() {
+  fun testReplaceFileExtSingleFileName() {
     val orig = "a.txt"
     val new = Util.replaceFileExtension(orig, "exe")
     assertThat(new).isEqualTo("a.exe")
   }
 
   @Test
-  fun test_replace_file_ext_long_file_name() {
+  fun testReplaceFileExtLongFileName() {
     val orig = "a/b/c.txt"
     val new = Util.replaceFileExtension(orig, "exec")
     assertThat(new).isEqualTo("a/b/c.exec")
   }
 
   @Test
-  fun test_compute_sha512() {
+  fun testComputeSha512ForString() {
     val string = "hello"
     val sha512 = Util.SHA512HashCode.createFromString(string)
-    assertThat(sha512.length).isEqualTo(string.length)
+    assertThat(sha512.numOfStrings).isEqualTo(1)
+    assertThat(sha512.getLengthOfString(0)).isEqualTo(string.length)
     assertThat(sha512.digest.toString()).isEqualTo(
       "9b71d224bd62f3785d96d46ad3ea3d73319bfbc2890caa" +
         "dae2dff72519673ca72323c3d99ba5c11d7c7acc6e14b8c5da0c4663475c2e5c3adef46f73bcdec043",
     )
+  }
+
+  @Test
+  fun testComputeShaForListOfStrings() {
+    val list = listOf(
+      hashListOfStrings(emptyList()),
+      hashListOfStrings(listOf("")),
+      hashListOfStrings(listOf("", "")),
+      hashListOfStrings(listOf("ab", "")),
+      hashListOfStrings(listOf("", "ab")),
+      hashListOfStrings(listOf("", "", "")),
+      hashListOfStrings(listOf("a", "")),
+      hashListOfStrings(listOf("", "a")),
+    )
+    assertThat(list.toSet()).containsExactlyElementsIn(list)
+    assertThat(list.toSet().size).isEqualTo(list.size)
   }
 
   @Test
@@ -363,7 +409,7 @@ class UtilTest {
   }
 
   @Test
-  fun test_visit_difference() {
+  fun testVisitDifference() {
     // TODO: test it here.
     val superList = listOf("a", "b", "c", "d")
     val a = superList[0]
@@ -381,7 +427,7 @@ class UtilTest {
   private val euqalizer = { a: Int, b: Int -> a == b }
 
   @Test
-  fun test_mergeContinuousElementsIntoRegions_empty() {
+  fun testMergeContinuousElementsIntoRegionsEmpty() {
     val list = mergeContinuousElementsIntoRegions(listOf(), euqalizer)
     assertThat(list).isEmpty()
   }
@@ -512,5 +558,56 @@ class UtilTest {
       lazyAssert({ false }) { goldenMessage }
     }
     assertThat(exception.message).contains(goldenMessage)
+  }
+
+  @Test
+  fun test_copyFileToDirectory() {
+    val srcFilePath = Files.createTempFile(tempDir, "test_copy_file", ".txt").also {
+      it.writeText("test content", StandardCharsets.UTF_8)
+    }
+    val destDir = Files.createTempDirectory(tempDir, "test_copy_file")
+    val destFilePath = Util.copyFileToDirectory(srcFilePath, destDir)
+
+    // Verify the new file exists in the working directory,
+    // and its content is same as the original file
+    assertThat(destFilePath.exists()).isTrue()
+    assertThat(srcFilePath.readText(StandardCharsets.UTF_8)).isEqualTo(
+      destFilePath.readText(StandardCharsets.UTF_8),
+    )
+  }
+
+  @Test
+  fun testCopyFileToDirectoryThrow() {
+    val originalFile = Files.createTempFile(tempDir, "test_copy_file", ".txt").also {
+      it.writeText("test content", StandardCharsets.UTF_8)
+    }
+    val exception = assertThrows(IllegalArgumentException::class.java) {
+      Util.copyFileToDirectory(originalFile, tempDir)
+    }
+    assertThat(exception.message)
+      .contains("Destination path cannot be the same as the original path.")
+  }
+
+  @Test
+  fun testAtomicSequenceGenerator() {
+    val g = Util.AtomicSequenceGenerator(minLengthForPadding = 2)
+    (1..9).forEach {
+      assertThat(g.next()).isEqualTo("0$it")
+    }
+    assertThat(g.next()).isEqualTo("10")
+    assertThat(g.next()).isEqualTo("11")
+  }
+
+  @Test
+  fun testSpaceSize() {
+    SpaceSize(bytes = 1000).let {
+      assertThat(it.bytes).isEqualTo(1000)
+    }
+    SpaceSize.kiloBytes(kb = 1).let {
+      assertThat(it.bytes).isEqualTo(1000)
+    }
+    SpaceSize.megaBytes(mb = 1).let {
+      assertThat(it.bytes).isEqualTo(1000 * 1000)
+    }
   }
 }

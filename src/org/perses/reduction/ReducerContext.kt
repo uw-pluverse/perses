@@ -21,6 +21,7 @@ import org.perses.program.TokenizedProgram
 import org.perses.reduction.cache.AbstractQueryCache
 import org.perses.reduction.io.token.TokenReductionIOManager
 import org.perses.spartree.AbstractNodeActionSetCache
+import org.perses.spartree.SparTreeNodeFactory
 
 class ReducerContext(
   ioManager: TokenReductionIOManager,
@@ -30,6 +31,7 @@ class ReducerContext(
   val queryCache: AbstractQueryCache,
   val nodeActionSetCache: AbstractNodeActionSetCache,
   val actionSetProfiler: AbstractActionSetProfiler,
+  val sparTreeNodeFactory: SparTreeNodeFactory,
 ) : AbstractReducerContext<TokenizedProgram, LanguageKind, TokenReductionIOManager, ReducerContext>(
   ioManager,
   executorService,

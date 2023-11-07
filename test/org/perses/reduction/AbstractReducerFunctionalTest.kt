@@ -22,11 +22,11 @@ import com.google.common.truth.Truth.assertWithMessage
 import org.perses.CommandOptions
 import org.perses.grammar.SingleParserFacadeFactory.Companion.builderWithBuiltinLanguages
 import org.perses.listener.ProgressMonitorForNodeReducer
+import org.perses.program.printer.PrinterRegistry
 import org.perses.util.AutoDeletableFolder
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Paths
-import java.util.function.Consumer
 import java.util.stream.Collectors
 import kotlin.io.path.absolutePathString
 
@@ -38,7 +38,7 @@ abstract class AbstractReducerFunctionalTest {
     testScript: String,
     sourceFile: String,
     algorithmType: ReducerAnnotation,
-    cmdCustomizer: Consumer<CommandOptions>,
+    cmdCustomizer: (CommandOptions) -> Unit,
     expected: String,
   ) {
     AutoDeletableFolder(Files.createTempDirectory(javaClass.simpleName))
@@ -54,8 +54,17 @@ abstract class AbstractReducerFunctionalTest {
         cmd.algorithmControlFlags.reductionAlgorithm = algorithmType.shortName()
         val outputDir = folder.file.resolve("perses_output_dir")
         cmd.resultOutputFlags.outputDir = outputDir
-        cmdCustomizer.accept(cmd)
-        val progressMonitor = ProgressMonitorForNodeReducer.createForSystemOut()
+        cmdCustomizer.invoke(cmd)
+        val reductionInput = RegularProgramReductionDriver.createReductionInputs(
+          builderWithBuiltinLanguages().build(),
+          cmd.inputFlags,
+        )
+        val progressMonitor = ProgressMonitorForNodeReducer.createForSystemOut(
+          PrinterRegistry.getPrinter(
+            cmd.reductionControlFlags.codeFormat
+              ?: reductionInput.mainDataKind.defaultCodeFormatControl,
+          ),
+        )
 
         RegularProgramReductionDriver.create(
           cmd,
@@ -78,7 +87,7 @@ abstract class AbstractReducerFunctionalTest {
   protected fun runBenchmarkSubject(
     reductionFolder: String,
     algorithmType: ReducerAnnotation,
-    cmdCustomizer: Consumer<CommandOptions>,
+    cmdCustomizer: (CommandOptions) -> Unit,
     expected: String,
   ) {
     test(reductionFolder, "r.sh", "small.c", algorithmType, cmdCustomizer, expected)
@@ -95,7 +104,7 @@ abstract class AbstractReducerFunctionalTest {
   protected fun runCTestSubject(
     reductionFolder: String,
     algorithmType: ReducerAnnotation,
-    cmdCustomizer: Consumer<CommandOptions>,
+    cmdCustomizer: (CommandOptions) -> Unit,
     expected: String,
   ) {
     test(reductionFolder, "r.sh", "t.c", algorithmType, cmdCustomizer, expected)

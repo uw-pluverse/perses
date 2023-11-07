@@ -16,6 +16,7 @@
  */
 package org.perses.program.printer
 
+import org.perses.antlr.toTokenType
 import org.perses.grammar.python3.Python3Lexer
 import org.perses.program.PersesTokenFactory.PersesToken
 import org.perses.program.TokenizedProgram
@@ -71,15 +72,18 @@ class PythonFormatPrintingVisitor(
 
   override fun isControlToken(token: PersesToken): Boolean {
     return when (token.type) {
-      Python3Lexer.NEWLINE, Python3Lexer.INDENT, Python3Lexer.DEDENT -> true
+      Python3Lexer.NEWLINE.toTokenType(),
+      Python3Lexer.INDENT.toTokenType(),
+      Python3Lexer.DEDENT.toTokenType(),
+      -> true
       else -> false
     }
   }
 
   override fun visitControlToken(token: PersesToken) {
     when (token.type) {
-      Python3Lexer.INDENT -> ++indentLevel
-      Python3Lexer.DEDENT -> --indentLevel
+      Python3Lexer.INDENT.toTokenType() -> ++indentLevel
+      Python3Lexer.DEDENT.toTokenType() -> --indentLevel
     }
     check(indentLevel >= 0) { indentLevel }
   }

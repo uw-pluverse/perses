@@ -56,7 +56,7 @@ class LoggingListener : DefaultReductionListener() {
     logger.ktInfo { "Elapsed time is ${timeSpan.formattedElaspedTime}" }
     val initialProgramSize = event.startEvent.programSize
     logger.ktInfo {
-      "Removed %s tokens. reduction ratio is " +
+      "Removed ${initialProgramSize - finalProgramSize} token(s). Reduction ratio is " +
         "$finalProgramSize/$initialProgramSize=${
           computePercentage(
             finalProgramSize,
@@ -65,7 +65,8 @@ class LoggingListener : DefaultReductionListener() {
         }"
     }
     logger.ktInfo {
-      "Test script execution count: " + event.countOfTestScriptExecutions
+      "Test script execution count: " +
+        event.testScriptExecutorServiceStatistics.scriptExecutionNumber
     }
   }
 

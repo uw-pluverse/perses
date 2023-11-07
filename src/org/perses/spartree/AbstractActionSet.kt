@@ -21,15 +21,20 @@ import com.google.common.collect.ImmutableSet
 import org.perses.util.Util.lazyAssert
 import org.perses.util.toImmutableMap
 
-abstract class AbstractActionSet<ACTION : AbstractTreeEditAction>
-protected constructor(val actions: ImmutableList<ACTION>, val actionsDescription: String) {
+sealed class AbstractActionSet<ACTION : AbstractTreeEditAction>(
+  val actions: ImmutableList<ACTION>,
+  val actionsDescription: String,
+  canBeSorted: Boolean,
+) {
 
   private val targetToActionMap = actions
     .asSequence()
     .toImmutableMap(keyFunc = { it.targetNode }, valueFunc = { it!! })
 
   init {
-    checkSortedAndDistinct(actions)
+    if (canBeSorted) {
+      checkSortedAndDistinct(actions)
+    }
     lazyAssert { actions.size == targetToActionMap.size }
     lazyAssert { actions.size > 0 }
   }

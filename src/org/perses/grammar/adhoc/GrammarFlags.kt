@@ -108,6 +108,15 @@ class GrammarFlags : ICommandLineFlags {
   )
   var lexerBase: Path? = null
 
+  @Parameter(
+    names = ["--enable-pnf-normalization"],
+    description = "whether to enable PNF normalization on the parser grammar",
+    required = false,
+    arity = 1,
+    order = CommonCmdOptionGroupOrder.GRAMMAR_CONTROL + 1000,
+  )
+  var enablePnfNormalization = false
+
   fun createAdhocGrammarConfiguration(): AdhocGrammarConfiguration {
     return AdhocGrammarConfiguration(
       parserFile = parserGrammar!!,
@@ -173,9 +182,6 @@ class GrammarFlags : ICommandLineFlags {
             "--existing-language-full-class-name",
         )
       }
-    }
-    check(tokenNamesOfIdentifiers.isNotEmpty()) {
-      "You need to specify --token-names-of-identifiers"
     }
     createAdhocGrammarConfiguration() // Make sure does not crash
   }

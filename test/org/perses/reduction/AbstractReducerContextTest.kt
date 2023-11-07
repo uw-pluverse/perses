@@ -40,7 +40,11 @@ class AbstractReducerContextTest : CommonReductionIOManagerData(
     ioManager: TokenReductionIOManager,
     executorService: TestScriptExecutorService,
   ) : AbstractReducerContext<
-    TokenizedProgram, LanguageKind, TokenReductionIOManager, DummyReducerContext,>(
+    TokenizedProgram,
+    LanguageKind,
+    TokenReductionIOManager,
+    DummyReducerContext,
+    >(
     ioManager,
     executorService,
   )

@@ -49,5 +49,8 @@ class AutoDeletableFolder(val file: Path) : Closeable {
 
     fun createTempDir(prefix: String) =
       AutoDeletableFolder(Files.createTempDirectory(prefix))
+
+    fun createTempDirWithClassNameAsPrefix(any: Any) =
+      createTempDir(prefix = any::class.java.name)
   }
 }

@@ -42,9 +42,9 @@ kt_jvm_library(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "parser_facade",
-    srcs = ["PnfSysverilogParserFacade.java"],
+    srcs = ["PnfSysverilogParserFacade.kt"],
     deps = [
         ":language_kind",
         ":pnf_sysverilog_grammar",

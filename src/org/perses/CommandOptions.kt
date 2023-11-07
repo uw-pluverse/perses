@@ -25,6 +25,7 @@ import org.perses.cmd.OutputRefiningFlags
 import org.perses.cmd.ProfilingFlags
 import org.perses.cmd.ReductionAlgorithmControlFlags
 import org.perses.cmd.ReductionControlFlags
+import org.perses.cmd.VulcanFlags
 import org.perses.util.cmd.AbstractCommandOptions
 
 /** Parser for command line arguments.  */
@@ -41,5 +42,6 @@ open class CommandOptions(defaultReductionAlgorithm: String) : AbstractCommandOp
   val profilingFlags = registerFlags(ProfilingFlags())
   val experimentFlags = registerFlags(ExperimentFlags())
   val languageControlFlags = registerFlags(LanguageControlFlags())
+  val vulcanFlags = registerFlags(VulcanFlags())
   open fun createInputFlags() = InputFlags()
 }

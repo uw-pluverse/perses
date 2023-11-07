@@ -18,10 +18,11 @@ package org.perses.program
 
 import com.google.common.base.MoreObjects
 import org.antlr.v4.runtime.CharStream
+import org.antlr.v4.runtime.CommonToken
 import org.antlr.v4.runtime.Token
+import org.antlr.v4.runtime.Token.DEFAULT_CHANNEL
 import org.antlr.v4.runtime.TokenSource
-import org.antlr.v4.runtime.tree.pattern.RuleTagToken
-import org.antlr.v4.runtime.tree.pattern.TokenTagToken
+import org.perses.antlr.TokenType
 import org.perses.util.Util.lazyAssert
 
 class PersesTokenFactory {
@@ -38,6 +39,8 @@ class PersesTokenFactory {
     lazyAssert { lexeme.text == text }
     return lexeme
   }
+
+  fun doesLexemeExist(lexeme: String) = lexemeMap.contains(lexeme)
 
   fun createPersesToken(token: Token): PersesToken {
     val lexeme = getOrCreateLexeme(token.text)
@@ -57,37 +60,31 @@ class PersesTokenFactory {
     }
   }
 
+  fun generatePlaceholderTokenForGivenType(tokenType: TokenType): PersesToken {
+    return PersesToken(
+      lexeme = Lexeme(id = Integer.MIN_VALUE, text = ""),
+      type = tokenType,
+      position = TokenPosition.INVALID,
+      channel = DEFAULT_CHANNEL,
+      tokenIndex = Integer.MIN_VALUE,
+      startIndex = Integer.MIN_VALUE,
+      stopIndex = Integer.MIN_VALUE,
+      antlrTokenClass = AntlrTokenClass.PLACEHOLDER_TOKEN,
+    )
+  }
+
   fun numOfLexemes() = lexemeMap.size
 
-  @Synchronized
-  fun getPersesTokenOrThrow(token: Token): PersesToken {
-    val lexeme = lexemeMap[token.text]
-    check(lexeme != null)
-    return createFromAntlrToken(lexeme, token)
-  }
-
-  companion object {
-    const val DEFAULT_RETURN_VALUE = Integer.MIN_VALUE
-  }
-
   private fun createFromAntlrToken(lexeme: Lexeme, token: Token): PersesToken {
-    var persesTokenType = TokenType.CommonToken
-    if (token is RuleTagToken) {
-      persesTokenType = TokenType.RuleTagToken
-    }
-    if (token is TokenTagToken) {
-      persesTokenType = TokenType.TokenTagToken
-    }
-
     return PersesToken(
       lexeme = lexeme,
-      type = token.type,
+      type = TokenType(token.type),
       position = TokenPosition(line = token.line, charPositionInLine = token.charPositionInLine),
       channel = token.channel,
       tokenIndex = token.tokenIndex,
       startIndex = token.startIndex,
       stopIndex = token.stopIndex,
-      tokenType = persesTokenType,
+      antlrTokenClass = AntlrTokenClass.COMMON_TOKEN,
     )
   }
 
@@ -99,15 +96,14 @@ class PersesTokenFactory {
       val INVALID = TokenPosition(line = Int.MIN_VALUE, charPositionInLine = Int.MIN_VALUE)
     }
   }
-  enum class TokenType() {
-    RuleTagToken,
-    TokenTagToken,
-    CommonToken,
+  enum class AntlrTokenClass(val antlrTokenClass: Class<out Token>?) {
+    COMMON_TOKEN(CommonToken::class.java),
+    PLACEHOLDER_TOKEN(null),
   }
 
   class PersesToken internal constructor(
     private val lexeme: Lexeme,
-    private val type: Int,
+    val type: TokenType,
     val position: TokenPosition,
     private val channel: Int,
     private val tokenIndex: Int,
@@ -115,7 +111,7 @@ class PersesTokenFactory {
     private val stopIndex: Int,
     // ruleTagtoken representing an entire subtree matched by a parser rule
     // tokenTagToken means this is a Token object representing a token of a particular type
-    val tokenType: Enum<TokenType>,
+    val antlrTokenClass: AntlrTokenClass,
     /* Do not keep a reference to the token, as token might hold a reference to a large string.*/
   ) : Token {
 
@@ -124,7 +120,7 @@ class PersesTokenFactory {
 
     override fun getText() = lexeme.text
 
-    override fun getType() = type
+    override fun getType() = type.antlrTokenType
 
     @Deprecated("", ReplaceWith("position"), level = DeprecationLevel.ERROR)
     override fun getLine() = position.line
@@ -160,20 +156,35 @@ class PersesTokenFactory {
         tokenIndex = tokenIndex,
         startIndex = startIndex,
         stopIndex = stopIndex,
-        tokenType = tokenType,
+        antlrTokenClass = antlrTokenClass,
       )
     }
+
+    fun copyWithNewPosition(newPosition: TokenPosition): PersesToken {
+      return PersesToken(
+        lexeme = lexeme,
+        type = type,
+        position = newPosition,
+        channel = channel,
+        tokenIndex = tokenIndex,
+        startIndex = startIndex,
+        stopIndex = stopIndex,
+        antlrTokenClass = antlrTokenClass,
+      )
+    }
+
+    fun isPlaceholder() = antlrTokenClass == AntlrTokenClass.PLACEHOLDER_TOKEN
 
     companion object {
       val INVALID_TOKEN = PersesToken(
         lexeme = Lexeme(id = Integer.MIN_VALUE, text = ""),
-        type = Integer.MIN_VALUE,
+        type = TokenType(Integer.MIN_VALUE),
         position = TokenPosition.INVALID,
         channel = Integer.MIN_VALUE,
         tokenIndex = Integer.MIN_VALUE,
         startIndex = Integer.MIN_VALUE,
         stopIndex = Integer.MIN_VALUE,
-        tokenType = TokenType.CommonToken,
+        antlrTokenClass = AntlrTokenClass.COMMON_TOKEN,
       )
     }
   }

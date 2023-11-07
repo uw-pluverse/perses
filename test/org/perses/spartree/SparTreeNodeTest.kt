@@ -33,7 +33,6 @@ import org.perses.program.TokenizedProgramFactory
 import java.io.IOException
 import java.nio.file.Path
 import java.nio.file.Paths
-import java.util.function.Consumer
 
 /**
  * TODO: we need better tests here. Most of the tests here are golden tests.
@@ -95,121 +94,121 @@ class SparTreeNodeTest {
   @Test
   fun testSparTreeCanReconstructOriginalGccPrograms_0() {
     TestUtility.partitionAndGet(TestUtility.gccTestFiles, 10, 0)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
   fun testSparTreeCanReconstructOriginalGccPrograms_1() {
     TestUtility.partitionAndGet(TestUtility.gccTestFiles, 10, 1)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
   fun testSparTreeCanReconstructOriginalGccPrograms_2() {
     TestUtility.partitionAndGet(TestUtility.gccTestFiles, 10, 2)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
   fun testSparTreeCanReconstructOriginalGccPrograms_3() {
     TestUtility.partitionAndGet(TestUtility.gccTestFiles, 10, 3)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
   fun testSparTreeCanReconstructOriginalGccPrograms_4() {
     TestUtility.partitionAndGet(TestUtility.gccTestFiles, 10, 4)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
   fun testSparTreeCanReconstructOriginalGccPrograms_5() {
     TestUtility.partitionAndGet(TestUtility.gccTestFiles, 10, 5)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
   fun testSparTreeCanReconstructOriginalGccPrograms_6() {
     TestUtility.partitionAndGet(TestUtility.gccTestFiles, 10, 6)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
   fun testSparTreeCanReconstructOriginalGccPrograms_7() {
     TestUtility.partitionAndGet(TestUtility.gccTestFiles, 10, 7)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
   fun testSparTreeCanReconstructOriginalGccPrograms_8() {
     TestUtility.partitionAndGet(TestUtility.gccTestFiles, 10, 8)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
   fun testSparTreeCanReconstructOriginalGccPrograms_9() {
     TestUtility.partitionAndGet(TestUtility.gccTestFiles, 10, 9)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
   fun testSparTreeCanReconstructOriginalClangPrograms_0() {
     TestUtility.partitionAndGet(TestUtility.clangTestFiles, 10, 0)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
   fun testSparTreeCanReconstructOriginalClangPrograms_1() {
     TestUtility.partitionAndGet(TestUtility.clangTestFiles, 10, 1)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
   fun testSparTreeCanReconstructOriginalClangPrograms_2() {
     TestUtility.partitionAndGet(TestUtility.clangTestFiles, 10, 2)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
   fun testSparTreeCanReconstructOriginalClangPrograms_3() {
     TestUtility.partitionAndGet(TestUtility.clangTestFiles, 10, 3)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
   fun testSparTreeCanReconstructOriginalClangPrograms_4() {
     TestUtility.partitionAndGet(TestUtility.clangTestFiles, 10, 4)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
   fun testSparTreeCanReconstructOriginalClangPrograms_5() {
     TestUtility.partitionAndGet(TestUtility.clangTestFiles, 10, 5)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
   fun testSparTreeCanReconstructOriginalClangPrograms_6() {
     TestUtility.partitionAndGet(TestUtility.clangTestFiles, 10, 6)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
   fun testSparTreeCanReconstructOriginalClangPrograms_7() {
     TestUtility.partitionAndGet(TestUtility.clangTestFiles, 10, 7)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
   fun testSparTreeCanReconstructOriginalClangPrograms_8() {
     TestUtility.partitionAndGet(TestUtility.clangTestFiles, 10, 8)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
   fun testSparTreeCanReconstructOriginalClangPrograms_9() {
     TestUtility.partitionAndGet(TestUtility.clangTestFiles, 10, 9)
-      .forEach(Consumer { file: Path -> testSparTreeCanReconstructOriginalPrograms(file) })
+      .forEach { testSparTreeCanReconstructOriginalPrograms(it) }
   }
 
   @Test
@@ -272,7 +271,12 @@ class SparTreeNodeTest {
     val parseTree = cParserFacade.parseFile(sourceFile)
     val tokens = AbstractParserFacade.getTokens(parseTree.tree)
     val factory = TokenizedProgramFactory.createFactory(tokens, cParserFacade.language)
-    val tree = SparTreeBuilder(cParserFacade.ruleHierarchy, factory, parseTree).result
+    val sparTreeNodeFactory = SparTreeNodeFactory(
+      cParserFacade.metaTokenInfoDb,
+      factory,
+      cParserFacade.ruleHierarchy,
+    )
+    val tree = SparTreeBuilder(sparTreeNodeFactory, parseTree).result
     tree.root.printTreeStructure()
     val program = tree.programSnapshot
     val originalProgram = AntlrGrammarUtil.convertParseTreeToProgram(
@@ -294,7 +298,12 @@ class SparTreeNodeTest {
         val language = cParserFacade.language
         val factory = TokenizedProgramFactory.createFactory(tokens, language)
         val expected = AntlrGrammarUtil.convertParseTreeToProgram(parseTree.tree, language)
-        val sparTree = SparTreeBuilder(cParserFacade.ruleHierarchy, factory, parseTree).result
+        val sparTreeNodeFactory = SparTreeNodeFactory(
+          cParserFacade.metaTokenInfoDb,
+          factory,
+          cParserFacade.ruleHierarchy,
+        )
+        val sparTree = SparTreeBuilder(sparTreeNodeFactory, parseTree).result
         val real = sparTree.programSnapshot
         assertThat(toAntlrTokens(real.tokens))
           .containsExactlyElementsIn(toAntlrTokens(expected.tokens))

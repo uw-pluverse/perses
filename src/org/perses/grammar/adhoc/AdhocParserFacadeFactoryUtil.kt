@@ -18,6 +18,7 @@ package org.perses.grammar.adhoc
 
 import org.perses.grammar.AbstractParserFacadeFactory
 import org.perses.grammar.SingleParserFacadeFactory
+import org.perses.grammar.adhoc.AdhocGrammarConfiguration.ParserFacadeJarFile
 import java.nio.file.Path
 
 object AdhocParserFacadeFactoryUtil {
@@ -29,12 +30,10 @@ object AdhocParserFacadeFactoryUtil {
   }
 }
 
-fun Sequence<AdhocGrammarConfiguration.ParserFacadeJarFile>
-  .toParserFacadeFactory(): AbstractParserFacadeFactory =
+fun Sequence<ParserFacadeJarFile>.toParserFacadeFactory(): AbstractParserFacadeFactory =
   fold(SingleParserFacadeFactory.Builder()) { builder, e ->
     builder.add(
       e.languageKind,
-      e::createParserFacade,
-      SingleParserFacadeFactory.IDENTITY_CUSTOMIZER,
+      e.klass,
     )
   }.build()

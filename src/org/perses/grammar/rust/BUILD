@@ -2,12 +2,14 @@ package(default_visibility = [
     "//visibility:public",
 ])
 
+load("//src/org/perses/grammar:antlr_util.bzl", "antlr_codegen_combined")
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 load("//antlropt/src/org/perses/antlr/pnf:pnf.bzl", "pnf_convert")
 load(
-    "//src/org/perses/grammar:antlr_util.bzl",
-    "antlr_codegen_combined",
+    "//src/org/perses/grammar/adhoc:adhoc_grammar.bzl",
+    "orig_parser_facade_library",
+    "pnf_parser_facade_library",
 )
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 antlr_codegen_combined(
     name = "orig_rust_grammar",
@@ -32,26 +34,38 @@ antlr_codegen_combined(
     parser_java_file_name = "PnfRustParser.java",
 )
 
-java_library(
-    name = "parser_facade",
-    srcs = ["PnfRustParserFacade.java"],
-    deps = [
-        ":language_kind",
-        ":orig_rust_grammar",
-        ":pnf_rust_grammar",
-        "//:antlr_runtime",
-        "//:flogger",
-        "//:guava",
-        "//src/org/perses/antlr:parse_tree_with_parser",
-        "//src/org/perses/grammar:grammar_facade",
-        "//src/org/perses/program:language_kind",
-    ],
-)
-
 kt_jvm_library(
     name = "language_kind",
     srcs = ["LanguageRust.kt"],
     deps = [
         "//src/org/perses/program:language_kind",
+    ],
+)
+
+pnf_parser_facade_library(
+    name = "parser_facade",
+    java_package_name = "org.perses.grammar.rust",
+    language_kind_full_name = "org.perses.grammar.rust.LanguageRust",
+    output_jar_file_name = "parser_facade.jar",
+    parser_facade_class_simple_name = "PnfRustParserFacade",
+    parser_file_name = "Rust.g4",
+    start_rule_name = "crate",
+    token_names_of_identifiers = ["Ident"],
+    deps = [
+        ":language_kind",
+    ],
+)
+
+orig_parser_facade_library(
+    name = "orig_parser_facade",
+    java_package_name = "org.perses.grammar.rust",
+    language_kind_full_name = "org.perses.grammar.rust.LanguageRust",
+    output_jar_file_name = "orig_parser_facade.jar",
+    parser_facade_class_simple_name = "OrigRustParserFacade",
+    parser_file_name = "Rust.g4",
+    start_rule_name = "crate",
+    token_names_of_identifiers = ["Ident"],
+    deps = [
+        ":language_kind",
     ],
 )

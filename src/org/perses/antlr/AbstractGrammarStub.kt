@@ -16,9 +16,8 @@
  */
 package org.perses.antlr
 
-import java.nio.charset.StandardCharsets
-import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.io.path.writeText
 
 abstract class AbstractGrammarStub(
   protected val packageName: String,
@@ -27,26 +26,26 @@ abstract class AbstractGrammarStub(
   protected val startRuleName: String,
 ) {
   init {
-    require(!packageName.isEmpty() && packageName.trim().equals(packageName)) {
+    require(packageName.isNotEmpty() && packageName.trim().equals(packageName)) {
       "packageName name must non-empty with no trailing/leading spaces"
     }
 
     require(
-      !parserClassSimpleName.isEmpty() &&
+      parserClassSimpleName.isNotEmpty() &&
         parserClassSimpleName.trim().equals(parserClassSimpleName),
     ) {
       "parserClassSimpleName must non-empty with no trailing/leading spaces"
     }
 
     require(
-      !lexerClassSimpleName.isEmpty() &&
+      lexerClassSimpleName.isNotEmpty() &&
         lexerClassSimpleName.trim().equals(lexerClassSimpleName),
     ) {
       "lexerClassSimpleName name must non-empty with no trailing/leading spaces"
     }
 
     require(
-      !startRuleName.isEmpty() &&
+      startRuleName.isNotEmpty() &&
         startRuleName.trim().equals(startRuleName),
     ) {
       "startRuleName name must non-empty with no trailing/leading spaces"
@@ -58,7 +57,7 @@ abstract class AbstractGrammarStub(
   abstract fun classFullName(): String
 
   fun writeTo(file: Path) {
-    Files.write(file, generateCode().toByteArray(StandardCharsets.UTF_8))
+    file.writeText(generateCode())
   }
 
   abstract fun generateCode(): String

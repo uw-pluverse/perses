@@ -20,28 +20,32 @@ import org.perses.PersesConstants
 import org.perses.PersesConstants.Companion.createCustomizedConstants
 import org.perses.PersesConstants.Companion.createDefaultConstants
 import org.perses.util.cmd.AbstractMain
-import java.io.IOException
+import java.io.Closeable
 import java.nio.file.Files
+import java.nio.file.Path
+import kotlin.io.path.deleteRecursively
 
-class InstallerMain(args: Array<String>) : AbstractMain<CommandOptions>(args) {
+class InstallerMain(args: Array<String>) : AbstractMain<CommandOptions>(args), Closeable {
+
+  private var tempDir: Path? = null
+
   override fun createCommandOptions(): CommandOptions {
     return CommandOptions()
   }
 
   override fun internalRun() {
-    val persesConstants: PersesConstants
-    persesConstants = if (cmd.outputFlags.output != null) {
-      try {
-        // FIXME: here is a resource leak.
-        val tempDir = Files.createTempDirectory(InstallerMain::class.java.canonicalName)
-        createCustomizedConstants(tempDir)
-      } catch (e: IOException) {
-        throw RuntimeException(e)
-      }
+    val persesConstants: PersesConstants = if (cmd.outputFlags.output != null) {
+      tempDir = Files.createTempDirectory(InstallerMain::class.java.canonicalName)
+      createCustomizedConstants(tempDir!!)
     } else {
       createDefaultConstants()
     }
-    AdhocGrammarInstaller(cmd, persesConstants).run()
+    AdhocGrammarInstaller(
+      cmd.computeAdhocGrammarConfiguration(),
+      persesConstants,
+      cmd.outputFlags.output,
+      enablePnfNormalization = cmd.compulsoryFlags.enablePnfNormalization,
+    ).run()
   }
 
   override fun processHelpRequests(): HelpRequestProcessingDecision {
@@ -53,10 +57,17 @@ class InstallerMain(args: Array<String>) : AbstractMain<CommandOptions>(args) {
     return super.processHelpRequests()
   }
 
+  override fun close() {
+    tempDir?.let {
+      it.deleteRecursively()
+      tempDir = null
+    }
+  }
+
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      InstallerMain(args).run()
+      InstallerMain(args).use { it.run() }
     }
   }
 }

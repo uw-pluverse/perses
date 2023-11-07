@@ -8,3 +8,14 @@ kt_jvm_test(
         "//version/org/perses/version",
     ],
 )
+
+kt_jvm_test(
+    name = "VersionClassGeneratorTest",
+    srcs = [
+        "VersionClassGeneratorTest.kt",
+    ],
+    deps = [
+        "//:truth",
+        "//version/org/perses/version:version_class_generator",
+    ],
+)

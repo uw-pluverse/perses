@@ -19,6 +19,7 @@ package org.perses.antlr.atn.simulator.transition
 import org.antlr.v4.runtime.atn.AtomTransition
 import org.antlr.v4.runtime.atn.EpsilonTransition
 import org.antlr.v4.runtime.atn.NotSetTransition
+import org.antlr.v4.runtime.atn.RangeTransition
 import org.antlr.v4.runtime.atn.SetTransition
 import org.antlr.v4.runtime.atn.Transition
 import org.antlr.v4.runtime.atn.WildcardTransition
@@ -44,6 +45,7 @@ class TransitionSimulatorRegistry :
         SetTransition::class.java -> SetTransitionSimulator(element as SetTransition)
         NotSetTransition::class.java -> NotSetTransitionSimulator(element as NotSetTransition)
         WildcardTransition::class.java -> WildcardTransitionSimulator()
+        RangeTransition::class.java -> RangeTransitionSimulator(element as RangeTransition)
         else -> error("unhandled element ${element::class.java}, $element")
       }
     }

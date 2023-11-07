@@ -23,7 +23,7 @@ import org.perses.util.exhaustive
 abstract class AstEdit {
   // TODO: replace Optional with nullable types.
   fun apply(ast: AbstractPersesRuleElement): NonDeleteTransformDecision {
-    return apply(ast, /*isRoot=*/true)
+    return apply(ast, isRoot = true)
   }
 
   private fun apply(
@@ -35,7 +35,7 @@ abstract class AstEdit {
     var childrenChanged = false
     for (i in 0 until size) {
       val oldChild = ast.getChild(i)
-      val decision = apply(oldChild, /*isRoot=*/false)
+      val decision = apply(oldChild, isRoot = false)
       when (decision) {
         is TransformDecision.Replace -> {
           childrenChanged = true

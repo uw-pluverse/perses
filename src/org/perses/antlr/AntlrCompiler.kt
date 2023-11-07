@@ -78,7 +78,7 @@ class AntlrCompiler(
     lexerClassSimpleName = lexerClassSimpleName,
     startRuleName = startRuleName,
   )
-  val outputFolder: Path = workingDirectory.resolve(packageName.replace('.', '/'))
+  private val outputFolder: Path = workingDirectory.resolve(packageName.replace('.', '/'))
 
   private val parserJavaFile: Path = outputFolder.resolve("$parserClassSimpleName.java")
   private val lexerJavaFile: Path = outputFolder.resolve("$lexerClassSimpleName.java")
@@ -111,12 +111,8 @@ class AntlrCompiler(
     lexerFile?.let {
       Files.move(it, outputFolder.resolve(it.fileName), StandardCopyOption.REPLACE_EXISTING)
     }
-    parserBaseFile?.let {
-      it.writeText("package $packageName;" + checkNotNull(parserBase).computeFileContent())
-    }
-    lexerBaseFile?.let {
-      it.writeText("package $packageName;" + checkNotNull(lexerBase).computeFileContent())
-    }
+    parserBaseFile?.writeText("package $packageName;" + parserBase!!.computeFileContent())
+    lexerBaseFile?.writeText("package $packageName;" + lexerBase!!.computeFileContent())
     check(Files.isRegularFile(parserJavaFile)) {
       "$parserJavaFile is not successfully generated."
     }

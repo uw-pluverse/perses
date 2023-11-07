@@ -16,7 +16,7 @@
  */
 package org.perses.reduction
 
-import org.perses.spartree.ChildHoistingAction
+import org.perses.spartree.NodeReplacementAction
 import java.io.BufferedWriter
 import java.io.IOException
 import java.nio.charset.StandardCharsets
@@ -25,17 +25,17 @@ import java.nio.file.Path
 
 abstract class AbstractActionSetProfiler {
   abstract fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant(
-    kleeneDescendant: ChildHoistingAction,
+    kleeneDescendant: NodeReplacementAction,
   )
 
   abstract fun onReplaceNodeWithNearestCompatibleDescendant(
-    replacement: ChildHoistingAction,
+    replacement: NodeReplacementAction,
   )
 
   class ActionSetProfiler(file: Path) : AbstractActionSetProfiler(), AutoCloseable {
     private var writer: BufferedWriter?
     override fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant(
-      kleeneDescendant: ChildHoistingAction,
+      kleeneDescendant: NodeReplacementAction,
     ) {
       try {
         writer!!
@@ -49,7 +49,7 @@ abstract class AbstractActionSetProfiler {
     }
 
     override fun onReplaceNodeWithNearestCompatibleDescendant(
-      replacement: ChildHoistingAction,
+      replacement: NodeReplacementAction,
     ) {
       try {
         writer!!
@@ -81,12 +81,12 @@ abstract class AbstractActionSetProfiler {
   companion object {
     val NULL_PROFILER = object : AbstractActionSetProfiler() {
       override fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant(
-        kleeneDescendant: ChildHoistingAction,
+        kleeneDescendant: NodeReplacementAction,
       ) {
       }
 
       override fun onReplaceNodeWithNearestCompatibleDescendant(
-        replacement: ChildHoistingAction,
+        replacement: NodeReplacementAction,
       ) {
       }
     }

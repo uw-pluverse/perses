@@ -16,7 +16,59 @@
  */
 package org.perses.reduction.io
 
-abstract class AbstractOutputManager {
+import com.google.common.collect.ImmutableList
+import org.perses.program.AbstractReductionFile
+import org.perses.util.Util
+import kotlin.io.path.writeText
 
-  abstract fun write(folder: ReductionFolder)
+abstract class AbstractOutputManager(private val reductionInputs: AbstractReductionInputs<*, *>) {
+
+  val shA512HashCode by lazy {
+    Util.SHA512HashCode.createFromListOfStrings(
+      fileContentList.map { it.second },
+    )
+  }
+
+  val fileContentList: ImmutableList<Pair<AbstractReductionFile<*, *>, String>> by lazy {
+    val list = internalComputeFileContentList()
+    check(list.size == reductionInputs.programFiles.size)
+    list.zip(reductionInputs.programFiles).forEach { (first, second) ->
+      val firstReductionFile = first.first
+      check(firstReductionFile === second) {
+        firstReductionFile.toString() + second.toString()
+      }
+    }
+    list
+  }
+
+  /**
+   * Note that we use a list instead of a map, because the list size is usually 1 element long.
+   */
+  private fun internalComputeFileContentList():
+    ImmutableList<Pair<AbstractReductionFile<*, *>, String>> {
+    val files = reductionInputs.programFiles
+    val builder =
+      ImmutableList.builderWithExpectedSize<Pair<AbstractReductionFile<*, *>, String>>(
+        files.size,
+      )
+    files.forEach {
+      builder.add(Pair(it, internalComputeContentForFile(it)))
+    }
+    return builder.build()
+  }
+
+  protected abstract fun internalComputeContentForFile(
+    origReductionFile: AbstractReductionFile<*, *>,
+  ): String
+
+  fun write(folder: ReductionFolder) {
+    fileContentList.forEach { pair ->
+      val destinationFile = folder.computeAbsPathForOrigFile(pair.first)
+      Util.ensureDirExists(destinationFile.parent)
+      destinationFile.writeText(pair.second)
+    }
+    writeMore(folder)
+  }
+
+  protected open fun writeMore(folder: ReductionFolder) {}
 }

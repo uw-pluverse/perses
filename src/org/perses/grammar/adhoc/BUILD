@@ -43,7 +43,6 @@ kt_jvm_library(
 kt_jvm_library(
     name = "adhoc_grammar_inaller_lib",
     srcs = [
-        "AdhocGrammarInfo.kt",
         "AdhocGrammarInstaller.kt",
         "InstallerMain.kt",
         "OrigGrammar.kt",

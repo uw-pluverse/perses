@@ -16,12 +16,15 @@
  */
 package org.perses.grammar
 
+import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
-import org.perses.grammar.SingleParserFacadeFactory.ParserFacadeFactoryCustomizer
+import org.perses.grammar.c.CParserFacade
 import org.perses.grammar.c.LanguageC
 import org.perses.grammar.c.PnfCParserFacade
 import org.perses.grammar.cpp.LanguageCpp
 import org.perses.grammar.cpp.PnfCppParserFacade
+import org.perses.grammar.glsl.GlslParserFacade
+import org.perses.grammar.glsl.LanguageGlsl
 import org.perses.grammar.go.LanguageGo
 import org.perses.grammar.go.PnfGoParserFacade
 import org.perses.grammar.java.JavaParserFacade
@@ -42,15 +45,19 @@ import org.perses.grammar.smtlibv2.LanguageSmtLibV2
 import org.perses.grammar.smtlibv2.SmtLibV2ParserFacade
 import org.perses.grammar.solidity.LanguageSolidity
 import org.perses.grammar.solidity.preprocessed.PnfSolidityParserFacade
-import org.perses.grammar.sqlite.LanguageSQLite
-import org.perses.grammar.sqlite.SQLiteParserFacade
+import org.perses.grammar.sql.mysql.LanguageMySQL
+import org.perses.grammar.sql.mysql.MySQLParserFacade
+import org.perses.grammar.sql.sqlite.LanguageSQLite
+import org.perses.grammar.sql.sqlite.SQLiteParserFacade
 import org.perses.grammar.sysverilog.LanguageSystemVerilog
 import org.perses.grammar.sysverilog.PnfSysverilogParserFacade
 import org.perses.program.LanguageKind
+import kotlin.reflect.KClass
+import kotlin.reflect.full.createInstance
 
 /** Creates a parser facade, based on the type of language kind.  */
 class SingleParserFacadeFactory private constructor(
-  private val language2FacadeMap: ImmutableMap<LanguageKind, ParserFacadeCreator>,
+  private val language2FacadeMap: ImmutableMap<LanguageKind, ParserFacadeList>,
 ) : AbstractParserFacadeFactory() {
 
   init {
@@ -64,10 +71,11 @@ class SingleParserFacadeFactory private constructor(
   }
 
   override fun createParserFacade(languageKind: LanguageKind): AbstractParserFacade {
-    require(containsLanguage(languageKind)) {
+    val facadeList = language2FacadeMap[languageKind]
+    requireNotNull(facadeList) {
       "Unrecognized language kind $languageKind"
     }
-    return language2FacadeMap[languageKind]!!.create().also {
+    return facadeList.defaultParserFacade.createInstance().also {
       check(it.language == languageKind) {
         "${it.language} != $languageKind"
       }
@@ -78,42 +86,45 @@ class SingleParserFacadeFactory private constructor(
     return language2FacadeMap.keys.asSequence()
   }
 
-  fun interface ParserFacadeCreator {
-    fun create(): AbstractParserFacade
-  }
-
-  fun interface ParserFacadeFactoryCustomizer {
-    fun customize(
-      language: LanguageKind,
-      defaultParserFacadeCreator: ParserFacadeCreator,
-    ): ParserFacadeCreator
+  data class ParserFacadeList(
+    val defaultParserFacade: KClass<out AbstractParserFacade>,
+    val otherParserFacades: ImmutableList<KClass<out AbstractParserFacade>>,
+  ) {
+    init {
+      require(!otherParserFacades.contains(defaultParserFacade)) {
+        """
+          | default parser facade: $defaultParserFacade
+          | other parser facades: $otherParserFacades
+        """.trimMargin()
+      }
+    }
   }
 
   companion object {
 
-    @JvmField
-    val IDENTITY_CUSTOMIZER =
-      ParserFacadeFactoryCustomizer { _, facadeCreator -> facadeCreator }
-
     @JvmStatic
-    fun builderWithBuiltinLanguages(
-      customizer: ParserFacadeFactoryCustomizer = IDENTITY_CUSTOMIZER,
-    ): Builder {
+    fun builderWithBuiltinLanguages(): Builder {
       val builder = Builder()
-      builder.add(LanguageGo, { PnfGoParserFacade() }, customizer)
-      builder.add(LanguageRust, { PnfRustParserFacade() }, customizer)
-      builder.add(LanguageScala, { PnfScalaParserFacade() }, customizer)
-      builder.add(LanguageJava, { JavaParserFacade() }, customizer)
-      builder.add(LanguageC, { PnfCParserFacade() }, customizer)
-      builder.add(LanguageSystemVerilog, { PnfSysverilogParserFacade() }, customizer)
-      builder.add(LanguageSolidity, { PnfSolidityParserFacade() }, customizer)
-      builder.add(LanguageCpp, { PnfCppParserFacade() }, customizer)
-      builder.add(LanguageJavaScript, { JavaScriptParserFacade() }, customizer)
-      builder.add(LanguagePhp, { PhpParserFacade() }, customizer)
-      builder.add(LanguageSmtLibV2, { SmtLibV2ParserFacade() }, customizer)
-      builder.add(LanguageSQLite, { SQLiteParserFacade() }, customizer)
-      builder.add(LanguagePython3, { Python3ParserFacade() }, customizer)
-      builder.add(LanguageRuby, { PnfRubyParserFacade() }, customizer)
+      builder.add(LanguageGlsl, GlslParserFacade::class)
+      builder.add(LanguageGo, PnfGoParserFacade::class)
+      builder.add(LanguageRust, PnfRustParserFacade::class)
+      builder.add(LanguageScala, PnfScalaParserFacade::class)
+      builder.add(LanguageJava, JavaParserFacade::class)
+      builder.add(
+        LanguageC,
+        PnfCParserFacade::class,
+        otherParserFacades = ImmutableList.of(CParserFacade::class),
+      )
+      builder.add(LanguageSystemVerilog, PnfSysverilogParserFacade::class)
+      builder.add(LanguageSolidity, PnfSolidityParserFacade::class)
+      builder.add(LanguageCpp, PnfCppParserFacade::class)
+      builder.add(LanguageJavaScript, JavaScriptParserFacade::class)
+      builder.add(LanguagePhp, PhpParserFacade::class)
+      builder.add(LanguageSmtLibV2, SmtLibV2ParserFacade::class)
+      builder.add(LanguageSQLite, SQLiteParserFacade::class)
+      builder.add(LanguageMySQL, MySQLParserFacade::class)
+      builder.add(LanguagePython3, Python3ParserFacade::class)
+      builder.add(LanguageRuby, PnfRubyParserFacade::class)
       return builder
     }
 
@@ -122,15 +133,20 @@ class SingleParserFacadeFactory private constructor(
 
   class Builder {
     private val language2FacadeMap =
-      ImmutableMap.builder<LanguageKind, ParserFacadeCreator>()
+      ImmutableMap.builder<LanguageKind, ParserFacadeList>()
 
     fun add(
       language: LanguageKind,
-      facadeCreator: ParserFacadeCreator,
-      customizer: ParserFacadeFactoryCustomizer = IDENTITY_CUSTOMIZER,
+      defaultFacadeClass: KClass<out AbstractParserFacade>,
+      otherParserFacades: ImmutableList<KClass<out AbstractParserFacade>> = ImmutableList.of(),
     ): Builder {
-      val customizedFacadeCreator = customizer.customize(language, facadeCreator)
-      language2FacadeMap.put(language, customizedFacadeCreator)
+      language2FacadeMap.put(
+        language,
+        ParserFacadeList(
+          defaultParserFacade = defaultFacadeClass,
+          otherParserFacades = otherParserFacades,
+        ),
+      )
       return this
     }
 

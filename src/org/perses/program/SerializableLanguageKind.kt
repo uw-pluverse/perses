@@ -20,6 +20,7 @@ import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.util.YamlUtil
 import org.perses.util.shell.ShellCommandOnPath
+import org.perses.util.shell.ShellCommandOnPath.IShellCommandOnPathCreator
 import org.perses.util.toImmutableList
 
 class SerializableLanguageKind internal constructor(
@@ -31,7 +32,7 @@ class SerializableLanguageKind internal constructor(
   data.origCodeFormatControl,
   data.allowedCodeFormatControl,
   data.defaultFormatterCommands.asSequence()
-    .map { ShellCommandOnPath(it.command, it.defaultFlags) }
+    .map { IShellCommandOnPathCreator { ShellCommandOnPath(it.command, it.defaultFlags) } }
     .toImmutableList(),
 ) {
 
@@ -50,7 +51,7 @@ class SerializableLanguageKind internal constructor(
     val defaultCodeFormatControl: EnumFormatControl,
     val origCodeFormatControl: EnumFormatControl,
     val allowedCodeFormatControl: ImmutableSet<EnumFormatControl>,
-    val defaultFormatterCommands: ImmutableList<ShellCommandData>,
+    val defaultFormatterCommands: ImmutableList<ShellCommandData> = ImmutableList.of(),
   ) {
 
     fun toYamlString(): String {
@@ -67,8 +68,8 @@ class SerializableLanguageKind internal constructor(
           defaultCodeFormatControl = language.defaultCodeFormatControl,
           origCodeFormatControl = language.origCodeFormatControl,
           allowedCodeFormatControl = language.allowedCodeFormatControl,
-          defaultFormatterCommands = language.defaultFormatterCommands
-            .asSequence()
+          defaultFormatterCommands = language.defaultFormatterCommandCreators
+            .mapNotNull { it.tryCreate() }
             .map { ShellCommandData(it.originalCommand, it.defaultFlags) }
             .toImmutableList(),
         )

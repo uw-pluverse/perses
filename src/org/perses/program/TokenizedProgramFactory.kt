@@ -21,6 +21,7 @@ import com.google.common.primitives.ImmutableIntArray
 import org.antlr.v4.runtime.Token
 import org.perses.util.Util.lazyAssert
 import org.perses.util.toImmutableList
+import org.perses.util.transformToImmutableList
 
 class TokenizedProgramFactory private constructor(
   // TODO: build an inverted index for this original program.
@@ -41,8 +42,10 @@ class TokenizedProgramFactory private constructor(
   fun create(tokens: List<Token>): TokenizedProgram {
     val persesTokens = tokens
       .asSequence()
-      .map { tokenFactory.getPersesTokenOrThrow(it) }
-      .toImmutableList()
+      .map {
+        check(tokenFactory.doesLexemeExist(it.text))
+        tokenFactory.createPersesToken(it)
+      }.toImmutableList()
     return TokenizedProgram(persesTokens, this)
   }
 
@@ -61,15 +64,19 @@ class TokenizedProgramFactory private constructor(
     }
 
     @JvmStatic
+    fun createEmptyFactory(languageKind: LanguageKind) = createFactory(
+      originalProgram = emptyList(),
+      languageKind,
+    )
+
+    @JvmStatic
     fun createFactory(
       originalProgram: List<Token>,
       languageKind: LanguageKind,
     ): TokenizedProgramFactory {
       val tokenFactory = PersesTokenFactory()
       val persesTokens = originalProgram
-        .asSequence()
-        .map { tokenFactory.createPersesToken(it) }
-        .toImmutableList()
+        .transformToImmutableList { tokenFactory.createPersesToken(it) }
       return TokenizedProgramFactory(tokenFactory, persesTokens, languageKind)
     }
   }

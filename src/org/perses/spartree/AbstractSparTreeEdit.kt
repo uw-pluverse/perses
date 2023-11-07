@@ -22,7 +22,7 @@ import org.perses.program.TokenizedProgram
 import java.util.concurrent.atomic.AtomicInteger
 
 // FIXME: this should be a sealed class.
-abstract class AbstractSparTreeEdit<T : AbstractTreeEditAction> protected constructor(
+sealed class AbstractSparTreeEdit<T : AbstractTreeEditAction> (
   val actionSet: AbstractActionSet<T>,
   private val tree: SparTree,
 ) : Comparable<AbstractSparTreeEdit<*>> {
@@ -100,6 +100,13 @@ abstract class AbstractSparTreeEdit<T : AbstractTreeEditAction> protected constr
       actionSet: ChildHoistingActionSet,
     ): AnyNodeReplacementTreeEdit {
       return AnyNodeReplacementTreeEdit(tree, actionSet)
+    }
+
+    fun createLatraGeneralTreeEdit(
+      tree: SparTree,
+      actionSet: LatraGeneralActionSet,
+    ): LatraGeneralTreeEdit {
+      return LatraGeneralTreeEdit(tree, actionSet)
     }
 
     private val idGenerator = AtomicInteger()

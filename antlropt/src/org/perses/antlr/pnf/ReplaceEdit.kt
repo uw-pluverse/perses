@@ -25,7 +25,7 @@ import org.perses.antlr.ast.TransformDecision
 
 open class ReplaceEdit(
   val oldPredicate: (AbstractPersesRuleElement) -> Boolean,
-  val newValue: AbstractPersesRuleElement,
+  val newValueComputer: (oldValue: AbstractPersesRuleElement) -> AbstractPersesRuleElement,
 ) : AstEdit() {
 
   override fun internalApply(
@@ -35,7 +35,7 @@ open class ReplaceEdit(
     return if (!oldPredicate(element)) {
       TransformDecision.Keep(element)
     } else {
-      TransformDecision.Replace(oldValue = element, newValue = newValue)
+      TransformDecision.Replace(oldValue = element, newValue = newValueComputer(element))
     }
   }
 

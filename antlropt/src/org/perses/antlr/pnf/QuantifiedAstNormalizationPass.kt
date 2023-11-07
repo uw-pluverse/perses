@@ -24,7 +24,6 @@ import org.perses.antlr.ast.AbstractPersesQuantifiedAst
 import org.perses.antlr.ast.AbstractPersesRuleElement
 import org.perses.antlr.ast.AstEdit
 import org.perses.antlr.ast.AstTag
-import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.ast.PersesRuleReferenceAst
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 import org.perses.antlr.ast.TransformDecision
@@ -33,10 +32,11 @@ import org.perses.util.exhaustive
 
 class QuantifiedAstNormalizationPass : AbstractPnfPass() {
 
-  override fun processParserGrammar(
-    parserGrammar: PersesGrammar,
-    lexerGrammar: PersesGrammar?,
-  ): PersesGrammar {
+  override fun processGrammar(
+    grammar: GrammarPair,
+  ): GrammarPair {
+    val parserGrammar = grammar.parserGrammar ?: return grammar
+
     val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     val toAdd = LinkedHashMultimap.create<RuleNameHandle, AbstractPersesRuleElement>()
     val toReplace = ArrayList<RuleEditTriple>()
@@ -60,8 +60,10 @@ class QuantifiedAstNormalizationPass : AbstractPnfPass() {
       }.exhaustive
     }
     toReplace.forEach { it.applyTo(mutable) }
-    toAdd.entries().forEach { mutable.getAltBlock(it.key).addIfInequivalent(it.value) }
-    return parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
+    toAdd.entries().forEach { mutable.getAltBlock(it.key).addIfNotEquivalent(it.value) }
+    return grammar.withNewParserGrammar(
+      parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList()),
+    )
     // grammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList(grammar.))
   }
 
@@ -106,7 +108,7 @@ class QuantifiedAstNormalizationPass : AbstractPnfPass() {
       val kleeneRuleName = currentRuleName.createAuxiliaryRuleName(
         getRuleTypeIfQuantifiedOrThrow(element.tag!!),
       )
-      newRules.getAltBlock(kleeneRuleName).addIfInequivalent(possibleNewBody)
+      newRules.getAltBlock(kleeneRuleName).addIfNotEquivalent(possibleNewBody)
 
       return TransformDecision.Replace(
         oldValue = element,

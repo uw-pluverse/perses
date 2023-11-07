@@ -30,11 +30,11 @@ import java.util.zip.ZipEntry
 import kotlin.io.path.readText
 
 class AdhocGrammarInstaller(
-  private val options: CommandOptions,
+  private val configuration: AdhocGrammarConfiguration,
   private val persesConstants: PersesConstants,
+  private val outputPath: Path?,
+  private val enablePnfNormalization: Boolean,
 ) {
-
-  private val configuration = options.computeAdhocGrammarConfiguration()
 
   fun run(): JarFile {
     val grammarRootFolder = createDirectoryForGrammar(
@@ -47,7 +47,11 @@ class AdhocGrammarInstaller(
     )
     configuration.copyGrammarFilesToDirectory(grammarSourceFolder)
 
-    val pnfGrammar = normalizePNF(grammarSourceFolder)
+    val pnfGrammar = if (enablePnfNormalization) {
+      normalizePNF(grammarSourceFolder)
+    } else {
+      grammarSourceFolder.resolve(configuration.parserFile.fileName)
+    }
 
     val workingDirectory = Util.ensureDirExists(
       grammarRootFolder.resolve("generate_jar"),
@@ -91,10 +95,10 @@ class AdhocGrammarInstaller(
       },
     )
     val jarFile = compiler.run()
-    return if (options.outputFlags.output == null) {
+    return if (outputPath == null) {
       jarFile.moveTo(configuration.computeJarFilePathPathForGrammar(persesConstants))
     } else {
-      jarFile.moveTo(options.outputFlags.output!!)
+      jarFile.moveTo(outputPath)
     }
   }
 

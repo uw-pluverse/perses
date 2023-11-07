@@ -25,6 +25,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.antlr.GrammarHierarchy.Companion.createFromString
 import org.perses.antlr.GrammarTestingUtility.readAntlrFileToString
+import org.perses.antlr.ast.PersesAstBuilder
 import org.perses.grammar.c.CParserFacade
 import java.io.ByteArrayInputStream
 import java.nio.charset.StandardCharsets
@@ -264,7 +265,7 @@ class GrammarHierarchyTest {
     ): String {
       val builder = StringBuilder()
       for (rule in rules) {
-        val subrules = listConverter.apply(rule)!!
+        val subrules = listConverter.apply(rule)
         if (subrules.isEmpty()) {
           continue
         }
@@ -286,5 +287,22 @@ class GrammarHierarchyTest {
         throw RuntimeException(e)
       }
     } // TODO: test token type retrieval.
+  }
+
+  @Test
+  fun testDotInParserRule() {
+    val grammar = PersesAstBuilder.loadGrammarFromString(
+      """
+      grammar T;
+      start: . ;
+      """.trimIndent(),
+    )
+    val hierarchy = GrammarHierarchyBuilder(
+      AbstractAntlrGrammar.CombinedAntlrGrammar(grammar),
+    ).build()
+    assertThat(hierarchy.ruleList).hasSize(1)
+    val entry = hierarchy.getRuleHierarchyEntryWithNameOrThrow("start")
+    assertThat(entry.immediateSubRuleNames).isEmpty()
+    assertThat(entry.transitiveSubRules).isEmpty()
   }
 }

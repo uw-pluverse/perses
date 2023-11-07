@@ -29,10 +29,13 @@ class ExceptionErrorStrategy : DefaultErrorStrategy() {
     throw e!!
   }
 
-  @Throws(RecognitionException::class)
   public override fun reportInputMismatch(recognizer: Parser, e: InputMismatchException) {
-    var msg = "mismatched input " + getTokenErrorDisplay(e.offendingToken)
-    msg += " expecting one of " + e.expectedTokens.toString(recognizer.tokenNames)
+    val msg = buildString {
+      append("mismatched input " + getTokenErrorDisplay(e.offendingToken))
+      append('\n')
+      append(" expecting one of ")
+      append(e.expectedTokens.toString(recognizer.vocabulary))
+    }
     val ex = RecognitionException(
       msg,
       recognizer,
@@ -47,12 +50,11 @@ class ExceptionErrorStrategy : DefaultErrorStrategy() {
     beginErrorCondition(recognizer)
     val t = recognizer.currentToken
     val expecting = getExpectedTokens(recognizer)
-    val msg = (
-      "missing " +
-        expecting.toString(recognizer.tokenNames) +
-        " at " +
-        getTokenErrorDisplay(t)
-      )
+    val msg = buildString {
+      append("missing ")
+      append(expecting.toString(recognizer.vocabulary))
+      append(" at ").append(getTokenErrorDisplay(t))
+    }
     throw RecognitionException(
       msg,
       recognizer,

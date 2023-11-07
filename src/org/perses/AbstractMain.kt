@@ -16,19 +16,27 @@
  */
 package org.perses
 
+import com.google.common.flogger.FluentLogger
 import org.perses.grammar.AbstractParserFacadeFactory
 import org.perses.grammar.CompositeParserFacadeFactory
 import org.perses.grammar.SingleParserFacadeFactory
 import org.perses.grammar.SingleParserFacadeFactory.Companion.builderWithBuiltinLanguages
 import org.perses.reduction.IReductionDriver
 import org.perses.util.cmd.AbstractCommandOptions
+import org.perses.util.ktInfo
 
 abstract class AbstractMain<Cmd : AbstractCommandOptions>(args: Array<String>) :
   org.perses.util.cmd.AbstractMain<Cmd>(args) {
 
   lateinit var parserFacadeFactory: AbstractParserFacadeFactory
 
-  override fun internalRun() {
+  final override fun internalRun() {
+    logger.ktInfo {
+      val keyValuePairs = commander.getFlagNameValueMap()
+        .map { '"' + it.key + '"' + ": " + '"' + it.value + '"' }
+        .joinToString(separator = ", ")
+      "The command-line options are: $keyValuePairs"
+    }
     initializeParserFacadeFactory()
     createReductionDriver(parserFacadeFactory).use { driver -> driver.reduce() }
   }
@@ -47,16 +55,14 @@ abstract class AbstractMain<Cmd : AbstractCommandOptions>(args: Array<String>) :
   ): IReductionDriver
 
   private fun createBuiltinParserFacadeFactory(): AbstractParserFacadeFactory {
-    val customizer = createCustomizer()
-    val builder = builderWithBuiltinLanguages(customizer)
-    return builder.build()
-  }
-
-  protected open fun createCustomizer(): SingleParserFacadeFactory.ParserFacadeFactoryCustomizer {
-    return SingleParserFacadeFactory.IDENTITY_CUSTOMIZER
+    return builderWithBuiltinLanguages().build()
   }
 
   protected open fun createExtFacadeFactory(): AbstractParserFacadeFactory {
     return SingleParserFacadeFactory.createEmptyFactory()
+  }
+
+  companion object {
+    private val logger = FluentLogger.forEnclosingClass()
   }
 }

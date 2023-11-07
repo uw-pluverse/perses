@@ -41,9 +41,9 @@ kt_jvm_library(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "AbstractPersesReducerTest",
-    srcs = ["AbstractPersesReducerTest.java"],
+    srcs = ["AbstractPersesReducerTest.kt"],
     data = [
         "//benchmark/gcc-59903:gcc59903",
         "//benchmark/gcc-71626:gcc71626",
@@ -66,17 +66,31 @@ java_library(
     ],
 )
 
-java_test(
+kt_jvm_test(
+    name = "TestScriptHistoryTest",
+    srcs = [
+        "TestScriptHistoryTest.kt",
+    ],
+    deps = [
+        "//:truth",
+        "//src/org/perses/reduction:TestScriptHistory",
+        "//src/org/perses/util",
+    ],
+)
+
+kt_jvm_test(
     name = "ProfileTest",
-    srcs = ["ProfileTest.java"],
+    srcs = ["ProfileTest.kt"],
     test_class = "org.perses.reduction.ProfileTest",
-    deps = ["//src/org/perses/listener:profile_event_interface"],
+    deps = [
+        "//:truth",
+        "//src/org/perses/listener:profile_event_interface",
+    ],
 )
 
 kt_jvm_test(
     name = "ReducerFactoryTest",
     srcs = ["ReducerFactoryTest.kt"],
-    test_class = "org.perses.reduction.ReducerFactoryTest",
     deps = [
         "//:guava",
         "//:truth",
@@ -94,7 +108,6 @@ kt_jvm_test(
     data = [
         "//test_data/delta_1",
     ],
-    test_class = "org.perses.reduction.ReductionConfigurationTest",
     deps = [
         "//:guava",
         "//:truth",
@@ -131,12 +144,13 @@ sh_test(
     data = ["query_cache_memory_usage.log"],
 )
 
-java_test(
+kt_jvm_test(
     name = "ReductionLevelSequenceTest",
-    srcs = ["ReductionLevelSequenceTest.java"],
+    srcs = ["ReductionLevelSequenceTest.kt"],
     test_class = "org.perses.reduction.ReductionLevelSequenceTest",
     deps = [
         "//:guava",
+        "//:truth",
         "//src/org/perses/reduction:reduction_level_sequence",
     ],
 )

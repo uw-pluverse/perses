@@ -18,11 +18,11 @@ package org.perses.program
 
 import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
-import org.antlr.v4.runtime.CommonToken
 import org.antlr.v4.runtime.Token
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.TestUtility.createAntlrToken
 import org.perses.grammar.c.LanguageC
 import org.perses.program.TokenizedProgramFactory.Companion.createFactory
 import org.perses.util.toImmutableList
@@ -34,6 +34,19 @@ class TokenizedProgramFactoryTest {
     ImmutableList.of("a", "b", "c", "d", "e"),
   ).let {
     createFactory(it, LanguageC)
+  }
+
+  @Test
+  fun testCreateEmptyTokenizedProgramFactory() {
+    val factory = TokenizedProgramFactory.createEmptyFactory(LanguageC)
+    val tokenFactory = factory.tokenFactory
+    val tokens = createAntlrTokens(listOf("a")).also { tokens ->
+      // The perses tokens must be created first.
+      tokens.forEach { token -> tokenFactory.createPersesToken(token) }
+    }
+    val program = factory.create(tokens).tokens
+    assertThat(program).hasSize(1)
+    assertThat(program.single().text).isEqualTo("a")
   }
 
   @Test
@@ -77,7 +90,7 @@ class TokenizedProgramFactoryTest {
 
   private fun createAntlrTokens(lexemes: List<String>): ImmutableList<Token> {
     return lexemes.asSequence()
-      .map { CommonToken( /*type=*/0, it) }
+      .map { createAntlrToken(it) }
       .toImmutableList()
   }
 }

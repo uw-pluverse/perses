@@ -16,28 +16,30 @@
  */
 package org.perses.antlr
 
-import org.antlr.v4.runtime.Lexer
 import org.antlr.v4.runtime.Parser
 import org.antlr.v4.runtime.Token
+import org.antlr.v4.runtime.Vocabulary
 import org.antlr.v4.runtime.tree.RuleNode
 import org.antlr.v4.runtime.tree.TerminalNode
 
 object ParseTreeUtil {
 
   @JvmStatic
-  fun getRuleName(tree: RuleNode, parser: Parser): String {
-    val ruleIndex = tree.ruleContext.ruleIndex
+  fun getParserRuleIndex(tree: RuleNode) = tree.ruleContext.ruleIndex
+
+  @JvmStatic
+  fun getParserRuleName(tree: RuleNode, parser: Parser): String {
+    val ruleIndex = getParserRuleIndex(tree)
     return parser.ruleNames[ruleIndex]
   }
 
   @JvmStatic
-  fun getTokenName(tree: TerminalNode, lexer: Lexer): String? {
-    val tokenType = tree.symbol.type
-    return lexer.vocabulary.getSymbolicName(tokenType)
+  fun getSymbolicTokenTypeName(tree: TerminalNode, lexerVocabulary: Vocabulary): String? {
+    return getSymbolicTokenTypeName(tree.symbol, lexerVocabulary)
   }
 
   @JvmStatic
-  fun getTokenName(token: Token, lexer: Lexer): String? {
-    return lexer.vocabulary.getSymbolicName(token.type)
+  fun getSymbolicTokenTypeName(token: Token, lexerVocabulary: Vocabulary): String? {
+    return lexerVocabulary.getSymbolicName(token.type)
   }
 }

@@ -27,11 +27,29 @@ import java.util.Random
 class PersesKtExtsTest {
 
   @Test
+  fun testToImmutableBiMap() {
+    sequenceOf(Pair("a", 1), Pair("b", 2)).toImmutableBiMap().let {
+      assertThat(
+        it.entries.map { entry ->
+          entry.key + "-" + entry.value
+        }.toList(),
+      ).containsExactly("a-1", "b-2")
+    }
+  }
+
+  @Test
   fun testTransformToImmutableList() {
     assertThat(listOf("", "1").transformToImmutableList { it.length }).containsExactly(
       0,
       1,
     ).inOrder()
+  }
+
+  @Test
+  fun testTransformToImmutableListFromSequence() {
+    assertThat(
+      sequenceOf("", "1").transformToImmutableList { it.length },
+    ).containsExactly(0, 1).inOrder()
   }
 
   @Test

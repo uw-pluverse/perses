@@ -25,7 +25,6 @@ import org.antlr.v4.runtime.tree.TerminalNode
 import org.perses.antlr.ParseTreeWithParser
 import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.SingleParserFacadeFactory
-import org.perses.grammar.SingleParserFacadeFactory.Companion.IDENTITY_CUSTOMIZER
 import org.perses.grammar.adhoc.AdhocGrammarInstaller
 import org.perses.grammar.adhoc.CommandOptions
 import org.perses.grammar.adhoc.LanguageAdhoc
@@ -37,6 +36,8 @@ import org.perses.grammar.php.LanguagePhp
 import org.perses.grammar.php.PhpParserFacade
 import org.perses.grammar.python3.LanguagePython3
 import org.perses.grammar.python3.Python3ParserFacade
+import org.perses.grammar.rust.LanguageRust
+import org.perses.grammar.rust.PnfRustParserFacade
 import org.perses.grammar.scala.LanguageScala
 import org.perses.grammar.scala.PnfScalaParserFacade
 import org.perses.grammar.smtlibv2.LanguageSmtLibV2
@@ -49,6 +50,8 @@ import org.perses.program.TokenizedProgramFactory.Companion.createFactory
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.SparTree
 import org.perses.spartree.SparTreeBuilder
+import org.perses.spartree.SparTreeNodeFactory
+import org.perses.util.toImmutableList
 import java.io.IOException
 import java.io.UncheckedIOException
 import java.nio.file.Files
@@ -56,7 +59,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.Arrays
 import java.util.concurrent.atomic.AtomicInteger
-import java.util.function.Consumer
+import kotlin.io.path.writeText
 
 /** Utility class for testing.  */
 object TestUtility {
@@ -224,12 +227,13 @@ object TestUtility {
   private val JAVA_PROGRAM_FOLDER =
     THIRD_PARTY_TEST_PROGRAMS_ROOT.resolve("java_programs/openjdk_testsuite")
   private val parserFacadeFactory = SingleParserFacadeFactory.Builder().apply {
-    add(LanguageC, { CParserFacade() }, IDENTITY_CUSTOMIZER)
-    add(LanguageScala, { PnfScalaParserFacade() }, IDENTITY_CUSTOMIZER)
-    add(LanguageJava, { JavaParserFacade() }, IDENTITY_CUSTOMIZER)
-    add(LanguagePhp, { PhpParserFacade() }, IDENTITY_CUSTOMIZER)
-    add(LanguagePython3, { Python3ParserFacade() }, IDENTITY_CUSTOMIZER)
-    add(LanguageSmtLibV2, { SmtLibV2ParserFacade() }, IDENTITY_CUSTOMIZER)
+    add(LanguageC, CParserFacade::class)
+    add(LanguageScala, PnfScalaParserFacade::class)
+    add(LanguageJava, JavaParserFacade::class)
+    add(LanguagePhp, PhpParserFacade::class)
+    add(LanguagePython3, Python3ParserFacade::class)
+    add(LanguageSmtLibV2, SmtLibV2ParserFacade::class)
+    add(LanguageRust, PnfRustParserFacade::class)
   }.build()
 
   fun partitionAndGet(
@@ -246,13 +250,13 @@ object TestUtility {
   @JvmStatic
   fun createAntlrTokens(vararg lexemes: String): ImmutableList<Token> {
     return Arrays.stream(lexemes)
-      .map { l: String -> CommonToken( /*type=*/0, l) }
+      .map { createAntlrToken(it) }
       .collect(ImmutableList.toImmutableList())
   }
 
   fun createAntlrToknesFromList(lexemes: List<String>): ImmutableList<Token> {
     return lexemes.stream()
-      .map { l: String -> CommonToken( /*type=*/0, l) }
+      .map { createAntlrToken(it) }
       .collect(ImmutableList.toImmutableList())
   }
 
@@ -289,11 +293,12 @@ object TestUtility {
     return parserFacadeFactory.createParserFacade(languageKind)
   }
 
-  fun getAdhocFacade(
+  fun generateAdhocFacade(
     combinedGrammerPath: Path,
     startRule: String,
     tokenNamesOfIdentifiers: List<String>,
     workingDir: Path,
+    enablePnfNormalization: Boolean,
   ): AbstractParserFacade {
     val testPersesConstants = PersesConstants.createCustomizedConstants(workingDir)
     val testOptions = CommandOptions()
@@ -305,10 +310,45 @@ object TestUtility {
     testOptions.compulsoryFlags.tokenNamesOfIdentifiers = tokenNamesOfIdentifiers
 
     testOptions.validate()
-    val installer = AdhocGrammarInstaller(testOptions, testPersesConstants)
+    val installer = AdhocGrammarInstaller(
+      testOptions.computeAdhocGrammarConfiguration(),
+      testPersesConstants,
+      testOptions.outputFlags.output,
+      enablePnfNormalization = enablePnfNormalization,
+    )
     val generatedJar = installer.run()
     return generatedJar.loadMainClass().getConstructor().newInstance() as AbstractParserFacade
   }
+
+  fun generateAdhocFacade(
+    combinedGrammarName: String,
+    combinedGrammarContent: String,
+    startRule: String,
+    tokenNamesOfIdentifiers: List<String>,
+    workingDir: Path,
+    enablePnfNormalization: Boolean,
+  ): AbstractParserFacade {
+    val grammarFile = workingDir.resolve("$combinedGrammarName.g4")
+    grammarFile.writeText(
+      """
+      grammar $combinedGrammarName;
+      
+      $combinedGrammarContent
+      """.trimIndent(),
+    )
+    return generateAdhocFacade(
+      grammarFile,
+      startRule,
+      tokenNamesOfIdentifiers,
+      workingDir,
+      enablePnfNormalization = enablePnfNormalization,
+    )
+  }
+
+  fun createAntlrToken(lexeme: String) = CommonToken(
+    0, // dummy token type,
+    lexeme,
+  )
 
   fun parseFile(file: String): ParseTreeWithParser {
     return parseFile(Paths.get(file))
@@ -349,14 +389,27 @@ object TestUtility {
     simplifyTree: Boolean = true,
   ): SparTree {
     val facade = getFacade(languageKind)
-    val parseTreeWithParser = parseString(sourceCode, languageKind)
+    return createSparTreeFromString(sourceCode, facade, simplifyTree)
+  }
+
+  fun createSparTreeFromString(
+    sourceCode: String,
+    facade: AbstractParserFacade,
+    simplifyTree: Boolean,
+  ): SparTree {
+    val languageKind = facade.language
+    val parseTreeWithParser = facade.parseString(sourceCode)
     val factory = createFactory(
       AbstractParserFacade.getTokens(parseTreeWithParser.tree),
       languageKind,
     )
-    return SparTreeBuilder(
-      facade.ruleHierarchy,
+    val sparTreeNodeFactory = SparTreeNodeFactory(
+      facade.metaTokenInfoDb,
       factory,
+      facade.ruleHierarchy,
+    )
+    return SparTreeBuilder(
+      sparTreeNodeFactory,
       parseTreeWithParser,
       simplifyTree = simplifyTree,
     ).result
@@ -376,7 +429,10 @@ object TestUtility {
     val sourceFile = SourceFile(file, parserFacadeFactory.computeLanguageKindWithFileName(file)!!)
     val facade = getFacade(sourceFile.dataKind)
     val parseTree = facade.parseFile(file)
-    return SparTreeBuilder(facade.ruleHierarchy, factory, parseTree).result
+    return SparTreeBuilder(
+      SparTreeNodeFactory(facade.metaTokenInfoDb, factory, facade.ruleHierarchy),
+      parseTree,
+    ).result
   }
 
   private fun getCFiles(folder: Path): ImmutableList<Path> {
@@ -410,7 +466,11 @@ object TestUtility {
     return try {
       Files.walk(folder)
         .filter { path: Path -> Files.isRegularFile(path) }
-        .filter { path: Path -> path.toString().endsWith(fileExtension) } //          .map(Path::toFile)
+        .filter { path: Path ->
+          path.toString().endsWith(
+            fileExtension,
+          )
+        }
         .sorted()
         .collect(ImmutableList.toImmutableList())
     } catch (e: IOException) {
@@ -425,10 +485,11 @@ object TestUtility {
   }
 
   @JvmStatic
-  fun extractTokenTexts(tree: ParseTree): ArrayList<String> {
-    val result = ArrayList<String>()
-    extractTokens(tree).forEach(Consumer { token: Token -> result.add(token.text) })
-    return result
+  fun extractTokenTexts(tree: ParseTree): ImmutableList<String> {
+    return extractTokens(tree)
+      .filter { it.type != Token.EOF }
+      .map { it.text }
+      .toImmutableList()
   }
 
   @JvmStatic
@@ -486,9 +547,9 @@ object TestUtility {
     builder[node] = value.build()
   }
 
-  private fun preOrderTraverse(tree: ParseTree, consumer: Consumer<Token>) {
+  private fun preOrderTraverse(tree: ParseTree, consumer: (Token) -> Unit) {
     if (tree is TerminalNode) {
-      consumer.accept(tree.symbol)
+      consumer.invoke(tree.symbol)
       return
     }
     var i = 0

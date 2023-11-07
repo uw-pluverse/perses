@@ -17,9 +17,7 @@
 package org.perses.antlr.pnf
 
 import org.perses.antlr.ast.PersesAlternativeBlockAst
-import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.util.AntlrToolWrapper.Companion.doesAntlrAcceptGrammar
-import org.perses.util.FileNameContentPair
 
 class PnfGrammarChecker {
 
@@ -27,43 +25,38 @@ class PnfGrammarChecker {
 
     @JvmStatic
     fun validateIntermediateGrammar(
-      grammarAfter: PersesGrammar,
+      grammarAfter: GrammarPair,
       passClass: Class<out AbstractPnfPass>,
-      grammarBefore: PersesGrammar,
-      lexerGrammar: PersesGrammar?,
+      grammarBefore: GrammarPair,
     ) {
       try {
         checkNoDuplicateDefs(grammarAfter)
         // call the antlr tool to validate the grammar.
-        checkAntlrAcceptsTheGrammar(grammarAfter, lexerGrammar)
+        checkAntlrAcceptsTheGrammar(grammarAfter)
       } catch (e: Exception) {
         val builder = StringBuilder()
         builder.append("Validation fails after pass ").append(passClass).append("\n")
         builder.append("\n\n")
         builder.append("Grammar Before: \n")
-        builder.append(grammarBefore.sourceCode)
+        builder.append(grammarBefore.combinedSourceCode)
         builder.append("\n\n\n")
         builder.append("Grammar After: \n")
-        builder.append(grammarAfter.sourceCode)
+        builder.append(grammarAfter.combinedSourceCode)
         builder.append("\n\n")
         throw RuntimeException(builder.toString(), e)
       }
     }
 
-    private fun checkAntlrAcceptsTheGrammar(
-      grammar: PersesGrammar,
-      lexerGrammar: PersesGrammar?,
+    fun checkAntlrAcceptsTheGrammar(
+      grammar: GrammarPair,
     ) {
-      val parserGrammar = FileNameContentPair.createFromString(
-        grammar.grammarName + ".g4",
-        grammar.sourceCode,
-      )
-      val lexerGrammar1 = lexerGrammar?.let {
-        FileNameContentPair.createFromString(it.grammarName + ".g4", it.sourceCode)
-      }
+      val parserGrammar = grammar.convertParserToFileContentPair()
+        ?: // if the parser file is empty, then it is not possible to check its validity.
+        return
+      val lexerGrammar = grammar.convertLexerToFileContentPair()
       val antlrCheckingResult = doesAntlrAcceptGrammar(
         parserGrammar,
-        lexerGrammar1,
+        lexerGrammar,
       )
 
       check(antlrCheckingResult.accpeted) {
@@ -78,10 +71,10 @@ class PnfGrammarChecker {
           ${parserGrammar.computeFileContent()}
           
           ====lexerGrammar====
-          ${lexerGrammar1?.fileName}
+          ${lexerGrammar?.fileName}
           
           ====lexerGrammar====
-          ${lexerGrammar1?.computeFileContent()}
+          ${lexerGrammar?.computeFileContent()}
         """.trimIndent()
 
         System.err.println(message)
@@ -90,8 +83,8 @@ class PnfGrammarChecker {
     }
 
     @JvmStatic
-    fun checkNoDuplicateDefs(grammar: PersesGrammar) {
-      grammar.parserRules.forEach { rule ->
+    fun checkNoDuplicateDefs(grammar: GrammarPair) {
+      grammar.grammarSequence().flatMap { it.flattenedAllRules }.forEach { rule ->
         val body = rule.body
         if (body is PersesAlternativeBlockAst) {
           PersesAlternativeBlockAst.checkNoDuplicatesAmongAlternatives(

@@ -16,26 +16,23 @@
  */
 package org.perses.grammar.cpp
 
-import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
-import org.perses.util.shell.ShellCommandOnPath
+import org.perses.util.shell.CommonShellCommands
 
 object LanguageCpp : LanguageKind(
   name = "cpp",
   extensions = ImmutableSet.of("cc", "cpp", "cxx"),
   defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE,
   origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-  defaultFormatterCommands = createPotentialCodeFormatterList(
-    ShellCommandOnPath.tryCreating(
-      "clang-format",
-      ImmutableList.of(/*in-place formatting*/"-i"),
-    ),
+  defaultFormatterCommandCreators = createPotentialCodeFormatterList(
+    { CommonShellCommands.CLANG_FORMAT_IN_PLACE },
   ),
   allowedCodeFormatControl = ImmutableSet.of(
     EnumFormatControl.SINGLE_TOKEN_PER_LINE,
     EnumFormatControl.COMPACT_ORIG_FORMAT,
     EnumFormatControl.ORIG_FORMAT,
   ),
+
 )

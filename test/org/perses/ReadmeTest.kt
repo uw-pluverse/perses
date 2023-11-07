@@ -17,11 +17,10 @@
 package org.perses
 
 import com.google.common.collect.ImmutableList
-import com.google.common.truth.Truth.assertThat
+import com.google.common.truth.Truth.assertWithMessage
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.grammar.SingleParserFacadeFactory
 import org.perses.grammar.SingleParserFacadeFactory.Companion.builderWithBuiltinLanguages
 import org.perses.program.LanguageKind
 import org.perses.util.toImmutableList
@@ -37,12 +36,12 @@ class ReadmeTest {
   fun testSupportedLanguage() {
     val persesSupported = getActuallySupportedLanguages()
     val readmeListed = parseReadmeSupportedLanguages()
-
-    assertThat(readmeListed).containsExactlyElementsIn(persesSupported)
+    assertWithMessage("You need to update //README.md to reflect the latest language support.")
+      .that(readmeListed).containsExactlyElementsIn(persesSupported)
   }
 
   private fun getActuallySupportedLanguages(): ImmutableList<String> {
-    val builder = builderWithBuiltinLanguages(SingleParserFacadeFactory.IDENTITY_CUSTOMIZER)
+    val builder = builderWithBuiltinLanguages()
     val parserFacadeFactory = builder.build()
     return parserFacadeFactory.languageSequence()
       .map { languageToString(it) }

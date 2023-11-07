@@ -19,6 +19,7 @@ package org.perses.antlr.atn.nfa
 import com.google.common.base.MoreObjects
 import org.antlr.v4.runtime.atn.AtomTransition
 import org.antlr.v4.runtime.atn.NotSetTransition
+import org.antlr.v4.runtime.atn.RangeTransition
 import org.antlr.v4.runtime.atn.SetTransition
 import org.antlr.v4.runtime.atn.Transition
 import org.antlr.v4.runtime.atn.WildcardTransition
@@ -29,14 +30,15 @@ import org.perses.util.ast.Indent
 import java.io.PrintStream
 
 class PersesTransitionAst(
-  val transition: Transition,
+  val atnTransition: Transition,
 ) : AbstractPersesTerminalAst() {
 
   init {
-    require(!transition.isEpsilon)
+    require(!atnTransition.isEpsilon)
     require(
-      when (transition::class.java) {
+      when (atnTransition::class.java) {
         AtomTransition::class.java,
+        RangeTransition::class.java,
         SetTransition::class.java,
         WildcardTransition::class.java,
         NotSetTransition::class.java,
@@ -44,16 +46,16 @@ class PersesTransitionAst(
         else -> false
       },
     ) {
-      "Unsupported transition class: ${transition::class.java}"
+      "Unsupported transition class: ${atnTransition::class.java}"
     }
   }
 
   override fun extraEquivalenceTest(other: AbstractPersesRuleElement): Boolean {
     return other is PersesTransitionAst &&
-      testTransistionEquivalence(transition, other.transition)
+      testTransitionEquivalence(atnTransition, other.atnTransition)
   }
 
-  private fun testTransistionEquivalence(
+  private fun testTransitionEquivalence(
     t1: Transition,
     t2: Transition,
   ): Boolean {
@@ -73,6 +75,11 @@ class PersesTransitionAst(
         val s2 = t2 as SetTransition
         s1.set == s2.set
       }
+      RangeTransition::class.java -> {
+        val r1 = t1 as RangeTransition
+        val r2 = t2 as RangeTransition
+        r1.from == r2.from && r1.to == r2.to
+      }
       WildcardTransition::class.java -> true
 
       else -> error("Unreachable. ${t1::class.java}, ${t2::class.java}")
@@ -83,15 +90,15 @@ class PersesTransitionAst(
     newChildren: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
     assert(newChildren.isEmpty())
-    return PersesTransitionAst(transition)
+    return PersesTransitionAst(atnTransition)
   }
 
   override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
-    stream.print(transition.toString())
+    stream.print(atnTransition.toString())
   }
 
   override fun toString(): String {
-    return MoreObjects.toStringHelper(this).add("transition", transition).toString()
+    return MoreObjects.toStringHelper(this).add("transition", atnTransition).toString()
   }
 
   override val tag: AstTag

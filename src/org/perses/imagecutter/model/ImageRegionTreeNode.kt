@@ -20,7 +20,7 @@ import org.perses.imagecutter.tree.AbstractImageTreeNode
 
 class ImageRegionTreeNode(nodeId: Int) : AbstractImageTreeNode(nodeId) {
 
-  override fun copyCurrentNode(): AbstractImageTreeNode {
-    return ImageRegionTreeNode(nodeId)
+  override fun internalCopyCurrentNode(computedNewNodeId: Int): AbstractImageTreeNode {
+    return ImageRegionTreeNode(computedNewNodeId)
   }
 }

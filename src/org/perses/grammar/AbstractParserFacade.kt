@@ -27,13 +27,16 @@ import org.antlr.v4.runtime.Token.DEFAULT_CHANNEL
 import org.antlr.v4.runtime.tree.ParseTree
 import org.antlr.v4.runtime.tree.TerminalNode
 import org.perses.antlr.AbstractAntlrGrammar
-import org.perses.antlr.GrammarHierarchy
 import org.perses.antlr.GrammarHierarchy.Companion.createFromAntlrGrammar
+import org.perses.antlr.MetaTokenInfoDB
 import org.perses.antlr.ParseTreeWithParser
 import org.perses.antlr.ast.PersesAstBuilder.Companion.loadGrammarFromString
+import org.perses.antlr.atn.LexerAtnWrapper
+import org.perses.antlr.toTokenType
 import org.perses.program.LanguageKind
 import org.perses.util.Util
 import org.perses.util.Util.lazyAssert
+import org.perses.util.transformToImmutableList
 import java.io.IOException
 import java.io.Reader
 import java.io.StringReader
@@ -47,14 +50,22 @@ import java.util.ArrayDeque
 abstract class AbstractParserFacade protected constructor(
   val language: LanguageKind,
   val antlrGrammar: AbstractAntlrGrammar,
-  val identifierTokenTypes: ImmutableIntArray,
+  identifierTokenTypes: ImmutableIntArray,
+  val lexerClass: Class<out Lexer>,
+  val parserClass: Class<out Parser>,
 ) {
 
-  val ruleHierarchy: GrammarHierarchy = createFromAntlrGrammar(antlrGrammar)
+  val ruleHierarchy = createFromAntlrGrammar(antlrGrammar)
 
-  abstract val lexerClass: Class<out Lexer>
-  abstract val parserClass: Class<out Parser>
+  val identifierTokenTypes = identifierTokenTypes
+    .toArray().asSequence().transformToImmutableList { it.toTokenType() }
 
+  val metaTokenInfoDb: MetaTokenInfoDB
+    get() = lexerAtnWrapper.metaTokenInfoDB
+
+  val lexerAtnWrapper: LexerAtnWrapper<out Lexer> by lazy {
+    LexerAtnWrapper(lexerClass)
+  }
   init {
     require(identifierTokenTypes.toArray().distinct().size == identifierTokenTypes.length()) {
       "The identifier token types have duplicate elements: $identifierTokenTypes"

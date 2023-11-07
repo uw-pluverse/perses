@@ -56,7 +56,12 @@ class AdhocGrammarInstallerTest : AbstractAntlrrdcTest() {
     testOptions.compulsoryFlags.tokenNamesOfIdentifiers = listOf("ID")
     testOptions.validate()
 
-    val installer = AdhocGrammarInstaller(testOptions, testPersesConstants)
+    val installer = AdhocGrammarInstaller(
+      testOptions.computeAdhocGrammarConfiguration(),
+      testPersesConstants,
+      testOptions.outputFlags.output,
+      enablePnfNormalization = true,
+    )
     val generatedJar = installer.run()
     assertThat(generatedJar.path.toString()).isEqualTo(
       workingDir.resolve(
@@ -103,7 +108,12 @@ class AdhocGrammarInstallerTest : AbstractAntlrrdcTest() {
     testOptions.compulsoryFlags.tokenNamesOfIdentifiers = listOf("ID")
     testOptions.validate()
 
-    val installer = AdhocGrammarInstaller(testOptions, testPersesConstants)
+    val installer = AdhocGrammarInstaller(
+      testOptions.computeAdhocGrammarConfiguration(),
+      testPersesConstants,
+      testOptions.outputFlags.output,
+      enablePnfNormalization = true,
+    )
     val generatedJar = installer.run()
     assertThat(generatedJar.path.toString()).isEqualTo(
       workingDir.resolve(
@@ -144,10 +154,79 @@ class AdhocGrammarInstallerTest : AbstractAntlrrdcTest() {
     testOptions.compulsoryFlags.tokenNamesOfIdentifiers = listOf("ID")
 
     testOptions.validate()
-    val installer = AdhocGrammarInstaller(testOptions, testPersesConstants)
+    val installer = AdhocGrammarInstaller(
+      testOptions.computeAdhocGrammarConfiguration(),
+      testPersesConstants,
+      testOptions.outputFlags.output,
+      enablePnfNormalization = true,
+    )
     val generatedJar = installer.run()
     val facade = generatedJar.loadMainClass().getConstructor().newInstance() as AbstractParserFacade
     val langauge = facade.language
     assertThat(langauge).isSameInstanceAs(LanguageAdhoc.INSTANCE)
+  }
+
+  @Test
+  fun testAdHocInstallerWithNullFormatter() {
+    val nonFormmatterConfiguration = """---
+      name: "test"
+      extensions:
+      - "cp"
+      - "c"
+      defaultCodeFormatControl: "ORIG_FORMAT"
+      origCodeFormatControl: "ORIG_FORMAT"
+      allowedCodeFormatControl:
+      - "ORIG_FORMAT"
+      - "COMPACT_ORIG_FORMAT"
+    """
+
+    val resultConfiguration = """---
+      name: "test"
+      extensions:
+      - "cp"
+      - "c"
+      defaultCodeFormatControl: "ORIG_FORMAT"
+      origCodeFormatControl: "ORIG_FORMAT"
+      allowedCodeFormatControl:
+      - "ORIG_FORMAT"
+      - "COMPACT_ORIG_FORMAT"
+      defaultFormatterCommands: []
+    """
+
+    val languageKindNonFormmatterFile = tempDir.resolve("language_kind_adhoc_non_format.yaml")
+      .apply {
+        writeText(nonFormmatterConfiguration)
+      }
+
+    val testPersesConstants = PersesConstants.createCustomizedConstants(workingDir)
+    val testOptions = CommandOptions()
+    testOptions.compulsoryFlags.parserGrammar = parserGrammarPath
+    testOptions.compulsoryFlags.lexerGrammar = lexerGrammarPath
+    testOptions.compulsoryFlags.startRuleName = "start"
+    testOptions.compulsoryFlags.languageKindYamlFile = languageKindNonFormmatterFile
+    testOptions.compulsoryFlags.tokenNamesOfIdentifiers = listOf("ID")
+    testOptions.validate()
+
+    val installer = AdhocGrammarInstaller(
+      testOptions.computeAdhocGrammarConfiguration(),
+      testPersesConstants,
+      testOptions.outputFlags.output,
+      enablePnfNormalization = true,
+    )
+    val generatedJar = installer.run()
+    assertThat(generatedJar.path.toString()).isEqualTo(
+      workingDir.resolve(
+        ".perses/installed_adhoc_languages/TestParser/" +
+          testOptions.compulsoryFlags.createAdhocGrammarConfiguration().computeContentHashCode() +
+          "/perses_adhoc_language_support.jar",
+      ).toString(),
+    )
+    assertThat(generatedJar.mainClassFullName).isEqualTo(
+      "org.perses.grammar.adhoc.testparser.TestParserAdhocParserFacade",
+    )
+
+    val facade = generatedJar.loadMainClass().getConstructor().newInstance() as AbstractParserFacade
+    val langauge = facade.language
+    assertThat(langauge).isEqualTo(SerializableLanguageKind.fromYamlString(resultConfiguration))
   }
 }

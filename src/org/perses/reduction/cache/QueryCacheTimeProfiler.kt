@@ -20,9 +20,7 @@ import com.google.common.collect.ImmutableList
 import org.perses.program.PersesTokenFactory.PersesToken
 import org.perses.program.TokenizedProgram
 import java.io.BufferedWriter
-import java.io.IOException
 import java.lang.AutoCloseable
-import java.lang.RuntimeException
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
@@ -32,13 +30,9 @@ class QueryCacheTimeProfiler(file: Path) : AbstractQueryCacheProfiler(), AutoClo
   private var writer: BufferedWriter?
 
   override fun close() {
-    try {
-      val local = writer
-      writer = null
-      local?.close()
-    } catch (e: IOException) {
-      throw RuntimeException(e)
-    }
+    val local = writer
+    writer = null
+    local?.close()
   }
 
   override fun onCreatingEncoder(
@@ -46,20 +40,16 @@ class QueryCacheTimeProfiler(file: Path) : AbstractQueryCacheProfiler(), AutoClo
     startTime: Long,
     endTime: Long,
   ) {
-    try {
-      writer!!
-        .append("create_encoder")
-        .append('\t')
-        .append("origin_token_count=")
-        .append(tokensInOrigin.size.toString())
-        .append('\t')
-        .append("duration=")
-        .append((endTime - startTime).toString())
-        .append('\n')
-        .flush()
-    } catch (e: IOException) {
-      throw RuntimeException(e)
-    }
+    writer!!
+      .append("create_encoder")
+      .append('\t')
+      .append("origin_token_count=")
+      .append(tokensInOrigin.size.toString())
+      .append('\t')
+      .append("duration=")
+      .append((endTime - startTime).toString())
+      .append('\n')
+      .flush()
   }
 
   override fun onDecodingProgram(
@@ -68,26 +58,22 @@ class QueryCacheTimeProfiler(file: Path) : AbstractQueryCacheProfiler(), AutoClo
     startTime: Long,
     endTime: Long,
   ) {
-    try {
-      writer!!
-        .append("decode")
-        .append('\t')
-        .append("origin_token_count=")
-        .append(tokensInOrigin.size.toString())
-        .append('\t')
-        .append("encoding_token_count=")
-        .append(encoding.tokenCount.toString())
-        .append('\t')
-        .append("encoding_length=")
-        .append(encoding.encodingSize().toString())
-        .append('\t')
-        .append("duration=")
-        .append((endTime - startTime).toString())
-        .append('\n')
-        .flush()
-    } catch (e: IOException) {
-      throw RuntimeException(e)
-    }
+    writer!!
+      .append("decode")
+      .append('\t')
+      .append("origin_token_count=")
+      .append(tokensInOrigin.size.toString())
+      .append('\t')
+      .append("encoding_token_count=")
+      .append(encoding.tokenCount.toString())
+      .append('\t')
+      .append("encoding_length=")
+      .append(encoding.encodingSize().toString())
+      .append('\t')
+      .append("duration=")
+      .append((endTime - startTime).toString())
+      .append('\n')
+      .flush()
   }
 
   override fun onEncodingProgram(
@@ -96,23 +82,19 @@ class QueryCacheTimeProfiler(file: Path) : AbstractQueryCacheProfiler(), AutoClo
     startTime: Long,
     endTime: Long,
   ) {
-    try {
-      writer!!
-        .append("encode")
-        .append('\t')
-        .append("origin_token_count=")
-        .append(tokensInOrigin.size.toString())
-        .append('\t')
-        .append("token_count=")
-        .append(program.tokenCount().toString())
-        .append('\t')
-        .append("duration=")
-        .append((endTime - startTime).toString())
-        .append('\n')
-        .flush()
-    } catch (e: IOException) {
-      throw RuntimeException(e)
-    }
+    writer!!
+      .append("encode")
+      .append('\t')
+      .append("origin_token_count=")
+      .append(tokensInOrigin.size.toString())
+      .append('\t')
+      .append("token_count=")
+      .append(program.tokenCount().toString())
+      .append('\t')
+      .append("duration=")
+      .append((endTime - startTime).toString())
+      .append('\n')
+      .flush()
   }
 
   override fun onHeavyweightCacheRefreshing(
@@ -123,29 +105,25 @@ class QueryCacheTimeProfiler(file: Path) : AbstractQueryCacheProfiler(), AutoClo
     startTime: Long,
     endTime: Long,
   ) {
-    try {
-      writer!!
-        .append("refresh_cache")
-        .append('\t')
-        .append("old_origin_token_count=")
-        .append(oldBestProgram.size.toString())
-        .append('\t')
-        .append("new_origin_token_count=")
-        .append(newBestProgram.size.toString())
-        .append('\t')
-        .append("entries_before=")
-        .append(numOfEntriesInCacheBefore.toString())
-        .append('\t')
-        .append("entries_after=")
-        .append(numOfEntriesInCacheAfter.toString())
-        .append('\t')
-        .append("duration=")
-        .append((endTime - startTime).toString())
-        .append('\n')
-        .flush()
-    } catch (e: IOException) {
-      throw RuntimeException(e)
-    }
+    writer!!
+      .append("refresh_cache")
+      .append('\t')
+      .append("old_origin_token_count=")
+      .append(oldBestProgram.size.toString())
+      .append('\t')
+      .append("new_origin_token_count=")
+      .append(newBestProgram.size.toString())
+      .append('\t')
+      .append("entries_before=")
+      .append(numOfEntriesInCacheBefore.toString())
+      .append('\t')
+      .append("entries_after=")
+      .append(numOfEntriesInCacheAfter.toString())
+      .append('\t')
+      .append("duration=")
+      .append((endTime - startTime).toString())
+      .append('\n')
+      .flush()
   }
 
   init {

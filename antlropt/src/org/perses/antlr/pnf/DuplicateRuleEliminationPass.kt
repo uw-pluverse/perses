@@ -24,20 +24,20 @@ import org.perses.util.toImmutableList
 
 class DuplicateRuleEliminationPass(private val startRuleName: String) : AbstractPnfPass() {
 
-  override fun processParserGrammar(
-    parserGrammar: PersesGrammar,
-    lexerGrammar: PersesGrammar?,
-  ): PersesGrammar {
+  override fun processGrammar(
+    grammar: GrammarPair,
+  ): GrammarPair {
+    val parserGrammar = grammar.parserGrammar ?: return grammar
     val startRuleName = parserGrammar
       .symbolTable
       .ruleNameRegistry
       .getOrThrow(startRuleName)
-    return AstUtil.fixpoint(parserGrammar) { grammar ->
-      val candidates = searchForCandidates(grammar)
+    val processedParserGramamr = AstUtil.fixpoint(parserGrammar) { inputGrammar ->
+      val candidates = searchForCandidates(inputGrammar)
       if (candidates.isEmpty()) {
-        return@fixpoint grammar
+        return@fixpoint inputGrammar
       }
-      val mutable = MutableGrammar.createParserRulesFrom(grammar)
+      val mutable = MutableGrammar.createParserRulesFrom(inputGrammar)
       for (rules in candidates) {
         require(rules.size > 1)
         val sortedRules = rules
@@ -61,8 +61,9 @@ class DuplicateRuleEliminationPass(private val startRuleName: String) : Abstract
           RuleRefRenamingEdit.renameDefMap(mutable, oldRuleName, canonicalName)
         }
       }
-      grammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
+      inputGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
     }
+    return grammar.withNewParserGrammar(processedParserGramamr)
   }
 
   companion object {

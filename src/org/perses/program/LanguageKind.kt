@@ -20,6 +20,7 @@ import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.util.shell.ShellCommandOnPath
+import org.perses.util.shell.ShellCommandOnPath.IShellCommandOnPathCreator
 import org.perses.util.toImmutableList
 
 abstract class LanguageKind(
@@ -28,12 +29,13 @@ abstract class LanguageKind(
   val defaultCodeFormatControl: EnumFormatControl,
   val origCodeFormatControl: EnumFormatControl,
   val allowedCodeFormatControl: ImmutableSet<EnumFormatControl>,
-  val defaultFormatterCommands: ImmutableList<ShellCommandOnPath> = ImmutableList.of(),
+  val defaultFormatterCommandCreators: ImmutableList<IShellCommandOnPathCreator> =
+    ImmutableList.of(),
 ) : AbstractDataKind(name, extensions) {
 
   init {
     check(defaultCodeFormatControl in allowedCodeFormatControl) {
-      "The default code format $defaultFormatterCommands is not in $allowedCodeFormatControl"
+      "The default code format $defaultCodeFormatControl is not in $allowedCodeFormatControl"
     }
     check(origCodeFormatControl in allowedCodeFormatControl) {
       "The orig code format $origCodeFormatControl is not in $allowedCodeFormatControl"
@@ -41,10 +43,10 @@ abstract class LanguageKind(
   }
 
   open fun getDefaultWorkingFormatter(): ShellCommandOnPath? {
-    return if (defaultFormatterCommands.isEmpty()) {
+    return if (defaultFormatterCommandCreators.isEmpty()) {
       null
     } else {
-      defaultFormatterCommands[0]
+      defaultFormatterCommandCreators.firstNotNullOfOrNull { it.tryCreate() }
     }
   }
 
@@ -56,8 +58,10 @@ abstract class LanguageKind(
     check(other.allowedCodeFormatControl == allowedCodeFormatControl)
   }
 
-  fun getAllDefaultFormatterCommandStrings() = defaultFormatterCommands
-    .joinToString(separator = ", ")
+  fun getAllDefaultFormatterCommandStrings() =
+    defaultFormatterCommandCreators
+      .mapNotNull { it.tryCreate() }
+      .joinToString(separator = ", ") { it.toString() }
 
   fun isCodeFormatAllowed(codeFormat: EnumFormatControl) =
     allowedCodeFormatControl.contains(codeFormat)
@@ -71,11 +75,7 @@ abstract class LanguageKind(
   companion object {
 
     @JvmStatic
-    fun createPotentialCodeFormatterList(vararg formatters: ShellCommandOnPath?) =
-      formatters
-        .asSequence()
-        .filter { it != null }
-        .map { it!! }
-        .toImmutableList()
+    fun createPotentialCodeFormatterList(vararg formatters: IShellCommandOnPathCreator?) =
+      formatters.filterNotNull().toImmutableList()
   }
 }

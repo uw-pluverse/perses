@@ -22,17 +22,17 @@ import org.perses.util.Util.lazyAssert
 abstract class AbstractNodeReplacementTreeEdit internal constructor(
   tree: SparTree,
   actionSet: ChildHoistingActionSet,
-) : AbstractSparTreeEdit<ChildHoistingAction>(actionSet, tree) {
+) : AbstractSparTreeEdit<NodeReplacementAction>(actionSet, tree) {
 
   val onlyReplacementNode: AbstractSparTreeNode
-    get() = actionSet.actions.single().replacingChild
+    get() = actionSet.actions.single().replacingNode
 
   override fun computeProgram(tree: SparTree): TokenizedProgram {
     return tree.customizeProgram(TokenizedProgramConstructor(actionSet))
   }
 
   private class TokenizedProgramConstructor(
-    private val actionSet: AbstractActionSet<ChildHoistingAction>,
+    private val actionSet: AbstractActionSet<NodeReplacementAction>,
   ) : AbstractTokenizedProgramCustomizer(actionSet) {
     override fun visit(
       node: AbstractSparTreeNode,
@@ -42,7 +42,7 @@ abstract class AbstractNodeReplacementTreeEdit internal constructor(
         return emptyList()
       }
       if (targets.contains(node)) {
-        val replacingChild = actionSet.getActionForTarget(node)!!.replacingChild
+        val replacingChild = actionSet.getActionForTarget(node)!!.replacingNode
         addTokenIntervalToResult(replacingChild)
         return emptyList()
       }

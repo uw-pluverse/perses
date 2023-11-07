@@ -27,6 +27,7 @@ object CommonCmdOptionGroupOrder {
   const val CACHE_CONTROL = 100000
   const val PROFILING_CONTROL = 120000
   const val VERBOSITY_CONTROL = 130000
+  const val VULCAN = 140000
   const val HELP = 160000
   const val EXPERIMENT = 180000
 }

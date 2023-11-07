@@ -33,7 +33,13 @@ class MutableAltBlock : Iterable<AbstractPersesRuleElement> {
     asSequence().forEach(visitor)
   }
 
-  fun addIfInequivalent(newAlt: AbstractPersesRuleElement): Boolean {
+  fun addIfNotEquivalent(newAlt: AbstractPersesRuleElement): Boolean {
+    if (newAlt.tag == AstTag.ALTERNATIVE_BLOCK) {
+      return (newAlt as PersesAlternativeBlockAst)
+        .alternatives
+        .map { alt -> addIfNotEquivalent(alt) }
+        .any { it }
+    }
     require(newAlt.tag != AstTag.ALTERNATIVE_BLOCK) { newAlt }
     if (containsEquivalent(newAlt)) {
       return false
@@ -47,7 +53,7 @@ class MutableAltBlock : Iterable<AbstractPersesRuleElement> {
 
   fun addAllIfInequivalent(newAlt: Iterable<AbstractPersesRuleElement>) {
     newAlt.forEach {
-      addIfInequivalent(it)
+      addIfNotEquivalent(it)
     }
   }
 
@@ -57,7 +63,7 @@ class MutableAltBlock : Iterable<AbstractPersesRuleElement> {
         decomposeAltBlockAndAddIfInequivalent(it)
       }
     } else {
-      addIfInequivalent(value)
+      addIfNotEquivalent(value)
     }
   }
 

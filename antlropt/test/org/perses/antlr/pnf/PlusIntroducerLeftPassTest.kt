@@ -37,7 +37,9 @@ class PlusIntroducerLeftPassTest : PnfLeftTestGrammar() {
     run {
       val grammar = createPersesGrammarFromString("start:C D a;", "a:(C D)*;")
       val pass = PlusIntroducerLeftPass()
-      val newGrammar = pass.processParserGrammar(grammar, lexerGrammar = null)
+      val newGrammar = pass.processGrammar(
+        GrammarPair(grammar, lexerGrammar = null),
+      ).parserGrammar!!
       assertThat(newGrammar.getRuleDefinition("start")!!.body.sourceCode)
         .isEqualTo("kleene_plus__a_1")
       assertThat(
@@ -47,7 +49,9 @@ class PlusIntroducerLeftPassTest : PnfLeftTestGrammar() {
     run {
       val grammar = createPersesGrammarFromString("start:a C D f;", "a:(C D)*;")
       val pass = PlusIntroducerLeftPass()
-      val newGrammar = pass.processParserGrammar(grammar, lexerGrammar = null)
+      val newGrammar = pass.processGrammar(
+        GrammarPair(grammar, lexerGrammar = null),
+      ).parserGrammar!!
       assertThat(newGrammar.getRuleDefinition("start")!!.body.sourceCode)
         .isEqualTo("kleene_plus__a_1 f")
       assertThat(

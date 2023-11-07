@@ -35,7 +35,7 @@ class IndirectLeftRecursionEliminationPass : AbstractIndirectRecursionEliminatio
     def: AbstractPersesRuleElement,
   ): RuleNameHandle? {
     require(def.tag !== AstTag.ALTERNATIVE_BLOCK)
-    return getFirstOrLastRuleRef(def, /*seekingFirst=*/true)
+    return getFirstOrLastRuleRef(def, seekingFirst = true)
   }
 
   override fun inlineRuleRefIntoSequence(

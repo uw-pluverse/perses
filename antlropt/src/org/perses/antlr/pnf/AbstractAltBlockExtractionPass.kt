@@ -21,7 +21,6 @@ import com.google.common.collect.ImmutableMap
 import org.perses.antlr.RuleType
 import org.perses.antlr.ast.AbstractPersesRuleElement
 import org.perses.antlr.ast.AstTag
-import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.ast.PersesSequenceAst
 import org.perses.antlr.ast.RuleNameRegistry
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
@@ -29,10 +28,10 @@ import org.perses.util.Interval
 
 abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
 
-  final override fun processParserGrammar(
-    parserGrammar: PersesGrammar,
-    lexerGrammar: PersesGrammar?,
-  ): PersesGrammar {
+  final override fun processGrammar(
+    grammar: GrammarPair,
+  ): GrammarPair {
+    val parserGrammar = grammar.parserGrammar ?: return grammar
     val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     var changed: Boolean
     do {
@@ -50,7 +49,9 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
         }
       }
     } while (changed)
-    return parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
+    return grammar.withNewParserGrammar(
+      parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList()),
+    )
   }
 
   abstract fun searchForCandidate(sequences: List<PersesSequenceAst>): AbstractCandidate?
@@ -73,12 +74,10 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
 
       grammar.getAltBlock(altBlockName).addAllIfInequivalent(alternatives)
       val processedSequences = sequences
-        .asSequence()
         .map { replaceGapWithRuleReference(it, getGapInterval(it), altBlockName) }
-        .toList()
       check(processedSequences.size == sequences.size)
       processedSequences.forEach { processedSequences.first().isEquivalent(it) }
-      grammar.getAltBlock(ruleName).addIfInequivalent(processedSequences.first())
+      grammar.getAltBlock(ruleName).addIfNotEquivalent(processedSequences.first())
     }
 
     abstract fun getGapInterval(sequence: PersesSequenceAst): Interval
@@ -212,13 +211,13 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
       abstract fun getElement(seq: PersesSequenceAst, index: Int): AbstractPersesRuleElement
     }
 
-    private object FORWARD_DIRECTION : AbstractDirection() {
+    private object ForwardDirection : AbstractDirection() {
       override fun getElement(seq: PersesSequenceAst, index: Int): AbstractPersesRuleElement {
         return seq.getChild(index)
       }
     }
 
-    private object BACKWARD_DIRECTION : AbstractDirection() {
+    private object BackwardDirection : AbstractDirection() {
       override fun getElement(seq: PersesSequenceAst, index: Int): AbstractPersesRuleElement {
         return seq.getChild(seq.childCount - index - 1)
       }
@@ -280,7 +279,7 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
     ): List<CommonPrefixCandidate> {
       return computeCandidatesClosedPrefixOrPostfix(
         sequences,
-        FORWARD_DIRECTION,
+        ForwardDirection,
       ) { sequencesList, lengthOfPrefix ->
         CommonPrefixCandidate(sequencesList, lengthOfPrefix)
       }
@@ -291,7 +290,7 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
     ): List<CommonPostfixCandidate> {
       return computeCandidatesClosedPrefixOrPostfix(
         sequences,
-        BACKWARD_DIRECTION,
+        BackwardDirection,
       ) { sequencesList, lengthOfPrefix ->
         CommonPostfixCandidate(sequencesList, lengthOfPrefix)
       }

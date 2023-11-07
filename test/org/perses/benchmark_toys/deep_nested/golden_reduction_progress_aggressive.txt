@@ -1,6 +1,12 @@
-======================Reduction starts======================
+=====================Reduction starts.======================
 
-The spar tree is the following.
+The initial program size is 93
+------------------------------------------------------------
+
+
+=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+
+The spar-tree is the following.
 translationUnit {id=1}
 |___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
     |___functionDefinition {id=4,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
@@ -230,6 +236,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
     int a = 99;
 ------------------------------------------------------------
 
@@ -378,6 +391,17 @@ The current best program is the following
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=42}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+                                                                                         ;
+      return b;
+    }
 ------------------------------------------------------------
 
 
@@ -971,13 +995,13 @@ It took less than 1 second to cancel the task.
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-3 entries are removed: 11 --> 8.
+3 entries are removed: 13 --> 10.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 49
+    size before clearance = 53
 ------------------------------------------------------------
 
 
@@ -1003,6 +1027,17 @@ The current best program is the following
 
 // edit action set type: [regular_node]can be epsilon
     int main() {
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+                ;
       int b =                                      a                                     ;
       return b;
     }
@@ -1130,6 +1165,17 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+              ;
+    }
+------------------------------------------------------------
+
+
 ===================Node reduction is done===================
 
 Failed to reduce node 17
@@ -1248,6 +1294,17 @@ The current best program is the following
       int a = 99;
       int b =                                      a                                     ;
       return b;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return  ;
     }
 ------------------------------------------------------------
 
@@ -1540,9 +1597,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=========Cache hit for the following program: fail==========
 
-// edit action set type: [kleene_star]dd@1
     int main() {
       int a = 99;
       int b =                                      a                                     ;
@@ -1718,7 +1774,58 @@ Failed to reduce node 940
 ------------------------------------------------------------
 
 
-==================Reducing node 2, size=19==================
+=Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
+
+The spar-tree is the following.
+translationUnit {id=941}
+|___(+) {id=942,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=944,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=945,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=1062,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=1066,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=1053,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=1061,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=1055,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=1057,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=1058,slot_type=LeftParen}
+        |           |___Token:) {id=1060,slot_type=RightParen}
+        |___compoundStatement {id=947,slot_type=compoundStatement}
+            |___Token:{ {id=948,slot_type=LeftBrace}
+            |___(?) {id=949,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=952,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___aux_rule__declaration_3 {id=1018,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=1019,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=1052,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=1020,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=1023,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:a {id=1048,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=1025,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=1026,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=1027,slot_type=Assign}
+            |       |   |               |___Token:99 {id=1045,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=1021,slot_type=Semi}
+            |       |___aux_rule__declaration_3 {id=982,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=983,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=1016,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=984,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=987,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:b {id=1012,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=989,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=990,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=991,slot_type=Assign}
+            |       |   |               |___Token:a {id=1009,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |___Token:; {id=985,slot_type=Semi}
+            |       |___jumpStatement {id=957,slot_type=[aux_rule__blockItemList_2,statement,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=960,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=961,slot_type=Return}
+            |           |   |___(?) {id=962,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:b {id=980,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |           |___Token:; {id=959,slot_type=Semi}
+            |___Token:} {id=950,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+=================Reducing node 942, size=19=================
 
 The current best program is the following
 
@@ -1732,11 +1839,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 2
+Failed to reduce node 942
 ------------------------------------------------------------
 
 
-==================Reducing node 4, size=19==================
+=================Reducing node 944, size=19=================
 
 The current best program is the following
 
@@ -1745,6 +1852,12 @@ The current best program is the following
       int b =                                      a                                     ;
       return b;
     }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    ;
 ------------------------------------------------------------
 
 
@@ -1763,11 +1876,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 4
+Failed to reduce node 944
 ------------------------------------------------------------
 
 
-==================Reducing node 7, size=19==================
+=================Reducing node 947, size=19=================
 
 The current best program is the following
 
@@ -1781,11 +1894,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 7
+Failed to reduce node 947
 ------------------------------------------------------------
 
 
-==================Reducing node 9, size=19==================
+=================Reducing node 949, size=19=================
 
 The current best program is the following
 
@@ -1806,78 +1919,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 9
+Failed to reduce node 949
 ------------------------------------------------------------
 
 
-=================Reducing node 12, size=19==================
-
-The current best program is the following
-
-    int main() {
-      int a = 99;
-      int b =                                      a                                     ;
-      return b;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=12}
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int main() {
-      int a = 99;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int main() {
-      int a = 99;
-      int b =                                      a                                     ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int main() {
-      return b;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int main() {
-      int a = 99;
-      return b;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int main() {
-      int b =                                      a                                     ;
-      return b;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 12
-------------------------------------------------------------
-
-
-=================Reducing node 78, size=19==================
+=================Reducing node 952, size=19=================
 
 The current best program is the following
 
@@ -1891,17 +1937,60 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=78}
+    NodeDeletionAction{target_node=952}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      int a = 99;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      return b;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      int a = 99;
+      return b;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      int b =                                      a                                     ;
+      return b;
+    }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 78
+Failed to reduce node 952
 ------------------------------------------------------------
 
 
-=================Reducing node 42, size=19==================
+================Reducing node 1018, size=19=================
 
 The current best program is the following
 
@@ -1915,17 +2004,61 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=42}
+    NodeDeletionAction{target_node=1018}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+                ;
+      int b =                                      a                                     ;
+      return b;
+    }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 42
+Failed to reduce node 1018
 ------------------------------------------------------------
 
 
-=================Reducing node 113, size=19=================
+=================Reducing node 982, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=982}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      int a = 99;
+                                                                                         ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 982
+------------------------------------------------------------
+
+
+================Reducing node 1053, size=19=================
 
 The current best program is the following
 
@@ -1949,11 +2082,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 113
+Failed to reduce node 1053
 ------------------------------------------------------------
 
 
-=================Reducing node 80, size=19==================
+================Reducing node 1020, size=19=================
 
 The current best program is the following
 
@@ -1977,11 +2110,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 80
+Failed to reduce node 1020
 ------------------------------------------------------------
 
 
-=================Reducing node 83, size=19==================
+================Reducing node 1023, size=19=================
 
 The current best program is the following
 
@@ -1995,7 +2128,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=83}
+    NodeDeletionAction{target_node=1023}
 ------------------------------------------------------------
 
 
@@ -2011,11 +2144,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 83
+Failed to reduce node 1023
 ------------------------------------------------------------
 
 
-=================Reducing node 44, size=19==================
+=================Reducing node 984, size=19=================
 
 The current best program is the following
 
@@ -2039,11 +2172,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 44
+Failed to reduce node 984
 ------------------------------------------------------------
 
 
-=================Reducing node 47, size=19==================
+=================Reducing node 987, size=19=================
 
 The current best program is the following
 
@@ -2057,7 +2190,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=47}
+    NodeDeletionAction{target_node=987}
 ------------------------------------------------------------
 
 
@@ -2083,11 +2216,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 47
+Failed to reduce node 987
 ------------------------------------------------------------
 
 
-=================Reducing node 17, size=19==================
+=================Reducing node 957, size=19=================
 
 The current best program is the following
 
@@ -2101,17 +2234,27 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=17}
+    NodeDeletionAction{target_node=957}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+              ;
+    }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 17
+Failed to reduce node 957
 ------------------------------------------------------------
 
 
-=================Reducing node 115, size=19=================
+================Reducing node 1055, size=19=================
 
 The current best program is the following
 
@@ -2135,11 +2278,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 115
+Failed to reduce node 1055
 ------------------------------------------------------------
 
 
-=================Reducing node 117, size=19=================
+================Reducing node 1057, size=19=================
 
 The current best program is the following
 
@@ -2153,17 +2296,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=117}
+    NodeDeletionAction{target_node=1057}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 117
+Failed to reduce node 1057
 ------------------------------------------------------------
 
 
-=================Reducing node 85, size=19==================
+================Reducing node 1025, size=19=================
 
 The current best program is the following
 
@@ -2187,11 +2330,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 85
+Failed to reduce node 1025
 ------------------------------------------------------------
 
 
-=================Reducing node 86, size=19==================
+================Reducing node 1026, size=19=================
 
 The current best program is the following
 
@@ -2205,17 +2348,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=86}
+    NodeDeletionAction{target_node=1026}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 86
+Failed to reduce node 1026
 ------------------------------------------------------------
 
 
-=================Reducing node 49, size=19==================
+=================Reducing node 989, size=19=================
 
 The current best program is the following
 
@@ -2239,11 +2382,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 49
+Failed to reduce node 989
 ------------------------------------------------------------
 
 
-=================Reducing node 50, size=19==================
+=================Reducing node 990, size=19=================
 
 The current best program is the following
 
@@ -2257,305 +2400,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=50}
+    NodeDeletionAction{target_node=990}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 50
+Failed to reduce node 990
 ------------------------------------------------------------
 
 
-=================Reducing node 20, size=19==================
-
-The current best program is the following
-
-    int main() {
-      int a = 99;
-      int b =                                      a                                     ;
-      return b;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 20
-------------------------------------------------------------
-
-
-=================Reducing node 121, size=19=================
-
-The current best program is the following
-
-    int main() {
-      int a = 99;
-      int b =                                      a                                     ;
-      return b;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 121
-------------------------------------------------------------
-
-
-=================Reducing node 120, size=19=================
-
-The current best program is the following
-
-    int main() {
-      int a = 99;
-      int b =                                      a                                     ;
-      return b;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 120
-------------------------------------------------------------
-
-
-=================Reducing node 118, size=19=================
-
-The current best program is the following
-
-    int main() {
-      int a = 99;
-      int b =                                      a                                     ;
-      return b;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 118
-------------------------------------------------------------
-
-
-=================Reducing node 108, size=19=================
-
-The current best program is the following
-
-    int main() {
-      int a = 99;
-      int b =                                      a                                     ;
-      return b;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 108
-------------------------------------------------------------
-
-
-=================Reducing node 105, size=19=================
-
-The current best program is the following
-
-    int main() {
-      int a = 99;
-      int b =                                      a                                     ;
-      return b;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 105
-------------------------------------------------------------
-
-
-=================Reducing node 87, size=19==================
-
-The current best program is the following
-
-    int main() {
-      int a = 99;
-      int b =                                      a                                     ;
-      return b;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 87
-------------------------------------------------------------
-
-
-=================Reducing node 81, size=19==================
-
-The current best program is the following
-
-    int main() {
-      int a = 99;
-      int b =                                      a                                     ;
-      return b;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 81
-------------------------------------------------------------
-
-
-=================Reducing node 79, size=19==================
-
-The current best program is the following
-
-    int main() {
-      int a = 99;
-      int b =                                      a                                     ;
-      return b;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 79
-------------------------------------------------------------
-
-
-=================Reducing node 112, size=19=================
-
-The current best program is the following
-
-    int main() {
-      int a = 99;
-      int b =                                      a                                     ;
-      return b;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 112
-------------------------------------------------------------
-
-
-=================Reducing node 72, size=19==================
-
-The current best program is the following
-
-    int main() {
-      int a = 99;
-      int b =                                      a                                     ;
-      return b;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 72
-------------------------------------------------------------
-
-
-=================Reducing node 69, size=19==================
-
-The current best program is the following
-
-    int main() {
-      int a = 99;
-      int b =                                      a                                     ;
-      return b;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 69
-------------------------------------------------------------
-
-
-=================Reducing node 51, size=19==================
-
-The current best program is the following
-
-    int main() {
-      int a = 99;
-      int b =                                      a                                     ;
-      return b;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 51
-------------------------------------------------------------
-
-
-=================Reducing node 45, size=19==================
-
-The current best program is the following
-
-    int main() {
-      int a = 99;
-      int b =                                      a                                     ;
-      return b;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 45
-------------------------------------------------------------
-
-
-=================Reducing node 43, size=19==================
-
-The current best program is the following
-
-    int main() {
-      int a = 99;
-      int b =                                      a                                     ;
-      return b;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 43
-------------------------------------------------------------
-
-
-=================Reducing node 76, size=19==================
-
-The current best program is the following
-
-    int main() {
-      int a = 99;
-      int b =                                      a                                     ;
-      return b;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 76
-------------------------------------------------------------
-
-
-=================Reducing node 22, size=19==================
+=================Reducing node 960, size=19=================
 
 The current best program is the following
 
@@ -2579,11 +2434,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 22
+Failed to reduce node 960
 ------------------------------------------------------------
 
 
-=================Reducing node 40, size=19==================
+================Reducing node 1061, size=19=================
 
 The current best program is the following
 
@@ -2597,11 +2452,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 40
+Failed to reduce node 1061
 ------------------------------------------------------------
 
 
-=================Reducing node 21, size=19==================
+================Reducing node 1060, size=19=================
 
 The current best program is the following
 
@@ -2615,11 +2470,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 21
+Failed to reduce node 1060
 ------------------------------------------------------------
 
 
-=================Reducing node 19, size=19==================
+================Reducing node 1058, size=19=================
 
 The current best program is the following
 
@@ -2633,11 +2488,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 19
+Failed to reduce node 1058
 ------------------------------------------------------------
 
 
-=================Reducing node 10, size=19==================
+================Reducing node 1048, size=19=================
 
 The current best program is the following
 
@@ -2651,11 +2506,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 10
+Failed to reduce node 1048
 ------------------------------------------------------------
 
 
-==================Reducing node 8, size=19==================
+================Reducing node 1045, size=19=================
 
 The current best program is the following
 
@@ -2669,11 +2524,309 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 8
+Failed to reduce node 1045
 ------------------------------------------------------------
 
 
-==================Reducing node 5, size=19==================
+================Reducing node 1027, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 1027
+------------------------------------------------------------
+
+
+================Reducing node 1021, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 1021
+------------------------------------------------------------
+
+
+================Reducing node 1019, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 1019
+------------------------------------------------------------
+
+
+================Reducing node 1052, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 1052
+------------------------------------------------------------
+
+
+================Reducing node 1012, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 1012
+------------------------------------------------------------
+
+
+================Reducing node 1009, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 1009
+------------------------------------------------------------
+
+
+=================Reducing node 991, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 991
+------------------------------------------------------------
+
+
+=================Reducing node 985, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 985
+------------------------------------------------------------
+
+
+=================Reducing node 983, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 983
+------------------------------------------------------------
+
+
+================Reducing node 1016, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 1016
+------------------------------------------------------------
+
+
+=================Reducing node 962, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return  ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 962
+------------------------------------------------------------
+
+
+=================Reducing node 980, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 980
+------------------------------------------------------------
+
+
+=================Reducing node 961, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 961
+------------------------------------------------------------
+
+
+=================Reducing node 959, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 959
+------------------------------------------------------------
+
+
+=================Reducing node 950, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 950
+------------------------------------------------------------
+
+
+=================Reducing node 948, size=19=================
+
+The current best program is the following
+
+    int main() {
+      int a = 99;
+      int b =                                      a                                     ;
+      return b;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 948
+------------------------------------------------------------
+
+
+=================Reducing node 945, size=19=================
 
 The current best program is the following
 
@@ -2697,11 +2850,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 5
+Failed to reduce node 945
 ------------------------------------------------------------
 
 
-=================Reducing node 122, size=19=================
+================Reducing node 1062, size=19=================
 
 The current best program is the following
 
@@ -2715,17 +2868,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=122}
+    NodeDeletionAction{target_node=1062}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 122
+Failed to reduce node 1062
 ------------------------------------------------------------
 
 
-=================Reducing node 126, size=19=================
+================Reducing node 1066, size=19=================
 
 The current best program is the following
 
@@ -2739,12 +2892,13 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 126
+Failed to reduce node 1066
 ------------------------------------------------------------
 
 
 #test success = 1
-#test failure = 19
-#test result cache hits = 21
+#test failure = 23
+#test result cache hits = 27
 #test execution cancelled = 36
 #node edit action set cache hits = 18
+#external test execution cache hits = 0

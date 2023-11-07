@@ -34,7 +34,6 @@ import org.perses.reduction.ReducerFactory.defaultReductionAlgName
 import org.perses.reduction.ReducerScheduler.ReducerCallEvent
 import org.perses.reduction.ReducerScheduler.StatsSnapshotEvent
 import org.perses.reduction.cache.EnumQueryCachingControl
-import org.perses.reduction.io.token.TokenReductionIOManager
 import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
 import org.perses.util.Util
 import java.nio.file.Files
@@ -81,7 +80,17 @@ class RegularProgramReductionDriverTest {
       inputFlags.testScript = scriptFile.absolutePathString()
     }
     val exception = assertThrows(IllegalStateException::class.java) {
-      createIOManager(cmd)
+      val inputs = RegularProgramReductionDriver.createReductionInputs(
+        facadeFactory,
+        cmd.inputFlags,
+      )
+      val lexerAtnWrapper = facadeFactory.createParserFacade(inputs.mainDataKind).lexerAtnWrapper
+      RegularProgramReductionDriver.createIOManager(
+        inputs,
+        cmd.reductionControlFlags,
+        cmd.resultOutputFlags,
+        lexerAtnWrapper,
+      )
     }
     assertThat(exception.message)
       .startsWith("Failed to detect the language kind for")
@@ -109,6 +118,26 @@ class RegularProgramReductionDriverTest {
     assertThat(backup[0].readText()).isEqualTo(sourceFile.readText())
   }
 
+  private fun createConfigGivenCmd(cmd: CommandOptions): ReductionConfiguration {
+    val inputs = RegularProgramReductionDriver.createReductionInputs(
+      facadeFactory,
+      cmd.inputFlags,
+    )
+    val languageKind = inputs.mainDataKind
+    val lexerAtnWrapper = facadeFactory.createParserFacade(languageKind).lexerAtnWrapper
+    val ioManager = RegularProgramReductionDriver.createIOManager(
+      inputs,
+      cmd.reductionControlFlags,
+      cmd.resultOutputFlags,
+      lexerAtnWrapper,
+    )
+    return createConfiguration(
+      cmd,
+      facadeFactory.createParserFacade(languageKind),
+      ioManager.getDefaultProgramFormat(),
+    )
+  }
+
   @Test
   fun test_enableTestScriptExecutionCaching() {
     for (format in LanguageC.allowedCodeFormatControl) {
@@ -119,13 +148,7 @@ class RegularProgramReductionDriverTest {
         cacheControlFlags.nodeActionSetCaching = true
         cacheControlFlags.queryCaching = EnumQueryCachingControl.TRUE
       }
-      val ioManager = createIOManager(cmd)
-      val config = createConfiguration(
-        cmd,
-        facadeFactory,
-        ioManager.reductionInputs.mainDataKind,
-        ioManager.getDefaultProgramFormat(),
-      )
+      val config = createConfigGivenCmd(cmd)
       assertThat(config.enableTestScriptExecutionCaching).isTrue()
     }
 
@@ -137,13 +160,7 @@ class RegularProgramReductionDriverTest {
         cacheControlFlags.nodeActionSetCaching = true
         cacheControlFlags.queryCaching = EnumQueryCachingControl.FALSE
       }
-      val ioManager = createIOManager(cmd)
-      val config = createConfiguration(
-        cmd,
-        facadeFactory,
-        ioManager.reductionInputs.mainDataKind,
-        ioManager.getDefaultProgramFormat(),
-      )
+      val config = createConfigGivenCmd(cmd)
       assertThat(config.enableTestScriptExecutionCaching).isFalse()
     }
 
@@ -154,13 +171,7 @@ class RegularProgramReductionDriverTest {
       cacheControlFlags.nodeActionSetCaching = true
       cacheControlFlags.queryCaching = EnumQueryCachingControl.AUTO
     }.let {
-      val ioManager = createIOManager(it)
-      val config = createConfiguration(
-        it,
-        facadeFactory,
-        ioManager.reductionInputs.mainDataKind,
-        ioManager.getDefaultProgramFormat(),
-      )
+      val config = createConfigGivenCmd(it)
       assertThat(config.enableTestScriptExecutionCaching).isTrue()
     }
 
@@ -171,14 +182,7 @@ class RegularProgramReductionDriverTest {
       cacheControlFlags.nodeActionSetCaching = true
       cacheControlFlags.queryCaching = EnumQueryCachingControl.AUTO
     }.let {
-      val factory = builderWithBuiltinLanguages().build()
-      val ioManager = createIOManager(it)
-      val config = createConfiguration(
-        it,
-        factory,
-        ioManager.reductionInputs.mainDataKind,
-        ioManager.getDefaultProgramFormat(),
-      )
+      val config = createConfigGivenCmd(it)
       assertThat(config.enableTestScriptExecutionCaching).isFalse()
     }
   }
@@ -275,30 +279,11 @@ class RegularProgramReductionDriverTest {
     cmd.inputFlags.inputFile = "t.c"
     cmd.inputFlags.testScript = "r.sh"
     try {
-      val factory = builderWithBuiltinLanguages().build()
-      val ioManager = createIOManager(cmd)
-      createConfiguration(
-        cmd,
-        factory,
-        ioManager.reductionInputs.mainDataKind,
-        ioManager.getDefaultProgramFormat(),
-      )
+      createConfigGivenCmd(cmd)
     } catch (e: RuntimeException) {
       // Keep this. This is just capture a bug when only "t.c" and "r.sh" were given without parent
       // folders.
       assertThat(e.message).contains("The file should be a regular file")
     }
-  }
-
-  fun createIOManager(cmd: CommandOptions): TokenReductionIOManager {
-    val inputs = RegularProgramReductionDriver.createReductionInputs(
-      facadeFactory,
-      cmd.inputFlags,
-    )
-    return RegularProgramReductionDriver.createIOManager(
-      inputs,
-      cmd.reductionControlFlags,
-      cmd.resultOutputFlags,
-    )
   }
 }

@@ -32,6 +32,7 @@ import org.perses.reduction.io.token.TokenReductionIOManager
 import org.perses.spartree.AbstractNodeActionSetCache
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.SparTree
+import org.perses.util.shell.ExitCode
 
 abstract class AbstractSlicingTask(
   val tree: SparTree,
@@ -141,6 +142,6 @@ abstract class AbstractSlicingTask(
   ): TestScriptExecResult<EditTestPayload>?
 
   companion object {
-    val INVALID_SYNTAX_EXIT_CODE = 99
+    val INVALID_SYNTAX_EXIT_CODE = ExitCode(99)
   }
 }

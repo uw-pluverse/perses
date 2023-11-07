@@ -41,7 +41,9 @@ class AltBlockExtractionPassTest {
       s : a c d | a b d;
       """.trimIndent(),
     )
-    val processedGrammar = pass.processParserGrammar(origGrammar, lexerGrammar = null)
+    val processedGrammar = pass.processGrammar(
+      GrammarPair(parserGrammar = origGrammar, lexerGrammar = null),
+    ).parserGrammar!!
     val auxRuleName = computeAltblockRuleName("s_1")
     /*
      * DO NOT MODIFY THE ORDER OF ALTERNATIVES.
@@ -85,8 +87,10 @@ class AltBlockExtractionPassTest {
   }
 
   private fun process(vararg grammarLines: String): PersesGrammar {
-    val grammar = GrammarTestingUtility.createPersesGrammarFromString(*grammarLines)
-    return pass.processParserGrammar(grammar, lexerGrammar = null)
+    val grammar = createPersesGrammarFromString(*grammarLines)
+    return pass.processGrammar(
+      GrammarPair(parserGrammar = grammar, lexerGrammar = null),
+    ).parserGrammar!!
   }
 
   @Test

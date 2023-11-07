@@ -21,6 +21,7 @@ import org.perses.grammar.AbstractParserFacade
 import org.perses.program.TokenizedProgramFactory.Companion.createFactory
 import org.perses.program.printer.PrinterRegistry
 import org.perses.spartree.SparTreeBuilder
+import org.perses.spartree.SparTreeNodeFactory
 import java.nio.file.Files
 import java.nio.file.Path
 
@@ -37,9 +38,13 @@ class LanguageKindTestUtil {
         AbstractParserFacade.getTokens(parseTree.tree),
         language,
       )
-      val sparTreeBuilder = SparTreeBuilder(
-        facade.ruleHierarchy,
+      val sparTreeNodeFactory = SparTreeNodeFactory(
+        facade.metaTokenInfoDb,
         tokenizedProgramFactory,
+        facade.ruleHierarchy,
+      )
+      val sparTreeBuilder = SparTreeBuilder(
+        sparTreeNodeFactory,
         parseTree,
       )
       val sparTree = sparTreeBuilder.result
@@ -56,8 +61,7 @@ class LanguageKindTestUtil {
           printer.print(tokenizedProgram).writeTo(tempFile)
           val reconstructedParseTree = facade.parseFile(tempFile)
           val reconstructedSparTree = SparTreeBuilder(
-            facade.ruleHierarchy,
-            tokenizedProgramFactory,
+            sparTree.sparTreeNodeFactory,
             reconstructedParseTree,
           ).result
           val reconstructedTokens = reconstructedSparTree.programSnapshot.tokens.map {

@@ -18,6 +18,7 @@ package org.perses.grammar
 
 import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
+import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -60,6 +61,18 @@ class ParserFacadeTest {
       |}
       """.trimMargin()
     scalaProgram = createSparTreeFromString(scalaSourceCode, LanguageScala).programSnapshot
+  }
+
+  @Test
+  fun testParserFacadeTag() {
+    assertThrows(Exception::class.java) { ParserFacadeTag.create("pnf") }
+    assertThrows(Exception::class.java) { ParserFacadeTag.create("original") }
+    assertThrows(Exception::class.java) { ParserFacadeTag.create("PNF") }
+
+    ParserFacadeTag.create("test").let {
+      assertThat(it).isEqualTo(ParserFacadeTag.create("test"))
+      assertThat(it).isNotEqualTo(ParserFacadeTag.create("t"))
+    }
   }
 
   @Test

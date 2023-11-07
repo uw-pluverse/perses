@@ -21,7 +21,6 @@ import org.perses.antlr.ast.AbstractPersesLexerRuleAst
 import org.perses.antlr.ast.AstTag
 import org.perses.antlr.ast.LexerRuleList
 import org.perses.antlr.ast.PersesAlternativeBlockAst
-import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.ast.PersesTerminalAst
 import org.perses.antlr.ast.RuleNameRegistry
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
@@ -30,11 +29,11 @@ import org.perses.util.toImmutableList
 
 class InlineFragmentPass : AbstractPnfPass() {
 
-  override fun processParserGrammar(
-    parserGrammar: PersesGrammar,
-    lexerGrammar: PersesGrammar?,
-  ): PersesGrammar {
-    val allLexerRules = parserGrammar.lexerRules.flattern()
+  override fun processGrammar(
+    grammar: GrammarPair,
+  ): GrammarPair {
+    val parserGrammar = grammar.parserGrammar ?: return grammar
+    val allLexerRules = parserGrammar.lexerRules.flattenedLexerRules
     val mutableGrammar = MutableGrammar.createRulesFrom(allLexerRules)
     inlineLexerRules(
       mutableGrammar,
@@ -64,7 +63,7 @@ class InlineFragmentPass : AbstractPnfPass() {
         mode.copyWithNewLexerRules(transformLexerRules(mode.lexerRules, mutableGrammar))
       }.toImmutableList()
     val newLexerRules = LexerRuleList(defaultMode, nonDefaultModes)
-    return parserGrammar.copyWithNewLexerRuleDefs(newLexerRules)
+    return grammar.withNewParserGrammar(parserGrammar.copyWithNewLexerRuleDefs(newLexerRules))
   }
 
   companion object {
@@ -104,7 +103,7 @@ class InlineFragmentPass : AbstractPnfPass() {
                     it.isTokenRef &&
                     it.text == usedRuleName.ruleName
                 },
-                newValue = usedRuleDef,
+                newValueComputer = { usedRuleDef },
               )
               val decision = replaceEdit.apply(originalAlt)
               check(decision is TransformDecision.Replace) {
@@ -114,10 +113,10 @@ class InlineFragmentPass : AbstractPnfPass() {
                 if (it is PersesAlternativeBlockAst) {
                   it.alternatives.forEach {
                       alt ->
-                    altBlock.addIfInequivalent(alt)
+                    altBlock.addIfNotEquivalent(alt)
                   }
                 } else {
-                  altBlock.addIfInequivalent(decision.newValue)
+                  altBlock.addIfNotEquivalent(decision.newValue)
                 }
               }
             }

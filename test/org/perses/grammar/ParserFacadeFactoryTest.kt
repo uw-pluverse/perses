@@ -28,8 +28,8 @@ import org.perses.grammar.java.LanguageJava
 @RunWith(JUnit4::class)
 class ParserFacadeFactoryTest {
 
-  val pnfc = { PnfCParserFacade() }
-  val optc = { CParserFacade() }
+  val pnfc = PnfCParserFacade::class
+  val optc = CParserFacade::class
 
   val pnfFactory = SingleParserFacadeFactory.Builder()
     .add(LanguageC, pnfc)

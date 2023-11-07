@@ -17,17 +17,16 @@
 package org.perses.antlr.pnf
 
 import org.perses.antlr.ast.AbstractPersesRuleElement
-import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.ast.PersesRuleElementOption
 import org.perses.antlr.ast.PersesSequenceAst
 
 class AssociativityParserRuleEliminatorPass :
   AbstractPnfPass() {
 
-  override fun processParserGrammar(
-    parserGrammar: PersesGrammar,
-    lexerGrammar: PersesGrammar?,
-  ): PersesGrammar {
+  override fun processGrammar(
+    grammar: GrammarPair,
+  ): GrammarPair {
+    val parserGrammar = grammar.parserGrammar ?: return grammar
     val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     val ruleNamesCopy = getSortedRuleNames(mutable)
     for (ruleName in ruleNamesCopy) {
@@ -47,7 +46,9 @@ class AssociativityParserRuleEliminatorPass :
       mutable.removeRule(ruleName)
       mutable.getAltBlock(ruleName).addAllIfInequivalent(newDefs)
     }
-    return parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
+    return grammar.withNewParserGrammar(
+      parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList()),
+    )
   }
 
   companion object {

@@ -26,6 +26,7 @@ import org.antlr.v4.runtime.atn.LoopEndState
 import org.antlr.v4.runtime.atn.NotSetTransition
 import org.antlr.v4.runtime.atn.PlusBlockStartState
 import org.antlr.v4.runtime.atn.PlusLoopbackState
+import org.antlr.v4.runtime.atn.RangeTransition
 import org.antlr.v4.runtime.atn.RuleStartState
 import org.antlr.v4.runtime.atn.RuleStopState
 import org.antlr.v4.runtime.atn.SetTransition
@@ -274,7 +275,7 @@ class ATNConstructorFromRegex {
       if (ast is PersesTransitionAst) {
         val start = createBasicState()
         val end = createBasicState()
-        val transition = copyTransition(ast.transition)
+        val transition = copyTransition(ast.atnTransition)
         transition.target = end
         start.addTransition(transition)
 
@@ -295,6 +296,7 @@ class ATNConstructorFromRegex {
         NotSetTransition::class.java -> NotSetTransition(t.target, (t as NotSetTransition).set)
         AtomTransition::class.java -> AtomTransition(t.target, (t as AtomTransition).label)
         WildcardTransition::class.java -> WildcardTransition(t.target)
+        RangeTransition::class.java -> RangeTransition(t.target, (t as RangeTransition).from, t.to)
         else -> error("Unhandled transition $t of ${t::class}")
       }
     }

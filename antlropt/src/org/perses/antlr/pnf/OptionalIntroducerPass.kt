@@ -19,7 +19,6 @@ package org.perses.antlr.pnf
 import org.perses.antlr.RuleType
 import org.perses.antlr.ast.AstTag
 import org.perses.antlr.ast.PersesAlternativeBlockAst
-import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.ast.PersesOptionalAst
 import org.perses.antlr.ast.PersesPlusAst
 import org.perses.antlr.ast.PersesRuleReferenceAst
@@ -28,10 +27,10 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 import org.perses.antlr.pnf.OptionalExtractionUtil.searchForCandidate
 
 class OptionalIntroducerPass : AbstractPnfPass() {
-  override fun processParserGrammar(
-    parserGrammar: PersesGrammar,
-    lexerGrammar: PersesGrammar?,
-  ): PersesGrammar {
+  override fun processGrammar(
+    grammar: GrammarPair,
+  ): GrammarPair {
+    val parserGrammar = grammar.parserGrammar ?: return grammar
     val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     // To make the process deterministic.
     val ruleNameList = getSortedRuleNames(mutable)
@@ -41,7 +40,9 @@ class OptionalIntroducerPass : AbstractPnfPass() {
         mergeTwoSeqs(ruleName, mutable, candidate)
       }
     }
-    return parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
+    return grammar.withNewParserGrammar(
+      parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList()),
+    )
   }
 
   private fun mergeTwoSeqs(
@@ -64,7 +65,7 @@ class OptionalIntroducerPass : AbstractPnfPass() {
       AstTag.STAR, AstTag.OPTIONAL -> return // Do nothing, to let other passes take care of this.
       AstTag.PLUS -> {
         val starRuleName = ruleName.createAuxiliaryRuleName(RuleType.KLEENE_STAR)
-        mutable.getAltBlock(starRuleName).addIfInequivalent(
+        mutable.getAltBlock(starRuleName).addIfNotEquivalent(
           (processedGapAst as PersesPlusAst).let { PersesStarAst(it.body, it.isGreedy) },
         )
         starRuleName
@@ -72,16 +73,16 @@ class OptionalIntroducerPass : AbstractPnfPass() {
       AstTag.TERMINAL, AstTag.RULE_REF -> {
         val optionalRuleName = ruleName
           .createAuxiliaryRuleName(RuleType.OPTIONAL)
-        mutable.getAltBlock(optionalRuleName).addIfInequivalent(
+        mutable.getAltBlock(optionalRuleName).addIfNotEquivalent(
           PersesOptionalAst.createGreedy(processedGapAst),
         )
         optionalRuleName
       }
       else -> {
         val wrapperRuleName = ruleName.createAuxiliaryRuleName(RuleType.OTHER_RULE)
-        mutable.getAltBlock(wrapperRuleName).addIfInequivalent(processedGapAst)
+        mutable.getAltBlock(wrapperRuleName).addIfNotEquivalent(processedGapAst)
         val optionalRuleName = ruleName.createAuxiliaryRuleName(RuleType.OPTIONAL)
-        mutable.getAltBlock(optionalRuleName).addIfInequivalent(
+        mutable.getAltBlock(optionalRuleName).addIfNotEquivalent(
           PersesOptionalAst.createGreedy(PersesRuleReferenceAst.create(wrapperRuleName)),
         )
         optionalRuleName

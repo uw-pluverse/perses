@@ -77,6 +77,10 @@ def check_repository():
 
 
 def call_hub_release(attach, message, tag):
+    githubTokenKey = "GITHUB_TOKEN"
+    if githubTokenKey not in os.environ:
+        print("Need to define the environment variable %s" % githubTokenKey)
+        exit(1)
     try:
         release_command = ['hub', 'release', 'create', '--browse', f"--attach={attach}", f'--message={message}', tag]
         pipe = None
@@ -90,6 +94,7 @@ def call_hub_release(attach, message, tag):
         print("\t1. go to https://github.com/settings/tokens/, and create a token.")
         print("\t2. the token should be in the repo and gist scope.")
         print("\t3. input the token as the password.")
+        raise e
 
 
 def main():

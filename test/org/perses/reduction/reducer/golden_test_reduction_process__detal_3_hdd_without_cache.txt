@@ -1,6 +1,12 @@
-======================Reduction starts======================
+=====================Reduction starts.======================
 
-The spar tree is the following.
+The initial program size is 16
+------------------------------------------------------------
+
+
+=============Fixpoint iteration 1. Reducer: hdd=============
+
+The spar-tree is the following.
 translationUnit {id=1}
 |___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
     |___functionDefinition {id=4,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
@@ -589,6 +595,46 @@ translationUnit {id=1}
       int a   99;
       return a    ;
     }
+------------------------------------------------------------
+
+
+=============Fixpoint iteration 2. Reducer: hdd=============
+
+The spar-tree is the following.
+translationUnit {id=100}
+|___(+) {id=101,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=103,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=104,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=184,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=188,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=175,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=183,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=177,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=179,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=180,slot_type=LeftParen}
+        |           |___Token:) {id=182,slot_type=RightParen}
+        |___compoundStatement {id=106,slot_type=compoundStatement}
+            |___Token:{ {id=107,slot_type=LeftBrace}
+            |___(?) {id=108,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=111,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___aux_rule__declaration_3 {id=140,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=141,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=174,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=142,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=145,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:a {id=170,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=147,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=148,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=149,slot_type=Assign}
+            |       |   |               |___Token:99 {id=167,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=143,slot_type=Semi}
+            |       |___jumpStatement {id=115,slot_type=[aux_rule__blockItemList_2,statement,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=118,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=119,slot_type=Return}
+            |           |   |___(?) {id=120,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:a {id=138,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |           |___Token:; {id=117,slot_type=Semi}
+            |___Token:} {id=109,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
@@ -1469,3 +1515,4 @@ translationUnit {id=1}
 #test result cache hits = 0
 #test execution cancelled = 0
 #node edit action set cache hits = 0
+#external test execution cache hits = 0

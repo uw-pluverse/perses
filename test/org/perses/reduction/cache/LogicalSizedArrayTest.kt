@@ -18,7 +18,6 @@ package org.perses.reduction.cache
 
 import com.google.common.truth.Truth.assertThat
 import com.google.common.truth.Truth.assertWithMessage
-import org.junit.Assert
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -46,7 +45,7 @@ class LogicalSizedArrayTest {
     }
     assertThrows(Throwable::class.java) {
       empty[0].let {
-        Assert.fail("unreachable.")
+        print(it)
       }
     }
   }

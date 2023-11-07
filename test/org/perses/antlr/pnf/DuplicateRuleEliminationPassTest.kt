@@ -36,7 +36,9 @@ class DuplicateRuleEliminationPassTest {
     )
     run {
       val pass = DuplicateRuleEliminationPass("start")
-      val processed = pass.processParserGrammar(persesGrammar, lexerGrammar = null)
+      val processed = pass.processGrammar(
+        GrammarPair(persesGrammar, lexerGrammar = null),
+      ).parserGrammar!!
       Truth.assertThat(processed.parserRuleNameList).hasSize(2)
       Truth.assertThat(processed.getRuleDefinition("start")!!.body.sourceCode)
         .isEqualTo("b")
@@ -44,7 +46,9 @@ class DuplicateRuleEliminationPassTest {
     }
     run {
       val pass = DuplicateRuleEliminationPass("c")
-      val processed = pass.processParserGrammar(persesGrammar, lexerGrammar = null)
+      val processed = pass.processGrammar(
+        GrammarPair(persesGrammar, lexerGrammar = null),
+      ).parserGrammar!!
       Truth.assertThat(processed.parserRuleNameList).hasSize(2)
       Truth.assertThat(processed.getRuleDefinition("c")!!.body.sourceCode).isEqualTo("b")
       Truth.assertThat(processed.getRuleDefinition("b")!!.body.sourceCode).isEqualTo("'e'")

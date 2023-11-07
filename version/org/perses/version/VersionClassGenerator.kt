@@ -16,7 +16,7 @@
  */
 package org.perses.version
 
-import com.google.common.collect.ImmutableMap
+import com.google.common.collect.ImmutableMultimap
 import java.nio.charset.StandardCharsets
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -39,10 +39,10 @@ object VersionClassGenerator {
     writeVersionClass(map, outputFile)
   }
 
-  private fun writeVersionClass(map: ImmutableMap<String, String>, outputFile: Path) {
-    val branch = map["PERSES_GIT_BRANCH"]
-    val hash = map["PERSES_GIT_COMMIT_HASH"]
-    val status = map["PERSES_GIT_STATUS"]
+  private fun writeVersionClass(map: ImmutableMultimap<String, String>, outputFile: Path) {
+    val branch: String = map.get("PERSES_GIT_BRANCH").single()
+    val hash: String = map.get("PERSES_GIT_COMMIT_HASH").single()
+    val status: String = map.get("PERSES_GIT_STATUS").single()
     val timestamp = ZonedDateTime.now().format(DateTimeFormatter.ISO_ZONED_DATE_TIME)
 
     outputFile.writeText(
@@ -72,12 +72,25 @@ object VersionClassGenerator {
     )
   }
 
-  private fun parse(lines: List<String>): ImmutableMap<String, String> {
-    val builder = ImmutableMap.builder<String, String>()
+  fun parse(lines: List<String>): ImmutableMultimap<String, String> {
+    val builder = ImmutableMultimap.builder<String, String>()
     for (line in lines) {
-      val segments = line.split("\\s|=".toRegex()).toTypedArray()
-      check(segments.size == 2)
-      builder.put(segments[0].trim { it <= ' ' }, segments[1].trim { it <= ' ' })
+      val trimmed = line.trim()
+      if (trimmed.isBlank()) {
+        continue
+      }
+      val index = trimmed.indexOfFirst { it.isWhitespace() }
+      val key: String
+      val value: String
+      if (index < 0) {
+        key = trimmed
+        value = ""
+      } else {
+        check(index > 0) { "Invalid line: \"$line\"" }
+        key = trimmed.substring(startIndex = 0, endIndex = index).trim()
+        value = trimmed.substring(startIndex = index).trim()
+      }
+      builder.put(key, value)
     }
     return builder.build()
   }

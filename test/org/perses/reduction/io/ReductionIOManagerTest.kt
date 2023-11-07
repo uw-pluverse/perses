@@ -25,6 +25,7 @@ import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.c.LanguageC
 import org.perses.reduction.io.AbstractReductionIOManager.Companion.getTempRootFolderName
+import org.perses.util.toImmutableList
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.time.LocalDateTime
@@ -90,6 +91,18 @@ class ReductionIOManagerTest : CommonReductionIOManagerData(ReductionIOManagerTe
   }
 
   @Test
+  fun testDigestOfOutputFilesWithoutMaterializingFiles() {
+    val outputManager = outputManagerFactory.createManagerFor(
+      TestUtility.createTokenizedProgramFromString("int a;", LanguageC),
+    )
+    val digest = outputManager.shA512HashCode
+    assertThat(digest.digest.toString()).isNotEmpty()
+    assertThat(digest).isSameInstanceAs(outputManager.shA512HashCode)
+    outputManager.write(ioManager.createTempResultFolder())
+    assertThat(digest).isSameInstanceAs(outputManager.shA512HashCode)
+  }
+
+  @Test
   fun testWriteTestScriptTo() {
     val folder = root.resolve("tmp").apply {
       Files.createDirectory(this)
@@ -112,9 +125,18 @@ class ReductionIOManagerTest : CommonReductionIOManagerData(ReductionIOManagerTe
 
   @Test
   fun testGetTempRootFolderName() {
-    val time = LocalDateTime.of(2000, 1, 21, 1, 2, 3)
-    assertThat(getTempRootFolderName(ImmutableList.of(Paths.get("t.c")), "r.sh", time))
-      .isEqualTo("PersesTempRoot_t.c_r.sh_20000121_010203")
+    val expectedPrefix = "PersesTempRoot_t.c_r.sh_20000121_010203_"
+
+    (0..10).map {
+      val time = LocalDateTime.of(2000, 1, 21, 1, 2, 3)
+      val name = getTempRootFolderName(ImmutableList.of(Paths.get("t.c")), "r.sh", time)
+      assertThat(name).startsWith(expectedPrefix)
+      assertThat(name.length).isGreaterThan(expectedPrefix.length)
+      name
+    }.toImmutableList().let {
+      val set = it.toHashSet()
+      assertThat(set).containsExactlyElementsIn(it)
+    }
   }
 
   @Test

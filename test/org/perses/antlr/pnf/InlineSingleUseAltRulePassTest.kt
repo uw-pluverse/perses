@@ -39,7 +39,9 @@ class InlineSingleUseAltRulePassTest {
     )
     run {
       val pass = InlineSingleUseAltRulePass()
-      val processed = pass.processParserGrammar(persesGrammar, lexerGrammar = null)
+      val processed = pass.processGrammar(
+        GrammarPair(persesGrammar, lexerGrammar = null),
+      ).parserGrammar!!
       val startAlts = (
         processed.getRuleDefinition("start")!!
           .body as PersesAlternativeBlockAst

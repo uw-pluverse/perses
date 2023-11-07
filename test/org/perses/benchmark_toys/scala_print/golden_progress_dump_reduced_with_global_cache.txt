@@ -1,0 +1,2627 @@
+=====================Reduction starts.======================
+
+The initial program size is 29
+------------------------------------------------------------
+
+
+=Fixpoint iteration 1. Reducer: perses_node_with_dfs_delta==
+
+The spar-tree is the following.
+compilationUnit {id=1}
+|___(+) {id=2,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=8,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=9,slot_type=Token}
+        |___objectDef {id=10,slot_type=objectDef}
+            |___Token:Hello {id=11,slot_type=Id}
+            |___(?) {id=13,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=15,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=16,slot_type=Token}
+                    |___(+) {id=17,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=23,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=24,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=26,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=27,slot_type=funSig}
+                    |           |   |___Token:main {id=136,slot_type=Id}
+                    |           |   |___(*) {id=138,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=139,slot_type=paramClause}
+                    |           |           |___Token:( {id=140,slot_type=Token}
+                    |           |           |___(?) {id=141,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=144,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=145,slot_type=Id}
+                    |           |           |       |___(?) {id=146,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=147,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=148,slot_type=Token}
+                    |           |           |               |___simpleType {id=157,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=180,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=159,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=161,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=162,slot_type=Token}
+                    |           |           |                           |___Token:String {id=176,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=164,slot_type=Token}
+                    |           |           |___Token:) {id=142,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=29,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=30,slot_type=Token}
+                    |               |___blockExpr {id=40,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,simpleExpr,blockExpr]}
+                    |                   |___Token:{ {id=41,slot_type=Token}
+                    |                   |___(+) {id=45,slot_type=[altnt_block__blockExpr_1,block,kleene_plus__block_1]}
+                    |                   |   |___infixExpr {id=51,slot_type=[blockStat,expr1,aux_rule__expr1_25,postfixExpr,infixExpr]}
+                    |                   |       |___simpleExpr1 {id=109,slot_type=[prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
+                    |                   |       |   |___Token:println {id=135,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |       |   |___(*) {id=111,slot_type=kleene_star__simpleExpr1_4}
+                    |                   |       |       |___aux_rule__argumentExprs_7 {id=114,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
+                    |                   |       |           |___Token:( {id=115,slot_type=Token}
+                    |                   |       |           |___(?) {id=118,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
+                    |                   |       |           |   |___Token:"line 1" {id=132,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                   |       |           |___Token:) {id=117,slot_type=Token}
+                    |                   |       |___(*) {id=53,slot_type=kleene_star__infixExpr_2}
+                    |                   |           |___aux_rule__infixExpr_3 {id=54,slot_type=aux_rule__infixExpr_3}
+                    |                   |               |___Token:println {id=55,slot_type=Id}
+                    |                   |               |___infixExpr {id=56,slot_type=infixExpr}
+                    |                   |                   |___aux_rule__simpleExpr1_10 {id=89,slot_type=[prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                   |                   |   |___Token:( {id=90,slot_type=Token}
+                    |                   |                   |   |___(?) {id=91,slot_type=optional__simpleExpr1_1}
+                    |                   |                   |   |   |___Token:"Hello, world" {id=106,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                   |                   |   |___Token:) {id=92,slot_type=Token}
+                    |                   |                   |___(*) {id=58,slot_type=kleene_star__infixExpr_2}
+                    |                   |                       |___aux_rule__infixExpr_3 {id=59,slot_type=aux_rule__infixExpr_3}
+                    |                   |                           |___Token:println {id=60,slot_type=Id}
+                    |                   |                           |___aux_rule__simpleExpr1_10 {id=67,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                   |                               |___Token:( {id=68,slot_type=Token}
+                    |                   |                               |___(?) {id=69,slot_type=optional__simpleExpr1_1}
+                    |                   |                               |   |___Token:"line 2" {id=84,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                   |                               |___Token:) {id=70,slot_type=Token}
+                    |                   |___Token:} {id=43,slot_type=Token}
+                    |___Token:} {id=18,slot_type=Token}
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=29==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=29==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=29==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=29==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+=================Reducing node 11, size=29==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+=================Reducing node 13, size=29==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    object Hello
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 13
+------------------------------------------------------------
+
+
+=================Reducing node 15, size=29==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    object Hello
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+=================Reducing node 16, size=29==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 16
+------------------------------------------------------------
+
+
+=================Reducing node 17, size=29==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 17
+------------------------------------------------------------
+
+
+=================Reducing node 18, size=29==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 18
+------------------------------------------------------------
+
+
+=================Reducing node 23, size=29==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+            main
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+                                        {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 23
+------------------------------------------------------------
+
+
+=================Reducing node 24, size=29==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 24
+------------------------------------------------------------
+
+
+=================Reducing node 26, size=29==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 26
+------------------------------------------------------------
+
+
+=================Reducing node 27, size=29==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main                      = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def      args                 = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 27
+------------------------------------------------------------
+
+
+=================Reducing node 29, size=29==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 29
+------------------------------------------------------------
+
+
+=================Reducing node 136, size=29=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 136
+------------------------------------------------------------
+
+
+=================Reducing node 138, size=29=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    object Hello {
+        def main                      = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 138
+------------------------------------------------------------
+
+
+=================Reducing node 30, size=29==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 30
+------------------------------------------------------------
+
+
+=================Reducing node 40, size=29==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+            println("line 1")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+                   ("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 40 from 29 to 27
+------------------------------------------------------------
+
+
+=================Reducing node 139, size=27=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    object Hello {
+        def main                      =
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 139
+------------------------------------------------------------
+
+
+=================Reducing node 51, size=27==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+                    "line 1"
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+                   ("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+            println("line 1")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+                   ("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 51
+------------------------------------------------------------
+
+
+=================Reducing node 140, size=27=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 140
+------------------------------------------------------------
+
+
+=================Reducing node 141, size=27=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    object Hello {
+        def main(                   ) =
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 141
+------------------------------------------------------------
+
+
+=================Reducing node 142, size=27=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 142
+------------------------------------------------------------
+
+
+=================Reducing node 109, size=27=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    object Hello {
+        def main(args: Array[String]) =
+                    "line 1"
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 109 from 27 to 24
+------------------------------------------------------------
+
+
+=================Reducing node 53, size=24==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 53
+------------------------------------------------------------
+
+
+=================Reducing node 144, size=24=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    object Hello {
+        def main(                   ) =
+            println
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args               ) =
+            println
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(      Array        ) =
+            println
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 144
+------------------------------------------------------------
+
+
+=================Reducing node 135, size=24=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 135
+------------------------------------------------------------
+
+
+=================Reducing node 54, size=24==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]kleene replacement
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 54
+------------------------------------------------------------
+
+
+=================Reducing node 145, size=24=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 145
+------------------------------------------------------------
+
+
+=================Reducing node 146, size=24=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    object Hello {
+        def main(args               ) =
+            println
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 146
+------------------------------------------------------------
+
+
+=================Reducing node 55, size=24==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 55
+------------------------------------------------------------
+
+
+=================Reducing node 56, size=24==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+            println("line 2")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println "Hello, world"
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println
+            println
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println
+                    "line 2"
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println
+                   ("line 2")
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 56 from 24 to 20
+------------------------------------------------------------
+
+
+=================Reducing node 147, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    object Hello {
+        def main(args               ) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 147
+------------------------------------------------------------
+
+
+=================Reducing node 89, size=20==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println "Hello, world"
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 89
+------------------------------------------------------------
+
+
+=================Reducing node 148, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 148
+------------------------------------------------------------
+
+
+=================Reducing node 157, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array        ) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args:       String ) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 157
+------------------------------------------------------------
+
+
+=================Reducing node 90, size=20==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 90
+------------------------------------------------------------
+
+
+=================Reducing node 91, size=20==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println(              )
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 91
+------------------------------------------------------------
+
+
+=================Reducing node 92, size=20==================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 92
+------------------------------------------------------------
+
+
+=================Reducing node 180, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 180
+------------------------------------------------------------
+
+
+=================Reducing node 159, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    object Hello {
+        def main(args: Array        ) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 159
+------------------------------------------------------------
+
+
+=================Reducing node 106, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 106
+------------------------------------------------------------
+
+
+=================Reducing node 161, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    object Hello {
+        def main(args: Array        ) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 161
+------------------------------------------------------------
+
+
+=================Reducing node 162, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 162
+------------------------------------------------------------
+
+
+=================Reducing node 176, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 176
+------------------------------------------------------------
+
+
+=================Reducing node 164, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 164
+------------------------------------------------------------
+
+
+=Fixpoint iteration 2. Reducer: perses_node_with_dfs_delta==
+
+The spar-tree is the following.
+compilationUnit {id=181}
+|___(+) {id=182,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=188,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=189,slot_type=Token}
+        |___objectDef {id=190,slot_type=objectDef}
+            |___Token:Hello {id=191,slot_type=Id}
+            |___(?) {id=193,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=195,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=196,slot_type=Token}
+                    |___(+) {id=197,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=203,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=204,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=206,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=207,slot_type=funSig}
+                    |           |   |___Token:main {id=252,slot_type=Id}
+                    |           |   |___(*) {id=254,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=255,slot_type=paramClause}
+                    |           |           |___Token:( {id=256,slot_type=Token}
+                    |           |           |___(?) {id=257,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=260,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=261,slot_type=Id}
+                    |           |           |       |___(?) {id=262,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=263,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=264,slot_type=Token}
+                    |           |           |               |___simpleType {id=273,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=296,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=275,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=277,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=278,slot_type=Token}
+                    |           |           |                           |___Token:String {id=292,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=280,slot_type=Token}
+                    |           |           |___Token:) {id=258,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=209,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=210,slot_type=Token}
+                    |               |___infixExpr {id=216,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr]}
+                    |                   |___Token:println {id=251,slot_type=[prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=218,slot_type=kleene_star__infixExpr_2}
+                    |                       |___aux_rule__infixExpr_3 {id=219,slot_type=aux_rule__infixExpr_3}
+                    |                           |___Token:println {id=220,slot_type=Id}
+                    |                           |___aux_rule__simpleExpr1_10 {id=227,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                               |___Token:( {id=228,slot_type=Token}
+                    |                               |___(?) {id=229,slot_type=optional__simpleExpr1_1}
+                    |                               |   |___Token:"Hello, world" {id=244,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                               |___Token:) {id=230,slot_type=Token}
+                    |___Token:} {id=198,slot_type=Token}
+------------------------------------------------------------
+
+
+=================Reducing node 182, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 182
+------------------------------------------------------------
+
+
+=================Reducing node 188, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 188
+------------------------------------------------------------
+
+
+=================Reducing node 189, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 189
+------------------------------------------------------------
+
+
+=================Reducing node 190, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 190
+------------------------------------------------------------
+
+
+=================Reducing node 191, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 191
+------------------------------------------------------------
+
+
+=================Reducing node 193, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    object Hello
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 193
+------------------------------------------------------------
+
+
+=================Reducing node 195, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    object Hello
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 195
+------------------------------------------------------------
+
+
+=================Reducing node 196, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 196
+------------------------------------------------------------
+
+
+=================Reducing node 197, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 197
+------------------------------------------------------------
+
+
+=================Reducing node 198, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 198
+------------------------------------------------------------
+
+
+=================Reducing node 203, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+            main
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+            println
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 203
+------------------------------------------------------------
+
+
+=================Reducing node 204, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 204
+------------------------------------------------------------
+
+
+=================Reducing node 206, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 206
+------------------------------------------------------------
+
+
+=================Reducing node 207, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main                      =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def      args                 =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 207
+------------------------------------------------------------
+
+
+=================Reducing node 209, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 209
+------------------------------------------------------------
+
+
+=================Reducing node 252, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 252
+------------------------------------------------------------
+
+
+=================Reducing node 254, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    object Hello {
+        def main                      =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 254
+------------------------------------------------------------
+
+
+=================Reducing node 210, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 210
+------------------------------------------------------------
+
+
+=================Reducing node 216, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+                    "Hello, world"
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+                   ("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 216
+------------------------------------------------------------
+
+
+=================Reducing node 255, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    object Hello {
+        def main                      =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 255
+------------------------------------------------------------
+
+
+=================Reducing node 251, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 251
+------------------------------------------------------------
+
+
+=================Reducing node 218, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 218
+------------------------------------------------------------
+
+
+=================Reducing node 256, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 256
+------------------------------------------------------------
+
+
+=================Reducing node 257, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    object Hello {
+        def main(                   ) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 257
+------------------------------------------------------------
+
+
+=================Reducing node 258, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 258
+------------------------------------------------------------
+
+
+=================Reducing node 219, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 219
+------------------------------------------------------------
+
+
+=================Reducing node 260, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    object Hello {
+        def main(                   ) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args               ) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(      Array        ) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 260
+------------------------------------------------------------
+
+
+=================Reducing node 220, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 220
+------------------------------------------------------------
+
+
+=================Reducing node 227, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println "Hello, world"
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 227
+------------------------------------------------------------
+
+
+=================Reducing node 261, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 261
+------------------------------------------------------------
+
+
+=================Reducing node 262, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    object Hello {
+        def main(args               ) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 262
+------------------------------------------------------------
+
+
+=================Reducing node 228, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 228
+------------------------------------------------------------
+
+
+=================Reducing node 229, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println(              )
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 229
+------------------------------------------------------------
+
+
+=================Reducing node 230, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 230
+------------------------------------------------------------
+
+
+=================Reducing node 263, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    object Hello {
+        def main(args               ) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 263
+------------------------------------------------------------
+
+
+=================Reducing node 244, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 244
+------------------------------------------------------------
+
+
+=================Reducing node 264, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 264
+------------------------------------------------------------
+
+
+=================Reducing node 273, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args: Array        ) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    object Hello {
+        def main(args:       String ) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 273
+------------------------------------------------------------
+
+
+=================Reducing node 296, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 296
+------------------------------------------------------------
+
+
+=================Reducing node 275, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star]dd@1
+    object Hello {
+        def main(args: Array        ) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 275
+------------------------------------------------------------
+
+
+=================Reducing node 277, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    object Hello {
+        def main(args: Array        ) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 277
+------------------------------------------------------------
+
+
+=================Reducing node 278, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 278
+------------------------------------------------------------
+
+
+=================Reducing node 292, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 292
+------------------------------------------------------------
+
+
+=================Reducing node 280, size=20=================
+
+The current best program is the following
+
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 280
+------------------------------------------------------------
+
+
+#test success = 3
+#test failure = 67
+#test result cache hits = 0
+#test execution cancelled = 2
+#node edit action set cache hits = 0
+#external test execution cache hits = 71

@@ -16,17 +16,24 @@
  */
 package org.perses.reduction
 
+import org.perses.util.shell.ExitCode
+
 /** The result of a test, including runtime information, i.e., time, exit code.  */
-class PropertyTestResult(val exitCode: Int, val elapsedMilliseconds: Long) {
+class PropertyTestResult(val exitCode: ExitCode, val elapsedMilliseconds: Long) {
 
   val isInteresting: Boolean
-    get() = exitCode == 0
+    get() = exitCode.isZero()
 
   val isNotInteresting: Boolean
     get() = !isInteresting
 
   companion object {
-    val INTERESTING_RESULT = PropertyTestResult(exitCode = 0, elapsedMilliseconds = 0)
-    val NON_INTERESTING_RESULT = PropertyTestResult(exitCode = 1, elapsedMilliseconds = 0)
+    val INTERESTING_RESULT = PropertyTestResult(ExitCode.ZERO, elapsedMilliseconds = 0)
+    val NON_INTERESTING_RESULT = PropertyTestResult(ExitCode.ONE, elapsedMilliseconds = 0)
+
+    fun of(exitCode: Int, elapsedMilliseconds: Long) = PropertyTestResult(
+      ExitCode(exitCode),
+      elapsedMilliseconds,
+    )
   }
 }

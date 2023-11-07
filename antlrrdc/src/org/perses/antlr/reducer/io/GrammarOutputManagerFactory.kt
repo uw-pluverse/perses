@@ -25,14 +25,11 @@ import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.AbstractOutputManagerFactory
 import org.perses.reduction.io.ReductionFolder
 import org.perses.util.AutoDeletableFolder
-import org.perses.util.FileNameContentPair
 import java.nio.file.Files
 import java.nio.file.Path
-import kotlin.io.path.writeText
 
 class GrammarOutputManagerFactory(
-  val lexer: FileNameContentPair,
-  val mainSourceFile: AbstractReductionFile<*, *>,
+  val reductionInputs: SeparateGrammarReductionInput,
   val startRuleName: String,
   val jarFileName: String,
   val testPrograms: ImmutableList<Path>,
@@ -44,12 +41,25 @@ class GrammarOutputManagerFactory(
 
   inner class OutputManager(
     private val program: PersesGrammar,
-  ) : AbstractOutputManager() {
+  ) : AbstractOutputManager(reductionInputs) {
 
-    override fun write(folder: ReductionFolder) {
-      val parserFile = folder.computeAbsPathForOrigFile(mainSourceFile)
-      parserFile.writeText(program.sourceCode)
-      val lexerFile = lexer.writeToDirectory(folder.folder)
+    override fun internalComputeContentForFile(
+      origReductionFile: AbstractReductionFile<*, *>,
+    ): String {
+      return when (origReductionFile) {
+        reductionInputs.mainFile -> {
+          program.sourceCode
+        }
+        reductionInputs.lexerFile -> {
+          reductionInputs.lexerFile.textualFileContent
+        }
+        else -> error("unhandled file $origReductionFile")
+      }
+    }
+
+    override fun writeMore(folder: ReductionFolder) {
+      val parserFile = folder.computeAbsPathForOrigFile(reductionInputs.mainFile)
+      val lexerFile = folder.computeAbsPathForOrigFile(reductionInputs.lexerFile)
       val jarFilePath = folder.folder.resolve(jarFileName)
       AutoDeletableFolder(
         folder.folder.resolve("temp_antlr_compiler_folder"),

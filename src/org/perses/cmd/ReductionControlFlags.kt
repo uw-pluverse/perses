@@ -48,13 +48,6 @@ class ReductionControlFlags : ICommandLineFlags {
   )
   var codeFormat: EnumFormatControl? = null
 
-  @Parameter(
-    names = ["--non-deletion-iteration-limit"],
-    description = "The maximum number of continuous non-deletion iterations allowed",
-    hidden = true,
-  )
-  var nonDeletionIterationLimit = 1000
-
   override fun validate() {
     if ("auto" != numOfThreads) {
       val num = numOfThreads.toInt()

@@ -20,6 +20,7 @@ import org.perses.program.TokenizedProgram
 import org.perses.reduction.AbstractReducerNameAndDesc
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.AbstractUnmodifiableSparTree
+import java.lang.ref.WeakReference
 
 class FixpointIterationStartEvent internal constructor(
   val reductionStartEvent: ReductionStartEvent,
@@ -27,12 +28,25 @@ class FixpointIterationStartEvent internal constructor(
   programSize: Int,
   val iteration: Int,
   val reducerClass: AbstractReducerNameAndDesc,
+  private val outdatedTree: WeakReference<AbstractUnmodifiableSparTree>,
+  val testScriptStatistics: TestScriptExecutorServiceStatisticsSnapshot,
 ) : AbstractStartEvent(currentTimeMillis, programSize) {
+
+  /**
+   * The tree dump might be outdated, because the spartree
+   * here might have been modified by certain reducer, and the tree
+   * dump does not reflect the actual tree when this event was
+   * created.
+   */
+  val oudatedTreeDump: String by lazy {
+    val tree = outdatedTree.get()
+    tree?.printTreeStructure() ?: ""
+  }
 
   fun createEndEvent(
     currentTimeMillis: Long,
     programSize: Int,
-    countOfTestScriptExecutions: Int,
+    testScriptStatistics: TestScriptExecutorServiceStatisticsSnapshot,
   ): FixpointIterationEndEvent {
     check(!ended)
     ended = true
@@ -40,7 +54,7 @@ class FixpointIterationStartEvent internal constructor(
       startEvent = this,
       currentTimeMillis = currentTimeMillis,
       programSize = programSize,
-      countOfTestScriptExecutions = countOfTestScriptExecutions,
+      testScriptStatistics = testScriptStatistics,
     )
   }
 

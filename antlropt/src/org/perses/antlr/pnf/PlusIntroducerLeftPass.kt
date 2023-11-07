@@ -37,10 +37,10 @@ import org.perses.util.exhaustive
 import org.perses.util.toImmutableList
 
 class PlusIntroducerLeftPass : AbstractPnfPass() {
-  override fun processParserGrammar(
-    parserGrammar: PersesGrammar,
-    lexerGrammar: PersesGrammar?,
-  ): PersesGrammar {
+  override fun processGrammar(
+    grammar: GrammarPair,
+  ): GrammarPair {
+    val parserGrammar = grammar.parserGrammar ?: return grammar
     val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     val edit = PlusIntroducerEdit(parserGrammar)
     val toUpdate = ArrayList<RuleEditTriple>()
@@ -56,9 +56,11 @@ class PlusIntroducerLeftPass : AbstractPnfPass() {
     }
     toUpdate.forEach { it.applyTo(mutable) }
     edit.toAdd.forEach { key, value ->
-      mutable.getAltBlock(key).addIfInequivalent(value)
+      mutable.getAltBlock(key).addIfNotEquivalent(value)
     }
-    return parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
+    return grammar.withNewParserGrammar(
+      parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList()),
+    )
   }
 
   @VisibleForTesting

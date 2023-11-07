@@ -35,16 +35,16 @@ class MutableGrammarTest : AbstractMutableGrammarTest() {
     assertThat(grammar.removeRule(nameA)).isNull()
 
     val block = grammar.getAltBlock(nameA)
-    block.addIfInequivalent(refA)
+    block.addIfNotEquivalent(refA)
     assertThat(grammar.removeRule(nameA)).isSameInstanceAs(block)
   }
 
   @Test
   fun testToImmutableMultiMap() {
-    grammar.getAltBlock(nameA).addIfInequivalent(refA)
-    grammar.getAltBlock(nameA).addIfInequivalent(refB)
-    grammar.getAltBlock(nameB).addIfInequivalent(refA)
-    grammar.getAltBlock(nameB).addIfInequivalent(refB)
+    grammar.getAltBlock(nameA).addIfNotEquivalent(refA)
+    grammar.getAltBlock(nameA).addIfNotEquivalent(refB)
+    grammar.getAltBlock(nameB).addIfNotEquivalent(refA)
+    grammar.getAltBlock(nameB).addIfNotEquivalent(refB)
     val map = grammar.toImmutableMultiMap()
     assertThat(map.entries().asSequence().map { it.key }.toList())
       .containsExactly(nameA, nameA, nameB, nameB).inOrder()
@@ -61,7 +61,7 @@ class MutableGrammarTest : AbstractMutableGrammarTest() {
     assertThat(block.isEmpty).isTrue()
     assertThat(grammar.isEmpty).isTrue()
 
-    block.addIfInequivalent(refA)
+    block.addIfNotEquivalent(refA)
     assertThat(grammar.isEmpty).isFalse()
     assertThat(grammar.getAltBlock(nameA)).isSameInstanceAs(block)
   }
@@ -76,21 +76,21 @@ class MutableGrammarTest : AbstractMutableGrammarTest() {
 
   @Test
   fun testaddIfInequivalent() {
-    assertThat(grammar.getAltBlock(nameA).addIfInequivalent(refA)).isTrue()
+    assertThat(grammar.getAltBlock(nameA).addIfNotEquivalent(refA)).isTrue()
     assertThat(grammar.nonEmptyAltBlockSequence().asIterable()).hasSize(1)
     assertThat(grammar.getAltBlock(nameA)[0]).isSameInstanceAs(refA)
 
-    assertThat(grammar.getAltBlock(nameA).addIfInequivalent(refA)).isFalse()
+    assertThat(grammar.getAltBlock(nameA).addIfNotEquivalent(refA)).isFalse()
     assertThat(grammar.nonEmptyAltBlockSequence().asIterable()).hasSize(1)
 
-    assertThat(grammar.getAltBlock(nameB).addIfInequivalent(refA)).isTrue()
+    assertThat(grammar.getAltBlock(nameB).addIfNotEquivalent(refA)).isTrue()
     assertThat(grammar.nonEmptyAltBlockSequence().asIterable()).hasSize(2)
   }
 
   @Test
   fun testremoveAlt() {
-    grammar.getAltBlock(nameA).addIfInequivalent(refA)
-    grammar.getAltBlock(nameB).addIfInequivalent(refB)
+    grammar.getAltBlock(nameA).addIfNotEquivalent(refA)
+    grammar.getAltBlock(nameB).addIfNotEquivalent(refB)
 
     assertThat(grammar.getAltBlock(nameA).removeAlt(refA)).isTrue()
     assertThat(grammar.getAltBlock(nameA).removeAlt(refB)).isFalse()
@@ -114,7 +114,7 @@ class MutableGrammarTest : AbstractMutableGrammarTest() {
     }
 
     MutableGrammar().let { grammar ->
-      grammar.getAltBlock(nameTop).addIfInequivalent(refC)
+      grammar.getAltBlock(nameTop).addIfNotEquivalent(refC)
       grammar.getAltBlock(nameTop).decomposeAltBlockAndAddIfInequivalent(blockTop)
       assertThat(grammar.getAltBlock(nameTop)).containsExactly(
         refC,

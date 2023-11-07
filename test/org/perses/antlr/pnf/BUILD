@@ -1,6 +1,7 @@
 load("//antlropt/src/org/perses/antlr/pnf:pnf.bzl", "pnf_convert")
 load("//test/org/perses:test.bzl", "golden_test")
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
+load("//:perses.bzl", "kt_binary_for_genrule")
 
 DEFAULT_DEPS = [
     "//src/org/perses/antlr:antlr_grammar_parser",
@@ -37,8 +38,6 @@ kt_jvm_library(
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//src/org/perses/antlr:antlr_grammar_parser",
-        "//src/org/perses/grammar/c:optc_parser_facade",
-        "//src/org/perses/grammar/java:parser_facade",
         "//src/org/perses/util:file_name_content_pair",
         "//test/org/perses/antlr:GrammarTestingUtility",
     ],
@@ -93,9 +92,9 @@ kt_jvm_test(
     deps = DEFAULT_TEST_DEPS,
 )
 
-java_binary(
+kt_binary_for_genrule(
     name = "DumpPnfPassManagerLog",
-    srcs = ["DumpPnfPassManagerLog.java"],
+    srcs = ["DumpPnfPassManagerLog.kt"],
     jvm_flags = ["-ea"],
     main_class = "org.perses.antlr.pnf.DumpPnfPassManagerLog",
     deps = DEFAULT_TEST_DEPS,

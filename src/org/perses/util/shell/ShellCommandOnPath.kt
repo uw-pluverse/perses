@@ -39,15 +39,19 @@ data class ShellCommandOnPath(
   fun runWith(
     extraArguments: ImmutableList<String> = ImmutableList.of(),
     captureOutput: Boolean = true,
-    workingDirectory: Path = AbstractShell.CURRENT_DIR,
-    environment: ImmutableMap<String, String> = AbstractShell.CURRENT_ENV,
+    workingDirectory: Path = Shells.CURRENT_DIR,
+    environment: ImmutableMap<String, String> = Shells.CURRENT_ENV,
   ): CmdOutput {
     val cmd = StringBuilder()
     cmd.append(normalizedCommand).append(' ')
     defaultFlags.joinTo(cmd, separator = " ")
     cmd.append(' ')
     extraArguments.joinTo(cmd, separator = " ")
-    return AbstractShell.singleton.run(cmd.toString(), workingDirectory, captureOutput, environment)
+    return Shells.singleton.run(cmd.toString(), workingDirectory, captureOutput, environment)
+  }
+
+  fun interface IShellCommandOnPathCreator {
+    fun tryCreate(): ShellCommandOnPath?
   }
 
   companion object {

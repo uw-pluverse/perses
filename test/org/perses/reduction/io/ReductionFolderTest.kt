@@ -17,8 +17,6 @@
 package org.perses.reduction.io
 
 import com.google.common.collect.ImmutableList
-import com.google.common.io.MoreFiles
-import com.google.common.io.RecursiveDeleteOption
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Assert.assertThrows
@@ -34,6 +32,8 @@ import org.perses.util.toImmutableList
 import java.lang.Exception
 import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.io.path.deleteRecursively
+import kotlin.io.path.readText
 import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
@@ -43,7 +43,7 @@ class ReductionFolderTest {
 
   @After
   fun teardown() {
-    MoreFiles.deleteRecursively(tempDir, RecursiveDeleteOption.ALLOW_INSECURE)
+    tempDir.deleteRecursively()
   }
 
   @Test
@@ -64,7 +64,11 @@ class ReductionFolderTest {
       testScript,
       mainDataKind = LanguageC,
       rootDirectory = root,
-      files = sequenceOf(fileA, file1, file2).map { SourceFile(it, LanguageC) }.toImmutableList(),
+      programFiles = sequenceOf(
+        fileA,
+        file1,
+        file2,
+      ).map { SourceFile(it, LanguageC) }.toImmutableList(),
     )
 
     val reductionInputs = ReductionInputs()
@@ -99,7 +103,7 @@ class ReductionFolderTest {
       testScript = scriptFile,
       mainDataKind = LanguageC,
       rootDirectory = root,
-      files = ImmutableList.of(SourceFile(file, LanguageC)),
+      programFiles = ImmutableList.of(SourceFile(file, LanguageC)),
     )
 
     val folderPath = Files.createDirectories(tempDir.resolve("reduction-folder"))
@@ -114,6 +118,52 @@ class ReductionFolderTest {
     assertThrows(Exception::class.java) { reductionFolder.deleteThisDirectoryRecursively() }
     assertThrows(Exception::class.java) { reductionFolder.deleteAllOtherFiles() }
     assertThrows(Exception::class.java) { reductionFolder.runTestScript() }
+  }
+
+  @Test
+  fun testCopyTo() {
+    val root = Files.createDirectories(tempDir.resolve("root"))
+    val file = Files.createFile(root.resolve("a.txt"))
+    val scriptFile = createTestScript(root.resolve("r.sh"))
+    val dir1 = Files.createDirectories(root.resolve("1"))
+    val dir2 = Files.createDirectories(root.resolve("2"))
+    val file1 = Files.createFile(dir1.resolve("a.txt"))
+    file1.writeText("file1")
+    val file2 = Files.createFile(dir1.resolve("b.txt"))
+    file2.writeText("file2")
+
+    val subdir = Files.createDirectories(dir1.resolve("subdir"))
+    val file3 = Files.createFile(subdir.resolve("c.txt"))
+    file3.writeText("file3")
+
+    class ReductionInputs : AbstractReductionInputs<LanguageKind, ReductionInputs> (
+      testScript = scriptFile,
+      mainDataKind = LanguageC,
+      rootDirectory = root,
+      programFiles = ImmutableList.of(SourceFile(file, LanguageC)),
+    )
+
+    val reductionFolder1 = ReductionFolder(
+      ReductionInputs(),
+      folder = dir1,
+    )
+    val reductionFolder2 = ReductionFolder(
+      ReductionInputs(),
+      folder = dir2,
+    )
+
+    reductionFolder1.copyTo(reductionFolder2)
+
+    val copyedFile1 = dir2.resolve(file1.fileName)
+    val copyedFile2 = dir2.resolve(file2.fileName)
+    val copyedSubdir = dir2.resolve(subdir.fileName)
+    val copyedFile3 = copyedSubdir.resolve(file3.fileName)
+    assertThat(Files.exists(copyedFile1)).isTrue()
+    assertThat(Files.exists(copyedFile2)).isTrue()
+    assertThat(Files.exists(copyedSubdir)).isTrue()
+    assertThat(copyedFile1.readText()).isEqualTo(file1.readText())
+    assertThat(copyedFile2.readText()).isEqualTo(file2.readText())
+    assertThat(copyedFile3.readText()).isEqualTo(file3.readText())
   }
 
   private fun createTestScript(path: Path): ScriptFile {

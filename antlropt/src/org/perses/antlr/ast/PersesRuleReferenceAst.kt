@@ -17,6 +17,7 @@
 package org.perses.antlr.ast
 
 import com.google.common.base.MoreObjects
+import org.perses.antlr.RuleType
 import org.perses.util.ast.Indent
 import java.io.PrintStream
 
@@ -24,6 +25,10 @@ class PersesRuleReferenceAst private constructor(
   val ruleNameHandle: RuleNameRegistry.RuleNameHandle,
   val arguments: PersesActionAst?,
 ) : AbstractPersesRuleElement() {
+
+  init {
+    require(RuleType.isParserRule(ruleNameHandle.ruleName))
+  }
 
   override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
     stream.print(ruleNameHandle.ruleName)

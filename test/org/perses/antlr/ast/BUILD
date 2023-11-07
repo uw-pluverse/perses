@@ -49,9 +49,9 @@ kt_jvm_test(
     deps = DEFAULT_DEPS,
 )
 
-java_test(
+kt_jvm_test(
     name = "RuleEpsilonComputerTest",
-    srcs = ["RuleEpsilonComputerTest.java"],
+    srcs = ["RuleEpsilonComputerTest.kt"],
     data = ["//test_data/antlr_grammars"],
     test_class = "org.perses.antlr.ast.RuleEpsilonComputerTest",
     deps = DEFAULT_DEPS,

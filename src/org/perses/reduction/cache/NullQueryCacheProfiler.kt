@@ -20,7 +20,7 @@ import com.google.common.collect.ImmutableList
 import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
 
-internal class NullQueryCacheProfiler : AbstractQueryCacheProfiler() {
+class NullQueryCacheProfiler : AbstractQueryCacheProfiler() {
 
   override fun close() {}
 

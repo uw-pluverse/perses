@@ -8,15 +8,19 @@ java_library(
     name = "antlr",
     visibility = ["//src/org/perses:__subpackages__"],
     exports = [
-        ":antlr_grammar_util",
         ":antlr_hierarchy",
+        ":meta_token_info_db",
+        ":util",
         "//antlropt/src/org/perses/antlr:enum_rule_type",
     ],
 )
 
 kt_jvm_library(
-    name = "antlr_grammar_util",
-    srcs = ["AntlrGrammarUtil.kt"],
+    name = "util",
+    srcs = [
+        "AntlrGrammarUtil.kt",
+        "ParseTreeUtil.kt",
+    ],
     deps = [
         "//:antlr_runtime",
         "//:antlr_tool",
@@ -46,7 +50,7 @@ kt_jvm_library(
     ],
     deps = [
         ":antlr_grammar_info",
-        ":antlr_grammar_util",
+        ":util",
         "//:antlr_runtime",
         "//:antlr_tool",
         "//:flogger",
@@ -78,6 +82,32 @@ kt_jvm_library(
 )
 
 kt_jvm_library(
+    name = "antlr_type_wrappers",
+    srcs = [
+        "AntlrTypeWrappers.kt",
+    ],
+    deps = [
+        "//:antlr_runtime",
+        "//:antlr_tool",
+    ],
+)
+
+kt_jvm_library(
+    name = "meta_token_info_db",
+    srcs = [
+        "LexerRuleNameAndTypeMapping.kt",
+        "MetaTokenInfoDB.kt",
+    ],
+    deps = [
+        ":antlr_type_wrappers",
+        ":util",
+        "//:antlr_runtime",
+        "//:guava",
+        "@maven//:org_apache_commons_commons_text_1_9",
+    ],
+)
+
+kt_jvm_library(
     name = "abstract_grammar_stub",
     srcs = [
         "AbstractGrammarStub.kt",
@@ -103,15 +133,5 @@ kt_jvm_library(
     srcs = ["AbstractAntlrGrammar.kt"],
     deps = [
         "//antlropt/src/org/perses/antlr/pnf",
-    ],
-)
-
-kt_jvm_library(
-    name = "parse_tree_util",
-    srcs = [
-        "ParseTreeUtil.kt",
-    ],
-    deps = [
-        "//:antlr_runtime",
     ],
 )

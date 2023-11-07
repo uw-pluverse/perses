@@ -16,11 +16,10 @@
  */
 package org.perses.antlr
 
-import com.google.common.io.MoreFiles
-import com.google.common.io.RecursiveDeleteOption
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.io.path.deleteRecursively
 
 abstract class AbstractAntlrrdcTest {
 
@@ -134,7 +133,7 @@ abstract class AbstractAntlrrdcTest {
   val invalid2 = createFile("invalid_2.input", "b c ")
 
   fun close() {
-    MoreFiles.deleteRecursively(tempDir, RecursiveDeleteOption.ALLOW_INSECURE)
+    tempDir.deleteRecursively()
   }
 
   fun createFile(fileName: String, fileContent: String): Path {

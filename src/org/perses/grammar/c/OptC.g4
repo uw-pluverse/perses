@@ -29,6 +29,8 @@
 /** C 2011 grammar built from the C11 Spec */
 grammar OptC;
 
+IncludeDirective: '#' 'include' ~ [\n]*;
+
 primaryExpression
     :   Identifier
     |   Constant
@@ -745,6 +747,7 @@ translationUnit
 externalDeclaration
     :   functionDefinition
     |   declaration
+    |   IncludeDirective
     |   ';' // stray ;
     ;
 

@@ -34,8 +34,41 @@ abstract class AbstractStackOrQueue<T, Self : AbstractStackOrQueue<T, Self>>(
 
   abstract fun peek(): T
 
+  fun copy(): Self {
+    val copy = createEmpty()
+    copy.deque.addAll(deque)
+    return copy
+  }
+
+  override fun hashCode(): Int {
+    return deque.hashCode()
+  }
+
+  override fun equals(other: Any?): Boolean {
+    if (other == null) {
+      return false
+    }
+    if (other === this) {
+      return true
+    }
+    if (other::class != this::class) {
+      return false
+    }
+    @Suppress("UNCHECKED_CAST")
+    val o = other as Self
+    return deque == o.deque
+  }
+
+  protected abstract fun createEmpty(): Self
+
   val size: Int
     get() = deque.size
+
+  fun contains(element: T) = deque.contains(element)
+
+  fun count(element: T) = count { it == element }
+
+  fun count(predicate: (T) -> Boolean) = deque.count(predicate)
 
   /**
    * Add the elements to this object from the head to the tail.
@@ -71,6 +104,26 @@ class SimpleStack<T>(
   override fun peek(): T {
     return deque.last()
   }
+
+  fun peekBottom(): T {
+    return deque.first()
+  }
+
+  fun sequenceFromTop(): Sequence<T> {
+    return deque.asReversed().asSequence()
+  }
+
+  fun sequenceFromBottom(): Sequence<T> {
+    return deque.asSequence()
+  }
+
+  override fun createEmpty(): SimpleStack<T> {
+    return SimpleStack()
+  }
+
+  companion object {
+    fun <T>of(element: T) = SimpleStack<T>().add(element)
+  }
 }
 
 class SimpleQueue<T>(
@@ -88,5 +141,13 @@ class SimpleQueue<T>(
 
   override fun peek(): T {
     return deque.first()
+  }
+
+  override fun createEmpty(): SimpleQueue<T> {
+    return SimpleQueue()
+  }
+
+  companion object {
+    fun <T> of(element: T) = SimpleQueue<T>().also { it.add(element) }
   }
 }

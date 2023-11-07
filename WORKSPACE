@@ -1,23 +1,33 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-RULES_JVM_EXTERNAL_TAG = "4.4.2"
+RULES_JVM_EXTERNAL_TAG = "5.3"
 
-RULES_JVM_EXTERNAL_SHA = "735602f50813eb2ea93ca3f5e43b1959bd80b213b836a07a62a29d757670b77b"
+RULES_JVM_EXTERNAL_SHA = "d31e369b854322ca5098ea12c69d7175ded971435e55c18dd9dd5f29cc5249ac"
 
 http_archive(
     name = "rules_jvm_external",
     sha256 = RULES_JVM_EXTERNAL_SHA,
     strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
-    url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_TAG,
+    url = "https://github.com/bazelbuild/rules_jvm_external/releases/download/%s/rules_jvm_external-%s.tar.gz" % (RULES_JVM_EXTERNAL_TAG, RULES_JVM_EXTERNAL_TAG),
 )
+
+load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
+
+rules_jvm_external_deps()
+
+load("@rules_jvm_external//:setup.bzl", "rules_jvm_external_setup")
+
+rules_jvm_external_setup()
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
-jackson_version = "2.14.2"
+jackson_version = "2.15.2"
 
-antlr_version = "4.12.0"
+antlr_version = "4.13.0"
 
 flogger_version = "0.7.4"
+
+kotlin_lib_version = "1.9.10"
 
 maven_install(
     name = "maven",
@@ -33,22 +43,24 @@ maven_install(
         "com.google.flogger:flogger-system-backend:%s" % flogger_version,
         "com.google.flogger:flogger:%s" % flogger_version,
         "com.google.googlejavaformat:google-java-format:1.15.0",
-        "com.google.guava:guava:31.1-jre",
-        "com.google.truth:truth:1.1.3",
+        "com.google.guava:guava:32.0.0-jre",
+        "com.google.truth:truth:1.1.4",
         "com.googlecode.java-diff-utils:diffutils:1.3.0",
         "com.guardsquare:proguard-base:7.2.1",
         "com.github.gumtreediff:core:3.0.0",
-        "com.pinterest:ktlint:0.48.2",
-        "io.gitlab.arturbosch.detekt:detekt-cli:1.16.0",
-        "it.unimi.dsi:fastutil:8.5.2",
+        "com.pinterest:ktlint:0.50.0",
+        "io.gitlab.arturbosch.detekt:detekt-cli:1.23.1",
+        "io.netty:netty-all:4.1.66.Final",
+        "it.unimi.dsi:fastutil:8.5.12",
         "me.lemire.integercompression:JavaFastPFOR:0.1.9",
         "org.antlr:antlr4-runtime:%s" % antlr_version,
         "org.antlr:antlr4:%s" % antlr_version,
+        "org.apache.commons:commons-csv:1.10.0",
         "org.apache.commons:commons-exec:1.3",
         "org.apache.commons:commons-lang3:3.9",
         "org.apache.commons:commons-text:1.9",
-        "org.jetbrains.kotlin:kotlin-scripting-jsr223:1.8.20",  # Delete this. @TODO(gaosen)
-        "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.20",
+        "org.jetbrains.kotlin:kotlin-stdlib-jdk8:%s" % kotlin_lib_version,
+        "org.jetbrains.kotlin:kotlin-reflect:%s" % kotlin_lib_version,
         "org.jfree:jfreechart:1.5.0",
         "org.jgrapht:jgrapht-core:1.3.0",
         "org.ow2.asm:asm:9.3",
@@ -67,9 +79,9 @@ maven_install(
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-rules_kotlin_version = "v1.8-RC-1"
+rules_kotlin_version = "v1.8.1"
 
-rules_kotlin_sha = "1779628569eb3b0fe97a3fb5c3ed8090e6503e425600b401c7b1afb6b23a3098"
+rules_kotlin_sha = "a630cda9fdb4f56cf2dc20a4bf873765c41cf00e9379e8d59cd07b24730f4fde"
 
 http_archive(
     name = "io_bazel_rules_kotlin",
@@ -77,7 +89,6 @@ http_archive(
     urls = ["https://github.com/bazelbuild/rules_kotlin/releases/download/%s/rules_kotlin_release.tgz" % rules_kotlin_version],
 )
 
-#https://github.com/bazelbuild/rules_kotlin/releases/download/v1.5.0-beta-3/rules_kotlin_release.tgz
 load("@io_bazel_rules_kotlin//kotlin:repositories.bzl", "kotlin_repositories")
 
 kotlin_repositories()  # if you want the default. Otherwise see custom kotlinc distribution below
@@ -88,44 +99,6 @@ load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_register_toolchains")
 register_toolchains("//:kotlin_toolchain")
 
 ###################################################################################################
-# Configure rules for rust
-###################################################################################################
-rust_rules_version = "0.6.0"
-
-rust_rules_sha256 = "872b04538ca20dad94791c348623f079ba93daf274c1d57ae6bfe0930ec77f0d"
-
-# To find additional information on this release or newer ones visit:
-# https://github.com/bazelbuild/rules_rust/releases
-http_archive(
-    name = "rules_rust",
-    sha256 = rust_rules_sha256,
-    urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_rust/releases/download/%s/rules_rust-v%s.tar.gz" % (rust_rules_version, rust_rules_version),
-        "https://github.com/bazelbuild/rules_rust/releases/download/%s/rules_rust-v%s.tar.gz" % (rust_rules_version, rust_rules_version),
-    ],
-)
-
-load(
-    "@rules_rust//rust:repositories.bzl",
-    "rules_rust_dependencies",
-    "rust_register_toolchains",
-)
-
-rules_rust_dependencies()
-
-rust_register_toolchains(
-    edition = "2018",
-    rustfmt_version = "1.59.0",
-    version = "1.59.0",
-)
-
-load("@rules_rust//proto:repositories.bzl", "rust_proto_repositories")
-
-rust_proto_repositories()
-
-load("@rules_rust//proto:transitive_repositories.bzl", "rust_proto_transitive_repositories")
-
-###################################################################################################
 #
 # The following is copied from
 #        https://github.com/bazelbuild/rules_go/.
@@ -133,9 +106,9 @@ load("@rules_rust//proto:transitive_repositories.bzl", "rust_proto_transitive_re
 ###################################################################################################
 # buildifier is written in Go and hence needs rules_go to be built.
 # See https://github.com/bazelbuild/rules_go for the up to date setup instructions.
-go_rules_version = "0.31.0"
+go_rules_version = "0.40.1"
 
-go_rules_sha = "f2dcd210c7095febe54b804bb1cd3a58fe8435a909db2ec04e31542631cf715c"
+go_rules_sha = "51dc53293afe317d2696d4d6433a4c33feedb7748a9e352072e2ec3c0dafd2c6"
 
 http_archive(
     name = "io_bazel_rules_go",
@@ -150,11 +123,11 @@ load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_depe
 
 go_rules_dependencies()
 
-go_register_toolchains(version = "1.18.1")
+go_register_toolchains(version = "1.20.7")
 
-bazel_gazelle_version = "0.24.0"
+bazel_gazelle_version = "0.30.0"
 
-bazel_gazelle_sha = "de69a09dc70417580aabf20a28619bb3ef60d038470c7cf8442fafcf627c21cb"
+bazel_gazelle_sha = "727f3e4edd96ea20c29e8c2ca9e8d2af724d8c7778e7923a854b2c80952bc405"
 
 http_archive(
     name = "bazel_gazelle",

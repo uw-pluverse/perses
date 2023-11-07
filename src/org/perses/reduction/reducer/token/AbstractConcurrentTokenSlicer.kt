@@ -52,13 +52,13 @@ abstract class AbstractConcurrentTokenSlicer(
         tokenSlicingGranularity = tokenSlicingGranularity,
       )
     listenerManager.onSlicingTokensStart(slicingStartEvent)
-    val slicingTasks = createSlicingTask(tokenSlicingGranularity, tree)
-
-    SlicingTaskConcurrentExecutor(
-      slicingTasks,
-      workingDequeExpectedSize = executorService.specifiedNumOfThreads + 2,
-    ).run()
-
+    createSequenceOfIndependentSlicingTasks(tokenSlicingGranularity, tree)
+      .forEach {
+        SlicingTaskConcurrentExecutor(
+          it.tasks,
+          workingDequeExpectedSize = executorService.specifiedNumOfThreads + 2,
+        ).run()
+      }
     val slicingEndEvent = slicingStartEvent.createEndEvent(
       currentTimeMillis = System.currentTimeMillis(),
       programSize = tree.programSnapshot.tokenCount(),
@@ -66,10 +66,14 @@ abstract class AbstractConcurrentTokenSlicer(
     listenerManager.onSlicingTokensEnd(slicingEndEvent)
   }
 
-  abstract fun createSlicingTask(
+  abstract fun createSequenceOfIndependentSlicingTasks(
     tokenSlicingGranularity: Int,
     tree: SparTree,
-  ): ImmutableList<AbstractSlicingTask>
+  ): Sequence<IndependentSlicingTasks>
+
+  data class IndependentSlicingTasks(
+    val tasks: ImmutableList<AbstractSlicingTask>,
+  )
 
   // TODO: testing
   abstract class AbstractTokenSlicerAnnotation(

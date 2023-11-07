@@ -23,7 +23,6 @@ import org.perses.antlr.ast.AbstractPersesRuleElement
 import org.perses.antlr.ast.AstTag
 import org.perses.antlr.ast.PersesAlternativeBlockAst
 import org.perses.antlr.ast.PersesAstBuilder.Companion.combineIntoSequence
-import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.ast.PersesRuleReferenceAst
 import org.perses.antlr.ast.PersesRuleReferenceAst.Companion.create
 import org.perses.antlr.ast.PersesSequenceAst
@@ -61,11 +60,11 @@ abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
     )
     rules.getAltBlock(quantifiedRuleName).addAllIfInequivalent(quantifiedBodyRule)
     val starRule = createGreedy(create(quantifiedRuleName))
-    rules.getAltBlock(starRuleName).addIfInequivalent(starRule)
+    rules.getAltBlock(starRuleName).addIfNotEquivalent(starRule)
     val starRuleRef = create(starRuleName)
     if (nonRecursiveDefs.size == 1) {
       val nonRecursiveDef = nonRecursiveDefs.single()
-      rules.getAltBlock(ruleName).addIfInequivalent(
+      rules.getAltBlock(ruleName).addIfNotEquivalent(
         combineIntoSequence(constructNewSequenceDef(nonRecursiveDef, starRuleRef)),
       )
     } else {
@@ -73,7 +72,7 @@ abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
       assert(altBlock.size > 1)
       val altBlockRuleName = ruleName.createAuxiliaryRuleName(RuleType.OTHER_RULE)
       rules.getAltBlock(altBlockRuleName).addAllIfInequivalent(altBlock)
-      rules.getAltBlock(ruleName).addIfInequivalent(
+      rules.getAltBlock(ruleName).addIfNotEquivalent(
         combineIntoSequence(constructNewSequenceDef(create(altBlockRuleName), starRuleRef)),
       )
     }
@@ -121,10 +120,10 @@ abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
     nonRecursiveDefs: LinkedHashSet<AbstractPersesRuleElement>,
   )
 
-  override fun processParserGrammar(
-    parserGrammar: PersesGrammar,
-    lexerGrammar: PersesGrammar?,
-  ): PersesGrammar {
+  override fun processGrammar(
+    grammar: GrammarPair,
+  ): GrammarPair {
+    val parserGrammar = grammar.parserGrammar ?: return grammar
     val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     mutable.ruleNameSequence()
       .sorted()
@@ -132,6 +131,8 @@ abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
       .forEach { ruleName ->
         introduceStars(mutable, ruleName)
       }
-    return parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
+    return grammar.withNewParserGrammar(
+      parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList()),
+    )
   }
 }

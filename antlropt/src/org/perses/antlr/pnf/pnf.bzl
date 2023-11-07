@@ -26,3 +26,38 @@ def pnf_convert(
         cmd = " ".join(args),
         tools = [tool],
     )
+
+def outline_implicit_token_defs(
+        name,
+        parser_input,
+        parser_output,
+        start_rule_name,
+        lexer_input = None,
+        lexer_output = None):
+    if not start_rule_name:
+        fail("start_rule_name cannot be empty.")
+    tool = "//antlropt/src/org/perses/antlr/pnf:outline_implicit_token_def_bin"
+    log_file = "%s_outline_implicit_token_defs.log" % name
+    args = [
+        "$(location %s)" % tool,
+        "--start_rule_name %s" % start_rule_name,
+        "--parser-input $(location %s)" % parser_input,
+        "--parser-output $(location %s)" % parser_output,
+    ]
+    srcs = [parser_input]
+    outs = [parser_output]
+    if (lexer_input == None) != (lexer_output == None):
+        fail("lexer_input and lexer_output should be specified at the same time.")
+    if lexer_input and lexer_output:
+        srcs.append(lexer_input)
+        outs.append(lexer_output)
+        args.append("--lexer-input $(location %s)" % lexer_input)
+        args.append("--lexer-output $(location %s)" % lexer_output)
+
+    native.genrule(
+        name = name,
+        outs = outs,
+        srcs = srcs,
+        tools = [tool],
+        cmd = " ".join(args),
+    )

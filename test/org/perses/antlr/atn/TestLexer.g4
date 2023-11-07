@@ -63,3 +63,16 @@ Long
 Wildcard
     : 'a' .
     ;
+
+NonRegexToken
+    : 'a'
+    | '#' NonRegexToken '#'
+    ;
+
+GreedyWildcard
+    : '|' .* '|'
+    ;
+
+NonGreedyWildcard
+    : '|' .*? '|'
+    ;

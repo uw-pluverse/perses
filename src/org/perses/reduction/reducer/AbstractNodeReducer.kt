@@ -146,6 +146,6 @@ abstract class AbstractNodeReducer(
   }
 
   companion object {
-    internal const val DEFAULT_INITIAL_QUEUE_CAPACITY = 600
+    const val DEFAULT_INITIAL_QUEUE_CAPACITY = 600
   }
 }

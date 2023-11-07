@@ -16,6 +16,7 @@
  */
 package org.perses.util
 
+import com.google.common.collect.ImmutableBiMap
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableSet
@@ -61,6 +62,13 @@ fun Sequence<Int>.toImmutableIntArray(): ImmutableIntArray {
 
 fun <T, V> List<T>.transformToImmutableList(transform: (T) -> V): ImmutableList<V> {
   return fold(ImmutableList.builderWithExpectedSize<V>(size)) { builder, e ->
+    builder.add(transform(e))
+    builder
+  }.build()
+}
+
+fun <T, V> Sequence<T>.transformToImmutableList(transform: (T) -> V): ImmutableList<V> {
+  return fold(ImmutableList.builder<V>()) { builder, e ->
     builder.add(transform(e))
     builder
   }.build()
@@ -128,6 +136,18 @@ fun <T> Sequence<T>.toImmutableSet(): ImmutableSet<T> {
 fun <K, V> Sequence<Map.Entry<K, V>>.toImmutableMap(): ImmutableMap<K, V> {
   return fold(ImmutableMap.builder<K, V>()) { builder, e ->
     builder.put(e.key, e.value)
+  }.build()
+}
+
+fun <K, V> Iterable<Pair<K, V>>.toImmutableMap(): ImmutableMap<K, V> {
+  return fold(ImmutableMap.builder<K, V>()) { builder, e ->
+    builder.put(e.first, e.second)
+  }.build()
+}
+
+fun <K, V> Sequence<Pair<K, V>>.toImmutableBiMap(): ImmutableBiMap<K, V> {
+  return fold(ImmutableBiMap.builder<K, V>()) { builder, pair ->
+    builder.put(pair.first, pair.second)
   }.build()
 }
 

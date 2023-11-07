@@ -16,33 +16,32 @@
  */
 package org.perses.spartree
 
+import com.google.common.collect.ImmutableBiMap
 import org.antlr.v4.runtime.Token
 import org.antlr.v4.runtime.tree.ParseTree
 import org.antlr.v4.runtime.tree.RuleNode
 import org.antlr.v4.runtime.tree.TerminalNode
-import org.perses.antlr.GrammarHierarchy
-import org.perses.antlr.ParseTreeUtil.getRuleName
-import org.perses.antlr.ParseTreeUtil.getTokenName
 import org.perses.antlr.ParseTreeWithParser
-import org.perses.program.TokenizedProgramFactory
 import org.perses.util.SimpleStack
 import org.perses.util.Util.lazyAssert
 
 /** Build a spar-tree from an Antlr [ParseTree] node.  */
 class SparTreeBuilder(
-  private val antlrRuleHierarchy: GrammarHierarchy,
-  private val tokenizedProgramFactory: TokenizedProgramFactory,
+  private val sparTreeNodeFactory: SparTreeNodeFactory,
   private val parseTreeWithParser: ParseTreeWithParser,
   val simplifyTree: Boolean = true,
 ) {
-
-  private var nodeIdGenerator = 0
-
+  private val spar2antlrMap = HashMap<AbstractSparTreeNode, ParseTree>()
+  val sparAntlrBiMap by lazy {
+    ImmutableBiMap.Builder<AbstractSparTreeNode, ParseTree>()
+      .putAll(spar2antlrMap)
+      .build()
+  }
   val result = build()
 
   private fun build(): SparTree {
     val rootParseTree = parseTreeWithParser.tree
-    val spar2antlrMap = HashMap<AbstractSparTreeNode, ParseTree>()
+    val spar2antlrMap = spar2antlrMap
     val stack = SimpleStack<AbstractSparTreeNode>()
     val root = createSparTreeNode(rootParseTree)
     lazyAssert { !spar2antlrMap.containsKey(root) }
@@ -68,7 +67,7 @@ class SparTreeBuilder(
     if (simplifyTree) {
       SparTreeSimplifier.simplify(root)
     }
-    return SparTree(root, antlrRuleHierarchy, tokenizedProgramFactory)
+    return SparTree(root, sparTreeNodeFactory)
   }
 
   private fun isEOFToken(node: ParseTree): Boolean {
@@ -76,26 +75,15 @@ class SparTreeBuilder(
   }
 
   private fun createSparTreeNode(parseTree: ParseTree): AbstractSparTreeNode {
-    val nodeId = nextNodeId()
     if (isTokenNode(parseTree)) {
-      val node = parseTree as TerminalNode
-      val symbol = node.symbol
-      val tokenRuleName = getTokenName(node, parseTreeWithParser.lexer)
-      val persesToken = tokenizedProgramFactory.tokenFactory.getPersesTokenOrThrow(symbol)
-      return LexerRuleSparTreeNode(
-        nodeId,
-        persesToken,
-        tokenRuleName?.let { antlrRuleHierarchy.getRuleHierarchyEntryOrNull(tokenRuleName) },
+      return sparTreeNodeFactory.createLexerRuleSparTreeNode(
+        parseTree as TerminalNode,
       )
     }
-    val rule = antlrRuleHierarchy.getRuleHierarchyEntryWithNameOrThrow(
-      getRuleName((parseTree as RuleNode), parseTreeWithParser.parser),
+    return sparTreeNodeFactory.createParserRuleSparTreeNode(
+      parseTree as RuleNode,
+      parseTreeWithParser.parser,
     )
-    return ParserRuleSparTreeNode(nodeId, rule)
-  }
-
-  private fun nextNodeId(): Int {
-    return ++nodeIdGenerator
   }
 
   companion object {

@@ -2,7 +2,7 @@ load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
 
 DEFAULT_DEPS = [
     "//src/org/perses/program:language_kind",
-    "//src/org/perses/antlr:antlr_grammar_util",
+    "//src/org/perses/antlr:util",
     "//src/org/perses/antlr:antlr_hierarchy",
     "//src/org/perses/grammar:grammar_facade",
     "//src/org/perses/grammar/c:optc_parser_facade",
@@ -53,6 +53,26 @@ kt_jvm_test(
 kt_jvm_test(
     name = "NodeReplacementActionSetTest",
     srcs = ["NodeReplacementActionSetTest.kt"],
+    data = [
+        "//test_data/misc",
+        "//test_data/parentheses",
+    ],
+    deps = DEFAULT_DEPS,
+)
+
+kt_jvm_test(
+    name = "LatraGeneralActionSetTest",
+    srcs = ["LatraGeneralActionSetTest.kt"],
+    data = [
+        "//test_data/misc",
+        "//test_data/parentheses",
+    ],
+    deps = DEFAULT_DEPS,
+)
+
+kt_jvm_test(
+    name = "LatraGeneralTreeEditTest",
+    srcs = ["LatraGeneralTreeEditTest.kt"],
     data = [
         "//test_data/misc",
         "//test_data/parentheses",
@@ -112,4 +132,54 @@ kt_jvm_test(
     ],
     test_class = "org.perses.spartree.SparTreeTest",
     deps = DEFAULT_DEPS,
+)
+
+kt_jvm_test(
+    name = "SparTreeBuilderTest",
+    srcs = ["SparTreeBuilderTest.kt"],
+    data = [
+        "//test_data/misc",
+        "//test_data/parentheses",
+    ],
+    test_class = "org.perses.spartree.SparTreeBuilderTest",
+    deps = DEFAULT_DEPS + [
+        "//src/org/perses/grammar/c:orig_parser_facade",
+    ],
+)
+
+kt_jvm_test(
+    name = "NodeDeletionTreeEditTest",
+    srcs = ["NodeDeletionTreeEditTest.kt"],
+    data = [
+        "//test_data/misc",
+        "//test_data/parentheses",
+    ],
+    deps = DEFAULT_DEPS,
+)
+
+kt_jvm_test(
+    name = "MinimalSparTreeGeneratorTest",
+    srcs = ["MinimalSparTreeGeneratorTest.kt"],
+    associates = ["//src/org/perses/spartree:minimal_spartree_generator"],
+    deps = DEFAULT_DEPS,
+)
+
+kt_jvm_test(
+    name = "PlaceholderSparTreeNodeTest",
+    srcs = ["PlaceholderSparTreeNodeTest.kt"],
+    associates = ["//src/org/perses/spartree"],
+    deps = [
+        "//:antlr_runtime",
+        "//:antlr_tool",
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/antlr:antlr_hierarchy",
+        "//src/org/perses/antlr:util",
+        "//src/org/perses/grammar:grammar_facade",
+        "//src/org/perses/grammar/c:optc_parser_facade",
+        "//src/org/perses/program",
+        "//src/org/perses/program:language_kind",
+        "//src/org/perses/program/printer",
+        "//test/org/perses:test_util",
+    ],
 )

@@ -79,7 +79,7 @@ class PersesAstTest {
   }
 
   @Test
-  fun test_pushMode() {
+  fun testPushMode() {
     val grammar = createPersesGrammarFromString(
       """
       XMLDeclOpen : '<' -> pushMode(INSIDE) ;
@@ -90,7 +90,7 @@ class PersesAstTest {
   }
 
   @Test
-  fun test_tokenSpecifications() {
+  fun testTokenSpecifications() {
     val grammar = createPersesGrammarFromString(
       """
         tokens { INDENT, DEDENT }
@@ -99,5 +99,42 @@ class PersesAstTest {
     val code = grammar.sourceCode
     assertThat(code.trim().replace(Regex("\\s"), ""))
       .contains("tokens {INDENT, DEDENT}".replace("\\s".toRegex(), ""))
+  }
+
+  @Test
+  fun testPersesParserAttributes() {
+    createPersesGrammarFromString("start locals [int a = 0] : 'a';").parserRules.single()
+      .attributes.let { attributes ->
+        assertThat(attributes.hasArguments()).isFalse()
+        assertThat(attributes.hasLocals()).isTrue()
+        assertThat(attributes.hasReturn()).isFalse()
+        attributes.locals!!.let { locals ->
+          assertThat(locals.sourceCode).isEqualTo("int a = 0")
+        }
+        assertThat(attributes.isEmpty()).isFalse()
+        assertThat(attributes.isNotEmpty()).isTrue()
+      }
+    createPersesGrammarFromString("start returns [int a] : 'a';").parserRules.single()
+      .attributes.let { attributes ->
+        assertThat(attributes.hasArguments()).isFalse()
+        assertThat(attributes.hasLocals()).isFalse()
+        assertThat(attributes.hasReturn()).isTrue()
+        attributes.returns!!.let {
+          assertThat(it.sourceCode).isEqualTo("int a")
+        }
+        assertThat(attributes.isEmpty()).isFalse()
+        assertThat(attributes.isNotEmpty()).isTrue()
+      }
+    createPersesGrammarFromString("start[int a]:'a';").parserRules.single()
+      .attributes.let { attributes ->
+        assertThat(attributes.hasReturn()).isFalse()
+        assertThat(attributes.hasLocals()).isFalse()
+        assertThat(attributes.hasArguments()).isTrue()
+        attributes.arguments!!.let {
+          assertThat(it.sourceCode).isEqualTo("int a")
+        }
+        assertThat(attributes.isEmpty()).isFalse()
+        assertThat(attributes.isNotEmpty()).isTrue()
+      }
   }
 }

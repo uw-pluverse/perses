@@ -16,8 +16,6 @@
  */
 package org.perses.util.java
 
-import com.google.common.io.MoreFiles
-import com.google.common.io.RecursiveDeleteOption
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Test
@@ -27,6 +25,7 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
+import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
 class JarFileTest {
@@ -35,7 +34,7 @@ class JarFileTest {
 
   @After
   fun teardown() {
-    MoreFiles.deleteRecursively(tempDir, RecursiveDeleteOption.ALLOW_INSECURE)
+    tempDir.deleteRecursively()
   }
 
   @Test

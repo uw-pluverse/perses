@@ -32,9 +32,9 @@ antlr_codegen_combined(
     parser_java_file_name = "PnfScalaParser.java",
 )
 
-java_library(
+kt_jvm_library(
     name = "parser_facade",
-    srcs = ["PnfScalaParserFacade.java"],
+    srcs = ["PnfScalaParserFacade.kt"],
     deps = [
         ":language_kind",
         ":orig_scala_grammar",

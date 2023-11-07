@@ -17,8 +17,6 @@
 package org.perses.reduction
 
 import org.perses.grammar.AbstractParserFacade
-import org.perses.grammar.AbstractParserFacadeFactory
-import org.perses.program.LanguageKind
 import java.nio.file.Path
 import kotlin.io.path.name
 
@@ -28,27 +26,20 @@ import kotlin.io.path.name
  * TODO: refactor this to a AutoValue class, or use the BUILDER pattern.
  */
 class ReductionConfiguration(
-  languageKind: LanguageKind,
   val statisticsFile: Path?,
-  val progressDumpFile: Path?,
+  val progressDumpFile: ProgressDumpFile?,
   val fixpointReduction: Boolean,
   val enableTestScriptExecutionCaching: Boolean,
   val useRealDeltaDebugger: Boolean,
   val numOfReductionThreads: Int,
-  parserFacadeFactory: AbstractParserFacadeFactory,
+  val parserFacade: AbstractParserFacade,
   val persesNodeReducerConfig: PersesNodeReducerConfiguration,
+  val vulcanConfig: VulcanConfig,
 ) {
-  /** The parser facade.  */
-  val parserFacade: AbstractParserFacade
 
   // TODO: convert the return type to File?
   val testScriptStatisticsFile: Path?
-    get() = if (statisticsFile == null) {
-      null
-    } else {
-      statisticsFile.parent.resolve("testscript-" + statisticsFile.name)
-//      File(statisticsFile.parentFile, "testscript-" + statisticsFile.name)
-    }
+    get() = statisticsFile?.parent?.resolve("testscript-" + statisticsFile.name)
 
   fun dumpConfiguration(): String {
     val builder = StringBuilder()
@@ -63,8 +54,9 @@ class ReductionConfiguration(
     require(numOfReductionThreads > 0) {
       "The number of reduction threads should be positive: $numOfReductionThreads"
     }
-    parserFacade = parserFacadeFactory.createParserFacade(languageKind)
   }
+
+  data class ProgressDumpFile(val path: Path, val appendMode: Boolean)
 
   class PersesNodeReducerConfiguration(
     val maxEditCountForRegularRuleNode: Int,
@@ -74,6 +66,17 @@ class ReductionConfiguration(
     init {
       require(maxEditCountForRegularRuleNode > 0)
       require(maxBfsDepthForRegularRuleNode > 0)
+    }
+  }
+
+  class VulcanConfig(
+    val nonDeletionIterationLimit: Int,
+    val windowSizeForLocalExhaustivePatternReduction: Int,
+    val vulcanFixpoint: Boolean,
+  ) {
+    init {
+      require(nonDeletionIterationLimit > 0)
+      require(windowSizeForLocalExhaustivePatternReduction > 0)
     }
   }
 }

@@ -37,18 +37,18 @@ class MutableAltBlockTest : AbstractMutableGrammarTest() {
 
   @Test
   fun test_addIfNotEquivalent() {
-    assertThat(block.addIfInequivalent(refA)).isTrue()
+    assertThat(block.addIfNotEquivalent(refA)).isTrue()
     assertThat(block.size()).isEqualTo(1)
     assertThat(block.asSequence().toList()).containsExactly(refA)
     assertThat(block.asIterable().toList()).containsExactly(refA)
     assertThat(block[0]).isSameInstanceAs(refA)
 
-    assertThat(block.addIfInequivalent(refA)).isFalse()
+    assertThat(block.addIfNotEquivalent(refA)).isFalse()
     assertThat(block.size()).isEqualTo(1)
     assertThat(block.isEmpty).isFalse()
     assertThat(block.isNotEmpty).isTrue()
 
-    assertThat(block.addIfInequivalent(refB)).isTrue()
+    assertThat(block.addIfNotEquivalent(refB)).isTrue()
     assertThat(block.size()).isEqualTo(2)
     assertThat(block[1]).isSameInstanceAs(refB)
   }
@@ -56,7 +56,7 @@ class MutableAltBlockTest : AbstractMutableGrammarTest() {
   @Test
   fun testReplace_throw() {
     val block = MutableAltBlock()
-    block.addIfInequivalent(refA)
+    block.addIfNotEquivalent(refA)
     Assert.assertThrows(Exception::class.java) {
       block.replace(refA, refA)
     }
@@ -65,7 +65,7 @@ class MutableAltBlockTest : AbstractMutableGrammarTest() {
       block.replace(refA, PersesRuleReferenceAst.create(refA.ruleNameHandle))
     }
 
-    block.addIfInequivalent(refB)
+    block.addIfNotEquivalent(refB)
     Assert.assertThrows(Exception::class.java) {
       block.replace(refA, refB)
     }
@@ -74,9 +74,9 @@ class MutableAltBlockTest : AbstractMutableGrammarTest() {
   @Test
   fun testReplace() {
     val block = MutableAltBlock()
-    block.addIfInequivalent(refA)
-    block.addIfInequivalent(refB)
-    block.addIfInequivalent(refC)
+    block.addIfNotEquivalent(refA)
+    block.addIfNotEquivalent(refB)
+    block.addIfNotEquivalent(refC)
 
     assertThat(block.asIterable()).containsExactly(
       refA,

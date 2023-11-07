@@ -24,7 +24,7 @@ class AlternativeBlockTDTreeNode(nodeId: Int) : AbstractTDTreeNode(nodeId) {
     return null
   }
 
-  override fun copyCurrentNode(): AbstractTDTreeNode {
-    return AlternativeBlockTDTreeNode(nodeId)
+  override fun internalCopyCurrentNode(computedNewNodeId: Int): AbstractTDTreeNode {
+    return AlternativeBlockTDTreeNode(computedNewNodeId)
   }
 }

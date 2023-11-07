@@ -42,7 +42,11 @@ class VersionTest {
   @Test
   fun testPrint() {
     val bos = ByteArrayOutputStream()
-    PrintStream(bos, /*autoFlush=*/true, Charsets.UTF_8.name()).use {
+    PrintStream(
+      bos,
+      true, // autoFlush
+      Charsets.UTF_8.name(),
+    ).use {
       VersionHelper.printVersionInfo("perses", it)
     }
     val string = bos.toString(Charsets.UTF_8.name())

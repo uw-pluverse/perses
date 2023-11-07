@@ -27,7 +27,7 @@ class PartitionList<T>(
   lateinit var partitions: ImmutableList<Partition<T>>
     private set
 
-  private fun createPartitionForInterval(interval: Interval) = Partition<T>(input, interval)
+  private fun createPartitionForInterval(interval: Interval) = Partition(input, interval)
 
   fun computeComplementFor(partitionToExclude: Partition<T>): ImmutableList<T> {
     val result = ImmutableList.builder<T>()
@@ -52,12 +52,13 @@ class PartitionList<T>(
   }
 
   class Builder<T>(input: ImmutableList<T>) {
-    private var list: PartitionList<T>? = PartitionList(input)
+    private var used = false
+    private val list = PartitionList(input)
     private var intervalBuilder = ImmutableList.builder<Partition<T>>()
 
     fun createPartition(leftInclusive: Int, rightExclusive: Int): Builder<T> {
       intervalBuilder.add(
-        list!!.createPartitionForInterval(
+        list.createPartitionForInterval(
           Interval(
             leftInclusive,
             rightExclusive,
@@ -68,18 +69,19 @@ class PartitionList<T>(
     }
 
     fun build(): PartitionList<T> {
-      val result = list!!
+      check(!used)
+      used = true
+      val result = list
       val partitions = intervalBuilder.build()
       result.partitions = partitions
-      list = null
 
-      require(
-        partitions.zipWithNext().all { (prev, curr) ->
-          prev.interval.rightExclusive <= curr.interval.leftInclusive
+      lazyAssert(
+        {
+          partitions.zipWithNext().all { (prev, curr) ->
+            prev.interval.rightExclusive <= curr.interval.leftInclusive
+          }
         },
-      ) {
-        "invalid partition intervals. $partitions"
-      }
+      ) { "invalid partition intervals. $partitions" }
       require(
         partitions.isEmpty() || partitions.last().interval.rightExclusive <= result.input.size,
       )

@@ -26,6 +26,7 @@ import org.perses.antlr.ast.PersesPlusAst
 import org.perses.antlr.ast.PersesRuleReferenceAst
 import org.perses.grammar.c.LanguageC
 import org.perses.program.printer.PrinterRegistry
+import org.perses.spartree.AbstractTreeNode.NodeIdCopyStrategy.ReuseNodeIdStrategy
 import java.nio.file.Paths
 
 @RunWith(JUnit4::class)
@@ -175,7 +176,7 @@ class SparTreeTest {
     )
     val node2 = nodeToTokensMap.getNode(node2Key, "compoundStatement")
 
-    val replacingNode = node2.recursiveDeepCopy()
+    val replacingNode = node2.recursiveDeepCopy(ReuseNodeIdStrategy)
 
     // remove inputNode out of the tree
     val builder = NodeDeletionActionSet.Builder("edit 1")

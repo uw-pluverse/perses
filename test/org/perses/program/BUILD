@@ -9,6 +9,12 @@ DEFAULT_DEPS = [
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 
 kt_jvm_test(
+    name = "LanguageKindTest",
+    srcs = ["LanguageKindTest.kt"],
+    deps = DEFAULT_DEPS,
+)
+
+kt_jvm_test(
     name = "TokenizedProgramTest",
     srcs = ["TokenizedProgramTest.kt"],
     data = [
@@ -16,7 +22,6 @@ kt_jvm_test(
         "//test_data/java_helloworld",
         "//test_data/parentheses",
     ],
-    test_class = "org.perses.program.TokenizedProgramTest",
     deps = DEFAULT_DEPS,
 )
 
@@ -38,7 +43,6 @@ kt_jvm_test(
     data = [
         "//test_data/delta_1",
     ],
-    test_class = "org.perses.program.ScriptFileTest",
     deps = DEFAULT_DEPS + [
         "//:kotlin_stdib",
         "//src/org/perses/program:language_kind",

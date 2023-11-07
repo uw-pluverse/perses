@@ -16,22 +16,21 @@
  */
 package org.perses.spartree
 
-import com.google.common.annotations.VisibleForTesting
 import com.google.common.base.MoreObjects
+import com.google.common.collect.ImmutableList
 import org.perses.antlr.RuleHierarchyEntry
 import org.perses.antlr.RuleType
-import org.perses.antlr.pnf.AstUtil.computeNodeType
+import org.perses.util.Util.lazyAssert
+import org.perses.util.toImmutableList
 import java.io.IOError
 import java.io.IOException
 import java.io.StringWriter
 import java.io.Writer
 
-abstract class AbstractSparTreeNode internal constructor(
+sealed class AbstractSparTreeNode(
   nodeId: Int,
   val antlrRule: RuleHierarchyEntry?,
 ) : AbstractTreeNode<AbstractSparTreeNode, AbstractNodePayload>(nodeId) {
-
-  val nodeType: RuleType = computeNodeType(antlrRule)
 
   /** The count of tokens under this node.  */
   var leafTokenCount = INVALID_LEAF_TOKEN_COUNT
@@ -39,19 +38,20 @@ abstract class AbstractSparTreeNode internal constructor(
 
   protected abstract val labelPrefix: String
 
-  abstract val isTokenNode: Boolean
+  val isTokenNode: Boolean
+    get() = this is LexerRuleSparTreeNode
 
   val isKleeneStarRuleNode: Boolean
-    get() = nodeType === RuleType.KLEENE_STAR
+    get() = this is ParserRuleSparTreeNode && this.ruleType === RuleType.KLEENE_STAR
 
   val isKleenePlusRuleNode: Boolean
-    get() = nodeType === RuleType.KLEENE_PLUS
+    get() = this is ParserRuleSparTreeNode && this.ruleType === RuleType.KLEENE_PLUS
 
   val isQuantifierNode: Boolean
     get() = isKleenePlusRuleNode || isKleeneStarRuleNode || isOptionalRuleNode
 
   val isOptionalRuleNode: Boolean
-    get() = nodeType === RuleType.OPTIONAL
+    get() = this is ParserRuleSparTreeNode && this.ruleType === RuleType.OPTIONAL
 
   val ruleName: String
     get() {
@@ -62,11 +62,11 @@ abstract class AbstractSparTreeNode internal constructor(
     }
 
   open fun asParserRule(): ParserRuleSparTreeNode {
-    TODO()
+    TODO("The current class is ${this::class}. $this")
   }
 
   open fun asLexerRule(): LexerRuleSparTreeNode {
-    TODO()
+    TODO("The current class is ${this::class}. $this")
   }
 
   /**
@@ -88,6 +88,56 @@ abstract class AbstractSparTreeNode internal constructor(
       }
     }
     return leafTokenCount
+  }
+
+  fun leafNodeSequence(): Sequence<LexerRuleSparTreeNode> {
+    lazyAssert({ checkLeafLinkIntegrity() == null }) { checkLeafLinkIntegrity()!! }
+    return internalLeafNodeSequence()
+  }
+
+  private fun internalLeafNodeSequence(): Sequence<LexerRuleSparTreeNode> {
+    return sequence {
+      var i = beginToken
+      while (i != null && i !== endToken) {
+        yield(i)
+        i = i.next
+      }
+      if (i != null && i === endToken) {
+        yield(i)
+      }
+    }
+  }
+
+  private fun checkLeafLinkIntegrity(): ErrorMessage? {
+    val errors = ImmutableList.builder<String>()
+    val leaves = collectLeavesWithPostorder()
+    val anotherLeaves = internalLeafNodeSequence().toImmutableList()
+    if (leaves.toList() != anotherLeaves.toList()) {
+      errors.add("leaf node links are not updated.")
+    }
+    if (leaves.size != anotherLeaves.size) {
+      errors.add("leaf node links are not updated.")
+    }
+    return errors.build().let {
+      if (it.isEmpty()) {
+        null
+      } else {
+        ErrorMessage(it)
+      }
+    }
+  }
+  override fun checkNodeIntegrity(): ErrorMessage? {
+    return null
+  }
+
+  private fun collectLeavesWithPostorder(): MutableList<LexerRuleSparTreeNode> {
+    val leaves = mutableListOf<LexerRuleSparTreeNode>()
+    postOrderVisit { node ->
+      if (node is LexerRuleSparTreeNode) {
+        leaves.add(node)
+      }
+    }
+    return leaves
   }
 
   fun buildTokenIntervalInfoRecursive() {
@@ -121,22 +171,22 @@ abstract class AbstractSparTreeNode internal constructor(
     return printTreeStructure(this)
   }
 
-  override fun recursiveDeepCopy(): AbstractSparTreeNode {
-    val copyNode = super.recursiveDeepCopy()
+  override fun recursiveDeepCopy(nodeIdCopyStrategy: NodeIdCopyStrategy): AbstractSparTreeNode {
+    val copyNode = super.recursiveDeepCopy(nodeIdCopyStrategy)
     copyNode.buildTokenIntervalInfoRecursive()
     copyNode.linkLeafNodes()
     return copyNode
   }
 
-  internal fun linkLeafNodes() {
-    // TODO: this can be improved with the 'yield' and iterator.
+  fun linkLeafNodes() {
+    // TODO(cnsun): this can be improved with the 'yield' and iterator.
     val nodes = ArrayList<LexerRuleSparTreeNode>(5000)
     preOrderVisit { node: AbstractSparTreeNode ->
       if (node.isPermanentlyDeleted) {
         return@preOrderVisit emptyList()
       }
-      if (node.nodeType == RuleType.TOKEN) {
-        nodes.add(node as LexerRuleSparTreeNode)
+      if (node is LexerRuleSparTreeNode) {
+        nodes.add(node)
         return@preOrderVisit emptyList()
       }
       node.immutableChildView
@@ -211,15 +261,6 @@ abstract class AbstractSparTreeNode internal constructor(
 
       builder.append("}")
       return builder.toString()
-    }
-
-    @VisibleForTesting
-    fun computeNodeType(antlrRule: RuleHierarchyEntry?): RuleType {
-      if (antlrRule == null) {
-        return RuleType.TOKEN
-      }
-      val ruleDef = antlrRule.ruleDef
-      return computeNodeType(ruleDef)
     }
   }
 }

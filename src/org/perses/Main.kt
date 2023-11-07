@@ -19,35 +19,16 @@ package org.perses
 import com.google.common.base.Preconditions
 import com.google.common.collect.ImmutableList
 import org.perses.grammar.AbstractParserFacadeFactory
-import org.perses.grammar.SingleParserFacadeFactory
-import org.perses.grammar.SingleParserFacadeFactory.ParserFacadeFactoryCustomizer
 import org.perses.grammar.adhoc.AdhocParserFacadeFactoryUtil.createParserFacadeFactory
-import org.perses.grammar.c.CParserFacade
-import org.perses.grammar.c.LanguageC
-import org.perses.grammar.c.PnfCParserFacade
 import org.perses.reduction.IReductionDriver
 import org.perses.reduction.ReducerFactory.defaultReductionAlgName
 import org.perses.reduction.ReducerFactory.isValidReducerName
 import org.perses.reduction.ReducerFactory.printAllReductionAlgorithms
-import org.perses.reduction.RegularProgramReductionDriver.Companion.create
+import org.perses.reduction.RegularProgramReductionDriver
 
 class Main(args: Array<String>) : AbstractMain<CommandOptions>(args) {
   override fun createCommandOptions(): CommandOptions {
     return CommandOptions(defaultReductionAlgName)
-  }
-
-  override fun createCustomizer(): ParserFacadeFactoryCustomizer {
-    return ParserFacadeFactoryCustomizer { language, defaultParserFacadeCreator ->
-      if (language === LanguageC) {
-        if (cmd.algorithmControlFlags.useOptCParser) {
-          SingleParserFacadeFactory.ParserFacadeCreator { CParserFacade() }
-        } else {
-          SingleParserFacadeFactory.ParserFacadeCreator { PnfCParserFacade() }
-        }
-      } else {
-        defaultParserFacadeCreator
-      }
-    }
   }
 
   override fun createExtFacadeFactory(): AbstractParserFacadeFactory {
@@ -78,7 +59,7 @@ class Main(args: Array<String>) : AbstractMain<CommandOptions>(args) {
   }
 
   override fun createReductionDriver(facadeFactory: AbstractParserFacadeFactory): IReductionDriver {
-    return create(cmd, facadeFactory, ImmutableList.of())
+    return RegularProgramReductionDriver.create(cmd, facadeFactory, ImmutableList.of())
   }
 
   companion object {

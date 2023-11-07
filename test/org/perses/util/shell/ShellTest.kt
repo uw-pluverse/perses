@@ -22,10 +22,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.util.Util
-import org.perses.util.shell.AbstractShell.Companion.CURRENT_ENV
-import org.perses.util.shell.AbstractShell.Companion.createNewEnvironmentVar
-import org.perses.util.shell.AbstractShell.Companion.singleton
 import org.perses.util.shell.ShellCommandOnPath.Companion.normalizeAndCheckExecutability
+import org.perses.util.shell.Shells.Companion.CURRENT_ENV
+import org.perses.util.shell.Shells.Companion.createNewEnvironmentVar
+import org.perses.util.shell.Shells.Companion.singleton
 import java.nio.file.Files
 import kotlin.io.path.writeText
 

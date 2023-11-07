@@ -294,11 +294,11 @@ protected constructor(val nodeId: Int) : Comparable<T> {
       .forEach { visitor(it) }
   }
 
-  open fun recursiveDeepCopy(): T {
+  open fun recursiveDeepCopy(nodeIdCopyStrategy: NodeIdCopyStrategy): T {
     cleanDeletedImmediateChildren()
     val map = HashMap<T, T>()
     postOrderVisit { origNode ->
-      val copyNode = origNode.copyCurrentNode()
+      val copyNode = origNode.copyCurrentNode(nodeIdCopyStrategy)
       origNode.children.forEach { oldChild ->
         val newChild = map[oldChild]!!
         copyNode.addChild(newChild, oldChild.payload!!)
@@ -309,7 +309,14 @@ protected constructor(val nodeId: Int) : Comparable<T> {
     return map[this]!!
   }
 
-  protected abstract fun copyCurrentNode(): T
+  protected fun copyCurrentNode(nodeIdCopyStrategy: NodeIdCopyStrategy): T {
+    val newNodeId = nodeIdCopyStrategy.computeNodeId(nodeId)
+    return internalCopyCurrentNode(newNodeId).also {
+      check(it.nodeId == newNodeId)
+    }
+  }
+
+  protected abstract fun internalCopyCurrentNode(computedNewNodeId: Int): T
 
   companion object {
 
@@ -382,6 +389,14 @@ protected constructor(val nodeId: Int) : Comparable<T> {
       anotherNode: T,
     ): T {
       return findLowestAncestor(ImmutableList.of(oneNode, anotherNode))
+    }
+  }
+
+  interface NodeIdCopyStrategy {
+    fun computeNodeId(oldNodeId: Int): Int
+
+    object ReuseNodeIdStrategy : NodeIdCopyStrategy {
+      override fun computeNodeId(oldNodeId: Int) = oldNodeId
     }
   }
 }

@@ -26,6 +26,22 @@ kt_jvm_library(
     ],
 )
 
+kt_jvm_test(
+    name = "LexerAtnWrapperTest",
+    srcs = ["LexerAtnWrapperTest.kt"],
+    jvm_flags = ["-javaagent:$(location //third_party/memory_measurer:object_explorer)"],
+    deps = [
+        ":TestLexer",
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/antlr/atn",
+        "//src/org/perses/util",
+        "//test/org/perses:test_util",
+        "//test/org/perses/antlr/atn:OrigC",
+        "//third_party/memory_measurer:object_explorer",
+    ],
+)
+
 java_binary(
     name = "antlr_tool_test",
     args = [

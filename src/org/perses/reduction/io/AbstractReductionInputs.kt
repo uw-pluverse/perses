@@ -29,15 +29,15 @@ abstract class AbstractReductionInputs<K : AbstractDataKind, S : AbstractReducti
   val testScript: ScriptFile,
   val mainDataKind: K,
   val rootDirectory: Path,
-  files: ImmutableList<out AbstractReductionFile<*, *>>,
+  val programFiles: ImmutableList<out AbstractReductionFile<*, *>>,
 ) {
 
   val absoluteRootDirectory: Path = rootDirectory.toAbsolutePath()
   val orig2relativePathPairs: ImmutableList<OrigAndRelativePathPair>
 
   init {
-    check(files.any { it.dataKind == mainDataKind }) { files }
-    orig2relativePathPairs = files.asSequence()
+    check(programFiles.any { it.dataKind == mainDataKind }) { programFiles }
+    orig2relativePathPairs = programFiles.asSequence()
       .map { it to it.file.toAbsolutePath() }
       .onEach { check(it.second.startsWith(absoluteRootDirectory)) }
       .map {
@@ -46,6 +46,10 @@ abstract class AbstractReductionInputs<K : AbstractDataKind, S : AbstractReducti
     check(orig2relativePathPairs.size < 5) {
       "Consider using a hash map for many elements. $orig2relativePathPairs"
     }
+    check(
+      orig2relativePathPairs.asSequence().map { it.relativePath }.distinct().count() ==
+        orig2relativePathPairs.size,
+    )
   }
 
   fun writeTestScriptTo(folder: Path): TestScript {

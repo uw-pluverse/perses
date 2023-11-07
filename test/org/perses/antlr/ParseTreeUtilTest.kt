@@ -28,8 +28,8 @@ import org.antlr.v4.tool.LexerGrammar
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.antlr.ParseTreeUtil.getRuleName
-import org.perses.antlr.ParseTreeUtil.getTokenName
+import org.perses.antlr.ParseTreeUtil.getParserRuleName
+import org.perses.antlr.ParseTreeUtil.getSymbolicTokenTypeName
 
 @RunWith(JUnit4::class)
 class ParseTreeUtilTest {
@@ -74,15 +74,15 @@ class ParseTreeUtilTest {
     assertThat(ruleNodeD.childCount).isEqualTo(1)
     val tokenNodeD = ruleNodeD.getChild(0) as TerminalNode
 
-    assertThat(getRuleName(ruleNodeStart, parser)).isEqualTo("start")
-    assertThat(getRuleName(ruleNodeOther, parser)).isEqualTo("other")
-    assertThat(getRuleName(ruleNodeD, parser)).isEqualTo("d")
+    assertThat(getParserRuleName(ruleNodeStart, parser)).isEqualTo("start")
+    assertThat(getParserRuleName(ruleNodeOther, parser)).isEqualTo("other")
+    assertThat(getParserRuleName(ruleNodeD, parser)).isEqualTo("d")
 
-    assertThat(getTokenName(tokenNodeA, lexEngine)).isEqualTo("A")
-    assertThat(getTokenName(tokenNodeB, lexEngine)).isEqualTo("B")
-    assertThat(getTokenName(tokenNodeC, lexEngine)).isEqualTo("C")
-    assertThat(getTokenName(tokenNodeD, lexEngine)).isEqualTo("D")
+    assertThat(getSymbolicTokenTypeName(tokenNodeA, lexEngine.vocabulary)).isEqualTo("A")
+    assertThat(getSymbolicTokenTypeName(tokenNodeB, lexEngine.vocabulary)).isEqualTo("B")
+    assertThat(getSymbolicTokenTypeName(tokenNodeC, lexEngine.vocabulary)).isEqualTo("C")
+    assertThat(getSymbolicTokenTypeName(tokenNodeD, lexEngine.vocabulary)).isEqualTo("D")
 
-    assertThat(getTokenName(tokenNodeA.symbol, lexEngine)).isEqualTo("A")
+    assertThat(getSymbolicTokenTypeName(tokenNodeA.symbol, lexEngine.vocabulary)).isEqualTo("A")
   }
 }

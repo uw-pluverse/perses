@@ -19,7 +19,6 @@ package org.perses.antlr.pnf
 import com.google.common.collect.ImmutableList
 import org.perses.antlr.ast.AbstractPersesRuleElement
 import org.perses.antlr.ast.AstTag
-import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.ast.PersesRuleReferenceAst
 import org.perses.util.toImmutableList
 
@@ -33,10 +32,10 @@ class InlineSingleUseAltRulePass : AbstractPnfPass() {
    *
    * FIXME(cnsun): this needs to be rewritten with the current [MutableGrammar].
    */
-  override fun processParserGrammar(
-    parserGrammar: PersesGrammar,
-    lexerGrammar: PersesGrammar?,
-  ): PersesGrammar {
+  override fun processGrammar(
+    grammar: GrammarPair,
+  ): GrammarPair {
+    val parserGrammar = grammar.parserGrammar ?: return grammar
     val mutableGrammar = MutableGrammar.createParserRulesFrom(parserGrammar)
     val ruleNameList = getSortedRuleNames(mutableGrammar)
     for (ruleName in ruleNameList) {
@@ -49,7 +48,9 @@ class InlineSingleUseAltRulePass : AbstractPnfPass() {
       // order.
       mutableGrammar.removeRule(ruleName)
       val oldAltToNewAlts = LinkedHashMap<
-        AbstractPersesRuleElement, ArrayList<AbstractPersesRuleElement>,>()
+        AbstractPersesRuleElement,
+        ArrayList<AbstractPersesRuleElement>,
+        >()
       for (alternative in origAlternatives) {
         val list = ArrayList<AbstractPersesRuleElement>()
         list.add(alternative)
@@ -70,10 +71,12 @@ class InlineSingleUseAltRulePass : AbstractPnfPass() {
         if (isEquivalentToAny(alt, mutableGrammar.getAltBlock(ruleName))) {
           continue
         }
-        mutableGrammar.getAltBlock(ruleName).addIfInequivalent(alt)
+        mutableGrammar.getAltBlock(ruleName).addIfNotEquivalent(alt)
       }
     }
-    return parserGrammar.copyWithNewParserRuleDefs(mutableGrammar.toParserRuleAstList())
+    return grammar.withNewParserGrammar(
+      parserGrammar.copyWithNewParserRuleDefs(mutableGrammar.toParserRuleAstList()),
+    )
   }
 
   private class Candidate(

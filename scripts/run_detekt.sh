@@ -13,11 +13,12 @@ fi
 readonly JAR="detekt_deploy.jar"
 bazel build "//:${JAR}"
 
+readonly KT_VERSION="1.8"
 # DON'T use 'bazel run //:detekt_deploy.jar' due to its working directory
 #     is not the root of the workspace.
 java -jar bazel-bin/${JAR} \
     --input src,test,antlropt,version \
-    --language-version 1.4 \
+    --language-version "${KT_VERSION}" \
     --parallel || exit 1
 
 echo "detekt is done."

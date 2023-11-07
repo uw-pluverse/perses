@@ -19,6 +19,10 @@ package org.perses.reduction
 import com.google.common.collect.ImmutableList
 import org.perses.reduction.AbstractProgramReductionDriver.StatsOfFilesBeingReduced
 import org.perses.reduction.ReducerAnnotation.ReductionResultSizeTrend.BEST_RESULT_SIZE_INCREASE
+import org.perses.reduction.ReducerScheduler.FixpointDecision.CONTINUE_CHANGE_IN_RESULT_BUT_NOT_SMALLER
+import org.perses.reduction.ReducerScheduler.FixpointDecision.CONTINUE_SMALLER_RESULT
+import org.perses.reduction.ReducerScheduler.FixpointDecision.STOP_NON_DELETION_ITERATION_LIMIT_REACHED
+import org.perses.reduction.ReducerScheduler.FixpointDecision.STOP_NO_CHANGE_IN_RESULT
 import org.perses.util.Util.lazyAssert
 
 class ReducerScheduler(
@@ -28,34 +32,55 @@ class ReducerScheduler(
   private val auxiliaryReducerCreators: ImmutableList<ITokenReducerCreator>,
   computeStatistics: () -> StatsOfFilesBeingReduced,
   reducerRunner: (AbstractTokenReducer) -> Unit,
-  private val nonDeletionIterationLimitThreshold: Int,
-  private val updateAfterIteration: () -> Unit,
+  private val actionBeforeNonFirstRunOfMainReducers: () -> Unit,
 ) {
 
   private val schedulerEvents = SchedulerEventHistory()
 
   fun run() {
-    do {
-      val initialStatistics = recordStatsSnapshotIfNotYet()
-      mainReducerCreator.create(reducerContext).forEach {
-        callReducer(it)
+    run {
+      // Always run the main reducers first, continuously if fixpoint is enabled.
+      var fixpointDecision = callMainReducersOnce()
+      while (fixpointMode && fixpointDecision.continueFixpoint) {
+        actionBeforeNonFirstRunOfMainReducers()
+        fixpointDecision = callMainReducersOnce()
       }
-      if (shouldExitFixpointIteration(initialStatistics)) {
-        if (auxiliaryReducerCreators.isEmpty()) {
-          break
-        } else {
+    }
+
+    val vulcanFixpointMode = reducerContext.configuration.vulcanConfig.vulcanFixpoint
+    var auxiliaryReducerMadeProgress: Boolean
+    do { // vulcan fixpoint
+      auxiliaryReducerMadeProgress = false
+      auxiliaryReducerCreators.forEach { creator ->
+        while (true) {
           val statsBeforeAuxReducers = recordStatsSnapshotIfNotYet()
-          auxiliaryReducerCreators
-            .asSequence()
-            .flatMap { it.create(reducerContext) }
-            .forEach { callReducer(it) }
-          if (shouldExitFixpointIteration(statsBeforeAuxReducers)) {
+          creator.create(reducerContext).forEach { callReducer(it) }
+          val auxFixpointDecision = computeFixpointDecision(statsBeforeAuxReducers)
+          if (!auxFixpointDecision.continueFixpoint) {
             break
+          }
+          if (auxFixpointDecision == CONTINUE_SMALLER_RESULT) {
+            auxiliaryReducerMadeProgress = true
+          }
+          actionBeforeNonFirstRunOfMainReducers()
+          val mainDecision = callMainReducersOnce()
+          if (mainDecision.continueFixpoint) {
+            /* If the aux reducer does not make progress but the main reducer does,
+             * then the progress of the main reducer is still attributed to the aux reducer.
+             */
+            auxiliaryReducerMadeProgress = true
           }
         }
       }
-      updateAfterIteration()
-    } while (fixpointMode)
+    } while (vulcanFixpointMode && auxiliaryReducerMadeProgress)
+  }
+
+  private fun callMainReducersOnce(): FixpointDecision {
+    val initialStatistics = recordStatsSnapshotIfNotYet()
+    mainReducerCreator.create(reducerContext).forEach {
+      callReducer(it)
+    }
+    return computeFixpointDecision(initialStatistics)
   }
 
   fun readSchedulerEvents(): Iterable<SchedulerEvent> = schedulerEvents.asIterable()
@@ -80,9 +105,9 @@ class ReducerScheduler(
 
   private var numOfNonDeletionIteration = 0
 
-  private fun shouldExitFixpointIteration(
+  private fun computeFixpointDecision(
     initialStatsEvent: StatsSnapshotEvent,
-  ): Boolean {
+  ): FixpointDecision {
     val initialStatistics = initialStatsEvent.stats
     val currentStatsSnapshotEvent = recordStatsSnapshotIfNotYet()
     val currentStatistics = currentStatsSnapshotEvent.stats
@@ -93,20 +118,45 @@ class ReducerScheduler(
       number is not decreasing and the attempt times reach the pre-configured
       limit, the reduction process will be terminated. Every time the token
       number is reduced, numOfNonDeletionTransformationAttempt will be reset.
-    */
+     */
     if (initialStatistics.fileContents == currentStatistics.fileContents) {
-      return true
+      return STOP_NO_CHANGE_IN_RESULT
     }
     if (initialStatistics.tokenCount == currentStatistics.tokenCount) {
       ++numOfNonDeletionIteration
     } else {
       numOfNonDeletionIteration = 0
-      return false
+      return CONTINUE_SMALLER_RESULT
     }
-    if (numOfNonDeletionIteration >= nonDeletionIterationLimitThreshold) {
-      return true
+    if (numOfNonDeletionIteration
+      >= reducerContext.configuration.vulcanConfig.nonDeletionIterationLimit
+    ) {
+      return STOP_NON_DELETION_ITERATION_LIMIT_REACHED
     }
-    return false
+    return CONTINUE_CHANGE_IN_RESULT_BUT_NOT_SMALLER
+  }
+
+  private enum class FixpointDecision(
+    val continueFixpoint: Boolean,
+    val reason: String,
+  ) {
+    STOP_NO_CHANGE_IN_RESULT(
+      continueFixpoint = false,
+      reason = "No change in the program.",
+    ),
+    STOP_NON_DELETION_ITERATION_LIMIT_REACHED(
+      continueFixpoint = false,
+      reason = "The limit of non-deletion iterations has been reached. The program" +
+        "has been changed multiple times but the size always remains.",
+    ),
+    CONTINUE_SMALLER_RESULT(
+      continueFixpoint = true,
+      reason = "The source file is smaller.",
+    ),
+    CONTINUE_CHANGE_IN_RESULT_BUT_NOT_SMALLER(
+      continueFixpoint = true,
+      reason = "The program is changed, but its size remains the same.",
+    ),
   }
 
   sealed class SchedulerEvent {

@@ -16,8 +16,6 @@
  */
 package org.perses.spartree
 
-import org.perses.util.Util.lazyAssert
-
 class AnyNodeReplacementTreeEdit internal constructor(
   tree: SparTree,
   actionSet: ChildHoistingActionSet,
@@ -25,42 +23,7 @@ class AnyNodeReplacementTreeEdit internal constructor(
 
   override fun internalApplyToTree() {
     actionSet.actions.forEach { action ->
-      val targetNode = action.targetNode
-      val parentNode = targetNode.parent!!
-      val replacingNode = action.replacingChild
-      lazyAssert { replacingNode.parent == null }
-      val payload = targetNode.payload!!
-      replacingNode.resetPayload()
-      parentNode.replaceChild(
-        targetNode,
-        replacingNode,
-        payload,
-      )
-      lazyAssert { targetNode.parent == null }
-      targetNode.delete()
-
-      // maintain leaf list
-      val targetNodePre = if (targetNode is LexerRuleSparTreeNode) {
-        targetNode.prev
-      } else {
-        targetNode.beginToken?.prev
-      }
-      val targetNodeNext = if (targetNode is LexerRuleSparTreeNode) {
-        targetNode.next
-      } else {
-        targetNode.endToken?.next
-      }
-
-      if (targetNodePre != null) {
-        targetNodePre.next = replacingNode.beginToken
-        replacingNode.beginToken?.prev = targetNodePre
-      }
-
-      if (targetNodeNext != null) {
-        targetNodeNext.prev = replacingNode.endToken
-        replacingNode.endToken?.next = targetNodeNext
-      }
-      SparTree.updateTokenIntervalUpToRoot(parentNode)
+      action.apply()
     }
   }
 }

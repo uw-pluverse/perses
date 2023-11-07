@@ -28,11 +28,14 @@ import org.antlr.v4.runtime.misc.IntervalSet
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.antlr.TokenType
 import org.perses.antlr.ast.AbstractPersesRuleElement
 import org.perses.antlr.ast.PersesEpsilonAst
 import org.perses.antlr.atn.LexerAtnWrapper
+import org.perses.antlr.atn.OrigCLexer
 import org.perses.antlr.atn.TestLexer
 import org.perses.antlr.atn.transitionSequence
+import org.perses.antlr.toTokenType
 import java.util.ArrayDeque
 
 @RunWith(JUnit4::class)
@@ -50,7 +53,7 @@ class NFATest {
     start.addTransition(transition)
     val backTransition = EpsilonTransition(start)
     end.addTransition(backTransition)
-    val regex = NFA.copyOf(start).simplifyToRegex()
+    val regex = MutableNFA.copyOf(start).simplifyToRegex()
     assertThat(regex.sourceCode).isEqualTo("97+")
   }
 
@@ -58,7 +61,7 @@ class NFATest {
   fun testConvertingPlusOfSequenceFromManuallyCreatedATN() {
     val start = createAtnOfPlusOverTwoChars()
 
-    val regex = NFA.copyOf(start).simplifyToRegex()
+    val regex = MutableNFA.copyOf(start).simplifyToRegex()
     assertThat(regex.sourceCode).isEqualTo("(97 98)+")
   }
 
@@ -70,7 +73,7 @@ class NFATest {
     start.stopState = newEnd
     val transition = SetTransition(newEnd, IntervalSet.of(100))
     end.addTransition(transition)
-    val regex = NFA.copyOf(start).simplifyToRegex()
+    val regex = MutableNFA.copyOf(start).simplifyToRegex()
     assertThat(regex.sourceCode).isEqualTo("(97 98)+ 100")
   }
 
@@ -94,42 +97,42 @@ class NFATest {
 
   @Test
   fun testConstructATNFromRegexForSingleChar() {
-    testConstructATNFromTransition(TestLexer.SingleChar)
+    testConstructATNFromTransition(TestLexer.SingleChar.toTokenType())
   }
 
   @Test
   fun testConstructATNFromRegexForTwoChars() {
-    testConstructATNFromTransition(TestLexer.TwoChars)
+    testConstructATNFromTransition(TestLexer.TwoChars.toTokenType())
   }
 
   @Test
   fun testConstructATNFromRegexForCharSet() {
-    testConstructATNFromTransition(TestLexer.CharSet)
+    testConstructATNFromTransition(TestLexer.CharSet.toTokenType())
   }
 
   @Test
   fun testConstructATNFromRegexForNotADigit() {
-    testConstructATNFromTransition(TestLexer.NotADigit)
+    testConstructATNFromTransition(TestLexer.NotADigit.toTokenType())
   }
 
   @Test
   fun testConstructATNFromRegexForKleeneStar() {
-    testConstructATNFromTransition(TestLexer.KleeneStar)
+    testConstructATNFromTransition(TestLexer.KleeneStar.toTokenType())
   }
 
   @Test
   fun testConstructATNFromRegexForOptionalOnly() {
-    testConstructATNFromTransition(TestLexer.OptionalOnly)
+    testConstructATNFromTransition(TestLexer.OptionalOnly.toTokenType())
   }
 
   @Test
   fun testConstructATNFromRegexForOptionalChar() {
-    testConstructATNFromTransition(TestLexer.OptionalChar)
+    testConstructATNFromTransition(TestLexer.OptionalChar.toTokenType())
   }
 
   @Test
   fun testConstructATNFromRegexForOptionalSequence() {
-    val regex = testConstructATNFromTransition(TestLexer.OptionalSequence)
+    val regex = testConstructATNFromTransition(TestLexer.OptionalSequence.toTokenType())
     val a = 'a'.code
     val b = 'b'.code
     val c = 'c'.code
@@ -140,40 +143,40 @@ class NFATest {
 
   @Test
   fun testConstructATNFromRegexForAlt() {
-    testConstructATNFromTransition(TestLexer.Alt)
+    testConstructATNFromTransition(TestLexer.Alt.toTokenType())
   }
 
   @Test
   fun testConstructATNFromRegexForKleenePlusOnSingleChar() {
-    testConstructATNFromTransition(TestLexer.KleenePlusOnSingleChar)
+    testConstructATNFromTransition(TestLexer.KleenePlusOnSingleChar.toTokenType())
   }
 
   @Test
   fun testConstructATNFromRegexForNegationAndPlus() {
-    testConstructATNFromTransition(TestLexer.NegationAndPlus)
+    testConstructATNFromTransition(TestLexer.NegationAndPlus.toTokenType())
   }
 
   @Test
   fun testConstructATNFromRegexForIncludeDirective() {
-    testConstructATNFromTransition(TestLexer.IncludeDirective)
+    testConstructATNFromTransition(TestLexer.IncludeDirective.toTokenType())
   }
 
   @Test
   fun testConstructATNFromRegexNaturalNumber() {
-    testConstructATNFromTransition(TestLexer.NaturalNumber)
+    testConstructATNFromTransition(TestLexer.NaturalNumber.toTokenType())
   }
 
   @Test
   fun testConstrctATNFromRegexLong() {
-    testConstructATNFromTransition(TestLexer.Long)
+    testConstructATNFromTransition(TestLexer.Long.toTokenType())
   }
 
-  fun testConstructATNFromTransition(ruleType: Int): AbstractPersesRuleElement {
+  fun testConstructATNFromTransition(ruleType: TokenType): AbstractPersesRuleElement {
     val origAtnStartState = atn.getOriginalStartState(ruleType)
-    val regex = NFA.copyOf(origAtnStartState)
+    val regex = MutableNFA.copyOf(origAtnStartState)
       .removeStatesUnreachableFromAcceptingState().simplifyToRegex()
     val recoveredATN = ATNConstructorFromRegex().construct(regex)
-    val recoveredRegex = NFA.copyOf(recoveredATN)
+    val recoveredRegex = MutableNFA.copyOf(recoveredATN)
       .removeStatesUnreachableFromAcceptingState().simplifyToRegex()
     assertThat(regex.isEquivalent(recoveredRegex)).isTrue()
     return regex
@@ -181,7 +184,7 @@ class NFATest {
 
   @Test
   fun testSimplifyToRegexForKleenePlusOnSingleChar() {
-    val regex = createNFA(TestLexer.KleenePlusOnSingleChar).simplifyToRegex()
+    val regex = createNFA(TestLexer.KleenePlusOnSingleChar.toTokenType()).simplifyToRegex()
     val a = 'a'.code.toString()
     assertThat(regex.sourceCode).isEqualTo("$a+")
   }
@@ -189,72 +192,84 @@ class NFATest {
   @Test
   fun testSimplifyToRegexForNegationAndPlus() {
     assertThat(
-      createNFA(TestLexer.NegationAndPlus).simplifyToRegex().sourceCode,
+      createNFA(TestLexer.NegationAndPlus.toTokenType()).simplifyToRegex().sourceCode,
     ).isEqualTo("~${'\n'.code}+")
   }
 
   @Test
   fun testSimplifyToRegexForLong() {
     val char0 = '0'.code.toString()
-    var char9 = '9'.code.toString()
+    val char9 = '9'.code.toString()
     val charL = 'L'.code.toString()
     assertThat(
-      createNFA(TestLexer.Long).simplifyToRegex().sourceCode,
+      createNFA(TestLexer.Long.toTokenType()).simplifyToRegex().sourceCode,
     ).isEqualTo("{$char0..$char9}+ $charL")
   }
 
   @Test
   fun testSimplifyToRegexForOptionalChar() {
-    val regex = createNFA(TestLexer.OptionalChar).simplifyToRegex()
+    val regex = createNFA(TestLexer.OptionalChar.toTokenType()).simplifyToRegex()
     assertThat(regex.sourceCode).isEqualTo("${'a'.code} ${'b'.code}?")
   }
 
   @Test
   fun testSimplifyToRegexForOptionalOnly() {
-    val nfa = createNFA(TestLexer.OptionalOnly)
+    val nfa = createNFA(TestLexer.OptionalOnly.toTokenType())
     val regex = nfa.simplifyToRegex()
     assertThat(regex.sourceCode).isEqualTo("${'b'.code}?")
   }
 
   @Test
   fun testSimplifyToRegexForKleeneStar() {
-    val nfa = createNFA(TestLexer.KleeneStar)
+    val nfa = createNFA(TestLexer.KleeneStar.toTokenType())
     val regex = nfa.simplifyToRegex()
     assertThat(regex.sourceCode).isEqualTo("${'a'.code} ${'b'.code}*")
   }
 
   @Test
   fun testSimplifyToRegExForTwoChars() {
-    val nfa = createNFA(TestLexer.TwoChars)
+    val nfa = createNFA(TestLexer.TwoChars.toTokenType())
     val regex = nfa.simplifyToRegex()
     val sourceCode = regex.sourceCode
     assertThat(sourceCode).isEqualTo("${'A'.code} ${'B'.code}")
   }
 
   @Test
+  fun testImmutableNFAAndMutableNFAHaveTheSameTopology() {
+    val atn = LexerAtnWrapper(OrigCLexer::class.java)
+    atn.metaTokenInfoDB.asSequence()
+      .map { token ->
+        val mutableNFA = MutableNFA.copyOf(atn.getOriginalStartState(token.tokenType))
+        mutableNFA to mutableNFA.toImmutableNFA()
+      }.forEach {
+        assertThat(it.first.printTopology()).isEqualTo(it.second.printTopology())
+      }
+  }
+
+  @Test
   fun testSimplifyToRegexForSingleChar() {
-    val nfa = createNFA(TestLexer.SingleChar)
+    val nfa = createNFA(TestLexer.SingleChar.toTokenType())
     val regex = nfa.simplifyToRegex()
     assertThat(regex.sourceCode).isEqualTo('A'.code.toString())
   }
 
-  private fun createNFA(ruleType: Int): NFA {
-    return NFA.copyOf(atn.getOriginalStartState(ruleType))
+  private fun createNFA(ruleType: TokenType): MutableNFA {
+    return MutableNFA.copyOf(atn.getOriginalStartState(ruleType))
       .removeStatesUnreachableFromAcceptingState()
   }
 
   @Test
   fun testNfaAndAtnHaveTheSameTopology() {
-    testNfaAndAtnHaveSameTopology(TestLexer.SingleChar)
-    testNfaAndAtnHaveSameTopology(TestLexer.NaturalNumber)
-    testNfaAndAtnHaveSameTopology(TestLexer.OptionalOnly)
-    testNfaAndAtnHaveSameTopology(TestLexer.Long)
+    testNfaAndAtnHaveSameTopology(TestLexer.SingleChar.toTokenType())
+    testNfaAndAtnHaveSameTopology(TestLexer.NaturalNumber.toTokenType())
+    testNfaAndAtnHaveSameTopology(TestLexer.OptionalOnly.toTokenType())
+    testNfaAndAtnHaveSameTopology(TestLexer.Long.toTokenType())
   }
 
-  private fun testNfaAndAtnHaveSameTopology(ruleType: Int) {
+  private fun testNfaAndAtnHaveSameTopology(ruleType: TokenType) {
     val startState = atn.getOriginalStartState(ruleType)
     val edgesInATN = getEdgesFromATN(startState)
-    val nfa = NFA.copyOf(startState)
+    val nfa = MutableNFA.copyOf(startState)
     assertThat(nfa.edgeSequence().count()).isAtLeast(edgesInATN.size)
     assertThat(nfa.stateSequence().count())
       .isEqualTo(
@@ -271,26 +286,26 @@ class NFATest {
         val targetNode = nfa.getTargetState(edge)
         val sourceTargetNodePair = sourceNode to targetNode
         assertThat(edgesInATN).containsKey(sourceTargetNodePair)
-        val transition = edgesInATN[sourceTargetNodePair]!!
+        val transition = edgesInATN[sourceNode.stateNumber to targetNode.stateNumber]!!
         val label = edge.label
         when (label) {
           is PersesEpsilonAst -> {
             assertThat(transition.isEpsilon).isTrue()
           }
           is PersesTransitionAst -> {
-            assertThat(label.transition).isSameInstanceAs(transition)
+            assertThat(label.atnTransition).isSameInstanceAs(transition)
           }
           else -> error("unreachable")
         }
       }
-    assertThat(nfa.startState).isSameInstanceAs(startState)
-    assertThat(nfa.acceptingState).isSameInstanceAs(startState.stopState)
+    assertThat(nfa.startState.stateNumber).isEqualTo(startState.stateNumber)
+    assertThat(nfa.acceptingState.stateNumber).isEqualTo(startState.stopState.stateNumber)
   }
 
   private fun getEdgesFromATN(
     startState: RuleStartState,
-  ): Map<Pair<ATNState, ATNState>, Transition> {
-    val result = HashMap<Pair<ATNState, ATNState>, Transition>()
+  ): Map<Pair<Int, Int>, Transition> {
+    val result = HashMap<Pair<Int, Int>, Transition>()
     val worklist = ArrayDeque<ATNState>().apply { add(startState) }
     val visited = HashSet<ATNState>()
     while (worklist.isNotEmpty()) {
@@ -299,7 +314,7 @@ class NFATest {
         continue
       }
       current.transitionSequence().forEach { transition ->
-        result[current to transition.target] = transition
+        result[current.stateNumber to transition.target.stateNumber] = transition
         worklist.add(transition.target)
       }
     }

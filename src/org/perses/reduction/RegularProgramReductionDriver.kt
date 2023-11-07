@@ -17,7 +17,9 @@
 package org.perses.reduction
 
 import com.google.common.collect.ImmutableList
+import org.antlr.v4.runtime.Lexer
 import org.perses.CommandOptions
+import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.cmd.InputFlags
 import org.perses.cmd.OutputFlags
 import org.perses.cmd.ReductionControlFlags
@@ -69,6 +71,7 @@ class RegularProgramReductionDriver private constructor(
       reductionInputs: RegularReductionInputs,
       reductionControlFlags: ReductionControlFlags,
       outputFlags: OutputFlags,
+      lexerAtnWrapper: LexerAtnWrapper<out Lexer>,
     ): TokenReductionIOManager {
       val workingDirectory = reductionInputs.mainFile.parentFile
       val languageKind = reductionInputs.mainFile.dataKind
@@ -86,8 +89,9 @@ class RegularProgramReductionDriver private constructor(
         workingDirectory,
         reductionInputs,
         outputManagerFactory = RegularOutputManagerFactory(
-          reductionInputs.mainFile,
+          reductionInputs,
           programFormatControl,
+          lexerAtnWrapper,
         ),
         outputDirectory = outputFlags.outputDir,
       )
@@ -102,15 +106,16 @@ class RegularProgramReductionDriver private constructor(
         parserFacadeFactory,
         cmd.inputFlags,
       )
+      val parserFacade = parserFacadeFactory.createParserFacade(reductionInputs.mainDataKind)
       val ioManager = createIOManager(
         reductionInputs,
         cmd.reductionControlFlags,
         cmd.resultOutputFlags,
+        parserFacade.lexerAtnWrapper,
       )
       val reductionConfiguration = createConfiguration(
         cmd,
-        parserFacadeFactory,
-        reductionInputs.mainDataKind,
+        parserFacade,
         ioManager.getDefaultProgramFormat(),
       )
       val tree = createSparTree(

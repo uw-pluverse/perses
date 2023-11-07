@@ -38,6 +38,7 @@ import org.perses.spartree.AbstractSparTreeEditListener
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.NodeDeletionTreeEdit
+import org.perses.spartree.ParserRuleSparTreeNode
 import org.perses.spartree.SparTree
 import org.perses.spartree.SparTreeSimplifier
 import org.perses.util.Util
@@ -117,6 +118,7 @@ abstract class AbstractTokenReducer protected constructor(
         configuration.parserFacade.isSourceCodeParsable(
           PrinterRegistry.getPrinter(
             ioManager.getDefaultProgramFormat(),
+            configuration.parserFacade.lexerAtnWrapper,
           ).print(best.payload!!.edit.program).sourceCode,
         )
     }
@@ -222,6 +224,7 @@ abstract class AbstractTokenReducer protected constructor(
             // TODO(cnsun): need to use StopResult here.
             EmptyResult()
           } else {
+            // TODO(cnsun): add the TestScriptHistory here.
             val outputManager = ioManager.createOutputManager(program)
             ProceedResult(outputManager, EditTestPayload(edit, cachedResult.asCacheMiss()))
           }
@@ -249,8 +252,8 @@ abstract class AbstractTokenReducer protected constructor(
         node = parent
         continue
       } else if (childCount > 1) {
-        val parentNodeType = parent.nodeType
-        when (parentNodeType) {
+        check(parent is ParserRuleSparTreeNode)
+        when (parent.ruleType) {
           RuleType.KLEENE_PLUS, RuleType.KLEENE_STAR -> true
           RuleType.OPTIONAL -> throw RuntimeException(
             "Optional should have a single child. " + node.printTreeStructure(),

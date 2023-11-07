@@ -18,6 +18,7 @@ def reduce(
         call_formatter = None,
         query_cache_type = None,
         other_flags = None,
+        extra_output_files = None,
         perses_bin = DEFAULT_PERSES_BIN,
         deps = None):
     if "/" in source_file:
@@ -62,9 +63,9 @@ def reduce(
             for file_name in names_of_other_files_in_output_dir:
                 outs.append("%s/%s" % (output_dir, file_name))
 
-    if (verbosity):
+    if verbosity:
         args.append("--verbosity %s" % verbosity)
-    if (log_file):
+    if log_file:
         args.append("&>")
         args.append("$(location %s)" % log_file)
         outs.append(log_file)
@@ -77,6 +78,8 @@ def reduce(
         for (key, value) in other_flags.items():
             args.append(key)
             args.append(value)
+    if extra_output_files:
+        outs += extra_output_files
 
     srcs = [source_file, test_script]
     if deps:

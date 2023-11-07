@@ -16,17 +16,19 @@
  */
 package org.perses.reduction.io
 
-import com.google.common.io.MoreFiles
-import com.google.common.io.RecursiveDeleteOption
+import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.grammar.c.LanguageC
+import org.perses.grammar.c.PnfCLexer
 import org.perses.program.EnumFormatControl
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
+import org.perses.reduction.AbstractExternalTestScriptExecutionCachePolicy.NullExternalTestScriptExecutionCachePolicy
 import org.perses.reduction.TestScriptExecutorService
 import org.perses.reduction.io.token.RegularOutputManagerFactory
 import org.perses.reduction.io.token.TokenReductionIOManager
 import org.perses.util.Util
 import java.nio.file.Files
+import kotlin.io.path.deleteRecursively
 import kotlin.io.path.writeText
 
 open class CommonReductionIOManagerData(val testClass: Class<*>) : AutoCloseable {
@@ -37,7 +39,7 @@ open class CommonReductionIOManagerData(val testClass: Class<*>) : AutoCloseable
     if (executorServiceDelegate.isInitialized()) {
       executorService.close()
     }
-    MoreFiles.deleteRecursively(root, RecursiveDeleteOption.ALLOW_INSECURE)
+    root.deleteRecursively()
   }
 
   val script = ScriptFile(
@@ -69,8 +71,9 @@ open class CommonReductionIOManagerData(val testClass: Class<*>) : AutoCloseable
     Files.createDirectory(this)
   }
   val outputManagerFactory = RegularOutputManagerFactory(
-    sourceFile,
+    inputs,
     EnumFormatControl.ORIG_FORMAT,
+    LexerAtnWrapper(PnfCLexer::class.java),
   )
   val ioManager = TokenReductionIOManager(
     workingFolder = workingDir,
@@ -86,6 +89,9 @@ open class CommonReductionIOManagerData(val testClass: Class<*>) : AutoCloseable
       ioManager.lazilyInitializedReductionFolderManager,
       specifiedNumOfThreads = 1,
       scriptExecutionTimeoutInSeconds = 600L,
+      externalTestScriptExecutionCachePolicyCreator = {
+        NullExternalTestScriptExecutionCachePolicy()
+      },
     )
   }
   val executorService: TestScriptExecutorService by executorServiceDelegate

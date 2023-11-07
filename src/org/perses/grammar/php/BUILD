@@ -57,9 +57,9 @@ antlr_codegen_parser(
     ],
 )
 
-java_library(
+kt_jvm_library(
     name = "parser_facade",
-    srcs = ["PhpParserFacade.java"],
+    srcs = ["PhpParserFacade.kt"],
     deps = [
         ":language_kind",
         ":orig_php_parser",

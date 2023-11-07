@@ -16,16 +16,17 @@
  */
 package org.perses.program
 
-import com.google.common.io.MoreFiles
-import com.google.common.io.RecursiveDeleteOption
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.grammar.c.LanguageC
+import org.perses.util.Util
 import java.nio.file.Files
 import java.nio.file.Paths
+import kotlin.io.path.absolute
+import kotlin.io.path.deleteRecursively
 import kotlin.io.path.readText
 
 @RunWith(JUnit4::class)
@@ -33,19 +34,33 @@ class SourceFileTest {
 
   val origFile = Paths.get("test_data/delta_1/t.c")
   val tempDir = Files.createTempDirectory(this::class.java.simpleName)
+  val source = SourceFile(origFile, LanguageC)
 
   @After
   fun teardown() {
-    MoreFiles.deleteRecursively(tempDir, RecursiveDeleteOption.ALLOW_INSECURE)
+    tempDir.deleteRecursively()
   }
 
   @Test
   fun testSourceFile() {
-    val source = SourceFile(origFile, LanguageC)
     assertThat(source.baseName).isEqualTo("t.c")
     assertThat(source.fileWithContent.textualFileContent).isEqualTo(origFile.readText())
     assertThat(source.dataKind).isEqualTo(LanguageC)
     assertThat(source.file.toString()).isEqualTo(origFile.toString())
+  }
+
+  @Test
+  fun testWriteToDirectory() {
+    val dir = tempDir.resolve("testWriteToDirectory")
+    Util.ensureDirExists(dir)
+    assertThat(Util.isEmptyDirectory(dir)).isTrue()
+    val result = source.writeToDirectory(dir)
+    assertThat(Util.isEmptyDirectory(dir)).isFalse()
+    assertThat(dir.toFile().listFiles()).hasLength(1)
+    val file = dir.resolve(source.baseName)
+    assertThat(Files.isRegularFile(file)).isTrue()
+    assertThat(file.readText()).isEqualTo(source.textualFileContent)
+    assertThat(file.absolute()).isEqualTo(result.absolute())
   }
 
   @Test

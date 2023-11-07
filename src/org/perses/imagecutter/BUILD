@@ -5,12 +5,14 @@ package(
 )
 
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("//:perses.bzl", "kt_binary_for_genrule")
 
-java_binary(
+kt_binary_for_genrule(
     name = "perses_image_reducer",
     srcs = [
-        "Main.java",
+        "Main.kt",
     ],
+    main_class = "org.perses.imagecutter.Main",
     deps = [],
 )
 

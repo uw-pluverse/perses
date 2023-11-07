@@ -20,7 +20,6 @@ import com.google.common.base.MoreObjects
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.util.Util
 import org.perses.util.Util.lazyAssert
-import java.util.stream.Stream
 
 /**
  * A partition contains a set of SparTreeNodes, and this set should be reduced together. A level in
@@ -40,10 +39,6 @@ class Partition(private val nodes: ArrayList<AbstractSparTreeNode>) {
 
   val isEmpty: Boolean
     get() = nodes.isEmpty()
-
-  fun stream(): Stream<AbstractSparTreeNode> {
-    return nodes.stream()
-  }
 
   fun size(): Int {
     return nodes.size
@@ -86,9 +81,8 @@ class Partition(private val nodes: ArrayList<AbstractSparTreeNode>) {
     return MoreObjects.toStringHelper(Partition::class.java)
       .add(
         "nodes",
-        nodes.asSequence().map { it.nodeId }.sorted().asSequence(),
-      )
-      .toString()
+        nodes.asSequence().map { it.nodeId }.sorted(),
+      ).toString()
   }
 
   /** A builder to build a Partition.  */

@@ -20,4 +20,8 @@ import org.antlr.v4.runtime.Lexer
 import org.antlr.v4.runtime.Parser
 import org.antlr.v4.runtime.tree.ParseTree
 
-data class ParseTreeWithParser(val tree: ParseTree, val parser: Parser, val lexer: Lexer)
+data class ParseTreeWithParser(
+  val tree: ParseTree,
+  val parser: Parser,
+  val lexer: Lexer,
+)

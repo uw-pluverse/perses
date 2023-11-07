@@ -23,6 +23,8 @@ import org.perses.reduction.cache.EnumQueryCachingControl
 import org.perses.util.Fraction
 import org.perses.util.cmd.CommonCmdOptionGroupOrder
 import org.perses.util.cmd.ICommandLineFlags
+import java.nio.file.Files
+import java.nio.file.Path
 
 class CacheControlFlags : ICommandLineFlags {
   @Parameter(
@@ -75,12 +77,34 @@ class CacheControlFlags : ICommandLineFlags {
   )
   var enablePassCache = false
 
+  @Parameter(
+    names = ["--global-cache-file"],
+    description = "The file that stores the global cache",
+    order = CommonCmdOptionGroupOrder.CACHE_CONTROL + 5,
+    hidden = true,
+    arity = 1,
+  )
+  var globalCacheFile: Path? = null
+
+  @Parameter(
+    names = ["--path-to-save-updated-global-cache"],
+    description = "The file to write the updated global cache",
+    order = CommonCmdOptionGroupOrder.CACHE_CONTROL + 6,
+    hidden = true,
+    arity = 1,
+  )
+  var pathToSaveUpdatedGlobalCache: Path? = null
   fun getQueryCacheRefreshThreshold(): Fraction {
     return Fraction(queryCacheRefreshThreshold, 100)
   }
 
   override fun validate() {
     getQueryCacheRefreshThreshold() // Should not throw exceptions.
+    globalCacheFile?.let {
+      check(Files.isRegularFile(it)) {
+        "The global cache file $it is not a file."
+      }
+    }
   }
 
   class QueryCachingControlConverter : IStringConverter<EnumQueryCachingControl> {

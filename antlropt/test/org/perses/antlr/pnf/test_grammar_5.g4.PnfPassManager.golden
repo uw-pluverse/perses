@@ -5,14 +5,10 @@ grammar test_grammar_5_PnfPassManager_output;
 
 
 start
-    : optional__start_2 'c'
+    : optional__start_1 'c'
     ;
 
-aux_rule__start_1
-    : a='b'
-    ;
-
-optional__start_2
-    : aux_rule__start_1?
+optional__start_1
+    : 'b'?
     ;
 

@@ -16,11 +16,9 @@
  */
 package org.perses.grammar.sysverilog
 
-import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
-import org.perses.util.shell.ShellCommandOnPath
 
 object LanguageSystemVerilog : LanguageKind(
   name = "system_verilog",
@@ -31,11 +29,5 @@ object LanguageSystemVerilog : LanguageKind(
     EnumFormatControl.SINGLE_TOKEN_PER_LINE,
     EnumFormatControl.COMPACT_ORIG_FORMAT,
     EnumFormatControl.ORIG_FORMAT,
-  ),
-  defaultFormatterCommands = createPotentialCodeFormatterList(
-    ShellCommandOnPath.tryCreating(
-      "clang-format",
-      ImmutableList.of(/*in-place formatting*/"-i"),
-    ),
   ),
 )

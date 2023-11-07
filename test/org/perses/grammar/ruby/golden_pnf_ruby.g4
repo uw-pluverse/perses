@@ -448,13 +448,13 @@ statement_list_terms
     ;
 
 aux_rule__expr_15
-    : aux_rule__expr_26
-    | aux_rule__expr_27
-    | aux_rule__expr_28
+    : aux_rule__expr_30
+    | aux_rule__expr_31
+    | aux_rule__expr_32
     | block
     | expr_statement_suffix
-    | aux_rule__expr_29
-    | aux_rule__expr_30
+    | aux_rule__expr_33
+    | aux_rule__expr_34
     ;
 
 kleene_star__expr_14
@@ -487,6 +487,18 @@ optional__statement_list_terms_4
     : statement?
     ;
 
+optional__expr_17
+    : SIGH?
+    ;
+
+aux_rule__expr_18
+    : expr COLON expr
+    ;
+
+optional__expr_19
+    : aux_rule__expr_18?
+    ;
+
 optional__id_symbol_1
     : COLON?
     ;
@@ -500,7 +512,7 @@ optional__function_definition_param_1
     ;
 
 aux_rule__primary_42
-    : altnt_block__primary_47 optional__expr_3
+    : altnt_block__expr_23 optional__expr_3
     ;
 
 optional__primary_43
@@ -516,17 +528,15 @@ optional__do_keyword_2
     : altnt_block__do_keyword_1?
     ;
 
-altnt_block__expr_17
-    : aux_rule__expr_31
-    | aux_rule__expr_32
-    | aux_rule__expr_33
-    | aux_rule__expr_34
+altnt_block__expr_20
+    : PATTERN_MATCH
     | aux_rule__expr_35
+    | aux_rule__expr_36
     ;
 
-altnt_block__expr_18
+altnt_block__expr_21
     : CLASS
-    | aux_rule__expr_36
+    | aux_rule__expr_37
     ;
 
 altnt_block__symbol_1
@@ -580,11 +590,10 @@ aux_rule__expr_16
     | Regex
     | symbol
     | block
-    | aux_rule__expr_37
+    | aux_rule__expr_38
     | class_definition
     | function_definition
     | module_definition
-    | aux_rule__expr_38
     | aux_rule__expr_39
     | aux_rule__expr_40
     | aux_rule__expr_41
@@ -592,6 +601,7 @@ aux_rule__expr_16
     | aux_rule__expr_43
     | aux_rule__expr_44
     | aux_rule__expr_45
+    | aux_rule__expr_46
     ;
 
 identifier
@@ -622,17 +632,17 @@ altnt_block__cpath_3
     | DOT
     ;
 
+altnt_block__expr_23
+    : DOT2
+    | DOT3
+    ;
+
 altnt_block__variable_path_4
     : identifier
     | literal
     ;
 
-altnt_block__primary_47
-    : DOT2
-    | DOT3
-    ;
-
-altnt_block__expr_21
+altnt_block__expr_25
     : QUESTION
     | SIGH
     ;
@@ -645,15 +655,15 @@ optional__func_call_parameters_9
     : aux_rule__func_call_parameters_8?
     ;
 
-altnt_block__expr_22
+altnt_block__expr_26
     : BREAK
     | RETURN
     | YIELD
     ;
 
-altnt_block__expr_23
+altnt_block__expr_27
     : func_call_parameters
-    | aux_rule__expr_46
+    | aux_rule__expr_47
     ;
 
 altnt_block__primary_48
@@ -679,19 +689,23 @@ altnt_block__primary_50
     | UNTIL
     ;
 
-altnt_block__expr_24
+altnt_block__expr_28
     : RAISE
-    | aux_rule__expr_47
-    | aux_rule__expr_48
+    | PLUS
+    | MINUS
+    | MUL
+    | MOD
+    | BIT_AND
+    | DEFINED
     | NOT
     | SIGH
     | BIT_NOT
     ;
 
-altnt_block__expr_25
+altnt_block__expr_29
     : ','
     | dot_ref
-    | aux_rule__expr_49
+    | aux_rule__expr_48
     | assignOperator
     | compareOperator
     | logicalOperator
@@ -756,51 +770,39 @@ aux_rule__then_keyword_3
     : altnt_block__then_keyword_2 optional__primary_25
     ;
 
-aux_rule__expr_26
-    : postfix=QUESTION
-    ;
-
-aux_rule__expr_27
+aux_rule__expr_30
     : LEFT_SBRACKET expr RIGHT_SBRACKET
     ;
 
-aux_rule__expr_28
-    : bop=DOT2 | DOT3 optional__expr_3
+aux_rule__expr_31
+    : altnt_block__expr_23 optional__expr_3
     ;
 
-aux_rule__expr_29
-    : altnt_block__expr_17 expr
+aux_rule__expr_32
+    : QUESTION optional__expr_19
     ;
 
-aux_rule__expr_30
-    : dot_ref altnt_block__expr_18
+aux_rule__expr_33
+    : altnt_block__expr_20 expr
+    ;
+
+aux_rule__expr_34
+    : dot_ref altnt_block__expr_21
     ;
 
 aux_rule__variable_path_5
     : COLON2 variable_path
     ;
 
-aux_rule__expr_31
-    : bop=PATTERN_MATCH
-    ;
-
-aux_rule__expr_32
-    : bop=BIT_NOT
-    ;
-
-aux_rule__expr_33
-    : SIGH BIT_NOT
-    ;
-
-aux_rule__expr_34
-    : QUESTION expr COLON
-    ;
-
 aux_rule__expr_35
-    : altnt_block__expr_25 optional__expr_1
+    : optional__expr_17 BIT_NOT
     ;
 
 aux_rule__expr_36
+    : altnt_block__expr_29 optional__expr_1
+    ;
+
+aux_rule__expr_37
     : function_name func_call_parameters_no_bracket optional__expr_12
     ;
 
@@ -844,40 +846,40 @@ aux_rule__primary_57
     : optional__expr_1 expr then_keyword optional__module_definition_1 kleene_star__primary_13
     ;
 
-aux_rule__expr_37
+aux_rule__expr_38
     : RESCUE optional__primary_3 optional__primary_4
     ;
 
-aux_rule__expr_38
+aux_rule__expr_39
     : LEFT_PAREN optional__expr_1 hash_asso optional__expr_1 kleene_star__primary_31 optional__expr_4 optional__expr_1 RIGHT_PAREN
     ;
 
-aux_rule__expr_39
+aux_rule__expr_40
     : LEFT_SBRACKET optional__expr_1 expr optional__expr_1 kleene_star__primary_38 optional__expr_4 optional__expr_1 RIGHT_SBRACKET
     ;
 
-aux_rule__expr_40
+aux_rule__expr_41
     : LEFT_RBRACKET expr optional__primary_43 RIGHT_RBRACKET
     ;
 
-aux_rule__expr_41
+aux_rule__expr_42
     : altnt_block__primary_44 END
     ;
 
-aux_rule__expr_42
-    : cpath altnt_block__expr_21
-    ;
-
 aux_rule__expr_43
-    : altnt_block__expr_22 optional__expr_3
+    : cpath altnt_block__expr_25
     ;
 
 aux_rule__expr_44
-    : function_name altnt_block__expr_23
+    : altnt_block__expr_26 optional__expr_3
     ;
 
 aux_rule__expr_45
-    : altnt_block__expr_24 expr
+    : function_name altnt_block__expr_27
+    ;
+
+aux_rule__expr_46
+    : altnt_block__expr_28 expr
     ;
 
 aux_rule__identifier_1
@@ -892,7 +894,7 @@ aux_rule__identifier_3
     : LEFT_SBRACKET RIGHT_SBRACKET
     ;
 
-aux_rule__expr_46
+aux_rule__expr_47
     : func_call_parameters_no_bracket optional__expr_12
     ;
 
@@ -908,15 +910,7 @@ aux_rule__primary_60
     : altnt_block__primary_50 optional__expr_1 expr do_keyword
     ;
 
-aux_rule__expr_47
-    : prefix=PLUS | MINUS | MUL | MOD | BIT_AND
-    ;
-
 aux_rule__expr_48
-    : prefix=DEFINED
-    ;
-
-aux_rule__expr_49
     : optional__expr_4 optional__expr_5 ASSIGN
     ;
 

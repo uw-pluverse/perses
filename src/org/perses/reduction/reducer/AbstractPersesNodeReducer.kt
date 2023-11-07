@@ -27,9 +27,11 @@ import org.perses.reduction.reducer.TreeTransformations.findCompatibleDescendant
 import org.perses.reduction.reducer.TreeTransformations.findCompatibleKleeneDescendantsForKleeneQuantifiedNode
 import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.spartree.AbstractSparTreeNode
-import org.perses.spartree.ChildHoistingAction
 import org.perses.spartree.ChildHoistingActionSet
+import org.perses.spartree.LexerRuleSparTreeNode
 import org.perses.spartree.NodeDeletionActionSet
+import org.perses.spartree.NodeReplacementAction
+import org.perses.spartree.ParserRuleSparTreeNode
 import org.perses.spartree.SparTree
 import org.perses.util.Util.lazyAssert
 import java.util.concurrent.Future
@@ -47,11 +49,15 @@ abstract class AbstractPersesNodeReducer protected constructor(
     tree: SparTree,
     node: AbstractSparTreeNode,
   ): ImmutableList<AbstractSparTreeNode> {
-    return when (node.nodeType) {
-      RuleType.KLEENE_PLUS -> reduceKleenePlus(tree, node)
-      RuleType.KLEENE_STAR, RuleType.OPTIONAL -> reduceKleenStar(tree, node)
-      RuleType.ALT_BLOCKS, RuleType.OTHER_RULE -> reduceRegularRule(tree, node)
-      RuleType.TOKEN -> ImmutableList.of() // TODO: Do nothing.
+    return when (node) {
+      is LexerRuleSparTreeNode -> ImmutableList.of()
+      is ParserRuleSparTreeNode -> when (node.ruleType) {
+        RuleType.KLEENE_PLUS -> reduceKleenePlus(tree, node)
+        RuleType.KLEENE_STAR, RuleType.OPTIONAL -> reduceKleenStar(tree, node)
+        RuleType.ALT_BLOCKS, RuleType.OTHER_RULE -> reduceRegularRule(tree, node)
+        else -> error("unhandled type: ${node.ruleType}")
+      }
+      else -> error("unhandled type: ${node::class}")
     }
   }
 
@@ -104,7 +110,7 @@ abstract class AbstractPersesNodeReducer protected constructor(
       regularRuleNode,
       3,
     ).forEach {
-      val action = ChildHoistingAction(targetNode = regularRuleNode, it)
+      val action = NodeReplacementAction(targetNode = regularRuleNode, it)
       actionSetProfiler.onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant(action)
       editList.add(
         asyncCreateTreeEdit {
@@ -123,7 +129,7 @@ abstract class AbstractPersesNodeReducer protected constructor(
       stopAtFirstCompatible = nodeReducerConfiguation.stopAtFirstCompatibleChildren,
       maxBfsDepth = nodeReducerConfiguation.maxBfsDepthForRegularRuleNode,
     ).forEach {
-      val action = ChildHoistingAction(targetNode = regularRuleNode, replacingChild = it)
+      val action = NodeReplacementAction(targetNode = regularRuleNode, replacingNode = it)
       actionSetProfiler.onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant(action)
       editList.add(
         asyncCreateTreeEdit {

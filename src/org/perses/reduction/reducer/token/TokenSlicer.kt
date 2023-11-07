@@ -30,6 +30,7 @@ import org.perses.reduction.TestScriptExecutorService.Companion.IDENTITY_POST_CH
 import org.perses.spartree.LexerRuleSparTreeNode
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.util.Util.lazyAssert
+import org.perses.util.shell.ExitCode
 
 class TokenSlicer(
   reducerContext: ReducerContext,
@@ -87,7 +88,7 @@ class TokenSlicer(
                     .print(testProgram).sourceCode,
                 )
               ) {
-                PropertyTestResult(exitCode = 0, elapsedMilliseconds = -1)
+                PropertyTestResult(exitCode = ExitCode.ZERO, elapsedMilliseconds = -1)
               } else {
                 PropertyTestResult(exitCode = INVALID_SYNTAX_EXIT_CODE, elapsedMilliseconds = -1)
               }
@@ -144,7 +145,7 @@ class TokenSlicer(
     }
 
     @VisibleForTesting
-    val INVALID_SYNTAX_EXIT_CODE = 99
+    val INVALID_SYNTAX_EXIT_CODE = ExitCode(99)
 
     @VisibleForTesting
     fun createNodeDeletionActionSetReverse(

@@ -73,13 +73,13 @@ class RuleElementLabelReducer(
     ): AbstractPersesRuleElement {
       if (ast === label) {
         check(newChildren.size == 1)
-        return newChildren.first()
+        return newChildren.single()
       }
       return super.visit(ast, newChildren)!!
     }
   }
 
   companion object {
-    val logger = FluentLogger.forEnclosingClass()
+    private val logger = FluentLogger.forEnclosingClass()
   }
 }
