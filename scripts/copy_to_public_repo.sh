@@ -50,5 +50,8 @@ for entry in $(git -C "$PUBLIC_REPO_DIR" ls-tree --name-only HEAD); do
   cp -rf "$(basename "${entry}")" "${PUBLIC_REPO_DIR}/"
 done
 
+for entry in $(find . -maxdepth 1 -type f); do
+  cp "${entry}" "${PUBLIC_REPO_DIR}/"
+done
 echo
 echo "Done."
