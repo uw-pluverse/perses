@@ -1,0 +1,12 @@
+Reduction starts.
+Current diff:
+	<a, b>
+	<b, a>
+Reducer ListDiffSlicer ends.
+Current diff:
+	<a, b>
+	<b, a>
+Reduction ends.
+Current diff:
+	<a, b>
+	<b, a>

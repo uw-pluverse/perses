@@ -1,0 +1,65 @@
+/*
+ * Copyright (C) 2018-2022 University of Waterloo.
+ *
+ * This file is part of Perses.
+ *
+ * Perses is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3, or (at your option) any later version.
+ *
+ * Perses is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
+ */
+package org.perses.ppr.diff.list
+
+import com.google.common.collect.ImmutableList
+import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.util.AbstractEditOperation
+import org.perses.util.Util
+import java.io.Closeable
+import java.nio.file.Path
+
+class ProgressMonitor(dumpFile: Path, appendMode: Boolean) : Closeable {
+
+  private val stream = if (appendMode) {
+    Util.createAppendablePrintStream(dumpFile)
+  } else {
+    Util.createNonAppendablePrintStream(dumpFile)
+  }
+
+  override fun close() {
+    stream.close()
+  }
+
+  fun onReductionStart(diffList: ImmutableList<AbstractEditOperation<PersesToken>>) {
+    stream.println("Reduction starts.")
+    dumpDiff(diffList)
+  }
+
+  fun onReductionEnd(diffList: ImmutableList<AbstractEditOperation<PersesToken>>) {
+    stream.println("Reduction ends.")
+    dumpDiff(diffList)
+    stream.close()
+  }
+
+  fun onReducerEnd(
+    reducerName: String,
+    diffList: ImmutableList<AbstractEditOperation<PersesToken>>,
+  ) {
+    stream.println("Reducer $reducerName ends.")
+    dumpDiff(diffList)
+  }
+
+  private fun dumpDiff(
+    diffList: ImmutableList<AbstractEditOperation<PersesToken>>,
+  ) {
+    stream.println("Current diff:")
+    for (diff in diffList) {
+      stream.println("\t<${diff.base?.text}, ${diff.revision?.text}>")
+    }
+  }
+}

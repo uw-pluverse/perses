@@ -1,0 +1,6 @@
+Reduction starts.
+Current diff:
+Reducer ListDiffDdmin ends.
+Current diff:
+Reduction ends.
+Current diff:
