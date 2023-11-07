@@ -1,3 +1,4 @@
+![CI](https://github.com/uw-pluverse/perses/actions/workflows/main.yml/badge.svg)
 # Perses: Syntax-Directed Program Reduction
 
 Perses is a language-agnostic program reducer to minimize a program with 
