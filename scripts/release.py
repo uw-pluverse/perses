@@ -13,6 +13,7 @@ def check_tools() -> None:
 
 
 def create_tag() -> str:
+    subprocess.check_call(['git', 'fetch', '--tags'])
     # create new tag as per current release
     command = ['git', 'tag']
     tags = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.read()
