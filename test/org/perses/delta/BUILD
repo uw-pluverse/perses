@@ -38,3 +38,14 @@ kt_jvm_test(
         "//src/org/perses/util",
     ],
 )
+
+kt_jvm_test(
+    name = "PristineProbabilisticDeltaDebuggerTest",
+    srcs = ["PristineProbabilisticDeltaDebuggerTest.kt"],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/delta",
+        "//src/org/perses/util",
+    ],
+)

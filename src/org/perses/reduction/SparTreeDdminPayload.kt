@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -14,8 +14,12 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.util.cmd
+package org.perses.reduction
 
-interface ICommandLineFlags {
-  fun validate()
-}
+import org.perses.spartree.NodeDeletionTreeEdit
+import org.perses.spartree.SparTree
+
+class SparTreeDdminPayload(
+  val tree: SparTree,
+  val edit: NodeDeletionTreeEdit,
+)

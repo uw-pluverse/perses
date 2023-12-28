@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -65,17 +65,12 @@ class ConcurrentStateBasedDeltaReducer(
     const val NAME = "concurrent_state_ddmin"
 
     @JvmStatic
-    val META = object : ReducerAnnotation() {
-      override val deterministic: Boolean
-        get() = true
-
-      override val reductionResultSizeTrend: ReductionResultSizeTrend
-        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
-
-      override fun shortName() = NAME
-
-      override fun description() = "A parallel ddmin"
-
+    val META = object : ReducerAnnotation(
+      shortName = NAME,
+      description = "A parallel ddmin",
+      deterministic = true,
+      reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+    ) {
       override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
         return ImmutableList.of(ConcurrentStateBasedDeltaReducer(reducerContext))
       }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,9 +18,11 @@ package org.perses.reduction
 
 import com.google.common.collect.ImmutableList
 import org.perses.antlr.RuleType
+import org.perses.delta.AbstractDeltaDebugger
+import org.perses.delta.AbstractDeltaDebugger.OnBestUpdateHandler
 import org.perses.delta.AbstractPropertyTestResultWithPayload
+import org.perses.delta.Configuration
 import org.perses.delta.IPropertyTester
-import org.perses.delta.PristineDeltaDebugger
 import org.perses.delta.PropertyTestResultWithPayload
 import org.perses.delta.SkipPropertyTestResult
 import org.perses.program.LanguageKind
@@ -267,69 +269,66 @@ abstract class AbstractTokenReducer protected constructor(
     return false
   }
 
-  protected class Payload(
-    val tree: SparTree,
-    val edit: NodeDeletionTreeEdit,
-    val cacheResult: AbstractCacheRetrievalResult,
-  )
-
-  protected fun createPristineDeltaDebugger(
+  private fun createNodeDeletionActionSetInverse(
+    originalInput: ImmutableList<AbstractSparTreeNode>,
     input: ImmutableList<AbstractSparTreeNode>,
+  ): NodeDeletionActionSet {
+    val actionSetBuilder =
+      NodeDeletionActionSet.Builder("delta debugger@${input.size}")
+    Util.visitDifference(superList = originalInput, subList = input) {
+      lazyAssert { !it.isPermanentlyDeleted }
+      actionSetBuilder.deleteNode(it)
+    }
+    return actionSetBuilder.build()
+  }
+  fun createPropertyTester(
+    actionSetDescriptionPrefix: String,
     tree: SparTree,
-  ): PristineDeltaDebugger<AbstractSparTreeNode, Payload> {
-    val onBestUpdateHandler =
-      { _: ImmutableList<AbstractSparTreeNode>, payload: Payload ->
-        payload.tree.applyEdit(payload.edit)
-      }
+  ) = object : IPropertyTester<AbstractSparTreeNode, SparTreeDdminPayload> {
 
-    fun createNodeDeletionActionSetReverse(
-      originalInput: ImmutableList<AbstractSparTreeNode>,
-      input: ImmutableList<AbstractSparTreeNode>,
-    ): NodeDeletionActionSet {
-      val actionSetBuilder =
-        NodeDeletionActionSet.Builder("delta debugger@${input.size}")
-      Util.visitDifference(superList = originalInput, subList = input) {
-        lazyAssert { !it.isPermanentlyDeleted }
-        actionSetBuilder.deleteNode(it)
+    override fun testProperty(
+      configuration: Configuration<AbstractSparTreeNode>,
+    ): AbstractPropertyTestResultWithPayload<SparTreeDdminPayload> {
+      val actionSet = configuration.deleted.let {
+        NodeDeletionActionSet.Builder(
+          "${actionSetDescriptionPrefix}dd@${it.size}",
+        ).deleteNodes(it).build()
       }
-      return actionSetBuilder.build()
+      if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
+        listenerManager.onNodeEditActionSetCacheHit(actionSet)
+        return SkipPropertyTestResult()
+      }
+      val treeEdit = tree.createNodeDeletionEdit(actionSet)
+      val result = testAllTreeEditsAndReturnTheBest(
+        listOf(treeEdit),
+      ) ?: return SkipPropertyTestResult()
+      return PropertyTestResultWithPayload(
+        result.testResult,
+        SparTreeDdminPayload(
+          tree,
+          result.edit as NodeDeletionTreeEdit,
+        ),
+      )
+    }
+  }
+
+  fun createOnBestUpdateHandler() =
+    OnBestUpdateHandler<AbstractSparTreeNode, SparTreeDdminPayload> { _, payload ->
+      payload.tree.applyEdit(payload.edit)
     }
 
-    val propertyTest = object : IPropertyTester<AbstractSparTreeNode, Payload> {
-
-      override fun testProperty(
-        currentBest: ImmutableList<AbstractSparTreeNode>,
-        candidate: ImmutableList<AbstractSparTreeNode>,
-      ): AbstractPropertyTestResultWithPayload<Payload> {
-        val actionSet = createNodeDeletionActionSetReverse(
-          currentBest,
-          candidate,
-        )
-        val treeEdit = tree.createNodeDeletionEdit(actionSet)
-        val testProgram = treeEdit.program
-        val cachedResult = queryCache.getCachedResult(testProgram)
-        if (cachedResult.isHit()) {
-          val testResult = cachedResult.asCacheHit().testResult
-          lazyAssert({ testResult.isNotInteresting }) { "Only failed programs can be cached." }
-          listenerManager.onTestResultCacheHit(testResult, testProgram, treeEdit)
-          return SkipPropertyTestResult()
-        }
-        val payload = Payload(tree, treeEdit, cachedResult)
-        val testTask = executorService.testProgramAsync(
-          ALWAYS_TRUE_PRECHECK,
-          IDENTITY_POST_CHECK,
-          ioManager.createOutputManager(testProgram),
-          EditTestPayload(treeEdit, cachedResult.asCacheMiss()),
-        )
-        // result is ignored, and will be handled by the delta debugger.
-        analyzeResultsAndGetBest(listOf(testTask))
-        return PropertyTestResultWithPayload(testTask.getWithTimeoutWarnings(), payload)
-      }
-    }
-    return PristineDeltaDebugger(
-      input,
-      propertyTest,
-      onBestUpdateHandler,
+  protected fun createDeltaArguments(
+    needToTestEmpty: Boolean,
+    tree: SparTree,
+    actionsDescription: String,
+    input: ImmutableList<AbstractSparTreeNode>,
+  ): AbstractDeltaDebugger.Arguments<AbstractSparTreeNode, SparTreeDdminPayload> {
+    return AbstractDeltaDebugger.Arguments(
+      needToTestEmpty = needToTestEmpty,
+      input = input,
+      propertyTester = createPropertyTester(actionSetDescriptionPrefix = actionsDescription, tree),
+      onBestUpdateHandler = createOnBestUpdateHandler(),
+      descriptionPrefix = actionsDescription,
     )
   }
 

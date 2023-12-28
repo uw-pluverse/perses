@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,7 +17,9 @@
 package org.perses.reduction.partition
 
 import com.google.common.collect.ImmutableList
+import org.perses.delta.xfs.Partition
 import org.perses.reduction.ReductionLevel
+import org.perses.spartree.AbstractSparTreeNode
 
 /** The base class for partitioning a level of spar-tree nodes.  */
 abstract class AbstractLevelPartitionPolicy {
@@ -25,5 +27,8 @@ abstract class AbstractLevelPartitionPolicy {
    * Partition the given region into multiple partitions. The partitions are visited from first to
    * last. So when you implement a new policy, take care of the order also.
    */
-  abstract fun partition(region: ReductionLevel, maxSizeOfPartition: Int): ImmutableList<Partition>
+  abstract fun partition(
+    region: ReductionLevel,
+    maxSizeOfPartition: Int,
+  ): ImmutableList<Partition<AbstractSparTreeNode>>
 }

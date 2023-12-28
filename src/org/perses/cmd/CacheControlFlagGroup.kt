@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,18 +21,17 @@ import com.beust.jcommander.Parameter
 import com.beust.jcommander.ParameterException
 import org.perses.reduction.cache.EnumQueryCachingControl
 import org.perses.util.Fraction
-import org.perses.util.cmd.CommonCmdOptionGroupOrder
-import org.perses.util.cmd.ICommandLineFlags
+import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import java.nio.file.Files
 import java.nio.file.Path
 
-class CacheControlFlags : ICommandLineFlags {
+class CacheControlFlagGroup : AbstractCommandLineFlagGroup(groupName = "Cache Control") {
   @Parameter(
     names = ["--query-caching"],
     description = "Enable query caching for test script executions.",
     arity = 1,
     converter = QueryCachingControlConverter::class,
-    order = CommonCmdOptionGroupOrder.CACHE_CONTROL + 0,
+    order = 0,
   )
   var queryCaching = EnumQueryCachingControl.AUTO
 
@@ -40,7 +39,7 @@ class CacheControlFlags : ICommandLineFlags {
     names = ["--edit-caching"],
     description = "Enable caching for edits performed between two successful reductions.",
     arity = 1,
-    order = CommonCmdOptionGroupOrder.CACHE_CONTROL + 1,
+    order = 1,
     hidden = true,
   )
   var nodeActionSetCaching = true
@@ -54,7 +53,7 @@ class CacheControlFlags : ICommandLineFlags {
       "t''	- tokens of the current best program. " +
       "Refresh threshold requires an integer input ranging [0, 100]. " +
       "e.g. 0 represents 0%, 85 represents 85%.",
-    order = CommonCmdOptionGroupOrder.CACHE_CONTROL + 2,
+    order = 2,
     hidden = true,
   )
   var queryCacheRefreshThreshold = 0 // Represent 0/100 = 0%
@@ -62,7 +61,7 @@ class CacheControlFlags : ICommandLineFlags {
   @Parameter(
     names = ["--enable-lightweight-refreshing"],
     description = "Whether to enable lightweight refreshing",
-    order = CommonCmdOptionGroupOrder.CACHE_CONTROL + 3,
+    order = 3,
     hidden = true,
     arity = 1,
   )
@@ -71,7 +70,7 @@ class CacheControlFlags : ICommandLineFlags {
   @Parameter(
     names = ["--pass-level-caching"],
     description = "Whether to enable pass-level cache. If enabled, a reducer might be skipped",
-    order = CommonCmdOptionGroupOrder.CACHE_CONTROL + 4,
+    order = 4,
     hidden = true,
     arity = 1,
   )
@@ -80,7 +79,7 @@ class CacheControlFlags : ICommandLineFlags {
   @Parameter(
     names = ["--global-cache-file"],
     description = "The file that stores the global cache",
-    order = CommonCmdOptionGroupOrder.CACHE_CONTROL + 5,
+    order = 5,
     hidden = true,
     arity = 1,
   )
@@ -89,7 +88,7 @@ class CacheControlFlags : ICommandLineFlags {
   @Parameter(
     names = ["--path-to-save-updated-global-cache"],
     description = "The file to write the updated global cache",
-    order = CommonCmdOptionGroupOrder.CACHE_CONTROL + 6,
+    order = 6,
     hidden = true,
     arity = 1,
   )

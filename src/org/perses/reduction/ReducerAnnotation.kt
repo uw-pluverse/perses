@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -25,15 +25,16 @@ fun interface ITokenReducerCreator {
 
 /** Annotation for a reducer.  */
 // TODO: test the equals and hashcode function.
-abstract class ReducerAnnotation : AbstractReducerNameAndDesc(), ITokenReducerCreator {
+abstract class ReducerAnnotation(
+  shortName: String,
+  description: String,
+  val deterministic: Boolean,
+  val reductionResultSizeTrend: ReductionResultSizeTrend,
+) : AbstractReducerNameAndDesc(shortName, description), ITokenReducerCreator {
 
   enum class ReductionResultSizeTrend {
     BEST_RESULT_SIZE_INCREASE,
     BEST_RESULT_SIZE_REMAIN,
     BEST_RESULT_SIZE_DECREASE,
   }
-
-  abstract val deterministic: Boolean
-
-  abstract val reductionResultSizeTrend: ReductionResultSizeTrend
 }

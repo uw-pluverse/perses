@@ -35,6 +35,7 @@ readonly SUBMODULE_BAZEL_DIRS=(
   "perses-fuzzer/test"
   "pigen/ast"
   "pigen/chaoty"
+  "weighted-dd"
 )
 for submodule in "${SUBMODULE_BAZEL_DIRS[@]}" ; do
   [[ -z "$(find "${submodule}" -name BUILD)" ]] && continue

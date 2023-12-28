@@ -9,11 +9,11 @@ kt_jvm_library(
     name = "partition",
     srcs = [
         "AbstractLevelPartitionPolicy.kt",
-        "Partition.kt",
         "SimpleLevelPartitionPolicy.kt",
     ],
     deps = [
         "//:guava",
+        "//src/org/perses/delta/xfs:Partition",
         "//src/org/perses/reduction:reduction_level",
         "//src/org/perses/spartree",
         "//src/org/perses/util",

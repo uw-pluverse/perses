@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,12 +17,13 @@
 package org.perses.reduction.reducer.hdd
 
 import com.google.common.collect.ImmutableList
+import org.perses.delta.xfs.Partition
 import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.reduction.partition.Partition
 import org.perses.reduction.reducer.TreeTransformations.createNodeDeletionActionSetFor
 import org.perses.spartree.AbstractSparTreeEdit
+import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.SparTree
 
 /** Implementation of the original HDD algorithm.  */
@@ -30,7 +31,7 @@ class HDDReducer(reducerContext: ReducerContext) :
   AbstractLevelBasedReducer(META, reducerContext) {
 
   override fun createTreeEditListByDisablingPartition(
-    partition: Partition,
+    partition: Partition<AbstractSparTreeNode>,
     tree: SparTree,
   ): List<AbstractSparTreeEdit<*>> {
     val actionSet = createNodeDeletionActionSetFor(partition, "HDD")
@@ -45,22 +46,12 @@ class HDDReducer(reducerContext: ReducerContext) :
     const val NAME = "hdd"
 
     @JvmField
-    val META: ReducerAnnotation = object : ReducerAnnotation() {
-
-      override val deterministic: Boolean
-        get() = true
-
-      override val reductionResultSizeTrend: ReductionResultSizeTrend
-        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
-
-      override fun shortName(): String {
-        return NAME
-      }
-
-      override fun description(): String {
-        return "A variant of HDD."
-      }
-
+    val META: ReducerAnnotation = object : ReducerAnnotation(
+      shortName = NAME,
+      description = "A variant of HDD.",
+      deterministic = true,
+      reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+    ) {
       override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
         return ImmutableList.of(HDDReducer(reducerContext))
       }

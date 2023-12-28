@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,7 +20,7 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.util.cmd.VerbosityFlags
+import org.perses.util.cmd.VerbosityFlagGroup
 import java.lang.RuntimeException
 
 @RunWith(JUnit4::class)
@@ -28,7 +28,7 @@ class VerbosityFlagsTest {
 
   @Test
   fun testInvalidValueTriggersException() {
-    val flags = VerbosityFlags()
+    val flags = VerbosityFlagGroup()
     flags.verbosity = "invalid"
     Assert.assertThrows(RuntimeException::class.java) {
       flags.validate()
@@ -37,7 +37,7 @@ class VerbosityFlagsTest {
 
   @Test
   fun test() {
-    val flags = VerbosityFlags()
+    val flags = VerbosityFlagGroup()
     flags.validate()
   }
 }

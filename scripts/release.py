@@ -77,10 +77,6 @@ def check_repository():
 
 
 def call_hub_release(attach, message, tag):
-    githubTokenKey = "GITHUB_TOKEN"
-    if githubTokenKey not in os.environ:
-        print("Need to define the environment variable %s" % githubTokenKey)
-        exit(1)
     try:
         release_command = ['hub', 'release', 'create', '--browse', f"--attach={attach}", f'--message={message}', tag]
         pipe = None
@@ -101,6 +97,11 @@ def main():
     # ensure in root folder
     if not os.path.exists("WORKSPACE"):
         raise Exception('ERROR: This script should be run in the root folder of the project.')
+
+    githubTokenKey = "GITHUB_TOKEN"
+    if githubTokenKey not in os.environ:
+        print("Need to define the environment variable %s" % githubTokenKey)
+        exit(1)
 
     # check prerequisite tools
     check_tools()

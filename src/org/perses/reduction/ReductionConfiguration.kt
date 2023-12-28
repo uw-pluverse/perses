@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,21 +16,20 @@
  */
 package org.perses.reduction
 
+import org.perses.delta.EnumDeltaDebuggerType
 import org.perses.grammar.AbstractParserFacade
 import java.nio.file.Path
 import kotlin.io.path.name
 
 /**
  * This is the internal configuration for Perses reducer.
- *
- * TODO: refactor this to a AutoValue class, or use the BUILDER pattern.
  */
 class ReductionConfiguration(
   val statisticsFile: Path?,
   val progressDumpFile: ProgressDumpFile?,
   val fixpointReduction: Boolean,
   val enableTestScriptExecutionCaching: Boolean,
-  val useRealDeltaDebugger: Boolean,
+  val defaultDeltaDebuggerTypeForKleene: EnumDeltaDebuggerType,
   val numOfReductionThreads: Int,
   val parserFacade: AbstractParserFacade,
   val persesNodeReducerConfig: PersesNodeReducerConfiguration,

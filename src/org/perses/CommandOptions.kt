@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,32 +16,32 @@
  */
 package org.perses
 
-import org.perses.cmd.CacheControlFlags
-import org.perses.cmd.ExperimentFlags
-import org.perses.cmd.InputFlags
-import org.perses.cmd.LanguageControlFlags
-import org.perses.cmd.OutputFlags
-import org.perses.cmd.OutputRefiningFlags
-import org.perses.cmd.ProfilingFlags
-import org.perses.cmd.ReductionAlgorithmControlFlags
-import org.perses.cmd.ReductionControlFlags
-import org.perses.cmd.VulcanFlags
+import org.perses.cmd.CacheControlFlagGroup
+import org.perses.cmd.ExperimentFlagGroup
+import org.perses.cmd.InputFlagGroup
+import org.perses.cmd.LanguageControlFlagGroup
+import org.perses.cmd.OutputFlagGroup
+import org.perses.cmd.OutputRefiningFlagGroup
+import org.perses.cmd.ProfilingFlagGroup
+import org.perses.cmd.ReductionAlgorithmControlFlagGroup
+import org.perses.cmd.ReductionControlFlagGroup
+import org.perses.cmd.VulcanFlagGroup
 import org.perses.util.cmd.AbstractCommandOptions
 
 /** Parser for command line arguments.  */
 open class CommandOptions(defaultReductionAlgorithm: String) : AbstractCommandOptions() {
 
   val inputFlags = registerFlags(createInputFlags())
-  val resultOutputFlags = registerFlags(OutputFlags())
-  val reductionControlFlags = registerFlags(ReductionControlFlags())
-  val outputRefiningFlags = registerFlags(OutputRefiningFlags())
+  val resultOutputFlags = registerFlags(OutputFlagGroup())
+  val reductionControlFlags = registerFlags(ReductionControlFlagGroup())
+  val outputRefiningFlags = registerFlags(OutputRefiningFlagGroup())
   val algorithmControlFlags = registerFlags(
-    ReductionAlgorithmControlFlags(defaultReductionAlgorithm),
+    ReductionAlgorithmControlFlagGroup(defaultReductionAlgorithm),
   )
-  val cacheControlFlags = registerFlags(CacheControlFlags())
-  val profilingFlags = registerFlags(ProfilingFlags())
-  val experimentFlags = registerFlags(ExperimentFlags())
-  val languageControlFlags = registerFlags(LanguageControlFlags())
-  val vulcanFlags = registerFlags(VulcanFlags())
-  open fun createInputFlags() = InputFlags()
+  val cacheControlFlags = registerFlags(CacheControlFlagGroup())
+  val profilingFlags = registerFlags(ProfilingFlagGroup())
+  val experimentFlags = registerFlags(ExperimentFlagGroup())
+  val languageControlFlags = registerFlags(LanguageControlFlagGroup())
+  val vulcanFlags = registerFlags(VulcanFlagGroup())
+  open fun createInputFlags() = InputFlagGroup()
 }

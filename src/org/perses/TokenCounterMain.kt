@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,15 +20,15 @@ import com.beust.jcommander.Parameter
 import com.beust.jcommander.converters.PathConverter
 import org.antlr.v4.runtime.Token
 import org.perses.TokenCounterMain.CommandOptions
-import org.perses.cmd.LanguageControlFlags
+import org.perses.cmd.LanguageControlFlagGroup
 import org.perses.grammar.AbstractParserFacadeFactory
 import org.perses.grammar.CompositeParserFacadeFactory
 import org.perses.grammar.SingleParserFacadeFactory.Companion.builderWithBuiltinLanguages
 import org.perses.grammar.adhoc.AdhocParserFacadeFactoryUtil.createParserFacadeFactory
 import org.perses.program.SourceFile
+import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import org.perses.util.cmd.AbstractCommandOptions
 import org.perses.util.cmd.AbstractMain
-import org.perses.util.cmd.ICommandLineFlags
 import java.io.OutputStream
 import java.io.PrintStream
 import java.nio.file.Files
@@ -78,10 +78,10 @@ class TokenCounterMain(
   }
 
   class CommandOptions : AbstractCommandOptions() {
-    val flags = registerFlags(RequiredFlags())
-    val extFlags = registerFlags(LanguageControlFlags())
+    val flags = registerFlags(RequiredFlagGroup())
+    val extFlags = registerFlags(LanguageControlFlagGroup())
 
-    class RequiredFlags : ICommandLineFlags {
+    class RequiredFlagGroup : AbstractCommandLineFlagGroup(groupName = "Compulsory") {
       @Parameter(description = "source file", required = true, converter = PathConverter::class)
       var file: Path? = null
       override fun validate() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,7 +16,6 @@
  */
 package org.perses.antlr
 
-import com.google.common.collect.ImmutableList
 import com.google.common.io.Files.getNameWithoutExtension
 import org.perses.antlr.ast.PersesAstBuilder
 import org.perses.antlr.ast.PersesGrammar
@@ -125,9 +124,7 @@ class AntlrCompiler(
   }
 
   private fun compileJavaCode() {
-    val compileTargets: MutableList<Path> = ArrayList<Path>(
-      ImmutableList.of(lexerJavaFile, parserJavaFile),
-    )
+    val compileTargets = mutableListOf(lexerJavaFile, parserJavaFile)
 
     if (lexerBaseFile != null) {
       compileTargets.add(lexerBaseFile)

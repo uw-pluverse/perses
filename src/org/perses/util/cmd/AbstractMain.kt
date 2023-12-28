@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -34,7 +34,7 @@ abstract class AbstractMain<Cmd : AbstractCommandOptions>(args: Array<String>) {
 
   fun run() {
     if (cmd.help) {
-      commander.print()
+      commander.printUsage()
       return
     }
     if (cmd.verbosityFlags.listVerbosity) {

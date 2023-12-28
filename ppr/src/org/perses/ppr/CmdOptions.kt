@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,26 +18,25 @@ package org.perses.ppr
 
 import com.beust.jcommander.Parameter
 import org.perses.CommandOptions
-import org.perses.cmd.InputFlags
+import org.perses.cmd.InputFlagGroup
 import org.perses.reduction.ReducerFactory.defaultReductionAlgName
-import org.perses.util.cmd.CommonCmdOptionGroupOrder
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
 class CmdOptions : CommandOptions(defaultReductionAlgName) {
 
-  override fun createInputFlags() = OverallInputFlags()
+  override fun createInputFlags() = OverallInputFlagGroup()
 
-  val overallInputFlags = inputFlags as OverallInputFlags
+  val overallInputFlags = inputFlags as OverallInputFlagGroup
 
-  class OverallInputFlags : InputFlags() {
+  class OverallInputFlagGroup : InputFlagGroup() {
     @JvmField
     @Parameter(
       names = ["--variant-file", "--variant", "-v"],
       required = true,
       description = "The variant file to reduce",
-      order = CommonCmdOptionGroupOrder.COMPULSORY + 10,
+      order = 10,
     )
     var variantFile: Path? = null
 
@@ -47,7 +46,7 @@ class CmdOptions : CommandOptions(defaultReductionAlgName) {
       required = true,
       arity = 1,
       description = "if true, enable tree-based diff reduction",
-      order = CommonCmdOptionGroupOrder.COMPULSORY + 11,
+      order = 11,
     )
     var minTDiff: Boolean = true
 
@@ -57,7 +56,7 @@ class CmdOptions : CommandOptions(defaultReductionAlgName) {
       required = true,
       arity = 1,
       description = "if true, enable seed reduction with diff",
-      order = CommonCmdOptionGroupOrder.COMPULSORY + 12,
+      order = 12,
     )
     var minCommonality: Boolean = true
 
@@ -67,7 +66,7 @@ class CmdOptions : CommandOptions(defaultReductionAlgName) {
       required = true,
       arity = 1,
       description = "if true, enable list-based diff reduction",
-      order = CommonCmdOptionGroupOrder.COMPULSORY + 13,
+      order = 13,
     )
     var minLDiff: Boolean = true
 
@@ -76,7 +75,7 @@ class CmdOptions : CommandOptions(defaultReductionAlgName) {
       names = ["--enable-diff-slicer"],
       description = "Enable diff slicer after syntax-guided variant reduction is done. Maybe slow.",
       arity = 1,
-      order = CommonCmdOptionGroupOrder.COMPULSORY + 14,
+      order = 14,
     )
     var enableDiffSlicer = true
 
@@ -86,7 +85,7 @@ class CmdOptions : CommandOptions(defaultReductionAlgName) {
       description = "Enable diff delta debugging reducer " +
         "after syntax-guided variant reduction is done.",
       arity = 1,
-      order = CommonCmdOptionGroupOrder.COMPULSORY + 15,
+      order = 15,
     )
     var enableDiffDdmin = true
 
@@ -98,7 +97,7 @@ class CmdOptions : CommandOptions(defaultReductionAlgName) {
       description = "List-based diff is not as symmetrical as Tree-based diff. " +
         "If mirror is enabled, it swaps the position of seed and variant, " +
         "and perform the same reduce algorithm once more.",
-      order = CommonCmdOptionGroupOrder.COMPULSORY + 16,
+      order = 16,
     )
     var mirror: Boolean = false
 

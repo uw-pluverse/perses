@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,21 +19,20 @@ package org.perses.util.cmd
 import com.beust.jcommander.Parameter
 import org.perses.util.DefaultLoggingConfigurations
 
-class VerbosityFlags : ICommandLineFlags {
-  @JvmField
+class VerbosityFlagGroup : AbstractCommandLineFlagGroup(groupName = "Verbosity") {
+
   @Parameter(
     names = ["--verbosity"],
     description = "verbosity of logging",
-    order = CommonCmdOptionGroupOrder.VERBOSITY_CONTROL + 10,
+    order = 10,
   )
   var verbosity = "INFO"
 
-  @JvmField
   @Parameter(
     names = ["--list-verbosity-levels"],
     description = "list all verbosity levels",
     help = true,
-    order = CommonCmdOptionGroupOrder.VERBOSITY_CONTROL + 20,
+    order = 20,
   )
   var listVerbosity = false
 

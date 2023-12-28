@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -111,23 +111,15 @@ class SubTreeReplacementReducer(
       return builder.build()
     }
 
-    val META = object : ReducerAnnotation() {
-      override val deterministic: Boolean
-        get() = false
-
-      override val reductionResultSizeTrend: ReductionResultSizeTrend
-        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_REMAIN
-
+    val META = object : ReducerAnnotation(
+      shortName = NAME,
+      description = "Randomly pick up a subtree, " +
+        "and replace it with another subtree of the same type.",
+      deterministic = false,
+      reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_REMAIN,
+    ) {
       override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
         return ImmutableList.of(SubTreeReplacementReducer(reducerContext))
-      }
-
-      override fun shortName(): String {
-        return NAME
-      }
-
-      override fun description(): String {
-        return "Randomly pick up a subtree, and replace it with another subtree of the same type."
       }
     }
 

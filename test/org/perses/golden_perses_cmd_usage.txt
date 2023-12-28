@@ -1,11 +1,30 @@
 Usage: org.perses.Main [options]
   Options:
+    --help, -h
+      print help message
+
+[Verbosity]  Options:
+    --verbosity
+      verbosity of logging
+      Default: INFO
+    --list-verbosity-levels
+      list all verbosity levels
+
+[Version]  Options:
+    --version
+      print the version
+
+[Inputs]  Options:
   * --test-script, --test, -t
       The test script to specify the property the reducer needs to preserve.
   * --input-file, --input, -i
       The input file to reduce
+
+[Outputs]  Options:
     --output-dir, -o
       The output directory to save the reduced result.
+
+[General Reduction Control]  Options:
     --fixpoint
       iterative reduction till fixpoint
       Default: true
@@ -15,6 +34,8 @@ Usage: org.perses.Main [options]
     --code-format
       The format of the reduced program.
       Possible Values: [SINGLE_TOKEN_PER_LINE, ORIG_FORMAT, COMPACT_ORIG_FORMAT, PYTHON3_FORMAT, COMPACT_PYTHON3_FORMAT]
+
+[Output Refining Control]  Options:
     --call-formatter
       call a formatter on the final result
       Default: false
@@ -27,6 +48,8 @@ Usage: org.perses.Main [options]
     --creduce-cmd
       the C-Reduce command name or path
       Default: creduce
+
+[Reduction Algorithm Control]  Options:
     --alg
       reduction algorithm: use --list-algs to list all available algorithms
     --list-algs
@@ -42,18 +65,18 @@ Usage: org.perses.Main [options]
       Enable line slicer after syntax-guided reduction, and before token 
       slicer 
       Default: false
-    --list-langs
-      List all the supported langauges.
-    --lang
-      The language to be used to parse the input program
-      Default: auto
-    --language-ext-jars
-      A list of JAR files to support new languages
-      Default: []
+    --default-delta-debugger-for-kleene
+      The default delta debugger algorithm to reduce kleene nodes.
+      Default: DFS
+      Possible Values: [PRISTINE, PERSES_VARIANT_OF_PRISTINE, DFS, BFS, CDD, PROBDD]
+
+[Cache Control]  Options:
     --query-caching
       Enable query caching for test script executions.
       Default: AUTO
       Possible Values: [TRUE, FALSE, AUTO]
+
+[Profiling]  Options:
     --progress-dump-file
       The file to record the reduction process. The dump file can be large..
     --append-to-progress-dump-file
@@ -77,11 +100,20 @@ Usage: org.perses.Main [options]
     --script-execution-keep-waiting-after-timeout
       keep trying even after the script execution timeouts.
       Default: true
-    --verbosity
-      verbosity of logging
-      Default: INFO
-    --list-verbosity-levels
-      list all verbosity levels
+
+[Language Control]  Options:
+    --list-langs
+      List all the supported langauges.
+    --designated-parser-facade-class-name
+      The parser facade to be used to parse the input program
+      Default: <empty string>
+    --list-parser-facades
+      List all the available parser facades.
+    --language-ext-jars
+      A list of JAR files to support new languages
+      Default: []
+
+[Vulcan Reducer Control]  Options:
     --enable-vulcan
       Enable vulcan (using auxiliary reducers to help produce smaller 
       reduction output).
@@ -96,8 +128,4 @@ Usage: org.perses.Main [options]
       Enable vulcan fixpoint iteratively using auxiliary reducers until no 
       progress can be made
       Default: false
-    --help, -h
-      print help message
-    --version
-      print the version
 

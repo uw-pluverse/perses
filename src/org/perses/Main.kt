@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,7 +16,6 @@
  */
 package org.perses
 
-import com.google.common.base.Preconditions
 import com.google.common.collect.ImmutableList
 import org.perses.grammar.AbstractParserFacadeFactory
 import org.perses.grammar.adhoc.AdhocParserFacadeFactoryUtil.createParserFacadeFactory
@@ -40,13 +39,10 @@ class Main(args: Array<String>) : AbstractMain<CommandOptions>(args) {
 
   override fun validateCommandOptions() {
     super.validateCommandOptions()
-    Preconditions.checkArgument(
-      isValidReducerName(
-        cmd.algorithmControlFlags.getReductionAlgorithmName(),
-      ),
-      "Invalid reduction algorithm %s",
-      cmd.algorithmControlFlags.getReductionAlgorithmName(),
-    )
+    check(isValidReducerName(cmd.algorithmControlFlags.getReductionAlgorithmName())) {
+      "Invalid reduction algorithm " +
+        cmd.algorithmControlFlags.getReductionAlgorithmName()
+    }
   }
 
   override fun processHelpRequests(): HelpRequestProcessingDecision {
@@ -54,6 +50,12 @@ class Main(args: Array<String>) : AbstractMain<CommandOptions>(args) {
       println("All available reduction algorithms: ")
       println(printAllReductionAlgorithms())
       return HelpRequestProcessingDecision.EXIT
+    }
+    if (cmd.languageControlFlags.listParserFacades) {
+      TODO("Need to implement this.")
+    }
+    if (cmd.languageControlFlags.listLangs) {
+      TODO("Need to implement this.")
     }
     return HelpRequestProcessingDecision.NO_EXIT
   }

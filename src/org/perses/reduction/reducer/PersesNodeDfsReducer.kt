@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,74 +17,28 @@
 package org.perses.reduction.reducer
 
 import com.google.common.collect.ImmutableList
-import com.google.common.flogger.FluentLogger
 import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.reduction.partition.Partition
-import org.perses.spartree.AbstractSparTreeNode
-import org.perses.spartree.SparTree
-import org.perses.util.Util.lazyAssert
-import java.util.ArrayDeque
-import java.util.Queue
 
 /** Perses node reducer, with dfs delta debugging  */
-open class PersesNodeDfsReducer constructor(
-  reducerAnnotation: ReducerAnnotation,
-  reducerContext: ReducerContext,
-) : AbstractPersesNodeReducer(reducerAnnotation, reducerContext) {
+object PersesNodeDfsReducer {
 
-  private val deltaDebugger = if (reducerContext.configuration.useRealDeltaDebugger) {
-    DeltaDebugger(
-      reducerContext.listenerManager,
-      reducerContext.nodeActionSetCache,
-    ) {
-      testSparTreeEdit(it)
-    }
-  } else {
-    DfsDeltaDebugger(
-      reducerContext.listenerManager,
-      reducerContext.nodeActionSetCache,
-    ) {
-      testSparTreeEdit(it)
-    }
-  }
+  const val NAME = "perses_node_with_dfs_delta"
 
-  init {
-    logger.atConfig().log("Delta Debugger is %s", deltaDebugger.javaClass)
-  }
-
-  override fun createReductionQueue(): Queue<AbstractSparTreeNode> =
-    ArrayDeque(DEFAULT_INITIAL_QUEUE_CAPACITY)
-
-  override fun performDelta(
-    tree: SparTree,
-    actionsDescription: String,
-    vararg startPartitions: Partition,
+  @JvmField
+  val META: ReducerAnnotation = object : ReducerAnnotation(
+    shortName = NAME,
+    description = "",
+    deterministic = true,
+    reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    lazyAssert { startPartitions.isNotEmpty() }
-    deltaDebugger.reduce(tree, actionsDescription, *startPartitions)
-  }
-
-  companion object {
-    const val NAME = "perses_node_with_dfs_delta"
-
-    @JvmField
-    val META: ReducerAnnotation = object : ReducerAnnotation() {
-      override val deterministic: Boolean
-        get() = true
-
-      override val reductionResultSizeTrend: ReductionResultSizeTrend
-        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
-
-      override fun shortName(): String = NAME
-
-      override fun description(): String = ""
-
-      override fun create(reducerContext: ReducerContext) =
-        ImmutableList.of<AbstractTokenReducer>(PersesNodeDfsReducer(this, reducerContext))
-    }
-
-    internal val logger = FluentLogger.forEnclosingClass()
+    override fun create(reducerContext: ReducerContext) = ImmutableList.of<AbstractTokenReducer>(
+      PersesNodeReducer(
+        this,
+        reducerContext,
+        AbstractNodeReducer.IReductionQueueStrategy.FOR_REGULAR_QUEUE,
+      ),
+    )
   }
 }

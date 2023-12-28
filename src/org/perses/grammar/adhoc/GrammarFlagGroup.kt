@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,19 +17,18 @@
 package org.perses.grammar.adhoc
 
 import com.beust.jcommander.Parameter
-import org.perses.util.cmd.CommonCmdOptionGroupOrder
-import org.perses.util.cmd.ICommandLineFlags
+import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import java.nio.file.Files
 import java.nio.file.Path
 
-class GrammarFlags : ICommandLineFlags {
+class GrammarFlagGroup : AbstractCommandLineFlagGroup(groupName = "") {
 
   @JvmField
   @Parameter(
     names = ["--parser-grammar"],
     description = "The parser grammar",
     required = false,
-    order = CommonCmdOptionGroupOrder.GRAMMAR_CONTROL,
+    order = 0,
   )
   var parserGrammar: Path? = null
 
@@ -38,7 +37,7 @@ class GrammarFlags : ICommandLineFlags {
     names = ["--start-rule"],
     description = "The start rule of the grammar",
     required = false,
-    order = CommonCmdOptionGroupOrder.GRAMMAR_CONTROL + 100,
+    order = 100,
   )
   var startRuleName: String? = null
 
@@ -47,7 +46,7 @@ class GrammarFlags : ICommandLineFlags {
     names = ["--token-names-of-identifiers"],
     description = "The token names of identifiers",
     required = false,
-    order = CommonCmdOptionGroupOrder.GRAMMAR_CONTROL + 200,
+    order = 200,
   )
   var tokenNamesOfIdentifiers: List<String> = listOf()
 
@@ -56,7 +55,7 @@ class GrammarFlags : ICommandLineFlags {
     names = ["--lexer-grammar"],
     description = "The lexer grammar",
     required = false,
-    order = CommonCmdOptionGroupOrder.GRAMMAR_CONTROL + 300,
+    order = 300,
   )
   var lexerGrammar: Path? = null
 
@@ -64,7 +63,7 @@ class GrammarFlags : ICommandLineFlags {
     names = ["--package-name"],
     description = "The package name of the generated classes in the generated Jar file.",
     required = false,
-    order = CommonCmdOptionGroupOrder.GRAMMAR_CONTROL + 400,
+    order = 400,
   )
   var packageName: String? = null
 
@@ -72,7 +71,7 @@ class GrammarFlags : ICommandLineFlags {
     names = ["--parser-facade-class-simple-name"],
     description = "The simple class name of the generated parser facade",
     required = false,
-    order = CommonCmdOptionGroupOrder.GRAMMAR_CONTROL + 500,
+    order = 500,
   )
   var parserFacadeClassSimpleName: String? = null
 
@@ -80,7 +79,7 @@ class GrammarFlags : ICommandLineFlags {
     names = ["--language-kind-yaml-file"],
     description = "The YAML file which defines the language kind for this grammar",
     required = false,
-    order = CommonCmdOptionGroupOrder.GRAMMAR_CONTROL + 600,
+    order = 600,
   )
   var languageKindYamlFile: Path? = null
 
@@ -88,7 +87,7 @@ class GrammarFlags : ICommandLineFlags {
     names = ["--existing-language-full-class-name"],
     description = "The full class name of the existing language kind",
     required = false,
-    order = CommonCmdOptionGroupOrder.GRAMMAR_CONTROL + 700,
+    order = 700,
   )
   var existingLanguageKindClassFullName: String? = null
 
@@ -96,7 +95,7 @@ class GrammarFlags : ICommandLineFlags {
     names = ["--parser-base-file"],
     description = "The file for the parse base",
     required = false,
-    order = CommonCmdOptionGroupOrder.GRAMMAR_CONTROL + 800,
+    order = 800,
   )
   var parserBase: Path? = null
 
@@ -104,7 +103,7 @@ class GrammarFlags : ICommandLineFlags {
     names = ["--lexer-base-file"],
     description = "The file for the lexer base",
     required = false,
-    order = CommonCmdOptionGroupOrder.GRAMMAR_CONTROL + 900,
+    order = 900,
   )
   var lexerBase: Path? = null
 
@@ -113,9 +112,18 @@ class GrammarFlags : ICommandLineFlags {
     description = "whether to enable PNF normalization on the parser grammar",
     required = false,
     arity = 1,
-    order = CommonCmdOptionGroupOrder.GRAMMAR_CONTROL + 1000,
+    order = 1000,
   )
   var enablePnfNormalization = false
+
+  @Parameter(
+    names = ["--extra-libs"],
+    description = "the extra libs for compiling the grammar",
+    required = false,
+    arity = 1,
+    order = 2000,
+  )
+  var extraLibs: List<Path> = listOf()
 
   fun createAdhocGrammarConfiguration(): AdhocGrammarConfiguration {
     return AdhocGrammarConfiguration(
@@ -182,6 +190,9 @@ class GrammarFlags : ICommandLineFlags {
             "--existing-language-full-class-name",
         )
       }
+    }
+    extraLibs.forEach {
+      require(Files.isRegularFile(it))
     }
     createAdhocGrammarConfiguration() // Make sure does not crash
   }

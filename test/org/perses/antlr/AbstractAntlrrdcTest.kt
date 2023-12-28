@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -132,7 +132,7 @@ abstract class AbstractAntlrrdcTest {
   val invalid1 = createFile("invalid_1.input", "b")
   val invalid2 = createFile("invalid_2.input", "b c ")
 
-  fun close() {
+  open fun close() {
     tempDir.deleteRecursively()
   }
 

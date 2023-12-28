@@ -94,7 +94,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__typeDeclaration]dd@1
 ------------------------------------------------------------
 
 
@@ -163,7 +163,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__classBody_1]dd@1
     public class Hello {
     }
 ------------------------------------------------------------
@@ -246,7 +246,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__block_1]dd@1
     public class Hello {
       public static void main(String[] args) {
       }
@@ -281,7 +281,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]remove whole except first
+// edit action set type: [kleene_plus:blockStatements]remove whole except first
     public class Hello {
       public static void main(String[] args) {
         System.out.println("hello");
@@ -298,7 +298,7 @@ The current best program is the following
 
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_plus]dd@1
+// edit action set type: [kleene_plus:blockStatements]dd@1
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -438,7 +438,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__methodDeclarator_1]dd@1
     public class Hello {
       public static void main(             ) {
         System.out.println("world");
@@ -666,7 +666,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@2
+// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@2
     public class Hello {
                     void main(String[] args) {
         System.out.println("world");
@@ -677,7 +677,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
     public class Hello {
       public        void main(String[] args) {
         System.out.println("world");
@@ -688,7 +688,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
     public class Hello {
              static void main(String[] args) {
         System.out.println("world");
@@ -951,7 +951,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__explicitConstructorInvocation_2]dd@1
     public class Hello {
       public static void main(String[] args) {
         System.out.println(       );
@@ -1196,7 +1196,7 @@ The current best program is the following
 
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__normalClassDeclaration_1]dd@1
     class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -1358,7 +1358,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__classBody_1]dd@1
     class Hello {
     }
 ------------------------------------------------------------
@@ -1437,7 +1437,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__block_1]dd@1
     class Hello {
       public static void main(String[] args) {
       }
@@ -1588,7 +1588,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__methodDeclarator_1]dd@1
     class Hello {
       public static void main(             ) {
         System.out.println("world");
@@ -1816,7 +1816,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@2
+// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@2
     class Hello {
                     void main(String[] args) {
         System.out.println("world");
@@ -1827,7 +1827,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
     class Hello {
       public        void main(String[] args) {
         System.out.println("world");
@@ -1838,7 +1838,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
     class Hello {
              static void main(String[] args) {
         System.out.println("world");
@@ -2101,7 +2101,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__explicitConstructorInvocation_2]dd@1
     class Hello {
       public static void main(String[] args) {
         System.out.println(       );

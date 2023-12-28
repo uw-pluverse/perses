@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,39 +20,25 @@ import com.google.common.collect.ImmutableList
 import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.spartree.AbstractSparTreeNode
-import java.util.PriorityQueue
-import java.util.Queue
 
 /** Perses node reducer, with dfs delta debugging  */
-open class PersesNodePrioritizedDfsReducer(
-  reducerContext: ReducerContext,
-) : PersesNodeDfsReducer(META, reducerContext) {
+object PersesNodePrioritizedDfsReducer {
 
-  override fun createReductionQueue(): Queue<AbstractSparTreeNode> {
-    return PriorityQueue(
-      DEFAULT_INITIAL_QUEUE_CAPACITY,
-      TreeNodeComparatorInLeafTokenCount,
+  const val NAME = "perses_node_priority_with_dfs_delta"
+
+  @JvmField
+  val META = object : ReducerAnnotation(
+    shortName = NAME,
+    description = "",
+    deterministic = true,
+    reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+  ) {
+    override fun create(reducerContext: ReducerContext) = ImmutableList.of<AbstractTokenReducer>(
+      PersesNodeReducer(
+        reducerAnnotation = this,
+        reducerContext,
+        AbstractNodeReducer.IReductionQueueStrategy.FOR_PRIORITY_QUEUE,
+      ),
     )
-  }
-
-  companion object {
-    const val NAME = "perses_node_priority_with_dfs_delta"
-
-    @JvmField
-    val META = object : ReducerAnnotation() {
-      override val deterministic: Boolean
-        get() = true
-
-      override val reductionResultSizeTrend: ReductionResultSizeTrend
-        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
-
-      override fun shortName() = NAME
-
-      override fun description() = ""
-
-      override fun create(reducerContext: ReducerContext) =
-        ImmutableList.of<AbstractTokenReducer>(PersesNodePrioritizedDfsReducer(reducerContext))
-    }
   }
 }

@@ -8,7 +8,7 @@ source "./scripts/constants.sh" || exit 1
 
 ./scripts/cleanup.sh || exit 1
 
-bazel test ${ALL_BAZEL_BUILD_TARGETS_STRING} \
+bazel test --test_output=errors ${ALL_BAZEL_BUILD_TARGETS_STRING} \
     //benchmark:run_benchmark_test\
     //benchmark:analyze_cache_profiling_test\
     //benchmark:convert_result_to_csv_test || exit 1

@@ -160,7 +160,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]remove whole except first
+// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]remove whole except first
     int printf(const char*, ...);
 ------------------------------------------------------------
 
@@ -173,7 +173,7 @@ The current best program is the following
 
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_plus]dd@1
+// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@1
     int main (int argc, char *argv[]) {
          int a = 1;
               int b = a + 1;
@@ -283,7 +283,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     int main (int argc, char *argv[]) {
     }
 ------------------------------------------------------------
@@ -318,7 +318,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]remove whole except first
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove whole except first
     int main (int argc, char *argv[]) {
          int a = 1;
     }
@@ -327,7 +327,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]dd@3
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@3
     int main (int argc, char *argv[]) {
          int a = 1;
               int b = a + 1;
@@ -338,7 +338,7 @@ The current best program is the following
 
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_plus]dd@1
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
     int main (int argc, char *argv[]) {
          int a = 1;
               int b = a + 1;
@@ -373,7 +373,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]dd@1
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
     int main (int argc, char *argv[]) {
          int a = 1;
               int b = a + 1;
@@ -385,7 +385,7 @@ The current best program is the following
 
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_plus]dd@1
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
     int main (int argc, char *argv[]) {
          int a = 1;
               int b = a + 1;
@@ -409,7 +409,7 @@ The current best program is the following
 
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_plus]dd@3
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@3
     int main (int argc, char *argv[]) {
      printf("world\n");
     }
@@ -706,7 +706,7 @@ The current best program is the following
 
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main                          {
             "world\n" ;
     }
@@ -817,7 +817,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     main                          {
     }
 ------------------------------------------------------------

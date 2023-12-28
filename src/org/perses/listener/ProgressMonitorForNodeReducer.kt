@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -64,7 +64,7 @@ class ProgressMonitorForNodeReducer private constructor(
 
   override fun onFixpointIterationStart(event: FixpointIterationStartEvent) {
     printBegin(
-      "Fixpoint iteration ${event.iteration}. Reducer: ${event.reducerClass.shortName()}",
+      "Fixpoint iteration ${event.iteration}. Reducer: ${event.reducerClass.shortName}",
     )
     stream.println("The spar-tree is the following.")
     stream.println(event.oudatedTreeDump.trim())

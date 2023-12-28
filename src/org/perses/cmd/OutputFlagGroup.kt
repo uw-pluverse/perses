@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -14,16 +14,20 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.delta
+package org.perses.cmd
 
-import com.google.common.collect.ImmutableList
+import com.beust.jcommander.Parameter
+import org.perses.util.cmd.AbstractCommandLineFlagGroup
+import java.nio.file.Path
 
-abstract class AbstractXFSDeltaDebugger<T, PropertyPayload>(
-  input: ImmutableList<T>,
-  propertyTester: IPropertyTester<T, PropertyPayload>,
-  onBestUpdateHandler: (ImmutableList<T>, PropertyPayload) -> Unit,
-) : AbstractDeltaDebugger<T, PropertyPayload>(input, propertyTester, onBestUpdateHandler) {
+class OutputFlagGroup : AbstractCommandLineFlagGroup(groupName = "Outputs") {
 
-  override fun reduceNonEmptyInput() {
-  }
+  @Parameter(
+    names = ["--output-dir", "-o"],
+    description = "The output directory to save the reduced result.",
+    order = 1,
+  )
+  var outputDir: Path? = null
+
+  override fun validate() = Unit
 }

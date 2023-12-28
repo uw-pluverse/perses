@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,30 +17,29 @@
 package org.perses.cmd
 
 import com.beust.jcommander.Parameter
-import org.perses.util.cmd.CommonCmdOptionGroupOrder
-import org.perses.util.cmd.ICommandLineFlags
+import org.perses.util.cmd.AbstractCommandLineFlagGroup
 
-class VulcanFlags : ICommandLineFlags {
+class VulcanFlagGroup : AbstractCommandLineFlagGroup(groupName = "Vulcan Reducer Control") {
   @Parameter(
     names = ["--enable-vulcan"],
     description = "Enable vulcan (using auxiliary reducers to help produce " +
       "smaller reduction output).",
     arity = 1,
-    order = CommonCmdOptionGroupOrder.VULCAN + 0,
+    order = 0,
   )
   var enableVulcan = false
 
   @Parameter(
     names = ["--non-deletion-iteration-limit"],
     description = "The maximum number of continuous non-deletion iterations allowed.",
-    order = CommonCmdOptionGroupOrder.VULCAN + 1,
+    order = 1,
   )
   var nonDeletionIterationLimit = 10
 
   @Parameter(
     names = ["--window-size"],
     description = "The window size used to perform local exhaustive pattern reduction.",
-    order = CommonCmdOptionGroupOrder.VULCAN + 2,
+    order = 2,
   )
   var windowSize = 4
 
@@ -49,7 +48,7 @@ class VulcanFlags : ICommandLineFlags {
     description = "Enable vulcan fixpoint iteratively using auxiliary reducers until no " +
       "progress can be made",
     arity = 1,
-    order = CommonCmdOptionGroupOrder.VULCAN + 3,
+    order = 3,
   )
   var vulcanFixpoint = false
 

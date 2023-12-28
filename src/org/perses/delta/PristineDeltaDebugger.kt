@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,79 +17,57 @@
 package org.perses.delta
 
 import com.google.common.collect.ImmutableList
-import org.perses.util.Util.lazyAssert
 
-class PristineDeltaDebugger<T, PropertyPayload>(
-  input: ImmutableList<T>,
-  propertyTester: IPropertyTester<T, PropertyPayload>,
-  onBestUpdateHandler: (ImmutableList<T>, PropertyPayload) -> Unit,
+open class PristineDeltaDebugger<T, PropertyPayload>(
+  arguments: AbstractDeltaDebugger.Arguments<T, PropertyPayload>,
   enableCache: Boolean = false,
   enableCacheRefresh: Boolean = false,
-) : AbstractDeltaDebugger<T, PropertyPayload>(input, propertyTester, onBestUpdateHandler) {
+) : AbstractDefaultDeltaDebugger<T, PropertyPayload, Any>(
+  arguments,
+  enableCache,
+  enableCacheRefresh,
+) {
 
-  private val cache: AbstractConfigCache<T> = if (enableCache) {
-    ConfigCache(enableCacheRefresh)
-  } else {
-    NullConfigCache()
+  override fun partition(
+    list: ImmutableList<ElementWrapper<T>>,
+    numberOfPartitions: Int,
+  ): PartitionList<ElementWrapper<T>> {
+    return countBasedPartition(list, numberOfPartitions)
   }
 
-  override fun reduceNonEmptyInput() {
-    var numOfPartitions = 2
-    outerLoop@ while (best.size > 1 && best.size >= numOfPartitions) {
-      lazyAssert({ best.size >= numOfPartitions }) { "$best, $numOfPartitions" }
-      lazyAssert { numOfPartitions > 1 }
-      val partitionList = partition(best, numOfPartitions)
+  companion object {
 
-      lazyAssert {
-        partitionList.partitions.size != 1 || partitionList.partitions.single().elements == best
+    @JvmStatic
+    fun <T> countBasedPartition(
+      list: ImmutableList<T>,
+      numOfPartitions: Int,
+    ): PartitionList<T> {
+      val length = list.size
+      require(length >= numOfPartitions)
+      val partitionSize: Int = computePartitionSize(length, numOfPartitions)
+      var remainder = length % numOfPartitions
+      val builder = PartitionList.Builder(list)
+      var start = 0
+      while (start < length) {
+        var end = start + partitionSize
+        if (remainder > 0) {
+          ++end
+          --remainder
+        }
+        if (end > length) {
+          end = length
+        }
+        builder.createPartition(start, end)
+        start = end
       }
+      return builder.build()
+    }
 
-      for (partition in partitionList.partitions) {
-        val elements = partition.elements
-        lazyAssert { elements.isNotEmpty() }
-        val config = ConfigurationBasedOnElementSystemIdentity(elements)
-        if (cache.contains(config)) {
-          continue
-        }
-        cache.add(config)
-        val propertyTestResult = propertyTester.testProperty(best, candidate = elements)
-
-        // TODO: this needs test.
-        if (propertyTestResult.needsSkip()) {
-          continue
-        }
-        if (propertyTestResult.result.isInteresting) {
-          cache.deleteStaleConfigs(elements.size)
-          updateBest(elements, propertyTestResult.payload)
-          numOfPartitions = 2.coerceAtMost(best.size)
-          continue@outerLoop
-        }
-      }
-
-      for (partition in partitionList.partitions) {
-        val complement = partitionList.computeComplementFor(partition)
-        val config = ConfigurationBasedOnElementSystemIdentity(complement)
-        if (cache.contains(config)) {
-          continue
-        }
-        cache.add(config)
-        val propertyTestResult = propertyTester.testProperty(best, candidate = complement)
-
-        if (propertyTestResult.needsSkip()) {
-          continue
-        }
-        if (propertyTestResult.result.isInteresting) {
-          cache.deleteStaleConfigs(complement.size)
-          updateBest(complement, propertyTestResult.payload)
-          numOfPartitions = (numOfPartitions - 1).coerceAtMost(best.size)
-          continue@outerLoop
-        }
-      }
-      if (best.size == numOfPartitions) {
-        break
-      } else {
-        numOfPartitions = (2 * numOfPartitions).coerceAtMost(best.size)
-      }
+    @JvmStatic
+    fun computePartitionSize(listSize: Int, numberOfPartitions: Int): Int {
+      require(listSize > 0)
+      require(numberOfPartitions > 0)
+      return listSize / numberOfPartitions
     }
   }
 }

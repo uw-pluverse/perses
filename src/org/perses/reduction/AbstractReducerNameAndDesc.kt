@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,11 +16,4 @@
  */
 package org.perses.reduction
 
-abstract class AbstractReducerNameAndDesc {
-
-  /** The short name of the reducer.  */
-  abstract fun shortName(): String
-
-  /** The description fo the reducer.  */
-  abstract fun description(): String
-}
+open class AbstractReducerNameAndDesc(val shortName: String, val description: String)

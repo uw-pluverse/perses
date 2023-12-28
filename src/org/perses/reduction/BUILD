@@ -84,6 +84,7 @@ kt_jvm_library(
     deps = [
         "//:guava",
         "//src/org/perses/antlr:parse_tree_with_parser",
+        "//src/org/perses/delta:EnumDeltaDebuggerType",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/program",
@@ -131,6 +132,17 @@ kt_jvm_library(
 )
 
 kt_jvm_library(
+    name = "SparTreeDdminPayload",
+    srcs = [
+        "SparTreeDdminPayload.kt",
+    ],
+    deps = [
+        "//src/org/perses/reduction/cache:query_cache_interface",
+        "//src/org/perses/spartree",
+    ],
+)
+
+kt_jvm_library(
     name = "abstract_reducer",
     srcs = [
         "AbstractReductionListener.kt",
@@ -142,6 +154,7 @@ kt_jvm_library(
         "SparTreeWithParsability.kt",
     ],
     deps = [
+        ":SparTreeDdminPayload",
         ":actionset_profiler",
         ":future_execution_result_triple",
         ":reducer_context_interface",

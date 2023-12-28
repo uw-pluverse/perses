@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,6 +17,7 @@
 package org.perses.reduction.reducer.token
 
 import com.google.common.collect.ImmutableList
+import org.perses.delta.PristineDeltaDebugger
 import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
@@ -36,9 +37,13 @@ class DeltaDebuggingReducer(
       .map { it as AbstractSparTreeNode }
       .toImmutableList()
 
-    val deltaDebugger = createPristineDeltaDebugger(
-      originalInput,
-      tree,
+    val deltaDebugger = PristineDeltaDebugger(
+      createDeltaArguments(
+        needToTestEmpty = true,
+        tree,
+        actionsDescription = "[pristine-ddmin]",
+        input = originalInput,
+      ),
     )
     deltaDebugger.reduce()
   }
@@ -48,17 +53,12 @@ class DeltaDebuggingReducer(
     const val NAME = "ddmin"
 
     @JvmStatic
-    val META = object : ReducerAnnotation() {
-      override val deterministic: Boolean
-        get() = true
-
-      override val reductionResultSizeTrend: ReductionResultSizeTrend
-        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
-
-      override fun shortName() = NAME
-
-      override fun description() = ""
-
+    val META = object : ReducerAnnotation(
+      shortName = NAME,
+      description = "",
+      deterministic = true,
+      reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+    ) {
       override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
         return ImmutableList.of(
           DeltaDebuggingReducer(

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,13 +17,12 @@
 package org.perses.cmd
 
 import com.beust.jcommander.Parameter
-import org.perses.util.cmd.CommonCmdOptionGroupOrder
-import org.perses.util.cmd.ICommandLineFlags
+import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.jar.JarFile
 
-class LanguageControlFlags : ICommandLineFlags {
+class LanguageControlFlagGroup : AbstractCommandLineFlagGroup(groupName = "Language Control") {
 
   @JvmField
   @Parameter(
@@ -31,25 +30,35 @@ class LanguageControlFlags : ICommandLineFlags {
     required = false,
     help = true,
     description = "List all the supported langauges.",
-    order = CommonCmdOptionGroupOrder.GRAMMAR_CONTROL + 100,
+    order = 100,
   )
   var listLangs = false
 
   @JvmField
   @Parameter(
-    names = ["--lang"],
+    names = ["--designated-parser-facade-class-name"],
     required = false,
-    description = "The language to be used to parse the input program",
-    order = CommonCmdOptionGroupOrder.GRAMMAR_CONTROL + 1000,
+    description = "The parser facade to be used to parse the input program",
+    order = 1000,
   )
-  var language: String = "auto"
+  var designatedParserFacadeClassName: String = ""
+
+  @JvmField
+  @Parameter(
+    names = ["--list-parser-facades"],
+    required = false,
+    help = true,
+    description = "List all the available parser facades.",
+    order = 2000,
+  )
+  var listParserFacades = false
 
   @JvmField
   @Parameter(
     names = ["--language-ext-jars"],
     required = false,
     description = "A list of JAR files to support new languages",
-    order = CommonCmdOptionGroupOrder.GRAMMAR_CONTROL + 2000,
+    order = 3000,
   )
   var languageJarFiles: List<Path> = listOf()
 

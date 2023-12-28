@@ -17,7 +17,7 @@ kt_jvm_library(
     name = "adhoc_grammar_configuration",
     srcs = [
         "AdhocGrammarConfiguration.kt",
-        "GrammarFlags.kt",
+        "GrammarFlagGroup.kt",
     ],
     deps = [
         "//:guava",

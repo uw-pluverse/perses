@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,7 +16,7 @@
  */
 package org.perses.reduction.reducer
 
-import org.perses.reduction.partition.Partition
+import org.perses.delta.xfs.Partition
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.TreeNodeFilterResult
@@ -107,7 +107,7 @@ object TreeTransformations {
 
   @JvmStatic
   fun createNodeDeletionActionSetFor(
-    partition: Partition,
+    partition: Partition<AbstractSparTreeNode>,
     actionsDescription: String,
   ): NodeDeletionActionSet {
     val actionSet = NodeDeletionActionSet.Builder(actionsDescription)

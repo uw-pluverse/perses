@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -51,7 +51,7 @@ abstract class AbstractReducerFunctionalTest {
         cmd.inputFlags.inputFile = tempSourceFile.absolutePathString()
         cmd.inputFlags.testScript = tempTestScript.absolutePathString()
         cmd.reductionControlFlags.fixpoint = true
-        cmd.algorithmControlFlags.reductionAlgorithm = algorithmType.shortName()
+        cmd.algorithmControlFlags.reductionAlgorithm = algorithmType.shortName
         val outputDir = folder.file.resolve("perses_output_dir")
         cmd.resultOutputFlags.outputDir = outputDir
         cmdCustomizer.invoke(cmd)

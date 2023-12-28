@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,16 +20,21 @@ import com.google.common.collect.ImmutableList
 import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
+import org.perses.reduction.reducer.PersesNodeReducer
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.SparTree
 import java.util.Queue
 
 /** Perses node reducer, with dfs delta debugging, only reduce specified nodes  */
 class CustomizedTreeNodesReducer(
+  reducerAnnotation: ReducerAnnotation,
   reducerContext: ReducerContext,
   private val startNodes: List<AbstractSparTreeNode>,
-) : PersesNodePrioritizedDfsReducer(reducerContext) {
+) : PersesNodeReducer(
+  reducerAnnotation,
+  reducerContext,
+  reductionQueueStrategy = IReductionQueueStrategy.FOR_PRIORITY_QUEUE,
+) {
 
   override fun initializeReductionQueue(queue: Queue<AbstractSparTreeNode>, tree: SparTree) {
     queue.addAll(startNodes)
@@ -39,21 +44,15 @@ class CustomizedTreeNodesReducer(
     const val NAME = "customized_tree_diff_node_reducer"
 
     class ExtendedReducerAnnotation(private val startNodes: ImmutableList<AbstractSparTreeNode>) :
-      ReducerAnnotation() {
-      override val deterministic: Boolean
-        get() = true
-
-      override val reductionResultSizeTrend: ReductionResultSizeTrend
-        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
-
-      override fun shortName() = NAME
-
-      override fun description() = ""
-
-      override fun create(reducerContext: ReducerContext) =
-        ImmutableList.of<AbstractTokenReducer>(
-          CustomizedTreeNodesReducer(reducerContext, startNodes),
-        )
+      ReducerAnnotation(
+        shortName = NAME,
+        description = "",
+        deterministic = true,
+        reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+      ) {
+      override fun create(reducerContext: ReducerContext) = ImmutableList.of<AbstractTokenReducer>(
+        CustomizedTreeNodesReducer(reducerAnnotation = this, reducerContext, startNodes),
+      )
     }
   }
 }

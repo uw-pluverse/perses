@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,9 +20,9 @@ import com.google.common.collect.ImmutableList
 import org.antlr.v4.runtime.Lexer
 import org.perses.CommandOptions
 import org.perses.antlr.atn.LexerAtnWrapper
-import org.perses.cmd.InputFlags
-import org.perses.cmd.OutputFlags
-import org.perses.cmd.ReductionControlFlags
+import org.perses.cmd.InputFlagGroup
+import org.perses.cmd.OutputFlagGroup
+import org.perses.cmd.ReductionControlFlagGroup
 import org.perses.grammar.AbstractParserFacadeFactory
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
@@ -53,7 +53,7 @@ class RegularProgramReductionDriver private constructor(
 
     fun createReductionInputs(
       parserFacadeFactory: AbstractParserFacadeFactory,
-      inputFlags: InputFlags,
+      inputFlags: InputFlagGroup,
     ): RegularReductionInputs {
       val absoluteSourceFilePath: Path = inputFlags.getSourceFile().toAbsolutePath()
       val languageKind = parserFacadeFactory.computeLanguageKindOrThrow(absoluteSourceFilePath)
@@ -69,8 +69,8 @@ class RegularProgramReductionDriver private constructor(
 
     fun createIOManager(
       reductionInputs: RegularReductionInputs,
-      reductionControlFlags: ReductionControlFlags,
-      outputFlags: OutputFlags,
+      reductionControlFlags: ReductionControlFlagGroup,
+      outputFlags: OutputFlagGroup,
       lexerAtnWrapper: LexerAtnWrapper<out Lexer>,
     ): TokenReductionIOManager {
       val workingDirectory = reductionInputs.mainFile.parentFile

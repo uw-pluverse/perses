@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,13 +17,13 @@
 package org.perses.reduction
 
 import com.google.common.truth.Truth.assertThat
+import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.program.EnumFormatControl
 import org.perses.reduction.cache.QueryCacheType
 import java.lang.IllegalArgumentException
-import kotlin.test.assertFailsWith
 
 @RunWith(JUnit4::class)
 class AbstractProgramReductionDriverTest {
@@ -65,7 +65,7 @@ class AbstractProgramReductionDriverTest {
       assertThat(it).isEqualTo(QueryCacheType.CONTENT_SHA512)
     }
 
-    assertFailsWith<IllegalArgumentException> {
+    Assert.assertThrows(IllegalArgumentException::class.java) {
       AbstractProgramReductionDriver.computeQueryCacheType(
         QueryCacheType.COMPACT_QUERY_CACHE_FORMAT_SENSITIVE,
         EnumFormatControl.SINGLE_TOKEN_PER_LINE,

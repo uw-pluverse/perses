@@ -148,7 +148,7 @@ kt_jvm_library(
         "//:guava",
         "//:jcommander",
         "//src/org/perses/antlr:parse_tree_with_parser",
-        "//src/org/perses/cmd:LanguageControlFlags",
+        "//src/org/perses/cmd:LanguageControlFlagGroup",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/grammar/adhoc:adhoc_parser_facade_factory_util",

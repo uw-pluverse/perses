@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,85 +18,129 @@ package org.perses.delta
 
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.Sets
+import org.perses.delta.AbstractDeltaDebuggerListener.NullDeltaDebuggerListener
+import org.perses.util.transformToImmutableList
 
 abstract class AbstractDeltaDebugger<T, PropertyPayload>(
-  input: ImmutableList<T>,
-  val propertyTester: IPropertyTester<T, PropertyPayload>,
-  val onBestUpdateHandler: (ImmutableList<T>, PropertyPayload) -> Unit,
+  protected val arguments: Arguments<T, PropertyPayload>,
 ) {
 
-  var best: ImmutableList<T> = input
-    private set
-
   init {
-    val uniqueObjects = input.fold(
-      Sets.newIdentityHashSet<T>(),
-    ) { acc, element ->
-      acc.add(element)
-      acc
-    }
-    require(uniqueObjects.size == input.size) {
-      "The elements in input have to be distinct objects. $input"
-    }
-  }
-
-  protected fun updateBest(
-    newBest: ImmutableList<T>,
-    payload: PropertyPayload,
-  ) {
-    best = newBest
-    onBestUpdateHandler(newBest, payload)
-  }
-
-  fun reduce() {
-    // test whether the entire input can be deleted.
-    run {
-      val empty = ImmutableList.of<T>()
-      propertyTester.testProperty(best, empty).let {
-        if (!it.needsSkip() && it.result.isInteresting) {
-          updateBest(empty, it.payload)
-          return
+    arguments.input.let { input ->
+      input.fold(
+        Sets.newIdentityHashSet<T>(),
+      ) { acc, element ->
+        acc.add(element)
+        acc
+      }.let {
+        require(it.size == input.size) {
+          "The elements in input have to be distinct objects. $input"
         }
       }
     }
-    reduceNonEmptyInput()
+  }
+
+  protected lateinit var best: ImmutableList<ElementWrapper<T>>
+    private set
+
+  val originalInput: ImmutableList<ElementWrapper<T>> by lazy {
+    createWrappedElementList(arguments.input)
+  }
+
+  private fun createWrappedElementList(
+    originalInput: ImmutableList<T>,
+  ): ImmutableList<ElementWrapper<T>> {
+    return originalInput.withIndex().transformToImmutableList {
+      createElementWrapperFor(it.index, it.value)
+    }
+  }
+
+  protected open fun createElementWrapperFor(index: Int, element: T): ElementWrapper<T> {
+    return ElementWrapper(index, element, NoPayload)
+  }
+
+  protected fun updateBest(
+    newBest: ImmutableList<ElementWrapper<T>>,
+    payload: PropertyPayload,
+  ) {
+    best = newBest
+    arguments.onBestUpdateHandler.invoke(newBest, payload)
+    arguments.listener.onBestUpdate(best)
+  }
+
+  protected fun testProperty(
+    configuration: Configuration<T>,
+  ): AbstractPropertyTestResultWithPayload<PropertyPayload> {
+    return arguments.propertyTester.testProperty(configuration).also {
+      arguments.listener.onPropertyTest(configuration, it)
+    }
+  }
+
+  fun reduce(): ImmutableList<T> {
+    try {
+      arguments.listener.startReduction(originalInput)
+      best = originalInput
+      // test whether the entire input can be deleted.
+      if (arguments.needToTestEmpty) {
+        arguments.listener.log { "Testing the empty input." }
+        val empty = ImmutableList.of<ElementWrapper<T>>()
+        testProperty(
+          Configuration(currentBest = best, candidate_ = empty, deleted_ = null),
+        ).let {
+          if (it is PropertyTestResultWithPayload && it.result.isInteresting) {
+            updateBest(empty, it.payload)
+            return best.transformToImmutableList { it.element }
+          }
+        }
+      } else {
+        arguments.listener.log { "Testing the empty input is disabled." }
+      }
+      reduceNonEmptyInput()
+      return best.transformToImmutableList { it.element }
+    } finally {
+      arguments.listener.endReduction()
+    }
+  }
+
+  protected fun log(msg: () -> String) {
+    arguments.listener.log(msg)
   }
 
   protected abstract fun reduceNonEmptyInput()
 
+  fun interface OnBestUpdateHandler<T, PropertyPayload> {
+    fun invoke(newBest: ImmutableList<ElementWrapper<T>>, payload: PropertyPayload)
+  }
+
+  data class Arguments<T, PropertyPayload>(
+    val needToTestEmpty: Boolean,
+    val input: ImmutableList<T>,
+    val propertyTester: IPropertyTester<T, PropertyPayload>,
+    val onBestUpdateHandler: OnBestUpdateHandler<T, PropertyPayload>,
+    val descriptionPrefix: String,
+    val partitionComplementControl: PartitionComplementControl = PartitionComplementControl(
+      enableReducingPartitions = true,
+      enableReducingComplements = true,
+    ),
+    val listener: AbstractDeltaDebuggerListener = NullDeltaDebuggerListener,
+  )
+
+  class ElementWrapper<T>(
+    val index: Int,
+    val element: T,
+    var elementPayload: Any,
+  ) : Comparable<ElementWrapper<T>> {
+    override fun compareTo(other: ElementWrapper<T>): Int {
+      return index.compareTo(other.index)
+    }
+  }
+
+  data class PartitionComplementControl(
+    val enableReducingPartitions: Boolean,
+    val enableReducingComplements: Boolean,
+  )
+
   companion object {
-
-    @JvmStatic
-    fun <T> partition(
-      list: ImmutableList<T>,
-      numOfPartitions: Int,
-    ): PartitionList<T> {
-      val length = list.size
-      require(length >= numOfPartitions)
-      val partitionSize: Int = computePartitionSize(length, numOfPartitions)
-      var remainder = length % numOfPartitions
-      val builder = PartitionList.Builder(list)
-      var start = 0
-      while (start < length) {
-        var end = start + partitionSize
-        if (remainder > 0) {
-          ++end
-          --remainder
-        }
-        if (end > length) {
-          end = length
-        }
-        builder.createPartition(start, end)
-        start = end
-      }
-      return builder.build()
-    }
-
-    @JvmStatic
-    fun computePartitionSize(listSize: Int, numberOfPartitions: Int): Int {
-      require(listSize > 0)
-      require(numberOfPartitions > 0)
-      return listSize / numberOfPartitions
-    }
+    object NoPayload
   }
 }

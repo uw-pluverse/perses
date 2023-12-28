@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -36,8 +36,11 @@ class ReadmeTest {
   fun testSupportedLanguage() {
     val persesSupported = getActuallySupportedLanguages()
     val readmeListed = parseReadmeSupportedLanguages()
-    assertWithMessage("You need to update //README.md to reflect the latest language support.")
-      .that(readmeListed).containsExactlyElementsIn(persesSupported)
+    assertWithMessage(
+      """You need to update //README.md to reflect the latest language support.
+      ${persesSupported.joinToString { "\n" }}
+      """.trimIndent(),
+    ).that(readmeListed).containsExactlyElementsIn(persesSupported)
   }
 
   private fun getActuallySupportedLanguages(): ImmutableList<String> {

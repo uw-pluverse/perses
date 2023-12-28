@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,14 +24,15 @@ import org.perses.reduction.ReducerContext
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.SparTree
-import java.util.ArrayDeque
 
 class TreeSlicer(
   reducerContext: ReducerContext,
-) : AbstractNodeReducer(META, reducerContext) {
-
-  override fun createReductionQueue() =
-    ArrayDeque<AbstractSparTreeNode>(DEFAULT_INITIAL_QUEUE_CAPACITY)
+) : AbstractNodeReducer(
+  reducerAnnotation = META,
+  reducerContext = reducerContext,
+  reductionQueueStrategy = IReductionQueueStrategy.FOR_REGULAR_QUEUE,
+  requiresParsableTree = false,
+) {
 
   override fun reduceOneNode(
     tree: SparTree,
@@ -64,23 +65,16 @@ class TreeSlicer(
     }
   }
 
-  override fun requiresParsableTree() = false
-
   companion object {
     const val NAME = "tree_slicer"
 
     @JvmStatic
-    val META = object : ReducerAnnotation() {
-      override val deterministic: Boolean
-        get() = true
-
-      override val reductionResultSizeTrend: ReductionResultSizeTrend
-        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
-
-      override fun shortName() = NAME
-
-      override fun description() = ""
-
+    val META = object : ReducerAnnotation(
+      shortName = NAME,
+      description = "",
+      deterministic = true,
+      reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+    ) {
       override fun create(
         reducerContext: ReducerContext,
       ): ImmutableList<AbstractTokenReducer> = ImmutableList.of(TreeSlicer(reducerContext))

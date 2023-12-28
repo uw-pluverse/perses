@@ -110,7 +110,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     int main() {
     }
 ------------------------------------------------------------
@@ -134,7 +134,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     int main() {
     }
 ------------------------------------------------------------
@@ -216,7 +216,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     int main() {
         return                 ;
     }
@@ -341,7 +341,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     int main   {
         return sizeof(char) + 1;
     }
@@ -391,7 +391,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     int main() {
         return sizeof(char)    ;
     }
@@ -649,7 +649,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main() {
         return sizeof(char) + 1;
     }
@@ -674,7 +674,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main() {
         return sizeof(char) + 1;
     }
@@ -1043,7 +1043,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     signed main(){
     }
 ------------------------------------------------------------
@@ -1067,7 +1067,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     signed main(){
     }
 ------------------------------------------------------------
@@ -1149,7 +1149,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     signed main(){
         return                 ;
     }
@@ -1274,7 +1274,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     signed main  {
         return sizeof(char) + 1;
     }
@@ -1324,7 +1324,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     signed main(){
         return sizeof(char)    ;
     }
@@ -1582,7 +1582,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return sizeof(char) + 1;
     }
@@ -1607,7 +1607,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return sizeof(char) + 1;
     }
@@ -1928,7 +1928,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     signed main(){
     }
 ------------------------------------------------------------
@@ -1952,7 +1952,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     signed main(){
     }
 ------------------------------------------------------------
@@ -2034,7 +2034,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     signed main(){
         return                 ;
     }
@@ -2159,7 +2159,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     signed main  {
         return sizeof(void) + 1;
     }
@@ -2209,7 +2209,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     signed main(){
         return sizeof(void)    ;
     }
@@ -2467,7 +2467,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return sizeof(void) + 1;
     }
@@ -2492,7 +2492,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return sizeof(void) + 1;
     }
@@ -2813,7 +2813,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     int    main(){
     }
 ------------------------------------------------------------
@@ -2837,7 +2837,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     int    main(){
     }
 ------------------------------------------------------------
@@ -2919,7 +2919,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     int    main(){
         return                 ;
     }
@@ -3044,7 +3044,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     int    main  {
         return sizeof(void) + 1;
     }
@@ -3094,7 +3094,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     int    main(){
         return sizeof(void)    ;
     }
@@ -3352,7 +3352,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return sizeof(void) + 1;
     }
@@ -3377,7 +3377,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return sizeof(void) + 1;
     }
@@ -3725,7 +3725,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     int    main(){
     }
 ------------------------------------------------------------
@@ -3749,7 +3749,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     int    main(){
     }
 ------------------------------------------------------------
@@ -3831,7 +3831,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     int    main(){
         return                 ;
     }
@@ -3956,7 +3956,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     int    main  {
         return _Alignof(void)+1;
     }
@@ -4006,7 +4006,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     int    main(){
         return _Alignof(void)  ;
     }
@@ -4264,7 +4264,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return _Alignof(void)+1;
     }
@@ -4289,7 +4289,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return _Alignof(void)+1;
     }
@@ -4637,7 +4637,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     signed main(){
     }
 ------------------------------------------------------------
@@ -4661,7 +4661,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     signed main(){
     }
 ------------------------------------------------------------
@@ -4743,7 +4743,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     signed main(){
         return                 ;
     }
@@ -4868,7 +4868,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     signed main  {
         return _Alignof(void)+1;
     }
@@ -4918,7 +4918,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     signed main(){
         return _Alignof(void)  ;
     }
@@ -5176,7 +5176,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return _Alignof(void)+1;
     }
@@ -5201,7 +5201,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return _Alignof(void)+1;
     }
@@ -5459,7 +5459,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     signed main(){
     }
 ------------------------------------------------------------
@@ -5483,7 +5483,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     signed main(){
     }
 ------------------------------------------------------------
@@ -5565,7 +5565,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     signed main(){
         return                    ;
     }
@@ -5690,7 +5690,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     signed main  {
         return __alignof__(void)+1;
     }
@@ -5740,7 +5740,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     signed main(){
         return __alignof__(void)  ;
     }
@@ -5998,7 +5998,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return __alignof__(void)+1;
     }
@@ -6023,7 +6023,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return __alignof__(void)+1;
     }
@@ -6344,7 +6344,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     int    main(){
     }
 ------------------------------------------------------------
@@ -6368,7 +6368,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     int    main(){
     }
 ------------------------------------------------------------
@@ -6450,7 +6450,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     int    main(){
         return                    ;
     }
@@ -6575,7 +6575,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     int    main  {
         return __alignof__(void)+1;
     }
@@ -6625,7 +6625,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     int    main(){
         return __alignof__(void)  ;
     }
@@ -6883,7 +6883,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return __alignof__(void)+1;
     }
@@ -6908,7 +6908,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return __alignof__(void)+1;
     }
@@ -7202,7 +7202,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     int    main(){
     }
 ------------------------------------------------------------
@@ -7226,7 +7226,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     int    main(){
     }
 ------------------------------------------------------------
@@ -7308,7 +7308,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     int    main(){
         return                    ;
     }
@@ -7433,7 +7433,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     int    main  {
         return __alignof__(char)+1;
     }
@@ -7483,7 +7483,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     int    main(){
         return __alignof__(char)  ;
     }
@@ -7741,7 +7741,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return __alignof__(char)+1;
     }
@@ -7766,7 +7766,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return __alignof__(char)+1;
     }
@@ -8114,7 +8114,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     signed main(){
     }
 ------------------------------------------------------------
@@ -8138,7 +8138,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     signed main(){
     }
 ------------------------------------------------------------
@@ -8220,7 +8220,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     signed main(){
         return                    ;
     }
@@ -8345,7 +8345,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     signed main  {
         return __alignof__(char)+1;
     }
@@ -8395,7 +8395,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     signed main(){
         return __alignof__(char)  ;
     }
@@ -8653,7 +8653,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return __alignof__(char)+1;
     }
@@ -8678,7 +8678,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return __alignof__(char)+1;
     }
@@ -8936,7 +8936,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     signed main(){
     }
 ------------------------------------------------------------
@@ -8960,7 +8960,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     signed main(){
     }
 ------------------------------------------------------------
@@ -9042,7 +9042,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     signed main(){
         return                    ;
     }
@@ -9167,7 +9167,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     signed main  {
         return _Alignof   (char)+1;
     }
@@ -9217,7 +9217,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     signed main(){
         return _Alignof   (char)  ;
     }
@@ -9475,7 +9475,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return _Alignof   (char)+1;
     }
@@ -9500,7 +9500,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return _Alignof   (char)+1;
     }
@@ -9821,7 +9821,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     int    main(){
     }
 ------------------------------------------------------------
@@ -9845,7 +9845,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     int    main(){
     }
 ------------------------------------------------------------
@@ -9927,7 +9927,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     int    main(){
         return                    ;
     }
@@ -10052,7 +10052,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     int    main  {
         return _Alignof   (char)+1;
     }
@@ -10102,7 +10102,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     int    main(){
         return _Alignof   (char)  ;
     }
@@ -10360,7 +10360,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return _Alignof   (char)+1;
     }
@@ -10385,7 +10385,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return _Alignof   (char)+1;
     }
@@ -10679,7 +10679,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     int    main(){
     }
 ------------------------------------------------------------
@@ -10703,7 +10703,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     int    main(){
     }
 ------------------------------------------------------------
@@ -10785,7 +10785,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     int    main(){
         return                     ;
     }
@@ -10931,7 +10931,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     int    main  {
         return _Alignof   (short)  ;
     }
@@ -11157,7 +11157,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return _Alignof   (short)  ;
     }
@@ -11182,7 +11182,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return _Alignof   (short)  ;
     }
@@ -11520,7 +11520,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     signed main(){
     }
 ------------------------------------------------------------
@@ -11544,7 +11544,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     signed main(){
     }
 ------------------------------------------------------------
@@ -11626,7 +11626,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     signed main(){
         return                     ;
     }
@@ -11717,7 +11717,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     signed main  {
         return _Alignof   (short)  ;
     }
@@ -11943,7 +11943,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return _Alignof   (short)  ;
     }
@@ -11968,7 +11968,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return _Alignof   (short)  ;
     }
@@ -12234,7 +12234,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     signed main(){
     }
 ------------------------------------------------------------
@@ -12258,7 +12258,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     signed main(){
     }
 ------------------------------------------------------------
@@ -12340,7 +12340,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     signed main(){
         return                     ;
     }
@@ -12431,7 +12431,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     signed main  {
         return __alignof__(short)  ;
     }
@@ -12657,7 +12657,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return __alignof__(short)  ;
     }
@@ -12682,7 +12682,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return __alignof__(short)  ;
     }
@@ -12993,7 +12993,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     int    main(){
     }
 ------------------------------------------------------------
@@ -13017,7 +13017,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     int    main(){
     }
 ------------------------------------------------------------
@@ -13099,7 +13099,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     int    main(){
         return                     ;
     }
@@ -13190,7 +13190,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     int    main  {
         return __alignof__(short)  ;
     }
@@ -13416,7 +13416,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return __alignof__(short)  ;
     }
@@ -13441,7 +13441,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return __alignof__(short)  ;
     }
@@ -13761,7 +13761,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     int    main(){
     }
 ------------------------------------------------------------
@@ -13785,7 +13785,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     int    main(){
     }
 ------------------------------------------------------------
@@ -13867,7 +13867,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     int    main(){
         return                     ;
     }
@@ -13958,7 +13958,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     int    main  {
         return __alignof__(int  )  ;
     }
@@ -14184,7 +14184,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return __alignof__(int  )  ;
     }
@@ -14209,7 +14209,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return __alignof__(int  )  ;
     }
@@ -14547,7 +14547,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     signed main(){
     }
 ------------------------------------------------------------
@@ -14571,7 +14571,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     signed main(){
     }
 ------------------------------------------------------------
@@ -14653,7 +14653,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     signed main(){
         return                     ;
     }
@@ -14744,7 +14744,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     signed main  {
         return __alignof__(int  )  ;
     }
@@ -14970,7 +14970,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return __alignof__(int  )  ;
     }
@@ -14995,7 +14995,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return __alignof__(int  )  ;
     }
@@ -15243,7 +15243,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     signed main(){
     }
 ------------------------------------------------------------
@@ -15267,7 +15267,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     signed main(){
     }
 ------------------------------------------------------------
@@ -15349,7 +15349,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     signed main(){
         return                     ;
     }
@@ -15440,7 +15440,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     signed main  {
         return _Alignof   (int  )  ;
     }
@@ -15666,7 +15666,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return _Alignof   (int  )  ;
     }
@@ -15691,7 +15691,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return _Alignof   (int  )  ;
     }
@@ -16002,7 +16002,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     int    main(){
     }
 ------------------------------------------------------------
@@ -16026,7 +16026,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     int    main(){
     }
 ------------------------------------------------------------
@@ -16108,7 +16108,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     int    main(){
         return                     ;
     }
@@ -16199,7 +16199,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     int    main  {
         return _Alignof   (int  )  ;
     }
@@ -16425,7 +16425,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return _Alignof   (int  )  ;
     }
@@ -16450,7 +16450,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return _Alignof   (int  )  ;
     }
@@ -16743,7 +16743,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     int    main(){
     }
 ------------------------------------------------------------
@@ -16767,7 +16767,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     int    main(){
     }
 ------------------------------------------------------------
@@ -16849,7 +16849,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     int    main(){
         return                     ;
     }
@@ -16940,7 +16940,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     int    main  {
         return _Alignof   (long )  ;
     }
@@ -17166,7 +17166,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return _Alignof   (long )  ;
     }
@@ -17191,7 +17191,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return _Alignof   (long )  ;
     }
@@ -17529,7 +17529,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     signed main(){
     }
 ------------------------------------------------------------
@@ -17553,7 +17553,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     signed main(){
     }
 ------------------------------------------------------------
@@ -17635,7 +17635,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     signed main(){
         return                     ;
     }
@@ -17726,7 +17726,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     signed main  {
         return _Alignof   (long )  ;
     }
@@ -17952,7 +17952,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return _Alignof   (long )  ;
     }
@@ -17977,7 +17977,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return _Alignof   (long )  ;
     }
@@ -18225,7 +18225,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     signed main(){
     }
 ------------------------------------------------------------
@@ -18249,7 +18249,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     signed main(){
     }
 ------------------------------------------------------------
@@ -18331,7 +18331,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     signed main(){
         return                     ;
     }
@@ -18422,7 +18422,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     signed main  {
         return __alignof__(long )  ;
     }
@@ -18648,7 +18648,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return __alignof__(long )  ;
     }
@@ -18673,7 +18673,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return __alignof__(long )  ;
     }
@@ -18984,7 +18984,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     int    main(){
     }
 ------------------------------------------------------------
@@ -19008,7 +19008,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     int    main(){
     }
 ------------------------------------------------------------
@@ -19090,7 +19090,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     int    main(){
         return                     ;
     }
@@ -19181,7 +19181,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     int    main  {
         return __alignof__(long )  ;
     }
@@ -19407,7 +19407,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return __alignof__(long )  ;
     }
@@ -19432,7 +19432,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return __alignof__(long )  ;
     }
@@ -19707,7 +19707,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     int    main(){
     }
 ------------------------------------------------------------
@@ -19731,7 +19731,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     int    main(){
     }
 ------------------------------------------------------------
@@ -19813,7 +19813,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     int    main(){
         return                     ;
     }
@@ -19904,7 +19904,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     int    main  {
         return __alignof__(float)  ;
     }
@@ -20130,7 +20130,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return __alignof__(float)  ;
     }
@@ -20155,7 +20155,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return __alignof__(float)  ;
     }
@@ -20493,7 +20493,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     signed main(){
     }
 ------------------------------------------------------------
@@ -20517,7 +20517,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     signed main(){
     }
 ------------------------------------------------------------
@@ -20599,7 +20599,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     signed main(){
         return                     ;
     }
@@ -20690,7 +20690,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     signed main  {
         return __alignof__(float)  ;
     }
@@ -20916,7 +20916,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return __alignof__(float)  ;
     }
@@ -20941,7 +20941,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return __alignof__(float)  ;
     }
@@ -21189,7 +21189,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     signed main(){
     }
 ------------------------------------------------------------
@@ -21213,7 +21213,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     signed main(){
     }
 ------------------------------------------------------------
@@ -21295,7 +21295,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     signed main(){
         return                     ;
     }
@@ -21386,7 +21386,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     signed main  {
         return _Alignof   (float)  ;
     }
@@ -21612,7 +21612,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return _Alignof   (float)  ;
     }
@@ -21637,7 +21637,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return _Alignof   (float)  ;
     }
@@ -21948,7 +21948,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     int    main(){
     }
 ------------------------------------------------------------
@@ -21972,7 +21972,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     int    main(){
     }
 ------------------------------------------------------------
@@ -22054,7 +22054,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     int    main(){
         return                     ;
     }
@@ -22145,7 +22145,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     int    main  {
         return _Alignof   (float)  ;
     }
@@ -22371,7 +22371,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return _Alignof   (float)  ;
     }
@@ -22396,7 +22396,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return _Alignof   (float)  ;
     }
@@ -22671,7 +22671,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     int    main(){
     }
 ------------------------------------------------------------
@@ -22695,7 +22695,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     int    main(){
     }
 ------------------------------------------------------------
@@ -22777,7 +22777,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     int    main(){
         return                     ;
     }
@@ -22868,7 +22868,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     int    main  {
         return _Alignof   (double) ;
     }
@@ -23094,7 +23094,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return _Alignof   (double) ;
     }
@@ -23119,7 +23119,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return _Alignof   (double) ;
     }
@@ -23457,7 +23457,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     signed main(){
     }
 ------------------------------------------------------------
@@ -23481,7 +23481,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     signed main(){
     }
 ------------------------------------------------------------
@@ -23563,7 +23563,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     signed main(){
         return                     ;
     }
@@ -23654,7 +23654,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     signed main  {
         return _Alignof   (double) ;
     }
@@ -23880,7 +23880,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return _Alignof   (double) ;
     }
@@ -23905,7 +23905,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return _Alignof   (double) ;
     }
@@ -24153,7 +24153,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     signed main(){
     }
 ------------------------------------------------------------
@@ -24177,7 +24177,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     signed main(){
     }
 ------------------------------------------------------------
@@ -24259,7 +24259,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     signed main(){
         return                     ;
     }
@@ -24350,7 +24350,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     signed main  {
         return __alignof__(double) ;
     }
@@ -24576,7 +24576,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return __alignof__(double) ;
     }
@@ -24601,7 +24601,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return __alignof__(double) ;
     }
@@ -24912,7 +24912,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     int    main(){
     }
 ------------------------------------------------------------
@@ -24936,7 +24936,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
     int    main(){
     }
 ------------------------------------------------------------
@@ -25018,7 +25018,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     int    main(){
         return                     ;
     }
@@ -25109,7 +25109,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     int    main  {
         return __alignof__(double) ;
     }
@@ -25335,7 +25335,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main(){
         return __alignof__(double) ;
     }
@@ -25360,7 +25360,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     main(){
         return __alignof__(double) ;
     }

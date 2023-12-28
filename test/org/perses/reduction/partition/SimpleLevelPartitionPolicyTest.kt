@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,7 +16,6 @@
  */
 package org.perses.reduction.partition
 
-import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -40,11 +39,11 @@ class SimpleLevelPartitionPolicyTest {
     val region = ReductionLevel(1)
     assertThat(region.level).isEqualTo(1)
     run {
-      val result: ImmutableList<Partition> = policy.partition(region, 1)
+      val result = policy.partition(region, 1)
       assertThat(result).hasSize(0)
     }
     run {
-      val result: ImmutableList<Partition> = policy.partition(region, 2)
+      val result = policy.partition(region, 2)
       assertThat(result).hasSize(0)
     }
   }
@@ -55,17 +54,17 @@ class SimpleLevelPartitionPolicyTest {
     val node: AbstractSparTreeNode = tree.root
     region.addNode(node)
     run {
-      val result: ImmutableList<Partition> = policy.partition(region, 1)
+      val result = policy.partition(region, 1)
       assertThat(result).hasSize(1)
-      val partition: Partition = result[0]
+      val partition = result[0]
       assertThat(partition.size()).isEqualTo(1)
       assertThat(partition.first).isEqualTo(node)
       assertThat(partition.first).isEqualTo(partition.getNode(0))
     }
     run {
-      val result: ImmutableList<Partition> = policy.partition(region, 2)
+      val result = policy.partition(region, 2)
       assertThat(result).hasSize(1)
-      val partition: Partition = result[0]
+      val partition = result[0]
       assertThat(partition.size()).isEqualTo(1)
       assertThat(partition.first).isEqualTo(partition.getNode(0))
       assertThat(partition.first).isEqualTo(node)
@@ -83,15 +82,15 @@ class SimpleLevelPartitionPolicyTest {
     assertThat(region.getNode(0)).isEqualTo(node1)
     assertThat(region.getNode(1)).isEqualTo(node2)
     run {
-      val result: ImmutableList<Partition> = policy.partition(region, 1)
+      val result = policy.partition(region, 1)
       assertThat(result).hasSize(2)
       assertThat(result[0].first).isEqualTo(node2)
       assertThat(result[1].first).isEqualTo(node1)
     }
     run {
-      val result: ImmutableList<Partition> = policy.partition(region, 2)
+      val result = policy.partition(region, 2)
       assertThat(result).hasSize(1)
-      val p: Partition = result[0]
+      val p = result[0]
       assertThat(p.size()).isEqualTo(2)
       assertThat(p.first).isEqualTo(node2)
       assertThat(p.last).isEqualTo(node1)

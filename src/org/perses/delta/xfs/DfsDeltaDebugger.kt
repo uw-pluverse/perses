@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -14,21 +14,24 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.cmd
+package org.perses.delta.xfs
 
-import com.beust.jcommander.Parameter
-import org.perses.util.cmd.CommonCmdOptionGroupOrder
-import org.perses.util.cmd.ICommandLineFlags
-import java.nio.file.Path
+import com.google.common.collect.ImmutableList
+import java.util.ArrayDeque
 
-class OutputFlags : ICommandLineFlags {
+class DfsDeltaDebugger<T, PropertyPayload>(
+  arguments: Arguments<T, PropertyPayload>,
+) : AbstractSpecialDeltaDebugger<T, PropertyPayload>(arguments) {
 
-  @Parameter(
-    names = ["--output-dir", "-o"],
-    description = "The output directory to save the reduced result.",
-    order = CommonCmdOptionGroupOrder.RESULT_OUTPUT + 1,
-  )
-  var outputDir: Path? = null
+  override fun pollFromWorklist(worklist: ArrayDeque<Partition<ElementWrapper<T>>>) =
+    worklist.pollLast()
 
-  override fun validate() = Unit
+  override fun addToWorklist(
+    worklist: ArrayDeque<Partition<ElementWrapper<T>>>,
+    partitions: ImmutableList<Partition<ElementWrapper<T>>>,
+  ) {
+    for (partition in partitions) {
+      worklist.addLast(partition)
+    }
+  }
 }

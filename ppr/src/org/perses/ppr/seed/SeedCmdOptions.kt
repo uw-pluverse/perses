@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,27 +18,26 @@ package org.perses.ppr.seed
 
 import com.beust.jcommander.Parameter
 import org.perses.CommandOptions
-import org.perses.cmd.InputFlags
+import org.perses.cmd.InputFlagGroup
 import org.perses.reduction.ReducerFactory.defaultReductionAlgName
-import org.perses.util.cmd.CommonCmdOptionGroupOrder
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
 class SeedCmdOptions : CommandOptions(defaultReductionAlgName) {
 
-  override fun createInputFlags() = SeedInputFlags()
+  override fun createInputFlags() = SeedInputFlagGroup()
 
-  val seedInputFlags = inputFlags as SeedInputFlags
+  val seedInputFlags = inputFlags as SeedInputFlagGroup
 
-  class SeedInputFlags : InputFlags() {
+  class SeedInputFlagGroup : InputFlagGroup() {
 
     @JvmField
     @Parameter(
       names = ["--variant-file", "--variant"],
       required = true,
       description = "The variant file to reduce",
-      order = CommonCmdOptionGroupOrder.COMPULSORY + 11,
+      order = 11,
     )
     var variantFile: String? = null
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -26,6 +26,7 @@ import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.spartree.LexerRuleSparTreeNode
 import org.perses.spartree.SparTree
 import org.perses.util.Util.lazyAssert
+import org.perses.util.isSortedAscendingly
 import org.perses.util.toImmutableList
 
 class IdentifierReplacementReducer(
@@ -110,7 +111,7 @@ class IdentifierReplacementReducer(
   ) {
 
     init {
-      lazyAssert { lexerNodeClusterWithSameLexemes.zipWithNext().all { it.first <= it.second } }
+      lazyAssert { lexerNodeClusterWithSameLexemes.isSortedAscendingly() }
     }
 
     fun getClusterWithName(name: String): LexerNodeClusterWithSameLexeme? {
@@ -185,26 +186,17 @@ class IdentifierReplacementReducer(
   companion object {
     const val NAME = "token_replacer"
 
-    val META = object : ReducerAnnotation() {
+    val META = object : ReducerAnnotation(
+      shortName = NAME,
+      description = "Randomly pick up an identifier or a set of identifiers, " +
+        "and replace it with another identifier.",
       // Given the same input, the algorithm might yield different results,
       // because this alg also depends on the cache in the reduction context.
-      override val deterministic: Boolean
-        get() = false
-
-      override val reductionResultSizeTrend: ReductionResultSizeTrend
-        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_REMAIN
-
+      deterministic = false,
+      reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_REMAIN,
+    ) {
       override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
         return ImmutableList.of(IdentifierReplacementReducer(reducerContext))
-      }
-
-      override fun shortName(): String {
-        return NAME
-      }
-
-      override fun description(): String {
-        return "Randomly pick up an identifier or a set of identifiers, " +
-          "and replace it with another identifier."
       }
     }
   }

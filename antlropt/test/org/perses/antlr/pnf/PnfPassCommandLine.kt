@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,9 +19,9 @@ package org.perses.antlr.pnf
 import com.beust.jcommander.Parameter
 import com.google.common.base.Strings
 import org.perses.antlr.GrammarTestingUtility.loadGrammarFromFile
+import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import org.perses.util.cmd.AbstractCommandOptions
 import org.perses.util.cmd.AbstractMain
-import org.perses.util.cmd.ICommandLineFlags
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.writeText
@@ -52,9 +52,9 @@ class PnfPassCommandLine(
   }
 
   class CommandOptions : AbstractCommandOptions() {
-    val flags = registerFlags(RequiredFlags())
+    val flags = registerFlags(RequiredFlagGroup())
 
-    class RequiredFlags : ICommandLineFlags {
+    class RequiredFlagGroup : AbstractCommandLineFlagGroup(groupName = "PNF Pass Control") {
       @Parameter(names = ["--input"], required = true, description = "Input.")
       var input: Path? = null
 

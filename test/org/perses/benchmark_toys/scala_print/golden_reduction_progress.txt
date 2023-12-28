@@ -715,7 +715,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__paramClause_2]dd@1
     object Hello {
         def main(                   ) =
             println("line 1")
@@ -935,7 +935,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__simpleType_3]dd@1
     object Hello {
         def main(args: Array        ) =
             println
@@ -1215,7 +1215,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__simpleExpr1_1]dd@1
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1738,7 +1738,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__paramClause_2]dd@1
     object Hello {
         def main(                   ) =
             println

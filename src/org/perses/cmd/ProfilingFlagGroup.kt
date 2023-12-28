@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,22 +17,21 @@
 package org.perses.cmd
 
 import com.beust.jcommander.Parameter
-import org.perses.util.cmd.CommonCmdOptionGroupOrder
-import org.perses.util.cmd.ICommandLineFlags
+import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import java.nio.file.Path
 
-class ProfilingFlags : ICommandLineFlags {
+class ProfilingFlagGroup : AbstractCommandLineFlagGroup(groupName = "Profiling") {
   @Parameter(
     names = ["--progress-dump-file"],
     description = "The file to record the reduction process. The dump file can be large..",
-    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 0,
+    order = 0,
   )
   var progressDumpFile: Path? = null
 
   @Parameter(
     names = ["--append-to-progress-dump-file"],
     description = "Whether to append the reduction progress to the progress dump file",
-    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 5,
+    order = 5,
     arity = 1,
   )
   var appendToProgressDumpFile = false
@@ -40,28 +39,28 @@ class ProfilingFlags : ICommandLineFlags {
   @Parameter(
     names = ["--stat-dump-file"],
     description = "The file to save the statistics collected during reduction.",
-    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 10,
+    order = 10,
   )
   var statDumpFile: Path? = null
 
   @Parameter(
     names = ["--profile-query-cache"],
     description = "The file to save the profiling data of the query cache.",
-    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 20,
+    order = 20,
   )
   var profileQueryCacheTime: String? = null
 
   @Parameter(
     names = ["--profile-query-cache-memory"],
     description = "The file to save the profiling data of the query cache.",
-    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 30,
+    order = 30,
   )
   var profileQueryCacheMemory: String? = null
 
   @Parameter(
     names = ["--profile-actionset"],
     description = "The file to save information of all the created edit action sets.",
-    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 40,
+    order = 40,
   )
   var actionSetProfiler: Path? = null
 
@@ -69,7 +68,7 @@ class ProfilingFlags : ICommandLineFlags {
     names = ["--profile"],
     description = "profile the reduction process for analysis",
     arity = 1,
-    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 50,
+    order = 50,
   )
   var profile = false
 
@@ -77,7 +76,7 @@ class ProfilingFlags : ICommandLineFlags {
     names = ["--script-execution-timeout-in-seconds"],
     description = "the interval in seconds to timeout " +
       "the test script executions. the default timeout is 600 seconds.",
-    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 60,
+    order = 60,
   )
   var testScriptExecutionTimeoutInSeconds: Long = 600L
 
@@ -86,7 +85,7 @@ class ProfilingFlags : ICommandLineFlags {
     description = "keep trying even after " +
       "the script execution timeouts.",
     arity = 1,
-    order = CommonCmdOptionGroupOrder.PROFILING_CONTROL + 70,
+    order = 70,
   )
   var testScriptExecutionKeepWaitingAfterTimeout: Boolean = true
 

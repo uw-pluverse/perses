@@ -128,6 +128,36 @@ reduction_golden_test(
 )
 
 reduction_golden_test(
+    name = "reduction_using_pristine_ddmin_for_reducing_kleene_test",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    golden_progress_file = "golden_reduction_using_pristine_ddmin_for_reducing_kleene_progress.txt",
+    golden_reduced_file = "golden_reduced_pristine_ddmin_t.c",
+    other_flags = {
+        "--default-delta-debugger-for-kleene": "PRISTINE",
+    },
+    progress_dump_file = "reduction_using_pristine_ddmin_for_reducing_kleene_progress.txt",
+    source_file = "t.c",
+    test_script = "r.sh",
+    thread_count = 1,
+)
+
+reduction_golden_test(
+    name = "reduction_using_probdd_for_reducing_kleene_test",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    golden_progress_file = "golden_reduction_using_probdd_for_reducing_kleene_progress.txt",
+    golden_reduced_file = "golden_reduced_probdd_t.c",
+    other_flags = {
+        "--default-delta-debugger-for-kleene": "PROBDD",
+    },
+    progress_dump_file = "reduction_using_probdd_for_reducing_kleene_progress.txt",
+    source_file = "t.c",
+    test_script = "r.sh",
+    thread_count = 1,
+)
+
+reduction_golden_test(
     name = "reduction_concurrent_state_token_slicer_golden_test",
     enable_edit_caching = True,
     enable_query_caching = True,

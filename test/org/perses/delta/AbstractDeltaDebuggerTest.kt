@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,8 +22,9 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.delta.AbstractDeltaDebugger.Companion.computePartitionSize
-import org.perses.delta.AbstractDeltaDebugger.Companion.partition
+import org.perses.delta.AbstractDeltaDebugger.OnBestUpdateHandler
+import org.perses.delta.PristineDeltaDebugger.Companion.computePartitionSize
+import org.perses.delta.PristineDeltaDebugger.Companion.countBasedPartition
 import org.perses.reduction.PropertyTestResult
 import org.perses.util.toImmutableList
 
@@ -31,21 +32,28 @@ import org.perses.util.toImmutableList
 class AbstractDeltaDebuggerTest {
 
   companion object {
-    val dummyPropertyTest = object : IPropertyTester<String, String> {
-      override fun testProperty(
-        currentBest: ImmutableList<String>,
-        candidate: ImmutableList<String>,
-      ): AbstractPropertyTestResultWithPayload<String> {
-        return PropertyTestResultWithPayload(PropertyTestResult.INTERESTING_RESULT, "dummy")
-      }
+    val dummyPropertyTest = IPropertyTester<String, String> {
+      PropertyTestResultWithPayload(PropertyTestResult.INTERESTING_RESULT, "dummy")
     }
 
-    val dummyHandler = { _: ImmutableList<String>, _: String -> }
+    val dummyHandler =
+      OnBestUpdateHandler {
+          _: ImmutableList<AbstractDeltaDebugger.ElementWrapper<String>>, _: String ->
+      }
   }
 
   class DummyDeltaDebugger(
     input: ImmutableList<String>,
-  ) : AbstractDeltaDebugger<String, String>(input, dummyPropertyTest, dummyHandler) {
+  ) : AbstractDeltaDebugger<String, String>(
+    Arguments(
+      needToTestEmpty = true,
+      input,
+      dummyPropertyTest,
+      dummyHandler,
+      descriptionPrefix = "",
+    ),
+  ) {
+
     override fun reduceNonEmptyInput() {
       TODO("Not yet implemented")
     }
@@ -76,7 +84,7 @@ class AbstractDeltaDebuggerTest {
       .build().let { list ->
         list.partitions.first().let {
           assertThat(it.elements).containsExactly("a")
-          assertThat(list.computeComplementFor(it)).containsExactly("b", "c")
+          assertThat(list.computeComplementFor(it).input).containsExactly("b", "c")
         }
       }
 
@@ -86,7 +94,7 @@ class AbstractDeltaDebuggerTest {
       .build().let { list ->
         list.partitions.first().let {
           assertThat(it.elements).containsExactly("a", "b")
-          assertThat(list.computeComplementFor(it)).containsExactly("c")
+          assertThat(list.computeComplementFor(it).input).containsExactly("c")
         }
       }
 
@@ -97,7 +105,7 @@ class AbstractDeltaDebuggerTest {
       .build().let { list ->
         list.partitions[1].let {
           assertThat(it.elements).containsExactly("b")
-          assertThat(list.computeComplementFor(it)).containsExactly("a", "c")
+          assertThat(list.computeComplementFor(it).input).containsExactly("a", "c")
         }
       }
 
@@ -107,7 +115,7 @@ class AbstractDeltaDebuggerTest {
       .build().let { list ->
         list.partitions.last().let {
           assertThat(it.elements).containsExactly("c")
-          assertThat(list.computeComplementFor(it)).containsExactly("a", "b")
+          assertThat(list.computeComplementFor(it).input).containsExactly("a", "b")
         }
       }
   }
@@ -129,7 +137,7 @@ class AbstractDeltaDebuggerTest {
   }
 
   private fun partition(s: String, numOfPartitions: Int): ImmutableList<String> {
-    val partitionsList = partition(s.asSequence().toImmutableList(), numOfPartitions)
+    val partitionsList = countBasedPartition(s.asSequence().toImmutableList(), numOfPartitions)
     return partitionsList
       .partitions
       .map { it.elements }

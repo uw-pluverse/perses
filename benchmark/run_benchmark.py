@@ -285,7 +285,7 @@ def main():
         for reducer in parameter.reducers:
             print(f"{reducer} in process")
             # unique time mark distinguishes different configurations
-            time = datetime.now().strftime("%Y%m%d-%H%M%S")
+            time = datetime.now().strftime("%Y%m%d-%H%M%S-%f")
             reducer_flags = get_extra_flags(reducer)
 
             # iteration

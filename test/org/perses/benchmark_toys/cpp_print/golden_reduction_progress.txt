@@ -106,7 +106,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__translationUnit_1]dd@1
 ------------------------------------------------------------
 
 
@@ -137,14 +137,14 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]remove whole except first
+// edit action set type: [kleene_plus:declarationseq]remove whole except first
     #include <iostream>
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]dd@1
+// edit action set type: [kleene_plus:declarationseq]dd@1
     #include <iostream>
     using namespace std;
 ------------------------------------------------------------
@@ -152,7 +152,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]dd@2
+// edit action set type: [kleene_plus:declarationseq]dd@2
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting " << "hello world" << "\n";
         return 0;
@@ -162,7 +162,7 @@ The current best program is the following
 
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_plus]dd@1
+// edit action set type: [kleene_plus:declarationseq]dd@1
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting " << "hello world" << "\n";
@@ -262,7 +262,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     #include <iostream>
     int main (int argc, char *argv[]) {
     }
@@ -295,7 +295,7 @@ The current best program is the following
 
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_plus]remove whole except first
+// edit action set type: [kleene_plus:statementSeq]remove whole except first
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting " << "hello world" << "\n";
@@ -563,7 +563,7 @@ The current best program is the following
 
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__shiftExpression_2]dd@1
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting " << "hello world"        ;
@@ -594,7 +594,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__shiftExpression_2]dd@1
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting "                         ;
@@ -604,7 +604,7 @@ The current best program is the following
 
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__shiftExpression_2]dd@1
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout                       << "hello world"        ;
@@ -643,7 +643,7 @@ The current best program is the following
 
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__lambdaDeclarator_1]dd@1
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -1054,7 +1054,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__simpleDeclaration_1]dd@1
     #include <iostream>
         main (                      ) {
         std::cout                       << "hello world"        ;
@@ -1203,7 +1203,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]dd@1
+// edit action set type: [kleene_plus:declarationseq]dd@1
     int main (                      ) {
         std::cout                       << "hello world"        ;
     }
@@ -1276,7 +1276,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     #include <iostream>
     int main (                      ) {
     }

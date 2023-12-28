@@ -292,7 +292,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     int main() {
     }
 ------------------------------------------------------------
@@ -324,7 +324,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]remove whole except first
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove whole except first
     int main() {
       int a = 99;
     }
@@ -333,7 +333,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]dd@1
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
     int main() {
       int a = 99;
       int b = (((((((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))))));
@@ -343,7 +343,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]dd@2
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
     int main() {
       return b;
     }
@@ -352,7 +352,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]dd@1
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
     int main() {
       int a = 99;
       return b;
@@ -362,7 +362,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]dd@1
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
     int main() {
       int b = (((((((((((((((((((((((((((((((((((((a)))))))))))))))))))))))))))))))))))));
       return b;
@@ -425,7 +425,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__declaration_2]dd@1
     int main() {
       int a = 99;
       int                                                                                ;
@@ -1093,7 +1093,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__declaration_2]dd@1
     int main() {
       int       ;
       int b =                                      a                                     ;
@@ -1717,7 +1717,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
     main() {
       int a = 99;
       int b =                                      a                                     ;

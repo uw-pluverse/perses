@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -14,26 +14,26 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.reduction.reducer
+package org.perses.delta.xfs
 
-import org.perses.reduction.AsyncReductionListenerManager
-import org.perses.reduction.TreeEditWithItsResult
-import org.perses.reduction.partition.Partition
-import org.perses.spartree.AbstractNodeActionSetCache
-import org.perses.spartree.AbstractSparTreeEdit
+import com.google.common.collect.ImmutableList
+import org.perses.delta.AbstractDeltaDebugger
 import java.util.ArrayDeque
 
-class BfsDeltaDebugger(
-  listenerManager: AsyncReductionListenerManager,
-  nodeActionSetCache: AbstractNodeActionSetCache,
-  treeEditTester: (AbstractSparTreeEdit<*>) -> TreeEditWithItsResult?,
-) : AbstractSpecialDeltaDebugger(listenerManager, nodeActionSetCache, treeEditTester) {
+class BfsDeltaDebugger<T, PropertyPayload>(
+  arguments: AbstractDeltaDebugger.Arguments<T, PropertyPayload>,
+) : AbstractSpecialDeltaDebugger<T, PropertyPayload>(arguments) {
 
-  override fun pollFromWorklist(worklist: ArrayDeque<Partition>): Partition {
+  override fun pollFromWorklist(
+    worklist: ArrayDeque<Partition<ElementWrapper<T>>>,
+  ): Partition<ElementWrapper<T>> {
     return worklist.pollFirst()
   }
 
-  override fun addToWorklist(worklist: ArrayDeque<Partition>, partitions: Array<out Partition>) {
+  override fun addToWorklist(
+    worklist: ArrayDeque<Partition<ElementWrapper<T>>>,
+    partitions: ImmutableList<Partition<ElementWrapper<T>>>,
+  ) {
     for (i in partitions.indices.reversed()) {
       worklist.addLast(partitions[i])
     }

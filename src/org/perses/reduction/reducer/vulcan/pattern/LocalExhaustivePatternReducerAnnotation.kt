@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -25,6 +25,7 @@ class LocalExhaustivePatternReducerAnnotation internal constructor(patternSize: 
   AbstractConcurrentTokenSlicer.AbstractTokenSlicerAnnotation(
     namePrefix = LocalExhaustivePatternReducer.NAME_PREFIX,
     granularity = patternSize,
+    description = "local exhaustive pattern reducer",
   ) {
 
   val patternSize: Int
@@ -32,12 +33,5 @@ class LocalExhaustivePatternReducerAnnotation internal constructor(patternSize: 
 
   override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
     return ImmutableList.of(LocalExhaustivePatternReducer(this, reducerContext))
-  }
-
-  override val deterministic: Boolean
-    get() = true
-
-  override fun description(): String {
-    return "local exhaustive pattern reducer."
   }
 }

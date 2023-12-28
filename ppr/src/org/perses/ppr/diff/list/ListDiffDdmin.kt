@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,7 +17,8 @@
 package org.perses.ppr.diff.list
 
 import com.google.common.collect.ImmutableList
-import org.perses.delta.AbstractPropertyTestResultWithPayload
+import org.perses.delta.AbstractDeltaDebugger
+import org.perses.delta.AbstractDeltaDebugger.OnBestUpdateHandler
 import org.perses.delta.IPropertyTester
 import org.perses.delta.PristineDeltaDebugger
 import org.perses.delta.PropertyTestResultWithPayload
@@ -26,6 +27,7 @@ import org.perses.reduction.TestScriptExecutorService
 import org.perses.reduction.TestScriptExecutorService.Companion.IDENTITY_POST_CHECK
 import org.perses.util.AbstractEditOperation
 import org.perses.util.ktInfo
+import org.perses.util.transformToImmutableList
 
 class ListDiffDdmin(
   ioManager: ListDiffReductionIOManager,
@@ -45,31 +47,31 @@ class ListDiffDdmin(
     state: ListDiffReductionState,
   ): PristineDeltaDebugger<AbstractEditOperation<PersesToken>, Any> {
     val onBestUpdateHandler =
-      {
-          newBest: ImmutableList<AbstractEditOperation<PersesToken>>, _: Any,
-        ->
-        state.updateBestDiff(newBest)
+      OnBestUpdateHandler<AbstractEditOperation<PersesToken>, Any> { newBest, _ ->
+        // TODO(cnsun): converting newBest to a new list is not efficient.
+        val newBestDiff: ImmutableList<AbstractEditOperation<PersesToken>> =
+          newBest.transformToImmutableList { it.element }
+        state.updateBestDiff(newBestDiff)
       }
 
-    val propertyTest = object :
-      IPropertyTester<AbstractEditOperation<PersesToken>, Any> {
-      override fun testProperty(
-        currentBest: ImmutableList<AbstractEditOperation<PersesToken>>,
-        candidate: ImmutableList<AbstractEditOperation<PersesToken>>,
-      ): AbstractPropertyTestResultWithPayload<Any> {
+    val propertyTest =
+      IPropertyTester { configuration ->
         val testTask = executorService.testProgramAsync(
           TestScriptExecutorService.ALWAYS_TRUE_PRECHECK,
           IDENTITY_POST_CHECK,
-          ioManager.createOutputManager(candidate),
+          ioManager.createOutputManager(configuration.candidate),
           payload = "dummy payload",
         )
-        return PropertyTestResultWithPayload(testTask.getWithTimeoutWarnings(), Any())
+        PropertyTestResultWithPayload(testTask.getWithTimeoutWarnings(), Any())
       }
-    }
     return PristineDeltaDebugger(
-      state.bestDiff,
-      propertyTest,
-      onBestUpdateHandler,
+      AbstractDeltaDebugger.Arguments(
+        needToTestEmpty = true,
+        input = state.bestDiff,
+        propertyTest,
+        onBestUpdateHandler,
+        descriptionPrefix = this::class.simpleName.toString(),
+      ),
     )
   }
 }

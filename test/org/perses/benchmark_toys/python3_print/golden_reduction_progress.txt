@@ -96,13 +96,13 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@3
+// edit action set type: [kleene_star:kleene_star__file_input_2]dd@3
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__file_input_2]dd@1
     def main():
         a = True
         if a:
@@ -112,7 +112,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@2
+// edit action set type: [kleene_star:kleene_star__file_input_2]dd@2
     if __name__ == '__main__':
         main()
 ------------------------------------------------------------
@@ -120,7 +120,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__file_input_2]dd@1
     if __name__ == '__main__':
         main()
 ------------------------------------------------------------
@@ -128,7 +128,7 @@ The current best program is the following
 
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__file_input_2]dd@1
     def main():
         a = True
         if a:
@@ -482,7 +482,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__suite_1]can be epsilon
     def main():
         print("hello world")
 ------------------------------------------------------------
@@ -530,7 +530,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__atom_expr_2]dd@1
     def main():
         print
     main()
@@ -621,7 +621,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__atom_expr_2]dd@1
     def main():
         print("hello world")
     main
@@ -735,7 +735,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__decorator_1]dd@1
     def main():
         print(             )
     main()
@@ -760,7 +760,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__atom_5]can be epsilon
     def main():
         print(             )
     main()
@@ -1037,13 +1037,13 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@3
+// edit action set type: [kleene_star:kleene_star__file_input_2]dd@3
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__file_input_2]dd@1
     def main():
         print("hello world")
 ------------------------------------------------------------
@@ -1051,21 +1051,21 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@2
+// edit action set type: [kleene_star:kleene_star__file_input_2]dd@2
     main()
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__file_input_2]dd@1
     main()
 ------------------------------------------------------------
 
 
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__file_input_2]dd@1
     def main():
         print("hello world")
     main()
@@ -1287,7 +1287,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__atom_expr_2]dd@1
     def main():
         print
     main()
@@ -1378,7 +1378,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__atom_expr_2]dd@1
     def main():
         print("hello world")
     main
@@ -1492,7 +1492,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__decorator_1]dd@1
     def main():
         print(             )
     main()
@@ -1517,7 +1517,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus]can be epsilon
+// edit action set type: [kleene_plus:kleene_plus__atom_5]can be epsilon
     def main():
         print(             )
     main()

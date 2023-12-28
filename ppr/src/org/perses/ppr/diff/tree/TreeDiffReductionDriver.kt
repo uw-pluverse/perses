@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,8 +20,8 @@ import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
 import org.antlr.v4.runtime.Lexer
 import org.perses.antlr.atn.LexerAtnWrapper
-import org.perses.cmd.OutputFlags
-import org.perses.cmd.ReductionControlFlags
+import org.perses.cmd.OutputFlagGroup
+import org.perses.cmd.ReductionControlFlagGroup
 import org.perses.grammar.AbstractParserFacadeFactory
 import org.perses.ppr.diff.PPRDiffUtils
 import org.perses.program.ScriptFile
@@ -61,7 +61,7 @@ class TreeDiffReductionDriver private constructor(
 
     private fun createReductionInputs(
       parserFacadeFactory: AbstractParserFacadeFactory,
-      inputFlags: TreeDiffCmdOptions.TreeDiffInputFlags,
+      inputFlags: TreeDiffCmdOptions.TreeDiffInputFlagGroup,
     ): TreeDiffReductionInputs {
       val absoluteSeedFilePath: Path = inputFlags.getSourceFile().toAbsolutePath()
       val absoluteVariantFilePath: Path = inputFlags.getVariantFile().toAbsolutePath()
@@ -87,8 +87,8 @@ class TreeDiffReductionDriver private constructor(
 
     private fun createIOManager(
       reductionInputs: TreeDiffReductionInputs,
-      reductionControlFlags: ReductionControlFlags,
-      outputFlags: OutputFlags,
+      reductionControlFlags: ReductionControlFlagGroup,
+      outputFlags: OutputFlagGroup,
       sparTreeToBeKept: SparTreeWithParsability,
       lexerAtnWrapper: LexerAtnWrapper<out Lexer>,
     ): TokenReductionIOManager {

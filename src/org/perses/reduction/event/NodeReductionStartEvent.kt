@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -28,7 +28,7 @@ class NodeReductionStartEvent internal constructor(
 
   val iteration = currentFixpointIteration.iteration
 
-  fun getReducerName() = currentFixpointIteration.reducerClass.shortName()
+  fun getReducerName() = currentFixpointIteration.reducerClass.shortName
 
   fun createEndEvent(
     currentTimeMillis: Long,

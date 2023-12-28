@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,13 +16,16 @@
  */
 package org.perses.reduction.reducer
 
-import com.google.common.annotations.VisibleForTesting
 import com.google.common.collect.ImmutableList
 import org.perses.antlr.RuleType
+import org.perses.delta.AbstractDeltaDebugger
+import org.perses.delta.AbstractDeltaDebugger.Arguments
+import org.perses.delta.DeltaDebuggerFactory
+import org.perses.delta.EnumDeltaDebuggerType
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.reduction.partition.Partition
-import org.perses.reduction.reducer.TreeTransformations.createNodeDeletionActionSetFor
+import org.perses.reduction.SparTreeDdminPayload
+import org.perses.reduction.reducer.PersesNodeReducer.IDeltaDebuggerStrategy.SelectableDeltaDebuggerStrategy
 import org.perses.reduction.reducer.TreeTransformations.findCompatibleDescendants
 import org.perses.reduction.reducer.TreeTransformations.findCompatibleKleeneDescendantsForKleeneQuantifiedNode
 import org.perses.spartree.AbstractSparTreeEdit
@@ -34,13 +37,23 @@ import org.perses.spartree.NodeReplacementAction
 import org.perses.spartree.ParserRuleSparTreeNode
 import org.perses.spartree.SparTree
 import org.perses.util.Util.lazyAssert
+import org.perses.util.toImmutableList
 import java.util.concurrent.Future
 
 /** Perses reducer. The granularity is parse tree nodes, but not level-based.  */
-abstract class AbstractPersesNodeReducer protected constructor(
+open class PersesNodeReducer(
   reducerAnnotation: ReducerAnnotation,
   reducerContext: ReducerContext,
-) : AbstractNodeReducer(reducerAnnotation, reducerContext) {
+  reductionQueueStrategy: IReductionQueueStrategy,
+  private val deltaDebuggerStrategy: IDeltaDebuggerStrategy = SelectableDeltaDebuggerStrategy {
+    reducerContext.configuration.defaultDeltaDebuggerTypeForKleene
+  },
+) : AbstractNodeReducer(
+  reducerAnnotation,
+  reducerContext,
+  reductionQueueStrategy,
+  requiresParsableTree = true,
+) {
 
   protected val nodeReducerConfiguation =
     reducerContext.configuration.persesNodeReducerConfig
@@ -60,8 +73,6 @@ abstract class AbstractPersesNodeReducer protected constructor(
       else -> error("unhandled type: ${node::class}")
     }
   }
-
-  override fun requiresParsableTree() = true
 
   private fun reduceRegularRule(
     tree: SparTree,
@@ -166,7 +177,12 @@ abstract class AbstractPersesNodeReducer protected constructor(
       return ImmutableList.of()
     }
     // FIXME: the best program is not saved.
-    performDelta(tree, "[kleene_star]dd", createPartition(kleeneStar, 0, childCount))
+    performDelta(
+      needToTestEmpty = true,
+      tree,
+      "[kleene_star:${kleeneStar.ruleName}]",
+      kleeneStar.immutableChildView.toImmutableList(),
+    )
     return if (kleeneStar.isPermanentlyDeleted) {
       ImmutableList.of()
     } else {
@@ -174,11 +190,22 @@ abstract class AbstractPersesNodeReducer protected constructor(
     }
   }
 
-  protected abstract fun performDelta(
+  private fun performDelta(
+    needToTestEmpty: Boolean,
     tree: SparTree,
     actionsDescription: String,
-    vararg startPartitions: Partition,
-  )
+    nodes: ImmutableList<AbstractSparTreeNode>,
+  ) {
+    require(nodes.isNotEmpty())
+    val arguments = createDeltaArguments(
+      needToTestEmpty,
+      tree,
+      actionsDescription,
+      nodes,
+    )
+    val deltaDebugger = deltaDebuggerStrategy.createDeltaDebugger(arguments)
+    deltaDebugger.reduce()
+  }
 
   private fun reduceKleenePlus(
     tree: SparTree,
@@ -188,20 +215,24 @@ abstract class AbstractPersesNodeReducer protected constructor(
     if (childCount == 0) {
       return ImmutableList.of()
     }
+    val kleeneActionSetPrefix = "[kleene_plus:${kleenePlus.ruleName}]"
     val editList = ArrayList<AbstractSparTreeEdit<*>>()
     if (canBeEpsilon(kleenePlus)) {
       optionallyCreateDeletionEditAndLog(
-        NodeDeletionActionSet.createByDeleteSingleNode(kleenePlus, "[kleene_plus]can be epsilon"),
+        NodeDeletionActionSet.createByDeleteSingleNode(
+          kleenePlus,
+          "${kleeneActionSetPrefix}can be epsilon",
+        ),
         tree,
       )?.let { editList.add(it) }
     }
     if (childCount > 1) {
-      val wholePartition = createPartition(kleenePlus, 1, childCount) // Skip the first.
+      // Skip the first element
+      val wholePartition = kleenePlus.immutableChildView.drop(1).toImmutableList()
       optionallyCreateDeletionEditAndLog(
-        createNodeDeletionActionSetFor(
-          wholePartition,
-          "[kleene_plus]remove whole except first",
-        ),
+        NodeDeletionActionSet.Builder(
+          "${kleeneActionSetPrefix}remove whole except first",
+        ).deleteNodes(wholePartition).build(),
         tree,
       )?.let { editList.add(it) }
     }
@@ -211,51 +242,38 @@ abstract class AbstractPersesNodeReducer protected constructor(
       return computePendingNodes(kleenePlus, best.edit)
     }
     if (childCount > 1) {
-      val halfIndex = (childCount + 1) / 2
       performDelta(
+        needToTestEmpty = false, // Cannot delete all elements at once as this is kleene-plus.
         tree,
-        "[kleene_plus]dd",
-        createPartition(kleenePlus, 0, halfIndex),
-        createPartition(kleenePlus, halfIndex, childCount),
+        kleeneActionSetPrefix,
+        kleenePlus.immutableChildView.toImmutableList(),
       )
     }
     return ImmutableList.copyOf(kleenePlus.immutableChildView)
   }
+  fun interface IDeltaDebuggerStrategy {
+    fun createDeltaDebugger(
+      args: Arguments<AbstractSparTreeNode, SparTreeDdminPayload>,
+    ): AbstractDeltaDebugger<AbstractSparTreeNode, SparTreeDdminPayload>
 
-  object TreeNodeComparatorInLeafTokenCount : Comparator<AbstractSparTreeNode> {
-    private val comparator = compareByDescending<AbstractSparTreeNode> { it.leafTokenCount }
-      .thenByDescending { it.nodeId }
-
-    override fun compare(o1: AbstractSparTreeNode, o2: AbstractSparTreeNode): Int {
-      val result = comparator.compare(o1, o2)
-      lazyAssert({ result != 0 }) { "Cannot guarantee determinism." }
-      return result
+    class SelectableDeltaDebuggerStrategy(
+      val typeProvider: () -> EnumDeltaDebuggerType,
+    ) : IDeltaDebuggerStrategy {
+      override fun createDeltaDebugger(
+        args: Arguments<AbstractSparTreeNode, SparTreeDdminPayload>,
+      ): AbstractDeltaDebugger<AbstractSparTreeNode, SparTreeDdminPayload> {
+        return DeltaDebuggerFactory.create(typeProvider.invoke(), args)
+      }
     }
-  }
 
-  companion object {
-
-    /**
-     * Create a partition from the tree node, by including the children in the range [childIndexFrom,
-     * childIndexTo)
-     */
-    @JvmStatic
-    @VisibleForTesting
-    fun createPartition(
-      node: AbstractSparTreeNode,
-      childIndexFrom: Int,
-      childIndexTo: Int,
-    ): Partition {
-      lazyAssert({ childIndexFrom >= 0 }) { childIndexFrom }
-      lazyAssert({ childIndexFrom < childIndexTo }) { "$childIndexFrom, $childIndexTo" }
-      lazyAssert({ childIndexTo <= node.childCount }) {
-        childIndexTo.toString() + ", " + node.childCount
+    class SimpleDeltaDebuggerStrategy(
+      val type: EnumDeltaDebuggerType,
+    ) : IDeltaDebuggerStrategy {
+      override fun createDeltaDebugger(
+        args: Arguments<AbstractSparTreeNode, SparTreeDdminPayload>,
+      ): AbstractDeltaDebugger<AbstractSparTreeNode, SparTreeDdminPayload> {
+        return DeltaDebuggerFactory.create(type, args)
       }
-      val builder = Partition.Builder(childIndexTo - childIndexFrom)
-      for (i in childIndexFrom until childIndexTo) {
-        builder.addNode(node.getChild(i))
-      }
-      return builder.build()
     }
   }
 }

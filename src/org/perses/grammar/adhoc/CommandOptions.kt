@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,22 +17,22 @@
 package org.perses.grammar.adhoc
 
 import com.beust.jcommander.Parameter
+import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import org.perses.util.cmd.AbstractCommandOptions
-import org.perses.util.cmd.ICommandLineFlags
 import java.nio.file.Path
 
 class CommandOptions : AbstractCommandOptions() {
 
-  val compulsoryFlags = registerFlags(GrammarFlags())
+  val compulsoryFlags = registerFlags(GrammarFlagGroup())
 
   @JvmField
-  val outputFlags = registerFlags(OutputFlags())
+  val outputFlags = registerFlags(OutputFlagGroup())
 
   fun computeAdhocGrammarConfiguration() =
     compulsoryFlags.createAdhocGrammarConfiguration()
 }
 
-class OutputFlags : ICommandLineFlags {
+class OutputFlagGroup : AbstractCommandLineFlagGroup(groupName = "Output") {
 
   @Parameter(
     names = ["--output"],

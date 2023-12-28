@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,6 +16,7 @@
  */
 package org.perses.reduction.reducer.hdd
 
+import org.perses.delta.xfs.Partition
 import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
@@ -23,7 +24,6 @@ import org.perses.reduction.ReducerContext
 import org.perses.reduction.ReductionLevel
 import org.perses.reduction.event.LevelReductionStartEvent
 import org.perses.reduction.partition.AbstractLevelPartitionPolicy
-import org.perses.reduction.partition.Partition
 import org.perses.reduction.partition.SimpleLevelPartitionPolicy
 import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.spartree.AbstractSparTreeNode
@@ -92,7 +92,7 @@ abstract class AbstractLevelBasedReducer protected constructor(
    * nodes.
    */
   protected abstract fun createTreeEditListByDisablingPartition(
-    partition: Partition,
+    partition: Partition<AbstractSparTreeNode>,
     tree: SparTree,
   ): List<AbstractSparTreeEdit<*>>
 
@@ -112,7 +112,7 @@ abstract class AbstractLevelBasedReducer protected constructor(
     listenerManager.onLevelGranularityReductionStart(granularityReductionStartEvent)
     val partitions = partitionPolicy.partition(reductionLevel, maxNodesPerPartition)
     for (partition in partitions) {
-      partition.removePermanentlyDeletedNodes()
+      partition.removePermanentlyDeletedNodes { it.isPermanentlyDeleted }
       if (partition.isEmpty) {
         continue
       }
@@ -138,7 +138,7 @@ abstract class AbstractLevelBasedReducer protected constructor(
     reductionLevel.cleanDeletedNodes()
   }
 
-  private fun logEmptyEdits(partition: Partition) {
+  private fun logEmptyEdits(partition: Partition<AbstractSparTreeNode>) {
     Files.newBufferedWriter(
       Paths.get("temp_empty_edits_dump.txt"),
       StandardCharsets.UTF_8,

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -35,10 +35,12 @@ import java.util.Queue
 abstract class AbstractNodeReducer(
   reducerAnnotation: ReducerAnnotation,
   reducerContext: ReducerContext,
+  private val reductionQueueStrategy: IReductionQueueStrategy,
+  protected val requiresParsableTree: Boolean,
 ) : AbstractTokenReducer(reducerAnnotation, reducerContext) {
 
   final override fun internalReduce(fixpointReductionState: FixpointReductionState) {
-    if (requiresParsableTree() && !fixpointReductionState.sparTree.parsable) {
+    if (requiresParsableTree && !fixpointReductionState.sparTree.parsable) {
       val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
       listenerManager.onReductionSkipped(
         fixpointReductionState.fixpointIterationStartEvent.createReductionSkippedEvent(
@@ -80,9 +82,7 @@ abstract class AbstractNodeReducer(
     queue.addAll(tree.root.immutableChildView)
   }
 
-  protected abstract fun requiresParsableTree(): Boolean
-
-  protected abstract fun createReductionQueue(): Queue<AbstractSparTreeNode>
+  private fun createReductionQueue() = reductionQueueStrategy.createQueue()
 
   protected abstract fun reduceOneNode(
     tree: SparTree,
@@ -147,5 +147,32 @@ abstract class AbstractNodeReducer(
 
   companion object {
     const val DEFAULT_INITIAL_QUEUE_CAPACITY = 600
+  }
+
+  object TreeNodeComparatorInLeafTokenCount : Comparator<AbstractSparTreeNode> {
+    private val comparator = compareByDescending<AbstractSparTreeNode> { it.leafTokenCount }
+      .thenByDescending { it.nodeId }
+
+    override fun compare(o1: AbstractSparTreeNode, o2: AbstractSparTreeNode): Int {
+      val result = comparator.compare(o1, o2)
+      lazyAssert({ result != 0 }) { "Cannot guarantee determinism." }
+      return result
+    }
+  }
+
+  fun interface IReductionQueueStrategy {
+    fun createQueue(): Queue<AbstractSparTreeNode>
+
+    companion object {
+      val FOR_REGULAR_QUEUE = IReductionQueueStrategy {
+        java.util.ArrayDeque(DEFAULT_INITIAL_QUEUE_CAPACITY)
+      }
+      val FOR_PRIORITY_QUEUE = IReductionQueueStrategy {
+        java.util.PriorityQueue(
+          DEFAULT_INITIAL_QUEUE_CAPACITY,
+          TreeNodeComparatorInLeafTokenCount,
+        )
+      }
+    }
   }
 }

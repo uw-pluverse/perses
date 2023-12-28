@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -101,49 +101,33 @@ class ConcurrentStateBasedLineSlicer(
       .map { ConcurrentStateLineSlicerAnnotation(NAME_PREFIX, granularity = it) }
       .toImmutableList()
 
-    val COMPOSITE_REDUCER = object : ReducerAnnotation() {
-      override val deterministic: Boolean
-        get() = true
-
-      override val reductionResultSizeTrend: ReductionResultSizeTrend
-        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
-
+    val COMPOSITE_REDUCER = object : ReducerAnnotation(
+      shortName = NAME_PREFIX,
+      description = "A concurrent state based line slicer",
+      deterministic = true,
+      reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+    ) {
       override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
         return REDUCER_ANNOTATIONS
           .asSequence()
           .flatMap { it.create(reducerContext) }
           .toImmutableList()
       }
-
-      override fun shortName(): String {
-        return NAME_PREFIX
-      }
-
-      override fun description(): String {
-        return "A concurrent state based line slicer"
-      }
     }
 
     class ConcurrentStateLineSlicerAnnotation(
       private val namePrefix: String,
       val granularity: Int,
-    ) : ReducerAnnotation() {
+    ) : ReducerAnnotation(
+      shortName = "$namePrefix@$granularity",
+      description = "A concurrent state-based line slicer",
+      deterministic = true,
+      reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+    ) {
 
       init {
         require(granularity > 0)
       }
-
-      override val deterministic: Boolean
-        get() = true
-
-      override val reductionResultSizeTrend: ReductionResultSizeTrend
-        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
-
-      private val name = "$namePrefix@$granularity"
-
-      override fun shortName(): String = name
-
-      override fun description(): String = "A concurrent state based line slicer"
 
       override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
         return ImmutableList.of(ConcurrentStateBasedLineSlicer(reducerContext, this))

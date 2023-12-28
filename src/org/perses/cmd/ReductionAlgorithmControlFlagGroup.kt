@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,16 +17,16 @@
 package org.perses.cmd
 
 import com.beust.jcommander.Parameter
-import org.perses.util.cmd.CommonCmdOptionGroupOrder
-import org.perses.util.cmd.ICommandLineFlags
+import org.perses.delta.EnumDeltaDebuggerType
+import org.perses.util.cmd.AbstractCommandLineFlagGroup
 
-class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
-  ICommandLineFlags {
+class ReductionAlgorithmControlFlagGroup(val defaultReductionAlgorithm: String) :
+  AbstractCommandLineFlagGroup(groupName = "Reduction Algorithm Control") {
   @JvmField
   @Parameter(
     names = ["--alg"],
     description = "reduction algorithm: use --list-algs to list all available algorithms",
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 0,
+    order = 0,
   )
   var reductionAlgorithm: String? = null
 
@@ -35,7 +35,7 @@ class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
     names = ["--list-algs"],
     description = "list all the reduction algorithms.",
     help = true,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 1,
+    order = 1,
   )
   var listAllReductionAlgorithms = false
 
@@ -44,7 +44,7 @@ class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
     description = "Reparse the program before the start of each fixpoint iteration.",
     arity = 1,
     hidden = true,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 2,
+    order = 2,
   )
   var rebuildParseTreeEachIteration = true
 
@@ -52,7 +52,7 @@ class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
     names = ["--enable-token-slicer"],
     description = "Enable token slicer after syntax-guided reduction is done. Maybe slow.",
     arity = 1,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 3,
+    order = 3,
   )
   var enableTokenSlicer = false
 
@@ -60,7 +60,7 @@ class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
     names = ["--enable-tree-slicer"],
     description = "Enable tree slicer after syntax-guided reduction, and before token slicer",
     arity = 1,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 4,
+    order = 4,
   )
   var enableTreeSlicer = false
 
@@ -68,28 +68,17 @@ class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
     names = ["--enable-line-slicer"],
     description = "Enable line slicer after syntax-guided reduction, and before token slicer",
     arity = 1,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 5,
+    order = 5,
   )
   var enableLineSlicer = false
 
   @Parameter(
-    names = ["--use-real-ddmin"],
-    description = "Whether to use the real delta debugging algorithm to reduce kleene nodes.",
+    names = ["--default-delta-debugger-for-kleene"],
+    description = "The default delta debugger algorithm to reduce kleene nodes.",
     arity = 1,
-    hidden = true,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 6,
+    order = 6,
   )
-  var useRealDeltaDebugger = false
-
-  @JvmField
-  @Parameter(
-    names = ["--use-optc-parser"],
-    description = "Use the OptC parser to construct the spar-tree.",
-    arity = 1,
-    hidden = true,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 7,
-  )
-  var useOptCParser = false
+  var defaultDeltaDebuggerTypeForKleene = EnumDeltaDebuggerType.DFS
 
   @JvmField
   @Parameter(
@@ -97,7 +86,7 @@ class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
     description = "The max count of edit candidates for reducing a regular rule node.",
     arity = 1,
     hidden = true,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 9,
+    order = 9,
   )
   var maxEditCountForRegularRuleNode = 100
 
@@ -107,7 +96,7 @@ class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
     description = "The max count of edit candidates for reducing a regular rule node.",
     arity = 1,
     hidden = true,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 10,
+    order = 10,
   )
   var maxBfsDepthForRegularRuleNode = 5
 
@@ -117,7 +106,7 @@ class ReductionAlgorithmControlFlags(val defaultReductionAlgorithm: String) :
     description = "The max count of edit candidates for reducing a regular rule node.",
     arity = 1,
     hidden = true,
-    order = CommonCmdOptionGroupOrder.ALG_CONTROL + 11,
+    order = 11,
   )
   var stopAtFirstCompatibleChildForRegularRuleNode = false
 

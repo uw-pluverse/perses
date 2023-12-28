@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,27 +18,26 @@ package org.perses.ppr.diff.list
 
 import com.beust.jcommander.Parameter
 import org.perses.CommandOptions
-import org.perses.cmd.InputFlags
+import org.perses.cmd.InputFlagGroup
 import org.perses.reduction.ReducerFactory.defaultReductionAlgName
-import org.perses.util.cmd.CommonCmdOptionGroupOrder
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
 class ListDiffCmdOptions : CommandOptions(defaultReductionAlgName) {
 
-  override fun createInputFlags() = ListDiffInputFlags()
+  override fun createInputFlags() = ListDiffInputFlagGroup()
 
-  val listDiffInputFlags = inputFlags as ListDiffInputFlags
+  val listDiffInputFlags = inputFlags as ListDiffInputFlagGroup
 
-  class ListDiffInputFlags : InputFlags() {
+  class ListDiffInputFlagGroup : InputFlagGroup() {
 
     @JvmField
     @Parameter(
       names = ["--variant-file", "--variant"],
       required = true,
       description = "The variant file to reduce",
-      order = CommonCmdOptionGroupOrder.COMPULSORY + 11,
+      order = 11,
     )
     var variantFile: String? = null
 
@@ -49,7 +48,7 @@ class ListDiffCmdOptions : CommandOptions(defaultReductionAlgName) {
       names = ["--enable-diff-slicer"],
       description = "Enable slicer on list-diff. Maybe slow.",
       arity = 1,
-      order = CommonCmdOptionGroupOrder.COMPULSORY + 12,
+      order = 12,
     )
     var enableDiffSlicer = false
 
@@ -58,7 +57,7 @@ class ListDiffCmdOptions : CommandOptions(defaultReductionAlgName) {
       names = ["--enable-diff-ddmin"],
       description = "Enable ddmin on list-diff.",
       arity = 1,
-      order = CommonCmdOptionGroupOrder.COMPULSORY + 13,
+      order = 13,
     )
     var enableDiffDdmin = true
 

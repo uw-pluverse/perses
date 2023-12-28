@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -27,6 +27,27 @@ import java.util.Random
 class PersesKtExtsTest {
 
   @Test
+  fun testIsSorted() {
+    assertThat(listOf<Int>().isSortedAscendingly()).isTrue()
+    assertThat(listOf(1).isSortedAscendingly()).isTrue()
+    assertThat(listOf(1, 2).isSortedAscendingly()).isTrue()
+    assertThat(listOf(1, 1).isSortedAscendingly()).isTrue()
+    assertThat(listOf(2, 1).isSortedAscendingly()).isFalse()
+    assertThat(listOf(1, 1, 1, 1).isSortedAscendingly()).isTrue()
+    assertThat(listOf(1, 1, 2, 2, 3, 3).isSortedAscendingly()).isTrue()
+    assertThat(listOf(2, 2, 3, 3, 3, 3, 1).isSortedAscendingly()).isFalse()
+    assertThat(listOf(1, 1, 2, 2, 5).isSortedAscendingly()).isTrue()
+  }
+
+  @Test
+  fun testIsSortedBy() {
+    assertThat(listOf<String>().isSortedAscendinglyBy { it.length }).isTrue()
+    assertThat(listOf("", "a").isSortedAscendinglyBy { it.length }).isTrue()
+    assertThat(listOf("a", "aa").isSortedAscendinglyBy { it.length }).isTrue()
+    assertThat(listOf("a", "").isSortedAscendinglyBy { it.length }).isFalse()
+  }
+
+  @Test
   fun testToImmutableBiMap() {
     sequenceOf(Pair("a", 1), Pair("b", 2)).toImmutableBiMap().let {
       assertThat(
@@ -43,6 +64,19 @@ class PersesKtExtsTest {
       0,
       1,
     ).inOrder()
+    assertThat(
+      (
+        listOf(
+          "",
+          "a",
+        ) as Iterable<String>
+        ).transformToImmutableList { it.length },
+    ).containsExactly(0, 1).inOrder()
+  }
+
+  @Test
+  fun testFilterToImmutableList() {
+    assertThat(listOf(1, 2).filterToImmutableList { it == 1 }).containsExactly(2)
   }
 
   @Test

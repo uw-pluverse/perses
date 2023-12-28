@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,18 +16,24 @@
  */
 package org.perses.util.cmd
 
-object CommonCmdOptionGroupOrder {
+import com.beust.jcommander.Parameter
+import org.perses.version.VersionHelper
+import java.io.PrintStream
 
-  const val COMPULSORY = 0
-  const val RESULT_OUTPUT = 20000
-  const val REDUCTION_CONTROL = 40000
-  const val OUTPUT_REFINING = 60000
-  const val ALG_CONTROL = 80000
-  const val GRAMMAR_CONTROL = 90000
-  const val CACHE_CONTROL = 100000
-  const val PROFILING_CONTROL = 120000
-  const val VERBOSITY_CONTROL = 130000
-  const val VULCAN = 140000
-  const val HELP = 160000
-  const val EXPERIMENT = 180000
+class VersionFlagGroup : AbstractCommandLineFlagGroup(groupName = "Version") {
+
+  @JvmField
+  @Parameter(
+    names = ["--version"],
+    description = "print the version",
+    help = true,
+    order = 1,
+  )
+  var version = false
+
+  override fun validate() = Unit
+
+  fun printVersionInfo(programName: String, stream: PrintStream) {
+    VersionHelper.printVersionInfo(programName, stream)
+  }
 }

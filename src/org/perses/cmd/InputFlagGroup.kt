@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,19 +17,18 @@
 package org.perses.cmd
 
 import com.beust.jcommander.Parameter
-import org.perses.util.cmd.CommonCmdOptionGroupOrder
-import org.perses.util.cmd.ICommandLineFlags
+import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-open class InputFlags : ICommandLineFlags {
+open class InputFlagGroup : AbstractCommandLineFlagGroup(groupName = "Inputs") {
   @JvmField
   @Parameter(
     names = ["--test-script", "--test", "-t"],
     required = true,
     description = "The test script to specify the property the reducer needs to preserve.",
-    order = CommonCmdOptionGroupOrder.COMPULSORY + 0,
+    order = 0,
   )
   var testScript: String? = null
 
@@ -38,7 +37,7 @@ open class InputFlags : ICommandLineFlags {
     names = ["--input-file", "--input", "-i"],
     required = true,
     description = "The input file to reduce",
-    order = CommonCmdOptionGroupOrder.COMPULSORY + 1,
+    order = 1,
   )
   var inputFile: String? = null
 

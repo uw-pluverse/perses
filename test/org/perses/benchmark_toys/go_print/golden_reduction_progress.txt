@@ -194,7 +194,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__sourceFile_4]dd@1
     package main;
     import "fmt";
 ------------------------------------------------------------
@@ -277,7 +277,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__functionDecl_1]dd@1
     package main;
     import "fmt";
     func main()
@@ -339,7 +339,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__block_1]dd@1
     package main;
     import "fmt";
     func main() {
@@ -378,7 +378,7 @@ The current best program is the following
 
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_plus]remove whole except first
+// edit action set type: [kleene_plus:statementList]remove whole except first
     package main;
     import "fmt";
     func main() {
@@ -518,7 +518,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__primaryExpr_1]dd@1
     package main;
     import "fmt";
     func main() {
@@ -529,7 +529,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__primaryExpr_1]dd@1
     package main;
     import "fmt";
     func main() {
@@ -582,7 +582,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__arguments_6]dd@1
     package main;
     import "fmt";
     func main() {
@@ -657,7 +657,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__sourceFile_2]dd@1
     package main;
     func main() {
         fmt.Println("go" + "lang");

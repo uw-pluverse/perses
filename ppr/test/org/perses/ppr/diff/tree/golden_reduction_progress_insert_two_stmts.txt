@@ -4,7 +4,7 @@ The initial program size is 34
 ------------------------------------------------------------
 
 
-=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+=Fixpoint iteration 1. Reducer: customized_tree_diff_node_reducer
 
 The spar-tree is the following.
 translationUnit {id=1}
@@ -228,7 +228,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     #include <stdio.h>
     int main(void)
     {
@@ -330,7 +330,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__postfixExpression_2]dd@1
     #include <stdio.h>
     int main(void)
     {
@@ -393,7 +393,7 @@ Failed to reduce node 140
 ------------------------------------------------------------
 
 
-=Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
+=Fixpoint iteration 2. Reducer: customized_tree_diff_node_reducer
 
 The spar-tree is the following.
 translationUnit {id=1}

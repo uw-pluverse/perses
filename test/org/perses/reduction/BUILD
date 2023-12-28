@@ -251,6 +251,5 @@ kt_jvm_test(
     deps = [
         "//:guava",
         "//:truth",
-        "@com_github_jetbrains_kotlin//:kotlin-test",
     ],
 )

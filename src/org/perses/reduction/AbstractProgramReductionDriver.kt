@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,7 +21,7 @@ import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
 import org.antlr.v4.runtime.tree.ParseTree
 import org.perses.CommandOptions
-import org.perses.cmd.ExperimentFlags
+import org.perses.cmd.ExperimentFlagGroup
 import org.perses.grammar.AbstractParserFacade
 import org.perses.listener.LoggingListener
 import org.perses.listener.ProgressMonitorForNodeReducer
@@ -152,7 +152,7 @@ abstract class AbstractProgramReductionDriver(
   )
 
   private fun createOnDemandReducerCreators(
-    experimentFlags: ExperimentFlags,
+    experimentFlags: ExperimentFlagGroup,
   ): ImmutableList<ITokenReducerCreator> {
     val classes = experimentFlags.onDemandReducerClasses
     if (classes.isNullOrEmpty()) {
@@ -395,7 +395,7 @@ abstract class AbstractProgramReductionDriver(
     reducer: AbstractTokenReducer,
   ) {
     simplifySparTree()
-    val reducerName = reducer.redcucerAnnotation.shortName()
+    val reducerName = reducer.redcucerAnnotation.shortName
     if (cmd.cacheControlFlags.enablePassCache && reducer.redcucerAnnotation.deterministic &&
       updatePassLevelCache(reducer.redcucerAnnotation) == PassLevelCacheResult.EXISTING_ALREADY
     ) {
@@ -523,7 +523,7 @@ abstract class AbstractProgramReductionDriver(
       cmd.algorithmControlFlags.getReductionAlgorithmName(),
     )
     logger.ktInfo {
-      "Reduction algorithm is ${algorithmMeta.shortName()}"
+      "Reduction algorithm is ${algorithmMeta.shortName}"
     }
     return algorithmMeta
   }
@@ -675,7 +675,8 @@ abstract class AbstractProgramReductionDriver(
           cmd.cacheControlFlags.queryCaching,
           defaultProgramFormat,
         ),
-        useRealDeltaDebugger = cmd.algorithmControlFlags.useRealDeltaDebugger,
+        defaultDeltaDebuggerTypeForKleene =
+        cmd.algorithmControlFlags.defaultDeltaDebuggerTypeForKleene,
         numOfReductionThreads = cmd.reductionControlFlags.getNumOfThreads(),
         parserFacade = parserFacade,
         persesNodeReducerConfig = ReductionConfiguration.PersesNodeReducerConfiguration(

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,22 +17,22 @@
 package org.perses.antlr.reducer
 
 import com.beust.jcommander.Parameter
+import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import org.perses.util.cmd.AbstractCommandOptions
-import org.perses.util.cmd.ICommandLineFlags
 import java.nio.file.Files
 import java.nio.file.Path
 
 class CommandOptions : AbstractCommandOptions() {
   @JvmField
-  val compulsoryFlags = registerFlags(CompulsoryFlags())
+  val compulsoryFlags = registerFlags(CompulsoryFlagGroup())
 
   @JvmField
-  val resultOutputFlags = registerFlags(ResultOutputFlags())
+  val resultOutputFlags = registerFlags(ResultOutputFlagGroup())
 
   @JvmField
-  val reductionControlFlags = registerFlags(ReductionControlFlags())
+  val reductionControlFlags = registerFlags(ReductionControlFlagGroup())
 
-  class CompulsoryFlags : ICommandLineFlags {
+  class CompulsoryFlagGroup : AbstractCommandLineFlagGroup("Compulsory") {
 
     @JvmField
     @Parameter(
@@ -90,7 +90,7 @@ class CommandOptions : AbstractCommandOptions() {
     }
   }
 
-  class ResultOutputFlags : ICommandLineFlags {
+  class ResultOutputFlagGroup : AbstractCommandLineFlagGroup(groupName = "Output") {
 
     @Parameter(
       names = ["--output-dir"],
@@ -102,7 +102,9 @@ class CommandOptions : AbstractCommandOptions() {
     override fun validate() = Unit
   }
 
-  class ReductionControlFlags : ICommandLineFlags {
+  class ReductionControlFlagGroup : AbstractCommandLineFlagGroup(
+    groupName = "Reduction Algorithm Control",
+  ) {
 
     @Parameter(
       names = ["--threads"],

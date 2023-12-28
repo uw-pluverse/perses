@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -346,7 +346,7 @@ object Util {
   }
 
   @JvmStatic
-  fun <T> visitDifference(superList: List<T>, subList: List<T>, visitor: (T) -> Unit) {
+  inline fun <T> visitDifference(superList: List<T>, subList: List<T>, visitor: (T) -> Unit) {
     lazyAssert { countDistinctObjects(superList) == superList.size }
     lazyAssert { countDistinctObjects(subList) == subList.size }
     var subIndex = 0

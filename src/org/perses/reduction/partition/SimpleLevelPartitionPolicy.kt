@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,14 +17,16 @@
 package org.perses.reduction.partition
 
 import com.google.common.collect.ImmutableList
+import org.perses.delta.xfs.Partition
 import org.perses.reduction.ReductionLevel
+import org.perses.spartree.AbstractSparTreeNode
 
 /** The simplest partitioning algorithm.  */
 class SimpleLevelPartitionPolicy : AbstractLevelPartitionPolicy() {
   override fun partition(
     region: ReductionLevel,
     maxSizeOfPartition: Int,
-  ): ImmutableList<Partition> {
+  ): ImmutableList<Partition<AbstractSparTreeNode>> {
     check(maxSizeOfPartition > 0) {
       "max number of nodes in per partition should be positive:$maxSizeOfPartition"
     }
@@ -32,16 +34,16 @@ class SimpleLevelPartitionPolicy : AbstractLevelPartitionPolicy() {
     if (nodeCount == 0) {
       return ImmutableList.of()
     }
-    val builder = ImmutableList.builder<Partition?>()
-    var partition = Partition.Builder(maxSizeOfPartition)
+    val builder = ImmutableList.builder<Partition<AbstractSparTreeNode>>()
+    var partition = Partition.Builder<AbstractSparTreeNode>(maxSizeOfPartition)
     for (i in nodeCount - 1 downTo 0) {
-      if (partition.size() == maxSizeOfPartition) {
+      if (partition.size == maxSizeOfPartition) {
         builder.add(partition.build())
         partition = Partition.Builder(maxSizeOfPartition)
       }
       partition.addNode(region.getNode(i))
     }
-    if (partition.size() > 0) {
+    if (partition.size > 0) {
       builder.add(partition.build())
     }
     return builder.build()

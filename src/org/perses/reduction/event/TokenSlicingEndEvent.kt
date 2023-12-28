@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -26,7 +26,7 @@ class TokenSlicingEndEvent internal constructor(
   val iteration = startEvent.iteration
 
   val reducerName: String by lazy {
-    startEvent.fixpointIterationStartEvent.reducerClass.shortName()
+    startEvent.fixpointIterationStartEvent.reducerClass.shortName
   }
 
   override fun initialProgramSize(): Int {

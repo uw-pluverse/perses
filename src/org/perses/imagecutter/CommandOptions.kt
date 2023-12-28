@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,10 +16,10 @@
  */
 package org.perses.imagecutter
 
-import org.perses.cmd.InputFlags
+import org.perses.cmd.InputFlagGroup
 import org.perses.util.cmd.AbstractCommandOptions
 
 class CommandOptions : AbstractCommandOptions() {
 
-  val inputFlags = registerFlags(InputFlags())
+  val inputFlags = registerFlags(InputFlagGroup())
 }

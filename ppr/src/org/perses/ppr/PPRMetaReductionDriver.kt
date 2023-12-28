@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,6 +19,7 @@ package org.perses.ppr
 import com.google.common.flogger.FluentLogger
 import org.antlr.v4.runtime.Token
 import org.perses.TokenCounterMain
+import org.perses.delta.EnumDeltaDebuggerType
 import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.AbstractParserFacadeFactory
 import org.perses.ppr.diff.PPRDiffUtils
@@ -161,8 +162,8 @@ class PPRMetaReductionDriver private constructor(
         "false",
         "--fixpoint",
         "false",
-        "--use-real-ddmin",
-        "true",
+        "--default-delta-debugger-for-kleene",
+        EnumDeltaDebuggerType.PERSES_VARIANT_OF_PRISTINE.name,
         "--call-formatter",
         cmd.outputRefiningFlags.callFormatter.toString(),
       )

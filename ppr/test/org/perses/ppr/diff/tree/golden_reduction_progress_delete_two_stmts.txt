@@ -4,7 +4,7 @@ The initial program size is 23
 ------------------------------------------------------------
 
 
-=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+=Fixpoint iteration 1. Reducer: customized_tree_diff_node_reducer
 
 The spar-tree is the following.
 translationUnit {id=1}

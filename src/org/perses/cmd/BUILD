@@ -5,9 +5,9 @@ package(default_visibility = [
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 kt_jvm_library(
-    name = "LanguageControlFlags",
+    name = "LanguageControlFlagGroup",
     srcs = [
-        "LanguageControlFlags.kt",
+        "LanguageControlFlagGroup.kt",
     ],
     deps = [
         "//src/org/perses/util/cmd",
@@ -17,20 +17,21 @@ kt_jvm_library(
 kt_jvm_library(
     name = "reduction_flags",
     srcs = [
-        "CacheControlFlags.kt",
-        "ExperimentFlags.kt",
-        "InputFlags.kt",
-        "OutputFlags.kt",
-        "OutputRefiningFlags.kt",
-        "ProfilingFlags.kt",
-        "ReductionAlgorithmControlFlags.kt",
-        "ReductionControlFlags.kt",
-        "VulcanFlags.kt",
+        "CacheControlFlagGroup.kt",
+        "ExperimentFlagGroup.kt",
+        "InputFlagGroup.kt",
+        "OutputFlagGroup.kt",
+        "OutputRefiningFlagGroup.kt",
+        "ProfilingFlagGroup.kt",
+        "ReductionAlgorithmControlFlagGroup.kt",
+        "ReductionControlFlagGroup.kt",
+        "VulcanFlagGroup.kt",
     ],
     exports = [
-        ":LanguageControlFlags",
+        ":LanguageControlFlagGroup",
     ],
     deps = [
+        "//src/org/perses/delta:EnumDeltaDebuggerType",
         "//src/org/perses/program:enum_format_control",
         "//src/org/perses/reduction/cache:enum_query_caching_control",
         "//src/org/perses/reduction/cache:test_execution_cache_type",

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -79,26 +79,16 @@ abstract class AbstractConcurrentTokenSlicer(
   abstract class AbstractTokenSlicerAnnotation(
     val namePrefix: String,
     val granularity: Int,
-  ) : ReducerAnnotation() {
+    description: String,
+  ) : ReducerAnnotation(
+    shortName = "$namePrefix@$granularity",
+    description = description,
+    deterministic = true,
+    reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+  ) {
 
     init {
       require(granularity > 0)
-    }
-
-    override val deterministic: Boolean
-      get() = true
-
-    override val reductionResultSizeTrend: ReductionResultSizeTrend
-      get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
-
-    private val name = "$namePrefix@$granularity"
-
-    final override fun shortName(): String {
-      return name
-    }
-
-    override fun description(): String {
-      return ""
     }
 
     final override fun hashCode(): Int {
@@ -116,10 +106,7 @@ abstract class AbstractConcurrentTokenSlicer(
       if (namePrefix != o.namePrefix) {
         return false
       }
-      if (granularity != o.granularity) {
-        return false
-      }
-      return true
+      return granularity == o.granularity
     }
   }
 }

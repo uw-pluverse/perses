@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -74,26 +74,18 @@ class LocalExhaustivePatternReducer internal constructor(
   }
 
   companion object {
-    val META = object : ReducerAnnotation() {
+    internal const val NAME_PREFIX = "token_pattern_reducer"
 
-      override fun shortName(): String {
-        return NAME_PREFIX
-      }
-
-      override val deterministic: Boolean
-        get() = true
-
-      override val reductionResultSizeTrend: ReductionResultSizeTrend
-        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
-
+    val META = object : ReducerAnnotation(
+      shortName = NAME_PREFIX,
+      description = "traverse all the sets that contain a fixed number (pattern size) of " +
+        "consecutive nodes in each level of the parse tree, " +
+        "and try all possible patterns of deletions.",
+      deterministic = true,
+      reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+    ) {
       override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
         return ImmutableList.of(LocalExhaustivePatternReducer(reducerContext))
-      }
-
-      override fun description(): String {
-        return "traverse all the sets that contain a fixed number (pattern size) of " +
-          "consecutive nodes in each level of the parse tree, " +
-          "and try all possible patterns of deletions."
       }
     }
 
@@ -134,8 +126,6 @@ class LocalExhaustivePatternReducer internal constructor(
     fun getDeletionPatterns(patternLength: Int): NumOfDeletesToPatterns {
       return requireNotNull(PATTERNS[patternLength])
     }
-
-    internal const val NAME_PREFIX = "token_pattern_reducer"
 
     private val logger = FluentLogger.forEnclosingClass()
   }

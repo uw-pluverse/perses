@@ -66,7 +66,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__mod_body_2]dd@1
 ------------------------------------------------------------
 
 
@@ -153,7 +153,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@3
+// edit action set type: [kleene_star:kleene_star__block_with_inner_attrs_2]dd@3
     fn main() {
     }
 ------------------------------------------------------------
@@ -161,7 +161,7 @@ The current best program is the following
 
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__block_with_inner_attrs_2]dd@1
     fn main() {
                                   println!("ingress");
     println!("hello_world");
@@ -190,7 +190,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__block_with_inner_attrs_2]dd@1
     fn main() {
                                   println!("ingress");
     }
@@ -199,7 +199,7 @@ The current best program is the following
 
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__block_with_inner_attrs_2]dd@1
     fn main() {
     println!("hello_world");
     }
@@ -371,7 +371,7 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star]dd@1
+// edit action set type: [kleene_star:kleene_star__inner_attr_1]dd@1
     fn main() {
     println!(             );
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -30,7 +30,7 @@ class PristineDeltaDebuggerTest {
 
   val input = ImmutableList.of("a", "b", "c", "d", "e")
 
-  val dummyHandler = { _: ImmutableList<String>, _: String ->
+  val dummyHandler = { _: ImmutableList<AbstractDeltaDebugger.ElementWrapper<String>>, _: String ->
   }
 
   @Test
@@ -46,13 +46,11 @@ class PristineDeltaDebuggerTest {
         // n = 2
         "abc", "de", "de", "abc",
         // n = 4
-        "ab", "c", "d", "e", "cde", "abde",
-        // n = 3
-        "ab", "d", "e", "de", "abe",
+        "ab", "c", "d", "e", "cde", "abde", "abe", "ab",
         // n = 2
         "ab", "e", "e", "ab",
         // n = 3
-        "a", "b", "e", "be", "ae",
+        "a", "b", "e", "be", "ae", "a",
         // n = 2
         "a", "e", "e", "a",
       ).inOrder()
@@ -66,28 +64,29 @@ class PristineDeltaDebuggerTest {
   ): ImmutableList<String>? {
     val testHistory = ArrayList<String>()
 
-    val propertyTest = object : IPropertyTester<String, String> {
-      override fun testProperty(
-        currentBest: ImmutableList<String>,
-        candidate: ImmutableList<String>,
-      ): AbstractPropertyTestResultWithPayload<String> {
+    val propertyTest =
+      IPropertyTester<String, String> { configuration ->
+        val candidate = configuration.candidate
         testHistory.add(candidate.joinToString(separator = ""))
-        return if (candidate.containsAll(property)) {
+        if (candidate.containsAll(property)) {
           PropertyTestResultWithPayload(INTERESTING_RESULT, "payload")
         } else {
           PropertyTestResultWithPayload(NON_INTERESTING_RESULT, "payload")
         }
       }
-    }
 
     val debugger = PristineDeltaDebugger<String, String>(
-      input,
-      propertyTest,
-      dummyHandler,
+      AbstractDeltaDebugger.Arguments(
+        needToTestEmpty = true,
+        input,
+        propertyTest,
+        dummyHandler,
+        descriptionPrefix = "",
+      ),
       enableCache,
     )
-    debugger.reduce()
-    assertThat(debugger.best).isEqualTo(expected)
+    val result = debugger.reduce()
+    assertThat(result).isEqualTo(expected)
     return ImmutableList.copyOf(testHistory)
   }
 

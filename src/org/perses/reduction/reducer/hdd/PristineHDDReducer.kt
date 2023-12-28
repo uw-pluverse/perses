@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,6 +17,7 @@
 package org.perses.reduction.reducer.hdd
 
 import com.google.common.collect.ImmutableList
+import org.perses.delta.PristineDeltaDebugger
 import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
@@ -38,12 +39,15 @@ class PristineHDDReducer(
     SparTreeSimplifier.simplify(tree)
     var currentLevel = ImmutableList.of(tree.root)
     while (currentLevel.isNotEmpty()) {
-      val debugger = createPristineDeltaDebugger(
-        input = currentLevel,
-        tree = tree,
+      val debugger = PristineDeltaDebugger(
+        createDeltaArguments(
+          needToTestEmpty = true,
+          tree,
+          actionsDescription = "[pristine-hdd]",
+          input = currentLevel,
+        ),
       )
-      debugger.reduce()
-      val reducedCurrentLevel = debugger.best
+      val reducedCurrentLevel = debugger.reduce()
       currentLevel = moveToNextLevel(reducedCurrentLevel)
     }
   }
@@ -53,18 +57,12 @@ class PristineHDDReducer(
     const val NAME = "pristine_hdd"
 
     @JvmStatic
-    val META = object : ReducerAnnotation() {
-
-      override val deterministic: Boolean
-        get() = true
-
-      override val reductionResultSizeTrend: ReductionResultSizeTrend
-        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
-
-      override fun shortName() = NAME
-
-      override fun description() = ""
-
+    val META = object : ReducerAnnotation(
+      shortName = NAME,
+      description = "",
+      deterministic = true,
+      reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+    ) {
       override fun create(reducerContext: ReducerContext) = ImmutableList.of<AbstractTokenReducer>(
         PristineHDDReducer(
           reducerContext,
@@ -88,6 +86,7 @@ class PristineHDDReducer(
               } else {
                 continue
               }
+
             1 -> candidates.addFirst(candidate.getChild(0))
             else -> builder.add(candidate)
           }

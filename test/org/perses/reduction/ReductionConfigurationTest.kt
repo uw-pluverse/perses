@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,6 +24,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.antlr.atn.LexerAtnWrapper
+import org.perses.delta.EnumDeltaDebuggerType
 import org.perses.grammar.SingleParserFacadeFactory
 import org.perses.grammar.c.LanguageC
 import org.perses.grammar.c.PnfCLexer
@@ -79,7 +80,7 @@ class ReductionConfigurationTest {
       progressDumpFile = null,
       fixpointReduction = true,
       enableTestScriptExecutionCaching = true,
-      useRealDeltaDebugger = false,
+      defaultDeltaDebuggerTypeForKleene = EnumDeltaDebuggerType.DFS,
       numOfReductionThreads = numOfReductionThreads,
       parserFacade = parserFacade,
       persesNodeReducerConfig = ReductionConfiguration.PersesNodeReducerConfiguration(

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,6 +21,7 @@ import com.google.common.collect.ImmutableCollection
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableSet
+import com.google.common.flogger.FluentLogger
 import org.perses.reduction.reducer.PersesNodeBfsReducer
 import org.perses.reduction.reducer.PersesNodeDfsReducer
 import org.perses.reduction.reducer.PersesNodePrioritizedBfsReducer
@@ -36,6 +37,9 @@ import org.perses.reduction.reducer.token.DeltaDebuggingReducer
 import org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer
 import org.perses.reduction.reducer.token.TokenSlicer
 import org.perses.util.Util.lazyAssert
+import org.perses.util.ktInfo
+import org.perses.util.ktWarning
+import kotlin.reflect.full.createInstance
 
 /** Factory to create various reducers.  */
 object ReducerFactory {
@@ -64,7 +68,7 @@ object ReducerFactory {
     .stream()
     .collect(
       ImmutableMap.toImmutableMap(
-        { obj: ReducerAnnotation -> obj.shortName() },
+        { obj: ReducerAnnotation -> obj.shortName },
         Functions.identity(),
       ),
     )
@@ -83,7 +87,20 @@ object ReducerFactory {
   }
 
   @JvmStatic
-  fun isValidReducerName(shortName: String) = REDUCTION_ALGs.containsKey(shortName)
+  fun isValidReducerName(shortName: String): Boolean {
+    val result = REDUCTION_ALGs.containsKey(shortName)
+    if (result) {
+      return true
+    }
+    logger.ktInfo { "Try to use the algorithm name as a class name" }
+    try {
+      Class.forName(shortName)
+      return true
+    } catch (e: Throwable) {
+      logger.ktInfo { "Unable to load the class $shortName" }
+      return false
+    }
+  }
 
   @JvmStatic
   val allReducerAlgorithms: ImmutableCollection<ReducerAnnotation>
@@ -91,7 +108,19 @@ object ReducerFactory {
 
   @JvmStatic
   fun getReductionAlgorithm(reducerShortName: String): ReducerAnnotation {
-    val annotation = getAnnotationWithName(reducerShortName)
+    var annotation = getAnnotationWithName(reducerShortName)
+    if (annotation == null) {
+      logger.ktWarning {
+        "No registered reducer annotation with the name $reducerShortName." +
+          "Retrying to load the reducer by using the given name as a class name"
+      }
+      try {
+        val klass = Class.forName(reducerShortName)
+        annotation = klass.kotlin.createInstance() as ReducerAnnotation
+      } catch (e: Throwable) {
+        logger.ktWarning { "Fail to load the class $reducerShortName. ${e.message}" }
+      }
+    }
     requireNotNull(annotation) {
       "Cannot find annotation for the name $reducerShortName"
     }
@@ -102,18 +131,20 @@ object ReducerFactory {
   fun printAllReductionAlgorithms(): String {
     val builder = StringBuilder()
     val algorithms: ImmutableList<ReducerAnnotation> = REDUCTION_ALGs.values.stream()
-      .sorted(Comparator.comparing { obj: ReducerAnnotation -> obj.shortName() })
+      .sorted(Comparator.comparing { obj: ReducerAnnotation -> obj.shortName })
       .collect(ImmutableList.toImmutableList())
     var i = 0
     val size = algorithms.size
     while (i < size) {
       val algorithm = algorithms[i]
-      builder.append(i + 1).append(". ").append(algorithm.shortName()).append(":\n")
+      builder.append(i + 1).append(". ").append(algorithm.shortName).append(":\n")
       builder.append("    ")
-      val description = algorithm.description().replace('\n', ' ')
+      val description = algorithm.description.replace('\n', ' ')
       builder.append(description).append('\n')
       ++i
     }
     return builder.toString()
   }
+
+  val logger = FluentLogger.forEnclosingClass()
 }

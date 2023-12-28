@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -14,26 +14,13 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.util.cmd
+package org.perses.delta
 
-import com.beust.jcommander.Parameter
-import org.perses.version.VersionHelper
-import java.io.PrintStream
-
-class VersionFlags : ICommandLineFlags {
-
-  @JvmField
-  @Parameter(
-    names = ["--version"],
-    description = "print the version",
-    help = true,
-    order = CommonCmdOptionGroupOrder.HELP + 1,
-  )
-  var version = false
-
-  override fun validate() = Unit
-
-  fun printVersionInfo(programName: String, stream: PrintStream) {
-    VersionHelper.printVersionInfo(programName, stream)
-  }
+enum class EnumDeltaDebuggerType {
+  PRISTINE,
+  PERSES_VARIANT_OF_PRISTINE,
+  DFS,
+  BFS,
+  CDD,
+  PROBDD,
 }

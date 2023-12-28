@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,17 +16,28 @@
  */
 package org.perses.util.cmd
 
+import com.beust.jcommander.DefaultUsageFormatter
 import com.beust.jcommander.JCommander
 import com.beust.jcommander.Parameter
+import com.beust.jcommander.ParameterDescription
 import com.google.common.collect.ImmutableMap
 import com.google.common.flogger.FluentLogger
 import org.perses.util.ktSevere
 import org.perses.util.toImmutableMap
+import java.lang.StringBuilder
+import java.util.IdentityHashMap
 
 abstract class AbstractCommandOptions {
 
-  class CmdUsagePrinter(private val jCommander: JCommander) {
-    fun print() = jCommander.usage()
+  inner class CmdUsagePrinter(private val jCommander: JCommander) {
+    fun printUsage(): String {
+      val formatter = PersesCmdUsageFormatter(jCommander)
+      val stringBuilder = java.lang.StringBuilder()
+      formatter.usage(stringBuilder)
+      val message = stringBuilder.toString()
+      println(message)
+      return message
+    }
 
     fun getFlagNameValueMap(): ImmutableMap<String, String> {
       val result = ImmutableMap.builder<String, String>()
@@ -40,22 +51,71 @@ abstract class AbstractCommandOptions {
     }
   }
 
+  private inner class PersesCmdUsageFormatter(jCommander: JCommander) :
+    DefaultUsageFormatter(jCommander) {
+    override fun appendAllParametersDetails(
+      out: StringBuilder,
+      indentCount: Int,
+      indent: String,
+      sortedParameters: List<ParameterDescription>,
+    ) {
+      val identityMap =
+        IdentityHashMap<AbstractCommandLineFlagGroup, MutableList<ParameterDescription>>()
+      val ownerObject = this@AbstractCommandOptions
+      val ownerFlags = mutableListOf<ParameterDescription>()
+      sortedParameters.forEach { flag ->
+        val flagGroup = flag.`object`
+        if (flagGroup === ownerObject) {
+          ownerFlags.add(flag)
+        } else {
+          check(flagGroup is AbstractCommandLineFlagGroup) { "Flag group: ${flagGroup::class}" }
+          val groupFlagList = identityMap.computeIfAbsent(flagGroup) {
+            mutableListOf()
+          }
+          groupFlagList.add(flag)
+        }
+      }
+
+      super.appendAllParametersDetails(out, indentCount, indent, ownerFlags)
+      out.append("\n")
+
+      val sortedGroupedFlags = identityMap.entries
+        .sortedBy { entry ->
+          allFlags.withIndex().single { it.value === entry.key }.index
+        }.toList()
+
+      var isFirst = true
+      sortedGroupedFlags.forEach { (group, flags) ->
+        if (flags.isEmpty()) {
+          return@forEach
+        }
+        if (isFirst) {
+          isFirst = false
+        } else {
+          out.append("\n")
+        }
+        out.append("[${group.groupName}]")
+        super.appendAllParametersDetails(out, indentCount, indent, flags)
+      }
+    }
+  }
+
   @JvmField
   @Parameter(
     names = ["--help", "-h"],
     description = "print help message",
     help = true,
-    order = CommonCmdOptionGroupOrder.HELP,
+    order = 0,
   )
   var help = false
 
-  private val allFlags = LinkedHashSet<ICommandLineFlags>()
+  private val allFlags = mutableListOf<AbstractCommandLineFlagGroup>()
 
   @JvmField
-  val verbosityFlags = registerFlags(VerbosityFlags())
+  val verbosityFlags = registerFlags(VerbosityFlagGroup())
 
   @JvmField
-  val versionFlags = registerFlags(VersionFlags())
+  val versionFlags = registerFlags(VersionFlagGroup())
 
   fun validate() {
     allFlags.forEach { it.validate() }
@@ -64,7 +124,7 @@ abstract class AbstractCommandOptions {
 
   protected open fun validateExtra() = Unit
 
-  protected fun <T : ICommandLineFlags> registerFlags(flags: T): T {
+  protected fun <T : AbstractCommandLineFlagGroup> registerFlags(flags: T): T {
     check(flags !in allFlags)
     allFlags.add(flags)
     return flags

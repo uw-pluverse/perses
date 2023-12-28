@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -27,27 +27,34 @@ import org.perses.antlr.reducer.codegen.GrammarMainStubFactory
 import org.perses.grammar.adhoc.LanguageAdhoc
 import org.perses.grammar.adhoc.ParserFacadeStubFactory
 import java.lang.reflect.InvocationTargetException
+import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.zip.ZipFile
+import kotlin.io.path.deleteRecursively
 import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class CompilersTest : AbstractAntlrrdcTest() {
 
-  val workignDir = tempDir.resolve("empty_working_dir")
+  val workingDir: Path = tempDir.resolve(this::class.simpleName)
 
   @After
   fun teardown() {
     close()
   }
 
+  override fun close() {
+    super.close()
+    workingDir.deleteRecursively()
+  }
+
   @Test
-  fun test_jarfile_can_fail() {
+  fun testJarfileCanFail() {
     val compiler = AntlrCompiler.createFromFiles(
       parserFile = parserGrammarPath,
       lexerFile = lexerGrammarPath,
       startRuleName = "start",
-      workingDirectory = workignDir,
+      workingDirectory = workingDir,
       stubFactory = GrammarMainStubFactory(
         testPrograms = ImmutableList.of(valid1, valid2),
       ),
@@ -63,12 +70,12 @@ class CompilersTest : AbstractAntlrrdcTest() {
   }
 
   @Test
-  fun test_simple_grammar() {
+  fun testSimpleGrammar() {
     val compiler = AntlrCompiler.createFromFiles(
       parserFile = parserGrammarPath,
       lexerFile = lexerGrammarPath,
       startRuleName = "start",
-      workingDirectory = workignDir,
+      workingDirectory = workingDir,
       stubFactory = GrammarMainStubFactory(
         testPrograms = ImmutableList.of(valid1, valid2),
       ),
@@ -97,7 +104,7 @@ class CompilersTest : AbstractAntlrrdcTest() {
   }
 
   @Test
-  fun test_solidity_grammar() {
+  fun testSolidityGrammar() {
     val solidityProgramExample = tempDir.resolve("solidity_hello_world.sol").apply {
       this.writeText(
         """
@@ -113,7 +120,7 @@ class CompilersTest : AbstractAntlrrdcTest() {
       parserFile = Paths.get("src/org/perses/grammar/solidity/Solidity.g4"),
       lexerFile = Paths.get("src/org/perses/grammar/solidity/SolidityLexer.g4"),
       startRuleName = "sourceUnit",
-      workingDirectory = workignDir,
+      workingDirectory = workingDir,
       stubFactory = GrammarMainStubFactory(
         testPrograms = ImmutableList.of(solidityProgramExample),
       ),
@@ -126,12 +133,12 @@ class CompilersTest : AbstractAntlrrdcTest() {
   }
 
   @Test
-  fun test_null_lexer_file() {
+  fun testNullLexerFile() {
     val compiler = AntlrCompiler.createFromFiles(
       parserFile = combinedGrammarPath,
       lexerFile = null,
       startRuleName = "start",
-      workingDirectory = workignDir,
+      workingDirectory = workingDir,
       stubFactory = GrammarMainStubFactory(
         testPrograms = ImmutableList.of(valid1, valid2),
       ),
@@ -145,12 +152,12 @@ class CompilersTest : AbstractAntlrrdcTest() {
   }
 
   @Test
-  fun test_generate_parser_facade_combined() {
+  fun testGenerateParserFacadeCombined() {
     val compiler = AntlrCompiler.createFromFiles(
       parserFile = combinedGrammarPath,
       lexerFile = null,
       startRuleName = "start",
-      workingDirectory = workignDir,
+      workingDirectory = workingDir,
       stubFactory = ParserFacadeStubFactory(
         grammarName = "TestCombined",
         parserFile = combinedGrammarPath,
@@ -181,12 +188,12 @@ class CompilersTest : AbstractAntlrrdcTest() {
   }
 
   @Test
-  fun test_generate_parser_facade_seperate() {
+  fun testGenerateParserFacadeSeperate() {
     val compiler = AntlrCompiler.createFromFiles(
       parserFile = parserGrammarPath,
       lexerFile = lexerGrammarPath,
       startRuleName = "start",
-      workingDirectory = workignDir,
+      workingDirectory = workingDir,
       stubFactory = ParserFacadeStubFactory(
         grammarName = "Test",
         parserFile = combinedGrammarPath,

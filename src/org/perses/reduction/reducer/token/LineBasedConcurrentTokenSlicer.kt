@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -110,13 +110,12 @@ class LineBasedConcurrentTokenSlicer(
       .map { LineBasedConcurrentTokenSlicerAnnotation(granularity = it) }
       .toImmutableList()
 
-    val COMPOSITE_REDUCER = object : ReducerAnnotation() {
-
-      override val deterministic: Boolean
-        get() = true
-
-      override val reductionResultSizeTrend: ReductionResultSizeTrend
-        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
+    val COMPOSITE_REDUCER = object : ReducerAnnotation(
+      shortName = NAME_PREFIX,
+      description = "",
+      deterministic = true,
+      reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+    ) {
 
       override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
         return REDUCER_ANNOTATIONS
@@ -124,19 +123,15 @@ class LineBasedConcurrentTokenSlicer(
           .flatMap { it.create(reducerContext) }
           .toImmutableList()
       }
-
-      override fun shortName(): String {
-        return NAME_PREFIX
-      }
-
-      override fun description(): String {
-        return ""
-      }
     }
   }
 
   class LineBasedConcurrentTokenSlicerAnnotation internal constructor(granularity: Int) :
-    AbstractTokenSlicerAnnotation(NAME_PREFIX, granularity) {
+    AbstractTokenSlicerAnnotation(
+      NAME_PREFIX,
+      granularity,
+      description = "line-based concurrent token slicer",
+    ) {
 
     override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
       return ImmutableList.of(LineBasedConcurrentTokenSlicer(reducerContext, this))

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,60 +17,31 @@
 package org.perses.reduction.reducer
 
 import com.google.common.collect.ImmutableList
+import org.perses.delta.EnumDeltaDebuggerType
 import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.reduction.partition.Partition
-import org.perses.spartree.AbstractSparTreeNode
-import org.perses.spartree.SparTree
-import org.perses.util.Util.lazyAssert
-import java.util.ArrayDeque
-import java.util.Queue
+import org.perses.reduction.reducer.PersesNodeReducer.IDeltaDebuggerStrategy.SimpleDeltaDebuggerStrategy
 
 /** Perses node reducer, with bfs delta debugging  */
-open class PersesNodeBfsReducer protected constructor(
-  reducerAnnotation: ReducerAnnotation,
-  reducerContext: ReducerContext,
-) : AbstractPersesNodeReducer(reducerAnnotation, reducerContext) {
+object PersesNodeBfsReducer {
+  const val NAME = "perses_node_with_bfs_delta"
 
-  private val deltaDebugger = BfsDeltaDebugger(
-    reducerContext.listenerManager,
-    reducerContext.nodeActionSetCache,
-  ) { testSparTreeEdit(it) }
-
-  override fun createReductionQueue(): Queue<AbstractSparTreeNode> {
-    return ArrayDeque(DEFAULT_INITIAL_QUEUE_CAPACITY)
-  }
-
-  override fun performDelta(
-    tree: SparTree,
-    actionsDescription: String,
-    vararg startPartitions: Partition,
+  @JvmField
+  val META: ReducerAnnotation = object : ReducerAnnotation(
+    shortName = NAME,
+    description = "",
+    deterministic = true,
+    reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    lazyAssert { startPartitions.isNotEmpty() }
-    deltaDebugger.reduce(tree, actionsDescription, *startPartitions)
-  }
-
-  companion object {
-    const val NAME = "perses_node_with_bfs_delta"
-
-    @JvmField
-    val META: ReducerAnnotation = object : ReducerAnnotation() {
-
-      override val deterministic: Boolean
-        get() = true
-
-      override val reductionResultSizeTrend: ReductionResultSizeTrend
-        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
-
-      override fun shortName() = NAME
-
-      override fun description() = ""
-
-      override fun create(reducerContext: ReducerContext) =
-        ImmutableList.of<AbstractTokenReducer>(
-          PersesNodeBfsReducer(this, reducerContext),
-        )
-    }
+    override fun create(reducerContext: ReducerContext) =
+      ImmutableList.of<AbstractTokenReducer>(
+        PersesNodeReducer(
+          reducerAnnotation = this,
+          reducerContext,
+          AbstractNodeReducer.IReductionQueueStrategy.FOR_REGULAR_QUEUE,
+          deltaDebuggerStrategy = SimpleDeltaDebuggerStrategy(EnumDeltaDebuggerType.BFS),
+        ),
+      )
   }
 }

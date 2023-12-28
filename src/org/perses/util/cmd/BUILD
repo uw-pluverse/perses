@@ -7,12 +7,11 @@ load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 kt_jvm_library(
     name = "cmd",
     srcs = [
+        "AbstractCommandLineFlagGroup.kt",
         "AbstractCommandOptions.kt",
         "AbstractMain.kt",
-        "CommonCmdOptionGroupOrder.kt",
-        "ICommandLineFlags.kt",
-        "VerbosityFlags.kt",
-        "VersionFlags.kt",
+        "VerbosityFlagGroup.kt",
+        "VersionFlagGroup.kt",
     ],
     deps = [
         "//:guava",

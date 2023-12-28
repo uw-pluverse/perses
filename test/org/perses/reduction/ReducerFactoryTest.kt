@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -67,7 +67,7 @@ class ReducerFactoryTest {
   @Test
   fun testGetAllReducerAlgorithms() {
     val names = allReducerAlgorithms.stream()
-      .map { obj: ReducerAnnotation -> obj.shortName() }
+      .map { obj: ReducerAnnotation -> obj.shortName }
       .collect(Collectors.toList())
     assertThat(names)
       .containsAtLeast(
@@ -83,23 +83,23 @@ class ReducerFactoryTest {
         ConcurrentStateBasedDeltaReducer.NAME,
       )
     assertThat(names).containsAtLeastElementsIn(
-      ConcurrentTokenSlicer.REDUCER_ANNOTATIONS.map { it.shortName() }.toList(),
+      ConcurrentTokenSlicer.REDUCER_ANNOTATIONS.map { it.shortName }.toList(),
     )
     assertThat(names).containsAtLeastElementsIn(
-      LineBasedConcurrentTokenSlicer.REDUCER_ANNOTATIONS.map { it.shortName() }.toList(),
+      LineBasedConcurrentTokenSlicer.REDUCER_ANNOTATIONS.map { it.shortName }.toList(),
     )
     assertThat(names).containsAtLeastElementsIn(
-      ConcurrentStateBasedTokenSlicer.REDUCER_ANNOTATIONS.map { it.shortName() }.toList(),
+      ConcurrentStateBasedTokenSlicer.REDUCER_ANNOTATIONS.map { it.shortName }.toList(),
     )
     assertThat(names).containsAtLeastElementsIn(
-      ConcurrentStateBasedLineSlicer.REDUCER_ANNOTATIONS.map { it.shortName() }.toList(),
+      ConcurrentStateBasedLineSlicer.REDUCER_ANNOTATIONS.map { it.shortName }.toList(),
     )
   }
 
   companion object {
     private fun testGetAnnotationWithName(name: String) {
       val annotation = getAnnotationWithName(name)!!
-      assertThat(annotation.shortName()).isEqualTo(name)
+      assertThat(annotation.shortName).isEqualTo(name)
     }
   }
 }

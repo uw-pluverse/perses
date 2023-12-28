@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -238,20 +238,12 @@ class RegularProgramReductionDriverTest {
 
   @Test
   fun testTokenSizeCheckWorks() {
-    val reducer = object : ReducerAnnotation() {
-      override val deterministic: Boolean
-        get() = true
-      override val reductionResultSizeTrend: ReductionResultSizeTrend
-        get() = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE
-
-      override fun shortName(): String {
-        return "fake"
-      }
-
-      override fun description(): String {
-        return "fake"
-      }
-
+    val reducer = object : ReducerAnnotation(
+      shortName = "fake",
+      description = "fake",
+      deterministic = true,
+      reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+    ) {
       override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
         TODO("Not yet implemented")
       }

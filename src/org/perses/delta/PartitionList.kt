@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,80 +17,58 @@
 package org.perses.delta
 
 import com.google.common.collect.ImmutableList
-import org.perses.util.Interval
 import org.perses.util.Util.lazyAssert
+import org.perses.util.toImmutableList
 
 class PartitionList<T>(
-  val input: ImmutableList<T>,
+  val partitions: ImmutableList<Partition<T>>,
 ) {
 
-  lateinit var partitions: ImmutableList<Partition<T>>
-    private set
+  val input: ImmutableList<T> by lazy {
+    partitions.asSequence().flatMap { it.elements.asSequence() }.toImmutableList()
+  }
 
-  private fun createPartitionForInterval(interval: Interval) = Partition(input, interval)
-
-  fun computeComplementFor(partitionToExclude: Partition<T>): ImmutableList<T> {
-    val result = ImmutableList.builder<T>()
+  fun computeComplementFor(partitionToExclude: Partition<T>): PartitionList<T> {
+    val result = ImmutableList.builder<Partition<T>>()
     var found = false
     for (partition in partitions) {
       if (partition === partitionToExclude) {
         found = true
         continue
       }
-      result.addAll(partition.elements)
+      result.add(partition)
     }
     check(found) { "The partition is not found in the partition list." }
-    return result.build()
+    return PartitionList(result.build())
+  }
+
+  fun isEquivalentTo(other: PartitionList<T>?): Boolean {
+    if (other == null) {
+      return false
+    }
+    // Do not consider the `input` property. We care about the partitions.
+    return partitions == other.partitions
   }
 
   data class Partition<T> internal constructor(
-    val input: ImmutableList<T>,
-    val interval: Interval,
-  ) {
+    val elements: ImmutableList<T>,
+  )
 
-    val elements = input.subList(interval.leftInclusive, interval.rightExclusive)
-  }
-
-  class Builder<T>(input: ImmutableList<T>) {
+  class Builder<T>(private val input: ImmutableList<T>) {
     private var used = false
-    private val list = PartitionList(input)
     private var intervalBuilder = ImmutableList.builder<Partition<T>>()
 
     fun createPartition(leftInclusive: Int, rightExclusive: Int): Builder<T> {
-      intervalBuilder.add(
-        list.createPartitionForInterval(
-          Interval(
-            leftInclusive,
-            rightExclusive,
-          ),
-        ),
-      )
+      intervalBuilder.add(Partition(input.subList(leftInclusive, rightExclusive)))
       return this
     }
 
     fun build(): PartitionList<T> {
       check(!used)
       used = true
-      val result = list
       val partitions = intervalBuilder.build()
-      result.partitions = partitions
-
-      lazyAssert(
-        {
-          partitions.zipWithNext().all { (prev, curr) ->
-            prev.interval.rightExclusive <= curr.interval.leftInclusive
-          }
-        },
-      ) { "invalid partition intervals. $partitions" }
-      require(
-        partitions.isEmpty() || partitions.last().interval.rightExclusive <= result.input.size,
-      )
-      require(partitions.isEmpty() || partitions.first().interval.leftInclusive >= 0)
-      lazyAssert {
-        partitions.asSequence().flatMap { it.elements }.distinct().count() ==
-          partitions.asSequence().flatMap { it.elements }.count()
-      }
-
+      val result = PartitionList(partitions)
+      lazyAssert { result.input == input }
       return result
     }
   }

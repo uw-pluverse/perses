@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -75,7 +75,7 @@ class LoggingListener : DefaultReductionListener() {
     if (!info.isEnabled) {
       return
     }
-    val builder = createStingBuilderWithPrefix(event.reducerClass.shortName(), event.iteration)
+    val builder = createStingBuilderWithPrefix(event.reducerClass.shortName, event.iteration)
     builder.append(": New fixpoint iteration started. #Tokens=").append(event.programSize)
     info.log(builder.toString())
   }
@@ -86,7 +86,7 @@ class LoggingListener : DefaultReductionListener() {
       return
     }
     val builder = createStingBuilderWithPrefix(
-      event.startEvent.reducerClass.shortName(),
+      event.startEvent.reducerClass.shortName,
       event.startEvent.iteration,
     )
     builder.append(": Fixpoint iteration finished, ")
@@ -102,7 +102,7 @@ class LoggingListener : DefaultReductionListener() {
       return
     }
     val builder = createStingBuilderWithPrefix(
-      event.currentFixpointIteration.reducerClass.shortName(),
+      event.currentFixpointIteration.reducerClass.shortName,
       event.currentFixpointIteration.iteration,
     )
     builder
@@ -118,7 +118,7 @@ class LoggingListener : DefaultReductionListener() {
       return
     }
     val builder = createStingBuilderWithPrefix(
-      event.startEvent.currentFixpointIteration.reducerClass.shortName(),
+      event.startEvent.currentFixpointIteration.reducerClass.shortName,
       event.iteration,
     )
     builder.append(":Reduction on level ").append(event.level)
@@ -141,7 +141,7 @@ class LoggingListener : DefaultReductionListener() {
         .levelReductionStartEvent
         .currentFixpointIteration
         .reducerClass
-        .shortName(),
+        .shortName,
       event.iteration,
     )
     builder.append(": Delta with granularity ").append(event.maxNumOfNodesPerPartition)
@@ -173,7 +173,7 @@ class LoggingListener : DefaultReductionListener() {
     }
     val builder = createStingBuilderWithPrefix(event.getReducerName(), event.iteration)
     builder
-      .append(": Delta node (#leaves=")
+      .append(": Reduce node (#leaves=")
       .append(event.node.leafTokenCount)
       .append(")")
     info.log(builder.toString())
@@ -186,11 +186,11 @@ class LoggingListener : DefaultReductionListener() {
     }
     val fixpointIteration = event.startEvent.currentFixpointIteration
     val builder = createStingBuilderWithPrefix(
-      fixpointIteration.reducerClass.shortName(),
+      fixpointIteration.reducerClass.shortName,
       fixpointIteration.iteration,
     )
     builder
-      .append(": Delta node (#leaves=")
+      .append(": Reduce node (#leaves=")
       .append(event.node.leafTokenCount)
       .append(")")
     builder.append(": queue=").append(event.remainingQueueSize)
@@ -208,7 +208,7 @@ class LoggingListener : DefaultReductionListener() {
     }
     val fixpointIteration = event.currentFixpointIteration
     val builder = createStingBuilderWithPrefix(
-      fixpointIteration.reducerClass.shortName(),
+      fixpointIteration.reducerClass.shortName,
       fixpointIteration.iteration,
     )
     builder.append(": Reduction is skipped. Cause:  ").append(event.message)
@@ -222,7 +222,7 @@ class LoggingListener : DefaultReductionListener() {
     }
     val fixpointIteration = event.currentFixpointIteration
     val builder = createStingBuilderWithPrefix(
-      fixpointIteration.reducerClass.shortName(),
+      fixpointIteration.reducerClass.shortName,
       fixpointIteration.iteration,
     )
     builder.append(": New minimal, ")

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -31,9 +31,13 @@ class CommandOptionTest {
     var value = ""
   }
 
+  val commander = cmd.parseArguments(
+    "program_name",
+    arrayOf("--a", "value", "--verbosity", "ERROR"),
+  )
+
   @Test
-  fun test() {
-    val commander = cmd.parseArguments("test", arrayOf("--a", "value", "--verbosity", "ERROR"))
+  fun testFlagNameValueMap() {
     val map = commander.getFlagNameValueMap().asSequence()
       .map { it.key to it.value }
       .toList()
@@ -45,6 +49,32 @@ class CommandOptionTest {
         "--verbosity" to "ERROR",
         "--version" to "false",
       ),
+    )
+  }
+
+  @Test
+  fun testPrinter() {
+    val message = commander.printUsage().trim()
+    assertThat(message).isEqualTo(
+      """
+      |Usage: program_name [options]
+      |  Options:
+      |    --help, -h
+      |      print help message
+      |    --a
+      |      Default: <empty string>
+      |
+      |[Verbosity]  Options:
+      |    --verbosity
+      |      verbosity of logging
+      |      Default: INFO
+      |    --list-verbosity-levels
+      |      list all verbosity levels
+      |
+      |[Version]  Options:
+      |    --version
+      |      print the version
+      """.trimMargin(),
     )
   }
 }

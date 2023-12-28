@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -67,12 +67,22 @@ fun <T, V> List<T>.transformToImmutableList(transform: (T) -> V): ImmutableList<
   }.build()
 }
 
+fun <T> List<T>.filterToImmutableList(predicateForDeletion: (T) -> Boolean): ImmutableList<T> {
+  return asSequence().filter { !predicateForDeletion(it) }.toImmutableList()
+}
+
 fun <T, V> Sequence<T>.transformToImmutableList(transform: (T) -> V): ImmutableList<V> {
   return fold(ImmutableList.builder<V>()) { builder, e ->
     builder.add(transform(e))
     builder
   }.build()
 }
+
+fun <T, V> Iterable<T>.transformToImmutableList(
+  transform: (T) -> V,
+) = asSequence().transformToImmutableList(
+  transform,
+)
 
 fun <T> ImmutableList<T>.excludesRegion(
   leftIndexInclusive: Int,
@@ -99,6 +109,29 @@ fun <T> ImmutableList<T>.excludesRegion(
       "${it.size}, $expectedSize"
     }
   }
+}
+
+inline fun <T, R : Comparable<R>> Iterable<T>.isSortedAscendinglyBy(
+  crossinline selector: (T) -> R?,
+): Boolean {
+  val iterator = iterator()
+  if (!iterator.hasNext()) {
+    return true
+  }
+  val comparator = compareBy(selector)
+  var prev = iterator.next()
+  while (iterator.hasNext()) {
+    val current = iterator.next()
+    if (comparator.compare(prev, current) > 0) {
+      return false
+    }
+    prev = current
+  }
+  return true
+}
+
+fun <T : Comparable<T>> Iterable<T>.isSortedAscendingly(): Boolean {
+  return isSortedAscendinglyBy { it }
 }
 
 fun <T> Iterable<T>.toImmutableList(): ImmutableList<T> {

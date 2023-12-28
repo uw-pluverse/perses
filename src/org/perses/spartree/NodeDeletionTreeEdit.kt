@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -25,7 +25,7 @@ class NodeDeletionTreeEdit internal constructor(
 ) : AbstractSparTreeEdit<NodeDeletionAction>(actionSet, tree) {
 
   init {
-    require(!actionSet.isEmpty)
+    require(!actionSet.isEmpty) { "The passed-in action set is empty." }
   }
 
   override fun internalApplyToTree() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,11 +21,31 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.delta.PristineDeltaDebugger.Companion.countBasedPartition
 
 @RunWith(JUnit4::class)
 class PartitionTest {
 
   private val baseList: ImmutableList<Int> = ImmutableList.of(0, 1, 2, 3)
+
+  @Test
+  fun testEquivalence() {
+    run {
+      val list = countBasedPartition(baseList, numOfPartitions = 1)
+      val other = countBasedPartition(baseList, numOfPartitions = 2)
+      assertThat(list.isEquivalentTo(other)).isFalse()
+    }
+    run {
+      val list = countBasedPartition(baseList, numOfPartitions = 2)
+      val other = countBasedPartition(baseList, numOfPartitions = 2)
+      assertThat(list.isEquivalentTo(other)).isTrue()
+    }
+    run {
+      val list = countBasedPartition(ImmutableList.of(0, 1, 2, 3), numOfPartitions = 2)
+      val other = countBasedPartition(baseList, numOfPartitions = 2)
+      assertThat(list.isEquivalentTo(other)).isTrue()
+    }
+  }
 
   @Test
   fun testPartitionSize1() {
@@ -37,22 +57,22 @@ class PartitionTest {
     val partitionList = listBuilder.build()
     partitionList.partitions[0].let {
       assertThat(it.elements).containsExactly(0).inOrder()
-      assertThat(partitionList.computeComplementFor(it)).containsExactly(1, 2, 3).inOrder()
+      assertThat(partitionList.computeComplementFor(it).input).containsExactly(1, 2, 3).inOrder()
     }
 
     partitionList.partitions[1].let {
       assertThat(it.elements).containsExactly(1).inOrder()
-      assertThat(partitionList.computeComplementFor(it)).containsExactly(0, 2, 3).inOrder()
+      assertThat(partitionList.computeComplementFor(it).input).containsExactly(0, 2, 3).inOrder()
     }
 
     partitionList.partitions[2].let {
       assertThat(it.elements).containsExactly(2).inOrder()
-      assertThat(partitionList.computeComplementFor(it)).containsExactly(0, 1, 3).inOrder()
+      assertThat(partitionList.computeComplementFor(it).input).containsExactly(0, 1, 3).inOrder()
     }
 
     partitionList.partitions[3].let {
       assertThat(it.elements).containsExactly(3).inOrder()
-      assertThat(partitionList.computeComplementFor(it)).containsExactly(0, 1, 2).inOrder()
+      assertThat(partitionList.computeComplementFor(it).input).containsExactly(0, 1, 2).inOrder()
     }
   }
 
@@ -63,7 +83,7 @@ class PartitionTest {
     val list = listBuilder.build()
     list.partitions.single().let {
       assertThat(it.elements).containsExactly(0, 1, 2, 3).inOrder()
-      assertThat(list.computeComplementFor(it)).isEmpty()
+      assertThat(list.computeComplementFor(it).input).isEmpty()
     }
   }
 
@@ -78,7 +98,7 @@ class PartitionTest {
       .let { list ->
         list.partitions.first().let {
           assertThat(it.elements).containsExactly(0, 1).inOrder()
-          assertThat(list.computeComplementFor(it)).containsExactly(2, 3).inOrder()
+          assertThat(list.computeComplementFor(it).input).containsExactly(2, 3).inOrder()
         }
       }
 
@@ -89,7 +109,7 @@ class PartitionTest {
       .build().let { list ->
         list.partitions[1].let {
           assertThat(it.elements).containsExactly(1, 2).inOrder()
-          assertThat(list.computeComplementFor(it)).containsExactly(0, 3).inOrder()
+          assertThat(list.computeComplementFor(it).input).containsExactly(0, 3).inOrder()
         }
       }
 
@@ -99,7 +119,7 @@ class PartitionTest {
       .build().let { list ->
         list.partitions.last().let {
           assertThat(it.elements).containsExactly(2, 3).inOrder()
-          assertThat(list.computeComplementFor(it)).containsExactly(0, 1).inOrder()
+          assertThat(list.computeComplementFor(it).input).containsExactly(0, 1).inOrder()
         }
       }
   }

@@ -51,13 +51,13 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@0
+// edit action set type: [pristine-ddmin]dd@16
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@8
+// edit action set type: [pristine-ddmin]dd@8
     int main() {
       int a =
 ------------------------------------------------------------
@@ -65,7 +65,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@8
+// edit action set type: [pristine-ddmin]dd@8
     99;
       return a + 0;
     }
@@ -74,7 +74,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@8
+// edit action set type: [pristine-ddmin]dd@8
     99;
       return a + 0;
     }
@@ -83,7 +83,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@8
+// edit action set type: [pristine-ddmin]dd@8
     int main() {
       int a =
 ------------------------------------------------------------
@@ -91,14 +91,14 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@4
+// edit action set type: [pristine-ddmin]dd@12
     int main()
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@4
+// edit action set type: [pristine-ddmin]dd@12
     {
       int a =
 ------------------------------------------------------------
@@ -106,7 +106,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@4
+// edit action set type: [pristine-ddmin]dd@12
     99;
       return a
 ------------------------------------------------------------
@@ -114,7 +114,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@4
+// edit action set type: [pristine-ddmin]dd@12
     + 0;
     }
 ------------------------------------------------------------
@@ -122,7 +122,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@12
+// edit action set type: [pristine-ddmin]dd@4
     {
       int a = 99;
       return a + 0;
@@ -132,7 +132,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@12
+// edit action set type: [pristine-ddmin]dd@4
     int main()
               99;
       return a + 0;
@@ -142,7 +142,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@12
+// edit action set type: [pristine-ddmin]dd@4
     int main() {
       int a =
                + 0;
@@ -152,7 +152,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@12
+// edit action set type: [pristine-ddmin]dd@4
     int main() {
       int a = 99;
       return a
@@ -161,21 +161,21 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@2
+// edit action set type: [pristine-ddmin]dd@14
     int main
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@2
+// edit action set type: [pristine-ddmin]dd@14
     ()
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@2
+// edit action set type: [pristine-ddmin]dd@14
     {
       int
 ------------------------------------------------------------
@@ -183,35 +183,35 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@2
+// edit action set type: [pristine-ddmin]dd@14
     a =
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@2
+// edit action set type: [pristine-ddmin]dd@14
     99;
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@2
+// edit action set type: [pristine-ddmin]dd@14
     return a
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@2
+// edit action set type: [pristine-ddmin]dd@14
     + 0
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@2
+// edit action set type: [pristine-ddmin]dd@14
     ;
     }
 ------------------------------------------------------------
@@ -219,7 +219,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@14
+// edit action set type: [pristine-ddmin]dd@2
     () {
       int a = 99;
       return a + 0;
@@ -229,7 +229,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@14
+// edit action set type: [pristine-ddmin]dd@2
     int main   {
       int a = 99;
       return a + 0;
@@ -239,7 +239,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@14
+// edit action set type: [pristine-ddmin]dd@2
     int main()
           a = 99;
       return a + 0;
@@ -249,7 +249,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@14
+// edit action set type: [pristine-ddmin]dd@2
     int main() {
       int     99;
       return a + 0;
@@ -259,7 +259,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@14
+// edit action set type: [pristine-ddmin]dd@2
     int main() {
       int a =
       return a + 0;
@@ -269,7 +269,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@14
+// edit action set type: [pristine-ddmin]dd@2
     int main() {
       int a = 99;
                + 0;
@@ -279,7 +279,7 @@ translationUnit {id=1}
 
 ============Testing the following program: pass=============
 
-// edit action set type: delta debugger@14
+// edit action set type: [pristine-ddmin]dd@2
     int main() {
       int a = 99;
       return a    ;
@@ -301,21 +301,134 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@2
+// edit action set type: [pristine-ddmin]dd@2
+    int main() {
+      int a = 99;
+      return a
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@7
+    int main() {
+      int a
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@7
+    = 99;
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@7
+    = 99;
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@7
+    int main() {
+      int a
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@10
+    int main()
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@10
+    {
+      int a =
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@11
+    99;
+      return
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@11
+    a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@4
+    {
+      int a = 99;
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@4
+    int main()
+              99;
+      return a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@3
+    int main() {
+      int a =
+             a    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@3
+    int main() {
+      int a = 99;
+      return
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@12
     int main
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@2
+// edit action set type: [pristine-ddmin]dd@12
     ()
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@2
+// edit action set type: [pristine-ddmin]dd@12
     {
       int
 ------------------------------------------------------------
@@ -323,36 +436,42 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@2
+// edit action set type: [pristine-ddmin]dd@12
     a =
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@2
+// edit action set type: [pristine-ddmin]dd@12
     99;
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@2
+// edit action set type: [pristine-ddmin]dd@12
     return a
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@2
+// edit action set type: [pristine-ddmin]dd@13
     ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
     }
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@12
+// edit action set type: [pristine-ddmin]dd@2
     () {
       int a = 99;
       return a    ;
@@ -362,7 +481,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@12
+// edit action set type: [pristine-ddmin]dd@2
     int main   {
       int a = 99;
       return a    ;
@@ -372,7 +491,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@12
+// edit action set type: [pristine-ddmin]dd@2
     int main()
           a = 99;
       return a    ;
@@ -382,7 +501,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@12
+// edit action set type: [pristine-ddmin]dd@2
     int main() {
       int     99;
       return a    ;
@@ -392,7 +511,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@12
+// edit action set type: [pristine-ddmin]dd@2
     int main() {
       int a =
       return a    ;
@@ -402,7 +521,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@12
+// edit action set type: [pristine-ddmin]dd@2
     int main() {
       int a = 99;
                   ;
@@ -412,114 +531,124 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@12
+// edit action set type: [pristine-ddmin]dd@1
     int main() {
       int a = 99;
       return a
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    int
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    main
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    (
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    )
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    {
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    int
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    a
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    =
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    99
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    return
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    a
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
     }
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@1
+    int main() {
+      int a = 99;
+      return a    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    int
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    main
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    (
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    )
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    {
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    int
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    a
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    =
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    99
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    return
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    a
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@1
     main() {
       int a = 99;
       return a    ;
@@ -529,7 +658,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@1
     int     () {
       int a = 99;
       return a    ;
@@ -539,7 +668,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@1
     int main ) {
       int a = 99;
       return a    ;
@@ -549,7 +678,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@1
     int main(  {
       int a = 99;
       return a    ;
@@ -559,7 +688,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@1
     int main()
       int a = 99;
       return a    ;
@@ -569,7 +698,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@1
     int main() {
           a = 99;
       return a    ;
@@ -579,7 +708,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@1
     int main() {
       int   = 99;
       return a    ;
@@ -589,7 +718,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@1
     int main() {
       int a   99;
       return a    ;
@@ -599,7 +728,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@1
     int main() {
       int a =   ;
       return a    ;
@@ -609,7 +738,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@1
     int main() {
       int a = 99
       return a    ;
@@ -619,7 +748,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@1
     int main() {
       int a = 99;
              a    ;
@@ -629,7 +758,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@1
     int main() {
       int a = 99;
       return      ;
@@ -639,7 +768,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@1
     int main() {
       int a = 99;
       return a
@@ -649,7 +778,7 @@ translationUnit {id=1}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@1
     int main() {
       int a = 99;
       return a    ;
@@ -698,13 +827,13 @@ translationUnit {id=100}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@0
+// edit action set type: [pristine-ddmin]dd@14
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@7
+// edit action set type: [pristine-ddmin]dd@7
     int
     main
     (
@@ -717,7 +846,7 @@ translationUnit {id=100}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@7
+// edit action set type: [pristine-ddmin]dd@7
     =
     99
     ;
@@ -730,7 +859,7 @@ translationUnit {id=100}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@7
+// edit action set type: [pristine-ddmin]dd@7
     =
     99
     ;
@@ -743,7 +872,7 @@ translationUnit {id=100}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@7
+// edit action set type: [pristine-ddmin]dd@7
     int
     main
     (
@@ -756,7 +885,7 @@ translationUnit {id=100}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@4
+// edit action set type: [pristine-ddmin]dd@10
     int
     main
     (
@@ -766,7 +895,7 @@ translationUnit {id=100}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@4
+// edit action set type: [pristine-ddmin]dd@10
     {
     int
     a
@@ -776,7 +905,7 @@ translationUnit {id=100}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@3
+// edit action set type: [pristine-ddmin]dd@11
     99
     ;
     return
@@ -785,7 +914,7 @@ translationUnit {id=100}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@3
+// edit action set type: [pristine-ddmin]dd@11
     a
     ;
     }
@@ -794,137 +923,7 @@ translationUnit {id=100}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@10
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@10
-    int
-    main
-    (
-    )
-    99
-    ;
-    return
-    a
-    ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@11
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    a
-    ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@11
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@2
-    int
-    main
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@2
-    (
-    )
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@2
-    {
-    int
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@2
-    a
-    =
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@2
-    99
-    ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@2
-    return
-    a
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@12
-    (
-    )
+// edit action set type: [pristine-ddmin]dd@4
     {
     int
     a
@@ -940,13 +939,11 @@ translationUnit {id=100}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@12
+// edit action set type: [pristine-ddmin]dd@4
     int
     main
-    {
-    int
-    a
-    =
+    (
+    )
     99
     ;
     return
@@ -958,43 +955,7 @@ translationUnit {id=100}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@12
-    int
-    main
-    (
-    )
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@12
-    int
-    main
-    (
-    )
-    {
-    int
-    99
-    ;
-    return
-    a
-    ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@12
+// edit action set type: [pristine-ddmin]dd@3
     int
     main
     (
@@ -1003,7 +964,6 @@ translationUnit {id=100}
     int
     a
     =
-    return
     a
     ;
     }
@@ -1012,25 +972,7 @@ translationUnit {id=100}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@12
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@3
     int
     main
     (
@@ -1042,132 +984,74 @@ translationUnit {id=100}
     99
     ;
     return
-    a
-    }
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@12
     int
     main
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@12
     (
     )
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@12
     {
     int
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@12
     a
-    =
-    99
-    ;
-    return
-    a
-    ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    int
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    main
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    (
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    )
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    {
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    int
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
-    a
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
     =
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@1
+// edit action set type: [pristine-ddmin]dd@12
     99
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
     ;
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@1
+// edit action set type: [pristine-ddmin]dd@12
     return
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@1
     a
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@1
+// edit action set type: [pristine-ddmin]dd@13
     ;
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@1
+// edit action set type: [pristine-ddmin]dd@13
     }
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
-    main
+// edit action set type: [pristine-ddmin]dd@2
     (
     )
     {
@@ -1185,10 +1069,9 @@ translationUnit {id=100}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@2
     int
-    (
-    )
+    main
     {
     int
     a
@@ -1204,12 +1087,11 @@ translationUnit {id=100}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@2
     int
     main
+    (
     )
-    {
-    int
     a
     =
     99
@@ -1223,14 +1105,13 @@ translationUnit {id=100}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@2
     int
     main
     (
+    )
     {
     int
-    a
-    =
     99
     ;
     return
@@ -1242,83 +1123,7 @@ translationUnit {id=100}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
-    int
-    main
-    (
-    )
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@13
-    int
-    main
-    (
-    )
-    {
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@13
-    int
-    main
-    (
-    )
-    {
-    int
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@13
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    99
-    ;
-    return
-    a
-    ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@2
     int
     main
     (
@@ -1327,7 +1132,6 @@ translationUnit {id=100}
     int
     a
     =
-    ;
     return
     a
     ;
@@ -1337,26 +1141,7 @@ translationUnit {id=100}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    return
-    a
-    ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@2
     int
     main
     (
@@ -1367,7 +1152,6 @@ translationUnit {id=100}
     =
     99
     ;
-    a
     ;
     }
 ------------------------------------------------------------
@@ -1375,26 +1159,7 @@ translationUnit {id=100}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@1
     int
     main
     (
@@ -1413,7 +1178,371 @@ translationUnit {id=100}
 
 ============Testing the following program: fail=============
 
-// edit action set type: delta debugger@13
+// edit action set type: [pristine-ddmin]dd@1
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    int
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    main
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    (
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    )
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    {
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    int
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    a
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    =
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    99
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    return
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    a
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@13
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@1
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@1
+    int
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@1
+    int
+    main
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@1
+    int
+    main
+    (
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@1
+    int
+    main
+    (
+    )
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@1
+    int
+    main
+    (
+    )
+    {
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@1
+    int
+    main
+    (
+    )
+    {
+    int
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@1
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@1
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@1
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@1
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@1
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@1
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-ddmin]dd@1
     int
     main
     (
@@ -1431,7 +1560,7 @@ translationUnit {id=100}
 
 
 #test success = 1
-#test failure = 126
+#test failure = 141
 #test result cache hits = 0
 #test execution cancelled = 0
 #node edit action set cache hits = 0

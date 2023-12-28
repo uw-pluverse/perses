@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,37 +18,58 @@ package org.perses.delta
 
 import com.google.common.collect.ImmutableList
 import org.perses.reduction.PropertyTestResult
+import org.perses.util.Util
+import org.perses.util.Util.lazyAssert
+import org.perses.util.isSortedAscendinglyBy
+import org.perses.util.transformToImmutableList
 
-interface IPropertyTester<T, Payload> {
+class Configuration<T>(
+  val currentBest: ImmutableList<AbstractDeltaDebugger.ElementWrapper<T>>?,
+  private val candidate_: ImmutableList<AbstractDeltaDebugger.ElementWrapper<T>>?,
+  private val deleted_: ImmutableList<AbstractDeltaDebugger.ElementWrapper<T>>?,
+) {
+  init {
+    require(currentBest != null || candidate_ != null || deleted_ != null) {
+      "The three fields cannot be null at the same time."
+    }
+    require(candidate_ != null || deleted_ != null)
+    lazyAssert {
+      currentBest == null || currentBest.isSortedAscendinglyBy { it.index }
+    }
+    lazyAssert {
+      candidate_ == null || candidate_.isSortedAscendinglyBy { it.index }
+    }
+    lazyAssert {
+      deleted_ == null || deleted_.isSortedAscendinglyBy { it.index }
+    }
+  }
+
+  val deletedWrappers: ImmutableList<AbstractDeltaDebugger.ElementWrapper<T>> by lazy {
+    deleted_ ?: Util.computeDifference(currentBest!!, candidate_!!)
+  }
+
+  val deleted: ImmutableList<T> by lazy {
+    deletedWrappers.transformToImmutableList { it.element }
+  }
+
+  val candidate: ImmutableList<T> by lazy {
+    candidate_?.transformToImmutableList { it.element }
+      ?: Util.computeDifference(currentBest!!, deleted_!!).transformToImmutableList { it.element }
+  }
+}
+
+fun interface IPropertyTester<T, Payload> {
   fun testProperty(
-    currentBest: ImmutableList<T>,
-    candidate: ImmutableList<T>,
+    configuration: Configuration<T>,
   ): AbstractPropertyTestResultWithPayload<Payload>
 }
 
-abstract class AbstractPropertyTestResultWithPayload<Payload> {
+// TODO(cnsun): make it sealed.
+sealed class AbstractPropertyTestResultWithPayload<Payload>
 
-  abstract fun needsSkip(): Boolean
-
-  abstract val result: PropertyTestResult
-
-  abstract val payload: Payload
-}
-
-class SkipPropertyTestResult<Payload> : AbstractPropertyTestResultWithPayload<Payload>() {
-  override fun needsSkip() = true
-
-  override val result: PropertyTestResult
-    get() = TODO("Not yet implemented")
-
-  override val payload: Payload
-    get() = TODO("Not yet implemented")
-}
+class SkipPropertyTestResult<Payload> : AbstractPropertyTestResultWithPayload<Payload>()
 
 data class PropertyTestResultWithPayload<Payload>(
-  override val result: PropertyTestResult,
-  override val payload: Payload,
-) : AbstractPropertyTestResultWithPayload<Payload>() {
-
-  override fun needsSkip() = false
-}
+  val result: PropertyTestResult,
+  val payload: Payload,
+) : AbstractPropertyTestResultWithPayload<Payload>()

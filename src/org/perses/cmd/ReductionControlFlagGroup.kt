@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 University of Waterloo.
+ * Copyright (C) 2018-2024 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,24 +19,25 @@ package org.perses.cmd
 import com.beust.jcommander.Parameter
 import com.google.common.flogger.FluentLogger
 import org.perses.program.EnumFormatControl
-import org.perses.util.cmd.CommonCmdOptionGroupOrder
-import org.perses.util.cmd.ICommandLineFlags
+import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import org.perses.util.ktWarning
 
-class ReductionControlFlags : ICommandLineFlags {
+class ReductionControlFlagGroup : AbstractCommandLineFlagGroup(
+  groupName = "General Reduction Control",
+) {
   @JvmField
   @Parameter(
     names = ["--fixpoint"],
     description = "iterative reduction till fixpoint",
     arity = 1,
-    order = CommonCmdOptionGroupOrder.REDUCTION_CONTROL + 0,
+    order = 0,
   )
   var fixpoint = true
 
   @Parameter(
     names = ["--threads"],
     description = "Number of reduction threads: a positive integer, or 'auto'.",
-    order = CommonCmdOptionGroupOrder.REDUCTION_CONTROL + 1,
+    order = 1,
   )
   private var numOfThreads = "auto"
 
@@ -44,7 +45,7 @@ class ReductionControlFlags : ICommandLineFlags {
     names = ["--code-format"],
     description = "The format of the reduced program.",
     arity = 1,
-    order = CommonCmdOptionGroupOrder.REDUCTION_CONTROL + 2,
+    order = 2,
   )
   var codeFormat: EnumFormatControl? = null
 
