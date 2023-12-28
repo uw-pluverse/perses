@@ -81,9 +81,7 @@ GNU General Public License 3.
 
 ### References
 
-Perses was first published at _International Conference on Software Engineering 2018_ as a [full research paper](https://dl.acm.org/doi/10.1145/3180155.3180236).
-
-Link to the [pdf](./doc/publication/2018_perses_icse.pdf).
+Perses was first published at _International Conference on Software Engineering 2018_ as a [full research paper](./doc/publication/2018_perses_icse.pdf).
 
 ```
 @inproceedings{perses,
