@@ -81,7 +81,9 @@ GNU General Public License 3.
 
 ### References
 
-Perses was first published at _International Conference on Software Engineering 2018_ as a [full research paper](./doc/publication/2018_perses_icse.pdf).
+This repository contains the implementations of the techniques proposed in the following papers. 
+
+#### 1. Perses: Syntax-Guided Program Reduction (ICSE 2018, [pdf](./doc/publication/2018_perses_icse.pdf))
 
 ```
 @inproceedings{perses,
@@ -95,9 +97,7 @@ Perses was first published at _International Conference on Software Engineering 
 }
 ```
 
-Based on Perses, we published the following work.
-
-##### Pushing the Limit of 1-Minimality of Language-Agnostic Program Reduction (OOPSLA 2023, [pdf](./doc/publication/2023_vulcan_oopsla.pdf))
+##### 2. Pushing the Limit of 1-Minimality of Language-Agnostic Program Reduction (OOPSLA 2023, [pdf](./doc/publication/2023_vulcan_oopsla.pdf))
 
 ```
 @article{vulcan,
@@ -112,7 +112,7 @@ Based on Perses, we published the following work.
 }
 ```
 
-##### PPR: Pairwise Program Reduction (ESEC/FSE 2023, [pdf](./doc/publication/2023_ppr_fse.pdf))
+##### 3. PPR: Pairwise Program Reduction (ESEC/FSE 2023, [pdf](./doc/publication/2023_ppr_fse.pdf))
 
 ```
 @inproceedings{ppr,
@@ -124,7 +124,7 @@ Based on Perses, we published the following work.
 }
 ```
 
-##### On the Caching Schemes to Speed Up Program Reduction (TOSEM, [pdf](./doc/publication/2023_caching_tosem.pdf))
+##### 4. On the Caching Schemes to Speed Up Program Reduction (TOSEM, [pdf](./doc/publication/2023_caching_tosem.pdf))
 
 ```
 @article{perses-caching,
