@@ -23,31 +23,14 @@ import org.antlr.v4.runtime.tree.ParseTree
 import org.perses.CommandOptions
 import org.perses.cmd.ExperimentFlagGroup
 import org.perses.grammar.AbstractParserFacade
-import org.perses.listener.LoggingListener
-import org.perses.listener.ProgressMonitorForNodeReducer
-import org.perses.listener.ReductionProfileListener
-import org.perses.listener.StatisticsListener
-import org.perses.listener.TestScriptExecutionListener
-import org.perses.program.EnumFormatControl
-import org.perses.program.LanguageKind
-import org.perses.program.SourceFile
-import org.perses.program.TokenizedProgram
-import org.perses.program.TokenizedProgramFactory
+import org.perses.listener.*
+import org.perses.program.*
 import org.perses.program.printer.PrinterRegistry
 import org.perses.reduction.AbstractActionSetProfiler.ActionSetProfiler
 import org.perses.reduction.AbstractExternalTestScriptExecutionCachePolicy.ExternalTestScriptExecutionCachePolicy
 import org.perses.reduction.AbstractExternalTestScriptExecutionCachePolicy.NullExternalTestScriptExecutionCachePolicy
-import org.perses.reduction.cache.AbstractQueryCache
-import org.perses.reduction.cache.AbstractQueryCacheProfiler
-import org.perses.reduction.cache.EnumQueryCachingControl
-import org.perses.reduction.cache.NullQueryCache
-import org.perses.reduction.cache.PassLevelCache
+import org.perses.reduction.cache.*
 import org.perses.reduction.cache.PassLevelCache.PassLevelCacheResult
-import org.perses.reduction.cache.QueryCacheConfiguration
-import org.perses.reduction.cache.QueryCacheFactory
-import org.perses.reduction.cache.QueryCacheMemoryProfiler
-import org.perses.reduction.cache.QueryCacheTimeProfiler
-import org.perses.reduction.cache.QueryCacheType
 import org.perses.reduction.event.ReductionStartEvent
 import org.perses.reduction.event.TestScriptExecutorServiceStatisticsSnapshot
 import org.perses.reduction.io.ReductionFolder
@@ -58,13 +41,7 @@ import org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer
 import org.perses.reduction.reducer.vulcan.IdentifierReplacementReducer
 import org.perses.reduction.reducer.vulcan.SubTreeReplacementReducer
 import org.perses.reduction.reducer.vulcan.pattern.LocalExhaustivePatternReducer
-import org.perses.spartree.AbstractNodeActionSetCache
-import org.perses.spartree.AbstractSparTreeEditListener
-import org.perses.spartree.NodeActionSetCache
-import org.perses.spartree.NullNodeActionSetCache
-import org.perses.spartree.SparTreeBuilder
-import org.perses.spartree.SparTreeNodeFactory
-import org.perses.spartree.SparTreeSimplifier
+import org.perses.spartree.*
 import org.perses.util.*
 import org.perses.util.shell.Shells
 import java.lang.ref.WeakReference
@@ -258,8 +235,9 @@ abstract class AbstractProgramReductionDriver(
     )
   } catch (e: Exception) {
     logger.ktWarning {
-      "Reduction process failed with exception: ${e.stackTrace}"
+      "Reduction process failed with exception: ${e.message}"
     }
+    e.printStackTrace()
   }
 
   private fun internalReduce(

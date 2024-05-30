@@ -22,31 +22,14 @@ import com.google.common.primitives.ImmutableIntArray
 import org.apache.commons.text.StringEscapeUtils
 import org.perses.antlr.RuleHierarchyEntry
 import org.perses.antlr.TokenType
-import org.perses.antlr.ast.AbstractPersesQuantifiedAst
-import org.perses.antlr.ast.AbstractPersesRuleElement
-import org.perses.antlr.ast.AstTag
-import org.perses.antlr.ast.PersesActionAst
-import org.perses.antlr.ast.PersesAlternativeBlockAst
-import org.perses.antlr.ast.PersesEpsilonAst
-import org.perses.antlr.ast.PersesLexerCharSet
-import org.perses.antlr.ast.PersesLexerCommandAst
-import org.perses.antlr.ast.PersesNotAst
-import org.perses.antlr.ast.PersesOptionalAst
-import org.perses.antlr.ast.PersesPlusAst
-import org.perses.antlr.ast.PersesRangeAst
-import org.perses.antlr.ast.PersesRuleElementLabel
-import org.perses.antlr.ast.PersesRuleReferenceAst
-import org.perses.antlr.ast.PersesSequenceAst
-import org.perses.antlr.ast.PersesStarAst
-import org.perses.antlr.ast.PersesTerminalAst
-import org.perses.antlr.ast.PersesTokenSetAst
+import org.perses.antlr.ast.*
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 import org.perses.antlr.toTokenType
 import org.perses.grammar.AbstractParserFacade
 import org.perses.program.PersesTokenFactory
 import org.perses.spartree.AbstractTreeNode.NodeIdCopyStrategy.ReuseNodeIdStrategy
 import org.perses.util.toImmutableList
-import java.util.Random
+import java.util.*
 
 class MinimalSparTreeGenerator(
   val parserFacade: AbstractParserFacade,
