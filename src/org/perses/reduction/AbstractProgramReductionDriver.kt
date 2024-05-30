@@ -65,14 +65,8 @@ import org.perses.spartree.NullNodeActionSetCache
 import org.perses.spartree.SparTreeBuilder
 import org.perses.spartree.SparTreeNodeFactory
 import org.perses.spartree.SparTreeSimplifier
-import org.perses.util.TimeSpan
-import org.perses.util.TimeUtil
-import org.perses.util.Util
-import org.perses.util.ktInfo
-import org.perses.util.ktSevere
+import org.perses.util.*
 import org.perses.util.shell.Shells
-import org.perses.util.toImmutableList
-import org.perses.util.transformToImmutableList
 import java.lang.ref.WeakReference
 import java.nio.file.Paths
 
@@ -227,13 +221,15 @@ abstract class AbstractProgramReductionDriver(
         }
         addAll(onDemandReducerCreators)
       }.build()
-    internalReduce(
+
+    tryInternalReduce(
       reductionStartEvent,
       sparTreeEditListeners,
       tokenizedProgramFactory,
       mainReducerAnnotation,
       auxiliaryReducerCreators,
     )
+
     run {
       val finalTokenCount = tree.updatetokenCountAndGet()
       val reductionEndEvent = reductionStartEvent.createEndEvent(
@@ -244,6 +240,26 @@ abstract class AbstractProgramReductionDriver(
     }
     callCreduceIfEnabled()
     formatBestFileIfEnabled()
+  }
+
+  private fun tryInternalReduce(
+    reductionStartEvent: ReductionStartEvent,
+    sparTreeEditListeners: ImmutableList<AbstractSparTreeEditListener>,
+    originalTokenizedProgramFactory: TokenizedProgramFactory,
+    mainReducerAnnotation: ReducerAnnotation,
+    auxiliaryReducerCreators: ImmutableList<ITokenReducerCreator>
+  ) = try {
+    internalReduce(
+      reductionStartEvent,
+      sparTreeEditListeners,
+      originalTokenizedProgramFactory,
+      mainReducerAnnotation,
+      auxiliaryReducerCreators
+    )
+  } catch (e: Exception) {
+    logger.ktWarning {
+      "Reduction process failed with exception: ${e.stackTrace}"
+    }
   }
 
   private fun internalReduce(
