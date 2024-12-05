@@ -22,31 +22,14 @@ import com.google.common.primitives.ImmutableIntArray
 import org.apache.commons.text.StringEscapeUtils
 import org.perses.antlr.RuleHierarchyEntry
 import org.perses.antlr.TokenType
-import org.perses.antlr.ast.AbstractPersesQuantifiedAst
-import org.perses.antlr.ast.AbstractPersesRuleElement
-import org.perses.antlr.ast.AstTag
-import org.perses.antlr.ast.PersesActionAst
-import org.perses.antlr.ast.PersesAlternativeBlockAst
-import org.perses.antlr.ast.PersesEpsilonAst
-import org.perses.antlr.ast.PersesLexerCharSet
-import org.perses.antlr.ast.PersesLexerCommandAst
-import org.perses.antlr.ast.PersesNotAst
-import org.perses.antlr.ast.PersesOptionalAst
-import org.perses.antlr.ast.PersesPlusAst
-import org.perses.antlr.ast.PersesRangeAst
-import org.perses.antlr.ast.PersesRuleElementLabel
-import org.perses.antlr.ast.PersesRuleReferenceAst
-import org.perses.antlr.ast.PersesSequenceAst
-import org.perses.antlr.ast.PersesStarAst
-import org.perses.antlr.ast.PersesTerminalAst
-import org.perses.antlr.ast.PersesTokenSetAst
+import org.perses.antlr.ast.*
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 import org.perses.antlr.toTokenType
 import org.perses.grammar.AbstractParserFacade
 import org.perses.program.PersesTokenFactory
 import org.perses.spartree.AbstractTreeNode.NodeIdCopyStrategy.ReuseNodeIdStrategy
 import org.perses.util.toImmutableList
-import java.util.Random
+import java.util.*
 
 class MinimalSparTreeGenerator(
   val parserFacade: AbstractParserFacade,
@@ -64,7 +47,9 @@ class MinimalSparTreeGenerator(
     ruleNameHandle: RuleNameHandle,
     indexOfAlternative: Int,
   ): AbstractSparTreeNode? {
-    check(originalLexerRuleNodeList.isNotEmpty())
+    check(originalLexerRuleNodeList.isNotEmpty()) {
+      "Original lexer rule list is empty"
+    }
     val preGeneratedNode =
       ruleToPreGeneratedCandidateSparTreeNodeMap[ruleNameHandle]?.getOrNull(indexOfAlternative)
         ?.recursiveDeepCopy(ReuseNodeIdStrategy) ?: return null
@@ -94,7 +79,9 @@ class MinimalSparTreeGenerator(
     }
     preGeneratedNode.linkLeafNodes()
     preGeneratedNode.buildTokenIntervalInfoRecursive()
-    check(preGeneratedNode.leafNodeSequence().all { it.token.isPlaceholder().not() })
+    check(preGeneratedNode.leafNodeSequence().all { it.token.isPlaceholder().not() }) {
+      "Some leaf nodes of the pre generated node are placeholders"
+    }
     return preGeneratedNode
   }
 
@@ -156,7 +143,9 @@ class MinimalSparTreeGenerator(
     check(
       mapToBuild
         .containsKey(antlrRule.ruleDef.ruleNameHandle).not(),
-    )
+    ) {
+      "Rule name already contained in map: ${antlrRule.ruleDef.ruleNameHandle}"
+    }
     mapToBuild[antlrRule.ruleDef.ruleNameHandle] =
       ImmutableList.of(preGeneratedNode)
   }
@@ -207,7 +196,9 @@ class MinimalSparTreeGenerator(
       mapToBuild,
       antlrRule,
     ) ?: return false
-    check(preGeneratedNodeList.isNotEmpty())
+    check(preGeneratedNodeList.isNotEmpty()) {
+      "Pre generated node list is empty"
+    }
     if (mapToBuild.containsKey(antlrRule.ruleDef.ruleNameHandle) &&
       preGeneratedNodeList.all { newNode ->
         mapToBuild[antlrRule.ruleDef.ruleNameHandle]!!.any { originalNode ->
@@ -230,14 +221,16 @@ class MinimalSparTreeGenerator(
   ): ImmutableList<AbstractSparTreeNode>? {
     return when (ruleBody) {
       is PersesAlternativeBlockAst -> {
+        antlrRule ?: return null
         val nodeList = mutableListOf<AbstractSparTreeNode>()
         ruleBody.foreachChildRuleElement { alternative ->
           val nodesBuiltFromAlternative = preBuildSparTreeNodeRec(
             alternative,
             mapToBuild,
           ) ?: return@foreachChildRuleElement
+
           val nodeForTheAlternative = generateParserNodeWithGivenRuleAndChildren(
-            antlrRule!!,
+            antlrRule,
             nodesBuiltFromAlternative,
           )
           if (nodeList.any { existingNode ->
@@ -425,7 +418,9 @@ class MinimalSparTreeGenerator(
                   text.subSequence(1, text.length - 1).toString(),
                 )
               }
-              check(text.length == 1)
+              check(text.length == 1) {
+                "Terminal node is not EOF and has more than one character"
+              }
               val randomNum = random.nextInt(95) + 32
               if (randomNum >= subRuleBody.text[0].code) {
                 (randomNum + 1).toChar().toString()
@@ -499,8 +494,10 @@ class MinimalSparTreeGenerator(
     return charset[random.nextInt(charset.size)].toString()
   }
 
-  internal fun getCharsetFromLexerCharset(lexerCharset: String): List<Char> {
-    check(lexerCharset.length > 2) // There must be at least one char in bracket
+  private fun getCharsetFromLexerCharset(lexerCharset: String): List<Char> {
+    check(lexerCharset.length > 2) {
+      "Must be at least one character in-between brackets, but length was < 3"
+    } // There must be at least one char in bracket
     val ranges = mutableListOf<Pair<Char, Char>>()
     var offset = 0
     val text = lexerCharset.substring(1, lexerCharset.length - 1)
@@ -513,7 +510,9 @@ class MinimalSparTreeGenerator(
         startAndNewOffset.first?.let { charset.add(it) }
         continue
       }
-      check(text[offset] == '-')
+      check(text[offset] == '-') {
+        "Char range must have '-' in-between"
+      }
       // if '-' is the last char, just add it to the charset
       if (offset == text.length - 1) {
         charset.add('-')
@@ -549,7 +548,9 @@ class MinimalSparTreeGenerator(
     if (text[offset] != '\\') {
       return Pair(text[offset], offset + 1)
     }
-    check(offset + 1 < text.length)
+    check(offset + 1 < text.length){
+      "Text has too few characters, at least ${offset + 2}"
+    }
 
     when (val escaped = text[offset + 1]) {
       'u' -> {
@@ -559,12 +560,16 @@ class MinimalSparTreeGenerator(
           // if lexer charset is in the format of \u{...}
           hexStartOffset = offset + 3
           hexEndOffset = text.indexOf('}', hexStartOffset)
-          check(hexEndOffset > hexStartOffset)
+          check(hexEndOffset > hexStartOffset) {
+            "End offset must be after start"
+          }
         } else {
           // if lexer charset is in the format of \uXXXX
           hexStartOffset = offset + 2
           hexEndOffset = offset + 6
-          check(hexEndOffset <= text.length)
+          check(hexEndOffset <= text.length) {
+            "End offset must be equal or before length"
+          }
         }
         val codePoint = Integer.valueOf(text.substring(hexStartOffset, hexEndOffset), 16)
         return Pair(codePoint.toChar(), hexEndOffset)
