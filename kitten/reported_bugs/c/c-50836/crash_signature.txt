@@ -1,0 +1,3 @@
+llvm::LoadInst::LoadInst(llvm::Type*, llvm::Value*, const llvm::Twine&, bool, llvm::Align, llvm::AtomicOrdering, llvm::SyncScope::ID, llvm::Instruction*): Assertion `cast<PointerType>(Ptr->getType())->isOpaqueOrPointeeTypeMatches(Ty)' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

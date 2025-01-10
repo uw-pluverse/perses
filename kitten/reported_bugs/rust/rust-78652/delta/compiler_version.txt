@@ -1,0 +1,14 @@
+rustc 1.49.0-nightly (e3051d8c2 2020-10-16)
+
+binary: rustc
+
+commit-hash: e3051d8c24467b54c81da9d9ad70a3e82e106ec1
+
+commit-date: 2020-10-16
+
+host: x86_64-unknown-linux-gnu
+
+release: 1.49.0-nightly
+
+LLVM version: 11.0
+

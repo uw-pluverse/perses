@@ -1,0 +1,78 @@
+error[E0432]: unresolved import `std::marker::x`
+
+ --> mutant.rs:5:24
+
+  |
+
+5 | use std :: marker :: { x , Unsize } ;
+
+  |                        ^ no `x` in `marker`
+
+
+
+error[E0412]: cannot find type `PhantomData` in this scope
+
+ --> mutant.rs:6:63
+
+  |
+
+6 | pub struct Smaht < T : ? Sized , MISC > ( pub Box < T > , pub PhantomData < MISC > ) ;
+
+  |                                                               ^^^^^^^^^^^ not found in this scope
+
+  |
+
+help: consider importing this struct
+
+  |
+
+4 | use PhantomData;
+
+  |
+
+
+
+error: internal compiler error: compiler/rustc_trait_selection/src/traits/object_safety.rs:469:33: error: the type `[type error]` has an unknown layout
+
+ while computing layout for type internal::Smaht<(), T>
+
+
+
+thread 'rustc' panicked at 'Box<Any>', compiler/rustc_errors/src/lib.rs:945:9
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.49.0-nightly (1eaadebb3 2020-10-21) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -C debuginfo=2 -C opt-level=z -C target-cpu=skylake --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [object_safety_violations] determine object safety of trait `internal::Foo`
+
+#1 [coherent_trait] coherence checking all impls of trait `internal::Marker`
+
+end of query stack
+
+error: aborting due to 3 previous errors
+
+
+
+Some errors have detailed explanations: E0412, E0432.
+
+For more information about an error, try `rustc --explain E0412`.
+

@@ -1,0 +1,4 @@
+internal compiler error: Segmentation fault
+crash_signal
+gimplify_target_expr
+gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)

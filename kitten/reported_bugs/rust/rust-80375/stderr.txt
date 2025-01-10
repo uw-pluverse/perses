@@ -1,0 +1,104 @@
+error[E0658]: const generics are unstable
+
+ --> mutant.rs:4:28
+
+  |
+
+4 | pub struct MyArray < const COUNT : usize > ( [ u8 ; COUNT + 1 ] ) ;
+
+  |                            ^^^^^
+
+  |
+
+  = note: see issue #74878 <https://github.com/rust-lang/rust/issues/74878> for more information
+
+  = help: add `#![feature(min_const_generics)]` to the crate attributes to enable
+
+
+
+error[E0658]: const generics are unstable
+
+ --> mutant.rs:5:14
+
+  |
+
+5 | impl < const COUNT : usize > MyArray < COUNT > {
+
+  |              ^^^^^
+
+  |
+
+  = note: see issue #74878 <https://github.com/rust-lang/rust/issues/74878> for more information
+
+  = help: add `#![feature(min_const_generics)]` to the crate attributes to enable
+
+
+
+error: internal compiler error: compiler/rustc_middle/src/ty/subst.rs:568:17: const parameter `COUNT/#0` (Const { ty: usize, val: Param(COUNT/#0) }/0) out of range when substituting substs=[]
+
+
+
+thread 'rustc' panicked at 'Box<Any>', /rustc/bb178237c5539c75e1b85ab78a8ab902b1f333d5/compiler/rustc_errors/src/lib.rs:904:9
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.50.0-nightly (bb178237c 2020-12-25) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=2 -Z new-llvm-pass-manager=no -Z unsound-mir-opts=no -Z polonius=no -Z polymorphize=no -C debuginfo=2 -C opt-level=2 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [eval_to_allocation_raw] const-evaluating + checking `MyArray::0::{constant#0}`
+
+#1 [eval_to_const_value_raw] simplifying constant for the type system `MyArray::0::{constant#0}`
+
+end of query stack
+
+thread 'rustc' panicked at 'Box<Any>', /rustc/bb178237c5539c75e1b85ab78a8ab902b1f333d5/compiler/rustc_errors/src/lib.rs:904:9
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.50.0-nightly (bb178237c 2020-12-25) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=2 -Z new-llvm-pass-manager=no -Z unsound-mir-opts=no -Z polonius=no -Z polymorphize=no -C debuginfo=2 -C opt-level=2 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [eval_to_allocation_raw] const-evaluating + checking `MyArray::<COUNT>::inner::{constant#0}`
+
+#1 [eval_to_const_value_raw] simplifying constant for the type system `MyArray::<COUNT>::inner::{constant#0}`
+
+end of query stack
+
+error: aborting due to 3 previous errors
+
+
+
+For more information about this error, try `rustc --explain E0658`.
+

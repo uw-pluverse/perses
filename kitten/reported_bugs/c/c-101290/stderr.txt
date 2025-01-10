@@ -1,0 +1,50 @@
+mutant.c: In function ‘foo’:
+
+mutant.c:2:26: warning: unused parameter ‘x’ [-Wunused-parameter]
+
+    2 | void foo ( unsigned long x )
+
+      |            ~~~~~~~~~~~~~~^
+
+during GIMPLE pass: evrp
+
+mutant.c: In function ‘main’:
+
+mutant.c:68:1: internal compiler error: in maybe_canonicalize_mem_ref_addr, at gimple-fold.c:5977
+
+   68 | }
+
+      | ^
+
+0x6d7cb2 maybe_canonicalize_mem_ref_addr
+
+	/tmp/tmp.7VMvqc1j38-gcc-builder/gcc/gcc/gimple-fold.c:5977
+
+0xc140e2 fold_stmt_1
+
+	/tmp/tmp.7VMvqc1j38-gcc-builder/gcc/gcc/gimple-fold.c:6090
+
+0x10c8766 substitute_and_fold_dom_walker::before_dom_children(basic_block_def*)
+
+	/tmp/tmp.7VMvqc1j38-gcc-builder/gcc/gcc/tree-ssa-propagate.c:853
+
+0x192dd57 dom_walker::walk(basic_block_def*)
+
+	/tmp/tmp.7VMvqc1j38-gcc-builder/gcc/gcc/domwalk.c:309
+
+0x10c7b09 substitute_and_fold_engine::substitute_and_fold(basic_block_def*)
+
+	/tmp/tmp.7VMvqc1j38-gcc-builder/gcc/gcc/tree-ssa-propagate.c:987
+
+0x196d5e5 execute_early_vrp
+
+	/tmp/tmp.7VMvqc1j38-gcc-builder/gcc/gcc/gimple-ssa-evrp.c:690
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

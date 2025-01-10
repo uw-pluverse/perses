@@ -1,0 +1,9 @@
+Internal compiler error during compilation:
+
+/solidity/libsolidity/ast/Types.h(228): Throw in function virtual unsigned int solidity::frontend::Type::calldataEncodedSize(bool) const
+
+Dynamic exception type: boost::wrapexcept<solidity::langutil::InternalCompilerError>
+
+std::exception::what:
+
+[solidity::util::tag_comment*] =

@@ -1,0 +1,1422 @@
+mutant.c:1:585: warning: padding size of 'struct (unnamed at mutant.c:1:585)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ^
+
+mutant.c:1:576: warning: padding size of 'struct (unnamed at mutant.c:1:576)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ^
+
+mutant.c:1:567: warning: padding size of 'struct (unnamed at mutant.c:1:567)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ^
+
+mutant.c:1:558: warning: padding size of 'struct (unnamed at mutant.c:1:558)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^
+
+mutant.c:1:549: warning: padding size of 'struct (unnamed at mutant.c:1:549)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ^
+
+mutant.c:1:540: warning: padding size of 'struct (unnamed at mutant.c:1:540)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ^
+
+mutant.c:1:531: warning: padding size of 'struct (unnamed at mutant.c:1:531)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ^
+
+mutant.c:1:522: warning: padding size of 'struct (unnamed at mutant.c:1:522)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ^
+
+mutant.c:1:513: warning: padding size of 'struct (unnamed at mutant.c:1:513)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ^
+
+mutant.c:1:504: warning: padding size of 'struct (unnamed at mutant.c:1:504)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ^
+
+mutant.c:1:495: warning: padding size of 'struct (unnamed at mutant.c:1:495)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ^
+
+mutant.c:1:486: warning: padding size of 'struct (unnamed at mutant.c:1:486)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ^
+
+mutant.c:1:477: warning: padding size of 'struct (unnamed at mutant.c:1:477)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ^
+
+mutant.c:1:468: warning: padding size of 'struct (unnamed at mutant.c:1:468)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^
+
+mutant.c:1:459: warning: padding size of 'struct (unnamed at mutant.c:1:459)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ^
+
+mutant.c:1:450: warning: padding size of 'struct (unnamed at mutant.c:1:450)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ^
+
+mutant.c:1:441: warning: padding size of 'struct (unnamed at mutant.c:1:441)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        ^
+
+mutant.c:1:432: warning: padding size of 'struct (unnamed at mutant.c:1:432)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                               ^
+
+mutant.c:1:423: warning: padding size of 'struct (unnamed at mutant.c:1:423)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                      ^
+
+mutant.c:1:414: warning: padding size of 'struct (unnamed at mutant.c:1:414)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                             ^
+
+mutant.c:1:405: warning: padding size of 'struct (unnamed at mutant.c:1:405)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                    ^
+
+mutant.c:1:396: warning: padding size of 'struct (unnamed at mutant.c:1:396)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                           ^
+
+mutant.c:1:387: warning: padding size of 'struct (unnamed at mutant.c:1:387)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                  ^
+
+mutant.c:1:378: warning: padding size of 'struct (unnamed at mutant.c:1:378)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                         ^
+
+mutant.c:1:369: warning: padding size of 'struct (unnamed at mutant.c:1:369)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                                ^
+
+mutant.c:1:360: warning: padding size of 'struct (unnamed at mutant.c:1:360)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                                       ^
+
+mutant.c:1:351: warning: padding size of 'struct (unnamed at mutant.c:1:351)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                              ^
+
+mutant.c:1:342: warning: padding size of 'struct (unnamed at mutant.c:1:342)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                                     ^
+
+mutant.c:1:333: warning: padding size of 'struct (unnamed at mutant.c:1:333)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                            ^
+
+mutant.c:1:324: warning: padding size of 'struct (unnamed at mutant.c:1:324)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                                   ^
+
+mutant.c:1:315: warning: padding size of 'struct (unnamed at mutant.c:1:315)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                          ^
+
+mutant.c:1:306: warning: padding size of 'struct (unnamed at mutant.c:1:306)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                                 ^
+
+mutant.c:1:297: warning: padding size of 'struct (unnamed at mutant.c:1:297)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                                        ^
+
+mutant.c:1:288: warning: padding size of 'struct (unnamed at mutant.c:1:288)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                               ^
+
+mutant.c:1:279: warning: padding size of 'struct (unnamed at mutant.c:1:279)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                                      ^
+
+mutant.c:1:270: warning: padding size of 'struct (unnamed at mutant.c:1:270)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                             ^
+
+mutant.c:1:261: warning: padding size of 'struct (unnamed at mutant.c:1:261)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                                    ^
+
+mutant.c:1:252: warning: padding size of 'struct (unnamed at mutant.c:1:252)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                           ^
+
+mutant.c:1:243: warning: padding size of 'struct (unnamed at mutant.c:1:243)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                                  ^
+
+mutant.c:1:234: warning: padding size of 'struct (unnamed at mutant.c:1:234)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                         ^
+
+mutant.c:1:225: warning: padding size of 'struct (unnamed at mutant.c:1:225)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                                ^
+
+mutant.c:1:216: warning: padding size of 'struct (unnamed at mutant.c:1:216)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                                       ^
+
+mutant.c:1:207: warning: padding size of 'struct (unnamed at mutant.c:1:207)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                              ^
+
+mutant.c:1:198: warning: padding size of 'struct (unnamed at mutant.c:1:198)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                                     ^
+
+mutant.c:1:189: warning: padding size of 'struct (unnamed at mutant.c:1:189)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                            ^
+
+mutant.c:1:180: warning: padding size of 'struct (unnamed at mutant.c:1:180)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                                   ^
+
+mutant.c:1:171: warning: padding size of 'struct (unnamed at mutant.c:1:171)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                          ^
+
+mutant.c:1:162: warning: padding size of 'struct (unnamed at mutant.c:1:162)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                                 ^
+
+mutant.c:1:153: warning: padding size of 'struct (unnamed at mutant.c:1:153)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                                        ^
+
+mutant.c:1:144: warning: padding size of 'struct (unnamed at mutant.c:1:144)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                               ^
+
+mutant.c:1:135: warning: padding size of 'struct (unnamed at mutant.c:1:135)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                                      ^
+
+mutant.c:1:126: warning: padding size of 'struct (unnamed at mutant.c:1:126)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                             ^
+
+mutant.c:1:117: warning: padding size of 'struct (unnamed at mutant.c:1:117)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                                    ^
+
+mutant.c:1:108: warning: padding size of 'struct (unnamed at mutant.c:1:108)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                           ^
+
+mutant.c:1:99: warning: padding size of 'struct (unnamed at mutant.c:1:99)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                                  ^
+
+mutant.c:1:90: warning: padding size of 'struct (unnamed at mutant.c:1:90)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                         ^
+
+mutant.c:1:81: warning: padding size of 'struct (unnamed at mutant.c:1:81)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                                ^
+
+mutant.c:1:72: warning: padding size of 'struct (unnamed at mutant.c:1:72)' with 1 byte to alignment boundary [-Wpadded]
+
+typedef struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { struct { int c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } c , l ; char ch [ 3 ] ; } pstr ;
+
+                                                                       ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:19: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                  ^~~~~~~~~~~~
+
+                  {           }
+
+mutant.c:2:32: warning: missing field 'l' initializer [-Wmissing-field-initializers]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+                               ^
+
+mutant.c:2:12: warning: no previous extern declaration for non-static variable 'ao' [-Wmissing-variable-declarations]
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+           ^
+
+mutant.c:2:7: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+const pstr ao = { 2 , 2 , "OK" } ;
+
+      ^
+
+clang-trunk: /tmp/tmp.B1HwadcXIH-clang-builder/llvm-project/clang/lib/CodeGen/CGExprConstant.cpp:170: bool {anonymous}::ConstantAggregateBuilder::add(llvm::Constant*, clang::CharUnits, bool): Assertion `(FirstElemToReplace == LastElemToReplace || AllowOverwrite) && "unexpectedly overwriting field"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:3:1: current parser token 'const'
+
+2.	mutant.c:2:12: LLVM IR generation of declaration 'ao'
+
+3.	mutant.c:2:12: Generating code for declaration 'ao'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x39591f4)[0x555fe1ce21f4]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x555fe1ce0014]
+
+clang-trunk(+0x389de48)[0x555fe1c26e48]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7fb2599d33c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7fb25947218b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7fb259451859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7fb259451729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7fb259462f36]
+
+clang-trunk(+0x3cbf666)[0x555fe2048666]
+
+clang-trunk(+0x3cc6013)[0x555fe204f013]
+
+clang-trunk(+0x3cc69ee)[0x555fe204f9ee]
+
+clang-trunk(+0x3cc571c)[0x555fe204e71c]
+
+clang-trunk(_ZN5clang7CodeGen15ConstantEmitter14tryEmitPrivateEPKNS_4ExprENS_8QualTypeE+0xcc)[0x555fe204ea8c]
+
+clang-trunk(+0x3cc5f85)[0x555fe204ef85]
+
+clang-trunk(+0x3cc69ee)[0x555fe204f9ee]
+
+clang-trunk(+0x3cc571c)[0x555fe204e71c]
+
+clang-trunk(_ZN5clang7CodeGen15ConstantEmitter14tryEmitPrivateEPKNS_4ExprENS_8QualTypeE+0xcc)[0x555fe204ea8c]
+
+clang-trunk(+0x3cc5f85)[0x555fe204ef85]
+
+clang-trunk(+0x3cc69ee)[0x555fe204f9ee]
+
+clang-trunk(+0x3cc571c)[0x555fe204e71c]
+
+clang-trunk(_ZN5clang7CodeGen15ConstantEmitter14tryEmitPrivateEPKNS_4ExprENS_8QualTypeE+0xcc)[0x555fe204ea8c]
+
+clang-trunk(+0x3cc5f85)[0x555fe204ef85]
+
+clang-trunk(+0x3cc69ee)[0x555fe204f9ee]
+
+clang-trunk(+0x3cc571c)[0x555fe204e71c]
+
+clang-trunk(_ZN5clang7CodeGen15ConstantEmitter14tryEmitPrivateEPKNS_4ExprENS_8QualTypeE+0xcc)[0x555fe204ea8c]
+
+clang-trunk(+0x3cc5f85)[0x555fe204ef85]
+
+clang-trunk(+0x3cc69ee)[0x555fe204f9ee]
+
+clang-trunk(+0x3cc571c)[0x555fe204e71c]
+
+clang-trunk(_ZN5clang7CodeGen15ConstantEmitter14tryEmitPrivateEPKNS_4ExprENS_8QualTypeE+0xcc)[0x555fe204ea8c]
+
+clang-trunk(+0x3cc5f85)[0x555fe204ef85]
+
+clang-trunk(+0x3cc69ee)[0x555fe204f9ee]
+
+clang-trunk(+0x3cc571c)[0x555fe204e71c]
+
+clang-trunk(_ZN5clang7CodeGen15ConstantEmitter14tryEmitPrivateEPKNS_4ExprENS_8QualTypeE+0xcc)[0x555fe204ea8c]
+
+clang-trunk(+0x3cc5f85)[0x555fe204ef85]
+
+clang-trunk(+0x3cc69ee)[0x555fe204f9ee]
+
+clang-trunk(+0x3cc571c)[0x555fe204e71c]
+
+clang-trunk(_ZN5clang7CodeGen15ConstantEmitter24tryEmitPrivateForVarInitERKNS_7VarDeclE+0x22f)[0x555fe205254f]
+
+clang-trunk(_ZN5clang7CodeGen15ConstantEmitter21tryEmitForInitializerERKNS_7VarDeclE+0x35)[0x555fe20527c5]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule23EmitGlobalVarDefinitionEPKNS_7VarDeclEb+0x245)[0x555fe2112965]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule20EmitGlobalDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x1d1)[0x555fe2135b21]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule10EmitGlobalENS_10GlobalDeclE+0x3eb)[0x555fe213603b]
+
+clang-trunk(+0x3db59fc)[0x555fe213e9fc]
+
+clang-trunk(+0x4ab82d9)[0x555fe2e412d9]
+
+clang-trunk(+0x4aaa4c0)[0x555fe2e334c0]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x204)[0x555fe3ef7174]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x555fe2e3e458]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x555fe26ed9e9]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x555fe2680c36]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x555fe27cb870]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x555fdf5eb696]
+
+clang-trunk(+0x125e9d8)[0x555fdf5e79d8]
+
+clang-trunk(+0x4188bb9)[0x555fe2511bb9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x555fe1c26fcc]
+
+clang-trunk(+0x418935d)[0x555fe251235d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x555fe24e4aeb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x555fe24e5609]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x555fe24f01b9]
+
+clang-trunk(main+0x18af)[0x555fdf51652f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fb2594530b3]
+
+clang-trunk(_start+0x2e)[0x555fdf5e754e]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git ef906573a127cffef7cae75d5155c15a8a2a3a5e)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-7e1bdb.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-7e1bdb.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

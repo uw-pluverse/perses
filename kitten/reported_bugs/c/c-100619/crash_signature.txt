@@ -1,0 +1,4 @@
+internal compiler error: in build_attr_access_from_parms, at c-family/c-attribs.c
+build_attr_access_from_parms(tree_node*, bool)
+finish_decl(tree_node*, unsigned int, tree_node*, tree_node*, tree_node*)
+c_parser_declaration_or_fndef

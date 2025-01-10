@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+set -o nounset
+set -o errexit
+set -o xtrace
+
+readonly TEMP=$(mktemp -d)
+trap "rm -rf ${TEMP} || true" EXIT
+
+readonly FILE="${TEMP}/t.c"
+
+cat > "${FILE}" << EOF
+#include <stdio.h>
+
+int main() {
+  char array[] = "$@";
+  printf("%s", array);
+  return 0;
+}
+EOF
+
+readonly OUTPUT_FILE="${@: -1}"
+gcc "${FILE}" -o "${OUTPUT_FILE}"
+
+

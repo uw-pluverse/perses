@@ -1,0 +1,3 @@
+llvm::LazyCallGraph::SCC& updateCGAndAnalysisManagerForPass(llvm::LazyCallGraph&, llvm::LazyCallGraph::SCC&, llvm::LazyCallGraph::Node&, llvm::CGSCCAnalysisManager&, llvm::CGSCCUpdateResult&, llvm::FunctionAnalysisManager&, bool): Assertion `(E || !FunctionPass) && "No function transformations should introduce *new* " "call edges! Any new calls should be modeled as " "promoted existing ref edges!"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

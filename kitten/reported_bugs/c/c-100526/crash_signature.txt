@@ -1,0 +1,4 @@
+internal compiler error: Segmentation fault
+crash_signal
+c_parser_gimple_declaration
+c_parser_gimple_compound_statement

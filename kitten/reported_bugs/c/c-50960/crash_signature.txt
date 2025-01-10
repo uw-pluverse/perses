@@ -1,0 +1,3 @@
+double llvm::APFloat::convertToDouble() const: Assertion `getSemantics().isRepresentableBy(semIEEEdouble) && "Float semantics is not representable by IEEEdouble"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

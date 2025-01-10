@@ -1,0 +1,6 @@
+thread 'rustc' panicked at 'cannot use the `#[rustc_if_this_changed]` or `#[rustc_then_this_would_need]` annotations without supplying `-Z query-dep-graph`'
+error: internal compiler error: unexpected panic
+note: the compiler unexpectedly panicked. this is a bug.
+thread '<unnamed>' panicked at 'assertion failed: `(left == right)`
+left: `LLVMing`
+right: `Codegenning`'

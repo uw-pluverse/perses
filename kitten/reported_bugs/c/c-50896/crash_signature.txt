@@ -1,0 +1,3 @@
+clang::CodeGen::Address clang::CodeGen::CodeGenFunction::EmitPointerWithAlignment(const clang::Expr*, clang::CodeGen::LValueBaseInfo*, clang::CodeGen::TBAAAccessInfo*): Assertion `E->getType()->isPointerType() || E->getType()->isObjCObjectPointerType()' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

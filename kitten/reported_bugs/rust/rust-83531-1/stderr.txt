@@ -1,0 +1,64 @@
+error[E0425]: cannot find value `rust` in this scope
+
+ --> mutant.rs:5:30
+
+  |
+
+5 | let array = [ 0u64 ] ; break rust ;
+
+  |                              ^^^^ not found in this scope
+
+
+
+error[E0268]: `break` outside of a loop
+
+ --> mutant.rs:5:24
+
+  |
+
+5 | let array = [ 0u64 ] ; break rust ;
+
+  |                        ^^^^^^^^^^ cannot `break` outside of a loop
+
+
+
+error: the `min` method cannot be invoked on a trait object
+
+    --> mutant.rs:2:5
+
+     |
+
+2    | t . min ( ) . unwrap ( )
+
+     |     ^^^
+
+     |
+
+     = note: you need `&mut dyn Iterator<Item = &u64>` instead of `&dyn Iterator<Item = &u64>`
+
+
+
+error: internal compiler error: It looks like you're trying to break rust; would you like some ICE?
+
+
+
+note: the compiler expectedly panicked. this is a feature.
+
+
+
+note: we would appreciate a joke overview: https://github.com/rust-lang/rust/issues/43162#issuecomment-320764675
+
+
+
+note: rustc 1.53.0-nightly (52e3dffa5 2021-03-25) running on x86_64-unknown-linux-gnu
+
+
+
+error: aborting due to 4 previous errors
+
+
+
+Some errors have detailed explanations: E0268, E0425.
+
+For more information about an error, try `rustc --explain E0268`.
+

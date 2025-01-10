@@ -1,0 +1,13 @@
+language: "GO"
+seedFolders:
+  - path: "kitten/test_data/go"
+    fileExtentions: [".go"]
+
+programsUnderTest:
+  - command: "go-trunk"
+    flagsToTest:
+      - flags: ["tool", "compile", "-gendwarfinl=3", "-dwarf", "-dwarflocationlists"]
+    versionFlags:
+      flags: ["tool", "compile",  "-V"]
+    crashDetectorClassName: "org.perses.fuzzer.compilers.c.GccCrashDetector"
+

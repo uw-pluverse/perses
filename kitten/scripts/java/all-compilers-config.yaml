@@ -1,0 +1,12 @@
+language: "JAVA"
+seedFolders:
+  - path: "kitten/test_data/java/"
+    fileExtentions: [".java"]
+
+programsUnderTest:
+  - command: "javac"
+    flagsToTest:
+      - flags: []
+    versionFlags:
+      flags: ["--version"]
+    crashDetectorClassName: "org.perses.fuzzer.compilers.javac.JavacCrashDetector"

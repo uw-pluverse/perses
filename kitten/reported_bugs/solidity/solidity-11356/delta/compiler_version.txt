@@ -1,0 +1,4 @@
+solc, the solidity compiler commandline interface
+
+Version: 0.8.5-develop.2021.5.7+commit.518629a8.Linux.clang
+

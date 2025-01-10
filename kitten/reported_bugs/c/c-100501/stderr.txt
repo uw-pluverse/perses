@@ -1,0 +1,126 @@
+mutant.c: In function ‘foo’:
+
+mutant.c:4:42: error: invalid application of ‘sizeof’ to incomplete type ‘struct one_ms’
+
+    4 | __asm__ ( "" : : "m" ( ( { if ( sizeof ( struct one_ms ) != 8 )
+
+      |                                          ^~~~~~
+
+mutant.c:5:1: warning: implicit declaration of function ‘abort’ [-Wimplicit-function-declaration]
+
+    5 | abort ( ) ; } ) ) ) ;
+
+      | ^~~~~
+
+mutant.c:1:1: note: include ‘<stdlib.h>’ or provide a declaration of ‘abort’
+
+  +++ |+#include <stdlib.h>
+
+    1 | void
+
+mutant.c:5:1: warning: incompatible implicit declaration of built-in function ‘abort’ [-Wbuiltin-declaration-mismatch]
+
+    5 | abort ( ) ; } ) ) ) ;
+
+      | ^~~~~
+
+mutant.c:5:1: note: include ‘<stdlib.h>’ or provide a declaration of ‘abort’
+
+mutant.c:4:31: internal compiler error: Segmentation fault
+
+    4 | __asm__ ( "" : : "m" ( ( { if ( sizeof ( struct one_ms ) != 8 )
+
+      |                        ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    5 | abort ( ) ; } ) ) ) ;
+
+      | ~~~~~~~~~~~~~~~                
+
+0xef73e3 crash_signal
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/toplev.c:327
+
+0xbead04 is_gimple_variable
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-expr.h:84
+
+0xbead04 is_gimple_id
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-expr.h:95
+
+0xbead04 is_gimple_addressable
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-expr.h:122
+
+0xbead04 is_gimple_lvalue(tree_node*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-expr.c:595
+
+0xc2742d gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimplify.c:15038
+
+0xc30a7d gimplify_asm_expr
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimplify.c:6506
+
+0xc26765 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimplify.c:14416
+
+0xc28fca gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc265cb gimplify_statement_list
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimplify.c:1879
+
+0xc265cb gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimplify.c:14528
+
+0xc28fca gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc297fe gimplify_bind_expr
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimplify.c:1421
+
+0xc25a33 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimplify.c:14284
+
+0xc28fca gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc2a5c3 gimplify_body(tree_node*, bool)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimplify.c:15328
+
+0xc2aa11 gimplify_function_tree(tree_node*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimplify.c:15482
+
+0xa7e737 cgraph_node::analyze()
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cgraphunit.c:670
+
+0xa81641 analyze_functions
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cgraphunit.c:1234
+
+0xa82111 symbol_table::finalize_compilation_unit()
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cgraphunit.c:2508
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

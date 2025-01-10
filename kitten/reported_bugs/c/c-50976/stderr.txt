@@ -1,0 +1,130 @@
+mutant.c:2:23: error: initializer element is not a compile-time constant
+
+static const char b = a [ 27 ] ;
+
+                      ^~~~~~~~
+
+mutant.c:4:109: warning: implicit declaration of function 'bar' is invalid in C99 [-Wimplicit-function-declaration]
+
+static const struct S e [ ] = { { "01234567890123456789012345678" , "90123456789012345678901234567" } , b = bar ( a ) } ;
+
+                                                                                                            ^
+
+mutant.c:4:107: error: cannot assign to variable 'b' with const-qualified type 'const char'
+
+static const struct S e [ ] = { { "01234567890123456789012345678" , "90123456789012345678901234567" } , b = bar ( a ) } ;
+
+                                                                                                        ~ ^
+
+mutant.c:2:19: note: variable 'b' declared const here
+
+static const char b = a [ 27 ] ;
+
+~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+
+clang-trunk: /tmp/tmp.M5Z1vtu79t-clang-builder/llvm-project/clang/lib/Sema/SemaDecl.cpp:11350: bool clang::Sema::CheckForConstantInitializer(clang::Expr*, clang::QualType): Assertion `Init->containsErrors() && "Dependent code should only occur in error-recovery path."' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:5:41: current parser token ';'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x398e264)[0x55e62eb40264]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x55e62eb3e084]
+
+clang-trunk(+0x38d2ec8)[0x55e62ea84ec8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7fd4b83893c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7fd4b7e2818b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7fd4b7e07859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7fd4b7e07729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7fd4b7e18f36]
+
+clang-trunk(_ZN5clang4Sema27CheckForConstantInitializerEPNS_4ExprENS_8QualTypeE+0xed)[0x55e630fec9ed]
+
+clang-trunk(_ZN5clang4Sema20AddInitializerToDeclEPNS_4DeclEPNS_4ExprEb+0x11c4)[0x55e631034494]
+
+clang-trunk(_ZN5clang6Parser44ParseDeclarationAfterDeclaratorAndAttributesERNS_10DeclaratorERKNS0_18ParsedTemplateInfoEPNS0_12ForRangeInitE+0x636)[0x55e630d89926]
+
+clang-trunk(_ZN5clang6Parser14ParseDeclGroupERNS_15ParsingDeclSpecENS_17DeclaratorContextEPNS_14SourceLocationEPNS0_12ForRangeInitE+0x4db)[0x55e630d9c80b]
+
+clang-trunk(_ZN5clang6Parser30ParseDeclOrFunctionDefInternalERNS_25ParsedAttributesWithRangeERNS_15ParsingDeclSpecENS_15AccessSpecifierE+0x226)[0x55e630d6a916]
+
+clang-trunk(+0x5bb8f01)[0x55e630d6af01]
+
+clang-trunk(_ZN5clang6Parser24ParseExternalDeclarationERNS_25ParsedAttributesWithRangeEPNS_15ParsingDeclSpecE+0x217)[0x55e630d71707]
+
+clang-trunk(_ZN5clang6Parser17ParseTopLevelDeclERNS_9OpaquePtrINS_12DeclGroupRefEEEb+0x1ce)[0x55e630d72c9e]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x219)[0x55e630d654e9]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x55e62fcac908]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55e62f552d99]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55e62f4e5db6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x55e62f630a80]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x55e62c429946]
+
+clang-trunk(+0x1273c88)[0x55e62c425c88]
+
+clang-trunk(+0x41c45f9)[0x55e62f3765f9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x55e62ea8504c]
+
+clang-trunk(+0x41c4d9d)[0x55e62f376d9d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55e62f34952b]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x55e62f34a049]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x55e62f354bf9]
+
+clang-trunk(main+0x18af)[0x55e62c35451f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fd4b7e090b3]
+
+clang-trunk(_start+0x2e)[0x55e62c4257fe]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 4aa1c141bd674564aaee83516b7e338aa3aae9e3)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-381582.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-381582.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

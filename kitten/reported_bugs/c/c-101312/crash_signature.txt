@@ -1,0 +1,4 @@
+internal compiler error: ‘verify_type’ failed
+verify_type(tree_node const*)
+gen_type_die_with_usage
+gen_type_die

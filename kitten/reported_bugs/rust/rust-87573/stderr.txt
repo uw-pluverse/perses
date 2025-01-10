@@ -1,0 +1,228 @@
+warning: unreachable block in `while` expression
+
+  --> mutant.rs:24:29
+
+   |
+
+24 | let y = 'l : while break 'l { } ;
+
+   |                    -------- ^^^ unreachable block in `while` expression
+
+   |                    |
+
+   |                    any code following this expression is unreachable
+
+   |
+
+   = note: `#[warn(unreachable_code)]` on by default
+
+
+
+warning: unused variable: `x`
+
+  --> mutant.rs:21:5
+
+   |
+
+21 | let x = while false {
+
+   |     ^ help: if this is intentional, prefix it with an underscore: `_x`
+
+   |
+
+   = note: `#[warn(unused_variables)]` on by default
+
+
+
+warning: unused variable: `y`
+
+  --> mutant.rs:24:5
+
+   |
+
+24 | let y = 'l : while break 'l { } ;
+
+   |     ^ help: if this is intentional, prefix it with an underscore: `_y`
+
+
+
+thread 'rustc' panicked at 'index out of bounds: the len is 0 but the index is 0', /rustc/2faabf579323f5252329264cc53ba9ff803429a3/compiler/rustc_middle/src/ty/subst.rs:303:43
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.56.0-nightly (2faabf579 2021-07-27) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [resolve_instance] resolving instance `main`
+
+#1 [collect_and_partition_mono_items] collect_and_partition_mono_items
+
+end of query stack
+
+warning: 3 warnings emitted
+
+
+
+error: internal compiler error: broken MIR in DefId(0:13 ~ mutant[d0c6]::main) (NoSolution): could not prove Binder(TraitPredicate(<bool as Copy>), [])
+
+  |
+
+  = note: delayed at compiler/rustc_mir/src/borrow_check/type_check/mod.rs:299:27
+
+
+
+thread 'rustc' panicked at 'no errors encountered even though `delay_span_bug` issued', compiler/rustc_errors/src/lib.rs:1050:13
+
+stack backtrace:
+
+   0:     0x7face499ef50 - std::backtrace_rs::backtrace::libunwind::trace::h99dbb39dca18857d
+
+                               at /rustc/2faabf579323f5252329264cc53ba9ff803429a3/library/std/src/../../backtrace/src/backtrace/libunwind.rs:90:5
+
+   1:     0x7face499ef50 - std::backtrace_rs::backtrace::trace_unsynchronized::h832861927e9cfedf
+
+                               at /rustc/2faabf579323f5252329264cc53ba9ff803429a3/library/std/src/../../backtrace/src/backtrace/mod.rs:66:5
+
+   2:     0x7face499ef50 - std::sys_common::backtrace::_print_fmt::h3d18154c77dcf310
+
+                               at /rustc/2faabf579323f5252329264cc53ba9ff803429a3/library/std/src/sys_common/backtrace.rs:67:5
+
+   3:     0x7face499ef50 - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::he312f4ad5b9bb346
+
+                               at /rustc/2faabf579323f5252329264cc53ba9ff803429a3/library/std/src/sys_common/backtrace.rs:46:22
+
+   4:     0x7face4a0cbbc - core::fmt::write::h9a6d9c74526a6c1b
+
+                               at /rustc/2faabf579323f5252329264cc53ba9ff803429a3/library/core/src/fmt/mod.rs:1115:17
+
+   5:     0x7face4990835 - std::io::Write::write_fmt::h6aced00850e8186f
+
+                               at /rustc/2faabf579323f5252329264cc53ba9ff803429a3/library/std/src/io/mod.rs:1665:15
+
+   6:     0x7face49a2c6b - std::sys_common::backtrace::_print::h65d996766de40da4
+
+                               at /rustc/2faabf579323f5252329264cc53ba9ff803429a3/library/std/src/sys_common/backtrace.rs:49:5
+
+   7:     0x7face49a2c6b - std::sys_common::backtrace::print::h40df9727e635f303
+
+                               at /rustc/2faabf579323f5252329264cc53ba9ff803429a3/library/std/src/sys_common/backtrace.rs:36:9
+
+   8:     0x7face49a2c6b - std::panicking::default_hook::{{closure}}::hd2da4327dea91a51
+
+                               at /rustc/2faabf579323f5252329264cc53ba9ff803429a3/library/std/src/panicking.rs:208:50
+
+   9:     0x7face49a2741 - std::panicking::default_hook::h3d55120ad6ada158
+
+                               at /rustc/2faabf579323f5252329264cc53ba9ff803429a3/library/std/src/panicking.rs:225:9
+
+  10:     0x7face517f611 - rustc_driver::DEFAULT_HOOK::{{closure}}::{{closure}}::h6c854bb74ca75dad
+
+  11:     0x7face49a3499 - std::panicking::rust_panic_with_hook::hf85dd0bb545e3b55
+
+                               at /rustc/2faabf579323f5252329264cc53ba9ff803429a3/library/std/src/panicking.rs:626:17
+
+  12:     0x7face49a2f57 - std::panicking::begin_panic_handler::{{closure}}::h736ae969434da9fa
+
+                               at /rustc/2faabf579323f5252329264cc53ba9ff803429a3/library/std/src/panicking.rs:519:13
+
+  13:     0x7face499f42c - std::sys_common::backtrace::__rust_end_short_backtrace::h6133bb80b1d6c3e0
+
+                               at /rustc/2faabf579323f5252329264cc53ba9ff803429a3/library/std/src/sys_common/backtrace.rs:141:18
+
+  14:     0x7face49a2eb9 - rust_begin_unwind
+
+                               at /rustc/2faabf579323f5252329264cc53ba9ff803429a3/library/std/src/panicking.rs:515:5
+
+  15:     0x7face496beab - std::panicking::begin_panic_fmt::hf70e90a601287d8b
+
+                               at /rustc/2faabf579323f5252329264cc53ba9ff803429a3/library/std/src/panicking.rs:457:5
+
+  16:     0x7face75c53d9 - rustc_errors::HandlerInner::flush_delayed::h400415fe09e32e42
+
+  17:     0x7face75c3e3d - <rustc_errors::HandlerInner as core::ops::drop::Drop>::drop::h99b093f7064b7696
+
+  18:     0x7face6c808e6 - core::ptr::drop_in_place<rustc_session::parse::ParseSess>::hd2c66b9140bd0417
+
+  19:     0x7face6c82bfe - <alloc::rc::Rc<T> as core::ops::drop::Drop>::drop::hd322edc4934bdbe3
+
+  20:     0x7face6c5657d - core::ptr::drop_in_place<rustc_interface::interface::Compiler>::hba47a069d6e06a26
+
+  21:     0x7face6c55e3c - rustc_span::with_source_map::hdc8c4c7d7611fe77
+
+  22:     0x7face6c680ba - rustc_interface::interface::create_compiler_and_run::hbe7a78745769ff96
+
+  23:     0x7face6c5ae19 - scoped_tls::ScopedKey<T>::set::ha164143a03306a1b
+
+  24:     0x7face6c56eba - std::sys_common::backtrace::__rust_begin_short_backtrace::h4dd3c27220dda569
+
+  25:     0x7face6c56335 - core::ops::function::FnOnce::call_once{{vtable.shim}}::h546778848e9193e6
+
+  26:     0x7face49afa27 - <alloc::boxed::Box<F,A> as core::ops::function::FnOnce<Args>>::call_once::h09f167e08fc945ff
+
+                               at /rustc/2faabf579323f5252329264cc53ba9ff803429a3/library/alloc/src/boxed.rs:1572:9
+
+  27:     0x7face49afa27 - <alloc::boxed::Box<F,A> as core::ops::function::FnOnce<Args>>::call_once::hf814fe85eeb118e0
+
+                               at /rustc/2faabf579323f5252329264cc53ba9ff803429a3/library/alloc/src/boxed.rs:1572:9
+
+  28:     0x7face49afa27 - std::sys::unix::thread::Thread::new::thread_start::hb71b17934c5f5e68
+
+                               at /rustc/2faabf579323f5252329264cc53ba9ff803429a3/library/std/src/sys/unix/thread.rs:91:17
+
+  29:     0x7face48dc609 - start_thread
+
+  30:     0x7face47f0293 - clone
+
+  31:                0x0 - <unknown>
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.56.0-nightly (2faabf579 2021-07-27) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+end of query stack
+
+thread panicked while panicking. aborting.
+
+timeout: the monitored command dumped core
+

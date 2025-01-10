@@ -1,0 +1,146 @@
+mutant.c:1:17: warning: identifier '_t' is reserved because it starts with '_' at global scope [-Wreserved-identifier]
+
+static unsigned _t = 0 ;
+
+                ^
+
+mutant.c:3:14: warning: declaration of 'struct ucontext' will not be visible outside of this function [-Wvisibility]
+
+foo ( struct ucontext * oucp )
+
+             ^
+
+mutant.c:3:25: warning: unused parameter 'oucp' [-Wunused-parameter]
+
+foo ( struct ucontext * oucp )
+
+                        ^
+
+mutant.c:3:1: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+foo ( struct ucontext * oucp )
+
+^
+
+mutant.c:2:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void __attribute__ ( ( interrupt ) )
+
+^
+
+static 
+
+Attribute 'byval' does not support unsized types!
+
+void (%struct.ucontext*)* @foo
+
+in function foo
+
+fatal error: error in backend: Broken function found, compilation aborted!
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	Code generation
+
+3.	Running pass 'Function Pass Manager' on module 'mutant.c'.
+
+4.	Running pass 'Module Verifier' on function '@foo'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x3950274)[0x56278e4f1274]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x56278e4ef094]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext10HandleExitEi+0xa3)[0x56278e436193]
+
+clang-trunk(_ZN4llvm3sys7Process4ExitEib+0x22)[0x56278e4e7302]
+
+clang-trunk(+0x125f897)[0x56278be00897]
+
+clang-trunk(_ZN4llvm18report_fatal_errorERKNS_5TwineEb+0x7c)[0x56278e43d3ac]
+
+clang-trunk(+0x389c57e)[0x56278e43d57e]
+
+clang-trunk(+0x30d6986)[0x56278dc77986]
+
+clang-trunk(_ZN4llvm13FPPassManager13runOnFunctionERNS_8FunctionE+0x365)[0x56278dbe90c5]
+
+clang-trunk(_ZN4llvm13FPPassManager11runOnModuleERNS_6ModuleE+0x39)[0x56278dbe9309]
+
+clang-trunk(_ZN4llvm6legacy15PassManagerImpl3runERNS_6ModuleE+0x382)[0x56278dbea402]
+
+clang-trunk(+0x3c823c2)[0x56278e8233c2]
+
+clang-trunk(_ZN5clang17EmitBackendOutputERNS_17DiagnosticsEngineERKNS_19HeaderSearchOptionsERKNS_14CodeGenOptionsERKNS_13TargetOptionsERKNS_11LangOptionsEN4llvm9StringRefEPNSE_6ModuleENS_13BackendActionESt10unique_ptrINSE_17raw_pwrite_streamESt14default_deleteISK_EE+0x47d)[0x56278e824e7d]
+
+clang-trunk(+0x4aae44f)[0x56278f64f44f]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x429)[0x562790706e49]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x56278f64df98]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x56278eefce79]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x56278ee900c6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x56278efdad00]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x56278be01b06]
+
+clang-trunk(+0x125ce48)[0x56278bdfde48]
+
+clang-trunk(+0x417fca9)[0x56278ed20ca9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x56278e43605c]
+
+clang-trunk(+0x418044d)[0x56278ed2144d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x56278ecf3bdb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x56278ecf46f9]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x56278ecff2a9]
+
+clang-trunk(main+0x18af)[0x56278bd2c50f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f5400b430b3]
+
+clang-trunk(_start+0x2e)[0x56278bdfd9be]
+
+clang-13: error: clang frontend command failed with exit code 70 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 24d48d45cc302a6abeab139d87ba87f7a2335323)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-0e8033.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-0e8033.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

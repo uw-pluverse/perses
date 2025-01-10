@@ -1,0 +1,128 @@
+mutant.c:1:52: error: use of undeclared identifier 'VariableWithParentheses'
+
+extern int b __attribute__ ( ( alias ( "a" ) ) ) ( VariableWithParentheses ) ;
+
+                                                   ^
+
+mutant.c:1:12: warning: 'extern' variable has an initializer [-Wextern-initializer]
+
+extern int b __attribute__ ( ( alias ( "a" ) ) ) ( VariableWithParentheses ) ;
+
+           ^
+
+mutant.c:1:12: warning: no previous extern declaration for non-static variable 'b' [-Wmissing-variable-declarations]
+
+mutant.c:1:8: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+extern int b __attribute__ ( ( alias ( "a" ) ) ) ( VariableWithParentheses ) ;
+
+       ^
+
+clang-trunk: /tmp/tmp.tctVHsQetE-clang-builder/llvm-project/clang/lib/Sema/SemaDecl.cpp:6481: void checkAttributesAfterMerging(clang::Sema&, clang::NamedDecl&): Assertion `VD->isThisDeclarationADefinition() && !VD->isExternallyVisible() && "Broken AliasAttr handled late!"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:1:78: current parser token ';'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x3a4c314)[0x558543fcf314]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x558543fcd114]
+
+clang-trunk(+0x398dd18)[0x558543f10d18]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f694c2063c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f694bca518b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f694bc84859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f694bc84729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f694bc95f36]
+
+clang-trunk(+0x5f467ba)[0x5585464c97ba]
+
+clang-trunk(_ZN5clang4Sema19FinalizeDeclarationEPNS_4DeclE+0xc4)[0x5585464d1fb4]
+
+clang-trunk(_ZN5clang6Parser44ParseDeclarationAfterDeclaratorAndAttributesERNS_10DeclaratorERKNS0_18ParsedTemplateInfoEPNS0_12ForRangeInitE+0x222)[0x558546237e72]
+
+clang-trunk(_ZN5clang6Parser14ParseDeclGroupERNS_15ParsingDeclSpecENS_17DeclaratorContextEPNS_14SourceLocationEPNS0_12ForRangeInitE+0x4db)[0x55854624b16b]
+
+clang-trunk(_ZN5clang6Parser30ParseDeclOrFunctionDefInternalERNS_25ParsedAttributesWithRangeERNS_15ParsingDeclSpecENS_15AccessSpecifierE+0x226)[0x5585462191a6]
+
+clang-trunk(+0x5c96791)[0x558546219791]
+
+clang-trunk(_ZN5clang6Parser24ParseExternalDeclarationERNS_25ParsedAttributesWithRangeEPNS_15ParsingDeclSpecE+0x217)[0x55854621ffb7]
+
+clang-trunk(_ZN5clang6Parser17ParseTopLevelDeclERNS_9OpaquePtrINS_12DeclGroupRefEEEb+0x1ce)[0x55854622154e]
+
+clang-trunk(_ZN5clang6Parser22ParseFirstTopLevelDeclERNS_9OpaquePtrINS_12DeclGroupRefEEE+0x39)[0x5585462218f9]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x1ea)[0x558546213d4a]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x55854514e958]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x5585449f0249]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x14e)[0x558544985efe]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x558544ace540]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7fd)[0x558541852e8d]
+
+clang-trunk(+0x12cc1d8)[0x55854184f1d8]
+
+clang-trunk(+0x42902b9)[0x5585448132b9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x558543f10e9c]
+
+clang-trunk(+0x4290a6d)[0x558544813a6d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x5585447e5f7b]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x5585447e6a99]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x5585447f1939]
+
+clang-trunk(main+0x18a6)[0x55854177b566]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f694bc860b3]
+
+clang-trunk(_start+0x2e)[0x55854184ed4e]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git cb53febe3d2f9b8e648d12b50915086d5774bcec)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-66f218.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-66f218.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

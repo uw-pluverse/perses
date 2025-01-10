@@ -1,0 +1,3 @@
+typename llvm::cast_retty<X, Y*>::ret_type llvm::cast(Y*) [with X = llvm::MCTargetExpr; Y = const llvm::MCExpr; typename llvm::cast_retty<X, Y*>::ret_type = const llvm::MCTargetExpr*]: Assertion `isa<X>(Val) && "cast<Ty>() argument of incompatible type!"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

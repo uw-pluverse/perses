@@ -1,0 +1,232 @@
+In file included from mutant.c:1:
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/arm_mve.h:15:2: error: "MVE support not enabled"
+
+#error "MVE support not enabled"
+
+ ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/arm_mve.h:25:24: error: '__neon_vector_type__' attribute is not supported on targets missing 'neon' or 'mve'; specify an appropriate -march= or -mcpu=
+
+typedef __attribute__((__neon_vector_type__(8), __clang_arm_mve_strict_polymorphism)) int16_t int16x8_t;
+
+                       ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/arm_mve.h:25:49: error: '__clang_arm_mve_strict_polymorphism' attribute can only be applied to an MVE/NEON vector type
+
+typedef __attribute__((__neon_vector_type__(8), __clang_arm_mve_strict_polymorphism)) int16_t int16x8_t;
+
+                                                ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/arm_mve.h:28:24: error: '__neon_vector_type__' attribute is not supported on targets missing 'neon' or 'mve'; specify an appropriate -march= or -mcpu=
+
+typedef __attribute__((__neon_vector_type__(4), __clang_arm_mve_strict_polymorphism)) int32_t int32x4_t;
+
+                       ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/arm_mve.h:28:49: error: '__clang_arm_mve_strict_polymorphism' attribute can only be applied to an MVE/NEON vector type
+
+typedef __attribute__((__neon_vector_type__(4), __clang_arm_mve_strict_polymorphism)) int32_t int32x4_t;
+
+                                                ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/arm_mve.h:31:24: error: '__neon_vector_type__' attribute is not supported on targets missing 'neon' or 'mve'; specify an appropriate -march= or -mcpu=
+
+typedef __attribute__((__neon_vector_type__(2), __clang_arm_mve_strict_polymorphism)) int64_t int64x2_t;
+
+                       ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/arm_mve.h:31:49: error: '__clang_arm_mve_strict_polymorphism' attribute can only be applied to an MVE/NEON vector type
+
+typedef __attribute__((__neon_vector_type__(2), __clang_arm_mve_strict_polymorphism)) int64_t int64x2_t;
+
+                                                ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/arm_mve.h:34:24: error: '__neon_vector_type__' attribute is not supported on targets missing 'neon' or 'mve'; specify an appropriate -march= or -mcpu=
+
+typedef __attribute__((__neon_vector_type__(16), __clang_arm_mve_strict_polymorphism)) int8_t int8x16_t;
+
+                       ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/arm_mve.h:34:50: error: '__clang_arm_mve_strict_polymorphism' attribute can only be applied to an MVE/NEON vector type
+
+typedef __attribute__((__neon_vector_type__(16), __clang_arm_mve_strict_polymorphism)) int8_t int8x16_t;
+
+                                                 ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/arm_mve.h:37:24: error: '__neon_vector_type__' attribute is not supported on targets missing 'neon' or 'mve'; specify an appropriate -march= or -mcpu=
+
+typedef __attribute__((__neon_vector_type__(8), __clang_arm_mve_strict_polymorphism)) uint16_t uint16x8_t;
+
+                       ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/arm_mve.h:37:49: error: '__clang_arm_mve_strict_polymorphism' attribute can only be applied to an MVE/NEON vector type
+
+typedef __attribute__((__neon_vector_type__(8), __clang_arm_mve_strict_polymorphism)) uint16_t uint16x8_t;
+
+                                                ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/arm_mve.h:40:24: error: '__neon_vector_type__' attribute is not supported on targets missing 'neon' or 'mve'; specify an appropriate -march= or -mcpu=
+
+typedef __attribute__((__neon_vector_type__(4), __clang_arm_mve_strict_polymorphism)) uint32_t uint32x4_t;
+
+                       ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/arm_mve.h:40:49: error: '__clang_arm_mve_strict_polymorphism' attribute can only be applied to an MVE/NEON vector type
+
+typedef __attribute__((__neon_vector_type__(4), __clang_arm_mve_strict_polymorphism)) uint32_t uint32x4_t;
+
+                                                ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/arm_mve.h:43:24: error: '__neon_vector_type__' attribute is not supported on targets missing 'neon' or 'mve'; specify an appropriate -march= or -mcpu=
+
+typedef __attribute__((__neon_vector_type__(2), __clang_arm_mve_strict_polymorphism)) uint64_t uint64x2_t;
+
+                       ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/arm_mve.h:43:49: error: '__clang_arm_mve_strict_polymorphism' attribute can only be applied to an MVE/NEON vector type
+
+typedef __attribute__((__neon_vector_type__(2), __clang_arm_mve_strict_polymorphism)) uint64_t uint64x2_t;
+
+                                                ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/arm_mve.h:46:24: error: '__neon_vector_type__' attribute is not supported on targets missing 'neon' or 'mve'; specify an appropriate -march= or -mcpu=
+
+typedef __attribute__((__neon_vector_type__(16), __clang_arm_mve_strict_polymorphism)) uint8_t uint8x16_t;
+
+                       ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/arm_mve.h:46:50: error: '__clang_arm_mve_strict_polymorphism' attribute can only be applied to an MVE/NEON vector type
+
+typedef __attribute__((__neon_vector_type__(16), __clang_arm_mve_strict_polymorphism)) uint8_t uint8x16_t;
+
+                                                 ^
+
+mutant.c:4:11: error: __bf16 is not supported on this target
+
+{ typedef __bf16 v32bf __attribute__ ( ( vector_size ( 64 ) ) ) ;
+
+          ^
+
+clang-trunk: /tmp/tmp.nPuVKAIgXI-clang-builder/llvm-project/clang/lib/AST/ASTContext.cpp:2394: clang::TypeInfo clang::ASTContext::getTypeInfoImpl(const clang::Type*) const: Assertion `llvm::isPowerOf2_32(Align) && "Alignment must be power of 2"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:4:65: current parser token ';'
+
+2.	mutant.c:4:1: parsing function body 'foo'
+
+3.	mutant.c:4:1: in compound statement ('{}')
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x3950274)[0x562812b69274]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x562812b67094]
+
+clang-trunk(+0x3894ed8)[0x562812aaded8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7fa2f7f113c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7fa2f79b018b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7fa2f798f859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7fa2f798f729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7fa2f79a0f36]
+
+clang-trunk(_ZNK5clang10ASTContext15getTypeInfoImplEPKNS_4TypeE+0x1cf)[0x562815a21d1f]
+
+clang-trunk(_ZNK5clang10ASTContext11getTypeInfoEPKNS_4TypeE+0xdf)[0x562815a1261f]
+
+clang-trunk(_ZN5clang4Sema15BuildVectorTypeENS_8QualTypeEPNS_4ExprENS_14SourceLocationE+0x349)[0x5628157c5949]
+
+clang-trunk(+0x65acaf9)[0x5628157c5af9]
+
+clang-trunk(+0x65b2ef7)[0x5628157cbef7]
+
+clang-trunk(+0x65c13fb)[0x5628157da3fb]
+
+clang-trunk(_ZN5clang4Sema20GetTypeForDeclaratorERNS_10DeclaratorEPNS_5ScopeE+0x12d)[0x5628157dc84d]
+
+clang-trunk(_ZN5clang4Sema16HandleDeclaratorEPNS_5ScopeERNS_10DeclaratorEN4llvm15MutableArrayRefIPNS_21TemplateParameterListEEE+0x1c6)[0x56281505dbf6]
+
+clang-trunk(_ZN5clang4Sema15ActOnDeclaratorEPNS_5ScopeERNS_10DeclaratorE+0x19)[0x56281505ed49]
+
+clang-trunk(_ZN5clang6Parser44ParseDeclarationAfterDeclaratorAndAttributesERNS_10DeclaratorERKNS0_18ParsedTemplateInfoEPNS0_12ForRangeInitE+0x1e0)[0x562814da2c20]
+
+clang-trunk(_ZN5clang6Parser14ParseDeclGroupERNS_15ParsingDeclSpecENS_17DeclaratorContextEPNS_14SourceLocationEPNS0_12ForRangeInitE+0x4db)[0x562814db5f5b]
+
+clang-trunk(_ZN5clang6Parser22ParseSimpleDeclarationENS_17DeclaratorContextERNS_14SourceLocationERNS_25ParsedAttributesWithRangeEbPNS0_12ForRangeInitEPS2_+0x238)[0x562814db6ab8]
+
+clang-trunk(_ZN5clang6Parser16ParseDeclarationENS_17DeclaratorContextERNS_14SourceLocationERNS_25ParsedAttributesWithRangeEPS2_+0x102)[0x562814db6f22]
+
+clang-trunk(_ZN5clang6Parser42ParseStatementOrDeclarationAfterAttributesERN4llvm11SmallVectorIPNS_4StmtELj32EEENS0_17ParsedStmtContextEPNS_14SourceLocationERNS_25ParsedAttributesWithRangeE+0x2f5)[0x562814e3f055]
+
+clang-trunk(_ZN5clang6Parser27ParseStatementOrDeclarationERN4llvm11SmallVectorIPNS_4StmtELj32EEENS0_17ParsedStmtContextEPNS_14SourceLocationE+0x9a)[0x562814e4003a]
+
+clang-trunk(_ZN5clang6Parser26ParseCompoundStatementBodyEb+0x5f9)[0x562814e40fb9]
+
+clang-trunk(_ZN5clang6Parser26ParseFunctionStatementBodyEPNS_4DeclERNS0_10ParseScopeE+0xda)[0x562814e435ca]
+
+clang-trunk(_ZN5clang6Parser23ParseFunctionDefinitionERNS_17ParsingDeclaratorERKNS0_18ParsedTemplateInfoEPNS0_18LateParsedAttrListE+0x682)[0x562814d89862]
+
+clang-trunk(_ZN5clang6Parser14ParseDeclGroupERNS_15ParsingDeclSpecENS_17DeclaratorContextEPNS_14SourceLocationEPNS0_12ForRangeInitE+0x740)[0x562814db61c0]
+
+clang-trunk(_ZN5clang6Parser30ParseDeclOrFunctionDefInternalERNS_25ParsedAttributesWithRangeERNS_15ParsingDeclSpecENS_15AccessSpecifierE+0x226)[0x562814d84066]
+
+clang-trunk(+0x5b6b651)[0x562814d84651]
+
+clang-trunk(_ZN5clang6Parser24ParseExternalDeclarationERNS_25ParsedAttributesWithRangeEPNS_15ParsingDeclSpecE+0x217)[0x562814d8ae57]
+
+clang-trunk(_ZN5clang6Parser17ParseTopLevelDeclERNS_9OpaquePtrINS_12DeclGroupRefEEEb+0x1ce)[0x562814d8c3ee]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x219)[0x562814d7ec39]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x562813cc5f98]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x562813574e79]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x5628135080c6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x562813652d00]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x562810479b06]
+
+clang-trunk(+0x125ce48)[0x562810475e48]
+
+clang-trunk(+0x417fca9)[0x562813398ca9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x562812aae05c]
+
+clang-trunk(+0x418044d)[0x56281339944d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x56281336bbdb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x56281336c6f9]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x5628133772a9]
+
+clang-trunk(main+0x18af)[0x5628103a450f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fa2f79910b3]
+
+clang-trunk(_start+0x2e)[0x5628104759be]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 24d48d45cc302a6abeab139d87ba87f7a2335323)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: Error generating preprocessed source(s).
+

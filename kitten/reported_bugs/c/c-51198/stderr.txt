@@ -1,0 +1,150 @@
+mutant.c:1:13: error: flexible array member 'block' in a union is not allowed
+
+union { int block [ ] ; double f ; } u17_017 = { 17.17 } ;
+
+            ^
+
+mutant.c:1:50: warning: flexible array initialization is a GNU extension [-Wgnu-flexible-array-initializer]
+
+union { int block [ ] ; double f ; } u17_017 = { 17.17 } ;
+
+                                                 ^~~~~
+
+mutant.c:1:13: note: initialized flexible array member 'block' is here
+
+union { int block [ ] ; double f ; } u17_017 = { 17.17 } ;
+
+            ^
+
+mutant.c:1:50: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+union { int block [ ] ; double f ; } u17_017 = { 17.17 } ;
+
+                                                 ^~~~~
+
+                                                 {    }
+
+mutant.c:1:50: warning: implicit conversion from 'double' to 'int' changes value from 17.17 to 17 [-Wliteral-conversion]
+
+union { int block [ ] ; double f ; } u17_017 = { 17.17 } ;
+
+                                                 ^~~~~
+
+clang-trunk: /tmp/tmp.vkHmvRaVPX-clang-builder/llvm-project/llvm/include/llvm/Support/Casting.h:104: static bool llvm::isa_impl_cl<To, const From*>::doit(const From*) [with To = clang::ParenExpr; From = clang::Expr]: Assertion `Val && "isa<> used on a null pointer"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:1:58: current parser token ';'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x399c5c4)[0x55b2d453a5c4]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x55b2d45383e4]
+
+clang-trunk(+0x38e1228)[0x55b2d447f228]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f080a9ae3c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f080a44d18b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f080a42c859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f080a42c729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f080a43df36]
+
+clang-trunk(+0x6a5cce5)[0x55b2d75face5]
+
+clang-trunk(+0x6a6a4fc)[0x55b2d76084fc]
+
+clang-trunk(_ZN5clang4Expr16IgnoreParenCastsEv+0x18)[0x55b2d760a3e8]
+
+clang-trunk(_ZN5clang4Sema19CheckForIntOverflowEPNS_4ExprE+0xb5)[0x55b2d68eda45]
+
+clang-trunk(_ZN5clang4Sema18CheckCompletedExprEPNS_4ExprENS_14SourceLocationEb+0x121)[0x55b2d693d3d1]
+
+clang-trunk(_ZN5clang4Sema19ActOnFinishFullExprEPNS_4ExprENS_14SourceLocationEbb+0x122)[0x55b2d6ce0032]
+
+clang-trunk(_ZN5clang4Sema20AddInitializerToDeclEPNS_4DeclEPNS_4ExprEb+0x64d)[0x55b2d6a3291d]
+
+clang-trunk(_ZN5clang6Parser44ParseDeclarationAfterDeclaratorAndAttributesERNS_10DeclaratorERKNS0_18ParsedTemplateInfoEPNS0_12ForRangeInitE+0x636)[0x55b2d6788806]
+
+clang-trunk(_ZN5clang6Parser14ParseDeclGroupERNS_15ParsingDeclSpecENS_17DeclaratorContextEPNS_14SourceLocationEPNS0_12ForRangeInitE+0x4db)[0x55b2d679b6eb]
+
+clang-trunk(_ZN5clang6Parser30ParseDeclOrFunctionDefInternalERNS_25ParsedAttributesWithRangeERNS_15ParsingDeclSpecENS_15AccessSpecifierE+0x226)[0x55b2d67697d6]
+
+clang-trunk(+0x5bcbdc1)[0x55b2d6769dc1]
+
+clang-trunk(_ZN5clang6Parser24ParseExternalDeclarationERNS_25ParsedAttributesWithRangeEPNS_15ParsingDeclSpecE+0x217)[0x55b2d67705e7]
+
+clang-trunk(_ZN5clang6Parser17ParseTopLevelDeclERNS_9OpaquePtrINS_12DeclGroupRefEEEb+0x1ce)[0x55b2d6771b7e]
+
+clang-trunk(_ZN5clang6Parser22ParseFirstTopLevelDeclERNS_9OpaquePtrINS_12DeclGroupRefEEE+0x39)[0x55b2d6771f29]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x1ea)[0x55b2d676437a]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x55b2d56a90c8]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55b2d4f4c3c9]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55b2d4edf3e6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x55b2d502a0f0]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x55b2d1e17916]
+
+clang-trunk(+0x1275c58)[0x55b2d1e13c58]
+
+clang-trunk(+0x41d1c29)[0x55b2d4d6fc29]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x55b2d447f3ac]
+
+clang-trunk(+0x41d23cd)[0x55b2d4d703cd]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55b2d4d42b5b]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x55b2d4d43679]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x55b2d4d4e229]
+
+clang-trunk(main+0x18af)[0x55b2d1d4266f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f080a42e0b3]
+
+clang-trunk(_start+0x2e)[0x55b2d1e137ce]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git e2904c8e0fa901adeefe579297cb2ece2757fb18)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-1e6299.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-1e6299.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

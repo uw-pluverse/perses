@@ -1,0 +1,4 @@
+internal compiler error: in expand_call, at calls.c
+expand_call(tree_node*, rtx_def*, int)
+expand_expr_real_1(tree_node*, rtx_def*, machine_mode, expand_modifier, rtx_def**, bool)
+store_expr(tree_node*, rtx_def*, int, bool, bool)

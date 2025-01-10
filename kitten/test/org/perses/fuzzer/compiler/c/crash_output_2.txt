@@ -1,0 +1,8 @@
+
+gcc-trunk: internal compiler error: Segmentation fault signal terminated program cc1
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+See <https://gcc.gnu.org/bugs/> for instructions.

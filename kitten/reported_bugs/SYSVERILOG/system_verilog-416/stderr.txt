@@ -1,0 +1,8 @@
+internal compiler error: Assertion 'subroutine.subroutineKind != SubroutineKind::Task' failed
+
+  in file /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/CallExpression.cpp, line 703
+
+  function: static bool slang::CallExpression::checkConstant(slang::EvalContext &, const slang::SubroutineSymbol &, slang::SourceRange)
+
+
+

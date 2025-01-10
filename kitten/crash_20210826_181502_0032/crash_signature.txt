@@ -1,0 +1,3 @@
+AddressSanitizer:DEADLYSIGNAL
+ERROR: AddressSanitizer: stack-overflow on address
+SUMMARY: AddressSanitizer: stack-overflow (/scratch/software/slang-trunk/bin/slang+0x5cb3b9) in __asan_memcpy

@@ -1,0 +1,222 @@
+mutant.c:3:1: warning: type specifier missing, defaults to 'int' [-Wimplicit-int]
+
+buf1 ) ; extern void abort ( void ) ; char buf1 [ 6 ] , buf2 [ 6 ] , buf3 [ 4 ] , buf4 [ 4 ] ; int i ; int foo ( void ) { int ret = snprintf ( buf1 , sizeof buf1 , "abcde" ) ;
+
+^
+
+mutant.c:2:12: warning: incompatible redeclaration of library function 'memcmp' [-Wincompatible-library-redeclaration]
+
+extern int memcmp ( const void * , const void * ,
+
+           ^
+
+mutant.c:2:12: note: 'memcmp' is a builtin with type 'int (const void *, const void *, unsigned long)'
+
+mutant.c:3:108: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+buf1 ) ; extern void abort ( void ) ; char buf1 [ 6 ] , buf2 [ 6 ] , buf3 [ 4 ] , buf4 [ 4 ] ; int i ; int foo ( void ) { int ret = snprintf ( buf1 , sizeof buf1 , "abcde" ) ;
+
+                                                                                                           ^
+
+mutant.c:3:104: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+buf1 ) ; extern void abort ( void ) ; char buf1 [ 6 ] , buf2 [ 6 ] , buf3 [ 4 ] , buf4 [ 4 ] ; int i ; int foo ( void ) { int ret = snprintf ( buf1 , sizeof buf1 , "abcde" ) ;
+
+                                                                                                       ^
+
+                                                                                                       static 
+
+mutant.c:3:44: warning: no previous extern declaration for non-static variable 'buf1' [-Wmissing-variable-declarations]
+
+buf1 ) ; extern void abort ( void ) ; char buf1 [ 6 ] , buf2 [ 6 ] , buf3 [ 4 ] , buf4 [ 4 ] ; int i ; int foo ( void ) { int ret = snprintf ( buf1 , sizeof buf1 , "abcde" ) ;
+
+                                           ^
+
+mutant.c:3:39: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+buf1 ) ; extern void abort ( void ) ; char buf1 [ 6 ] , buf2 [ 6 ] , buf3 [ 4 ] , buf4 [ 4 ] ; int i ; int foo ( void ) { int ret = snprintf ( buf1 , sizeof buf1 , "abcde" ) ;
+
+                                      ^
+
+mutant.c:3:57: warning: no previous extern declaration for non-static variable 'buf2' [-Wmissing-variable-declarations]
+
+buf1 ) ; extern void abort ( void ) ; char buf1 [ 6 ] , buf2 [ 6 ] , buf3 [ 4 ] , buf4 [ 4 ] ; int i ; int foo ( void ) { int ret = snprintf ( buf1 , sizeof buf1 , "abcde" ) ;
+
+                                                        ^
+
+mutant.c:3:39: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+buf1 ) ; extern void abort ( void ) ; char buf1 [ 6 ] , buf2 [ 6 ] , buf3 [ 4 ] , buf4 [ 4 ] ; int i ; int foo ( void ) { int ret = snprintf ( buf1 , sizeof buf1 , "abcde" ) ;
+
+                                      ^
+
+mutant.c:3:70: warning: no previous extern declaration for non-static variable 'buf3' [-Wmissing-variable-declarations]
+
+buf1 ) ; extern void abort ( void ) ; char buf1 [ 6 ] , buf2 [ 6 ] , buf3 [ 4 ] , buf4 [ 4 ] ; int i ; int foo ( void ) { int ret = snprintf ( buf1 , sizeof buf1 , "abcde" ) ;
+
+                                                                     ^
+
+mutant.c:3:39: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+buf1 ) ; extern void abort ( void ) ; char buf1 [ 6 ] , buf2 [ 6 ] , buf3 [ 4 ] , buf4 [ 4 ] ; int i ; int foo ( void ) { int ret = snprintf ( buf1 , sizeof buf1 , "abcde" ) ;
+
+                                      ^
+
+mutant.c:3:83: warning: no previous extern declaration for non-static variable 'buf4' [-Wmissing-variable-declarations]
+
+buf1 ) ; extern void abort ( void ) ; char buf1 [ 6 ] , buf2 [ 6 ] , buf3 [ 4 ] , buf4 [ 4 ] ; int i ; int foo ( void ) { int ret = snprintf ( buf1 , sizeof buf1 , "abcde" ) ;
+
+                                                                                  ^
+
+mutant.c:3:39: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+buf1 ) ; extern void abort ( void ) ; char buf1 [ 6 ] , buf2 [ 6 ] , buf3 [ 4 ] , buf4 [ 4 ] ; int i ; int foo ( void ) { int ret = snprintf ( buf1 , sizeof buf1 , "abcde" ) ;
+
+                                      ^
+
+mutant.c:3:100: warning: no previous extern declaration for non-static variable 'i' [-Wmissing-variable-declarations]
+
+buf1 ) ; extern void abort ( void ) ; char buf1 [ 6 ] , buf2 [ 6 ] , buf3 [ 4 ] , buf4 [ 4 ] ; int i ; int foo ( void ) { int ret = snprintf ( buf1 , sizeof buf1 , "abcde" ) ;
+
+                                                                                                   ^
+
+mutant.c:3:96: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+buf1 ) ; extern void abort ( void ) ; char buf1 [ 6 ] , buf2 [ 6 ] , buf3 [ 4 ] , buf4 [ 4 ] ; int i ; int foo ( void ) { int ret = snprintf ( buf1 , sizeof buf1 , "abcde" ) ;
+
+                                                                                               ^
+
+clang-trunk: /tmp/tmp.FIfHBNID2p-clang-builder/llvm-project/llvm/lib/IR/Instructions.cpp:493: void llvm::CallInst::init(llvm::FunctionType*, llvm::Value*, llvm::ArrayRef<llvm::Value*>, llvm::ArrayRef<llvm::OperandBundleDefT<llvm::Value*> >, const llvm::Twine&): Assertion `(i >= FTy->getNumParams() || FTy->getParamType(i) == Args[i]->getType()) && "Calling a function with a bad signature!"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	Optimizer
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x394ec64)[0x55b4364a7c64]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x55b4364a5a84]
+
+clang-trunk(+0x38938c8)[0x55b4363ec8c8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f36b3ce33c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f36b378318b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f36b3762859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f36b3762729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f36b3773f36]
+
+clang-trunk(_ZN4llvm8CallInst4initEPNS_12FunctionTypeEPNS_5ValueENS_8ArrayRefIS4_EENS5_INS_17OperandBundleDefTIS4_EEEERKNS_5TwineE+0x203)[0x55b435b5ece3]
+
+clang-trunk(+0x397ed5b)[0x55b4364d7d5b]
+
+clang-trunk(+0x3983595)[0x55b4364dc595]
+
+clang-trunk(_ZN4llvm8emitBCmpEPNS_5ValueES1_S1_RNS_13IRBuilderBaseERKNS_10DataLayoutEPKNS_17TargetLibraryInfoE+0xd7)[0x55b4364dddb7]
+
+clang-trunk(_ZN4llvm17LibCallSimplifier27optimizeStringMemoryLibCallEPNS_8CallInstERNS_13IRBuilderBaseE+0x165)[0x55b436665085]
+
+clang-trunk(_ZN4llvm17LibCallSimplifier12optimizeCallEPNS_8CallInstERNS_13IRBuilderBaseE+0x5ea)[0x55b43666588a]
+
+clang-trunk(+0x32fe716)[0x55b435e57716]
+
+clang-trunk(+0x3303605)[0x55b435e5c605]
+
+clang-trunk(+0x33054ac)[0x55b435e5e4ac]
+
+clang-trunk(+0x32c2cd8)[0x55b435e1bcd8]
+
+clang-trunk(+0x32c5413)[0x55b435e1e413]
+
+clang-trunk(_ZN4llvm15InstCombinePass3runERNS_8FunctionERNS_15AnalysisManagerIS1_JEEE+0x891)[0x55b435e20471]
+
+clang-trunk(+0x4b25eb6)[0x55b43767eeb6]
+
+clang-trunk(_ZN4llvm11PassManagerINS_8FunctionENS_15AnalysisManagerIS1_JEEEJEE3runERS1_RS3_+0x436)[0x55b435be4066]
+
+clang-trunk(+0x15272d6)[0x55b4340802d6]
+
+clang-trunk(_ZN4llvm27ModuleToFunctionPassAdaptor3runERNS_6ModuleERNS_15AnalysisManagerIS1_JEEE+0x6e9)[0x55b435be2b89]
+
+clang-trunk(+0x1527b46)[0x55b434080b46]
+
+clang-trunk(_ZN4llvm11PassManagerINS_6ModuleENS_15AnalysisManagerIS1_JEEEJEE3runERS1_RS3_+0x50f)[0x55b435be046f]
+
+clang-trunk(+0x3c7f47d)[0x55b4367d847d]
+
+clang-trunk(_ZN5clang17EmitBackendOutputERNS_17DiagnosticsEngineERKNS_19HeaderSearchOptionsERKNS_14CodeGenOptionsERKNS_13TargetOptionsERKNS_11LangOptionsEN4llvm9StringRefEPNSE_6ModuleENS_13BackendActionESt10unique_ptrINSE_17raw_pwrite_streamESt14default_deleteISK_EE+0x47d)[0x55b4367db6fd]
+
+clang-trunk(+0x4aabb2f)[0x55b437604b2f]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x429)[0x55b4386bc209]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x55b437603678]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55b436eb3029]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55b436e461e6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x55b436f90eb0]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x55b433db96f6]
+
+clang-trunk(+0x125ca38)[0x55b433db5a38]
+
+clang-trunk(+0x417ddb9)[0x55b436cd6db9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x55b4363eca4c]
+
+clang-trunk(+0x417e55d)[0x55b436cd755d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55b436ca9ceb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x55b436caa809]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x55b436cb53b9]
+
+clang-trunk(main+0x18af)[0x55b433ce44ef]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f36b37640b3]
+
+clang-trunk(_start+0x2e)[0x55b433db55ae]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 5c8659801a4976ef2b327f4071d98086efd42a36)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-368f77.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-368f77.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

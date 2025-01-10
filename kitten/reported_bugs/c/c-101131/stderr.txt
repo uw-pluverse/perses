@@ -1,0 +1,40 @@
+mutant.c:18:1: warning: return type defaults to ‘int’ [-Wimplicit-int]
+
+   18 | static_function ( void )
+
+      | ^~~~~~~~~~~~~~~
+
+mutant.c:18:1: warning: ‘alias’ attribute ignored because function is defined [-Wattributes]
+
+during IPA pass: whole-program
+
+mutant.c:24:1: internal compiler error: in noninterposable_alias, at symtab.c:2011
+
+   24 | }
+
+      | ^
+
+0x695a35 symtab_node::noninterposable_alias()
+
+	/tmp/tmp.M5bbDhYIJL-gcc-builder/gcc/gcc/symtab.c:2011
+
+0x19fd08f function_and_variable_visibility
+
+	/tmp/tmp.M5bbDhYIJL-gcc-builder/gcc/gcc/ipa-visibility.c:773
+
+0x19fd6ca whole_program_function_and_variable_visibility
+
+	/tmp/tmp.M5bbDhYIJL-gcc-builder/gcc/gcc/ipa-visibility.c:921
+
+0x19fd6ca execute
+
+	/tmp/tmp.M5bbDhYIJL-gcc-builder/gcc/gcc/ipa-visibility.c:969
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

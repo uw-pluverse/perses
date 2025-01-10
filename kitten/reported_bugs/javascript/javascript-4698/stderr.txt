@@ -1,0 +1,2 @@
+/tmp/tmp.F2MvT4tsOz/jerryscript/jerry-core/ecma/base/ecma-helpers-collection.c:227:3: runtime error: null pointer passed as argument 2, which is declared to never be null
+

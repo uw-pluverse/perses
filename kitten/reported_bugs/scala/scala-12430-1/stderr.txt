@@ -1,0 +1,118 @@
+Unexpected New(...collection/TypeTree[TypeRef(ThisType(TypeRef(NoPrefix,module class scala)),module class collection)]) reached GenBCode.
+
+  Call was genLoad(New(TypeTree[TypeRef(ThisType(TypeRef(NoPrefix,module class scala)),module class collection)]),Lscala/collection;)
+
+exception occurred while compiling mutant.scala
+
+Exception in thread "main" java.lang.RuntimeException: Unexpected New(...collection/TypeTree[TypeRef(ThisType(TypeRef(NoPrefix,module class scala)),module class collection)]) reached GenBCode.
+
+  Call was genLoad(New(TypeTree[TypeRef(ThisType(TypeRef(NoPrefix,module class scala)),module class collection)]),Lscala/collection;)
+
+	at dotty.tools.backend.jvm.BCodeHelpers.abort(BCodeHelpers.scala:937)
+
+	at dotty.tools.backend.jvm.BCodeHelpers.abort$(BCodeHelpers.scala:41)
+
+	at dotty.tools.backend.jvm.GenBCodePipeline.abort(GenBCode.scala:81)
+
+	at dotty.tools.backend.jvm.BCodeBodyBuilder$PlainBodyBuilder.genLoad(BCodeBodyBuilder.scala:319)
+
+	at dotty.tools.backend.jvm.BCodeBodyBuilder$PlainBodyBuilder.genLoad(BCodeBodyBuilder.scala:270)
+
+	at dotty.tools.backend.jvm.BCodeBodyBuilder$PlainBodyBuilder.genLoadQualifier(BCodeBodyBuilder.scala:987)
+
+	at dotty.tools.backend.jvm.BCodeBodyBuilder$PlainBodyBuilder.genTypeApply(BCodeBodyBuilder.scala:623)
+
+	at dotty.tools.backend.jvm.BCodeBodyBuilder$PlainBodyBuilder.genLoad(BCodeBodyBuilder.scala:437)
+
+	at dotty.tools.backend.jvm.BCodeBodyBuilder$PlainBodyBuilder.genLoad(BCodeBodyBuilder.scala:270)
+
+	at dotty.tools.backend.jvm.BCodeBodyBuilder$PlainBodyBuilder.genLoadQualifier(BCodeBodyBuilder.scala:987)
+
+	at dotty.tools.backend.jvm.BCodeBodyBuilder$PlainBodyBuilder.genApply(BCodeBodyBuilder.scala:756)
+
+	at dotty.tools.backend.jvm.BCodeBodyBuilder$PlainBodyBuilder.genLoad(BCodeBodyBuilder.scala:346)
+
+	at dotty.tools.backend.jvm.BCodeBodyBuilder$PlainBodyBuilder.genStat(BCodeBodyBuilder.scala:96)
+
+	at dotty.tools.backend.jvm.BCodeBodyBuilder$PlainBodyBuilder.genBlock$$anonfun$1(BCodeBodyBuilder.scala:895)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.immutable.List.foreach(List.scala:333)
+
+	at dotty.tools.backend.jvm.BCodeBodyBuilder$PlainBodyBuilder.genBlock(BCodeBodyBuilder.scala:895)
+
+	at dotty.tools.backend.jvm.BCodeBodyBuilder$PlainBodyBuilder.genLoad(BCodeBodyBuilder.scala:417)
+
+	at dotty.tools.backend.jvm.BCodeSkelBuilder$PlainSkelBuilder.emitNormalMethodBody$1(BCodeSkelBuilder.scala:765)
+
+	at dotty.tools.backend.jvm.BCodeSkelBuilder$PlainSkelBuilder.genDefDef(BCodeSkelBuilder.scala:800)
+
+	at dotty.tools.backend.jvm.BCodeSkelBuilder$PlainSkelBuilder.gen(BCodeSkelBuilder.scala:608)
+
+	at dotty.tools.backend.jvm.BCodeSkelBuilder$PlainSkelBuilder.gen$$anonfun$1(BCodeSkelBuilder.scala:614)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.immutable.List.foreach(List.scala:333)
+
+	at dotty.tools.backend.jvm.BCodeSkelBuilder$PlainSkelBuilder.gen(BCodeSkelBuilder.scala:614)
+
+	at dotty.tools.backend.jvm.BCodeSkelBuilder$PlainSkelBuilder.genPlainClass(BCodeSkelBuilder.scala:229)
+
+	at dotty.tools.backend.jvm.GenBCodePipeline$Worker1.visit(GenBCode.scala:229)
+
+	at dotty.tools.backend.jvm.GenBCodePipeline$Worker1.run(GenBCode.scala:194)
+
+	at dotty.tools.backend.jvm.GenBCodePipeline.buildAndSendToDisk(GenBCode.scala:529)
+
+	at dotty.tools.backend.jvm.GenBCodePipeline.run(GenBCode.scala:495)
+
+	at dotty.tools.backend.jvm.GenBCode.run(GenBCode.scala:60)
+
+	at dotty.tools.dotc.core.Phases$Phase.runOn$$anonfun$1(Phases.scala:303)
+
+	at scala.collection.immutable.List.map(List.scala:246)
+
+	at dotty.tools.dotc.core.Phases$Phase.runOn(Phases.scala:304)
+
+	at dotty.tools.backend.jvm.GenBCode.runOn(GenBCode.scala:64)
+
+	at dotty.tools.dotc.Run.runPhases$4$$anonfun$4(Run.scala:205)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.ArrayOps$.foreach$extension(ArrayOps.scala:1323)
+
+	at dotty.tools.dotc.Run.runPhases$5(Run.scala:216)
+
+	at dotty.tools.dotc.Run.compileUnits$$anonfun$1(Run.scala:224)
+
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+
+	at dotty.tools.dotc.util.Stats$.maybeMonitored(Stats.scala:67)
+
+	at dotty.tools.dotc.Run.compileUnits(Run.scala:231)
+
+	at dotty.tools.dotc.Run.compileSources(Run.scala:166)
+
+	at dotty.tools.dotc.Run.compile(Run.scala:150)
+
+	at dotty.tools.dotc.Driver.doCompile(Driver.scala:39)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:199)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:167)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:179)
+
+	at dotty.tools.dotc.Driver.main(Driver.scala:209)
+
+	at dotty.tools.dotc.Main.main(Main.scala)
+

@@ -1,0 +1,670 @@
+warning: functions generic over types or consts must be mangled
+
+  --> mutant.rs:43:1
+
+   |
+
+42 |   # [ no_mangle ]
+
+   |   --------------- help: remove this attribute
+
+43 | / fn call_through_fn_trait ( a : & mut impl Fn < ( ) , Output = ( ) > ) {
+
+44 | | ( * a ) ( )
+
+45 | | }
+
+   | |_^
+
+   |
+
+   = note: `#[warn(no_mangle_generic_items)]` on by default
+
+
+
+warning: 1 warning emitted
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after InstCombine in phase Optimization) at bb1[12]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after InstCombine in phase Optimization) at bb1[13]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after ConstProp in phase Optimization) at bb1[12]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after ConstProp in phase Optimization) at bb1[13]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after SimplifyBranches-after-const-prop in phase Optimization) at bb1[12]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after SimplifyBranches-after-const-prop in phase Optimization) at bb1[13]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after EarlyOtherwiseBranch in phase Optimization) at bb1[12]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after EarlyOtherwiseBranch in phase Optimization) at bb1[13]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after SimplifyComparisonIntegral in phase Optimization) at bb1[12]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after SimplifyComparisonIntegral in phase Optimization) at bb1[13]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after SimplifyArmIdentity in phase Optimization) at bb1[12]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after SimplifyArmIdentity in phase Optimization) at bb1[13]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after SimplifyBranchSame in phase Optimization) at bb1[12]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after SimplifyBranchSame in phase Optimization) at bb1[13]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after DestinationPropagation in phase Optimization) at bb1[12]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after DestinationPropagation in phase Optimization) at bb1[13]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after SimplifyBranches-final in phase Optimization) at bb1[12]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after SimplifyBranches-final in phase Optimization) at bb1[13]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after RemoveNoopLandingPads in phase Optimization) at bb1[12]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after RemoveNoopLandingPads in phase Optimization) at bb1[13]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after SimplifyCfg-final in phase Optimization) at bb1[12]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after SimplifyCfg-final in phase Optimization) at bb1[13]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after RenameReturnPlace in phase Optimization) at bb1[12]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after RenameReturnPlace in phase Optimization) at bb1[13]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after SimplifyLocals in phase Optimization) at bb1[12]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after SimplifyLocals in phase Optimization) at bb1[13]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after MultipleReturnTerminators in phase Optimization) at bb1[12]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after MultipleReturnTerminators in phase Optimization) at bb1[13]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after AddCallGuards in phase Optimization) at bb1[12]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after AddCallGuards in phase Optimization) at bb1[13]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after PreCodegen in phase Optimization) at bb1[12]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (after PreCodegen in phase Optimization) at bb1[13]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (end of phase Optimization) at bb1[12]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+error: internal compiler error: broken MIR in Item(WithOptConstParam { did: DefId(0:34 ~ mutant[8787]::test), const_param_did: None }) (end of phase Optimization) at bb1[13]:
+
+`Operand::Copy` with non-`Copy` type &usize
+
+  --> mutant.rs:57:15
+
+   |
+
+57 | STORAGE_FOO ( & 1 , & mut buf ) ;
+
+   |               ^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/validate.rs:171:36
+
+
+
+thread 'rustc' panicked at 'no errors encountered even though `delay_span_bug` issued', compiler/rustc_errors/src/lib.rs:974:13
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.49.0-nightly (9d78d1d02 2020-11-05) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=1 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z verify-llvm-ir=yes -Z validate-mir=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=1 --crate-type staticlib
+
+
+
+query stack during panic:
+
+end of query stack
+

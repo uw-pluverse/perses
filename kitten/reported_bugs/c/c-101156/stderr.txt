@@ -1,0 +1,72 @@
+mutant.c: In function ‘baz’:
+
+mutant.c:14:12: warning: passing argument 1 of ‘setjmp’ from incompatible pointer type [-Wincompatible-pointer-types]
+
+   14 | setjmp ( p -- ) ;
+
+      |          ~~^~
+
+      |            |
+
+      |            struct S *
+
+mutant.c:7:15: note: expected ‘int *’ but argument is of type ‘struct S *’
+
+    7 | void setjmp ( jmp_buf ) ;
+
+      |               ^~~~~~~
+
+mutant.c:11:1: error: type mismatch in ‘pointer_plus_expr’
+
+   11 | baz ( struct S * p )
+
+      | ^~~
+
+struct S *
+
+
+
+<<< error >>>
+
+
+
+sizetype
+
+
+
+p = _1 + 18446744073709551572;
+
+mutant.c:11:1: internal compiler error: ‘verify_gimple’ failed
+
+0xf4c4c5 verify_gimple_in_seq(gimple*)
+
+	/tmp/tmp.oJWiD4wb77-gcc-builder/gcc/gcc/tree-cfg.c:5183
+
+0xc3a336 gimplify_body(tree_node*, bool)
+
+	/tmp/tmp.oJWiD4wb77-gcc-builder/gcc/gcc/gimplify.c:15422
+
+0xc3a4d1 gimplify_function_tree(tree_node*)
+
+	/tmp/tmp.oJWiD4wb77-gcc-builder/gcc/gcc/gimplify.c:15493
+
+0xa8be17 cgraph_node::analyze()
+
+	/tmp/tmp.oJWiD4wb77-gcc-builder/gcc/gcc/cgraphunit.c:670
+
+0xa8ed11 analyze_functions
+
+	/tmp/tmp.oJWiD4wb77-gcc-builder/gcc/gcc/cgraphunit.c:1234
+
+0xa8f7e1 symbol_table::finalize_compilation_unit()
+
+	/tmp/tmp.oJWiD4wb77-gcc-builder/gcc/gcc/cgraphunit.c:2508
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

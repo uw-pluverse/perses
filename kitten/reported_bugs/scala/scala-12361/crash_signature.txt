@@ -1,0 +1,4 @@
+Exception in thread "main" scala.MatchError: MacroTree(TypeApply(Select(Ident(Impls),foo),List(Ident(U)))) (of class dotty.tools.dotc.ast.untpd$MacroTree)
+at dotty.tools.dotc.ast.desugar$.apply
+at dotty.tools.dotc.typer.Typer.typedUnnamed$1
+at dotty.tools.dotc.typer.Typer.typedUnadapted

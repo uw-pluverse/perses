@@ -1,0 +1,3 @@
+static llvm::IntegerType* llvm::IntegerType::get(llvm::LLVMContext&, unsigned int): Assertion `NumBits >= MIN_INT_BITS && "bitwidth too small"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

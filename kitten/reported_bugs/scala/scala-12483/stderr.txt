@@ -1,0 +1,2082 @@
+[33m-- [E115] Syntax Warning: mutant.scala:3:187 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[0m
+
+[33m3 |[0m[33mdef[0m [36mtest[0m ( [36mx[0m : [35mIntAnyVal[0m ) = ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( x : @ annotation . switch ) [33mmatch[0m {
+
+  |                                                                                                                                                             [33m^[0m
+
+  |                                                                                                                                                             Could not emit switch for @switch annotated match
+
+[33m4 |[0m[33mcase[0m IntAnyVal ( [31m1[0m ) => [31m1[0m
+
+[33m5 |[0m[33mcase[0m IntAnyVal ( [31m2[0m ) => [31m2[0m
+
+[33m6 |[0m[33mcase[0m IntAnyVal ( [31m3[0m ) => [31m3[0m
+
+[33m7 |[0m[33mcase[0m _ => [31m4[0m
+
+[33m8 |[0m} ) [33mmatch[0m {
+
+
+
+longer explanation available when compiling with `-explain`
+
+[31m-- Error: mutant.scala:9:5 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[0m
+
+[31m9 |[0m[33mcase[0m IntAnyVal ( [31m1[0m ) => [31m1[0m
+
+  |     [31m^^^^^^^^^^^^^^^[0m
+
+  |     cannot test if value of type ([31m1[0m : Int) | ([31m2[0m : Int) | ([31m3[0m : Int) | ([31m4[0m : Int) is a reference of [33mclass[0m [35mIntAnyVal[0m
+
+exception occurred while compiling mutant.scala
+
+Exception in thread "main" java.lang.AssertionError: assertion failed
+
+	at scala.runtime.Scala3RunTime$.assertFailed(Scala3RunTime.scala:11)
+
+	at dotty.tools.dotc.transform.Erasure$Boxing$.unbox(Erasure.scala:291)
+
+	at dotty.tools.dotc.transform.Erasure$Boxing$.adaptToType(Erasure.scala:379)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.adapt(Erasure.scala:1080)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedTypeApply(Erasure.scala:822)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2700)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.$anonfun$4(Erasure.scala:850)
+
+	at dotty.tools.dotc.core.Decorators$ListDecorator$.zipWithConserve$extension(Decorators.scala:153)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedApply(Erasure.scala:850)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2681)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.$anonfun$11(Typer.scala:1079)
+
+	at dotty.tools.dotc.typer.Applications.harmonic(Applications.scala:2178)
+
+	at dotty.tools.dotc.typer.Applications.harmonic$(Applications.scala:303)
+
+	at dotty.tools.dotc.typer.Typer.harmonic(Typer.scala:106)
+
+	at dotty.tools.dotc.typer.Typer.typedIf(Typer.scala:1082)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedIf(Erasure.scala:884)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2690)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2862)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.Typer.typedValDef(Typer.scala:2090)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedValDef(Erasure.scala:908)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2655)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedLabeled(Typer.scala:1624)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2674)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+

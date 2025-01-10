@@ -1,0 +1,94 @@
+mutant.c:1:5: error: ‘__GIMPLE’ only valid with ‘-fgimple’
+
+    1 | int __GIMPLE foo ( )
+
+      |     ^~~~~~~~
+
+mutant.c: In function ‘foo’:
+
+mutant.c:3:6: error: ‘a’ undeclared (first use in this function)
+
+    3 | if ( a != 2 )
+
+      |      ^
+
+mutant.c:3:6: note: each undeclared identifier is reported only once for each function it appears in
+
+mutant.c:8:1: error: duplicate label ‘bb1’
+
+    8 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:9:5: error: base variable or SSA name undeclared before ‘=’ token
+
+    9 | a_1 = 10 ;
+
+      |     ^
+
+mutant.c:6:1: warning: label ‘bb2’ declared but not defined [-Wunused-label]
+
+    6 | goto bb2 ;
+
+      | ^~~~
+
+mutant.c:7:1: warning: label ‘bb1’ defined but not used [-Wunused-label]
+
+    7 | bb1 :
+
+      | ^~~
+
+during GIMPLE pass: cfg
+
+mutant.c:1:14: internal compiler error: Segmentation fault
+
+    1 | int __GIMPLE foo ( )
+
+      |              ^~~
+
+0xef83e3 crash_signal
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/toplev.c:327
+
+0xf38755 contains_struct_check(tree_node*, tree_node_structure_enum, char const*, int, char const*)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/tree.h:3469
+
+0xf38755 stmt_starts_bb_p
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/tree-cfg.c:2784
+
+0xf38755 make_blocks_1
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/tree-cfg.c:552
+
+0xf44fd6 make_blocks
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/tree-cfg.c:661
+
+0xf44fd6 build_gimple_cfg
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/tree-cfg.c:226
+
+0xf44fd6 execute_build_cfg
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/tree-cfg.c:370
+
+0xf44fd6 execute
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/tree-cfg.c:409
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

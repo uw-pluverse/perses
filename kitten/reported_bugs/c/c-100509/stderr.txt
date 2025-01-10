@@ -1,0 +1,66 @@
+mutant.c:3:45: warning: type defaults to ‘int’ in declaration of ‘a’ [-Wimplicit-int]
+
+    3 | static const __attribute__ ( ( noinline ) ) a = { 0 , 1 , 2 , 3 } ;
+
+      |                                             ^
+
+mutant.c:3:1: warning: ‘noinline’ attribute ignored [-Wattributes]
+
+    3 | static const __attribute__ ( ( noinline ) ) a = { 0 , 1 , 2 , 3 } ;
+
+      | ^~~~~~
+
+mutant.c:3:55: warning: excess elements in scalar initializer
+
+    3 | static const __attribute__ ( ( noinline ) ) a = { 0 , 1 , 2 , 3 } ;
+
+      |                                                       ^
+
+mutant.c:3:55: note: (near initialization for ‘a’)
+
+mutant.c:3:59: warning: excess elements in scalar initializer
+
+    3 | static const __attribute__ ( ( noinline ) ) a = { 0 , 1 , 2 , 3 } ;
+
+      |                                                           ^
+
+mutant.c:3:59: note: (near initialization for ‘a’)
+
+mutant.c:3:63: warning: excess elements in scalar initializer
+
+    3 | static const __attribute__ ( ( noinline ) ) a = { 0 , 1 , 2 , 3 } ;
+
+      |                                                               ^
+
+mutant.c:3:63: note: (near initialization for ‘a’)
+
+during GIMPLE pass: forwprop
+
+mutant.c: In function ‘foo’:
+
+mutant.c:19:1: internal compiler error: in fold_convert_loc, at fold-const.c:2552
+
+   19 | }
+
+      | ^
+
+0x6bd7c1 fold_convert_loc(unsigned int, tree_node*, tree_node*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/fold-const.c:2552
+
+0xc02486 fold_stmt_1
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-fold.c:6269
+
+0x1032191 execute
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/tree-ssa-forwprop.c:3108
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

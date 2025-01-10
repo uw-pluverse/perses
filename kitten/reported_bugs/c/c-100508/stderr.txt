@@ -1,0 +1,28 @@
+mutant.c:5:1: warning: return type defaults to ‘int’ [-Wimplicit-int]
+
+    5 | foo ( unsigned char l )
+
+      | ^~~
+
+during RTL pass: expand
+
+mutant.c: In function ‘foo.simdclone.2’:
+
+mutant.c:5:1: internal compiler error: in expand_debug_locations, at cfgexpand.c:5618
+
+0x68c497 expand_debug_locations
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cfgexpand.c:5618
+
+0x68c497 execute
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cfgexpand.c:6735
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

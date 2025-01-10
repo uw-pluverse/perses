@@ -1,0 +1,174 @@
+mutant.c:1:8: warning: incompatible redeclaration of library function 'sin' [-Wincompatible-library-redeclaration]
+
+double sin ( long double x ) ;
+
+       ^
+
+mutant.c:1:8: note: 'sin' is a builtin with type 'double (double)'
+
+mutant.c:8:13: warning: implicit conversion increases floating-point precision: 'double' to 'long double' [-Wdouble-promotion]
+
+8.8 , sin ( 1.0 ) , 2.6 } ;
+
+      ~~~   ^~~
+
+mutant.c:7:24: warning: implicit conversion increases floating-point precision: 'double' to 'long double' [-Wdouble-promotion]
+
+double d [ ] = { sin ( 1.0 ) ,
+
+                 ~~~   ^~~
+
+mutant.c:5:9: warning: unused variable 'a' [-Wunused-variable]
+
+int * * a [ ] = { & p ,
+
+        ^
+
+mutant.c:7:8: warning: unused variable 'd' [-Wunused-variable]
+
+double d [ ] = { sin ( 1.0 ) ,
+
+       ^
+
+mutant.c:3:1: warning: no previous prototype for function 'fn' [-Wmissing-prototypes]
+
+fn ( int * p )
+
+^
+
+mutant.c:2:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void
+
+^
+
+static 
+
+clang-trunk: /tmp/tmp.M5Z1vtu79t-clang-builder/llvm-project/llvm/lib/Support/APFloat.cpp:4888: double llvm::APFloat::convertToDouble() const: Assertion `getSemantics().isRepresentableBy(semIEEEdouble) && "Float semantics is not representable by IEEEdouble"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	Optimizer
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x398e264)[0x5647e7319264]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x5647e7317084]
+
+clang-trunk(+0x38d2ec8)[0x5647e725dec8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7fe55314f3c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7fe552bee18b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7fe552bcd859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7fe552bcd729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7fe552bdef36]
+
+clang-trunk(_ZNK4llvm7APFloat15convertToDoubleEv+0x12f)[0x5647e723366f]
+
+clang-trunk(+0x27b2d33)[0x5647e613dd33]
+
+clang-trunk(+0x27bb305)[0x5647e6146305]
+
+clang-trunk(_ZN4llvm16ConstantFoldCallEPKNS_8CallBaseEPNS_8FunctionENS_8ArrayRefIPNS_8ConstantEEEPKNS_17TargetLibraryInfoE+0x1e9)[0x5647e614d269]
+
+clang-trunk(_ZN4llvm12SimplifyCallEPNS_8CallBaseERKNS_13SimplifyQueryE+0x536)[0x5647e61a8066]
+
+clang-trunk(_ZN4llvm19SimplifyInstructionEPNS_11InstructionERKNS_13SimplifyQueryEPNS_25OptimizationRemarkEmitterE+0xbad)[0x5647e61ae25d]
+
+clang-trunk(+0x362e36c)[0x5647e6fb936c]
+
+clang-trunk(+0x362fdd4)[0x5647e6fbadd4]
+
+clang-trunk(_ZN4llvm12EarlyCSEPass3runERNS_8FunctionERNS_15AnalysisManagerIS1_JEEE+0x503)[0x5647e6fbbe23]
+
+clang-trunk(+0x3cb5296)[0x5647e7640296]
+
+clang-trunk(_ZN4llvm11PassManagerINS_8FunctionENS_15AnalysisManagerIS1_JEEEJEE3runERS1_RS3_+0x436)[0x5647e6a506f6]
+
+clang-trunk(+0x15417b6)[0x5647e4ecc7b6]
+
+clang-trunk(_ZN4llvm27ModuleToFunctionPassAdaptor3runERNS_6ModuleERNS_15AnalysisManagerIS1_JEEE+0x6e9)[0x5647e6a4f219]
+
+clang-trunk(+0x1542026)[0x5647e4ecd026]
+
+clang-trunk(_ZN4llvm11PassManagerINS_6ModuleENS_15AnalysisManagerIS1_JEEEJEE3runERS1_RS3_+0x50f)[0x5647e6a4caff]
+
+clang-trunk(+0x3cc511d)[0x5647e765011d]
+
+clang-trunk(_ZN5clang17EmitBackendOutputERNS_17DiagnosticsEngineERKNS_19HeaderSearchOptionsERKNS_14CodeGenOptionsERKNS_13TargetOptionsERKNS_11LangOptionsEN4llvm9StringRefEPNSE_6ModuleENS_13BackendActionESt10unique_ptrINSE_17raw_pwrite_streamESt14default_deleteISK_EE+0x47d)[0x5647e765339d]
+
+clang-trunk(+0x4afbdbf)[0x5647e8486dbf]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x429)[0x5647e953e6f9]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x5647e8485908]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x5647e7d2bd99]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x5647e7cbedb6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x5647e7e09a80]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x5647e4c02946]
+
+clang-trunk(+0x1273c88)[0x5647e4bfec88]
+
+clang-trunk(+0x41c45f9)[0x5647e7b4f5f9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x5647e725e04c]
+
+clang-trunk(+0x41c4d9d)[0x5647e7b4fd9d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x5647e7b2252b]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x5647e7b23049]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x5647e7b2dbf9]
+
+clang-trunk(main+0x18af)[0x5647e4b2d51f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fe552bcf0b3]
+
+clang-trunk(_start+0x2e)[0x5647e4bfe7fe]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 4aa1c141bd674564aaee83516b7e338aa3aae9e3)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-4cc657.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-4cc657.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

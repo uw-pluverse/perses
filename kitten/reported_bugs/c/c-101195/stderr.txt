@@ -1,0 +1,72 @@
+mutant.c: In function ‘test_eh_return_data_regno’:
+
+mutant.c:2:14: warning: variable ‘res’ set but not used [-Wunused-but-set-variable]
+
+    2 | volatile int res ;
+
+      |              ^~~
+
+during RTL pass: expand
+
+mutant.c:4:7: internal compiler error: in tree_to_uhwi, at tree.c:6324
+
+    4 | res = __builtin_eh_return_data_regno ( - 42. ) ;
+
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+0x7c7c8e tree_to_uhwi(tree_node const*)
+
+	/tmp/tmp.7VMvqc1j38-gcc-builder/gcc/gcc/tree.c:6324
+
+0x7c7c8e tree_to_uhwi(tree_node const*)
+
+	/tmp/tmp.7VMvqc1j38-gcc-builder/gcc/gcc/tree.c:6322
+
+0xb50507 expand_builtin_eh_return_data_regno(tree_node*)
+
+	/tmp/tmp.7VMvqc1j38-gcc-builder/gcc/gcc/except.c:2170
+
+0xa222c6 expand_builtin(tree_node*, rtx_def*, rtx_def*, machine_mode, int)
+
+	/tmp/tmp.7VMvqc1j38-gcc-builder/gcc/gcc/builtins.c:10409
+
+0xb7363c expand_expr_real_1(tree_node*, rtx_def*, machine_mode, expand_modifier, rtx_def**, bool)
+
+	/tmp/tmp.7VMvqc1j38-gcc-builder/gcc/gcc/expr.c:11439
+
+0xb7dfe8 store_expr(tree_node*, rtx_def*, int, bool, bool)
+
+	/tmp/tmp.7VMvqc1j38-gcc-builder/gcc/gcc/expr.c:5994
+
+0xb7f62f expand_assignment(tree_node*, tree_node*, bool)
+
+	/tmp/tmp.7VMvqc1j38-gcc-builder/gcc/gcc/expr.c:5729
+
+0xa4cb5b expand_call_stmt
+
+	/tmp/tmp.7VMvqc1j38-gcc-builder/gcc/gcc/cfgexpand.c:2844
+
+0xa4cb5b expand_gimple_stmt_1
+
+	/tmp/tmp.7VMvqc1j38-gcc-builder/gcc/gcc/cfgexpand.c:3877
+
+0xa4cb5b expand_gimple_stmt
+
+	/tmp/tmp.7VMvqc1j38-gcc-builder/gcc/gcc/cfgexpand.c:4041
+
+0xa52899 expand_gimple_basic_block
+
+	/tmp/tmp.7VMvqc1j38-gcc-builder/gcc/gcc/cfgexpand.c:6083
+
+0xa5476f execute
+
+	/tmp/tmp.7VMvqc1j38-gcc-builder/gcc/gcc/cfgexpand.c:6809
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

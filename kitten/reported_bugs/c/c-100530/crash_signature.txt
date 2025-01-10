@@ -1,0 +1,3 @@
+internal compiler error: in add_dwarf_attr, at dwarf2out.c
+add_dwarf_attr
+add_AT_string

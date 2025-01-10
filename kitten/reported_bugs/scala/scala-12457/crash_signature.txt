@@ -1,0 +1,3 @@
+at dotty.tools.dotc.ast.Trees$Tree.tpe
+at dotty.tools.dotc.ast.tpd$.tpes
+at dotty.tools.dotc.core.TypeOps$.boundsViolations

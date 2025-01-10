@@ -1,0 +1,145 @@
+package(default_visibility = [
+    "//visibility:public",
+])
+
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
+kt_jvm_library(
+    name = "perses_fuzzer",
+    srcs = [
+        "AbstractFlatCrashFolder.kt",
+        "AdditionalFuzzerControl.kt",
+        "CrashClusterFolder.kt",
+        "CrashClusterIndex.kt",
+        "CrashInstanceFolder.kt",
+        "DistributionTable.kt",
+        "DuplicateBugFolder.kt",
+        "ExtensionScript.kt",
+        "FindingFolder.kt",
+        "FuzzerDriver.kt",
+        "FuzzingScheduler.kt",
+        "MutatedProgram.kt",
+        "MutationFrequencyController.kt",
+        "MutationOperatorExecutor.kt",
+        "ProcessingFolder.kt",
+        "ReportedBugFolder.kt",
+        "SparTreeFuzzer.kt",
+        "SparTreeFuzzerQueue.kt",
+    ],
+    deps = [
+        ":command_options",
+        ":fuzzer_mode",
+        "//:antlr_runtime",
+        "//:antlr_tool",
+        "//:flogger",
+        "//:guava",
+        "//:jackson",
+        "//:jcommander",
+        "//antlropt/src/org/perses/antlr:enum_rule_type",
+        "//antlropt/src/org/perses/antlr/ast",
+        "//kitten/src/org/perses/fuzzer/compilers:compiler_configuration",
+        "//kitten/src/org/perses/fuzzer/compilers/c",
+        "//kitten/src/org/perses/fuzzer/compilers/javac:java",
+        "//kitten/src/org/perses/fuzzer/compilers/javascript",
+        "//kitten/src/org/perses/fuzzer/compilers/php",
+        "//kitten/src/org/perses/fuzzer/compilers/ruby",
+        "//kitten/src/org/perses/fuzzer/compilers/rust",
+        "//kitten/src/org/perses/fuzzer/compilers/scala",
+        "//kitten/src/org/perses/fuzzer/compilers/solidity",
+        "//kitten/src/org/perses/fuzzer/compilers/sysverilog",
+        "//kitten/src/org/perses/fuzzer/coveragecollector:coverage_collector",
+        "//kitten/src/org/perses/fuzzer/languagemodel:language_model_type",
+        "//kitten/src/org/perses/fuzzer/reduction",
+        "//kitten/src/org/perses/spartree:generator",
+        "//kitten/src/org/perses/spartree:generator_type",
+        "//src/org/perses/antlr:util",
+        "//src/org/perses/grammar:antlr_exception_strategy",
+        "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar:grammar_facade",
+        "//src/org/perses/grammar/c:optc_parser_facade",
+        "//src/org/perses/grammar/c:parser_facade",
+        "//src/org/perses/grammar/go:parser_facade",
+        "//src/org/perses/grammar/java:parser_facade_java8",
+        "//src/org/perses/grammar/rust:parser_facade",
+        "//src/org/perses/grammar/scala:parser_facade",
+        "//src/org/perses/grammar/solidity/preprocessed:parser_facade",
+        "//src/org/perses/program",
+        "//src/org/perses/program:enum_format_control",
+        "//src/org/perses/program:language_kind",
+        "//src/org/perses/program/printer",
+        "//src/org/perses/spartree",
+        "//src/org/perses/util",
+        "//src/org/perses/util:auto_deltable_folder",
+        "//src/org/perses/util:timeutil",
+        "//src/org/perses/util/shell",
+    ],
+)
+
+kt_jvm_library(
+    name = "fuzzer_mode",
+    srcs = ["FuzzerMode.kt"],
+)
+
+kt_jvm_library(
+    name = "converter",
+    srcs = ["TreeToSequenceConverter.kt"],
+    deps = [
+        "//:guava",
+        "//kitten/src/org/perses/fuzzer/languagemodel:node_representation",
+        "//src/org/perses/antlr:util",
+        "//src/org/perses/spartree",
+    ],
+)
+
+kt_jvm_library(
+    name = "command_options",
+    srcs = ["CommandOptions.kt"],
+    deps = [
+        ":fuzzer_mode",
+        "//:flogger",
+        "//:guava",
+        "//:jcommander",
+        "//kitten/src/org/perses/fuzzer/config:testing_configuration",
+        "//kitten/src/org/perses/fuzzer/languagemodel:language_model_type",
+        "//kitten/src/org/perses/spartree:generator_type",
+        "//src/org/perses/cmd:LanguageControlFlagGroup",
+        "//src/org/perses/grammar/rust:language_kind",
+        "//src/org/perses/program:language_kind",
+        "//src/org/perses/util/cmd",
+    ],
+)
+
+java_library(
+    name = "kira_lib",
+    srcs = ["Main.java"],
+    deps = [
+        ":command_options",
+        ":perses_fuzzer",
+        "//:antlr_runtime",
+        "//:antlr_tool",
+        "//:flogger",
+        "//:guava",
+        "//:jcommander",
+        "//antlropt/src/org/perses/antlr/ast",
+        "//kitten/src/org/perses/fuzzer/compilers:compiler_configuration",
+        "//src/org/perses/antlr:util",
+        "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar:grammar_facade",
+        "//src/org/perses/grammar/c:optc_parser_facade",
+        "//src/org/perses/grammar/c:parser_facade",
+        "//src/org/perses/program",
+        "//src/org/perses/program:enum_format_control",
+        "//src/org/perses/program:language_kind",
+        "//src/org/perses/spartree",
+        "//src/org/perses/util:default_logging_configurations",
+        "//src/org/perses/util/cmd",
+    ],
+)
+
+java_binary(
+    name = "kira",
+    main_class = "org.perses.fuzzer.Main",
+    runtime_deps = [
+        ":kira_lib",
+    ],
+)

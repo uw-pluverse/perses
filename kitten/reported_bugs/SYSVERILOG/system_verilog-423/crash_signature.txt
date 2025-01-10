@@ -1,0 +1,5 @@
+AddressSanitizer:DEADLYSIGNAL
+ERROR: AddressSanitizer: stack-overflow on address
+SUMMARY: AddressSanitizer: stack-overflow
+slang-nightly/source/binding/Expression.cpp
+in slang::Expression::bad() const

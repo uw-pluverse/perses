@@ -1,0 +1,6 @@
+Internal compiler error during compilation:
+/solidity/libsolidity/codegen/ContractCompiler.cpp
+Throw in function void (anonymous namespace)::StackHeightChecker::check()
+Dynamic exception type: boost::wrapexcept<solidity::langutil::InternalCompilerError>
+std::exception::what: I sense a disturbance in the stack: 4 vs 3
+[solidity::util::tag_comment*] = I sense a disturbance in the stack: 4 vs 3

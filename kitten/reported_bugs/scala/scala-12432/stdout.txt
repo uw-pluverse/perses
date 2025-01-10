@@ -1,0 +1,218 @@
+error while transforming ([36mi1[0m: [35mannotation[0m)[33m extends[0m [35mObject[0m(), _root_.scala.Product, _root_.scala.Serializable {
+
+  [33mval[0m [36mi1[0m: [35mannotation[0m
+
+  [33mdef[0m [36mcopy[0m([36mi1[0m: [35mannotation[0m): [35mi1[0m = [33mnew [0m[35mi1[0m(i1)
+
+  [33mdef[0m [36mcopy$default$1[0m: [35mannotation @uncheckedVariance[0m = i1.this.i1
+
+  [33mdef[0m [36m_1[0m: [35mannotation[0m = [33mthis[0m.i1
+
+}
+
+error while transforming @[35mscala.annotation.internal.SourceFile[0m([32m"mutant.scala"[0m) [33mcase[0m [33mclass[0m [35mi1[0m([36mi1[0m: [35mannotation[0m)[33m extends[0m [35mObject[0m(), _root_.scala.Product, _root_.scala.Serializable {
+
+  [33mval[0m [36mi1[0m: [35mannotation[0m
+
+  [33mdef[0m [36mcopy[0m([36mi1[0m: [35mannotation[0m): [35mi1[0m = [33mnew [0m[35mi1[0m(i1)
+
+  [33mdef[0m [36mcopy$default$1[0m: [35mannotation @uncheckedVariance[0m = i1.this.i1
+
+  [33mdef[0m [36m_1[0m: [35mannotation[0m = [33mthis[0m.i1
+
+}
+
+error while transforming [33mpackage [0m<empty> {
+
+  @[35mscala.annotation.internal.SourceFile[0m([32m"mutant.scala"[0m) [33mcase[0m [33mclass[0m [35mi1[0m([36mi1[0m: [35mannotation[0m)[33m extends[0m [35mObject[0m(), _root_.scala.Product, _root_.scala.Serializable {
+
+    [33mval[0m [36mi1[0m: [35mannotation[0m
+
+    [33mdef[0m [36mcopy[0m([36mi1[0m: [35mannotation[0m): [35mi1[0m = [33mnew [0m[35mi1[0m(i1)
+
+    [33mdef[0m [36mcopy$default$1[0m: [35mannotation @uncheckedVariance[0m = i1.this.i1
+
+    [33mdef[0m [36m_1[0m: [35mannotation[0m = [33mthis[0m.i1
+
+  }
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m [33mval[0m [36mi1[0m: [35mi1$[0m = [33mnew [0m[35mi1$[0m()
+
+  [33mfinal[0m [33mmodule[0m [33mclass[0m [35mi1$[0m()[33m extends[0m [35mAnyRef[0m() { [33mthis[0m: i1.[33mtype[0m =>
+
+    [33mdef[0m [36mapply[0m([36mi1[0m: [35mannotation[0m): [35mi1[0m = [33mnew [0m[35mi1[0m(i1)
+
+    [33mdef[0m [36munapply[0m([36mx$1[0m: [35mi1[0m): [35mi1[0m = x$1
+
+    [33moverride[0m [33mdef[0m [36mtoString[0m: [35mString[0m = [32m"i1"[0m
+
+  }
+
+}
+
+java.lang.AssertionError: assertion failed: no member [33mthis[0m.i1 . ==, members = Scope{
+
+  class switch?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object switch?
+
+  [33mfinal[0m [33mmodule[0m object switch$?
+
+  class implicitAmbiguous?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object implicitAmbiguous?
+
+  [33mfinal[0m [33mmodule[0m object implicitAmbiguous$?
+
+  trait ClassfileAnnotation?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object ClassfileAnnotation?
+
+  [33mfinal[0m [33mmodule[0m object ClassfileAnnotation$: <notype>
+
+  trait TypeConstraint?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object TypeConstraint?
+
+  [33mfinal[0m [33mmodule[0m object TypeConstraint$: <notype>
+
+  class unspecialized?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object unspecialized?
+
+  [33mfinal[0m [33mmodule[0m object unspecialized$?
+
+  class varargs?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object varargs?
+
+  [33mfinal[0m [33mmodule[0m object varargs$?
+
+  class unused?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object unused?
+
+  [33mfinal[0m [33mmodule[0m object unused$?
+
+  class implicitNotFound?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object implicitNotFound?
+
+  [33mfinal[0m [33mmodule[0m object implicitNotFound$?
+
+  [33mprivate[scala][0m class migration?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object migration?
+
+  [33mfinal[0m [33mmodule[0m object migration$?
+
+  class strictfp?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object strictfp?
+
+  [33mfinal[0m [33mmodule[0m object strictfp$?
+
+  class compileTimeOnly?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object compileTimeOnly?
+
+  [33mfinal[0m [33mmodule[0m object compileTimeOnly$?
+
+  [33mabstract[0m class Annotation extends [35mObject[0m {} at (scala.annotation : annotation.type)
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object Annotation?
+
+  [33mfinal[0m [33mmodule[0m object Annotation$: <notype>
+
+  class nowarn?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object nowarn?
+
+  [33mfinal[0m [33mmodule[0m object nowarn$?
+
+  [33mabstract[0m trait StaticAnnotation extends [35mscala.annotation.Annotation[0m {} at (scala.annotation : annotation.type)
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object StaticAnnotation?
+
+  [33mfinal[0m [33mmodule[0m object StaticAnnotation$: <notype>
+
+  trait ConstantAnnotation?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object ConstantAnnotation?
+
+  [33mfinal[0m [33mmodule[0m object ConstantAnnotation$: <notype>
+
+  class tailrec?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object tailrec?
+
+  [33mfinal[0m [33mmodule[0m object tailrec$?
+
+  class showAsInfix?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object showAsInfix?
+
+  [33mfinal[0m [33mmodule[0m object showAsInfix$?
+
+  class elidable?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object elidable?
+
+  [33mfinal[0m [33mmodule[0m object elidable$?
+
+  class threadUnsafe?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object threadUnsafe?
+
+  [33mfinal[0m [33mmodule[0m object threadUnsafe$?
+
+  class alpha?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object alpha?
+
+  [33mfinal[0m [33mmodule[0m object alpha$?
+
+  trait RefiningAnnotation?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object RefiningAnnotation?
+
+  [33mfinal[0m [33mmodule[0m object RefiningAnnotation$: <notype>
+
+  class targetName?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object targetName?
+
+  [33mfinal[0m [33mmodule[0m object targetName$?
+
+  class static?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object static?
+
+  [33mfinal[0m [33mmodule[0m object static$?
+
+  class transparentTrait?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object transparentTrait?
+
+  [33mfinal[0m [33mmodule[0m object transparentTrait$?
+
+  class constructorOnly?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object constructorOnly?
+
+  [33mfinal[0m [33mmodule[0m object constructorOnly$?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object unchecked: scala.annotation.unchecked
+
+  [33mfinal[0m [33mmodule[0m object unchecked extends  {this: scala.annotation.unchecked.type =>} at (scala.annotation : annotation.type)
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object meta: scala.annotation.meta
+
+  [33mfinal[0m [33mmodule[0m object meta extends  {this: scala.annotation.meta.type =>} at (scala.annotation : annotation.type)
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object internal: scala.annotation.internal
+
+  [33mfinal[0m [33mmodule[0m object internal extends  {this: scala.annotation.internal.type =>} at (scala.annotation : annotation.type)
+
+} while compiling mutant.scala
+

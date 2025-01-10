@@ -1,0 +1,3 @@
+llvm::APInt llvm::APInt::udiv(const llvm::APInt&) const: Assertion `rhsWords && "Divided by zero???"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

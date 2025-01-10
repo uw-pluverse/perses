@@ -1,0 +1,78 @@
+mutant.c: In function ‘foo’:
+
+mutant.c:6:1: error: inconsistent operand constraints in an ‘asm’
+
+    6 | asm ( "# %0 %1" : "=&r" ( a ) , "=r" ( b ) ) ; return - ( a / 10 ) ;
+
+      | ^~~
+
+mutant.c:7:1: error: unable to find a register to spill
+
+    7 | }
+
+      | ^
+
+mutant.c:7:1: error: this is the insn:
+
+(insn 11 25 12 2 (parallel [
+
+            (set (reg:DI 88)
+
+                (truncate:DI (lshiftrt:TI (mult:TI (sign_extend:TI (reg:DI 95 [93]))
+
+                            (sign_extend:TI (reg:DI 89)))
+
+                        (const_int 64 [0x40]))))
+
+            (clobber (reg:DI 95 [93]))
+
+            (clobber (reg:CC 17 flags))
+
+        ]) "mutant.c":6:61 439 {*smuldi3_highpart_1}
+
+     (expr_list:REG_UNUSED (reg:DI 95 [93])
+
+        (expr_list:REG_DEAD (reg:DI 89)
+
+            (expr_list:REG_UNUSED (reg:CC 17 flags)
+
+                (expr_list:REG_EQUAL (truncate:DI (lshiftrt:TI (mult:TI (sign_extend:TI (reg:DI 0 ax [ a ]))
+
+                                (const_int 7378697629483820647 [0x6666666666666667]))
+
+                            (const_int 64 [0x40])))
+
+                    (nil))))))
+
+during RTL pass: reload
+
+mutant.c:7:1: internal compiler error: in lra_split_hard_reg_for, at lra-assigns.c:1837
+
+0x73f5d3 _fatal_insn(char const*, rtx_def const*, char const*, int, char const*)
+
+	/tmp/tmp.azYviButln-gcc-builder/gcc/gcc/rtl-error.c:108
+
+0xd75766 lra_split_hard_reg_for()
+
+	/tmp/tmp.azYviButln-gcc-builder/gcc/gcc/lra-assigns.c:1837
+
+0xd6fc29 lra(_IO_FILE*)
+
+	/tmp/tmp.azYviButln-gcc-builder/gcc/gcc/lra.c:2412
+
+0xd24ce9 do_reload
+
+	/tmp/tmp.azYviButln-gcc-builder/gcc/gcc/ira.c:5822
+
+0xd24ce9 execute
+
+	/tmp/tmp.azYviButln-gcc-builder/gcc/gcc/ira.c:6008
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

@@ -1,0 +1,146 @@
+mutant.c:3:1: warning: no previous prototype for function 'fn1' [-Wmissing-prototypes]
+
+fn1 ( )
+
+^
+
+mutant.c:2:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void
+
+^
+
+static 
+
+mutant.c:3:5: warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+
+fn1 ( )
+
+    ^
+
+mutant.c:1:5: warning: no previous extern declaration for non-static variable 'a' [-Wmissing-variable-declarations]
+
+int a ;
+
+    ^
+
+mutant.c:1:1: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+int a ;
+
+^
+
+clang-trunk: /tmp/tmp.OKn6kNiY8c-clang-builder/llvm-project/llvm/lib/CodeGen/TwoAddressInstructionPass.cpp:1398: void {anonymous}::TwoAddressInstructionPass::processTiedPairs(llvm::MachineInstr*, {anonymous}::TwoAddressInstructionPass::TiedPairList&, unsigned int&): Assertion `i == DstIdx || !MI->getOperand(i).isReg() || MI->getOperand(i).getReg() != RegA' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	Code generation
+
+3.	Running pass 'Function Pass Manager' on module 'mutant.c'.
+
+4.	Running pass 'Two-Address instruction pass' on function '@fn1'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x3995714)[0x5611ceb24714]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x5611ceb22534]
+
+clang-trunk(+0x38da378)[0x5611cea69378]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f751b7693c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f751b20818b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f751b1e7859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f751b1e7729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f751b1f8f36]
+
+clang-trunk(+0x2ddee30)[0x5611cdf6de30]
+
+clang-trunk(+0x2de0a86)[0x5611cdf6fa86]
+
+clang-trunk(_ZN4llvm19MachineFunctionPass13runOnFunctionERNS_8FunctionE+0x258)[0x5611cdd33388]
+
+clang-trunk(_ZN4llvm13FPPassManager13runOnFunctionERNS_8FunctionE+0x365)[0x5611ce215555]
+
+clang-trunk(_ZN4llvm13FPPassManager11runOnModuleERNS_6ModuleE+0x39)[0x5611ce215799]
+
+clang-trunk(_ZN4llvm6legacy15PassManagerImpl3runERNS_6ModuleE+0x382)[0x5611ce216892]
+
+clang-trunk(+0x3cce1c2)[0x5611cee5d1c2]
+
+clang-trunk(_ZN5clang17EmitBackendOutputERNS_17DiagnosticsEngineERKNS_19HeaderSearchOptionsERKNS_14CodeGenOptionsERKNS_13TargetOptionsERKNS_11LangOptionsEN4llvm9StringRefEPNSE_6ModuleENS_13BackendActionESt10unique_ptrINSE_17raw_pwrite_streamESt14default_deleteISK_EE+0x47d)[0x5611cee5ec7d]
+
+clang-trunk(+0x4b0675f)[0x5611cfc9575f]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x429)[0x5611d0d4d419]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x5611cfc942a8]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x5611cf537399]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x5611cf4ca3b6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x5611cf6150c0]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x5611cc407846]
+
+clang-trunk(+0x1274b88)[0x5611cc403b88]
+
+clang-trunk(+0x41cbbf9)[0x5611cf35abf9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x5611cea694fc]
+
+clang-trunk(+0x41cc39d)[0x5611cf35b39d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x5611cf32db2b]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x5611cf32e649]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x5611cf3391f9]
+
+clang-trunk(main+0x18af)[0x5611cc33259f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f751b1e90b3]
+
+clang-trunk(_start+0x2e)[0x5611cc4036fe]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 6b0d266036f73f5ee9556d211a7d0946091ff3b2)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-e04110.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-e04110.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

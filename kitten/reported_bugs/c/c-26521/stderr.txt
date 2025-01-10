@@ -1,0 +1,134 @@
+mutant.c:4:1: warning: extension used [-Wlanguage-extension-token]
+
+asm ( "# %0" : "+fm" ( x ) ) ;
+
+^
+
+mutant.c:2:1: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+foo ( double x )
+
+^
+
+mutant.c:1:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void
+
+^
+
+static 
+
+fatal error: error in backend: Cannot pop empty stack!
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	Code generation
+
+3.	Running pass 'Function Pass Manager' on module 'mutant.c'.
+
+4.	Running pass 'X86 FP Stackifier' on function '@foo'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x3b25754)[0x56007669c754]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x56007669a554]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext10HandleExitEi+0xa3)[0x5600765de2f3]
+
+clang-trunk(_ZN4llvm3sys7Process4ExitEib+0x22)[0x5600766921b2]
+
+clang-trunk(+0x139eee7)[0x560073f15ee7]
+
+clang-trunk(_ZN4llvm18report_fatal_errorERKNS_5TwineEb+0x7c)[0x5600765e65ac]
+
+clang-trunk(+0x3a6f76e)[0x5600765e676e]
+
+clang-trunk(+0x259f3aa)[0x5600751163aa]
+
+clang-trunk(+0x25a414f)[0x56007511b14f]
+
+clang-trunk(+0x25a5317)[0x56007511c317]
+
+clang-trunk(_ZN4llvm19MachineFunctionPass13runOnFunctionERNS_8FunctionE+0x258)[0x5600758866d8]
+
+clang-trunk(_ZN4llvm13FPPassManager13runOnFunctionERNS_8FunctionE+0x365)[0x560075d6b6a5]
+
+clang-trunk(_ZN4llvm13FPPassManager11runOnModuleERNS_6ModuleE+0x39)[0x560075d6b8e9]
+
+clang-trunk(_ZN4llvm6legacy15PassManagerImpl3runERNS_6ModuleE+0x382)[0x560075d6c9d2]
+
+clang-trunk(+0x3e637d2)[0x5600769da7d2]
+
+clang-trunk(_ZN5clang17EmitBackendOutputERNS_17DiagnosticsEngineERKNS_19HeaderSearchOptionsERKNS_14CodeGenOptionsERKNS_13TargetOptionsERKNS_11LangOptionsEN4llvm9StringRefEPNSE_6ModuleENS_13BackendActionESt10unique_ptrINSE_17raw_pwrite_streamESt14default_deleteISK_EE+0x47d)[0x5600769dc43d]
+
+clang-trunk(+0x4cb97af)[0x5600778307af]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x429)[0x5600788f4f59]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x56007782f2f8]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x5600770cd419]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x14e)[0x56007706307e]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x5600771ab710]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7fd)[0x560073f1715d]
+
+clang-trunk(+0x139c4a8)[0x560073f134a8]
+
+clang-trunk(+0x4378969)[0x560076eef969]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x5600765de1bc]
+
+clang-trunk(+0x437911d)[0x560076ef011d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x560076ec262b]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x560076ec3149]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x560076ecdfe9]
+
+clang-trunk(main+0x18a6)[0x560073e3f566]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fc838d9f0b3]
+
+clang-trunk(_start+0x2e)[0x560073f1301e]
+
+clang-13: error: clang frontend command failed with exit code 70 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git ab5ac659c81a453a3f58df94f39fe8ba3cd35918)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-984a4c.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-984a4c.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

@@ -1,0 +1,3 @@
+bool EvaluateInteger(const clang::Expr*, llvm::APSInt&, {anonymous}::EvalInfo&): Assertion `!E->isValueDependent()' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

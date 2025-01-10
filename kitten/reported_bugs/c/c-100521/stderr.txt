@@ -1,0 +1,76 @@
+mutant.c:2:1: warning: mismatch in argument 1 type of built-in function ‘__builtin_clz’; expected ‘unsigned int’ [-Wbuiltin-declaration-mismatch]
+
+    2 | __builtin_clz ( int a ) { return __builtin_clz ( a ) ;
+
+      | ^~~~~~~~~~~~~
+
+during GIMPLE pass: evrp
+
+mutant.c: In function ‘__builtin_clz’:
+
+mutant.c:3:1: internal compiler error: in verify_range, at value-range.cc:384
+
+    3 | }
+
+      | ^
+
+0x7ccab3 irange::verify_range()
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/value-range.cc:384
+
+0x191c63b range_of_builtin_call(range_query&, irange&, gcall*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-range.cc:774
+
+0x191d0fa gimple_ranger::range_of_builtin_call(irange&, gcall*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-range.cc:900
+
+0x191d0fa gimple_ranger::range_of_call(irange&, gcall*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-range.cc:602
+
+0x191e65d gimple_ranger::calc_stmt(irange&, gimple*, tree_node*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-range.cc:378
+
+0x191e9f4 gimple_ranger::range_of_stmt(irange&, gimple*, tree_node*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-range.cc:1077
+
+0x1919782 gimple_ranger::range_of_expr(irange&, tree_node*, gimple*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-range.cc:960
+
+0x120fda4 range_query::value_of_expr(tree_node*, gimple*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/value-query.cc:86
+
+0x192b605 hybrid_folder::value_of_expr(tree_node*, gimple*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-ssa-evrp.c:235
+
+0x10abf36 substitute_and_fold_dom_walker::before_dom_children(basic_block_def*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/tree-ssa-propagate.c:816
+
+0x18edc67 dom_walker::walk(basic_block_def*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/domwalk.c:309
+
+0x10ab229 substitute_and_fold_engine::substitute_and_fold(basic_block_def*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/tree-ssa-propagate.c:987
+
+0x192b26e execute_early_vrp
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-ssa-evrp.c:349
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

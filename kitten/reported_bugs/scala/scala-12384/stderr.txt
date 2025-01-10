@@ -1,0 +1,284 @@
+[31m-- [E007] Type Mismatch Error: mutant.scala:10:0 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[0m
+
+[31m10 |[0mF # Apply [ Succ [ N ] , N # FoldR [ Init , Type , F ] ]
+
+   |[31m^[0m
+
+   |Found:    F
+
+   |Required: ?{ Apply: ? }
+
+
+
+longer explanation available when compiling with `-explain`
+
+[31m-- [E049] Reference Error: mutant.scala:35:31 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[0m
+
+[31m35 |[0m[33mtype[0m [35mApply[0m [ [35mN <: Any , Acc <: Nat ] = Succ [ Acc ][0m
+
+   |                               [31m^^^[0m
+
+   |                               Reference to Nat is ambiguous,
+
+   |                               it is both defined in [33mobject[0m [35mNats[0m
+
+   |                               and inherited subsequently in [33mtrait[0m [35m<refinement>[0m
+
+
+
+longer explanation available when compiling with `-explain`
+
+[31m-- [E049] Reference Error: mutant.scala:35:39 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[0m
+
+[31m35 |[0m[33mtype[0m [35mApply[0m [ [35mN <: Any , Acc <: Nat ] = Succ [ Acc ][0m
+
+   |                                       [31m^^^^[0m
+
+   |                                       Reference to Succ is ambiguous,
+
+   |                                       it is both defined in [33mobject[0m [35mNats[0m
+
+   |                                       and inherited subsequently in [33mtrait[0m [35m<refinement>[0m
+
+
+
+longer explanation available when compiling with `-explain`
+
+exception occurred while typechecking mutant.scala
+
+exception occurred while compiling mutant.scala
+
+Exception in thread "main" java.lang.ClassCastException: dotty.tools.dotc.core.Types$Range cannot be cast to dotty.tools.dotc.core.Types$TypeBounds
+
+	at scala.collection.immutable.List.mapConserve(List.scala:472)
+
+	at dotty.tools.dotc.core.Types$HKTypeLambda.newLikeThis$$anonfun$1(Types.scala:3801)
+
+	at dotty.tools.dotc.core.Types$HKTypeLambda.<init>(Types.scala:3757)
+
+	at dotty.tools.dotc.core.Types$HKTypeLambda$.apply(Types.scala:3863)
+
+	at dotty.tools.dotc.core.Types$HKTypeLambda.newLikeThis(Types.scala:3802)
+
+	at dotty.tools.dotc.core.Types$HKTypeLambda.newLikeThis(Types.scala:3797)
+
+	at dotty.tools.dotc.core.Types$HKTypeLambda.newLikeThis(Types.scala:3796)
+
+	at dotty.tools.dotc.core.Types$LambdaType.derivedLambdaType(Types.scala:3353)
+
+	at dotty.tools.dotc.core.Types$LambdaType.derivedLambdaType$(Types.scala:3296)
+
+	at dotty.tools.dotc.core.Types$HKLambda.derivedLambdaType(Types.scala:3369)
+
+	at dotty.tools.dotc.core.Types$ApproximatingTypeMap.derivedLambdaType(Types.scala:5653)
+
+	at dotty.tools.dotc.core.Types$ApproximatingTypeMap.derivedLambdaType(Types.scala:5651)
+
+	at dotty.tools.dotc.core.Types$TypeMap.mapOverLambda(Types.scala:5255)
+
+	at dotty.tools.dotc.core.TypeOps$AsSeenFromMap.apply(TypeOps.scala:104)
+
+	at dotty.tools.dotc.core.Types$TypeMap.op$proxy18$1(Types.scala:5283)
+
+	at dotty.tools.dotc.core.Types$TypeMap.mapOver(Types.scala:5283)
+
+	at dotty.tools.dotc.core.TypeOps$AsSeenFromMap.apply(TypeOps.scala:110)
+
+	at dotty.tools.dotc.core.TypeOps$.asSeenFrom(TypeOps.scala:55)
+
+	at dotty.tools.dotc.core.Types$Type.asSeenFrom(Types.scala:1020)
+
+	at dotty.tools.dotc.core.Denotations$SingleDenotation.derived$1(Denotations.scala:1096)
+
+	at dotty.tools.dotc.core.Denotations$SingleDenotation.computeAsSeenFrom(Denotations.scala:1118)
+
+	at dotty.tools.dotc.core.Denotations$SingleDenotation.computeAsSeenFrom(Denotations.scala:1076)
+
+	at dotty.tools.dotc.core.Denotations$PreDenotation.asSeenFrom(Denotations.scala:135)
+
+	at dotty.tools.dotc.core.SymDenotations$ClassDenotation.findMember(SymDenotations.scala:1985)
+
+	at dotty.tools.dotc.core.Types$Type.go$1(Types.scala:711)
+
+	at dotty.tools.dotc.core.Types$Type.findMember(Types.scala:866)
+
+	at dotty.tools.dotc.core.Types$Type.memberBasedOnFlags(Types.scala:662)
+
+	at dotty.tools.dotc.core.Types$Type.member(Types.scala:646)
+
+	at dotty.tools.dotc.typer.Typer.typedRefinedTypeTree$$anonfun$1(Typer.scala:1831)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.immutable.List.foreach(List.scala:333)
+
+	at dotty.tools.dotc.typer.Typer.typedRefinedTypeTree(Typer.scala:1834)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2706)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Namer.typedAheadType$$anonfun$1(Namer.scala:1381)
+
+	at dotty.tools.dotc.typer.Namer.typedAhead(Namer.scala:1373)
+
+	at dotty.tools.dotc.typer.Namer.typedAheadType(Namer.scala:1381)
+
+	at dotty.tools.dotc.typer.Namer$TypeDefCompleter.typeSig(Namer.scala:925)
+
+	at dotty.tools.dotc.typer.Namer$Completer.completeInCreationContext(Namer.scala:826)
+
+	at dotty.tools.dotc.typer.Namer$Completer.complete(Namer.scala:727)
+
+	at dotty.tools.dotc.core.SymDenotations$SymDenotation.completeFrom(SymDenotations.scala:167)
+
+	at dotty.tools.dotc.core.Denotations$Denotation.completeInfo$1(Denotations.scala:188)
+
+	at dotty.tools.dotc.core.Denotations$Denotation.info(Denotations.scala:190)
+
+	at dotty.tools.dotc.core.Types$NamedType.info(Types.scala:2152)
+
+	at dotty.tools.dotc.core.Types$Type.isRef(Types.scala:188)
+
+	at dotty.tools.dotc.typer.Checking$.preCheckKind(Checking.scala:157)
+
+	at dotty.tools.dotc.typer.Checking$.$anonfun$2(Checking.scala:163)
+
+	at dotty.tools.dotc.core.Decorators$ListDecorator$.zipWithConserve$extension(Decorators.scala:153)
+
+	at dotty.tools.dotc.core.Decorators$ListDecorator$.zipWithConserve$extension(Decorators.scala:154)
+
+	at dotty.tools.dotc.core.Decorators$ListDecorator$.zipWithConserve$extension(Decorators.scala:154)
+
+	at dotty.tools.dotc.typer.Checking$.preCheckKinds(Checking.scala:163)
+
+	at dotty.tools.dotc.typer.Typer.typedAppliedTypeTree(Typer.scala:1905)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2707)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Namer.typedAheadType$$anonfun$1(Namer.scala:1381)
+
+	at dotty.tools.dotc.typer.Namer.typedAhead(Namer.scala:1373)
+
+	at dotty.tools.dotc.typer.Namer.typedAheadType(Namer.scala:1381)
+
+	at dotty.tools.dotc.typer.Namer$TypeDefCompleter.typeSig(Namer.scala:925)
+
+	at dotty.tools.dotc.typer.Namer$Completer.completeInCreationContext(Namer.scala:826)
+
+	at dotty.tools.dotc.typer.Namer$Completer.complete(Namer.scala:727)
+
+	at dotty.tools.dotc.core.SymDenotations$SymDenotation.completeFrom(SymDenotations.scala:167)
+
+	at dotty.tools.dotc.core.Denotations$Denotation.completeInfo$1(Denotations.scala:188)
+
+	at dotty.tools.dotc.core.Denotations$Denotation.info(Denotations.scala:190)
+
+	at dotty.tools.dotc.core.SymDenotations$SymDenotation.ensureCompleted(SymDenotations.scala:369)
+
+	at dotty.tools.dotc.typer.Typer.retrieveSym(Typer.scala:2623)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2648)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2742)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2834)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2884)
+
+	at dotty.tools.dotc.typer.Typer.typedClassDef(Typer.scala:2340)
+
+	at dotty.tools.dotc.typer.Typer.typedTypeOrClassDef$2(Typer.scala:2669)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2673)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2742)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2834)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2884)
+
+	at dotty.tools.dotc.typer.Typer.typedPackageDef(Typer.scala:2463)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2714)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2928)
+
+	at dotty.tools.dotc.typer.FrontEnd.liftedTree1$1(FrontEnd.scala:79)
+
+	at dotty.tools.dotc.typer.FrontEnd.typeCheck$$anonfun$1(FrontEnd.scala:84)
+
+	at dotty.tools.dotc.typer.FrontEnd.monitor(FrontEnd.scala:43)
+
+	at dotty.tools.dotc.typer.FrontEnd.typeCheck(FrontEnd.scala:85)
+
+	at dotty.tools.dotc.typer.FrontEnd.runOn$$anonfun$3(FrontEnd.scala:120)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.immutable.List.foreach(List.scala:333)
+
+	at dotty.tools.dotc.typer.FrontEnd.runOn(FrontEnd.scala:120)
+
+	at dotty.tools.dotc.Run.runPhases$4$$anonfun$4(Run.scala:205)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.ArrayOps$.foreach$extension(ArrayOps.scala:1323)
+
+	at dotty.tools.dotc.Run.runPhases$5(Run.scala:216)
+
+	at dotty.tools.dotc.Run.compileUnits$$anonfun$1(Run.scala:224)
+
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+
+	at dotty.tools.dotc.util.Stats$.maybeMonitored(Stats.scala:67)
+
+	at dotty.tools.dotc.Run.compileUnits(Run.scala:231)
+
+	at dotty.tools.dotc.Run.compileSources(Run.scala:166)
+
+	at dotty.tools.dotc.Run.compile(Run.scala:150)
+
+	at dotty.tools.dotc.Driver.doCompile(Driver.scala:39)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:199)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:167)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:179)
+
+	at dotty.tools.dotc.Driver.main(Driver.scala:209)
+
+	at dotty.tools.dotc.Main.main(Main.scala)
+

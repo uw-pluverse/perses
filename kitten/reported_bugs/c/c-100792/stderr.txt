@@ -1,0 +1,80 @@
+mutant.c: In function ‘ldt_add_entry’:
+
+mutant.c:3:28: internal compiler error: in gimplify_expr, at gimplify.c:14876
+
+    3 | __asm__ ( "" : : "m" ( ( { __asm__ ( "" : : : "R4" , "R5" , "R6" , "R7" , "R8" , "R9" , "R10" , "R11" , "R12" ,
+
+      |                        ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    4 | "R13" , "R14" , "R15" ) ; } ) ) ) ;
+
+      | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+0x6dc624 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:14876
+
+0xc3654d gimplify_asm_expr
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:6509
+
+0xc2c235 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:14295
+
+0xc2ea9a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:6880
+
+0xc2c09b gimplify_statement_list
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:1882
+
+0xc2c09b gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:14407
+
+0xc2ea9a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:6880
+
+0xc2f2ce gimplify_bind_expr
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:1424
+
+0xc2b503 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:14163
+
+0xc2ea9a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:6880
+
+0xc30093 gimplify_body(tree_node*, bool)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:15207
+
+0xc304e1 gimplify_function_tree(tree_node*)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:15361
+
+0xa83297 cgraph_node::analyze()
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/cgraphunit.c:670
+
+0xa861c1 analyze_functions
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/cgraphunit.c:1234
+
+0xa86c91 symbol_table::finalize_compilation_unit()
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/cgraphunit.c:2508
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

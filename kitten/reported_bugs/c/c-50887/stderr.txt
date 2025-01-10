@@ -1,0 +1,186 @@
+mutant.c:2:5: warning: parameter 'x' was not declared, defaulting to type 'int' [-Wpedantic]
+
+f ( x )
+
+    ^
+
+mutant.c:2:1: warning: type specifier missing, defaults to 'int' [-Wimplicit-int]
+
+f ( x )
+
+^
+
+mutant.c:8:1: warning: implicit declaration of function 'g' is invalid in C99 [-Wimplicit-function-declaration]
+
+g ( 0 ) ;
+
+^
+
+mutant.c:2:1: warning: no previous prototype for function 'f' [-Wmissing-prototypes]
+
+f ( x )
+
+^
+
+mutant.c:2:3: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+f ( x )
+
+  ^
+
+  static 
+
+mutant.c:2:3: warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+
+f ( x )
+
+  ^
+
+mutant.c:9:1: warning: non-void function does not return a value [-Wreturn-type]
+
+}
+
+^
+
+clang-trunk: /tmp/tmp.B1HwadcXIH-clang-builder/llvm-project/clang/lib/AST/Type.cpp:2198: bool clang::Type::isConstantSizeType() const: Assertion `!isIncompleteType() && "This doesn't make sense for incomplete types"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	mutant.c:2:1: LLVM IR generation of declaration 'f'
+
+3.	mutant.c:2:1: Generating code for declaration 'f'
+
+4.	mutant.c:5:1: LLVM IR generation of compound statement ('{}')
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x39591f4)[0x55850c1841f4]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x55850c182014]
+
+clang-trunk(+0x389de48)[0x55850c0c8e48]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7ffb032683c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7ffb02d0718b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7ffb02ce6859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7ffb02ce6729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7ffb02cf7f36]
+
+clang-trunk(_ZNK5clang4Type18isConstantSizeTypeEv+0x5d)[0x55850f46dbdd]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule24getOrCreateStaticVarDeclERKNS_7VarDeclEN4llvm11GlobalValue12LinkageTypesE+0x169)[0x55850c7eaad9]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction17EmitStaticVarDeclERKNS_7VarDeclEN4llvm11GlobalValue12LinkageTypesE+0x34)[0x55850c7eba04]
+
+clang-trunk(+0x3fc5260)[0x55850c7f0260]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction8EmitDeclERKNS_4DeclE+0x1b0)[0x55850c7f0670]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction12EmitDeclStmtERKNS_8DeclStmtE+0x87)[0x55850c5077c7]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction14EmitSimpleStmtEPKNS_4StmtEN4llvm8ArrayRefIPKNS_4AttrEEE+0x14f)[0x55850c51a18f]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction8EmitStmtEPKNS_4StmtEN4llvm8ArrayRefIPKNS_4AttrEEE+0x5c)[0x55850c51367c]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction28EmitCompoundStmtWithoutScopeERKNS_12CompoundStmtEbNS0_12AggValueSlotE+0x8c)[0x55850c519a8c]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction16EmitCompoundStmtERKNS_12CompoundStmtEbNS0_12AggValueSlotE+0x167)[0x55850c519ea7]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction14EmitSimpleStmtEPKNS_4StmtEN4llvm8ArrayRefIPKNS_4AttrEEE+0x68)[0x55850c51a0a8]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction8EmitStmtEPKNS_4StmtEN4llvm8ArrayRefIPKNS_4AttrEEE+0x5c)[0x55850c51367c]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction10EmitIfStmtERKNS_6IfStmtE+0x483)[0x55850c519623]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction8EmitStmtEPKNS_4StmtEN4llvm8ArrayRefIPKNS_4AttrEEE+0x6e1)[0x55850c513d01]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction28EmitCompoundStmtWithoutScopeERKNS_12CompoundStmtEbNS0_12AggValueSlotE+0x8c)[0x55850c519a8c]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction16EmitFunctionBodyEPKNS_4StmtE+0xd1)[0x55850c570ed1]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction12GenerateCodeENS_10GlobalDeclEPN4llvm8FunctionERKNS0_14CGFunctionInfoE+0x37c)[0x55850c58272c]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule28EmitGlobalFunctionDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x1c6)[0x55850c5dc036]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule20EmitGlobalDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x285)[0x55850c5d7bd5]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule10EmitGlobalENS_10GlobalDeclE+0x3eb)[0x55850c5d803b]
+
+clang-trunk(+0x3db5aa2)[0x55850c5e0aa2]
+
+clang-trunk(+0x4ab82d9)[0x55850d2e32d9]
+
+clang-trunk(+0x4aaa4c0)[0x55850d2d54c0]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x204)[0x55850e399174]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x55850d2e0458]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55850cb8f9e9]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55850cb22c36]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x55850cc6d870]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x558509a8d696]
+
+clang-trunk(+0x125e9d8)[0x558509a899d8]
+
+clang-trunk(+0x4188bb9)[0x55850c9b3bb9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x55850c0c8fcc]
+
+clang-trunk(+0x418935d)[0x55850c9b435d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55850c986aeb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x55850c987609]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x55850c9921b9]
+
+clang-trunk(main+0x18af)[0x5585099b852f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7ffb02ce80b3]
+
+clang-trunk(_start+0x2e)[0x558509a8954e]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git ef906573a127cffef7cae75d5155c15a8a2a3a5e)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-a3a4d6.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-a3a4d6.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

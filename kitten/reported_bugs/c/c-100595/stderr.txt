@@ -1,0 +1,82 @@
+mutant.c:16:1: internal compiler error: output_operand: invalid expression as operand
+
+   16 | }
+
+      | ^
+
+0xb7f867 output_operand_lossage(char const*, ...)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/final.c:3238
+
+0xb80341 output_addr_const(_IO_FILE*, rtx_def*)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/final.c:3835
+
+0xb80123 output_addr_const(_IO_FILE*, rtx_def*)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/final.c:3810
+
+0xb80123 output_addr_const(_IO_FILE*, rtx_def*)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/final.c:3810
+
+0x1240c82 assemble_integer_with_op(char const*, rtx_def*)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/varasm.c:2866
+
+0x1240ce1 default_assemble_integer(rtx_def*, unsigned int, int)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/varasm.c:2882
+
+0x1240d60 assemble_integer(rtx_def*, unsigned int, unsigned int, int)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/varasm.c:2898
+
+0x1247cc8 output_constant
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/varasm.c:5267
+
+0x1249f74 output_constant
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/varasm.c:5172
+
+0x1249f74 assemble_variable_contents
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/varasm.c:2235
+
+0x1253cfc assemble_variable(tree_node*, int, int, int)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/varasm.c:2414
+
+0x1256dc9 varpool_node::assemble_decl()
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/varpool.c:595
+
+0x125794e varpool_node::assemble_decl()
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/varpool.c:567
+
+0x125794e symbol_table::output_variables()
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/varpool.c:761
+
+0xa8081f symbol_table::compile()
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/cgraphunit.c:2359
+
+0xa8365b symbol_table::compile()
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/cgraphunit.c:2269
+
+0xa8365b symbol_table::finalize_compilation_unit()
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/cgraphunit.c:2537
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

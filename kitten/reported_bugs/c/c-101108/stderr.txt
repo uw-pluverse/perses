@@ -1,0 +1,240 @@
+mutant.c: In function ‘test_ptr’:
+
+mutant.c:78:4: warning: dereferencing ‘void *’ pointer
+
+   78 | ++ * p ;
+
+      |    ^~~
+
+mutant.c:78:1: error: invalid use of void expression
+
+   78 | ++ * p ;
+
+      | ^~
+
+mutant.c:79:6: warning: dereferencing ‘void *’ pointer
+
+   79 | if ( * p != 2 )
+
+      |      ^~~
+
+mutant.c:79:6: error: void value not ignored as it ought to be
+
+mutant.c:81:1: warning: dereferencing ‘void *’ pointer
+
+   81 | * p += 2 ;
+
+      | ^~~
+
+mutant.c:81:5: error: invalid use of void expression
+
+   81 | * p += 2 ;
+
+      |     ^~
+
+mutant.c:82:6: warning: dereferencing ‘void *’ pointer
+
+   82 | if ( * p != 4 )
+
+      |      ^~~
+
+mutant.c:82:6: error: void value not ignored as it ought to be
+
+mutant.c:84:3: warning: dereferencing ‘void *’ pointer
+
+   84 | ( * p ) ++ ;
+
+      |   ^~~
+
+mutant.c:84:9: error: invalid use of void expression
+
+   84 | ( * p ) ++ ;
+
+      |         ^~
+
+mutant.c:85:6: warning: dereferencing ‘void *’ pointer
+
+   85 | if ( * p != 5 )
+
+      |      ^~~
+
+mutant.c:85:6: error: void value not ignored as it ought to be
+
+mutant.c:87:4: warning: dereferencing ‘void *’ pointer
+
+   87 | -- * p ;
+
+      |    ^~~
+
+mutant.c:87:1: error: invalid use of void expression
+
+   87 | -- * p ;
+
+      | ^~
+
+mutant.c:88:6: warning: dereferencing ‘void *’ pointer
+
+   88 | if ( * p != 4 )
+
+      |      ^~~
+
+mutant.c:88:6: error: void value not ignored as it ought to be
+
+mutant.c:90:3: warning: dereferencing ‘void *’ pointer
+
+   90 | ( * p ) -- ;
+
+      |   ^~~
+
+mutant.c:90:9: error: invalid use of void expression
+
+   90 | ( * p ) -- ;
+
+      |         ^~
+
+mutant.c:91:6: warning: dereferencing ‘void *’ pointer
+
+   91 | if ( * p != 3 )
+
+      |      ^~~
+
+mutant.c:91:6: error: void value not ignored as it ought to be
+
+mutant.c:93:1: warning: dereferencing ‘void *’ pointer
+
+   93 | * p -= 2 ;
+
+      | ^~~
+
+mutant.c:93:5: error: invalid use of void expression
+
+   93 | * p -= 2 ;
+
+      |     ^~
+
+mutant.c:94:6: warning: dereferencing ‘void *’ pointer
+
+   94 | if ( * p != 1 )
+
+      |      ^~~
+
+mutant.c:94:6: error: void value not ignored as it ought to be
+
+mutant.c:97:6: warning: dereferencing ‘void *’ pointer
+
+   97 | j += * p ;
+
+      |      ^~~
+
+mutant.c:97:1: error: void value not ignored as it ought to be
+
+   97 | j += * p ;
+
+      | ^
+
+mutant.c:100:6: warning: dereferencing ‘void *’ pointer
+
+  100 | j -= * p ;
+
+      |      ^~~
+
+mutant.c:100:1: error: void value not ignored as it ought to be
+
+  100 | j -= * p ;
+
+      | ^
+
+mutant.c:97:3: internal compiler error: Segmentation fault
+
+   97 | j += * p ;
+
+      |   ^~
+
+0xf0b4b3 crash_signal
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/toplev.c:327
+
+0xc43342 gimplify_target_expr
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/gimplify.c:6760
+
+0xc34e32 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/gimplify.c:14491
+
+0xc382fa gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/gimplify.c:6865
+
+0xc358fb gimplify_statement_list
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/gimplify.c:1887
+
+0xc358fb gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/gimplify.c:14539
+
+0xc382fa gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/gimplify.c:6865
+
+0xc38729 gimplify_compound_expr
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/gimplify.c:6065
+
+0xc35463 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/gimplify.c:14084
+
+0xc382fa gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/gimplify.c:6865
+
+0xc358fb gimplify_statement_list
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/gimplify.c:1887
+
+0xc358fb gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/gimplify.c:14539
+
+0xc382fa gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/gimplify.c:6865
+
+0xc38b2e gimplify_bind_expr
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/gimplify.c:1426
+
+0xc34d63 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/gimplify.c:14295
+
+0xc382fa gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/gimplify.c:6865
+
+0xc398f3 gimplify_body(tree_node*, bool)
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/gimplify.c:15339
+
+0xc39d41 gimplify_function_tree(tree_node*)
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/gimplify.c:15493
+
+0xa8b5d7 cgraph_node::analyze()
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/cgraphunit.c:670
+
+0xa8e501 analyze_functions
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/cgraphunit.c:1234
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

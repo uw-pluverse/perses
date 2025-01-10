@@ -1,0 +1,4 @@
+error: internal compiler error: unrecognized representation hint
+thread 'rustc' panicked at 'no errors encountered even though `delay_span_bug` issued'
+error: internal compiler error: unexpected panic
+note: the compiler unexpectedly panicked. this is a bug.

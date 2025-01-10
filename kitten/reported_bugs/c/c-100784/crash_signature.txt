@@ -1,0 +1,4 @@
+internal compiler error: Segmentation fault
+crash_signal
+contains_struct_check(tree_node*, tree_node_structure_enum, char const*, int, char const*)
+verify_gimple_assign_ternary

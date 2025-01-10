@@ -1,0 +1,5 @@
+thread 'rustc' panicked at 'called `Option::unwrap()` on a `None` value'
+error: internal compiler error: unexpected panic
+note: the compiler unexpectedly panicked. this is a bug.
+thread 'rustc' panicked at 'already borrowed: BorrowMutError'
+thread panicked while panicking. aborting.

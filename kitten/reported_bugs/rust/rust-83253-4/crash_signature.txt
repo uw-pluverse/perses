@@ -1,0 +1,5 @@
+thread 'rustc' panicked at 'assertion failed: `(left == right)`
+left: `u8`
+right: `bool`: cannot relate constants of different types'
+error: internal compiler error: unexpected panic
+note: the compiler unexpectedly panicked. this is a bug.

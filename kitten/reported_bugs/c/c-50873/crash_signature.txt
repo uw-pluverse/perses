@@ -1,0 +1,3 @@
+clang::CodeGen::ConstantAddress clang::CodeGen::CodeGenModule::GetWeakRefReference(const clang::ValueDecl*): Assertion `AA && "No alias?"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

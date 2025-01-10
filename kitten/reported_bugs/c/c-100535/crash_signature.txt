@@ -1,0 +1,4 @@
+internal compiler error: tree check: expected function_type or method_type, have integer_type in gimplify_call_expr, at gimplify.c
+tree_check_failed(tree_node const*, char const*, int, char const*, ...)
+tree_check2(tree_node*, char const*, int, char const*, tree_code, tree_code)
+gimplify_call_expr

@@ -1,0 +1,160 @@
+error: internal compiler error: trimmed_def_paths constructed
+
+  |
+
+  = note: delayed at    0: rustc_errors::Handler::delay_good_path_bug
+
+             1: rustc_middle::ty::print::pretty::trimmed_def_paths
+
+             2: rustc_query_impl::<impl rustc_query_system::query::config::QueryAccessors<rustc_query_impl::plumbing::QueryCtxt> for rustc_query_impl::queries::trimmed_def_paths>::compute
+
+             3: rustc_query_system::dep_graph::graph::DepGraph<K>::with_task_impl
+
+             4: rustc_query_system::dep_graph::graph::DepGraph<K>::with_task
+
+             5: rustc_data_structures::stack::ensure_sufficient_stack
+
+             6: rustc_query_system::query::plumbing::force_query_with_job
+
+             7: rustc_query_system::query::plumbing::get_query_impl
+
+             8: rustc_query_system::query::plumbing::get_query
+
+             9: <rustc_middle::ty::print::pretty::FmtPrinter<F> as rustc_middle::ty::print::Printer>::print_def_path
+
+            10: rustc_middle::ty::print::pretty::PrettyPrinter::pretty_print_type
+
+            11: rustc_middle::ty::print::pretty::<impl core::fmt::Display for &rustc_middle::ty::TyS>::fmt
+
+            12: core::fmt::write
+
+                       at /rustc/52e3dffa50cfffdcfa145c0cc0ba48b49abc0c07/library/core/src/fmt/mod.rs:1092:17
+
+            13: core::fmt::Write::write_fmt
+
+                       at /rustc/52e3dffa50cfffdcfa145c0cc0ba48b49abc0c07/library/core/src/fmt/mod.rs:182:9
+
+                alloc::fmt::format
+
+                       at /rustc/52e3dffa50cfffdcfa145c0cc0ba48b49abc0c07/library/alloc/src/fmt.rs:578:5
+
+            14: rustc_mir_build::thir::pattern::const_to_pat::ConstToPat::recur
+
+            15: <core::iter::adapters::map::Map<I,F> as core::iter::traits::iterator::Iterator>::try_fold
+
+            16: <alloc::vec::Vec<T> as alloc::vec::spec_from_iter::SpecFromIter<T,I>>::from_iter
+
+            17: rustc_mir_build::thir::pattern::const_to_pat::ConstToPat::recur
+
+            18: rustc_mir_build::thir::pattern::const_to_pat::ConstToPat::recur
+
+            19: rustc_mir_build::thir::pattern::const_to_pat::ConstToPat::recur
+
+            20: rustc_mir_build::thir::pattern::const_to_pat::ConstToPat::to_pat
+
+            21: rustc_infer::infer::InferCtxtBuilder::enter
+
+            22: rustc_mir_build::thir::pattern::const_to_pat::<impl rustc_mir_build::thir::pattern::PatCtxt>::const_to_pat
+
+            23: rustc_mir_build::thir::pattern::PatCtxt::lower_path
+
+            24: rustc_mir_build::thir::pattern::PatCtxt::lower_pattern
+
+            25: rustc_mir_build::thir::pattern::check_match::MatchVisitor::lower_pattern
+
+            26: <alloc::vec::Vec<T> as alloc::vec::spec_from_iter::SpecFromIter<T,I>>::from_iter
+
+            27: <rustc_mir_build::thir::pattern::check_match::MatchVisitor as rustc_hir::intravisit::Visitor>::visit_expr
+
+            28: <rustc_mir_build::thir::pattern::check_match::MatchVisitor as rustc_hir::intravisit::Visitor>::visit_expr
+
+            29: rustc_mir_build::thir::pattern::check_match::check_match
+
+            30: rustc_query_system::dep_graph::graph::DepGraph<K>::with_task_impl
+
+            31: rustc_query_system::query::plumbing::force_query_with_job
+
+            32: rustc_query_system::query::plumbing::get_query_impl
+
+            33: <rustc_query_impl::Queries as rustc_middle::ty::query::QueryEngine>::check_match
+
+            34: rustc_middle::ty::<impl rustc_middle::ty::context::TyCtxt>::par_body_owners
+
+            35: rustc_session::utils::<impl rustc_session::session::Session>::time
+
+            36: rustc_interface::passes::analysis
+
+            37: rustc_query_system::dep_graph::graph::DepGraph<K>::with_task_impl
+
+            38: rustc_data_structures::stack::ensure_sufficient_stack
+
+            39: rustc_query_system::query::plumbing::force_query_with_job
+
+            40: rustc_query_system::query::plumbing::get_query_impl
+
+            41: <rustc_query_impl::Queries as rustc_middle::ty::query::QueryEngine>::analysis
+
+            42: rustc_interface::passes::QueryContext::enter
+
+            43: rustc_interface::queries::<impl rustc_interface::interface::Compiler>::enter
+
+            44: rustc_span::with_source_map
+
+            45: rustc_interface::interface::create_compiler_and_run
+
+            46: scoped_tls::ScopedKey<T>::set
+
+            47: std::sys_common::backtrace::__rust_begin_short_backtrace
+
+            48: core::ops::function::FnOnce::call_once{{vtable.shim}}
+
+            49: <alloc::boxed::Box<F,A> as core::ops::function::FnOnce<Args>>::call_once
+
+                       at /rustc/52e3dffa50cfffdcfa145c0cc0ba48b49abc0c07/library/alloc/src/boxed.rs:1546:9
+
+                <alloc::boxed::Box<F,A> as core::ops::function::FnOnce<Args>>::call_once
+
+                       at /rustc/52e3dffa50cfffdcfa145c0cc0ba48b49abc0c07/library/alloc/src/boxed.rs:1546:9
+
+                std::sys::unix::thread::Thread::new::thread_start
+
+                       at /rustc/52e3dffa50cfffdcfa145c0cc0ba48b49abc0c07/library/std/src/sys/unix/thread.rs:71:17
+
+            50: start_thread
+
+            51: clone
+
+          
+
+
+
+thread 'rustc' panicked at 'no warnings or errors encountered even though `delayed_good_path_bugs` issued', compiler/rustc_errors/src/lib.rs:1013:13
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.53.0-nightly (52e3dffa5 2021-03-25) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+end of query stack
+

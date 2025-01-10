@@ -1,0 +1,170 @@
+mutant.c:2:1: warning: incompatible redeclaration of library function 'strcpy' [-Wincompatible-library-redeclaration]
+
+strcpy ( char * __dest , __const char * __src )
+
+^
+
+mutant.c:2:1: note: 'strcpy' is a builtin with type 'char *(char *, const char *)'
+
+mutant.c:2:17: warning: identifier '__dest' is reserved because it starts with '__' [-Wreserved-identifier]
+
+strcpy ( char * __dest , __const char * __src )
+
+                ^
+
+mutant.c:2:41: warning: identifier '__src' is reserved because it starts with '__' [-Wreserved-identifier]
+
+strcpy ( char * __dest , __const char * __src )
+
+                                        ^
+
+mutant.c:4:8: warning: incompatible pointer types returning 'char *' from a function with result type 'int *' [-Wincompatible-pointer-types]
+
+return __builtin___strcpy_chk ( __dest , __src , __builtin_object_size ( __dest , 2 > 1 ) ) ;
+
+       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c:6:34: warning: unused parameter 'attr' [-Wunused-parameter]
+
+const char * get_attr ( unsigned attr )
+
+                                 ^
+
+mutant.c:6:14: warning: no previous prototype for function 'get_attr' [-Wmissing-prototypes]
+
+const char * get_attr ( unsigned attr )
+
+             ^
+
+mutant.c:6:7: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+const char * get_attr ( unsigned attr )
+
+      ^
+
+static 
+
+clang-trunk: /tmp/tmp.FIfHBNID2p-clang-builder/llvm-project/llvm/lib/Analysis/CGSCCPassManager.cpp:921: llvm::LazyCallGraph::SCC& updateCGAndAnalysisManagerForPass(llvm::LazyCallGraph&, llvm::LazyCallGraph::SCC&, llvm::LazyCallGraph::Node&, llvm::CGSCCAnalysisManager&, llvm::CGSCCUpdateResult&, llvm::FunctionAnalysisManager&, bool): Assertion `(E || !FunctionPass) && "No function transformations should introduce *new* " "call edges! Any new calls should be modeled as " "promoted existing ref edges!"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	Optimizer
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x394ec64)[0x55838efc4c64]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x55838efc2a84]
+
+clang-trunk(+0x38938c8)[0x55838ef098c8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f82b32933c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f82b2d3318b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f82b2d12859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f82b2d12729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f82b2d23f36]
+
+clang-trunk(+0x276cc49)[0x55838dde2c49]
+
+clang-trunk(_ZN4llvm26CGSCCToFunctionPassAdaptor3runERNS_13LazyCallGraph3SCCERNS_15AnalysisManagerIS2_JRS1_EEES5_RNS_17CGSCCUpdateResultE+0x7f1)[0x55838dde3a51]
+
+clang-trunk(+0x1527fa6)[0x55838cb9dfa6]
+
+clang-trunk(_ZN4llvm11PassManagerINS_13LazyCallGraph3SCCENS_15AnalysisManagerIS2_JRS1_EEEJS4_RNS_17CGSCCUpdateResultEEE3runERS2_RS5_S4_S7_+0x1fb)[0x55838dddadeb]
+
+clang-trunk(+0x31a4fe6)[0x55838e81afe6]
+
+clang-trunk(_ZN4llvm21DevirtSCCRepeatedPass3runERNS_13LazyCallGraph3SCCERNS_15AnalysisManagerIS2_JRS1_EEES5_RNS_17CGSCCUpdateResultE+0x1d4)[0x55838dddf464]
+
+clang-trunk(+0x31a4f96)[0x55838e81af96]
+
+clang-trunk(_ZN4llvm33ModuleToPostOrderCGSCCPassAdaptor3runERNS_6ModuleERNS_15AnalysisManagerIS1_JEEE+0xf83)[0x55838dddd153]
+
+clang-trunk(+0x31a5036)[0x55838e81b036]
+
+clang-trunk(_ZN4llvm11PassManagerINS_6ModuleENS_15AnalysisManagerIS1_JEEEJEE3runERS1_RS3_+0x50f)[0x55838e6fd46f]
+
+clang-trunk(_ZN4llvm24ModuleInlinerWrapperPass3runERNS_6ModuleERNS_15AnalysisManagerIS1_JEEE+0x202)[0x55838e81daa2]
+
+clang-trunk(+0x4b260e6)[0x55839019c0e6]
+
+clang-trunk(_ZN4llvm11PassManagerINS_6ModuleENS_15AnalysisManagerIS1_JEEEJEE3runERS1_RS3_+0x50f)[0x55838e6fd46f]
+
+clang-trunk(+0x3c7f47d)[0x55838f2f547d]
+
+clang-trunk(_ZN5clang17EmitBackendOutputERNS_17DiagnosticsEngineERKNS_19HeaderSearchOptionsERKNS_14CodeGenOptionsERKNS_13TargetOptionsERKNS_11LangOptionsEN4llvm9StringRefEPNSE_6ModuleENS_13BackendActionESt10unique_ptrINSE_17raw_pwrite_streamESt14default_deleteISK_EE+0x47d)[0x55838f2f86fd]
+
+clang-trunk(+0x4aabb2f)[0x558390121b2f]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x429)[0x5583911d9209]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x558390120678]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55838f9d0029]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55838f9631e6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x55838faadeb0]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x55838c8d66f6]
+
+clang-trunk(+0x125ca38)[0x55838c8d2a38]
+
+clang-trunk(+0x417ddb9)[0x55838f7f3db9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x55838ef09a4c]
+
+clang-trunk(+0x417e55d)[0x55838f7f455d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55838f7c6ceb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x55838f7c7809]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x55838f7d23b9]
+
+clang-trunk(main+0x18af)[0x55838c8014ef]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f82b2d140b3]
+
+clang-trunk(_start+0x2e)[0x55838c8d25ae]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 5c8659801a4976ef2b327f4071d98086efd42a36)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-31f8a4.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-31f8a4.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

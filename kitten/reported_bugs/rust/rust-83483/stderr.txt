@@ -1,0 +1,46 @@
+error: internal compiler error: compiler/rustc_typeck/src/collect/type_of.rs:371:21: compute_type_of_item: unexpected item type: Trait(No, Normal, Generics { params: [GenericParam { hir_id: HirId { owner: DefId(0:3 ~ mutant[8787]::Foo), local_id: 1 }, name: Plain('a#0), bounds: [], span: mutant.rs:3:34: 3:36 (#0), pure_wrt_drop: false, kind: Lifetime { kind: Explicit } }], where_clause: WhereClause { predicates: [], span: mutant.rs:3:38: 3:38 (#0) }, span: mutant.rs:3:32: 3:38 (#0) }, [], [])
+
+ --> mutant.rs:3:22
+
+  |
+
+3 | # [ rustc_def_path ] trait Foo < 'a > { }
+
+  |                      ^^^^^^^^^^^^^^^^^^^^
+
+
+
+thread 'rustc' panicked at 'Box<Any>', /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/panic.rs:59:5
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.53.0-nightly (07e0e2ec2 2021-03-24) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [type_of] computing type of `Foo`
+
+#1 [symbol_name] computing the symbol for `Foo`
+
+end of query stack
+
+error: aborting due to previous error
+
+
+

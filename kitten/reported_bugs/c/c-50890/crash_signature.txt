@@ -1,0 +1,3 @@
+clang::CodeGen::LValue clang::CodeGen::CodeGenFunction::EmitDeclRefLValue(const clang::DeclRefExpr*): Assertion `E->isNonOdrUse() != NOUR_Unevaluated && "should not emit an unevaluated operand"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

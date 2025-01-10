@@ -1,0 +1,116 @@
+mutant.c: In function ‘foo’:
+
+mutant.c:4:8: error: ‘__transaction_atomic’ without transactional memory support enabled
+
+    4 | return __transaction_atomic ( x + 1 ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~
+
+mutant.c: In function ‘bar’:
+
+mutant.c:8:80: warning: result of ‘3853319862790607633 << 32’ requires 95 bits to represent, but ‘long long int’ only has 64 bits [-Wshift-overflow=]
+
+    8 | return __transaction_relaxed ( ( 0x1234567876543210LL + 0x2345678765432101LL ) << 32 ) ;
+
+      |                                                                                ^~
+
+mutant.c:8:8: error: ‘__transaction_relaxed ’ without transactional memory support enabled
+
+    8 | return __transaction_relaxed ( ( 0x1234567876543210LL + 0x2345678765432101LL ) << 32 ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~
+
+mutant.c:8:80: internal compiler error: in gimplify_expr, at gimplify.c:14747
+
+    8 | return __transaction_relaxed ( ( 0x1234567876543210LL + 0x2345678765432101LL ) << 32 ) ;
+
+      |                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+
+0x6dccb6 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:14747
+
+0xc3b947 gimplify_modify_expr
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:5821
+
+0xc2b168 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:13962
+
+0xc2ea9a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:6880
+
+0xc2f2ce gimplify_bind_expr
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:1424
+
+0xc2b503 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:14163
+
+0xc2ea9a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:6880
+
+0xc2dc48 gimplify_and_add(tree_node*, gimple**)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:492
+
+0xc2dc48 gimplify_and_return_first
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:504
+
+0xc2dc48 gimplify_transaction
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:13582
+
+0xc2dc48 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:14590
+
+0xc2b36f gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:14267
+
+0xc3b947 gimplify_modify_expr
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:5821
+
+0xc2b168 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:13962
+
+0xc2ea9a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:6880
+
+0xc3a27d gimplify_and_add(tree_node*, gimple**)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:492
+
+0xc3a27d gimplify_return_expr
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:1674
+
+0xc2be0f gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:14224
+
+0xc2ea9a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:6880
+
+0xc2c09b gimplify_statement_list
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimplify.c:1882
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

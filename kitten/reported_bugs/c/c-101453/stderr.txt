@@ -1,0 +1,60 @@
+*** buffer overflow detected ***: terminated
+
+mutant.c:6:1: internal compiler error: Aborted
+
+    6 | {
+
+      | ^
+
+0xf264b3 crash_signal
+
+	/tmp/tmp.RJV1U21mAq-gcc-builder/gcc/gcc/toplev.c:328
+
+0x99f9a3 sprintf
+
+	/usr/include/x86_64-linux-gnu/bits/stdio2.h:36
+
+0x99f9a3 parse_optimize_options(tree_node*, bool)
+
+	/tmp/tmp.RJV1U21mAq-gcc-builder/gcc/gcc/c-family/c-common.c:5802
+
+0x9e4298 handle_optimize_attribute
+
+	/tmp/tmp.RJV1U21mAq-gcc-builder/gcc/gcc/c-family/c-attribs.c:5395
+
+0x8e4d66 decl_attributes(tree_node**, tree_node*, int, tree_node*)
+
+	/tmp/tmp.RJV1U21mAq-gcc-builder/gcc/gcc/attribs.c:720
+
+0x901d67 start_function(c_declspecs*, c_declarator*, tree_node*)
+
+	/tmp/tmp.RJV1U21mAq-gcc-builder/gcc/gcc/c/c-decl.c:9452
+
+0x95f74e c_parser_declaration_or_fndef
+
+	/tmp/tmp.RJV1U21mAq-gcc-builder/gcc/gcc/c/c-parser.c:2440
+
+0x967c23 c_parser_external_declaration
+
+	/tmp/tmp.RJV1U21mAq-gcc-builder/gcc/gcc/c/c-parser.c:1777
+
+0x968689 c_parser_translation_unit
+
+	/tmp/tmp.RJV1U21mAq-gcc-builder/gcc/gcc/c/c-parser.c:1650
+
+0x968689 c_parse_file()
+
+	/tmp/tmp.RJV1U21mAq-gcc-builder/gcc/gcc/c/c-parser.c:22121
+
+0x9ca725 c_common_parse_file()
+
+	/tmp/tmp.RJV1U21mAq-gcc-builder/gcc/gcc/c-family/c-opts.c:1219
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

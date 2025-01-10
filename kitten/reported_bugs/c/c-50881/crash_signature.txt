@@ -1,0 +1,3 @@
+updateCGAndAnalysisManagerForPass(llvm::LazyCallGraph&, llvm::LazyCallGraph::SCC&, llvm::LazyCallGraph::Node&, llvm::CGSCCAnalysisManager&, llvm::CGSCCUpdateResult&, llvm::FunctionAnalysisManager&, bool)::<lambda(llvm::Function&)>: Assertion `(E || !FunctionPass) && "No function transformations should introduce *new* ref " "edges! Any new ref edges would require IPO which " "function passes aren't allowed to do!"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

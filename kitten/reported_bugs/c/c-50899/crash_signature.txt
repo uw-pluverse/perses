@@ -1,0 +1,3 @@
+clang::ExprResult clang::Sema::BuildBinOp(clang::Scope*, clang::SourceLocation, clang::BinaryOperatorKind, clang::Expr*, clang::Expr*): Assertion `(LHSExpr->containsErrors() || RHSExpr->containsErrors()) && "Should only occur in error-recovery path."' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

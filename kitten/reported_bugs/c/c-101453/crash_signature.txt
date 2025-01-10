@@ -1,0 +1,4 @@
+internal compiler error: Aborted
+crash_signal
+sprintf
+parse_optimize_options(tree_node*, bool)

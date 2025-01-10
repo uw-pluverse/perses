@@ -1,0 +1,350 @@
+mutant.c: In function ‘eq_si16_x’:
+
+mutant.c:6:378: warning: implicit declaration of function ‘memcmp’ [-Wimplicit-function-declaration]
+
+    6 | q ( const void * , const void * , size_t ) ; struct Si16_x { int16_t n , a [ ] ; } ; const struct Si16_x si16_4 = { 0x1112 , { 0x2122 , 0x3132 , 0x4142 } } ; const char si16_4_rep [ ] = { 0x12 , 0x11 , 0x22 , 0x21 , 0x32 , 0x31 , 0x42 , 0x41 } ; void eq_si16_x ( void ) { int n = 0 , b = sizeof si16_4_rep ; const char * p = ( const char * ) & si16_4 , * q = si16_4_rep ; n += memcmp ( p , q , b ) ; n += memcmp ( p + 1 , q + 1 , b - 1 ) ; n += memcmp ( p + 2 , q + 2 , b - 2 ) ; n += memcmp ( p + 3 , q + 3 , b - 3 ) ; n += memcmp ( p + 4 , q + 4 , b - 4 ) ;
+
+      |                                                                                                                                                                                                                                                                                                                                                                                          ^~~~~~
+
+mutant.c:1:1: note: include ‘<string.h>’ or provide a declaration of ‘memcmp’
+
+  +++ |+#include <string.h>
+
+    1 | typedef __INT8_TYPE__ int8_t ;
+
+mutant.c:6:395: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+    6 | q ( const void * , const void * , size_t ) ; struct Si16_x { int16_t n , a [ ] ; } ; const struct Si16_x si16_4 = { 0x1112 , { 0x2122 , 0x3132 , 0x4142 } } ; const char si16_4_rep [ ] = { 0x12 , 0x11 , 0x22 , 0x21 , 0x32 , 0x31 , 0x42 , 0x41 } ; void eq_si16_x ( void ) { int n = 0 , b = sizeof si16_4_rep ; const char * p = ( const char * ) & si16_4 , * q = si16_4_rep ; n += memcmp ( p , q , b ) ; n += memcmp ( p + 1 , q + 1 , b - 1 ) ; n += memcmp ( p + 2 , q + 2 , b - 2 ) ; n += memcmp ( p + 3 , q + 3 , b - 3 ) ; n += memcmp ( p + 4 , q + 4 , b - 4 ) ;
+
+      |                                                                                                                                                                                                                                                                                                                                                                                                           ^
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:6:433: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+    6 | q ( const void * , const void * , size_t ) ; struct Si16_x { int16_t n , a [ ] ; } ; const struct Si16_x si16_4 = { 0x1112 , { 0x2122 , 0x3132 , 0x4142 } } ; const char si16_4_rep [ ] = { 0x12 , 0x11 , 0x22 , 0x21 , 0x32 , 0x31 , 0x42 , 0x41 } ; void eq_si16_x ( void ) { int n = 0 , b = sizeof si16_4_rep ; const char * p = ( const char * ) & si16_4 , * q = si16_4_rep ; n += memcmp ( p , q , b ) ; n += memcmp ( p + 1 , q + 1 , b - 1 ) ; n += memcmp ( p + 2 , q + 2 , b - 2 ) ; n += memcmp ( p + 3 , q + 3 , b - 3 ) ; n += memcmp ( p + 4 , q + 4 , b - 4 ) ;
+
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:6:473: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+    6 | q ( const void * , const void * , size_t ) ; struct Si16_x { int16_t n , a [ ] ; } ; const struct Si16_x si16_4 = { 0x1112 , { 0x2122 , 0x3132 , 0x4142 } } ; const char si16_4_rep [ ] = { 0x12 , 0x11 , 0x22 , 0x21 , 0x32 , 0x31 , 0x42 , 0x41 } ; void eq_si16_x ( void ) { int n = 0 , b = sizeof si16_4_rep ; const char * p = ( const char * ) & si16_4 , * q = si16_4_rep ; n += memcmp ( p , q , b ) ; n += memcmp ( p + 1 , q + 1 , b - 1 ) ; n += memcmp ( p + 2 , q + 2 , b - 2 ) ; n += memcmp ( p + 3 , q + 3 , b - 3 ) ; n += memcmp ( p + 4 , q + 4 , b - 4 ) ;
+
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:6:513: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+    6 | q ( const void * , const void * , size_t ) ; struct Si16_x { int16_t n , a [ ] ; } ; const struct Si16_x si16_4 = { 0x1112 , { 0x2122 , 0x3132 , 0x4142 } } ; const char si16_4_rep [ ] = { 0x12 , 0x11 , 0x22 , 0x21 , 0x32 , 0x31 , 0x42 , 0x41 } ; void eq_si16_x ( void ) { int n = 0 , b = sizeof si16_4_rep ; const char * p = ( const char * ) & si16_4 , * q = si16_4_rep ; n += memcmp ( p , q , b ) ; n += memcmp ( p + 1 , q + 1 , b - 1 ) ; n += memcmp ( p + 2 , q + 2 , b - 2 ) ; n += memcmp ( p + 3 , q + 3 , b - 3 ) ; n += memcmp ( p + 4 , q + 4 , b - 4 ) ;
+
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:6:553: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+    6 | q ( const void * , const void * , size_t ) ; struct Si16_x { int16_t n , a [ ] ; } ; const struct Si16_x si16_4 = { 0x1112 , { 0x2122 , 0x3132 , 0x4142 } } ; const char si16_4_rep [ ] = { 0x12 , 0x11 , 0x22 , 0x21 , 0x32 , 0x31 , 0x42 , 0x41 } ; void eq_si16_x ( void ) { int n = 0 , b = sizeof si16_4_rep ; const char * p = ( const char * ) & si16_4 , * q = si16_4_rep ; n += memcmp ( p , q , b ) ; n += memcmp ( p + 1 , q + 1 , b - 1 ) ; n += memcmp ( p + 2 , q + 2 , b - 2 ) ; n += memcmp ( p + 3 , q + 3 , b - 3 ) ; n += memcmp ( p + 4 , q + 4 , b - 4 ) ;
+
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:7:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+    7 | n += memcmp ( p + 5 , q + 5 , b - 5 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:8:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+    8 | n += memcmp ( p + 6 , q + 6 , b - 6 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:9:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+    9 | n += memcmp ( p + 7 , q + 7 , b - 7 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:10:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   10 | n += memcmp ( p + 8 , q + 8 , b - 8 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:12:23: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   12 | n += memcmp ( p , q , b ) ;
+
+      |                       ^
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:13:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   13 | n += memcmp ( p + 1 , q + 1 , b - 1 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:14:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   14 | n += memcmp ( p + 2 , q + 2 , b - 2 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:15:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   15 | n += memcmp ( p + 3 , q + 3 , b - 3 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:16:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   16 | n += memcmp ( p + 4 , q + 4 , b - 4 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:17:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   17 | n += memcmp ( p + 5 , q + 5 , b - 5 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:18:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   18 | n += memcmp ( p + 6 , q + 6 , b - 6 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:19:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   19 | n += memcmp ( p + 7 , q + 7 , b - 7 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:20:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   20 | n += memcmp ( p + 8 , q + 8 , b - 8 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:23:25: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   23 | n += memcmp ( p , q , b - 2 ) ;
+
+      |                       ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:24:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   24 | n += memcmp ( p + 1 , q + 1 , b - 3 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:25:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   25 | n += memcmp ( p + 2 , q + 2 , b - 4 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:26:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   26 | n += memcmp ( p + 3 , q + 3 , b - 5 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:27:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   27 | n += memcmp ( p + 4 , q + 4 , b - 6 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:28:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   28 | n += memcmp ( p + 5 , q + 5 , b - 7 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:29:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   29 | n += memcmp ( p + 6 , q + 6 , b - 8 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:32:25: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   32 | n += memcmp ( p , q , b - 4 ) ;
+
+      |                       ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:33:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   33 | n += memcmp ( p + 1 , q + 1 , b - 5 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:34:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   34 | n += memcmp ( p + 2 , q + 2 , b - 6 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:35:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   35 | n += memcmp ( p + 3 , q + 3 , b - 7 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+mutant.c:36:33: warning: ‘memcmp’ argument 3 type is ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   36 | n += memcmp ( p + 4 , q + 4 , b - 8 ) ;
+
+      |                               ~~^~~
+
+<built-in>: note: built-in ‘memcmp’ declared here
+
+during RTL pass: expand
+
+mutant.c:6:378: internal compiler error: in decompose, at wide-int.h:984
+
+    6 | q ( const void * , const void * , size_t ) ; struct Si16_x { int16_t n , a [ ] ; } ; const struct Si16_x si16_4 = { 0x1112 , { 0x2122 , 0x3132 , 0x4142 } } ; const char si16_4_rep [ ] = { 0x12 , 0x11 , 0x22 , 0x21 , 0x32 , 0x31 , 0x42 , 0x41 } ; void eq_si16_x ( void ) { int n = 0 , b = sizeof si16_4_rep ; const char * p = ( const char * ) & si16_4 , * q = si16_4_rep ; n += memcmp ( p , q , b ) ; n += memcmp ( p + 1 , q + 1 , b - 1 ) ; n += memcmp ( p + 2 , q + 2 , b - 2 ) ; n += memcmp ( p + 3 , q + 3 , b - 3 ) ; n += memcmp ( p + 4 , q + 4 , b - 4 ) ;
+
+      |                                                                                                                                                                                                                                                                                                                                                                                          ^~~~~~~~~~~~~~~~~~~~
+
+0x679a02 wi::int_traits<generic_wide_int<wide_int_ref_storage<false, false> > >::decompose(long*, unsigned int, generic_wide_int<wide_int_ref_storage<false, false> > const&)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/wide-int.h:984
+
+0x67e3d1 wi::int_traits<generic_wide_int<wide_int_storage> >::decompose(long*, unsigned int, generic_wide_int<wide_int_storage> const&)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/tree.h:3479
+
+0x67e3d1 wide_int_ref_storage<true, false>::wide_int_ref_storage<generic_wide_int<wide_int_storage> >(generic_wide_int<wide_int_storage> const&, unsigned int)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/wide-int.h:1034
+
+0x67e3d1 generic_wide_int<wide_int_ref_storage<true, false> >::generic_wide_int<generic_wide_int<wide_int_storage> >(generic_wide_int<wide_int_storage> const&, unsigned int)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/wide-int.h:790
+
+0x67e3d1 bool wi::ltu_p<generic_wide_int<wide_int_ref_storage<false, false> >, generic_wide_int<wide_int_storage> >(generic_wide_int<wide_int_ref_storage<false, false> > const&, generic_wide_int<wide_int_storage> const&)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/wide-int.h:1937
+
+0x67e3d1 bool wi::leu_p<generic_wide_int<wide_int_storage>, generic_wide_int<wide_int_ref_storage<false, false> > >(generic_wide_int<wide_int_storage> const&, generic_wide_int<wide_int_ref_storage<false, false> > const&)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/wide-int.h:1979
+
+0x67e3d1 check_nul_terminated_array(tree_node*, tree_node*, tree_node*)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/builtins.c:1228
+
+0xa0ad9e check_access(tree_node*, tree_node*, tree_node*, tree_node*, tree_node*, access_mode, access_data const*)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/builtins.c:4669
+
+0xa0d0e7 check_read_access
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/builtins.c:4909
+
+0xa0e1a1 check_read_access
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/builtins.c:4904
+
+0xa0e1a1 expand_builtin_memcmp
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/builtins.c:7049
+
+0xa12154 expand_builtin(tree_node*, rtx_def*, rtx_def*, machine_mode, int)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/builtins.c:10226
+
+0xb6243c expand_expr_real_1(tree_node*, rtx_def*, machine_mode, expand_modifier, rtx_def**, bool)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/expr.c:11405
+
+0xb6cf58 store_expr(tree_node*, rtx_def*, int, bool, bool)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/expr.c:5986
+
+0xb6e59f expand_assignment(tree_node*, tree_node*, bool)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/expr.c:5721
+
+0xa3cb0b expand_call_stmt
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/cfgexpand.c:2841
+
+0xa3cb0b expand_gimple_stmt_1
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/cfgexpand.c:3847
+
+0xa3cb0b expand_gimple_stmt
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/cfgexpand.c:4011
+
+0xa42809 expand_gimple_basic_block
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/cfgexpand.c:6048
+
+0xa4445f execute
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/cfgexpand.c:6732
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

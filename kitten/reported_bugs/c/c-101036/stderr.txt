@@ -1,0 +1,138 @@
+mutant.c: In function ‘z1’:
+
+mutant.c:11:15: warning: unused parameter ‘a’ [-Wunused-parameter]
+
+   11 | void z1 ( int a , int b )
+
+      |           ~~~~^
+
+mutant.c:11:23: warning: unused parameter ‘b’ [-Wunused-parameter]
+
+   11 | void z1 ( int a , int b )
+
+      |                   ~~~~^
+
+mutant.c: In function ‘w1’:
+
+mutant.c:18:15: warning: unused parameter ‘a’ [-Wunused-parameter]
+
+   18 | void w1 ( int a , int b )
+
+      |           ~~~~^
+
+mutant.c:18:23: warning: unused parameter ‘b’ [-Wunused-parameter]
+
+   18 | void w1 ( int a , int b )
+
+      |                   ~~~~^
+
+mutant.c: At top level:
+
+mutant.c:76:1: error: conflicting types for ‘z1_called’; have ‘int (*[])(int)’
+
+   76 | z1_called [ ] ) ( int ) = { z3 , w3 } ; __attribute__ ( ( __noipa__ ) ) void f4 ( int x ) { int ( * * q ) ( int ) = p4 ; int ( * * r ) ( int ) = p4 + x ; int next = x ; for ( ; q < r ; q ++ ) next = ( * q ) ( next ) ; } int main ( void ) { static int ( * p3 [ ] ) ( int ) = { z3 , w3 } ; static void ( * p1 [ ] ) ( int , int ) = { z1 , w1 } ; f1 ( 2 , p1 ) ; if ( z1_called != 1 || w1_called != 1 )
+
+      | ^~~~~~~~~
+
+mutant.c:8:5: note: previous definition of ‘z1_called’ with type ‘int’
+
+    8 | int z1_called = 0 ;
+
+      |     ^~~~~~~~~
+
+mutant.c: In function ‘f4’:
+
+mutant.c:76:117: error: ‘p4’ undeclared (first use in this function); did you mean ‘f4’?
+
+   76 | z1_called [ ] ) ( int ) = { z3 , w3 } ; __attribute__ ( ( __noipa__ ) ) void f4 ( int x ) { int ( * * q ) ( int ) = p4 ; int ( * * r ) ( int ) = p4 + x ; int next = x ; for ( ; q < r ; q ++ ) next = ( * q ) ( next ) ; } int main ( void ) { static int ( * p3 [ ] ) ( int ) = { z3 , w3 } ; static void ( * p1 [ ] ) ( int , int ) = { z1 , w1 } ; f1 ( 2 , p1 ) ; if ( z1_called != 1 || w1_called != 1 )
+
+      |                                                                                                                     ^~
+
+      |                                                                                                                     f4
+
+mutant.c:76:117: note: each undeclared identifier is reported only once for each function it appears in
+
+mutant.c: In function ‘main’:
+
+mutant.c:76:375: warning: comparison between pointer and integer
+
+   76 | z1_called [ ] ) ( int ) = { z3 , w3 } ; __attribute__ ( ( __noipa__ ) ) void f4 ( int x ) { int ( * * q ) ( int ) = p4 ; int ( * * r ) ( int ) = p4 + x ; int next = x ; for ( ; q < r ; q ++ ) next = ( * q ) ( next ) ; } int main ( void ) { static int ( * p3 [ ] ) ( int ) = { z3 , w3 } ; static void ( * p1 [ ] ) ( int , int ) = { z1 , w1 } ; f1 ( 2 , p1 ) ; if ( z1_called != 1 || w1_called != 1 )
+
+      |                                                                                                                                                                                                                                                                                                                                                                                       ^~
+
+mutant.c: In function ‘z1’:
+
+mutant.c:15:11: internal compiler error: in fold_convert_loc, at fold-const.c:2430
+
+   15 | z1_called ++ ;
+
+      | ~~~~~~~~~~^~
+
+0x6c27da fold_convert_loc(unsigned int, tree_node*, tree_node*)
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/fold-const.c:2430
+
+0xc3a3fe gimplify_self_mod_expr(tree_node**, gimple**, gimple**, bool, tree_node*)
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/gimplify.c:3202
+
+0xc33e0f gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/gimplify.c:14009
+
+0xc37aea gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/gimplify.c:6863
+
+0xc350eb gimplify_statement_list
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/gimplify.c:1885
+
+0xc350eb gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/gimplify.c:14524
+
+0xc37aea gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/gimplify.c:6863
+
+0xc3831e gimplify_bind_expr
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/gimplify.c:1424
+
+0xc34553 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/gimplify.c:14280
+
+0xc37aea gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/gimplify.c:6863
+
+0xc390e3 gimplify_body(tree_node*, bool)
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/gimplify.c:15324
+
+0xc39531 gimplify_function_tree(tree_node*)
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/gimplify.c:15478
+
+0xa8b027 cgraph_node::analyze()
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/cgraphunit.c:670
+
+0xa8df51 analyze_functions
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/cgraphunit.c:1234
+
+0xa8ea21 symbol_table::finalize_compilation_unit()
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/cgraphunit.c:2508
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

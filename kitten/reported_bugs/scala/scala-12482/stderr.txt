@@ -1,0 +1,198 @@
+[31m-- Error: mutant.scala:15:48 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[0m
+
+[31m15 |[0mensureDir ) = splitPath ( path , front = [31mtrue[0m ) [33mprivate[0m [33mdef[0m baseName ( path : String ) = splitPath ( path , front = [31mfalse[0m ) [33mprivate[0m [33mdef[0m splitPath ( path0 : String , front : Boolean ) : String = { [33mval[0m isDir = path0 . charAt ( path0 . length - [31m1[0m ) == [31m'/'[0m [33mval[0m path = [33mif[0m ( isDir ) path0 . substring ( [31m0[0m , path0 . length - [31m1[0m ) [33melse[0m path0 [33mval[0m idx = path . lastIndexOf ( [31m'/'[0m ) [33mif[0m ( idx < [31m0[0m ) [33mif[0m ( front ) [31m"/"[0m [33melse[0m path [33melse[0m [33mif[0m ( front ) path . substring ( [31m0[0m , idx + [31m1[0m ) [33melse[0m path . substring ( idx + [31m1[0m ) } } [33mimport[0m ZipArchive . _ [33mabstract[0m [33mclass[0m ZipArchive ( [33moverride[0m [33mval[0m jpath : JPath , release : Option [ String ] ) [33mextends[0m AbstractFile [33mwith[0m Equals { self => [33moverride[0m [33mdef[0m underlyingSource : Option [ ZipArchive ] = Some ( [33mthis[0m ) [33mdef[0m isDirectory : Boolean = [31mtrue[0m [33mdef[0m lookupName ( name : String , directory : Boolean ) : AbstractFile = unsupported ( ) [33mdef[0m lookupNameUnchecked ( name : String , directory : Boolean ) : AbstractFile = unsupported ( ) [33mdef[0m create ( ) : Unit = unsupported ( ) [33mdef[0m delete ( ) : Unit = unsupported ( ) [33mdef[0m output : OutputStream = unsupported ( ) [33mdef[0m container : AbstractFile = unsupported ( ) [33mdef[0m absolute : AbstractFile = unsupported ( ) [33msealed[0m [33mabstract[0m [33mclass[0m Entry ( path : String , [33mval[0m parent : Entry ) [33mextends[0m VirtualFile ( baseName ( path ) , path ) { [33mdef[0m getArchive : ZipFile = [31mnull[0m [33moverride[0m [33mdef[0m underlyingSource : Option [ ZipArchive ] = Some ( self ) [33moverride[0m [33mdef[0m toString : String = self . path + [31m"("[0m + path + [31m")"[0m } [33mclass[0m DirEntry ( path : String , parent : Entry ) [33mextends[0m Entry ( path , parent ) { [33mval[0m entries : mutable . HashMap [ String , Entry ] = mutable . HashMap ( ) [33moverride[0m [33mdef[0m isDirectory : Boolean = [31mtrue[0m [33moverride[0m [33mdef[0m iterator : Iterator [ Entry ] = entries . valuesIterator [33moverride[0m [33mdef[0m lookupName ( name : String , directory : Boolean ) : Entry = { [33mif[0m ( directory ) entries . get ( name + [31m"/"[0m ) . orNull [33melse[0m entries . get ( name ) . orNull } } [33mprivate[0m [33mdef[0m ensureDir ( dirs : mutable . Map [ String , DirEntry ] , path : String ) : DirEntry =
+
+   |                                                [31m^^^^^^^[0m
+
+   |                                                end of statement expected but 'private' found
+
+[31m-- Error: mutant.scala:15:501 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[0m
+
+[31m15 |[0mensureDir ) = splitPath ( path , front = [31mtrue[0m ) [33mprivate[0m [33mdef[0m baseName ( path : String ) = splitPath ( path , front = [31mfalse[0m ) [33mprivate[0m [33mdef[0m splitPath ( path0 : String , front : Boolean ) : String = { [33mval[0m isDir = path0 . charAt ( path0 . length - [31m1[0m ) == [31m'/'[0m [33mval[0m path = [33mif[0m ( isDir ) path0 . substring ( [31m0[0m , path0 . length - [31m1[0m ) [33melse[0m path0 [33mval[0m idx = path . lastIndexOf ( [31m'/'[0m ) [33mif[0m ( idx < [31m0[0m ) [33mif[0m ( front ) [31m"/"[0m [33melse[0m path [33melse[0m [33mif[0m ( front ) path . substring ( [31m0[0m , idx + [31m1[0m ) [33melse[0m path . substring ( idx + [31m1[0m ) } } [33mimport[0m ZipArchive . _ [33mabstract[0m [33mclass[0m ZipArchive ( [33moverride[0m [33mval[0m jpath : JPath , release : Option [ String ] ) [33mextends[0m AbstractFile [33mwith[0m Equals { self => [33moverride[0m [33mdef[0m underlyingSource : Option [ ZipArchive ] = Some ( [33mthis[0m ) [33mdef[0m isDirectory : Boolean = [31mtrue[0m [33mdef[0m lookupName ( name : String , directory : Boolean ) : AbstractFile = unsupported ( ) [33mdef[0m lookupNameUnchecked ( name : String , directory : Boolean ) : AbstractFile = unsupported ( ) [33mdef[0m create ( ) : Unit = unsupported ( ) [33mdef[0m delete ( ) : Unit = unsupported ( ) [33mdef[0m output : OutputStream = unsupported ( ) [33mdef[0m container : AbstractFile = unsupported ( ) [33mdef[0m absolute : AbstractFile = unsupported ( ) [33msealed[0m [33mabstract[0m [33mclass[0m Entry ( path : String , [33mval[0m parent : Entry ) [33mextends[0m VirtualFile ( baseName ( path ) , path ) { [33mdef[0m getArchive : ZipFile = [31mnull[0m [33moverride[0m [33mdef[0m underlyingSource : Option [ ZipArchive ] = Some ( self ) [33moverride[0m [33mdef[0m toString : String = self . path + [31m"("[0m + path + [31m")"[0m } [33mclass[0m DirEntry ( path : String , parent : Entry ) [33mextends[0m Entry ( path , parent ) { [33mval[0m entries : mutable . HashMap [ String , Entry ] = mutable . HashMap ( ) [33moverride[0m [33mdef[0m isDirectory : Boolean = [31mtrue[0m [33moverride[0m [33mdef[0m iterator : Iterator [ Entry ] = entries . valuesIterator [33moverride[0m [33mdef[0m lookupName ( name : String , directory : Boolean ) : Entry = { [33mif[0m ( directory ) entries . get ( name + [31m"/"[0m ) . orNull [33melse[0m entries . get ( name ) . orNull } } [33mprivate[0m [33mdef[0m ensureDir ( dirs : mutable . Map [ String , DirEntry ] , path : String ) : DirEntry =
+
+   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     [31m^^^^^^[0m
+
+   |                                                                                                                                                                                                          end of toplevel definition expected but 'import' found
+
+undefined: [33mnew [0m[35mdotty.tools.io.ZipArchive[0m # -1: TermRef(TypeRef(TermRef(ThisType(TypeRef(NoPrefix,module class tools)),object io),ZipArchive),<init>) at typer
+
+exception occurred while typechecking mutant.scala
+
+exception occurred while compiling mutant.scala
+
+Exception in thread "main" java.lang.AssertionError: assertion failed: class FileZipArchive has non-class parent: val <none>
+
+	at scala.runtime.Scala3RunTime$.assertFailed(Scala3RunTime.scala:8)
+
+	at dotty.tools.dotc.core.SymDenotations$ClassDenotation.traverse$1(SymDenotations.scala:1822)
+
+	at dotty.tools.dotc.core.SymDenotations$ClassDenotation.computeBaseData(SymDenotations.scala:1827)
+
+	at dotty.tools.dotc.core.SymDenotations$BaseDataImpl.apply(SymDenotations.scala:2798)
+
+	at dotty.tools.dotc.core.SymDenotations$ClassDenotation.baseData(SymDenotations.scala:1798)
+
+	at dotty.tools.dotc.core.SymDenotations$ClassDenotation.baseClasses(SymDenotations.scala:1805)
+
+	at dotty.tools.dotc.core.NamerOps$.memberExists$1(NamerOps.scala:139)
+
+	at dotty.tools.dotc.core.NamerOps$.addConstructorProxies$$anonfun$1(NamerOps.scala:143)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.immutable.List.foreach(List.scala:333)
+
+	at dotty.tools.dotc.core.Scopes$Scope.foreach(Scopes.scala:94)
+
+	at dotty.tools.dotc.core.NamerOps$.addConstructorProxies(NamerOps.scala:145)
+
+	at dotty.tools.dotc.core.tasty.TreeUnpickler$TreeReader.readTemplate(TreeUnpickler.scala:948)
+
+	at dotty.tools.dotc.core.tasty.TreeUnpickler$TreeReader.readNewDef(TreeUnpickler.scala:854)
+
+	at dotty.tools.dotc.core.tasty.TreeUnpickler$TreeReader.readIndexedDef(TreeUnpickler.scala:777)
+
+	at dotty.tools.dotc.core.tasty.TreeUnpickler$Completer.complete(TreeUnpickler.scala:122)
+
+	at dotty.tools.dotc.core.SymDenotations$SymDenotation.completeFrom(SymDenotations.scala:167)
+
+	at dotty.tools.dotc.core.Denotations$Denotation.completeInfo$1(Denotations.scala:188)
+
+	at dotty.tools.dotc.core.Denotations$Denotation.info(Denotations.scala:190)
+
+	at dotty.tools.dotc.core.Types$NamedType.info(Types.scala:2152)
+
+	at dotty.tools.dotc.core.Types$TermLambda.dotty$tools$dotc$core$Types$TermLambda$$_$compute$1(Types.scala:3504)
+
+	at dotty.tools.dotc.core.Types$TermLambda.dotty$tools$dotc$core$Types$TermLambda$$depStatus(Types.scala:3517)
+
+	at dotty.tools.dotc.core.Types$TermLambda.dependencyStatus(Types.scala:3531)
+
+	at dotty.tools.dotc.core.Types$TermLambda.resultType(Types.scala:3470)
+
+	at dotty.tools.dotc.core.Types$TermLambda.resultType$(Types.scala:3462)
+
+	at dotty.tools.dotc.core.Types$MethodType.resultType(Types.scala:3576)
+
+	at dotty.tools.dotc.core.Types$TypeMap.mapOverLambda(Types.scala:5250)
+
+	at dotty.tools.dotc.core.Types$TypeMap.mapOver(Types.scala:5280)
+
+	at dotty.tools.dotc.typer.Checking$NotPrivate$1.apply(Checking.scala:610)
+
+	at dotty.tools.dotc.typer.Checking$.checkNoPrivateLeaks(Checking.scala:614)
+
+	at dotty.tools.dotc.typer.TypeAssigner.avoidPrivateLeaks(TypeAssigner.scala:48)
+
+	at dotty.tools.dotc.typer.TypeAssigner.avoidPrivateLeaks$(TypeAssigner.scala:20)
+
+	at dotty.tools.dotc.typer.Typer.avoidPrivateLeaks(Typer.scala:106)
+
+	at dotty.tools.dotc.typer.Namer$Completer.completeInCreationContext(Namer.scala:829)
+
+	at dotty.tools.dotc.typer.Namer$Completer.complete(Namer.scala:727)
+
+	at dotty.tools.dotc.core.SymDenotations$SymDenotation.completeFrom(SymDenotations.scala:167)
+
+	at dotty.tools.dotc.core.Denotations$Denotation.completeInfo$1(Denotations.scala:188)
+
+	at dotty.tools.dotc.core.Denotations$Denotation.info(Denotations.scala:190)
+
+	at dotty.tools.dotc.core.SymDenotations$SymDenotation.ensureCompleted(SymDenotations.scala:369)
+
+	at dotty.tools.dotc.typer.Typer.retrieveSym(Typer.scala:2623)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2648)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2742)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2834)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2884)
+
+	at dotty.tools.dotc.typer.Typer.typedClassDef(Typer.scala:2340)
+
+	at dotty.tools.dotc.typer.Typer.typedTypeOrClassDef$2(Typer.scala:2669)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2673)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2742)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2834)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2884)
+
+	at dotty.tools.dotc.typer.Typer.typedPackageDef(Typer.scala:2463)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2714)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2928)
+
+	at dotty.tools.dotc.typer.FrontEnd.liftedTree1$1(FrontEnd.scala:79)
+
+	at dotty.tools.dotc.typer.FrontEnd.typeCheck$$anonfun$1(FrontEnd.scala:84)
+
+	at dotty.tools.dotc.typer.FrontEnd.monitor(FrontEnd.scala:43)
+
+	at dotty.tools.dotc.typer.FrontEnd.typeCheck(FrontEnd.scala:85)
+
+	at dotty.tools.dotc.typer.FrontEnd.runOn$$anonfun$3(FrontEnd.scala:120)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.immutable.List.foreach(List.scala:333)
+
+	at dotty.tools.dotc.typer.FrontEnd.runOn(FrontEnd.scala:120)
+
+	at dotty.tools.dotc.Run.runPhases$4$$anonfun$4(Run.scala:205)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.ArrayOps$.foreach$extension(ArrayOps.scala:1323)
+
+	at dotty.tools.dotc.Run.runPhases$5(Run.scala:216)
+
+	at dotty.tools.dotc.Run.compileUnits$$anonfun$1(Run.scala:224)
+
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+
+	at dotty.tools.dotc.util.Stats$.maybeMonitored(Stats.scala:67)
+
+	at dotty.tools.dotc.Run.compileUnits(Run.scala:231)
+
+	at dotty.tools.dotc.Run.compileSources(Run.scala:166)
+
+	at dotty.tools.dotc.Run.compile(Run.scala:150)
+
+	at dotty.tools.dotc.Driver.doCompile(Driver.scala:39)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:199)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:167)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:179)
+
+	at dotty.tools.dotc.Driver.main(Driver.scala:209)
+
+	at dotty.tools.dotc.Main.main(Main.scala)
+

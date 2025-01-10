@@ -1,0 +1,4 @@
+internal compiler error: in gimple_cond_get_ops_from_tree, at gimple-expr.c
+gimple_cond_get_ops_from_tree(tree_node*, tree_code*, tree_node**, tree_node**)
+gimple_build_cond_from_tree(tree_node*, tree_node*, tree_node*)
+c_parser_gimple_if_stmt

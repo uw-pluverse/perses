@@ -1,0 +1,396 @@
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:47:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+
+const gsl_complex_long_double zero = { { 0 , 0 } } ;
+
+                                         ^~~~~
+
+                                         {    }
+
+mutant.c:42:6: warning: no previous prototype for function 'gsl_vector_complex_long_double_set_zero' [-Wmissing-prototypes]
+
+void gsl_vector_complex_long_double_set_zero ( gsl_vector_complex_long_double * v )
+
+     ^
+
+mutant.c:42:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void gsl_vector_complex_long_double_set_zero ( gsl_vector_complex_long_double * v )
+
+^
+
+static 
+
+clang-trunk: /tmp/tmp.xjN6dMkdrg-clang-builder/llvm-project/llvm/lib/IR/Type.cpp:651: static llvm::FixedVectorType* llvm::FixedVectorType::get(llvm::Type*, unsigned int): Assertion `NumElts > 0 && "#Elements of a VectorType must be greater than 0"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	Optimizer
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x395b184)[0x556486c3b184]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x556486c38fa4]
+
+clang-trunk(+0x389fdd8)[0x556486b7fdd8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7efcbd43f3c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7efcbcede18b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7efcbcebd859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7efcbcebd729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7efcbcecef36]
+
+clang-trunk(_ZN4llvm15FixedVectorType3getEPNS_4TypeEj+0x61c)[0x55648638bddc]
+
+clang-trunk(+0x37e33ba)[0x556486ac33ba]
+
+clang-trunk(+0x37ec7c4)[0x556486acc7c4]
+
+clang-trunk(+0x37f123f)[0x556486ad123f]
+
+clang-trunk(+0x37f2d5a)[0x556486ad2d5a]
+
+clang-trunk(_ZN4llvm4SROA11runOnAllocaERNS_10AllocaInstE+0xe37)[0x556486ad5347]
+
+clang-trunk(_ZN4llvm4SROA7runImplERNS_8FunctionERNS_13DominatorTreeERNS_15AssumptionCacheE+0x3fd)[0x556486ad710d]
+
+clang-trunk(_ZN4llvm4SROA3runERNS_8FunctionERNS_15AnalysisManagerIS1_JEEE+0x109)[0x556486ad81d9]
+
+clang-trunk(+0x4c7e8f6)[0x556487f5e8f6]
+
+clang-trunk(_ZN4llvm11PassManagerINS_8FunctionENS_15AnalysisManagerIS1_JEEEJEE3runERS1_RS3_+0x436)[0x5564863774d6]
+
+clang-trunk(+0x152c836)[0x55648480c836]
+
+clang-trunk(_ZN4llvm27ModuleToFunctionPassAdaptor3runERNS_6ModuleERNS_15AnalysisManagerIS1_JEEE+0x6e9)[0x556486375ff9]
+
+clang-trunk(+0x152d0a6)[0x55648480d0a6]
+
+clang-trunk(_ZN4llvm11PassManagerINS_6ModuleENS_15AnalysisManagerIS1_JEEEJEE3runERS1_RS3_+0x50f)[0x5564863738df]
+
+clang-trunk(+0x3c8c6ad)[0x556486f6c6ad]
+
+clang-trunk(_ZN5clang17EmitBackendOutputERNS_17DiagnosticsEngineERKNS_19HeaderSearchOptionsERKNS_14CodeGenOptionsERKNS_13TargetOptionsERKNS_11LangOptionsEN4llvm9StringRefEPNSE_6ModuleENS_13BackendActionESt10unique_ptrINSE_17raw_pwrite_streamESt14default_deleteISK_EE+0x47d)[0x556486f6f92d]
+
+clang-trunk(+0x4ab8e1f)[0x556487d98e1f]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x429)[0x556488e504d9]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x556487d97968]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x556487647599]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x5564875da7e6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x556487725480]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x556484545696]
+
+clang-trunk(+0x12619d8)[0x5564845419d8]
+
+clang-trunk(+0x418b789)[0x55648746b789]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x556486b7ff5c]
+
+clang-trunk(+0x418bf2d)[0x55648746bf2d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55648743e6bb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x55648743f1d9]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x556487449d89]
+
+clang-trunk(main+0x18af)[0x55648447052f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7efcbcebf0b3]
+
+clang-trunk(_start+0x2e)[0x55648454154e]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 2e9c75daffddd65e37c3236708b5b133e6f5f2f5)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-9d2b8a.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-9d2b8a.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

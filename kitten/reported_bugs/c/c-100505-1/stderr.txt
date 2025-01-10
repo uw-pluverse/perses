@@ -1,0 +1,12354 @@
+mutant.c:1:5: error: ‘__GIMPLE’ only valid with ‘-fgimple’
+
+    1 | int __GIMPLE foo ( )
+
+      |     ^~~~~~~~
+
+mutant.c: In function ‘foo’:
+
+mutant.c:3:6: error: ‘a’ undeclared (first use in this function)
+
+    3 | if ( a != 2 )
+
+      |      ^
+
+mutant.c:3:6: note: each undeclared identifier is reported only once for each function it appears in
+
+mutant.c:8:1: error: duplicate label ‘bb1’
+
+    8 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:9:1: error: duplicate label ‘bb1’
+
+    9 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:10:1: error: duplicate label ‘bb1’
+
+   10 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:11:1: error: duplicate label ‘bb1’
+
+   11 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:12:1: error: duplicate label ‘bb1’
+
+   12 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:13:1: error: duplicate label ‘bb1’
+
+   13 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:14:1: error: duplicate label ‘bb1’
+
+   14 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:15:1: error: duplicate label ‘bb1’
+
+   15 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:16:1: error: duplicate label ‘bb1’
+
+   16 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:17:1: error: duplicate label ‘bb1’
+
+   17 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:18:1: error: duplicate label ‘bb1’
+
+   18 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:19:1: error: duplicate label ‘bb1’
+
+   19 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:20:1: error: duplicate label ‘bb1’
+
+   20 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:21:1: error: duplicate label ‘bb1’
+
+   21 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:22:1: error: duplicate label ‘bb1’
+
+   22 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:23:1: error: duplicate label ‘bb1’
+
+   23 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:24:1: error: duplicate label ‘bb1’
+
+   24 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:25:1: error: duplicate label ‘bb1’
+
+   25 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:26:1: error: duplicate label ‘bb1’
+
+   26 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:27:1: error: duplicate label ‘bb1’
+
+   27 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:28:1: error: duplicate label ‘bb1’
+
+   28 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:29:1: error: duplicate label ‘bb1’
+
+   29 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:30:1: error: duplicate label ‘bb1’
+
+   30 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:31:1: error: duplicate label ‘bb1’
+
+   31 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:32:1: error: duplicate label ‘bb1’
+
+   32 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:33:1: error: duplicate label ‘bb1’
+
+   33 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:34:1: error: duplicate label ‘bb1’
+
+   34 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:35:1: error: duplicate label ‘bb1’
+
+   35 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:36:1: error: duplicate label ‘bb1’
+
+   36 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:37:1: error: duplicate label ‘bb1’
+
+   37 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:38:1: error: duplicate label ‘bb1’
+
+   38 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:39:1: error: duplicate label ‘bb1’
+
+   39 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:40:1: error: duplicate label ‘bb1’
+
+   40 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:41:1: error: duplicate label ‘bb1’
+
+   41 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:42:1: error: duplicate label ‘bb1’
+
+   42 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:43:1: error: duplicate label ‘bb1’
+
+   43 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:44:1: error: duplicate label ‘bb1’
+
+   44 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:45:1: error: duplicate label ‘bb1’
+
+   45 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:46:1: error: duplicate label ‘bb1’
+
+   46 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:47:1: error: duplicate label ‘bb1’
+
+   47 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:48:1: error: duplicate label ‘bb1’
+
+   48 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:49:1: error: duplicate label ‘bb1’
+
+   49 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:50:1: error: duplicate label ‘bb1’
+
+   50 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:51:1: error: duplicate label ‘bb1’
+
+   51 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:52:1: error: duplicate label ‘bb1’
+
+   52 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:53:1: error: duplicate label ‘bb1’
+
+   53 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:54:1: error: duplicate label ‘bb1’
+
+   54 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:55:1: error: duplicate label ‘bb1’
+
+   55 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:56:1: error: duplicate label ‘bb1’
+
+   56 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:57:1: error: duplicate label ‘bb1’
+
+   57 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:58:1: error: duplicate label ‘bb1’
+
+   58 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:59:1: error: duplicate label ‘bb1’
+
+   59 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:60:1: error: duplicate label ‘bb1’
+
+   60 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:61:1: error: duplicate label ‘bb1’
+
+   61 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:62:1: error: duplicate label ‘bb1’
+
+   62 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:63:1: error: duplicate label ‘bb1’
+
+   63 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:64:1: error: duplicate label ‘bb1’
+
+   64 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:65:1: error: duplicate label ‘bb1’
+
+   65 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:66:1: error: duplicate label ‘bb1’
+
+   66 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:67:1: error: duplicate label ‘bb1’
+
+   67 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:68:1: error: duplicate label ‘bb1’
+
+   68 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:69:1: error: duplicate label ‘bb1’
+
+   69 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:70:1: error: duplicate label ‘bb1’
+
+   70 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:71:1: error: duplicate label ‘bb1’
+
+   71 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:72:1: error: duplicate label ‘bb1’
+
+   72 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:73:1: error: duplicate label ‘bb1’
+
+   73 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:74:1: error: duplicate label ‘bb1’
+
+   74 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:75:1: error: duplicate label ‘bb1’
+
+   75 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:76:1: error: duplicate label ‘bb1’
+
+   76 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:77:1: error: duplicate label ‘bb1’
+
+   77 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:78:1: error: duplicate label ‘bb1’
+
+   78 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:79:1: error: duplicate label ‘bb1’
+
+   79 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:80:1: error: duplicate label ‘bb1’
+
+   80 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:81:1: error: duplicate label ‘bb1’
+
+   81 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:82:1: error: duplicate label ‘bb1’
+
+   82 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:83:1: error: duplicate label ‘bb1’
+
+   83 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:84:1: error: duplicate label ‘bb1’
+
+   84 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:85:1: error: duplicate label ‘bb1’
+
+   85 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:86:1: error: duplicate label ‘bb1’
+
+   86 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:87:1: error: duplicate label ‘bb1’
+
+   87 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:88:1: error: duplicate label ‘bb1’
+
+   88 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:89:1: error: duplicate label ‘bb1’
+
+   89 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:90:1: error: duplicate label ‘bb1’
+
+   90 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:91:1: error: duplicate label ‘bb1’
+
+   91 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:92:1: error: duplicate label ‘bb1’
+
+   92 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:93:1: error: duplicate label ‘bb1’
+
+   93 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:94:1: error: duplicate label ‘bb1’
+
+   94 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:95:1: error: duplicate label ‘bb1’
+
+   95 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:96:1: error: duplicate label ‘bb1’
+
+   96 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:97:1: error: duplicate label ‘bb1’
+
+   97 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:98:1: error: duplicate label ‘bb1’
+
+   98 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:99:1: error: duplicate label ‘bb1’
+
+   99 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:100:1: error: duplicate label ‘bb1’
+
+  100 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:101:1: error: duplicate label ‘bb1’
+
+  101 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:102:1: error: duplicate label ‘bb1’
+
+  102 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:103:1: error: duplicate label ‘bb1’
+
+  103 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:104:1: error: duplicate label ‘bb1’
+
+  104 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:105:1: error: duplicate label ‘bb1’
+
+  105 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:106:1: error: duplicate label ‘bb1’
+
+  106 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:107:1: error: duplicate label ‘bb1’
+
+  107 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:108:1: error: duplicate label ‘bb1’
+
+  108 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:109:1: error: duplicate label ‘bb1’
+
+  109 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:110:1: error: duplicate label ‘bb1’
+
+  110 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:111:1: error: duplicate label ‘bb1’
+
+  111 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:112:1: error: duplicate label ‘bb1’
+
+  112 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:113:1: error: duplicate label ‘bb1’
+
+  113 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:114:1: error: duplicate label ‘bb1’
+
+  114 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:115:1: error: duplicate label ‘bb1’
+
+  115 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:116:1: error: duplicate label ‘bb1’
+
+  116 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:117:1: error: duplicate label ‘bb1’
+
+  117 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:118:1: error: duplicate label ‘bb1’
+
+  118 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:119:1: error: duplicate label ‘bb1’
+
+  119 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:120:1: error: duplicate label ‘bb1’
+
+  120 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:121:1: error: duplicate label ‘bb1’
+
+  121 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:122:1: error: duplicate label ‘bb1’
+
+  122 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:123:1: error: duplicate label ‘bb1’
+
+  123 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:124:1: error: duplicate label ‘bb1’
+
+  124 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:125:1: error: duplicate label ‘bb1’
+
+  125 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:126:1: error: duplicate label ‘bb1’
+
+  126 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:127:1: error: duplicate label ‘bb1’
+
+  127 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:128:1: error: duplicate label ‘bb1’
+
+  128 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:129:1: error: duplicate label ‘bb1’
+
+  129 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:130:1: error: duplicate label ‘bb1’
+
+  130 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:131:1: error: duplicate label ‘bb1’
+
+  131 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:132:1: error: duplicate label ‘bb1’
+
+  132 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:133:1: error: duplicate label ‘bb1’
+
+  133 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:134:1: error: duplicate label ‘bb1’
+
+  134 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:135:1: error: duplicate label ‘bb1’
+
+  135 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:136:1: error: duplicate label ‘bb1’
+
+  136 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:137:1: error: duplicate label ‘bb1’
+
+  137 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:138:1: error: duplicate label ‘bb1’
+
+  138 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:139:1: error: duplicate label ‘bb1’
+
+  139 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:140:1: error: duplicate label ‘bb1’
+
+  140 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:141:1: error: duplicate label ‘bb1’
+
+  141 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:142:1: error: duplicate label ‘bb1’
+
+  142 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:143:1: error: duplicate label ‘bb1’
+
+  143 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:144:1: error: duplicate label ‘bb1’
+
+  144 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:145:1: error: duplicate label ‘bb1’
+
+  145 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:146:1: error: duplicate label ‘bb1’
+
+  146 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:147:1: error: duplicate label ‘bb1’
+
+  147 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:148:1: error: duplicate label ‘bb1’
+
+  148 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:149:1: error: duplicate label ‘bb1’
+
+  149 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:150:1: error: duplicate label ‘bb1’
+
+  150 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:151:1: error: duplicate label ‘bb1’
+
+  151 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:152:1: error: duplicate label ‘bb1’
+
+  152 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:153:1: error: duplicate label ‘bb1’
+
+  153 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:154:1: error: duplicate label ‘bb1’
+
+  154 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:155:1: error: duplicate label ‘bb1’
+
+  155 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:156:1: error: duplicate label ‘bb1’
+
+  156 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:157:1: error: duplicate label ‘bb1’
+
+  157 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:158:1: error: duplicate label ‘bb1’
+
+  158 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:159:1: error: duplicate label ‘bb1’
+
+  159 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:160:1: error: duplicate label ‘bb1’
+
+  160 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:161:1: error: duplicate label ‘bb1’
+
+  161 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:162:1: error: duplicate label ‘bb1’
+
+  162 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:163:1: error: duplicate label ‘bb1’
+
+  163 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:164:1: error: duplicate label ‘bb1’
+
+  164 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:165:1: error: duplicate label ‘bb1’
+
+  165 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:166:1: error: duplicate label ‘bb1’
+
+  166 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:167:1: error: duplicate label ‘bb1’
+
+  167 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:168:1: error: duplicate label ‘bb1’
+
+  168 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:169:1: error: duplicate label ‘bb1’
+
+  169 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:170:1: error: duplicate label ‘bb1’
+
+  170 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:171:1: error: duplicate label ‘bb1’
+
+  171 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:172:1: error: duplicate label ‘bb1’
+
+  172 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:173:1: error: duplicate label ‘bb1’
+
+  173 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:174:1: error: duplicate label ‘bb1’
+
+  174 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:175:1: error: duplicate label ‘bb1’
+
+  175 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:176:1: error: duplicate label ‘bb1’
+
+  176 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:177:1: error: duplicate label ‘bb1’
+
+  177 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:178:1: error: duplicate label ‘bb1’
+
+  178 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:179:1: error: duplicate label ‘bb1’
+
+  179 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:180:1: error: duplicate label ‘bb1’
+
+  180 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:181:1: error: duplicate label ‘bb1’
+
+  181 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:182:1: error: duplicate label ‘bb1’
+
+  182 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:183:1: error: duplicate label ‘bb1’
+
+  183 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:184:1: error: duplicate label ‘bb1’
+
+  184 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:185:1: error: duplicate label ‘bb1’
+
+  185 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:186:1: error: duplicate label ‘bb1’
+
+  186 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:187:1: error: duplicate label ‘bb1’
+
+  187 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:188:1: error: duplicate label ‘bb1’
+
+  188 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:189:1: error: duplicate label ‘bb1’
+
+  189 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:190:1: error: duplicate label ‘bb1’
+
+  190 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:191:1: error: duplicate label ‘bb1’
+
+  191 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:192:1: error: duplicate label ‘bb1’
+
+  192 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:193:1: error: duplicate label ‘bb1’
+
+  193 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:194:1: error: duplicate label ‘bb1’
+
+  194 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:195:1: error: duplicate label ‘bb1’
+
+  195 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:196:1: error: duplicate label ‘bb1’
+
+  196 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:197:1: error: duplicate label ‘bb1’
+
+  197 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:198:1: error: duplicate label ‘bb1’
+
+  198 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:199:1: error: duplicate label ‘bb1’
+
+  199 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:200:1: error: duplicate label ‘bb1’
+
+  200 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:201:1: error: duplicate label ‘bb1’
+
+  201 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:202:1: error: duplicate label ‘bb1’
+
+  202 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:203:1: error: duplicate label ‘bb1’
+
+  203 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:204:1: error: duplicate label ‘bb1’
+
+  204 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:205:1: error: duplicate label ‘bb1’
+
+  205 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:206:1: error: duplicate label ‘bb1’
+
+  206 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:207:1: error: duplicate label ‘bb1’
+
+  207 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:208:1: error: duplicate label ‘bb1’
+
+  208 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:209:1: error: duplicate label ‘bb1’
+
+  209 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:210:1: error: duplicate label ‘bb1’
+
+  210 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:211:1: error: duplicate label ‘bb1’
+
+  211 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:212:1: error: duplicate label ‘bb1’
+
+  212 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:213:1: error: duplicate label ‘bb1’
+
+  213 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:214:1: error: duplicate label ‘bb1’
+
+  214 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:215:1: error: duplicate label ‘bb1’
+
+  215 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:216:1: error: duplicate label ‘bb1’
+
+  216 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:217:1: error: duplicate label ‘bb1’
+
+  217 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:218:1: error: duplicate label ‘bb1’
+
+  218 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:219:1: error: duplicate label ‘bb1’
+
+  219 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:220:1: error: duplicate label ‘bb1’
+
+  220 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:221:1: error: duplicate label ‘bb1’
+
+  221 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:222:1: error: duplicate label ‘bb1’
+
+  222 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:223:1: error: duplicate label ‘bb1’
+
+  223 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:224:1: error: duplicate label ‘bb1’
+
+  224 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:225:1: error: duplicate label ‘bb1’
+
+  225 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:226:1: error: duplicate label ‘bb1’
+
+  226 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:227:1: error: duplicate label ‘bb1’
+
+  227 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:228:1: error: duplicate label ‘bb1’
+
+  228 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:229:1: error: duplicate label ‘bb1’
+
+  229 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:230:1: error: duplicate label ‘bb1’
+
+  230 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:231:1: error: duplicate label ‘bb1’
+
+  231 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:232:1: error: duplicate label ‘bb1’
+
+  232 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:233:1: error: duplicate label ‘bb1’
+
+  233 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:234:1: error: duplicate label ‘bb1’
+
+  234 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:235:1: error: duplicate label ‘bb1’
+
+  235 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:236:1: error: duplicate label ‘bb1’
+
+  236 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:237:1: error: duplicate label ‘bb1’
+
+  237 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:238:1: error: duplicate label ‘bb1’
+
+  238 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:239:1: error: duplicate label ‘bb1’
+
+  239 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:240:1: error: duplicate label ‘bb1’
+
+  240 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:241:1: error: duplicate label ‘bb1’
+
+  241 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:242:1: error: duplicate label ‘bb1’
+
+  242 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:243:1: error: duplicate label ‘bb1’
+
+  243 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:244:1: error: duplicate label ‘bb1’
+
+  244 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:245:1: error: duplicate label ‘bb1’
+
+  245 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:246:1: error: duplicate label ‘bb1’
+
+  246 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:247:1: error: duplicate label ‘bb1’
+
+  247 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:248:1: error: duplicate label ‘bb1’
+
+  248 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:249:1: error: duplicate label ‘bb1’
+
+  249 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:250:1: error: duplicate label ‘bb1’
+
+  250 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:251:1: error: duplicate label ‘bb1’
+
+  251 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:252:1: error: duplicate label ‘bb1’
+
+  252 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:253:1: error: duplicate label ‘bb1’
+
+  253 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:254:1: error: duplicate label ‘bb1’
+
+  254 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:255:1: error: duplicate label ‘bb1’
+
+  255 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:256:1: error: duplicate label ‘bb1’
+
+  256 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:257:1: error: duplicate label ‘bb1’
+
+  257 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:258:1: error: duplicate label ‘bb1’
+
+  258 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:259:1: error: duplicate label ‘bb1’
+
+  259 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:260:1: error: duplicate label ‘bb1’
+
+  260 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:261:1: error: duplicate label ‘bb1’
+
+  261 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:262:1: error: duplicate label ‘bb1’
+
+  262 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:263:1: error: duplicate label ‘bb1’
+
+  263 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:264:1: error: duplicate label ‘bb1’
+
+  264 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:265:1: error: duplicate label ‘bb1’
+
+  265 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:266:1: error: duplicate label ‘bb1’
+
+  266 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:267:1: error: duplicate label ‘bb1’
+
+  267 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:268:1: error: duplicate label ‘bb1’
+
+  268 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:269:1: error: duplicate label ‘bb1’
+
+  269 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:270:1: error: duplicate label ‘bb1’
+
+  270 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:271:1: error: duplicate label ‘bb1’
+
+  271 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:272:1: error: duplicate label ‘bb1’
+
+  272 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:273:1: error: duplicate label ‘bb1’
+
+  273 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:274:1: error: duplicate label ‘bb1’
+
+  274 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:275:1: error: duplicate label ‘bb1’
+
+  275 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:276:1: error: duplicate label ‘bb1’
+
+  276 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:277:1: error: duplicate label ‘bb1’
+
+  277 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:278:1: error: duplicate label ‘bb1’
+
+  278 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:279:1: error: duplicate label ‘bb1’
+
+  279 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:280:1: error: duplicate label ‘bb1’
+
+  280 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:281:1: error: duplicate label ‘bb1’
+
+  281 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:282:1: error: duplicate label ‘bb1’
+
+  282 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:283:1: error: duplicate label ‘bb1’
+
+  283 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:284:1: error: duplicate label ‘bb1’
+
+  284 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:285:1: error: duplicate label ‘bb1’
+
+  285 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:286:1: error: duplicate label ‘bb1’
+
+  286 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:287:1: error: duplicate label ‘bb1’
+
+  287 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:288:1: error: duplicate label ‘bb1’
+
+  288 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:289:1: error: duplicate label ‘bb1’
+
+  289 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:290:1: error: duplicate label ‘bb1’
+
+  290 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:291:1: error: duplicate label ‘bb1’
+
+  291 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:292:1: error: duplicate label ‘bb1’
+
+  292 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:293:1: error: duplicate label ‘bb1’
+
+  293 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:294:1: error: duplicate label ‘bb1’
+
+  294 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:295:1: error: duplicate label ‘bb1’
+
+  295 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:296:1: error: duplicate label ‘bb1’
+
+  296 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:297:1: error: duplicate label ‘bb1’
+
+  297 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:298:1: error: duplicate label ‘bb1’
+
+  298 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:299:1: error: duplicate label ‘bb1’
+
+  299 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:300:1: error: duplicate label ‘bb1’
+
+  300 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:301:1: error: duplicate label ‘bb1’
+
+  301 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:302:1: error: duplicate label ‘bb1’
+
+  302 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:303:1: error: duplicate label ‘bb1’
+
+  303 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:304:1: error: duplicate label ‘bb1’
+
+  304 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:305:1: error: duplicate label ‘bb1’
+
+  305 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:306:1: error: duplicate label ‘bb1’
+
+  306 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:307:1: error: duplicate label ‘bb1’
+
+  307 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:308:1: error: duplicate label ‘bb1’
+
+  308 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:309:1: error: duplicate label ‘bb1’
+
+  309 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:310:1: error: duplicate label ‘bb1’
+
+  310 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:311:1: error: duplicate label ‘bb1’
+
+  311 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:312:1: error: duplicate label ‘bb1’
+
+  312 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:313:1: error: duplicate label ‘bb1’
+
+  313 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:314:1: error: duplicate label ‘bb1’
+
+  314 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:315:1: error: duplicate label ‘bb1’
+
+  315 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:316:1: error: duplicate label ‘bb1’
+
+  316 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:317:1: error: duplicate label ‘bb1’
+
+  317 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:318:1: error: duplicate label ‘bb1’
+
+  318 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:319:1: error: duplicate label ‘bb1’
+
+  319 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:320:1: error: duplicate label ‘bb1’
+
+  320 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:321:1: error: duplicate label ‘bb1’
+
+  321 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:322:1: error: duplicate label ‘bb1’
+
+  322 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:323:1: error: duplicate label ‘bb1’
+
+  323 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:324:1: error: duplicate label ‘bb1’
+
+  324 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:325:1: error: duplicate label ‘bb1’
+
+  325 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:326:1: error: duplicate label ‘bb1’
+
+  326 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:327:1: error: duplicate label ‘bb1’
+
+  327 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:328:1: error: duplicate label ‘bb1’
+
+  328 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:329:1: error: duplicate label ‘bb1’
+
+  329 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:330:1: error: duplicate label ‘bb1’
+
+  330 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:331:1: error: duplicate label ‘bb1’
+
+  331 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:332:1: error: duplicate label ‘bb1’
+
+  332 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:333:1: error: duplicate label ‘bb1’
+
+  333 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:334:1: error: duplicate label ‘bb1’
+
+  334 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:335:1: error: duplicate label ‘bb1’
+
+  335 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:336:1: error: duplicate label ‘bb1’
+
+  336 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:337:1: error: duplicate label ‘bb1’
+
+  337 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:338:1: error: duplicate label ‘bb1’
+
+  338 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:339:1: error: duplicate label ‘bb1’
+
+  339 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:340:1: error: duplicate label ‘bb1’
+
+  340 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:341:1: error: duplicate label ‘bb1’
+
+  341 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:342:1: error: duplicate label ‘bb1’
+
+  342 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:343:1: error: duplicate label ‘bb1’
+
+  343 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:344:1: error: duplicate label ‘bb1’
+
+  344 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:345:1: error: duplicate label ‘bb1’
+
+  345 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:346:1: error: duplicate label ‘bb1’
+
+  346 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:347:1: error: duplicate label ‘bb1’
+
+  347 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:348:1: error: duplicate label ‘bb1’
+
+  348 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:349:1: error: duplicate label ‘bb1’
+
+  349 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:350:1: error: duplicate label ‘bb1’
+
+  350 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:351:1: error: duplicate label ‘bb1’
+
+  351 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:352:1: error: duplicate label ‘bb1’
+
+  352 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:353:1: error: duplicate label ‘bb1’
+
+  353 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:354:1: error: duplicate label ‘bb1’
+
+  354 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:355:1: error: duplicate label ‘bb1’
+
+  355 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:356:1: error: duplicate label ‘bb1’
+
+  356 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:357:1: error: duplicate label ‘bb1’
+
+  357 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:358:1: error: duplicate label ‘bb1’
+
+  358 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:359:1: error: duplicate label ‘bb1’
+
+  359 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:360:1: error: duplicate label ‘bb1’
+
+  360 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:361:1: error: duplicate label ‘bb1’
+
+  361 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:362:1: error: duplicate label ‘bb1’
+
+  362 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:363:1: error: duplicate label ‘bb1’
+
+  363 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:364:1: error: duplicate label ‘bb1’
+
+  364 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:365:1: error: duplicate label ‘bb1’
+
+  365 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:366:1: error: duplicate label ‘bb1’
+
+  366 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:367:1: error: duplicate label ‘bb1’
+
+  367 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:368:1: error: duplicate label ‘bb1’
+
+  368 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:369:1: error: duplicate label ‘bb1’
+
+  369 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:370:1: error: duplicate label ‘bb1’
+
+  370 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:371:1: error: duplicate label ‘bb1’
+
+  371 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:372:1: error: duplicate label ‘bb1’
+
+  372 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:373:1: error: duplicate label ‘bb1’
+
+  373 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:374:1: error: duplicate label ‘bb1’
+
+  374 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:375:1: error: duplicate label ‘bb1’
+
+  375 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:376:1: error: duplicate label ‘bb1’
+
+  376 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:377:1: error: duplicate label ‘bb1’
+
+  377 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:378:1: error: duplicate label ‘bb1’
+
+  378 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:379:1: error: duplicate label ‘bb1’
+
+  379 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:380:1: error: duplicate label ‘bb1’
+
+  380 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:381:1: error: duplicate label ‘bb1’
+
+  381 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:382:1: error: duplicate label ‘bb1’
+
+  382 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:383:1: error: duplicate label ‘bb1’
+
+  383 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:384:1: error: duplicate label ‘bb1’
+
+  384 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:385:1: error: duplicate label ‘bb1’
+
+  385 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:386:1: error: duplicate label ‘bb1’
+
+  386 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:387:1: error: duplicate label ‘bb1’
+
+  387 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:388:1: error: duplicate label ‘bb1’
+
+  388 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:389:1: error: duplicate label ‘bb1’
+
+  389 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:390:1: error: duplicate label ‘bb1’
+
+  390 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:391:1: error: duplicate label ‘bb1’
+
+  391 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:392:1: error: duplicate label ‘bb1’
+
+  392 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:393:1: error: duplicate label ‘bb1’
+
+  393 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:394:1: error: duplicate label ‘bb1’
+
+  394 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:395:1: error: duplicate label ‘bb1’
+
+  395 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:396:1: error: duplicate label ‘bb1’
+
+  396 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:397:1: error: duplicate label ‘bb1’
+
+  397 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:398:1: error: duplicate label ‘bb1’
+
+  398 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:399:1: error: duplicate label ‘bb1’
+
+  399 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:400:1: error: duplicate label ‘bb1’
+
+  400 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:401:1: error: duplicate label ‘bb1’
+
+  401 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:402:1: error: duplicate label ‘bb1’
+
+  402 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:403:1: error: duplicate label ‘bb1’
+
+  403 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:404:1: error: duplicate label ‘bb1’
+
+  404 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:405:1: error: duplicate label ‘bb1’
+
+  405 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:406:1: error: duplicate label ‘bb1’
+
+  406 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:407:1: error: duplicate label ‘bb1’
+
+  407 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:408:1: error: duplicate label ‘bb1’
+
+  408 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:409:1: error: duplicate label ‘bb1’
+
+  409 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:410:1: error: duplicate label ‘bb1’
+
+  410 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:411:1: error: duplicate label ‘bb1’
+
+  411 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:412:1: error: duplicate label ‘bb1’
+
+  412 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:413:1: error: duplicate label ‘bb1’
+
+  413 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:414:1: error: duplicate label ‘bb1’
+
+  414 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:415:1: error: duplicate label ‘bb1’
+
+  415 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:416:1: error: duplicate label ‘bb1’
+
+  416 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:417:1: error: duplicate label ‘bb1’
+
+  417 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:418:1: error: duplicate label ‘bb1’
+
+  418 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:419:1: error: duplicate label ‘bb1’
+
+  419 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:420:1: error: duplicate label ‘bb1’
+
+  420 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:421:1: error: duplicate label ‘bb1’
+
+  421 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:422:1: error: duplicate label ‘bb1’
+
+  422 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:423:1: error: duplicate label ‘bb1’
+
+  423 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:424:1: error: duplicate label ‘bb1’
+
+  424 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:425:1: error: duplicate label ‘bb1’
+
+  425 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:426:1: error: duplicate label ‘bb1’
+
+  426 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:427:1: error: duplicate label ‘bb1’
+
+  427 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:428:1: error: duplicate label ‘bb1’
+
+  428 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:429:1: error: duplicate label ‘bb1’
+
+  429 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:430:1: error: duplicate label ‘bb1’
+
+  430 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:431:1: error: duplicate label ‘bb1’
+
+  431 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:432:1: error: duplicate label ‘bb1’
+
+  432 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:433:1: error: duplicate label ‘bb1’
+
+  433 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:434:1: error: duplicate label ‘bb1’
+
+  434 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:435:1: error: duplicate label ‘bb1’
+
+  435 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:436:1: error: duplicate label ‘bb1’
+
+  436 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:437:1: error: duplicate label ‘bb1’
+
+  437 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:438:1: error: duplicate label ‘bb1’
+
+  438 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:439:1: error: duplicate label ‘bb1’
+
+  439 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:440:1: error: duplicate label ‘bb1’
+
+  440 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:441:1: error: duplicate label ‘bb1’
+
+  441 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:442:1: error: duplicate label ‘bb1’
+
+  442 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:443:1: error: duplicate label ‘bb1’
+
+  443 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:444:1: error: duplicate label ‘bb1’
+
+  444 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:445:1: error: duplicate label ‘bb1’
+
+  445 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:446:1: error: duplicate label ‘bb1’
+
+  446 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:447:1: error: duplicate label ‘bb1’
+
+  447 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:448:1: error: duplicate label ‘bb1’
+
+  448 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:449:1: error: duplicate label ‘bb1’
+
+  449 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:450:1: error: duplicate label ‘bb1’
+
+  450 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:451:1: error: duplicate label ‘bb1’
+
+  451 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:452:1: error: duplicate label ‘bb1’
+
+  452 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:453:1: error: duplicate label ‘bb1’
+
+  453 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:454:1: error: duplicate label ‘bb1’
+
+  454 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:455:1: error: duplicate label ‘bb1’
+
+  455 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:456:1: error: duplicate label ‘bb1’
+
+  456 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:457:1: error: duplicate label ‘bb1’
+
+  457 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:458:1: error: duplicate label ‘bb1’
+
+  458 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:459:1: error: duplicate label ‘bb1’
+
+  459 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:460:1: error: duplicate label ‘bb1’
+
+  460 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:461:1: error: duplicate label ‘bb1’
+
+  461 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:462:1: error: duplicate label ‘bb1’
+
+  462 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:463:1: error: duplicate label ‘bb1’
+
+  463 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:464:1: error: duplicate label ‘bb1’
+
+  464 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:465:1: error: duplicate label ‘bb1’
+
+  465 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:466:1: error: duplicate label ‘bb1’
+
+  466 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:467:1: error: duplicate label ‘bb1’
+
+  467 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:468:1: error: duplicate label ‘bb1’
+
+  468 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:469:1: error: duplicate label ‘bb1’
+
+  469 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:470:1: error: duplicate label ‘bb1’
+
+  470 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:471:1: error: duplicate label ‘bb1’
+
+  471 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:472:1: error: duplicate label ‘bb1’
+
+  472 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:473:1: error: duplicate label ‘bb1’
+
+  473 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:474:1: error: duplicate label ‘bb1’
+
+  474 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:475:1: error: duplicate label ‘bb1’
+
+  475 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:476:1: error: duplicate label ‘bb1’
+
+  476 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:477:1: error: duplicate label ‘bb1’
+
+  477 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:478:1: error: duplicate label ‘bb1’
+
+  478 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:479:1: error: duplicate label ‘bb1’
+
+  479 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:480:1: error: duplicate label ‘bb1’
+
+  480 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:481:1: error: duplicate label ‘bb1’
+
+  481 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:482:1: error: duplicate label ‘bb1’
+
+  482 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:483:1: error: duplicate label ‘bb1’
+
+  483 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:484:1: error: duplicate label ‘bb1’
+
+  484 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:485:1: error: duplicate label ‘bb1’
+
+  485 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:486:1: error: duplicate label ‘bb1’
+
+  486 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:487:1: error: duplicate label ‘bb1’
+
+  487 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:488:1: error: duplicate label ‘bb1’
+
+  488 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:489:1: error: duplicate label ‘bb1’
+
+  489 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:490:1: error: duplicate label ‘bb1’
+
+  490 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:491:1: error: duplicate label ‘bb1’
+
+  491 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:492:1: error: duplicate label ‘bb1’
+
+  492 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:493:1: error: duplicate label ‘bb1’
+
+  493 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:494:1: error: duplicate label ‘bb1’
+
+  494 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:495:1: error: duplicate label ‘bb1’
+
+  495 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:496:1: error: duplicate label ‘bb1’
+
+  496 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:497:1: error: duplicate label ‘bb1’
+
+  497 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:498:1: error: duplicate label ‘bb1’
+
+  498 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:499:1: error: duplicate label ‘bb1’
+
+  499 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:500:1: error: duplicate label ‘bb1’
+
+  500 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:501:1: error: duplicate label ‘bb1’
+
+  501 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:502:1: error: duplicate label ‘bb1’
+
+  502 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:503:1: error: duplicate label ‘bb1’
+
+  503 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:504:1: error: duplicate label ‘bb1’
+
+  504 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:505:1: error: duplicate label ‘bb1’
+
+  505 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:506:1: error: duplicate label ‘bb1’
+
+  506 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:507:1: error: duplicate label ‘bb1’
+
+  507 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:508:1: error: duplicate label ‘bb1’
+
+  508 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:509:1: error: duplicate label ‘bb1’
+
+  509 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:510:1: error: duplicate label ‘bb1’
+
+  510 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:511:1: error: duplicate label ‘bb1’
+
+  511 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:512:1: error: duplicate label ‘bb1’
+
+  512 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:513:1: error: duplicate label ‘bb1’
+
+  513 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:514:1: error: duplicate label ‘bb1’
+
+  514 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:515:1: error: duplicate label ‘bb1’
+
+  515 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:516:1: error: duplicate label ‘bb1’
+
+  516 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:517:1: error: duplicate label ‘bb1’
+
+  517 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:518:1: error: duplicate label ‘bb1’
+
+  518 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:519:1: error: duplicate label ‘bb1’
+
+  519 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:520:1: error: duplicate label ‘bb1’
+
+  520 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:521:1: error: duplicate label ‘bb1’
+
+  521 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:522:1: error: duplicate label ‘bb1’
+
+  522 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:523:1: error: duplicate label ‘bb1’
+
+  523 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:524:1: error: duplicate label ‘bb1’
+
+  524 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:525:1: error: duplicate label ‘bb1’
+
+  525 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:526:1: error: duplicate label ‘bb1’
+
+  526 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:527:1: error: duplicate label ‘bb1’
+
+  527 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:528:1: error: duplicate label ‘bb1’
+
+  528 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:529:1: error: duplicate label ‘bb1’
+
+  529 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:530:1: error: duplicate label ‘bb1’
+
+  530 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:531:1: error: duplicate label ‘bb1’
+
+  531 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:532:1: error: duplicate label ‘bb1’
+
+  532 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:533:1: error: duplicate label ‘bb1’
+
+  533 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:534:1: error: duplicate label ‘bb1’
+
+  534 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:535:1: error: duplicate label ‘bb1’
+
+  535 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:536:1: error: duplicate label ‘bb1’
+
+  536 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:537:1: error: duplicate label ‘bb1’
+
+  537 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:538:1: error: duplicate label ‘bb1’
+
+  538 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:539:1: error: duplicate label ‘bb1’
+
+  539 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:540:1: error: duplicate label ‘bb1’
+
+  540 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:541:1: error: duplicate label ‘bb1’
+
+  541 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:542:1: error: duplicate label ‘bb1’
+
+  542 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:543:1: error: duplicate label ‘bb1’
+
+  543 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:544:1: error: duplicate label ‘bb1’
+
+  544 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:545:1: error: duplicate label ‘bb1’
+
+  545 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:546:1: error: duplicate label ‘bb1’
+
+  546 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:547:1: error: duplicate label ‘bb1’
+
+  547 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:548:1: error: duplicate label ‘bb1’
+
+  548 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:549:1: error: duplicate label ‘bb1’
+
+  549 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:550:1: error: duplicate label ‘bb1’
+
+  550 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:551:1: error: duplicate label ‘bb1’
+
+  551 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:552:1: error: duplicate label ‘bb1’
+
+  552 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:553:1: error: duplicate label ‘bb1’
+
+  553 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:554:1: error: duplicate label ‘bb1’
+
+  554 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:555:1: error: duplicate label ‘bb1’
+
+  555 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:556:1: error: duplicate label ‘bb1’
+
+  556 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:557:1: error: duplicate label ‘bb1’
+
+  557 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:558:1: error: duplicate label ‘bb1’
+
+  558 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:559:1: error: duplicate label ‘bb1’
+
+  559 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:560:1: error: duplicate label ‘bb1’
+
+  560 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:561:1: error: duplicate label ‘bb1’
+
+  561 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:562:1: error: duplicate label ‘bb1’
+
+  562 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:563:1: error: duplicate label ‘bb1’
+
+  563 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:564:1: error: duplicate label ‘bb1’
+
+  564 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:565:1: error: duplicate label ‘bb1’
+
+  565 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:566:1: error: duplicate label ‘bb1’
+
+  566 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:567:1: error: duplicate label ‘bb1’
+
+  567 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:568:1: error: duplicate label ‘bb1’
+
+  568 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:569:1: error: duplicate label ‘bb1’
+
+  569 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:570:1: error: duplicate label ‘bb1’
+
+  570 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:571:1: error: duplicate label ‘bb1’
+
+  571 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:572:1: error: duplicate label ‘bb1’
+
+  572 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:573:1: error: duplicate label ‘bb1’
+
+  573 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:574:1: error: duplicate label ‘bb1’
+
+  574 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:575:1: error: duplicate label ‘bb1’
+
+  575 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:576:1: error: duplicate label ‘bb1’
+
+  576 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:577:1: error: duplicate label ‘bb1’
+
+  577 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:578:1: error: duplicate label ‘bb1’
+
+  578 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:579:1: error: duplicate label ‘bb1’
+
+  579 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:580:1: error: duplicate label ‘bb1’
+
+  580 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:581:1: error: duplicate label ‘bb1’
+
+  581 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:582:1: error: duplicate label ‘bb1’
+
+  582 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:583:1: error: duplicate label ‘bb1’
+
+  583 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:584:1: error: duplicate label ‘bb1’
+
+  584 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:585:1: error: duplicate label ‘bb1’
+
+  585 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:586:1: error: duplicate label ‘bb1’
+
+  586 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:587:1: error: duplicate label ‘bb1’
+
+  587 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:588:1: error: duplicate label ‘bb1’
+
+  588 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:589:1: error: duplicate label ‘bb1’
+
+  589 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:590:1: error: duplicate label ‘bb1’
+
+  590 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:591:1: error: duplicate label ‘bb1’
+
+  591 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:592:1: error: duplicate label ‘bb1’
+
+  592 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:593:1: error: duplicate label ‘bb1’
+
+  593 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:594:1: error: duplicate label ‘bb1’
+
+  594 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:595:1: error: duplicate label ‘bb1’
+
+  595 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:596:1: error: duplicate label ‘bb1’
+
+  596 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:597:1: error: duplicate label ‘bb1’
+
+  597 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:598:1: error: duplicate label ‘bb1’
+
+  598 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:599:1: error: duplicate label ‘bb1’
+
+  599 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:600:1: error: duplicate label ‘bb1’
+
+  600 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:601:1: error: duplicate label ‘bb1’
+
+  601 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:602:1: error: duplicate label ‘bb1’
+
+  602 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:603:1: error: duplicate label ‘bb1’
+
+  603 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:604:1: error: duplicate label ‘bb1’
+
+  604 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:605:1: error: duplicate label ‘bb1’
+
+  605 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:606:1: error: duplicate label ‘bb1’
+
+  606 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:607:1: error: duplicate label ‘bb1’
+
+  607 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:608:1: error: duplicate label ‘bb1’
+
+  608 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:609:1: error: duplicate label ‘bb1’
+
+  609 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:610:1: error: duplicate label ‘bb1’
+
+  610 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:611:1: error: duplicate label ‘bb1’
+
+  611 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:612:1: error: duplicate label ‘bb1’
+
+  612 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:613:1: error: duplicate label ‘bb1’
+
+  613 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:614:1: error: duplicate label ‘bb1’
+
+  614 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:615:1: error: duplicate label ‘bb1’
+
+  615 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:616:1: error: duplicate label ‘bb1’
+
+  616 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:617:1: error: duplicate label ‘bb1’
+
+  617 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:618:1: error: duplicate label ‘bb1’
+
+  618 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:619:1: error: duplicate label ‘bb1’
+
+  619 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:620:1: error: duplicate label ‘bb1’
+
+  620 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:621:1: error: duplicate label ‘bb1’
+
+  621 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:622:1: error: duplicate label ‘bb1’
+
+  622 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:623:1: error: duplicate label ‘bb1’
+
+  623 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:624:1: error: duplicate label ‘bb1’
+
+  624 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:625:1: error: duplicate label ‘bb1’
+
+  625 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:626:1: error: duplicate label ‘bb1’
+
+  626 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:627:1: error: duplicate label ‘bb1’
+
+  627 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:628:1: error: duplicate label ‘bb1’
+
+  628 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:629:1: error: duplicate label ‘bb1’
+
+  629 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:630:1: error: duplicate label ‘bb1’
+
+  630 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:631:1: error: duplicate label ‘bb1’
+
+  631 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:632:1: error: duplicate label ‘bb1’
+
+  632 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:633:1: error: duplicate label ‘bb1’
+
+  633 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:634:1: error: duplicate label ‘bb1’
+
+  634 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:635:1: error: duplicate label ‘bb1’
+
+  635 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:636:1: error: duplicate label ‘bb1’
+
+  636 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:637:1: error: duplicate label ‘bb1’
+
+  637 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:638:1: error: duplicate label ‘bb1’
+
+  638 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:639:1: error: duplicate label ‘bb1’
+
+  639 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:640:1: error: duplicate label ‘bb1’
+
+  640 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:641:1: error: duplicate label ‘bb1’
+
+  641 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:642:1: error: duplicate label ‘bb1’
+
+  642 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:643:1: error: duplicate label ‘bb1’
+
+  643 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:644:1: error: duplicate label ‘bb1’
+
+  644 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:645:1: error: duplicate label ‘bb1’
+
+  645 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:646:1: error: duplicate label ‘bb1’
+
+  646 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:647:1: error: duplicate label ‘bb1’
+
+  647 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:648:1: error: duplicate label ‘bb1’
+
+  648 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:649:1: error: duplicate label ‘bb1’
+
+  649 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:650:1: error: duplicate label ‘bb1’
+
+  650 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:651:1: error: duplicate label ‘bb1’
+
+  651 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:652:1: error: duplicate label ‘bb1’
+
+  652 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:653:1: error: duplicate label ‘bb1’
+
+  653 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:654:1: error: duplicate label ‘bb1’
+
+  654 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:655:1: error: duplicate label ‘bb1’
+
+  655 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:656:1: error: duplicate label ‘bb1’
+
+  656 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:657:1: error: duplicate label ‘bb1’
+
+  657 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:658:1: error: duplicate label ‘bb1’
+
+  658 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:659:1: error: duplicate label ‘bb1’
+
+  659 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:660:1: error: duplicate label ‘bb1’
+
+  660 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:661:1: error: duplicate label ‘bb1’
+
+  661 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:662:1: error: duplicate label ‘bb1’
+
+  662 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:663:1: error: duplicate label ‘bb1’
+
+  663 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:664:1: error: duplicate label ‘bb1’
+
+  664 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:665:1: error: duplicate label ‘bb1’
+
+  665 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:666:1: error: duplicate label ‘bb1’
+
+  666 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:667:1: error: duplicate label ‘bb1’
+
+  667 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:668:1: error: duplicate label ‘bb1’
+
+  668 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:669:1: error: duplicate label ‘bb1’
+
+  669 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:670:1: error: duplicate label ‘bb1’
+
+  670 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:671:1: error: duplicate label ‘bb1’
+
+  671 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:672:1: error: duplicate label ‘bb1’
+
+  672 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:673:1: error: duplicate label ‘bb1’
+
+  673 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:674:1: error: duplicate label ‘bb1’
+
+  674 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:675:1: error: duplicate label ‘bb1’
+
+  675 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:676:1: error: duplicate label ‘bb1’
+
+  676 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:677:1: error: duplicate label ‘bb1’
+
+  677 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:678:1: error: duplicate label ‘bb1’
+
+  678 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:679:1: error: duplicate label ‘bb1’
+
+  679 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:680:1: error: duplicate label ‘bb1’
+
+  680 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:681:1: error: duplicate label ‘bb1’
+
+  681 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:682:1: error: duplicate label ‘bb1’
+
+  682 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:683:1: error: duplicate label ‘bb1’
+
+  683 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:684:1: error: duplicate label ‘bb1’
+
+  684 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:685:1: error: duplicate label ‘bb1’
+
+  685 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:686:1: error: duplicate label ‘bb1’
+
+  686 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:687:1: error: duplicate label ‘bb1’
+
+  687 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:688:1: error: duplicate label ‘bb1’
+
+  688 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:689:1: error: duplicate label ‘bb1’
+
+  689 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:690:1: error: duplicate label ‘bb1’
+
+  690 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:691:1: error: duplicate label ‘bb1’
+
+  691 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:692:1: error: duplicate label ‘bb1’
+
+  692 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:693:1: error: duplicate label ‘bb1’
+
+  693 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:694:1: error: duplicate label ‘bb1’
+
+  694 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:695:1: error: duplicate label ‘bb1’
+
+  695 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:696:1: error: duplicate label ‘bb1’
+
+  696 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:697:1: error: duplicate label ‘bb1’
+
+  697 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:698:1: error: duplicate label ‘bb1’
+
+  698 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:699:1: error: duplicate label ‘bb1’
+
+  699 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:700:1: error: duplicate label ‘bb1’
+
+  700 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:701:1: error: duplicate label ‘bb1’
+
+  701 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:702:1: error: duplicate label ‘bb1’
+
+  702 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:703:1: error: duplicate label ‘bb1’
+
+  703 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:704:1: error: duplicate label ‘bb1’
+
+  704 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:705:1: error: duplicate label ‘bb1’
+
+  705 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:706:1: error: duplicate label ‘bb1’
+
+  706 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:707:1: error: duplicate label ‘bb1’
+
+  707 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:708:1: error: duplicate label ‘bb1’
+
+  708 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:709:1: error: duplicate label ‘bb1’
+
+  709 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:710:1: error: duplicate label ‘bb1’
+
+  710 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:711:1: error: duplicate label ‘bb1’
+
+  711 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:712:1: error: duplicate label ‘bb1’
+
+  712 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:713:1: error: duplicate label ‘bb1’
+
+  713 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:714:1: error: duplicate label ‘bb1’
+
+  714 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:715:1: error: duplicate label ‘bb1’
+
+  715 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:716:1: error: duplicate label ‘bb1’
+
+  716 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:717:1: error: duplicate label ‘bb1’
+
+  717 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:718:1: error: duplicate label ‘bb1’
+
+  718 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:719:1: error: duplicate label ‘bb1’
+
+  719 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:720:1: error: duplicate label ‘bb1’
+
+  720 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:721:1: error: duplicate label ‘bb1’
+
+  721 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:722:1: error: duplicate label ‘bb1’
+
+  722 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:723:1: error: duplicate label ‘bb1’
+
+  723 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:724:1: error: duplicate label ‘bb1’
+
+  724 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:725:1: error: duplicate label ‘bb1’
+
+  725 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:726:1: error: duplicate label ‘bb1’
+
+  726 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:727:1: error: duplicate label ‘bb1’
+
+  727 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:728:1: error: duplicate label ‘bb1’
+
+  728 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:729:1: error: duplicate label ‘bb1’
+
+  729 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:730:1: error: duplicate label ‘bb1’
+
+  730 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:731:1: error: duplicate label ‘bb1’
+
+  731 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:732:1: error: duplicate label ‘bb1’
+
+  732 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:733:1: error: duplicate label ‘bb1’
+
+  733 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:734:1: error: duplicate label ‘bb1’
+
+  734 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:735:1: error: duplicate label ‘bb1’
+
+  735 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:736:1: error: duplicate label ‘bb1’
+
+  736 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:737:1: error: duplicate label ‘bb1’
+
+  737 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:738:1: error: duplicate label ‘bb1’
+
+  738 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:739:1: error: duplicate label ‘bb1’
+
+  739 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:740:1: error: duplicate label ‘bb1’
+
+  740 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:741:1: error: duplicate label ‘bb1’
+
+  741 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:742:1: error: duplicate label ‘bb1’
+
+  742 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:743:1: error: duplicate label ‘bb1’
+
+  743 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:744:1: error: duplicate label ‘bb1’
+
+  744 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:745:1: error: duplicate label ‘bb1’
+
+  745 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:746:1: error: duplicate label ‘bb1’
+
+  746 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:747:1: error: duplicate label ‘bb1’
+
+  747 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:748:1: error: duplicate label ‘bb1’
+
+  748 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:749:1: error: duplicate label ‘bb1’
+
+  749 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:750:1: error: duplicate label ‘bb1’
+
+  750 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:751:1: error: duplicate label ‘bb1’
+
+  751 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:752:1: error: duplicate label ‘bb1’
+
+  752 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:753:1: error: duplicate label ‘bb1’
+
+  753 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:754:1: error: duplicate label ‘bb1’
+
+  754 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:755:1: error: duplicate label ‘bb1’
+
+  755 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:756:1: error: duplicate label ‘bb1’
+
+  756 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:757:1: error: duplicate label ‘bb1’
+
+  757 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:758:1: error: duplicate label ‘bb1’
+
+  758 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:759:1: error: duplicate label ‘bb1’
+
+  759 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:760:1: error: duplicate label ‘bb1’
+
+  760 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:761:1: error: duplicate label ‘bb1’
+
+  761 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:762:1: error: duplicate label ‘bb1’
+
+  762 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:763:1: error: duplicate label ‘bb1’
+
+  763 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:764:1: error: duplicate label ‘bb1’
+
+  764 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:765:1: error: duplicate label ‘bb1’
+
+  765 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:766:1: error: duplicate label ‘bb1’
+
+  766 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:767:1: error: duplicate label ‘bb1’
+
+  767 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:768:1: error: duplicate label ‘bb1’
+
+  768 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:769:1: error: duplicate label ‘bb1’
+
+  769 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:770:1: error: duplicate label ‘bb1’
+
+  770 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:771:1: error: duplicate label ‘bb1’
+
+  771 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:772:1: error: duplicate label ‘bb1’
+
+  772 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:773:1: error: duplicate label ‘bb1’
+
+  773 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:774:1: error: duplicate label ‘bb1’
+
+  774 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:775:1: error: duplicate label ‘bb1’
+
+  775 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:776:1: error: duplicate label ‘bb1’
+
+  776 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:777:1: error: duplicate label ‘bb1’
+
+  777 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:778:1: error: duplicate label ‘bb1’
+
+  778 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:779:1: error: duplicate label ‘bb1’
+
+  779 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:780:1: error: duplicate label ‘bb1’
+
+  780 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:781:1: error: duplicate label ‘bb1’
+
+  781 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:782:1: error: duplicate label ‘bb1’
+
+  782 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:783:1: error: duplicate label ‘bb1’
+
+  783 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:784:1: error: duplicate label ‘bb1’
+
+  784 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:785:1: error: duplicate label ‘bb1’
+
+  785 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:786:1: error: duplicate label ‘bb1’
+
+  786 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:787:1: error: duplicate label ‘bb1’
+
+  787 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:788:1: error: duplicate label ‘bb1’
+
+  788 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:789:1: error: duplicate label ‘bb1’
+
+  789 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:790:1: error: duplicate label ‘bb1’
+
+  790 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:791:1: error: duplicate label ‘bb1’
+
+  791 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:792:1: error: duplicate label ‘bb1’
+
+  792 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:793:1: error: duplicate label ‘bb1’
+
+  793 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:794:1: error: duplicate label ‘bb1’
+
+  794 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:795:1: error: duplicate label ‘bb1’
+
+  795 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:796:1: error: duplicate label ‘bb1’
+
+  796 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:797:1: error: duplicate label ‘bb1’
+
+  797 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:798:1: error: duplicate label ‘bb1’
+
+  798 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:799:1: error: duplicate label ‘bb1’
+
+  799 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:800:1: error: duplicate label ‘bb1’
+
+  800 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:801:1: error: duplicate label ‘bb1’
+
+  801 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:802:1: error: duplicate label ‘bb1’
+
+  802 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:803:1: error: duplicate label ‘bb1’
+
+  803 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:804:1: error: duplicate label ‘bb1’
+
+  804 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:805:1: error: duplicate label ‘bb1’
+
+  805 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:806:1: error: duplicate label ‘bb1’
+
+  806 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:807:1: error: duplicate label ‘bb1’
+
+  807 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:808:1: error: duplicate label ‘bb1’
+
+  808 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:809:1: error: duplicate label ‘bb1’
+
+  809 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:810:1: error: duplicate label ‘bb1’
+
+  810 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:811:1: error: duplicate label ‘bb1’
+
+  811 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:812:1: error: duplicate label ‘bb1’
+
+  812 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:813:1: error: duplicate label ‘bb1’
+
+  813 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:814:1: error: duplicate label ‘bb1’
+
+  814 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:815:1: error: duplicate label ‘bb1’
+
+  815 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:816:1: error: duplicate label ‘bb1’
+
+  816 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:817:1: error: duplicate label ‘bb1’
+
+  817 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:818:1: error: duplicate label ‘bb1’
+
+  818 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:819:1: error: duplicate label ‘bb1’
+
+  819 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:820:1: error: duplicate label ‘bb1’
+
+  820 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:821:1: error: duplicate label ‘bb1’
+
+  821 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:822:1: error: duplicate label ‘bb1’
+
+  822 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:823:1: error: duplicate label ‘bb1’
+
+  823 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:824:1: error: duplicate label ‘bb1’
+
+  824 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:825:1: error: duplicate label ‘bb1’
+
+  825 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:826:1: error: duplicate label ‘bb1’
+
+  826 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:827:1: error: duplicate label ‘bb1’
+
+  827 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:828:1: error: duplicate label ‘bb1’
+
+  828 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:829:1: error: duplicate label ‘bb1’
+
+  829 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:830:1: error: duplicate label ‘bb1’
+
+  830 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:831:1: error: duplicate label ‘bb1’
+
+  831 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:832:1: error: duplicate label ‘bb1’
+
+  832 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:833:1: error: duplicate label ‘bb1’
+
+  833 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:834:1: error: duplicate label ‘bb1’
+
+  834 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:835:1: error: duplicate label ‘bb1’
+
+  835 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:836:1: error: duplicate label ‘bb1’
+
+  836 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:837:1: error: duplicate label ‘bb1’
+
+  837 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:838:1: error: duplicate label ‘bb1’
+
+  838 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:839:1: error: duplicate label ‘bb1’
+
+  839 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:840:1: error: duplicate label ‘bb1’
+
+  840 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:841:1: error: duplicate label ‘bb1’
+
+  841 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:842:1: error: duplicate label ‘bb1’
+
+  842 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:843:1: error: duplicate label ‘bb1’
+
+  843 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:844:1: error: duplicate label ‘bb1’
+
+  844 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:845:1: error: duplicate label ‘bb1’
+
+  845 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:846:1: error: duplicate label ‘bb1’
+
+  846 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:847:1: error: duplicate label ‘bb1’
+
+  847 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:848:1: error: duplicate label ‘bb1’
+
+  848 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:849:1: error: duplicate label ‘bb1’
+
+  849 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:850:1: error: duplicate label ‘bb1’
+
+  850 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:851:1: error: duplicate label ‘bb1’
+
+  851 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:852:1: error: duplicate label ‘bb1’
+
+  852 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:853:1: error: duplicate label ‘bb1’
+
+  853 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:854:1: error: duplicate label ‘bb1’
+
+  854 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:855:1: error: duplicate label ‘bb1’
+
+  855 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:856:1: error: duplicate label ‘bb1’
+
+  856 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:857:1: error: duplicate label ‘bb1’
+
+  857 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:858:1: error: duplicate label ‘bb1’
+
+  858 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:859:1: error: duplicate label ‘bb1’
+
+  859 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:860:1: error: duplicate label ‘bb1’
+
+  860 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:861:1: error: duplicate label ‘bb1’
+
+  861 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:862:1: error: duplicate label ‘bb1’
+
+  862 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:863:1: error: duplicate label ‘bb1’
+
+  863 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:864:1: error: duplicate label ‘bb1’
+
+  864 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:865:1: error: duplicate label ‘bb1’
+
+  865 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:866:1: error: duplicate label ‘bb1’
+
+  866 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:867:1: error: duplicate label ‘bb1’
+
+  867 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:868:1: error: duplicate label ‘bb1’
+
+  868 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:869:1: error: duplicate label ‘bb1’
+
+  869 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:870:1: error: duplicate label ‘bb1’
+
+  870 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:871:1: error: duplicate label ‘bb1’
+
+  871 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:872:1: error: duplicate label ‘bb1’
+
+  872 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:873:1: error: duplicate label ‘bb1’
+
+  873 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:874:1: error: duplicate label ‘bb1’
+
+  874 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:875:1: error: duplicate label ‘bb1’
+
+  875 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:876:1: error: duplicate label ‘bb1’
+
+  876 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:877:1: error: duplicate label ‘bb1’
+
+  877 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:878:1: error: duplicate label ‘bb1’
+
+  878 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:879:1: error: duplicate label ‘bb1’
+
+  879 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:880:1: error: duplicate label ‘bb1’
+
+  880 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:881:1: error: duplicate label ‘bb1’
+
+  881 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:882:1: error: duplicate label ‘bb1’
+
+  882 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:883:1: error: duplicate label ‘bb1’
+
+  883 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:884:1: error: duplicate label ‘bb1’
+
+  884 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:885:1: error: duplicate label ‘bb1’
+
+  885 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:886:1: error: duplicate label ‘bb1’
+
+  886 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:887:1: error: duplicate label ‘bb1’
+
+  887 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:888:1: error: duplicate label ‘bb1’
+
+  888 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:889:1: error: duplicate label ‘bb1’
+
+  889 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:890:1: error: duplicate label ‘bb1’
+
+  890 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:891:1: error: duplicate label ‘bb1’
+
+  891 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:892:1: error: duplicate label ‘bb1’
+
+  892 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:893:1: error: duplicate label ‘bb1’
+
+  893 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:894:1: error: duplicate label ‘bb1’
+
+  894 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:895:1: error: duplicate label ‘bb1’
+
+  895 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:896:1: error: duplicate label ‘bb1’
+
+  896 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:897:1: error: duplicate label ‘bb1’
+
+  897 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:898:1: error: duplicate label ‘bb1’
+
+  898 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:899:1: error: duplicate label ‘bb1’
+
+  899 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:900:1: error: duplicate label ‘bb1’
+
+  900 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:901:1: error: duplicate label ‘bb1’
+
+  901 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:902:1: error: duplicate label ‘bb1’
+
+  902 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:903:1: error: duplicate label ‘bb1’
+
+  903 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:904:1: error: duplicate label ‘bb1’
+
+  904 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:905:1: error: duplicate label ‘bb1’
+
+  905 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:906:1: error: duplicate label ‘bb1’
+
+  906 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:907:1: error: duplicate label ‘bb1’
+
+  907 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:908:1: error: duplicate label ‘bb1’
+
+  908 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:909:1: error: duplicate label ‘bb1’
+
+  909 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:910:1: error: duplicate label ‘bb1’
+
+  910 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:911:1: error: duplicate label ‘bb1’
+
+  911 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:912:1: error: duplicate label ‘bb1’
+
+  912 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:913:1: error: duplicate label ‘bb1’
+
+  913 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:914:1: error: duplicate label ‘bb1’
+
+  914 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:915:1: error: duplicate label ‘bb1’
+
+  915 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:916:1: error: duplicate label ‘bb1’
+
+  916 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:917:1: error: duplicate label ‘bb1’
+
+  917 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:918:1: error: duplicate label ‘bb1’
+
+  918 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:919:1: error: duplicate label ‘bb1’
+
+  919 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:920:1: error: duplicate label ‘bb1’
+
+  920 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:921:1: error: duplicate label ‘bb1’
+
+  921 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:922:1: error: duplicate label ‘bb1’
+
+  922 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:923:1: error: duplicate label ‘bb1’
+
+  923 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:924:1: error: duplicate label ‘bb1’
+
+  924 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:925:1: error: duplicate label ‘bb1’
+
+  925 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:926:1: error: duplicate label ‘bb1’
+
+  926 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:927:1: error: duplicate label ‘bb1’
+
+  927 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:928:1: error: duplicate label ‘bb1’
+
+  928 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:929:1: error: duplicate label ‘bb1’
+
+  929 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:930:1: error: duplicate label ‘bb1’
+
+  930 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:931:1: error: duplicate label ‘bb1’
+
+  931 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:932:1: error: duplicate label ‘bb1’
+
+  932 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:933:1: error: duplicate label ‘bb1’
+
+  933 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:934:1: error: duplicate label ‘bb1’
+
+  934 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:935:1: error: duplicate label ‘bb1’
+
+  935 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:936:1: error: duplicate label ‘bb1’
+
+  936 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:937:1: error: duplicate label ‘bb1’
+
+  937 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:938:1: error: duplicate label ‘bb1’
+
+  938 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:939:1: error: duplicate label ‘bb1’
+
+  939 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:940:1: error: duplicate label ‘bb1’
+
+  940 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:941:1: error: duplicate label ‘bb1’
+
+  941 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:942:1: error: duplicate label ‘bb1’
+
+  942 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:943:1: error: duplicate label ‘bb1’
+
+  943 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:944:1: error: duplicate label ‘bb1’
+
+  944 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:945:1: error: duplicate label ‘bb1’
+
+  945 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:946:1: error: duplicate label ‘bb1’
+
+  946 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:947:1: error: duplicate label ‘bb1’
+
+  947 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:948:1: error: duplicate label ‘bb1’
+
+  948 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:949:1: error: duplicate label ‘bb1’
+
+  949 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:950:1: error: duplicate label ‘bb1’
+
+  950 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:951:1: error: duplicate label ‘bb1’
+
+  951 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:952:1: error: duplicate label ‘bb1’
+
+  952 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:953:1: error: duplicate label ‘bb1’
+
+  953 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:954:1: error: duplicate label ‘bb1’
+
+  954 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:955:1: error: duplicate label ‘bb1’
+
+  955 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:956:1: error: duplicate label ‘bb1’
+
+  956 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:957:1: error: duplicate label ‘bb1’
+
+  957 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:958:1: error: duplicate label ‘bb1’
+
+  958 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:959:1: error: duplicate label ‘bb1’
+
+  959 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:960:1: error: duplicate label ‘bb1’
+
+  960 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:961:1: error: duplicate label ‘bb1’
+
+  961 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:962:1: error: duplicate label ‘bb1’
+
+  962 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:963:1: error: duplicate label ‘bb1’
+
+  963 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:964:1: error: duplicate label ‘bb1’
+
+  964 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:965:1: error: duplicate label ‘bb1’
+
+  965 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:966:1: error: duplicate label ‘bb1’
+
+  966 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:967:1: error: duplicate label ‘bb1’
+
+  967 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:968:1: error: duplicate label ‘bb1’
+
+  968 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:969:1: error: duplicate label ‘bb1’
+
+  969 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:970:1: error: duplicate label ‘bb1’
+
+  970 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:971:1: error: duplicate label ‘bb1’
+
+  971 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:972:1: error: duplicate label ‘bb1’
+
+  972 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:973:1: error: duplicate label ‘bb1’
+
+  973 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:974:1: error: duplicate label ‘bb1’
+
+  974 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:975:1: error: duplicate label ‘bb1’
+
+  975 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:976:1: error: duplicate label ‘bb1’
+
+  976 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:977:1: error: duplicate label ‘bb1’
+
+  977 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:978:1: error: duplicate label ‘bb1’
+
+  978 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:979:1: error: duplicate label ‘bb1’
+
+  979 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:980:1: error: duplicate label ‘bb1’
+
+  980 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:981:1: error: duplicate label ‘bb1’
+
+  981 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:982:1: error: duplicate label ‘bb1’
+
+  982 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:983:1: error: duplicate label ‘bb1’
+
+  983 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:984:1: error: duplicate label ‘bb1’
+
+  984 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:985:1: error: duplicate label ‘bb1’
+
+  985 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:986:1: error: duplicate label ‘bb1’
+
+  986 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:987:1: error: duplicate label ‘bb1’
+
+  987 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:988:1: error: duplicate label ‘bb1’
+
+  988 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:989:1: error: duplicate label ‘bb1’
+
+  989 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:990:1: error: duplicate label ‘bb1’
+
+  990 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:991:1: error: duplicate label ‘bb1’
+
+  991 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:992:1: error: duplicate label ‘bb1’
+
+  992 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:993:1: error: duplicate label ‘bb1’
+
+  993 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:994:1: error: duplicate label ‘bb1’
+
+  994 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:995:1: error: duplicate label ‘bb1’
+
+  995 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:996:1: error: duplicate label ‘bb1’
+
+  996 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:997:1: error: duplicate label ‘bb1’
+
+  997 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:998:1: error: duplicate label ‘bb1’
+
+  998 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:999:1: error: duplicate label ‘bb1’
+
+  999 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1000:1: error: duplicate label ‘bb1’
+
+ 1000 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1001:1: error: duplicate label ‘bb1’
+
+ 1001 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1002:1: error: duplicate label ‘bb1’
+
+ 1002 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1003:1: error: duplicate label ‘bb1’
+
+ 1003 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1004:1: error: duplicate label ‘bb1’
+
+ 1004 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1005:1: error: duplicate label ‘bb1’
+
+ 1005 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1006:1: error: duplicate label ‘bb1’
+
+ 1006 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1007:1: error: duplicate label ‘bb1’
+
+ 1007 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1008:1: error: duplicate label ‘bb1’
+
+ 1008 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1009:1: error: duplicate label ‘bb1’
+
+ 1009 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1010:1: error: duplicate label ‘bb1’
+
+ 1010 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1011:1: error: duplicate label ‘bb1’
+
+ 1011 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1012:1: error: duplicate label ‘bb1’
+
+ 1012 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1013:1: error: duplicate label ‘bb1’
+
+ 1013 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1014:1: error: duplicate label ‘bb1’
+
+ 1014 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1015:1: error: duplicate label ‘bb1’
+
+ 1015 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1016:1: error: duplicate label ‘bb1’
+
+ 1016 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1017:1: error: duplicate label ‘bb1’
+
+ 1017 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1018:1: error: duplicate label ‘bb1’
+
+ 1018 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1019:1: error: duplicate label ‘bb1’
+
+ 1019 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1020:1: error: duplicate label ‘bb1’
+
+ 1020 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1021:1: error: duplicate label ‘bb1’
+
+ 1021 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1022:1: error: duplicate label ‘bb1’
+
+ 1022 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1023:1: error: duplicate label ‘bb1’
+
+ 1023 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1024:1: error: duplicate label ‘bb1’
+
+ 1024 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1025:1: error: duplicate label ‘bb1’
+
+ 1025 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1026:1: error: duplicate label ‘bb1’
+
+ 1026 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1027:1: error: duplicate label ‘bb1’
+
+ 1027 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1028:1: error: duplicate label ‘bb1’
+
+ 1028 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1029:1: error: duplicate label ‘bb1’
+
+ 1029 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1030:1: error: duplicate label ‘bb1’
+
+ 1030 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1031:1: error: duplicate label ‘bb1’
+
+ 1031 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:1032:5: error: base variable or SSA name undeclared before ‘=’ token
+
+ 1032 | a_1 = 10 ;
+
+      |     ^
+
+mutant.c:6:1: warning: label ‘bb2’ declared but not defined [-Wunused-label]
+
+    6 | goto bb2 ;
+
+      | ^~~~
+
+mutant.c:7:1: warning: label ‘bb1’ defined but not used [-Wunused-label]
+
+    7 | bb1 :
+
+      | ^~~
+
+during GIMPLE pass: eh
+
+mutant.c:1:14: internal compiler error: in record_in_finally_tree, at tree-eh.c:213
+
+    1 | int __GIMPLE foo ( )
+
+      |              ^~~
+
+0xf5fcc6 record_in_finally_tree
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/tree-eh.c:213
+
+0xf5fcc6 record_in_finally_tree
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/tree-eh.c:203
+
+0xf64be9 collect_finally_tree_1
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/tree-eh.c:229
+
+0xf64be9 execute
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/tree-eh.c:2197
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

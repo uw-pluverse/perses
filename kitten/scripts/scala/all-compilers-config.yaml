@@ -1,0 +1,12 @@
+language: "SCALA"
+seedFolders:
+  - path: "kitten/test_data/scala/"
+    fileExtentions: [".scala"]
+
+programsUnderTest:
+  - command: "scalac-trunk"
+    flagsToTest:
+      - flags: []
+    versionFlags:
+      flags: ["-version"]
+    crashDetectorClassName: "org.perses.fuzzer.compilers.scala.ScalaCrashDetector"

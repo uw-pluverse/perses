@@ -1,0 +1,4 @@
+internal compiler error: in force_constant_size, at gimplify.c
+force_constant_size
+gimple_add_tmp_var(tree_node*)
+create_tmp_var(tree_node*, char const*)

@@ -1,0 +1,3 @@
+void llvm::APInt::setBits(unsigned int, unsigned int): Assertion `hiBit <= BitWidth && "hiBit out of range"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

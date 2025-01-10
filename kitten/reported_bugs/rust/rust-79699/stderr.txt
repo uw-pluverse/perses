@@ -1,0 +1,114 @@
+error[E0412]: cannot find type `Words` in this scope
+
+  --> mutant.rs:14:51
+
+   |
+
+14 | # [ rustc_variance ] impl < 'a , L > Iterator for Words < 'a , L >
+
+   |                                                   ^^^^^ not found in this scope
+
+
+
+error[E0208]: [-, -, -]
+
+ --> mutant.rs:3:1
+
+  |
+
+3 | / struct Test2 < 'a , 'b , 'c > {
+
+4 | | x : & 'a isize ,
+
+5 | | y : & 'b [ isize ] ,
+
+6 | | c : & 'c str
+
+7 | | }
+
+  | |_^
+
+
+
+error[E0208]: [+, +, +]
+
+  --> mutant.rs:9:1
+
+   |
+
+9  | / struct Test3 < 'a , 'b , 'c > {
+
+10 | | x : extern "Rust" fn ( & 'a isize ) ,
+
+11 | | y : extern "Rust" fn ( & 'b [ isize ] ) ,
+
+12 | | c : extern "Rust" fn ( & 'c str ) ,
+
+13 | | }
+
+   | |_^
+
+
+
+error: internal compiler error: compiler/rustc_typeck/src/variance/mod.rs:45:9: asked to compute variance for wrong kind of item
+
+  --> mutant.rs:14:22
+
+   |
+
+14 |   # [ rustc_variance ] impl < 'a , L > Iterator for Words < 'a , L >
+
+   |  ______________________^
+
+15 | | where
+
+16 | | L : Iterator < Item = & 'a ( ) > ,
+
+17 | | {
+
+...  |
+
+21 | | }
+
+22 | | }
+
+   | |_^
+
+
+
+thread 'rustc' panicked at 'Box<Any>', /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/panic.rs:59:5
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.53.0-nightly (07e0e2ec2 2021-03-24) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [variances_of] computing the variances of `<impl at mutant.rs:14:22: 22:2>`
+
+#1 [analysis] running analysis passes on this crate
+
+end of query stack
+
+error: aborting due to 4 previous errors
+
+
+
+For more information about this error, try `rustc --explain E0412`.
+

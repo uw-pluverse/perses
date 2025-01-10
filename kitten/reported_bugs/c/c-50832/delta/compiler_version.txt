@@ -1,0 +1,24 @@
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 5c8659801a4976ef2b327f4071d98086efd42a36)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/10
+
+Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/8
+
+Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/9
+
+Selected GCC installation: /usr/lib/gcc/x86_64-linux-gnu/10
+
+Candidate multilib: .;@m64
+
+Candidate multilib: 32;@m32
+
+Candidate multilib: x32;@mx32
+
+Selected multilib: .;@m64
+

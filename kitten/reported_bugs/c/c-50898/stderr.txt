@@ -1,0 +1,292 @@
+mutant.c:1:37: warning: unused parameter 'arg' [-Wunused-parameter]
+
+const void * invalid1 ( const int * arg ) { extern int A [ ] ;
+
+                                    ^
+
+mutant.c:1:14: warning: no previous prototype for function 'invalid1' [-Wmissing-prototypes]
+
+const void * invalid1 ( const int * arg ) { extern int A [ ] ;
+
+             ^
+
+mutant.c:1:7: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+const void * invalid1 ( const int * arg ) { extern int A [ ] ;
+
+      ^
+
+static 
+
+mutant.c:2:1: warning: non-void function does not return a value [-Wreturn-type]
+
+}
+
+^
+
+mutant.c:3:5: warning: no previous prototype for function 'valid2' [-Wmissing-prototypes]
+
+int valid2 ( void ) {
+
+    ^
+
+mutant.c:3:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int valid2 ( void ) {
+
+^
+
+static 
+
+mutant.c:7:8: warning: returning 'const int *' from a function with result type 'void *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+
+return __builtin_preserve_access_index ( & arg [ 1 ] ) ;
+
+       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c:6:8: warning: no previous prototype for function 'invalid3' [-Wmissing-prototypes]
+
+void * invalid3 ( const int * arg ) {
+
+       ^
+
+mutant.c:6:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void * invalid3 ( const int * arg ) {
+
+^
+
+static 
+
+mutant.c:10:8: warning: returning 'const volatile int *' from a function with result type 'const void *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+
+return __builtin_preserve_access_index ( arg ) ;
+
+       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c:9:14: warning: no previous prototype for function 'invalid4' [-Wmissing-prototypes]
+
+const void * invalid4 ( volatile const int * arg ) {
+
+             ^
+
+mutant.c:9:7: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+const void * invalid4 ( volatile const int * arg ) {
+
+      ^
+
+static 
+
+mutant.c:12:7: warning: no previous prototype for function 'valid5' [-Wmissing-prototypes]
+
+int * valid5 ( int * arg ) {
+
+      ^
+
+mutant.c:12:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int * valid5 ( int * arg ) {
+
+^
+
+static 
+
+mutant.c:15:5: warning: no previous prototype for function 'valid6' [-Wmissing-prototypes]
+
+int valid6 ( const volatile int * arg ) {
+
+    ^
+
+mutant.c:15:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int valid6 ( const volatile int * arg ) {
+
+^
+
+static 
+
+mutant.c:19:5: warning: no previous prototype for function 'valid7' [-Wmissing-prototypes]
+
+int valid7 ( struct s * arg ) {
+
+    ^
+
+mutant.c:19:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int valid7 ( struct s * arg ) {
+
+^
+
+static 
+
+mutant.c:22:5: warning: no previous prototype for function 'valid8' [-Wmissing-prototypes]
+
+int valid8 ( struct s * arg ) {
+
+    ^
+
+mutant.c:22:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int valid8 ( struct s * arg ) {
+
+^
+
+static 
+
+mutant.c:26:44: warning: use of GNU statement expression extension [-Wgnu-statement-expression]
+
+return __builtin_preserve_access_index ( ( { arg -> a = 2 ; arg -> b = 3 ; } ) ) ;
+
+                                           ^
+
+mutant.c:26:43: warning: '(' and '{' tokens introducing statement expression are separated by whitespace [-Wcompound-token-split-by-space]
+
+return __builtin_preserve_access_index ( ( { arg -> a = 2 ; arg -> b = 3 ; } ) ) ;
+
+                                         ~^~
+
+mutant.c:26:77: warning: '}' and ')' tokens terminating statement expression are separated by whitespace [-Wcompound-token-split-by-space]
+
+return __builtin_preserve_access_index ( ( { arg -> a = 2 ; arg -> b = 3 ; } ) ) ;
+
+                                                                           ~^~
+
+mutant.c:25:5: warning: no previous prototype for function 'valid9' [-Wmissing-prototypes]
+
+int valid9 ( struct s * arg ) {
+
+    ^
+
+mutant.c:25:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int valid9 ( struct s * arg ) {
+
+^
+
+static 
+
+fatal error: error in backend: Cannot select: intrinsic %llvm.preserve.array.access.index
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	Code generation
+
+3.	Running pass 'Function Pass Manager' on module 'mutant.c'.
+
+4.	Running pass 'X86 DAG->DAG Instruction Selection' on function '@invalid3'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x39591f4)[0x55f102b311f4]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x55f102b2f014]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext10HandleExitEi+0xa3)[0x55f102a76103]
+
+clang-trunk(_ZN4llvm3sys7Process4ExitEib+0x22)[0x55f102b27282]
+
+clang-trunk(+0x1261427)[0x55f100439427]
+
+clang-trunk(_ZN4llvm18report_fatal_errorERKNS_5TwineEb+0x7c)[0x55f102a7d31c]
+
+clang-trunk(+0x38a54a4)[0x55f102a7d4a4]
+
+clang-trunk(_ZN4llvm16SelectionDAGISel15CannotYetSelectEPNS_6SDNodeE+0x1f3)[0x55f103b4d9f3]
+
+clang-trunk(_ZN4llvm16SelectionDAGISel16SelectCodeCommonEPNS_6SDNodeEPKhj+0x7ba)[0x55f103b4f3ca]
+
+clang-trunk(+0x244615f)[0x55f10161e15f]
+
+clang-trunk(_ZN4llvm16SelectionDAGISel22DoInstructionSelectionEv+0x3e9)[0x55f103b4bf29]
+
+clang-trunk(_ZN4llvm16SelectionDAGISel17CodeGenAndEmitDAGEv+0x82f)[0x55f103b566cf]
+
+clang-trunk(_ZN4llvm16SelectionDAGISel20SelectAllBasicBlocksERKNS_8FunctionE+0xacb)[0x55f103b59e2b]
+
+clang-trunk(+0x498405b)[0x55f103b5c05b]
+
+clang-trunk(+0x2450e6c)[0x55f101628e6c]
+
+clang-trunk(_ZN4llvm19MachineFunctionPass13runOnFunctionERNS_8FunctionE+0x258)[0x55f101d4ca08]
+
+clang-trunk(_ZN4llvm13FPPassManager13runOnFunctionERNS_8FunctionE+0x365)[0x55f102225a05]
+
+clang-trunk(_ZN4llvm13FPPassManager11runOnModuleERNS_6ModuleE+0x39)[0x55f102225c49]
+
+clang-trunk(_ZN4llvm6legacy15PassManagerImpl3runERNS_6ModuleE+0x382)[0x55f102226d42]
+
+clang-trunk(+0x3c8b872)[0x55f102e63872]
+
+clang-trunk(_ZN5clang17EmitBackendOutputERNS_17DiagnosticsEngineERKNS_19HeaderSearchOptionsERKNS_14CodeGenOptionsERKNS_13TargetOptionsERKNS_11LangOptionsEN4llvm9StringRefEPNSE_6ModuleENS_13BackendActionESt10unique_ptrINSE_17raw_pwrite_streamESt14default_deleteISK_EE+0x47d)[0x55f102e6532d]
+
+clang-trunk(+0x4ab690f)[0x55f103c8e90f]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x429)[0x55f104d46399]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x55f103c8d458]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55f10353c9e9]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55f1034cfc36]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x55f10361a870]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x55f10043a696]
+
+clang-trunk(+0x125e9d8)[0x55f1004369d8]
+
+clang-trunk(+0x4188bb9)[0x55f103360bb9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x55f102a75fcc]
+
+clang-trunk(+0x418935d)[0x55f10336135d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55f103333aeb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x55f103334609]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x55f10333f1b9]
+
+clang-trunk(main+0x18af)[0x55f10036552f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fa53b9fa0b3]
+
+clang-trunk(_start+0x2e)[0x55f10043654e]
+
+clang-13: error: clang frontend command failed with exit code 70 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git ef906573a127cffef7cae75d5155c15a8a2a3a5e)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-e20d65.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-e20d65.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

@@ -1,0 +1,4 @@
+Error while emitting mutant.scala
+
+java.lang.AssertionError: assertion failed: class Int while compiling mutant.scala
+

@@ -1,0 +1,302 @@
+thread 'rustc' panicked at 'assertion failed: !self.gen_args.args.is_empty()', compiler/rustc_typeck/src/structured_errors/wrong_number_of_generic_args.rs:514:17
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.54.0-nightly (1025db84a 2021-05-14) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [explicit_item_bounds] finding item bounds for `Baz::Baa`
+
+#1 [item_bounds] elaborating item bounds for `Baz::Baa`
+
+end of query stack
+
+error: internal compiler error: trimmed_def_paths constructed
+
+  |
+
+  = note: delayed at    0: rustc_errors::Handler::delay_good_path_bug
+
+             1: rustc_middle::ty::print::pretty::trimmed_def_paths
+
+             2: rustc_query_impl::<impl rustc_query_system::query::config::QueryAccessors<rustc_query_impl::plumbing::QueryCtxt> for rustc_query_impl::queries::trimmed_def_paths>::compute
+
+             3: rustc_query_system::dep_graph::graph::DepGraph<K>::with_task_impl
+
+             4: rustc_data_structures::stack::ensure_sufficient_stack
+
+             5: rustc_query_system::query::plumbing::force_query_with_job
+
+             6: rustc_query_system::query::plumbing::get_query_impl
+
+             7: rustc_query_system::query::plumbing::get_query
+
+             8: <rustc_middle::ty::print::pretty::FmtPrinter<F> as rustc_middle::ty::print::Printer>::print_def_path
+
+             9: rustc_middle::ty::print::pretty::<impl rustc_middle::ty::context::TyCtxt>::def_path_str_with_substs
+
+            10: rustc_middle::ty::print::pretty::<impl rustc_middle::ty::context::TyCtxt>::def_path_str
+
+            11: <rustc_typeck::structured_errors::wrong_number_of_generic_args::WrongNumberOfGenericArgs as rustc_typeck::structured_errors::StructuredDiagnostic>::diagnostic_common
+
+            12: rustc_typeck::structured_errors::StructuredDiagnostic::diagnostic
+
+            13: rustc_typeck::astconv::generics::<impl dyn rustc_typeck::astconv::AstConv>::check_generic_arg_count
+
+            14: <dyn rustc_typeck::astconv::AstConv>::create_substs_for_ast_path
+
+            15: <dyn rustc_typeck::astconv::AstConv>::create_substs_for_associated_item
+
+            16: <dyn rustc_typeck::astconv::AstConv>::res_to_ty
+
+            17: <dyn rustc_typeck::astconv::AstConv>::ast_ty_to_ty_inner
+
+            18: <alloc::vec::Vec<T> as alloc::vec::spec_from_iter::SpecFromIter<T,I>>::from_iter
+
+            19: <dyn rustc_typeck::astconv::AstConv>::instantiate_poly_trait_ref
+
+            20: <dyn rustc_typeck::astconv::AstConv>::add_bounds
+
+            21: <dyn rustc_typeck::astconv::AstConv>::compute_bounds_inner
+
+            22: rustc_typeck::collect::item_bounds::explicit_item_bounds
+
+            23: rustc_query_system::dep_graph::graph::DepGraph<K>::with_task_impl
+
+            24: rustc_data_structures::stack::ensure_sufficient_stack
+
+            25: rustc_query_system::query::plumbing::force_query_with_job
+
+            26: rustc_query_system::query::plumbing::get_query_impl
+
+            27: <rustc_query_impl::Queries as rustc_middle::ty::query::QueryEngine>::explicit_item_bounds
+
+            28: rustc_typeck::collect::item_bounds::item_bounds
+
+            29: rustc_query_system::dep_graph::graph::DepGraph<K>::with_task_impl
+
+            30: rustc_data_structures::stack::ensure_sufficient_stack
+
+            31: rustc_query_system::query::plumbing::force_query_with_job
+
+            32: rustc_query_system::query::plumbing::get_query_impl
+
+            33: <rustc_query_impl::Queries as rustc_middle::ty::query::QueryEngine>::item_bounds
+
+            34: <rustc_typeck::collect::CollectItemTypesVisitor as rustc_hir::intravisit::Visitor>::visit_trait_item
+
+            35: rustc_middle::hir::map::Map::visit_item_likes_in_module
+
+            36: rustc_typeck::collect::collect_mod_item_types
+
+            37: rustc_query_system::dep_graph::graph::DepGraph<K>::with_task_impl
+
+            38: rustc_query_system::query::plumbing::force_query_with_job
+
+            39: rustc_query_system::query::plumbing::get_query_impl
+
+            40: <rustc_query_impl::Queries as rustc_middle::ty::query::QueryEngine>::collect_mod_item_types
+
+            41: rustc_session::session::Session::track_errors
+
+            42: rustc_typeck::check_crate
+
+            43: rustc_interface::passes::analysis
+
+            44: rustc_query_system::dep_graph::graph::DepGraph<K>::with_task_impl
+
+            45: rustc_data_structures::stack::ensure_sufficient_stack
+
+            46: rustc_query_system::query::plumbing::force_query_with_job
+
+            47: rustc_query_system::query::plumbing::get_query_impl
+
+            48: <rustc_query_impl::Queries as rustc_middle::ty::query::QueryEngine>::analysis
+
+            49: rustc_interface::queries::<impl rustc_interface::interface::Compiler>::enter
+
+            50: rustc_span::with_source_map
+
+            51: rustc_interface::interface::create_compiler_and_run
+
+            52: scoped_tls::ScopedKey<T>::set
+
+            53: std::sys_common::backtrace::__rust_begin_short_backtrace
+
+            54: core::ops::function::FnOnce::call_once{{vtable.shim}}
+
+            55: <alloc::boxed::Box<F,A> as core::ops::function::FnOnce<Args>>::call_once
+
+                       at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/alloc/src/boxed.rs:1575:9
+
+                <alloc::boxed::Box<F,A> as core::ops::function::FnOnce<Args>>::call_once
+
+                       at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/alloc/src/boxed.rs:1575:9
+
+                std::sys::unix::thread::Thread::new::thread_start
+
+                       at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/std/src/sys/unix/thread.rs:71:17
+
+            56: start_thread
+
+            57: clone
+
+          
+
+
+
+thread 'rustc' panicked at 'no warnings or errors encountered even though `delayed_good_path_bugs` issued', compiler/rustc_errors/src/lib.rs:1021:13
+
+stack backtrace:
+
+   0:     0x7f2189a147f0 - std::backtrace_rs::backtrace::libunwind::trace::h1037ca7e6eeef65c
+
+                               at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/std/src/../../backtrace/src/backtrace/libunwind.rs:90:5
+
+   1:     0x7f2189a147f0 - std::backtrace_rs::backtrace::trace_unsynchronized::haaefac1bc3669450
+
+                               at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/std/src/../../backtrace/src/backtrace/mod.rs:66:5
+
+   2:     0x7f2189a147f0 - std::sys_common::backtrace::_print_fmt::h863a6f5e6d995885
+
+                               at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/std/src/sys_common/backtrace.rs:67:5
+
+   3:     0x7f2189a147f0 - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::h767e17e1aa7df6a8
+
+                               at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/std/src/sys_common/backtrace.rs:46:22
+
+   4:     0x7f2189a82bbf - core::fmt::write::h7aa6cd0067dca82a
+
+                               at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/core/src/fmt/mod.rs:1094:17
+
+   5:     0x7f2189a06105 - std::io::Write::write_fmt::h4c802b6f761026c1
+
+                               at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/std/src/io/mod.rs:1584:15
+
+   6:     0x7f2189a1851b - std::sys_common::backtrace::_print::h2769edb26a7eb606
+
+                               at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/std/src/sys_common/backtrace.rs:49:5
+
+   7:     0x7f2189a1851b - std::sys_common::backtrace::print::ha71f3549862b4cb6
+
+                               at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/std/src/sys_common/backtrace.rs:36:9
+
+   8:     0x7f2189a1851b - std::panicking::default_hook::{{closure}}::h95488a3bade217f6
+
+                               at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/std/src/panicking.rs:208:50
+
+   9:     0x7f2189a17ffd - std::panicking::default_hook::h290aa602c0fb11df
+
+                               at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/std/src/panicking.rs:225:9
+
+  10:     0x7f218a1e897d - rustc_driver::report_ice::hd3cc36482d14ae75
+
+  11:     0x7f2189a18c30 - std::panicking::rust_panic_with_hook::hf32c4fa635e215f2
+
+                               at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/std/src/panicking.rs:595:17
+
+  12:     0x7f2189a18807 - std::panicking::begin_panic_handler::{{closure}}::h95197ccd88846f7a
+
+                               at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/std/src/panicking.rs:497:13
+
+  13:     0x7f2189a14c8c - std::sys_common::backtrace::__rust_end_short_backtrace::h7641df9566f7b7d0
+
+                               at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/std/src/sys_common/backtrace.rs:141:18
+
+  14:     0x7f2189a18769 - rust_begin_unwind
+
+                               at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/std/src/panicking.rs:493:5
+
+  15:     0x7f21899e126b - std::panicking::begin_panic_fmt::hdc39c0cc0031e534
+
+                               at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/std/src/panicking.rs:435:5
+
+  16:     0x7f218c68add9 - rustc_errors::HandlerInner::flush_delayed::hc2f459040da2350d
+
+  17:     0x7f218c689911 - <rustc_errors::HandlerInner as core::ops::drop::Drop>::drop::h798bc5b71c003caf
+
+  18:     0x7f218bcfbcf6 - core::ptr::drop_in_place<rustc_session::parse::ParseSess>::h1bb2b4c5781b7039
+
+  19:     0x7f218bcfe64e - <alloc::rc::Rc<T> as core::ops::drop::Drop>::drop::h7ba935d30b18b43d
+
+  20:     0x7f218bd00f2d - core::ptr::drop_in_place<rustc_interface::interface::Compiler>::h088a78e629dcd384
+
+  21:     0x7f218bd00778 - rustc_span::with_source_map::h694394ea2165aaf8
+
+  22:     0x7f218bd12cba - rustc_interface::interface::create_compiler_and_run::hdb60b33248837a36
+
+  23:     0x7f218bd03249 - scoped_tls::ScopedKey<T>::set::h1596facb5ff394ec
+
+  24:     0x7f218bd1300b - std::sys_common::backtrace::__rust_begin_short_backtrace::h12a0a5546a332acd
+
+  25:     0x7f218bcfb035 - core::ops::function::FnOnce::call_once{{vtable.shim}}::h20acfcdb849c7ae8
+
+  26:     0x7f2189a24a57 - <alloc::boxed::Box<F,A> as core::ops::function::FnOnce<Args>>::call_once::h902e2cf6655e1b0c
+
+                               at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/alloc/src/boxed.rs:1575:9
+
+  27:     0x7f2189a24a57 - <alloc::boxed::Box<F,A> as core::ops::function::FnOnce<Args>>::call_once::h893a5452154309d1
+
+                               at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/alloc/src/boxed.rs:1575:9
+
+  28:     0x7f2189a24a57 - std::sys::unix::thread::Thread::new::thread_start::hdedcb57c96ab37cd
+
+                               at /rustc/1025db84a68b948139b5adcd55da31bce32da8f3/library/std/src/sys/unix/thread.rs:71:17
+
+  29:     0x7f2189953609 - start_thread
+
+  30:     0x7f2189867293 - clone
+
+  31:                0x0 - <unknown>
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.54.0-nightly (1025db84a 2021-05-14) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+end of query stack
+
+thread panicked while panicking. aborting.
+
+timeout: the monitored command dumped core
+

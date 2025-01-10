@@ -1,0 +1,64 @@
+mutant.c:4:33: warning: ‘struct S’ declared inside parameter list will not be visible outside of this definition or declaration
+
+    4 | static inline void foo ( struct S { int a : 1 , b : 4 , c : 27 ; } * x )
+
+      |                                 ^
+
+mutant.c: In function ‘bar’:
+
+mutant.c:10:7: warning: passing argument 1 of ‘foo’ from incompatible pointer type [-Wincompatible-pointer-types]
+
+   10 | foo ( x ) ;
+
+      |       ^
+
+      |       |
+
+      |       struct A *
+
+mutant.c:4:70: note: expected ‘struct S *’ but argument is of type ‘struct A *’
+
+    4 | static inline void foo ( struct S { int a : 1 , b : 4 , c : 27 ; } * x )
+
+      |                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+
+mutant.c: In function ‘baz’:
+
+mutant.c:6:1: error: output number 0 not directly addressable
+
+    6 | __asm__ __volatile__ ( "" : "+m" ( x -> a ) : "r" ( x ) : "memory" , "cc" ) ;
+
+      | ^~~~~~~
+
+during RTL pass: expand
+
+mutant.c:6:1: internal compiler error: in expand_asm_stmt, at cfgexpand.c:3401
+
+0x68b2bc expand_asm_stmt
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/cfgexpand.c:3401
+
+0xa40b89 expand_gimple_stmt_1
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/cfgexpand.c:3847
+
+0xa40b89 expand_gimple_stmt
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/cfgexpand.c:4014
+
+0xa46cd9 expand_gimple_basic_block
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/cfgexpand.c:6056
+
+0xa48baf execute
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/cfgexpand.c:6782
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

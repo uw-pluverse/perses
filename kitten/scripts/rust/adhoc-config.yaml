@@ -1,0 +1,42 @@
+language: "RUST"
+seedFolders:
+  - path: "kitten/test_data/rust/rust"
+    fileExtentions: [".rs"]
+
+programsUnderTest:
+  - command: "rustc"
+    flagsToTest:
+      - flags: ["--crate-type", "staticlib", 
+                "-C", "link-dead-code", 
+                "-C", "debuginfo=2", 
+                "-C", "opt-level=3",  
+                "-Z", "mir-opt-level=3", 
+                "-Z", "new-llvm-pass-manager=yes", 
+                "-Z", "unsound-mir-opts=yes",
+                "-Z", "polonius=yes", 
+                "-Z", "polymorphize=yes"]
+    versionFlags:
+      flags: ["--verbose", "--version"]
+    crashDetectorClassName: "org.perses.fuzzer.compilers.rust.RustcCrashDetector"
+
+  - command: "rustdoc"
+    flagsToTest:
+      - flags: ["--crate-type", "staticlib", 
+                "-C", "link-dead-code", 
+                "-C", "debuginfo=2", 
+                "-C", "opt-level=3",  
+                "-Z", "mir-opt-level=3", 
+                "-Z", "new-llvm-pass-manager=yes", 
+                "-Z", "unsound-mir-opts=yes",
+                "-Z", "polonius=yes", 
+                "-Z", "polymorphize=yes"]
+    versionFlags:
+      flags: ["--verbose", "--version"]
+    crashDetectorClassName: "org.perses.fuzzer.compilers.rust.RustcCrashDetector"
+
+  - command: "rustc-consistency.sh"
+    flagsToTest:
+      - flags: []
+    versionFlags:
+      flags: ["--verbose-version"]
+    crashDetectorClassName: "org.perses.fuzzer.compilers.rust.RustcCrashDetector"

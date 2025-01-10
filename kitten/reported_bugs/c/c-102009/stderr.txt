@@ -1,0 +1,90 @@
+mutant.c:6:8: warning: declaration of built-in function ‘memcpy’ without a prototype; expected ‘void *(void *, const void *, long unsigned int)’ [-Wbuiltin-declaration-mismatch]
+
+    6 | void * memcpy ( ) ;
+
+      |        ^~~~~~
+
+mutant.c:7:8: warning: declaration of built-in function ‘realloc’ without a prototype; expected ‘void *(void *, long unsigned int)’ [-Wbuiltin-declaration-mismatch]
+
+    7 | void * realloc ( ) ;
+
+      |        ^~~~~~~
+
+mutant.c: In function ‘ext2fs_resize_mem’:
+
+mutant.c:11:12: warning: too few arguments to built-in function ‘realloc’ expecting 2 [-Wbuiltin-declaration-mismatch]
+
+   11 | void * p = realloc ( ( void * ) p ) ;
+
+      |            ^~~~~~~
+
+mutant.c:7:8: note: declared here
+
+    7 | void * realloc ( ) ;
+
+      |        ^~~~~~~
+
+mutant.c:9:5: warning: unused variable ‘size’ [-Wunused-variable]
+
+    9 | int size = 0 ;
+
+      |     ^~~~
+
+mutant.c:11:12: warning: ‘p’ is used uninitialized [-Wuninitialized]
+
+   11 | void * p = realloc ( ( void * ) p ) ;
+
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~
+
+during GIMPLE pass: waccess
+
+mutant.c:8:5: internal compiler error: in gimple_call_arg, at gimple.h:3272
+
+    8 | int ext2fs_resize_mem ( void * p1 ) {
+
+      |     ^~~~~~~~~~~~~~~~~
+
+0x6eab75 gimple_call_arg
+
+	/tmp/tmp.UcERrrYv4Z-gcc-builder/gcc/gcc/gimple.h:3272
+
+0x6eab75 gimple_call_arg
+
+	/tmp/tmp.UcERrrYv4Z-gcc-builder/gcc/gcc/gimple.h:3270
+
+0x6eab75 gimple_call_arg
+
+	/tmp/tmp.UcERrrYv4Z-gcc-builder/gcc/gcc/gimple.h:3280
+
+0x6eab75 call_arg
+
+	/tmp/tmp.UcERrrYv4Z-gcc-builder/gcc/gcc/gimple-ssa-warn-access.cc:115
+
+0x6eab75 check_alloca
+
+	/tmp/tmp.UcERrrYv4Z-gcc-builder/gcc/gcc/gimple-ssa-warn-access.cc:2492
+
+0x6eab75 check_builtin
+
+	/tmp/tmp.UcERrrYv4Z-gcc-builder/gcc/gcc/gimple-ssa-warn-access.cc:2810
+
+0x6eab75 check
+
+	/tmp/tmp.UcERrrYv4Z-gcc-builder/gcc/gcc/gimple-ssa-warn-access.cc:3285
+
+0x6eab75 check
+
+	/tmp/tmp.UcERrrYv4Z-gcc-builder/gcc/gcc/gimple-ssa-warn-access.cc:3304
+
+0x6eab75 execute
+
+	/tmp/tmp.UcERrrYv4Z-gcc-builder/gcc/gcc/gimple-ssa-warn-access.cc:3317
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

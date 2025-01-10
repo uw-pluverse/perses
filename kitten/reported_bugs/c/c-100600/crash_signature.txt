@@ -1,0 +1,4 @@
+internal compiler error: in verify_hash_value, at fold-const.c
+operand_compare::verify_hash_value(tree_node const*, tree_node const*, unsigned int, bool*)
+ipa_icf_gimple::func_checker::operand_equal_p(tree_node const*, tree_node const*, unsigned int)
+ipa_icf_gimple::func_checker::compare_operand(tree_node*, tree_node*, ipa_icf_gimple::func_checker::operand_access_type)

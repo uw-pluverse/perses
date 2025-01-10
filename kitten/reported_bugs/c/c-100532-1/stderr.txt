@@ -1,0 +1,114 @@
+mutant.c:1:22: error: declaration of ‘z5’ as array of voids
+
+    1 | void * memcpy ( void z5 [ ] , const void * , __SIZE_TYPE__ ) ;
+
+      |                      ^~
+
+mutant.c: In function ‘f’:
+
+mutant.c:8:10: error: type of formal parameter 1 is incomplete
+
+    8 | memcpy ( & x [ 1 ] , & x [ 0 ] , sizeof ( x [ 0 ] ) ) ;
+
+      |          ^~~~~~~~~
+
+mutant.c:10:10: error: type of formal parameter 1 is incomplete
+
+   10 | memcpy ( & x [ f ] , & x [ 0 ] , sizeof ( x [ 0 ] ) ) ;
+
+      |          ^~~~~~~~~
+
+mutant.c:8:1: internal compiler error: tree check: expected class ‘type’, have ‘exceptional’ (error_mark) in useless_type_conversion_p, at gimple-expr.c:259
+
+    8 | memcpy ( & x [ 1 ] , & x [ 0 ] , sizeof ( x [ 0 ] ) ) ;
+
+      | ^~~~~~
+
+0x7bce07 tree_class_check_failed(tree_node const*, tree_code_class, char const*, int, char const*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/tree.c:8724
+
+0x6cb4a3 tree_class_check(tree_node*, tree_code_class, char const*, int, char const*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/tree.h:3479
+
+0x6cb4a3 useless_type_conversion_p(tree_node*, tree_node*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-expr.c:259
+
+0xc2fc77 types_compatible_p
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-expr.h:67
+
+0xc2fc77 gimplify_addr_expr
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:6246
+
+0xc25d93 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:14130
+
+0xc34d59 gimplify_call_expr
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:3446
+
+0xc25d73 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:14055
+
+0xc28f6a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc2656b gimplify_statement_list
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:1879
+
+0xc2656b gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:14528
+
+0xc28f6a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc2d4cb gimplify_cond_expr
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:4264
+
+0xc25a77 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:14040
+
+0xc28f6a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc2656b gimplify_statement_list
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:1879
+
+0xc2656b gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:14528
+
+0xc28f6a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc2979e gimplify_bind_expr
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:1421
+
+0xc259d3 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:14284
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

@@ -1,0 +1,3 @@
+void clang::CodeGen::CodeGenFunction::EmitAsmStmt(const clang::AsmStmt&): Assertion `OutputTy->isFloatingPointTy() && "Unexpected output type"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

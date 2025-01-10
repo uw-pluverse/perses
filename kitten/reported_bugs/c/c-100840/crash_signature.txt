@@ -1,0 +1,3 @@
+internal compiler error: in replace_reg, at reg-stack.c
+replace_reg
+compare_for_stack_reg

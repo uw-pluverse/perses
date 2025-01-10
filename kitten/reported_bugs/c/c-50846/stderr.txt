@@ -1,0 +1,154 @@
+mutant.c:2:1: warning: type specifier missing, defaults to 'int' [-Wimplicit-int]
+
+x7 ) ; int x7 ( void )
+
+^
+
+mutant.c:1:8: warning: incompatible redeclaration of library function 'calloc' [-Wincompatible-library-redeclaration]
+
+void * calloc ( __SIZE_TYPE__ ,
+
+       ^
+
+mutant.c:1:8: note: 'calloc' is a builtin with type 'void *(unsigned long, unsigned long)'
+
+mutant.c:2:12: warning: no previous prototype for function 'x7' [-Wmissing-prototypes]
+
+x7 ) ; int x7 ( void )
+
+           ^
+
+mutant.c:2:8: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+x7 ) ; int x7 ( void )
+
+       ^
+
+       static 
+
+clang-trunk: /tmp/tmp.nPuVKAIgXI-clang-builder/llvm-project/llvm/lib/Support/APInt.cpp:231: llvm::APInt llvm::APInt::operator*(const llvm::APInt&) const: Assertion `BitWidth == RHS.BitWidth && "Bit widths must be the same"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	Optimizer
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x3950274)[0x55e12ff73274]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x55e12ff71094]
+
+clang-trunk(+0x3894ed8)[0x55e12feb7ed8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f4f2ac503c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f4f2a6ef18b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f4f2a6ce859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f4f2a6ce729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f4f2a6dff36]
+
+clang-trunk(+0x3874691)[0x55e12fe97691]
+
+clang-trunk(_ZNK4llvm5APInt7umul_ovERKS0_Rb+0x118)[0x55e12fe9d628]
+
+clang-trunk(+0x32fe1c4)[0x55e12f9211c4]
+
+clang-trunk(+0x33042af)[0x55e12f9272af]
+
+clang-trunk(+0x330640c)[0x55e12f92940c]
+
+clang-trunk(+0x32c3bf8)[0x55e12f8e6bf8]
+
+clang-trunk(+0x32c6333)[0x55e12f8e9333]
+
+clang-trunk(_ZN4llvm15InstCombinePass3runERNS_8FunctionERNS_15AnalysisManagerIS1_JEEE+0x891)[0x55e12f8eb391]
+
+clang-trunk(+0x4b287d6)[0x55e13114b7d6]
+
+clang-trunk(_ZN4llvm11PassManagerINS_8FunctionENS_15AnalysisManagerIS1_JEEEJEE3runERS1_RS3_+0x436)[0x55e12f6ae5c6]
+
+clang-trunk(+0x15272a6)[0x55e12db4a2a6]
+
+clang-trunk(_ZN4llvm27ModuleToFunctionPassAdaptor3runERNS_6ModuleERNS_15AnalysisManagerIS1_JEEE+0x6e9)[0x55e12f6ad0e9]
+
+clang-trunk(+0x1527b16)[0x55e12db4ab16]
+
+clang-trunk(_ZN4llvm11PassManagerINS_6ModuleENS_15AnalysisManagerIS1_JEEEJEE3runERS1_RS3_+0x50f)[0x55e12f6aa9cf]
+
+clang-trunk(+0x3c80bfd)[0x55e1302a3bfd]
+
+clang-trunk(_ZN5clang17EmitBackendOutputERNS_17DiagnosticsEngineERKNS_19HeaderSearchOptionsERKNS_14CodeGenOptionsERKNS_13TargetOptionsERKNS_11LangOptionsEN4llvm9StringRefEPNSE_6ModuleENS_13BackendActionESt10unique_ptrINSE_17raw_pwrite_streamESt14default_deleteISK_EE+0x47d)[0x55e1302a6e7d]
+
+clang-trunk(+0x4aae44f)[0x55e1310d144f]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x429)[0x55e132188e49]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x55e1310cff98]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55e13097ee79]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55e1309120c6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x55e130a5cd00]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x55e12d883b06]
+
+clang-trunk(+0x125ce48)[0x55e12d87fe48]
+
+clang-trunk(+0x417fca9)[0x55e1307a2ca9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x55e12feb805c]
+
+clang-trunk(+0x418044d)[0x55e1307a344d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55e130775bdb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x55e1307766f9]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x55e1307812a9]
+
+clang-trunk(main+0x18af)[0x55e12d7ae50f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f4f2a6d00b3]
+
+clang-trunk(_start+0x2e)[0x55e12d87f9be]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 24d48d45cc302a6abeab139d87ba87f7a2335323)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-dfcca0.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-dfcca0.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

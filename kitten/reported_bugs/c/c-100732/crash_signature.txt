@@ -1,0 +1,4 @@
+internal compiler error: in ao_ref_init_from_ptr_and_range, at tree-ssa-alias.c
+ao_ref_init_from_ptr_and_range
+maybe_warn_pass_by_reference
+warn_uninitialized_vars

@@ -1,0 +1,236 @@
+mutant.c:2:25: warning: unused parameter 'a' [-Wunused-parameter]
+
+void __regcall v1 ( int a , int b ) { }
+
+                        ^
+
+mutant.c:2:33: warning: unused parameter 'b' [-Wunused-parameter]
+
+void __regcall v1 ( int a , int b ) { }
+
+                                ^
+
+mutant.c:2:16: warning: no previous prototype for function 'v1' [-Wmissing-prototypes]
+
+void __regcall v1 ( int a , int b ) { }
+
+               ^
+
+mutant.c:2:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void __regcall v1 ( int a , int b ) { }
+
+^
+
+static 
+
+mutant.c:3:46: warning: unused parameter 'a' [-Wunused-parameter]
+
+void __attribute__ ( ( regcall ) ) v1b ( int a , int b ) { }
+
+                                             ^
+
+mutant.c:3:54: warning: unused parameter 'b' [-Wunused-parameter]
+
+void __attribute__ ( ( regcall ) ) v1b ( int a , int b ) { }
+
+                                                     ^
+
+mutant.c:3:36: warning: no previous prototype for function 'v1b' [-Wmissing-prototypes]
+
+void __attribute__ ( ( regcall ) ) v1b ( int a , int b ) { }
+
+                                   ^
+
+mutant.c:3:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void __attribute__ ( ( regcall ) ) v1b ( int a , int b ) { }
+
+^
+
+static 
+
+mutant.c:4:26: warning: unused parameter 'a' [-Wunused-parameter]
+
+void __regcall v2 ( char a , char b ) { }
+
+                         ^
+
+mutant.c:4:35: warning: unused parameter 'b' [-Wunused-parameter]
+
+void __regcall v2 ( char a , char b ) { }
+
+                                  ^
+
+mutant.c:4:16: warning: no previous prototype for function 'v2' [-Wmissing-prototypes]
+
+void __regcall v2 ( char a , char b ) { }
+
+               ^
+
+mutant.c:4:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void __regcall v2 ( char a , char b ) { }
+
+^
+
+static 
+
+mutant.c:5:16: warning: declaration does not declare anything [-Wmissing-declarations]
+
+struct Small { int
+
+               ^~~
+
+mutant.c:5:1: warning: empty struct has size 0 in C, size 1 in C++ [-Wc++-compat]
+
+struct Small { int
+
+^
+
+mutant.c:5:1: warning: empty struct is a GNU extension [-Wgnu-empty-struct]
+
+mutant.c:6:41: warning: unused parameter 'a' [-Wunused-parameter]
+
+__regcall ; } ; void __regcall v3 ( int a , struct Small b , int c ) { } struct Large { int a [ 5 ] ; } ; void __regcall v4 ( int a , struct Large b , int c ) { } struct HFA2 { double x , y ; } ; struct HFA4 { double w , x , y , z ; } ; struct HFA5 { double v , w , x , y , z ; } ; void __regcall hfa1 ( int a , struct HFA4 b , int c ) { } void __regcall hfa2 ( struct HFA4 a , struct HFA4 b , double c ) { } void __regcall hfa3 ( double a , double b , double c , double d , double e , struct HFA2 f ) { } void __regcall hfa4 ( struct HFA5 a ) { }
+
+                                        ^
+
+mutant.c:6:58: warning: unused parameter 'b' [-Wunused-parameter]
+
+__regcall ; } ; void __regcall v3 ( int a , struct Small b , int c ) { } struct Large { int a [ 5 ] ; } ; void __regcall v4 ( int a , struct Large b , int c ) { } struct HFA2 { double x , y ; } ; struct HFA4 { double w , x , y , z ; } ; struct HFA5 { double v , w , x , y , z ; } ; void __regcall hfa1 ( int a , struct HFA4 b , int c ) { } void __regcall hfa2 ( struct HFA4 a , struct HFA4 b , double c ) { } void __regcall hfa3 ( double a , double b , double c , double d , double e , struct HFA2 f ) { } void __regcall hfa4 ( struct HFA5 a ) { }
+
+                                                         ^
+
+mutant.c:6:66: warning: unused parameter 'c' [-Wunused-parameter]
+
+__regcall ; } ; void __regcall v3 ( int a , struct Small b , int c ) { } struct Large { int a [ 5 ] ; } ; void __regcall v4 ( int a , struct Large b , int c ) { } struct HFA2 { double x , y ; } ; struct HFA4 { double w , x , y , z ; } ; struct HFA5 { double v , w , x , y , z ; } ; void __regcall hfa1 ( int a , struct HFA4 b , int c ) { } void __regcall hfa2 ( struct HFA4 a , struct HFA4 b , double c ) { } void __regcall hfa3 ( double a , double b , double c , double d , double e , struct HFA2 f ) { } void __regcall hfa4 ( struct HFA5 a ) { }
+
+                                                                 ^
+
+mutant.c:6:32: warning: no previous prototype for function 'v3' [-Wmissing-prototypes]
+
+__regcall ; } ; void __regcall v3 ( int a , struct Small b , int c ) { } struct Large { int a [ 5 ] ; } ; void __regcall v4 ( int a , struct Large b , int c ) { } struct HFA2 { double x , y ; } ; struct HFA4 { double w , x , y , z ; } ; struct HFA5 { double v , w , x , y , z ; } ; void __regcall hfa1 ( int a , struct HFA4 b , int c ) { } void __regcall hfa2 ( struct HFA4 a , struct HFA4 b , double c ) { } void __regcall hfa3 ( double a , double b , double c , double d , double e , struct HFA2 f ) { } void __regcall hfa4 ( struct HFA5 a ) { }
+
+                               ^
+
+mutant.c:6:17: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+__regcall ; } ; void __regcall v3 ( int a , struct Small b , int c ) { } struct Large { int a [ 5 ] ; } ; void __regcall v4 ( int a , struct Large b , int c ) { } struct HFA2 { double x , y ; } ; struct HFA4 { double w , x , y , z ; } ; struct HFA5 { double v , w , x , y , z ; } ; void __regcall hfa1 ( int a , struct HFA4 b , int c ) { } void __regcall hfa2 ( struct HFA4 a , struct HFA4 b , double c ) { } void __regcall hfa3 ( double a , double b , double c , double d , double e , struct HFA2 f ) { } void __regcall hfa4 ( struct HFA5 a ) { }
+
+                ^
+
+                static 
+
+clang-trunk: /tmp/tmp.FIfHBNID2p-clang-builder/llvm-project/llvm/include/llvm/IR/Function.h:812: llvm::Argument* llvm::Function::getArg(unsigned int) const: Assertion `i < NumArgs && "getArg() out of range!"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:6:74: current parser token 'struct'
+
+2.	mutant.c:6:32: LLVM IR generation of declaration 'v3'
+
+3.	mutant.c:6:32: Generating code for declaration 'v3'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x394ec64)[0x557675544c64]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x557675542a84]
+
+clang-trunk(+0x38938c8)[0x5576754898c8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7fec01ff63c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7fec01a9518b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7fec01a74859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7fec01a74729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7fec01a85f36]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction18EmitFunctionPrologERKNS0_14CGFunctionInfoEPN4llvm8FunctionERKNS0_15FunctionArgListE+0x29e5)[0x557675b715d5]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction13StartFunctionENS_10GlobalDeclENS_8QualTypeEPN4llvm8FunctionERKNS0_14CGFunctionInfoERKNS0_15FunctionArgListENS_14SourceLocationESD_+0x1b3a)[0x55767593d93a]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction12GenerateCodeENS_10GlobalDeclEPN4llvm8FunctionERKNS0_14CGFunctionInfoE+0x1af)[0x55767594292f]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule28EmitGlobalFunctionDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x1c6)[0x55767599c406]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule20EmitGlobalDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x285)[0x557675997fa5]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule10EmitGlobalENS_10GlobalDeclE+0x3eb)[0x55767599840b]
+
+clang-trunk(+0x3daae72)[0x5576759a0e72]
+
+clang-trunk(+0x4aad4f9)[0x5576766a34f9]
+
+clang-trunk(+0x4a9f6e0)[0x5576766956e0]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x204)[0x557677758fe4]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x5576766a0678]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x557675f50029]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x557675ee31e6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x55767602deb0]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x557672e566f6]
+
+clang-trunk(+0x125ca38)[0x557672e52a38]
+
+clang-trunk(+0x417ddb9)[0x557675d73db9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x557675489a4c]
+
+clang-trunk(+0x417e55d)[0x557675d7455d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x557675d46ceb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x557675d47809]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x557675d523b9]
+
+clang-trunk(main+0x18af)[0x557672d814ef]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fec01a760b3]
+
+clang-trunk(_start+0x2e)[0x557672e525ae]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 5c8659801a4976ef2b327f4071d98086efd42a36)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-f2d429.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-f2d429.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

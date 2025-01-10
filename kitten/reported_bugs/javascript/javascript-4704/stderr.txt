@@ -1,0 +1,2 @@
+/tmp/tmp.F2MvT4tsOz/jerryscript/jerry-core/ecma/builtin-objects/ecma-builtin-helpers-date.c:82:27: runtime error: signed integer overflow: 19998030 * 365 cannot be represented in type 'int'
+

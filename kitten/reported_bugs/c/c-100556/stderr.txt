@@ -1,0 +1,116 @@
+mutant.c: In function ‘f2’:
+
+mutant.c:4:31: warning: implicit declaration of function ‘f’; did you mean ‘f2’? [-Wimplicit-function-declaration]
+
+    4 | return __transaction_atomic ( f ( 0xffffffffu ) == 0 )
+
+      |                               ^
+
+      |                               f2
+
+mutant.c:4:8: error: ‘__transaction_atomic’ without transactional memory support enabled
+
+    4 | return __transaction_atomic ( f ( 0xffffffffu ) == 0 )
+
+      |        ^~~~~~~~~~~~~~~~~~~~
+
+mutant.c:5:3: error: ‘__transaction_atomic’ without transactional memory support enabled
+
+    5 | + __transaction_atomic ( global + 4 ) ;
+
+      |   ^~~~~~~~~~~~~~~~~~~~
+
+mutant.c:4:31: internal compiler error: in gimplify_expr, at gimplify.c:14868
+
+    4 | return __transaction_atomic ( f ( 0xffffffffu ) == 0 )
+
+      |                               ^~~~~~~~~~~~~~~~~
+
+0x6daa38 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:14868
+
+0xc24eb1 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:14838
+
+0xc2531f gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:14388
+
+0xc358b7 gimplify_modify_expr
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:5818
+
+0xc25118 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:14083
+
+0xc28a4a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc2927e gimplify_bind_expr
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:1421
+
+0xc254b3 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:14284
+
+0xc28a4a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc27bf8 gimplify_and_add(tree_node*, gimple**)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:489
+
+0xc27bf8 gimplify_and_return_first
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:501
+
+0xc27bf8 gimplify_transaction
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:13703
+
+0xc27bf8 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:14711
+
+0xc24eb1 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:14838
+
+0xc358b7 gimplify_modify_expr
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:5818
+
+0xc25118 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:14083
+
+0xc28a4a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc341ed gimplify_and_add(tree_node*, gimple**)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:489
+
+0xc341ed gimplify_return_expr
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:1671
+
+0xc25dbf gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/gimplify.c:14345
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

@@ -1,0 +1,228 @@
+exception occurred while typechecking mutant.scala
+
+exception occurred while compiling mutant.scala
+
+Exception in thread "main" java.lang.AssertionError: assertion failed: duplicate attachment for key dotty.tools.dotc.util.Property$Key@761e788f
+
+	at scala.runtime.Scala3RunTime$.assertFailed(Scala3RunTime.scala:8)
+
+	at dotty.tools.dotc.util.Attachment$Container.pushAttachment(Attachment.scala:120)
+
+	at dotty.tools.dotc.util.Attachment$Container.pushAttachment$(Attachment.scala:101)
+
+	at dotty.tools.dotc.ast.Trees$Tree.pushAttachment(Trees.scala:56)
+
+	at dotty.tools.dotc.typer.Namer.record$1(Namer.scala:343)
+
+	at dotty.tools.dotc.typer.Namer.expand(Namer.scala:346)
+
+	at dotty.tools.dotc.typer.Namer.index$$anonfun$1(Namer.scala:648)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.immutable.List.foreach(List.scala:333)
+
+	at dotty.tools.dotc.typer.Namer.index(Namer.scala:648)
+
+	at dotty.tools.dotc.typer.Namer$ClassCompleter.completeConstructor(Namer.scala:1170)
+
+	at dotty.tools.dotc.typer.Namer$ClassCompleter.completeInCreationContext(Namer.scala:1319)
+
+	at dotty.tools.dotc.typer.Namer$Completer.complete(Namer.scala:727)
+
+	at dotty.tools.dotc.core.SymDenotations$SymDenotation.completeFrom(SymDenotations.scala:167)
+
+	at dotty.tools.dotc.core.Denotations$Denotation.completeInfo$1(Denotations.scala:188)
+
+	at dotty.tools.dotc.core.Denotations$Denotation.info(Denotations.scala:190)
+
+	at dotty.tools.dotc.core.SymDenotations$SymDenotation.ensureCompleted(SymDenotations.scala:369)
+
+	at dotty.tools.dotc.typer.Typer.retrieveSym(Typer.scala:2623)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2648)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2742)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2834)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2884)
+
+	at dotty.tools.dotc.typer.Typer.typedBlockStats(Typer.scala:1016)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1020)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2689)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.ProtoTypes$FunProto.$anonfun$3$$anonfun$1(ProtoTypes.scala:395)
+
+	at dotty.tools.dotc.typer.ProtoTypes$FunProto.cacheTypedArg(ProtoTypes.scala:370)
+
+	at dotty.tools.dotc.typer.ProtoTypes$FunProto.$anonfun$4(ProtoTypes.scala:395)
+
+	at dotty.tools.dotc.typer.ProtoTypes$FunProto.$anonfun$adapted$1(ProtoTypes.scala:395)
+
+	at dotty.tools.dotc.core.Decorators$ListDecorator$.recur$1(Decorators.scala:168)
+
+	at dotty.tools.dotc.core.Decorators$ListDecorator$.mapWithIndexConserve$extension(Decorators.scala:174)
+
+	at dotty.tools.dotc.typer.ProtoTypes$FunProto.typedArgs(ProtoTypes.scala:395)
+
+	at dotty.tools.dotc.typer.ProtoTypes$FunProto.isMatchedBy(ProtoTypes.scala:325)
+
+	at dotty.tools.dotc.core.TypeComparer.isMatchedByProto(TypeComparer.scala:1838)
+
+	at dotty.tools.dotc.core.TypeComparer.firstTry$1(TypeComparer.scala:305)
+
+	at dotty.tools.dotc.core.TypeComparer.recur(TypeComparer.scala:1264)
+
+	at dotty.tools.dotc.core.TypeComparer.isSubType(TypeComparer.scala:185)
+
+	at dotty.tools.dotc.core.TypeComparer.isSubType(TypeComparer.scala:195)
+
+	at dotty.tools.dotc.core.TypeComparer.topLevelSubType(TypeComparer.scala:128)
+
+	at dotty.tools.dotc.core.TypeComparer$.topLevelSubType(TypeComparer.scala:2655)
+
+	at dotty.tools.dotc.core.Types$Type.$less$colon$less(Types.scala:1028)
+
+	at dotty.tools.dotc.core.Types$Type.relaxed_$less$colon$less(Types.scala:1060)
+
+	at dotty.tools.dotc.typer.ProtoTypes$Compatibility.isCompatible(ProtoTypes.scala:39)
+
+	at dotty.tools.dotc.typer.ProtoTypes$Compatibility.isCompatible$(ProtoTypes.scala:26)
+
+	at dotty.tools.dotc.typer.ProtoTypes$NoViewsAllowed$.isCompatible(ProtoTypes.scala:131)
+
+	at dotty.tools.dotc.typer.ProtoTypes$Compatibility.testCompat$1(ProtoTypes.scala:56)
+
+	at dotty.tools.dotc.typer.ProtoTypes$Compatibility.normalizedCompatible(ProtoTypes.scala:82)
+
+	at dotty.tools.dotc.typer.ProtoTypes$Compatibility.normalizedCompatible$(ProtoTypes.scala:26)
+
+	at dotty.tools.dotc.typer.ProtoTypes$NoViewsAllowed$.normalizedCompatible(ProtoTypes.scala:131)
+
+	at dotty.tools.dotc.typer.ProtoTypes$SelectionProto.qualifies$1(ProtoTypes.scala:203)
+
+	at dotty.tools.dotc.typer.ProtoTypes$SelectionProto.isMatchedBy(ProtoTypes.scala:207)
+
+	at dotty.tools.dotc.typer.Typer.tryInsertImplicitOnQualifier(Typer.scala:3037)
+
+	at dotty.tools.dotc.typer.Applications.tryWithImplicitOnQualifier$4(Applications.scala:907)
+
+	at dotty.tools.dotc.typer.Applications.realApply$8$$anonfun$7(Applications.scala:977)
+
+	at dotty.tools.dotc.typer.Typer.tryEither(Typer.scala:2939)
+
+	at dotty.tools.dotc.typer.Applications.realApply$1(Applications.scala:980)
+
+	at dotty.tools.dotc.typer.Applications.typedApply(Applications.scala:1018)
+
+	at dotty.tools.dotc.typer.Applications.typedApply$(Applications.scala:303)
+
+	at dotty.tools.dotc.typer.Typer.typedApply(Typer.scala:106)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2681)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2861)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2884)
+
+	at dotty.tools.dotc.typer.Typer.typedClassDef(Typer.scala:2340)
+
+	at dotty.tools.dotc.typer.Typer.typedTypeOrClassDef$2(Typer.scala:2669)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2673)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2742)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2834)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2884)
+
+	at dotty.tools.dotc.typer.Typer.typedPackageDef(Typer.scala:2463)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2714)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2928)
+
+	at dotty.tools.dotc.typer.FrontEnd.liftedTree1$1(FrontEnd.scala:79)
+
+	at dotty.tools.dotc.typer.FrontEnd.typeCheck$$anonfun$1(FrontEnd.scala:84)
+
+	at dotty.tools.dotc.typer.FrontEnd.monitor(FrontEnd.scala:43)
+
+	at dotty.tools.dotc.typer.FrontEnd.typeCheck(FrontEnd.scala:85)
+
+	at dotty.tools.dotc.typer.FrontEnd.runOn$$anonfun$3(FrontEnd.scala:120)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.immutable.List.foreach(List.scala:333)
+
+	at dotty.tools.dotc.typer.FrontEnd.runOn(FrontEnd.scala:120)
+
+	at dotty.tools.dotc.Run.runPhases$4$$anonfun$4(Run.scala:205)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.ArrayOps$.foreach$extension(ArrayOps.scala:1323)
+
+	at dotty.tools.dotc.Run.runPhases$5(Run.scala:216)
+
+	at dotty.tools.dotc.Run.compileUnits$$anonfun$1(Run.scala:224)
+
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+
+	at dotty.tools.dotc.util.Stats$.maybeMonitored(Stats.scala:67)
+
+	at dotty.tools.dotc.Run.compileUnits(Run.scala:231)
+
+	at dotty.tools.dotc.Run.compileSources(Run.scala:166)
+
+	at dotty.tools.dotc.Run.compile(Run.scala:150)
+
+	at dotty.tools.dotc.Driver.doCompile(Driver.scala:39)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:199)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:167)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:179)
+
+	at dotty.tools.dotc.Driver.main(Driver.scala:209)
+
+	at dotty.tools.dotc.Main.main(Main.scala)
+

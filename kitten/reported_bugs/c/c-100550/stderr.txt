@@ -1,0 +1,336 @@
+mutant.c:2:15: warning: argument 1 of type ‘int[*]’ declared as a variable length array [-Wvla-parameter]
+
+    2 | void f1ia_x ( int [ * ] ) ;
+
+      |               ^~~~~~~~~
+
+mutant.c:1:15: note: previously declared as an ordinary array ‘int[]’
+
+    1 | void f1ia_x ( int [ ] ) ;
+
+      |               ^~~~~~~
+
+mutant.c:4:15: warning: argument 1 of type ‘int[*]’ declared as a variable length array [-Wvla-parameter]
+
+    4 | void f1ia_x ( int [ * ] ) ;
+
+      |               ^~~~~~~~~
+
+mutant.c:1:15: note: previously declared as an ordinary array ‘int[]’
+
+    1 | void f1ia_x ( int [ ] ) ;
+
+      |               ^~~~~~~
+
+mutant.c:6:15: warning: argument 1 of type ‘int[*]’ declared as a variable length array [-Wvla-parameter]
+
+    6 | void f1ia_x ( int [ * ] ) ;
+
+      |               ^~~~~~~~~
+
+mutant.c:5:19: note: previously declared as an ordinary array ‘int[]’
+
+    5 | void f1ia_x ( int a [ ] ) { ( void ) & a ; }
+
+      |               ~~~~^~~~~
+
+mutant.c:8:15: warning: argument 1 of type ‘int[*]’ declared as a variable length array [-Wvla-parameter]
+
+    8 | void f1ia1x ( int [ * ] ) ;
+
+      |               ^~~~~~~~~
+
+mutant.c:7:15: note: previously declared as an ordinary array ‘int[1]’
+
+    7 | void f1ia1x ( int [ 1 ] ) ;
+
+      |               ^~~~~~~~~
+
+mutant.c:11:15: warning: argument 1 of type ‘int[*]’ declared as a variable length array [-Wvla-parameter]
+
+   11 | void f1ia1x ( int [ * ] ) ;
+
+      |               ^~~~~~~~~
+
+mutant.c:9:19: note: previously declared as an ordinary array ‘int[1]’
+
+    9 | void f1ia1x ( int a [ 1 ] ) { ( void ) & a ; }
+
+      |               ~~~~^~~~~~~
+
+mutant.c:13:14: warning: argument 1 of type ‘int[*]’ declared as a variable length array [-Wvla-parameter]
+
+   13 | void f1ipx ( int [ * ] ) ;
+
+      |              ^~~~~~~~~
+
+mutant.c:12:14: note: previously declared as a pointer ‘int *’
+
+   12 | void f1ipx ( int * ) ;
+
+      |              ^~~~~
+
+mutant.c:16:14: warning: argument 1 of type ‘int[*]’ declared as a variable length array [-Wvla-parameter]
+
+   16 | void f1ipx ( int [ * ] ) ;
+
+      |              ^~~~~~~~~
+
+mutant.c:15:20: note: previously declared as a pointer ‘int *’
+
+   15 | void f1ipx ( int * p ) { ( void ) & p ; }
+
+      |              ~~~~~~^
+
+mutant.c:19:22: warning: argument 2 of type ‘int[*]’ declared as a variable length array [-Wvla-parameter]
+
+   19 | void f2ipx ( int * , int [ * ] ) ;
+
+      |                      ^~~~~~~~~
+
+mutant.c:18:22: note: previously declared as a pointer ‘int *’
+
+   18 | void f2ipx ( int * , int * ) ;
+
+      |                      ^~~~~
+
+mutant.c:21:22: warning: argument 2 of type ‘int[*]’ declared as a variable length array [-Wvla-parameter]
+
+   21 | void f2ipx ( int * , int [ * ] ) ;
+
+      |                      ^~~~~~~~~
+
+mutant.c:18:22: note: previously declared as a pointer ‘int *’
+
+   18 | void f2ipx ( int * , int * ) ;
+
+      |                      ^~~~~
+
+mutant.c:23:22: warning: argument 2 of type ‘int[*]’ declared as a variable length array [-Wvla-parameter]
+
+   23 | void f2ipx ( int * , int [ * ] ) ;
+
+      |                      ^~~~~~~~~
+
+mutant.c:22:30: note: previously declared as a pointer ‘int *’
+
+   22 | void f2ipx ( int * p , int * q ) { ( void ) & p ; ( void ) & q ; }
+
+      |                        ~~~~~~^
+
+mutant.c:25:16: warning: argument 1 of type ‘int[*]’ declared as a variable length array [-Wvla-parameter]
+
+   25 | void f1ias2x ( int [ * ] ) ;
+
+      |                ^~~~~~~~~
+
+mutant.c:24:16: note: previously declared as an ordinary array ‘int[static 2]’
+
+   24 | void f1ias2x ( int [ static 2 ] ) ;
+
+      |                ^~~~~~~~~~~~~~~~
+
+mutant.c:27:16: warning: argument 1 of type ‘int[*]’ declared as a variable length array [-Wvla-parameter]
+
+   27 | void f1ias2x ( int [ * ] ) ;
+
+      |                ^~~~~~~~~
+
+mutant.c:24:16: note: previously declared as an ordinary array ‘int[static 2]’
+
+   24 | void f1ias2x ( int [ static 2 ] ) ;
+
+      |                ^~~~~~~~~~~~~~~~
+
+mutant.c:29:16: warning: argument 1 of type ‘int[*]’ declared as a variable length array [-Wvla-parameter]
+
+   29 | void f1ias2x ( int [ * ] ) ;
+
+      |                ^~~~~~~~~
+
+mutant.c:28:20: note: previously declared as an ordinary array ‘int[static 2]’
+
+   28 | void f1ias2x ( int a [ static 2 ] ) { ( void ) & a ; }
+
+      |                ~~~~^~~~~~~~~~~~~~
+
+mutant.c:33:17: warning: argument 1 of type ‘short int[nelts]’ declared as a variable length array [-Wvla-parameter]
+
+   33 | void f1sa_var ( short [ nelts ] ) ;
+
+      |                 ^~~~~~~~~~~~~~~
+
+mutant.c:32:17: note: previously declared as an ordinary array ‘short int[]’
+
+   32 | void f1sa_var ( short [ ] ) ;
+
+      |                 ^~~~~~~~~
+
+mutant.c:35:17: warning: argument 1 of type ‘short int[nelts]’ declared as a variable length array [-Wvla-parameter]
+
+   35 | void f1sa_var ( short [ nelts ] ) ;
+
+      |                 ^~~~~~~~~~~~~~~
+
+mutant.c:32:17: note: previously declared as an ordinary array ‘short int[]’
+
+   32 | void f1sa_var ( short [ ] ) ;
+
+      |                 ^~~~~~~~~
+
+mutant.c:37:17: warning: argument 1 of type ‘short int[nelts]’ declared as a variable length array [-Wvla-parameter]
+
+   37 | void f1sa_var ( short [ nelts ] ) ;
+
+      |                 ^~~~~~~~~~~~~~~
+
+mutant.c:36:23: note: previously declared as an ordinary array ‘short int[]’
+
+   36 | void f1sa_var ( short a [ ] ) { ( void ) & a ; }
+
+      |                 ~~~~~~^~~~~
+
+mutant.c:40:18: warning: argument 1 of type ‘int[nelts + 1]’ declared as a variable length array [-Wvla-parameter]
+
+   40 | void f1sa_expr ( int [ nelts + 1 ] ) ;
+
+      |                  ^~~~~~~~~~~~~~~~~
+
+mutant.c:39:18: note: previously declared as an ordinary array ‘int[]’
+
+   39 | void f1sa_expr ( int [ ] ) ;
+
+      |                  ^~~~~~~
+
+mutant.c:42:18: warning: argument 1 of type ‘int[nelts * 2]’ declared as a variable length array [-Wvla-parameter]
+
+   42 | void f1sa_expr ( int [ nelts * 2 ] ) ;
+
+      |                  ^~~~~~~~~~~~~~~~~
+
+mutant.c:39:18: note: previously declared as an ordinary array ‘int[]’
+
+   39 | void f1sa_expr ( int [ ] ) ;
+
+      |                  ^~~~~~~
+
+mutant.c:44:18: warning: argument 1 of type ‘int[nelts / 3]’ declared as a variable length array [-Wvla-parameter]
+
+   44 | void f1sa_expr ( int [ nelts / 3 ] ) ;
+
+      |                  ^~~~~~~~~~~~~~~~~
+
+mutant.c:43:22: note: previously declared as an ordinary array ‘int[]’
+
+   43 | void f1sa_expr ( int a [ ] ) { ( void ) & a ; }
+
+      |                  ~~~~^~~~~
+
+mutant.c:48:15: warning: argument 1 of type ‘int[f(1)]’ declared as a variable length array [-Wvla-parameter]
+
+   48 | void f1ia_f ( int [ f ( 1 ) ] ) ;
+
+      |               ^~~~~~~~~~~~~~~
+
+mutant.c:47:15: note: previously declared as an ordinary array ‘int[]’
+
+   47 | void f1ia_f ( int [ ] ) ;
+
+      |               ^~~~~~~
+
+mutant.c:50:15: warning: argument 1 of type ‘int[f(2)]’ declared as a variable length array [-Wvla-parameter]
+
+   50 | void f1ia_f ( int [ f ( 2 ) ] ) ;
+
+      |               ^~~~~~~~~~~~~~~
+
+mutant.c:47:15: note: previously declared as an ordinary array ‘int[]’
+
+   47 | void f1ia_f ( int [ ] ) ;
+
+      |               ^~~~~~~
+
+mutant.c:52:15: warning: argument 1 of type ‘int[f(3)]’ declared as a variable length array [-Wvla-parameter]
+
+   52 | void f1ia_f ( int [ f ( 3 ) ] ) ;
+
+      |               ^~~~~~~~~~~~~~~
+
+mutant.c:51:19: note: previously declared as an ordinary array ‘int[]’
+
+   51 | void f1ia_f ( int a [ ] ) { ( void ) & a ; }
+
+      |               ~~~~^~~~~
+
+mutant.c:53:29: warning: passing argument 1 of ‘f1ipx’ makes pointer from integer without a cast [-Wint-conversion]
+
+   53 | void f1ia_f ( int [ f1ipx ( 4 ) ] ) ;
+
+      |                             ^
+
+      |                             |
+
+      |                             int
+
+mutant.c:15:20: note: expected ‘int *’ but argument is of type ‘int’
+
+   15 | void f1ipx ( int * p ) { ( void ) & p ; }
+
+      |              ~~~~~~^
+
+mutant.c:53:19: error: size of unnamed array has non-integer type
+
+   53 | void f1ia_f ( int [ f1ipx ( 4 ) ] ) ;
+
+      |                   ^
+
+mutant.c:53:1: internal compiler error: in fold_convert_loc, at fold-const.c:2429
+
+   53 | void f1ia_f ( int [ f1ipx ( 4 ) ] ) ;
+
+      | ^~~~
+
+0x6bd71f fold_convert_loc(unsigned int, tree_node*, tree_node*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/fold-const.c:2429
+
+0x11fec86 build_range_type_1
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/tree.c:7015
+
+0x8c8e5b attr_access::array_as_string[abi:cxx11](tree_node*) const
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/attribs.c:2392
+
+0x9d8915 warn_parm_array_mismatch(unsigned int, tree_node*, tree_node*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c-family/c-warn.c:3448
+
+0x943e4c c_parser_declaration_or_fndef
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:2342
+
+0x94b9d3 c_parser_external_declaration
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:1777
+
+0x94c439 c_parser_translation_unit
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:1650
+
+0x94c439 c_parse_file()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:21984
+
+0x9ac765 c_common_parse_file()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c-family/c-opts.c:1218
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

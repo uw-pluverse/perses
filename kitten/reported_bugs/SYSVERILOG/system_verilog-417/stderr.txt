@@ -1,0 +1,8 @@
+internal compiler error: Assertion 'init->constant' failed
+
+  in file /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp, line 403
+
+  function: const slang::ConstantValue &slang::SpecparamSymbol::getValue() const
+
+
+

@@ -1,0 +1,246 @@
+mutant.c:1:53: warning: 'enable_if' is a clang extension [-Wgcc-compat]
+
+void foo ( int m ) __attribute__ ( ( overloadable , enable_if ( m > 0 , "" ) ) ) ;
+
+                                                    ^
+
+mutant.c:4:10: warning: variable 'p' set but not used [-Wunused-but-set-variable]
+
+void ( * p ) ( int ) = foo ;
+
+         ^
+
+mutant.c:5:10: warning: unused variable 'p2' [-Wunused-variable]
+
+void ( * p2 ) ( int ) = & foo ;
+
+         ^
+
+mutant.c:8:8: warning: variable 'vp1' set but not used [-Wunused-but-set-variable]
+
+void * vp1 = ( void * ) & foo ;
+
+       ^
+
+mutant.c:9:8: warning: unused variable 'vp2' [-Wunused-variable]
+
+void * vp2 = ( void * ) foo ;
+
+       ^
+
+mutant.c:3:6: warning: no previous prototype for function 'test1' [-Wmissing-prototypes]
+
+void test1 ( ) {
+
+     ^
+
+mutant.c:3:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void test1 ( ) {
+
+^
+
+static 
+
+mutant.c:3:12: warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+
+void test1 ( ) {
+
+           ^
+
+mutant.c:13:53: warning: 'enable_if' is a clang extension [-Wgcc-compat]
+
+void bar ( int m ) __attribute__ ( ( overloadable , enable_if ( m > 0 , "" ) ) ) ;
+
+                                                    ^
+
+mutant.c:14:53: warning: 'enable_if' is a clang extension [-Wgcc-compat]
+
+void bar ( int m ) __attribute__ ( ( overloadable , enable_if ( 1 , "" ) ) ) ;
+
+                                                    ^
+
+mutant.c:16:10: warning: variable 'p' set but not used [-Wunused-but-set-variable]
+
+void ( * p ) ( int ) = bar ;
+
+         ^
+
+mutant.c:17:10: warning: unused variable 'p2' [-Wunused-variable]
+
+void ( * p2 ) ( int ) = & bar ;
+
+         ^
+
+mutant.c:20:8: warning: variable 'vp1' set but not used [-Wunused-but-set-variable]
+
+void * vp1 = ( void * ) & bar ;
+
+       ^
+
+mutant.c:21:8: warning: unused variable 'vp2' [-Wunused-variable]
+
+void * vp2 = ( void * ) bar ;
+
+       ^
+
+mutant.c:15:6: warning: no previous prototype for function 'test2' [-Wmissing-prototypes]
+
+void test2 ( ) {
+
+     ^
+
+mutant.c:15:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void test2 ( ) {
+
+^
+
+static 
+
+mutant.c:15:12: warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+
+void test2 ( ) {
+
+           ^
+
+mutant.c:25:53: warning: 'enable_if' is a clang extension [-Wgcc-compat]
+
+void baz ( int m ) __attribute__ ( ( overloadable , enable_if ( 1 , "" ) ) ) ;
+
+                                                    ^
+
+clang-trunk: /tmp/tmp.nPuVKAIgXI-clang-builder/llvm-project/clang/lib/AST/ExprClassification.cpp:68: Cl clang::Expr::ClassifyImpl(clang::ASTContext&, clang::SourceLocation*) const: Assertion `getValueKind() == VK_PRValue' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:30:11: current parser token ';'
+
+2.	mutant.c:27:16: parsing function body 'test3'
+
+3.	mutant.c:27:16: in compound statement ('{}')
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x3950274)[0x561166996274]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x561166994094]
+
+clang-trunk(+0x3894ed8)[0x5611668daed8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7fb9329a33c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7fb93244218b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7fb932421859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7fb932421729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7fb932432f36]
+
+clang-trunk(_ZNK5clang4Expr12ClassifyImplERNS_10ASTContextEPNS_14SourceLocationE+0x508)[0x561169a5cb68]
+
+clang-trunk(_ZNK5clang4Expr18isModifiableLvalueERNS_10ASTContextEPNS_14SourceLocationE+0x31)[0x561169a5cd61]
+
+clang-trunk(+0x5fd5ce6)[0x56116901bce6]
+
+clang-trunk(_ZN5clang4Sema23CheckAssignmentOperandsEPNS_4ExprERNS_12ActionResultIS2_Lb1EEENS_14SourceLocationENS_8QualTypeE+0x75)[0x56116904f0d5]
+
+clang-trunk(_ZN5clang4Sema18CreateBuiltinBinOpENS_14SourceLocationENS_18BinaryOperatorKindEPNS_4ExprES4_+0xa0b)[0x56116905039b]
+
+clang-trunk(_ZN5clang4Sema10BuildBinOpEPNS_5ScopeENS_14SourceLocationENS_18BinaryOperatorKindEPNS_4ExprES6_+0x85f)[0x5611690515df]
+
+clang-trunk(_ZN5clang4Sema10ActOnBinOpEPNS_5ScopeENS_14SourceLocationENS_3tok9TokenKindEPNS_4ExprES7_+0x91)[0x561169051781]
+
+clang-trunk(_ZN5clang6Parser26ParseRHSOfBinaryExpressionENS_12ActionResultIPNS_4ExprELb1EEENS_4prec5LevelE+0x77f)[0x561168c0b41f]
+
+clang-trunk(_ZN5clang6Parser15ParseExpressionENS0_13TypeCastStateE+0xd)[0x561168c0d47d]
+
+clang-trunk(_ZN5clang6Parser18ParseExprStatementENS0_17ParsedStmtContextE+0x4e)[0x561168c750be]
+
+clang-trunk(_ZN5clang6Parser42ParseStatementOrDeclarationAfterAttributesERN4llvm11SmallVectorIPNS_4StmtELj32EEENS0_17ParsedStmtContextEPNS_14SourceLocationERNS_25ParsedAttributesWithRangeE+0x8f2)[0x561168c6c652]
+
+clang-trunk(_ZN5clang6Parser27ParseStatementOrDeclarationERN4llvm11SmallVectorIPNS_4StmtELj32EEENS0_17ParsedStmtContextEPNS_14SourceLocationE+0x9a)[0x561168c6d03a]
+
+clang-trunk(_ZN5clang6Parser26ParseCompoundStatementBodyEb+0x5f9)[0x561168c6dfb9]
+
+clang-trunk(_ZN5clang6Parser26ParseFunctionStatementBodyEPNS_4DeclERNS0_10ParseScopeE+0xda)[0x561168c705ca]
+
+clang-trunk(_ZN5clang6Parser23ParseFunctionDefinitionERNS_17ParsingDeclaratorERKNS0_18ParsedTemplateInfoEPNS0_18LateParsedAttrListE+0x682)[0x561168bb6862]
+
+clang-trunk(_ZN5clang6Parser14ParseDeclGroupERNS_15ParsingDeclSpecENS_17DeclaratorContextEPNS_14SourceLocationEPNS0_12ForRangeInitE+0x740)[0x561168be31c0]
+
+clang-trunk(_ZN5clang6Parser30ParseDeclOrFunctionDefInternalERNS_25ParsedAttributesWithRangeERNS_15ParsingDeclSpecENS_15AccessSpecifierE+0x226)[0x561168bb1066]
+
+clang-trunk(+0x5b6b651)[0x561168bb1651]
+
+clang-trunk(_ZN5clang6Parser24ParseExternalDeclarationERNS_25ParsedAttributesWithRangeEPNS_15ParsingDeclSpecE+0x217)[0x561168bb7e57]
+
+clang-trunk(_ZN5clang6Parser17ParseTopLevelDeclERNS_9OpaquePtrINS_12DeclGroupRefEEEb+0x1ce)[0x561168bb93ee]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x219)[0x561168babc39]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x561167af2f98]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x5611673a1e79]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x5611673350c6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x56116747fd00]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x5611642a6b06]
+
+clang-trunk(+0x125ce48)[0x5611642a2e48]
+
+clang-trunk(+0x417fca9)[0x5611671c5ca9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x5611668db05c]
+
+clang-trunk(+0x418044d)[0x5611671c644d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x561167198bdb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x5611671996f9]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x5611671a42a9]
+
+clang-trunk(main+0x18af)[0x5611641d150f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fb9324230b3]
+
+clang-trunk(_start+0x2e)[0x5611642a29be]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 24d48d45cc302a6abeab139d87ba87f7a2335323)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-f9f6a8.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-f9f6a8.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

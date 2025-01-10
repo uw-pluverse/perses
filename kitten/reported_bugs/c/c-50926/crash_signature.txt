@@ -1,0 +1,3 @@
+llvm::Value* clang::CodeGen::RValue::getScalarVal() const: Assertion `isScalar() && "Not a scalar!"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

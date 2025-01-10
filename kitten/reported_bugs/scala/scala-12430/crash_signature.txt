@@ -1,0 +1,4 @@
+Exception in thread "main" java.lang.RuntimeException: Unexpected New(...collection/TypeTree[TypeRef(ThisType(TypeRef(NoPrefix,module class scala)),module class collection)]) reached GenBCode.
+at dotty.tools.backend.jvm.BCodeHelpers.abort
+at dotty.tools.backend.jvm.BCodeHelpers.abort$
+at dotty.tools.backend.jvm.GenBCodePipeline.abort

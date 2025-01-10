@@ -1,0 +1,58 @@
+error[E0517]: attribute should be applied to a struct
+
+ --> mutant.rs:7:12
+
+  |
+
+7 | # [ repr ( simd ) ]
+
+  |            ^^^^
+
+8 | # [ derive ( Copy , Clone ) ]
+
+9 | enum Es { Ls = - 128 , Hs = 127 }
+
+  | --------------------------------- not a struct
+
+
+
+thread 'rustc' panicked at 'assertion failed: self.is_struct() || self.is_union()', compiler/rustc_middle/src/ty/adt.rs:293:9
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.53.0-nightly (07e0e2ec2 2021-03-24) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [layout_raw] computing layout of `Es`
+
+#1 [check_mod_item_types] checking item types in top-level module
+
+end of query stack
+
+error: aborting due to previous error
+
+
+
+For more information about this error, try `rustc --explain E0517`.
+

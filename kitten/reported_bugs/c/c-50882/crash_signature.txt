@@ -1,0 +1,3 @@
+void llvm::Value::doRAUW(llvm::Value*, llvm::Value::ReplaceMetadataUses): Assertion `New->getType() == getType() && "replaceAllUses of value with new value of different type!"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

@@ -1,0 +1,3 @@
+static llvm::FixedVectorType* llvm::FixedVectorType::get(llvm::Type*, unsigned int): Assertion `NumElts > 0 && "#Elements of a VectorType must be greater than 0"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

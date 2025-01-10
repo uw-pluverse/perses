@@ -1,0 +1,8 @@
+internal compiler error: Assertion 'target' failed
+
+  in file /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp, line 178
+
+  function: slang::ConstantValue slang::NamedValueExpression::evalImpl(slang::EvalContext &) const
+
+
+

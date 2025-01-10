@@ -1,0 +1,22 @@
+error: expected one of `.`, `?`, `]`, or an operator, found `,`
+
+  --> mutant.rs:49:65
+
+   |
+
+24 | ( $ ctor : expr , $ iter : ident ( $ ( $ param : expr ) , + ) ) => ( {
+
+   |   ------------- while parsing argument for this `expr` macro fragment
+
+...
+
+49 | "the compiler unexpectedly panicked. this is a bug." . into ( ) ,
+
+   |                                                                 ^ expected one of `.`, `?`, `]`, or an operator
+
+
+
+error: aborting due to previous error
+
+
+

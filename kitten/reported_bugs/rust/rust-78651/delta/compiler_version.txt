@@ -1,0 +1,12 @@
+rustc 1.49.0-nightly (4f7612ac1 2020-10-31)
+
+binary: rustc
+
+commit-hash: 4f7612ac1499258025077f1fd05d2f429f9accfb
+
+commit-date: 2020-10-31
+
+host: x86_64-unknown-linux-gnu
+
+release: 1.49.0-nightly
+

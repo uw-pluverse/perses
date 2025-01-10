@@ -1,0 +1,142 @@
+mutant.c:1:1: warning: '_Atomic' type qualifier on return type has no effect [-Wignored-qualifiers]
+
+_Atomic _Bool
+
+^~~~~~~~
+
+mutant.c:2:1: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+foo ( double x , double y )
+
+^
+
+mutant.c:1:9: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+_Atomic _Bool
+
+        ^
+
+        static 
+
+clang-trunk: /tmp/tmp.pdZ9IJX6si-clang-builder/llvm-project/llvm/lib/IR/Instructions.cpp:1476: void llvm::StoreInst::AssertOK(): Assertion `cast<PointerType>(getOperand(1)->getType()) ->isOpaqueOrPointeeTypeMatches(getOperand(0)->getType()) && "Ptr must be a pointer to Val type!"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	mutant.c:2:1: LLVM IR generation of declaration 'foo'
+
+3.	mutant.c:2:1: Generating code for declaration 'foo'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x39b85f4)[0x56301d0fa5f4]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x56301d0f8414]
+
+clang-trunk(+0x38fd258)[0x56301d03f258]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f48d87843c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f48d822318b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f48d8202859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f48d8202729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f48d8213f36]
+
+clang-trunk(_ZN4llvm9StoreInst8AssertOKEv+0x5c)[0x56301c7aa4dc]
+
+clang-trunk(_ZN4llvm9StoreInstC2EPNS_5ValueES2_bNS_5AlignEPNS_11InstructionE+0x17)[0x56301c7aa717]
+
+clang-trunk(+0x3d3f9a5)[0x56301d4819a5]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction14EmitReturnStmtERKNS_10ReturnStmtE+0x67c)[0x56301d48df4c]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction8EmitStmtEPKNS_4StmtEN4llvm8ArrayRefIPKNS_4AttrEEE+0x691)[0x56301d48fc21]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction28EmitCompoundStmtWithoutScopeERKNS_12CompoundStmtEbNS0_12AggValueSlotE+0x8c)[0x56301d4959fc]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction16EmitFunctionBodyEPKNS_4StmtE+0xd1)[0x56301d4ecf61]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction12GenerateCodeENS_10GlobalDeclEPN4llvm8FunctionERKNS0_14CGFunctionInfoE+0x37c)[0x56301d4fe86c]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule28EmitGlobalFunctionDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x1c6)[0x56301d558dc6]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule20EmitGlobalDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x285)[0x56301d554965]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule10EmitGlobalENS_10GlobalDeclE+0x3eb)[0x56301d554dcb]
+
+clang-trunk(+0x3e1b832)[0x56301d55d832]
+
+clang-trunk(+0x4b30e79)[0x56301e272e79]
+
+clang-trunk(+0x4b23060)[0x56301e265060]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x204)[0x56301f32c164]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x56301e26fff8]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x56301db12fc9]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x56301daa5fd6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x56301dbf0d00]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x56301a9cf7b6]
+
+clang-trunk(+0x1289af8)[0x56301a9cbaf8]
+
+clang-trunk(+0x41f48e9)[0x56301d9368e9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x56301d03f3dc]
+
+clang-trunk(+0x41f508d)[0x56301d93708d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x56301d90981b]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x56301d90a339]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x56301d914ee9]
+
+clang-trunk(main+0x18af)[0x56301a8fa64f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f48d82040b3]
+
+clang-trunk(_start+0x2e)[0x56301a9cb66e]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 74c308c56a2d0f000dfed3287311ce46a94ae3c8)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-d5747a.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-d5747a.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

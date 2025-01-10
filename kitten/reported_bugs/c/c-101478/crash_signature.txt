@@ -1,0 +1,4 @@
+internal compiler error: in recompute_tree_invariant_for_addr_expr, at tree.c
+recompute_tree_invariant_for_addr_expr(tree_node*)
+gimplify_addr_expr
+gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)

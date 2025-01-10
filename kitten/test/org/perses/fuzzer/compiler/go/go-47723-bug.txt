@@ -1,0 +1,11 @@
+crash.go:16:2: internal compiler error: .dict already has a location
+
+goroutine 1 [running]:
+runtime/debug.Stack()
+	/home/alberto/go/src/runtime/debug/stack.go:24 +0x65
+cmd/compile/internal/base.FatalfAt({0x401d40, 0xc0}, {0xcfa973, 0x19}, {0xc000115760, 0x1, 0x1})
+	/home/alberto/go/src/cmd/compile/internal/base/print.go:227 +0x154
+cmd/compile/internal/base.Fatalf(...)
+	/home/alberto/go/src/cmd/compile/internal/base/print.go:196
+cmd/compile/internal/escape.(*escape).newLoc(0xc000115880, {0xe5fe98, 0xc000401d40}, 0x0)
+	/home/alberto/go/src/cmd/compile/internal/escape/graph.go:246 +0x54e

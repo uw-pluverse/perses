@@ -1,0 +1,6 @@
+thread 'rustc' panicked at 'index out of bounds: the len is 0 but the index is 0'
+error: internal compiler error: unexpected panic
+note: the compiler unexpectedly panicked. this is a bug.
+error: internal compiler error: broken MIR in DefId(0
+thread 'rustc' panicked at 'no errors encountered even though `delay_span_bug` issued'
+thread panicked while panicking. aborting.

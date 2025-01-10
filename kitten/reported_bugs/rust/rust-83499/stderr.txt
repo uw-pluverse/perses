@@ -1,0 +1,114 @@
+error[E0670]: `async fn` is not permitted in Rust 2015
+
+ --> mutant.rs:1:1
+
+  |
+
+1 | async fn multiple_named_lifetimes < 'a , 'b > ( _ : & 'a u8 , ... ) { }
+
+  | ^^^^^ to use `async fn`, switch to Rust 2018 or later
+
+  |
+
+  = help: set `edition = "2018"` in `Cargo.toml`
+
+  = note: for more on editions, read https://doc.rust-lang.org/edition-guide
+
+
+
+error: only foreign or `unsafe extern "C" functions may be C-variadic
+
+ --> mutant.rs:1:63
+
+  |
+
+1 | async fn multiple_named_lifetimes < 'a , 'b > ( _ : & 'a u8 , ... ) { }
+
+  |                                                               ^^^^
+
+
+
+error[E0658]: C-variadic functions are unstable
+
+ --> mutant.rs:1:1
+
+  |
+
+1 | async fn multiple_named_lifetimes < 'a , 'b > ( _ : & 'a u8 , ... ) { }
+
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  |
+
+  = note: see issue #44930 <https://github.com/rust-lang/rust/issues/44930> for more information
+
+  = help: add `#![feature(c_variadic)]` to the crate attributes to enable
+
+
+
+error[E0700]: hidden type for `impl Trait` captures lifetime that does not appear in bounds
+
+ --> mutant.rs:1:69
+
+  |
+
+1 | async fn multiple_named_lifetimes < 'a , 'b > ( _ : & 'a u8 , ... ) { }
+
+  |                                                                     ^
+
+  |
+
+note: hidden type `impl Future` captures lifetime smaller than the function body
+
+ --> mutant.rs:1:69
+
+  |
+
+1 | async fn multiple_named_lifetimes < 'a , 'b > ( _ : & 'a u8 , ... ) { }
+
+  |                                                                     ^
+
+
+
+thread 'rustc' panicked at 'index out of bounds: the len is 2 but the index is 2', compiler/rustc_mir/src/borrow_check/type_check/input_output.rs:76:32
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.53.0-nightly (07e0e2ec2 2021-03-24) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [mir_borrowck] borrow-checking `multiple_named_lifetimes`
+
+#1 [type_of] computing type of `multiple_named_lifetimes::{opaque#0}`
+
+end of query stack
+
+error: aborting due to 4 previous errors
+
+
+
+Some errors have detailed explanations: E0658, E0670, E0700.
+
+For more information about an error, try `rustc --explain E0658`.
+

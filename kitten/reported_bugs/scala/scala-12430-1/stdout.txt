@@ -1,0 +1,8 @@
+Warning: mocking up superclass for module class collection
+
+Error while emitting mutant.scala
+
+java.lang.RuntimeException: Unexpected New(...collection/TypeTree[TypeRef(ThisType(TypeRef(NoPrefix,module class scala)),module class collection)]) reached GenBCode.
+
+  Call was genLoad(New(TypeTree[TypeRef(ThisType(TypeRef(NoPrefix,module class scala)),module class collection)]),Lscala/collection;) while compiling mutant.scala
+

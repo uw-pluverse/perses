@@ -1,0 +1,294 @@
+mutant.c:3:6: warning: no previous prototype for function 'test1_h' [-Wmissing-prototypes]
+
+void test1_h ( void ) {
+
+     ^
+
+mutant.c:3:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void test1_h ( void ) {
+
+^
+
+static 
+
+mutant.c:6:6: warning: no previous prototype for function 'test2_f' [-Wmissing-prototypes]
+
+void test2_f ( void ) { }
+
+     ^
+
+mutant.c:6:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void test2_f ( void ) { }
+
+^
+
+static 
+
+mutant.c:8:6: warning: no previous prototype for function 'test2_h' [-Wmissing-prototypes]
+
+void test2_h ( void ) {
+
+     ^
+
+mutant.c:8:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void test2_h ( void ) {
+
+^
+
+static 
+
+mutant.c:13:69: warning: no previous prototype for function 'test3_foo' [-Wmissing-prototypes]
+
+test6_f ( void ) __attribute__ ( ( weakref ( "test3_f" ) ) ) ; void test3_foo ( void ) { test3_f ( ) ; } void test3_h ( void ) { test3_g ( ) ; } void test4_f ( void ) ; static void test4_g ( void ) __attribute__ ( ( weakref ( "test4_f" ) ) ) ; void test4_h ( void ) { test4_g ( ) ; } void test4_f ( void ) { } void test5_f ( void ) ; static void test5_g ( void ) __attribute__ ( ( weakref ( "test5_f" ) ) ) ; void test5_h ( void ) { test5_g ( ) ; } void test5_foo ( void ) { test5_f ( ) ; } void test6_f ( void ) __attribute__ ( ( weak ) ) ; static void test6_g ( void ) __attribute__ ( ( weakref ( "test6_f" ) ) ) ; void test6_h ( void ) { test6_g ( ) ; } void test6_foo ( void ) { test6_f ( ) ;
+
+                                                                    ^
+
+mutant.c:13:64: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+test6_f ( void ) __attribute__ ( ( weakref ( "test3_f" ) ) ) ; void test3_foo ( void ) { test3_f ( ) ; } void test3_h ( void ) { test3_g ( ) ; } void test4_f ( void ) ; static void test4_g ( void ) __attribute__ ( ( weakref ( "test4_f" ) ) ) ; void test4_h ( void ) { test4_g ( ) ; } void test4_f ( void ) { } void test5_f ( void ) ; static void test5_g ( void ) __attribute__ ( ( weakref ( "test5_f" ) ) ) ; void test5_h ( void ) { test5_g ( ) ; } void test5_foo ( void ) { test5_f ( ) ; } void test6_f ( void ) __attribute__ ( ( weak ) ) ; static void test6_g ( void ) __attribute__ ( ( weakref ( "test6_f" ) ) ) ; void test6_h ( void ) { test6_g ( ) ; } void test6_foo ( void ) { test6_f ( ) ;
+
+                                                               ^
+
+                                                               static 
+
+mutant.c:13:130: warning: implicit declaration of function 'test3_g' is invalid in C99 [-Wimplicit-function-declaration]
+
+test6_f ( void ) __attribute__ ( ( weakref ( "test3_f" ) ) ) ; void test3_foo ( void ) { test3_f ( ) ; } void test3_h ( void ) { test3_g ( ) ; } void test4_f ( void ) ; static void test4_g ( void ) __attribute__ ( ( weakref ( "test4_f" ) ) ) ; void test4_h ( void ) { test4_g ( ) ; } void test4_f ( void ) { } void test5_f ( void ) ; static void test5_g ( void ) __attribute__ ( ( weakref ( "test5_f" ) ) ) ; void test5_h ( void ) { test5_g ( ) ; } void test5_foo ( void ) { test5_f ( ) ; } void test6_f ( void ) __attribute__ ( ( weak ) ) ; static void test6_g ( void ) __attribute__ ( ( weakref ( "test6_f" ) ) ) ; void test6_h ( void ) { test6_g ( ) ; } void test6_foo ( void ) { test6_f ( ) ;
+
+                                                                                                                                 ^
+
+mutant.c:13:111: warning: no previous prototype for function 'test3_h' [-Wmissing-prototypes]
+
+test6_f ( void ) __attribute__ ( ( weakref ( "test3_f" ) ) ) ; void test3_foo ( void ) { test3_f ( ) ; } void test3_h ( void ) { test3_g ( ) ; } void test4_f ( void ) ; static void test4_g ( void ) __attribute__ ( ( weakref ( "test4_f" ) ) ) ; void test4_h ( void ) { test4_g ( ) ; } void test4_f ( void ) { } void test5_f ( void ) ; static void test5_g ( void ) __attribute__ ( ( weakref ( "test5_f" ) ) ) ; void test5_h ( void ) { test5_g ( ) ; } void test5_foo ( void ) { test5_f ( ) ; } void test6_f ( void ) __attribute__ ( ( weak ) ) ; static void test6_g ( void ) __attribute__ ( ( weakref ( "test6_f" ) ) ) ; void test6_h ( void ) { test6_g ( ) ; } void test6_foo ( void ) { test6_f ( ) ;
+
+                                                                                                              ^
+
+mutant.c:13:106: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+test6_f ( void ) __attribute__ ( ( weakref ( "test3_f" ) ) ) ; void test3_foo ( void ) { test3_f ( ) ; } void test3_h ( void ) { test3_g ( ) ; } void test4_f ( void ) ; static void test4_g ( void ) __attribute__ ( ( weakref ( "test4_f" ) ) ) ; void test4_h ( void ) { test4_g ( ) ; } void test4_f ( void ) { } void test5_f ( void ) ; static void test5_g ( void ) __attribute__ ( ( weakref ( "test5_f" ) ) ) ; void test5_h ( void ) { test5_g ( ) ; } void test5_foo ( void ) { test5_f ( ) ; } void test6_f ( void ) __attribute__ ( ( weak ) ) ; static void test6_g ( void ) __attribute__ ( ( weakref ( "test6_f" ) ) ) ; void test6_h ( void ) { test6_g ( ) ; } void test6_foo ( void ) { test6_f ( ) ;
+
+                                                                                                         ^
+
+                                                                                                         static 
+
+mutant.c:13:250: warning: no previous prototype for function 'test4_h' [-Wmissing-prototypes]
+
+test6_f ( void ) __attribute__ ( ( weakref ( "test3_f" ) ) ) ; void test3_foo ( void ) { test3_f ( ) ; } void test3_h ( void ) { test3_g ( ) ; } void test4_f ( void ) ; static void test4_g ( void ) __attribute__ ( ( weakref ( "test4_f" ) ) ) ; void test4_h ( void ) { test4_g ( ) ; } void test4_f ( void ) { } void test5_f ( void ) ; static void test5_g ( void ) __attribute__ ( ( weakref ( "test5_f" ) ) ) ; void test5_h ( void ) { test5_g ( ) ; } void test5_foo ( void ) { test5_f ( ) ; } void test6_f ( void ) __attribute__ ( ( weak ) ) ; static void test6_g ( void ) __attribute__ ( ( weakref ( "test6_f" ) ) ) ; void test6_h ( void ) { test6_g ( ) ; } void test6_foo ( void ) { test6_f ( ) ;
+
+                                                                                                                                                                                                                                                         ^
+
+mutant.c:13:245: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+test6_f ( void ) __attribute__ ( ( weakref ( "test3_f" ) ) ) ; void test3_foo ( void ) { test3_f ( ) ; } void test3_h ( void ) { test3_g ( ) ; } void test4_f ( void ) ; static void test4_g ( void ) __attribute__ ( ( weakref ( "test4_f" ) ) ) ; void test4_h ( void ) { test4_g ( ) ; } void test4_f ( void ) { } void test5_f ( void ) ; static void test5_g ( void ) __attribute__ ( ( weakref ( "test5_f" ) ) ) ; void test5_h ( void ) { test5_g ( ) ; } void test5_foo ( void ) { test5_f ( ) ; } void test6_f ( void ) __attribute__ ( ( weak ) ) ; static void test6_g ( void ) __attribute__ ( ( weakref ( "test6_f" ) ) ) ; void test6_h ( void ) { test6_g ( ) ; } void test6_foo ( void ) { test6_f ( ) ;
+
+                                                                                                                                                                                                                                                    ^
+
+                                                                                                                                                                                                                                                    static 
+
+mutant.c:13:415: warning: no previous prototype for function 'test5_h' [-Wmissing-prototypes]
+
+test6_f ( void ) __attribute__ ( ( weakref ( "test3_f" ) ) ) ; void test3_foo ( void ) { test3_f ( ) ; } void test3_h ( void ) { test3_g ( ) ; } void test4_f ( void ) ; static void test4_g ( void ) __attribute__ ( ( weakref ( "test4_f" ) ) ) ; void test4_h ( void ) { test4_g ( ) ; } void test4_f ( void ) { } void test5_f ( void ) ; static void test5_g ( void ) __attribute__ ( ( weakref ( "test5_f" ) ) ) ; void test5_h ( void ) { test5_g ( ) ; } void test5_foo ( void ) { test5_f ( ) ; } void test6_f ( void ) __attribute__ ( ( weak ) ) ; static void test6_g ( void ) __attribute__ ( ( weakref ( "test6_f" ) ) ) ; void test6_h ( void ) { test6_g ( ) ; } void test6_foo ( void ) { test6_f ( ) ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                              ^
+
+mutant.c:13:410: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+test6_f ( void ) __attribute__ ( ( weakref ( "test3_f" ) ) ) ; void test3_foo ( void ) { test3_f ( ) ; } void test3_h ( void ) { test3_g ( ) ; } void test4_f ( void ) ; static void test4_g ( void ) __attribute__ ( ( weakref ( "test4_f" ) ) ) ; void test4_h ( void ) { test4_g ( ) ; } void test4_f ( void ) { } void test5_f ( void ) ; static void test5_g ( void ) __attribute__ ( ( weakref ( "test5_f" ) ) ) ; void test5_h ( void ) { test5_g ( ) ; } void test5_foo ( void ) { test5_f ( ) ; } void test6_f ( void ) __attribute__ ( ( weak ) ) ; static void test6_g ( void ) __attribute__ ( ( weakref ( "test6_f" ) ) ) ; void test6_h ( void ) { test6_g ( ) ; } void test6_foo ( void ) { test6_f ( ) ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                         ^
+
+                                                                                                                                                                                                                                                                                                                                                                                                                         static 
+
+mutant.c:13:455: warning: no previous prototype for function 'test5_foo' [-Wmissing-prototypes]
+
+test6_f ( void ) __attribute__ ( ( weakref ( "test3_f" ) ) ) ; void test3_foo ( void ) { test3_f ( ) ; } void test3_h ( void ) { test3_g ( ) ; } void test4_f ( void ) ; static void test4_g ( void ) __attribute__ ( ( weakref ( "test4_f" ) ) ) ; void test4_h ( void ) { test4_g ( ) ; } void test4_f ( void ) { } void test5_f ( void ) ; static void test5_g ( void ) __attribute__ ( ( weakref ( "test5_f" ) ) ) ; void test5_h ( void ) { test5_g ( ) ; } void test5_foo ( void ) { test5_f ( ) ; } void test6_f ( void ) __attribute__ ( ( weak ) ) ; static void test6_g ( void ) __attribute__ ( ( weakref ( "test6_f" ) ) ) ; void test6_h ( void ) { test6_g ( ) ; } void test6_foo ( void ) { test6_f ( ) ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ^
+
+mutant.c:13:450: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+test6_f ( void ) __attribute__ ( ( weakref ( "test3_f" ) ) ) ; void test3_foo ( void ) { test3_f ( ) ; } void test3_h ( void ) { test3_g ( ) ; } void test4_f ( void ) ; static void test4_g ( void ) __attribute__ ( ( weakref ( "test4_f" ) ) ) ; void test4_h ( void ) { test4_g ( ) ; } void test4_f ( void ) { } void test5_f ( void ) ; static void test5_g ( void ) __attribute__ ( ( weakref ( "test5_f" ) ) ) ; void test5_h ( void ) { test5_g ( ) ; } void test5_foo ( void ) { test5_f ( ) ; } void test6_f ( void ) __attribute__ ( ( weak ) ) ; static void test6_g ( void ) __attribute__ ( ( weakref ( "test6_f" ) ) ) ; void test6_h ( void ) { test6_g ( ) ; } void test6_foo ( void ) { test6_f ( ) ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ^
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                 static 
+
+mutant.c:13:532: warning: attribute declaration must precede definition [-Wignored-attributes]
+
+test6_f ( void ) __attribute__ ( ( weakref ( "test3_f" ) ) ) ; void test3_foo ( void ) { test3_f ( ) ; } void test3_h ( void ) { test3_g ( ) ; } void test4_f ( void ) ; static void test4_g ( void ) __attribute__ ( ( weakref ( "test4_f" ) ) ) ; void test4_h ( void ) { test4_g ( ) ; } void test4_f ( void ) { } void test5_f ( void ) ; static void test5_g ( void ) __attribute__ ( ( weakref ( "test5_f" ) ) ) ; void test5_h ( void ) { test5_g ( ) ; } void test5_foo ( void ) { test5_f ( ) ; } void test6_f ( void ) __attribute__ ( ( weak ) ) ; static void test6_g ( void ) __attribute__ ( ( weakref ( "test6_f" ) ) ) ; void test6_h ( void ) { test6_g ( ) ; } void test6_foo ( void ) { test6_f ( ) ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^
+
+mutant.c:13:1: note: previous definition is here
+
+test6_f ( void ) __attribute__ ( ( weakref ( "test3_f" ) ) ) ; void test3_foo ( void ) { test3_f ( ) ; } void test3_h ( void ) { test3_g ( ) ; } void test4_f ( void ) ; static void test4_g ( void ) __attribute__ ( ( weakref ( "test4_f" ) ) ) ; void test4_h ( void ) { test4_g ( ) ; } void test4_f ( void ) { } void test5_f ( void ) ; static void test5_g ( void ) __attribute__ ( ( weakref ( "test5_f" ) ) ) ; void test5_h ( void ) { test5_g ( ) ; } void test5_foo ( void ) { test5_f ( ) ; } void test6_f ( void ) __attribute__ ( ( weak ) ) ; static void test6_g ( void ) __attribute__ ( ( weakref ( "test6_f" ) ) ) ; void test6_h ( void ) { test6_g ( ) ; } void test6_foo ( void ) { test6_f ( ) ;
+
+^
+
+mutant.c:13:623: warning: no previous prototype for function 'test6_h' [-Wmissing-prototypes]
+
+test6_f ( void ) __attribute__ ( ( weakref ( "test3_f" ) ) ) ; void test3_foo ( void ) { test3_f ( ) ; } void test3_h ( void ) { test3_g ( ) ; } void test4_f ( void ) ; static void test4_g ( void ) __attribute__ ( ( weakref ( "test4_f" ) ) ) ; void test4_h ( void ) { test4_g ( ) ; } void test4_f ( void ) { } void test5_f ( void ) ; static void test5_g ( void ) __attribute__ ( ( weakref ( "test5_f" ) ) ) ; void test5_h ( void ) { test5_g ( ) ; } void test5_foo ( void ) { test5_f ( ) ; } void test6_f ( void ) __attribute__ ( ( weak ) ) ; static void test6_g ( void ) __attribute__ ( ( weakref ( "test6_f" ) ) ) ; void test6_h ( void ) { test6_g ( ) ; } void test6_foo ( void ) { test6_f ( ) ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ^
+
+mutant.c:13:618: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+test6_f ( void ) __attribute__ ( ( weakref ( "test3_f" ) ) ) ; void test3_foo ( void ) { test3_f ( ) ; } void test3_h ( void ) { test3_g ( ) ; } void test4_f ( void ) ; static void test4_g ( void ) __attribute__ ( ( weakref ( "test4_f" ) ) ) ; void test4_h ( void ) { test4_g ( ) ; } void test4_f ( void ) { } void test5_f ( void ) ; static void test5_g ( void ) __attribute__ ( ( weakref ( "test5_f" ) ) ) ; void test5_h ( void ) { test5_g ( ) ; } void test5_foo ( void ) { test5_f ( ) ; } void test6_f ( void ) __attribute__ ( ( weak ) ) ; static void test6_g ( void ) __attribute__ ( ( weakref ( "test6_f" ) ) ) ; void test6_h ( void ) { test6_g ( ) ; } void test6_foo ( void ) { test6_f ( ) ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ^
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         static 
+
+mutant.c:13:663: warning: no previous prototype for function 'test6_foo' [-Wmissing-prototypes]
+
+test6_f ( void ) __attribute__ ( ( weakref ( "test3_f" ) ) ) ; void test3_foo ( void ) { test3_f ( ) ; } void test3_h ( void ) { test3_g ( ) ; } void test4_f ( void ) ; static void test4_g ( void ) __attribute__ ( ( weakref ( "test4_f" ) ) ) ; void test4_h ( void ) { test4_g ( ) ; } void test4_f ( void ) { } void test5_f ( void ) ; static void test5_g ( void ) __attribute__ ( ( weakref ( "test5_f" ) ) ) ; void test5_h ( void ) { test5_g ( ) ; } void test5_foo ( void ) { test5_f ( ) ; } void test6_f ( void ) __attribute__ ( ( weak ) ) ; static void test6_g ( void ) __attribute__ ( ( weakref ( "test6_f" ) ) ) ; void test6_h ( void ) { test6_g ( ) ; } void test6_foo ( void ) { test6_f ( ) ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ^
+
+mutant.c:13:658: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+test6_f ( void ) __attribute__ ( ( weakref ( "test3_f" ) ) ) ; void test3_foo ( void ) { test3_f ( ) ; } void test3_h ( void ) { test3_g ( ) ; } void test4_f ( void ) ; static void test4_g ( void ) __attribute__ ( ( weakref ( "test4_f" ) ) ) ; void test4_h ( void ) { test4_g ( ) ; } void test4_f ( void ) { } void test5_f ( void ) ; static void test5_g ( void ) __attribute__ ( ( weakref ( "test5_f" ) ) ) ; void test5_h ( void ) { test5_g ( ) ; } void test5_foo ( void ) { test5_f ( ) ; } void test6_f ( void ) __attribute__ ( ( weak ) ) ; static void test6_g ( void ) __attribute__ ( ( weakref ( "test6_f" ) ) ) ; void test6_h ( void ) { test6_g ( ) ; } void test6_foo ( void ) { test6_f ( ) ;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ^
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 static 
+
+clang-trunk: /tmp/tmp.nPuVKAIgXI-clang-builder/llvm-project/clang/lib/CodeGen/CodeGenModule.cpp:2814: clang::CodeGen::ConstantAddress clang::CodeGen::CodeGenModule::GetWeakRefReference(const clang::ValueDecl*): Assertion `AA && "No alias?"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:15:1: current parser token 'static'
+
+2.	mutant.c:13:663: LLVM IR generation of declaration 'test6_foo'
+
+3.	mutant.c:13:663: Generating code for declaration 'test6_foo'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x3950274)[0x55a3919ca274]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x55a3919c8094]
+
+clang-trunk(+0x3894ed8)[0x55a39190eed8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7fa89605e3c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7fa895afd18b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7fa895adc859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7fa895adc729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7fa895aedf36]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule19GetWeakRefReferenceEPKNS_9ValueDeclE+0x1af)[0x55a391e2603f]
+
+clang-trunk(+0x3fdacc8)[0x55a392054cc8]
+
+clang-trunk(+0x3fdafaf)[0x55a392054faf]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction10EmitCalleeEPKNS_4ExprE+0x279)[0x55a392076139]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction10EmitCalleeEPKNS_4ExprE+0x1a7)[0x55a392076067]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction12EmitCallExprEPKNS_8CallExprENS0_15ReturnValueSlotE+0x113)[0x55a392076453]
+
+clang-trunk(+0x40357d2)[0x55a3920af7d2]
+
+clang-trunk(+0x4032cc9)[0x55a3920accc9]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction14EmitScalarExprEPKNS_4ExprEb+0x6a)[0x55a3920aee8a]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction11EmitAnyExprEPKNS_4ExprENS0_12AggValueSlotEb+0xd7)[0x55a392056177]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction15EmitIgnoredExprEPKNS_4ExprE+0x6e)[0x55a392074aee]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction8EmitStmtEPKNS_4StmtEN4llvm8ArrayRefIPKNS_4AttrEEE+0xca)[0x55a391d5923a]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction28EmitCompoundStmtWithoutScopeERKNS_12CompoundStmtEbNS0_12AggValueSlotE+0x8c)[0x55a391d5f5dc]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction16EmitFunctionBodyEPKNS_4StmtE+0xd1)[0x55a391db6a21]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction12GenerateCodeENS_10GlobalDeclEPN4llvm8FunctionERKNS0_14CGFunctionInfoE+0x37c)[0x55a391dc827c]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule28EmitGlobalFunctionDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x1c6)[0x55a391e21b86]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule20EmitGlobalDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x285)[0x55a391e1d725]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule10EmitGlobalENS_10GlobalDeclE+0x3eb)[0x55a391e1db8b]
+
+clang-trunk(+0x3dac5f2)[0x55a391e265f2]
+
+clang-trunk(+0x4aafe19)[0x55a392b29e19]
+
+clang-trunk(+0x4aa2000)[0x55a392b1c000]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x204)[0x55a393bdfc24]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x55a392b26f98]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55a3923d5e79]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55a3923690c6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x55a3924b3d00]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x55a38f2dab06]
+
+clang-trunk(+0x125ce48)[0x55a38f2d6e48]
+
+clang-trunk(+0x417fca9)[0x55a3921f9ca9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x55a39190f05c]
+
+clang-trunk(+0x418044d)[0x55a3921fa44d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55a3921ccbdb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x55a3921cd6f9]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x55a3921d82a9]
+
+clang-trunk(main+0x18af)[0x55a38f20550f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fa895ade0b3]
+
+clang-trunk(_start+0x2e)[0x55a38f2d69be]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 24d48d45cc302a6abeab139d87ba87f7a2335323)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-69c725.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-69c725.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

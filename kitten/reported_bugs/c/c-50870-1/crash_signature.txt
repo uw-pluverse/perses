@@ -1,0 +1,2 @@
+void {anonymous}::LValue::addUnsizedArray({anonymous}::EvalInfo&, const clang::Expr*, clang::QualType): Assertion `getType(Base)->isPointerType() || getType(Base)->isArrayType()' failed.
+PLEASE submit a bug report to

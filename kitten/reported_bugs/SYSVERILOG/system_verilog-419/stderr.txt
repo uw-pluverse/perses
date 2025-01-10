@@ -1,0 +1,8 @@
+internal compiler error: Assertion 'T::isKind(kind)' failed
+
+  in file /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/Symbol.h, line 183
+
+  function: decltype(auto) slang::Symbol::as() [T = slang::InstanceSymbol]
+
+
+

@@ -1,0 +1,4 @@
+Exception in thread "main" java.lang.AssertionError: assertion failed: class Int
+at scala.runtime.Scala3RunTime$.assertFailed
+at dotty.tools.backend.jvm.BCodeHelpers$BCInnerClassGen.assertClassNotArrayNotPrimitive
+at dotty.tools.backend.jvm.BCodeHelpers$BCInnerClassGen.getClassBTypeAndRegisterInnerClass

@@ -1,0 +1,198 @@
+mutant.c:3:1: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+foo ( )
+
+^
+
+mutant.c:2:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void
+
+^
+
+static 
+
+mutant.c:3:5: warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+
+foo ( )
+
+    ^
+
+mutant.c:4:1: warning: function 'foo' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+
+{
+
+^
+
+mutant.c:10:1: warning: no previous prototype for function 'bar' [-Wmissing-prototypes]
+
+bar ( int x )
+
+^
+
+mutant.c:9:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void
+
+^
+
+static 
+
+mutant.c:20:41: warning: use of GNU address-of-label extension [-Wgnu-label-as-value]
+
+unsigned char * p = ( unsigned char * ) && lab ;
+
+                                        ^
+
+mutant.c:24:15: warning: variables 'i' and 'x' used in loop condition not modified in loop body [-Wfor-loop-analysis]
+
+for ( i = 0 ; i < x ;
+
+              ^   ~
+
+mutant.c:30:1: warning: extension used [-Wlanguage-extension-token]
+
+asm volatile ( "" ) ;
+
+^
+
+mutant.c:18:1: warning: no previous prototype for function 'baz' [-Wmissing-prototypes]
+
+baz ( int x , int y )
+
+^
+
+mutant.c:17:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void
+
+^
+
+static 
+
+clang-trunk: /tmp/tmp.nPuVKAIgXI-clang-builder/llvm-project/llvm/lib/Analysis/CGSCCPassManager.cpp:957: updateCGAndAnalysisManagerForPass(llvm::LazyCallGraph&, llvm::LazyCallGraph::SCC&, llvm::LazyCallGraph::Node&, llvm::CGSCCAnalysisManager&, llvm::CGSCCUpdateResult&, llvm::FunctionAnalysisManager&, bool)::<lambda(llvm::Function&)>: Assertion `(E || !FunctionPass) && "No function transformations should introduce *new* ref " "edges! Any new ref edges would require IPO which " "function passes aren't allowed to do!"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	Optimizer
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x3950274)[0x55c5eba44274]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x55c5eba42094]
+
+clang-trunk(+0x3894ed8)[0x55c5eb988ed8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f326dc933c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f326d73218b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f326d711859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f326d711729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f326d722f36]
+
+clang-trunk(+0x276a53c)[0x55c5ea85e53c]
+
+clang-trunk(+0x276b640)[0x55c5ea85f640]
+
+clang-trunk(_ZN4llvm26CGSCCToFunctionPassAdaptor3runERNS_13LazyCallGraph3SCCERNS_15AnalysisManagerIS2_JRS1_EEES5_RNS_17CGSCCUpdateResultE+0x7f1)[0x55c5ea8611c1]
+
+clang-trunk(+0x1527f76)[0x55c5e961bf76]
+
+clang-trunk(_ZN4llvm11PassManagerINS_13LazyCallGraph3SCCENS_15AnalysisManagerIS2_JRS1_EEEJS4_RNS_17CGSCCUpdateResultEEE3runERS2_RS5_S4_S7_+0x1fb)[0x55c5ea85855b]
+
+clang-trunk(+0x31a5c06)[0x55c5eb299c06]
+
+clang-trunk(_ZN4llvm21DevirtSCCRepeatedPass3runERNS_13LazyCallGraph3SCCERNS_15AnalysisManagerIS2_JRS1_EEES5_RNS_17CGSCCUpdateResultE+0x1d4)[0x55c5ea85cbd4]
+
+clang-trunk(+0x31a5bb6)[0x55c5eb299bb6]
+
+clang-trunk(_ZN4llvm33ModuleToPostOrderCGSCCPassAdaptor3runERNS_6ModuleERNS_15AnalysisManagerIS1_JEEE+0xf83)[0x55c5ea85a8c3]
+
+clang-trunk(+0x31a5c56)[0x55c5eb299c56]
+
+clang-trunk(_ZN4llvm11PassManagerINS_6ModuleENS_15AnalysisManagerIS1_JEEEJEE3runERS1_RS3_+0x50f)[0x55c5eb17b9cf]
+
+clang-trunk(_ZN4llvm24ModuleInlinerWrapperPass3runERNS_6ModuleERNS_15AnalysisManagerIS1_JEEE+0x205)[0x55c5eb29cd35]
+
+clang-trunk(+0x4b28a06)[0x55c5ecc1ca06]
+
+clang-trunk(_ZN4llvm11PassManagerINS_6ModuleENS_15AnalysisManagerIS1_JEEEJEE3runERS1_RS3_+0x50f)[0x55c5eb17b9cf]
+
+clang-trunk(+0x3c80bfd)[0x55c5ebd74bfd]
+
+clang-trunk(_ZN5clang17EmitBackendOutputERNS_17DiagnosticsEngineERKNS_19HeaderSearchOptionsERKNS_14CodeGenOptionsERKNS_13TargetOptionsERKNS_11LangOptionsEN4llvm9StringRefEPNSE_6ModuleENS_13BackendActionESt10unique_ptrINSE_17raw_pwrite_streamESt14default_deleteISK_EE+0x47d)[0x55c5ebd77e7d]
+
+clang-trunk(+0x4aae44f)[0x55c5ecba244f]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x429)[0x55c5edc59e49]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x55c5ecba0f98]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55c5ec44fe79]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55c5ec3e30c6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x55c5ec52dd00]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x55c5e9354b06]
+
+clang-trunk(+0x125ce48)[0x55c5e9350e48]
+
+clang-trunk(+0x417fca9)[0x55c5ec273ca9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x55c5eb98905c]
+
+clang-trunk(+0x418044d)[0x55c5ec27444d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55c5ec246bdb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x55c5ec2476f9]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x55c5ec2522a9]
+
+clang-trunk(main+0x18af)[0x55c5e927f50f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f326d7130b3]
+
+clang-trunk(_start+0x2e)[0x55c5e93509be]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 24d48d45cc302a6abeab139d87ba87f7a2335323)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-35ce71.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-35ce71.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

@@ -1,0 +1,138 @@
+warning: unknown lint: `simd`
+
+ --> mutant.rs:9:13
+
+  |
+
+9 | # [ allow ( simd ) ] struct f32x3 ( f32 , f32 , f32 ) ;
+
+  |             ^^^^
+
+  |
+
+  = note: `#[warn(unknown_lints)]` on by default
+
+
+
+warning: struct is never constructed: `i8x1`
+
+ --> mutant.rs:7:28
+
+  |
+
+7 | # [ repr ( simd ) ] struct i8x1 ( i8 ) ;
+
+  |                            ^^^^
+
+  |
+
+  = note: `#[warn(dead_code)]` on by default
+
+
+
+warning: struct is never constructed: `u16x2`
+
+ --> mutant.rs:8:28
+
+  |
+
+8 | # [ repr ( simd ) ] struct u16x2 ( u16 , u16 ) ;
+
+  |                            ^^^^^
+
+
+
+warning: struct is never constructed: `f32x3`
+
+ --> mutant.rs:9:29
+
+  |
+
+9 | # [ allow ( simd ) ] struct f32x3 ( f32 , f32 , f32 ) ;
+
+  |                             ^^^^^
+
+
+
+warning: function is never used: `simd_insert`
+
+  --> mutant.rs:12:1
+
+   |
+
+12 | fn simd_insert < T , U > ( x : T , idx : u32 , val : U ) -> T ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+warning: function is never used: `simd_extract`
+
+  --> mutant.rs:14:1
+
+   |
+
+14 | fn simd_extract < T , U > ( x : T , idx : u32 ) -> U ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+warning: function is never used: `main`
+
+  --> mutant.rs:16:4
+
+   |
+
+16 | fn main ( ) {
+
+   |    ^^^^
+
+
+
+error: internal compiler error: compiler/rustc_mir/src/interpret/place.rs:463:18: `mplace_index` called on non-array type f32x3
+
+  --> mutant.rs:39:28
+
+   |
+
+39 | const V : f32x3 = unsafe { simd_insert ( U , 1_u32 , 42_f32 ) } ;
+
+   |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+thread 'rustc' panicked at 'Box<Any>', /rustc/8f349be27815d43d462a32faeb270a22a68486b6/library/std/src/panic.rs:59:5
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.52.0-nightly (8f349be27 2021-03-08) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [eval_to_allocation_raw] const-evaluating + checking `main::V`
+
+#1 [eval_to_const_value_raw] simplifying constant for the type system `main::V`
+
+end of query stack
+
+error: aborting due to previous error; 7 warnings emitted
+
+
+

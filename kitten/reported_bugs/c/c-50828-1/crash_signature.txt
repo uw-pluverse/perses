@@ -1,0 +1,2 @@
+const clang::ASTRecordLayout& clang::ASTContext::getASTRecordLayout(const clang::RecordDecl*) const: Assertion `D && "Cannot get layout of forward declarations!"' failed.
+PLEASE submit a bug report to

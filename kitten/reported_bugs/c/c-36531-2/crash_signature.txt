@@ -1,0 +1,2 @@
+clang::QualType clang::Sema::GetSignedVectorType(clang::QualType): Assertion `TypeSize == Context.getTypeSize(Context.CharTy) && "Unhandled vector element size in vector compare"' failed.
+PLEASE submit a bug report to

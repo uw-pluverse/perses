@@ -1,0 +1,102 @@
+mutant.c: In function ‘foo’:
+
+mutant.c:5:19: warning: implicit declaration of function ‘map’ [-Wimplicit-function-declaration]
+
+    5 | union C { int d [ map ( ) ] ; char * e ; } ;
+
+      |                   ^~~
+
+mutant.c:6:1: internal compiler error: in force_constant_size, at gimplify.c:736
+
+    6 | bar ( ( union C ) & a ) ;
+
+      | ^~~~~~~~~~~~~~~~~~~~~~~
+
+0x6d844a force_constant_size
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimplify.c:736
+
+0xc2c537 gimple_add_tmp_var(tree_node*)
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimplify.c:774
+
+0xbf557b create_tmp_var(tree_node*, char const*)
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimple-expr.c:485
+
+0xc363d0 create_tmp_from_val
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimplify.c:567
+
+0xc363d0 lookup_tmp_var
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimplify.c:599
+
+0xc363d0 internal_get_tmp_var
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimplify.c:638
+
+0xc2fd57 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimplify.c:15065
+
+0xc31676 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimplify.c:14526
+
+0xc3e1f4 gimplify_expr
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimplify.c:15111
+
+0xc40105 gimplify_call_expr
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimplify.c:3527
+
+0xc30f13 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimplify.c:14048
+
+0xc3410a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimplify.c:6863
+
+0xc3170b gimplify_statement_list
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimplify.c:1885
+
+0xc3170b gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimplify.c:14521
+
+0xc3410a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimplify.c:6863
+
+0xc3493e gimplify_bind_expr
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimplify.c:1424
+
+0xc30b73 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimplify.c:14277
+
+0xc3410a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimplify.c:6863
+
+0xc35703 gimplify_body(tree_node*, bool)
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimplify.c:15321
+
+0xc35b51 gimplify_function_tree(tree_node*)
+
+	/tmp/tmp.YBPd3t5p5G-gcc-builder/gcc/gcc/gimplify.c:15475
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

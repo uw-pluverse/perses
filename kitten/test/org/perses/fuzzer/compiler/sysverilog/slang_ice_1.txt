@@ -1,0 +1,5 @@
+internal compiler error: Assertion '!arg.isError()' failed
+
+  in file /tmp/tmp.8mv1csjR86/slang-nightly/source/types/Type.cpp, line 1062
+
+  function: slang::Diagnostic &slang::operator<<(slang::Diagnostic &, const slang::Type &)

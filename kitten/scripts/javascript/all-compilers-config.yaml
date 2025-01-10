@@ -1,0 +1,12 @@
+language: "JAVASCRIPT"
+seedFolders:
+  - path: "kitten/test_data/javascript/"
+    fileExtentions: [".js"]
+
+programsUnderTest:
+  - command: "jerry-trunk-asan_ubsan"
+    flagsToTest:
+      - flags: []
+    versionFlags:
+      flags: ["--version"]
+    crashDetectorClassName: "org.perses.fuzzer.compilers.javascript.JerryScriptCrashDetector"

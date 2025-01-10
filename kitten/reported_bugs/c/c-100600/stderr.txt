@@ -1,0 +1,76 @@
+mutant.c: In function ‘f4’:
+
+mutant.c:35:1: warning: statement with no effect [-Wunused-value]
+
+   35 | for ( 4 ; d2 < b2 ; d2 ++ )
+
+      | ^~~
+
+mutant.c:31:31: warning: unused parameter ‘a2’ [-Wunused-parameter]
+
+   31 | f4 ( long a1 , long b1 , long a2 , long b2 )
+
+      |                          ~~~~~^~
+
+during IPA pass: icf
+
+mutant.c: At top level:
+
+mutant.c:48:1: internal compiler error: in verify_hash_value, at fold-const.c:3929
+
+   48 | }
+
+      | ^
+
+0x6b4fe9 operand_compare::verify_hash_value(tree_node const*, tree_node const*, unsigned int, bool*)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/fold-const.c:3929
+
+0x19e8d35 ipa_icf_gimple::func_checker::operand_equal_p(tree_node const*, tree_node const*, unsigned int)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/ipa-icf-gimple.c:312
+
+0x19e606b ipa_icf_gimple::func_checker::compare_operand(tree_node*, tree_node*, ipa_icf_gimple::func_checker::operand_access_type)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/ipa-icf-gimple.c:397
+
+0x19d642a ipa_icf::sem_function::compare_phi_node(basic_block_def*, basic_block_def*)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/ipa-icf.c:1584
+
+0x19dccf1 ipa_icf::sem_function::equals_private(ipa_icf::sem_item*)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/ipa-icf.c:925
+
+0x19dcdf3 ipa_icf::sem_function::equals_private(ipa_icf::sem_item*)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/ipa-icf.c:836
+
+0x19dcdf3 ipa_icf::sem_function::equals(ipa_icf::sem_item*, hash_map<symtab_node*, ipa_icf::sem_item*, simple_hashmap_traits<default_hash_traits<symtab_node*>, ipa_icf::sem_item*> >&)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/ipa-icf.c:813
+
+0x19d7457 ipa_icf::sem_item_optimizer::subdivide_classes_by_equality(bool)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/ipa-icf.c:2732
+
+0x19e34ac ipa_icf::sem_item_optimizer::execute()
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/ipa-icf.c:2464
+
+0x19e51aa ipa_icf_driver
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/ipa-icf.c:3600
+
+0x19e51aa ipa_icf::pass_ipa_icf::execute(function*)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/ipa-icf.c:3647
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

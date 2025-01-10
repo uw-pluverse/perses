@@ -1,0 +1,4 @@
+internal compiler error: in fold_convert_loc, at fold-const.c
+fold_convert_loc(unsigned int, tree_node*, tree_node*)
+fold_builtin_abs
+fold_builtin_1

@@ -1,0 +1,3332 @@
+error[E0433]: failed to resolve: unresolved import
+
+ --> mutant.rs:4:14
+
+  |
+
+4 | use crate :: os :: raw :: { c_char , c_int , c_long , c_longlong , c_uint , c_ulong , c_ushort } ;
+
+  |              ^^
+
+  |              |
+
+  |              unresolved import
+
+  |              help: a similar path exists: `std::os`
+
+
+
+error[E0432]: unresolved import `crate::ptr`
+
+ --> mutant.rs:5:5
+
+  |
+
+5 | use crate :: ptr ;
+
+  |     ^^^^^^^^^^^^ no `ptr` in the root
+
+
+
+error[E0432]: unresolved import `libc`
+
+ --> mutant.rs:6:5
+
+  |
+
+6 | use libc :: { c_void , size_t , wchar_t } ;
+
+  |     ^^^^ maybe a missing crate `libc`?
+
+
+
+error[E0433]: failed to resolve: use of undeclared crate or module `cfg_if`
+
+   --> mutant.rs:546:1
+
+    |
+
+546 | cfg_if :: cfg_if ! {
+
+    | ^^^^^^ use of undeclared crate or module `cfg_if`
+
+
+
+error[E0433]: failed to resolve: use of undeclared crate or module `cfg_if`
+
+   --> mutant.rs:631:1
+
+    |
+
+631 | cfg_if :: cfg_if ! {
+
+    | ^^^^^^ use of undeclared crate or module `cfg_if`
+
+
+
+error: cannot find macro `compat_fn` in this scope
+
+   --> mutant.rs:920:1
+
+    |
+
+920 | compat_fn ! {
+
+    | ^^^^^^^^^
+
+
+
+error[E0433]: failed to resolve: unresolved import
+
+  --> mutant.rs:52:28
+
+   |
+
+52 | pub type SOCKET = crate :: os :: windows :: raw :: SOCKET ;
+
+   |                            ^^
+
+   |                            |
+
+   |                            unresolved import
+
+   |                            help: a similar path exists: `std::os`
+
+
+
+error[E0433]: failed to resolve: unresolved import
+
+   --> mutant.rs:362:40
+
+    |
+
+362 | pub type LPPROGRESS_ROUTINE = crate :: option :: Option <
+
+    |                                        ^^^^^^
+
+    |                                        |
+
+    |                                        unresolved import
+
+    |                                        help: a similar path exists: `std::option`
+
+
+
+error[E0412]: cannot find type `c_ulong` in this scope
+
+ --> mutant.rs:9:18
+
+  |
+
+9 | pub type DWORD = c_ulong ;
+
+  |                  ^^^^^^^ not found in this scope
+
+  |
+
+help: consider importing this type alias
+
+  |
+
+4 | use std::os::raw::c_ulong;
+
+  |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+  --> mutant.rs:14:17
+
+   |
+
+14 | pub type BOOL = c_int ;
+
+   |                 ^^^^^ not found in this scope
+
+   |
+
+help: consider importing this type alias
+
+   |
+
+4  | use std::os::raw::c_int;
+
+   |
+
+
+
+error[E0412]: cannot find type `c_uint` in this scope
+
+  --> mutant.rs:17:18
+
+   |
+
+17 | pub type GROUP = c_uint ;
+
+   |                  ^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this type alias
+
+   |
+
+4  | use std::os::raw::c_uint;
+
+   |
+
+
+
+error[E0412]: cannot find type `c_longlong` in this scope
+
+  --> mutant.rs:18:26
+
+   |
+
+18 | pub type LARGE_INTEGER = c_longlong ;
+
+   |                          ^^^^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this type alias
+
+   |
+
+4  | use std::os::raw::c_longlong;
+
+   |
+
+
+
+error[E0412]: cannot find type `c_long` in this scope
+
+  --> mutant.rs:19:17
+
+   |
+
+19 | pub type LONG = c_long ;
+
+   |                 ^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this type alias
+
+   |
+
+4  | use std::os::raw::c_long;
+
+   |
+
+
+
+error[E0412]: cannot find type `c_uint` in this scope
+
+  --> mutant.rs:20:17
+
+   |
+
+20 | pub type UINT = c_uint ;
+
+   |                 ^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this type alias
+
+   |
+
+4  | use std::os::raw::c_uint;
+
+   |
+
+
+
+error[E0412]: cannot find type `c_ushort` in this scope
+
+  --> mutant.rs:22:19
+
+   |
+
+22 | pub type USHORT = c_ushort ;
+
+   |                   ^^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this type alias
+
+   |
+
+4  | use std::os::raw::c_ushort;
+
+   |
+
+
+
+error[E0412]: cannot find type `c_char` in this scope
+
+  --> mutant.rs:25:17
+
+   |
+
+25 | pub type CHAR = c_char ;
+
+   |                 ^^^^^^
+
+   |
+
+help: a builtin type with a similar name exists
+
+   |
+
+25 | pub type CHAR = char ;
+
+   |                 ^^^^
+
+help: consider importing this type alias
+
+   |
+
+4  | use std::os::raw::c_char;
+
+   |
+
+
+
+error[E0412]: cannot find type `c_ulong` in this scope
+
+  --> mutant.rs:27:18
+
+   |
+
+27 | pub type ULONG = c_ulong ;
+
+   |                  ^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this type alias
+
+   |
+
+4  | use std::os::raw::c_ulong;
+
+   |
+
+
+
+error[E0412]: cannot find type `c_longlong` in this scope
+
+  --> mutant.rs:50:33
+
+   |
+
+50 | pub type PLARGE_INTEGER = * mut c_longlong ;
+
+   |                                 ^^^^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this type alias
+
+   |
+
+4  | use std::os::raw::c_longlong;
+
+   |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+  --> mutant.rs:53:22
+
+   |
+
+53 | pub type socklen_t = c_int ;
+
+   |                      ^^^^^ not found in this scope
+
+   |
+
+help: consider importing this type alias
+
+   |
+
+4  | use std::os::raw::c_int;
+
+   |
+
+
+
+error[E0412]: cannot find type `c_ulong` in this scope
+
+  --> mutant.rs:86:21
+
+   |
+
+86 | pub const FIONBIO : c_ulong = 0x8004667e ;
+
+   |                     ^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this type alias
+
+   |
+
+4  | use std::os::raw::c_ulong;
+
+   |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:112:23
+
+    |
+
+112 | pub const WSAEACCES : c_int = 10013 ;
+
+    |                       ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:113:23
+
+    |
+
+113 | pub const WSAEINVAL : c_int = 10022 ;
+
+    |                       ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:114:28
+
+    |
+
+114 | pub const WSAEWOULDBLOCK : c_int = 10035 ;
+
+    |                            ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:115:27
+
+    |
+
+115 | pub const WSAEPROTOTYPE : c_int = 10041 ;
+
+    |                           ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:116:27
+
+    |
+
+116 | pub const WSAEADDRINUSE : c_int = 10048 ;
+
+    |                           ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:117:30
+
+    |
+
+117 | pub const WSAEADDRNOTAVAIL : c_int = 10049 ;
+
+    |                              ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:118:29
+
+    |
+
+118 | pub const WSAECONNABORTED : c_int = 10053 ;
+
+    |                             ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:119:27
+
+    |
+
+119 | pub const WSAECONNRESET : c_int = 10054 ;
+
+    |                           ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:120:25
+
+    |
+
+120 | pub const WSAENOTCONN : c_int = 10057 ;
+
+    |                         ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:121:26
+
+    |
+
+121 | pub const WSAESHUTDOWN : c_int = 10058 ;
+
+    |                          ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:122:26
+
+    |
+
+122 | pub const WSAETIMEDOUT : c_int = 10060 ;
+
+    |                          ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:123:29
+
+    |
+
+123 | pub const WSAECONNREFUSED : c_int = 10061 ;
+
+    |                             ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:184:21
+
+    |
+
+184 | pub const AF_INET : c_int = 2 ;
+
+    |                     ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:185:22
+
+    |
+
+185 | pub const AF_INET6 : c_int = 23 ;
+
+    |                      ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:186:21
+
+    |
+
+186 | pub const SD_BOTH : c_int = 2 ;
+
+    |                     ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:187:24
+
+    |
+
+187 | pub const SD_RECEIVE : c_int = 0 ;
+
+    |                        ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:188:21
+
+    |
+
+188 | pub const SD_SEND : c_int = 1 ;
+
+    |                     ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:189:24
+
+    |
+
+189 | pub const SOCK_DGRAM : c_int = 2 ;
+
+    |                        ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:190:25
+
+    |
+
+190 | pub const SOCK_STREAM : c_int = 1 ;
+
+    |                         ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:191:24
+
+    |
+
+191 | pub const SOL_SOCKET : c_int = 0xffff ;
+
+    |                        ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:192:25
+
+    |
+
+192 | pub const SO_RCVTIMEO : c_int = 0x1006 ;
+
+    |                         ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:193:25
+
+    |
+
+193 | pub const SO_SNDTIMEO : c_int = 0x1005 ;
+
+    |                         ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:194:24
+
+    |
+
+194 | pub const IPPROTO_IP : c_int = 0 ;
+
+    |                        ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:195:25
+
+    |
+
+195 | pub const IPPROTO_TCP : c_int = 6 ;
+
+    |                         ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:196:26
+
+    |
+
+196 | pub const IPPROTO_IPV6 : c_int = 41 ;
+
+    |                          ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:197:25
+
+    |
+
+197 | pub const TCP_NODELAY : c_int = 0x0001 ;
+
+    |                         ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:198:20
+
+    |
+
+198 | pub const IP_TTL : c_int = 4 ;
+
+    |                    ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:199:25
+
+    |
+
+199 | pub const IPV6_V6ONLY : c_int = 27 ;
+
+    |                         ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:200:22
+
+    |
+
+200 | pub const SO_ERROR : c_int = 0x1007 ;
+
+    |                      ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:201:26
+
+    |
+
+201 | pub const SO_BROADCAST : c_int = 0x0020 ;
+
+    |                          ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:202:31
+
+    |
+
+202 | pub const IP_MULTICAST_LOOP : c_int = 11 ;
+
+    |                               ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:203:33
+
+    |
+
+203 | pub const IPV6_MULTICAST_LOOP : c_int = 11 ;
+
+    |                                 ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:204:30
+
+    |
+
+204 | pub const IP_MULTICAST_TTL : c_int = 10 ;
+
+    |                              ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:205:31
+
+    |
+
+205 | pub const IP_ADD_MEMBERSHIP : c_int = 12 ;
+
+    |                               ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:206:32
+
+    |
+
+206 | pub const IP_DROP_MEMBERSHIP : c_int = 13 ;
+
+    |                                ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:207:33
+
+    |
+
+207 | pub const IPV6_ADD_MEMBERSHIP : c_int = 12 ;
+
+    |                                 ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:208:34
+
+    |
+
+208 | pub const IPV6_DROP_MEMBERSHIP : c_int = 13 ;
+
+    |                                  ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:209:22
+
+    |
+
+209 | pub const MSG_PEEK : c_int = 0x2 ;
+
+    |                      ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_uint` in this scope
+
+   --> mutant.rs:218:24
+
+    |
+
+218 | pub ipv6mr_interface : c_uint ,
+
+    |                        ^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_uint;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:277:16
+
+    |
+
+277 | pub iVersion : c_int ,
+
+    |                ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:278:22
+
+    |
+
+278 | pub iAddressFamily : c_int ,
+
+    |                      ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:279:20
+
+    |
+
+279 | pub iMaxSockAddr : c_int ,
+
+    |                    ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:280:20
+
+    |
+
+280 | pub iMinSockAddr : c_int ,
+
+    |                    ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:281:19
+
+    |
+
+281 | pub iSocketType : c_int ,
+
+    |                   ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:282:17
+
+    |
+
+282 | pub iProtocol : c_int ,
+
+    |                 ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:283:26
+
+    |
+
+283 | pub iProtocolMaxOffset : c_int ,
+
+    |                          ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:284:25
+
+    |
+
+284 | pub iNetworkByteOrder : c_int ,
+
+    |                         ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:285:23
+
+    |
+
+285 | pub iSecurityScheme : c_int ,
+
+    |                       ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_uint` in this scope
+
+   --> mutant.rs:340:18
+
+    |
+
+340 | pub ReparseTag : c_uint ,
+
+    |                  ^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_uint;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_ushort` in this scope
+
+   --> mutant.rs:341:25
+
+    |
+
+341 | pub ReparseDataLength : c_ushort ,
+
+    |                         ^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_ushort;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_ushort` in this scope
+
+   --> mutant.rs:342:16
+
+    |
+
+342 | pub Reserved : c_ushort ,
+
+    |                ^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_ushort;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_ushort` in this scope
+
+   --> mutant.rs:347:28
+
+    |
+
+347 | pub SubstituteNameOffset : c_ushort ,
+
+    |                            ^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_ushort;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_ushort` in this scope
+
+   --> mutant.rs:348:28
+
+    |
+
+348 | pub SubstituteNameLength : c_ushort ,
+
+    |                            ^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_ushort;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_ushort` in this scope
+
+   --> mutant.rs:349:23
+
+    |
+
+349 | pub PrintNameOffset : c_ushort ,
+
+    |                       ^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_ushort;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_ushort` in this scope
+
+   --> mutant.rs:350:23
+
+    |
+
+350 | pub PrintNameLength : c_ushort ,
+
+    |                       ^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_ushort;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_ulong` in this scope
+
+   --> mutant.rs:351:13
+
+    |
+
+351 | pub Flags : c_ulong ,
+
+    |             ^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_ulong;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_ushort` in this scope
+
+   --> mutant.rs:356:28
+
+    |
+
+356 | pub SubstituteNameOffset : c_ushort ,
+
+    |                            ^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_ushort;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_ushort` in this scope
+
+   --> mutant.rs:357:28
+
+    |
+
+357 | pub SubstituteNameLength : c_ushort ,
+
+    |                            ^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_ushort;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_ushort` in this scope
+
+   --> mutant.rs:358:23
+
+    |
+
+358 | pub PrintNameOffset : c_ushort ,
+
+    |                       ^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_ushort;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_ushort` in this scope
+
+   --> mutant.rs:359:23
+
+    |
+
+359 | pub PrintNameLength : c_ushort ,
+
+    |                       ^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_ushort;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:411:16
+
+    |
+
+411 | pub ChainLen : c_int ,
+
+    |                ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_ulong` in this scope
+
+   --> mutant.rs:461:22
+
+    |
+
+461 | pub Internal : * mut c_ulong ,
+
+    |                      ^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_ulong;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_ulong` in this scope
+
+   --> mutant.rs:462:26
+
+    |
+
+462 | pub InternalHigh : * mut c_ulong ,
+
+    |                          ^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_ulong;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:484:16
+
+    |
+
+484 | pub ai_flags : c_int ,
+
+    |                ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:485:17
+
+    |
+
+485 | pub ai_family : c_int ,
+
+    |                 ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:486:19
+
+    |
+
+486 | pub ai_socktype : c_int ,
+
+    |                   ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:487:19
+
+    |
+
+487 | pub ai_protocol : c_int ,
+
+    |                   ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_char` in this scope
+
+   --> mutant.rs:489:26
+
+    |
+
+489 | pub ai_canonname : * mut c_char ,
+
+    |                          ^^^^^^
+
+    |
+
+help: a builtin type with a similar name exists
+
+    |
+
+489 | pub ai_canonname : * mut char ,
+
+    |                          ^^^^
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_char;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_ulong` in this scope
+
+   --> mutant.rs:506:21
+
+    |
+
+506 | pub sin6_flowinfo : c_ulong ,
+
+    |                     ^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_ulong;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_ulong` in this scope
+
+   --> mutant.rs:508:21
+
+    |
+
+508 | pub sin6_scope_id : c_ulong ,
+
+    |                     ^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_ulong;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_uint` in this scope
+
+   --> mutant.rs:532:16
+
+    |
+
+532 | pub fd_count : c_uint ,
+
+    |                ^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_uint;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_long` in this scope
+
+   --> mutant.rs:543:14
+
+    |
+
+543 | pub tv_sec : c_long ,
+
+    |              ^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_long;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_long` in this scope
+
+   --> mutant.rs:544:15
+
+    |
+
+544 | pub tv_usec : c_long ,
+
+    |               ^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_long;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:653:75
+
+    |
+
+653 | pub fn WSAStartup ( wVersionRequested : WORD , lpWSAData : LPWSADATA ) -> c_int ;
+
+    |                                                                           ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:654:26
+
+    |
+
+654 | pub fn WSACleanup ( ) -> c_int ;
+
+    |                          ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:655:31
+
+    |
+
+655 | pub fn WSAGetLastError ( ) -> c_int ;
+
+    |                               ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:660:6
+
+    |
+
+660 | ) -> c_int ;
+
+    |      ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:669:6
+
+    |
+
+669 | ) -> c_int ;
+
+    |      ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:678:6
+
+    |
+
+678 | ) -> c_int ;
+
+    |      ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:681:6
+
+    |
+
+681 | af : c_int ,
+
+    |      ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:682:8
+
+    |
+
+682 | kind : c_int ,
+
+    |        ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:683:12
+
+    |
+
+683 | protocol : c_int ,
+
+    |            ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_long` in this scope
+
+   --> mutant.rs:688:41
+
+    |
+
+688 | pub fn ioctlsocket ( s : SOCKET , cmd : c_long , argp : * mut c_ulong ) -> c_int ;
+
+    |                                         ^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_long;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_ulong` in this scope
+
+   --> mutant.rs:688:63
+
+    |
+
+688 | pub fn ioctlsocket ( s : SOCKET , cmd : c_long , argp : * mut c_ulong ) -> c_int ;
+
+    |                                                               ^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_ulong;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:688:76
+
+    |
+
+688 | pub fn ioctlsocket ( s : SOCKET , cmd : c_long , argp : * mut c_ulong ) -> c_int ;
+
+    |                                                                            ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_uint` in this scope
+
+   --> mutant.rs:702:34
+
+    |
+
+702 | pub fn ExitProcess ( uExitCode : c_uint ) -> ! ;
+
+    |                                  ^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_uint;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:778:15
+
+    |
+
+778 | cchWideChar : c_int ,
+
+    |               ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:780:15
+
+    |
+
+780 | cbMultiByte : c_int ,
+
+    |               ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:783:6
+
+    |
+
+783 | ) -> c_int ;
+
+    |      ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:784:43
+
+    |
+
+784 | pub fn closesocket ( socket : SOCKET ) -> c_int ;
+
+    |                                           ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:785:60
+
+    |
+
+785 | pub fn recv ( socket : SOCKET , buf : * mut c_void , len : c_int , flags : c_int ) -> c_int ;
+
+    |                                                            ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:785:76
+
+    |
+
+785 | pub fn recv ( socket : SOCKET , buf : * mut c_void , len : c_int , flags : c_int ) -> c_int ;
+
+    |                                                                            ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:785:87
+
+    |
+
+785 | pub fn recv ( socket : SOCKET , buf : * mut c_void , len : c_int , flags : c_int ) -> c_int ;
+
+    |                                                                                       ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:786:62
+
+    |
+
+786 | pub fn send ( socket : SOCKET , buf : * const c_void , len : c_int , flags : c_int ) -> c_int ;
+
+    |                                                              ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:786:78
+
+    |
+
+786 | pub fn send ( socket : SOCKET , buf : * const c_void , len : c_int , flags : c_int ) -> c_int ;
+
+    |                                                                              ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:786:89
+
+    |
+
+786 | pub fn send ( socket : SOCKET , buf : * const c_void , len : c_int , flags : c_int ) -> c_int ;
+
+    |                                                                                         ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:790:7
+
+    |
+
+790 | len : c_int ,
+
+    |       ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:791:9
+
+    |
+
+791 | flags : c_int ,
+
+    |         ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:793:17
+
+    |
+
+793 | addrlen : * mut c_int ,
+
+    |                 ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:794:6
+
+    |
+
+794 | ) -> c_int ;
+
+    |      ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:798:7
+
+    |
+
+798 | len : c_int ,
+
+    |       ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:799:9
+
+    |
+
+799 | flags : c_int ,
+
+    |         ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:801:11
+
+    |
+
+801 | addrlen : c_int ,
+
+    |           ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:802:6
+
+    |
+
+802 | ) -> c_int ;
+
+    |      ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:803:43
+
+    |
+
+803 | pub fn shutdown ( socket : SOCKET , how : c_int ) -> c_int ;
+
+    |                                           ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:803:54
+
+    |
+
+803 | pub fn shutdown ( socket : SOCKET , how : c_int ) -> c_int ;
+
+    |                                                      ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:804:82
+
+    |
+
+804 | pub fn accept ( socket : SOCKET , address : * mut SOCKADDR , address_len : * mut c_int ) -> SOCKET ;
+
+    |                                                                                  ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:852:9
+
+    |
+
+852 | level : c_int ,
+
+    |         ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:853:11
+
+    |
+
+853 | optname : c_int ,
+
+    |           ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_char` in this scope
+
+   --> mutant.rs:854:16
+
+    |
+
+854 | optval : * mut c_char ,
+
+    |                ^^^^^^
+
+    |
+
+help: a builtin type with a similar name exists
+
+    |
+
+854 | optval : * mut char ,
+
+    |                ^^^^
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_char;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:855:16
+
+    |
+
+855 | optlen : * mut c_int ,
+
+    |                ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:856:6
+
+    |
+
+856 | ) -> c_int ;
+
+    |      ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:859:9
+
+    |
+
+859 | level : c_int ,
+
+    |         ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:860:11
+
+    |
+
+860 | optname : c_int ,
+
+    |           ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:862:10
+
+    |
+
+862 | optlen : c_int ,
+
+    |          ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:863:6
+
+    |
+
+863 | ) -> c_int ;
+
+    |      ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:864:87
+
+    |
+
+864 | pub fn getsockname ( socket : SOCKET , address : * mut SOCKADDR , address_len : * mut c_int ) -> c_int ;
+
+    |                                                                                       ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:864:98
+
+    |
+
+864 | pub fn getsockname ( socket : SOCKET , address : * mut SOCKADDR , address_len : * mut c_int ) -> c_int ;
+
+    |                                                                                                  ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:865:87
+
+    |
+
+865 | pub fn getpeername ( socket : SOCKET , address : * mut SOCKADDR , address_len : * mut c_int ) -> c_int ;
+
+    |                                                                                       ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:865:98
+
+    |
+
+865 | pub fn getpeername ( socket : SOCKET , address : * mut SOCKADDR , address_len : * mut c_int ) -> c_int ;
+
+    |                                                                                                  ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:866:91
+
+    |
+
+866 | pub fn bind ( socket : SOCKET , address : * const SOCKADDR , address_len : socklen_t ) -> c_int ;
+
+    |                                                                                           ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:867:45
+
+    |
+
+867 | pub fn listen ( socket : SOCKET , backlog : c_int ) -> c_int ;
+
+    |                                             ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:867:56
+
+    |
+
+867 | pub fn listen ( socket : SOCKET , backlog : c_int ) -> c_int ;
+
+    |                                                        ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:868:71
+
+    |
+
+868 | pub fn connect ( socket : SOCKET , address : * const SOCKADDR , len : c_int ) -> c_int ;
+
+    |                                                                       ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:868:82
+
+    |
+
+868 | pub fn connect ( socket : SOCKET , address : * const SOCKADDR , len : c_int ) -> c_int ;
+
+    |                                                                                  ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_char` in this scope
+
+   --> mutant.rs:870:16
+
+    |
+
+870 | node : * const c_char ,
+
+    |                ^^^^^^
+
+    |
+
+help: a builtin type with a similar name exists
+
+    |
+
+870 | node : * const char ,
+
+    |                ^^^^
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_char;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_char` in this scope
+
+   --> mutant.rs:871:19
+
+    |
+
+871 | service : * const c_char ,
+
+    |                   ^^^^^^
+
+    |
+
+help: a builtin type with a similar name exists
+
+    |
+
+871 | service : * const char ,
+
+    |                   ^^^^
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_char;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:874:6
+
+    |
+
+874 | ) -> c_int ;
+
+    |      ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:909:8
+
+    |
+
+909 | nfds : c_int ,
+
+    |        ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0412]: cannot find type `c_int` in this scope
+
+   --> mutant.rs:914:6
+
+    |
+
+914 | ) -> c_int ;
+
+    |      ^^^^^ not found in this scope
+
+    |
+
+help: consider importing this type alias
+
+    |
+
+4   | use std::os::raw::c_int;
+
+    |
+
+
+
+error[E0734]: stability attributes may not be used outside of the standard library
+
+ --> mutant.rs:3:1
+
+  |
+
+3 | # ! [ unstable ( issue = "none" , feature = "windows_c" ) ]
+
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+thread 'rustc' panicked at 'bad input type for cast', compiler/rustc_mir/src/transform/check_consts/validation.rs:665:59
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.52.0-nightly (4a8b6f708 2021-03-11) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [mir_const_qualif] const checking `WSAPROTOCOLCHAIN::ChainEntries::{constant#0}`
+
+#1 [eval_to_allocation_raw] const-evaluating + checking `WSAPROTOCOLCHAIN::ChainEntries::{constant#0}`
+
+end of query stack
+
+error: aborting due to 151 previous errors
+
+
+
+Some errors have detailed explanations: E0412, E0432, E0433, E0734.
+
+For more information about an error, try `rustc --explain E0412`.
+

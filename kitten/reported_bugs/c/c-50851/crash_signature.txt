@@ -1,0 +1,3 @@
+virtual llvm::StackOffset llvm::X86FrameLowering::getFrameIndexReference(const llvm::MachineFunction&, int, llvm::Register&) const: Assertion `isAligned(MFI.getObjectAlign(FI), -(Offset + StackSize))' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

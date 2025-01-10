@@ -1,0 +1,5 @@
+thread '<unnamed>' panicked at 'assertion failed: `(left == right)`
+left: `LLVMing`
+right: `Codegenning`'
+error: internal compiler error: unexpected panic
+note: the compiler unexpectedly panicked. this is a bug.

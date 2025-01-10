@@ -1,0 +1,180 @@
+In file included from mutant.c:1:
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/arm_neon.h:28:2: error: "NEON intrinsics not available with the soft-float ABI. Please use -mfloat-abi=softfp or -mfloat-abi=hard"
+
+#error "NEON intrinsics not available with the soft-float ABI. Please use -mfloat-abi=softfp or -mfloat-abi=hard"
+
+ ^
+
+mutant.c:3:1: error: function return value cannot have __fp16 type; did you forget * ?
+
+func2 ( __fp16 a , __fp16 b )
+
+^
+
+mutant.c:3:16: error: parameters cannot have __fp16 type; did you forget * ?
+
+func2 ( __fp16 a , __fp16 b )
+
+               ^
+
+mutant.c:3:27: error: parameters cannot have __fp16 type; did you forget * ?
+
+func2 ( __fp16 a , __fp16 b )
+
+                          ^
+
+mutant.c:12:45: warning: implicit declaration of function 'foo' is invalid in C99 [-Wimplicit-function-declaration]
+
+for ( i = 0 ; i < sizeof ( array ) / sizeof foo ( x + 0x1234560UL ) ; i ++ )
+
+                                            ^
+
+mutant.c:12:36: warning: expression does not compute the number of elements in this array; element type is '__fp16', not 'int' [-Wsizeof-array-div]
+
+for ( i = 0 ; i < sizeof ( array ) / sizeof foo ( x + 0x1234560UL ) ; i ++ )
+
+                           ~~~~~   ^
+
+mutant.c:10:8: note: array 'array' declared here
+
+__fp16 array [ 16 ] ;
+
+       ^
+
+Cannot print TypoExpr nodes
+
+UNREACHABLE executed at /tmp/tmp.8XILhl7k2v-clang-builder/llvm-project/clang/lib/AST/StmtPrinter.cpp:2537!
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:12:69: current parser token ';'
+
+2.	mutant.c:9:1: parsing function body 'main'
+
+3.	mutant.c:9:1: in compound statement ('{}')
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x39dab34)[0x557713aeeb34]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x557713aec954]
+
+clang-trunk(+0x391f738)[0x557713a33738]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f12334713c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f1232f1018b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f1232eef859]
+
+clang-trunk(+0x392701e)[0x557713a3b01e]
+
+clang-trunk(+0x6c933a9)[0x557716da73a9]
+
+clang-trunk(+0x6c9a0c3)[0x557716dae0c3]
+
+clang-trunk(+0x6c91a34)[0x557716da5a34]
+
+clang-trunk(+0x6c9b5e8)[0x557716daf5e8]
+
+clang-trunk(+0x6c9b7b8)[0x557716daf7b8]
+
+clang-trunk(+0x6c92026)[0x557716da6026]
+
+clang-trunk(+0x6c9f74c)[0x557716db374c]
+
+clang-trunk(+0x6c92bc6)[0x557716da6bc6]
+
+clang-trunk(_ZNK5clang4Stmt11printPrettyERN4llvm11raw_ostreamEPNS_13PrinterHelperERKNS_14PrintingPolicyEjNS1_9StringRefEPKNS_10ASTContextE+0x7b)[0x557716da799b]
+
+clang-trunk(+0x6cac169)[0x557716dc0169]
+
+clang-trunk(+0x5e68534)[0x557715f7c534]
+
+clang-trunk(+0x6066cc7)[0x55771617acc7]
+
+clang-trunk(_ZN5clang4Sema27CheckMultiplyDivideOperandsERNS_12ActionResultIPNS_4ExprELb1EEES5_NS_14SourceLocationEbb+0x21e)[0x5577161c1dce]
+
+clang-trunk(_ZN5clang4Sema18CreateBuiltinBinOpENS_14SourceLocationENS_18BinaryOperatorKindEPNS_4ExprES4_+0xb2f)[0x5577161ca78f]
+
+clang-trunk(_ZN5clang4Sema10BuildBinOpEPNS_5ScopeENS_14SourceLocationENS_18BinaryOperatorKindEPNS_4ExprES6_+0x564)[0x5577161cb5b4]
+
+clang-trunk(_ZN5clang4Sema10ActOnBinOpEPNS_5ScopeENS_14SourceLocationENS_3tok9TokenKindEPNS_4ExprES7_+0x91)[0x5577161cba51]
+
+clang-trunk(_ZN5clang6Parser26ParseRHSOfBinaryExpressionENS_12ActionResultIPNS_4ExprELb1EEENS_4prec5LevelE+0x77f)[0x557715d8537f]
+
+clang-trunk(_ZN5clang6Parser26ParseRHSOfBinaryExpressionENS_12ActionResultIPNS_4ExprELb1EEENS_4prec5LevelE+0x6a4)[0x557715d852a4]
+
+clang-trunk(_ZN5clang6Parser15ParseExpressionENS0_13TypeCastStateE+0xd)[0x557715d873dd]
+
+clang-trunk(_ZN5clang6Parser17ParseForStatementEPNS_14SourceLocationE+0x12df)[0x557715deb6ff]
+
+clang-trunk(_ZN5clang6Parser42ParseStatementOrDeclarationAfterAttributesERN4llvm11SmallVectorIPNS_4StmtELj32EEENS0_17ParsedStmtContextEPNS_14SourceLocationERNS_25ParsedAttributesWithRangeE+0x4da)[0x557715de5eaa]
+
+clang-trunk(_ZN5clang6Parser27ParseStatementOrDeclarationERN4llvm11SmallVectorIPNS_4StmtELj32EEENS0_17ParsedStmtContextEPNS_14SourceLocationE+0x9a)[0x557715de6cba]
+
+clang-trunk(_ZN5clang6Parser26ParseCompoundStatementBodyEb+0x5f9)[0x557715de7c39]
+
+clang-trunk(_ZN5clang6Parser26ParseFunctionStatementBodyEPNS_4DeclERNS0_10ParseScopeE+0xda)[0x557715dea1ea]
+
+clang-trunk(_ZN5clang6Parser23ParseFunctionDefinitionERNS_17ParsingDeclaratorERKNS0_18ParsedTemplateInfoEPNS0_18LateParsedAttrListE+0x692)[0x557715d300a2]
+
+clang-trunk(_ZN5clang6Parser14ParseDeclGroupERNS_15ParsingDeclSpecENS_17DeclaratorContextEPNS_14SourceLocationEPNS0_12ForRangeInitE+0x740)[0x557715d5ca20]
+
+clang-trunk(_ZN5clang6Parser30ParseDeclOrFunctionDefInternalERNS_25ParsedAttributesWithRangeERNS_15ParsingDeclSpecENS_15AccessSpecifierE+0x226)[0x557715d2a886]
+
+clang-trunk(+0x5c16e71)[0x557715d2ae71]
+
+clang-trunk(_ZN5clang6Parser24ParseExternalDeclarationERNS_25ParsedAttributesWithRangeEPNS_15ParsingDeclSpecE+0x217)[0x557715d31697]
+
+clang-trunk(_ZN5clang6Parser17ParseTopLevelDeclERNS_9OpaquePtrINS_12DeclGroupRefEEEb+0x1ce)[0x557715d32c2e]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x219)[0x557715d25459]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x557714c68848]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55771450a059]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55771449d066]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x5577145e7ee0]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x5577113a3516]
+
+clang-trunk(+0x128b858)[0x55771139f858]
+
+clang-trunk(+0x4219949)[0x55771432d949]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x557713a338bc]
+
+clang-trunk(+0x421a0ed)[0x55771432e0ed]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55771430086b]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x557714301389]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x55771430bf49]
+
+clang-trunk(main+0x18af)[0x5577112ce62f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f1232ef10b3]
+
+clang-trunk(_start+0x2e)[0x55771139f3ce]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 189c55251849076e17ddab590c1302f4af0e60f8)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: Error generating preprocessed source(s).
+

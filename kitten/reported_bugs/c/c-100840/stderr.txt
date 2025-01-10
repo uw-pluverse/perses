@@ -1,0 +1,80 @@
+mutant.c: In function ‘main’:
+
+mutant.c:9:1: warning: implicit declaration of function ‘assert’ [-Wimplicit-function-declaration]
+
+    9 | assert ( res == 42. ) ;
+
+      | ^~~~~~
+
+mutant.c:1:1: note: ‘assert’ is defined in header ‘<assert.h>’; did you forget to ‘#include <assert.h>’?
+
+  +++ |+#include <assert.h>
+
+    1 | int
+
+mutant.c:5:1: error: output constraint 0 must specify a single register
+
+    5 | asm ( "lxr\t%0,%1\n"
+
+      | ^~~
+
+during RTL pass: stack
+
+mutant.c:10:1: internal compiler error: in replace_reg, at reg-stack.c:714
+
+   10 | }
+
+      | ^
+
+0x72f5c6 replace_reg
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/reg-stack.c:714
+
+0x72f5c6 replace_reg
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/reg-stack.c:712
+
+0xe6b272 compare_for_stack_reg
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/reg-stack.c:1379
+
+0xe6b272 subst_stack_regs_pat
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/reg-stack.c:1998
+
+0xe6bb0a subst_stack_regs
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/reg-stack.c:2441
+
+0xe6c4ec convert_regs_1
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/reg-stack.c:3077
+
+0xe6c4ec convert_regs_2
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/reg-stack.c:3211
+
+0xe6d160 convert_regs
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/reg-stack.c:3246
+
+0xe6d160 reg_to_stack
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/reg-stack.c:3371
+
+0xe6d160 rest_of_handle_stack_regs
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/reg-stack.c:3426
+
+0xe6d160 execute
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/reg-stack.c:3458
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

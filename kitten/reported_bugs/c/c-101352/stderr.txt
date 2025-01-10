@@ -1,0 +1,48 @@
+mutant.c: In function ‘g’:
+
+mutant.c:6:5: warning: unused parameter ‘i’ [-Wunused-parameter]
+
+    6 | int i __attribute__ ( ( __vector_size__ ( 16 ) ) ) ;
+
+      |     ^
+
+during RTL pass: expand
+
+mutant.c:5:5: internal compiler error: in convert_move, at expr.c:279
+
+    5 | int g ( i )
+
+      |     ^
+
+0x6bf71f convert_move(rtx_def*, rtx_def*, int)
+
+	/tmp/tmp.azYviButln-gcc-builder/gcc/gcc/expr.c:279
+
+0xb83995 convert_modes(machine_mode, machine_mode, rtx_def*, int)
+
+	/tmp/tmp.azYviButln-gcc-builder/gcc/gcc/expr.c:738
+
+0xbe800c assign_parm_setup_reg
+
+	/tmp/tmp.azYviButln-gcc-builder/gcc/gcc/function.c:3294
+
+0xbea431 assign_parms
+
+	/tmp/tmp.azYviButln-gcc-builder/gcc/gcc/function.c:3699
+
+0xbecaa2 expand_function_start(tree_node*)
+
+	/tmp/tmp.azYviButln-gcc-builder/gcc/gcc/function.c:5155
+
+0xa5efd5 execute
+
+	/tmp/tmp.azYviButln-gcc-builder/gcc/gcc/cfgexpand.c:6693
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

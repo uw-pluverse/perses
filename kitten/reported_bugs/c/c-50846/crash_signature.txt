@@ -1,0 +1,3 @@
+llvm::APInt llvm::APInt::operator*(const llvm::APInt&) const: Assertion `BitWidth == RHS.BitWidth && "Bit widths must be the same"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

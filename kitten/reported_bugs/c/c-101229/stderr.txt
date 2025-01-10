@@ -1,0 +1,50 @@
+during GIMPLE pass: vect
+
+mutant.c: In function ‘foo’:
+
+mutant.c:2:6: internal compiler error: in vect_get_vec_defs_for_operand, at tree-vect-stmts.c:1450
+
+    2 | void foo ( void )
+
+      |      ^~~
+
+0x7b93d3 vect_get_vec_defs_for_operand(vec_info*, _stmt_vec_info*, unsigned int, tree_node*, vec<tree_node*, va_heap, vl_ptr>*, tree_node*)
+
+	/tmp/tmp.CuW17uqJjv-gcc-builder/gcc/gcc/tree-vect-stmts.c:1450
+
+0x1187583 vect_get_vec_defs(vec_info*, _stmt_vec_info*, _slp_tree*, unsigned int, tree_node*, vec<tree_node*, va_heap, vl_ptr>*, tree_node*, tree_node*, vec<tree_node*, va_heap, vl_ptr>*, tree_node*, tree_node*, vec<tree_node*, va_heap, vl_ptr>*, tree_node*, tree_node*, vec<tree_node*, va_heap, vl_ptr>*, tree_node*)
+
+	/tmp/tmp.CuW17uqJjv-gcc-builder/gcc/gcc/tree-vect-stmts.c:1482
+
+0x118766c vect_get_vec_defs(vec_info*, _stmt_vec_info*, _slp_tree*, unsigned int, tree_node*, vec<tree_node*, va_heap, vl_ptr>*, tree_node*, vec<tree_node*, va_heap, vl_ptr>*, tree_node*, vec<tree_node*, va_heap, vl_ptr>*, tree_node*, vec<tree_node*, va_heap, vl_ptr>*)
+
+	/tmp/tmp.CuW17uqJjv-gcc-builder/gcc/gcc/tree-vect-stmts.c:1504
+
+0x11adcf4 vectorizable_lc_phi(_loop_vec_info*, _stmt_vec_info*, gimple**, _slp_tree*)
+
+	/tmp/tmp.CuW17uqJjv-gcc-builder/gcc/gcc/tree-vect-loop.c:7732
+
+0x11a337d vect_transform_stmt(vec_info*, _stmt_vec_info*, gimple_stmt_iterator*, _slp_tree*, _slp_instance*)
+
+	/tmp/tmp.CuW17uqJjv-gcc-builder/gcc/gcc/tree-vect-stmts.c:10979
+
+0x11c2f30 vect_transform_loop(_loop_vec_info*, gimple*)
+
+	/tmp/tmp.CuW17uqJjv-gcc-builder/gcc/gcc/tree-vect-loop.c:9584
+
+0x11f5bcc try_vectorize_loop_1
+
+	/tmp/tmp.CuW17uqJjv-gcc-builder/gcc/gcc/tree-vectorizer.c:1099
+
+0x11f6881 vectorize_loops()
+
+	/tmp/tmp.CuW17uqJjv-gcc-builder/gcc/gcc/tree-vectorizer.c:1238
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

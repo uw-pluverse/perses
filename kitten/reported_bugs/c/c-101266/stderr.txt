@@ -1,0 +1,94 @@
+mutant.c:39:1: internal compiler error: in loc_list_from_tree_1, at dwarf2out.c:19421
+
+   39 | fn8 ( U ( * * p ) [ ( int ) { 1 } ] )
+
+      | ^~~
+
+0x6b1ad0 loc_list_from_tree_1
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/dwarf2out.c:19421
+
+0xb2236d loc_list_from_tree_1
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/dwarf2out.c:18927
+
+0xb2236d loc_list_from_tree_1
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/dwarf2out.c:18927
+
+0xb22dd8 loc_list_from_tree_1
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/dwarf2out.c:19245
+
+0xb25ddb loc_list_from_tree
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/dwarf2out.c:19518
+
+0xb31865 add_scalar_info
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/dwarf2out.c:21265
+
+0xb32a8e add_subscript_info
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/dwarf2out.c:21507
+
+0xb1d677 gen_array_type_die
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/dwarf2out.c:22378
+
+0xb1d677 gen_type_die_with_usage
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/dwarf2out.c:26125
+
+0xb1ec96 gen_type_die
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/dwarf2out.c:26187
+
+0xb37f2e gen_decl_die
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/dwarf2out.c:26826
+
+0xb39156 dwarf2out_decl
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/dwarf2out.c:27381
+
+0xb39320 dwarf2out_type_decl
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/dwarf2out.c:27099
+
+0xb39320 dwarf2out_type_decl
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/dwarf2out.c:27094
+
+0xe30a3a rest_of_decl_compilation(tree_node*, int, int)
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/passes.c:251
+
+0x8f2b67 finish_decl(tree_node*, unsigned int, tree_node*, tree_node*, tree_node*)
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/c/c-decl.c:5606
+
+0x8f67ee grokdeclarator
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/c/c-decl.c:7171
+
+0x8fa6d3 push_parm_decl(c_parm const*, tree_node**)
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/c/c-decl.c:5896
+
+0x942f39 c_parser_parms_list_declarator
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/c/c-parser.c:4291
+
+0x9432ac c_parser_parms_declarator
+
+	/tmp/tmp.u7J6IXvOcg-gcc-builder/gcc/gcc/c/c-parser.c:4217
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

@@ -1,0 +1,4 @@
+Exception in thread "main" java.lang.AssertionError: assertion failed: invalid prefix HKTypeLambda(List(T), List(TypeBounds(TypeRef(ThisType(TypeRef(NoPrefix,module class scala)),class Nothing),TypeRef(ThisType(TypeRef(NoPrefix,module class scala)),class Any))), AppliedType(TypeRef(TermRef(ThisType(TypeRef(NoPrefix,module class <root>)),object scala),class Array),List(TypeParamRef(T))))
+at scala.runtime.Scala3RunTime$.assertFailed
+at dotty.tools.dotc.core.Types$NamedType.<init>
+at dotty.tools.dotc.core.Types$TypeRef.<init>

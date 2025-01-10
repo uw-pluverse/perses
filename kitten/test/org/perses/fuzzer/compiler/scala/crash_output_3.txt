@@ -1,0 +1,59 @@
+^[[31m-- [E161] Naming Error: mutant.scala:8:0 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------^[[0m
+
+^[[31m8 |^[[0m^[[33mimplicit^[[0m ^[[33mobject^[[0m ^[[35mTest^[[0m ^[[33mextends^[[0m ^[[35mApp^[[0m {
+
+  |^[[31m^^[[0m
+
+  |Test is already defined as ^[[33mobject^[[0m ^[[35mTest^[[0m in mutant.scala
+
+exception occurred while typechecking mutant.scala
+
+exception occurred while compiling mutant.scala
+
+Exception in thread "main" java.lang.AssertionError: assertion failed: no companion Test$ in dotty.tools.dotc.core.Scopes$MutableScope@41522537
+
+        at scala.runtime.Scala3RunTime$.assertFailed(Scala3RunTime.scala:8)
+
+        at dotty.tools.dotc.core.Decorators$.assertingErrorsReported(Decorators.scala:252)
+
+        at dotty.tools.dotc.core.NamerOps$.findModuleBuddy(NamerOps.scala:67)
+
+        at dotty.tools.dotc.core.NamerOps$.adjustModuleCompleter$$anonfun$1(NamerOps.scala:59)
+
+        at dotty.tools.dotc.core.SymDenotations$LazyType.withModuleClass$$anonfun$1(SymDenotations.scala:2579)
+
+        at dotty.tools.dotc.core.SymDenotations$LazyType.moduleClass(SymDenotations.scala:2574)
+
+        at dotty.tools.dotc.core.SymDenotations$SymDenotation.moduleClass(SymDenotations.scala:1004)
+
+        at dotty.tools.dotc.core.SymDenotations$SymDenotation.isAbsent(SymDenotations.scala:577)
+
+        at dotty.tools.dotc.core.SymDenotations$SymDenotation.isAccessibleFrom(SymDenotations.scala:870)
+
+        at dotty.tools.dotc.typer.Implicits$ContextualImplicits.isAccessible(Implicits.scala:368)
+
+        at dotty.tools.dotc.typer.Implicits$ImplicitRefs.candidateKind$1(Implicits.scala:220)
+
+        at dotty.tools.dotc.typer.Implicits$ImplicitRefs.tryCandidate$1(Implicits.scala:255)
+
+        at dotty.tools.dotc.typer.Implicits$ImplicitRefs.filterMatching$$anonfun$2(Implicits.scala:264)
+
+        at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+        at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+        at scala.collection.immutable.List.foreach(List.scala:333)
+
+        at dotty.tools.dotc.typer.Implicits$ImplicitRefs.filterMatching(Implicits.scala:264)
+
+        at dotty.tools.dotc.typer.Implicits$ContextualImplicits.computeEligible(Implicits.scala:356)
+
+        at dotty.tools.dotc.typer.Implicits$ContextualImplicits.eligible(Implicits.scala:348)
+
+        at dotty.tools.dotc.typer.Implicits$ImplicitSearch.searchImplicit(Implicits.scala:1303)
+
+        at dotty.tools.dotc.typer.Implicits$ImplicitSearch.bestImplicit(Implicits.scala:1338)
+
+        at dotty.tools.dotc.typer.Implicits.inferImplicit(Implicits.scala:974)
+
+        at dotty.tools.dotc.typer.Implicits.inferImplicit$(Implicits.scala:769)

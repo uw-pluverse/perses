@@ -1,0 +1,56 @@
+error[E0277]: `u32` is not a future
+
+ --> mutant.rs:1:30
+
+  |
+
+1 | fn test_ref ( x : & u32 ) -> impl std :: future :: Future < Output = u32 > + '_ {
+
+  |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u32` is not a future
+
+  |
+
+  = help: the trait `Future` is not implemented for `u32`
+
+
+
+thread 'rustc' panicked at 'assertion failed: !value.has_escaping_bound_vars()', compiler/rustc_middle/src/ty/sty.rs:968:9
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.55.0-nightly (67b03007c 2021-07-23) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [typeck] type-checking `u`
+
+#1 [typeck_item_bodies] type-checking all item bodies
+
+end of query stack
+
+error: aborting due to previous error
+
+
+
+For more information about this error, try `rustc --explain E0277`.
+

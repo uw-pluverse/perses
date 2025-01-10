@@ -1,0 +1,3 @@
+fatal error: error in backend: Cannot select: intrinsic %llvm.preserve.array.access.index
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

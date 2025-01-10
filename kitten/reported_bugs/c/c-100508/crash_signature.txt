@@ -1,0 +1,3 @@
+internal compiler error: in expand_debug_locations, at cfgexpand.c
+expand_debug_locations
+execute

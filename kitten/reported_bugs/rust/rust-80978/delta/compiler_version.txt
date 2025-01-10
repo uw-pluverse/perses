@@ -1,0 +1,12 @@
+rustc 1.51.0-nightly (7a9b552cb 2021-01-12)
+
+binary: rustc
+
+commit-hash: 7a9b552cb1621c9c57898d147228aab32b65a7c3
+
+commit-date: 2021-01-12
+
+host: x86_64-unknown-linux-gnu
+
+release: 1.51.0-nightly
+

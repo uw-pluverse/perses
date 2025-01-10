@@ -1,0 +1,3 @@
+void getCopyToParts(llvm::SelectionDAG&, const llvm::SDLoc&, llvm::SDValue, llvm::SDValue*, unsigned int, llvm::MVT, const llvm::Value*, llvm::Optional<unsigned int>, llvm::ISD::NodeType): Assertion `DAG.getTargetLoweringInfo().isTypeLegal(PartVT) && "Copying to an illegal type!"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

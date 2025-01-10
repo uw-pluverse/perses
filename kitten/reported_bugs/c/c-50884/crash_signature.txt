@@ -1,0 +1,3 @@
+bool EvaluateAsBooleanCondition(const clang::Expr*, bool&, {anonymous}::EvalInfo&): Assertion `E->isPRValue() && "missing lvalue-to-rvalue conv in bool condition"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

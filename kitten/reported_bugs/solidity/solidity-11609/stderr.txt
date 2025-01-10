@@ -1,0 +1,10 @@
+Internal compiler error during compilation:
+
+/solidity/libsolidity/ast/Types.cpp(1683): Throw in function virtual unsigned int solidity::frontend::ArrayType::calldataEncodedSize(bool) const
+
+Dynamic exception type: boost::wrapexcept<solidity::langutil::InternalCompilerError>
+
+std::exception::what: Array size does not fit unsigned.
+
+[solidity::util::tag_comment*] = Array size does not fit unsigned.
+

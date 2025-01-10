@@ -1,0 +1,54 @@
+mutant.c: In function ‘f’:
+
+mutant.c:4:8: warning: ‘return’ with a value, in function returning void [-Wreturn-type]
+
+    4 | return __builtin_ia32_shufpd ( x , y , 1 ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c:1:73: note: declared here
+
+    1 | typedef double v2df __attribute__ ( ( __vector_size__ ( 16 ) ) ) ; void f ( double d , double e ) {
+
+      |                                                                         ^
+
+during GIMPLE pass: lower
+
+mutant.c:1:73: internal compiler error: Segmentation fault
+
+0xf006e3 crash_signal
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/toplev.c:327
+
+0xf3bdc2 contains_struct_check(tree_node*, tree_node_structure_enum, char const*, int, char const*)
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/tree.h:3479
+
+0xf3bdc2 verify_gimple_assign_ternary
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/tree-cfg.c:4180
+
+0xf3e977 verify_gimple_in_seq_2
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/tree-cfg.c:5121
+
+0xf412c5 verify_gimple_in_seq(gimple*)
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/tree-cfg.c:5160
+
+0xe11540 execute_function_todo
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/passes.c:2044
+
+0xe121fe execute_todo
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/passes.c:2096
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

@@ -1,0 +1,12 @@
+language: "ruby"
+seedFolders:
+  - path: "kitten/test_data/ruby/ruby"
+    fileExtentions: ["rb"]
+
+programsUnderTest:
+  - command: "ruby-trunk"
+    flagsToTest:
+      - flags: ["-d"]
+    versionFlags:
+      flags: ["--version"]
+    crashDetectorClassName: "org.perses.fuzzer.compilers.ruby.RubyCrashDetector"

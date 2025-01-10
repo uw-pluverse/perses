@@ -1,0 +1,4 @@
+internal compiler error: in default_conversion, at c/c-typeck.c
+default_conversion(tree_node*)
+get_priority
+handle_constructor_attribute

@@ -1,0 +1,630 @@
+mutant.c:1:47: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+int __attribute__ ( ( target ( "sse4.2" ) ) ) foo ( void ) { return 0 ; }
+
+                                              ^
+
+mutant.c:1:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int __attribute__ ( ( target ( "sse4.2" ) ) ) foo ( void ) { return 0 ; }
+
+^
+
+static 
+
+mutant.c:3:55: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+int __attribute__ ( ( target ( "arch=ivybridge" ) ) ) foo ( void ) { return 1 ; }
+
+                                                      ^
+
+mutant.c:3:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int __attribute__ ( ( target ( "arch=ivybridge" ) ) ) foo ( void ) { return 1 ; }
+
+^
+
+static 
+
+mutant.c:4:54: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+int __attribute__ ( ( target ( "arch=goldmont" ) ) ) foo ( void ) { return 3 ; }
+
+                                                     ^
+
+mutant.c:4:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int __attribute__ ( ( target ( "arch=goldmont" ) ) ) foo ( void ) { return 3 ; }
+
+^
+
+static 
+
+mutant.c:5:59: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+int __attribute__ ( ( target ( "arch=goldmont-plus" ) ) ) foo ( void ) { return 4 ; }
+
+                                                          ^
+
+mutant.c:5:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int __attribute__ ( ( target ( "arch=goldmont-plus" ) ) ) foo ( void ) { return 4 ; }
+
+^
+
+static 
+
+mutant.c:6:53: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+int __attribute__ ( ( target ( "arch=tremont" ) ) ) foo ( void ) { return 5 ; }
+
+                                                    ^
+
+mutant.c:6:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int __attribute__ ( ( target ( "arch=tremont" ) ) ) foo ( void ) { return 5 ; }
+
+^
+
+static 
+
+mutant.c:7:60: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+int __attribute__ ( ( target ( "arch=icelake-client" ) ) ) foo ( void ) { return 6 ; }
+
+                                                           ^
+
+mutant.c:7:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int __attribute__ ( ( target ( "arch=icelake-client" ) ) ) foo ( void ) { return 6 ; }
+
+^
+
+static 
+
+mutant.c:8:60: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+int __attribute__ ( ( target ( "arch=icelake-server" ) ) ) foo ( void ) { return 7 ; }
+
+                                                           ^
+
+mutant.c:8:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int __attribute__ ( ( target ( "arch=icelake-server" ) ) ) foo ( void ) { return 7 ; }
+
+^
+
+static 
+
+mutant.c:9:56: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+int __attribute__ ( ( target ( "arch=cooperlake" ) ) ) foo ( void ) { return 8 ; }
+
+                                                       ^
+
+mutant.c:9:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int __attribute__ ( ( target ( "arch=cooperlake" ) ) ) foo ( void ) { return 8 ; }
+
+^
+
+static 
+
+mutant.c:10:55: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+int __attribute__ ( ( target ( "arch=tigerlake" ) ) ) foo ( void ) { return 9 ; }
+
+                                                      ^
+
+mutant.c:10:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int __attribute__ ( ( target ( "arch=tigerlake" ) ) ) foo ( void ) { return 9 ; }
+
+^
+
+static 
+
+mutant.c:11:60: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+int __attribute__ ( ( target ( "arch=sapphirerapids" ) ) ) foo ( void ) { return 10 ; }
+
+                                                           ^
+
+mutant.c:11:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int __attribute__ ( ( target ( "arch=sapphirerapids" ) ) ) foo ( void ) { return 10 ; }
+
+^
+
+static 
+
+mutant.c:12:55: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+int __attribute__ ( ( target ( "arch=alderlake" ) ) ) foo ( void ) { return 11 ; }
+
+                                                      ^
+
+mutant.c:12:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int __attribute__ ( ( target ( "arch=alderlake" ) ) ) foo ( void ) { return 11 ; }
+
+^
+
+static 
+
+mutant.c:19:15: warning: unused variable 'outer12' [-Wunused-variable]
+
+static double outer12 ;
+
+              ^
+
+mutant.c:13:77: warning: unused variable 'outer10' [-Wunused-variable]
+
+int __attribute__ ( ( target ( "arch=rocketlake" ) ) ) foo ( void ) { float outer10 ;
+
+                                                                            ^
+
+mutant.c:14:7: warning: unused variable 'outer11' [-Wunused-variable]
+
+float outer11 ;
+
+      ^
+
+mutant.c:15:7: warning: unused variable 'outer12' [-Wunused-variable]
+
+float outer12 ;
+
+      ^
+
+mutant.c:13:56: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+int __attribute__ ( ( target ( "arch=rocketlake" ) ) ) foo ( void ) { float outer10 ;
+
+                                                       ^
+
+mutant.c:13:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int __attribute__ ( ( target ( "arch=rocketlake" ) ) ) foo ( void ) { float outer10 ;
+
+^
+
+static 
+
+mutant.c:24:3: warning: non-void function does not return a value [-Wreturn-type]
+
+} }
+
+  ^
+
+mutant.c:25:48: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+int __attribute__ ( ( target ( "default" ) ) ) foo ( void ) { return 2 ; }
+
+                                               ^
+
+mutant.c:25:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int __attribute__ ( ( target ( "default" ) ) ) foo ( void ) { return 2 ; }
+
+^
+
+static 
+
+mutant.c:26:5: warning: no previous prototype for function 'bar' [-Wmissing-prototypes]
+
+int bar ( ) {
+
+    ^
+
+mutant.c:26:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int bar ( ) {
+
+^
+
+static 
+
+mutant.c:26:9: warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+
+int bar ( ) {
+
+        ^
+
+mutant.c:33:5: warning: no previous prototype for function 'bar2' [-Wmissing-prototypes]
+
+int bar2 ( ) {
+
+    ^
+
+mutant.c:33:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int bar2 ( ) {
+
+^
+
+static 
+
+mutant.c:33:10: warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+
+int bar2 ( ) {
+
+         ^
+
+mutant.c:38:6: warning: no previous prototype for function 'bar3' [-Wmissing-prototypes]
+
+void bar3 ( ) {
+
+     ^
+
+mutant.c:38:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void bar3 ( ) {
+
+^
+
+static 
+
+mutant.c:38:11: warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+
+void bar3 ( ) {
+
+          ^
+
+mutant.c:43:72: warning: unused parameter 'i' [-Wunused-parameter]
+
+inline __attribute__ ( ( target ( "default" ) ) ) void foo_multi ( int i , double d ) { }
+
+                                                                       ^
+
+mutant.c:43:83: warning: unused parameter 'd' [-Wunused-parameter]
+
+inline __attribute__ ( ( target ( "default" ) ) ) void foo_multi ( int i , double d ) { }
+
+                                                                                  ^
+
+mutant.c:44:75: warning: unused parameter 'i' [-Wunused-parameter]
+
+inline __attribute__ ( ( target ( "avx,sse4.2" ) ) ) void foo_multi ( int i , double d ) { }
+
+                                                                          ^
+
+mutant.c:44:86: warning: unused parameter 'd' [-Wunused-parameter]
+
+inline __attribute__ ( ( target ( "avx,sse4.2" ) ) ) void foo_multi ( int i , double d ) { }
+
+                                                                                     ^
+
+mutant.c:45:76: warning: unused parameter 'i' [-Wunused-parameter]
+
+inline __attribute__ ( ( target ( "sse4.2,fma4" ) ) ) void foo_multi ( int i , double d ) { }
+
+                                                                           ^
+
+mutant.c:45:87: warning: unused parameter 'd' [-Wunused-parameter]
+
+inline __attribute__ ( ( target ( "sse4.2,fma4" ) ) ) void foo_multi ( int i , double d ) { }
+
+                                                                                      ^
+
+mutant.c:46:91: warning: unused parameter 'i' [-Wunused-parameter]
+
+inline __attribute__ ( ( target ( "arch=ivybridge,fma4,sse4.2" ) ) ) void foo_multi ( int i , double d ) { }
+
+                                                                                          ^
+
+mutant.c:46:102: warning: unused parameter 'd' [-Wunused-parameter]
+
+inline __attribute__ ( ( target ( "arch=ivybridge,fma4,sse4.2" ) ) ) void foo_multi ( int i , double d ) { }
+
+                                                                                                     ^
+
+mutant.c:47:6: warning: no previous prototype for function 'bar4' [-Wmissing-prototypes]
+
+void bar4 ( ) {
+
+     ^
+
+mutant.c:47:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void bar4 ( ) {
+
+^
+
+static 
+
+mutant.c:47:11: warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+
+void bar4 ( ) {
+
+          ^
+
+mutant.c:54:48: warning: no previous prototype for function 'fwd_decl_avx' [-Wmissing-prototypes]
+
+int __attribute__ ( ( target ( "default" ) ) ) fwd_decl_avx ( void ) { return 2 ; }
+
+                                               ^
+
+mutant.c:54:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int __attribute__ ( ( target ( "default" ) ) ) fwd_decl_avx ( void ) { return 2 ; }
+
+^
+
+static 
+
+mutant.c:55:6: warning: no previous prototype for function 'bar5' [-Wmissing-prototypes]
+
+void bar5 ( ) {
+
+     ^
+
+mutant.c:55:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void bar5 ( ) {
+
+^
+
+static 
+
+mutant.c:55:11: warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+
+void bar5 ( ) {
+
+          ^
+
+mutant.c:59:44: warning: no previous prototype for function 'changed_to_mv' [-Wmissing-prototypes]
+
+int __attribute__ ( ( target ( "avx" ) ) ) changed_to_mv ( void ) { return 0 ; }
+
+                                           ^
+
+mutant.c:59:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int __attribute__ ( ( target ( "avx" ) ) ) changed_to_mv ( void ) { return 0 ; }
+
+^
+
+static 
+
+mutant.c:60:45: warning: no previous prototype for function 'changed_to_mv' [-Wmissing-prototypes]
+
+int __attribute__ ( ( target ( "fma4" ) ) ) changed_to_mv ( void ) { return 1 ; }
+
+                                            ^
+
+mutant.c:60:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int __attribute__ ( ( target ( "fma4" ) ) ) changed_to_mv ( void ) { return 1 ; }
+
+^
+
+static 
+
+mutant.c:61:78: warning: unused parameter 'i' [-Wunused-parameter]
+
+__attribute__ ( ( target ( "default" ) , used ) ) inline void foo_used ( int i , double d ) { }
+
+                                                                             ^
+
+mutant.c:61:89: warning: unused parameter 'd' [-Wunused-parameter]
+
+__attribute__ ( ( target ( "default" ) , used ) ) inline void foo_used ( int i , double d ) { }
+
+                                                                                        ^
+
+mutant.c:62:74: warning: unused parameter 'i' [-Wunused-parameter]
+
+__attribute__ ( ( target ( "avx,sse4.2" ) ) ) inline void foo_used ( int i , double d ) { }
+
+                                                                         ^
+
+mutant.c:62:85: warning: unused parameter 'd' [-Wunused-parameter]
+
+__attribute__ ( ( target ( "avx,sse4.2" ) ) ) inline void foo_used ( int i , double d ) { }
+
+                                                                                    ^
+
+mutant.c:63:72: warning: unused parameter 'i' [-Wunused-parameter]
+
+__attribute__ ( ( target ( "default" ) ) ) inline void foo_used2 ( int i , double d ) { }
+
+                                                                       ^
+
+mutant.c:63:83: warning: unused parameter 'd' [-Wunused-parameter]
+
+__attribute__ ( ( target ( "default" ) ) ) inline void foo_used2 ( int i , double d ) { }
+
+                                                                                  ^
+
+mutant.c:64:82: warning: unused parameter 'i' [-Wunused-parameter]
+
+__attribute__ ( ( target ( "avx,sse4.2" ) , used ) ) inline void foo_used2 ( int i , double d ) { }
+
+                                                                                 ^
+
+mutant.c:64:93: warning: unused parameter 'd' [-Wunused-parameter]
+
+__attribute__ ( ( target ( "avx,sse4.2" ) , used ) ) inline void foo_used2 ( int i , double d ) { }
+
+                                                                                            ^
+
+mutant.c:66:75: warning: static function 'must_be_emitted' is used in an inline function with external linkage [-Wstatic-in-inline]
+
+inline __attribute__ ( ( target ( "default" ) ) ) void pr50025 ( void ) { must_be_emitted ( ) ; }
+
+                                                                          ^
+
+mutant.c:66:1: note: use 'static' to give inline function 'pr50025' internal linkage
+
+inline __attribute__ ( ( target ( "default" ) ) ) void pr50025 ( void ) { must_be_emitted ( ) ; }
+
+^
+
+static 
+
+mutant.c:65:13: note: 'must_be_emitted' declared here
+
+static void must_be_emitted ( void ) { }
+
+            ^
+
+mutant.c:67:6: warning: no previous prototype for function 'calls_pr50025' [-Wmissing-prototypes]
+
+void calls_pr50025 ( ) { pr50025 ( ) ; }
+
+     ^
+
+mutant.c:67:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void calls_pr50025 ( ) { pr50025 ( ) ; }
+
+^
+
+static 
+
+mutant.c:67:20: warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+
+void calls_pr50025 ( ) { pr50025 ( ) ; }
+
+                   ^
+
+mutant.c:68:76: warning: static function 'must_be_emitted' is used in an inline function with external linkage [-Wstatic-in-inline]
+
+inline __attribute__ ( ( target ( "default" ) ) ) void pr50025b ( void ) { must_be_emitted ( ) ; }
+
+                                                                           ^
+
+mutant.c:68:1: note: use 'static' to give inline function 'pr50025b' internal linkage
+
+inline __attribute__ ( ( target ( "default" ) ) ) void pr50025b ( void ) { must_be_emitted ( ) ; }
+
+^
+
+static 
+
+mutant.c:65:13: note: 'must_be_emitted' declared here
+
+static void must_be_emitted ( void ) { }
+
+            ^
+
+mutant.c:70:6: warning: no previous prototype for function 'calls_pr50025c' [-Wmissing-prototypes]
+
+void calls_pr50025c ( ) { pr50025c ( ) ; }
+
+     ^
+
+mutant.c:70:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void calls_pr50025c ( ) { pr50025c ( ) ; }
+
+^
+
+static 
+
+mutant.c:70:21: warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+
+void calls_pr50025c ( ) { pr50025c ( ) ; }
+
+                    ^
+
+clang-trunk: /tmp/tmp.B1HwadcXIH-clang-builder/llvm-project/llvm/include/llvm/Support/Casting.h:104: static bool llvm::isa_impl_cl<To, const From*>::doit(const From*) [with To = llvm::Function; From = llvm::GlobalValue]: Assertion `Val && "isa<> used on a null pointer"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	Per-file LLVM IR generation
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x39591f4)[0x5571214a61f4]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x5571214a4014]
+
+clang-trunk(+0x389de48)[0x5571213eae48]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f4748fcf3c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f4748a6e18b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f4748a4d859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f4748a4d729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f4748a5ef36]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule25emitMultiVersionFunctionsEv+0x1d29)[0x557121906009]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule7ReleaseEv+0x98)[0x5571219060b8]
+
+clang-trunk(+0x4ab7aba)[0x557122604aba]
+
+clang-trunk(+0x4ab6605)[0x557122603605]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x429)[0x5571236bb399]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x557122602458]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x557121eb19e9]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x557121e44c36]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x557121f8f870]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x55711edaf696]
+
+clang-trunk(+0x125e9d8)[0x55711edab9d8]
+
+clang-trunk(+0x4188bb9)[0x557121cd5bb9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x5571213eafcc]
+
+clang-trunk(+0x418935d)[0x557121cd635d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x557121ca8aeb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x557121ca9609]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x557121cb41b9]
+
+clang-trunk(main+0x18af)[0x55711ecda52f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f4748a4f0b3]
+
+clang-trunk(_start+0x2e)[0x55711edab54e]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git ef906573a127cffef7cae75d5155c15a8a2a3a5e)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-7ccaa6.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-7ccaa6.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

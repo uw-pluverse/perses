@@ -1,0 +1,51 @@
+
+
+#![feature(core_intrinsics, rustc_attrs)]
+
+use std::intrinsics::rustc_peek;
+use std::mem::{drop, replace};
+
+struct S(i32);
+
+#[rustc_mir(rustc_peek_maybe_uninit,stop_after_dataflow)]
+fn foo(test: bool, x: &mut S, y: S, mut z: S) -> S {
+    let ret;
+
+    rustc_peek(&ret);
+
+
+
+    rustc_peek(&x);
+    rustc_peek(&y);
+    rustc_peek(&z);
+
+    ret = if test {
+        ::std::mem::replace(x, y)
+    } else {
+        z = y;
+        z
+    };
+
+
+    rustc_peek(&z);
+
+
+    rustc_peek(&y);
+
+
+    rustc_peek(&x);
+
+    ::std::mem::drop(x);
+
+
+    rustc_peek(&x);
+
+
+    rustc_peek(&ret);
+
+    ret
+}
+fn main() {
+    foo(true, &mut S(13), S(14), S(15));
+    foo(false, &mut S(13), S(14), S(15));
+}

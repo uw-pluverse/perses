@@ -1,0 +1,3 @@
+fatal error: error in backend: Unsupported asm: input constraint with a matching output constraint of incompatible type!
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

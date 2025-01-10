@@ -1,0 +1,4 @@
+internal compiler error: SSA corruption
+fail_abnormal_edge_coalesce
+coalesce_partitions
+coalesce_ssa_name(_var_map*)

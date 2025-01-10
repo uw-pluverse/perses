@@ -1,0 +1,1370 @@
+error[E0433]: failed to resolve: maybe a missing crate `core`?
+
+ --> mutant.rs:1:5
+
+  |
+
+1 | use core :: cmp :: Ordering ;
+
+  |     ^^^^ maybe a missing crate `core`?
+
+
+
+error[E0433]: failed to resolve: maybe a missing crate `core`?
+
+ --> mutant.rs:2:5
+
+  |
+
+2 | use core :: marker :: PhantomData ;
+
+  |     ^^^^ maybe a missing crate `core`?
+
+
+
+error[E0433]: failed to resolve: maybe a missing crate `core`?
+
+ --> mutant.rs:3:5
+
+  |
+
+3 | use core :: mem :: { self , MaybeUninit } ;
+
+  |     ^^^^ maybe a missing crate `core`?
+
+
+
+error[E0432]: unresolved import `core`
+
+ --> mutant.rs:3:5
+
+  |
+
+3 | use core :: mem :: { self , MaybeUninit } ;
+
+  |     ^^^^ maybe a missing crate `core`?
+
+
+
+error[E0433]: failed to resolve: maybe a missing crate `core`?
+
+ --> mutant.rs:4:5
+
+  |
+
+4 | use core :: ptr :: { self , NonNull , Unique } ;
+
+  |     ^^^^ maybe a missing crate `core`?
+
+
+
+error[E0432]: unresolved import `core`
+
+ --> mutant.rs:4:5
+
+  |
+
+4 | use core :: ptr :: { self , NonNull , Unique } ;
+
+  |     ^^^^ maybe a missing crate `core`?
+
+
+
+error[E0432]: unresolved import `core`
+
+ --> mutant.rs:5:5
+
+  |
+
+5 | use core :: slice ;
+
+  |     ^^^^ maybe a missing crate `core`?
+
+
+
+error[E0432]: unresolved import `crate::alloc`
+
+ --> mutant.rs:6:14
+
+  |
+
+6 | use crate :: alloc :: { AllocRef , Global , Layout } ;
+
+  |              ^^^^^
+
+  |              |
+
+  |              unresolved import
+
+  |              help: a similar path exists: `std::alloc`
+
+
+
+error[E0433]: failed to resolve: maybe a missing crate `core`?
+
+    --> mutant.rs:1026:5
+
+     |
+
+1026 | use core :: marker :: PhantomData ;
+
+     |     ^^^^ maybe a missing crate `core`?
+
+
+
+error[E0432]: unresolved import `crate::boxed`
+
+ --> mutant.rs:7:14
+
+  |
+
+7 | use crate :: boxed :: Box ;
+
+  |              ^^^^^
+
+  |              |
+
+  |              unresolved import
+
+  |              help: a similar path exists: `std::boxed`
+
+
+
+error[E0412]: cannot find type `NonNull` in this scope
+
+  --> mutant.rs:15:19
+
+   |
+
+15 | parent : Option < NonNull < InternalNode < K , V > > > ,
+
+   |                   ^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this struct
+
+   |
+
+1  | use std::ptr::NonNull;
+
+   |
+
+
+
+error[E0412]: cannot find type `MaybeUninit` in this scope
+
+  --> mutant.rs:16:14
+
+   |
+
+16 | parent_idx : MaybeUninit < u16 > ,
+
+   |              ^^^^^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this union
+
+   |
+
+1  | use std::mem::MaybeUninit;
+
+   |
+
+
+
+error[E0412]: cannot find type `MaybeUninit` in this scope
+
+  --> mutant.rs:18:10
+
+   |
+
+18 | keys : [ MaybeUninit < K > ; CAPACITY ] ,
+
+   |          ^^^^^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this union
+
+   |
+
+1  | use std::mem::MaybeUninit;
+
+   |
+
+
+
+error[E0412]: cannot find type `MaybeUninit` in this scope
+
+  --> mutant.rs:19:10
+
+   |
+
+19 | vals : [ MaybeUninit < V > ; CAPACITY ] ,
+
+   |          ^^^^^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this union
+
+   |
+
+1  | use std::mem::MaybeUninit;
+
+   |
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `MaybeUninit`
+
+  --> mutant.rs:24:8
+
+   |
+
+24 | keys : MaybeUninit :: uninit_array ( ) ,
+
+   |        ^^^^^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this union
+
+   |
+
+1  | use std::mem::MaybeUninit;
+
+   |
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `MaybeUninit`
+
+  --> mutant.rs:25:8
+
+   |
+
+25 | vals : MaybeUninit :: uninit_array ( ) ,
+
+   |        ^^^^^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this union
+
+   |
+
+1  | use std::mem::MaybeUninit;
+
+   |
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `MaybeUninit`
+
+  --> mutant.rs:27:14
+
+   |
+
+27 | parent_idx : MaybeUninit :: uninit ( ) ,
+
+   |              ^^^^^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this union
+
+   |
+
+1  | use std::mem::MaybeUninit;
+
+   |
+
+
+
+error[E0412]: cannot find type `MaybeUninit` in this scope
+
+  --> mutant.rs:35:11
+
+   |
+
+35 | edges : [ MaybeUninit < BoxedNode < K , V > > ; 2 * B ] ,
+
+   |           ^^^^^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this union
+
+   |
+
+1  | use std::mem::MaybeUninit;
+
+   |
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `MaybeUninit`
+
+  --> mutant.rs:39:64
+
+   |
+
+39 | InternalNode { data : unsafe { LeafNode :: new ( ) } , edges : MaybeUninit :: uninit_array ( ) }
+
+   |                                                                ^^^^^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this union
+
+   |
+
+1  | use std::mem::MaybeUninit;
+
+   |
+
+
+
+error[E0412]: cannot find type `Unique` in this scope
+
+  --> mutant.rs:43:7
+
+   |
+
+43 | ptr : Unique < LeafNode < K , V > > ,
+
+   |       ^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this struct
+
+   |
+
+1  | use std::ptr::Unique;
+
+   |
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `Unique`
+
+  --> mutant.rs:50:19
+
+   |
+
+50 | BoxedNode { ptr : Unique :: from ( & mut Box :: leak ( node ) . data ) }
+
+   |                   ^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this struct
+
+   |
+
+1  | use std::ptr::Unique;
+
+   |
+
+
+
+error[E0412]: cannot find type `NonNull` in this scope
+
+  --> mutant.rs:52:28
+
+   |
+
+52 | unsafe fn from_ptr ( ptr : NonNull < LeafNode < K , V > > ) -> Self {
+
+   |                            ^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this struct
+
+   |
+
+1  | use std::ptr::NonNull;
+
+   |
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `Unique`
+
+  --> mutant.rs:53:28
+
+   |
+
+53 | BoxedNode { ptr : unsafe { Unique :: new_unchecked ( ptr . as_ptr ( ) ) } }
+
+   |                            ^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this struct
+
+   |
+
+1  | use std::ptr::Unique;
+
+   |
+
+
+
+error[E0412]: cannot find type `NonNull` in this scope
+
+  --> mutant.rs:55:25
+
+   |
+
+55 | fn as_ptr ( & self ) -> NonNull < LeafNode < K , V > > {
+
+   |                         ^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this struct
+
+   |
+
+1  | use std::ptr::NonNull;
+
+   |
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `NonNull`
+
+  --> mutant.rs:56:1
+
+   |
+
+56 | NonNull :: from ( self . ptr )
+
+   | ^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this struct
+
+   |
+
+1  | use std::ptr::NonNull;
+
+   |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+  --> mutant.rs:73:80
+
+   |
+
+73 | NodeRef { height : self . height , node : self . node . as_ptr ( ) , _marker : PhantomData }
+
+   |                                                                                ^^^^^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this unit struct
+
+   |
+
+1  | use std::marker::PhantomData;
+
+   |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+  --> mutant.rs:76:80
+
+   |
+
+76 | NodeRef { height : self . height , node : self . node . as_ptr ( ) , _marker : PhantomData }
+
+   |                                                                                ^^^^^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this unit struct
+
+   |
+
+1  | use std::marker::PhantomData;
+
+   |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+  --> mutant.rs:79:80
+
+   |
+
+79 | NodeRef { height : self . height , node : self . node . as_ptr ( ) , _marker : PhantomData }
+
+   |                                                                                ^^^^^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this unit struct
+
+   |
+
+1  | use std::marker::PhantomData;
+
+   |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+  --> mutant.rs:82:80
+
+   |
+
+82 | NodeRef { height : self . height , node : self . node . as_ptr ( ) , _marker : PhantomData }
+
+   |                                                                                ^^^^^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this unit struct
+
+   |
+
+1  | use std::marker::PhantomData;
+
+   |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+  --> mutant.rs:90:80
+
+   |
+
+90 | NodeRef { height : self . height , node : self . node . as_ptr ( ) , _marker : PhantomData } ;
+
+   |                                                                                ^^^^^^^^^^^ not found in this scope
+
+   |
+
+help: consider importing this unit struct
+
+   |
+
+1  | use std::marker::PhantomData;
+
+   |
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `NonNull`
+
+   --> mutant.rs:107:20
+
+    |
+
+107 | Global . dealloc ( NonNull :: from ( top ) . cast ( ) , Layout :: new :: < InternalNode < K , V > > ( ) ) ;
+
+    |                    ^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this struct
+
+    |
+
+1   | use std::ptr::NonNull;
+
+    |
+
+
+
+error[E0412]: cannot find type `NonNull` in this scope
+
+   --> mutant.rs:113:8
+
+    |
+
+113 | node : NonNull < LeafNode < K , V > > ,
+
+    |        ^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this struct
+
+    |
+
+1   | use std::ptr::NonNull;
+
+    |
+
+
+
+error[E0412]: cannot find type `PhantomData` in this scope
+
+   --> mutant.rs:114:11
+
+    |
+
+114 | _marker : PhantomData < ( BorrowType , Type ) > ,
+
+    |           ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this struct
+
+    |
+
+1   | use std::marker::PhantomData;
+
+    |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+   --> mutant.rs:150:67
+
+    |
+
+150 | NodeRef { height : self . height , node : self . node , _marker : PhantomData }
+
+    |                                                                   ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this unit struct
+
+    |
+
+1   | use std::marker::PhantomData;
+
+    |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+   --> mutant.rs:180:11
+
+    |
+
+180 | _marker : PhantomData ,
+
+    |           ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this unit struct
+
+    |
+
+1   | use std::marker::PhantomData;
+
+    |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+   --> mutant.rs:183:11
+
+    |
+
+183 | _marker : PhantomData ,
+
+    |           ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this unit struct
+
+    |
+
+1   | use std::marker::PhantomData;
+
+    |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+   --> mutant.rs:232:67
+
+    |
+
+232 | NodeRef { height : self . height , node : self . node , _marker : PhantomData }
+
+    |                                                                   ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this unit struct
+
+    |
+
+1   | use std::marker::PhantomData;
+
+    |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+   --> mutant.rs:235:67
+
+    |
+
+235 | NodeRef { height : self . height , node : self . node , _marker : PhantomData }
+
+    |                                                                   ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this unit struct
+
+    |
+
+1   | use std::marker::PhantomData;
+
+    |
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `MaybeUninit`
+
+   --> mutant.rs:253:1
+
+    |
+
+253 | MaybeUninit :: slice_as_mut_ptr ( & mut self . as_leaf_mut ( ) . keys ) ,
+
+    | ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this union
+
+    |
+
+1   | use std::mem::MaybeUninit;
+
+    |
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `MaybeUninit`
+
+   --> mutant.rs:265:1
+
+    |
+
+265 | MaybeUninit :: slice_as_mut_ptr ( & mut self . as_leaf_mut ( ) . vals ) ,
+
+    | ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this union
+
+    |
+
+1   | use std::mem::MaybeUninit;
+
+    |
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `MaybeUninit`
+
+   --> mutant.rs:275:1
+
+    |
+
+275 | MaybeUninit :: slice_as_mut_ptr ( & mut self . as_internal_mut ( ) . edges ) ,
+
+    | ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this union
+
+    |
+
+1   | use std::mem::MaybeUninit;
+
+    |
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `MaybeUninit`
+
+   --> mutant.rs:365:1
+
+    |
+
+365 | MaybeUninit :: slice_as_mut_ptr ( & mut self . as_internal_mut ( ) . edges ) ,
+
+    | ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this union
+
+    |
+
+1   | use std::mem::MaybeUninit;
+
+    |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+   --> mutant.rs:431:11
+
+    |
+
+431 | _marker : PhantomData ,
+
+    |           ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this unit struct
+
+    |
+
+1   | use std::marker::PhantomData;
+
+    |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+   --> mutant.rs:437:11
+
+    |
+
+437 | _marker : PhantomData ,
+
+    |           ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this unit struct
+
+    |
+
+1   | use std::marker::PhantomData;
+
+    |
+
+
+
+error[E0412]: cannot find type `PhantomData` in this scope
+
+   --> mutant.rs:445:11
+
+    |
+
+445 | _marker : PhantomData < Type > ,
+
+    |           ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this struct
+
+    |
+
+1   | use std::marker::PhantomData;
+
+    |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+   --> mutant.rs:464:33
+
+    |
+
+464 | Handle { node , idx , _marker : PhantomData }
+
+    |                                 ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this unit struct
+
+    |
+
+1   | use std::marker::PhantomData;
+
+    |
+
+
+
+error[E0412]: cannot find type `Ordering` in this scope
+
+   --> mutant.rs:483:56
+
+    |
+
+483 | fn partial_cmp ( & self , other : & Self ) -> Option < Ordering > {
+
+    |                                                        ^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing one of these items
+
+    |
+
+1   | use std::cmp::Ordering;
+
+    |
+
+1   | use std::sync::atomic::Ordering;
+
+    |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+   --> mutant.rs:491:75
+
+    |
+
+491 | Handle { node : self . node . reborrow ( ) , idx : self . idx , _marker : PhantomData }
+
+    |                                                                           ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this unit struct
+
+    |
+
+1   | use std::marker::PhantomData;
+
+    |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+   --> mutant.rs:498:90
+
+    |
+
+498 | Handle { node : unsafe { self . node . reborrow_mut ( ) } , idx : self . idx , _marker : PhantomData }
+
+    |                                                                                          ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this unit struct
+
+    |
+
+1   | use std::marker::PhantomData;
+
+    |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+   --> mutant.rs:504:33
+
+    |
+
+504 | Handle { node , idx , _marker : PhantomData }
+
+    |                                 ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this unit struct
+
+    |
+
+1   | use std::marker::PhantomData;
+
+    |
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `NonNull`
+
+   --> mutant.rs:579:11
+
+    |
+
+579 | let ptr = NonNull :: new ( self . node . as_internal_mut ( ) ) ;
+
+    |           ^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this struct
+
+    |
+
+1   | use std::ptr::NonNull;
+
+    |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+   --> mutant.rs:658:11
+
+    |
+
+658 | _marker : PhantomData ,
+
+    |           ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this unit struct
+
+    |
+
+1   | use std::marker::PhantomData;
+
+    |
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `MaybeUninit`
+
+   --> mutant.rs:696:1
+
+    |
+
+696 | MaybeUninit :: slice_as_mut_ptr ( & mut new_node . keys ) ,
+
+    | ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this union
+
+    |
+
+1   | use std::mem::MaybeUninit;
+
+    |
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `MaybeUninit`
+
+   --> mutant.rs:701:1
+
+    |
+
+701 | MaybeUninit :: slice_as_mut_ptr ( & mut new_node . vals ) ,
+
+    | ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this union
+
+    |
+
+1   | use std::mem::MaybeUninit;
+
+    |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+   --> mutant.rs:927:67
+
+    |
+
+927 | NodeRef { height : self . height , node : self . node , _marker : PhantomData }
+
+    |                                                                   ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this unit struct
+
+    |
+
+1   | use std::marker::PhantomData;
+
+    |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+   --> mutant.rs:932:67
+
+    |
+
+932 | NodeRef { height : self . height , node : self . node , _marker : PhantomData }
+
+    |                                                                   ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this unit struct
+
+    |
+
+1   | use std::marker::PhantomData;
+
+    |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+   --> mutant.rs:974:68
+
+    |
+
+974 | ForceResult :: Leaf ( Handle { node , idx : self . idx , _marker : PhantomData } )
+
+    |                                                                    ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this unit struct
+
+    |
+
+1   | use std::marker::PhantomData;
+
+    |
+
+
+
+error[E0425]: cannot find value `PhantomData` in this scope
+
+   --> mutant.rs:977:72
+
+    |
+
+977 | ForceResult :: Internal ( Handle { node , idx : self . idx , _marker : PhantomData } )
+
+    |                                                                        ^^^^^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this unit struct
+
+    |
+
+1   | use std::marker::PhantomData;
+
+    |
+
+
+
+error[E0412]: cannot find type `PhantomData` in this scope
+
+    --> mutant.rs:1031:27
+
+     |
+
+1031 | pub struct Immut < 'a > ( PhantomData < & 'a ( ) > ) ;
+
+     |                           ^^^^^^^^^^^ not found in this scope
+
+     |
+
+help: consider importing this struct
+
+     |
+
+1026 | use std::marker::PhantomData;
+
+     |
+
+
+
+error[E0412]: cannot find type `PhantomData` in this scope
+
+    --> mutant.rs:1032:25
+
+     |
+
+1032 | pub struct Mut < 'a > ( PhantomData < & 'a mut ( ) > ) ;
+
+     |                         ^^^^^^^^^^^ not found in this scope
+
+     |
+
+help: consider importing this struct
+
+     |
+
+1026 | use std::marker::PhantomData;
+
+     |
+
+
+
+error[E0412]: cannot find type `PhantomData` in this scope
+
+    --> mutant.rs:1033:28
+
+     |
+
+1033 | pub struct ValMut < 'a > ( PhantomData < & 'a mut ( ) > ) ;
+
+     |                            ^^^^^^^^^^^ not found in this scope
+
+     |
+
+help: consider importing this struct
+
+     |
+
+1026 | use std::marker::PhantomData;
+
+     |
+
+
+
+error[E0658]: raw address of syntax is experimental
+
+   --> mutant.rs:304:37
+
+    |
+
+304 | let keys : * const [ _ ] = unsafe { &raw const ( * leaf ) . keys } ;
+
+    |                                     ^^^^^^^^^^
+
+    |
+
+    = note: see issue #64490 <https://github.com/rust-lang/rust/issues/64490> for more information
+
+    = help: add `#![feature(raw_ref_op)]` to the crate attributes to enable
+
+
+
+error[E0658]: raw address of syntax is experimental
+
+   --> mutant.rs:305:35
+
+    |
+
+305 | let vals : * mut [ _ ] = unsafe { &raw mut ( * leaf ) . vals } ;
+
+    |                                   ^^^^^^^^
+
+    |
+
+    = note: see issue #64490 <https://github.com/rust-lang/rust/issues/64490> for more information
+
+    = help: add `#![feature(raw_ref_op)]` to the crate attributes to enable
+
+
+
+error[E0658]: exclusive range pattern syntax is experimental
+
+   --> mutant.rs:528:1
+
+    |
+
+528 | 0 .. EDGE_IDX_LEFT_OF_CENTER => ( KV_IDX_CENTER - 1 , InsertionPlace :: Left ( edge_idx ) ) ,
+
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    |
+
+    = note: see issue #37854 <https://github.com/rust-lang/rust/issues/37854> for more information
+
+    = help: add `#![feature(exclusive_range_pattern)]` to the crate attributes to enable
+
+
+
+error: internal compiler error: compiler/rustc_ty_utils/src/ty.rs:209:14: associated_item_def_ids: not impl or trait
+
+   --> mutant.rs:111:1
+
+    |
+
+111 | / pub struct NodeRef < BorrowType , K , V , Type > {
+
+112 | | height : usize ,
+
+113 | | node : NonNull < LeafNode < K , V > > ,
+
+114 | | _marker : PhantomData < ( BorrowType , Type ) > ,
+
+115 | | }
+
+    | |_^
+
+
+
+thread 'rustc' panicked at 'Box<Any>', /rustc/4fdac23f3171e2f8864d359a21da600dd3faafc9/library/std/src/panic.rs:59:5
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.53.0-nightly (4fdac23f3 2021-03-31) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [associated_item_def_ids] collecting associated items of `NodeRef`
+
+#1 [associated_items] collecting associated items of NodeRef
+
+end of query stack
+
+error: aborting due to 65 previous errors
+
+
+
+Some errors have detailed explanations: E0412, E0425, E0432, E0433, E0658.
+
+For more information about an error, try `rustc --explain E0412`.
+

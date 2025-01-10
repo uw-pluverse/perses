@@ -1,0 +1,4068 @@
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+287 | check ! ( ymm_reg_i32 i32 ymm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+287 | check ! ( ymm_reg_i32 i32 ymm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+288 | check ! ( ymm_reg_f32 f32 ymm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+288 | check ! ( ymm_reg_f32 f32 ymm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+289 | check ! ( ymm_reg_i64 i64 ymm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+289 | check ! ( ymm_reg_i64 i64 ymm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+290 | check ! ( ymm_reg_f64 f64 ymm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+290 | check ! ( ymm_reg_f64 f64 ymm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+291 | check ! ( ymm_reg_ptr ptr ymm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+291 | check ! ( ymm_reg_ptr ptr ymm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+292 | check ! ( ymm_reg_i8x16 i8x16 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+292 | check ! ( ymm_reg_i8x16 i8x16 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+293 | check ! ( ymm_reg_i16x8 i16x8 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+293 | check ! ( ymm_reg_i16x8 i16x8 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+294 | check ! ( ymm_reg_i32x4 i32x4 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+294 | check ! ( ymm_reg_i32x4 i32x4 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+295 | check ! ( ymm_reg_i64x2 i64x2 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+295 | check ! ( ymm_reg_i64x2 i64x2 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+296 | check ! ( ymm_reg_f32x4 f32x4 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+296 | check ! ( ymm_reg_f32x4 f32x4 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+297 | check ! ( ymm_reg_f64x2 f64x2 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+297 | check ! ( ymm_reg_f64x2 f64x2 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+298 | check ! ( ymm_reg_i8x32 i8x32 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+298 | check ! ( ymm_reg_i8x32 i8x32 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+299 | check ! ( ymm_reg_i16x16 i16x16 ymm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+299 | check ! ( ymm_reg_i16x16 i16x16 ymm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+300 | check ! ( ymm_reg_i32x8 i32x8 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+300 | check ! ( ymm_reg_i32x8 i32x8 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+301 | check ! ( ymm_reg_i64x4 i64x4 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+301 | check ! ( ymm_reg_i64x4 i64x4 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+302 | check ! ( ymm_reg_f32x8 f32x8 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+302 | check ! ( ymm_reg_f32x8 f32x8 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+303 | check ! ( ymm_reg_f64x4 f64x4 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+303 | check ! ( ymm_reg_f64x4 f64x4 ymm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+304 | check ! ( zmm_reg_i32 i32 zmm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+304 | check ! ( zmm_reg_i32 i32 zmm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+305 | check ! ( zmm_reg_f32 f32 zmm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+305 | check ! ( zmm_reg_f32 f32 zmm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+306 | check ! ( zmm_reg_i64 i64 zmm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+306 | check ! ( zmm_reg_i64 i64 zmm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+307 | check ! ( zmm_reg_f64 f64 zmm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+307 | check ! ( zmm_reg_f64 f64 zmm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+308 | check ! ( zmm_reg_ptr ptr zmm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+308 | check ! ( zmm_reg_ptr ptr zmm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+309 | check ! ( zmm_reg_i8x16 i8x16 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+309 | check ! ( zmm_reg_i8x16 i8x16 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+310 | check ! ( zmm_reg_i16x8 i16x8 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+310 | check ! ( zmm_reg_i16x8 i16x8 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+311 | check ! ( zmm_reg_i32x4 i32x4 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+311 | check ! ( zmm_reg_i32x4 i32x4 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+312 | check ! ( zmm_reg_i64x2 i64x2 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+312 | check ! ( zmm_reg_i64x2 i64x2 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+313 | check ! ( zmm_reg_f32x4 f32x4 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+313 | check ! ( zmm_reg_f32x4 f32x4 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+314 | check ! ( zmm_reg_f64x2 f64x2 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+314 | check ! ( zmm_reg_f64x2 f64x2 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+315 | check ! ( zmm_reg_i8x32 i8x32 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+315 | check ! ( zmm_reg_i8x32 i8x32 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+316 | check ! ( zmm_reg_i16x16 i16x16 zmm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+316 | check ! ( zmm_reg_i16x16 i16x16 zmm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+317 | check ! ( zmm_reg_i32x8 i32x8 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+317 | check ! ( zmm_reg_i32x8 i32x8 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+318 | check ! ( zmm_reg_i64x4 i64x4 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+318 | check ! ( zmm_reg_i64x4 i64x4 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+319 | check ! ( zmm_reg_f32x8 f32x8 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+319 | check ! ( zmm_reg_f32x8 f32x8 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+320 | check ! ( zmm_reg_f64x4 f64x4 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+320 | check ! ( zmm_reg_f64x4 f64x4 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+321 | check ! ( zmm_reg_i8x64 i8x64 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+321 | check ! ( zmm_reg_i8x64 i8x64 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+322 | check ! ( zmm_reg_i16x32 i16x32 zmm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+322 | check ! ( zmm_reg_i16x32 i16x32 zmm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+323 | check ! ( zmm_reg_i32x16 i32x16 zmm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+323 | check ! ( zmm_reg_i32x16 i32x16 zmm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+324 | check ! ( zmm_reg_i64x8 i64x8 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+324 | check ! ( zmm_reg_i64x8 i64x8 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+325 | check ! ( zmm_reg_f32x16 f32x16 zmm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+325 | check ! ( zmm_reg_f32x16 f32x16 zmm_reg "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+326 | check ! ( zmm_reg_f64x8 f64x8 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+326 | check ! ( zmm_reg_f64x8 f64x8 zmm_reg "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+327 | check ! ( kreg_i8 i8 kreg "kmovb" ) ;
+
+    | ------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+327 | check ! ( kreg_i8 i8 kreg "kmovb" ) ;
+
+    | ------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+328 | check ! ( kreg_i16 i16 kreg "kmovw" ) ;
+
+    | --------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+328 | check ! ( kreg_i16 i16 kreg "kmovw" ) ;
+
+    | --------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+329 | check ! ( kreg_i32 i32 kreg "kmovd" ) ;
+
+    | --------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+329 | check ! ( kreg_i32 i32 kreg "kmovd" ) ;
+
+    | --------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+330 | check ! ( kreg_i64 i64 kreg "kmovq" ) ;
+
+    | --------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+330 | check ! ( kreg_i64 i64 kreg "kmovq" ) ;
+
+    | --------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:240:42
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                          ^^^^^^^^^^^^^^^^^^^^^
+
+...
+
+331 | check ! ( kreg_ptr ptr kreg "kmovq" ) ;
+
+    | --------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:240:66
+
+    |
+
+240 | asm ! ( concat ! ( $ mov , " {}, {}" ) , lateout ( $ class ) y , in ( $ class ) x ) ;
+
+    |                                                                  ^^^^^^^^^^^^^^^^
+
+...
+
+331 | check ! ( kreg_ptr ptr kreg "kmovq" ) ;
+
+    | --------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: invalid register `ah`: high byte registers cannot be used as an operand on x86_64
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+340 | check_reg ! ( ah_byte i8 "ah" "mov" ) ;
+
+    | --------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: invalid register `ah`: high byte registers cannot be used as an operand on x86_64
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+340 | check_reg ! ( ah_byte i8 "ah" "mov" ) ;
+
+    | --------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+352 | check_reg ! ( ymm0_i32 i32 "ymm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+352 | check_reg ! ( ymm0_i32 i32 "ymm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+353 | check_reg ! ( ymm0_f32 f32 "ymm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+353 | check_reg ! ( ymm0_f32 f32 "ymm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+354 | check_reg ! ( ymm0_i64 i64 "ymm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+354 | check_reg ! ( ymm0_i64 i64 "ymm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+355 | check_reg ! ( ymm0_f64 f64 "ymm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+355 | check_reg ! ( ymm0_f64 f64 "ymm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+356 | check_reg ! ( ymm0_ptr ptr "ymm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+356 | check_reg ! ( ymm0_ptr ptr "ymm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+357 | check_reg ! ( ymm0_i8x16 i8x16 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+357 | check_reg ! ( ymm0_i8x16 i8x16 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+358 | check_reg ! ( ymm0_i16x8 i16x8 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+358 | check_reg ! ( ymm0_i16x8 i16x8 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+359 | check_reg ! ( ymm0_i32x4 i32x4 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+359 | check_reg ! ( ymm0_i32x4 i32x4 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+360 | check_reg ! ( ymm0_i64x2 i64x2 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+360 | check_reg ! ( ymm0_i64x2 i64x2 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+361 | check_reg ! ( ymm0_f32x4 f32x4 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+361 | check_reg ! ( ymm0_f32x4 f32x4 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+362 | check_reg ! ( ymm0_f64x2 f64x2 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+362 | check_reg ! ( ymm0_f64x2 f64x2 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+363 | check_reg ! ( ymm0_i8x32 i8x32 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+363 | check_reg ! ( ymm0_i8x32 i8x32 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+364 | check_reg ! ( ymm0_i16x16 i16x16 "ymm0" "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+364 | check_reg ! ( ymm0_i16x16 i16x16 "ymm0" "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+365 | check_reg ! ( ymm0_i32x8 i32x8 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+365 | check_reg ! ( ymm0_i32x8 i32x8 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+366 | check_reg ! ( ymm0_i64x4 i64x4 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+366 | check_reg ! ( ymm0_i64x4 i64x4 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+367 | check_reg ! ( ymm0_f32x8 f32x8 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+367 | check_reg ! ( ymm0_f32x8 f32x8 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+368 | check_reg ! ( ymm0_f64x4 f64x4 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `ymm_reg` requires the `avx` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+368 | check_reg ! ( ymm0_f64x4 f64x4 "ymm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+369 | check_reg ! ( zmm0_i32 i32 "zmm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+369 | check_reg ! ( zmm0_i32 i32 "zmm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+370 | check_reg ! ( zmm0_f32 f32 "zmm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+370 | check_reg ! ( zmm0_f32 f32 "zmm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+371 | check_reg ! ( zmm0_i64 i64 "zmm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+371 | check_reg ! ( zmm0_i64 i64 "zmm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+372 | check_reg ! ( zmm0_f64 f64 "zmm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+372 | check_reg ! ( zmm0_f64 f64 "zmm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+373 | check_reg ! ( zmm0_ptr ptr "zmm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+373 | check_reg ! ( zmm0_ptr ptr "zmm0" "vmovaps" ) ;
+
+    | ----------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+374 | check_reg ! ( zmm0_i8x16 i8x16 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+374 | check_reg ! ( zmm0_i8x16 i8x16 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+375 | check_reg ! ( zmm0_i16x8 i16x8 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+375 | check_reg ! ( zmm0_i16x8 i16x8 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+376 | check_reg ! ( zmm0_i32x4 i32x4 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+376 | check_reg ! ( zmm0_i32x4 i32x4 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+377 | check_reg ! ( zmm0_i64x2 i64x2 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+377 | check_reg ! ( zmm0_i64x2 i64x2 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+378 | check_reg ! ( zmm0_f32x4 f32x4 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+378 | check_reg ! ( zmm0_f32x4 f32x4 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+379 | check_reg ! ( zmm0_f64x2 f64x2 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+379 | check_reg ! ( zmm0_f64x2 f64x2 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+380 | check_reg ! ( zmm0_i8x32 i8x32 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+380 | check_reg ! ( zmm0_i8x32 i8x32 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+381 | check_reg ! ( zmm0_i16x16 i16x16 "zmm0" "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+381 | check_reg ! ( zmm0_i16x16 i16x16 "zmm0" "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+382 | check_reg ! ( zmm0_i32x8 i32x8 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+382 | check_reg ! ( zmm0_i32x8 i32x8 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+383 | check_reg ! ( zmm0_i64x4 i64x4 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+383 | check_reg ! ( zmm0_i64x4 i64x4 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+384 | check_reg ! ( zmm0_f32x8 f32x8 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+384 | check_reg ! ( zmm0_f32x8 f32x8 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+385 | check_reg ! ( zmm0_f64x4 f64x4 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+385 | check_reg ! ( zmm0_f64x4 f64x4 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+386 | check_reg ! ( zmm0_i8x64 i8x64 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+386 | check_reg ! ( zmm0_i8x64 i8x64 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+387 | check_reg ! ( zmm0_i16x32 i16x32 "zmm0" "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+387 | check_reg ! ( zmm0_i16x32 i16x32 "zmm0" "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+388 | check_reg ! ( zmm0_i32x16 i32x16 "zmm0" "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+388 | check_reg ! ( zmm0_i32x16 i32x16 "zmm0" "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+389 | check_reg ! ( zmm0_i64x8 i64x8 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+389 | check_reg ! ( zmm0_i64x8 i64x8 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+390 | check_reg ! ( zmm0_f32x16 f32x16 "zmm0" "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+390 | check_reg ! ( zmm0_f32x16 f32x16 "zmm0" "vmovaps" ) ;
+
+    | ----------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+391 | check_reg ! ( zmm0_f64x8 f64x8 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `zmm_reg` requires the `avx512f` target feature
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+391 | check_reg ! ( zmm0_f64x8 f64x8 "zmm0" "vmovaps" ) ;
+
+    | --------------------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+392 | check_reg ! ( k1_i8 i8 "k1" "kmovb" ) ;
+
+    | --------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+392 | check_reg ! ( k1_i8 i8 "k1" "kmovb" ) ;
+
+    | --------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+393 | check_reg ! ( k1_i16 i16 "k1" "kmovw" ) ;
+
+    | ----------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+393 | check_reg ! ( k1_i16 i16 "k1" "kmovw" ) ;
+
+    | ----------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+394 | check_reg ! ( k1_i32 i32 "k1" "kmovd" ) ;
+
+    | ----------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+394 | check_reg ! ( k1_i32 i32 "k1" "kmovd" ) ;
+
+    | ----------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+395 | check_reg ! ( k1_i64 i64 "k1" "kmovq" ) ;
+
+    | ----------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+395 | check_reg ! ( k1_i64 i64 "k1" "kmovq" ) ;
+
+    | ----------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:254:59
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                           ^^^^^^^^^^^^^^^^^^^
+
+...
+
+396 | check_reg ! ( k1_ptr ptr "k1" "kmovq" ) ;
+
+    | ----------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: register class `kreg` requires at least one target feature: avx512bw, avx512f
+
+   --> mutant.rs:254:81
+
+    |
+
+254 | asm ! ( concat ! ( $ mov , " " , $ reg , ", " , $ reg ) , lateout ( $ reg ) y , in ( $ reg ) x ) ;
+
+    |                                                                                 ^^^^^^^^^^^^^^
+
+...
+
+396 | check_reg ! ( k1_ptr ptr "k1" "kmovq" ) ;
+
+    | ----------------------------------------- in this macro invocation
+
+    |
+
+    = note: this error originates in the macro `check_reg` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error[E0369]: binary operation `==` cannot be applied to type `{integer}`
+
+   --> mutant.rs:205:15
+
+    |
+
+205 | e if ( || { e == 0 } ) ( ) => { } ,
+
+    |             - ^^ - {integer}
+
+    |             |
+
+    |             {integer}
+
+
+
+error: internal compiler error: compiler/rustc_typeck/src/check/callee.rs:591:17: failed to find an overloaded call trait for closure call
+
+   --> mutant.rs:205:6
+
+    |
+
+205 | e if ( || { e == 0 } ) ( ) => { } ,
+
+    |      ^^^^^^^^^^^^^^^^^^^^^
+
+
+
+thread 'rustc' panicked at 'Box<dyn Any>', /rustc/a435b49e86d16e98dcc6595dd471f95e823f41aa/compiler/rustc_errors/src/lib.rs:953:9
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.55.0-nightly (a435b49e8 2021-06-28) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [typeck] type-checking `main`
+
+#1 [typeck_item_bodies] type-checking all item bodies
+
+end of query stack
+
+error: aborting due to 184 previous errors
+
+
+
+For more information about this error, try `rustc --explain E0369`.
+

@@ -1,0 +1,510 @@
+AddressSanitizer:DEADLYSIGNAL
+
+=================================================================
+
+==3234799==ERROR: AddressSanitizer: stack-overflow on address 0x7ffef17e0d08 (pc 0x0000005cb3b9 bp 0x7ffef17e1550 sp 0x7ffef17e0d10 T0)
+
+    #0 0x5cb3b9 in __asan_memcpy (/scratch/software/slang-trunk/bin/slang+0x5cb3b9)
+
+    #1 0x1c10d6c in slang::IdentifierNameSyntax::getChild(unsigned long) const /tmp/tmp.8mv1csjR86/slang-build/source/AllSyntax.cpp:6756:24
+
+    #2 0x1f55729 in slang::ConstTokenOrSyntax (anonymous namespace)::GetChildVisitor::visit<slang::IdentifierNameSyntax>(slang::IdentifierNameSyntax const&, unsigned long) /tmp/tmp.8mv1csjR86/slang-nightly/source/syntax/SyntaxNode.cpp:19:21
+
+    #3 0x1f33269 in decltype(auto) slang::detail::visitSyntaxNode<slang::SyntaxNode const, (anonymous namespace)::GetChildVisitor, unsigned long&>(slang::SyntaxNode const*, (anonymous namespace)::GetChildVisitor&, unsigned long&) /tmp/tmp.8mv1csjR86/slang-build/source/slang/syntax/AllSyntax.h:9127:57
+
+    #4 0x1f1fbbb in decltype(auto) slang::SyntaxNode::visit<(anonymous namespace)::GetChildVisitor, unsigned long&>((anonymous namespace)::GetChildVisitor&, unsigned long&) const /tmp/tmp.8mv1csjR86/slang-build/source/slang/syntax/AllSyntax.h:9434:12
+
+    #5 0x1f1eed6 in slang::SyntaxNode::getChild(unsigned long) const /tmp/tmp.8mv1csjR86/slang-nightly/source/syntax/SyntaxNode.cpp:82:12
+
+    #6 0x1f1e995 in slang::SyntaxNode::getFirstToken() const /tmp/tmp.8mv1csjR86/slang-nightly/source/syntax/SyntaxNode.cpp:43:22
+
+    #7 0x1f1f783 in slang::SyntaxNode::sourceRange() const /tmp/tmp.8mv1csjR86/slang-nightly/source/syntax/SyntaxNode.cpp:75:24
+
+    #8 0x794e06 in slang::Lookup::name(slang::NameSyntax const&, slang::BindContext const&, slang::bitmask<slang::LookupFlags>, slang::LookupResult&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Lookup.cpp:824:32
+
+    #9 0x11fc496 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:793:5
+
+    #10 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #11 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #12 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #13 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #14 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #15 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #16 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #17 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #18 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #19 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #20 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #21 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #22 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #23 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #24 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #25 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #26 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #27 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #28 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #29 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #30 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #31 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #32 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #33 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #34 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #35 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #36 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #37 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #38 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #39 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #40 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #41 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #42 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #43 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #44 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #45 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #46 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #47 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #48 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #49 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #50 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #51 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #52 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #53 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #54 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #55 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #56 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #57 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #58 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #59 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #60 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #61 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #62 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #63 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #64 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #65 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #66 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #67 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #68 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #69 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #70 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #71 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #72 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #73 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #74 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #75 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #76 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #77 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #78 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #79 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #80 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #81 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #82 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #83 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #84 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #85 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #86 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #87 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #88 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #89 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #90 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #91 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #92 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #93 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #94 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #95 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #96 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #97 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #98 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #99 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #100 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #101 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #102 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #103 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #104 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #105 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #106 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #107 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #108 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #109 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #110 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #111 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #112 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #113 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #114 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #115 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #116 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #117 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #118 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #119 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #120 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #121 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #122 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #123 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #124 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #125 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #126 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #127 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #128 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #129 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #130 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #131 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #132 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #133 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #134 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #135 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #136 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #137 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #138 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #139 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #140 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #141 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #142 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #143 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #144 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #145 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #146 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #147 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #148 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #149 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #150 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #151 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #152 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #153 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #154 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #155 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #156 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #157 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #158 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #159 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #160 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #161 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #162 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #163 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #164 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #165 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #166 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #167 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #168 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #169 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #170 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #171 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #172 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #173 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #174 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #175 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #176 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #177 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #178 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #179 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #180 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #181 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #182 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #183 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #184 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #185 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #186 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #187 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #188 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #189 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #190 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #191 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #192 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #193 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #194 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #195 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #196 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #197 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #198 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #199 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #200 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #201 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #202 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #203 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #204 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #205 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #206 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #207 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #208 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #209 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #210 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #211 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #212 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #213 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #214 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #215 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #216 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #217 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #218 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #219 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #220 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #221 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #222 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #223 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #224 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #225 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #226 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #227 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #228 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #229 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #230 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #231 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #232 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #233 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #234 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #235 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #236 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #237 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+    #238 0x1302e3f in slang::ValueExpressionBase::fromSymbol(slang::BindContext const&, slang::Symbol const&, bool, slang::SourceRange, bool) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:65:43
+
+    #239 0x11fedae in slang::Expression::bindLookupResult(slang::Compilation&, slang::LookupResult const&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:867:21
+
+    #240 0x11fcc75 in slang::Expression::bindName(slang::Compilation&, slang::NameSyntax const&, slang::InvocationExpressionSyntax const*, slang::ArrayOrRandomizeMethodExpressionSyntax const*, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:806:12
+
+    #241 0x11ee2b4 in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:741:27
+
+    #242 0x136a104 in slang::BinaryExpression::fromSyntax(slang::Compilation&, slang::BinaryExpressionSyntax const&, slang::BindContext const&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/OperatorExpressions.cpp:579:23
+
+    #243 0x11ebfcf in slang::Expression::create(slang::Compilation&, slang::ExpressionSyntax const&, slang::BindContext const&, slang::bitmask<slang::BindFlags>, slang::Type const*) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:626:23
+
+    #244 0x11ef88f in slang::Expression::bindRValue(slang::Type const&, slang::ExpressionSyntax const&, slang::SourceLocation, slang::BindContext const&, slang::bitmask<slang::BindFlags>) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:217:24
+
+    #245 0xf11312 in slang::DeclaredType::resolveAt(slang::BindContext const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:372:20
+
+    #246 0xf115bc in slang::DeclaredType::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/types/DeclaredType.cpp:380:5
+
+    #247 0xb2d3c0 in slang::ValueSymbol::getInitializer() const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ValueSymbol.h:37:68
+
+    #248 0xd479c5 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:137:21
+
+
+
+SUMMARY: AddressSanitizer: stack-overflow (/scratch/software/slang-trunk/bin/slang+0x5cb3b9) in __asan_memcpy
+
+==3234799==ABORTING
+

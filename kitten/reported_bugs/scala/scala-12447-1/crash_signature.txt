@@ -1,0 +1,4 @@
+Exception in thread "main" java.lang.AssertionError: assertion failed: Non-sensical cast between unrelated types ErasedValueType(A.I0, Double) and ErasedValueType(A.I0, Double)
+at scala.runtime.Scala3RunTime$.assertFailed
+at dotty.tools.dotc.transform.Erasure$Boxing$.cast
+at dotty.tools.dotc.transform.Erasure$Boxing$.unbox

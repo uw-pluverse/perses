@@ -1,0 +1,76 @@
+error: expected expression, found `=`
+
+  --> mutant.rs:56:24
+
+   |
+
+56 | } else if week_mon_0 > = weeks_in_year as i32 {
+
+   |                        ^ expected expression
+
+
+
+error: expected expression, found `=`
+
+  --> mutant.rs:71:24
+
+   |
+
+71 | if days_in_last_week > = 4 { 53 } else { 52 }
+
+   |                        ^ expected expression
+
+
+
+error[E0433]: failed to resolve: use of undeclared crate or module `k`
+
+   --> mutant.rs:254:6
+
+    |
+
+254 | it : k :: from_ymd ( year , 1 , 1 ) .. ,
+
+    |      ^ use of undeclared crate or module `k`
+
+
+
+error: internal compiler error: compiler/rustc_middle/src/ty/sty.rs:2150:18: tuple_fields called on non-tuple
+
+
+
+thread 'rustc' panicked at 'Box<Any>', compiler/rustc_errors/src/lib.rs:945:9
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.49.0-nightly (1eaadebb3 2020-10-21) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -C debuginfo=2 -C opt-level=z -C target-cpu=skylake --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [evaluate_obligation] evaluating trait selection obligation `[closure@mutant.rs:255:5: 255:37]: std::clone::Clone`
+
+#1 [typeck] type-checking `dates_in_year`
+
+end of query stack
+
+error: aborting due to 4 previous errors
+
+
+
+For more information about this error, try `rustc --explain E0433`.
+

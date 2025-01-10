@@ -1,0 +1,52 @@
+error[E0573]: expected type, found local variable `x`
+
+  --> mutant.rs:34:23
+
+   |
+
+34 | let _ = | ( x , ) : ( x , ) | x ;
+
+   |                       ^ not a type
+
+
+
+thread 'rustc' panicked at 'expected `NodeId` to be lowered already for res Local(
+
+    NodeId(51),
+
+)', compiler/rustc_ast_lowering/src/lib.rs:674:17
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.50.0-nightly (6a889570e 2020-11-27) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=1 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=1 --crate-type staticlib
+
+
+
+query stack during panic:
+
+end of query stack
+
+error: aborting due to previous error
+
+
+
+For more information about this error, try `rustc --explain E0573`.
+

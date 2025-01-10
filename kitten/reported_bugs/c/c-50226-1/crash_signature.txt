@@ -1,0 +1,3 @@
+bool clang::Expr::EvaluateAsInt(clang::Expr::EvalResult&, const clang::ASTContext&, clang::Expr::SideEffectsKind, bool) const: Assertion `!isValueDependent() && "Expression evaluator can't be called on a dependent expression."' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

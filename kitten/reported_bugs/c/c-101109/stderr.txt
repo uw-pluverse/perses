@@ -1,0 +1,52 @@
+mutant.c:16:36: warning: return type defaults to ‘int’ [-Wimplicit-int]
+
+   16 | section ( ".vtable_map_vars" ) ) ) f3 ( int z )
+
+      |                                    ^~
+
+during RTL pass: final
+
+mutant.c: In function ‘f3’:
+
+mutant.c:19:1: internal compiler error: Segmentation fault
+
+   19 | }
+
+      | ^
+
+0xf0b4b3 crash_signal
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/toplev.c:327
+
+0x12638d9 tree_check(tree_node*, char const*, int, char const*, tree_code)
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/tree.h:3370
+
+0x12638d9 default_elf_asm_named_section(char const*, unsigned int, tree_node*)
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/varasm.c:6908
+
+0x1265bf5 switch_to_section(section*, tree_node*)
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/varasm.c:7832
+
+0x127204d assemble_start_function(tree_node*, char const*)
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/varasm.c:1915
+
+0xb90153 rest_of_handle_final
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/final.c:4281
+
+0xb90153 execute
+
+	/tmp/tmp.oVXW1bTezX-gcc-builder/gcc/gcc/final.c:4363
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

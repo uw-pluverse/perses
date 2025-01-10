@@ -1,0 +1,198 @@
+mutant.c:40:1: warning: no previous prototype for function 'i' [-Wmissing-prototypes]
+
+i ( ) {
+
+^
+
+mutant.c:39:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void
+
+^
+
+static 
+
+mutant.c:40:3: warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+
+i ( ) {
+
+  ^
+
+mutant.c:43:10: warning: variable 'j' is uninitialized when used here [-Wuninitialized]
+
+* g ++ = j ;
+
+         ^
+
+mutant.c:41:1: note: variable 'j' is declared here
+
+f j ;
+
+^
+
+clang-trunk: /tmp/tmp.FIfHBNID2p-clang-builder/llvm-project/clang/lib/CodeGen/CGRecordLayoutBuilder.cpp:747: void {anonymous}::CGRecordLowering::clipTailPadding(): Assertion `Prior->FD->hasAttr<NoUniqueAddressAttr>() && "should not have reused this field's tail padding"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	mutant.c:40:1: LLVM IR generation of declaration 'i'
+
+3.	mutant.c:40:1: Generating code for declaration 'i'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x394ec64)[0x55aed4a1cc64]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x55aed4a1aa84]
+
+clang-trunk(+0x38938c8)[0x55aed49618c8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f706d30a3c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f706cda918b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f706cd88859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f706cd88729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f706cd99f36]
+
+clang-trunk(+0x3cc3ac3)[0x55aed4d91ac3]
+
+clang-trunk(+0x3cca154)[0x55aed4d98154]
+
+clang-trunk(_ZN5clang7CodeGen12CodeGenTypes19ComputeRecordLayoutEPKNS_10RecordDeclEPN4llvm10StructTypeE+0x4e)[0x55aed4d9b6ce]
+
+clang-trunk(_ZN5clang7CodeGen12CodeGenTypes21ConvertRecordDeclTypeEPKNS_10RecordDeclE+0x45f)[0x55aed4eb870f]
+
+clang-trunk(_ZN5clang7CodeGen12CodeGenTypes11ConvertTypeENS_8QualTypeE+0x1bb)[0x55aed4ebb0cb]
+
+clang-trunk(_ZN5clang7CodeGen12CodeGenTypes17ConvertTypeForMemENS_8QualTypeEb+0xa7)[0x55aed4ebca77]
+
+clang-trunk(+0x3cca1bd)[0x55aed4d981bd]
+
+clang-trunk(_ZN5clang7CodeGen12CodeGenTypes19ComputeRecordLayoutEPKNS_10RecordDeclEPN4llvm10StructTypeE+0x4e)[0x55aed4d9b6ce]
+
+clang-trunk(_ZN5clang7CodeGen12CodeGenTypes21ConvertRecordDeclTypeEPKNS_10RecordDeclE+0x45f)[0x55aed4eb870f]
+
+clang-trunk(_ZN5clang7CodeGen12CodeGenTypes11ConvertTypeENS_8QualTypeE+0x1bb)[0x55aed4ebb0cb]
+
+clang-trunk(_ZN5clang7CodeGen12CodeGenTypes17ConvertTypeForMemENS_8QualTypeEb+0xa7)[0x55aed4ebca77]
+
+clang-trunk(+0x3cca1bd)[0x55aed4d981bd]
+
+clang-trunk(_ZN5clang7CodeGen12CodeGenTypes19ComputeRecordLayoutEPKNS_10RecordDeclEPN4llvm10StructTypeE+0x4e)[0x55aed4d9b6ce]
+
+clang-trunk(_ZN5clang7CodeGen12CodeGenTypes21ConvertRecordDeclTypeEPKNS_10RecordDeclE+0x45f)[0x55aed4eb870f]
+
+clang-trunk(_ZN5clang7CodeGen12CodeGenTypes11ConvertTypeENS_8QualTypeE+0x1bb)[0x55aed4ebb0cb]
+
+clang-trunk(_ZN5clang7CodeGen12CodeGenTypes17ConvertTypeForMemENS_8QualTypeEb+0xa7)[0x55aed4ebca77]
+
+clang-trunk(+0x3cca1bd)[0x55aed4d981bd]
+
+clang-trunk(_ZN5clang7CodeGen12CodeGenTypes19ComputeRecordLayoutEPKNS_10RecordDeclEPN4llvm10StructTypeE+0x4e)[0x55aed4d9b6ce]
+
+clang-trunk(_ZN5clang7CodeGen12CodeGenTypes21ConvertRecordDeclTypeEPKNS_10RecordDeclE+0x45f)[0x55aed4eb870f]
+
+clang-trunk(_ZN5clang7CodeGen12CodeGenTypes11ConvertTypeENS_8QualTypeE+0x1bb)[0x55aed4ebb0cb]
+
+clang-trunk(_ZN5clang7CodeGen12CodeGenTypes17ConvertTypeForMemENS_8QualTypeEb+0xa7)[0x55aed4ebca77]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction17EmitAutoVarAllocaERKNS_7VarDeclE+0xacd)[0x55aed5087e1d]
+
+clang-trunk(+0x3fba4ce)[0x55aed50884ce]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction8EmitDeclERKNS_4DeclE+0x1b0)[0x55aed5088870]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction12EmitDeclStmtERKNS_8DeclStmtE+0x87)[0x55aed4d9fb97]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction14EmitSimpleStmtEPKNS_4StmtEN4llvm8ArrayRefIPKNS_4AttrEEE+0x14f)[0x55aed4db255f]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction8EmitStmtEPKNS_4StmtEN4llvm8ArrayRefIPKNS_4AttrEEE+0x5c)[0x55aed4daba4c]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction28EmitCompoundStmtWithoutScopeERKNS_12CompoundStmtEbNS0_12AggValueSlotE+0x8c)[0x55aed4db1e5c]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction16EmitFunctionBodyEPKNS_4StmtE+0xd1)[0x55aed4e092a1]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction12GenerateCodeENS_10GlobalDeclEPN4llvm8FunctionERKNS0_14CGFunctionInfoE+0x37c)[0x55aed4e1aafc]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule28EmitGlobalFunctionDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x1c6)[0x55aed4e74406]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule20EmitGlobalDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x285)[0x55aed4e6ffa5]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule10EmitGlobalENS_10GlobalDeclE+0x3eb)[0x55aed4e7040b]
+
+clang-trunk(+0x3daae72)[0x55aed4e78e72]
+
+clang-trunk(+0x4aad4f9)[0x55aed5b7b4f9]
+
+clang-trunk(+0x4a9f6e0)[0x55aed5b6d6e0]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x204)[0x55aed6c30fe4]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x55aed5b78678]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55aed5428029]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55aed53bb1e6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x55aed5505eb0]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x55aed232e6f6]
+
+clang-trunk(+0x125ca38)[0x55aed232aa38]
+
+clang-trunk(+0x417ddb9)[0x55aed524bdb9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x55aed4961a4c]
+
+clang-trunk(+0x417e55d)[0x55aed524c55d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55aed521eceb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x55aed521f809]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x55aed522a3b9]
+
+clang-trunk(main+0x18af)[0x55aed22594ef]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f706cd8a0b3]
+
+clang-trunk(_start+0x2e)[0x55aed232a5ae]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 5c8659801a4976ef2b327f4071d98086efd42a36)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-93b588.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-93b588.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

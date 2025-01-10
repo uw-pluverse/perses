@@ -1,0 +1,280 @@
+mutant.c:4:1: warning: no previous prototype for function 'check' [-Wmissing-prototypes]
+
+check ( int n )
+
+^
+
+mutant.c:3:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void
+
+^
+
+static 
+
+mutant.c:13:142: warning: expression with side effects has no effect in an unevaluated context [-Wunevaluated-expression]
+
+check ( _Generic ( n ( _Generic ( n ( _Generic ( n ( _Generic ( n ( _Generic ( n ( _Generic ( n ( _Generic ( n ( _Generic ( n ( _Generic ( n ++ , int : 0 ) ) , int : 0 ) ) , int : 0 ) ) , int : 0 ) ) , int : 0 ) ) , int : 0 ) ) , int : 0 ) ) , int : 0 ) ) , int : 0 ) ) ;
+
+                                                                                                                                             ^
+
+mutant.c:13:127: error: called object type 'int' is not a function or function pointer
+
+check ( _Generic ( n ( _Generic ( n ( _Generic ( n ( _Generic ( n ( _Generic ( n ( _Generic ( n ( _Generic ( n ( _Generic ( n ( _Generic ( n ++ , int : 0 ) ) , int : 0 ) ) , int : 0 ) ) , int : 0 ) ) , int : 0 ) ) , int : 0 ) ) , int : 0 ) ) , int : 0 ) ) , int : 0 ) ) ;
+
+                                                                                                                            ~ ^
+
+clang-trunk: /tmp/tmp.xjN6dMkdrg-clang-builder/llvm-project/clang/include/clang/AST/Expr.h:5778: unsigned int clang::GenericSelectionExpr::getResultIndex() const: Assertion `!isResultDependent() && "Generic selection is result-dependent but getResultIndex called!"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:13:185: current parser token ')'
+
+2.	mutant.c:11:1: parsing function body 'main'
+
+3.	mutant.c:11:1: in compound statement ('{}')
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x395b184)[0x560a2773a184]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x560a27737fa4]
+
+clang-trunk(+0x389fdd8)[0x560a2767edd8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f8efe0ac3c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f8efdb4b18b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f8efdb2a859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f8efdb2a729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f8efdb3bf36]
+
+clang-trunk(+0x6a11819)[0x560a2a7f0819]
+
+clang-trunk(_ZNK5clang4Expr14HasSideEffectsERKNS_10ASTContextEb+0x4c9)[0x560a2a7f81f9]
+
+clang-trunk(_ZNK5clang4Expr14HasSideEffectsERKNS_10ASTContextEb+0x1b3)[0x560a2a7f7ee3]
+
+clang-trunk(_ZN5clang4Sema26CreateGenericSelectionExprENS_14SourceLocationES1_S1_PNS_4ExprEN4llvm8ArrayRefIPNS_14TypeSourceInfoEEENS5_IS3_EE+0x267f)[0x560a29ddcb8f]
+
+clang-trunk(_ZN5clang4Sema25ActOnGenericSelectionExprENS_14SourceLocationES1_S1_PNS_4ExprEN4llvm8ArrayRefINS_9OpaquePtrINS_8QualTypeEEEEENS5_IS3_EE+0xd6)[0x560a29df8936]
+
+clang-trunk(_ZN5clang6Parser31ParseGenericSelectionExpressionEv+0x49b)[0x560a299ae11b]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbRbNS0_13TypeCastStateEbPb+0x124f)[0x560a299abb2f]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbNS0_13TypeCastStateEbPb+0x3b)[0x560a299ad50b]
+
+clang-trunk(_ZN5clang6Parser25ParseAssignmentExpressionENS0_13TypeCastStateE+0x3d)[0x560a299ad5ad]
+
+clang-trunk(_ZN5clang6Parser19ParseExpressionListERN4llvm15SmallVectorImplIPNS_4ExprEEERNS2_INS_14SourceLocationEEENS1_12function_refIFvvEEE+0x6f)[0x560a299ad8ef]
+
+clang-trunk(_ZN5clang6Parser28ParsePostfixExpressionSuffixENS_12ActionResultIPNS_4ExprELb1EEE+0x5b8)[0x560a299b1388]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbRbNS0_13TypeCastStateEbPb+0x132)[0x560a299aaa12]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbNS0_13TypeCastStateEbPb+0x3b)[0x560a299ad50b]
+
+clang-trunk(_ZN5clang6Parser25ParseAssignmentExpressionENS0_13TypeCastStateE+0x3d)[0x560a299ad5ad]
+
+clang-trunk(_ZN5clang6Parser31ParseGenericSelectionExpressionEv+0x188)[0x560a299ade08]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbRbNS0_13TypeCastStateEbPb+0x124f)[0x560a299abb2f]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbNS0_13TypeCastStateEbPb+0x3b)[0x560a299ad50b]
+
+clang-trunk(_ZN5clang6Parser25ParseAssignmentExpressionENS0_13TypeCastStateE+0x3d)[0x560a299ad5ad]
+
+clang-trunk(_ZN5clang6Parser19ParseExpressionListERN4llvm15SmallVectorImplIPNS_4ExprEEERNS2_INS_14SourceLocationEEENS1_12function_refIFvvEEE+0x6f)[0x560a299ad8ef]
+
+clang-trunk(_ZN5clang6Parser28ParsePostfixExpressionSuffixENS_12ActionResultIPNS_4ExprELb1EEE+0x5b8)[0x560a299b1388]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbRbNS0_13TypeCastStateEbPb+0x132)[0x560a299aaa12]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbNS0_13TypeCastStateEbPb+0x3b)[0x560a299ad50b]
+
+clang-trunk(_ZN5clang6Parser25ParseAssignmentExpressionENS0_13TypeCastStateE+0x3d)[0x560a299ad5ad]
+
+clang-trunk(_ZN5clang6Parser31ParseGenericSelectionExpressionEv+0x188)[0x560a299ade08]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbRbNS0_13TypeCastStateEbPb+0x124f)[0x560a299abb2f]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbNS0_13TypeCastStateEbPb+0x3b)[0x560a299ad50b]
+
+clang-trunk(_ZN5clang6Parser25ParseAssignmentExpressionENS0_13TypeCastStateE+0x3d)[0x560a299ad5ad]
+
+clang-trunk(_ZN5clang6Parser19ParseExpressionListERN4llvm15SmallVectorImplIPNS_4ExprEEERNS2_INS_14SourceLocationEEENS1_12function_refIFvvEEE+0x6f)[0x560a299ad8ef]
+
+clang-trunk(_ZN5clang6Parser28ParsePostfixExpressionSuffixENS_12ActionResultIPNS_4ExprELb1EEE+0x5b8)[0x560a299b1388]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbRbNS0_13TypeCastStateEbPb+0x132)[0x560a299aaa12]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbNS0_13TypeCastStateEbPb+0x3b)[0x560a299ad50b]
+
+clang-trunk(_ZN5clang6Parser25ParseAssignmentExpressionENS0_13TypeCastStateE+0x3d)[0x560a299ad5ad]
+
+clang-trunk(_ZN5clang6Parser31ParseGenericSelectionExpressionEv+0x188)[0x560a299ade08]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbRbNS0_13TypeCastStateEbPb+0x124f)[0x560a299abb2f]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbNS0_13TypeCastStateEbPb+0x3b)[0x560a299ad50b]
+
+clang-trunk(_ZN5clang6Parser25ParseAssignmentExpressionENS0_13TypeCastStateE+0x3d)[0x560a299ad5ad]
+
+clang-trunk(_ZN5clang6Parser19ParseExpressionListERN4llvm15SmallVectorImplIPNS_4ExprEEERNS2_INS_14SourceLocationEEENS1_12function_refIFvvEEE+0x6f)[0x560a299ad8ef]
+
+clang-trunk(_ZN5clang6Parser28ParsePostfixExpressionSuffixENS_12ActionResultIPNS_4ExprELb1EEE+0x5b8)[0x560a299b1388]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbRbNS0_13TypeCastStateEbPb+0x132)[0x560a299aaa12]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbNS0_13TypeCastStateEbPb+0x3b)[0x560a299ad50b]
+
+clang-trunk(_ZN5clang6Parser25ParseAssignmentExpressionENS0_13TypeCastStateE+0x3d)[0x560a299ad5ad]
+
+clang-trunk(_ZN5clang6Parser31ParseGenericSelectionExpressionEv+0x188)[0x560a299ade08]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbRbNS0_13TypeCastStateEbPb+0x124f)[0x560a299abb2f]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbNS0_13TypeCastStateEbPb+0x3b)[0x560a299ad50b]
+
+clang-trunk(_ZN5clang6Parser25ParseAssignmentExpressionENS0_13TypeCastStateE+0x3d)[0x560a299ad5ad]
+
+clang-trunk(_ZN5clang6Parser19ParseExpressionListERN4llvm15SmallVectorImplIPNS_4ExprEEERNS2_INS_14SourceLocationEEENS1_12function_refIFvvEEE+0x6f)[0x560a299ad8ef]
+
+clang-trunk(_ZN5clang6Parser28ParsePostfixExpressionSuffixENS_12ActionResultIPNS_4ExprELb1EEE+0x5b8)[0x560a299b1388]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbRbNS0_13TypeCastStateEbPb+0x132)[0x560a299aaa12]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbNS0_13TypeCastStateEbPb+0x3b)[0x560a299ad50b]
+
+clang-trunk(_ZN5clang6Parser25ParseAssignmentExpressionENS0_13TypeCastStateE+0x3d)[0x560a299ad5ad]
+
+clang-trunk(_ZN5clang6Parser31ParseGenericSelectionExpressionEv+0x188)[0x560a299ade08]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbRbNS0_13TypeCastStateEbPb+0x124f)[0x560a299abb2f]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbNS0_13TypeCastStateEbPb+0x3b)[0x560a299ad50b]
+
+clang-trunk(_ZN5clang6Parser25ParseAssignmentExpressionENS0_13TypeCastStateE+0x3d)[0x560a299ad5ad]
+
+clang-trunk(_ZN5clang6Parser19ParseExpressionListERN4llvm15SmallVectorImplIPNS_4ExprEEERNS2_INS_14SourceLocationEEENS1_12function_refIFvvEEE+0x6f)[0x560a299ad8ef]
+
+clang-trunk(_ZN5clang6Parser28ParsePostfixExpressionSuffixENS_12ActionResultIPNS_4ExprELb1EEE+0x5b8)[0x560a299b1388]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbRbNS0_13TypeCastStateEbPb+0x132)[0x560a299aaa12]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbNS0_13TypeCastStateEbPb+0x3b)[0x560a299ad50b]
+
+clang-trunk(_ZN5clang6Parser25ParseAssignmentExpressionENS0_13TypeCastStateE+0x3d)[0x560a299ad5ad]
+
+clang-trunk(_ZN5clang6Parser31ParseGenericSelectionExpressionEv+0x188)[0x560a299ade08]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbRbNS0_13TypeCastStateEbPb+0x124f)[0x560a299abb2f]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbNS0_13TypeCastStateEbPb+0x3b)[0x560a299ad50b]
+
+clang-trunk(_ZN5clang6Parser25ParseAssignmentExpressionENS0_13TypeCastStateE+0x3d)[0x560a299ad5ad]
+
+clang-trunk(_ZN5clang6Parser19ParseExpressionListERN4llvm15SmallVectorImplIPNS_4ExprEEERNS2_INS_14SourceLocationEEENS1_12function_refIFvvEEE+0x6f)[0x560a299ad8ef]
+
+clang-trunk(_ZN5clang6Parser28ParsePostfixExpressionSuffixENS_12ActionResultIPNS_4ExprELb1EEE+0x5b8)[0x560a299b1388]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbRbNS0_13TypeCastStateEbPb+0x132)[0x560a299aaa12]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbNS0_13TypeCastStateEbPb+0x3b)[0x560a299ad50b]
+
+clang-trunk(_ZN5clang6Parser25ParseAssignmentExpressionENS0_13TypeCastStateE+0x3d)[0x560a299ad5ad]
+
+clang-trunk(_ZN5clang6Parser15ParseExpressionENS0_13TypeCastStateE+0xd)[0x560a299b0b0d]
+
+clang-trunk(_ZN5clang6Parser18ParseExprStatementENS0_17ParsedStmtContextE+0x4e)[0x560a29a1874e]
+
+clang-trunk(_ZN5clang6Parser42ParseStatementOrDeclarationAfterAttributesERN4llvm11SmallVectorIPNS_4StmtELj32EEENS0_17ParsedStmtContextEPNS_14SourceLocationERNS_25ParsedAttributesWithRangeE+0x8f2)[0x560a29a0fce2]
+
+clang-trunk(_ZN5clang6Parser27ParseStatementOrDeclarationERN4llvm11SmallVectorIPNS_4StmtELj32EEENS0_17ParsedStmtContextEPNS_14SourceLocationE+0x9a)[0x560a29a106ca]
+
+clang-trunk(_ZN5clang6Parser26ParseCompoundStatementBodyEb+0x5f9)[0x560a29a11649]
+
+clang-trunk(_ZN5clang6Parser26ParseFunctionStatementBodyEPNS_4DeclERNS0_10ParseScopeE+0xda)[0x560a29a13c5a]
+
+clang-trunk(_ZN5clang6Parser23ParseFunctionDefinitionERNS_17ParsingDeclaratorERKNS0_18ParsedTemplateInfoEPNS0_18LateParsedAttrListE+0x682)[0x560a29959ef2]
+
+clang-trunk(_ZN5clang6Parser14ParseDeclGroupERNS_15ParsingDeclSpecENS_17DeclaratorContextEPNS_14SourceLocationEPNS0_12ForRangeInitE+0x740)[0x560a29986850]
+
+clang-trunk(_ZN5clang6Parser30ParseDeclOrFunctionDefInternalERNS_25ParsedAttributesWithRangeERNS_15ParsingDeclSpecENS_15AccessSpecifierE+0x226)[0x560a299546f6]
+
+clang-trunk(+0x5b75ce1)[0x560a29954ce1]
+
+clang-trunk(_ZN5clang6Parser24ParseExternalDeclarationERNS_25ParsedAttributesWithRangeEPNS_15ParsingDeclSpecE+0x217)[0x560a2995b4e7]
+
+clang-trunk(_ZN5clang6Parser17ParseTopLevelDeclERNS_9OpaquePtrINS_12DeclGroupRefEEEb+0x1ce)[0x560a2995ca7e]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x219)[0x560a2994f2c9]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x560a28896968]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x560a28146599]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x560a280d97e6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x560a28224480]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x560a25044696]
+
+clang-trunk(+0x12619d8)[0x560a250409d8]
+
+clang-trunk(+0x418b789)[0x560a27f6a789]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x560a2767ef5c]
+
+clang-trunk(+0x418bf2d)[0x560a27f6af2d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x560a27f3d6bb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x560a27f3e1d9]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x560a27f48d89]
+
+clang-trunk(main+0x18af)[0x560a24f6f52f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f8efdb2c0b3]
+
+clang-trunk(_start+0x2e)[0x560a2504054e]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 2e9c75daffddd65e37c3236708b5b133e6f5f2f5)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-0543e3.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-0543e3.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

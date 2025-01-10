@@ -1,0 +1,106 @@
+mutant.c:8:22: warning: ‘struct T’ declared inside parameter list will not be visible outside of this definition or declaration
+
+    8 | foo ( int n , struct T { char a [ n ] ; } b )
+
+      |                      ^
+
+mutant.c: In function ‘foo’:
+
+mutant.c:10:22: warning: unused variable ‘baz’ [-Wunused-variable]
+
+   10 | int r = 0 , i ; char baz [ 15 ] ;
+
+      |                      ^~~
+
+mutant.c:10:13: warning: unused variable ‘i’ [-Wunused-variable]
+
+   10 | int r = 0 , i ; char baz [ 15 ] ;
+
+      |             ^
+
+mutant.c:8:43: warning: unused parameter ‘b’ [-Wunused-parameter]
+
+    8 | foo ( int n , struct T { char a [ n ] ; } b )
+
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+
+In function ‘foo.constprop’:
+
+cc1: internal compiler error: in force_constant_size, at gimplify.c:733
+
+0x6d5542 force_constant_size
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:733
+
+0xc21537 gimple_add_tmp_var(tree_node*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:771
+
+0xbea82b create_tmp_var(tree_node*, char const*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-expr.c:485
+
+0xc2b230 create_tmp_from_val
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:564
+
+0xc2b230 lookup_tmp_var
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:596
+
+0xc2b230 internal_get_tmp_var
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:635
+
+0xc24bb7 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:15072
+
+0xc49b43 gimple_regimplify_operands(gimple*, gimple_stmt_iterator*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify-me.c:235
+
+0xf7689a insert_init_stmt
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/tree-inline.c:3377
+
+0xf88e47 tree_function_versioning(tree_node*, tree_node*, vec<ipa_replace_map*, va_gc, vl_embed>*, ipa_param_adjustments*, bool, bitmap_head*, basic_block_def*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/tree-inline.c:6418
+
+0xa83c85 cgraph_node::materialize_clone()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cgraphclones.c:1131
+
+0xa70dbd cgraph_node::get_untransformed_body()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cgraph.c:3921
+
+0xa7dda9 cgraph_node::expand()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cgraphunit.c:1799
+
+0xa7f26f expand_all_functions
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cgraphunit.c:1992
+
+0xa7f26f symbol_table::compile()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cgraphunit.c:2356
+
+0xa8214b symbol_table::compile()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cgraphunit.c:2269
+
+0xa8214b symbol_table::finalize_compilation_unit()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cgraphunit.c:2537
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

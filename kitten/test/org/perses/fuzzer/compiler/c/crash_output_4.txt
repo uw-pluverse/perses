@@ -1,0 +1,113 @@
+mutant.c: In function ‘foo’:
+
+mutant.c:4:33: error: ‘global’ undeclared (first use in this function)
+
+    4 | __asm__ ( "" : : "m" ( ( { if ( global )
+
+      |                                 ^~~~~~
+
+mutant.c:4:33: note: each undeclared identifier is reported only once for each function it appears in
+
+mutant.c:5:1: warning: implicit declaration of function ‘TMreleaseNode’ [-Wimplicit-function-declaration]
+
+    5 | TMreleaseNode ( ) ; } ) ) ) ;
+
+      | ^~~~~~~~~~~~~
+
+mutant.c:4:31: internal compiler error: Segmentation fault
+
+    4 | __asm__ ( "" : : "m" ( ( { if ( global )
+
+      |                        ~~~~~~~^~~~~~~~~~
+
+    5 | TMreleaseNode ( ) ; } ) ) ) ;
+
+      | ~~~~~~~~~~~~~~~~~~~~~~~
+
+0xef8403 crash_signal
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/toplev.c:327
+
+0xbebdb4 is_gimple_variable
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimple-expr.h:84
+
+0xbebdb4 is_gimple_id
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimple-expr.h:95
+
+0xbebdb4 is_gimple_addressable
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimple-expr.h:122
+
+0xbebdb4 is_gimple_lvalue(tree_node*)
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimple-expr.c:595
+
+0xc2832d gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimplify.c:15038
+
+0xc3197d gimplify_asm_expr
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimplify.c:6506
+
+0xc27665 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimplify.c:14416
+
+0xc29eca gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc274cb gimplify_statement_list
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimplify.c:1879
+
+0xc274cb gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimplify.c:14528
+
+0xc29eca gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc2a6fe gimplify_bind_expr
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimplify.c:1421
+
+0xc26933 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimplify.c:14284
+
+0xc29eca gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc2b4c3 gimplify_body(tree_node*, bool)
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimplify.c:15328
+
+0xc2b911 gimplify_function_tree(tree_node*)
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimplify.c:15482
+
+0xa7fa97 cgraph_node::analyze()
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/cgraphunit.c:670
+
+0xa829a1 analyze_functions
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/cgraphunit.c:1234
+
+0xa83471 symbol_table::finalize_compilation_unit()
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/cgraphunit.c:2508
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.

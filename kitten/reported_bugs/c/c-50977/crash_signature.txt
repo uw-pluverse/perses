@@ -1,0 +1,2 @@
+typename llvm::cast_retty<X, Y*>::ret_type llvm::cast(Y*) [with X = clang::FunctionDecl; Y = clang::Decl; typename llvm::cast_retty<X, Y*>::ret_type = clang::FunctionDecl*]: Assertion `isa<X>(Val) && "cast<Ty>() argument of incompatible type!"' failed.
+PLEASE submit a bug report to

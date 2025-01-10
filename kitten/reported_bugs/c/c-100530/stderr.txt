@@ -1,0 +1,88 @@
+mutant.c:1:21: warning: ‘i’ initialized and declared ‘extern’
+
+    1 | extern __seg_gs int i = 0 ;
+
+      |                     ^
+
+mutant.c:1:1: internal compiler error: in add_dwarf_attr, at dwarf2out.c:4493
+
+    1 | extern __seg_gs int i = 0 ;
+
+      | ^~~~~~
+
+0x6a0017 add_dwarf_attr
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/dwarf2out.c:4493
+
+0x6a0017 add_dwarf_attr
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/dwarf2out.c:4480
+
+0x6a0017 add_AT_string
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/dwarf2out.c:4753
+
+0x6a0017 add_name_attribute
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/dwarf2out.c:20909
+
+0xb0587c add_name_attribute
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/dwarf2out.c:13684
+
+0xb0587c modified_type_die
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/dwarf2out.c:13876
+
+0xb078f4 add_type_attribute
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/dwarf2out.c:22023
+
+0xafb587 gen_variable_die
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/dwarf2out.c:24331
+
+0xb1d6c8 gen_decl_die
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/dwarf2out.c:26780
+
+0xb1ec96 dwarf2out_decl
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/dwarf2out.c:27270
+
+0xb1f434 dwarf2out_early_global_decl
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/dwarf2out.c:26920
+
+0x8dfeeb finish_decl(tree_node*, unsigned int, tree_node*, tree_node*, tree_node*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-decl.c:5534
+
+0x94350c c_parser_declaration_or_fndef
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:2285
+
+0x94b9d3 c_parser_external_declaration
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:1777
+
+0x94c439 c_parser_translation_unit
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:1650
+
+0x94c439 c_parse_file()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:21984
+
+0x9ac765 c_common_parse_file()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c-family/c-opts.c:1218
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

@@ -1,0 +1,46 @@
+mutant.c: In function ‘nowarn_range_ptr_var_1’:
+
+mutant.c:6:28: warning: format ‘%s’ expects argument of type ‘char *’, but argument 3 has type ‘int’ [-Wformat=]
+
+    6 | __builtin_sprintf ( d4 , "%s" , d7 [ i ] ) ;
+
+      |                           ~^    ~~~~~~~~
+
+      |                            |       |
+
+      |                            char *  int
+
+      |                           %d
+
+during GIMPLE pass: uninit
+
+mutant.c:4:6: internal compiler error: in ao_ref_init_from_ptr_and_range, at tree-ssa-alias.c:824
+
+    4 | void nowarn_range_ptr_var_1 ( int i )
+
+      |      ^~~~~~~~~~~~~~~~~~~~~~
+
+0x7750a5 ao_ref_init_from_ptr_and_range
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/tree-ssa-alias.c:824
+
+0x113b3b1 maybe_warn_pass_by_reference
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/tree-ssa-uninit.c:545
+
+0x113b3b1 warn_uninitialized_vars
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/tree-ssa-uninit.c:659
+
+0x114056a execute
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/tree-ssa-uninit.c:3030
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

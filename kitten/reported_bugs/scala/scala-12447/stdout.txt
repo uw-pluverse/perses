@@ -1,0 +1,66 @@
+exception while typing I0.hashCode$extension([33mthis[0m) of class class dotty.tools.dotc.ast.Trees$Apply # -1
+
+exception while typing I0.hashCode$extension([33mthis[0m)() of class class dotty.tools.dotc.ast.Trees$Apply # -1
+
+exception while typing [33moverride[0m [33mdef[0m [36mhashCode[0m(): [35mInt[0m = I0.hashCode$extension([33mthis[0m)() of class class dotty.tools.dotc.ast.Trees$DefDef # -1
+
+exception while typing @[35mscala.annotation.internal.SourceFile[0m([32m"mutant.scala"[0m) [33mfinal[0m [33mclass[0m [35mI0[0m([36mI0[0m: [35mDouble & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0[0m)[33m extends[0m [35mAnyVal[0m() {
+
+  [33moverride[0m [33mdef[0m [36mhashCode[0m(): [35mInt[0m = I0.hashCode$extension([33mthis[0m)()
+
+  [33moverride[0m [33mdef[0m [36mequals[0m([36mx$0[0m: [35mAny[0m): [35mBoolean[0m = I0.equals$extension([33mthis[0m)(x$0)
+
+  [33mprivate[0m [33mdef[0m [36mI0[0m: [35mDouble & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0[0m
+
+} of class class dotty.tools.dotc.ast.Trees$TypeDef # -1
+
+exception while typing [33mpackage [0m<empty> {
+
+  @[35mscala.annotation.internal.SourceFile[0m([32m"mutant.scala"[0m) [33mfinal[0m [33mclass[0m [35mI0[0m([36mI0[0m: [35mDouble & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0[0m)[33m extends[0m [35mAnyVal[0m() {
+
+    [33moverride[0m [33mdef[0m [36mhashCode[0m(): [35mInt[0m = I0.hashCode$extension([33mthis[0m)()
+
+    [33moverride[0m [33mdef[0m [36mequals[0m([36mx$0[0m: [35mAny[0m): [35mBoolean[0m = I0.equals$extension([33mthis[0m)(x$0)
+
+    [33mprivate[0m [33mdef[0m [36mI0[0m: [35mDouble & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0 & I0[0m
+
+  }
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m [33mval[0m [36mI0[0m: [35mI0$[0m = [33mnew [0m[35mI0$[0m()
+
+  @[35mscala.annotation.internal.SourceFile[0m([32m"mutant.scala"[0m) [33mfinal[0m [33mmodule[0m [33mclass[0m [35mI0$[0m()[33m extends[0m [35mAnyRef[0m() {
+
+    [33mprivate[0m [33mdef[0m [36mwriteReplace[0m(): [35mAnyRef[0m = [33mnew [0m[35mscala.runtime.ModuleSerializationProxy[0m(classOf[I0.type])
+
+    [33mfinal[0m [33mdef[0m [36mhashCode$extension[0m([36m$this[0m: [35mI0[0m)(): [35mInt[0m = I0.hashCode$extension($this.I0)()
+
+    [33mfinal[0m [33mdef[0m [36mequals$extension[0m([36m$this[0m: [35mI0[0m)([36mx$0[0m: [35mAny[0m): [35mBoolean[0m = 
+
+      matchResult1[33m[[0mBoolean[33m]: [0m
+
+        {
+
+          [33mcase[0m [33mval[0m [36mx1[0m: [35m(x$0 : Object)[0m = x$0
+
+          [33mif [0mx1.$isInstanceOf$[[35mI0 @unchecked[0m][33m then[0m 
+
+            {
+
+              [33mcase[0m [33mval[0m [36mx$0[0m: [35mI0[0m = x1.$asInstanceOf$[[35mI0 @unchecked[0m]
+
+              [33mreturn[[0mmatchResult1[33m][0m $this.I0.==(x$0.I0)
+
+            }
+
+          [33m else [0m[31m()[0m
+
+          [33mreturn[[0mmatchResult1[33m][0m [31mfalse[0m
+
+        }
+
+  }
+
+} of class class dotty.tools.dotc.ast.Trees$PackageDef # -1
+
+java.lang.AssertionError: assertion failed: Non-sensical cast between unrelated types ErasedValueType(I0, Double) and ErasedValueType(I0, Double) while compiling mutant.scala
+

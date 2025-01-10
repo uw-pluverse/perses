@@ -1,0 +1,60 @@
+mutant.c: In function ‘foo_ashiftrt_256’:
+
+mutant.c:5:1: warning: AVX vector return without AVX enabled changes the ABI [-Wpsabi]
+
+    5 | {
+
+      | ^
+
+mutant.c:4:1: note: the ABI for passing parameters with 32-byte alignment has changed in GCC 4.6
+
+    4 | foo_ashiftrt_256 ( v32qi a )
+
+      | ^~~~~~~~~~~~~~~~
+
+mutant.c: In function ‘foo_ashift_256’:
+
+mutant.c:8:1: warning: AVX vector argument without AVX enabled changes the ABI [-Wpsabi]
+
+    8 | foo_ashift_256 ( v32qi a )
+
+      | ^~~~~~~~~~~~~~
+
+during RTL pass: expand
+
+mutant.c: In function ‘foo_ashift_256.arch_core_avx2.0’:
+
+mutant.c:11:1: internal compiler error: Segmentation fault
+
+   11 | }
+
+      | ^
+
+0xf0a1a3 crash_signal
+
+	/tmp/tmp.MAuXx9TiBr-gcc-builder/gcc/gcc/toplev.c:327
+
+0xb53029 convert_memory_address_addr_space_1(scalar_int_mode, rtx_def*, unsigned char, bool, bool)
+
+	/tmp/tmp.MAuXx9TiBr-gcc-builder/gcc/gcc/explow.c:309
+
+0xbdf25b expand_function_end()
+
+	/tmp/tmp.MAuXx9TiBr-gcc-builder/gcc/gcc/function.c:5517
+
+0xa50992 construct_exit_block
+
+	/tmp/tmp.MAuXx9TiBr-gcc-builder/gcc/gcc/cfgexpand.c:6194
+
+0xa50992 execute
+
+	/tmp/tmp.MAuXx9TiBr-gcc-builder/gcc/gcc/cfgexpand.c:6812
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

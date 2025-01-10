@@ -1,0 +1,4 @@
+internal compiler error: in decompose, at wide-int.h
+check_nul_terminated_array(tree_node*, tree_node*, tree_node*)
+check_access(tree_node*, tree_node*, tree_node*, tree_node*, tree_node*, access_mode, access_data const*)
+check_read_access

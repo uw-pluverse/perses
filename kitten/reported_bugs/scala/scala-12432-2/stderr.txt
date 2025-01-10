@@ -1,0 +1,272 @@
+exception occurred while compiling mutant.scala
+
+Exception in thread "main" java.lang.AssertionError: assertion failed: no member [33mthis[0m.annotation . ==, members = Scope{
+
+  class switch?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object switch?
+
+  [33mfinal[0m [33mmodule[0m object switch$?
+
+  class implicitAmbiguous?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object implicitAmbiguous?
+
+  [33mfinal[0m [33mmodule[0m object implicitAmbiguous$?
+
+  trait ClassfileAnnotation?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object ClassfileAnnotation?
+
+  [33mfinal[0m [33mmodule[0m object ClassfileAnnotation$: <notype>
+
+  trait TypeConstraint?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object TypeConstraint?
+
+  [33mfinal[0m [33mmodule[0m object TypeConstraint$: <notype>
+
+  class unspecialized?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object unspecialized?
+
+  [33mfinal[0m [33mmodule[0m object unspecialized$?
+
+  class varargs?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object varargs?
+
+  [33mfinal[0m [33mmodule[0m object varargs$?
+
+  class unused?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object unused?
+
+  [33mfinal[0m [33mmodule[0m object unused$?
+
+  class implicitNotFound?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object implicitNotFound?
+
+  [33mfinal[0m [33mmodule[0m object implicitNotFound$?
+
+  [33mprivate[scala][0m class migration?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object migration?
+
+  [33mfinal[0m [33mmodule[0m object migration$?
+
+  class strictfp?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object strictfp?
+
+  [33mfinal[0m [33mmodule[0m object strictfp$?
+
+  class compileTimeOnly?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object compileTimeOnly?
+
+  [33mfinal[0m [33mmodule[0m object compileTimeOnly$?
+
+  [33mabstract[0m class Annotation extends [35mObject[0m {} at (scala.annotation : annotation.type)
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object Annotation?
+
+  [33mfinal[0m [33mmodule[0m object Annotation$: <notype>
+
+  class nowarn?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object nowarn?
+
+  [33mfinal[0m [33mmodule[0m object nowarn$?
+
+  [33mabstract[0m trait StaticAnnotation extends [35mscala.annotation.Annotation[0m {} at (scala.annotation : annotation.type)
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object StaticAnnotation?
+
+  [33mfinal[0m [33mmodule[0m object StaticAnnotation$: <notype>
+
+  trait ConstantAnnotation?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object ConstantAnnotation?
+
+  [33mfinal[0m [33mmodule[0m object ConstantAnnotation$: <notype>
+
+  class tailrec?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object tailrec?
+
+  [33mfinal[0m [33mmodule[0m object tailrec$?
+
+  class showAsInfix?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object showAsInfix?
+
+  [33mfinal[0m [33mmodule[0m object showAsInfix$?
+
+  class elidable?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object elidable?
+
+  [33mfinal[0m [33mmodule[0m object elidable$?
+
+  class threadUnsafe?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object threadUnsafe?
+
+  [33mfinal[0m [33mmodule[0m object threadUnsafe$?
+
+  class alpha?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object alpha?
+
+  [33mfinal[0m [33mmodule[0m object alpha$?
+
+  trait RefiningAnnotation?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object RefiningAnnotation?
+
+  [33mfinal[0m [33mmodule[0m object RefiningAnnotation$: <notype>
+
+  class targetName?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object targetName?
+
+  [33mfinal[0m [33mmodule[0m object targetName$?
+
+  class static?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object static?
+
+  [33mfinal[0m [33mmodule[0m object static$?
+
+  class transparentTrait?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object transparentTrait?
+
+  [33mfinal[0m [33mmodule[0m object transparentTrait$?
+
+  class constructorOnly?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object constructorOnly?
+
+  [33mfinal[0m [33mmodule[0m object constructorOnly$?
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object unchecked: scala.annotation.unchecked
+
+  [33mfinal[0m [33mmodule[0m object unchecked extends  {this: scala.annotation.unchecked.type =>} at (scala.annotation : annotation.type)
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object meta: scala.annotation.meta
+
+  [33mfinal[0m [33mmodule[0m object meta extends  {this: scala.annotation.meta.type =>} at (scala.annotation : annotation.type)
+
+  [33mfinal[0m [33mlazy[0m [33mmodule[0m object internal: scala.annotation.internal
+
+  [33mfinal[0m [33mmodule[0m object internal extends  {this: scala.annotation.internal.type =>} at (scala.annotation : annotation.type)
+
+}
+
+	at scala.runtime.Scala3RunTime$.assertFailed(Scala3RunTime.scala:8)
+
+	at dotty.tools.dotc.ast.Trees$Instance.applyOverloaded(Trees.scala:1675)
+
+	at dotty.tools.dotc.ast.tpd$TreeOps$.equal$extension(tpd.scala:962)
+
+	at dotty.tools.dotc.transform.SyntheticMembers.$anonfun$12(SyntheticMembers.scala:255)
+
+	at scala.collection.immutable.List.map(List.scala:246)
+
+	at dotty.tools.dotc.transform.SyntheticMembers.equalsBody$1(SyntheticMembers.scala:255)
+
+	at dotty.tools.dotc.transform.SyntheticMembers.syntheticRHS$1(SyntheticMembers.scala:146)
+
+	at dotty.tools.dotc.transform.SyntheticMembers.syntheticDef$3$$anonfun$2$$anonfun$1(SyntheticMembers.scala:155)
+
+	at dotty.tools.dotc.transform.SyntheticMembers.synthesizeDef$$anonfun$1(SyntheticMembers.scala:85)
+
+	at dotty.tools.dotc.ast.tpd$.DefDef(tpd.scala:285)
+
+	at dotty.tools.dotc.transform.SyntheticMembers.synthesizeDef(SyntheticMembers.scala:85)
+
+	at dotty.tools.dotc.transform.SyntheticMembers.syntheticDef$1(SyntheticMembers.scala:155)
+
+	at dotty.tools.dotc.transform.SyntheticMembers.syntheticDefIfMissing$1(SyntheticMembers.scala:110)
+
+	at dotty.tools.dotc.transform.SyntheticMembers.caseAndValueMethods$$anonfun$1(SyntheticMembers.scala:383)
+
+	at scala.collection.immutable.List.flatMap(List.scala:293)
+
+	at dotty.tools.dotc.transform.SyntheticMembers.caseAndValueMethods(SyntheticMembers.scala:383)
+
+	at dotty.tools.dotc.transform.SyntheticMembers.addSyntheticMembers(SyntheticMembers.scala:604)
+
+	at dotty.tools.dotc.transform.PostTyper$PostTyperTransformer.transform$$anonfun$4(PostTyper.scala:343)
+
+	at dotty.tools.dotc.transform.PostTyper$PostTyperTransformer.withNoCheckNews(PostTyper.scala:98)
+
+	at dotty.tools.dotc.transform.PostTyper$PostTyperTransformer.transform(PostTyper.scala:344)
+
+	at dotty.tools.dotc.ast.Trees$Instance$TreeMap.transform(Trees.scala:1410)
+
+	at dotty.tools.dotc.transform.MacroTransform$Transformer.transform(MacroTransform.scala:51)
+
+	at dotty.tools.dotc.transform.PostTyper$PostTyperTransformer.transform(PostTyper.scala:368)
+
+	at dotty.tools.dotc.transform.MacroTransform$Transformer.transformStat$1(MacroTransform.scala:39)
+
+	at dotty.tools.dotc.transform.MacroTransform$Transformer.transformStats$$anonfun$1(MacroTransform.scala:42)
+
+	at dotty.tools.dotc.core.Decorators$ListDecorator$.loop$1(Decorators.scala:92)
+
+	at dotty.tools.dotc.core.Decorators$ListDecorator$.mapconserve$extension(Decorators.scala:108)
+
+	at dotty.tools.dotc.transform.MacroTransform$Transformer.transformStats(MacroTransform.scala:42)
+
+	at dotty.tools.dotc.ast.Trees$Instance$TreeMap.transform(Trees.scala:1421)
+
+	at dotty.tools.dotc.transform.MacroTransform$Transformer.transform(MacroTransform.scala:51)
+
+	at dotty.tools.dotc.transform.PostTyper$PostTyperTransformer.transform(PostTyper.scala:433)
+
+	at dotty.tools.dotc.transform.MacroTransform.run(MacroTransform.scala:21)
+
+	at dotty.tools.dotc.core.Phases$Phase.runOn$$anonfun$1(Phases.scala:303)
+
+	at scala.collection.immutable.List.map(List.scala:246)
+
+	at dotty.tools.dotc.core.Phases$Phase.runOn(Phases.scala:304)
+
+	at dotty.tools.dotc.Run.runPhases$4$$anonfun$4(Run.scala:205)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.ArrayOps$.foreach$extension(ArrayOps.scala:1323)
+
+	at dotty.tools.dotc.Run.runPhases$5(Run.scala:216)
+
+	at dotty.tools.dotc.Run.compileUnits$$anonfun$1(Run.scala:224)
+
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+
+	at dotty.tools.dotc.util.Stats$.maybeMonitored(Stats.scala:67)
+
+	at dotty.tools.dotc.Run.compileUnits(Run.scala:231)
+
+	at dotty.tools.dotc.Run.compileSources(Run.scala:166)
+
+	at dotty.tools.dotc.Run.compile(Run.scala:150)
+
+	at dotty.tools.dotc.Driver.doCompile(Driver.scala:39)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:199)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:167)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:179)
+
+	at dotty.tools.dotc.Driver.main(Driver.scala:209)
+
+	at dotty.tools.dotc.Main.main(Main.scala)
+

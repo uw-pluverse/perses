@@ -1,0 +1,3 @@
+internal compiler error: symtab_node::verify failed
+symtab_node::verify()
+symtab_node::verify_symtab_nodes()

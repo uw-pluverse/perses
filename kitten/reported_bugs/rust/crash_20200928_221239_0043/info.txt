@@ -1,0 +1,6 @@
+seed=test_data/rust_programs/rust_testsuite/ui/dep-graph/dep-graph-variance-alias.rs
+compiler_version=rustc 1.48.0-nightly (7f7a1cbfd 2020-09-27)
+
+
+mutant=default_temp_folder_rust/mutant_00084062/mutant.rs
+reported=https://github.com/rust-lang/rust/issues/77323

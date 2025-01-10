@@ -1,0 +1,3 @@
+void checkAttributesAfterMerging(clang::Sema&, clang::NamedDecl&): Assertion `VD->isThisDeclarationADefinition() && !VD->isExternallyVisible() && "Broken AliasAttr handled late!"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

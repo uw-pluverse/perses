@@ -1,0 +1,74 @@
+mutant.c:1:5: error: ‘__GIMPLE’ only valid with ‘-fgimple’
+
+    1 | int __GIMPLE foo ( )
+
+      |     ^~~~~~~~
+
+mutant.c: In function ‘foo’:
+
+mutant.c:4:24: error: ‘a’ undeclared (first use in this function)
+
+    4 | t1_1 = __builtin_abs ( a ) ;
+
+      |                        ^
+
+mutant.c:4:24: note: each undeclared identifier is reported only once for each function it appears in
+
+mutant.c:3:5: warning: unused variable ‘t1’ [-Wunused-variable]
+
+    3 | int t1 ;
+
+      |     ^~
+
+during GIMPLE pass: lower
+
+mutant.c:1:14: internal compiler error: tree check: expected class ‘type’, have ‘exceptional’ (error_mark) in useless_type_conversion_p, at gimple-expr.c:87
+
+    1 | int __GIMPLE foo ( )
+
+      |              ^~~
+
+0x7bcdf3 tree_class_check_failed(tree_node const*, tree_code_class, char const*, int, char const*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/tree.c:8724
+
+0x6cb6e0 tree_class_check(tree_node*, tree_code_class, char const*, int, char const*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/tree.h:3479
+
+0x6cb6e0 useless_type_conversion_p(tree_node*, tree_node*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-expr.c:87
+
+0xbe580a gimple_builtin_call_types_compatible_p(gimple const*, tree_node*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple.c:2723
+
+0x1917795 lower_stmt
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-low.c:387
+
+0x1917795 lower_sequence
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-low.c:217
+
+0x191764d lower_gimple_bind
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-low.c:473
+
+0x191850d lower_function_body
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-low.c:110
+
+0x191850d execute
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-low.c:195
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

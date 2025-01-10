@@ -1,0 +1,4 @@
+internal compiler error: verify_gimple failed
+verify_gimple_in_cfg(function*, bool)
+execute_function_todo
+execute_todo

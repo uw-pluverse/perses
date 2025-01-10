@@ -1,0 +1,87 @@
+Exception in thread "main" java.lang.NoClassDefFoundError: Could not initialize class dotty.tools.dotc.reporting.ExpectedTokenButFound
+
+	at dotty.tools.dotc.parsing.Parsers$Parser.accept(Parsers.scala:289)
+
+	at dotty.tools.dotc.parsing.Parsers$Parser.enclosed(Parsers.scala:532)
+
+	at dotty.tools.dotc.parsing.Parsers$Parser.inBraces(Parsers.scala:535)
+
+	at dotty.tools.dotc.parsing.Parsers$Parser.inBracesOrIndented(Parsers.scala:548)
+
+	at dotty.tools.dotc.parsing.Parsers$Parser.inDefScopeBraces(Parsers.scala:551)
+
+	at dotty.tools.dotc.parsing.Parsers$Parser.templateBody(Parsers.scala:3746)
+
+	at dotty.tools.dotc.parsing.Parsers$Parser.templateBodyOpt(Parsers.scala:3739)
+
+	at dotty.tools.dotc.parsing.Parsers$Parser.template(Parsers.scala:3716)
+
+	at dotty.tools.dotc.parsing.Parsers$Parser.templateOpt(Parsers.scala:3724)
+
+	at dotty.tools.dotc.parsing.Parsers$Parser.objectDef(Parsers.scala:3478)
+
+	at dotty.tools.dotc.parsing.Parsers$Parser.tmplDef(Parsers.scala:3437)
+
+	at dotty.tools.dotc.parsing.Parsers$Parser.defOrDcl(Parsers.scala:3229)
+
+	at dotty.tools.dotc.parsing.Parsers$Parser.topStatSeq(Parsers.scala:3803)
+
+	at dotty.tools.dotc.parsing.Parsers$Parser.topstats$2(Parsers.scala:3971)
+
+	at dotty.tools.dotc.parsing.Parsers$Parser.compilationUnit$$anonfun$1(Parsers.scala:3976)
+
+	at dotty.tools.dotc.parsing.Parsers$Parser.checkNoEscapingPlaceholders(Parsers.scala:476)
+
+	at dotty.tools.dotc.parsing.Parsers$Parser.compilationUnit(Parsers.scala:3981)
+
+	at dotty.tools.dotc.parsing.Parsers$Parser.parse(Parsers.scala:176)
+
+	at dotty.tools.dotc.typer.FrontEnd.parse$$anonfun$1(FrontEnd.scala:57)
+
+	at dotty.tools.dotc.typer.FrontEnd.monitor(FrontEnd.scala:43)
+
+	at dotty.tools.dotc.typer.FrontEnd.parse(FrontEnd.scala:67)
+
+	at dotty.tools.dotc.typer.FrontEnd.runOn$$anonfun$1(FrontEnd.scala:108)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.immutable.List.foreach(List.scala:333)
+
+	at dotty.tools.dotc.typer.FrontEnd.runOn(FrontEnd.scala:108)
+
+	at dotty.tools.dotc.Run.runPhases$4$$anonfun$4(Run.scala:205)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.ArrayOps$.foreach$extension(ArrayOps.scala:1323)
+
+	at dotty.tools.dotc.Run.runPhases$5(Run.scala:215)
+
+	at dotty.tools.dotc.Run.compileUnits$$anonfun$1(Run.scala:223)
+
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+
+	at dotty.tools.dotc.util.Stats$.maybeMonitored(Stats.scala:67)
+
+	at dotty.tools.dotc.Run.compileUnits(Run.scala:230)
+
+	at dotty.tools.dotc.Run.compileSources(Run.scala:166)
+
+	at dotty.tools.dotc.Run.compile(Run.scala:150)
+
+	at dotty.tools.dotc.Driver.doCompile(Driver.scala:39)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:199)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:167)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:179)
+
+	at dotty.tools.dotc.Driver.main(Driver.scala:209)
+
+	at dotty.tools.dotc.Main.main(Main.scala)

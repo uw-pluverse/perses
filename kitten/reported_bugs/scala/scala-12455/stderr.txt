@@ -1,0 +1,158 @@
+[31m-- [E006] Not Found Error: mutant.scala:1:45 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[0m
+
+[31m1 |[0m[33mabstract[0m [33mclass[0m [35mA[0m { util . Random . shuffle ( makePoints2 )
+
+  |                                             [31m^^^^^^^^^^^[0m
+
+  |                                             Not found: makePoints2
+
+
+
+longer explanation available when compiling with `-explain`
+
+exception occurred while typechecking mutant.scala
+
+exception occurred while compiling mutant.scala
+
+Exception in thread "main" java.util.NoSuchElementException: head of empty list
+
+	at scala.collection.immutable.Nil$.head(List.scala:629)
+
+	at scala.collection.immutable.Nil$.head(List.scala:628)
+
+	at dotty.tools.dotc.core.SymDenotations$SymDenotation.recurWithParamss$1(SymDenotations.scala:312)
+
+	at dotty.tools.dotc.core.SymDenotations$SymDenotation.recurWithParamss$1(SymDenotations.scala:312)
+
+	at dotty.tools.dotc.core.SymDenotations$SymDenotation.recurWithParamss$1(SymDenotations.scala:312)
+
+	at dotty.tools.dotc.core.SymDenotations$SymDenotation.paramSymss(SymDenotations.scala:329)
+
+	at dotty.tools.dotc.typer.Typer.paramSymWithMethodTree$3(Typer.scala:3326)
+
+	at dotty.tools.dotc.typer.Typer.issueErrors$1$$anonfun$1$$anonfun$1(Typer.scala:3338)
+
+	at dotty.tools.dotc.reporting.NoExplanation.msg(Message.scala:133)
+
+	at dotty.tools.dotc.reporting.Message.message(Message.scala:88)
+
+	at dotty.tools.dotc.reporting.Message.isNonSensical(Message.scala:100)
+
+	at dotty.tools.dotc.reporting.HideNonSensicalMessages.isHidden(HideNonSensicalMessages.scala:16)
+
+	at dotty.tools.dotc.reporting.HideNonSensicalMessages.isHidden$(HideNonSensicalMessages.scala:10)
+
+	at dotty.tools.dotc.reporting.AbstractReporter.isHidden(AbstractReporter.scala:8)
+
+	at dotty.tools.dotc.reporting.Reporter.report(Reporter.scala:148)
+
+	at dotty.tools.dotc.report$.error(report.scala:71)
+
+	at dotty.tools.dotc.typer.Typer.issueErrors$2$$anonfun$2(Typer.scala:3340)
+
+	at scala.runtime.function.JProcedure3.apply(JProcedure3.java:15)
+
+	at scala.runtime.function.JProcedure3.apply(JProcedure3.java:10)
+
+	at scala.collection.LazyZip3.foreach(LazyZipOps.scala:248)
+
+	at dotty.tools.dotc.typer.Typer.issueErrors$3(Typer.scala:3342)
+
+	at dotty.tools.dotc.typer.Typer.addImplicitArgs$3(Typer.scala:3368)
+
+	at dotty.tools.dotc.typer.Typer.adaptNoArgsImplicitMethod$2(Typer.scala:3385)
+
+	at dotty.tools.dotc.typer.Typer.adaptNoArgs$1(Typer.scala:3582)
+
+	at dotty.tools.dotc.typer.Typer.adapt1(Typer.scala:3795)
+
+	at dotty.tools.dotc.typer.Typer.adapt(Typer.scala:3147)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2861)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2884)
+
+	at dotty.tools.dotc.typer.Typer.typedClassDef(Typer.scala:2340)
+
+	at dotty.tools.dotc.typer.Typer.typedTypeOrClassDef$2(Typer.scala:2669)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2673)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2742)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2834)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2884)
+
+	at dotty.tools.dotc.typer.Typer.typedPackageDef(Typer.scala:2463)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2714)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2928)
+
+	at dotty.tools.dotc.typer.FrontEnd.liftedTree1$1(FrontEnd.scala:79)
+
+	at dotty.tools.dotc.typer.FrontEnd.typeCheck$$anonfun$1(FrontEnd.scala:84)
+
+	at dotty.tools.dotc.typer.FrontEnd.monitor(FrontEnd.scala:43)
+
+	at dotty.tools.dotc.typer.FrontEnd.typeCheck(FrontEnd.scala:85)
+
+	at dotty.tools.dotc.typer.FrontEnd.runOn$$anonfun$3(FrontEnd.scala:120)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.immutable.List.foreach(List.scala:333)
+
+	at dotty.tools.dotc.typer.FrontEnd.runOn(FrontEnd.scala:120)
+
+	at dotty.tools.dotc.Run.runPhases$4$$anonfun$4(Run.scala:205)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.ArrayOps$.foreach$extension(ArrayOps.scala:1323)
+
+	at dotty.tools.dotc.Run.runPhases$5(Run.scala:216)
+
+	at dotty.tools.dotc.Run.compileUnits$$anonfun$1(Run.scala:224)
+
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+
+	at dotty.tools.dotc.util.Stats$.maybeMonitored(Stats.scala:67)
+
+	at dotty.tools.dotc.Run.compileUnits(Run.scala:231)
+
+	at dotty.tools.dotc.Run.compileSources(Run.scala:166)
+
+	at dotty.tools.dotc.Run.compile(Run.scala:150)
+
+	at dotty.tools.dotc.Driver.doCompile(Driver.scala:39)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:199)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:167)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:179)
+
+	at dotty.tools.dotc.Driver.main(Driver.scala:209)
+
+	at dotty.tools.dotc.Main.main(Main.scala)
+

@@ -1,0 +1,50 @@
+during GIMPLE pass: slp
+
+mutant.c: In function ‘count_fib’:
+
+mutant.c:4:6: internal compiler error: Segmentation fault
+
+    4 | void count_fib ( void )
+
+      |      ^~~~~~~~~
+
+0xf13763 crash_signal
+
+	/tmp/tmp.buHCZx7AOn-gcc-builder/gcc/gcc/toplev.c:327
+
+0x11e1f55 vect_optimize_slp(vec_info*)
+
+	/tmp/tmp.buHCZx7AOn-gcc-builder/gcc/gcc/tree-vect-slp.c:3694
+
+0x11eb481 vect_optimize_slp(vec_info*)
+
+	/tmp/tmp.buHCZx7AOn-gcc-builder/gcc/gcc/tree-vect-slp.c:5644
+
+0x11eb481 vect_slp_analyze_bb_1
+
+	/tmp/tmp.buHCZx7AOn-gcc-builder/gcc/gcc/tree-vect-slp.c:5608
+
+0x11eb481 vect_slp_region
+
+	/tmp/tmp.buHCZx7AOn-gcc-builder/gcc/gcc/tree-vect-slp.c:5695
+
+0x11ec5c8 vect_slp_bbs
+
+	/tmp/tmp.buHCZx7AOn-gcc-builder/gcc/gcc/tree-vect-slp.c:5845
+
+0x11ec9fc vect_slp_function(function*)
+
+	/tmp/tmp.buHCZx7AOn-gcc-builder/gcc/gcc/tree-vect-slp.c:5931
+
+0x11f3761 execute
+
+	/tmp/tmp.buHCZx7AOn-gcc-builder/gcc/gcc/tree-vectorizer.c:1445
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

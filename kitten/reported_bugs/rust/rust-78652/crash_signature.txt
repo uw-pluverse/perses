@@ -1,0 +1,4 @@
+error: internal compiler error: stable const functions must have either `rustc_const_stable` or `rustc_const_unstable` attribute
+thread 'rustc' panicked at 'no errors encountered even though `delay_span_bug` issued'
+error: internal compiler error: unexpected panic
+note: the compiler unexpectedly panicked. this is a bug.

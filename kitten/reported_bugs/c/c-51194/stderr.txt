@@ -1,0 +1,172 @@
+mutant.c:1:15: warning: no previous extern declaration for non-static variable 'b' [-Wmissing-variable-declarations]
+
+unsigned char b = 36 , c = 173 ;
+
+              ^
+
+mutant.c:1:1: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+unsigned char b = 36 , c = 173 ;
+
+^
+
+mutant.c:1:24: warning: no previous extern declaration for non-static variable 'c' [-Wmissing-variable-declarations]
+
+unsigned char b = 36 , c = 173 ;
+
+                       ^
+
+mutant.c:1:1: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+unsigned char b = 36 , c = 173 ;
+
+^
+
+mutant.c:3:30: warning: unknown attribute 'noclone' ignored [-Wunknown-attributes]
+
+__attribute__ ( ( noinline , noclone ) ) void
+
+                             ^~~~~~~
+
+mutant.c:4:1: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+foo ( void )
+
+^
+
+mutant.c:3:42: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+__attribute__ ( ( noinline , noclone ) ) void
+
+                                         ^
+
+                                         static 
+
+mutant.c:14:1: warning: extension used [-Wlanguage-extension-token]
+
+asm volatile ( "" : : "g" ( & b ) , "g" ( __builtin_complex ( 1.0 , 2.0 ) ) : "memory" ) ;
+
+^
+
+clang-trunk: /tmp/tmp.ufQ47o3KEZ-clang-builder/llvm-project/clang/lib/CodeGen/CGValue.h:72: clang::CodeGen::Address clang::CodeGen::RValue::getAggregateAddress() const: Assertion `isAggregate() && "Not an aggregate!"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	mutant.c:10:1: LLVM IR generation of declaration 'main'
+
+3.	mutant.c:10:1: Generating code for declaration 'main'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x39db3a4)[0x562a87a863a4]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x562a87a841c4]
+
+clang-trunk(+0x391ffa8)[0x562a879cafa8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f03f4a113c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f03f44b018b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f03f448f859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f03f448f729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f03f44a0f36]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction18EmitCallExprLValueEPKNS_8CallExprE+0x1bd)[0x562a88144b1d]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction10EmitLValueEPKNS_4ExprE+0xce)[0x562a88136d7e]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction12EmitAsmInputERKNS_10TargetInfo14ConstraintInfoEPKNS_4ExprERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE+0x1ac)[0x562a87e1381c]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction11EmitAsmStmtERKNS_7AsmStmtE+0xf45)[0x562a87e19125]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction8EmitStmtEPKNS_4StmtEN4llvm8ArrayRefIPKNS_4AttrEEE+0x26b)[0x562a87e1f7ab]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction28EmitCompoundStmtWithoutScopeERKNS_12CompoundStmtEbNS0_12AggValueSlotE+0x8c)[0x562a87e25a7c]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction16EmitFunctionBodyEPKNS_4StmtE+0xd1)[0x562a87e7cf81]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction12GenerateCodeENS_10GlobalDeclEPN4llvm8FunctionERKNS0_14CGFunctionInfoE+0x37c)[0x562a87e8e8cc]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule28EmitGlobalFunctionDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x1c6)[0x562a87ee8ef6]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule20EmitGlobalDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x285)[0x562a87ee4a95]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule10EmitGlobalENS_10GlobalDeclE+0x3eb)[0x562a87ee4efb]
+
+clang-trunk(+0x3e42962)[0x562a87eed962]
+
+clang-trunk(+0x4b58369)[0x562a88c03369]
+
+clang-trunk(+0x4b4a550)[0x562a88bf5550]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x204)[0x562a89cbd9f4]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x562a88c004e8]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x562a884a1f29]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x562a88434f36]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x562a88580210]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x562a853394f6]
+
+clang-trunk(+0x128a838)[0x562a85335838]
+
+clang-trunk(+0x421a799)[0x562a882c5799]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x562a879cb12c]
+
+clang-trunk(+0x421af3d)[0x562a882c5f3d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x562a882986bb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x562a882991d9]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x562a882a3d99]
+
+clang-trunk(main+0x18af)[0x562a8526460f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f03f44910b3]
+
+clang-trunk(_start+0x2e)[0x562a853353ae]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 11a0d236503b9ed53a3b216181344a55a0212f95)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-94364a.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-94364a.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

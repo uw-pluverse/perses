@@ -1,0 +1,3 @@
+uint64_t llvm::alignTo(uint64_t, uint64_t, uint64_t): Assertion `Align != 0u && "Align can't be 0."' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

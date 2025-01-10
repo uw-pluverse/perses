@@ -1,0 +1,106 @@
+mutant.c:1:10: fatal error: 'harness.h' file not found
+
+#include "harness.h"
+
+         ^~~~~~~~~~~
+
+clang-trunk: /tmp/tmp.OKn6kNiY8c-clang-builder/llvm-project/clang/lib/AST/RecordLayoutBuilder.cpp:3229: const clang::ASTRecordLayout& clang::ASTContext::getASTRecordLayout(const clang::RecordDecl*) const: Assertion `D && "Cannot get layout of forward declarations!"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:3:99: current parser token ';'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x3995714)[0x561b7d8aa714]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x561b7d8a8534]
+
+clang-trunk(+0x38da378)[0x561b7d7ef378]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f93852ca3c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f9384d6918b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f9384d48859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f9384d48729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f9384d59f36]
+
+clang-trunk(_ZNK5clang10ASTContext18getASTRecordLayoutEPKNS_10RecordDeclE+0x1468)[0x561b80b25e78]
+
+clang-trunk(_ZNK5clang10ASTContext15getTypeInfoImplEPKNS_4TypeE+0xb9a)[0x561b807779ea]
+
+clang-trunk(_ZNK5clang10ASTContext11getTypeInfoEPKNS_4TypeE+0xdf)[0x561b8076793f]
+
+clang-trunk(_ZNK5clang10ASTContext15getTypeInfoImplEPKNS_4TypeE+0x69)[0x561b80776eb9]
+
+clang-trunk(_ZNK5clang10ASTContext11getTypeInfoEPKNS_4TypeE+0xdf)[0x561b8076793f]
+
+clang-trunk(_ZN5clang4Sema23ActOnVariableDeclaratorEPNS_5ScopeERNS_10DeclaratorEPNS_11DeclContextEPNS_14TypeSourceInfoERNS_12LookupResultEN4llvm15MutableArrayRefIPNS_21TemplateParameterListEEERbNSB_8ArrayRefIPNS_11BindingDeclEEE+0x2e6c)[0x561b7fd9cfbc]
+
+clang-trunk(_ZN5clang4Sema16HandleDeclaratorEPNS_5ScopeERNS_10DeclaratorEN4llvm15MutableArrayRefIPNS_21TemplateParameterListEEE+0x756)[0x561b7fdb3036]
+
+clang-trunk(_ZN5clang4Sema15ActOnDeclaratorEPNS_5ScopeERNS_10DeclaratorE+0x19)[0x561b7fdb3bf9]
+
+clang-trunk(_ZN5clang6Parser44ParseDeclarationAfterDeclaratorAndAttributesERNS_10DeclaratorERKNS0_18ParsedTemplateInfoEPNS0_12ForRangeInitE+0x1e0)[0x561b7faf7210]
+
+clang-trunk(_ZN5clang6Parser14ParseDeclGroupERNS_15ParsingDeclSpecENS_17DeclaratorContextEPNS_14SourceLocationEPNS0_12ForRangeInitE+0x4db)[0x561b7fb0a54b]
+
+clang-trunk(_ZN5clang6Parser30ParseDeclOrFunctionDefInternalERNS_25ParsedAttributesWithRangeERNS_15ParsingDeclSpecENS_15AccessSpecifierE+0x226)[0x561b7fad8636]
+
+clang-trunk(+0x5bc3c21)[0x561b7fad8c21]
+
+clang-trunk(_ZN5clang6Parser24ParseExternalDeclarationERNS_25ParsedAttributesWithRangeEPNS_15ParsingDeclSpecE+0x217)[0x561b7fadf447]
+
+clang-trunk(_ZN5clang6Parser17ParseTopLevelDeclERNS_9OpaquePtrINS_12DeclGroupRefEEEb+0x1ce)[0x561b7fae09de]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x219)[0x561b7fad3209]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x561b7ea1a2a8]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x561b7e2bd399]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x561b7e2503b6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x561b7e39b0c0]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x561b7b18d846]
+
+clang-trunk(+0x1274b88)[0x561b7b189b88]
+
+clang-trunk(+0x41cbbf9)[0x561b7e0e0bf9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x561b7d7ef4fc]
+
+clang-trunk(+0x41cc39d)[0x561b7e0e139d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x561b7e0b3b2b]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x561b7e0b4649]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x561b7e0bf1f9]
+
+clang-trunk(main+0x18af)[0x561b7b0b859f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f9384d4a0b3]
+
+clang-trunk(_start+0x2e)[0x561b7b1896fe]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 6b0d266036f73f5ee9556d211a7d0946091ff3b2)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: Error generating preprocessed source(s).
+

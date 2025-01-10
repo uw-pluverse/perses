@@ -1,0 +1,46 @@
+mutant.c:2:1: warning: type defaults to ‘int’ in type name [-Wimplicit-int]
+
+    2 | main ( int argc , __attribute__ ( ( vector_size ( 1 << 29 ) ) ) )
+
+      | ^~~~
+
+mutant.c:2:1: warning: second argument of ‘main’ should be ‘char **’ [-Wmain]
+
+mutant.c: In function ‘main’:
+
+mutant.c:2:12: warning: unused parameter ‘argc’ [-Wunused-parameter]
+
+    2 | main ( int argc , __attribute__ ( ( vector_size ( 1 << 29 ) ) ) )
+
+      |        ~~~~^~~~
+
+mutant.c:2:1: note: the ABI for passing parameters with 268435456-byte alignment has changed in GCC 4.6
+
+    2 | main ( int argc , __attribute__ ( ( vector_size ( 1 << 29 ) ) ) )
+
+      | ^~~~
+
+during RTL pass: expand
+
+mutant.c:5:1: internal compiler error: in expand_stack_alignment, at cfgexpand.c:6385
+
+    5 | }
+
+      | ^
+
+0x68c38b expand_stack_alignment
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/cfgexpand.c:6385
+
+0x68c38b execute
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/cfgexpand.c:6845
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

@@ -1,0 +1,246 @@
+In file included from mutant.c:1:
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/arm_bf16.h:14:9: error: __bf16 is not supported on this target
+
+typedef __bf16 bfloat16_t;
+
+        ^
+
+mutant.c:2:36: warning: identifier '__a' is reserved because it starts with '__' [-Wreserved-identifier]
+
+bfloat16_t stacktest1 ( bfloat16_t __a )
+
+                                   ^
+
+mutant.c:2:12: warning: no previous prototype for function 'stacktest1' [-Wmissing-prototypes]
+
+bfloat16_t stacktest1 ( bfloat16_t __a )
+
+           ^
+
+mutant.c:2:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+bfloat16_t stacktest1 ( bfloat16_t __a )
+
+^
+
+static 
+
+mutant.c:9:23: warning: extension used [-Wlanguage-extension-token]
+
+register bfloat16_t x asm ( "h2" ) ;
+
+                      ^
+
+mutant.c:9:29: error: unknown register name 'h2' in asm
+
+register bfloat16_t x asm ( "h2" ) ;
+
+                            ^
+
+mutant.c:10:23: warning: extension used [-Wlanguage-extension-token]
+
+register bfloat16_t y asm ( "h1" ) ;
+
+                      ^
+
+mutant.c:10:29: error: unknown register name 'h1' in asm
+
+register bfloat16_t y asm ( "h1" ) ;
+
+                            ^
+
+mutant.c:11:1: warning: extension used [-Wlanguage-extension-token]
+
+asm volatile ( "" : "=w" ( x ) ) ;
+
+^
+
+mutant.c:11:21: error: invalid output constraint '=w' in asm
+
+asm volatile ( "" : "=w" ( x ) ) ;
+
+                    ^
+
+mutant.c:13:1: warning: extension used [-Wlanguage-extension-token]
+
+asm volatile ( "" : : "w" ( y ) ) ;
+
+^
+
+mutant.c:13:23: error: invalid input constraint 'w' in asm
+
+asm volatile ( "" : : "w" ( y ) ) ;
+
+                      ^
+
+mutant.c:7:6: warning: no previous prototype for function 'bfloat_mov_ww' [-Wmissing-prototypes]
+
+void bfloat_mov_ww ( void )
+
+     ^
+
+mutant.c:7:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void bfloat_mov_ww ( void )
+
+^
+
+static 
+
+mutant.c:17:23: warning: extension used [-Wlanguage-extension-token]
+
+register bfloat16_t x asm ( "w1" ) ;
+
+                      ^
+
+mutant.c:17:29: error: unknown register name 'w1' in asm
+
+register bfloat16_t x asm ( "w1" ) ;
+
+                            ^
+
+mutant.c:18:23: warning: extension used [-Wlanguage-extension-token]
+
+register bfloat16_t y asm ( "h1" ) ;
+
+                      ^
+
+mutant.c:18:29: error: unknown register name 'h1' in asm
+
+register bfloat16_t y asm ( "h1" ) ;
+
+                            ^
+
+mutant.c:19:1: warning: extension used [-Wlanguage-extension-token]
+
+asm volatile ( "" : "=r" ( x ) ) ;
+
+^
+
+clang-trunk: /tmp/tmp.xjN6dMkdrg-clang-builder/llvm-project/clang/lib/AST/ASTContext.cpp:2394: clang::TypeInfo clang::ASTContext::getTypeInfoImpl(const clang::Type*) const: Assertion `llvm::isPowerOf2_32(Align) && "Alignment must be power of 2"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:19:34: current parser token ';'
+
+2.	mutant.c:16:1: parsing function body 'bfloat_mov_rw'
+
+3.	mutant.c:16:1: in compound statement ('{}')
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x395b184)[0x556868bd0184]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x556868bcdfa4]
+
+clang-trunk(+0x389fdd8)[0x556868b14dd8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7fdefa3b23c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7fdef9e5118b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7fdef9e30859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7fdef9e30729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7fdef9e41f36]
+
+clang-trunk(_ZNK5clang10ASTContext15getTypeInfoImplEPKNS_4TypeE+0x1cf)[0x55686ba88b2f]
+
+clang-trunk(_ZNK5clang10ASTContext11getTypeInfoEPKNS_4TypeE+0xdf)[0x55686ba7944f]
+
+clang-trunk(_ZNK5clang10ASTContext15getTypeInfoImplEPKNS_4TypeE+0x5f1)[0x55686ba88f51]
+
+clang-trunk(_ZNK5clang10ASTContext11getTypeInfoEPKNS_4TypeE+0xdf)[0x55686ba7944f]
+
+clang-trunk(_ZN5clang4Sema15ActOnGCCAsmStmtENS_14SourceLocationEbbjjPPNS_14IdentifierInfoEN4llvm15MutableArrayRefIPNS_4ExprEEES9_S8_S9_jS1_+0x824)[0x55686b60bd64]
+
+clang-trunk(_ZN5clang6Parser17ParseAsmStatementERb+0x979)[0x55686aeb6659]
+
+clang-trunk(_ZN5clang6Parser42ParseStatementOrDeclarationAfterAttributesERN4llvm11SmallVectorIPNS_4StmtELj32EEENS0_17ParsedStmtContextEPNS_14SourceLocationERNS_25ParsedAttributesWithRangeE+0x558)[0x55686aea5948]
+
+clang-trunk(_ZN5clang6Parser27ParseStatementOrDeclarationERN4llvm11SmallVectorIPNS_4StmtELj32EEENS0_17ParsedStmtContextEPNS_14SourceLocationE+0x9a)[0x55686aea66ca]
+
+clang-trunk(_ZN5clang6Parser26ParseCompoundStatementBodyEb+0x5f9)[0x55686aea7649]
+
+clang-trunk(_ZN5clang6Parser26ParseFunctionStatementBodyEPNS_4DeclERNS0_10ParseScopeE+0xda)[0x55686aea9c5a]
+
+clang-trunk(_ZN5clang6Parser23ParseFunctionDefinitionERNS_17ParsingDeclaratorERKNS0_18ParsedTemplateInfoEPNS0_18LateParsedAttrListE+0x682)[0x55686adefef2]
+
+clang-trunk(_ZN5clang6Parser14ParseDeclGroupERNS_15ParsingDeclSpecENS_17DeclaratorContextEPNS_14SourceLocationEPNS0_12ForRangeInitE+0x740)[0x55686ae1c850]
+
+clang-trunk(_ZN5clang6Parser30ParseDeclOrFunctionDefInternalERNS_25ParsedAttributesWithRangeERNS_15ParsingDeclSpecENS_15AccessSpecifierE+0x226)[0x55686adea6f6]
+
+clang-trunk(+0x5b75ce1)[0x55686adeace1]
+
+clang-trunk(_ZN5clang6Parser24ParseExternalDeclarationERNS_25ParsedAttributesWithRangeEPNS_15ParsingDeclSpecE+0x217)[0x55686adf14e7]
+
+clang-trunk(_ZN5clang6Parser17ParseTopLevelDeclERNS_9OpaquePtrINS_12DeclGroupRefEEEb+0x1ce)[0x55686adf2a7e]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x219)[0x55686ade52c9]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x556869d2c968]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x5568695dc599]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55686956f7e6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x5568696ba480]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x5568664da696]
+
+clang-trunk(+0x12619d8)[0x5568664d69d8]
+
+clang-trunk(+0x418b789)[0x556869400789]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x556868b14f5c]
+
+clang-trunk(+0x418bf2d)[0x556869400f2d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x5568693d36bb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x5568693d41d9]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x5568693ded89]
+
+clang-trunk(main+0x18af)[0x55686640552f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fdef9e320b3]
+
+clang-trunk(_start+0x2e)[0x5568664d654e]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 2e9c75daffddd65e37c3236708b5b133e6f5f2f5)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-ee20cf.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-ee20cf.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

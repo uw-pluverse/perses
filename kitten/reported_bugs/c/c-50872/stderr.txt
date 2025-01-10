@@ -1,0 +1,174 @@
+mutant.c:8:5: error: expected ';' after expression
+
+arg1 arg2 = ( float64x1_t ) 0x3fcdc53742ea9c40 ; uint64x1_t result = ( uint64x1_t ) ( arg1 == arg2 ) ;
+
+    ^
+
+    ;
+
+mutant.c:8:1: warning: expression result unused [-Wunused-value]
+
+arg1 arg2 = ( float64x1_t ) 0x3fcdc53742ea9c40 ; uint64x1_t result = ( uint64x1_t ) ( arg1 == arg2 ) ;
+
+^~~~
+
+mutant.c:8:6: error: use of undeclared identifier 'arg2'; did you mean 'arg1'?
+
+arg1 arg2 = ( float64x1_t ) 0x3fcdc53742ea9c40 ; uint64x1_t result = ( uint64x1_t ) ( arg1 == arg2 ) ;
+
+     ^~~~
+
+     arg1
+
+mutant.c:7:13: note: 'arg1' declared here
+
+float64x1_t arg1 = ( float64x1_t ) 0x3fedf9d4343c7c80 ;
+
+            ^
+
+clang-trunk: /tmp/tmp.B1HwadcXIH-clang-builder/llvm-project/llvm/lib/Support/APInt.cpp:863: llvm::APInt llvm::APInt::trunc(unsigned int) const: Assertion `width < BitWidth && "Invalid APInt Truncate request"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:8:50: current parser token 'uint64x1_t'
+
+2.	mutant.c:6:1: parsing function body 'foo'
+
+3.	mutant.c:6:1: in compound statement ('{}')
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x39591f4)[0x562eb2ab41f4]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x562eb2ab2014]
+
+clang-trunk(+0x389de48)[0x562eb29f8e48]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f4fd54d63c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f4fd4f7518b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f4fd4f54859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f4fd4f54729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f4fd4f65f36]
+
+clang-trunk(_ZNK4llvm5APInt5truncEj+0x122)[0x562eb29d3d02]
+
+clang-trunk(+0x6aa7c64)[0x562eb5c02c64]
+
+clang-trunk(+0x6aa9701)[0x562eb5c04701]
+
+clang-trunk(+0x6aaa361)[0x562eb5c05361]
+
+clang-trunk(+0x6a509e6)[0x562eb5bab9e6]
+
+clang-trunk(+0x6aac49b)[0x562eb5c0749b]
+
+clang-trunk(+0x6aa99f5)[0x562eb5c049f5]
+
+clang-trunk(+0x6aaa361)[0x562eb5c05361]
+
+clang-trunk(+0x6a509e6)[0x562eb5bab9e6]
+
+clang-trunk(+0x6a5ac89)[0x562eb5bb5c89]
+
+clang-trunk(_ZNK5clang4Expr19EvaluateForOverflowERKNS_10ASTContextE+0x212)[0x562eb5bb7492]
+
+clang-trunk(_ZN5clang4Sema19CheckForIntOverflowEPNS_4ExprE+0x1f5)[0x562eb4e51f25]
+
+clang-trunk(_ZN5clang4Sema18CheckCompletedExprEPNS_4ExprENS_14SourceLocationEb+0x121)[0x562eb4ea15b1]
+
+clang-trunk(_ZN5clang4Sema19ActOnFinishFullExprEPNS_4ExprENS_14SourceLocationEbb+0x122)[0x562eb5244122]
+
+clang-trunk(_ZN5clang4Sema13ActOnExprStmtENS_12ActionResultIPNS_4ExprELb1EEEb+0x3b)[0x562eb549b63b]
+
+clang-trunk(_ZN5clang6Parser18ParseExprStatementENS0_17ParsedStmtContextE+0xc3)[0x562eb4d92683]
+
+clang-trunk(_ZN5clang6Parser42ParseStatementOrDeclarationAfterAttributesERN4llvm11SmallVectorIPNS_4StmtELj32EEENS0_17ParsedStmtContextEPNS_14SourceLocationERNS_25ParsedAttributesWithRangeE+0x8f2)[0x562eb4d89ba2]
+
+clang-trunk(_ZN5clang6Parser27ParseStatementOrDeclarationERN4llvm11SmallVectorIPNS_4StmtELj32EEENS0_17ParsedStmtContextEPNS_14SourceLocationE+0x9a)[0x562eb4d8a58a]
+
+clang-trunk(_ZN5clang6Parser26ParseCompoundStatementBodyEb+0x5f9)[0x562eb4d8b509]
+
+clang-trunk(_ZN5clang6Parser26ParseFunctionStatementBodyEPNS_4DeclERNS0_10ParseScopeE+0xda)[0x562eb4d8db1a]
+
+clang-trunk(_ZN5clang6Parser23ParseFunctionDefinitionERNS_17ParsingDeclaratorERKNS0_18ParsedTemplateInfoEPNS0_18LateParsedAttrListE+0x682)[0x562eb4cd3db2]
+
+clang-trunk(_ZN5clang6Parser14ParseDeclGroupERNS_15ParsingDeclSpecENS_17DeclaratorContextEPNS_14SourceLocationEPNS0_12ForRangeInitE+0x740)[0x562eb4d00710]
+
+clang-trunk(_ZN5clang6Parser30ParseDeclOrFunctionDefInternalERNS_25ParsedAttributesWithRangeERNS_15ParsingDeclSpecENS_15AccessSpecifierE+0x226)[0x562eb4cce5b6]
+
+clang-trunk(+0x5b73ba1)[0x562eb4cceba1]
+
+clang-trunk(_ZN5clang6Parser24ParseExternalDeclarationERNS_25ParsedAttributesWithRangeEPNS_15ParsingDeclSpecE+0x217)[0x562eb4cd53a7]
+
+clang-trunk(_ZN5clang6Parser17ParseTopLevelDeclERNS_9OpaquePtrINS_12DeclGroupRefEEEb+0x1ce)[0x562eb4cd693e]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x219)[0x562eb4cc9189]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x562eb3c10458]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x562eb34bf9e9]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x562eb3452c36]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x562eb359d870]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x562eb03bd696]
+
+clang-trunk(+0x125e9d8)[0x562eb03b99d8]
+
+clang-trunk(+0x4188bb9)[0x562eb32e3bb9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x562eb29f8fcc]
+
+clang-trunk(+0x418935d)[0x562eb32e435d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x562eb32b6aeb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x562eb32b7609]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x562eb32c21b9]
+
+clang-trunk(main+0x18af)[0x562eb02e852f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f4fd4f560b3]
+
+clang-trunk(_start+0x2e)[0x562eb03b954e]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git ef906573a127cffef7cae75d5155c15a8a2a3a5e)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-c24caa.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-c24caa.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

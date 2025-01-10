@@ -1,0 +1,137 @@
+mutant.c:6:9: error: _Float16 is not supported on this target
+
+typedef _Float16 v64hf __attribute__ ( ( vector_size ( 128 ) ) ) ;
+
+        ^
+
+mutant.c:7:9: error: _Float16 is not supported on this target
+
+typedef _Float16 vector_size __attribute__ ( ( vector_size ( 64 ) ) ) ;
+
+        ^
+
+mutant.c:8:9: error: __bf16 is not supported on this target
+
+typedef __bf16 v64bf __attribute__ ( ( vector_size ( 128 ) ) ) ;
+
+        ^
+
+clang-trunk: /tmp/tmp.I8YlLX7NCh-clang-builder/llvm-project/clang/lib/AST/ASTContext.cpp:2394: clang::TypeInfo clang::ASTContext::getTypeInfoImpl(const clang::Type*) const: Assertion `llvm::isPowerOf2_32(Align) && "Alignment must be power of 2"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:8:64: current parser token ';'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x394c8d4)[0x55e4cb5218d4]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x55e4cb51f6f4]
+
+clang-trunk(+0x38927d8)[0x55e4cb4677d8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7fb6dfff23c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7fb6dfa9218b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7fb6dfa71859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7fb6dfa71729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7fb6dfa82f36]
+
+clang-trunk(_ZNK5clang10ASTContext15getTypeInfoImplEPKNS_4TypeE+0x1cf)[0x55e4ce3a65cf]
+
+clang-trunk(_ZNK5clang10ASTContext11getTypeInfoEPKNS_4TypeE+0xdf)[0x55e4ce396ecf]
+
+clang-trunk(_ZN5clang4Sema15BuildVectorTypeENS_8QualTypeEPNS_4ExprENS_14SourceLocationE+0x349)[0x55e4ce14a599]
+
+clang-trunk(+0x6575749)[0x55e4ce14a749]
+
+clang-trunk(+0x657b7a7)[0x55e4ce1507a7]
+
+clang-trunk(+0x6589cab)[0x55e4ce15ecab]
+
+clang-trunk(_ZN5clang4Sema20GetTypeForDeclaratorERNS_10DeclaratorEPNS_5ScopeE+0x12d)[0x55e4ce1610fd]
+
+clang-trunk(_ZN5clang4Sema16HandleDeclaratorEPNS_5ScopeERNS_10DeclaratorEN4llvm15MutableArrayRefIPNS_21TemplateParameterListEEE+0x1c6)[0x55e4cda16036]
+
+clang-trunk(_ZN5clang4Sema15ActOnDeclaratorEPNS_5ScopeERNS_10DeclaratorE+0x19)[0x55e4cda17189]
+
+clang-trunk(_ZN5clang6Parser44ParseDeclarationAfterDeclaratorAndAttributesERNS_10DeclaratorERKNS0_18ParsedTemplateInfoEPNS0_12ForRangeInitE+0x1e0)[0x55e4cd75b130]
+
+clang-trunk(_ZN5clang6Parser14ParseDeclGroupERNS_15ParsingDeclSpecENS_17DeclaratorContextEPNS_14SourceLocationEPNS0_12ForRangeInitE+0x4db)[0x55e4cd76e46b]
+
+clang-trunk(_ZN5clang6Parser22ParseSimpleDeclarationENS_17DeclaratorContextERNS_14SourceLocationERNS_25ParsedAttributesWithRangeEbPNS0_12ForRangeInitEPS2_+0x238)[0x55e4cd76efc8]
+
+clang-trunk(_ZN5clang6Parser16ParseDeclarationENS_17DeclaratorContextERNS_14SourceLocationERNS_25ParsedAttributesWithRangeEPS2_+0x102)[0x55e4cd76f432]
+
+clang-trunk(_ZN5clang6Parser24ParseExternalDeclarationERNS_25ParsedAttributesWithRangeEPNS_15ParsingDeclSpecE+0x23c)[0x55e4cd74338c]
+
+clang-trunk(_ZN5clang6Parser17ParseTopLevelDeclERNS_9OpaquePtrINS_12DeclGroupRefEEEb+0x1ce)[0x55e4cd7448fe]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x219)[0x55e4cd737149]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x55e4cc67dce8]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55e4cbf2fe79]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55e4cbec2fd6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x55e4cc00d8f0]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x55e4c8e341f6]
+
+clang-trunk(+0x125b538)[0x55e4c8e30538]
+
+clang-trunk(+0x417eca9)[0x55e4cbd53ca9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x55e4cb46795c]
+
+clang-trunk(+0x417f44d)[0x55e4cbd5444d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55e4cbd26bdb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x55e4cbd276f9]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x55e4cbd322a9]
+
+clang-trunk(main+0x18af)[0x55e4c8d5f4ff]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fb6dfa730b3]
+
+clang-trunk(_start+0x2e)[0x55e4c8e300ae]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 74909e4b6e9bc0da6c197cf6c4419991a8dc335f)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg:
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-ae44e5.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-ae44e5.sh
+
+clang-13: note: diagnostic msg:
+
+
+
+********************

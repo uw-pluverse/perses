@@ -1,0 +1,4 @@
+internal compiler error: in noninterposable_alias, at symtab.c
+symtab_node::noninterposable_alias()
+function_and_variable_visibility
+whole_program_function_and_variable_visibility

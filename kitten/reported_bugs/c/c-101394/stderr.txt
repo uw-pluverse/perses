@@ -1,0 +1,48 @@
+
+
+Unable to coalesce ssa_names 6 and 15 which are marked as MUST COALESCE.
+
+h_6(ab) and  h_15(ab)
+
+during RTL pass: expand
+
+mutant.c: In function ‘g’:
+
+mutant.c:10:6: internal compiler error: SSA corruption
+
+   10 | void g ( void )
+
+      |      ^
+
+0x1049cfc fail_abnormal_edge_coalesce
+
+	/tmp/tmp.3D53A0PPQI-gcc-builder/gcc/gcc/tree-ssa-coalesce.c:1003
+
+0x1049cfc coalesce_partitions
+
+	/tmp/tmp.3D53A0PPQI-gcc-builder/gcc/gcc/tree-ssa-coalesce.c:1425
+
+0x1049cfc coalesce_ssa_name(_var_map*)
+
+	/tmp/tmp.3D53A0PPQI-gcc-builder/gcc/gcc/tree-ssa-coalesce.c:1755
+
+0xfe1d89 remove_ssa_form
+
+	/tmp/tmp.3D53A0PPQI-gcc-builder/gcc/gcc/tree-outof-ssa.c:1065
+
+0xfe1d89 rewrite_out_of_ssa(ssaexpand*)
+
+	/tmp/tmp.3D53A0PPQI-gcc-builder/gcc/gcc/tree-outof-ssa.c:1323
+
+0xa6150a execute
+
+	/tmp/tmp.3D53A0PPQI-gcc-builder/gcc/gcc/cfgexpand.c:6588
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

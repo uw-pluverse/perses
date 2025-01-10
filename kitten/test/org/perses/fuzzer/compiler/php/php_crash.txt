@@ -1,0 +1,17 @@
+Crash report begins. Anonymous machine information:
+
+amd64
+
+11.2-RELEASE-p6
+
+FreeBSD 11.2-RELEASE-p6 #3 518496b29ae(RELENG_2_4_4): Wed Dec 12 07:41:44 EST 2018 root@buildbot2.nyi.netgate.com:/build/ce-crossbuild-244/obj/amd64/ZfGpH5cd/build/ce-crossbuild-244/pfSense/tmp/FreeBSD-src/sys/pfSense
+
+Crash report details:
+
+PHP Errors:
+
+[10-Apr-2019 08:53:23 America/New_York] PHP Fatal error: Allowed memory size of 536870912 bytes exhausted (tried to allocate 268435464 bytes) in /usr/local/pkg/pfblockerng/pfblockerng.inc on line 2511
+
+
+
+No FreeBSD crash data found.

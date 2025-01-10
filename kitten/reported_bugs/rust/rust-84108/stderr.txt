@@ -1,0 +1,78 @@
+error[E0412]: cannot find type `OsStr` in this scope
+
+ --> mutant.rs:2:34
+
+  |
+
+2 | static NONE : Option < ( AsRef < OsStr > , & 'static u8 ) > = None ;
+
+  |                                  ^^^^^ not found in this scope
+
+  |
+
+help: consider importing this struct
+
+  |
+
+1 | use std::ffi::OsStr;
+
+  |
+
+
+
+warning: trait objects without an explicit `dyn` are deprecated
+
+ --> mutant.rs:2:26
+
+  |
+
+2 | static NONE : Option < ( AsRef < OsStr > , & 'static u8 ) > = None ;
+
+  |                          ^^^^^^^^^^^^^^^ help: use `dyn`: `dyn AsRef < OsStr >`
+
+  |
+
+  = note: `#[warn(bare_trait_objects)]` on by default
+
+
+
+error: internal compiler error: compiler/rustc_middle/src/ty/layout.rs:370:17: univariant: field #2 of `(dyn AsRef<[type error]>, &u8)` comes after unsized field
+
+
+
+thread 'rustc' panicked at 'Box<Any>', /rustc/dae9d6ac3e9a8fb389cfe471b30f4d72c3122196/library/std/src/panic.rs:59:5
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.53.0-nightly (dae9d6ac3 2021-04-09) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [layout_raw] computing layout of `(dyn std::convert::AsRef<[type error]>, &u8)`
+
+#1 [layout_raw] computing layout of `std::option::Option<(dyn std::convert::AsRef<[type error]>, &u8)>`
+
+end of query stack
+
+error: aborting due to 2 previous errors; 1 warning emitted
+
+
+
+For more information about this error, try `rustc --explain E0412`.
+

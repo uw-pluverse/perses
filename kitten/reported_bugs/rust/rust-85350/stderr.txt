@@ -1,0 +1,728 @@
+error[E0583]: file not found for module `pretty`
+
+ --> mutant.rs:7:1
+
+  |
+
+7 | mod pretty ;
+
+  | ^^^^^^^^^^^^
+
+  |
+
+  = help: to create the module `pretty`, create file "pretty.rs"
+
+
+
+error[E0433]: failed to resolve: maybe a missing crate `ty`?
+
+ --> mutant.rs:1:14
+
+  |
+
+1 | use crate :: ty :: subst :: { GenericArg , Subst } ;
+
+  |              ^^ maybe a missing crate `ty`?
+
+
+
+error[E0433]: failed to resolve: maybe a missing crate `rustc_data_structures`?
+
+ --> mutant.rs:3:5
+
+  |
+
+3 | use rustc_data_structures :: fx :: FxHashSet ;
+
+  |     ^^^^^^^^^^^^^^^^^^^^^ maybe a missing crate `rustc_data_structures`?
+
+
+
+error[E0433]: failed to resolve: maybe a missing crate `rustc_data_structures`?
+
+ --> mutant.rs:4:5
+
+  |
+
+4 | use rustc_data_structures :: mini_set :: MiniSet ;
+
+  |     ^^^^^^^^^^^^^^^^^^^^^ maybe a missing crate `rustc_data_structures`?
+
+
+
+error[E0433]: failed to resolve: maybe a missing crate `rustc_hir`?
+
+ --> mutant.rs:5:5
+
+  |
+
+5 | use rustc_hir :: def_id :: { CrateNum , DefId } ;
+
+  |     ^^^^^^^^^ maybe a missing crate `rustc_hir`?
+
+
+
+error[E0433]: failed to resolve: maybe a missing crate `rustc_hir`?
+
+ --> mutant.rs:6:5
+
+  |
+
+6 | use rustc_hir :: definitions :: { DefPathData , DisambiguatedDefPathData } ;
+
+  |     ^^^^^^^^^ maybe a missing crate `rustc_hir`?
+
+
+
+error[E0432]: unresolved import `crate::ty`
+
+ --> mutant.rs:2:22
+
+  |
+
+2 | use crate :: ty :: { self , DefIdTree , Ty , TyCtxt } ;
+
+  |              --      ^^^^ no `ty` in the root
+
+  |              |
+
+  |              help: a similar name exists in the module: `Ty`
+
+
+
+error: cannot find macro `debug` in this scope
+
+  --> mutant.rs:74:1
+
+   |
+
+74 | debug ! ( "default_print_def_path: def_id={:?}, substs={:?}" , def_id , substs ) ;
+
+   | ^^^^^
+
+
+
+error: cannot find macro `debug` in this scope
+
+  --> mutant.rs:76:1
+
+   |
+
+76 | debug ! ( "default_print_def_path: key={:?}" , key ) ;
+
+   | ^^^^^
+
+
+
+error: cannot find macro `debug` in this scope
+
+   --> mutant.rs:169:1
+
+    |
+
+169 | debug ! (
+
+    | ^^^^^
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `DefPathData`
+
+  --> mutant.rs:78:1
+
+   |
+
+78 | DefPathData :: CrateRoot => {
+
+   | ^^^^^^^^^^^ use of undeclared type `DefPathData`
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `DefPathData`
+
+  --> mutant.rs:82:1
+
+   |
+
+82 | DefPathData :: Impl => {
+
+   | ^^^^^^^^^^^ use of undeclared type `DefPathData`
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `DefPathData`
+
+   --> mutant.rs:100:1
+
+    |
+
+100 | DefPathData :: ClosureExpr => { }
+
+    | ^^^^^^^^^^^ use of undeclared type `DefPathData`
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `GenericArg`
+
+   --> mutant.rs:152:4
+
+    |
+
+152 | == GenericArg :: from (
+
+    |    ^^^^^^^^^^ use of undeclared type `GenericArg`
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `MiniSet`
+
+   --> mutant.rs:237:51
+
+    |
+
+237 | characteristic_def_id_of_type_cached ( ty , & mut MiniSet :: new ( ) )
+
+    |                                                   ^^^^^^^ use of undeclared type `MiniSet`
+
+
+
+error[E0437]: type `Output` is not a member of trait `FnMut`
+
+   --> mutant.rs:268:1
+
+    |
+
+268 | type Output = P :: Const ;
+
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^ not a member of trait `FnMut`
+
+
+
+error[E0437]: type `Error` is not a member of trait `FnMut`
+
+   --> mutant.rs:269:1
+
+    |
+
+269 | type Error = P :: Error ;
+
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^ not a member of trait `FnMut`
+
+
+
+error[E0407]: method `print` is not a member of trait `FnMut`
+
+   --> mutant.rs:270:1
+
+    |
+
+270 | / fn print ( & self , cx : P ) -> Result < Self :: Output , Self :: Error > {
+
+271 | | cx . print_const ( self )
+
+272 | | }
+
+    | |_^ not a member of trait `FnMut`
+
+
+
+error[E0412]: cannot find type `TyCtxt` in this scope
+
+  --> mutant.rs:22:25
+
+   |
+
+22 | fn tcx ( & 'a self ) -> TyCtxt < 'tcx > ;
+
+   |                         ^^^^^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `DefId` in this scope
+
+  --> mutant.rs:25:10
+
+   |
+
+25 | def_id : DefId ,
+
+   |          ^^^^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `GenericArg` in this scope
+
+  --> mutant.rs:26:19
+
+   |
+
+26 | substs : & 'tcx [ GenericArg < 'tcx > ] ,
+
+   |                   ^^^^^^^^^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `DefId` in this scope
+
+  --> mutant.rs:32:15
+
+   |
+
+32 | impl_def_id : DefId ,
+
+   |               ^^^^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `GenericArg` in this scope
+
+  --> mutant.rs:33:19
+
+   |
+
+33 | substs : & 'tcx [ GenericArg < 'tcx > ] ,
+
+   |                   ^^^^^^^^^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `Ty` in this scope
+
+  --> mutant.rs:34:11
+
+   |
+
+34 | self_ty : Ty < 'tcx > ,
+
+   |           ^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `Ty` in this scope
+
+  --> mutant.rs:40:29
+
+   |
+
+40 | fn print_type ( self , ty : Ty < 'tcx > ) -> Result < Self :: Type , Self :: Error > ;
+
+   |                             ^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `CrateNum` in this scope
+
+  --> mutant.rs:46:31
+
+   |
+
+46 | fn path_crate ( self , cnum : CrateNum ) -> Result < Self :: Path , Self :: Error > ;
+
+   |                               ^^^^^^^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `Ty` in this scope
+
+  --> mutant.rs:49:11
+
+   |
+
+49 | self_ty : Ty < 'tcx > ,
+
+   |           ^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `DisambiguatedDefPathData` in this scope
+
+  --> mutant.rs:55:24
+
+   |
+
+55 | disambiguated_data : & DisambiguatedDefPathData ,
+
+   |                        ^^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `Ty` in this scope
+
+  --> mutant.rs:56:11
+
+   |
+
+56 | self_ty : Ty < 'tcx > ,
+
+   |           ^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `DisambiguatedDefPathData` in this scope
+
+  --> mutant.rs:62:24
+
+   |
+
+62 | disambiguated_data : & DisambiguatedDefPathData ,
+
+   |                        ^^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `GenericArg` in this scope
+
+  --> mutant.rs:67:12
+
+   |
+
+67 | args : & [ GenericArg < 'tcx > ] ,
+
+   |            ^^^^^^^^^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `DefId` in this scope
+
+  --> mutant.rs:71:10
+
+   |
+
+71 | def_id : DefId ,
+
+   |          ^^^^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `GenericArg` in this scope
+
+  --> mutant.rs:72:19
+
+   |
+
+72 | substs : & 'tcx [ GenericArg < 'tcx > ] ,
+
+   |                   ^^^^^^^^^^ not found in this scope
+
+
+
+error[E0422]: cannot find struct, variant or union type `DefId` in this scope
+
+  --> mutant.rs:93:21
+
+   |
+
+93 | let parent_def_id = DefId { index : key . parent . unwrap ( ) , .. def_id } ;
+
+   |                     ^^^^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `GenericArg` in this scope
+
+   --> mutant.rs:136:19
+
+    |
+
+136 | substs : & 'tcx [ GenericArg < 'tcx > ] ,
+
+    |                   ^^^^^^^^^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `GenericArg` in this scope
+
+   --> mutant.rs:137:15
+
+    |
+
+137 | ) -> & 'tcx [ GenericArg < 'tcx > ] {
+
+    |               ^^^^^^^^^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `DefId` in this scope
+
+   --> mutant.rs:164:15
+
+    |
+
+164 | impl_def_id : DefId ,
+
+    |               ^^^^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `GenericArg` in this scope
+
+   --> mutant.rs:165:20
+
+    |
+
+165 | _substs : & 'tcx [ GenericArg < 'tcx > ] ,
+
+    |                    ^^^^^^^^^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `Ty` in this scope
+
+   --> mutant.rs:166:11
+
+    |
+
+166 | self_ty : Ty < 'tcx > ,
+
+    |           ^^ not found in this scope
+
+
+
+error[E0422]: cannot find struct, variant or union type `DefId` in this scope
+
+   --> mutant.rs:174:21
+
+    |
+
+174 | let parent_def_id = DefId { index : key . parent . unwrap ( ) , .. impl_def_id } ;
+
+    |                     ^^^^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `Ty` in this scope
+
+   --> mutant.rs:196:6
+
+    |
+
+196 | ty : Ty < 'a > ,
+
+    |      ^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `MiniSet` in this scope
+
+   --> mutant.rs:197:17
+
+    |
+
+197 | visited : & mut MiniSet < Ty < 'a > > ,
+
+    |                 ^^^^^^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `Ty` in this scope
+
+   --> mutant.rs:197:27
+
+    |
+
+197 | visited : & mut MiniSet < Ty < 'a > > ,
+
+    |                           ^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `DefId` in this scope
+
+   --> mutant.rs:198:15
+
+    |
+
+195 | fn characteristic_def_id_of_type_cached < 'a > (
+
+    |                                             - help: you might be missing a type parameter: `, DefId`
+
+...
+
+198 | ) -> Option < DefId > {
+
+    |               ^^^^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `Ty` in this scope
+
+   --> mutant.rs:236:45
+
+    |
+
+236 | pub fn characteristic_def_id_of_type ( ty : Ty < '_ > ) -> Option < DefId > {
+
+    |                                             ^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `DefId` in this scope
+
+   --> mutant.rs:236:69
+
+    |
+
+236 | pub fn characteristic_def_id_of_type ( ty : Ty < '_ > ) -> Option < DefId > {
+
+    |                                     -                               ^^^^^ not found in this scope
+
+    |                                     |
+
+    |                                     help: you might be missing a type parameter: `<DefId>`
+
+
+
+error[E0412]: cannot find type `Ty` in this scope
+
+   --> mutant.rs:253:61
+
+    |
+
+253 | impl < 'tcx , P : Printer < 'tcx > > Print < 'tcx , P > for Ty < 'tcx > {
+
+    |                                                             ^^ not found in this scope
+
+
+
+error[E0412]: cannot find type `Context` in this scope
+
+   --> mutant.rs:267:52
+
+    |
+
+267 | impl < 'tcx , P : Printer < 'tcx > > FnMut ( & mut Context < '_ > ) -> Poll < T > for & 'tcx ty :: Const < 'tcx > {
+
+    |                                                    ^^^^^^^ not found in this scope
+
+    |
+
+help: consider importing this struct
+
+    |
+
+1   | use std::task::Context;
+
+    |
+
+
+
+error[E0412]: cannot find type `Poll` in this scope
+
+   --> mutant.rs:267:72
+
+    |
+
+267 | impl < 'tcx , P : Printer < 'tcx > > FnMut ( & mut Context < '_ > ) -> Poll < T > for & 'tcx ty :: Const < 'tcx > {
+
+    |                                                                        ^^^^ not found in this scope
+
+    |
+
+help: consider importing this enum
+
+    |
+
+1   | use std::task::Poll;
+
+    |
+
+
+
+error[E0412]: cannot find type `T` in this scope
+
+   --> mutant.rs:267:79
+
+    |
+
+267 | impl < 'tcx , P : Printer < 'tcx > > FnMut ( & mut Context < '_ > ) -> Poll < T > for & 'tcx ty :: Const < 'tcx > {
+
+    |               - similarly named type parameter `P` defined here               ^ help: a type parameter with a similar name exists: `P`
+
+
+
+error[E0229]: associated type bindings are not allowed here
+
+   --> mutant.rs:267:72
+
+    |
+
+267 | impl < 'tcx , P : Printer < 'tcx > > FnMut ( & mut Context < '_ > ) -> Poll < T > for & 'tcx ty :: Const < 'tcx > {
+
+    |                                                                        ^^^^^^^^^^ associated type not allowed here
+
+
+
+error[E0261]: use of undeclared lifetime name `'a`
+
+  --> mutant.rs:22:12
+
+   |
+
+22 | fn tcx ( & 'a self ) -> TyCtxt < 'tcx > ;
+
+   |            ^^ undeclared lifetime
+
+   |
+
+   = help: if you want to experiment with in-band lifetime bindings, add `#![feature(in_band_lifetimes)]` to the crate attributes
+
+help: consider introducing lifetime `'a` here
+
+   |
+
+15 | pub trait Printer < 'a, 'tcx > : Sized {
+
+   |                     ^^^
+
+help: consider introducing lifetime `'a` here
+
+   |
+
+22 | fn tcx<'a> ( & 'a self ) -> TyCtxt < 'tcx > ;
+
+   |       ^^^^
+
+
+
+error: internal compiler error: compiler/rustc_middle/src/ty/fold.rs:829:17: Trying to collect bound vars with a bound region: DebruijnIndex(0) BoundRegion { var: 0, kind: BrAnon(0) }
+
+
+
+thread 'rustc' panicked at 'Box<Any>', /rustc/42816d61ead7e46d462df997958ccfd514f8c21c/library/std/src/panic.rs:59:5
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.53.0-nightly (42816d61e 2021-04-24) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [fn_sig] computing function signature of `<impl at mutant.rs:267:1: 273:2>::print`
+
+#1 [collect_mod_item_types] collecting item types in top-level module
+
+end of query stack
+
+error: aborting due to 53 previous errors
+
+
+
+Some errors have detailed explanations: E0229, E0261, E0407, E0412, E0422, E0432, E0433, E0437, E0583.
+
+For more information about an error, try `rustc --explain E0229`.
+

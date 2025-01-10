@@ -1,0 +1,68 @@
+mutant.c: In function ‘foo’:
+
+mutant.c:1:1: internal compiler error: in default_conversion, at c/c-typeck.c:2240
+
+    1 | int foo ( ) { void bar ( char * ) __attribute__ ( ( constructor ( foo ) ) ) ;
+
+      | ^~~
+
+0x64a6bf default_conversion(tree_node*)
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/c/c-typeck.c:2240
+
+0x9d750a get_priority
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/c-family/c-attribs.c:1848
+
+0x9d972e handle_constructor_attribute
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/c-family/c-attribs.c:1899
+
+0x8d97c6 decl_attributes(tree_node**, tree_node*, int, tree_node*)
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/attribs.c:720
+
+0x8f5cee start_decl(c_declarator*, c_declspecs*, bool, tree_node*, unsigned int*)
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/c/c-decl.c:5201
+
+0x95392d c_parser_declaration_or_fndef
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/c/c-parser.c:2302
+
+0x952cea c_parser_compound_statement_nostart
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/c/c-parser.c:5700
+
+0x953084 c_parser_compound_statement
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/c/c-parser.c:5597
+
+0x954a72 c_parser_declaration_or_fndef
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/c/c-parser.c:2539
+
+0x95c3f3 c_parser_external_declaration
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/c/c-parser.c:1777
+
+0x95ce59 c_parser_translation_unit
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/c/c-parser.c:1650
+
+0x95ce59 c_parse_file()
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/c/c-parser.c:22119
+
+0x9be155 c_common_parse_file()
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/c-family/c-opts.c:1219
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

@@ -1,0 +1,3 @@
+void llvm::StoreInst::AssertOK(): Assertion `cast<PointerType>(getOperand(1)->getType()) ->isOpaqueOrPointeeTypeMatches(getOperand(0)->getType()) && "Ptr must be a pointer to Val type!"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

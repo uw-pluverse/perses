@@ -1,0 +1,12 @@
+language: "php"
+seedFolders:
+  - path: "kitten/test_data/php/php-src"
+    fileExtentions: ["php"]
+
+programsUnderTest:
+  - command: "php-trunk"
+    flagsToTest:
+      - flags: [""]
+    versionFlags:
+      flags: ["--version"]
+    crashDetectorClassName: "org.perses.fuzzer.compilers.php.PhpCrashDetector"

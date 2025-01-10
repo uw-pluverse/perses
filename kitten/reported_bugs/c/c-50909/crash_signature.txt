@@ -1,0 +1,3 @@
+void {anonymous}::CGRecordLowering::clipTailPadding(): Assertion `Prior->FD->hasAttr<NoUniqueAddressAttr>() && "should not have reused this field's tail padding"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

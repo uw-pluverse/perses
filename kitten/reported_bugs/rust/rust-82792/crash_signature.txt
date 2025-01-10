@@ -1,0 +1,9 @@
+error: internal compiler error: unexpected const parent in type_of_def_id()
+error: internal compiler error: TyKind
+error: internal compiler error: cat_expr Errd
+error: internal compiler error: mir_const_qualif
+error: internal compiler error: PromoteTemps
+error: internal compiler error: broken MIR in DefId(0
+thread 'rustc' panicked at 'no errors encountered even though `delay_span_bug` issued'
+error: internal compiler error: unexpected panic
+note: the compiler unexpectedly panicked. this is a bug.

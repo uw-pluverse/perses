@@ -1,0 +1,10 @@
+Internal compiler error during compilation:
+
+/solidity/libsolidity/formal/SMTEncoder.cpp(329): Throw in function virtual bool solidity::frontend::SMTEncoder::visit(const solidity::frontend::InlineAssembly &)
+
+Dynamic exception type: boost::wrapexcept<solidity::langutil::InternalCompilerError>
+
+std::exception::what: Non-local variable assigned in inlined assembly
+
+[solidity::util::tag_comment*] = Non-local variable assigned in inlined assembly
+

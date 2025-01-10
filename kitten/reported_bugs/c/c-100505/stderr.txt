@@ -1,0 +1,90 @@
+mutant.c:1:5: error: ‘__GIMPLE’ only valid with ‘-fgimple’
+
+    1 | int __GIMPLE foo ( )
+
+      |     ^~~~~~~~
+
+mutant.c: In function ‘foo’:
+
+mutant.c:3:6: error: ‘a’ undeclared (first use in this function)
+
+    3 | if ( a != 2 )
+
+      |      ^
+
+mutant.c:3:6: note: each undeclared identifier is reported only once for each function it appears in
+
+mutant.c:8:1: error: duplicate label ‘bb1’
+
+    8 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:9:1: error: duplicate label ‘bb1’
+
+    9 | bb1 :
+
+      | ^~~
+
+mutant.c:7:1: note: previous definition of ‘bb1’ with type ‘void’
+
+    7 | bb1 :
+
+      | ^~~
+
+mutant.c:10:5: error: base variable or SSA name undeclared before ‘=’ token
+
+   10 | a_1 = 10 ;
+
+      |     ^
+
+mutant.c:6:1: warning: label ‘bb2’ declared but not defined [-Wunused-label]
+
+    6 | goto bb2 ;
+
+      | ^~~~
+
+mutant.c:7:1: warning: label ‘bb1’ defined but not used [-Wunused-label]
+
+    7 | bb1 :
+
+      | ^~~
+
+during GIMPLE pass: eh
+
+mutant.c:1:14: internal compiler error: in record_in_finally_tree, at tree-eh.c:213
+
+    1 | int __GIMPLE foo ( )
+
+      |              ^~~
+
+0xf5fe56 record_in_finally_tree
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/tree-eh.c:213
+
+0xf5fe56 record_in_finally_tree
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/tree-eh.c:203
+
+0xf64d79 collect_finally_tree_1
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/tree-eh.c:229
+
+0xf64d79 execute
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/tree-eh.c:2197
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

@@ -1,0 +1,47 @@
+t.cpp:13:24: internal compiler error: in get_or_insert_ctor_field, at cp/constexpr.c:3556
+   13 |   union U u = { .a = a };
+      |                        ^
+0x67bf5d get_or_insert_ctor_field
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/constexpr.c:3556
+0xa13e28 cxx_eval_bare_aggregate
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/constexpr.c:4455
+0xa053e4 cxx_eval_constant_expression
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/constexpr.c:6687
+0xa07d29 cxx_eval_outermost_constant_expr
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/constexpr.c:7262
+0xa0cd91 maybe_constant_value(tree_node*, tree_node*, bool)
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/constexpr.c:7536
+0xa3f875 cp_fully_fold(tree_node*)
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/cp-gimplify.c:2146
+0xa3fa04 cp_fully_fold(tree_node*)
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/cp-gimplify.c:2140
+0xa3fa04 cp_fully_fold_init(tree_node*)
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/cp-gimplify.c:2167
+0xc32623 store_init_value(tree_node*, tree_node*, vec<tree_node*, va_gc, vl_embed>**, int)
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/typeck2.c:816
+0xa59450 check_initializer
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/decl.c:7121
+0xa7ca10 cp_finish_decl(tree_node*, tree_node*, bool, tree_node*, int)
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/decl.c:8055
+0xb680ff cp_parser_init_declarator
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/parser.c:21902
+0xb435fd cp_parser_simple_declaration
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/parser.c:14464
+0xb452d9 cp_parser_declaration_statement
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/parser.c:13599
+0xb45e3b cp_parser_statement
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/parser.c:11829
+0xb4702e cp_parser_statement_seq_opt
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/parser.c:12196
+0xb47108 cp_parser_compound_statement
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/parser.c:12145
+0xb66868 cp_parser_function_body
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/parser.c:24094
+0xb66868 cp_parser_ctor_initializer_opt_and_function_body
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/parser.c:24145
+0xb6734a cp_parser_function_definition_after_declarator
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cp/parser.c:30088
+Please submit a full bug report,
+with preprocessed source if appropriate.
+Please include the complete backtrace with any bug report.
+See <https://gcc.gnu.org/bugs/> for instructions.

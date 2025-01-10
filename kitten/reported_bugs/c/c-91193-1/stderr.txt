@@ -1,0 +1,68 @@
+mutant.c:3:1: error: ‘xtype’ redeclared as different kind of symbol
+
+    3 | xtype ( a ) xtype a ;
+
+      | ^~~~~
+
+mutant.c:1:13: note: previous declaration of ‘xtype’ with type ‘xtype’ {aka ‘int’}
+
+    1 | typedef int xtype ;
+
+      |             ^~~~~
+
+mutant.c: In function ‘xtype’:
+
+mutant.c:3:1: internal compiler error: tree check: expected class ‘type’, have ‘declaration’ (function_decl) in grokdeclarator, at c/c-decl.c:6362
+
+    3 | xtype ( a ) xtype a ;
+
+      | ^~~~~
+
+0x7bce07 tree_class_check_failed(tree_node const*, tree_code_class, char const*, int, char const*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/tree.c:8724
+
+0x63d8ad tree_class_check(tree_node*, tree_code_class, char const*, int, char const*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/tree.h:3479
+
+0x63d8ad grokdeclarator
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-decl.c:6362
+
+0x8e6284 start_decl(c_declarator*, c_declspecs*, bool, tree_node*, unsigned int*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-decl.c:5088
+
+0x94314d c_parser_declaration_or_fndef
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:2302
+
+0x94409c c_parser_declaration_or_fndef
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:2498
+
+0x94b9d3 c_parser_external_declaration
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:1777
+
+0x94c439 c_parser_translation_unit
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:1650
+
+0x94c439 c_parse_file()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:21984
+
+0x9ac765 c_common_parse_file()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c-family/c-opts.c:1218
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

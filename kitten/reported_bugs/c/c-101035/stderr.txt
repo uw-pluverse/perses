@@ -1,0 +1,86 @@
+mutant.c:1:5: error: ‘__GIMPLE’ only valid with ‘-fgimple’
+
+    1 | int __GIMPLE foo ( int a )
+
+      |     ^~~~~~~~
+
+mutant.c: In function ‘foo’:
+
+mutant.c:4:1: internal compiler error: in wide_int_to_tree_1, at tree.c:1751
+
+    4 | t1_1 = __builtin_abs -> next ;
+
+      | ^~~~
+
+0x7ce2c8 wide_int_to_tree_1
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/tree.c:1751
+
+0x1217cd0 wide_int_to_tree(tree_node*, poly_int<1u, generic_wide_int<wide_int_ref_storage<false, true> > > const&)
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/tree.c:1863
+
+0x1217cd0 build_int_cst(tree_node*, poly_int<1u, long>)
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/tree.c:1503
+
+0x1219918 build_simple_mem_ref_loc(unsigned int, tree_node*)
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/tree.c:5174
+
+0x95a5db c_parser_gimple_postfix_expression_after_primary
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/c/gimple-parser.c:1834
+
+0x95a5db c_parser_gimple_postfix_expression
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/c/gimple-parser.c:1712
+
+0x95b374 c_parser_gimple_binary_expression
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/c/gimple-parser.c:922
+
+0x95c66f c_parser_gimple_statement
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/c/gimple-parser.c:859
+
+0x95c66f c_parser_gimple_compound_statement
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/c/gimple-parser.c:650
+
+0x95c66f c_parser_gimple_compound_statement
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/c/gimple-parser.c:381
+
+0x95ea87 c_parser_parse_gimple_body(c_parser*, char*, c_declspec_il, profile_count)
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/c/gimple-parser.c:253
+
+0x94db47 c_parser_declaration_or_fndef
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/c/c-parser.c:2533
+
+0x955423 c_parser_external_declaration
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/c/c-parser.c:1777
+
+0x955e89 c_parser_translation_unit
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/c/c-parser.c:1650
+
+0x955e89 c_parse_file()
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/c/c-parser.c:22104
+
+0x9b7245 c_common_parse_file()
+
+	/tmp/tmp.GWysxNSsSH-gcc-builder/gcc/gcc/c-family/c-opts.c:1219
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

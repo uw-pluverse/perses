@@ -1,0 +1,4 @@
+internal compiler error: in from_mode_char, at attribs.h
+attr_access::from_mode_char(char)
+init_attr_rdwr_indices(hash_map<rdwr_access_hash, attr_access, simple_hashmap_traits<default_hash_traits<rdwr_access_hash>, attr_access> >*, tree_node*)
+append_access_attr

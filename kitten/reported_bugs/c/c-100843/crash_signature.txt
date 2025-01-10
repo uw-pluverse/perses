@@ -1,0 +1,4 @@
+internal compiler error: in try_store_by_multiple_pieces, at builtins.c
+try_store_by_multiple_pieces(rtx_def*, rtx_def*, unsigned int, unsigned long, unsigned long, rtx_def*, char, unsigned int)
+clear_storage_hints(rtx_def*, rtx_def*, block_op_methods, unsigned int, long, unsigned long, unsigned long, unsigned long, unsigned int)
+expand_builtin_memset_args

@@ -1,0 +1,40 @@
+mutant.c: In function ‘foo’:
+
+mutant.c:8:3: warning: unused variable ‘x’ [-Wunused-variable]
+
+    8 | V x = v >> w ;
+
+      |   ^
+
+during RTL pass: expand
+
+mutant.c:5:1: internal compiler error: Segmentation fault
+
+    5 | foo ( void )
+
+      | ^~~
+
+0xef7273 crash_signal
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/toplev.c:327
+
+0xa3b867 expand_debug_expr
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cfgexpand.c:5245
+
+0xa452f0 expand_debug_locations
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cfgexpand.c:5608
+
+0xa452f0 execute
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cfgexpand.c:6735
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

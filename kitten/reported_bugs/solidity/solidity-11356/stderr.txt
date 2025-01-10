@@ -1,0 +1,10 @@
+Internal compiler error during compilation:
+
+/solidity/libsolidity/analysis/TypeChecker.cpp(595): Throw in function virtual bool solidity::frontend::TypeChecker::visit(const solidity::frontend::VariableDeclaration &)
+
+Dynamic exception type: boost::wrapexcept<solidity::langutil::InternalCompilerError>
+
+std::exception::what: 
+
+[solidity::util::tag_comment*] = 
+

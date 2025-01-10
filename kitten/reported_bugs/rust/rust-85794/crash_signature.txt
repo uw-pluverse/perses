@@ -1,0 +1,4 @@
+error: internal compiler error: the following error was constructed but not emitted
+thread 'rustc' panicked at 'explicit panic'
+error: internal compiler error: unexpected panic
+note: the compiler unexpectedly panicked. this is a bug.

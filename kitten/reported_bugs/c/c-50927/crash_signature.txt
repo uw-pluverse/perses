@@ -1,0 +1,2 @@
+bool clang::Expr::EvaluateWithSubstitution(clang::APValue&, clang::ASTContext&, const clang::FunctionDecl*, llvm::ArrayRef<const clang::Expr*>, const clang::Expr*) const: Assertion `!isValueDependent() && "Expression evaluator can't be called on a dependent expression."' failed.
+PLEASE submit a bug report to

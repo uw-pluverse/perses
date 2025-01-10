@@ -1,0 +1,58 @@
+warning: to use a constant of type `Sum` in a pattern, `Sum` must be annotated with `#[derive(PartialEq, Eq)]`
+
+  --> mutant.rs:30:5
+
+   |
+
+30 | & & EEK_ONE => { println ! ( "Gbye" ) ; }
+
+   |     ^^^^^^^
+
+   |
+
+   = note: `#[warn(indirect_structural_match)]` on by default
+
+   = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+
+   = note: for more information, see issue #62411 <https://github.com/rust-lang/rust/issues/62411>
+
+
+
+thread 'rustc' panicked at 'called `Result::unwrap()` on an `Err` value: FallbackToConstRef(())', compiler/rustc_mir_build/src/thir/pattern/const_to_pat.rs:169:83
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.52.0-nightly (234781afe 2021-03-07) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [check_match] match-checking `main`
+
+#1 [analysis] running analysis passes on this crate
+
+end of query stack
+
+warning: 1 warning emitted
+
+
+

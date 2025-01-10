@@ -1,0 +1,136 @@
+mutant.c:4:23: error: duplicate member 'i'
+
+i [ 12 ] ; __int128_t i ; } __attribute__ ( ( packed , aligned ( 8 ) ) ) ; typedef struct unaligned_int128_t_ { __int128_t value ; } __attribute__ ( ( packed , aligned ( 4 ) ) ) unaligned_int128_t ; struct tuple_t p = { { 0 } , 1 } ; unaligned_int128_t * addr = ( unaligned_int128_t * ) ( & p . i ) ;
+
+                      ^
+
+mutant.c:4:1: note: previous declaration is here
+
+i [ 12 ] ; __int128_t i ; } __attribute__ ( ( packed , aligned ( 8 ) ) ) ; typedef struct unaligned_int128_t_ { __int128_t value ; } __attribute__ ( ( packed , aligned ( 4 ) ) ) unaligned_int128_t ; struct tuple_t p = { { 0 } , 1 } ; unaligned_int128_t * addr = ( unaligned_int128_t * ) ( & p . i ) ;
+
+^
+
+clang-trunk: /tmp/tmp.xjN6dMkdrg-clang-builder/llvm-project/clang/lib/AST/RecordLayoutBuilder.cpp:3230: const clang::ASTRecordLayout& clang::ASTContext::getASTRecordLayout(const clang::RecordDecl*) const: Assertion `!D->isInvalidDecl() && "Cannot get layout of invalid decl!"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:4:300: current parser token ';'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x395b184)[0x555e299cf184]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x555e299ccfa4]
+
+clang-trunk(+0x389fdd8)[0x555e29913dd8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f4b3d1403c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f4b3cbdf18b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f4b3cbbe859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f4b3cbbe729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f4b3cbcff36]
+
+clang-trunk(_ZNK5clang10ASTContext18getASTRecordLayoutEPKNS_10RecordDeclE+0x2279)[0x555e2cc35619]
+
+clang-trunk(+0x5d05bd3)[0x555e2bd79bd3]
+
+clang-trunk(+0x5d060f7)[0x555e2bd7a0f7]
+
+clang-trunk(_ZN5clang4Sema14CheckCastAlignEPNS_4ExprENS_8QualTypeENS_11SourceRangeE+0x142)[0x555e2bd836b2]
+
+clang-trunk(+0x5ce6c94)[0x555e2bd5ac94]
+
+clang-trunk(_ZN5clang4Sema19BuildCStyleCastExprENS_14SourceLocationEPNS_14TypeSourceInfoES1_PNS_4ExprE+0x26d)[0x555e2bd5bb5d]
+
+clang-trunk(_ZN5clang4Sema13ActOnCastExprEPNS_5ScopeENS_14SourceLocationERNS_10DeclaratorERNS_9OpaquePtrINS_8QualTypeEEES3_PNS_4ExprE+0x391)[0x555e2c08b211]
+
+clang-trunk(_ZN5clang6Parser20ParseParenExpressionERNS0_16ParenParseOptionEbbRNS_9OpaquePtrINS_8QualTypeEEERNS_14SourceLocationE+0x141f)[0x555e2bc4a50f]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbRbNS0_13TypeCastStateEbPb+0xd30)[0x555e2bc40610]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbNS0_13TypeCastStateEbPb+0x3b)[0x555e2bc4250b]
+
+clang-trunk(_ZN5clang6Parser25ParseAssignmentExpressionENS0_13TypeCastStateE+0x3d)[0x555e2bc425ad]
+
+clang-trunk(_ZN5clang6Parser44ParseDeclarationAfterDeclaratorAndAttributesERNS_10DeclaratorERKNS0_18ParsedTemplateInfoEPNS0_12ForRangeInitE+0x5f5)[0x555e2bc086c5]
+
+clang-trunk(_ZN5clang6Parser14ParseDeclGroupERNS_15ParsingDeclSpecENS_17DeclaratorContextEPNS_14SourceLocationEPNS0_12ForRangeInitE+0x4db)[0x555e2bc1b5eb]
+
+clang-trunk(_ZN5clang6Parser30ParseDeclOrFunctionDefInternalERNS_25ParsedAttributesWithRangeERNS_15ParsingDeclSpecENS_15AccessSpecifierE+0x226)[0x555e2bbe96f6]
+
+clang-trunk(+0x5b75ce1)[0x555e2bbe9ce1]
+
+clang-trunk(_ZN5clang6Parser24ParseExternalDeclarationERNS_25ParsedAttributesWithRangeEPNS_15ParsingDeclSpecE+0x217)[0x555e2bbf04e7]
+
+clang-trunk(_ZN5clang6Parser17ParseTopLevelDeclERNS_9OpaquePtrINS_12DeclGroupRefEEEb+0x1ce)[0x555e2bbf1a7e]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x219)[0x555e2bbe42c9]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x555e2ab2b968]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x555e2a3db599]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x555e2a36e7e6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x555e2a4b9480]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x555e272d9696]
+
+clang-trunk(+0x12619d8)[0x555e272d59d8]
+
+clang-trunk(+0x418b789)[0x555e2a1ff789]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x555e29913f5c]
+
+clang-trunk(+0x418bf2d)[0x555e2a1fff2d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x555e2a1d26bb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x555e2a1d31d9]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x555e2a1ddd89]
+
+clang-trunk(main+0x18af)[0x555e2720452f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f4b3cbc00b3]
+
+clang-trunk(_start+0x2e)[0x555e272d554e]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 2e9c75daffddd65e37c3236708b5b133e6f5f2f5)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-4db798.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-4db798.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

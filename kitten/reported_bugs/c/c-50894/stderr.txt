@@ -1,0 +1,128 @@
+mutant.c:6:1: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+foo ( void )
+
+^
+
+mutant.c:5:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void
+
+^
+
+static 
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:10:1: current parser token 'void'
+
+2.	mutant.c:6:1: LLVM IR generation of declaration 'foo'
+
+3.	mutant.c:6:1: Generating code for declaration 'foo'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x39591f4)[0x559aea09c1f4]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x559aea09a014]
+
+clang-trunk(+0x389de48)[0x559ae9fe0e48]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f1da60b53c0]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction14EmitAtomicExprEPNS_10AtomicExprE+0x242)[0x559aea5c4af2]
+
+clang-trunk(+0x403bf58)[0x559aea77ef58]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction14EmitScalarExprEPKNS_4ExprEb+0x6a)[0x559aea780d9a]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction11EmitAnyExprEPKNS_4ExprENS0_12AggValueSlotEb+0xd7)[0x559aea728087]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction15EmitIgnoredExprEPKNS_4ExprE+0x6e)[0x559aea7469fe]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction8EmitStmtEPKNS_4StmtEN4llvm8ArrayRefIPKNS_4AttrEEE+0xca)[0x559aea42b6ea]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction28EmitCompoundStmtWithoutScopeERKNS_12CompoundStmtEbNS0_12AggValueSlotE+0x8c)[0x559aea431a8c]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction16EmitFunctionBodyEPKNS_4StmtE+0xd1)[0x559aea488ed1]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction12GenerateCodeENS_10GlobalDeclEPN4llvm8FunctionERKNS0_14CGFunctionInfoE+0x37c)[0x559aea49a72c]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule28EmitGlobalFunctionDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x1c6)[0x559aea4f4036]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule20EmitGlobalDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x285)[0x559aea4efbd5]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule10EmitGlobalENS_10GlobalDeclE+0x3eb)[0x559aea4f003b]
+
+clang-trunk(+0x3db5aa2)[0x559aea4f8aa2]
+
+clang-trunk(+0x4ab82d9)[0x559aeb1fb2d9]
+
+clang-trunk(+0x4aaa4c0)[0x559aeb1ed4c0]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x204)[0x559aec2b1174]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x559aeb1f8458]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x559aeaaa79e9]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x559aeaa3ac36]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x559aeab85870]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x559ae79a5696]
+
+clang-trunk(+0x125e9d8)[0x559ae79a19d8]
+
+clang-trunk(+0x4188bb9)[0x559aea8cbbb9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x559ae9fe0fcc]
+
+clang-trunk(+0x418935d)[0x559aea8cc35d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x559aea89eaeb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x559aea89f609]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x559aea8aa1b9]
+
+clang-trunk(main+0x18af)[0x559ae78d052f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f1da5b350b3]
+
+clang-trunk(_start+0x2e)[0x559ae79a154e]
+
+clang-13: error: clang frontend command failed with exit code 136 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git ef906573a127cffef7cae75d5155c15a8a2a3a5e)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-e423ab.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-e423ab.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

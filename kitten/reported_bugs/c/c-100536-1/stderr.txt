@@ -1,0 +1,66 @@
+mutant.c: In function ‘foo’:
+
+mutant.c:5:16: warning: unused parameter ‘arg’ [-Wunused-parameter]
+
+    5 | foo ( struct S arg )
+
+      |       ~~~~~~~~~^~~
+
+mutant.c: In function ‘baz’:
+
+mutant.c:11:1: sorry, unimplemented: passing too large argument on stack
+
+   11 | foo ( bar ( s , & a [ 1 ] , a [ 2 ] ) ) ;
+
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c:11:1: sorry, unimplemented: passing too large argument on stack
+
+during RTL pass: expand
+
+mutant.c:11:1: internal compiler error: in expand_call, at calls.c:4980
+
+0x686a4e expand_call(tree_node*, rtx_def*, int)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/calls.c:4980
+
+0xb5fe9e expand_expr_real_1(tree_node*, rtx_def*, machine_mode, expand_modifier, rtx_def**, bool)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/expr.c:11461
+
+0xa3cfc9 expand_expr
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/expr.h:301
+
+0xa3cfc9 expand_call_stmt
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cfgexpand.c:2843
+
+0xa3cfc9 expand_gimple_stmt_1
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cfgexpand.c:3847
+
+0xa3cfc9 expand_gimple_stmt
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cfgexpand.c:4011
+
+0xa429dc expand_gimple_tailcall
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cfgexpand.c:4057
+
+0xa429dc expand_gimple_basic_block
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cfgexpand.c:6025
+
+0xa4451f execute
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cfgexpand.c:6732
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

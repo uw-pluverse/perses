@@ -1,0 +1,32 @@
+mutant.c: In function ‘l2’:
+
+mutant.c:18:17: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+
+   18 | __int128 * nd = ( __int128 * ) bm ;
+
+      |                 ^
+
+during GIMPLE pass: pre
+
+mutant.c:3:1: internal compiler error: in compute_antic, at tree-ssa-pre.c:2512
+
+    3 | l2 ( unsigned long int hz )
+
+      | ^~
+
+0x7918dd compute_antic
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/tree-ssa-pre.c:2512
+
+0x7918dd execute
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/tree-ssa-pre.c:4381
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

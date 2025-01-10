@@ -1,0 +1,118 @@
+mutant.c: In function ‘main’:
+
+mutant.c:12:26: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+
+   12 | o = ( ( struct obj * ) ( ( const char * ) ( { 1 ; } )
+
+      |                          ^
+
+mutant.c:7:16: warning: unused parameter ‘argc’ [-Wunused-parameter]
+
+    7 | int main ( int argc , char * argv [ ] )
+
+      |            ~~~~^~~~
+
+mutant.c:7:30: warning: unused parameter ‘argv’ [-Wunused-parameter]
+
+    7 | int main ( int argc , char * argv [ ] )
+
+      |                       ~~~~~~~^~~~~~~~
+
+mutant.c:12:7: internal compiler error: in recompute_tree_invariant_for_addr_expr, at tree.c:4795
+
+   12 | o = ( ( struct obj * ) ( ( const char * ) ( { 1 ; } )
+
+      |     ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   13 | - ( const char * ) & ( ( struct obj * ) 0 ) -> l ) ) ;
+
+      | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+0x7d4698 recompute_tree_invariant_for_addr_expr(tree_node*)
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/tree.c:4795
+
+0xc57ff4 gimplify_addr_expr
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/gimplify.c:6239
+
+0xc4aa0f gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/gimplify.c:14257
+
+0xc56b1f gimplify_modify_expr
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/gimplify.c:5807
+
+0xc49ed0 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/gimplify.c:14210
+
+0xc4d89a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/gimplify.c:6869
+
+0xc4bb0b gimplify_statement_list
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/gimplify.c:1887
+
+0xc4bb0b gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/gimplify.c:14655
+
+0xc4d89a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/gimplify.c:6869
+
+0xc4bb0b gimplify_statement_list
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/gimplify.c:1887
+
+0xc4bb0b gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/gimplify.c:14655
+
+0xc4d89a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/gimplify.c:6869
+
+0xc4e0ce gimplify_bind_expr
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/gimplify.c:1426
+
+0xc4b0cc gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/gimplify.c:14411
+
+0xc4d89a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/gimplify.c:6869
+
+0xc4bb0b gimplify_statement_list
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/gimplify.c:1887
+
+0xc4bb0b gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/gimplify.c:14655
+
+0xc4d89a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/gimplify.c:6869
+
+0xc4eec3 gimplify_body(tree_node*, bool)
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/gimplify.c:15442
+
+0xc4f311 gimplify_function_tree(tree_node*)
+
+	/tmp/tmp.9NRxLvOOjK-gcc-builder/gcc/gcc/gimplify.c:15596
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

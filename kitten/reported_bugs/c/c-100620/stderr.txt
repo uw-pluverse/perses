@@ -1,0 +1,72 @@
+mutant.c:1:5: error: ‘__GIMPLE’ only valid with ‘-fgimple’
+
+    1 | int __GIMPLE foo ( int a )
+
+      |     ^~~~~~~~
+
+mutant.c: In function ‘foo’:
+
+mutant.c:3:5: warning: variable ‘t1’ set but not used [-Wunused-but-set-variable]
+
+    3 | int t1 ;
+
+      |     ^~
+
+mutant.c:1:24: warning: unused parameter ‘a’ [-Wunused-parameter]
+
+    1 | int __GIMPLE foo ( int a )
+
+      |                    ~~~~^
+
+during GIMPLE pass: lower
+
+cc1: internal compiler error: in force_gimple_operand_1, at gimplify-me.c:79
+
+0x6ec7e0 force_gimple_operand_1(tree_node*, gimple**, bool (*)(tree_node*), tree_node*)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify-me.c:79
+
+0xbf29f0 gimplify_and_update_call_from_tree(gimple_stmt_iterator*, tree_node*)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimple-fold.c:792
+
+0xc007b9 gimple_fold_builtin
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimple-fold.c:5167
+
+0xc03117 gimple_fold_call
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimple-fold.c:5561
+
+0xc03117 fold_stmt_1
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimple-fold.c:6263
+
+0x191f533 lower_stmt
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimple-low.c:388
+
+0x191f533 lower_sequence
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimple-low.c:217
+
+0x191f3dd lower_gimple_bind
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimple-low.c:473
+
+0x192029d lower_function_body
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimple-low.c:110
+
+0x192029d execute
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimple-low.c:195
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

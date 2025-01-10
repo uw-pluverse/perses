@@ -1,0 +1,3 @@
+internal compiler error: output_operand: invalid expression as operand
+output_operand_lossage(char const*, ...)
+output_addr_const(_IO_FILE*, rtx_def*)

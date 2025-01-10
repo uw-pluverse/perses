@@ -1,0 +1,3 @@
+void computeKnownBits(const llvm::Value*, const llvm::APInt&, llvm::KnownBits&, unsigned int, const {anonymous}::Query&): Assertion `(Ty->isIntOrIntVectorTy(BitWidth) || Ty->isPtrOrPtrVectorTy()) && "Not integer or pointer type!"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

@@ -1,0 +1,76 @@
+error[E0670]: `async fn` is not permitted in Rust 2015
+
+ --> mutant.rs:9:5
+
+  |
+
+9 | pub async fn async_fn ( ) { }
+
+  |     ^^^^^ to use `async fn`, switch to Rust 2018 or later
+
+  |
+
+  = help: set `edition = "2018"` in `Cargo.toml`
+
+  = note: for more on editions, read https://doc.rust-lang.org/edition-guide
+
+
+
+error[E0670]: `async fn` is not permitted in Rust 2015
+
+  --> mutant.rs:16:5
+
+   |
+
+16 | pub async fn async_foo ( & self ) { }
+
+   |     ^^^^^ to use `async fn`, switch to Rust 2018 or later
+
+   |
+
+   = help: set `edition = "2018"` in `Cargo.toml`
+
+   = note: for more on editions, read https://doc.rust-lang.org/edition-guide
+
+
+
+error: internal compiler error: compiler/rustc_metadata/src/rmeta/decoder.rs:1233:18: cannot get associated-item of `DefKey { parent: Some(DefIndex(37465)), disambiguated_data: DisambiguatedDefPathData { data: TypeNs("None"), disambiguator: 0 } }`
+
+
+
+thread 'rustc' panicked at 'Box<Any>', /rustc/4fdac23f3171e2f8864d359a21da600dd3faafc9/library/std/src/panic.rs:59:5
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.53.0-nightly (4fdac23f3 2021-03-31) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [associated_item] computing associated item data for `std::prelude::v1::None`
+
+#1 [associated_items] collecting associated items of std::option::Option
+
+end of query stack
+
+error: aborting due to 3 previous errors
+
+
+
+For more information about this error, try `rustc --explain E0670`.
+

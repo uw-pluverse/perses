@@ -1,0 +1,4 @@
+internal compiler error: Segmentation fault
+crash_signal
+flags_from_decl_or_type(tree_node const*)
+gimple_call_flags(gimple const*)

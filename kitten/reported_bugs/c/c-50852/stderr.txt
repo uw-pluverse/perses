@@ -1,0 +1,178 @@
+mutant.c:4:1: warning: extension used [-Wlanguage-extension-token]
+
+asm volatile ( "%0 %1 %2 %3"
+
+^
+
+mutant.c:7:1: warning: extension used [-Wlanguage-extension-token]
+
+asm volatile ( "set %0 %1" : "=r" ( ret ) : "r" ( stride ) ) ;
+
+^
+
+mutant.c:1:25: warning: unused parameter 'v' [-Wunused-parameter]
+
+int sad16_sse2 ( void * v , unsigned char * blk2 , unsigned char * blk1 ,
+
+                        ^
+
+mutant.c:1:5: warning: no previous prototype for function 'sad16_sse2' [-Wmissing-prototypes]
+
+int sad16_sse2 ( void * v , unsigned char * blk2 , unsigned char * blk1 ,
+
+    ^
+
+mutant.c:1:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int sad16_sse2 ( void * v , unsigned char * blk2 , unsigned char * blk1 ,
+
+^
+
+static 
+
+mutant.c:4:16: error: unexpected token at start of statement
+
+asm volatile ( "%0 %1 %2 %3"
+
+               ^
+
+<inline asm>:1:2: note: instantiated into assembly here
+
+        %r8d %rdx %rsi %rax
+
+        ^
+
+clang-trunk: /tmp/tmp.nPuVKAIgXI-clang-builder/llvm-project/llvm/include/llvm/Support/Casting.h:269: typename llvm::cast_retty<X, Y*>::ret_type llvm::cast(Y*) [with X = llvm::MCTargetExpr; Y = const llvm::MCExpr; typename llvm::cast_retty<X, Y*>::ret_type = const llvm::MCTargetExpr*]: Assertion `isa<X>(Val) && "cast<Ty>() argument of incompatible type!"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	Code generation
+
+3.	Running pass 'Function Pass Manager' on module 'mutant.c'.
+
+4.	Running pass 'X86 Assembly Printer' on function '@sad16_sse2'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x3950274)[0x5567e96ea274]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x5567e96e8094]
+
+clang-trunk(+0x3894ed8)[0x5567e962eed8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7fe7c77503c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7fe7c71ef18b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7fe7c71ce859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7fe7c71ce729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7fe7c71dff36]
+
+clang-trunk(_ZNK4llvm6MCExpr25evaluateAsRelocatableImplERNS_7MCValueEPKNS_11MCAssemblerEPKNS_11MCAsmLayoutEPKNS_7MCFixupEPKNS_8DenseMapIPKNS_9MCSectionEmNS_12DenseMapInfoISF_EENS_6detail12DenseMapPairISF_mEEEEb+0x79b)[0x5567e9255ddb]
+
+clang-trunk(_ZNK4llvm6MCExpr18evaluateAsAbsoluteERl+0x52)[0x5567e9256142]
+
+clang-trunk(+0x353f0c8)[0x5567e92d90c8]
+
+clang-trunk(+0x267df59)[0x5567e8417f59]
+
+clang-trunk(+0x268e67b)[0x5567e842867b]
+
+clang-trunk(+0x3535a25)[0x5567e92cfa25]
+
+clang-trunk(+0x354e692)[0x5567e92e8692]
+
+clang-trunk(+0x3543435)[0x5567e92dd435]
+
+clang-trunk(_ZNK4llvm10AsmPrinter13emitInlineAsmENS_9StringRefERKNS_15MCSubtargetInfoERKNS_15MCTargetOptionsEPKNS_6MDNodeENS_9InlineAsm10AsmDialectE+0x249)[0x5567ea43f029]
+
+clang-trunk(_ZNK4llvm10AsmPrinter13emitInlineAsmEPKNS_12MachineInstrE+0x15a2)[0x5567ea440712]
+
+clang-trunk(_ZN4llvm10AsmPrinter16emitFunctionBodyEv+0x763)[0x5567ea43b0a3]
+
+clang-trunk(+0x2377386)[0x5567e8111386]
+
+clang-trunk(_ZN4llvm19MachineFunctionPass13runOnFunctionERNS_8FunctionE+0x258)[0x5567e890ad98]
+
+clang-trunk(_ZN4llvm13FPPassManager13runOnFunctionERNS_8FunctionE+0x365)[0x5567e8de20c5]
+
+clang-trunk(_ZN4llvm13FPPassManager11runOnModuleERNS_6ModuleE+0x39)[0x5567e8de2309]
+
+clang-trunk(_ZN4llvm6legacy15PassManagerImpl3runERNS_6ModuleE+0x382)[0x5567e8de3402]
+
+clang-trunk(+0x3c823c2)[0x5567e9a1c3c2]
+
+clang-trunk(_ZN5clang17EmitBackendOutputERNS_17DiagnosticsEngineERKNS_19HeaderSearchOptionsERKNS_14CodeGenOptionsERKNS_13TargetOptionsERKNS_11LangOptionsEN4llvm9StringRefEPNSE_6ModuleENS_13BackendActionESt10unique_ptrINSE_17raw_pwrite_streamESt14default_deleteISK_EE+0x47d)[0x5567e9a1de7d]
+
+clang-trunk(+0x4aae44f)[0x5567ea84844f]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x429)[0x5567eb8ffe49]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x5567ea846f98]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x5567ea0f5e79]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x5567ea0890c6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x5567ea1d3d00]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x5567e6ffab06]
+
+clang-trunk(+0x125ce48)[0x5567e6ff6e48]
+
+clang-trunk(+0x417fca9)[0x5567e9f19ca9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x5567e962f05c]
+
+clang-trunk(+0x418044d)[0x5567e9f1a44d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x5567e9eecbdb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x5567e9eed6f9]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x5567e9ef82a9]
+
+clang-trunk(main+0x18af)[0x5567e6f2550f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fe7c71d00b3]
+
+clang-trunk(_start+0x2e)[0x5567e6ff69be]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 24d48d45cc302a6abeab139d87ba87f7a2335323)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-710687.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-710687.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

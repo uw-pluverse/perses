@@ -1,0 +1,292 @@
+mutant.c:3:1: warning: implicit declaration of function 'valid8' is invalid in C99 [-Wimplicit-function-declaration]
+
+valid8 ( & arg [ 1 ] , 1 ) ; } int valid2 ( void ) { return __builtin_preserve_access_index ( 1 ) ; } void * invalid3 ( const int * arg ) { return __builtin_preserve_access_index ( & arg [ 1 ] ) ; } const void * invalid4 ( volatile const int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int * valid5 ( int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int valid6 ( const volatile int * arg ) { return * __builtin_preserve_access_index ( arg ) ; } struct s { int a ; int b ; } ; int valid7 ( struct s * arg ) { return * __builtin_preserve_access_index ( & arg -> b ) ; } int valid8 ( struct s * arg ) {
+
+^
+
+mutant.c:3:1: warning: incompatible integer to pointer conversion returning 'int' from a function with result type 'const void *' [-Wint-conversion]
+
+valid8 ( & arg [ 1 ] , 1 ) ; } int valid2 ( void ) { return __builtin_preserve_access_index ( 1 ) ; } void * invalid3 ( const int * arg ) { return __builtin_preserve_access_index ( & arg [ 1 ] ) ; } const void * invalid4 ( volatile const int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int * valid5 ( int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int valid6 ( const volatile int * arg ) { return * __builtin_preserve_access_index ( arg ) ; } struct s { int a ; int b ; } ; int valid7 ( struct s * arg ) { return * __builtin_preserve_access_index ( & arg -> b ) ; } int valid8 ( struct s * arg ) {
+
+^~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c:1:14: warning: no previous prototype for function 'invalid1' [-Wmissing-prototypes]
+
+const void * invalid1 ( const int * arg ) {
+
+             ^
+
+mutant.c:1:7: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+const void * invalid1 ( const int * arg ) {
+
+      ^
+
+static 
+
+mutant.c:3:36: warning: no previous prototype for function 'valid2' [-Wmissing-prototypes]
+
+valid8 ( & arg [ 1 ] , 1 ) ; } int valid2 ( void ) { return __builtin_preserve_access_index ( 1 ) ; } void * invalid3 ( const int * arg ) { return __builtin_preserve_access_index ( & arg [ 1 ] ) ; } const void * invalid4 ( volatile const int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int * valid5 ( int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int valid6 ( const volatile int * arg ) { return * __builtin_preserve_access_index ( arg ) ; } struct s { int a ; int b ; } ; int valid7 ( struct s * arg ) { return * __builtin_preserve_access_index ( & arg -> b ) ; } int valid8 ( struct s * arg ) {
+
+                                   ^
+
+mutant.c:3:32: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+valid8 ( & arg [ 1 ] , 1 ) ; } int valid2 ( void ) { return __builtin_preserve_access_index ( 1 ) ; } void * invalid3 ( const int * arg ) { return __builtin_preserve_access_index ( & arg [ 1 ] ) ; } const void * invalid4 ( volatile const int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int * valid5 ( int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int valid6 ( const volatile int * arg ) { return * __builtin_preserve_access_index ( arg ) ; } struct s { int a ; int b ; } ; int valid7 ( struct s * arg ) { return * __builtin_preserve_access_index ( & arg -> b ) ; } int valid8 ( struct s * arg ) {
+
+                               ^
+
+                               static 
+
+mutant.c:3:148: warning: returning 'const int *' from a function with result type 'void *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+
+valid8 ( & arg [ 1 ] , 1 ) ; } int valid2 ( void ) { return __builtin_preserve_access_index ( 1 ) ; } void * invalid3 ( const int * arg ) { return __builtin_preserve_access_index ( & arg [ 1 ] ) ; } const void * invalid4 ( volatile const int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int * valid5 ( int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int valid6 ( const volatile int * arg ) { return * __builtin_preserve_access_index ( arg ) ; } struct s { int a ; int b ; } ; int valid7 ( struct s * arg ) { return * __builtin_preserve_access_index ( & arg -> b ) ; } int valid8 ( struct s * arg ) {
+
+                                                                                                                                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c:3:110: warning: no previous prototype for function 'invalid3' [-Wmissing-prototypes]
+
+valid8 ( & arg [ 1 ] , 1 ) ; } int valid2 ( void ) { return __builtin_preserve_access_index ( 1 ) ; } void * invalid3 ( const int * arg ) { return __builtin_preserve_access_index ( & arg [ 1 ] ) ; } const void * invalid4 ( volatile const int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int * valid5 ( int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int valid6 ( const volatile int * arg ) { return * __builtin_preserve_access_index ( arg ) ; } struct s { int a ; int b ; } ; int valid7 ( struct s * arg ) { return * __builtin_preserve_access_index ( & arg -> b ) ; } int valid8 ( struct s * arg ) {
+
+                                                                                                             ^
+
+mutant.c:3:103: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+valid8 ( & arg [ 1 ] , 1 ) ; } int valid2 ( void ) { return __builtin_preserve_access_index ( 1 ) ; } void * invalid3 ( const int * arg ) { return __builtin_preserve_access_index ( & arg [ 1 ] ) ; } const void * invalid4 ( volatile const int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int * valid5 ( int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int valid6 ( const volatile int * arg ) { return * __builtin_preserve_access_index ( arg ) ; } struct s { int a ; int b ; } ; int valid7 ( struct s * arg ) { return * __builtin_preserve_access_index ( & arg -> b ) ; } int valid8 ( struct s * arg ) {
+
+                                                                                                      ^
+
+                                                                                                      static 
+
+mutant.c:3:260: warning: returning 'const volatile int *' from a function with result type 'const void *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+
+valid8 ( & arg [ 1 ] , 1 ) ; } int valid2 ( void ) { return __builtin_preserve_access_index ( 1 ) ; } void * invalid3 ( const int * arg ) { return __builtin_preserve_access_index ( & arg [ 1 ] ) ; } const void * invalid4 ( volatile const int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int * valid5 ( int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int valid6 ( const volatile int * arg ) { return * __builtin_preserve_access_index ( arg ) ; } struct s { int a ; int b ; } ; int valid7 ( struct s * arg ) { return * __builtin_preserve_access_index ( & arg -> b ) ; } int valid8 ( struct s * arg ) {
+
+                                                                                                                                                                                                                                                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c:3:213: warning: no previous prototype for function 'invalid4' [-Wmissing-prototypes]
+
+valid8 ( & arg [ 1 ] , 1 ) ; } int valid2 ( void ) { return __builtin_preserve_access_index ( 1 ) ; } void * invalid3 ( const int * arg ) { return __builtin_preserve_access_index ( & arg [ 1 ] ) ; } const void * invalid4 ( volatile const int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int * valid5 ( int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int valid6 ( const volatile int * arg ) { return * __builtin_preserve_access_index ( arg ) ; } struct s { int a ; int b ; } ; int valid7 ( struct s * arg ) { return * __builtin_preserve_access_index ( & arg -> b ) ; } int valid8 ( struct s * arg ) {
+
+                                                                                                                                                                                                                    ^
+
+mutant.c:3:206: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+valid8 ( & arg [ 1 ] , 1 ) ; } int valid2 ( void ) { return __builtin_preserve_access_index ( 1 ) ; } void * invalid3 ( const int * arg ) { return __builtin_preserve_access_index ( & arg [ 1 ] ) ; } const void * invalid4 ( volatile const int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int * valid5 ( int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int valid6 ( const volatile int * arg ) { return * __builtin_preserve_access_index ( arg ) ; } struct s { int a ; int b ; } ; int valid7 ( struct s * arg ) { return * __builtin_preserve_access_index ( & arg -> b ) ; } int valid8 ( struct s * arg ) {
+
+                                                                                                                                                                                                             ^
+
+                                                                                                                                                                                                       static 
+
+mutant.c:3:310: warning: no previous prototype for function 'valid5' [-Wmissing-prototypes]
+
+valid8 ( & arg [ 1 ] , 1 ) ; } int valid2 ( void ) { return __builtin_preserve_access_index ( 1 ) ; } void * invalid3 ( const int * arg ) { return __builtin_preserve_access_index ( & arg [ 1 ] ) ; } const void * invalid4 ( volatile const int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int * valid5 ( int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int valid6 ( const volatile int * arg ) { return * __builtin_preserve_access_index ( arg ) ; } struct s { int a ; int b ; } ; int valid7 ( struct s * arg ) { return * __builtin_preserve_access_index ( & arg -> b ) ; } int valid8 ( struct s * arg ) {
+
+                                                                                                                                                                                                                                                                                                                     ^
+
+mutant.c:3:304: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+valid8 ( & arg [ 1 ] , 1 ) ; } int valid2 ( void ) { return __builtin_preserve_access_index ( 1 ) ; } void * invalid3 ( const int * arg ) { return __builtin_preserve_access_index ( & arg [ 1 ] ) ; } const void * invalid4 ( volatile const int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int * valid5 ( int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int valid6 ( const volatile int * arg ) { return * __builtin_preserve_access_index ( arg ) ; } struct s { int a ; int b ; } ; int valid7 ( struct s * arg ) { return * __builtin_preserve_access_index ( & arg -> b ) ; } int valid8 ( struct s * arg ) {
+
+                                                                                                                                                                                                                                                                                                               ^
+
+                                                                                                                                                                                                                                                                                                               static 
+
+mutant.c:3:388: warning: no previous prototype for function 'valid6' [-Wmissing-prototypes]
+
+valid8 ( & arg [ 1 ] , 1 ) ; } int valid2 ( void ) { return __builtin_preserve_access_index ( 1 ) ; } void * invalid3 ( const int * arg ) { return __builtin_preserve_access_index ( & arg [ 1 ] ) ; } const void * invalid4 ( volatile const int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int * valid5 ( int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int valid6 ( const volatile int * arg ) { return * __builtin_preserve_access_index ( arg ) ; } struct s { int a ; int b ; } ; int valid7 ( struct s * arg ) { return * __builtin_preserve_access_index ( & arg -> b ) ; } int valid8 ( struct s * arg ) {
+
+                                                                                                                                                                                                                                                                                                                                                                                                   ^
+
+mutant.c:3:384: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+valid8 ( & arg [ 1 ] , 1 ) ; } int valid2 ( void ) { return __builtin_preserve_access_index ( 1 ) ; } void * invalid3 ( const int * arg ) { return __builtin_preserve_access_index ( & arg [ 1 ] ) ; } const void * invalid4 ( volatile const int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int * valid5 ( int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int valid6 ( const volatile int * arg ) { return * __builtin_preserve_access_index ( arg ) ; } struct s { int a ; int b ; } ; int valid7 ( struct s * arg ) { return * __builtin_preserve_access_index ( & arg -> b ) ; } int valid8 ( struct s * arg ) {
+
+                                                                                                                                                                                                                                                                                                                                                                                               ^
+
+                                                                                                                                                                                                                                                                                                                                                                                               static 
+
+mutant.c:3:514: warning: no previous prototype for function 'valid7' [-Wmissing-prototypes]
+
+valid8 ( & arg [ 1 ] , 1 ) ; } int valid2 ( void ) { return __builtin_preserve_access_index ( 1 ) ; } void * invalid3 ( const int * arg ) { return __builtin_preserve_access_index ( & arg [ 1 ] ) ; } const void * invalid4 ( volatile const int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int * valid5 ( int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int valid6 ( const volatile int * arg ) { return * __builtin_preserve_access_index ( arg ) ; } struct s { int a ; int b ; } ; int valid7 ( struct s * arg ) { return * __builtin_preserve_access_index ( & arg -> b ) ; } int valid8 ( struct s * arg ) {
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ^
+
+mutant.c:3:510: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+valid8 ( & arg [ 1 ] , 1 ) ; } int valid2 ( void ) { return __builtin_preserve_access_index ( 1 ) ; } void * invalid3 ( const int * arg ) { return __builtin_preserve_access_index ( & arg [ 1 ] ) ; } const void * invalid4 ( volatile const int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int * valid5 ( int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int valid6 ( const volatile int * arg ) { return * __builtin_preserve_access_index ( arg ) ; } struct s { int a ; int b ; } ; int valid7 ( struct s * arg ) { return * __builtin_preserve_access_index ( & arg -> b ) ; } int valid8 ( struct s * arg ) {
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             static 
+
+mutant.c:3:606: warning: no previous prototype for function 'valid8' [-Wmissing-prototypes]
+
+valid8 ( & arg [ 1 ] , 1 ) ; } int valid2 ( void ) { return __builtin_preserve_access_index ( 1 ) ; } void * invalid3 ( const int * arg ) { return __builtin_preserve_access_index ( & arg [ 1 ] ) ; } const void * invalid4 ( volatile const int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int * valid5 ( int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int valid6 ( const volatile int * arg ) { return * __builtin_preserve_access_index ( arg ) ; } struct s { int a ; int b ; } ; int valid7 ( struct s * arg ) { return * __builtin_preserve_access_index ( & arg -> b ) ; } int valid8 ( struct s * arg ) {
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^
+
+mutant.c:3:602: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+valid8 ( & arg [ 1 ] , 1 ) ; } int valid2 ( void ) { return __builtin_preserve_access_index ( 1 ) ; } void * invalid3 ( const int * arg ) { return __builtin_preserve_access_index ( & arg [ 1 ] ) ; } const void * invalid4 ( volatile const int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int * valid5 ( int * arg ) { return __builtin_preserve_access_index ( arg ) ; } int valid6 ( const volatile int * arg ) { return * __builtin_preserve_access_index ( arg ) ; } struct s { int a ; int b ; } ; int valid7 ( struct s * arg ) { return * __builtin_preserve_access_index ( & arg -> b ) ; } int valid8 ( struct s * arg ) {
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ^
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         static 
+
+mutant.c:7:44: warning: use of GNU statement expression extension [-Wgnu-statement-expression]
+
+return __builtin_preserve_access_index ( ( { arg -> a = 2 ; arg -> b = 3 ; } ) ) ;
+
+                                           ^
+
+mutant.c:7:43: warning: '(' and '{' tokens introducing statement expression are separated by whitespace [-Wcompound-token-split-by-space]
+
+return __builtin_preserve_access_index ( ( { arg -> a = 2 ; arg -> b = 3 ; } ) ) ;
+
+                                         ~^~
+
+mutant.c:7:77: warning: '}' and ')' tokens terminating statement expression are separated by whitespace [-Wcompound-token-split-by-space]
+
+return __builtin_preserve_access_index ( ( { arg -> a = 2 ; arg -> b = 3 ; } ) ) ;
+
+                                                                           ~^~
+
+mutant.c:6:5: warning: no previous prototype for function 'valid9' [-Wmissing-prototypes]
+
+int valid9 ( struct s * arg ) {
+
+    ^
+
+mutant.c:6:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int valid9 ( struct s * arg ) {
+
+^
+
+static 
+
+fatal error: error in backend: Cannot select: intrinsic %llvm.preserve.struct.access.index
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	Code generation
+
+3.	Running pass 'Function Pass Manager' on module 'mutant.c'.
+
+4.	Running pass 'X86 DAG->DAG Instruction Selection' on function '@invalid1'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x3964a64)[0x55bb94ceaa64]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x55bb94ce8884]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext10HandleExitEi+0xa3)[0x55bb94c2f983]
+
+clang-trunk(_ZN4llvm3sys7Process4ExitEib+0x22)[0x55bb94ce0af2]
+
+clang-trunk(+0x1265447)[0x55bb925eb447]
+
+clang-trunk(_ZN4llvm18report_fatal_errorERKNS_5TwineEb+0x7c)[0x55bb94c36b9c]
+
+clang-trunk(+0x38b0d24)[0x55bb94c36d24]
+
+clang-trunk(_ZN4llvm16SelectionDAGISel15CannotYetSelectEPNS_6SDNodeE+0x1f3)[0x55bb95d122a3]
+
+clang-trunk(_ZN4llvm16SelectionDAGISel16SelectCodeCommonEPNS_6SDNodeEPKhj+0x7e2)[0x55bb95d13ca2]
+
+clang-trunk(+0x24531af)[0x55bb937d91af]
+
+clang-trunk(_ZN4llvm16SelectionDAGISel22DoInstructionSelectionEv+0x3e9)[0x55bb95d10789]
+
+clang-trunk(_ZN4llvm16SelectionDAGISel17CodeGenAndEmitDAGEv+0x82f)[0x55bb95d1b04f]
+
+clang-trunk(_ZN4llvm16SelectionDAGISel20SelectAllBasicBlocksERKNS_8FunctionE+0xacb)[0x55bb95d1e81b]
+
+clang-trunk(+0x499aa4b)[0x55bb95d20a4b]
+
+clang-trunk(+0x245dd9c)[0x55bb937e3d9c]
+
+clang-trunk(_ZN4llvm19MachineFunctionPass13runOnFunctionERNS_8FunctionE+0x258)[0x55bb93f089b8]
+
+clang-trunk(_ZN4llvm13FPPassManager13runOnFunctionERNS_8FunctionE+0x365)[0x55bb943e06c5]
+
+clang-trunk(_ZN4llvm13FPPassManager11runOnModuleERNS_6ModuleE+0x39)[0x55bb943e0909]
+
+clang-trunk(_ZN4llvm6legacy15PassManagerImpl3runERNS_6ModuleE+0x382)[0x55bb943e1a02]
+
+clang-trunk(+0x3c9cc52)[0x55bb95022c52]
+
+clang-trunk(_ZN5clang17EmitBackendOutputERNS_17DiagnosticsEngineERKNS_19HeaderSearchOptionsERKNS_14CodeGenOptionsERKNS_13TargetOptionsERKNS_11LangOptionsEN4llvm9StringRefEPNSE_6ModuleENS_13BackendActionESt10unique_ptrINSE_17raw_pwrite_streamESt14default_deleteISK_EE+0x47d)[0x55bb9502470d]
+
+clang-trunk(+0x4acd31f)[0x55bb95e5331f]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x429)[0x55bb96f0afe9]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x55bb95e51e68]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55bb956fca19]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55bb9568fae6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x55bb957da440]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x55bb925ec6b6]
+
+clang-trunk(+0x12629f8)[0x55bb925e89f8]
+
+clang-trunk(+0x419aad9)[0x55bb95520ad9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x55bb94c2f84c]
+
+clang-trunk(+0x419b27d)[0x55bb9552127d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55bb954f3a0b]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x55bb954f4529]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x55bb954ff0d9]
+
+clang-trunk(main+0x18af)[0x55bb9251754f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f43824330b3]
+
+clang-trunk(_start+0x2e)[0x55bb925e856e]
+
+clang-13: error: clang frontend command failed with exit code 70 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 716d2fedbfc8e67a478f2bee7024729f8f94ca10)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-7a081e.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-7a081e.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

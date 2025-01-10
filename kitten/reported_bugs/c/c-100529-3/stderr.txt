@@ -1,0 +1,86 @@
+mutant.c:8:22: warning: ‘struct T’ declared inside parameter list will not be visible outside of this definition or declaration
+
+    8 | foo ( int n , struct T { char a [ n ] ; } b )
+
+      |                      ^
+
+In function ‘foo.constprop’:
+
+cc1: internal compiler error: in force_constant_size, at gimplify.c:733
+
+0x6d63fc force_constant_size
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimplify.c:733
+
+0xc22497 gimple_add_tmp_var(tree_node*)
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimplify.c:771
+
+0xbeb90b create_tmp_var(tree_node*, char const*)
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimple-expr.c:485
+
+0xc2c190 create_tmp_from_val
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimplify.c:564
+
+0xc2c190 lookup_tmp_var
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimplify.c:596
+
+0xc2c190 internal_get_tmp_var
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimplify.c:635
+
+0xc25b17 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimplify.c:15072
+
+0xc4aaa3 gimple_regimplify_operands(gimple*, gimple_stmt_iterator*)
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/gimplify-me.c:235
+
+0xf77a2a insert_init_stmt
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/tree-inline.c:3377
+
+0xf89fd7 tree_function_versioning(tree_node*, tree_node*, vec<ipa_replace_map*, va_gc, vl_embed>*, ipa_param_adjustments*, bool, bitmap_head*, basic_block_def*)
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/tree-inline.c:6418
+
+0xa85015 cgraph_node::materialize_clone()
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/cgraphclones.c:1131
+
+0xa7214d cgraph_node::get_untransformed_body()
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/cgraph.c:3921
+
+0xa7f139 cgraph_node::expand()
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/cgraphunit.c:1799
+
+0xa805ff expand_all_functions
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/cgraphunit.c:1992
+
+0xa805ff symbol_table::compile()
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/cgraphunit.c:2356
+
+0xa834db symbol_table::compile()
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/cgraphunit.c:2269
+
+0xa834db symbol_table::finalize_compilation_unit()
+
+	/tmp/tmp.6hqng0L7lN-gcc-builder/gcc/gcc/cgraphunit.c:2537
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

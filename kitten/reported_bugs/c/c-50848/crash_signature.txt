@@ -1,0 +1,3 @@
+bool clang::Sema::CheckFunctionDeclaration(clang::Scope*, clang::FunctionDecl*, clang::LookupResult&, bool): Assertion `(Previous.empty() || llvm::any_of(Previous, [](const NamedDecl *ND) { return ND->hasAttr<OverloadableAttr>(); })) && "Non-redecls shouldn't happen without overloadable present"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

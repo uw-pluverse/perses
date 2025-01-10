@@ -1,0 +1,16 @@
+Using built-in specs.
+
+COLLECT_GCC=gcc-trunk
+
+COLLECT_LTO_WRAPPER=/scratch/software/gcc-trunk/libexec/gcc/x86_64-pc-linux-gnu/12.0.0/lto-wrapper
+
+Target: x86_64-pc-linux-gnu
+
+Configured with: /tmp/tmp.CuW17uqJjv-gcc-builder/gcc/configure --enable-languages=c,c++,lto --enable-checking-yes --enable-multiarch --prefix=/scratch/software/gcc-trunk --disable-bootstrap
+
+Thread model: posix
+
+Supported LTO compression algorithms: zlib
+
+gcc version 12.0.0 20210627 (experimental) [master revision :18e95d5ce:461f937b47278eaa4ca3c5507c80cca26af4b015] (GCC) 
+

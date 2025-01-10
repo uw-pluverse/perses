@@ -1,0 +1,94 @@
+mutant.c:8:22: warning: ‘struct T’ declared inside parameter list will not be visible outside of this definition or declaration
+
+    8 | foo ( int n , struct T { char a [ n ] ; } b )
+
+      |                      ^
+
+mutant.c: In function ‘foo’:
+
+mutant.c:13:8: warning: returning ‘int (*)(int,  struct T)’ from a function with return type ‘int’ makes integer from pointer without a cast [-Wint-conversion]
+
+   13 | return foo ;
+
+      |        ^~~
+
+In function ‘foo.constprop’:
+
+cc1: internal compiler error: in force_constant_size, at gimplify.c:733
+
+0x6d5544 force_constant_size
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimplify.c:733
+
+0xc21597 gimple_add_tmp_var(tree_node*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimplify.c:771
+
+0xbea85b create_tmp_var(tree_node*, char const*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-expr.c:485
+
+0xc2b290 create_tmp_from_val
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimplify.c:564
+
+0xc2b290 lookup_tmp_var
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimplify.c:596
+
+0xc2b290 internal_get_tmp_var
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimplify.c:635
+
+0xc24c17 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimplify.c:15072
+
+0xc49ba3 gimple_regimplify_operands(gimple*, gimple_stmt_iterator*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimplify-me.c:235
+
+0xf76a2a insert_init_stmt
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/tree-inline.c:3377
+
+0xf88fd7 tree_function_versioning(tree_node*, tree_node*, vec<ipa_replace_map*, va_gc, vl_embed>*, ipa_param_adjustments*, bool, bitmap_head*, basic_block_def*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/tree-inline.c:6418
+
+0xa83cb5 cgraph_node::materialize_clone()
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cgraphclones.c:1131
+
+0xe0ba78 execute_all_ipa_transforms(bool)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/passes.c:2329
+
+0xa7de79 cgraph_node::expand()
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cgraphunit.c:1821
+
+0xa7f29f expand_all_functions
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cgraphunit.c:1992
+
+0xa7f29f symbol_table::compile()
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cgraphunit.c:2356
+
+0xa8217b symbol_table::compile()
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cgraphunit.c:2269
+
+0xa8217b symbol_table::finalize_compilation_unit()
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/cgraphunit.c:2537
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

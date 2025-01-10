@@ -1,0 +1,52 @@
+error: internal compiler error: compiler/rustc_typeck/src/collect/type_of.rs:407:21: compute_type_of_item: unexpected item type: Trait(No, Normal, Generics { params: [GenericParam { hir_id: HirId { owner: DefId(0:3 ~ mutant[8787]::PrinterSupport), local_id: 1 }, name: Plain('ast#0), bounds: [], span: mutant.rs:3:45: 3:49 (#0), pure_wrt_drop: false, kind: Lifetime { kind: Explicit } }], where_clause: WhereClause { predicates: [], span: mutant.rs:3:51: 3:51 (#0) }, span: mutant.rs:3:43: 3:51 (#0) }, [], [TraitItemRef { id: TraitItemId { def_id: DefId(0:5 ~ mutant[8787]::PrinterSupport::ast_map) }, ident: ast_map#0, kind: Fn { has_self: true }, span: mutant.rs:4:1: 4:58 (#0), defaultness: Default { has_value: true } }])
+
+ --> mutant.rs:3:22
+
+  |
+
+3 |   # [ rustc_def_path ] trait PrinterSupport < 'ast > {
+
+  |  ______________________^
+
+4 | | fn ast_map ( & self ) -> Option < & 'ast usize > { None }
+
+5 | | }
+
+  | |_^
+
+
+
+thread 'rustc' panicked at 'Box<dyn Any>', /rustc/e8cb1a4a567ce88e459ffd431207eff2e0f0ffa5/compiler/rustc_errors/src/lib.rs:953:9
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.55.0-nightly (e8cb1a4a5 2021-06-27) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [type_of] computing type of `PrinterSupport`
+
+#1 [symbol_name] computing the symbol for `PrinterSupport`
+
+end of query stack
+
+error: aborting due to previous error
+
+
+

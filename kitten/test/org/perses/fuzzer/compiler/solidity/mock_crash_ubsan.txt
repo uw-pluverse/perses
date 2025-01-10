@@ -1,0 +1,1 @@
+/tmp/tmp.Ue9c4CSA9f/jerryscript/jerry-core/vm/vm.c:3731:77: runtime error: left shift of 49734321 by 12 places cannot be represented in type 'int'

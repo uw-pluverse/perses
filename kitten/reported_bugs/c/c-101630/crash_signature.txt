@@ -1,0 +1,3 @@
+internal compiler error: in get_constant, at c-family/c-format.c
+get_constant
+decode_format_attr

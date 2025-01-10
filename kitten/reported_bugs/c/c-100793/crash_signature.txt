@@ -1,0 +1,4 @@
+internal compiler error: in expand_assignment, at expr.c
+expand_assignment(tree_node*, tree_node*, bool)
+expand_gimple_stmt_1
+expand_gimple_stmt

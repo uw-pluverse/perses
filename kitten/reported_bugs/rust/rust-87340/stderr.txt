@@ -1,0 +1,118 @@
+error: at least one trait must be specified
+
+ --> mutant.rs:4:31
+
+  |
+
+4 | type PartiallyDefined < T > = impl 'static ;
+
+  |                               ^^^^^^^^^^^^
+
+
+
+error: at least one trait must be specified
+
+ --> mutant.rs:8:32
+
+  |
+
+8 | type PartiallyDefined2 < T > = impl 'static ;
+
+  |                                ^^^^^^^^^^^^
+
+
+
+error[E0658]: `impl Trait` in type aliases is unstable
+
+ --> mutant.rs:4:31
+
+  |
+
+4 | type PartiallyDefined < T > = impl 'static ;
+
+  |                               ^^^^^^^^^^^^
+
+  |
+
+  = note: see issue #63063 <https://github.com/rust-lang/rust/issues/63063> for more information
+
+  = help: add `#![feature(min_type_alias_impl_trait)]` to the crate attributes to enable
+
+
+
+error[E0658]: `impl Trait` in type aliases is unstable
+
+ --> mutant.rs:8:32
+
+  |
+
+8 | type PartiallyDefined2 < T > = impl 'static ;
+
+  |                                ^^^^^^^^^^^^
+
+  |
+
+  = note: see issue #63063 <https://github.com/rust-lang/rust/issues/63063> for more information
+
+  = help: add `#![feature(min_type_alias_impl_trait)]` to the crate attributes to enable
+
+
+
+warning: the feature `type_alias_impl_trait` is incomplete and may not be safe to use and/or cause compiler crashes
+
+ --> mutant.rs:1:17
+
+  |
+
+1 | # ! [ feature ( type_alias_impl_trait ) ]
+
+  |                 ^^^^^^^^^^^^^^^^^^^^^
+
+  |
+
+  = note: `#[warn(incomplete_features)]` on by default
+
+  = note: see issue #63063 <https://github.com/rust-lang/rust/issues/63063> for more information
+
+
+
+thread 'rustc' panicked at 'called `Result::unwrap()` on an `Err` value: UnresolvedTy(_#0t)', compiler/rustc_typeck/src/check/writeback.rs:499:75
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.56.0-nightly (d9aa28767 2021-07-24) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [typeck] type-checking `partially_defined`
+
+#1 [fn_sig] computing function signature of `partially_defined`
+
+end of query stack
+
+error: aborting due to 4 previous errors; 1 warning emitted
+
+
+
+For more information about this error, try `rustc --explain E0658`.
+

@@ -1,0 +1,3 @@
+llvm::Value* llvm::IRBuilderBase::CreateZExtOrTrunc(llvm::Value*, llvm::Type*, const llvm::Twine&): Assertion `V->getType()->isIntOrIntVectorTy() && DestTy->isIntOrIntVectorTy() && "Can only zero extend/truncate integers!"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

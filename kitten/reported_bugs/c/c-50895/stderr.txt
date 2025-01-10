@@ -1,0 +1,238 @@
+mutant.c:6:1: warning: no previous prototype for function 'avx512vl_test' [-Wmissing-prototypes]
+
+avx512vl_test ( void )
+
+^
+
+mutant.c:5:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void extern
+
+^
+
+mutant.c:8:5: error: '__builtin_ia32_alignq256' needs target feature avx512vl
+
+y = _mm256_alignr_epi64 ( y , y , 3 ) ;
+
+    ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/avx512vlintrin.h:8220:12: note: expanded from macro '_mm256_alignr_epi64'
+
+  (__m256i)__builtin_ia32_alignq256((__v4di)(__m256i)(A), \
+
+           ^
+
+mutant.c:9:5: error: '__builtin_ia32_selectq_256' needs target feature avx512vl
+
+y = _mm256_mask_alignr_epi64 ( y , m , y , y , 3 ) ;
+
+    ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/avx512vlintrin.h:8224:12: note: expanded from macro '_mm256_mask_alignr_epi64'
+
+  (__m256i)__builtin_ia32_selectq_256((__mmask8)(U), \
+
+           ^
+
+mutant.c:9:5: error: '__builtin_ia32_alignq256' needs target feature avx512vl
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/avx512vlintrin.h:8225:42: note: expanded from macro '_mm256_mask_alignr_epi64'
+
+                                 (__v4di)_mm256_alignr_epi64((A), (B), (imm)), \
+
+                                         ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/avx512vlintrin.h:8220:12: note: expanded from macro '_mm256_alignr_epi64'
+
+  (__m256i)__builtin_ia32_alignq256((__v4di)(__m256i)(A), \
+
+           ^
+
+mutant.c:10:5: error: '__builtin_ia32_selectq_256' needs target feature avx512vl
+
+y = _mm256_maskz_alignr_epi64 ( m , y , y , 5 ) ;
+
+    ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/avx512vlintrin.h:8229:12: note: expanded from macro '_mm256_maskz_alignr_epi64'
+
+  (__m256i)__builtin_ia32_selectq_256((__mmask8)(U), \
+
+           ^
+
+mutant.c:10:5: error: '__builtin_ia32_alignq256' needs target feature avx512vl
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/avx512vlintrin.h:8230:42: note: expanded from macro '_mm256_maskz_alignr_epi64'
+
+                                 (__v4di)_mm256_alignr_epi64((A), (B), (imm)), \
+
+                                         ^
+
+/scratch/software/clang-trunk/lib/clang/13.0.0/include/avx512vlintrin.h:8220:12: note: expanded from macro '_mm256_alignr_epi64'
+
+  (__m256i)__builtin_ia32_alignq256((__v4di)(__m256i)(A), \
+
+           ^
+
+clang-trunk: /tmp/tmp.nPuVKAIgXI-clang-builder/llvm-project/llvm/lib/IR/Instructions.cpp:1941: llvm::ShuffleVectorInst::ShuffleVectorInst(llvm::Value*, llvm::Value*, llvm::ArrayRef<int>, const llvm::Twine&, llvm::Instruction*): Assertion `isValidOperands(V1, V2, Mask) && "Invalid shuffle vector instruction operands!"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	mutant.c:6:1: LLVM IR generation of declaration 'avx512vl_test'
+
+3.	mutant.c:6:1: Generating code for declaration 'avx512vl_test'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x3950274)[0x55930dfaf274]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x55930dfad094]
+
+clang-trunk(+0x3894ed8)[0x55930def3ed8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f4e75eca3c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f4e7596918b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f4e75948859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f4e75948729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f4e75959f36]
+
+clang-trunk(_ZN4llvm17ShuffleVectorInstC2EPNS_5ValueES2_NS_8ArrayRefIiEERKNS_5TwineEPNS_11InstructionE+0x1ba)[0x55930d673b7a]
+
+clang-trunk(+0x1bcd2c9)[0x55930c22c2c9]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction18EmitX86BuiltinExprEjPKNS_8CallExprE+0x26d1)[0x55930e56e7d1]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction15EmitBuiltinExprENS_10GlobalDeclEjPKNS_8CallExprENS0_15ReturnValueSlotE+0xadd2)[0x55930e5a81f2]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction12EmitCallExprEPKNS_8CallExprENS0_15ReturnValueSlotE+0x297)[0x55930e65b5d7]
+
+clang-trunk(+0x40357d2)[0x55930e6947d2]
+
+clang-trunk(+0x4032cc9)[0x55930e691cc9]
+
+clang-trunk(+0x403affb)[0x55930e699ffb]
+
+clang-trunk(+0x4032cb6)[0x55930e691cb6]
+
+clang-trunk(+0x403affb)[0x55930e699ffb]
+
+clang-trunk(+0x4032cb6)[0x55930e691cb6]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction14EmitScalarExprEPKNS_4ExprEb+0x6a)[0x55930e693e8a]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction18EmitX86BuiltinExprEjPKNS_8CallExprE+0x297)[0x55930e56c397]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction15EmitBuiltinExprENS_10GlobalDeclEjPKNS_8CallExprENS0_15ReturnValueSlotE+0xadd2)[0x55930e5a81f2]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction12EmitCallExprEPKNS_8CallExprENS0_15ReturnValueSlotE+0x297)[0x55930e65b5d7]
+
+clang-trunk(+0x40357d2)[0x55930e6947d2]
+
+clang-trunk(+0x4032cc9)[0x55930e691cc9]
+
+clang-trunk(+0x403affb)[0x55930e699ffb]
+
+clang-trunk(+0x4032cb6)[0x55930e691cb6]
+
+clang-trunk(+0x4039fa0)[0x55930e698fa0]
+
+clang-trunk(+0x4033c33)[0x55930e692c33]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction14EmitScalarExprEPKNS_4ExprEb+0x6a)[0x55930e693e8a]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction11EmitAnyExprEPKNS_4ExprENS0_12AggValueSlotEb+0xd7)[0x55930e63b177]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction15EmitIgnoredExprEPKNS_4ExprE+0x6e)[0x55930e659aee]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction8EmitStmtEPKNS_4StmtEN4llvm8ArrayRefIPKNS_4AttrEEE+0xca)[0x55930e33e23a]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction28EmitCompoundStmtWithoutScopeERKNS_12CompoundStmtEbNS0_12AggValueSlotE+0x8c)[0x55930e3445dc]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction16EmitFunctionBodyEPKNS_4StmtE+0xd1)[0x55930e39ba21]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction12GenerateCodeENS_10GlobalDeclEPN4llvm8FunctionERKNS0_14CGFunctionInfoE+0x37c)[0x55930e3ad27c]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule28EmitGlobalFunctionDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x1c6)[0x55930e406b86]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule20EmitGlobalDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x285)[0x55930e402725]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule10EmitGlobalENS_10GlobalDeclE+0x3eb)[0x55930e402b8b]
+
+clang-trunk(+0x3dac5f2)[0x55930e40b5f2]
+
+clang-trunk(+0x4aafe19)[0x55930f10ee19]
+
+clang-trunk(+0x4aa2000)[0x55930f101000]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x204)[0x5593101c4c24]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x55930f10bf98]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55930e9bae79]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55930e94e0c6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x55930ea98d00]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x55930b8bfb06]
+
+clang-trunk(+0x125ce48)[0x55930b8bbe48]
+
+clang-trunk(+0x417fca9)[0x55930e7deca9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x55930def405c]
+
+clang-trunk(+0x418044d)[0x55930e7df44d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55930e7b1bdb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x55930e7b26f9]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x55930e7bd2a9]
+
+clang-trunk(main+0x18af)[0x55930b7ea50f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f4e7594a0b3]
+
+clang-trunk(_start+0x2e)[0x55930b8bb9be]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 24d48d45cc302a6abeab139d87ba87f7a2335323)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-ce39fc.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-ce39fc.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

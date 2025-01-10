@@ -1,0 +1,116 @@
+mutant.c:1:18: error: unknown type name ‘CGFloat’
+
+    1 | struct _NSSize { CGFloat width ; CGFloat height ; } labs ( long int j ) ;
+
+      |                  ^~~~~~~
+
+mutant.c:1:34: error: unknown type name ‘CGFloat’
+
+    1 | struct _NSSize { CGFloat width ; CGFloat height ; } labs ( long int j ) ;
+
+      |                                  ^~~~~~~
+
+mutant.c:1:53: warning: mismatch in return type of built-in function ‘labs’; expected ‘long int’ [-Wbuiltin-declaration-mismatch]
+
+    1 | struct _NSSize { CGFloat width ; CGFloat height ; } labs ( long int j ) ;
+
+      |                                                     ^~~~
+
+mutant.c:1:1: note: ‘labs’ is declared in header ‘<stdlib.h>’
+
+  +++ |+#include <stdlib.h>
+
+    1 | struct _NSSize { CGFloat width ; CGFloat height ; } labs ( long int j ) ;
+
+mutant.c: In function ‘main’:
+
+mutant.c:7:1: internal compiler error: in fold_convert_loc, at fold-const.c:2554
+
+    7 | a [ i ] = labs ( a [ i ] ) ;
+
+      | ^
+
+0x6cecaa fold_convert_loc(unsigned int, tree_node*, tree_node*)
+
+	/tmp/tmp.K5cVOXlrxH-gcc-builder/gcc/gcc/fold-const.c:2554
+
+0xa25ce8 fold_builtin_abs
+
+	/tmp/tmp.K5cVOXlrxH-gcc-builder/gcc/gcc/builtins.c:11466
+
+0xa25ce8 fold_builtin_1
+
+	/tmp/tmp.K5cVOXlrxH-gcc-builder/gcc/gcc/builtins.c:12203
+
+0xa25ce8 fold_builtin_n
+
+	/tmp/tmp.K5cVOXlrxH-gcc-builder/gcc/gcc/builtins.c:12457
+
+0xbe0c99 fold(tree_node*)
+
+	/tmp/tmp.K5cVOXlrxH-gcc-builder/gcc/gcc/fold-const.c:13353
+
+0x96ab2f c_fully_fold_internal
+
+	/tmp/tmp.K5cVOXlrxH-gcc-builder/gcc/gcc/c/c-fold.c:244
+
+0x96d237 c_fully_fold(tree_node*, bool, bool*, bool)
+
+	/tmp/tmp.K5cVOXlrxH-gcc-builder/gcc/gcc/c/c-fold.c:125
+
+0x92bbb3 build_modify_expr(unsigned int, tree_node*, tree_node*, tree_code, unsigned int, tree_node*, tree_node*)
+
+	/tmp/tmp.K5cVOXlrxH-gcc-builder/gcc/gcc/c/c-typeck.c:6367
+
+0x9499d4 c_parser_expr_no_commas
+
+	/tmp/tmp.K5cVOXlrxH-gcc-builder/gcc/gcc/c/c-parser.c:7553
+
+0x949b41 c_parser_expression
+
+	/tmp/tmp.K5cVOXlrxH-gcc-builder/gcc/gcc/c/c-parser.c:10641
+
+0x94a317 c_parser_expression_conv
+
+	/tmp/tmp.K5cVOXlrxH-gcc-builder/gcc/gcc/c/c-parser.c:10680
+
+0x95d763 c_parser_statement_after_labels
+
+	/tmp/tmp.K5cVOXlrxH-gcc-builder/gcc/gcc/c/c-parser.c:6249
+
+0x95fa04 c_parser_compound_statement_nostart
+
+	/tmp/tmp.K5cVOXlrxH-gcc-builder/gcc/gcc/c/c-parser.c:5788
+
+0x9600f4 c_parser_compound_statement
+
+	/tmp/tmp.K5cVOXlrxH-gcc-builder/gcc/gcc/c/c-parser.c:5597
+
+0x961ae2 c_parser_declaration_or_fndef
+
+	/tmp/tmp.K5cVOXlrxH-gcc-builder/gcc/gcc/c/c-parser.c:2539
+
+0x969463 c_parser_external_declaration
+
+	/tmp/tmp.K5cVOXlrxH-gcc-builder/gcc/gcc/c/c-parser.c:1777
+
+0x969ec9 c_parser_translation_unit
+
+	/tmp/tmp.K5cVOXlrxH-gcc-builder/gcc/gcc/c/c-parser.c:1650
+
+0x969ec9 c_parse_file()
+
+	/tmp/tmp.K5cVOXlrxH-gcc-builder/gcc/gcc/c/c-parser.c:22121
+
+0x9cbf85 c_common_parse_file()
+
+	/tmp/tmp.K5cVOXlrxH-gcc-builder/gcc/gcc/c-family/c-opts.c:1223
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

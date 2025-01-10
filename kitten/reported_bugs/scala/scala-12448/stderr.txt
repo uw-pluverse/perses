@@ -1,0 +1,258 @@
+[31m-- Error: mutant.scala:12:20 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[0m
+
+[31m12 |[0mArray ] ( [31m1[0m ) ) } } [33mtrait[0m A { [33mtype[0m AType <: AnyRef } [33mtrait[0m I [33mextends[0m A { [33mtype[0m AType = Array [ Int ]
+
+   |                    [31m^^^^^[0m
+
+   |                    end of toplevel definition expected but 'trait' found
+
+[31m-- [E006] Not Found Error: mutant.scala:2:19 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[0m
+
+[31m2 |[0m[33mdef[0m [36mmkArray[0m [ [35mT[0m [35m<: A[0m ] ( [36matype[0m : [35mInt[0m ) : [35mT[0m # AType = {
+
+  |                   [31m^[0m
+
+  |                   Not found: type A
+
+
+
+longer explanation available when compiling with `-explain`
+
+exception occurred while typechecking mutant.scala
+
+exception occurred while compiling mutant.scala
+
+Exception in thread "main" java.lang.AssertionError: assertion failed: invalid prefix HKTypeLambda(List(T), List(TypeBounds(TypeRef(ThisType(TypeRef(NoPrefix,module class scala)),class Nothing),TypeRef(ThisType(TypeRef(NoPrefix,module class scala)),class Any))), AppliedType(TypeRef(TermRef(ThisType(TypeRef(NoPrefix,module class <root>)),object scala),class Array),List(TypeParamRef(T))))
+
+	at scala.runtime.Scala3RunTime$.assertFailed(Scala3RunTime.scala:8)
+
+	at dotty.tools.dotc.core.Types$NamedType.<init>(Types.scala:2043)
+
+	at dotty.tools.dotc.core.Types$TypeRef.<init>(Types.scala:2613)
+
+	at dotty.tools.dotc.core.Types$CachedTypeRef.<init>(Types.scala:2669)
+
+	at dotty.tools.dotc.core.Uniques$NamedTypeUniques.newType$1(Uniques.scala:43)
+
+	at dotty.tools.dotc.core.Uniques$NamedTypeUniques.enterIfNew(Uniques.scala:53)
+
+	at dotty.tools.dotc.core.Types$TypeRef$.apply(Types.scala:2728)
+
+	at dotty.tools.dotc.core.Types$NamedType$.apply(Types.scala:2704)
+
+	at dotty.tools.dotc.core.Types$NamedType.withPrefix(Types.scala:2548)
+
+	at dotty.tools.dotc.core.Types$NamedType.derivedSelect(Types.scala:2480)
+
+	at dotty.tools.dotc.core.Substituters$.substParams(Substituters.scala:154)
+
+	at dotty.tools.dotc.core.Substituters$SubstParamsMap.apply(Substituters.scala:197)
+
+	at dotty.tools.dotc.core.Types$TypeMap.mapOverLambda(Types.scala:5259)
+
+	at dotty.tools.dotc.core.Types$TypeMap.mapOver(Types.scala:5284)
+
+	at dotty.tools.dotc.core.Substituters$.substParams(Substituters.scala:161)
+
+	at dotty.tools.dotc.core.Types$Type.substParams(Types.scala:1742)
+
+	at dotty.tools.dotc.core.Types$LambdaType.instantiate(Types.scala:3339)
+
+	at dotty.tools.dotc.core.Types$LambdaType.instantiate$(Types.scala:3300)
+
+	at dotty.tools.dotc.core.Types$MethodOrPoly.instantiate(Types.scala:3380)
+
+	at dotty.tools.dotc.typer.TypeAssigner.assignType(TypeAssigner.scala:346)
+
+	at dotty.tools.dotc.typer.TypeAssigner.assignType$(TypeAssigner.scala:19)
+
+	at dotty.tools.dotc.typer.Typer.assignType(Typer.scala:106)
+
+	at dotty.tools.dotc.typer.Applications.typedTypeApply(Applications.scala:1089)
+
+	at dotty.tools.dotc.typer.Applications.typedTypeApply$(Applications.scala:303)
+
+	at dotty.tools.dotc.typer.Typer.typedTypeApply(Typer.scala:106)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2704)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2748)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2817)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2933)
+
+	at dotty.tools.dotc.typer.Applications.realApply$1(Applications.scala:868)
+
+	at dotty.tools.dotc.typer.Applications.typedApply(Applications.scala:1018)
+
+	at dotty.tools.dotc.typer.Applications.typedApply$(Applications.scala:303)
+
+	at dotty.tools.dotc.typer.Typer.typedApply(Typer.scala:106)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2685)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2748)
+
+	at dotty.tools.dotc.typer.ProtoTypes$FunProto.$anonfun$2(ProtoTypes.scala:414)
+
+	at dotty.tools.dotc.typer.ProtoTypes$FunProto.cacheTypedArg(ProtoTypes.scala:370)
+
+	at dotty.tools.dotc.typer.ProtoTypes$FunProto.typedArg(ProtoTypes.scala:415)
+
+	at dotty.tools.dotc.typer.Applications$ApplyToUntyped.typedArg(Applications.scala:836)
+
+	at dotty.tools.dotc.typer.Applications$ApplyToUntyped.typedArg(Applications.scala:836)
+
+	at dotty.tools.dotc.typer.Applications$Application.addTyped$1(Applications.scala:530)
+
+	at dotty.tools.dotc.typer.Applications$Application.matchArgs(Applications.scala:595)
+
+	at dotty.tools.dotc.typer.Applications$Application.init(Applications.scala:433)
+
+	at dotty.tools.dotc.typer.Applications$TypedApply.<init>(Applications.scala:721)
+
+	at dotty.tools.dotc.typer.Applications$ApplyToUntyped.<init>(Applications.scala:835)
+
+	at dotty.tools.dotc.typer.Applications.ApplyTo(Applications.scala:1043)
+
+	at dotty.tools.dotc.typer.Applications.ApplyTo$(Applications.scala:303)
+
+	at dotty.tools.dotc.typer.Typer.ApplyTo(Typer.scala:106)
+
+	at dotty.tools.dotc.typer.Applications.simpleApply$1(Applications.scala:890)
+
+	at dotty.tools.dotc.typer.Applications.realApply$5$$anonfun$4(Applications.scala:969)
+
+	at dotty.tools.dotc.typer.Typer.tryEither(Typer.scala:2941)
+
+	at dotty.tools.dotc.typer.Applications.realApply$1(Applications.scala:980)
+
+	at dotty.tools.dotc.typer.Applications.typedApply(Applications.scala:1018)
+
+	at dotty.tools.dotc.typer.Applications.typedApply$(Applications.scala:303)
+
+	at dotty.tools.dotc.typer.Typer.typedApply(Typer.scala:106)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2685)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2748)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2817)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2933)
+
+	at dotty.tools.dotc.typer.Typer.typedBlock(Typer.scala:1026)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2693)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2748)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2817)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2933)
+
+	at dotty.tools.dotc.typer.Typer.$anonfun$34(Typer.scala:2158)
+
+	at dotty.tools.dotc.typer.PrepareInlineable$.dropInlineIfError(PrepareInlineable.scala:225)
+
+	at dotty.tools.dotc.typer.Typer.typedDefDef(Typer.scala:2158)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2662)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2747)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2817)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2839)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2889)
+
+	at dotty.tools.dotc.typer.Typer.typedClassDef(Typer.scala:2344)
+
+	at dotty.tools.dotc.typer.Typer.typedTypeOrClassDef$2(Typer.scala:2673)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2677)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2747)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2817)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2839)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2889)
+
+	at dotty.tools.dotc.typer.Typer.typedPackageDef(Typer.scala:2467)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2718)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2748)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2817)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2933)
+
+	at dotty.tools.dotc.typer.FrontEnd.liftedTree1$1(FrontEnd.scala:79)
+
+	at dotty.tools.dotc.typer.FrontEnd.typeCheck$$anonfun$1(FrontEnd.scala:84)
+
+	at dotty.tools.dotc.typer.FrontEnd.monitor(FrontEnd.scala:43)
+
+	at dotty.tools.dotc.typer.FrontEnd.typeCheck(FrontEnd.scala:85)
+
+	at dotty.tools.dotc.typer.FrontEnd.runOn$$anonfun$3(FrontEnd.scala:120)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.immutable.List.foreach(List.scala:333)
+
+	at dotty.tools.dotc.typer.FrontEnd.runOn(FrontEnd.scala:120)
+
+	at dotty.tools.dotc.Run.runPhases$4$$anonfun$4(Run.scala:205)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.ArrayOps$.foreach$extension(ArrayOps.scala:1323)
+
+	at dotty.tools.dotc.Run.runPhases$5(Run.scala:216)
+
+	at dotty.tools.dotc.Run.compileUnits$$anonfun$1(Run.scala:224)
+
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+
+	at dotty.tools.dotc.util.Stats$.maybeMonitored(Stats.scala:67)
+
+	at dotty.tools.dotc.Run.compileUnits(Run.scala:231)
+
+	at dotty.tools.dotc.Run.compileSources(Run.scala:166)
+
+	at dotty.tools.dotc.Run.compile(Run.scala:150)
+
+	at dotty.tools.dotc.Driver.doCompile(Driver.scala:39)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:199)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:167)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:179)
+
+	at dotty.tools.dotc.Driver.main(Driver.scala:209)
+
+	at dotty.tools.dotc.Main.main(Main.scala)
+

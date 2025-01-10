@@ -1,0 +1,4 @@
+internal compiler error: in assign_stack_temp_for_type, at function.c
+assign_stack_temp_for_type(machine_mode, poly_int<1u, long>, tree_node*)
+assign_temp(tree_node*, int, int)
+expand_call(tree_node*, rtx_def*, int)

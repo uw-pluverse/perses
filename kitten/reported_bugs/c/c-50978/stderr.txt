@@ -1,0 +1,198 @@
+mutant.c:4:1: warning: no previous prototype for function 'test1' [-Wmissing-prototypes]
+
+test1 ( int len , int align )
+
+^
+
+mutant.c:3:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void
+
+^
+
+static 
+
+mutant.c:23:26: warning: implicit declaration of function 'my_alloc2' is invalid in C99 [-Wimplicit-function-declaration]
+
+double * __restrict o1 = my_alloc2 ( 32 , len ) ;
+
+                         ^
+
+mutant.c:23:21: warning: incompatible integer to pointer conversion initializing 'double *restrict' with an expression of type 'int' [-Wint-conversion]
+
+double * __restrict o1 = my_alloc2 ( 32 , len ) ;
+
+                    ^    ~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c:24:21: warning: incompatible integer to pointer conversion initializing 'double *restrict' with an expression of type 'int' [-Wint-conversion]
+
+double * __restrict o2 = my_alloc2 ( 32 , len ) ;
+
+                    ^    ~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c:25:21: warning: incompatible integer to pointer conversion initializing 'double *restrict' with an expression of type 'int' [-Wint-conversion]
+
+double * __restrict o3 = my_alloc2 ( 32 , len ) ;
+
+                    ^    ~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c:26:21: warning: incompatible integer to pointer conversion initializing 'double *restrict' with an expression of type 'int' [-Wint-conversion]
+
+double * __restrict i1 = my_alloc2 ( 32 , len ) ;
+
+                    ^    ~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c:27:21: warning: incompatible integer to pointer conversion initializing 'double *restrict' with an expression of type 'int' [-Wint-conversion]
+
+double * __restrict i2 = my_alloc2 ( align , len ) ;
+
+                    ^    ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c:20:1: warning: no previous prototype for function 'test2' [-Wmissing-prototypes]
+
+test2 ( int len , int align )
+
+^
+
+mutant.c:19:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void
+
+^
+
+static 
+
+mutant.c:2:8: warning: tentative array definition assumed to have one element
+
+double expected [ ] ;
+
+       ^
+
+mutant.c:2:8: warning: no previous extern declaration for non-static variable 'expected' [-Wmissing-variable-declarations]
+
+mutant.c:2:1: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+double expected [ ] ;
+
+^
+
+clang-trunk: /tmp/tmp.OKn6kNiY8c-clang-builder/llvm-project/llvm/include/llvm/Support/Casting.h:269: typename llvm::cast_retty<X, Y*>::ret_type llvm::cast(Y*) [with X = llvm::SCEVConstant; Y = const llvm::SCEV; typename llvm::cast_retty<X, Y*>::ret_type = const llvm::SCEVConstant*]: Assertion `isa<X>(Val) && "cast<Ty>() argument of incompatible type!"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	Optimizer
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x3995714)[0x56389860a714]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x563898608534]
+
+clang-trunk(+0x38da378)[0x56389854f378]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f69f6dce3c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f69f686d18b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f69f684c859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f69f684c729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f69f685df36]
+
+clang-trunk(+0x35e873e)[0x56389825d73e]
+
+clang-trunk(+0x35e8d35)[0x56389825dd35]
+
+clang-trunk(_ZN4llvm28AlignmentFromAssumptionsPass17processAssumptionEPNS_8CallInstEj+0x36e)[0x56389825ea6e]
+
+clang-trunk(_ZN4llvm28AlignmentFromAssumptionsPass7runImplERNS_8FunctionERNS_15AssumptionCacheEPNS_15ScalarEvolutionEPNS_13DominatorTreeE+0xef)[0x56389825ff2f]
+
+clang-trunk(_ZN4llvm28AlignmentFromAssumptionsPass3runERNS_8FunctionERNS_15AnalysisManagerIS1_JEEE+0x188)[0x5638982600e8]
+
+clang-trunk(+0x4ccb8d6)[0x5638999408d6]
+
+clang-trunk(_ZN4llvm11PassManagerINS_8FunctionENS_15AnalysisManagerIS1_JEEEJEE3runERS1_RS3_+0x436)[0x563897d40d26]
+
+clang-trunk(+0x1543666)[0x5638961b8666]
+
+clang-trunk(_ZN4llvm27ModuleToFunctionPassAdaptor3runERNS_6ModuleERNS_15AnalysisManagerIS1_JEEE+0x6e9)[0x563897d3f849]
+
+clang-trunk(+0x1543ed6)[0x5638961b8ed6]
+
+clang-trunk(_ZN4llvm11PassManagerINS_6ModuleENS_15AnalysisManagerIS1_JEEEJEE3runERS1_RS3_+0x50f)[0x563897d3d12f]
+
+clang-trunk(+0x3ccc9fd)[0x5638989419fd]
+
+clang-trunk(_ZN5clang17EmitBackendOutputERNS_17DiagnosticsEngineERKNS_19HeaderSearchOptionsERKNS_14CodeGenOptionsERKNS_13TargetOptionsERKNS_11LangOptionsEN4llvm9StringRefEPNSE_6ModuleENS_13BackendActionESt10unique_ptrINSE_17raw_pwrite_streamESt14default_deleteISK_EE+0x47d)[0x563898944c7d]
+
+clang-trunk(+0x4b0675f)[0x56389977b75f]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x429)[0x56389a833419]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x56389977a2a8]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x56389901d399]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x563898fb03b6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x5638990fb0c0]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x563895eed846]
+
+clang-trunk(+0x1274b88)[0x563895ee9b88]
+
+clang-trunk(+0x41cbbf9)[0x563898e40bf9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x56389854f4fc]
+
+clang-trunk(+0x41cc39d)[0x563898e4139d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x563898e13b2b]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x563898e14649]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x563898e1f1f9]
+
+clang-trunk(main+0x18af)[0x563895e1859f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f69f684e0b3]
+
+clang-trunk(_start+0x2e)[0x563895ee96fe]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 6b0d266036f73f5ee9556d211a7d0946091ff3b2)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-cba746.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-cba746.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

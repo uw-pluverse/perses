@@ -1,0 +1,2 @@
+java.util.NoSuchElementException: head of empty list while compiling mutant.scala
+

@@ -1,0 +1,384 @@
+warning: attribute should be applied to a function or static
+
+ --> mutant.rs:5:1
+
+  |
+
+5 | # [ no_mangle ]
+
+  | ^^^^^^^^^^^^^^^
+
+6 | pub static collision : Box < _ > ;
+
+  | ---------------------------------- not a function or static
+
+  |
+
+  = note: `#[warn(unused_attributes)]` on by default
+
+  = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+
+
+
+warning: unnecessary `unsafe` block
+
+  --> mutant.rs:16:1
+
+   |
+
+16 | unsafe {
+
+   | ^^^^^^ unnecessary `unsafe` block
+
+   |
+
+   = note: `#[warn(unused_unsafe)]` on by default
+
+
+
+warning: function is never used: `main`
+
+  --> mutant.rs:15:4
+
+   |
+
+15 | fn main ( ) {
+
+   |    ^^^^
+
+   |
+
+   = note: `#[warn(dead_code)]` on by default
+
+
+
+warning: `extern` block uses type `Box<[type error]>`, which is not FFI-safe
+
+ --> mutant.rs:6:24
+
+  |
+
+6 | pub static collision : Box < _ > ;
+
+  |                        ^^^^^^^^^ not FFI-safe
+
+  |
+
+  = note: `#[warn(improper_ctypes)]` on by default
+
+  = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+
+  = note: this struct has unspecified layout
+
+
+
+warning: 4 warnings emitted
+
+
+
+error: internal compiler error: TyKind::Error constructed but no error reported
+
+  |
+
+  = note: delayed at compiler/rustc_typeck/src/astconv/mod.rs:444:33
+
+
+
+error: internal compiler error: TyKind::Error constructed but no error reported
+
+  |
+
+  = note: delayed at compiler/rustc_typeck/src/check/expr.rs:401:55
+
+
+
+error: internal compiler error: TyKind::Error constructed but no error reported
+
+  |
+
+  = note: delayed at compiler/rustc_typeck/src/check/expr.rs:1149:22
+
+
+
+error: internal compiler error: TyKind::Error constructed but no error reported
+
+  |
+
+  = note: delayed at /rustc/4a20eb6a9da36c88ee929826c4f1eb8d7ea393b2/compiler/rustc_middle/src/ty/relate.rs:334:59
+
+
+
+error: internal compiler error: TyKind::Error constructed but no error reported
+
+  |
+
+  = note: delayed at compiler/rustc_typeck/src/check/fn_ctxt/checks.rs:714:27
+
+
+
+error: internal compiler error: TyKind::Error constructed but no error reported
+
+  |
+
+  = note: delayed at compiler/rustc_typeck/src/check/coercion.rs:1261:42
+
+
+
+error: internal compiler error: TyKind::Error constructed but no error reported
+
+  |
+
+  = note: delayed at compiler/rustc_infer/src/infer/sub.rs:124:31
+
+
+
+error: internal compiler error: TyKind::Error constructed but no error reported
+
+  |
+
+  = note: delayed at compiler/rustc_typeck/src/check/fn_ctxt/_impl.rs:652:60
+
+
+
+error: internal compiler error: cat_expr Errd
+
+  --> mutant.rs:15:13
+
+   |
+
+15 |   fn main ( ) {
+
+   |  _____________^
+
+16 | | unsafe {
+
+17 | | println ! ( "{:p}" , & dep1 :: collision ) ;
+
+18 | | }
+
+19 | | }
+
+   | |_^
+
+   |
+
+   = note: delayed at compiler/rustc_typeck/src/check/regionck.rs:402:31
+
+
+
+error: internal compiler error: cat_expr Errd
+
+  --> mutant.rs:16:1
+
+   |
+
+16 | / unsafe {
+
+17 | | println ! ( "{:p}" , & dep1 :: collision ) ;
+
+18 | | }
+
+   | |_^
+
+   |
+
+   = note: delayed at compiler/rustc_typeck/src/check/regionck.rs:402:31
+
+
+
+error: internal compiler error: cat_expr Errd
+
+  --> mutant.rs:17:1
+
+   |
+
+17 | println ! ( "{:p}" , & dep1 :: collision ) ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+   |
+
+   = note: delayed at compiler/rustc_typeck/src/check/regionck.rs:402:31
+
+   = note: this error: internal compiler error originates in a macro (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: internal compiler error: cat_expr Errd
+
+  --> mutant.rs:17:1
+
+   |
+
+17 | println ! ( "{:p}" , & dep1 :: collision ) ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+   |
+
+   = note: delayed at compiler/rustc_typeck/src/check/regionck.rs:402:31
+
+   = note: this error: internal compiler error originates in a macro (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: internal compiler error: cat_expr Errd
+
+  --> mutant.rs:17:22
+
+   |
+
+17 | println ! ( "{:p}" , & dep1 :: collision ) ;
+
+   |                      ^^^^^^^^^^^^^^^^^^^
+
+   |
+
+   = note: delayed at compiler/rustc_typeck/src/check/regionck.rs:402:31
+
+
+
+error: internal compiler error: cat_expr Errd
+
+  --> mutant.rs:17:24
+
+   |
+
+17 | println ! ( "{:p}" , & dep1 :: collision ) ;
+
+   |                        ^^^^^^^^^^^^^^^^^
+
+   |
+
+   = note: delayed at compiler/rustc_typeck/src/check/regionck.rs:402:31
+
+
+
+error: internal compiler error: cat_expr Errd
+
+  --> mutant.rs:17:22
+
+   |
+
+17 | println ! ( "{:p}" , & dep1 :: collision ) ;
+
+   |                      ^^^^^^^^^^^^^^^^^^^
+
+   |
+
+   = note: delayed at compiler/rustc_typeck/src/check/regionck.rs:402:31
+
+   = note: this error: internal compiler error originates in a macro (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error: internal compiler error: TyKind::Error constructed but no error reported
+
+  |
+
+  = note: delayed at compiler/rustc_mir_build/src/build/mod.rs:737:18
+
+
+
+error: internal compiler error: PromoteTemps: MIR had errors
+
+  --> mutant.rs:15:1
+
+   |
+
+15 | fn main ( ) {
+
+   | ^^^^^^^^^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/transform/promote_consts.rs:55:22
+
+
+
+error: internal compiler error: broken MIR in DefId(0:9 ~ mutant[8787]::main) ("return type"): bad type [type error]
+
+  --> mutant.rs:15:1
+
+   |
+
+15 | fn main ( ) {
+
+   | ^^^^^^^^^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/borrow_check/type_check/mod.rs:252:27
+
+
+
+error: internal compiler error: TyKind::Error constructed but no error reported
+
+  |
+
+  = note: delayed at compiler/rustc_mir/src/borrow_check/type_check/mod.rs:721:20
+
+
+
+error: internal compiler error: broken MIR in DefId(0:9 ~ mutant[8787]::main) (LocalDecl { mutability: Mut, local_info: None, internal: false, is_block_tail: None, ty: [type error], user_ty: None, source_info: SourceInfo { span: mutant.rs:15:1: 15:12 (#0), scope: scope[0] } }): bad type [type error]
+
+  --> mutant.rs:15:1
+
+   |
+
+15 | fn main ( ) {
+
+   | ^^^^^^^^^^^
+
+   |
+
+   = note: delayed at compiler/rustc_mir/src/borrow_check/type_check/mod.rs:252:27
+
+
+
+error: internal compiler error: bad_placeholder_type
+
+ --> mutant.rs:6:30
+
+  |
+
+6 | pub static collision : Box < _ > ;
+
+  |                              ^
+
+  |
+
+  = note: delayed at compiler/rustc_typeck/src/collect.rs:370:20
+
+
+
+thread 'rustc' panicked at 'no errors encountered even though `delay_span_bug` issued', compiler/rustc_errors/src/lib.rs:1014:13
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.53.0-nightly (4a20eb6a9 2021-03-28) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+end of query stack
+

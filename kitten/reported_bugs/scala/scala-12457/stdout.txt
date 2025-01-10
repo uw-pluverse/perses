@@ -1,0 +1,2 @@
+dotty.tools.dotc.ast.Trees$UnAssignedTypeException: type of Ident(R) is not assigned while compiling mutant.scala
+

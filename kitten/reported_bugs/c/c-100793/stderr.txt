@@ -1,0 +1,84 @@
+mutant.c: In function ‘f1’:
+
+mutant.c:4:21: error: the register specified for ‘a’ cannot be accessed by the current target
+
+    4 | register __float128 a __asm ( "xmm16" ) ;
+
+      |                     ^
+
+mutant.c: In function ‘f2’:
+
+mutant.c:13:21: error: the register specified for ‘a’ cannot be accessed by the current target
+
+   13 | register __float128 a __asm ( "xmm16" ) , b __asm ( "xmm17" ) ;
+
+      |                     ^
+
+mutant.c:13:43: error: the register specified for ‘b’ cannot be accessed by the current target
+
+   13 | register __float128 a __asm ( "xmm16" ) , b __asm ( "xmm17" ) ;
+
+      |                                           ^
+
+mutant.c: In function ‘f3’:
+
+mutant.c:23:21: error: the register specified for ‘a’ cannot be accessed by the current target
+
+   23 | register __float128 a __asm ( "xmm16" ) ;
+
+      |                     ^
+
+mutant.c: In function ‘f4’:
+
+mutant.c:32:21: error: the register specified for ‘a’ cannot be accessed by the current target
+
+   32 | register __int128_t a __asm ( "xmm16" ) ;
+
+      |                     ^
+
+mutant.c:33:62: error: the register specified for ‘b’ cannot be accessed by the current target
+
+   33 | register __int128_t __attribute__ ( ( vector_size ( 16 ) ) ) b __asm ( "xmm17" ) ;
+
+      |                                                              ^
+
+during RTL pass: expand
+
+mutant.c:40:15: internal compiler error: in expand_assignment, at expr.c:5363
+
+   39 | b [
+
+      | ~~~            
+
+   40 | b [ 0 ] = a ] = a ] = a ] = a ] = a ;
+
+      | ~~~~~~~~~~~~~~^~~
+
+0x6b2dac expand_assignment(tree_node*, tree_node*, bool)
+
+	/tmp/tmp.tVhv2eaPzV-gcc-builder/gcc/gcc/expr.c:5363
+
+0xa41c2f expand_gimple_stmt_1
+
+	/tmp/tmp.tVhv2eaPzV-gcc-builder/gcc/gcc/cfgexpand.c:3916
+
+0xa41c2f expand_gimple_stmt
+
+	/tmp/tmp.tVhv2eaPzV-gcc-builder/gcc/gcc/cfgexpand.c:4014
+
+0xa47d09 expand_gimple_basic_block
+
+	/tmp/tmp.tVhv2eaPzV-gcc-builder/gcc/gcc/cfgexpand.c:6056
+
+0xa49bdf execute
+
+	/tmp/tmp.tVhv2eaPzV-gcc-builder/gcc/gcc/cfgexpand.c:6782
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

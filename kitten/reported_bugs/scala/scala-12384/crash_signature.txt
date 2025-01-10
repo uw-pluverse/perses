@@ -1,0 +1,4 @@
+Exception in thread "main" java.lang.ClassCastException: dotty.tools.dotc.core.Types$Range cannot be cast to dotty.tools.dotc.core.Types$TypeBounds
+at scala.collection.immutable.List.mapConserve
+at dotty.tools.dotc.core.Types$HKTypeLambda.newLikeThis$$anonfun$1
+at dotty.tools.dotc.core.Types$HKTypeLambda.<init>

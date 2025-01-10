@@ -1,0 +1,96 @@
+mutant.c:1:5: error: ‘__GIMPLE’ only valid with ‘-fgimple’
+
+    1 | int __GIMPLE foo ( int a )
+
+      |     ^~~~~~~~
+
+mutant.c: In function ‘foo’:
+
+mutant.c:3:5: warning: unused variable ‘t1’ [-Wunused-variable]
+
+    3 | int t1 ;
+
+      |     ^~
+
+mutant.c:1:24: warning: parameter ‘a’ set but not used [-Wunused-but-set-parameter]
+
+    1 | int __GIMPLE foo ( int a )
+
+      |                    ~~~~^
+
+during GIMPLE pass: lower
+
+mutant.c:4:24: internal compiler error: tree check: expected function_type or method_type, have integer_type in gimplify_call_expr, at gimplify.c:3457
+
+    4 | t1_1 = __builtin_abs ( __builtin_abs ( __builtin_abs ( __builtin_abs ( __builtin_abs ( __builtin_abs ( __builtin_abs ( __builtin_abs ( __builtin_abs ( __builtin_abs ( __builtin_abs ( __builtin_abs ( __builtin_abs ( __builtin_abs ( __builtin_abs ( __builtin_abs ( __builtin_abs ( a ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ;
+
+      |                        ^~~~~~~~~~~~~
+
+0x7bca06 tree_check_failed(tree_node const*, char const*, int, char const*, ...)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/tree.c:8674
+
+0x6e13ef tree_check2(tree_node*, char const*, int, char const*, tree_code, tree_code)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/tree.h:3375
+
+0x6e13ef gimplify_call_expr
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:3457
+
+0xc25d73 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:14055
+
+0xc27bf9 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:14829
+
+0xc493c1 force_gimple_operand_1(tree_node*, gimple**, bool (*)(tree_node*), tree_node*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify-me.c:78
+
+0xbf1980 gimplify_and_update_call_from_tree(gimple_stmt_iterator*, tree_node*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-fold.c:790
+
+0xbff139 gimple_fold_builtin
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-fold.c:5165
+
+0xc012b0 gimple_fold_call
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-fold.c:5581
+
+0xc0288b fold_stmt_1
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-fold.c:6283
+
+0x19177c3 lower_stmt
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-low.c:388
+
+0x19177c3 lower_sequence
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-low.c:217
+
+0x191766d lower_gimple_bind
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-low.c:473
+
+0x191852d lower_function_body
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-low.c:110
+
+0x191852d execute
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-low.c:195
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

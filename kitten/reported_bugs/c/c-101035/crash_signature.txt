@@ -1,0 +1,4 @@
+internal compiler error: in wide_int_to_tree_1, at tree.c
+wide_int_to_tree_1
+wide_int_to_tree(tree_node*, poly_int<1u, generic_wide_int<wide_int_ref_storage<false, true> > > const&)
+build_int_cst(tree_node*, poly_int<1u, long>)

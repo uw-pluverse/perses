@@ -1,0 +1,134 @@
+clang-trunk: /tmp/tmp.B1HwadcXIH-clang-builder/llvm-project/clang/lib/Sema/SemaExpr.cpp:12190: clang::QualType clang::Sema::GetSignedVectorType(clang::QualType): Assertion `TypeSize == Context.getTypeSize(Context.CharTy) && "Unhandled vector element size in vector compare"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:8:12: current parser token ';'
+
+2.	mutant.c:5:1: parsing function body 'foo'
+
+3.	mutant.c:5:1: in compound statement ('{}')
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x39591f4)[0x55a4f66e51f4]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x55a4f66e3014]
+
+clang-trunk(+0x389de48)[0x55a4f6629e48]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7fa3659df3c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7fa36547e18b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7fa36545d859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7fa36545d729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7fa36546ef36]
+
+clang-trunk(_ZN5clang4Sema19GetSignedVectorTypeENS_8QualTypeE+0x2cb)[0x55a4f8d2672b]
+
+clang-trunk(_ZN5clang4Sema26CheckVectorCompareOperandsERNS_12ActionResultIPNS_4ExprELb1EEES5_NS_14SourceLocationENS_18BinaryOperatorKindE+0x15d)[0x55a4f8d93e4d]
+
+clang-trunk(_ZN5clang4Sema20CheckCompareOperandsERNS_12ActionResultIPNS_4ExprELb1EEES5_NS_14SourceLocationENS_18BinaryOperatorKindE+0x149)[0x55a4f8d96669]
+
+clang-trunk(_ZN5clang4Sema18CreateBuiltinBinOpENS_14SourceLocationENS_18BinaryOperatorKindEPNS_4ExprES4_+0x6b6)[0x55a4f8d9e596]
+
+clang-trunk(_ZN5clang4Sema10BuildBinOpEPNS_5ScopeENS_14SourceLocationENS_18BinaryOperatorKindEPNS_4ExprES6_+0x564)[0x55a4f8d9f834]
+
+clang-trunk(_ZN5clang4Sema10ActOnBinOpEPNS_5ScopeENS_14SourceLocationENS_3tok9TokenKindEPNS_4ExprES7_+0x91)[0x55a4f8d9fcd1]
+
+clang-trunk(_ZN5clang6Parser26ParseRHSOfBinaryExpressionENS_12ActionResultIPNS_4ExprELb1EEENS_4prec5LevelE+0x77f)[0x55a4f895996f]
+
+clang-trunk(_ZN5clang6Parser26ParseRHSOfBinaryExpressionENS_12ActionResultIPNS_4ExprELb1EEENS_4prec5LevelE+0x6a4)[0x55a4f8959894]
+
+clang-trunk(_ZN5clang6Parser15ParseExpressionENS0_13TypeCastStateE+0xd)[0x55a4f895b9cd]
+
+clang-trunk(_ZN5clang6Parser18ParseExprStatementENS0_17ParsedStmtContextE+0x4e)[0x55a4f89c360e]
+
+clang-trunk(_ZN5clang6Parser42ParseStatementOrDeclarationAfterAttributesERN4llvm11SmallVectorIPNS_4StmtELj32EEENS0_17ParsedStmtContextEPNS_14SourceLocationERNS_25ParsedAttributesWithRangeE+0x8f2)[0x55a4f89baba2]
+
+clang-trunk(_ZN5clang6Parser27ParseStatementOrDeclarationERN4llvm11SmallVectorIPNS_4StmtELj32EEENS0_17ParsedStmtContextEPNS_14SourceLocationE+0x9a)[0x55a4f89bb58a]
+
+clang-trunk(_ZN5clang6Parser26ParseCompoundStatementBodyEb+0x5f9)[0x55a4f89bc509]
+
+clang-trunk(_ZN5clang6Parser26ParseFunctionStatementBodyEPNS_4DeclERNS0_10ParseScopeE+0xda)[0x55a4f89beb1a]
+
+clang-trunk(_ZN5clang6Parser23ParseFunctionDefinitionERNS_17ParsingDeclaratorERKNS0_18ParsedTemplateInfoEPNS0_18LateParsedAttrListE+0x682)[0x55a4f8904db2]
+
+clang-trunk(_ZN5clang6Parser14ParseDeclGroupERNS_15ParsingDeclSpecENS_17DeclaratorContextEPNS_14SourceLocationEPNS0_12ForRangeInitE+0x740)[0x55a4f8931710]
+
+clang-trunk(_ZN5clang6Parser30ParseDeclOrFunctionDefInternalERNS_25ParsedAttributesWithRangeERNS_15ParsingDeclSpecENS_15AccessSpecifierE+0x226)[0x55a4f88ff5b6]
+
+clang-trunk(+0x5b73ba1)[0x55a4f88ffba1]
+
+clang-trunk(_ZN5clang6Parser24ParseExternalDeclarationERNS_25ParsedAttributesWithRangeEPNS_15ParsingDeclSpecE+0x217)[0x55a4f89063a7]
+
+clang-trunk(_ZN5clang6Parser17ParseTopLevelDeclERNS_9OpaquePtrINS_12DeclGroupRefEEEb+0x1ce)[0x55a4f890793e]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x219)[0x55a4f88fa189]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x55a4f7841458]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55a4f70f09e9]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55a4f7083c36]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x55a4f71ce870]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x55a4f3fee696]
+
+clang-trunk(+0x125e9d8)[0x55a4f3fea9d8]
+
+clang-trunk(+0x4188bb9)[0x55a4f6f14bb9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x55a4f6629fcc]
+
+clang-trunk(+0x418935d)[0x55a4f6f1535d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55a4f6ee7aeb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x55a4f6ee8609]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x55a4f6ef31b9]
+
+clang-trunk(main+0x18af)[0x55a4f3f1952f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fa36545f0b3]
+
+clang-trunk(_start+0x2e)[0x55a4f3fea54e]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git ef906573a127cffef7cae75d5155c15a8a2a3a5e)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-946156.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-946156.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

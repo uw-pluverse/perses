@@ -1,0 +1,4 @@
+internal compiler error: in maybe_canonicalize_mem_ref_addr, at gimple-fold.c
+maybe_canonicalize_mem_ref_addr
+fold_stmt_1
+substitute_and_fold_dom_walker::before_dom_children(basic_block_def*)

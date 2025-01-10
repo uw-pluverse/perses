@@ -1,0 +1,64 @@
+mutant.c:1:95: warning: call-clobbered register used for global register variable
+
+    1 | void w1 ( void * x , double y ) { * ( double * ) ( x + 32767 ) = y ; } register unsigned long __sys_res asm ( "r10" ) ;
+
+      |                                                                                               ^~~~~~~~~
+
+mutant.c:39:1: error: assembler name hash list corrupted
+
+   39 | double r20 ( void * x ) { return * ( double * ) ( x + 32748 ) ; }
+
+      | ^~~~~~
+
+*r10/1 (__sys_res) @0x7f4202942100
+
+  Type: variable definition analyzed
+
+  Visibility: public
+
+  References: 
+
+  Referring: 
+
+  Availability: not-ready
+
+  Varpool flags:
+
+mutant.c:39:1: internal compiler error: symtab_node::verify failed
+
+0xa717c9 symtab_node::verify()
+
+	/tmp/tmp.2G3KkJkZyC-gcc-builder/gcc/gcc/symtab.c:1361
+
+0xa717c9 symtab_node::verify()
+
+	/tmp/tmp.2G3KkJkZyC-gcc-builder/gcc/gcc/symtab.c:1349
+
+0xa72a27 symtab_node::verify_symtab_nodes()
+
+	/tmp/tmp.2G3KkJkZyC-gcc-builder/gcc/gcc/symtab.c:1384
+
+0xa88b04 symtab_node::checking_verify_symtab_nodes()
+
+	/tmp/tmp.2G3KkJkZyC-gcc-builder/gcc/gcc/cgraph.h:678
+
+0xa88b04 symbol_table::compile()
+
+	/tmp/tmp.2G3KkJkZyC-gcc-builder/gcc/gcc/cgraphunit.c:2272
+
+0xa8b7db symbol_table::compile()
+
+	/tmp/tmp.2G3KkJkZyC-gcc-builder/gcc/gcc/cgraphunit.c:2269
+
+0xa8b7db symbol_table::finalize_compilation_unit()
+
+	/tmp/tmp.2G3KkJkZyC-gcc-builder/gcc/gcc/cgraphunit.c:2537
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

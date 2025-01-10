@@ -1,0 +1,66 @@
+mutant.c:2:6: error: ‘A’ redeclared as different kind of symbol
+
+    2 | void A ( void ) __attribute__ ( ( constructor ( A ) ) ) ;
+
+      |      ^
+
+mutant.c:1:8: note: previous definition of ‘A’ with type ‘enum <anonymous>’
+
+    1 | enum { A = 128 , B = 1 } ;
+
+      |        ^
+
+mutant.c:3:1: internal compiler error: in default_conversion, at c/c-typeck.c:2242
+
+    3 | void fn4 ( void ) __attribute__ ( ( destructor ( A ) ) ) ;
+
+      | ^~~~
+
+0x6415e4 default_conversion(tree_node*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-typeck.c:2242
+
+0x9c5a4a get_priority
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c-family/c-attribs.c:1824
+
+0x9c7af1 handle_destructor_attribute
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c-family/c-attribs.c:1905
+
+0x8c9f06 decl_attributes(tree_node**, tree_node*, int, tree_node*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/attribs.c:723
+
+0x8e63ae start_decl(c_declarator*, c_declspecs*, bool, tree_node*, unsigned int*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-decl.c:5198
+
+0x94314d c_parser_declaration_or_fndef
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:2302
+
+0x94b9d3 c_parser_external_declaration
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:1777
+
+0x94c439 c_parser_translation_unit
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:1650
+
+0x94c439 c_parse_file()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:21984
+
+0x9ac765 c_common_parse_file()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c-family/c-opts.c:1218
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

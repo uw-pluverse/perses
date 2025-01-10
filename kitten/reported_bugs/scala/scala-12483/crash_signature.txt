@@ -1,0 +1,4 @@
+Exception in thread "main" java.lang.AssertionError: assertion failed
+at scala.runtime.Scala3RunTime$.assertFailed
+at dotty.tools.dotc.transform.Erasure$Boxing$.unbox
+at dotty.tools.dotc.transform.Erasure$Boxing$.adaptToType

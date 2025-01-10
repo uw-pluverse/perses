@@ -1,0 +1,2 @@
+java.lang.StackOverflowError while compiling mutant.scala
+

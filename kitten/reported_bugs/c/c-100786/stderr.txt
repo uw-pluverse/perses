@@ -1,0 +1,110 @@
+mutant.c:4:8: warning: return type defaults to ‘int’ [-Wimplicit-int]
+
+    4 | static inc ( )
+
+      |        ^~~
+
+mutant.c: In function ‘main’:
+
+mutant.c:11:3: error: assignment of read-only variable ‘a’
+
+   11 | a = 0 ;
+
+      |   ^
+
+mutant.c: In function ‘inc’:
+
+mutant.c:6:3: internal compiler error: in fold_convert_loc, at fold-const.c:2429
+
+    6 | b ++ ;
+
+      | ~~^~
+
+0x6bfac1 fold_convert_loc(unsigned int, tree_node*, tree_node*)
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/fold-const.c:2429
+
+0xc07527 fold_stmt_1
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/gimple-fold.c:6251
+
+0xc3bb32 gimplify_modify_expr
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/gimplify.c:5997
+
+0xc2b168 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/gimplify.c:13962
+
+0xc2ea9a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/gimplify.c:6880
+
+0xc30c56 gimplify_and_add(tree_node*, gimple**)
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/gimplify.c:492
+
+0xc30c56 internal_get_tmp_var
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/gimplify.c:645
+
+0xc2a6e7 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/gimplify.c:14951
+
+0xc2af01 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/gimplify.c:14717
+
+0xc3b947 gimplify_modify_expr
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/gimplify.c:5821
+
+0xc2b168 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/gimplify.c:13962
+
+0xc2ea9a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/gimplify.c:6880
+
+0xc2c09b gimplify_statement_list
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/gimplify.c:1882
+
+0xc2c09b gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/gimplify.c:14407
+
+0xc2ea9a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/gimplify.c:6880
+
+0xc2f2ce gimplify_bind_expr
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/gimplify.c:1424
+
+0xc2b503 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/gimplify.c:14163
+
+0xc2ea9a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/gimplify.c:6880
+
+0xc30093 gimplify_body(tree_node*, bool)
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/gimplify.c:15207
+
+0xc304e1 gimplify_function_tree(tree_node*)
+
+	/tmp/tmp.gf8Eur1mqL-gcc-builder/gcc/gcc/gimplify.c:15361
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

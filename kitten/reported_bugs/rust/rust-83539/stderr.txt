@@ -1,0 +1,54 @@
+warning: unused imports: `drop`, `replace`
+
+ --> mutant.rs:3:21
+
+  |
+
+3 | use std :: mem :: { drop , replace } ;
+
+  |                     ^^^^   ^^^^^^^
+
+  |
+
+  = note: `#[warn(unused_imports)]` on by default
+
+
+
+thread 'rustc' panicked at 'called `Result::unwrap()` on an `Err` value: (MoveData { move_paths: [MovePath { place: _0 }, MovePath { place: _1 }, MovePath { place: _2 }, MovePath { place: _3 }, MovePath { place: _4 }, MovePath { place: _5 }, MovePath { place: _6 }, MovePath { place: _7 }, MovePath { place: _8 }, MovePath { place: _9 }, MovePath { place: _10 }, MovePath { place: _11 }, MovePath { place: _12 }, MovePath { place: _13 }, MovePath { place: _14 }, MovePath { place: _15 }, MovePath { place: _16 }, MovePath { place: _17 }, MovePath { place: _18 }, MovePath { place: _19 }, MovePath { place: _20 }, MovePath { place: _21 }, MovePath { place: _22 }, MovePath { place: _23 }, MovePath { place: _24 }, MovePath { place: _25 }, MovePath { place: _26 }, MovePath { place: _27 }, MovePath { place: _28 }, MovePath { place: _29 }, MovePath { place: _30 }], moves: [mp7@bb0[4], mp7@bb1[0], mp6@bb1[1], mp9@bb1[5], mp9@bb2[0], mp8@bb2[1], mp11@bb2[5], mp11@bb3[0], mp10@bb3[1], mp13@bb3[5], mp13@bb4[0], mp12@bb4[1], mp15@bb4[5], mp3@bb5[3], mp16@bb5[4], mp17@bb5[4], mp3@bb6[1], mp18@bb6[2], mp18@bb6[3], mp4@bb6[4], mp17@bb7[0], mp16@bb7[1], mp15@bb8[0], mp14@bb8[1], mp14@bb8[2], mp20@bb8[6], mp20@bb9[0], mp19@bb9[1], mp22@bb9[5], mp22@bb10[0], mp21@bb10[1], mp24@bb10[5], mp24@bb11[0], mp23@bb11[1], mp2@bb11[4], mp26@bb11[5], mp26@bb12[0], mp25@bb12[1], mp28@bb12[5], mp28@bb13[0], mp27@bb13[1], mp30@bb13[5], mp30@bb14[0], mp29@bb14[1], mp5@bb14[2], mp5@bb14[3]], loc_map: LocationMap { map: [[[], [], [], [], [mo0]], [[mo1], [mo2], [], [], [], [mo3]], [[mo4], [mo5], [], [], [], [mo6]], [[mo7], [mo8], [], [], [], [mo9]], [[mo10], [mo11], [], [], [], [mo12]], [[], [], [], [mo13], [mo14, mo15]], [[], [mo16], [mo17], [mo18], [mo19], []], [[mo20], [mo21], []], [[mo22], [mo23], [mo24], [], [], [], [mo25]], [[mo26], [mo27], [], [], [], [mo28]], [[mo29], [mo30], [], [], [], [mo31]], [[mo32], [mo33], [], [], [mo34], [mo35]], [[mo36], [mo37], [], [], [], [mo38]], [[mo39], [mo40], [], [], [], [mo41]], [[mo42], [mo43], [mo44], [mo45], []], [[]]] }, path_map: [[], [], [mo34], [mo13, mo16], [mo19], [mo44, mo45], [mo2], [mo0, mo1], [mo5], [mo3, mo4], [mo8], [mo6, mo7], [mo11], [mo9, mo10], [mo23, mo24], [mo12, mo22], [mo14, mo21], [mo15, mo20], [mo17, mo18], [mo27], [mo25, mo26], [mo30], [mo28, mo29], [mo33], [mo31, mo32], [mo37], [mo35, mo36], [mo40], [mo38, mo39], [mo43], [mo41, mo42]], rev_lookup: MovePathLookup { locals: [mp0, mp1, mp2, mp3, mp4, mp5, mp6, mp7, mp8, mp9, mp10, mp11, mp12, mp13, mp14, mp15, mp16, mp17, mp18, mp19, mp20, mp21, mp22, mp23, mp24, mp25, mp26, mp27, mp28, mp29, mp30], projections: {} }, inits: [mp1@Argument(_1) (Deep), mp2@Argument(_2) (Deep), mp3@Argument(_3) (Deep), mp4@Argument(_4) (Deep), mp7@Statement(bb0[3]) (Deep), mp6@Statement(bb0[4]) (NonPanicPathOnly), mp9@Statement(bb1[4]) (Deep), mp8@Statement(bb1[5]) (NonPanicPathOnly), mp11@Statement(bb2[4]) (Deep), mp10@Statement(bb2[5]) (NonPanicPathOnly), mp13@Statement(bb3[4]) (Deep), mp12@Statement(bb3[5]) (NonPanicPathOnly), mp15@Statement(bb4[4]) (Deep), mp16@Statement(bb5[1]) (Deep), mp17@Statement(bb5[3]) (Deep), mp14@Statement(bb5[4]) (NonPanicPathOnly), mp18@Statement(bb6[1]) (Deep), mp4@Statement(bb6[2]) (Deep), mp14@Statement(bb6[4]) (Deep), mp5@Statement(bb8[1]) (Deep), mp20@Statement(bb8[5]) (Deep), mp19@Statement(bb8[6]) (NonPanicPathOnly), mp22@Statement(bb9[4]) (Deep), mp21@Statement(bb9[5]) (NonPanicPathOnly), mp24@Statement(bb10[4]) (Deep), mp23@Statement(bb10[5]) (NonPanicPathOnly), mp26@Statement(bb11[4]) (Deep), mp25@Statement(bb11[5]) (NonPanicPathOnly), mp28@Statement(bb12[4]) (Deep), mp27@Statement(bb12[5]) (NonPanicPathOnly), mp30@Statement(bb13[4]) (Deep), mp29@Statement(bb13[5]) (NonPanicPathOnly), mp0@Statement(bb14[2]) (Deep)], init_loc_map: LocationMap { map: [[[], [], [], [in4], [in5]], [[], [], [], [], [in6], [in7]], [[], [], [], [], [in8], [in9]], [[], [], [], [], [in10], [in11]], [[], [], [], [], [in12], []], [[], [in13], [], [in14], [in15]], [[], [in16], [in17], [], [in18], []], [[], [], []], [[], [in19], [], [], [], [in20], [in21]], [[], [], [], [], [in22], [in23]], [[], [], [], [], [in24], [in25]], [[], [], [], [], [in26], [in27]], [[], [], [], [], [in28], [in29]], [[], [], [], [], [in30], [in31]], [[], [], [in32], [], []], [[]]] }, init_path_map: [[in32], [in0], [in1], [in2], [in3, in17], [in19], [in5], [in4], [in7], [in6], [in9], [in8], [in11], [in10], [in15, in18], [in12], [in13], [in14], [in16], [in21], [in20], [in23], [in22], [in25], [in24], [in27], [in26], [in29], [in28], [in31], [in30]] }, [((*_2), IllegalMove { cannot_move_out_of: IllegalMoveOrigin { location: bb3[4], kind: BorrowedContent { target_place: (*_2) } } })])', compiler/rustc_mir/src/transform/rustc_peek.rs:37:70
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.53.0-nightly (52e3dffa5 2021-03-25) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [mir_const] processing MIR for `foo`
+
+#1 [mir_promoted] processing `foo`
+
+end of query stack
+
+warning: 1 warning emitted
+
+
+

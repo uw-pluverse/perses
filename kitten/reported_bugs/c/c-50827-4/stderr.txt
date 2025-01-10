@@ -1,0 +1,170 @@
+mutant.c:1:10: warning: complex integer types are a GNU extension [-Wgnu-complex-integer]
+
+_Complex int t = 0 ;
+
+         ^
+
+mutant.c:1:14: warning: no previous extern declaration for non-static variable 't' [-Wmissing-variable-declarations]
+
+_Complex int t = 0 ;
+
+             ^
+
+mutant.c:1:10: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+_Complex int t = 0 ;
+
+         ^
+
+mutant.c:3:3: warning: extension used [-Wlanguage-extension-token]
+
+{ asm (
+
+  ^
+
+mutant.c:2:5: warning: no previous prototype for function 'f' [-Wmissing-prototypes]
+
+int f ( void )
+
+    ^
+
+mutant.c:2:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+int f ( void )
+
+^
+
+static 
+
+mutant.c:19:1: warning: non-void function does not return a value [-Wreturn-type]
+
+}
+
+^
+
+clang-trunk: /tmp/tmp.B1HwadcXIH-clang-builder/llvm-project/llvm/include/llvm/Support/Alignment.h:78: llvm::Align::Align(uint64_t): Assertion `llvm::isPowerOf2_64(Value) && "Alignment is not a power of 2"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	Code generation
+
+3.	Running pass 'Function Pass Manager' on module 'mutant.c'.
+
+4.	Running pass 'X86 Assembly Printer' on function '@f'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x39591f4)[0x5564556401f4]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x55645563e014]
+
+clang-trunk(+0x389de48)[0x556455584e48]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7ff4c1f4e3c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7ff4c19ed18b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7ff4c19cc859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7ff4c19cc729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7ff4c19ddf36]
+
+clang-trunk(_ZN4llvm16MCObjectStreamer20emitValueToAlignmentEjljj+0x14f)[0x5564551bcbff]
+
+clang-trunk(+0x3548818)[0x55645522f818]
+
+clang-trunk(+0x3559608)[0x556455240608]
+
+clang-trunk(+0x354c5a5)[0x5564552335a5]
+
+clang-trunk(_ZNK4llvm10AsmPrinter13emitInlineAsmENS_9StringRefERKNS_15MCSubtargetInfoERKNS_15MCTargetOptionsEPKNS_6MDNodeENS_9InlineAsm10AsmDialectE+0x249)[0x556456394559]
+
+clang-trunk(_ZNK4llvm10AsmPrinter13emitInlineAsmEPKNS_12MachineInstrE+0x15a2)[0x556456395c42]
+
+clang-trunk(_ZN4llvm10AsmPrinter16emitFunctionBodyEv+0x763)[0x5564563905d3]
+
+clang-trunk(+0x2379ef6)[0x556454060ef6]
+
+clang-trunk(_ZN4llvm19MachineFunctionPass13runOnFunctionERNS_8FunctionE+0x258)[0x55645485ba08]
+
+clang-trunk(_ZN4llvm13FPPassManager13runOnFunctionERNS_8FunctionE+0x365)[0x556454d34a05]
+
+clang-trunk(_ZN4llvm13FPPassManager11runOnModuleERNS_6ModuleE+0x39)[0x556454d34c49]
+
+clang-trunk(_ZN4llvm6legacy15PassManagerImpl3runERNS_6ModuleE+0x382)[0x556454d35d42]
+
+clang-trunk(+0x3c8b872)[0x556455972872]
+
+clang-trunk(_ZN5clang17EmitBackendOutputERNS_17DiagnosticsEngineERKNS_19HeaderSearchOptionsERKNS_14CodeGenOptionsERKNS_13TargetOptionsERKNS_11LangOptionsEN4llvm9StringRefEPNSE_6ModuleENS_13BackendActionESt10unique_ptrINSE_17raw_pwrite_streamESt14default_deleteISK_EE+0x47d)[0x55645597432d]
+
+clang-trunk(+0x4ab690f)[0x55645679d90f]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x429)[0x556457855399]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x55645679c458]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55645604b9e9]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x556455fdec36]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x556456129870]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x556452f49696]
+
+clang-trunk(+0x125e9d8)[0x556452f459d8]
+
+clang-trunk(+0x4188bb9)[0x556455e6fbb9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x556455584fcc]
+
+clang-trunk(+0x418935d)[0x556455e7035d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x556455e42aeb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x556455e43609]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x556455e4e1b9]
+
+clang-trunk(main+0x18af)[0x556452e7452f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7ff4c19ce0b3]
+
+clang-trunk(_start+0x2e)[0x556452f4554e]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git ef906573a127cffef7cae75d5155c15a8a2a3a5e)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-ef9982.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-ef9982.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

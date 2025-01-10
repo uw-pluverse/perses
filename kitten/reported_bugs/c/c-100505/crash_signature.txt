@@ -1,0 +1,3 @@
+internal compiler error: in record_in_finally_tree, at tree-eh.c
+record_in_finally_tree
+collect_finally_tree_1

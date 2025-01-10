@@ -1,0 +1,146 @@
+error[E0658]: `impl Trait` in type aliases is unstable
+
+ --> mutant.rs:7:10
+
+  |
+
+7 | type E = impl Copy ;
+
+  |          ^^^^^^^^^
+
+  |
+
+  = note: see issue #63063 <https://github.com/rust-lang/rust/issues/63063> for more information
+
+  = help: add `#![feature(min_type_alias_impl_trait)]` to the crate attributes to enable
+
+
+
+warning: the feature `type_alias_impl_trait` is incomplete and may not be safe to use and/or cause compiler crashes
+
+ --> mutant.rs:1:17
+
+  |
+
+1 | # ! [ feature ( type_alias_impl_trait ) ]
+
+  |                 ^^^^^^^^^^^^^^^^^^^^^
+
+  |
+
+  = note: `#[warn(incomplete_features)]` on by default
+
+  = note: see issue #63063 <https://github.com/rust-lang/rust/issues/63063> for more information
+
+
+
+error[E0276]: impl has stricter requirements than trait
+
+ --> mutant.rs:8:1
+
+  |
+
+4 | fn foo < T > ( ) -> Self :: E ;
+
+  | ------------------------------- definition of `foo` from trait
+
+...
+
+8 | fn foo < T : Default > ( ) -> Self :: E {
+
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ impl has extra requirement `T: Default`
+
+
+
+error[E0277]: the trait bound `T: Copy` is not satisfied in `((), T)`
+
+ --> mutant.rs:7:10
+
+  |
+
+7 | type E = impl Copy ;
+
+  |          ^^^^^^^^^ within `((), T)`, the trait `Copy` is not implemented for `T`
+
+  |
+
+  = note: required because it appears within the type `((), T)`
+
+help: consider further restricting this bound
+
+  |
+
+8 | fn foo < T : Default + std::marker::Copy > ( ) -> Self :: E {
+
+  |                      ^^^^^^^^^^^^^^^^^^^
+
+
+
+error: type parameter `T` is part of concrete type but not used in parameter list for the `impl Trait` type alias
+
+  --> mutant.rs:8:41
+
+   |
+
+8  |   fn foo < T : Default > ( ) -> Self :: E {
+
+   |  _________________________________________^
+
+9  | | ( drop ( ( 0 .. 1 ) . filter ( |_| true ) ) , T :: default ( ) )
+
+10 | | }
+
+   | |_^
+
+
+
+error: internal compiler error: compiler/rustc_mir/src/borrow_check/universal_regions.rs:533:26: expected defining type for `DefId(0:13 ~ mutant[8787]::{impl#0}::foo::{closure#0})`: `[type error]`
+
+ --> mutant.rs:9:32
+
+  |
+
+9 | ( drop ( ( 0 .. 1 ) . filter ( |_| true ) ) , T :: default ( ) )
+
+  |                                ^^^^^^^^
+
+
+
+thread 'rustc' panicked at 'Box<dyn Any>', /rustc/a435b49e86d16e98dcc6595dd471f95e823f41aa/compiler/rustc_errors/src/lib.rs:953:9
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.55.0-nightly (a435b49e8 2021-06-28) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [mir_borrowck] borrow-checking `<impl at mutant.rs:6:1: 11:2>::foo::{closure#0}`
+
+#1 [type_of] computing type of `<impl at mutant.rs:6:1: 11:2>::E::{opaque#0}`
+
+end of query stack
+
+error: aborting due to 5 previous errors; 1 warning emitted
+
+
+
+Some errors have detailed explanations: E0276, E0277, E0658.
+
+For more information about an error, try `rustc --explain E0276`.
+

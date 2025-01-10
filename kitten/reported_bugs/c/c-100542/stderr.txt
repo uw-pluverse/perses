@@ -1,0 +1,108 @@
+mutant.c: In function ‘ldt_add_entry’:
+
+mutant.c:3:48: warning: unused variable ‘tmp’ [-Wunused-variable]
+
+    3 | __asm__ ( "" : : "m" ( ( { unsigned __v ; char tmp ; } ) ) ) ;
+
+      |                                                ^~~
+
+mutant.c:3:37: warning: unused variable ‘__v’ [-Wunused-variable]
+
+    3 | __asm__ ( "" : : "m" ( ( { unsigned __v ; char tmp ; } ) ) ) ;
+
+      |                                     ^~~
+
+mutant.c:3:26: internal compiler error: Segmentation fault
+
+    3 | __asm__ ( "" : : "m" ( ( { unsigned __v ; char tmp ; } ) ) ) ;
+
+      |                        ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+0xef7273 crash_signal
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/toplev.c:327
+
+0xbeacd4 is_gimple_variable
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-expr.h:84
+
+0xbeacd4 is_gimple_id
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-expr.h:95
+
+0xbeacd4 is_gimple_addressable
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-expr.h:122
+
+0xbeacd4 is_gimple_lvalue(tree_node*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-expr.c:595
+
+0xc273cd gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:15038
+
+0xc30a1d gimplify_asm_expr
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:6506
+
+0xc26705 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:14416
+
+0xc28f6a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc2656b gimplify_statement_list
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:1879
+
+0xc2656b gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:14528
+
+0xc28f6a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc2979e gimplify_bind_expr
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:1421
+
+0xc259d3 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:14284
+
+0xc28f6a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc2a563 gimplify_body(tree_node*, bool)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:15328
+
+0xc2a9b1 gimplify_function_tree(tree_node*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:15482
+
+0xa7e707 cgraph_node::analyze()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cgraphunit.c:670
+
+0xa81611 analyze_functions
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cgraphunit.c:1234
+
+0xa820e1 symbol_table::finalize_compilation_unit()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cgraphunit.c:2508
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

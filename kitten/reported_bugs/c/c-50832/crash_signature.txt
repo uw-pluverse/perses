@@ -1,0 +1,3 @@
+const T* clang::Type::castAs() const [with T = clang::PointerType]: Assertion `isa<T>(CanonicalType)' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

@@ -1,0 +1,510 @@
+AddressSanitizer:DEADLYSIGNAL
+
+=================================================================
+
+==2408786==ERROR: AddressSanitizer: stack-overflow on address 0x7ffde2b02ff8 (pc 0x0000011ea4ac bp 0x7ffde2b03030 sp 0x7ffde2b03000 T0)
+
+    #0 0x11ea4ac in slang::Expression::bad() const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:466:47
+
+    #1 0x120b62a in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:26:18
+
+    #2 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #3 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #4 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #5 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #6 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #7 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #8 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #9 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #10 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #11 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #12 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #13 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #14 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #15 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #16 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #17 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #18 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #19 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #20 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #21 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #22 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #23 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #24 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #25 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #26 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #27 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #28 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #29 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #30 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #31 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #32 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #33 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #34 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #35 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #36 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #37 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #38 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #39 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #40 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #41 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #42 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #43 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #44 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #45 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #46 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #47 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #48 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #49 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #50 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #51 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #52 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #53 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #54 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #55 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #56 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #57 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #58 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #59 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #60 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #61 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #62 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #63 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #64 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #65 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #66 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #67 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #68 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #69 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #70 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #71 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #72 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #73 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #74 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #75 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #76 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #77 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #78 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #79 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #80 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #81 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #82 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #83 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #84 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #85 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #86 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #87 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #88 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #89 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #90 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #91 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #92 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #93 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #94 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #95 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #96 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #97 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #98 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #99 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #100 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #101 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #102 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #103 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #104 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #105 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #106 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #107 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #108 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #109 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #110 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #111 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #112 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #113 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #114 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #115 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #116 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #117 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #118 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #119 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #120 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #121 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #122 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #123 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #124 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #125 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #126 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #127 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #128 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #129 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #130 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #131 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #132 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #133 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #134 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #135 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #136 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #137 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #138 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #139 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #140 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #141 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #142 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #143 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #144 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #145 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #146 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #147 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #148 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #149 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #150 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #151 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #152 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #153 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #154 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #155 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #156 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #157 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #158 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #159 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #160 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #161 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #162 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #163 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #164 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #165 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #166 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #167 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #168 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #169 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #170 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #171 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #172 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #173 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #174 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #175 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #176 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #177 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #178 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #179 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #180 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #181 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #182 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #183 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #184 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #185 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #186 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #187 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #188 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #189 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #190 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #191 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #192 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #193 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #194 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #195 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #196 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #197 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #198 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #199 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #200 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #201 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #202 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #203 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #204 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #205 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #206 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #207 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #208 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #209 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #210 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #211 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #212 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #213 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #214 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #215 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #216 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #217 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #218 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #219 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #220 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #221 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #222 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #223 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #224 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #225 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #226 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #227 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #228 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #229 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #230 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #231 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #232 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #233 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #234 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #235 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #236 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #237 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #238 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #239 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #240 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #241 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+    #242 0x11f5c45 in slang::Expression::eval(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:334:12
+
+    #243 0x11c5a26 in slang::BindContext::eval(slang::Expression const&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/BindContext.cpp:181:33
+
+    #244 0xd47d53 in slang::ParameterSymbol::getValue() const /tmp/tmp.8mv1csjR86/slang-nightly/source/symbols/ParameterSymbols.cpp:143:63
+
+    #245 0x1307f7f in slang::NamedValueExpression::evalImpl(slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/MiscExpressions.cpp:175:51
+
+    #246 0x120bb65 in slang::ConstantValue (anonymous namespace)::EvalVisitor::visit<slang::NamedValueExpression>(slang::NamedValueExpression const&, slang::EvalContext&) /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:35:33
+
+    #247 0x1202db8 in decltype(auto) slang::Expression::visitExpression<slang::Expression const, (anonymous namespace)::EvalVisitor&, slang::EvalContext&>(slang::Expression const*, (anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:287:9
+
+    #248 0x11f5dd6 in decltype(auto) slang::Expression::visit<(anonymous namespace)::EvalVisitor&, slang::EvalContext&>((anonymous namespace)::EvalVisitor&, slang::EvalContext&) const /tmp/tmp.8mv1csjR86/slang-nightly/source/../include/slang/symbols/ASTVisitor.h:326:12
+
+
+
+SUMMARY: AddressSanitizer: stack-overflow /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Expression.cpp:466:47 in slang::Expression::bad() const
+
+==2408786==ABORTING
+

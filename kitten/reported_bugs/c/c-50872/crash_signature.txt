@@ -1,0 +1,3 @@
+llvm::APInt llvm::APInt::trunc(unsigned int) const: Assertion `width < BitWidth && "Invalid APInt Truncate request"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

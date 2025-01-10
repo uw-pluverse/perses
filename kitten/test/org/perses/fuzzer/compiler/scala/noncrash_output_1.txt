@@ -1,0 +1,5 @@
+-- [E008] Not Found Error: mutant.scala:1:15 ------------------------------------------------------------------------------------------
+1 |import scala . Exceptional
+  |               ^^^^^^^^^^^
+  |               value Exceptional is not a member of scala
+1 error found

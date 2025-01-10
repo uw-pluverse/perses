@@ -1,0 +1,326 @@
+error: free type alias without body
+
+ --> mutant.rs:4:1
+
+  |
+
+4 | / type PairCoupledTypes < T > : Trait < [ u32 ; {
+
+5 | | # [ no_mangle ]
+
+6 | | static FOO : usize = 42 ;
+
+7 | | 3
+
+8 | | } ] > ;
+
+  | |       ^ help: provide a definition for the type: `= <type>;`
+
+  | |_______|
+
+  | 
+
+
+
+error: bounds on `type`s in this context have no effect
+
+ --> mutant.rs:4:31
+
+  |
+
+4 |   type PairCoupledTypes < T > : Trait < [ u32 ; {
+
+  |  _______________________________^
+
+5 | | # [ no_mangle ]
+
+6 | | static FOO : usize = 42 ;
+
+7 | | 3
+
+8 | | } ] > ;
+
+  | |_____^
+
+
+
+error[E0405]: cannot find trait `Trait` in this scope
+
+ --> mutant.rs:4:31
+
+  |
+
+4 | type PairCoupledTypes < T > : Trait < [ u32 ; {
+
+  |                               ^^^^^ not found in this scope
+
+
+
+thread 'rustc' panicked at 'called `Option::unwrap()` on a `None` value', compiler/rustc_middle/src/hir/map/collector.rs:156:78
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.53.0-nightly (07e0e2ec2 2021-03-24) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+thread 'rustc' panicked at 'already borrowed: BorrowMutError', /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/compiler/rustc_data_structures/src/sync.rs:481:16
+
+stack backtrace:
+
+   0:     0x7fc15b58ef80 - std::backtrace_rs::backtrace::libunwind::trace::h4dee703919bfd40a
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/../../backtrace/src/backtrace/libunwind.rs:90:5
+
+   1:     0x7fc15b58ef80 - std::backtrace_rs::backtrace::trace_unsynchronized::h457e839f1a563e20
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/../../backtrace/src/backtrace/mod.rs:66:5
+
+   2:     0x7fc15b58ef80 - std::sys_common::backtrace::_print_fmt::h86a55fb30f8393c8
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/sys_common/backtrace.rs:67:5
+
+   3:     0x7fc15b58ef80 - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::h7b3d6cac46d277e1
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/sys_common/backtrace.rs:46:22
+
+   4:     0x7fc15b5fd8df - core::fmt::write::h127419eb46f2ecc9
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/core/src/fmt/mod.rs:1092:17
+
+   5:     0x7fc15b583505 - std::io::Write::write_fmt::h6010cfbb4726588b
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/io/mod.rs:1578:15
+
+   6:     0x7fc15b592cbb - std::sys_common::backtrace::_print::h79b4f9652330cc9d
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/sys_common/backtrace.rs:49:5
+
+   7:     0x7fc15b592cbb - std::sys_common::backtrace::print::h330bb326a76af8cf
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/sys_common/backtrace.rs:36:9
+
+   8:     0x7fc15b592cbb - std::panicking::default_hook::{{closure}}::heb6a42a7d50a472e
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/panicking.rs:208:50
+
+   9:     0x7fc15b592783 - std::panicking::default_hook::h17e521ba6d68d6e1
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/panicking.rs:225:9
+
+  10:     0x7fc15bd64f2b - rustc_driver::report_ice::ha40982d59fc75b99
+
+  11:     0x7fc15b5933d0 - std::panicking::rust_panic_with_hook::h70db735e3a6e70cb
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/panicking.rs:595:17
+
+  12:     0x7fc15b592fa7 - std::panicking::begin_panic_handler::{{closure}}::h777c71c8e5a7e25c
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/panicking.rs:497:13
+
+  13:     0x7fc15b58f43c - std::sys_common::backtrace::__rust_end_short_backtrace::h3e9bf30168899554
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/sys_common/backtrace.rs:141:18
+
+  14:     0x7fc15b592f09 - rust_begin_unwind
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/panicking.rs:493:5
+
+  15:     0x7fc15b559f31 - core::panicking::panic_fmt::h5322a082d19786c3
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/core/src/panicking.rs:92:14
+
+  16:     0x7fc15b559e23 - core::option::expect_none_failed::h354eaa93a51d71b8
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/core/src/option.rs:1329:5
+
+  17:     0x7fc15d2cc6b1 - rustc_query_system::query::plumbing::get_query_impl::h9285eb59969e22c8
+
+  18:     0x7fc15d32c43f - <rustc_query_impl::Queries as rustc_middle::ty::query::QueryEngine>::hir_owner::h8cf23765d3e4de6b
+
+  19:     0x7fc15d93acd9 - rustc_middle::hir::map::Map::find_entry::h29d0e05ce7362da9
+
+  20:     0x7fc15d93d781 - rustc_middle::hir::map::Map::opt_span::h0e633ec6695201db
+
+  21:     0x7fc15d934bb4 - core::ops::function::FnOnce::call_once::h8e8fc2e78b42ea40
+
+  22:     0x7fc15d344fef - rustc_query_system::dep_graph::graph::DepGraph<K>::with_task_impl::heb66790eab05aa9c
+
+  23:     0x7fc15d2eddc6 - rustc_query_system::query::plumbing::force_query_with_job::hd99723bfec38226e
+
+  24:     0x7fc15d2b71aa - rustc_query_system::query::plumbing::get_query_impl::h29f54ecbf531e372
+
+  25:     0x7fc15d32e2ca - <rustc_query_impl::Queries as rustc_middle::ty::query::QueryEngine>::def_span::hf8951f7e9bd1bf9c
+
+  26:     0x7fc15c372f40 - <rustc_span::def_id::DefId as rustc_query_impl::keys::Key>::default_span::h1c3c7dc090c3f014
+
+  27:     0x7fc15c372e68 - <rustc_span::def_id::LocalDefId as rustc_query_impl::keys::Key>::default_span::heda70f45b0543b34
+
+  28:     0x7fc15c4ee123 - rustc_query_impl::make_query::hir_owner::h3da83ab69db93eaa
+
+  29:     0x7fc15c58e777 - <core::iter::adapters::map::Map<I,F> as core::iter::traits::iterator::Iterator>::fold::hd1991837c2161eb2
+
+  30:     0x7fc15c56ad2e - <hashbrown::map::HashMap<K,V,S,A> as core::iter::traits::collect::Extend<(K,V)>>::extend::hd6666d2b93c8a6ad
+
+  31:     0x7fc15c2e0619 - rustc_query_system::query::plumbing::QueryState<D,K>::try_collect_active_jobs::h9e1d046a9d6f2a48
+
+  32:     0x7fc15c425215 - rustc_query_impl::Queries::try_collect_active_jobs::hde35c82843c1c977
+
+  33:     0x7fc15c4ece10 - <rustc_query_impl::plumbing::QueryCtxt as rustc_query_system::query::QueryContext>::try_collect_active_jobs::h074fbdf881b5d394
+
+  34:     0x7fc15c343efc - rustc_query_system::query::job::print_query_stack::hc8bd6fa9da6896ed
+
+  35:     0x7fc15be37018 - rustc_interface::interface::try_print_query_stack::h52edfe36792d8caa
+
+  36:     0x7fc15bd65338 - rustc_driver::report_ice::ha40982d59fc75b99
+
+  37:     0x7fc15b5933d0 - std::panicking::rust_panic_with_hook::h70db735e3a6e70cb
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/panicking.rs:595:17
+
+  38:     0x7fc15b592f77 - std::panicking::begin_panic_handler::{{closure}}::h777c71c8e5a7e25c
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/panicking.rs:495:13
+
+  39:     0x7fc15b58f43c - std::sys_common::backtrace::__rust_end_short_backtrace::h3e9bf30168899554
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/sys_common/backtrace.rs:141:18
+
+  40:     0x7fc15b592f09 - rust_begin_unwind
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/panicking.rs:493:5
+
+  41:     0x7fc15b559f31 - core::panicking::panic_fmt::h5322a082d19786c3
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/core/src/panicking.rs:92:14
+
+  42:     0x7fc15b559e7d - core::panicking::panic::haebb15b6842d6229
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/core/src/panicking.rs:50:5
+
+  43:     0x7fc15d8d38f3 - rustc_middle::hir::map::collector::NodeCollector::finalize_and_compute_crate_hash::ha4f7aa4c32ef1fb5
+
+  44:     0x7fc15e2e6e48 - rustc_middle::hir::map::index_hir::h8d13710fbf6ecbc7
+
+  45:     0x7fc15de58f75 - rustc_query_system::dep_graph::graph::DepGraph<K>::with_task_impl::hb443d6bb581e91b6
+
+  46:     0x7fc15deb5f17 - rustc_data_structures::stack::ensure_sufficient_stack::he0c6c8cfc8bd647a
+
+  47:     0x7fc15dd8c5c1 - rustc_query_system::query::plumbing::force_query_with_job::h961a1a8f48ff034b
+
+  48:     0x7fc15dd3f9af - rustc_query_system::query::plumbing::get_query_impl::h5cd26487eff2131e
+
+  49:     0x7fc15de325cf - <rustc_query_impl::Queries as rustc_middle::ty::query::QueryEngine>::index_hir::hf2b2ac559a14a0d9
+
+  50:     0x7fc15d935487 - core::ops::function::FnOnce::call_once::hff88764e303a68c4
+
+  51:     0x7fc15d3420b5 - rustc_query_system::dep_graph::graph::DepGraph<K>::with_task_impl::hc0460b29df8a668f
+
+  52:     0x7fc15d2e87ee - rustc_query_system::query::plumbing::force_query_with_job::h8d24115ee3a536a8
+
+  53:     0x7fc15d2cc390 - rustc_query_system::query::plumbing::get_query_impl::h9285eb59969e22c8
+
+  54:     0x7fc15d32c43f - <rustc_query_impl::Queries as rustc_middle::ty::query::QueryEngine>::hir_owner::h8cf23765d3e4de6b
+
+  55:     0x7fc15d93acd9 - rustc_middle::hir::map::Map::find_entry::h29d0e05ce7362da9
+
+  56:     0x7fc15d93b136 - <rustc_middle::hir::map::Map as rustc_hir::intravisit::Map>::item::h5a1c6a1d862795bc
+
+  57:     0x7fc15d3cb2c0 - rustc_middle::hir::map::Map::visit_item_likes_in_module::hf01ac21b956183d6
+
+  58:     0x7fc15df15294 - rustc_passes::hir_id_validator::check_crate::hb29522cb7117c68c
+
+  59:     0x7fc15d9def76 - rustc_interface::passes::analysis::h84e230aa18168bec
+
+  60:     0x7fc15de566b5 - rustc_query_system::dep_graph::graph::DepGraph<K>::with_task_impl::ha9ecb0a4a5f74d0a
+
+  61:     0x7fc15deb8b87 - rustc_data_structures::stack::ensure_sufficient_stack::hfc73cb57dd5c4995
+
+  62:     0x7fc15dd83161 - rustc_query_system::query::plumbing::force_query_with_job::h3b03867f47f56f3f
+
+  63:     0x7fc15dd59eff - rustc_query_system::query::plumbing::get_query_impl::hb5cdf9a8bb6380d7
+
+  64:     0x7fc15de3272f - <rustc_query_impl::Queries as rustc_middle::ty::query::QueryEngine>::analysis::he7fb436d5ea44844
+
+  65:     0x7fc15d9cca6b - rustc_interface::passes::QueryContext::enter::h6632cc7bc285eb19
+
+  66:     0x7fc15d998425 - rustc_interface::queries::<impl rustc_interface::interface::Compiler>::enter::h2731ac3c02105c7c
+
+  67:     0x7fc15d9cd071 - rustc_span::with_source_map::h94d38a1c3089ae35
+
+  68:     0x7fc15d9993ee - rustc_interface::interface::create_compiler_and_run::h2bc2789fb7dc8d5b
+
+  69:     0x7fc15d993b78 - scoped_tls::ScopedKey<T>::set::hc4c30e2561747f9c
+
+  70:     0x7fc15d9997c4 - std::sys_common::backtrace::__rust_begin_short_backtrace::h904e8f4f3fa6a302
+
+  71:     0x7fc15d9bb0f5 - core::ops::function::FnOnce::call_once{{vtable.shim}}::he1a228660be11f81
+
+  72:     0x7fc15b5a2cf3 - <alloc::boxed::Box<F,A> as core::ops::function::FnOnce<Args>>::call_once::h7f7bdfc757a1add0
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/alloc/src/boxed.rs:1546:9
+
+  73:     0x7fc15b5a2cf3 - <alloc::boxed::Box<F,A> as core::ops::function::FnOnce<Args>>::call_once::ha294ad0fb99e9b3a
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/alloc/src/boxed.rs:1546:9
+
+  74:     0x7fc15b5a2cf3 - std::sys::unix::thread::Thread::new::thread_start::h4614854ae73cd6b0
+
+                               at /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/sys/unix/thread.rs:71:17
+
+  75:     0x7fc15b4cd609 - start_thread
+
+  76:     0x7fc15b3e1293 - clone
+
+  77:                0x0 - <unknown>
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.53.0-nightly (07e0e2ec2 2021-03-24) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+end of query stack
+
+thread panicked while panicking. aborting.
+
+timeout: the monitored command dumped core
+

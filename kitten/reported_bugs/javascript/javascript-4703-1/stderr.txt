@@ -1,0 +1,2 @@
+/tmp/tmp.F2MvT4tsOz/jerryscript/jerry-core/vm/vm.c:3731:77: runtime error: left shift of negative value -1
+

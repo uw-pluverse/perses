@@ -1,0 +1,468 @@
+mutant.c:20:5: warning: declaration of built-in function ‘abs’ without a prototype; expected ‘int(int)’ [-Wbuiltin-declaration-mismatch]
+
+   20 | int abs ( ) ;
+
+      |     ^~~
+
+mutant.c: In function ‘test_integer_conversion_abs’:
+
+mutant.c:25:5: warning: taking the absolute value of unsigned type ‘unsigned char’ has no effect [-Wabsolute-value]
+
+   25 | i = abs ( uc ) ;
+
+      |     ^~~
+
+mutant.c:27:5: warning: taking the absolute value of unsigned type ‘short unsigned int’ has no effect [-Wabsolute-value]
+
+   27 | i = abs ( usi ) ;
+
+      |     ^~~
+
+mutant.c:29:5: warning: taking the absolute value of unsigned type ‘unsigned int’ has no effect [-Wabsolute-value]
+
+   29 | i = abs ( ui ) ;
+
+      |     ^~~
+
+mutant.c:29:11: warning: ‘abs’ argument 1 type is ‘unsigned int’ where ‘int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   29 | i = abs ( ui ) ;
+
+      |           ^~
+
+mutant.c:20:5: note: built-in ‘abs’ declared here
+
+   20 | int abs ( ) ;
+
+      |     ^~~
+
+mutant.c:30:5: warning: taking the absolute value of unsigned type ‘unsigned int’ has no effect [-Wabsolute-value]
+
+   30 | i = __builtin_abs ( ui ) ;
+
+      |     ^~~~~~~~~~~~~
+
+mutant.c:31:11: warning: ‘abs’ argument 1 type is ‘long int’ where ‘int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   31 | i = abs ( li ) ;
+
+      |           ^~
+
+mutant.c:20:5: note: built-in ‘abs’ declared here
+
+   20 | int abs ( ) ;
+
+      |     ^~~
+
+mutant.c:32:5: warning: taking the absolute value of unsigned type ‘long unsigned int’ has no effect [-Wabsolute-value]
+
+   32 | i = abs ( uli ) ;
+
+      |     ^~~
+
+mutant.c:32:11: warning: ‘abs’ argument 1 type is ‘long unsigned int’ where ‘int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   32 | i = abs ( uli ) ;
+
+      |           ^~~
+
+mutant.c:20:5: note: built-in ‘abs’ declared here
+
+   20 | int abs ( ) ;
+
+      |     ^~~
+
+mutant.c:34:5: warning: taking the absolute value of unsigned type ‘enum E’ has no effect [-Wabsolute-value]
+
+   34 | i = abs ( e ) ;
+
+      |     ^~~
+
+mutant.c:35:5: warning: using integer absolute value function ‘abs’ when argument is of floating-point type ‘double’ [-Wabsolute-value]
+
+   35 | i = abs ( - 1.0 ) ;
+
+      |     ^~~
+
+mutant.c:35:11: warning: ‘abs’ argument 1 type is ‘double’ where ‘int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   35 | i = abs ( - 1.0 ) ;
+
+      |           ^~~~~
+
+mutant.c:20:5: note: built-in ‘abs’ declared here
+
+   20 | int abs ( ) ;
+
+      |     ^~~
+
+mutant.c:36:5: warning: using integer absolute value function ‘abs’ when argument is of floating-point type ‘float’ [-Wabsolute-value]
+
+   36 | i = abs ( f ) ;
+
+      |     ^~~
+
+mutant.c:36:11: warning: ‘abs’ argument 1 promotes to ‘double’ where ‘int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   36 | i = abs ( f ) ;
+
+      |           ^
+
+mutant.c:20:5: note: built-in ‘abs’ declared here
+
+   20 | int abs ( ) ;
+
+      |     ^~~
+
+mutant.c:37:5: warning: using integer absolute value function ‘abs’ when argument is of floating-point type ‘long double’ [-Wabsolute-value]
+
+   37 | i = abs ( ld ) ;
+
+      |     ^~~
+
+mutant.c:37:11: warning: ‘abs’ argument 1 type is ‘long double’ where ‘int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   37 | i = abs ( ld ) ;
+
+      |           ^~
+
+mutant.c:20:5: note: built-in ‘abs’ declared here
+
+   20 | int abs ( ) ;
+
+      |     ^~~
+
+mutant.c:38:5: warning: using integer absolute value function ‘__builtin_abs’ when argument is of floating-point type ‘long double’ [-Wabsolute-value]
+
+   38 | i = __builtin_abs ( ld ) ;
+
+      |     ^~~~~~~~~~~~~
+
+mutant.c: At top level:
+
+mutant.c:40:15: warning: declaration of built-in function ‘memset’ without a prototype; expected ‘void *(void *, int,  long unsigned int)’ [-Wbuiltin-declaration-mismatch]
+
+   40 | extern void * memset ( ) ;
+
+      |               ^~~~~~
+
+mutant.c: In function ‘test_integer_conversion_memset’:
+
+mutant.c:44:21: warning: ‘memset’ argument 3 promotes to ‘int’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   44 | memset ( d , '\0' , c ) ;
+
+      |                     ^
+
+mutant.c:40:15: note: built-in ‘memset’ declared here
+
+   40 | extern void * memset ( ) ;
+
+      |               ^~~~~~
+
+mutant.c:46:18: warning: ‘memset’ argument 3 promotes to ‘ptrdiff_t’ {aka ‘long int’} where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   46 | memset ( d , 0 , diffi ) ;
+
+      |                  ^~~~~
+
+mutant.c:40:15: note: built-in ‘memset’ declared here
+
+   40 | extern void * memset ( ) ;
+
+      |               ^~~~~~
+
+mutant.c:47:18: warning: ‘memset’ argument 3 type is ‘double’ where ‘long unsigned int’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   47 | memset ( d , 0 , 2.0 ) ;
+
+      |                  ^~~
+
+mutant.c:40:15: note: built-in ‘memset’ declared here
+
+   40 | extern void * memset ( ) ;
+
+      |               ^~~~~~
+
+mutant.c: At top level:
+
+mutant.c:50:8: warning: declaration of built-in function ‘fabs’ without a prototype; expected ‘double(double)’ [-Wbuiltin-declaration-mismatch]
+
+   50 | double fabs ( ) ;
+
+      |        ^~~~
+
+mutant.c:51:7: warning: conflicting types for built-in function ‘fabsf’; expected ‘float(float)’ [-Wbuiltin-declaration-mismatch]
+
+   51 | float fabsf ( ) ;
+
+      |       ^~~~~
+
+mutant.c:1:1: note: ‘fabsf’ is declared in header ‘<math.h>’
+
+  +++ |+#include <math.h>
+
+    1 | typedef __PTRDIFF_TYPE__ ptrdiff_t ;
+
+mutant.c:52:13: warning: declaration of built-in function ‘fabsl’ without a prototype; expected ‘long double(long double)’ [-Wbuiltin-declaration-mismatch]
+
+   52 | long double fabsl ( ) ;
+
+      |             ^~~~~
+
+mutant.c: In function ‘test_real_conversion_fabs’:
+
+mutant.c:55:5: warning: using floating-point absolute value function ‘fabs’ when argument is of integer type ‘char’ [-Wabsolute-value]
+
+   55 | d = fabs ( c ) ;
+
+      |     ^~~~
+
+mutant.c:55:12: warning: ‘fabs’ argument 1 promotes to ‘int’ where ‘double’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   55 | d = fabs ( c ) ;
+
+      |            ^
+
+mutant.c:50:8: note: built-in ‘fabs’ declared here
+
+   50 | double fabs ( ) ;
+
+      |        ^~~~
+
+mutant.c:56:5: warning: using floating-point absolute value function ‘fabs’ when argument is of integer type ‘int’ [-Wabsolute-value]
+
+   56 | d = fabs ( i ) ;
+
+      |     ^~~~
+
+mutant.c:56:12: warning: ‘fabs’ argument 1 type is ‘int’ where ‘double’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   56 | d = fabs ( i ) ;
+
+      |            ^
+
+mutant.c:50:8: note: built-in ‘fabs’ declared here
+
+   50 | double fabs ( ) ;
+
+      |        ^~~~
+
+mutant.c:57:5: warning: using floating-point absolute value function ‘fabs’ when argument is of integer type ‘long int’ [-Wabsolute-value]
+
+   57 | d = fabs ( li ) ;
+
+      |     ^~~~
+
+mutant.c:57:12: warning: ‘fabs’ argument 1 type is ‘long int’ where ‘double’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   57 | d = fabs ( li ) ;
+
+      |            ^~
+
+mutant.c:50:8: note: built-in ‘fabs’ declared here
+
+   50 | double fabs ( ) ;
+
+      |        ^~~~
+
+mutant.c:58:5: warning: using floating-point absolute value function ‘fabs’ when argument is of integer type ‘int’ [-Wabsolute-value]
+
+   58 | d = fabs ( e0 ) ;
+
+      |     ^~~~
+
+mutant.c:58:12: warning: ‘fabs’ argument 1 type is ‘int’ where ‘double’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   58 | d = fabs ( e0 ) ;
+
+      |            ^~
+
+mutant.c:50:8: note: built-in ‘fabs’ declared here
+
+   50 | double fabs ( ) ;
+
+      |        ^~~~
+
+mutant.c:59:5: warning: using floating-point absolute value function ‘fabs’ when argument is of integer type ‘enum E’ [-Wabsolute-value]
+
+   59 | d = fabs ( e ) ;
+
+      |     ^~~~
+
+mutant.c:59:12: warning: ‘fabs’ argument 1 type is ‘enum E’ where ‘double’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   59 | d = fabs ( e ) ;
+
+      |            ^
+
+mutant.c:50:8: note: built-in ‘fabs’ declared here
+
+   50 | double fabs ( ) ;
+
+      |        ^~~~
+
+mutant.c:61:12: warning: ‘fabs’ argument 1 type is ‘long double’ where ‘double’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   61 | d = fabs ( ld ) ;
+
+      |            ^~
+
+mutant.c:50:8: note: built-in ‘fabs’ declared here
+
+   50 | double fabs ( ) ;
+
+      |        ^~~~
+
+mutant.c:63:5: warning: using floating-point absolute value function ‘fabsl’ when argument is of integer type ‘char’ [-Wabsolute-value]
+
+   63 | d = fabsl ( c ) ;
+
+      |     ^~~~~
+
+mutant.c:63:13: warning: ‘fabsl’ argument 1 promotes to ‘int’ where ‘long double’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   63 | d = fabsl ( c ) ;
+
+      |             ^
+
+mutant.c:52:13: note: built-in ‘fabsl’ declared here
+
+   52 | long double fabsl ( ) ;
+
+      |             ^~~~~
+
+mutant.c:64:13: warning: ‘fabsl’ argument 1 promotes to ‘double’ where ‘long double’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   64 | d = fabsl ( f ) ;
+
+      |             ^
+
+mutant.c:52:13: note: built-in ‘fabsl’ declared here
+
+   52 | long double fabsl ( ) ;
+
+      |             ^~~~~
+
+mutant.c: At top level:
+
+mutant.c:67:8: warning: declaration of built-in function ‘pow’ without a prototype; expected ‘double(double,  double)’ [-Wbuiltin-declaration-mismatch]
+
+   67 | double pow ( ) ;
+
+      |        ^~~
+
+mutant.c: In function ‘test_real_conversion_pow’:
+
+mutant.c:73:11: warning: ‘pow’ argument 1 type is ‘int’ where ‘double’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   73 | d = pow ( 2 , 3.0 ) ;
+
+      |           ^
+
+mutant.c:67:8: note: built-in ‘pow’ declared here
+
+   67 | double pow ( ) ;
+
+      |        ^~~
+
+mutant.c:74:17: warning: ‘pow’ argument 2 type is ‘int’ where ‘double’ is expected in a call to built-in function declared without prototype [-Wbuiltin-declaration-mismatch]
+
+   74 | d = pow ( 3.0 , 2 ) ;
+
+      |                 ^
+
+mutant.c:67:8: note: built-in ‘pow’ declared here
+
+   67 | double pow ( ) ;
+
+      |        ^~~
+
+mutant.c: At top level:
+
+mutant.c:76:15: warning: declaration of built-in function ‘memcpy’ without a prototype; expected ‘void *(void *, const void *, long unsigned int)’ [-Wbuiltin-declaration-mismatch]
+
+   76 | extern void * memcpy ( ) ;
+
+      |               ^~~~~~
+
+mutant.c: In function ‘test_qual_conversion_memcpy’:
+
+mutant.c:80:10: warning: passing argument 1 of ‘memcpy’ discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+
+   80 | memcpy ( s , d , sizeof ( int ) ) ;
+
+      |          ^
+
+mutant.c:76:15: note: expected ‘void *’ but argument is of type ‘const void *’
+
+   76 | extern void * memcpy ( ) ;
+
+      |               ^~~~~~
+
+during RTL pass: expand
+
+mutant.c: In function ‘test_integer_conversion_memset’:
+
+mutant.c:44:1: internal compiler error: in try_store_by_multiple_pieces, at builtins.c:6739
+
+   44 | memset ( d , '\0' , c ) ;
+
+      | ^~~~~~~~~~~~~~~~~~~~~~~
+
+0x681192 try_store_by_multiple_pieces(rtx_def*, rtx_def*, unsigned int, unsigned long, unsigned long, rtx_def*, char, unsigned int)
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/builtins.c:6739
+
+0xb7106d clear_storage_hints(rtx_def*, rtx_def*, block_op_methods, unsigned int, long, unsigned long, unsigned long, unsigned long, unsigned int)
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/expr.c:3201
+
+0xa08952 expand_builtin_memset_args
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/builtins.c:6969
+
+0xa1abae expand_builtin_memset
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/builtins.c:6685
+
+0xa1abae expand_builtin(tree_node*, rtx_def*, rtx_def*, machine_mode, int)
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/builtins.c:10187
+
+0xb6ae3c expand_expr_real_1(tree_node*, rtx_def*, machine_mode, expand_modifier, rtx_def**, bool)
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/expr.c:11429
+
+0xa44ef9 expand_expr
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/expr.h:301
+
+0xa44ef9 expand_call_stmt
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/cfgexpand.c:2846
+
+0xa44ef9 expand_gimple_stmt_1
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/cfgexpand.c:3850
+
+0xa44ef9 expand_gimple_stmt
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/cfgexpand.c:4014
+
+0xa4a859 expand_gimple_basic_block
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/cfgexpand.c:6056
+
+0xa4c72f execute
+
+	/tmp/tmp.zS0RT0UjCW-gcc-builder/gcc/gcc/cfgexpand.c:6782
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

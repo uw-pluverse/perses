@@ -1,0 +1,280 @@
+mutant.c:20:1: warning: missing initializer for field ‘i’ of ‘struct <anonymous>’ [-Wmissing-field-initializers]
+
+   20 | B B1 = { 0.1 , { 1 , 2 , 3 } } ;
+
+      | ^
+
+mutant.c:4:509: note: ‘i’ declared here
+
+    4 | typedef struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; int i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } B ;
+
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^
+
+mutant.c:20:8: warning: missing braces around initializer [-Wmissing-braces]
+
+   20 | B B1 = { 0.1 , { 1 , 2 , 3 } } ;
+
+      |        ^
+
+      |                  {   {{  {{}}}}}
+
+mutant.c:20:8: warning: missing braces around initializer [-Wmissing-braces]
+
+   20 | B B1 = { 0.1 , { 1 , 2 , 3 } } ;
+
+      |        ^
+
+      |                  {   {{  {{}}}}}
+
+mutant.c:21:1: warning: missing initializer for field ‘i’ of ‘struct <anonymous>’ [-Wmissing-field-initializers]
+
+   21 | B B2 = { 0.2 , { 5 , 4 , 3 } } ;
+
+      | ^
+
+mutant.c:4:509: note: ‘i’ declared here
+
+    4 | typedef struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; struct { double d ; int i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } i [ 3 ] ; } B ;
+
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^
+
+mutant.c:21:8: warning: missing braces around initializer [-Wmissing-braces]
+
+   21 | B B2 = { 0.2 , { 5 , 4 , 3 } } ;
+
+      |        ^
+
+      |                  {   {{  {{}}}}}
+
+mutant.c:21:8: warning: missing braces around initializer [-Wmissing-braces]
+
+   21 | B B2 = { 0.2 , { 5 , 4 , 3 } } ;
+
+      |        ^
+
+      |                  {   {{  {{}}}}}
+
+mutant.c: In function ‘f’:
+
+mutant.c:31:46: warning: format ‘%d’ expects argument of type ‘int’, but argument 4 has type ‘struct <anonymous>’ [-Wformat=]
+
+   31 | sprintf ( out , "X f(B,char,double,B):({%g,{%d,%d,%d}},'%c',%g,{%g,{%d,%d,%d}})" ,
+
+      |                                             ~^
+
+      |                                              |
+
+      |                                              int
+
+   32 | a . d , a . i [ 0 ] , a . i [ 1 ] , a . i [ 2 ] , b , c , d . d , d . i [ 0 ] , d . i [ 1 ] , d . i [ 2 ] ) ;
+
+      |         ~~~~~~~~~~~                           
+
+      |               |
+
+      |               struct <anonymous>
+
+mutant.c:31:49: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘struct <anonymous>’ [-Wformat=]
+
+   31 | sprintf ( out , "X f(B,char,double,B):({%g,{%d,%d,%d}},'%c',%g,{%g,{%d,%d,%d}})" ,
+
+      |                                                ~^
+
+      |                                                 |
+
+      |                                                 int
+
+   32 | a . d , a . i [ 0 ] , a . i [ 1 ] , a . i [ 2 ] , b , c , d . d , d . i [ 0 ] , d . i [ 1 ] , d . i [ 2 ] ) ;
+
+      |                       ~~~~~~~~~~~                
+
+      |                             |
+
+      |                             struct <anonymous>
+
+mutant.c:31:52: warning: format ‘%d’ expects argument of type ‘int’, but argument 6 has type ‘struct <anonymous>’ [-Wformat=]
+
+   31 | sprintf ( out , "X f(B,char,double,B):({%g,{%d,%d,%d}},'%c',%g,{%g,{%d,%d,%d}})" ,
+
+      |                                                   ~^
+
+      |                                                    |
+
+      |                                                    int
+
+   32 | a . d , a . i [ 0 ] , a . i [ 1 ] , a . i [ 2 ] , b , c , d . d , d . i [ 0 ] , d . i [ 1 ] , d . i [ 2 ] ) ;
+
+      |                                     ~~~~~~~~~~~     
+
+      |                                           |
+
+      |                                           struct <anonymous>
+
+mutant.c:31:70: warning: format ‘%d’ expects argument of type ‘int’, but argument 10 has type ‘struct <anonymous>’ [-Wformat=]
+
+   31 | sprintf ( out , "X f(B,char,double,B):({%g,{%d,%d,%d}},'%c',%g,{%g,{%d,%d,%d}})" ,
+
+      |                                                                     ~^
+
+      |                                                                      |
+
+      |                                                                      int
+
+   32 | a . d , a . i [ 0 ] , a . i [ 1 ] , a . i [ 2 ] , b , c , d . d , d . i [ 0 ] , d . i [ 1 ] , d . i [ 2 ] ) ;
+
+      |                                                                   ~~~~~~~~~~~
+
+      |                                                                         |
+
+      |                                                                         struct <anonymous>
+
+mutant.c:31:73: warning: format ‘%d’ expects argument of type ‘int’, but argument 11 has type ‘struct <anonymous>’ [-Wformat=]
+
+   31 | sprintf ( out , "X f(B,char,double,B):({%g,{%d,%d,%d}},'%c',%g,{%g,{%d,%d,%d}})" ,
+
+      |                                                                        ~^
+
+      |                                                                         |
+
+      |                                                                         int
+
+   32 | a . d , a . i [ 0 ] , a . i [ 1 ] , a . i [ 2 ] , b , c , d . d , d . i [ 0 ] , d . i [ 1 ] , d . i [ 2 ] ) ;
+
+      |                                                                                 ~~~~~~~~~~~
+
+      |                                                                                       |
+
+      |                                                                                       struct <anonymous>
+
+mutant.c:31:76: warning: format ‘%d’ expects argument of type ‘int’, but argument 12 has type ‘struct <anonymous>’ [-Wformat=]
+
+   31 | sprintf ( out , "X f(B,char,double,B):({%g,{%d,%d,%d}},'%c',%g,{%g,{%d,%d,%d}})" ,
+
+      |                                                                           ~^
+
+      |                                                                            |
+
+      |                                                                            int
+
+   32 | a . d , a . i [ 0 ] , a . i [ 1 ] , a . i [ 2 ] , b , c , d . d , d . i [ 0 ] , d . i [ 1 ] , d . i [ 2 ] ) ;
+
+      |                                                                                               ~~~~~~~~~~~
+
+      |                                                                                                     |
+
+      |                                                                                                     struct <anonymous>
+
+mutant.c: At top level:
+
+mutant.c:36:1: warning: return type defaults to ‘int’ [-Wimplicit-int]
+
+   36 | main ( )
+
+      | ^~~~
+
+mutant.c: In function ‘main’:
+
+mutant.c:45:1: warning: implicit declaration of function ‘abort’ [-Wimplicit-function-declaration]
+
+   45 | abort ( ) ;
+
+      | ^~~~~
+
+mutant.c:3:1: note: include ‘<stdlib.h>’ or provide a declaration of ‘abort’
+
+    2 | #include <string.h>
+
+  +++ |+#include <stdlib.h>
+
+    3 | char out [ 100 ] ;
+
+mutant.c:45:1: warning: incompatible implicit declaration of built-in function ‘abort’ [-Wbuiltin-declaration-mismatch]
+
+   45 | abort ( ) ;
+
+      | ^~~~~
+
+mutant.c:45:1: note: include ‘<stdlib.h>’ or provide a declaration of ‘abort’
+
+mutant.c:46:1: warning: implicit declaration of function ‘exit’ [-Wimplicit-function-declaration]
+
+   46 | exit ( 0 ) ;
+
+      | ^~~~
+
+mutant.c:46:1: note: include ‘<stdlib.h>’ or provide a declaration of ‘exit’
+
+mutant.c:46:1: warning: incompatible implicit declaration of built-in function ‘exit’ [-Wbuiltin-declaration-mismatch]
+
+mutant.c:46:1: note: include ‘<stdlib.h>’ or provide a declaration of ‘exit’
+
+mutant.c: In function ‘f’:
+
+mutant.c:31:1: sorry, unimplemented: passing too large argument on stack
+
+   31 | sprintf ( out , "X f(B,char,double,B):({%g,{%d,%d,%d}},'%c',%g,{%g,{%d,%d,%d}})" ,
+
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   32 | a . d , a . i [ 0 ] , a . i [ 1 ] , a . i [ 2 ] , b , c , d . d , d . i [ 0 ] , d . i [ 1 ] , d . i [ 2 ] ) ;
+
+      | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c:31:1: sorry, unimplemented: passing too large argument on stack
+
+mutant.c:31:1: sorry, unimplemented: passing too large argument on stack
+
+mutant.c:31:1: sorry, unimplemented: passing too large argument on stack
+
+mutant.c:31:1: sorry, unimplemented: passing too large argument on stack
+
+mutant.c:31:1: sorry, unimplemented: passing too large argument on stack
+
+during RTL pass: expand
+
+mutant.c:31:1: internal compiler error: in expand_call, at calls.c:4984
+
+0x6991cd expand_call(tree_node*, rtx_def*, int)
+
+	/tmp/tmp.OHHYG1e72I-gcc-builder/gcc/gcc/calls.c:4984
+
+0xa3155d expand_builtin(tree_node*, rtx_def*, rtx_def*, machine_mode, int)
+
+	/tmp/tmp.OHHYG1e72I-gcc-builder/gcc/gcc/builtins.c:11078
+
+0xb857ac expand_expr_real_1(tree_node*, rtx_def*, machine_mode, expand_modifier, rtx_def**, bool)
+
+	/tmp/tmp.OHHYG1e72I-gcc-builder/gcc/gcc/expr.c:11440
+
+0xa5d6df expand_expr
+
+	/tmp/tmp.OHHYG1e72I-gcc-builder/gcc/gcc/expr.h:301
+
+0xa5d6df expand_call_stmt
+
+	/tmp/tmp.OHHYG1e72I-gcc-builder/gcc/gcc/cfgexpand.c:2846
+
+0xa5d6df expand_gimple_stmt_1
+
+	/tmp/tmp.OHHYG1e72I-gcc-builder/gcc/gcc/cfgexpand.c:3879
+
+0xa5d6df expand_gimple_stmt
+
+	/tmp/tmp.OHHYG1e72I-gcc-builder/gcc/gcc/cfgexpand.c:4043
+
+0xa62fe9 expand_gimple_basic_block
+
+	/tmp/tmp.OHHYG1e72I-gcc-builder/gcc/gcc/cfgexpand.c:6085
+
+0xa64ebf execute
+
+	/tmp/tmp.OHHYG1e72I-gcc-builder/gcc/gcc/cfgexpand.c:6811
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

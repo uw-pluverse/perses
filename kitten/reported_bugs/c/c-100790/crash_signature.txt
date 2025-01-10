@@ -1,0 +1,4 @@
+internal compiler error: in verify_range, at value-range.cc
+irange::verify_range()
+fold_using_range::range_of_builtin_call(irange&, gcall*, fur_source&)
+fold_using_range::range_of_call(irange&, gcall*, fur_source&)

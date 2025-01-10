@@ -1,0 +1,2 @@
+clang::TypeInfo clang::ASTContext::getTypeInfoImpl(const clang::Type*) const: Assertion `llvm::isPowerOf2_32(Align) && "Alignment must be power of 2"' failed.
+PLEASE submit a bug report to

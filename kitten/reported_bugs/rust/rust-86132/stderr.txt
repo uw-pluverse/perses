@@ -1,0 +1,404 @@
+error[E0080]: it is undefined behavior to use this value
+
+  --> mutant.rs:15:1
+
+   |
+
+15 | const STR_TOO_LONG : & str = unsafe { mem :: transmute ( ( & 42u8 , 999usize ) ) } ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ type validation failed: encountered a dangling reference (going beyond the bounds of its allocation)
+
+   |
+
+   = note: The rules on what exactly is undefined behavior aren't clear, so this check might be overzealous. Please open an issue on the rustc repository if you believe it should not be considered undefined behavior.
+
+   = note: the raw bytes of the constant (size: 16, align: 8) {
+
+               ╾───────alloc7────────╼ e7 03 00 00 00 00 00 00 │ ╾──────╼........
+
+           }
+
+
+
+error[E0080]: it is undefined behavior to use this value
+
+  --> mutant.rs:16:1
+
+   |
+
+16 | const NESTED_STR_MUCH_TOO_LONG : ( & str , ) = ( unsafe { mem :: transmute ( ( & 42 , usize :: MAX ) ) } , ) ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ type validation failed: encountered invalid reference metadata: slice is bigger than largest supported object at .0
+
+   |
+
+   = note: The rules on what exactly is undefined behavior aren't clear, so this check might be overzealous. Please open an issue on the rustc repository if you believe it should not be considered undefined behavior.
+
+   = note: the raw bytes of the constant (size: 16, align: 8) {
+
+               ╾───────alloc13───────╼ ff ff ff ff ff ff ff ff │ ╾──────╼........
+
+           }
+
+
+
+error[E0080]: it is undefined behavior to use this value
+
+  --> mutant.rs:17:1
+
+   |
+
+17 | const STR_LENGTH_PTR : & str = unsafe { mem :: transmute ( ( & 42u8 , & 3 ) ) } ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ type validation failed: encountered non-integer slice length in wide pointer
+
+   |
+
+   = note: The rules on what exactly is undefined behavior aren't clear, so this check might be overzealous. Please open an issue on the rustc repository if you believe it should not be considered undefined behavior.
+
+   = note: the raw bytes of the constant (size: 16, align: 8) {
+
+               ╾───────alloc19───────╼ ╾───────alloc21───────╼ │ ╾──────╼╾──────╼
+
+           }
+
+
+
+error[E0080]: it is undefined behavior to use this value
+
+  --> mutant.rs:18:1
+
+   |
+
+18 | const MY_STR_LENGTH_PTR : & MyStr = unsafe { mem :: transmute ( ( & 42u8 , & 3 ) ) } ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ type validation failed: encountered non-integer slice length in wide pointer
+
+   |
+
+   = note: The rules on what exactly is undefined behavior aren't clear, so this check might be overzealous. Please open an issue on the rustc repository if you believe it should not be considered undefined behavior.
+
+   = note: the raw bytes of the constant (size: 16, align: 8) {
+
+               ╾───────alloc26───────╼ ╾───────alloc28───────╼ │ ╾──────╼╾──────╼
+
+           }
+
+
+
+error[E0080]: it is undefined behavior to use this value
+
+  --> mutant.rs:19:1
+
+   |
+
+19 | const MY_STR_MUCH_TOO_LONG : & MyStr = unsafe { mem :: transmute ( ( & 42u8 , usize :: MAX ) ) } ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ type validation failed: encountered invalid reference metadata: slice is bigger than largest supported object
+
+   |
+
+   = note: The rules on what exactly is undefined behavior aren't clear, so this check might be overzealous. Please open an issue on the rustc repository if you believe it should not be considered undefined behavior.
+
+   = note: the raw bytes of the constant (size: 16, align: 8) {
+
+               ╾───────alloc33───────╼ ff ff ff ff ff ff ff ff │ ╾──────╼........
+
+           }
+
+
+
+error[E0080]: it is undefined behavior to use this value
+
+  --> mutant.rs:20:1
+
+   |
+
+20 | const STR_NO_INIT : & str = unsafe { mem :: transmute :: < & [ _ ] , _ > ( & [ MaybeUninit :: < u8 > { uninit : ( ) } ] ) } ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ type validation failed: encountered uninitialized data in `str` at .<deref>
+
+   |
+
+   = note: The rules on what exactly is undefined behavior aren't clear, so this check might be overzealous. Please open an issue on the rustc repository if you believe it should not be considered undefined behavior.
+
+   = note: the raw bytes of the constant (size: 16, align: 8) {
+
+               ╾───────alloc39───────╼ 01 00 00 00 00 00 00 00 │ ╾──────╼........
+
+           }
+
+
+
+error[E0080]: it is undefined behavior to use this value
+
+  --> mutant.rs:21:1
+
+   |
+
+21 | const MYSTR_NO_INIT : & MyStr = unsafe { mem :: transmute :: < & [ _ ] , _ > ( & [ MaybeUninit :: < u8 > { uninit : ( ) } ] ) } ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ type validation failed: encountered uninitialized data in `str` at .<deref>.0
+
+   |
+
+   = note: The rules on what exactly is undefined behavior aren't clear, so this check might be overzealous. Please open an issue on the rustc repository if you believe it should not be considered undefined behavior.
+
+   = note: the raw bytes of the constant (size: 16, align: 8) {
+
+               ╾───────alloc44───────╼ 01 00 00 00 00 00 00 00 │ ╾──────╼........
+
+           }
+
+
+
+error[E0080]: it is undefined behavior to use this value
+
+  --> mutant.rs:23:1
+
+   |
+
+23 | / const SLICE_LENGTH_UNINIT : & [ u8 ] = unsafe {
+
+24 | | let uninit_len = MaybeUninit :: < usize > { uninit : ( ) } ;
+
+25 | | mem :: transmute ( ( 42 , uninit_len ) )
+
+26 | | } ;
+
+   | |___^ type validation failed: encountered uninitialized reference
+
+   |
+
+   = note: The rules on what exactly is undefined behavior aren't clear, so this check might be overzealous. Please open an issue on the rustc repository if you believe it should not be considered undefined behavior.
+
+   = note: the raw bytes of the constant (size: 16, align: 8) {
+
+               __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ │ ░░░░░░░░░░░░░░░░
+
+           }
+
+
+
+error[E0080]: it is undefined behavior to use this value
+
+  --> mutant.rs:27:1
+
+   |
+
+27 | const SLICE_TOO_LONG : & [ u8 ] = unsafe { mem :: transmute ( ( & 42u8 , 999usize ) ) } ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ type validation failed: encountered a dangling reference (going beyond the bounds of its allocation)
+
+   |
+
+   = note: The rules on what exactly is undefined behavior aren't clear, so this check might be overzealous. Please open an issue on the rustc repository if you believe it should not be considered undefined behavior.
+
+   = note: the raw bytes of the constant (size: 16, align: 8) {
+
+               ╾───────alloc58───────╼ e7 03 00 00 00 00 00 00 │ ╾──────╼........
+
+           }
+
+
+
+error[E0080]: it is undefined behavior to use this value
+
+  --> mutant.rs:28:1
+
+   |
+
+28 | const SLICE_LENGTH_PTR : & [ u8 ] = unsafe { mem :: transmute ( ( & 42u8 , & 3 ) ) } ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ type validation failed: encountered non-integer slice length in wide pointer
+
+   |
+
+   = note: The rules on what exactly is undefined behavior aren't clear, so this check might be overzealous. Please open an issue on the rustc repository if you believe it should not be considered undefined behavior.
+
+   = note: the raw bytes of the constant (size: 16, align: 8) {
+
+               ╾───────alloc63───────╼ ╾───────alloc65───────╼ │ ╾──────╼╾──────╼
+
+           }
+
+
+
+error[E0080]: it is undefined behavior to use this value
+
+  --> mutant.rs:29:1
+
+   |
+
+29 | const SLICE_TOO_LONG_BOX : Box < [ u8 ] > = unsafe { mem :: transmute ( ( & 42u8 , 999usize ) ) } ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ type validation failed: encountered a dangling box (going beyond the bounds of its allocation)
+
+   |
+
+   = note: The rules on what exactly is undefined behavior aren't clear, so this check might be overzealous. Please open an issue on the rustc repository if you believe it should not be considered undefined behavior.
+
+   = note: the raw bytes of the constant (size: 16, align: 8) {
+
+               ╾───────alloc70───────╼ e7 03 00 00 00 00 00 00 │ ╾──────╼........
+
+           }
+
+
+
+error[E0080]: it is undefined behavior to use this value
+
+  --> mutant.rs:30:1
+
+   |
+
+30 | const SLICE_LENGTH_PTR_BOX : Box < [ u8 ] > = unsafe { mem :: transmute ( ( & 42u8 , & 3 ) ) } ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ type validation failed: encountered non-integer slice length in wide pointer
+
+   |
+
+   = note: The rules on what exactly is undefined behavior aren't clear, so this check might be overzealous. Please open an issue on the rustc repository if you believe it should not be considered undefined behavior.
+
+   = note: the raw bytes of the constant (size: 16, align: 8) {
+
+               ╾───────alloc75───────╼ ╾───────alloc77───────╼ │ ╾──────╼╾──────╼
+
+           }
+
+
+
+error[E0080]: it is undefined behavior to use this value
+
+  --> mutant.rs:31:1
+
+   |
+
+31 | const SLICE_CONTENT_INVALID : & [ bool ] = & [ unsafe { mem :: transmute ( 3u8 ) } ] ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ type validation failed: encountered 0x03 at .<deref>[0], but expected a boolean
+
+   |
+
+   = note: The rules on what exactly is undefined behavior aren't clear, so this check might be overzealous. Please open an issue on the rustc repository if you believe it should not be considered undefined behavior.
+
+   = note: the raw bytes of the constant (size: 8, align: 8) {
+
+               ╾───────alloc83───────╼                         │ ╾──────╼
+
+           }
+
+
+
+error[E0080]: it is undefined behavior to use this value
+
+  --> mutant.rs:33:1
+
+   |
+
+33 | const MYSLICE_PREFIX_BAD : & MySliceBool = & MySlice ( unsafe { mem :: transmute ( 3u8 ) } , [ false ] ) ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ type validation failed: encountered 0x03 at .<deref>.0, but expected a boolean
+
+   |
+
+   = note: The rules on what exactly is undefined behavior aren't clear, so this check might be overzealous. Please open an issue on the rustc repository if you believe it should not be considered undefined behavior.
+
+   = note: the raw bytes of the constant (size: 8, align: 8) {
+
+               ╾───────alloc92───────╼                         │ ╾──────╼
+
+           }
+
+
+
+error[E0080]: it is undefined behavior to use this value
+
+  --> mutant.rs:34:1
+
+   |
+
+34 | const MYSLICE_SUFFIX_BAD : & MySliceBool = & MySlice ( true , [ unsafe { mem :: transmute ( 3u8 ) } ] ) ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ type validation failed: encountered 0x03 at .<deref>.1[0], but expected a boolean
+
+   |
+
+   = note: The rules on what exactly is undefined behavior aren't clear, so this check might be overzealous. Please open an issue on the rustc repository if you believe it should not be considered undefined behavior.
+
+   = note: the raw bytes of the constant (size: 8, align: 8) {
+
+               ╾───────alloc97───────╼                         │ ╾──────╼
+
+           }
+
+
+
+error[E0080]: it is undefined behavior to use this value
+
+  --> mutant.rs:38:1
+
+   |
+
+38 | / const RAW_SLICE_LENGTH_UNINIT : * const [ u8 ] = unsafe {
+
+39 | | let uninit_len = MaybeUninit :: < usize > { uninit : ( ) } ;
+
+40 | | mem :: transmute ( ( 42 , uninit_len ) )
+
+41 | | } ;
+
+   | |___^ type validation failed: encountered uninitialized raw pointer
+
+   |
+
+   = note: The rules on what exactly is undefined behavior aren't clear, so this check might be overzealous. Please open an issue on the rustc repository if you believe it should not be considered undefined behavior.
+
+   = note: the raw bytes of the constant (size: 16, align: 8) {
+
+               __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ │ ░░░░░░░░░░░░░░░░
+
+           }
+
+
+
+thread 'rustc' panicked at 'called `Result::unwrap()` on an `Err` value: "`7` is not a power of 2"', compiler/rustc_mir/src/interpret/traits.rs:168:62
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.54.0-nightly (35fff69d0 2021-06-06) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [eval_to_allocation_raw] const-evaluating + checking `TRAIT_OBJ_UNALIGNED_VTABLE`
+
+#1 [eval_to_const_value_raw] simplifying constant for the type system `TRAIT_OBJ_UNALIGNED_VTABLE`
+
+end of query stack
+
+error: aborting due to 16 previous errors
+
+
+
+For more information about this error, try `rustc --explain E0080`.
+

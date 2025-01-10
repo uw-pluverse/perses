@@ -1,0 +1,4 @@
+internal compiler error: Segmentation fault
+crash_signal
+gsi_insert_seq_nodes_before
+ix86_gimple_fold_builtin(gimple_stmt_iterator*)

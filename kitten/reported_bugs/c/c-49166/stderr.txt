@@ -1,0 +1,170 @@
+mutant.c:3:8: warning: this function declaration is not a prototype [-Wstrict-prototypes]
+
+void t ( ) ;
+
+       ^
+
+         void
+
+mutant.c:6:1: warning: extension used [-Wlanguage-extension-token]
+
+asm ( "" : "=r" ( a ) : "0" ( a , 23.23 ) ) ;
+
+^
+
+mutant.c:6:31: warning: expression result unused [-Wunused-value]
+
+asm ( "" : "=r" ( a ) : "0" ( a , 23.23 ) ) ;
+
+                              ^
+
+mutant.c:6:33: warning: possible misuse of comma operator here [-Wcomma]
+
+asm ( "" : "=r" ( a ) : "0" ( a , 23.23 ) ) ;
+
+                                ^
+
+mutant.c:6:31: note: cast expression to void to silence warning
+
+asm ( "" : "=r" ( a ) : "0" ( a , 23.23 ) ) ;
+
+                              ^
+
+                              (void)( )
+
+mutant.c:4:6: warning: no previous prototype for function 'reset' [-Wmissing-prototypes]
+
+void reset ( )
+
+     ^
+
+mutant.c:4:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void reset ( )
+
+^
+
+static 
+
+mutant.c:4:12: warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+
+void reset ( )
+
+           ^
+
+clang-trunk: /tmp/tmp.nPuVKAIgXI-clang-builder/llvm-project/llvm/include/llvm/IR/IRBuilder.h:1994: llvm::Value* llvm::IRBuilderBase::CreateZExtOrTrunc(llvm::Value*, llvm::Type*, const llvm::Twine&): Assertion `V->getType()->isIntOrIntVectorTy() && DestTy->isIntOrIntVectorTy() && "Can only zero extend/truncate integers!"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:8:1: current parser token 'int'
+
+2.	mutant.c:4:6: LLVM IR generation of declaration 'reset'
+
+3.	mutant.c:4:6: Generating code for declaration 'reset'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x3950274)[0x55f5832ca274]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x55f5832c8094]
+
+clang-trunk(+0x3894ed8)[0x55f58320eed8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7fbd8c5c93c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7fbd8c06818b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7fbd8c047859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7fbd8c047729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7fbd8c058f36]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction11EmitAsmStmtERKNS_7AsmStmtE+0x4ec7)[0x55f5836571f7]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction8EmitStmtEPKNS_4StmtEN4llvm8ArrayRefIPKNS_4AttrEEE+0x23b)[0x55f5836593ab]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction28EmitCompoundStmtWithoutScopeERKNS_12CompoundStmtEbNS0_12AggValueSlotE+0x8c)[0x55f58365f5dc]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction16EmitFunctionBodyEPKNS_4StmtE+0xd1)[0x55f5836b6a21]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction12GenerateCodeENS_10GlobalDeclEPN4llvm8FunctionERKNS0_14CGFunctionInfoE+0x37c)[0x55f5836c827c]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule28EmitGlobalFunctionDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x1c6)[0x55f583721b86]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule20EmitGlobalDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x285)[0x55f58371d725]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule10EmitGlobalENS_10GlobalDeclE+0x3eb)[0x55f58371db8b]
+
+clang-trunk(+0x3dac5f2)[0x55f5837265f2]
+
+clang-trunk(+0x4aafe19)[0x55f584429e19]
+
+clang-trunk(+0x4aa2000)[0x55f58441c000]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x204)[0x55f5854dfc24]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x55f584426f98]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55f583cd5e79]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55f583c690c6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x55f583db3d00]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x55f580bdab06]
+
+clang-trunk(+0x125ce48)[0x55f580bd6e48]
+
+clang-trunk(+0x417fca9)[0x55f583af9ca9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x55f58320f05c]
+
+clang-trunk(+0x418044d)[0x55f583afa44d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55f583accbdb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x55f583acd6f9]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x55f583ad82a9]
+
+clang-trunk(main+0x18af)[0x55f580b0550f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fbd8c0490b3]
+
+clang-trunk(_start+0x2e)[0x55f580bd69be]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 24d48d45cc302a6abeab139d87ba87f7a2335323)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-1f7718.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-1f7718.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

@@ -1,0 +1,96 @@
+warning: trait `u32` should have an upper camel case name
+
+ --> mutant.rs:2:1
+
+  |
+
+2 | u32 { const CONST : u32 ;
+
+  | ^^^ help: convert the identifier to upper camel case (notice the capitalization): `U32`
+
+  |
+
+  = note: `#[warn(non_camel_case_types)]` on by default
+
+
+
+warning: trait objects without an explicit `dyn` are deprecated
+
+ --> mutant.rs:2:21
+
+  |
+
+2 | u32 { const CONST : u32 ;
+
+  |                     ^^^ help: use `dyn`: `dyn u32`
+
+  |
+
+  = note: `#[warn(bare_trait_objects)]` on by default
+
+  = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+
+  = note: for more information, see issue #80165 <https://github.com/rust-lang/rust/issues/80165>
+
+
+
+error: associated item referring to unboxed trait object for its own trait
+
+ --> mutant.rs:2:21
+
+  |
+
+2 | u32 { const CONST : u32 ;
+
+  | --- in this trait   ^^^
+
+  |
+
+help: you might have meant to use `Self` to refer to the implementing type
+
+  |
+
+2 | u32 { const CONST : Self ;
+
+  |                     ^^^^
+
+
+
+error: internal compiler error: compiler/rustc_typeck/src/hir_wf_check.rs:133:29: Unexpected TraitItem Const(Ty { hir_id: HirId { owner: DefId(0:4 ~ mutant[d0c6]::u32::CONST), local_id: 3 }, kind: TraitObject([PolyTraitRef { bound_generic_params: [], trait_ref: TraitRef { path: Path { span: mutant.rs:2:21: 2:24 (#0), res: Def(Trait, DefId(0:3 ~ mutant[d0c6]::u32)), segments: [PathSegment { ident: u32#0, hir_id: Some(HirId { owner: DefId(0:4 ~ mutant[d0c6]::u32::CONST), local_id: 2 }), res: Some(Def(Trait, DefId(0:3 ~ mutant[d0c6]::u32))), args: None, infer_args: false }] }, hir_ref_id: HirId { owner: DefId(0:4 ~ mutant[d0c6]::u32::CONST), local_id: 1 } }, span: mutant.rs:2:21: 2:24 (#0) }], lifetime(HirId { owner: DefId(0:4 ~ mutant[d0c6]::u32::CONST), local_id: 4 }: ), None), span: mutant.rs:2:21: 2:24 (#0) }, None)
+
+
+
+thread 'rustc' panicked at 'Box<dyn Any>', compiler/rustc_errors/src/lib.rs:1034:9
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.55.0-nightly (67b03007c 2021-07-23) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [diagnostic_hir_wf_check] performing HIR wf-checking for predicate Binder(ObjectSafe(DefId(0:3 ~ mutant[d0c6]::u32)), []) at item Ty(DefId(0:4 ~ mutant[d0c6]::u32::CONST))
+
+#1 [check_trait_item_well_formed] checking that `u32::CONST` is well-formed
+
+end of query stack
+
+error: aborting due to 2 previous errors; 2 warnings emitted
+
+
+

@@ -1,0 +1,96 @@
+mutant.c: In function ‘foo’:
+
+mutant.c:6:1: internal compiler error: in force_constant_size, at gimplify.c:738
+
+    6 | bar ( ( union C ) & a ) ;
+
+      | ^~~~~~~~~~~~~~~~~~~~~~~
+
+0x6dfda2 force_constant_size
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimplify.c:738
+
+0xc37457 gimple_add_tmp_var(tree_node*)
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimplify.c:776
+
+0xbff7fb create_tmp_var(tree_node*, char const*)
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimple-expr.c:485
+
+0xc41360 create_tmp_from_val
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimplify.c:569
+
+0xc41360 lookup_tmp_var
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimplify.c:601
+
+0xc41360 internal_get_tmp_var
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimplify.c:640
+
+0xc3aca7 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimplify.c:15199
+
+0xc3d248 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimplify.c:14660
+
+0xc417df gimplify_expr
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimplify.c:15244
+
+0xc417df gimplify_arg(tree_node**, gimple**, unsigned int, bool)
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimplify.c:3293
+
+0xc451a5 gimplify_call_expr
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimplify.c:3529
+
+0xc3c87f gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimplify.c:14182
+
+0xc3f06a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimplify.c:6869
+
+0xc3d2db gimplify_statement_list
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimplify.c:1887
+
+0xc3d2db gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimplify.c:14655
+
+0xc3f06a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimplify.c:6869
+
+0xc3f89e gimplify_bind_expr
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimplify.c:1426
+
+0xc3c89c gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimplify.c:14411
+
+0xc3f06a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimplify.c:6869
+
+0xc40693 gimplify_body(tree_node*, bool)
+
+	/tmp/tmp.yauZuOEy6G-gcc-builder/gcc/gcc/gimplify.c:15442
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

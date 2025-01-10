@@ -1,0 +1,1 @@
+assert_eq ! ( it . next ( ) . map ( | it | l . starts_with ( "thread 'main' panicked at" ) ) , Some ( true ) ) ;

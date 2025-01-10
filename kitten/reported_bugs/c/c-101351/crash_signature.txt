@@ -1,0 +1,4 @@
+internal compiler error: in lra_split_hard_reg_for, at lra-assigns.c
+_fatal_insn(char const*, rtx_def const*, char const*, int, char const*)
+lra_split_hard_reg_for()
+lra(_IO_FILE*)

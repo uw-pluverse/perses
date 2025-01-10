@@ -1,0 +1,4 @@
+internal compiler error: in vect_get_vec_defs_for_operand, at tree-vect-stmts.c
+vect_get_vec_defs_for_operand(vec_info*, _stmt_vec_info*, unsigned int, tree_node*, vec<tree_node*, va_heap, vl_ptr>*, tree_node*)
+vect_get_vec_defs(vec_info*, _stmt_vec_info*, _slp_tree*, unsigned int, tree_node*, vec<tree_node*, va_heap, vl_ptr>*, tree_node*, tree_node*, vec<tree_node*, va_heap, vl_ptr>*, tree_node*, tree_node*, vec<tree_node*, va_heap, vl_ptr>*, tree_node*, tree_node*, vec<tree_node*, va_heap, vl_ptr>*, tree_node*)
+vect_get_vec_defs(vec_info*, _stmt_vec_info*, _slp_tree*, unsigned int, tree_node*, vec<tree_node*, va_heap, vl_ptr>*, tree_node*, vec<tree_node*, va_heap, vl_ptr>*, tree_node*, vec<tree_node*, va_heap, vl_ptr>*, tree_node*, vec<tree_node*, va_heap, vl_ptr>*)

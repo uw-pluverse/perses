@@ -1,0 +1,238 @@
+[31m-- Error: mutant.scala:2:36 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[0m
+
+[31m2 |[0mF { [33mtype[0m [35mT[0m [ [35mG [ X ] <: X , F [ X ] <: G [ F [ X ] ][0m ]
+
+  |                                    [31m^[0m
+
+  |                                    Recursion limit exceeded.
+
+  |                                    Maybe there is an illegal cyclic reference?
+
+  |                                    If that's not the case, you could also try to increase the stacksize using the -Xss JVM option.
+
+  |                                    A recurring operation is (inner to outer):
+
+  |
+
+  |                                      type parameters of F[X]
+
+  |                                      type parameters of F[X]
+
+  |                                      type parameters of G[F[X]]
+
+  |                                      type parameters of F[X]
+
+  |                                      type parameters of F[X]
+
+  |                                      type parameters of G[F[X]]
+
+  |                                      type parameters of F[X]
+
+  |                                      type parameters of F[X]
+
+  |                                      type parameters of G[F[X]]
+
+  |                                      type parameters of F[X]
+
+  |                                      ...
+
+  |
+
+  |                                      type parameters of G[F[X]]
+
+  |                                      type parameters of F[X]
+
+  |                                      type parameters of F[X]
+
+  |                                      type parameters of G[F[X]]
+
+  |                                      type parameters of F[X]
+
+  |                                      type parameters of F[X]
+
+  |                                      type parameters of G[F[X]]
+
+  |                                      type parameters of F[X]
+
+  |                                      type parameters of G[F[X]]
+
+  |                                      type parameters of  <: G[F[X]]
+
+[31m-- Error: mutant.scala:2:28 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[0m
+
+[31m2 |[0mF { [33mtype[0m [35mT[0m [ [35mG [ X ] <: X , F [ X ] <: G [ F [ X ] ][0m ]
+
+  |                            [31m^[0m
+
+  |                            Recursion limit exceeded.
+
+  |                            Maybe there is an illegal cyclic reference?
+
+  |                            If that's not the case, you could also try to increase the stacksize using the -Xss JVM option.
+
+  |                            A recurring operation is (inner to outer):
+
+  |
+
+  |                              type parameters of F[X]
+
+  |                              type parameters of G[F[X]]
+
+  |                              type parameters of F[X]
+
+  |                              type parameters of F[X]
+
+  |                              type parameters of G[F[X]]
+
+  |                              type parameters of F[X]
+
+  |                              type parameters of F[X]
+
+  |                              type parameters of G[F[X]]
+
+  |                              type parameters of F[X]
+
+  |                              type parameters of F[X]
+
+  |                              ...
+
+  |
+
+  |                              type parameters of F[X]
+
+  |                              type parameters of G[F[X]]
+
+  |                              type parameters of F[X]
+
+  |                              type parameters of F[X]
+
+  |                              type parameters of G[F[X]]
+
+  |                              type parameters of F[X]
+
+  |                              type parameters of F[X]
+
+  |                              type parameters of G[F[X]]
+
+  |                              type parameters of F[X]
+
+  |                              type parameters of G[F[X]]
+
+exception occurred while typechecking mutant.scala
+
+exception occurred while compiling mutant.scala
+
+Exception in thread "main" java.lang.AssertionError: assertion failed: isType called on not-a-Type val <none>
+
+	at scala.runtime.Scala3RunTime$.assertFailed(Scala3RunTime.scala:8)
+
+	at dotty.tools.dotc.core.Symbols$Symbol.asType(Symbols.scala:167)
+
+	at dotty.tools.dotc.typer.TypeAssigner.assignType$$anonfun$6(TypeAssigner.scala:462)
+
+	at scala.collection.immutable.List.map(List.scala:250)
+
+	at dotty.tools.dotc.typer.TypeAssigner.assignType(TypeAssigner.scala:462)
+
+	at dotty.tools.dotc.typer.TypeAssigner.assignType$(TypeAssigner.scala:20)
+
+	at dotty.tools.dotc.typer.Typer.assignType(Typer.scala:106)
+
+	at dotty.tools.dotc.typer.Typer.typeIndexedLambdaTypeTree(Typer.scala:1930)
+
+	at dotty.tools.dotc.typer.Typer.typedTypeDef(Typer.scala:2217)
+
+	at dotty.tools.dotc.typer.Typer.typedTypeOrClassDef$2(Typer.scala:2671)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2673)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.typer.Typer.typedClassDef(Typer.scala:2340)
+
+	at dotty.tools.dotc.typer.Typer.typedTypeOrClassDef$2(Typer.scala:2669)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2673)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2835)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2885)
+
+	at dotty.tools.dotc.typer.Typer.typedPackageDef(Typer.scala:2463)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2714)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2744)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2809)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2813)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2929)
+
+	at dotty.tools.dotc.typer.FrontEnd.liftedTree1$1(FrontEnd.scala:79)
+
+	at dotty.tools.dotc.typer.FrontEnd.typeCheck$$anonfun$1(FrontEnd.scala:84)
+
+	at dotty.tools.dotc.typer.FrontEnd.monitor(FrontEnd.scala:43)
+
+	at dotty.tools.dotc.typer.FrontEnd.typeCheck(FrontEnd.scala:85)
+
+	at dotty.tools.dotc.typer.FrontEnd.runOn$$anonfun$3(FrontEnd.scala:120)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.immutable.List.foreach(List.scala:333)
+
+	at dotty.tools.dotc.typer.FrontEnd.runOn(FrontEnd.scala:120)
+
+	at dotty.tools.dotc.Run.runPhases$4$$anonfun$4(Run.scala:205)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.ArrayOps$.foreach$extension(ArrayOps.scala:1323)
+
+	at dotty.tools.dotc.Run.runPhases$5(Run.scala:216)
+
+	at dotty.tools.dotc.Run.compileUnits$$anonfun$1(Run.scala:224)
+
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+
+	at dotty.tools.dotc.util.Stats$.maybeMonitored(Stats.scala:67)
+
+	at dotty.tools.dotc.Run.compileUnits(Run.scala:231)
+
+	at dotty.tools.dotc.Run.compileSources(Run.scala:166)
+
+	at dotty.tools.dotc.Run.compile(Run.scala:150)
+
+	at dotty.tools.dotc.Driver.doCompile(Driver.scala:39)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:199)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:167)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:179)
+
+	at dotty.tools.dotc.Driver.main(Driver.scala:209)
+
+	at dotty.tools.dotc.Main.main(Main.scala)
+

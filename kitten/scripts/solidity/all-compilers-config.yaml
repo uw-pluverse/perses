@@ -1,0 +1,12 @@
+language: "SOLIDITY"
+seedFolders:
+  - path: "kitten/test_data/solidity/solidity"
+    fileExtentions: [".sol"]
+
+programsUnderTest:
+  - command: "solc-trunk-asan_ubsan"
+    flagsToTest:
+      - flags: ["--optimize"]
+    versionFlags:
+      flags: ["--version"]
+    crashDetectorClassName: "org.perses.fuzzer.compilers.solidity.SolidityCrashDetector"

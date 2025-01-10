@@ -1,0 +1,3 @@
+clang::CodeGen::Address clang::CodeGen::RValue::getAggregateAddress() const: Assertion `isAggregate() && "Not an aggregate!"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

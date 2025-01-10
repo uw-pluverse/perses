@@ -1,0 +1,50 @@
+mutant.c: In function ‘fast_clamp’:
+
+mutant.c:3:1: warning: no return statement in function returning non-void [-Wreturn-type]
+
+    3 | { }
+
+      | ^
+
+during IPA pass: targetclone
+
+mutant.c: At top level:
+
+mutant.c:8:1: internal compiler error: tree check: expected string_cst, have plus_expr in get_attr_len, at multiple_target.c:198
+
+    8 | }
+
+      | ^
+
+0x7bc9f2 tree_check_failed(tree_node const*, char const*, int, char const*, ...)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/tree.c:8674
+
+0x89f9a4 tree_check(tree_node*, char const*, int, char const*, tree_code)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/tree.h:3356
+
+0x89f9a4 get_attr_len
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/multiple_target.c:198
+
+0x89f9a4 expand_target_clones
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/multiple_target.c:344
+
+0x89f9a4 ipa_target_clone
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/multiple_target.c:517
+
+0x89f9a4 execute
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/multiple_target.c:553
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

@@ -1,0 +1,4 @@
+internal compiler error: tree check: expected class ‘type’, have ‘declaration’ (function_decl) in grokdeclarator, at c/c-decl.c
+tree_class_check_failed(tree_node const*, tree_code_class, char const*, int, char const*)
+tree_class_check(tree_node*, tree_code_class, char const*, int, char const*)
+grokdeclarator

@@ -1,0 +1,110 @@
+error: only foreign or `unsafe extern "C" functions may be C-variadic
+
+ --> mutant.rs:2:57
+
+  |
+
+2 | fn foo < T > ( _ : usize , mut ap0 : & mut VaListImpl , mut ap1 : ... ) -> impl Into < [ T ; { const FOO : usize = 1 ; FOO } ] > {
+
+  |                                                         ^^^^^^^^^^^^^^
+
+
+
+error[E0412]: cannot find type `VaListImpl` in this scope
+
+ --> mutant.rs:2:44
+
+  |
+
+2 | fn foo < T > ( _ : usize , mut ap0 : & mut VaListImpl , mut ap1 : ... ) -> impl Into < [ T ; { const FOO : usize = 1 ; FOO } ] > {
+
+  |                                            ^^^^^^^^^^ not found in this scope
+
+  |
+
+help: consider importing this struct
+
+  |
+
+2 | use std::ffi::VaListImpl;
+
+  |
+
+
+
+error[E0425]: cannot find value `t` in this scope
+
+ --> mutant.rs:3:3
+
+  |
+
+3 | [ t ]
+
+  |   ^ not found in this scope
+
+
+
+error[E0658]: C-variadic functions are unstable
+
+ --> mutant.rs:2:1
+
+  |
+
+2 | / fn foo < T > ( _ : usize , mut ap0 : & mut VaListImpl , mut ap1 : ... ) -> impl Into < [ T ; { const FOO : usize = 1 ; FOO } ] > {
+
+3 | | [ t ]
+
+4 | | }
+
+  | |_^
+
+  |
+
+  = note: see issue #44930 <https://github.com/rust-lang/rust/issues/44930> for more information
+
+  = help: add `#![feature(c_variadic)]` to the crate attributes to enable
+
+
+
+thread 'rustc' panicked at 'index out of bounds: the len is 3 but the index is 3', compiler/rustc_mir/src/borrow_check/type_check/input_output.rs:76:32
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.53.0-nightly (5e65467ef 2021-03-26) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [mir_borrowck] borrow-checking `foo`
+
+#1 [type_of] computing type of `foo::{opaque#0}`
+
+end of query stack
+
+error: aborting due to 4 previous errors
+
+
+
+Some errors have detailed explanations: E0412, E0425, E0658.
+
+For more information about an error, try `rustc --explain E0412`.
+

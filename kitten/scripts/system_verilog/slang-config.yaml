@@ -1,0 +1,15 @@
+language: "system_verilog"
+seedFolders:
+  - path: "kitten/test_data/system_verilog/slang"
+    fileExtentions: [".sv", ".v"]
+
+  - path: "kitten/test_data/system_verilog/Surelog"
+    fileExtentions: [".sv", ".v"]
+
+programsUnderTest:
+  - command: "slang-trunk"
+    flagsToTest:
+      - flags: []
+    versionFlags:
+      flags: ["--version"]
+    crashDetectorClassName: "org.perses.fuzzer.compilers.sysverilog.SlangCrashDetector"

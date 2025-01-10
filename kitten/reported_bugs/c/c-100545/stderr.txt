@@ -1,0 +1,72 @@
+mutant.c:7:43: warning: type defaults to ‘int’ in declaration of ‘fatp_t’ [-Wimplicit-int]
+
+    7 | typedef __attribute__ ( ( mode ( SI ) ) ) fatp_t
+
+      |                                           ^~~~~~
+
+mutant.c:8:1: internal compiler error: in gen_typedef_die, at dwarf2out.c:25714
+
+    8 | __attribute__ ( ( aligned ( 2 * __alignof__ ( uintptr_t ) ) ) ) ;
+
+      | ^~~~~~~~~~~~~
+
+0x6a6c97 gen_typedef_die
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/dwarf2out.c:25714
+
+0x6a6c97 gen_typedef_die
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/dwarf2out.c:25686
+
+0xb1d4b9 gen_decl_die
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/dwarf2out.c:26718
+
+0xb1ec96 dwarf2out_decl
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/dwarf2out.c:27270
+
+0xb1f180 dwarf2out_type_decl
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/dwarf2out.c:26988
+
+0xb1f180 dwarf2out_type_decl
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/dwarf2out.c:26983
+
+0xe0a48a rest_of_decl_compilation(tree_node*, int, int)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/passes.c:251
+
+0x8dffe7 finish_decl(tree_node*, unsigned int, tree_node*, tree_node*, tree_node*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-decl.c:5603
+
+0x9431ab c_parser_declaration_or_fndef
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:2370
+
+0x94b9d3 c_parser_external_declaration
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:1777
+
+0x94c439 c_parser_translation_unit
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:1650
+
+0x94c439 c_parse_file()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:21984
+
+0x9ac765 c_common_parse_file()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c-family/c-opts.c:1218
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

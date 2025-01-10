@@ -1,0 +1,14 @@
+rustc 1.53.0-nightly (138fd56cf 2021-04-02)
+
+binary: rustc
+
+commit-hash: 138fd56cf9598b4bf016634c768dca128a83a5d7
+
+commit-date: 2021-04-02
+
+host: x86_64-unknown-linux-gnu
+
+release: 1.53.0-nightly
+
+LLVM version: 12.0.0
+

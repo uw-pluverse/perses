@@ -1,0 +1,176 @@
+exception occurred while compiling mutant.scala
+
+Exception in thread "main" java.lang.AssertionError: assertion failed: Non-sensical cast between unrelated types ErasedValueType(A.I0, Double) and ErasedValueType(A.I0, Double)
+
+	at scala.runtime.Scala3RunTime$.assertFailed(Scala3RunTime.scala:8)
+
+	at dotty.tools.dotc.transform.Erasure$Boxing$.cast(Erasure.scala:335)
+
+	at dotty.tools.dotc.transform.Erasure$Boxing$.unbox(Erasure.scala:303)
+
+	at dotty.tools.dotc.transform.Erasure$Boxing$.adaptToType(Erasure.scala:379)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.adapt(Erasure.scala:1080)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2928)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.$anonfun$4(Erasure.scala:850)
+
+	at dotty.tools.dotc.core.Decorators$ListDecorator$.zipWithConserve$extension(Decorators.scala:153)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedApply(Erasure.scala:850)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2681)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2928)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedApply(Erasure.scala:837)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2681)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2928)
+
+	at dotty.tools.dotc.typer.Typer.$anonfun$34(Typer.scala:2154)
+
+	at dotty.tools.dotc.typer.PrepareInlineable$.dropInlineIfError(PrepareInlineable.scala:225)
+
+	at dotty.tools.dotc.typer.Typer.typedDefDef(Typer.scala:2154)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedDefDef(Erasure.scala:955)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2658)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2742)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2834)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2884)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedClassDef(Typer.scala:2340)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedClassDef(Erasure.scala:1057)
+
+	at dotty.tools.dotc.typer.Typer.typedTypeOrClassDef$2(Typer.scala:2669)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2673)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2742)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2834)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2884)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedClassDef(Typer.scala:2340)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedClassDef(Erasure.scala:1057)
+
+	at dotty.tools.dotc.typer.Typer.typedTypeOrClassDef$2(Typer.scala:2669)
+
+	at dotty.tools.dotc.typer.Typer.typedNamed$1(Typer.scala:2673)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2742)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.traverse$1(Typer.scala:2834)
+
+	at dotty.tools.dotc.typer.Typer.typedStats(Typer.scala:2884)
+
+	at dotty.tools.dotc.transform.Erasure$Typer.typedStats(Erasure.scala:1068)
+
+	at dotty.tools.dotc.typer.Typer.typedPackageDef(Typer.scala:2463)
+
+	at dotty.tools.dotc.typer.Typer.typedUnnamed$1(Typer.scala:2714)
+
+	at dotty.tools.dotc.typer.Typer.typedUnadapted(Typer.scala:2743)
+
+	at dotty.tools.dotc.typer.ReTyper.typedUnadapted(ReTyper.scala:118)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2808)
+
+	at dotty.tools.dotc.typer.Typer.typed(Typer.scala:2812)
+
+	at dotty.tools.dotc.typer.Typer.typedExpr(Typer.scala:2928)
+
+	at dotty.tools.dotc.transform.Erasure.run(Erasure.scala:132)
+
+	at dotty.tools.dotc.core.Phases$Phase.runOn$$anonfun$1(Phases.scala:303)
+
+	at scala.collection.immutable.List.map(List.scala:246)
+
+	at dotty.tools.dotc.core.Phases$Phase.runOn(Phases.scala:304)
+
+	at dotty.tools.dotc.Run.runPhases$4$$anonfun$4(Run.scala:205)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.ArrayOps$.foreach$extension(ArrayOps.scala:1323)
+
+	at dotty.tools.dotc.Run.runPhases$5(Run.scala:216)
+
+	at dotty.tools.dotc.Run.compileUnits$$anonfun$1(Run.scala:224)
+
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+
+	at dotty.tools.dotc.util.Stats$.maybeMonitored(Stats.scala:67)
+
+	at dotty.tools.dotc.Run.compileUnits(Run.scala:231)
+
+	at dotty.tools.dotc.Run.compileSources(Run.scala:166)
+
+	at dotty.tools.dotc.Run.compile(Run.scala:150)
+
+	at dotty.tools.dotc.Driver.doCompile(Driver.scala:39)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:199)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:167)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:179)
+
+	at dotty.tools.dotc.Driver.main(Driver.scala:209)
+
+	at dotty.tools.dotc.Main.main(Main.scala)
+

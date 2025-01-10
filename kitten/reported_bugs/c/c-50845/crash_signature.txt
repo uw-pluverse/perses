@@ -1,0 +1,3 @@
+static llvm::CastInst* llvm::CastInst::Create(llvm::Instruction::CastOps, llvm::Value*, llvm::Type*, const llvm::Twine&, llvm::Instruction*): Assertion `castIsValid(op, S, Ty) && "Invalid cast!"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

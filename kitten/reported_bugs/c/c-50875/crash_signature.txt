@@ -1,0 +1,3 @@
+llvm::InlineAsm::InlineAsm(llvm::FunctionType*, const string&, const string&, bool, bool, llvm::InlineAsm::AsmDialect, bool): Assertion `Verify(getFunctionType(), constraints) && "Function type not legal for constraints!"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

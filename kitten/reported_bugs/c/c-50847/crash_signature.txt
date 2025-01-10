@@ -1,0 +1,3 @@
+llvm::MDNode* clang::CodeGen::CodeGenTBAA::getAccessTagInfo(clang::CodeGen::TBAAAccessInfo): Assertion `!Info.isIncomplete() && "Access to an object of an incomplete type!"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

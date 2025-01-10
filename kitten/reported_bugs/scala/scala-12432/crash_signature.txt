@@ -1,0 +1,4 @@
+Exception in thread "main" java.lang.AssertionError: assertion failed: no member [33mthis[0m.i1 . ==, members = Scope{
+at scala.runtime.Scala3RunTime$.assertFailed
+at dotty.tools.dotc.ast.Trees$Instance.applyOverloaded
+at dotty.tools.dotc.ast.tpd$TreeOps$.equal$extension

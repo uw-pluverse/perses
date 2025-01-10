@@ -1,0 +1,5 @@
+thread 'rustc' panicked at 'assertion failed: `(left == right)`
+left: `i8`
+right: `u16: Return type `u16` must match vector element type `i8``'
+error: internal compiler error: unexpected panic
+note: the compiler unexpectedly panicked. this is a bug.

@@ -1,0 +1,3 @@
+static bool llvm::isa_impl_cl<To, const From*>::doit(const From*) [with To = clang::ParenExpr; From = clang::Expr]: Assertion `Val && "isa<> used on a null pointer"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

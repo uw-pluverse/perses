@@ -1,0 +1,2 @@
+Scala compiler version 3.0.1-RC1-bin-SNAPSHOT-git-66b315d -- Copyright 2002-2021, LAMP/EPFL
+

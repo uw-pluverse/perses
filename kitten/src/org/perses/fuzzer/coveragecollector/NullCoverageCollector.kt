@@ -1,0 +1,40 @@
+/*
+ * Copyright (C) 2018-2025 University of Waterloo.
+ *
+ * This file is part of Perses.
+ *
+ * Perses is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3, or (at your option) any later version.
+ *
+ * Perses is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
+ */
+package org.perses.fuzzer.coveragecollector
+
+import java.util.concurrent.ExecutorService
+
+class NullCoverageCollector : ICoverageCollector {
+  override fun launch(): ExecutorService? {
+    return null
+  }
+
+  override fun getCoverageReport(): ICoverageCollector.CoverageReport {
+    return NULL_COVERAGE_REPORT
+  }
+
+  companion object {
+    private val NULL_COVERAGE_REPORT = ICoverageCollector.CoverageReport(
+      branch_covered = 0,
+      branch_total = 1,
+      line_covered = 0,
+      line_total = 1,
+      aflMapDensity = 0.0,
+      aflHitCount = 0,
+    )
+  }
+}

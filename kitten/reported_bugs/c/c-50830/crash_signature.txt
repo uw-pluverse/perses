@@ -1,0 +1,3 @@
+void DoMarkVarDeclReferenced(clang::Sema&, clang::SourceLocation, clang::VarDecl*, clang::Expr*, llvm::DenseMap<const clang::VarDecl*, int>&): Assertion `(!E || isa<FunctionParmPackExpr>(E)) && "missing non-odr-use marking for unevaluated decl ref"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

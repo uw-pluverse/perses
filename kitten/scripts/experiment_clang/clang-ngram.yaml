@@ -1,0 +1,15 @@
+language: "C"
+seedFolders:
+  - path: "kitten/test_data/c/gcc/gcc/testsuite/"
+    fileExtentions: [".c"]
+
+  - path: "kitten/test_data/c/llvm-project/clang/"
+    fileExtentions: [".c"]
+
+programsUnderTest:
+  - command: "kitten/temp_compilers_source/clang_ngram/bin/clang"
+    flagsToTest:
+      - flags: ["-O3", "-g3", "-c", "-Wall", "-Wextra", "-Weverything"]
+    versionFlags:
+      flags: ["-v"]
+    crashDetectorClassName: "org.perses.fuzzer.compilers.c.ClangCrashDetector"

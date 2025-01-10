@@ -1,0 +1,4 @@
+Exception in thread "main" java.lang.AssertionError: assertion failed: isType called on not-a-Type val <none>
+at scala.runtime.Scala3RunTime$.assertFailed
+at dotty.tools.dotc.core.Symbols$Symbol.asType
+at dotty.tools.dotc.typer.TypeAssigner.assignType$$anonfun$6

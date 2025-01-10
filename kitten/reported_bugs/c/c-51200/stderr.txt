@@ -1,0 +1,590 @@
+mutant.c:2:5: warning: incompatible redeclaration of library function 'sprintf' [-Wincompatible-library-redeclaration]
+
+int sprintf ( char * * __restrict , const char * restrict , ... ) ;
+
+    ^
+
+mutant.c:2:5: note: 'sprintf' is a builtin with type 'int (char *, const char *, ...)'
+
+mutant.c:4:12: warning: no previous extern declaration for non-static variable 'a0' [-Wmissing-variable-declarations]
+
+const char a0 [ ] = "" ;
+
+           ^
+
+mutant.c:4:7: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+const char a0 [ ] = "" ;
+
+      ^
+
+mutant.c:5:12: warning: no previous extern declaration for non-static variable 'a1' [-Wmissing-variable-declarations]
+
+const char a1 [ ] = "1" ;
+
+           ^
+
+mutant.c:5:7: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+const char a1 [ ] = "1" ;
+
+      ^
+
+mutant.c:6:12: warning: no previous extern declaration for non-static variable 'a2' [-Wmissing-variable-declarations]
+
+const char a2 [ ] = "12" ;
+
+           ^
+
+mutant.c:6:7: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+const char a2 [ ] = "12" ;
+
+      ^
+
+mutant.c:7:12: warning: no previous extern declaration for non-static variable 'a3' [-Wmissing-variable-declarations]
+
+const char a3 [ ] = "123" ;
+
+           ^
+
+mutant.c:7:7: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+const char a3 [ ] = "123" ;
+
+      ^
+
+mutant.c:8:12: warning: no previous extern declaration for non-static variable 'a4' [-Wmissing-variable-declarations]
+
+const char a4 [ ] = "1234" ;
+
+           ^
+
+mutant.c:8:7: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+const char a4 [ ] = "1234" ;
+
+      ^
+
+mutant.c:9:12: warning: no previous extern declaration for non-static variable 'a5' [-Wmissing-variable-declarations]
+
+const char a5 [ ] = "12345" ;
+
+           ^
+
+mutant.c:9:7: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+const char a5 [ ] = "12345" ;
+
+      ^
+
+mutant.c:10:12: warning: no previous extern declaration for non-static variable 'a6' [-Wmissing-variable-declarations]
+
+const char a6 [ ] = "123456" ;
+
+           ^
+
+mutant.c:10:7: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+const char a6 [ ] = "123456" ;
+
+      ^
+
+mutant.c:11:12: warning: no previous extern declaration for non-static variable 'a7' [-Wmissing-variable-declarations]
+
+const char a7 [ ] = "1234567" ;
+
+           ^
+
+mutant.c:11:7: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+const char a7 [ ] = "1234567" ;
+
+      ^
+
+mutant.c:12:12: warning: no previous extern declaration for non-static variable 'a8' [-Wmissing-variable-declarations]
+
+const char a8 [ ] = "12345678" ;
+
+           ^
+
+mutant.c:12:7: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+const char a8 [ ] = "12345678" ;
+
+      ^
+
+mutant.c:13:12: warning: no previous extern declaration for non-static variable 'a9' [-Wmissing-variable-declarations]
+
+const char a9 [ ] = "123456789" ;
+
+           ^
+
+mutant.c:13:7: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+const char a9 [ ] = "123456789" ;
+
+      ^
+
+mutant.c:20:16: warning: incompatible pointer types passing 'char *' to parameter of type 'char **'; take the address with & [-Wincompatible-pointer-types]
+
+if ( sprintf ( d , "%s" , p1 ) > 2 )
+
+               ^
+
+               &
+
+mutant.c:2:35: note: passing argument to parameter here
+
+int sprintf ( char * * __restrict , const char * restrict , ... ) ;
+
+                                  ^
+
+mutant.c:15:6: warning: no previous prototype for function 'g1' [-Wmissing-prototypes]
+
+void g1 ( char * d )
+
+     ^
+
+mutant.c:15:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void g1 ( char * d )
+
+^
+
+static 
+
+mutant.c:29:16: warning: incompatible pointer types passing 'char *' to parameter of type 'char **'; take the address with & [-Wincompatible-pointer-types]
+
+if ( sprintf ( d , "%s" , p2 ) > 3 )
+
+               ^
+
+               &
+
+mutant.c:2:35: note: passing argument to parameter here
+
+int sprintf ( char * * __restrict , const char * restrict , ... ) ;
+
+                                  ^
+
+mutant.c:23:6: warning: no previous prototype for function 'g2' [-Wmissing-prototypes]
+
+void g2 ( char * d )
+
+     ^
+
+mutant.c:23:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void g2 ( char * d )
+
+^
+
+static 
+
+mutant.c:39:16: warning: incompatible pointer types passing 'char *' to parameter of type 'char **'; take the address with & [-Wincompatible-pointer-types]
+
+if ( sprintf ( d , "%s" , p3 ) > 4 )
+
+               ^
+
+               &
+
+mutant.c:2:35: note: passing argument to parameter here
+
+int sprintf ( char * * __restrict , const char * restrict , ... ) ;
+
+                                  ^
+
+mutant.c:32:6: warning: no previous prototype for function 'g3' [-Wmissing-prototypes]
+
+void g3 ( char * d )
+
+     ^
+
+mutant.c:32:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void g3 ( char * d )
+
+^
+
+static 
+
+mutant.c:51:16: warning: incompatible pointer types passing 'char *' to parameter of type 'char **'; take the address with & [-Wincompatible-pointer-types]
+
+if ( sprintf ( d , "%s" , p4 ) > 5 )
+
+               ^
+
+               &
+
+mutant.c:2:35: note: passing argument to parameter here
+
+int sprintf ( char * * __restrict , const char * restrict , ... ) ;
+
+                                  ^
+
+mutant.c:42:6: warning: no previous prototype for function 'g4' [-Wmissing-prototypes]
+
+void g4 ( char * d )
+
+     ^
+
+mutant.c:42:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void g4 ( char * d )
+
+^
+
+static 
+
+mutant.c:64:16: warning: incompatible pointer types passing 'char *' to parameter of type 'char **'; take the address with & [-Wincompatible-pointer-types]
+
+if ( sprintf ( d , "%s" , p5 ) > 6 )
+
+               ^
+
+               &
+
+mutant.c:2:35: note: passing argument to parameter here
+
+int sprintf ( char * * __restrict , const char * restrict , ... ) ;
+
+                                  ^
+
+mutant.c:54:6: warning: no previous prototype for function 'g5' [-Wmissing-prototypes]
+
+void g5 ( char * d )
+
+     ^
+
+mutant.c:54:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void g5 ( char * d )
+
+^
+
+static 
+
+mutant.c:78:16: warning: incompatible pointer types passing 'char *' to parameter of type 'char **'; take the address with & [-Wincompatible-pointer-types]
+
+if ( sprintf ( d , "%s" , p6 ) > 7 )
+
+               ^
+
+               &
+
+mutant.c:2:35: note: passing argument to parameter here
+
+int sprintf ( char * * __restrict , const char * restrict , ... ) ;
+
+                                  ^
+
+mutant.c:67:6: warning: no previous prototype for function 'g6' [-Wmissing-prototypes]
+
+void g6 ( char * d )
+
+     ^
+
+mutant.c:67:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void g6 ( char * d )
+
+^
+
+static 
+
+mutant.c:93:16: warning: incompatible pointer types passing 'char *' to parameter of type 'char **'; take the address with & [-Wincompatible-pointer-types]
+
+if ( sprintf ( d , "%s" , p7 ) > 8 )
+
+               ^
+
+               &
+
+mutant.c:2:35: note: passing argument to parameter here
+
+int sprintf ( char * * __restrict , const char * restrict , ... ) ;
+
+                                  ^
+
+mutant.c:81:6: warning: no previous prototype for function 'g7' [-Wmissing-prototypes]
+
+void g7 ( char * d )
+
+     ^
+
+mutant.c:81:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void g7 ( char * d )
+
+^
+
+static 
+
+mutant.c:109:16: warning: incompatible pointer types passing 'char *' to parameter of type 'char **'; take the address with & [-Wincompatible-pointer-types]
+
+if ( sprintf ( d , "%s" , p8 ) > 9 )
+
+               ^
+
+               &
+
+mutant.c:2:35: note: passing argument to parameter here
+
+int sprintf ( char * * __restrict , const char * restrict , ... ) ;
+
+                                  ^
+
+mutant.c:96:6: warning: no previous prototype for function 'g8' [-Wmissing-prototypes]
+
+void g8 ( char * d )
+
+     ^
+
+mutant.c:96:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void g8 ( char * d )
+
+^
+
+static 
+
+mutant.c:14:5: warning: no previous extern declaration for non-static variable 'i0' [-Wmissing-variable-declarations]
+
+int i0 , i1 , i2 , i3 , i4 , i5 , i6 , i7 , i8 ;
+
+    ^
+
+mutant.c:14:1: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+int i0 , i1 , i2 , i3 , i4 , i5 , i6 , i7 , i8 ;
+
+^
+
+mutant.c:14:10: warning: no previous extern declaration for non-static variable 'i1' [-Wmissing-variable-declarations]
+
+int i0 , i1 , i2 , i3 , i4 , i5 , i6 , i7 , i8 ;
+
+         ^
+
+mutant.c:14:1: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+int i0 , i1 , i2 , i3 , i4 , i5 , i6 , i7 , i8 ;
+
+^
+
+mutant.c:14:15: warning: no previous extern declaration for non-static variable 'i2' [-Wmissing-variable-declarations]
+
+int i0 , i1 , i2 , i3 , i4 , i5 , i6 , i7 , i8 ;
+
+              ^
+
+mutant.c:14:1: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+int i0 , i1 , i2 , i3 , i4 , i5 , i6 , i7 , i8 ;
+
+^
+
+mutant.c:14:20: warning: no previous extern declaration for non-static variable 'i3' [-Wmissing-variable-declarations]
+
+int i0 , i1 , i2 , i3 , i4 , i5 , i6 , i7 , i8 ;
+
+                   ^
+
+mutant.c:14:1: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+int i0 , i1 , i2 , i3 , i4 , i5 , i6 , i7 , i8 ;
+
+^
+
+mutant.c:14:25: warning: no previous extern declaration for non-static variable 'i4' [-Wmissing-variable-declarations]
+
+int i0 , i1 , i2 , i3 , i4 , i5 , i6 , i7 , i8 ;
+
+                        ^
+
+mutant.c:14:1: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+int i0 , i1 , i2 , i3 , i4 , i5 , i6 , i7 , i8 ;
+
+^
+
+mutant.c:14:30: warning: no previous extern declaration for non-static variable 'i5' [-Wmissing-variable-declarations]
+
+int i0 , i1 , i2 , i3 , i4 , i5 , i6 , i7 , i8 ;
+
+                             ^
+
+mutant.c:14:1: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+int i0 , i1 , i2 , i3 , i4 , i5 , i6 , i7 , i8 ;
+
+^
+
+mutant.c:14:35: warning: no previous extern declaration for non-static variable 'i6' [-Wmissing-variable-declarations]
+
+int i0 , i1 , i2 , i3 , i4 , i5 , i6 , i7 , i8 ;
+
+                                  ^
+
+mutant.c:14:1: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+int i0 , i1 , i2 , i3 , i4 , i5 , i6 , i7 , i8 ;
+
+^
+
+mutant.c:14:40: warning: no previous extern declaration for non-static variable 'i7' [-Wmissing-variable-declarations]
+
+int i0 , i1 , i2 , i3 , i4 , i5 , i6 , i7 , i8 ;
+
+                                       ^
+
+mutant.c:14:1: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+int i0 , i1 , i2 , i3 , i4 , i5 , i6 , i7 , i8 ;
+
+^
+
+mutant.c:14:45: warning: no previous extern declaration for non-static variable 'i8' [-Wmissing-variable-declarations]
+
+int i0 , i1 , i2 , i3 , i4 , i5 , i6 , i7 , i8 ;
+
+                                            ^
+
+mutant.c:14:1: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+int i0 , i1 , i2 , i3 , i4 , i5 , i6 , i7 , i8 ;
+
+^
+
+clang-trunk: /tmp/tmp.pdZ9IJX6si-clang-builder/llvm-project/llvm/lib/IR/IRBuilder.cpp:994: llvm::Value* llvm::IRBuilderBase::CreatePtrDiff(llvm::Value*, llvm::Value*, const llvm::Twine&): Assertion `LHS->getType() == RHS->getType() && "Pointer subtraction operand types must match!"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	Optimizer
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x39b85f4)[0x55f3054005f4]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x55f3053fe414]
+
+clang-trunk(+0x38fd258)[0x55f305345258]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7fcf59f103c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7fcf599af18b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7fcf5998e859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7fcf5998e729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7fcf5999ff36]
+
+clang-trunk(_ZN4llvm13IRBuilderBase13CreatePtrDiffEPNS_5ValueES2_RKNS_5TwineE+0x2f4)[0x55f304a963f4]
+
+clang-trunk(_ZN4llvm17LibCallSimplifier21optimizeSPrintFStringEPNS_8CallInstERNS_13IRBuilderBaseE+0x3ef)[0x55f3055b185f]
+
+clang-trunk(_ZN4llvm17LibCallSimplifier15optimizeSPrintFEPNS_8CallInstERNS_13IRBuilderBaseE+0x60)[0x55f3055b6e40]
+
+clang-trunk(_ZN4llvm17LibCallSimplifier12optimizeCallEPNS_8CallInstERNS_13IRBuilderBaseE+0x8a3)[0x55f3055bedc3]
+
+clang-trunk(+0x33624c6)[0x55f304daa4c6]
+
+clang-trunk(+0x336728c)[0x55f304daf28c]
+
+clang-trunk(+0x336911c)[0x55f304db111c]
+
+clang-trunk(+0x33267a8)[0x55f304d6e7a8]
+
+clang-trunk(+0x3328ef3)[0x55f304d70ef3]
+
+clang-trunk(_ZN4llvm15InstCombinePass3runERNS_8FunctionERNS_15AnalysisManagerIS1_JEEE+0x891)[0x55f304d72f51]
+
+clang-trunk(+0x4ba9ae6)[0x55f3065f1ae6]
+
+clang-trunk(_ZN4llvm11PassManagerINS_8FunctionENS_15AnalysisManagerIS1_JEEEJEE3runERS1_RS3_+0x436)[0x55f304b33f76]
+
+clang-trunk(+0x155a546)[0x55f302fa2546]
+
+clang-trunk(_ZN4llvm27ModuleToFunctionPassAdaptor3runERNS_6ModuleERNS_15AnalysisManagerIS1_JEEE+0x6e9)[0x55f304b32a99]
+
+clang-trunk(+0x155adb6)[0x55f302fa2db6]
+
+clang-trunk(_ZN4llvm11PassManagerINS_6ModuleENS_15AnalysisManagerIS1_JEEEJEE3runERS1_RS3_+0x50f)[0x55f304b3037f]
+
+clang-trunk(+0x3ceefed)[0x55f305736fed]
+
+clang-trunk(_ZN5clang17EmitBackendOutputERNS_17DiagnosticsEngineERKNS_19HeaderSearchOptionsERKNS_14CodeGenOptionsERKNS_13TargetOptionsERKNS_11LangOptionsEN4llvm9StringRefEPNSE_6ModuleENS_13BackendActionESt10unique_ptrINSE_17raw_pwrite_streamESt14default_deleteISK_EE+0x47d)[0x55f30573a26d]
+
+clang-trunk(+0x4b2f4af)[0x55f3065774af]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x429)[0x55f307632389]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x55f306575ff8]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55f305e18fc9]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55f305dabfd6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x55f305ef6d00]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x55f302cd57b6]
+
+clang-trunk(+0x1289af8)[0x55f302cd1af8]
+
+clang-trunk(+0x41f48e9)[0x55f305c3c8e9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x55f3053453dc]
+
+clang-trunk(+0x41f508d)[0x55f305c3d08d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55f305c0f81b]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x55f305c10339]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x55f305c1aee9]
+
+clang-trunk(main+0x18af)[0x55f302c0064f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fcf599900b3]
+
+clang-trunk(_start+0x2e)[0x55f302cd166e]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 74c308c56a2d0f000dfed3287311ce46a94ae3c8)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-ed4ec5.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-ed4ec5.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

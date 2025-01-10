@@ -1,0 +1,268 @@
+mutant.c:2:14: warning: incompatible redeclaration of library function 'fabsf' [-Wincompatible-library-redeclaration]
+
+extern float fabsf ( double d ) ;
+
+             ^
+
+mutant.c:2:14: note: 'fabsf' is a builtin with type 'float (float)'
+
+mutant.c:4:8: warning: no previous prototype for function 'test1' [-Wmissing-prototypes]
+
+double test1 ( double x )
+
+       ^
+
+mutant.c:4:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+double test1 ( double x )
+
+^
+
+static 
+
+mutant.c:8:7: warning: no previous prototype for function 'test1f' [-Wmissing-prototypes]
+
+float test1f ( float x )
+
+      ^
+
+mutant.c:8:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+float test1f ( float x )
+
+^
+
+static 
+
+mutant.c:12:8: warning: no previous prototype for function 'test2' [-Wmissing-prototypes]
+
+double test2 ( double x )
+
+       ^
+
+mutant.c:12:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+double test2 ( double x )
+
+^
+
+static 
+
+mutant.c:18:30: warning: implicit conversion increases floating-point precision: 'float' to 'double' [-Wdouble-promotion]
+
+return fabsf ( x ) * fabsf ( x ) ;
+
+                     ~~~~~   ^
+
+mutant.c:18:16: warning: implicit conversion increases floating-point precision: 'float' to 'double' [-Wdouble-promotion]
+
+return fabsf ( x ) * fabsf ( x ) ;
+
+       ~~~~~   ^
+
+mutant.c:16:7: warning: no previous prototype for function 'test2f' [-Wmissing-prototypes]
+
+float test2f ( float x )
+
+      ^
+
+mutant.c:16:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+float test2f ( float x )
+
+^
+
+static 
+
+mutant.c:20:8: warning: no previous prototype for function 'test3' [-Wmissing-prototypes]
+
+double test3 ( double x , double y )
+
+       ^
+
+mutant.c:20:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+double test3 ( double x , double y )
+
+^
+
+static 
+
+mutant.c:24:7: warning: no previous prototype for function 'test3f' [-Wmissing-prototypes]
+
+float test3f ( float x , float y )
+
+      ^
+
+mutant.c:24:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+float test3f ( float x , float y )
+
+^
+
+static 
+
+mutant.c:28:8: warning: no previous prototype for function 'test4' [-Wmissing-prototypes]
+
+double test4 ( double x , double y )
+
+       ^
+
+mutant.c:28:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+double test4 ( double x , double y )
+
+^
+
+static 
+
+mutant.c:32:7: warning: no previous prototype for function 'test4f' [-Wmissing-prototypes]
+
+float test4f ( float x , float y )
+
+      ^
+
+mutant.c:32:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+float test4f ( float x , float y )
+
+^
+
+static 
+
+clang-trunk: /tmp/tmp.xjN6dMkdrg-clang-builder/llvm-project/llvm/lib/IR/Value.cpp:493: void llvm::Value::doRAUW(llvm::Value*, llvm::Value::ReplaceMetadataUses): Assertion `New->getType() == getType() && "replaceAllUses of value with new value of different type!"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	Optimizer
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x395b184)[0x558a5379e184]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x558a5379bfa4]
+
+clang-trunk(+0x389fdd8)[0x558a536e2dd8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7fedc62573c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7fedc5cf618b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7fedc5cd5859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7fedc5cd5729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7fedc5ce6f36]
+
+clang-trunk(_ZN4llvm5Value6doRAUWEPS0_NS0_19ReplaceMetadataUsesE+0x1cc)[0x558a52efb45c]
+
+clang-trunk(+0x35fb948)[0x558a5343e948]
+
+clang-trunk(+0x35fd0a4)[0x558a534400a4]
+
+clang-trunk(_ZN4llvm12EarlyCSEPass3runERNS_8FunctionERNS_15AnalysisManagerIS1_JEEE+0x503)[0x558a534410f3]
+
+clang-trunk(+0x3c7c826)[0x558a53abf826]
+
+clang-trunk(_ZN4llvm11PassManagerINS_8FunctionENS_15AnalysisManagerIS1_JEEEJEE3runERS1_RS3_+0x436)[0x558a52eda4d6]
+
+clang-trunk(+0x152c836)[0x558a5136f836]
+
+clang-trunk(_ZN4llvm26CGSCCToFunctionPassAdaptor3runERNS_13LazyCallGraph3SCCERNS_15AnalysisManagerIS2_JRS1_EEES5_RNS_17CGSCCUpdateResultE+0x62f)[0x558a525b71af]
+
+clang-trunk(+0x152d506)[0x558a51370506]
+
+clang-trunk(_ZN4llvm11PassManagerINS_13LazyCallGraph3SCCENS_15AnalysisManagerIS2_JRS1_EEEJS4_RNS_17CGSCCUpdateResultEEE3runERS2_RS5_S4_S7_+0x1fb)[0x558a525ae70b]
+
+clang-trunk(+0x31b1ad6)[0x558a52ff4ad6]
+
+clang-trunk(_ZN4llvm21DevirtSCCRepeatedPass3runERNS_13LazyCallGraph3SCCERNS_15AnalysisManagerIS2_JRS1_EEES5_RNS_17CGSCCUpdateResultE+0x1d4)[0x558a525b2d84]
+
+clang-trunk(+0x31b1a86)[0x558a52ff4a86]
+
+clang-trunk(_ZN4llvm33ModuleToPostOrderCGSCCPassAdaptor3runERNS_6ModuleERNS_15AnalysisManagerIS1_JEEE+0xf83)[0x558a525b0a73]
+
+clang-trunk(+0x31b1b26)[0x558a52ff4b26]
+
+clang-trunk(_ZN4llvm11PassManagerINS_6ModuleENS_15AnalysisManagerIS1_JEEEJEE3runERS1_RS3_+0x50f)[0x558a52ed68df]
+
+clang-trunk(_ZN4llvm24ModuleInlinerWrapperPass3runERNS_6ModuleERNS_15AnalysisManagerIS1_JEEE+0x205)[0x558a52ff7c05]
+
+clang-trunk(+0x4b33686)[0x558a54976686]
+
+clang-trunk(_ZN4llvm11PassManagerINS_6ModuleENS_15AnalysisManagerIS1_JEEEJEE3runERS1_RS3_+0x50f)[0x558a52ed68df]
+
+clang-trunk(+0x3c8c6ad)[0x558a53acf6ad]
+
+clang-trunk(_ZN5clang17EmitBackendOutputERNS_17DiagnosticsEngineERKNS_19HeaderSearchOptionsERKNS_14CodeGenOptionsERKNS_13TargetOptionsERKNS_11LangOptionsEN4llvm9StringRefEPNSE_6ModuleENS_13BackendActionESt10unique_ptrINSE_17raw_pwrite_streamESt14default_deleteISK_EE+0x47d)[0x558a53ad292d]
+
+clang-trunk(+0x4ab8e1f)[0x558a548fbe1f]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x429)[0x558a559b34d9]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x558a548fa968]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x558a541aa599]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x558a5413d7e6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x558a54288480]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x558a510a8696]
+
+clang-trunk(+0x12619d8)[0x558a510a49d8]
+
+clang-trunk(+0x418b789)[0x558a53fce789]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x558a536e2f5c]
+
+clang-trunk(+0x418bf2d)[0x558a53fcef2d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x558a53fa16bb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x558a53fa21d9]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x558a53facd89]
+
+clang-trunk(main+0x18af)[0x558a50fd352f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fedc5cd70b3]
+
+clang-trunk(_start+0x2e)[0x558a510a454e]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 2e9c75daffddd65e37c3236708b5b133e6f5f2f5)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-4d8890.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-4d8890.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

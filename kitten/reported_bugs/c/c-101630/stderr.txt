@@ -1,0 +1,108 @@
+mutant.c:1:29: error: ‘N’ undeclared here (not in a function)
+
+    1 | int printf ( char a [ 2 ] [ N ] , ... ) ;
+
+      |                             ^
+
+mutant.c: In function ‘foo’:
+
+mutant.c:3:17: error: type of formal parameter 1 is incomplete
+
+    3 | return printf ( printf ) ;
+
+      |                 ^~~~~~
+
+mutant.c:3:1: internal compiler error: in get_constant, at c-family/c-format.c:325
+
+    3 | return printf ( printf ) ;
+
+      | ^~~~~~
+
+0x675c97 get_constant
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c-family/c-format.c:325
+
+0x675c97 get_constant
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c-family/c-format.c:313
+
+0x9b061e decode_format_attr
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c-family/c-format.c:377
+
+0x9b2894 check_function_format(tree_node const*, tree_node*, int, tree_node**, vec<unsigned int, va_heap, vl_ptr>*)
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c-family/c-format.c:1173
+
+0x9a1c86 check_function_arguments(unsigned int, tree_node const*, tree_node const*, int, tree_node**, vec<unsigned int, va_heap, vl_ptr>*)
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c-family/c-common.c:5981
+
+0x92a0eb build_function_call_vec(unsigned int, vec<unsigned int, va_heap, vl_ptr>, tree_node*, vec<tree_node*, va_gc, vl_embed>*, vec<tree_node*, va_gc, vl_embed>*, tree_node*)
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c/c-typeck.c:3195
+
+0x94b27a c_parser_postfix_expression_after_primary
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c/c-parser.c:10505
+
+0x93bc65 c_parser_postfix_expression
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c/c-parser.c:10178
+
+0x946141 c_parser_unary_expression
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c/c-parser.c:8224
+
+0x94780f c_parser_cast_expression
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c/c-parser.c:8066
+
+0x947abf c_parser_binary_expression
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c/c-parser.c:7869
+
+0x948da8 c_parser_conditional_expression
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c/c-parser.c:7592
+
+0x949420 c_parser_expr_no_commas
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c/c-parser.c:7507
+
+0x9496b1 c_parser_expression
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c/c-parser.c:10641
+
+0x949e87 c_parser_expression_conv
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c/c-parser.c:10680
+
+0x95dff0 c_parser_statement_after_labels
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c/c-parser.c:6160
+
+0x95f594 c_parser_compound_statement_nostart
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c/c-parser.c:5788
+
+0x95fc84 c_parser_compound_statement
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c/c-parser.c:5597
+
+0x961672 c_parser_declaration_or_fndef
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c/c-parser.c:2539
+
+0x968ff3 c_parser_external_declaration
+
+	/tmp/tmp.L6oVb4kJw3-gcc-builder/gcc/gcc/c/c-parser.c:1777
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

@@ -1,0 +1,18 @@
+An exception has occurred in the compiler (16-internal). Please file a bug against the Java compiler via the Java bug reporting page (http://bugreport.java.com) after checking the Bug Database (http://bugs.java.com) for duplicates. Include your program, the following diagnostic, and the parameters passed to the Java compiler in your report. Thank you.
+java.lang.AssertionError: CRT: tree source positions are undefined
+at jdk.compiler/com.sun.tools.javac.util.Assert.error(Assert.java:162)
+at jdk.compiler/com.sun.tools.javac.util.Assert.checkNonNull(Assert.java:137)
+at jdk.compiler/com.sun.tools.javac.jvm.CRTable.writeCRT(CRTable.java:107)
+at jdk.compiler/com.sun.tools.javac.jvm.ClassWriter.writeCode(ClassWriter.java:1051)
+at jdk.compiler/com.sun.tools.javac.jvm.ClassWriter.writeMethod(ClassWriter.java:987)
+at jdk.compiler/com.sun.tools.javac.jvm.ClassWriter.writeMethods(ClassWriter.java:1478)
+at jdk.compiler/com.sun.tools.javac.jvm.ClassWriter.writeClassFile(ClassWriter.java:1583)
+at jdk.compiler/com.sun.tools.javac.jvm.ClassWriter.writeClass(ClassWriter.java:1504)
+at jdk.compiler/com.sun.tools.javac.main.JavaCompiler.genCode(JavaCompiler.java:757)
+at jdk.compiler/com.sun.tools.javac.main.JavaCompiler.generate(JavaCompiler.java:1644)
+at jdk.compiler/com.sun.tools.javac.main.JavaCompiler.generate(JavaCompiler.java:1612)
+at jdk.compiler/com.sun.tools.javac.main.JavaCompiler.compile(JavaCompiler.java:973)
+at jdk.compiler/com.sun.tools.javac.main.Main.compile(Main.java:317)
+at jdk.compiler/com.sun.tools.javac.main.Main.compile(Main.java:176)
+at jdk.compiler/com.sun.tools.javac.Main.compile(Main.java:64)
+at jdk.compiler/com.sun.tools.javac.Main.main(Main.java:50)

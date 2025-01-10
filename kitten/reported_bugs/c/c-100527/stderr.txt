@@ -1,0 +1,84 @@
+mutant.c:1:5: error: ‘__GIMPLE’ only valid with ‘-fgimple’
+
+    1 | int __GIMPLE foo ( int a )
+
+      |     ^~~~~~~~
+
+mutant.c: In function ‘foo’:
+
+mutant.c:4:22: error: base variable or SSA name undeclared before ‘=’ token
+
+    4 | __builtin_abs ; t1_1 = __builtin_abs ( a ) ;
+
+      |                      ^
+
+mutant.c:4:22: internal compiler error: Segmentation fault
+
+0xef7273 crash_signal
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/toplev.c:327
+
+0xa1e00e flags_from_decl_or_type(tree_node const*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/calls.c:810
+
+0xbe2c32 gimple_call_flags(gimple const*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple.c:1474
+
+0xbe2d9c gimple_call_reset_alias_info(gcall*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple.c:210
+
+0xbe2ef6 gimple_build_call_1
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple.c:235
+
+0xbe2ef6 gimple_build_call_from_tree(tree_node*, tree_node*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple.c:375
+
+0x953d58 c_parser_gimple_statement
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/gimple-parser.c:851
+
+0x953d58 c_parser_gimple_compound_statement
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/gimple-parser.c:650
+
+0x953d58 c_parser_gimple_compound_statement
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/gimple-parser.c:381
+
+0x954fa7 c_parser_parse_gimple_body(c_parser*, char*, c_declspec_il, profile_count)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/gimple-parser.c:253
+
+0x944187 c_parser_declaration_or_fndef
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:2533
+
+0x94b9d3 c_parser_external_declaration
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:1777
+
+0x94c439 c_parser_translation_unit
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:1650
+
+0x94c439 c_parse_file()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c/c-parser.c:21984
+
+0x9ac765 c_common_parse_file()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/c-family/c-opts.c:1218
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

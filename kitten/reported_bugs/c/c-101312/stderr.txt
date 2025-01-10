@@ -1,0 +1,158 @@
+mutant.c:1:1: error: ‘TYPE_CANONICAL’ of main variant is not main variant
+
+    1 | static const char b [ 1 ] __attribute__ ( ( may_alias ) ) ;
+
+      | ^~~~~~
+
+ <array_type 0x7f10298d4f18
+
+    type <integer_type 0x7f10297c7498 char readonly QI
+
+        size <integer_cst 0x7f10297a0de0 constant 8>
+
+        unit-size <integer_cst 0x7f10297a0df8 constant 1>
+
+        align:8 warn_if_not_align:0 symtab:0 alias-set -1 canonical-type 0x7f10297c7498 precision:8 min <integer_cst 0x7f10297a0e28 -128> max <integer_cst 0x7f10297a0e58 127>
+
+        pointer_to_this <pointer_type 0x7f10297c7540>>
+
+    QI size <integer_cst 0x7f10297a0de0 8> unit-size <integer_cst 0x7f10297a0df8 1>
+
+    align:8 warn_if_not_align:0 symtab:0 alias-set -1 canonical-type 0x7f10298d4f18
+
+    domain <integer_type 0x7f10297c4b28
+
+        type <integer_type 0x7f10297b9000 sizetype public unsigned DI
+
+            size <integer_cst 0x7f10297a0cf0 constant 64>
+
+            unit-size <integer_cst 0x7f10297a0d08 constant 8>
+
+            align:64 warn_if_not_align:0 symtab:0 alias-set -1 canonical-type 0x7f10297b9000 precision:64 min <integer_cst 0x7f10297a0d20 0> max <integer_cst 0x7f10297a14c0 18446744073709551615>>
+
+        DI size <integer_cst 0x7f10297a0cf0 64> unit-size <integer_cst 0x7f10297a0d08 8>
+
+        align:64 warn_if_not_align:0 symtab:0 alias-set -1 canonical-type 0x7f10297c4b28 precision:64 min <integer_cst 0x7f10297a0d20 0> max <integer_cst 0x7f10297a0d20 0>>>
+
+ <array_type 0x7f10298d4e70
+
+    type <integer_type 0x7f10297b93f0 char public QI
+
+        size <integer_cst 0x7f10297a0de0 constant 8>
+
+        unit-size <integer_cst 0x7f10297a0df8 constant 1>
+
+        align:8 warn_if_not_align:0 symtab:0 alias-set -1 canonical-type 0x7f10297b93f0 precision:8 min <integer_cst 0x7f10297a0e28 -128> max <integer_cst 0x7f10297a0e58 127>
+
+        pointer_to_this <pointer_type 0x7f10297c4c78>>
+
+    QI size <integer_cst 0x7f10297a0de0 8> unit-size <integer_cst 0x7f10297a0df8 1>
+
+    align:8 warn_if_not_align:0 symtab:0 alias-set -1 canonical-type 0x7f10298d4e70
+
+    domain <integer_type 0x7f10297c4b28
+
+        type <integer_type 0x7f10297b9000 sizetype public unsigned DI
+
+            size <integer_cst 0x7f10297a0cf0 constant 64>
+
+            unit-size <integer_cst 0x7f10297a0d08 constant 8>
+
+            align:64 warn_if_not_align:0 symtab:0 alias-set -1 canonical-type 0x7f10297b9000 precision:64 min <integer_cst 0x7f10297a0d20 0> max <integer_cst 0x7f10297a14c0 18446744073709551615>>
+
+        DI size <integer_cst 0x7f10297a0cf0 64> unit-size <integer_cst 0x7f10297a0d08 8>
+
+        align:64 warn_if_not_align:0 symtab:0 alias-set -1 canonical-type 0x7f10297c4b28 precision:64 min <integer_cst 0x7f10297a0d20 0> max <integer_cst 0x7f10297a0d20 0>>>
+
+ <array_type 0x7f10298d43f0
+
+    type <integer_type 0x7f10297c7498 char readonly QI
+
+        size <integer_cst 0x7f10297a0de0 constant 8>
+
+        unit-size <integer_cst 0x7f10297a0df8 constant 1>
+
+        align:8 warn_if_not_align:0 symtab:0 alias-set -1 canonical-type 0x7f10297c7498 precision:8 min <integer_cst 0x7f10297a0e28 -128> max <integer_cst 0x7f10297a0e58 127>
+
+        pointer_to_this <pointer_type 0x7f10297c7540>>
+
+    QI size <integer_cst 0x7f10297a0de0 8> unit-size <integer_cst 0x7f10297a0df8 1>
+
+    align:8 warn_if_not_align:0 symtab:0 alias-set -1 canonical-type 0x7f10298d4f18
+
+    attributes <tree_list 0x7f10298d2f78
+
+        purpose <identifier_node 0x7f10298ed230 may_alias>>
+
+    domain <integer_type 0x7f10297c4b28
+
+        type <integer_type 0x7f10297b9000 sizetype public unsigned DI
+
+            size <integer_cst 0x7f10297a0cf0 constant 64>
+
+            unit-size <integer_cst 0x7f10297a0d08 constant 8>
+
+            align:64 warn_if_not_align:0 symtab:0 alias-set -1 canonical-type 0x7f10297b9000 precision:64 min <integer_cst 0x7f10297a0d20 0> max <integer_cst 0x7f10297a14c0 18446744073709551615>>
+
+        DI size <integer_cst 0x7f10297a0cf0 64> unit-size <integer_cst 0x7f10297a0d08 8>
+
+        align:64 warn_if_not_align:0 symtab:0 alias-set -1 canonical-type 0x7f10297c4b28 precision:64 min <integer_cst 0x7f10297a0d20 0> max <integer_cst 0x7f10297a0d20 0>>>
+
+mutant.c:1:1: internal compiler error: ‘verify_type’ failed
+
+0x1242fe8 verify_type(tree_node const*)
+
+	/tmp/tmp.15GJ8PF8pO-gcc-builder/gcc/gcc/tree.c:13796
+
+0xb20aa4 gen_type_die_with_usage
+
+	/tmp/tmp.15GJ8PF8pO-gcc-builder/gcc/gcc/dwarf2out.c:25960
+
+0xb22806 gen_type_die
+
+	/tmp/tmp.15GJ8PF8pO-gcc-builder/gcc/gcc/dwarf2out.c:26191
+
+0xb3bddb gen_decl_die
+
+	/tmp/tmp.15GJ8PF8pO-gcc-builder/gcc/gcc/dwarf2out.c:26869
+
+0xb3cda6 dwarf2out_decl
+
+	/tmp/tmp.15GJ8PF8pO-gcc-builder/gcc/gcc/dwarf2out.c:27385
+
+0xb3cfd0 dwarf2out_early_global_decl
+
+	/tmp/tmp.15GJ8PF8pO-gcc-builder/gcc/gcc/dwarf2out.c:27035
+
+0x8f637b finish_decl(tree_node*, unsigned int, tree_node*, tree_node*, tree_node*)
+
+	/tmp/tmp.15GJ8PF8pO-gcc-builder/gcc/gcc/c/c-decl.c:5537
+
+0x95a50b c_parser_declaration_or_fndef
+
+	/tmp/tmp.15GJ8PF8pO-gcc-builder/gcc/gcc/c/c-parser.c:2370
+
+0x962f73 c_parser_external_declaration
+
+	/tmp/tmp.15GJ8PF8pO-gcc-builder/gcc/gcc/c/c-parser.c:1777
+
+0x9639d9 c_parser_translation_unit
+
+	/tmp/tmp.15GJ8PF8pO-gcc-builder/gcc/gcc/c/c-parser.c:1650
+
+0x9639d9 c_parse_file()
+
+	/tmp/tmp.15GJ8PF8pO-gcc-builder/gcc/gcc/c/c-parser.c:22121
+
+0x9c5a75 c_common_parse_file()
+
+	/tmp/tmp.15GJ8PF8pO-gcc-builder/gcc/gcc/c-family/c-opts.c:1219
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

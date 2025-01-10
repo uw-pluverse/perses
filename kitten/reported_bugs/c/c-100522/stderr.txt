@@ -1,0 +1,66 @@
+mutant.c:1:5: error: ‘__GIMPLE’ only valid with ‘-fgimple’
+
+    1 | int __GIMPLE foo ( int a )
+
+      |     ^~~~~~~~
+
+mutant.c: In function ‘foo’:
+
+mutant.c:4:1: internal compiler error: in extract_ops_from_tree, at gimple-expr.c:556
+
+    4 | t1_1 = t1_1 ( a ) ;
+
+      | ^~~~
+
+0x6cbc8e extract_ops_from_tree(tree_node*, tree_code*, tree_node**, tree_node**, tree_node**)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple-expr.c:556
+
+0xbe1300 gimple_build_assign(tree_node*, tree_node*)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/gimple.c:436
+
+0x952c5a c_parser_gimple_statement
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/c/gimple-parser.c:880
+
+0x952c5a c_parser_gimple_compound_statement
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/c/gimple-parser.c:650
+
+0x952c5a c_parser_gimple_compound_statement
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/c/gimple-parser.c:381
+
+0x954fe7 c_parser_parse_gimple_body(c_parser*, char*, c_declspec_il, profile_count)
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/c/gimple-parser.c:253
+
+0x9441c7 c_parser_declaration_or_fndef
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/c/c-parser.c:2533
+
+0x94ba13 c_parser_external_declaration
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/c/c-parser.c:1777
+
+0x94c479 c_parser_translation_unit
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/c/c-parser.c:1650
+
+0x94c479 c_parse_file()
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/c/c-parser.c:21984
+
+0x9ac7a5 c_common_parse_file()
+
+	/tmp/tmp.FRQzt2wMfl-gcc-builder/gcc/gcc/c-family/c-opts.c:1218
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

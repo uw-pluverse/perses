@@ -1,0 +1,3 @@
+unsigned int clang::GenericSelectionExpr::getResultIndex() const: Assertion `!isResultDependent() && "Generic selection is result-dependent but getResultIndex called!"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

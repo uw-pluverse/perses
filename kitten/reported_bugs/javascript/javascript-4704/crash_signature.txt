@@ -1,0 +1,4 @@
+jerryscript/jerry-core/ecma/builtin-objects/ecma-builtin-helpers-date.c
+runtime error: signed integer overflow:
+*
+cannot be represented in type 'int'

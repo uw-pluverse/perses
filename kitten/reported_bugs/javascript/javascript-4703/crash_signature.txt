@@ -1,0 +1,4 @@
+jerryscript/jerry-core/vm/vm.c
+runtime error: left shift of
+by
+places cannot be represented in type 'int'

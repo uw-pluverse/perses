@@ -1,0 +1,168 @@
+mutant.c:1:5: warning: no previous extern declaration for non-static variable 'A' [-Wmissing-variable-declarations]
+
+int A [ 10 ] = { 1 , 2 , 3 , 4 , 5 } ;
+
+    ^
+
+mutant.c:1:1: note: declare 'static' if the variable is not intended to be used outside of this translation unit
+
+int A [ 10 ] = { 1 , 2 , 3 , 4 , 5 } ;
+
+^
+
+mutant.c:3:6: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+void foo ( ) { x [ 0 ] = 1 ; }
+
+     ^
+
+mutant.c:3:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void foo ( ) { x [ 0 ] = 1 ; }
+
+^
+
+static 
+
+mutant.c:3:10: warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+
+void foo ( ) { x [ 0 ] = 1 ; }
+
+         ^
+
+mutant.c:4:25: error: unknown type name '__m128i'
+
+int x [ 10 ] ; volatile __m128i y ;
+
+                        ^
+
+clang-trunk: /tmp/tmp.B1HwadcXIH-clang-builder/llvm-project/clang/lib/AST/ExprConstant.cpp:1669: void {anonymous}::LValue::addUnsizedArray({anonymous}::EvalInfo&, const clang::Expr*, clang::QualType): Assertion `getType(Base)->isPointerType() || getType(Base)->isArrayType()' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:6:14: current parser token ';'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x39591f4)[0x56317a46b1f4]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x56317a469014]
+
+clang-trunk(+0x389de48)[0x56317a3afe48]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f9a1cb863c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f9a1c62518b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f9a1c604859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f9a1c604729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f9a1c615f36]
+
+clang-trunk(+0x6a222f5)[0x56317d5342f5]
+
+clang-trunk(+0x6a333c7)[0x56317d5453c7]
+
+clang-trunk(+0x6aa0246)[0x56317d5b2246]
+
+clang-trunk(+0x6a6f535)[0x56317d581535]
+
+clang-trunk(+0x6a9ff30)[0x56317d5b1f30]
+
+clang-trunk(+0x6a6f535)[0x56317d581535]
+
+clang-trunk(+0x6a707c6)[0x56317d5827c6]
+
+clang-trunk(+0x6a509a5)[0x56317d5629a5]
+
+clang-trunk(+0x6a5ac89)[0x56317d56cc89]
+
+clang-trunk(_ZNK5clang4Expr16EvaluateAsRValueERNS0_10EvalResultERKNS_10ASTContextEb+0x1ff)[0x56317d56ed4f]
+
+clang-trunk(_ZNK5clang4Expr13isEvaluatableERKNS_10ASTContextENS0_15SideEffectsKindE+0x54)[0x56317d56edd4]
+
+clang-trunk(_ZNK5clang4Expr21isConstantInitializerERNS_10ASTContextEbPPKS0_+0x120)[0x56317d52f100]
+
+clang-trunk(_ZN5clang4Sema27CheckForConstantInitializerEPNS_4ExprENS_8QualTypeE+0x74)[0x56317c906d54]
+
+clang-trunk(_ZN5clang4Sema20AddInitializerToDeclEPNS_4DeclEPNS_4ExprEb+0x11c4)[0x56317c94e874]
+
+clang-trunk(_ZN5clang6Parser44ParseDeclarationAfterDeclaratorAndAttributesERNS_10DeclaratorERKNS0_18ParsedTemplateInfoEPNS0_12ForRangeInitE+0x636)[0x56317c6a45c6]
+
+clang-trunk(_ZN5clang6Parser14ParseDeclGroupERNS_15ParsingDeclSpecENS_17DeclaratorContextEPNS_14SourceLocationEPNS0_12ForRangeInitE+0x4db)[0x56317c6b74ab]
+
+clang-trunk(_ZN5clang6Parser30ParseDeclOrFunctionDefInternalERNS_25ParsedAttributesWithRangeERNS_15ParsingDeclSpecENS_15AccessSpecifierE+0x226)[0x56317c6855b6]
+
+clang-trunk(+0x5b73ba1)[0x56317c685ba1]
+
+clang-trunk(_ZN5clang6Parser24ParseExternalDeclarationERNS_25ParsedAttributesWithRangeEPNS_15ParsingDeclSpecE+0x217)[0x56317c68c3a7]
+
+clang-trunk(_ZN5clang6Parser17ParseTopLevelDeclERNS_9OpaquePtrINS_12DeclGroupRefEEEb+0x1ce)[0x56317c68d93e]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x219)[0x56317c680189]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x56317b5c7458]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x56317ae769e9]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x56317ae09c36]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x56317af54870]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x563177d74696]
+
+clang-trunk(+0x125e9d8)[0x563177d709d8]
+
+clang-trunk(+0x4188bb9)[0x56317ac9abb9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x56317a3affcc]
+
+clang-trunk(+0x418935d)[0x56317ac9b35d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x56317ac6daeb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x56317ac6e609]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x56317ac791b9]
+
+clang-trunk(main+0x18af)[0x563177c9f52f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f9a1c6060b3]
+
+clang-trunk(_start+0x2e)[0x563177d7054e]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git ef906573a127cffef7cae75d5155c15a8a2a3a5e)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-5ffe65.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-5ffe65.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

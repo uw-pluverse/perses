@@ -1,0 +1,3 @@
+jerryscript/jerry-core/ecma/base/ecma-helpers-collection.c
+runtime error: null pointer passed as argument
+, which is declared to never be null

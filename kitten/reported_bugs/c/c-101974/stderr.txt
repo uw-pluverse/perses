@@ -1,0 +1,80 @@
+mutant.c:2:1: error: wrong number of arguments specified for ‘access’ attribute
+
+    2 | access_v ( void ) ;
+
+      | ^~~~~~~~
+
+mutant.c:2:1: note: expected between 1 and 3, found 0
+
+mutant.c:4:1: error: wrong number of arguments specified for ‘access’ attribute
+
+    4 | access___v ( void ) ;
+
+      | ^~~~~~~~~~
+
+mutant.c:4:1: note: expected between 1 and 3, found 0
+
+mutant.c:6:1: error: attribute ‘access’ invalid mode ‘rdonly’; expected one of ‘read_only’, ‘read_write’, ‘write_only’, or ‘none’
+
+    6 | rdonly_spelling ( void ) ;
+
+      | ^~~~~~~~~~~~~~~
+
+mutant.c:8:1: internal compiler error: in from_mode_char, at attribs.h:304
+
+    8 | rdonly_v_all ( void ) ;
+
+      | ^~~~~~~~~~~~
+
+0x64da68 attr_access::from_mode_char(char)
+
+	/tmp/tmp.Jmk5E4VqDy-gcc-builder/gcc/gcc/attribs.h:304
+
+0x64da68 init_attr_rdwr_indices(hash_map<rdwr_access_hash, attr_access, simple_hashmap_traits<default_hash_traits<rdwr_access_hash>, attr_access> >*, tree_node*)
+
+	/tmp/tmp.Jmk5E4VqDy-gcc-builder/gcc/gcc/attribs.c:2138
+
+0x9f7d42 append_access_attr
+
+	/tmp/tmp.Jmk5E4VqDy-gcc-builder/gcc/gcc/c-family/c-attribs.c:4472
+
+0x9f8b52 handle_access_attribute
+
+	/tmp/tmp.Jmk5E4VqDy-gcc-builder/gcc/gcc/c-family/c-attribs.c:4718
+
+0x8f0796 decl_attributes(tree_node**, tree_node*, int, tree_node*)
+
+	/tmp/tmp.Jmk5E4VqDy-gcc-builder/gcc/gcc/attribs.c:715
+
+0x90cf5e start_decl(c_declarator*, c_declspecs*, bool, tree_node*, unsigned int*)
+
+	/tmp/tmp.Jmk5E4VqDy-gcc-builder/gcc/gcc/c/c-decl.c:5201
+
+0x96aee5 c_parser_declaration_or_fndef
+
+	/tmp/tmp.Jmk5E4VqDy-gcc-builder/gcc/gcc/c/c-parser.c:2306
+
+0x973ee3 c_parser_external_declaration
+
+	/tmp/tmp.Jmk5E4VqDy-gcc-builder/gcc/gcc/c/c-parser.c:1778
+
+0x974949 c_parser_translation_unit
+
+	/tmp/tmp.Jmk5E4VqDy-gcc-builder/gcc/gcc/c/c-parser.c:1651
+
+0x974949 c_parse_file()
+
+	/tmp/tmp.Jmk5E4VqDy-gcc-builder/gcc/gcc/c/c-parser.c:22272
+
+0x9d6a45 c_common_parse_file()
+
+	/tmp/tmp.Jmk5E4VqDy-gcc-builder/gcc/gcc/c-family/c-opts.c:1223
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

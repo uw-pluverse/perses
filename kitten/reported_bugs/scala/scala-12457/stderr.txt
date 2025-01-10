@@ -1,0 +1,130 @@
+exception occurred while compiling mutant.scala
+
+Exception in thread "main" dotty.tools.dotc.ast.Trees$UnAssignedTypeException: type of Ident(R) is not assigned
+
+	at dotty.tools.dotc.ast.Trees$Tree.tpe(Trees.scala:79)
+
+	at dotty.tools.dotc.ast.tpd$.tpes(tpd.scala:1166)
+
+	at dotty.tools.dotc.core.TypeOps$.boundsViolations(TypeOps.scala:551)
+
+	at dotty.tools.dotc.typer.Checking$.checkBounds(Checking.scala:73)
+
+	at dotty.tools.dotc.typer.Checking$.checkAppliedType(Checking.scala:112)
+
+	at dotty.tools.dotc.transform.PostTyper$PostTyperTransformer.transform(PostTyper.scala:385)
+
+	at dotty.tools.dotc.ast.Trees$Instance$TreeMap.transform(Trees.scala:1389)
+
+	at dotty.tools.dotc.transform.MacroTransform$Transformer.transform(MacroTransform.scala:60)
+
+	at dotty.tools.dotc.transform.PostTyper$PostTyperTransformer.transform(PostTyper.scala:433)
+
+	at dotty.tools.dotc.ast.Trees$Instance$TreeMap.transform(Trees.scala:1410)
+
+	at dotty.tools.dotc.transform.MacroTransform$Transformer.transform(MacroTransform.scala:51)
+
+	at dotty.tools.dotc.transform.PostTyper$PostTyperTransformer.transform(PostTyper.scala:368)
+
+	at dotty.tools.dotc.ast.Trees$Instance$TreeMap.transform$$anonfun$1(Trees.scala:1437)
+
+	at scala.collection.immutable.List.mapConserve(List.scala:472)
+
+	at dotty.tools.dotc.ast.Trees$Instance$TreeMap.transform(Trees.scala:1437)
+
+	at dotty.tools.dotc.ast.Trees$Instance$TreeMap.transformParams(Trees.scala:1443)
+
+	at dotty.tools.dotc.ast.Trees$Instance$TreeMap.transformParamss$$anonfun$1(Trees.scala:1445)
+
+	at scala.collection.immutable.List.mapConserve(List.scala:472)
+
+	at dotty.tools.dotc.ast.Trees$Instance$TreeMap.transformParamss(Trees.scala:1445)
+
+	at dotty.tools.dotc.ast.Trees$Instance$TreeMap.transform(Trees.scala:1406)
+
+	at dotty.tools.dotc.transform.MacroTransform$Transformer.transform(MacroTransform.scala:51)
+
+	at dotty.tools.dotc.transform.PostTyper$PostTyperTransformer.transform$$anonfun$5(PostTyper.scala:351)
+
+	at dotty.tools.dotc.transform.SuperAccessors.wrapDefDef(SuperAccessors.scala:225)
+
+	at dotty.tools.dotc.transform.PostTyper$PostTyperTransformer.transform(PostTyper.scala:351)
+
+	at dotty.tools.dotc.ast.Trees$Instance$TreeMap.transformSub(Trees.scala:1439)
+
+	at dotty.tools.dotc.transform.MacroTransform$Transformer.transform(MacroTransform.scala:54)
+
+	at dotty.tools.dotc.transform.PostTyper$PostTyperTransformer.transform$$anonfun$8$$anonfun$1(PostTyper.scala:342)
+
+	at dotty.tools.dotc.transform.SuperAccessors.wrapTemplate(SuperAccessors.scala:210)
+
+	at dotty.tools.dotc.transform.PostTyper$PostTyperTransformer.transform$$anonfun$4(PostTyper.scala:342)
+
+	at dotty.tools.dotc.transform.PostTyper$PostTyperTransformer.withNoCheckNews(PostTyper.scala:98)
+
+	at dotty.tools.dotc.transform.PostTyper$PostTyperTransformer.transform(PostTyper.scala:344)
+
+	at dotty.tools.dotc.ast.Trees$Instance$TreeMap.transform(Trees.scala:1410)
+
+	at dotty.tools.dotc.transform.MacroTransform$Transformer.transform(MacroTransform.scala:51)
+
+	at dotty.tools.dotc.transform.PostTyper$PostTyperTransformer.transform(PostTyper.scala:368)
+
+	at dotty.tools.dotc.transform.MacroTransform$Transformer.transformStat$1(MacroTransform.scala:39)
+
+	at dotty.tools.dotc.transform.MacroTransform$Transformer.transformStats$$anonfun$1(MacroTransform.scala:42)
+
+	at dotty.tools.dotc.core.Decorators$ListDecorator$.loop$1(Decorators.scala:92)
+
+	at dotty.tools.dotc.core.Decorators$ListDecorator$.mapconserve$extension(Decorators.scala:108)
+
+	at dotty.tools.dotc.transform.MacroTransform$Transformer.transformStats(MacroTransform.scala:42)
+
+	at dotty.tools.dotc.ast.Trees$Instance$TreeMap.transform(Trees.scala:1421)
+
+	at dotty.tools.dotc.transform.MacroTransform$Transformer.transform(MacroTransform.scala:51)
+
+	at dotty.tools.dotc.transform.PostTyper$PostTyperTransformer.transform(PostTyper.scala:433)
+
+	at dotty.tools.dotc.transform.MacroTransform.run(MacroTransform.scala:21)
+
+	at dotty.tools.dotc.core.Phases$Phase.runOn$$anonfun$1(Phases.scala:303)
+
+	at scala.collection.immutable.List.map(List.scala:246)
+
+	at dotty.tools.dotc.core.Phases$Phase.runOn(Phases.scala:304)
+
+	at dotty.tools.dotc.Run.runPhases$4$$anonfun$4(Run.scala:205)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)
+
+	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)
+
+	at scala.collection.ArrayOps$.foreach$extension(ArrayOps.scala:1323)
+
+	at dotty.tools.dotc.Run.runPhases$5(Run.scala:216)
+
+	at dotty.tools.dotc.Run.compileUnits$$anonfun$1(Run.scala:224)
+
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+
+	at dotty.tools.dotc.util.Stats$.maybeMonitored(Stats.scala:67)
+
+	at dotty.tools.dotc.Run.compileUnits(Run.scala:231)
+
+	at dotty.tools.dotc.Run.compileSources(Run.scala:166)
+
+	at dotty.tools.dotc.Run.compile(Run.scala:150)
+
+	at dotty.tools.dotc.Driver.doCompile(Driver.scala:39)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:199)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:167)
+
+	at dotty.tools.dotc.Driver.process(Driver.scala:179)
+
+	at dotty.tools.dotc.Driver.main(Driver.scala:209)
+
+	at dotty.tools.dotc.Main.main(Main.scala)
+

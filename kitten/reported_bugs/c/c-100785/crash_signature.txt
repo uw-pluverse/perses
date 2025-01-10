@@ -1,0 +1,4 @@
+internal compiler error: in expand_asm_stmt, at cfgexpand.c
+expand_asm_stmt
+expand_gimple_stmt_1
+expand_gimple_stmt

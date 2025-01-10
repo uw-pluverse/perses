@@ -1,0 +1,92 @@
+mutant.c:3:51: error: invalid application of ‘sizeof’ to incomplete type ‘struct z’
+
+    3 | foo ( char * cp1 , char * cp2 , char f [ sizeof ( struct z ) != 48 ? - 1 : 1 ] , char * cp4 )
+
+      |                                                   ^~~~~~
+
+mutant.c:3:58: warning: ‘struct z’ declared inside parameter list will not be visible outside of this definition or declaration
+
+    3 | foo ( char * cp1 , char * cp2 , char f [ sizeof ( struct z ) != 48 ? - 1 : 1 ] , char * cp4 )
+
+      |                                                          ^
+
+‘
+
+in print_type, at c/c-objc-common.c:188
+
+    4 | {
+
+      | ^
+
+0x654caa print_type
+
+	/tmp/tmp.8ampfMaoxc-gcc-builder/gcc/gcc/c/c-objc-common.c:188
+
+0x91d34a c_tree_printer
+
+	/tmp/tmp.8ampfMaoxc-gcc-builder/gcc/gcc/c/c-objc-common.c:310
+
+0x91d34a c_tree_printer
+
+	/tmp/tmp.8ampfMaoxc-gcc-builder/gcc/gcc/c/c-objc-common.c:254
+
+0x1b33ddc pp_format(pretty_printer*, text_info*)
+
+	/tmp/tmp.8ampfMaoxc-gcc-builder/gcc/gcc/pretty-print.c:1475
+
+0x1b1845c diagnostic_report_diagnostic(diagnostic_context*, diagnostic_info*)
+
+	/tmp/tmp.8ampfMaoxc-gcc-builder/gcc/gcc/diagnostic.c:1244
+
+0x1b1899e diagnostic_impl
+
+	/tmp/tmp.8ampfMaoxc-gcc-builder/gcc/gcc/diagnostic.c:1406
+
+0x1b18ec9 warning(int, char const*, ...)
+
+	/tmp/tmp.8ampfMaoxc-gcc-builder/gcc/gcc/diagnostic.c:1527
+
+0x9cf4d1 positional_argument(tree_node const*, tree_node const*, tree_node*, tree_code, int, int)
+
+	/tmp/tmp.8ampfMaoxc-gcc-builder/gcc/gcc/c-family/c-attribs.c:748
+
+0x9cf842 handle_nonnull_attribute
+
+	/tmp/tmp.8ampfMaoxc-gcc-builder/gcc/gcc/c-family/c-attribs.c:4338
+
+0x8cd976 decl_attributes(tree_node**, tree_node*, int, tree_node*)
+
+	/tmp/tmp.8ampfMaoxc-gcc-builder/gcc/gcc/attribs.c:723
+
+0x8ea617 start_function(c_declspecs*, c_declarator*, tree_node*)
+
+	/tmp/tmp.8ampfMaoxc-gcc-builder/gcc/gcc/c/c-decl.c:9436
+
+0x94718e c_parser_declaration_or_fndef
+
+	/tmp/tmp.8ampfMaoxc-gcc-builder/gcc/gcc/c/c-parser.c:2440
+
+0x94f453 c_parser_external_declaration
+
+	/tmp/tmp.8ampfMaoxc-gcc-builder/gcc/gcc/c/c-parser.c:1777
+
+0x94feb9 c_parser_translation_unit
+
+	/tmp/tmp.8ampfMaoxc-gcc-builder/gcc/gcc/c/c-parser.c:1650
+
+0x94feb9 c_parse_file()
+
+	/tmp/tmp.8ampfMaoxc-gcc-builder/gcc/gcc/c/c-parser.c:21994
+
+0x9b0285 c_common_parse_file()
+
+	/tmp/tmp.8ampfMaoxc-gcc-builder/gcc/gcc/c-family/c-opts.c:1219
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

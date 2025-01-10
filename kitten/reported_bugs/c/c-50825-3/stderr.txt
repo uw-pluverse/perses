@@ -1,0 +1,134 @@
+mutant.c:5:1: warning: extension used [-Wlanguage-extension-token]
+
+asm ( "# %0" : "+fvm" ( x ) ) ;
+
+^
+
+mutant.c:2:1: warning: no previous prototype for function 'foo' [-Wmissing-prototypes]
+
+foo ( long double x )
+
+^
+
+mutant.c:1:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+long double
+
+^
+
+static 
+
+clang-trunk: /tmp/tmp.CwcktpYo8l-clang-builder/llvm-project/llvm/lib/Target/X86/X86FloatingPoint.cpp:1383: void {anonymous}::FPS::handleTwoArgFP(llvm::MachineBasicBlock::iterator&): Assertion `UpdatedSlot < StackTop && Dest < 7' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	Code generation
+
+3.	Running pass 'Function Pass Manager' on module 'mutant.c'.
+
+4.	Running pass 'X86 FP Stackifier' on function '@foo'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x3964a64)[0x555d89c19a64]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x555d89c17884]
+
+clang-trunk(+0x38a96c8)[0x555d89b5e6c8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f7031ee93c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f703198818b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f7031967859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f7031967729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f7031978f36]
+
+clang-trunk(+0x2423ac5)[0x555d886d8ac5]
+
+clang-trunk(+0x24248c7)[0x555d886d98c7]
+
+clang-trunk(_ZN4llvm19MachineFunctionPass13runOnFunctionERNS_8FunctionE+0x258)[0x555d88e379b8]
+
+clang-trunk(_ZN4llvm13FPPassManager13runOnFunctionERNS_8FunctionE+0x365)[0x555d8930f6c5]
+
+clang-trunk(_ZN4llvm13FPPassManager11runOnModuleERNS_6ModuleE+0x39)[0x555d8930f909]
+
+clang-trunk(_ZN4llvm6legacy15PassManagerImpl3runERNS_6ModuleE+0x382)[0x555d89310a02]
+
+clang-trunk(+0x3c9cc52)[0x555d89f51c52]
+
+clang-trunk(_ZN5clang17EmitBackendOutputERNS_17DiagnosticsEngineERKNS_19HeaderSearchOptionsERKNS_14CodeGenOptionsERKNS_13TargetOptionsERKNS_11LangOptionsEN4llvm9StringRefEPNSE_6ModuleENS_13BackendActionESt10unique_ptrINSE_17raw_pwrite_streamESt14default_deleteISK_EE+0x47d)[0x555d89f5370d]
+
+clang-trunk(+0x4acd31f)[0x555d8ad8231f]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x429)[0x555d8be39fe9]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x555d8ad80e68]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x555d8a62ba19]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x555d8a5beae6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x555d8a709440]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x555d8751b6b6]
+
+clang-trunk(+0x12629f8)[0x555d875179f8]
+
+clang-trunk(+0x419aad9)[0x555d8a44fad9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x555d89b5e84c]
+
+clang-trunk(+0x419b27d)[0x555d8a45027d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x555d8a422a0b]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x555d8a423529]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x555d8a42e0d9]
+
+clang-trunk(main+0x18af)[0x555d8744654f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f70319690b3]
+
+clang-trunk(_start+0x2e)[0x555d8751756e]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 716d2fedbfc8e67a478f2bee7024729f8f94ca10)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-8949b5.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-8949b5.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

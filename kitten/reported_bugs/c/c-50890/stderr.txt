@@ -1,0 +1,222 @@
+mutant.c:1:21: warning: extra tokens at end of #include directive [-Wextra-tokens]
+
+#include <stdarg.h> int i exit ( int ) ;
+
+                    ^
+
+                    //
+
+mutant.c:8:18: warning: extension used [-Wlanguage-extension-token]
+
+int j = sizeof ( typeof ( * ( ++ i , ( char ( * ) [ i ] ) a ) ) ) ;
+
+                 ^
+
+mutant.c:8:53: warning: variable length array used [-Wvla]
+
+int j = sizeof ( typeof ( * ( ++ i , ( char ( * ) [ i ] ) a ) ) ) ;
+
+                                                    ^
+
+mutant.c:8:36: warning: possible misuse of comma operator here [-Wcomma]
+
+int j = sizeof ( typeof ( * ( ++ i , ( char ( * ) [ i ] ) a ) ) ) ;
+
+                                   ^
+
+mutant.c:8:31: note: cast expression to void to silence warning
+
+int j = sizeof ( typeof ( * ( ++ i , ( char ( * ) [ i ] ) a ) ) ) ;
+
+                              ^~~~
+
+                              (void)( )
+
+mutant.c:5:1: warning: no previous prototype for function 'f1' [-Wmissing-prototypes]
+
+f1 ( void )
+
+^
+
+mutant.c:4:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void
+
+^
+
+static 
+
+mutant.c:8:9: warning: implicit conversion loses integer precision: 'unsigned long' to 'int' [-Wshorten-64-to-32]
+
+int j = sizeof ( typeof ( * ( ++ i , ( char ( * ) [ i ] ) a ) ) ) ;
+
+    ~   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+clang-trunk: /tmp/tmp.nPuVKAIgXI-clang-builder/llvm-project/clang/lib/CodeGen/CGExpr.cpp:2673: clang::CodeGen::LValue clang::CodeGen::CodeGenFunction::EmitDeclRefLValue(const clang::DeclRefExpr*): Assertion `E->isNonOdrUse() != NOUR_Unevaluated && "should not emit an unevaluated operand"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:12:1: current parser token 'int'
+
+2.	mutant.c:5:1: LLVM IR generation of declaration 'f1'
+
+3.	mutant.c:5:1: Generating code for declaration 'f1'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x3950274)[0x563f2e4a0274]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x563f2e49e094]
+
+clang-trunk(+0x3894ed8)[0x563f2e3e4ed8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f3f8b6e73c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f3f8b18618b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f3f8b165859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f3f8b165729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f3f8b176f36]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction17EmitDeclRefLValueEPKNS_11DeclRefExprE+0x219f)[0x563f2eb4491f]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction10EmitLValueEPKNS_4ExprE+0x659)[0x563f2eb3f029]
+
+clang-trunk(+0x40345c4)[0x563f2eb845c4]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction14EmitScalarExprEPKNS_4ExprEb+0x6a)[0x563f2eb84e8a]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction11EmitAnyExprEPKNS_4ExprENS0_12AggValueSlotEb+0xd7)[0x563f2eb2c177]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction15EmitIgnoredExprEPKNS_4ExprE+0x6e)[0x563f2eb4aaee]
+
+clang-trunk(+0x4033b75)[0x563f2eb83b75]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction14EmitScalarExprEPKNS_4ExprEb+0x6a)[0x563f2eb84e8a]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction24EmitPointerWithAlignmentEPKNS_4ExprEPNS0_14LValueBaseInfoEPNS0_14TBAAAccessInfoE+0xba)[0x563f2eb44c9a]
+
+clang-trunk(+0x3ffa22a)[0x563f2eb4a22a]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction17EmitUnaryOpLValueEPKNS_13UnaryOperatorE+0x31)[0x563f2eb4a6e1]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction10EmitLValueEPKNS_4ExprE+0x692)[0x563f2eb3f062]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction10EmitLValueEPKNS_4ExprE+0xe8)[0x563f2eb3eab8]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction15EmitIgnoredExprEPKNS_4ExprE+0x2f)[0x563f2eb4aaaf]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction24EmitVariablyModifiedTypeENS_8QualTypeE+0x44c)[0x563f2e89719c]
+
+clang-trunk(+0x4021f3d)[0x563f2eb71f3d]
+
+clang-trunk(+0x403365c)[0x563f2eb8365c]
+
+clang-trunk(+0x403af3d)[0x563f2eb8af3d]
+
+clang-trunk(+0x4032e4e)[0x563f2eb82e4e]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction14EmitScalarExprEPKNS_4ExprEb+0x6a)[0x563f2eb84e8a]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction14EmitScalarInitEPKNS_4ExprEPKNS_9ValueDeclENS0_6LValueEb+0x3a7)[0x563f2eb03f27]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction14EmitExprAsInitEPKNS_4ExprEPKNS_9ValueDeclENS0_6LValueEb+0x18d)[0x563f2eb049cd]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction15EmitAutoVarInitERKNS1_15AutoVarEmissionE+0x473)[0x563f2eb0ae33]
+
+clang-trunk(+0x3fbc3c9)[0x563f2eb0c3c9]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction8EmitDeclERKNS_4DeclE+0x1b0)[0x563f2eb0c760]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction12EmitDeclStmtERKNS_8DeclStmtE+0x87)[0x563f2e823317]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction14EmitSimpleStmtEPKNS_4StmtEN4llvm8ArrayRefIPKNS_4AttrEEE+0x14f)[0x563f2e835cdf]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction8EmitStmtEPKNS_4StmtEN4llvm8ArrayRefIPKNS_4AttrEEE+0x5c)[0x563f2e82f1cc]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction28EmitCompoundStmtWithoutScopeERKNS_12CompoundStmtEbNS0_12AggValueSlotE+0x8c)[0x563f2e8355dc]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction16EmitFunctionBodyEPKNS_4StmtE+0xd1)[0x563f2e88ca21]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction12GenerateCodeENS_10GlobalDeclEPN4llvm8FunctionERKNS0_14CGFunctionInfoE+0x37c)[0x563f2e89e27c]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule28EmitGlobalFunctionDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x1c6)[0x563f2e8f7b86]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule20EmitGlobalDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x285)[0x563f2e8f3725]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule10EmitGlobalENS_10GlobalDeclE+0x3eb)[0x563f2e8f3b8b]
+
+clang-trunk(+0x3dac5f2)[0x563f2e8fc5f2]
+
+clang-trunk(+0x4aafe19)[0x563f2f5ffe19]
+
+clang-trunk(+0x4aa2000)[0x563f2f5f2000]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x204)[0x563f306b5c24]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x563f2f5fcf98]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x563f2eeabe79]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x563f2ee3f0c6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x563f2ef89d00]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x563f2bdb0b06]
+
+clang-trunk(+0x125ce48)[0x563f2bdace48]
+
+clang-trunk(+0x417fca9)[0x563f2eccfca9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x563f2e3e505c]
+
+clang-trunk(+0x418044d)[0x563f2ecd044d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x563f2eca2bdb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x563f2eca36f9]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x563f2ecae2a9]
+
+clang-trunk(main+0x18af)[0x563f2bcdb50f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f3f8b1670b3]
+
+clang-trunk(_start+0x2e)[0x563f2bdac9be]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 24d48d45cc302a6abeab139d87ba87f7a2335323)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-1f4a3b.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-1f4a3b.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

@@ -1,0 +1,70 @@
+mutant.c:20:1: warning: return type defaults to ‘int’ [-Wimplicit-int]
+
+   20 | f ( w , l , r )
+
+      | ^
+
+mutant.c: In function ‘f’:
+
+mutant.c:26:1: warning: implicit declaration of function ‘g’ [-Wimplicit-function-declaration]
+
+   26 | g ( w -> f [ i ] ) ;
+
+      | ^
+
+mutant.c:27:1: warning: control reaches end of non-void function [-Wreturn-type]
+
+   27 | }
+
+      | ^
+
+mutant.c:26:1: sorry, unimplemented: passing too large argument on stack
+
+   26 | g ( w -> f [ i ] ) ;
+
+      | ^~~~~~~~~~~~~~~~~~
+
+during RTL pass: expand
+
+mutant.c:26:1: internal compiler error: in expand_call, at calls.c:4980
+
+0x686a4e expand_call(tree_node*, rtx_def*, int)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/calls.c:4980
+
+0xb5fdc1 expand_expr_real_1(tree_node*, rtx_def*, machine_mode, expand_modifier, rtx_def**, bool)
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/expr.c:11408
+
+0xa3cf09 expand_expr
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/expr.h:301
+
+0xa3cf09 expand_call_stmt
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/cfgexpand.c:2843
+
+0xa3cf09 expand_gimple_stmt_1
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/cfgexpand.c:3847
+
+0xa3cf09 expand_gimple_stmt
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/cfgexpand.c:4011
+
+0xa42809 expand_gimple_basic_block
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/cfgexpand.c:6048
+
+0xa4445f execute
+
+	/tmp/tmp.BriefQJ2R3-gcc-builder/gcc/gcc/cfgexpand.c:6732
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

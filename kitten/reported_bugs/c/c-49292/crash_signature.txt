@@ -1,0 +1,3 @@
+clang::ExprResult clang::Sema::BuildCallExpr(clang::Scope*, clang::Expr*, clang::SourceLocation, clang::MultiExprArg, clang::SourceLocation, clang::Expr*, bool, bool): Assertion `(Fn->containsErrors() || llvm::any_of(ArgExprs, [](clang::Expr *E) { return E->containsErrors(); })) && "should only occur in error-recovery path."' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

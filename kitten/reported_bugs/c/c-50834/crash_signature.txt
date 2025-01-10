@@ -1,0 +1,3 @@
+static llvm::Constant* llvm::ConstantExpr::getCast(unsigned int, llvm::Constant*, llvm::Type*, bool): Assertion `CastInst::castIsValid(opc, C, Ty) && "Invalid constantexpr cast!"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

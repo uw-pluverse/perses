@@ -1,0 +1,3 @@
+internal compiler error: in gimple_call_arg_ptr, at gimple.h
+gimple_call_arg_ptr
+copy_bb

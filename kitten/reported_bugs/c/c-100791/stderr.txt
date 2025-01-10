@@ -1,0 +1,84 @@
+mutant.c:4:42: warning: conflicting types for built-in function ‘sprintf’; expected ‘int(char *, const char *, ...)’ [-Wbuiltin-declaration-mismatch]
+
+    4 | __attribute__ ( ( __gnu_inline__ ) ) int sprintf ( int * p1 , char * p2 , ... )
+
+      |                                          ^~~~~~~
+
+mutant.c:1:1: note: ‘sprintf’ is declared in header ‘<stdio.h>’
+
+  +++ |+#include <stdio.h>
+
+    1 | long a ;
+
+mutant.c: In function ‘sprintf’:
+
+mutant.c:8:1: warning: implicit declaration of function ‘log_bad_request’ [-Wimplicit-function-declaration]
+
+    8 | log_bad_request ( 0 , 0 , a , p2 , __builtin_va_arg_pack ( ) ) ; } void log_bad_request ( )
+
+      | ^~~~~~~~~~~~~~~
+
+mutant.c:4:58: warning: unused parameter ‘p1’ [-Wunused-parameter]
+
+    4 | __attribute__ ( ( __gnu_inline__ ) ) int sprintf ( int * p1 , char * p2 , ... )
+
+      |                                                    ~~~~~~^~
+
+mutant.c: At top level:
+
+mutant.c:8:73: warning: conflicting types for ‘log_bad_request’; have ‘void()’
+
+    8 | log_bad_request ( 0 , 0 , a , p2 , __builtin_va_arg_pack ( ) ) ; } void log_bad_request ( )
+
+      |                                                                         ^~~~~~~~~~~~~~~
+
+mutant.c:8:1: note: previous implicit declaration of ‘log_bad_request’ with type ‘void()’
+
+    8 | log_bad_request ( 0 , 0 , a , p2 , __builtin_va_arg_pack ( ) ) ; } void log_bad_request ( )
+
+      | ^~~~~~~~~~~~~~~
+
+mutant.c: In function ‘log_bad_request’:
+
+mutant.c:11:1: error: invalid conversion in gimple call
+
+   11 | }
+
+      | ^
+
+int
+
+
+
+void
+
+
+
+# .MEM_13 = VDEF <.MEM_12>
+
+_11 = log_bad_request (0, 0, _10, "foo");
+
+during GIMPLE pass: einline
+
+mutant.c:11:1: internal compiler error: verify_gimple failed
+
+0xf4f7d1 verify_gimple_in_cfg(function*, bool)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/tree-cfg.c:5509
+
+0xe1140f execute_function_todo
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/passes.c:2042
+
+0xe121fe execute_todo
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/passes.c:2096
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

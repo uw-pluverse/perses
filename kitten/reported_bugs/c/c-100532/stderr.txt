@@ -1,0 +1,120 @@
+mutant.c:2:29: error: declaration of ‘d’ as array of voids
+
+    2 | extern void * memcpy ( void d [ 6 ] , const void * , size_t ) ;
+
+      |                             ^
+
+mutant.c:3:15: warning: conflicting types for built-in function ‘strlen’; expected ‘long unsigned int(const char *)’ [-Wbuiltin-declaration-mismatch]
+
+    3 | extern char * strlen ( const char * ) ;
+
+      |               ^~~~~~
+
+mutant.c:1:1: note: ‘strlen’ is declared in header ‘<string.h>’
+
+  +++ |+#include <string.h>
+
+    1 | typedef __SIZE_TYPE__ size_t ;
+
+mutant.c: In function ‘foo’:
+
+mutant.c:8:10: error: type of formal parameter 1 is incomplete
+
+    8 | memcpy ( c , "a" , 2 ) ;
+
+      |          ^
+
+mutant.c:8:1: internal compiler error: tree check: expected class ‘type’, have ‘exceptional’ (error_mark) in useless_type_conversion_p, at gimple-expr.c:259
+
+    8 | memcpy ( c , "a" , 2 ) ;
+
+      | ^~~~~~
+
+0x7bce07 tree_class_check_failed(tree_node const*, tree_code_class, char const*, int, char const*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/tree.c:8724
+
+0x6cb4a3 tree_class_check(tree_node*, tree_code_class, char const*, int, char const*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/tree.h:3479
+
+0x6cb4a3 useless_type_conversion_p(tree_node*, tree_node*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-expr.c:259
+
+0xc2fc77 types_compatible_p
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-expr.h:67
+
+0xc2fc77 gimplify_addr_expr
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:6246
+
+0xc25d93 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:14130
+
+0xc34d59 gimplify_call_expr
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:3446
+
+0xc25d73 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:14055
+
+0xc28f6a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc2656b gimplify_statement_list
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:1879
+
+0xc2656b gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:14528
+
+0xc28f6a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc2979e gimplify_bind_expr
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:1421
+
+0xc259d3 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:14284
+
+0xc28f6a gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc2a563 gimplify_body(tree_node*, bool)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:15328
+
+0xc2a9b1 gimplify_function_tree(tree_node*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimplify.c:15482
+
+0xa7e707 cgraph_node::analyze()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cgraphunit.c:670
+
+0xa81611 analyze_functions
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cgraphunit.c:1234
+
+0xa820e1 symbol_table::finalize_compilation_unit()
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/cgraphunit.c:2508
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

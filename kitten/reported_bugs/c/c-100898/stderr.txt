@@ -1,0 +1,90 @@
+mutant.c: In function ‘fn1’:
+
+mutant.c:8:8: warning: implicit declaration of function ‘bar’ [-Wimplicit-function-declaration]
+
+    8 | return bar ( 5 , "" , 6 , __builtin_va_arg_pack ( ) ) ;
+
+      |        ^~~
+
+mutant.c:5:5: warning: unused variable ‘d’ [-Wunused-variable]
+
+    5 | int d ;
+
+      |     ^
+
+during IPA pass: inline
+
+cc1: internal compiler error: in gimple_call_arg_ptr, at gimple.h:3264
+
+0x758b10 gimple_call_arg_ptr
+
+	/tmp/tmp.6GNjkccaVE-gcc-builder/gcc/gcc/gimple.h:3264
+
+0x758b10 gimple_call_arg_ptr
+
+	/tmp/tmp.6GNjkccaVE-gcc-builder/gcc/gcc/gimple.h:3262
+
+0x758b10 copy_bb
+
+	/tmp/tmp.6GNjkccaVE-gcc-builder/gcc/gcc/tree-inline.c:2085
+
+0xf93522 copy_cfg_body
+
+	/tmp/tmp.6GNjkccaVE-gcc-builder/gcc/gcc/tree-inline.c:3022
+
+0xf93522 copy_body
+
+	/tmp/tmp.6GNjkccaVE-gcc-builder/gcc/gcc/tree-inline.c:3278
+
+0xf96a56 expand_call_inline
+
+	/tmp/tmp.6GNjkccaVE-gcc-builder/gcc/gcc/tree-inline.c:5105
+
+0xf98109 gimple_expand_calls_inline
+
+	/tmp/tmp.6GNjkccaVE-gcc-builder/gcc/gcc/tree-inline.c:5300
+
+0xf98109 optimize_inline_calls(tree_node*)
+
+	/tmp/tmp.6GNjkccaVE-gcc-builder/gcc/gcc/tree-inline.c:5473
+
+0xcbf76b inline_transform(cgraph_node*)
+
+	/tmp/tmp.6GNjkccaVE-gcc-builder/gcc/gcc/ipa-inline-transform.c:790
+
+0xe19e04 execute_one_ipa_transform_pass
+
+	/tmp/tmp.6GNjkccaVE-gcc-builder/gcc/gcc/passes.c:2290
+
+0xe19e04 execute_all_ipa_transforms(bool)
+
+	/tmp/tmp.6GNjkccaVE-gcc-builder/gcc/gcc/passes.c:2337
+
+0xa874a9 cgraph_node::expand()
+
+	/tmp/tmp.6GNjkccaVE-gcc-builder/gcc/gcc/cgraphunit.c:1821
+
+0xa888cf expand_all_functions
+
+	/tmp/tmp.6GNjkccaVE-gcc-builder/gcc/gcc/cgraphunit.c:1992
+
+0xa888cf symbol_table::compile()
+
+	/tmp/tmp.6GNjkccaVE-gcc-builder/gcc/gcc/cgraphunit.c:2356
+
+0xa8b7cb symbol_table::compile()
+
+	/tmp/tmp.6GNjkccaVE-gcc-builder/gcc/gcc/cgraphunit.c:2269
+
+0xa8b7cb symbol_table::finalize_compilation_unit()
+
+	/tmp/tmp.6GNjkccaVE-gcc-builder/gcc/gcc/cgraphunit.c:2537
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

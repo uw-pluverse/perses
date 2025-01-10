@@ -1,0 +1,2 @@
+internal compiler error: /tmp/tmp.8mv1csjR86/slang-nightly/source/binding/Statements.cpp:1032: Default case should be unreachable!
+

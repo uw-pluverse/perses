@@ -1,0 +1,12 @@
+rustc 1.50.0-nightly (bb178237c 2020-12-25)
+
+binary: rustc
+
+commit-hash: bb178237c5539c75e1b85ab78a8ab902b1f333d5
+
+commit-date: 2020-12-25
+
+host: x86_64-unknown-linux-gnu
+
+release: 1.50.0-nightly
+

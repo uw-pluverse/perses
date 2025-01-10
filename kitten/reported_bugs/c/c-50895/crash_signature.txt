@@ -1,0 +1,3 @@
+llvm::ShuffleVectorInst::ShuffleVectorInst(llvm::Value*, llvm::Value*, llvm::ArrayRef<int>, const llvm::Twine&, llvm::Instruction*): Assertion `isValidOperands(V1, V2, Mask) && "Invalid shuffle vector instruction operands!"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

@@ -1,0 +1,4 @@
+error: internal compiler error: trimmed_def_paths constructed
+thread 'rustc' panicked at 'no warnings or errors encountered even though `delayed_good_path_bugs` issued'
+error: internal compiler error: unexpected panic
+note: the compiler unexpectedly panicked. this is a bug.

@@ -1,0 +1,240 @@
+mutant.c: In function ‘f4’:
+
+mutant.c:27:8: warning: implicit declaration of function ‘__builtin_ia32_pcmpeqq’; did you mean ‘__builtin_ia32_pcmpeqb’? [-Wimplicit-function-declaration]
+
+   27 | return __builtin_ia32_pcmpeqq ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~
+
+      |        __builtin_ia32_pcmpeqb
+
+mutant.c:27:8: error: incompatible types when returning type ‘int’ but ‘v2di’ {aka ‘__vector(2) long long int’} was expected
+
+   27 | return __builtin_ia32_pcmpeqq ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c: In function ‘f6’:
+
+mutant.c:35:20: warning: unused parameter ‘b’ [-Wunused-parameter]
+
+   35 | f6 ( v8hi a , v8hi b )
+
+      |               ~~~~~^
+
+mutant.c: In function ‘f8’:
+
+mutant.c:47:8: warning: implicit declaration of function ‘__builtin_ia32_pcmpgtq’; did you mean ‘__builtin_ia32_pcmpgtb’? [-Wimplicit-function-declaration]
+
+   47 | return __builtin_ia32_pcmpgtq ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~
+
+      |        __builtin_ia32_pcmpgtb
+
+mutant.c:47:8: error: incompatible types when returning type ‘int’ but ‘v2di’ {aka ‘__vector(2) long long int’} was expected
+
+   47 | return __builtin_ia32_pcmpgtq ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c: In function ‘f9’:
+
+mutant.c:51:1: warning: AVX vector return without AVX enabled changes the ABI [-Wpsabi]
+
+   51 | {
+
+      | ^
+
+mutant.c:52:8: warning: implicit declaration of function ‘__builtin_ia32_pcmpeqb256’; did you mean ‘__builtin_ia32_pcmpeqb’? [-Wimplicit-function-declaration]
+
+   52 | return __builtin_ia32_pcmpeqb256 ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+      |        __builtin_ia32_pcmpeqb
+
+mutant.c:52:8: error: incompatible types when returning type ‘int’ but ‘v32qi’ {aka ‘__vector(32) char’} was expected
+
+   52 | return __builtin_ia32_pcmpeqb256 ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c: In function ‘f10’:
+
+mutant.c:57:8: warning: implicit declaration of function ‘__builtin_ia32_pcmpeqw256’; did you mean ‘__builtin_ia32_pcmpeqw’? [-Wimplicit-function-declaration]
+
+   57 | return __builtin_ia32_pcmpeqw256 ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+      |        __builtin_ia32_pcmpeqw
+
+mutant.c:57:8: error: incompatible types when returning type ‘int’ but ‘v16hi’ {aka ‘__vector(16) short int’} was expected
+
+   57 | return __builtin_ia32_pcmpeqw256 ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c: In function ‘f11’:
+
+mutant.c:62:8: warning: implicit declaration of function ‘__builtin_ia32_pcmpeqd256’; did you mean ‘__builtin_ia32_pcmpeqd’? [-Wimplicit-function-declaration]
+
+   62 | return __builtin_ia32_pcmpeqd256 ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+      |        __builtin_ia32_pcmpeqd
+
+mutant.c:62:8: error: incompatible types when returning type ‘int’ but ‘v8si’ {aka ‘__vector(8) int’} was expected
+
+   62 | return __builtin_ia32_pcmpeqd256 ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c: In function ‘f12’:
+
+mutant.c:67:8: warning: implicit declaration of function ‘__builtin_ia32_pcmpeqq256’; did you mean ‘__builtin_ia32_pcmpeqb’? [-Wimplicit-function-declaration]
+
+   67 | return __builtin_ia32_pcmpeqq256 ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+      |        __builtin_ia32_pcmpeqb
+
+mutant.c:67:8: error: incompatible types when returning type ‘int’ but ‘v4di’ {aka ‘__vector(4) long long int’} was expected
+
+   67 | return __builtin_ia32_pcmpeqq256 ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c: In function ‘f13’:
+
+mutant.c:72:8: warning: implicit declaration of function ‘__builtin_ia32_pcmpgtb256’; did you mean ‘__builtin_ia32_pcmpgtb’? [-Wimplicit-function-declaration]
+
+   72 | return __builtin_ia32_pcmpgtb256 ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+      |        __builtin_ia32_pcmpgtb
+
+mutant.c:72:8: error: incompatible types when returning type ‘int’ but ‘v32qi’ {aka ‘__vector(32) char’} was expected
+
+   72 | return __builtin_ia32_pcmpgtb256 ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c: In function ‘f14’:
+
+mutant.c:77:8: warning: implicit declaration of function ‘__builtin_ia32_pcmpgtw256’; did you mean ‘__builtin_ia32_pcmpgtw’? [-Wimplicit-function-declaration]
+
+   77 | return __builtin_ia32_pcmpgtw256 ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+      |        __builtin_ia32_pcmpgtw
+
+mutant.c:77:8: error: incompatible types when returning type ‘int’ but ‘v16hi’ {aka ‘__vector(16) short int’} was expected
+
+   77 | return __builtin_ia32_pcmpgtw256 ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c: In function ‘f15’:
+
+mutant.c:82:8: warning: implicit declaration of function ‘__builtin_ia32_pcmpgtd256’; did you mean ‘__builtin_ia32_pcmpgtd’? [-Wimplicit-function-declaration]
+
+   82 | return __builtin_ia32_pcmpgtd256 ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+      |        __builtin_ia32_pcmpgtd
+
+mutant.c:82:8: error: incompatible types when returning type ‘int’ but ‘v8si’ {aka ‘__vector(8) int’} was expected
+
+   82 | return __builtin_ia32_pcmpgtd256 ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c: In function ‘f16’:
+
+mutant.c:87:8: warning: implicit declaration of function ‘__builtin_ia32_pcmpgtq256’; did you mean ‘__builtin_ia32_pcmpgtb’? [-Wimplicit-function-declaration]
+
+   87 | return __builtin_ia32_pcmpgtq256 ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+      |        __builtin_ia32_pcmpgtb
+
+mutant.c:87:8: error: incompatible types when returning type ‘int’ but ‘v4di’ {aka ‘__vector(4) long long int’} was expected
+
+   87 | return __builtin_ia32_pcmpgtq256 ( a , b ) ;
+
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mutant.c: In function ‘f4’:
+
+mutant.c:28:1: warning: control reaches end of non-void function [-Wreturn-type]
+
+   28 | }
+
+      | ^
+
+during GIMPLE pass: lower
+
+mutant.c: In function ‘f6’:
+
+mutant.c:35:1: internal compiler error: Segmentation fault
+
+   35 | f6 ( v8hi a , v8hi b )
+
+      | ^~
+
+0xef7273 crash_signal
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/toplev.c:327
+
+0xbebb17 gsi_insert_seq_nodes_before
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-iterator.c:130
+
+0x12a30c6 ix86_gimple_fold_builtin(gimple_stmt_iterator*)
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/config/i386/i386.c:18003
+
+0xc01508 gimple_fold_call
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-fold.c:5586
+
+0xc0288b fold_stmt_1
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-fold.c:6283
+
+0x19177c3 lower_stmt
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-low.c:388
+
+0x19177c3 lower_sequence
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-low.c:217
+
+0x191766d lower_gimple_bind
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-low.c:473
+
+0x191852d lower_function_body
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-low.c:110
+
+0x191852d execute
+
+	/tmp/tmp.FUbEknNORK-gcc-builder/gcc/gcc/gimple-low.c:195
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

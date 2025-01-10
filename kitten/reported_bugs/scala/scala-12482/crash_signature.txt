@@ -1,0 +1,4 @@
+Exception in thread "main" java.lang.AssertionError: assertion failed: class FileZipArchive has non-class parent: val <none>
+at scala.runtime.Scala3RunTime$.assertFailed
+at dotty.tools.dotc.core.SymDenotations$ClassDenotation.traverse$1
+at dotty.tools.dotc.core.SymDenotations$ClassDenotation.computeBaseData

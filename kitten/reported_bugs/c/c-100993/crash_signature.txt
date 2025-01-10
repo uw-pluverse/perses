@@ -1,0 +1,4 @@
+internal compiler error: Segmentation fault
+crash_signal
+cgraph_update_edges_for_call_stmt(gimple*, tree_node*, gimple*)
+fold_marked_statements

@@ -1,0 +1,3 @@
+bool clang::Sema::CheckForConstantInitializer(clang::Expr*, clang::QualType): Assertion `Init->containsErrors() && "Dependent code should only occur in error-recovery path."' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

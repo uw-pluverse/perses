@@ -1,0 +1,3 @@
+void {anonymous}::TwoAddressInstructionPass::processTiedPairs(llvm::MachineInstr*, {anonymous}::TwoAddressInstructionPass::TiedPairList&, unsigned int&): Assertion `i == DstIdx || !MI->getOperand(i).isReg() || MI->getOperand(i).getReg() != RegA' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

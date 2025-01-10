@@ -1,0 +1,306 @@
+warning: function is never used: `main`
+
+ --> mutant.rs:1:4
+
+  |
+
+1 | fn main ( ) {
+
+  |    ^^^^
+
+  |
+
+  = note: `#[warn(dead_code)]` on by default
+
+
+
+warning: static variable `foo` should have an upper case name
+
+ --> mutant.rs:2:8
+
+  |
+
+2 | static foo : dyn Fn ( ) -> _ = || -> u32 {
+
+  |        ^^^ help: convert the identifier to upper case (notice the capitalization): `FOO`
+
+  |
+
+  = note: `#[warn(non_upper_case_globals)]` on by default
+
+
+
+warning: 2 warnings emitted
+
+
+
+error: internal compiler error: bad_placeholder_type
+
+ --> mutant.rs:2:28
+
+  |
+
+2 | static foo : dyn Fn ( ) -> _ = || -> u32 {
+
+  |                            ^
+
+  |
+
+  = note: delayed at compiler/rustc_typeck/src/collect.rs:371:20
+
+
+
+error: internal compiler error: TyKind::Error constructed but no error reported
+
+  |
+
+  = note: delayed at /rustc/0a8629bff642c3c3b84bb644c0099194f063b627/compiler/rustc_trait_selection/src/opaque_types.rs:942:32
+
+
+
+error: internal compiler error: TyKind::Error constructed but no error reported
+
+  |
+
+  = note: delayed at compiler/rustc_typeck/src/check/coercion.rs:154:49
+
+
+
+error: internal compiler error: TyKind::Error constructed but no error reported
+
+  |
+
+  = note: delayed at compiler/rustc_typeck/src/check/fn_ctxt/_impl.rs:653:60
+
+
+
+error: internal compiler error: TyKind::Error constructed but no error reported
+
+  |
+
+  = note: delayed at /rustc/0a8629bff642c3c3b84bb644c0099194f063b627/compiler/rustc_middle/src/ty/relate.rs:355:59
+
+
+
+error: internal compiler error: TyKind::Error constructed but no error reported
+
+  |
+
+  = note: delayed at compiler/rustc_infer/src/infer/sub.rs:125:31
+
+
+
+error: internal compiler error: cat_expr Errd
+
+ --> mutant.rs:2:32
+
+  |
+
+2 |   static foo : dyn Fn ( ) -> _ = || -> u32 {
+
+  |  ________________________________^
+
+3 | | 0
+
+4 | | } ;
+
+  | |_^
+
+  |
+
+  = note: delayed at compiler/rustc_typeck/src/check/regionck.rs:402:31
+
+
+
+error: internal compiler error: TyKind::Error constructed but no error reported
+
+  |
+
+  = note: delayed at compiler/rustc_mir_build/src/build/mod.rs:777:18
+
+
+
+error: internal compiler error: mir_const_qualif: MIR had errors
+
+ --> mutant.rs:2:1
+
+  |
+
+2 | / static foo : dyn Fn ( ) -> _ = || -> u32 {
+
+3 | | 0
+
+4 | | } ;
+
+  | |___^
+
+  |
+
+  = note: delayed at compiler/rustc_mir/src/transform/mod.rs:236:18
+
+
+
+error: internal compiler error: PromoteTemps: MIR had errors
+
+ --> mutant.rs:2:1
+
+  |
+
+2 | / static foo : dyn Fn ( ) -> _ = || -> u32 {
+
+3 | | 0
+
+4 | | } ;
+
+  | |___^
+
+  |
+
+  = note: delayed at compiler/rustc_mir/src/transform/promote_consts.rs:51:22
+
+
+
+error: internal compiler error: broken MIR in DefId(0:4 ~ mutant[8787]::main::foo) ("return type"): bad type [type error]
+
+ --> mutant.rs:2:1
+
+  |
+
+2 | / static foo : dyn Fn ( ) -> _ = || -> u32 {
+
+3 | | 0
+
+4 | | } ;
+
+  | |___^
+
+  |
+
+  = note: delayed at compiler/rustc_mir/src/borrow_check/type_check/mod.rs:253:27
+
+
+
+error: internal compiler error: TyKind::Error constructed but no error reported
+
+  |
+
+  = note: delayed at compiler/rustc_mir/src/borrow_check/type_check/mod.rs:722:20
+
+
+
+error: internal compiler error: broken MIR in DefId(0:4 ~ mutant[8787]::main::foo) (LocalDecl { mutability: Mut, local_info: None, internal: false, is_block_tail: None, ty: [type error], user_ty: None, source_info: SourceInfo { span: mutant.rs:2:1: 4:4 (#0), scope: scope[0] } }): bad type [type error]
+
+ --> mutant.rs:2:1
+
+  |
+
+2 | / static foo : dyn Fn ( ) -> _ = || -> u32 {
+
+3 | | 0
+
+4 | | } ;
+
+  | |___^
+
+  |
+
+  = note: delayed at compiler/rustc_mir/src/borrow_check/type_check/mod.rs:253:27
+
+
+
+error: internal compiler error: PromoteTemps: MIR had errors
+
+ --> mutant.rs:2:32
+
+  |
+
+2 |   static foo : dyn Fn ( ) -> _ = || -> u32 {
+
+  |  ________________________________^
+
+3 | | 0
+
+4 | | } ;
+
+  | |_^
+
+  |
+
+  = note: delayed at compiler/rustc_mir/src/transform/promote_consts.rs:51:22
+
+
+
+error: internal compiler error: broken MIR in DefId(0:5 ~ mutant[8787]::main::foo::{closure#0}) ("return type"): bad type [type error]
+
+ --> mutant.rs:2:32
+
+  |
+
+2 |   static foo : dyn Fn ( ) -> _ = || -> u32 {
+
+  |  ________________________________^
+
+3 | | 0
+
+4 | | } ;
+
+  | |_^
+
+  |
+
+  = note: delayed at compiler/rustc_mir/src/borrow_check/type_check/mod.rs:253:27
+
+
+
+error: internal compiler error: broken MIR in DefId(0:5 ~ mutant[8787]::main::foo::{closure#0}) (LocalDecl { mutability: Mut, local_info: None, internal: false, is_block_tail: None, ty: [type error], user_ty: None, source_info: SourceInfo { span: mutant.rs:2:32: 4:2 (#0), scope: scope[0] } }): bad type [type error]
+
+ --> mutant.rs:2:32
+
+  |
+
+2 |   static foo : dyn Fn ( ) -> _ = || -> u32 {
+
+  |  ________________________________^
+
+3 | | 0
+
+4 | | } ;
+
+  | |_^
+
+  |
+
+  = note: delayed at compiler/rustc_mir/src/borrow_check/type_check/mod.rs:253:27
+
+
+
+thread 'rustc' panicked at 'no errors encountered even though `delay_span_bug` issued', compiler/rustc_errors/src/lib.rs:1023:13
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.54.0-nightly (0a8629bff 2021-06-11) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+end of query stack
+

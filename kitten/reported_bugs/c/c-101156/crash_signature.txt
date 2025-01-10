@@ -1,0 +1,4 @@
+internal compiler error: ‘verify_gimple’ failed
+verify_gimple_in_seq(gimple*)
+gimplify_body(tree_node*, bool)
+gimplify_function_tree(tree_node*)

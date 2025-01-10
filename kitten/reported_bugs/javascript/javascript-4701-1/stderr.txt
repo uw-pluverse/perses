@@ -1,0 +1,2 @@
+/tmp/tmp.F2MvT4tsOz/jerryscript/jerry-core/vm/opcodes-ecma-bitwise.c:96:70: runtime error: left shift of 2147483647 by 1 places cannot be represented in type 'int'
+

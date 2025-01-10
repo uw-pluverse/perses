@@ -1,0 +1,3 @@
+llvm::Align::Align(uint64_t): Assertion `llvm::isPowerOf2_64(Value) && "Alignment is not a power of 2"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

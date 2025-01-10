@@ -1,0 +1,7 @@
+thread 'rustc' panicked at 'assertion failed: `(left == right)`
+left: `DefId(0:13 ~ mutant[8787]::f1::{misc#0})`
+right: `DefId(0:14 ~ mutant[8787]::f1::{misc#1})`'
+error: internal compiler error: unexpected panic
+note: the compiler unexpectedly panicked. this is a bug.
+thread 'rustc' panicked at 'already borrowed: BorrowMutError'
+thread panicked while panicking. aborting.

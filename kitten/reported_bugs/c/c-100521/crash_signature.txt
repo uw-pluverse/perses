@@ -1,0 +1,4 @@
+internal compiler error: in verify_range, at value-range.cc
+irange::verify_range()
+range_of_builtin_call(range_query&, irange&, gcall*)
+gimple_ranger::range_of_builtin_call(irange&, gcall*)

@@ -1,0 +1,16 @@
+language: "C"
+seedFolders:
+  - path: "kitten/test_data/c/gcc/gcc/testsuite/"
+    fileExtentions: [".c"]
+
+programsUnderTest:
+  - command: "gcc-trunk"
+    flagsToTest:
+      - flags: ["-O3", "-fcompare-debug", "-c", "-Wall", "-Wextra"]
+      - flags: ["-O2", "-fcompare-debug", "-c", "-Wall", "-Wextra"]
+      - flags: ["-O1", "-fcompare-debug", "-c", "-Wall", "-Wextra"]
+      - flags: ["-O0", "-fcompare-debug", "-c", "-Wall", "-Wextra"]
+      - flags: ["-Os", "-fcompare-debug", "-c", "-Wall", "-Wextra"]
+    versionFlags:
+      flags: ["-v"]
+    crashDetectorClassName: "org.perses.fuzzer.compilers.c.GccCrashDetector"

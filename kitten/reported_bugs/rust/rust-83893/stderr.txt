@@ -1,0 +1,72 @@
+error[E0412]: cannot find type `RHS` in this scope
+
+  --> mutant.rs:11:21
+
+   |
+
+11 | fn add ( self , _ : RHS ) -> Self :: Output ;
+
+   |                     ^^^ not found in this scope
+
+
+
+warning: unreachable statement
+
+  --> mutant.rs:15:1
+
+   |
+
+14 | let r = loop { } ;
+
+   |         -------- any code following this expression is unreachable
+
+15 | r = r + a ;
+
+   | ^^^^^^^^^^^ unreachable statement
+
+   |
+
+   = note: `#[warn(unreachable_code)]` on by default
+
+
+
+thread 'rustc' panicked at 'index out of bounds: the len is 1 but the index is 1', compiler/rustc_typeck/src/check/method/mod.rs:318:32
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.53.0-nightly (c755ee4ce 2021-04-04) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [typeck] type-checking `ice`
+
+#1 [typeck_item_bodies] type-checking all item bodies
+
+end of query stack
+
+error: aborting due to previous error; 1 warning emitted
+
+
+
+For more information about this error, try `rustc --explain E0412`.
+

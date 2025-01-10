@@ -1,0 +1,66 @@
+during IPA pass: inline
+
+In function ‘__builtin_acc_on_device’:
+
+cc1: internal compiler error: Segmentation fault
+
+0xf091b3 crash_signal
+
+	/tmp/tmp.I0nMxdxnJz-gcc-builder/gcc/gcc/toplev.c:327
+
+0xa826d0 cgraph_update_edges_for_call_stmt(gimple*, tree_node*, gimple*)
+
+	/tmp/tmp.I0nMxdxnJz-gcc-builder/gcc/gcc/cgraph.c:1729
+
+0xf8bdcd fold_marked_statements
+
+	/tmp/tmp.I0nMxdxnJz-gcc-builder/gcc/gcc/tree-inline.c:5384
+
+0xf9bf87 tree_function_versioning(tree_node*, tree_node*, vec<ipa_replace_map*, va_gc, vl_embed>*, ipa_param_adjustments*, bool, bitmap_head*, basic_block_def*)
+
+	/tmp/tmp.I0nMxdxnJz-gcc-builder/gcc/gcc/tree-inline.c:6457
+
+0xcc1f1b save_inline_function_body
+
+	/tmp/tmp.I0nMxdxnJz-gcc-builder/gcc/gcc/ipa-inline-transform.c:658
+
+0xcc1f1b inline_transform(cgraph_node*)
+
+	/tmp/tmp.I0nMxdxnJz-gcc-builder/gcc/gcc/ipa-inline-transform.c:750
+
+0xe1c8f4 execute_one_ipa_transform_pass
+
+	/tmp/tmp.I0nMxdxnJz-gcc-builder/gcc/gcc/passes.c:2290
+
+0xe1c8f4 execute_all_ipa_transforms(bool)
+
+	/tmp/tmp.I0nMxdxnJz-gcc-builder/gcc/gcc/passes.c:2337
+
+0xa89639 cgraph_node::expand()
+
+	/tmp/tmp.I0nMxdxnJz-gcc-builder/gcc/gcc/cgraphunit.c:1821
+
+0xa8aa5f expand_all_functions
+
+	/tmp/tmp.I0nMxdxnJz-gcc-builder/gcc/gcc/cgraphunit.c:1992
+
+0xa8aa5f symbol_table::compile()
+
+	/tmp/tmp.I0nMxdxnJz-gcc-builder/gcc/gcc/cgraphunit.c:2356
+
+0xa8d95b symbol_table::compile()
+
+	/tmp/tmp.I0nMxdxnJz-gcc-builder/gcc/gcc/cgraphunit.c:2269
+
+0xa8d95b symbol_table::finalize_compilation_unit()
+
+	/tmp/tmp.I0nMxdxnJz-gcc-builder/gcc/gcc/cgraphunit.c:2537
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

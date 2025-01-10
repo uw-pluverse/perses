@@ -1,0 +1,148 @@
+mutant.c:4:24: warning: implicit conversion changes signedness: 'int' to 'unsigned long long' [-Wsign-conversion]
+
+unsigned long long a = ~ 0 ;
+
+                   ~   ^~~
+
+clang-trunk: /tmp/tmp.B1HwadcXIH-clang-builder/llvm-project/clang/lib/AST/ExprConstant.cpp:15525: llvm::Optional<llvm::APSInt> clang::Expr::getIntegerConstantExpr(const clang::ASTContext&, clang::SourceLocation*, bool) const: Assertion `!isValueDependent() && "Expression evaluator can't be called on a dependent expression."' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	mutant.c:9:41: current parser token ')'
+
+2.	mutant.c:3:1: parsing function body 'main'
+
+3.	mutant.c:3:1: in compound statement ('{}')
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x39591f4)[0x560ff883d1f4]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x560ff883b014]
+
+clang-trunk(+0x389de48)[0x560ff8781e48]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7fe1248813c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7fe12432018b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7fe1242ff859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7fe1242ff729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7fe124310f36]
+
+clang-trunk(_ZNK5clang4Expr22getIntegerConstantExprERKNS_10ASTContextEPNS_14SourceLocationEb+0x3b1)[0x560ffb942391]
+
+clang-trunk(_ZN5clang4Sema15BuildAtomicExprENS_11SourceRangeES1_NS_14SourceLocationEN4llvm15MutableArrayRefIPNS_4ExprEEENS_10AtomicExpr8AtomicOpENS0_19AtomicArgumentOrderE+0x12b3)[0x560ffabf23d3]
+
+clang-trunk(_ZN5clang4Sema23SemaAtomicOpsOverloadedENS_12ActionResultIPNS_4ExprELb1EEENS_10AtomicExpr8AtomicOpE+0x110)[0x560ffabf27c0]
+
+clang-trunk(_ZN5clang4Sema24CheckBuiltinFunctionCallEPNS_12FunctionDeclEjPNS_8CallExprE+0x78b)[0x560ffac2645b]
+
+clang-trunk(_ZN5clang4Sema21BuildResolvedCallExprEPNS_4ExprEPNS_9NamedDeclENS_14SourceLocationEN4llvm8ArrayRefIS2_EES5_S2_bNS_8CallExpr11ADLCallKindE+0xca7)[0x560ffaefe9c7]
+
+clang-trunk(_ZN5clang4Sema13BuildCallExprEPNS_5ScopeEPNS_4ExprENS_14SourceLocationEN4llvm15MutableArrayRefIS4_EES5_S4_bb+0x50b)[0x560ffaeff97b]
+
+clang-trunk(_ZN5clang4Sema13ActOnCallExprEPNS_5ScopeEPNS_4ExprENS_14SourceLocationEN4llvm15MutableArrayRefIS4_EES5_S4_+0x5d)[0x560ffaf00d3d]
+
+clang-trunk(_ZN5clang6Parser28ParsePostfixExpressionSuffixENS_12ActionResultIPNS_4ExprELb1EEE+0xb3b)[0x560ffaab47cb]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbRbNS0_13TypeCastStateEbPb+0x132)[0x560ffaaad8d2]
+
+clang-trunk(_ZN5clang6Parser19ParseCastExpressionENS0_13CastParseKindEbNS0_13TypeCastStateEbPb+0x3b)[0x560ffaab03cb]
+
+clang-trunk(_ZN5clang6Parser25ParseAssignmentExpressionENS0_13TypeCastStateE+0x3d)[0x560ffaab046d]
+
+clang-trunk(_ZN5clang6Parser15ParseExpressionENS0_13TypeCastStateE+0xd)[0x560ffaab39cd]
+
+clang-trunk(_ZN5clang6Parser18ParseExprStatementENS0_17ParsedStmtContextE+0x4e)[0x560ffab1b60e]
+
+clang-trunk(_ZN5clang6Parser42ParseStatementOrDeclarationAfterAttributesERN4llvm11SmallVectorIPNS_4StmtELj32EEENS0_17ParsedStmtContextEPNS_14SourceLocationERNS_25ParsedAttributesWithRangeE+0x8f2)[0x560ffab12ba2]
+
+clang-trunk(_ZN5clang6Parser27ParseStatementOrDeclarationERN4llvm11SmallVectorIPNS_4StmtELj32EEENS0_17ParsedStmtContextEPNS_14SourceLocationE+0x9a)[0x560ffab1358a]
+
+clang-trunk(_ZN5clang6Parser26ParseCompoundStatementBodyEb+0x5f9)[0x560ffab14509]
+
+clang-trunk(_ZN5clang6Parser26ParseFunctionStatementBodyEPNS_4DeclERNS0_10ParseScopeE+0xda)[0x560ffab16b1a]
+
+clang-trunk(_ZN5clang6Parser23ParseFunctionDefinitionERNS_17ParsingDeclaratorERKNS0_18ParsedTemplateInfoEPNS0_18LateParsedAttrListE+0x682)[0x560ffaa5cdb2]
+
+clang-trunk(_ZN5clang6Parser14ParseDeclGroupERNS_15ParsingDeclSpecENS_17DeclaratorContextEPNS_14SourceLocationEPNS0_12ForRangeInitE+0x740)[0x560ffaa89710]
+
+clang-trunk(_ZN5clang6Parser30ParseDeclOrFunctionDefInternalERNS_25ParsedAttributesWithRangeERNS_15ParsingDeclSpecENS_15AccessSpecifierE+0x226)[0x560ffaa575b6]
+
+clang-trunk(+0x5b73ba1)[0x560ffaa57ba1]
+
+clang-trunk(_ZN5clang6Parser24ParseExternalDeclarationERNS_25ParsedAttributesWithRangeEPNS_15ParsingDeclSpecE+0x217)[0x560ffaa5e3a7]
+
+clang-trunk(_ZN5clang6Parser17ParseTopLevelDeclERNS_9OpaquePtrINS_12DeclGroupRefEEEb+0x1ce)[0x560ffaa5f93e]
+
+clang-trunk(_ZN5clang6Parser22ParseFirstTopLevelDeclERNS_9OpaquePtrINS_12DeclGroupRefEEE+0x39)[0x560ffaa5fce9]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x1ea)[0x560ffaa5215a]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x560ff9999458]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x560ff92489e9]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x560ff91dbc36]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x560ff9326870]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x560ff6146696]
+
+clang-trunk(+0x125e9d8)[0x560ff61429d8]
+
+clang-trunk(+0x4188bb9)[0x560ff906cbb9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x560ff8781fcc]
+
+clang-trunk(+0x418935d)[0x560ff906d35d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x560ff903faeb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x560ff9040609]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x560ff904b1b9]
+
+clang-trunk(main+0x18af)[0x560ff607152f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fe1243010b3]
+
+clang-trunk(_start+0x2e)[0x560ff614254e]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git ef906573a127cffef7cae75d5155c15a8a2a3a5e)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-8a18c1.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-8a18c1.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

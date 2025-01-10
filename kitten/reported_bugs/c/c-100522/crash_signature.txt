@@ -1,0 +1,4 @@
+internal compiler error: in extract_ops_from_tree, at gimple-expr.c
+extract_ops_from_tree(tree_node*, tree_code*, tree_node**, tree_node**, tree_node**)
+gimple_build_assign(tree_node*, tree_node*)
+c_parser_gimple_statement

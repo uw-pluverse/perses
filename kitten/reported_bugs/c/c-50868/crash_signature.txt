@@ -1,0 +1,3 @@
+fatal error: error in backend: Broken module found, compilation aborted!
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

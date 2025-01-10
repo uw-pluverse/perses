@@ -1,0 +1,3 @@
+void emitGlobalConstantStruct(const llvm::DataLayout&, const llvm::ConstantStruct*, llvm::AsmPrinter&, const llvm::Constant*, uint64_t): Assertion `SizeSoFar == Layout->getSizeInBytes() && "Layout of constant struct may be incorrect!"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

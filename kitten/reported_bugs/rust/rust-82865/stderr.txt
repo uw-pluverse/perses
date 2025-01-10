@@ -1,0 +1,670 @@
+error[E0583]: file not found for module `asm`
+
+  --> mutant.rs:15:1
+
+   |
+
+15 | mod asm ;
+
+   | ^^^^^^^^^
+
+   |
+
+   = help: to create the module `asm`, create file "asm.rs"
+
+
+
+error[E0583]: file not found for module `assert`
+
+  --> mutant.rs:16:1
+
+   |
+
+16 | mod assert ;
+
+   | ^^^^^^^^^^^^
+
+   |
+
+   = help: to create the module `assert`, create file "assert.rs"
+
+
+
+error[E0583]: file not found for module `cfg`
+
+  --> mutant.rs:17:1
+
+   |
+
+17 | mod cfg ;
+
+   | ^^^^^^^^^
+
+   |
+
+   = help: to create the module `cfg`, create file "cfg.rs"
+
+
+
+error[E0583]: file not found for module `cfg_accessible`
+
+  --> mutant.rs:18:1
+
+   |
+
+18 | mod cfg_accessible ;
+
+   | ^^^^^^^^^^^^^^^^^^^^
+
+   |
+
+   = help: to create the module `cfg_accessible`, create file "cfg_accessible.rs"
+
+
+
+error[E0583]: file not found for module `compile_error`
+
+  --> mutant.rs:19:1
+
+   |
+
+19 | mod compile_error ;
+
+   | ^^^^^^^^^^^^^^^^^^^
+
+   |
+
+   = help: to create the module `compile_error`, create file "compile_error.rs"
+
+
+
+error[E0583]: file not found for module `concat`
+
+  --> mutant.rs:20:1
+
+   |
+
+20 | mod concat ;
+
+   | ^^^^^^^^^^^^
+
+   |
+
+   = help: to create the module `concat`, create file "concat.rs"
+
+
+
+error[E0583]: file not found for module `concat_idents`
+
+  --> mutant.rs:21:1
+
+   |
+
+21 | mod concat_idents ;
+
+   | ^^^^^^^^^^^^^^^^^^^
+
+   |
+
+   = help: to create the module `concat_idents`, create file "concat_idents.rs"
+
+
+
+error[E0583]: file not found for module `deriving`
+
+  --> mutant.rs:22:1
+
+   |
+
+22 | mod deriving ;
+
+   | ^^^^^^^^^^^^^^
+
+   |
+
+   = help: to create the module `deriving`, create file "deriving.rs"
+
+
+
+error[E0583]: file not found for module `env`
+
+  --> mutant.rs:23:1
+
+   |
+
+23 | mod env ;
+
+   | ^^^^^^^^^
+
+   |
+
+   = help: to create the module `env`, create file "env.rs"
+
+
+
+error[E0583]: file not found for module `format`
+
+  --> mutant.rs:24:1
+
+   |
+
+24 | mod format ;
+
+   | ^^^^^^^^^^^^
+
+   |
+
+   = help: to create the module `format`, create file "format.rs"
+
+
+
+error[E0583]: file not found for module `format_foreign`
+
+  --> mutant.rs:25:1
+
+   |
+
+25 | mod format_foreign ;
+
+   | ^^^^^^^^^^^^^^^^^^^^
+
+   |
+
+   = help: to create the module `format_foreign`, create file "format_foreign.rs"
+
+
+
+error[E0583]: file not found for module `global_allocator`
+
+  --> mutant.rs:26:1
+
+   |
+
+26 | mod global_allocator ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^
+
+   |
+
+   = help: to create the module `global_allocator`, create file "global_allocator.rs"
+
+
+
+error[E0583]: file not found for module `global_asm`
+
+  --> mutant.rs:27:1
+
+   |
+
+27 | mod global_asm ;
+
+   | ^^^^^^^^^^^^^^^^
+
+   |
+
+   = help: to create the module `global_asm`, create file "global_asm.rs"
+
+
+
+error[E0583]: file not found for module `llvm_asm`
+
+  --> mutant.rs:28:1
+
+   |
+
+28 | mod llvm_asm ;
+
+   | ^^^^^^^^^^^^^^
+
+   |
+
+   = help: to create the module `llvm_asm`, create file "llvm_asm.rs"
+
+
+
+error[E0583]: file not found for module `log_syntax`
+
+  --> mutant.rs:29:1
+
+   |
+
+29 | mod log_syntax ;
+
+   | ^^^^^^^^^^^^^^^^
+
+   |
+
+   = help: to create the module `log_syntax`, create file "log_syntax.rs"
+
+
+
+error[E0583]: file not found for module `source_util`
+
+  --> mutant.rs:30:1
+
+   |
+
+30 | mod source_util ;
+
+   | ^^^^^^^^^^^^^^^^^
+
+   |
+
+   = help: to create the module `source_util`, create file "source_util.rs"
+
+
+
+error[E0583]: file not found for module `test`
+
+  --> mutant.rs:31:1
+
+   |
+
+31 | mod test ;
+
+   | ^^^^^^^^^^
+
+   |
+
+   = help: to create the module `test`, create file "test.rs"
+
+
+
+error[E0583]: file not found for module `trace_macros`
+
+  --> mutant.rs:32:1
+
+   |
+
+32 | mod trace_macros ;
+
+   | ^^^^^^^^^^^^^^^^^^
+
+   |
+
+   = help: to create the module `trace_macros`, create file "trace_macros.rs"
+
+
+
+error[E0583]: file not found for module `util`
+
+  --> mutant.rs:33:1
+
+   |
+
+33 | mod util ;
+
+   | ^^^^^^^^^^
+
+   |
+
+   = help: to create the module `util`, create file "util.rs"
+
+
+
+error[E0583]: file not found for module `cmdline_attrs`
+
+  --> mutant.rs:34:1
+
+   |
+
+34 | pub mod cmdline_attrs ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^
+
+   |
+
+   = help: to create the module `cmdline_attrs`, create file "cmdline_attrs.rs"
+
+
+
+error[E0583]: file not found for module `proc_macro_harness`
+
+  --> mutant.rs:35:1
+
+   |
+
+35 | pub mod proc_macro_harness ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+   |
+
+   = help: to create the module `proc_macro_harness`, create file "proc_macro_harness.rs"
+
+
+
+error[E0583]: file not found for module `standard_library_imports`
+
+  --> mutant.rs:36:1
+
+   |
+
+36 | pub mod standard_library_imports ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+   |
+
+   = help: to create the module `standard_library_imports`, create file "standard_library_imports.rs"
+
+
+
+error[E0583]: file not found for module `test_harness`
+
+  --> mutant.rs:37:1
+
+   |
+
+37 | pub mod test_harness ;
+
+   | ^^^^^^^^^^^^^^^^^^^^^^
+
+   |
+
+   = help: to create the module `test_harness`, create file "test_harness.rs"
+
+
+
+error[E0433]: failed to resolve: maybe a missing crate `rustc_expand`?
+
+  --> mutant.rs:11:5
+
+   |
+
+11 | use rustc_expand :: base :: { MacroExpanderFn , ResolverExpand , SyntaxExtension , SyntaxExtensionKind } ;
+
+   |     ^^^^^^^^^^^^ maybe a missing crate `rustc_expand`?
+
+
+
+error[E0433]: failed to resolve: maybe a missing crate `rustc_expand`?
+
+  --> mutant.rs:12:5
+
+   |
+
+12 | use rustc_expand :: proc_macro :: BangProcMacro ;
+
+   |     ^^^^^^^^^^^^ maybe a missing crate `rustc_expand`?
+
+
+
+error[E0433]: failed to resolve: maybe a missing crate `rustc_span`?
+
+  --> mutant.rs:13:5
+
+   |
+
+13 | use rustc_span :: edition :: Edition ;
+
+   |     ^^^^^^^^^^ maybe a missing crate `rustc_span`?
+
+
+
+error[E0433]: failed to resolve: maybe a missing crate `rustc_span`?
+
+  --> mutant.rs:14:5
+
+   |
+
+14 | use rustc_span :: symbol :: { sym , Ident } ;
+
+   |     ^^^^^^^^^^ maybe a missing crate `rustc_span`?
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `SyntaxExtension`
+
+  --> mutant.rs:42:42
+
+   |
+
+42 | SyntaxExtension { is_builtin : true , .. SyntaxExtension :: default ( kind , edition ) } ,
+
+   |                                          ^^^^^^^^^^^^^^^ use of undeclared type `SyntaxExtension`
+
+
+
+error[E0433]: failed to resolve: use of undeclared crate or module `sym`
+
+  --> mutant.rs:46:16
+
+   |
+
+46 |   $ ( register ( sym :: $ name , SyntaxExtensionKind :: LegacyBang ( Box :: new ( $ f as MacroExpanderFn ) ) ) ; ) *
+
+   |                  ^^^ use of undeclared crate or module `sym`
+
+...
+
+54 | / register_bang ! {
+
+55 | | asm : asm :: expand_asm ,
+
+56 | | assert : assert :: expand_assert ,
+
+57 | | cfg : cfg :: expand_cfg ,
+
+...  |
+
+76 | | trace_macros : trace_macros :: expand_trace_macros ,
+
+77 | | }
+
+   | |_- in this macro invocation
+
+   |
+
+   = note: this error originates in a macro (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `SyntaxExtensionKind`
+
+  --> mutant.rs:46:32
+
+   |
+
+46 |   $ ( register ( sym :: $ name , SyntaxExtensionKind :: LegacyBang ( Box :: new ( $ f as MacroExpanderFn ) ) ) ; ) *
+
+   |                                  ^^^^^^^^^^^^^^^^^^^ use of undeclared type `SyntaxExtensionKind`
+
+...
+
+54 | / register_bang ! {
+
+55 | | asm : asm :: expand_asm ,
+
+56 | | assert : assert :: expand_assert ,
+
+57 | | cfg : cfg :: expand_cfg ,
+
+...  |
+
+76 | | trace_macros : trace_macros :: expand_trace_macros ,
+
+77 | | }
+
+   | |_- in this macro invocation
+
+   |
+
+   = note: this error originates in a macro (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error[E0433]: failed to resolve: use of undeclared crate or module `sym`
+
+  --> mutant.rs:49:16
+
+   |
+
+49 |   $ ( register ( sym :: $ name , SyntaxExtensionKind :: LegacyAttr ( Box :: new ( $ f ) ) ) ; ) *
+
+   |                  ^^^ use of undeclared crate or module `sym`
+
+...
+
+78 | / register_attr ! {
+
+79 | | bench : test :: expand_bench ,
+
+80 | | cfg_accessible : cfg_accessible :: Expander ,
+
+81 | | global_allocator : global_allocator :: expand ,
+
+82 | | test : test :: expand_test ,
+
+83 | | test_case : test :: expand_test_case ,
+
+84 | | }
+
+   | |_- in this macro invocation
+
+   |
+
+   = note: this error originates in a macro (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `SyntaxExtensionKind`
+
+  --> mutant.rs:49:32
+
+   |
+
+49 |   $ ( register ( sym :: $ name , SyntaxExtensionKind :: LegacyAttr ( Box :: new ( $ f ) ) ) ; ) *
+
+   |                                  ^^^^^^^^^^^^^^^^^^^ use of undeclared type `SyntaxExtensionKind`
+
+...
+
+78 | / register_attr ! {
+
+79 | | bench : test :: expand_bench ,
+
+80 | | cfg_accessible : cfg_accessible :: Expander ,
+
+81 | | global_allocator : global_allocator :: expand ,
+
+82 | | test : test :: expand_test ,
+
+83 | | test_case : test :: expand_test_case ,
+
+84 | | }
+
+   | |_- in this macro invocation
+
+   |
+
+   = note: this error originates in a macro (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error[E0433]: failed to resolve: use of undeclared crate or module `sym`
+
+  --> mutant.rs:52:16
+
+   |
+
+52 |   $ ( register ( sym :: $ name , SyntaxExtensionKind :: LegacyDerive ( Box :: SyntaxExtension ( BuiltinDerive ( $ f ) ) ) ) ; ) *
+
+   |                  ^^^ use of undeclared crate or module `sym`
+
+...
+
+85 | / register_derive ! {
+
+86 | | Clone : clone :: expand_deriving_clone ,
+
+87 | | Copy : bounds :: expand_deriving_copy ,
+
+88 | | Debug : debug :: expand_deriving_debug ,
+
+...  |
+
+96 | | RustcEncodable : encodable :: expand_deriving_rustc_encodable ,
+
+97 | | }
+
+   | |_- in this macro invocation
+
+   |
+
+   = note: this error originates in a macro (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+error[E0433]: failed to resolve: use of undeclared type `SyntaxExtensionKind`
+
+  --> mutant.rs:52:32
+
+   |
+
+52 |   $ ( register ( sym :: $ name , SyntaxExtensionKind :: LegacyDerive ( Box :: SyntaxExtension ( BuiltinDerive ( $ f ) ) ) ) ; ) *
+
+   |                                  ^^^^^^^^^^^^^^^^^^^ use of undeclared type `SyntaxExtensionKind`
+
+...
+
+85 | / register_derive ! {
+
+86 | | Clone : clone :: expand_deriving_clone ,
+
+87 | | Copy : bounds :: expand_deriving_copy ,
+
+88 | | Debug : debug :: expand_deriving_debug ,
+
+...  |
+
+96 | | RustcEncodable : encodable :: expand_deriving_rustc_encodable ,
+
+97 | | }
+
+   | |_- in this macro invocation
+
+   |
+
+   = note: this error originates in a macro (in Nightly builds, run with -Z macro-backtrace for more info)
+
+
+
+thread 'rustc' panicked at 'compiler/rustc_resolve/src/lib.rs:1929:21: undetermined resolution during main resolution pass', /rustc/51748a8fc77283914d4135f31b5966a407208187/library/std/src/panic.rs:59:5
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+error: internal compiler error: unexpected panic
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.52.0-nightly (51748a8fc 2021-03-05) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+end of query stack
+
+error: aborting due to 34 previous errors
+
+
+
+Some errors have detailed explanations: E0433, E0583.
+
+For more information about an error, try `rustc --explain E0433`.
+

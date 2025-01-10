@@ -1,0 +1,76 @@
+mutant.c:2:1: warning: mismatch in argument 1 type of built-in function ‘__builtin_clz’; expected ‘unsigned int’ [-Wbuiltin-declaration-mismatch]
+
+    2 | __builtin_clz ( int x ) { return x ? __builtin_clz ( x ) : 32 ;
+
+      | ^~~~~~~~~~~~~
+
+during GIMPLE pass: evrp
+
+mutant.c: In function ‘__builtin_clz’:
+
+mutant.c:8:1: internal compiler error: in verify_range, at value-range.cc:384
+
+    8 | }
+
+      | ^
+
+0x7cf779 irange::verify_range()
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/value-range.cc:384
+
+0x19377a7 fold_using_range::range_of_builtin_call(irange&, gcall*, fur_source&)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimple-range.cc:799
+
+0x19381ca fold_using_range::range_of_call(irange&, gcall*, fur_source&)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimple-range.cc:626
+
+0x1939d60 fold_using_range::fold_stmt(irange&, gimple*, fur_source&, tree_node*)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimple-range.cc:380
+
+0x1939fe2 gimple_ranger::fold_range_internal(irange&, gimple*, tree_node*)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimple-range.cc:1076
+
+0x1939fe2 gimple_ranger::range_of_stmt(irange&, gimple*, tree_node*)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimple-range.cc:1106
+
+0x19348b2 gimple_ranger::range_of_expr(irange&, tree_node*, gimple*)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimple-range.cc:979
+
+0x121e564 range_query::value_of_expr(tree_node*, gimple*)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/value-query.cc:86
+
+0x1946fd5 hybrid_folder::value_of_expr(tree_node*, gimple*)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimple-ssa-evrp.c:235
+
+0x10b83c6 substitute_and_fold_dom_walker::before_dom_children(basic_block_def*)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/tree-ssa-propagate.c:816
+
+0x1908e87 dom_walker::walk(basic_block_def*)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/domwalk.c:309
+
+0x10b76b9 substitute_and_fold_engine::substitute_and_fold(basic_block_def*)
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/tree-ssa-propagate.c:987
+
+0x1946c3e execute_early_vrp
+
+	/tmp/tmp.bSd6dDcXdE-gcc-builder/gcc/gcc/gimple-ssa-evrp.c:349
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

@@ -1,0 +1,4 @@
+internal compiler error: in force_gimple_operand_1, at gimplify-me.c
+force_gimple_operand_1(tree_node*, gimple**, bool (*)(tree_node*), tree_node*)
+gimplify_and_update_call_from_tree(gimple_stmt_iterator*, tree_node*)
+gimple_fold_builtin

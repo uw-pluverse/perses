@@ -1,0 +1,6 @@
+Internal compiler error during compilation:
+/solidity/libsolidity/ast/Types.cpp
+Throw in function virtual bool solidity::frontend::StructType::isDynamicallyEncoded() const
+Dynamic exception type: boost::wrapexcept<solidity::langutil::InternalCompilerError>
+std::exception::what:
+[solidity::util::tag_comment*] =

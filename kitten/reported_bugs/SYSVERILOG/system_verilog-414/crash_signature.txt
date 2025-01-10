@@ -1,0 +1,3 @@
+internal compiler error: Assertion '!arg.isError()' failed
+Type.cpp
+function: slang::Diagnostic &slang::operator<<(slang::Diagnostic &, const slang::Type &)

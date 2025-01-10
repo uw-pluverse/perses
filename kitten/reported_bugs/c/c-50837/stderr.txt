@@ -1,0 +1,138 @@
+mutant.c:2:1: warning: no previous prototype for function 'i' [-Wmissing-prototypes]
+
+i ( unsigned char __seg_gs * arr , unsigned char c , long n ) { for ( long i = 0 ; i < n ; ++ i )
+
+^
+
+mutant.c:1:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void
+
+^
+
+static 
+
+fatal error: error in backend: cannot lower memory intrinsic in address space 256
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	Code generation
+
+3.	Running pass 'Function Pass Manager' on module 'mutant.c'.
+
+4.	Running pass 'X86 DAG->DAG Instruction Selection' on function '@i'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x394ec64)[0x55c0c1227c64]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x55c0c1225a84]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext10HandleExitEi+0xa3)[0x55c0c116cb83]
+
+clang-trunk(_ZN4llvm3sys7Process4ExitEib+0x22)[0x55c0c121dcf2]
+
+clang-trunk(+0x125f487)[0x55c0beb38487]
+
+clang-trunk(_ZN4llvm18report_fatal_errorERKNS_5TwineEb+0x7c)[0x55c0c1173d9c]
+
+clang-trunk(+0x490b50c)[0x55c0c21e450c]
+
+clang-trunk(_ZN4llvm12SelectionDAG9getMemsetENS_7SDValueERKNS_5SDLocES1_S1_S1_NS_5AlignEbbNS_18MachinePointerInfoERKNS_9AAMDNodesE+0x947)[0x55c0c222d817]
+
+clang-trunk(_ZN4llvm19SelectionDAGBuilder18visitIntrinsicCallERKNS_8CallInstEj+0x7a73)[0x55c0c21b2723]
+
+clang-trunk(_ZN4llvm19SelectionDAGBuilder9visitCallERKNS_8CallInstE+0x79)[0x55c0c21b59d9]
+
+clang-trunk(_ZN4llvm19SelectionDAGBuilder5visitERKNS_11InstructionE+0x3d)[0x55c0c21e371d]
+
+clang-trunk(_ZN4llvm16SelectionDAGISel16SelectBasicBlockENS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_11InstructionELb1ELb0EvEELb0ELb1EEES6_Rb+0x90)[0x55c0c224f440]
+
+clang-trunk(_ZN4llvm16SelectionDAGISel20SelectAllBasicBlocksERKNS_8FunctionE+0xacb)[0x55c0c22500fb]
+
+clang-trunk(+0x497932b)[0x55c0c225232b]
+
+clang-trunk(+0x244ecec)[0x55c0bfd27cec]
+
+clang-trunk(_ZN4llvm19MachineFunctionPass13runOnFunctionERNS_8FunctionE+0x258)[0x55c0c0449ce8]
+
+clang-trunk(_ZN4llvm13FPPassManager13runOnFunctionERNS_8FunctionE+0x365)[0x55c0c0920b65]
+
+clang-trunk(_ZN4llvm13FPPassManager11runOnModuleERNS_6ModuleE+0x39)[0x55c0c0920da9]
+
+clang-trunk(_ZN4llvm6legacy15PassManagerImpl3runERNS_6ModuleE+0x382)[0x55c0c0921ea2]
+
+clang-trunk(+0x3c80c42)[0x55c0c1559c42]
+
+clang-trunk(_ZN5clang17EmitBackendOutputERNS_17DiagnosticsEngineERKNS_19HeaderSearchOptionsERKNS_14CodeGenOptionsERKNS_13TargetOptionsERKNS_11LangOptionsEN4llvm9StringRefEPNSE_6ModuleENS_13BackendActionESt10unique_ptrINSE_17raw_pwrite_streamESt14default_deleteISK_EE+0x47d)[0x55c0c155b6fd]
+
+clang-trunk(+0x4aabb2f)[0x55c0c2384b2f]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x429)[0x55c0c343c209]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x55c0c2383678]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55c0c1c33029]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55c0c1bc61e6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x55c0c1d10eb0]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x55c0beb396f6]
+
+clang-trunk(+0x125ca38)[0x55c0beb35a38]
+
+clang-trunk(+0x417ddb9)[0x55c0c1a56db9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x55c0c116ca4c]
+
+clang-trunk(+0x417e55d)[0x55c0c1a5755d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55c0c1a29ceb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x55c0c1a2a809]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x55c0c1a353b9]
+
+clang-trunk(main+0x18af)[0x55c0bea644ef]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fc256b100b3]
+
+clang-trunk(_start+0x2e)[0x55c0beb355ae]
+
+clang-13: error: clang frontend command failed with exit code 70 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 5c8659801a4976ef2b327f4071d98086efd42a36)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-1d402c.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-1d402c.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

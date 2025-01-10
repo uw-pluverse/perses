@@ -1,0 +1,3 @@
+std::enable_if_t<(! llvm::is_simple_type<Y>::value), typename llvm::cast_retty<X, const Y>::ret_type> llvm::cast(const Y&) [with X = clang::PointerType; Y = clang::QualType; std::enable_if_t<(! llvm::is_simple_type<Y>::value), typename llvm::cast_retty<X, const Y>::ret_type> = const clang::PointerType*]: Assertion `isa<X>(Val) && "cast<Ty>() argument of incompatible type!"' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

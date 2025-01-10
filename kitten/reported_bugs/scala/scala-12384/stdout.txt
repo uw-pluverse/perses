@@ -1,0 +1,2 @@
+java.lang.ClassCastException: dotty.tools.dotc.core.Types$Range cannot be cast to dotty.tools.dotc.core.Types$TypeBounds while compiling mutant.scala
+

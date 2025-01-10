@@ -1,0 +1,62 @@
+warning: attribute should be applied to a function or static
+
+ --> mutant.rs:2:1
+
+  |
+
+2 | # [ no_mangle ]
+
+  | ^^^^^^^^^^^^^^^
+
+3 | # [ cmse_nonsecure_entry ]
+
+4 | pub struct XEmpty2 ;
+
+  | -------------------- not a function or static
+
+  |
+
+  = note: `#[warn(unused_attributes)]` on by default
+
+  = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+
+
+
+error: internal compiler error: compiler/rustc_typeck/src/collect.rs:1777:13: unexpected sort of node in fn_sig(): Item(Item { ident: XEmpty2#0, def_id: DefId(0:3 ~ mutant[8787]::XEmpty2), kind: Struct(Unit(HirId { owner: DefId(0:3 ~ mutant[8787]::XEmpty2), local_id: 1 }), Generics { params: [], where_clause: WhereClause { predicates: [], span: mutant.rs:4:19: 4:19 (#0) }, span: mutant.rs:4:19: 4:19 (#0) }), vis: Spanned { node: Public, span: mutant.rs:4:1: 4:4 (#0) }, span: mutant.rs:4:1: 4:21 (#0) })
+
+
+
+thread 'rustc' panicked at 'Box<Any>', /rustc/07e0e2ec268c140e607e1ac7f49f145612d0f597/library/std/src/panic.rs:59:5
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.53.0-nightly (07e0e2ec2 2021-03-24) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -Z mir-opt-level=3 -Z new-llvm-pass-manager=yes -Z unsound-mir-opts=yes -Z polonius=yes -Z polymorphize=yes -C debuginfo=2 -C opt-level=3 --crate-type staticlib
+
+
+
+query stack during panic:
+
+#0 [fn_sig] computing function signature of `XEmpty2`
+
+#1 [codegen_fn_attrs] computing codegen attributes of `XEmpty2`
+
+end of query stack
+
+error: aborting due to previous error; 1 warning emitted
+
+
+

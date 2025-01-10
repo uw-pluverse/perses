@@ -1,0 +1,68 @@
+mutant.c:103:3: warning: size of ‘u2a’ 10126655089046369816 bytes exceeds maximum object size 9223372036854775807 [-Wlarger-than=]
+
+  103 | } u2a ;
+
+      |   ^~~
+
+during RTL pass: expand
+
+mutant.c: In function ‘unions’:
+
+mutant.c:107:7: internal compiler error: in assign_stack_temp_for_type, at function.c:798
+
+  107 | u2a = fu2 ( ) ;
+
+      |       ^~~~~~~
+
+0x6d71fd assign_stack_temp_for_type(machine_mode, poly_int<1u, long>, tree_node*)
+
+	/tmp/tmp.qepXK3Rjco-gcc-builder/gcc/gcc/function.c:798
+
+0xbf2c1b assign_temp(tree_node*, int, int)
+
+	/tmp/tmp.qepXK3Rjco-gcc-builder/gcc/gcc/function.c:1018
+
+0xa42f5f expand_call(tree_node*, rtx_def*, int)
+
+	/tmp/tmp.qepXK3Rjco-gcc-builder/gcc/gcc/calls.c:3882
+
+0xb814a5 expand_expr_real_1(tree_node*, rtx_def*, machine_mode, expand_modifier, rtx_def**, bool)
+
+	/tmp/tmp.qepXK3Rjco-gcc-builder/gcc/gcc/expr.c:11443
+
+0xb8e558 store_expr(tree_node*, rtx_def*, int, bool, bool)
+
+	/tmp/tmp.qepXK3Rjco-gcc-builder/gcc/gcc/expr.c:5994
+
+0xb8fb9f expand_assignment(tree_node*, tree_node*, bool)
+
+	/tmp/tmp.qepXK3Rjco-gcc-builder/gcc/gcc/expr.c:5729
+
+0xa5b6e1 expand_call_stmt
+
+	/tmp/tmp.qepXK3Rjco-gcc-builder/gcc/gcc/cfgexpand.c:2844
+
+0xa5b6e1 expand_gimple_stmt_1
+
+	/tmp/tmp.qepXK3Rjco-gcc-builder/gcc/gcc/cfgexpand.c:3877
+
+0xa5b6e1 expand_gimple_stmt
+
+	/tmp/tmp.qepXK3Rjco-gcc-builder/gcc/gcc/cfgexpand.c:4041
+
+0xa613c9 expand_gimple_basic_block
+
+	/tmp/tmp.qepXK3Rjco-gcc-builder/gcc/gcc/cfgexpand.c:6083
+
+0xa6329f execute
+
+	/tmp/tmp.qepXK3Rjco-gcc-builder/gcc/gcc/cfgexpand.c:6809
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

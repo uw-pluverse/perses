@@ -1,0 +1,3 @@
+static clang::OverloadExpr::FindResult clang::OverloadExpr::find(clang::Expr*): Assertion `E->getType()->isSpecificBuiltinType(BuiltinType::Overload)' failed.
+PLEASE submit a bug report to
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:

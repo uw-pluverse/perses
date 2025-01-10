@@ -1,0 +1,84 @@
+error: encountered dangling pointer in final constant
+
+ --> mutant.rs:1:1
+
+  |
+
+1 | / const FOO : * const u32 = {
+
+2 | | let x = 42 ;
+
+3 | | & x
+
+4 | | } ;
+
+  | |___^
+
+
+
+error[E0005]: refutable pattern in local binding: `_` not covered
+
+ --> mutant.rs:6:5
+
+  |
+
+1 | / const FOO : * const u32 = {
+
+2 | | let x = 42 ;
+
+3 | | & x
+
+4 | | } ;
+
+  | |___- constant defined here
+
+5 |   fn main ( ) {
+
+6 |   let FOO = FOO ;
+
+  |       ^^^
+
+  |       |
+
+  |       interpreted as a constant pattern, not a new variable
+
+  |       help: introduce a variable instead: `foo_var`
+
+  |
+
+  = note: the matched value is of type `*const u32`
+
+
+
+error: internal compiler error: compiler/rustc_middle/src/mir/mod.rs:2358:49: could not find allocation for alloc1
+
+
+
+thread 'rustc' panicked at 'Box<Any>', compiler/rustc_errors/src/lib.rs:945:9
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+
+note: the compiler unexpectedly panicked. this is a bug.
+
+
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+
+
+note: rustc 1.49.0-nightly (8dae8cdcc 2020-10-12) running on x86_64-unknown-linux-gnu
+
+
+
+note: compiler flags: -C debuginfo=2 -C opt-level=1 -C target-cpu=skylake --crate-type staticlib
+
+
+
+error: aborting due to 3 previous errors
+
+
+
+For more information about this error, try `rustc --explain E0005`.
+

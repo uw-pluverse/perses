@@ -1,0 +1,126 @@
+mutant.c:6:6: error: conflicting types for ‘foo’; have ‘void()’
+
+    6 | void foo ( )
+
+      |      ^~~
+
+mutant.c:4:12: note: previous declaration of ‘foo’ with type ‘int(void)’
+
+    4 | extern int foo ( void ) ;
+
+      |            ^~~
+
+mutant.c: In function ‘foo’:
+
+mutant.c:18:1: error: void value not ignored as it ought to be
+
+   18 | double j = c /= foo ( ) ;
+
+      | ^~~~~~
+
+mutant.c:21:10: warning: comparison between pointer and integer
+
+   21 | if ( foo == 1 << 31 )
+
+      |          ^~
+
+mutant.c:28:10: warning: comparison between pointer and integer
+
+   28 | if ( foo == 1 << 30 )
+
+      |          ^~
+
+mutant.c:18:14: internal compiler error: Segmentation fault
+
+   18 | double j = c /= foo ( ) ;
+
+      |              ^~
+
+0xef83e3 crash_signal
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/toplev.c:327
+
+0xc34ee2 gimplify_target_expr
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify.c:6772
+
+0xc269e2 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify.c:14480
+
+0xc29eaa gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc274ab gimplify_statement_list
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify.c:1879
+
+0xc274ab gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify.c:14528
+
+0xc29eaa gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc2a2d9 gimplify_compound_expr
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify.c:6077
+
+0xc3049d gimplify_modify_expr_rhs
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify.c:5398
+
+0xc36c3a gimplify_modify_expr
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify.c:5773
+
+0xc26578 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify.c:14083
+
+0xc29eaa gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc34ba7 gimplify_and_add(tree_node*, gimple**)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify.c:489
+
+0xc34ba7 gimplify_decl_expr
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify.c:1826
+
+0xc270f2 gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify.c:14280
+
+0xc29eaa gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc274ab gimplify_statement_list
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify.c:1879
+
+0xc274ab gimplify_expr(tree_node**, gimple**, gimple**, bool (*)(tree_node*), int)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify.c:14528
+
+0xc29eaa gimplify_stmt(tree_node**, gimple**)
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify.c:6877
+
+0xc2a6de gimplify_bind_expr
+
+	/tmp/tmp.eZIsobWkq2-gcc-builder/gcc/gcc/gimplify.c:1421
+
+Please submit a full bug report,
+
+with preprocessed source if appropriate.
+
+Please include the complete backtrace with any bug report.
+
+See <https://gcc.gnu.org/bugs/> for instructions.
+

@@ -1,0 +1,190 @@
+mutant.c:7:8: warning: equality comparison between function pointer and void pointer ('void *' and 'void *(*)(void)') [-Wpedantic]
+
+if ( d == b && e ( ) ) a [ 9 ] ;
+
+     ~ ^  ~
+
+mutant.c:7:26: warning: subscript of a pointer to void is a GNU extension [-Wpointer-arith]
+
+if ( d == b && e ( ) ) a [ 9 ] ;
+
+                       ~ ^
+
+mutant.c:7:30: warning: expression result unused [-Wunused-value]
+
+if ( d == b && e ( ) ) a [ 9 ] ;
+
+                       ~   ~ ^
+
+mutant.c:5:1: warning: no previous prototype for function 'c' [-Wmissing-prototypes]
+
+c ( ) {
+
+^
+
+mutant.c:4:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void *
+
+^
+
+static 
+
+mutant.c:5:3: warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+
+c ( ) {
+
+  ^
+
+mutant.c:7:6: warning: variable 'd' is uninitialized when used here [-Wuninitialized]
+
+if ( d == b && e ( ) ) a [ 9 ] ;
+
+     ^
+
+mutant.c:6:9: note: initialize the variable 'd' to silence this warning
+
+void * d ;
+
+        ^
+
+         = 0
+
+clang-trunk: /tmp/tmp.FIfHBNID2p-clang-builder/llvm-project/clang/lib/CodeGen/CodeGenTBAA.cpp:397: llvm::MDNode* clang::CodeGen::CodeGenTBAA::getAccessTagInfo(clang::CodeGen::TBAAAccessInfo): Assertion `!Info.isIncomplete() && "Access to an object of an incomplete type!"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	mutant.c:5:1: LLVM IR generation of declaration 'c'
+
+3.	mutant.c:5:1: Generating code for declaration 'c'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x394ec64)[0x563caf2c1c64]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x563caf2bfa84]
+
+clang-trunk(+0x38938c8)[0x563caf2068c8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f1eb11303c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f1eb0bcf18b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f1eb0bae859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f1eb0bae729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f1eb0bbff36]
+
+clang-trunk(_ZN5clang7CodeGen11CodeGenTBAA16getAccessTagInfoENS0_14TBAAAccessInfoE+0x889)[0x563caf75a059]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule27DecorateInstructionWithTBAAEPN4llvm11InstructionENS0_14TBAAAccessInfoE+0x54)[0x563caf6c69e4]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction16EmitLoadOfScalarENS0_7AddressEbNS_8QualTypeENS_14SourceLocationENS0_14LValueBaseInfoENS0_14TBAAAccessInfoEb+0x342)[0x563caf95a222]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction16EmitLoadOfLValueENS0_6LValueENS_14SourceLocationE+0x274)[0x563caf95a7e4]
+
+clang-trunk(+0x40335cd)[0x563caf9a65cd]
+
+clang-trunk(+0x4038e5b)[0x563caf9abe5b]
+
+clang-trunk(+0x40311e4)[0x563caf9a41e4]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction14EmitScalarExprEPKNS_4ExprEb+0x6a)[0x563caf9a5f9a]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction11EmitAnyExprEPKNS_4ExprENS0_12AggValueSlotEb+0xd7)[0x563caf94d287]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction15EmitIgnoredExprEPKNS_4ExprE+0x6e)[0x563caf96bbfe]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction8EmitStmtEPKNS_4StmtEN4llvm8ArrayRefIPKNS_4AttrEEE+0xca)[0x563caf650aba]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction10EmitIfStmtERKNS_6IfStmtE+0x483)[0x563caf6569f3]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction8EmitStmtEPKNS_4StmtEN4llvm8ArrayRefIPKNS_4AttrEEE+0x6e1)[0x563caf6510d1]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction28EmitCompoundStmtWithoutScopeERKNS_12CompoundStmtEbNS0_12AggValueSlotE+0x8c)[0x563caf656e5c]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction16EmitFunctionBodyEPKNS_4StmtE+0xd1)[0x563caf6ae2a1]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction12GenerateCodeENS_10GlobalDeclEPN4llvm8FunctionERKNS0_14CGFunctionInfoE+0x37c)[0x563caf6bfafc]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule28EmitGlobalFunctionDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x1c6)[0x563caf719406]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule20EmitGlobalDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x285)[0x563caf714fa5]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule10EmitGlobalENS_10GlobalDeclE+0x3eb)[0x563caf71540b]
+
+clang-trunk(+0x3daae72)[0x563caf71de72]
+
+clang-trunk(+0x4aad4f9)[0x563cb04204f9]
+
+clang-trunk(+0x4a9f6e0)[0x563cb04126e0]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x204)[0x563cb14d5fe4]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x563cb041d678]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x563cafccd029]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x563cafc601e6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x563cafdaaeb0]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x563cacbd36f6]
+
+clang-trunk(+0x125ca38)[0x563cacbcfa38]
+
+clang-trunk(+0x417ddb9)[0x563cafaf0db9]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x563caf206a4c]
+
+clang-trunk(+0x417e55d)[0x563cafaf155d]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x563cafac3ceb]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x563cafac4809]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x563cafacf3b9]
+
+clang-trunk(main+0x18af)[0x563cacafe4ef]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f1eb0bb00b3]
+
+clang-trunk(_start+0x2e)[0x563cacbcf5ae]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 5c8659801a4976ef2b327f4071d98086efd42a36)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-5a6bab.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-5a6bab.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+

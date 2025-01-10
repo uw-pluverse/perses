@@ -1,0 +1,4 @@
+Exception in thread "main" java.lang.AssertionError: assertion failed: duplicate attachment for key dotty.tools.dotc.util.Property$Key
+at scala.runtime.Scala3RunTime$.assertFailed
+at dotty.tools.dotc.util.Attachment$Container.pushAttachment
+at dotty.tools.dotc.util.Attachment$Container.pushAttachment$

@@ -1,0 +1,138 @@
+mutant.c:16:1: warning: extension used [-Wlanguage-extension-token]
+
+asm (
+
+^
+
+mutant.c:15:6: warning: no previous prototype for function 'switch_to_stack' [-Wmissing-prototypes]
+
+void switch_to_stack ( my_stack * stack ) {
+
+     ^
+
+mutant.c:15:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+
+void switch_to_stack ( my_stack * stack ) {
+
+^
+
+static 
+
+clang-trunk: /tmp/tmp.MZZAoX1zOr-clang-builder/llvm-project/llvm/lib/IR/Type.cpp:277: static llvm::IntegerType* llvm::IntegerType::get(llvm::LLVMContext&, unsigned int): Assertion `NumBits <= MAX_INT_BITS && "bitwidth too large"' failed.
+
+PLEASE submit a bug report to https://bugs.llvm.org/ and include the crash backtrace, preprocessed source, and associated run script.
+
+Stack dump:
+
+0.	Program arguments: clang-trunk -O3 -g3 -c -Wall -Wextra -Weverything mutant.c
+
+1.	<eof> parser at end of file
+
+2.	mutant.c:15:6: LLVM IR generation of declaration 'switch_to_stack'
+
+3.	mutant.c:15:6: Generating code for declaration 'switch_to_stack'
+
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+
+clang-trunk(+0x395d684)[0x55a7962ad684]
+
+clang-trunk(_ZN4llvm3sys15CleanupOnSignalEm+0xe4)[0x55a7962ab4a4]
+
+clang-trunk(+0x38a22d8)[0x55a7961f22d8]
+
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x153c0)[0x7f5394c393c0]
+
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xcb)[0x7f53946d818b]
+
+/lib/x86_64-linux-gnu/libc.so.6(abort+0x12b)[0x7f53946b7859]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x25729)[0x7f53946b7729]
+
+/lib/x86_64-linux-gnu/libc.so.6(+0x36f36)[0x7f53946c8f36]
+
+clang-trunk(_ZN4llvm11IntegerType3getERNS_11LLVMContextEj+0x778)[0x55a7959f5af8]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction11EmitAsmStmtERKNS_7AsmStmtE+0x282a)[0x55a796638bfa]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction8EmitStmtEPKNS_4StmtEN4llvm8ArrayRefIPKNS_4AttrEEE+0x23b)[0x55a79663d44b]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction28EmitCompoundStmtWithoutScopeERKNS_12CompoundStmtEbNS0_12AggValueSlotE+0x8c)[0x55a79664367c]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction16EmitFunctionBodyEPKNS_4StmtE+0xd1)[0x55a79669aac1]
+
+clang-trunk(_ZN5clang7CodeGen15CodeGenFunction12GenerateCodeENS_10GlobalDeclEPN4llvm8FunctionERKNS0_14CGFunctionInfoE+0x37c)[0x55a7966ac31c]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule28EmitGlobalFunctionDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x1c6)[0x55a7967059b6]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule20EmitGlobalDefinitionENS_10GlobalDeclEPN4llvm11GlobalValueE+0x285)[0x55a796701505]
+
+clang-trunk(_ZN5clang7CodeGen13CodeGenModule10EmitGlobalENS_10GlobalDeclE+0x3eb)[0x55a79670196b]
+
+clang-trunk(+0x3dba422)[0x55a79670a422]
+
+clang-trunk(+0x4abd099)[0x55a79740d099]
+
+clang-trunk(+0x4aaf280)[0x55a7973ff280]
+
+clang-trunk(_ZN5clang8ParseASTERNS_4SemaEbb+0x204)[0x55a7984c2b64]
+
+clang-trunk(_ZN5clang13CodeGenAction13ExecuteActionEv+0x178)[0x55a79740a218]
+
+clang-trunk(_ZN5clang14FrontendAction7ExecuteEv+0xd9)[0x55a796cb9a79]
+
+clang-trunk(_ZN5clang16CompilerInstance13ExecuteActionERNS_14FrontendActionE+0x146)[0x55a796c4ccc6]
+
+clang-trunk(_ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE+0x930)[0x55a796d979c0]
+
+clang-trunk(_Z8cc1_mainN4llvm8ArrayRefIPKcEES2_Pv+0x7f6)[0x55a793bb5696]
+
+clang-trunk(+0x12619d8)[0x55a793bb19d8]
+
+clang-trunk(+0x418dd49)[0x55a796addd49]
+
+clang-trunk(_ZN4llvm20CrashRecoveryContext9RunSafelyENS_12function_refIFvvEEE+0xbc)[0x55a7961f245c]
+
+clang-trunk(+0x418e4ed)[0x55a796ade4ed]
+
+clang-trunk(_ZNK5clang6driver11Compilation14ExecuteCommandERKNS0_7CommandERPS3_+0x9b)[0x55a796ab0c7b]
+
+clang-trunk(_ZNK5clang6driver11Compilation11ExecuteJobsERKNS0_7JobListERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x119)[0x55a796ab1799]
+
+clang-trunk(_ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImplISt4pairIiPKNS0_7CommandEEEE+0x99)[0x55a796abc349]
+
+clang-trunk(main+0x18af)[0x55a793ae052f]
+
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f53946b90b3]
+
+clang-trunk(_start+0x2e)[0x55a793bb154e]
+
+clang-13: error: clang frontend command failed with exit code 134 (use -v to see invocation)
+
+clang version 13.0.0 (https://github.com/llvm/llvm-project.git 699d47472c3f7c5799fe75486689545179cfba03)
+
+Target: x86_64-unknown-linux-gnu
+
+Thread model: posix
+
+InstalledDir: /home/cnsun/usr/bin
+
+clang-13: note: diagnostic msg: 
+
+********************
+
+
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+
+Preprocessed source(s) and associated run script(s) are located at:
+
+clang-13: note: diagnostic msg: /tmp/mutant-768e14.c
+
+clang-13: note: diagnostic msg: /tmp/mutant-768e14.sh
+
+clang-13: note: diagnostic msg: 
+
+
+
+********************
+
