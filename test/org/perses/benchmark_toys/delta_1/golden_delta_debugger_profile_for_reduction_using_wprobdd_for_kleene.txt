@@ -1,0 +1,284 @@
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 2 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=360, parent=2}
+--Element 1
+  index=1, payload=ElementWrapper{index=1, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=5, parent=2}
+Testing the empty input is disabled.
+Property Test. Deleted elements: [1]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=13, parent=10}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 6 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=267, parent=13}
+--Element 1
+  index=1, payload=ElementWrapper{index=1, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=219, parent=13}
+--Element 2
+  index=2, payload=ElementWrapper{index=2, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=149, parent=13}
+--Element 3
+  index=3, payload=ElementWrapper{index=3, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=99, parent=13}
+--Element 4
+  index=4, payload=ElementWrapper{index=4, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=49, parent=13}
+--Element 5
+  index=5, payload=ElementWrapper{index=5, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=22, parent=13}
+Testing the empty input is disabled.
+Property Test. Deleted elements: [0, 1, 2]. Interestingness: interesting
+New best is found: [3, 4, 5]
+Property Test. Deleted elements: [3, 4]. Interestingness: skip
+Property Test. Deleted elements: [3, 5]. Interestingness: interesting
+New best is found: [4]
+Property Test. Deleted elements: [4]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=307, parent=305}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=367, parent=362}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=371, parent=369}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=68, parent=50}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=72, parent=70}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 2 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=const}, LexerRuleSparTreeNode{id=397, parent=382}}
+--Element 1
+  index=1, payload=ElementWrapper{index=1, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=char}, LexerRuleSparTreeNode{id=395, parent=382}}
+Testing the empty input is disabled.
+Property Test. Deleted elements: [0, 1]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [1]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=378, parent=377}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=387, parent=384}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=94, parent=74}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=354, parent=6}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 2 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=482, parent=404}
+--Element 1
+  index=1, payload=ElementWrapper{index=1, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=407, parent=404}
+Testing the empty input is disabled.
+Property Test. Deleted elements: [0, 1]. Interestingness: skip
+Property Test. Deleted elements: [1]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=489, parent=484}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=493, parent=491}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=415, parent=412}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=438, parent=420}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=442, parent=440}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 2 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=const}, LexerRuleSparTreeNode{id=519, parent=504}}
+--Element 1
+  index=1, payload=ElementWrapper{index=1, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=char}, LexerRuleSparTreeNode{id=517, parent=504}}
+Testing the empty input is disabled.
+Property Test. Deleted elements: [0, 1]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [1]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=500, parent=499}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=471, parent=469}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=509, parent=506}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=464, parent=444}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.ParserRuleSparTreeNode, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
+  element=ParserRuleSparTreeNode{id=476, parent=408}
+Testing the empty input.
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [0]. Interestingness: skip
+Reduction ends.
+

@@ -1,0 +1,19 @@
+All currently supported languages:
+    c             : LanguageC{name=c, extensions=[c], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE}
+    cpp           : LanguageCpp{name=cpp, extensions=[cc, cpp, cxx], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE}
+    glsl          : LanguageGlsl{name=glsl, extensions=[glsl, comp, frag, vert], defaultCodeFormatControl=COMPACT_ORIG_FORMAT}
+    go            : LanguageGo{name=go, extensions=[go], defaultCodeFormatControl=COMPACT_ORIG_FORMAT}
+    java          : LanguageJava{name=java, extensions=[java], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE}
+    javascript    : LanguageJavaScript{name=javascript, extensions=[javascript, js], defaultCodeFormatControl=COMPACT_ORIG_FORMAT}
+    line          : LanguageLine{name=line, extensions=[line], defaultCodeFormatControl=COMPACT_ORIG_FORMAT}
+    mysql         : LanguageMySQL{name=mysql, extensions=[mysql], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE}
+    php           : LanguagePhp{name=php, extensions=[php], defaultCodeFormatControl=COMPACT_ORIG_FORMAT}
+    python3       : LanguagePython3{name=python3, extensions=[py, py3], defaultCodeFormatControl=COMPACT_PYTHON3_FORMAT}
+    ruby          : LanguageRuby{name=ruby, extensions=[rb], defaultCodeFormatControl=COMPACT_ORIG_FORMAT}
+    rust          : LanguageRust{name=rust, extensions=[rs], defaultCodeFormatControl=COMPACT_ORIG_FORMAT}
+    scala         : LanguageScala{name=scala, extensions=[scala, sc], defaultCodeFormatControl=COMPACT_ORIG_FORMAT}
+    smtlibv2      : LanguageSmtLibV2{name=smtlibv2, extensions=[smt2], defaultCodeFormatControl=COMPACT_ORIG_FORMAT}
+    solidity      : LanguageSolidity{name=solidity, extensions=[sol], defaultCodeFormatControl=COMPACT_ORIG_FORMAT}
+    sqlite        : LanguageSQLite{name=sqlite, extensions=[sqlite], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE}
+    system_verilog: LanguageSystemVerilog{name=system_verilog, extensions=[v, sv], defaultCodeFormatControl=COMPACT_ORIG_FORMAT}
+    xml           : LanguageXML{name=xml, extensions=[xml], defaultCodeFormatControl=COMPACT_ORIG_FORMAT}

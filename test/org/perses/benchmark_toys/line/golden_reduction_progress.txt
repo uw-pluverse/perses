@@ -1,0 +1,1061 @@
+=====================Reduction starts.======================
+
+The initial program size is 14
+The command line options are:
+---
+help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+versionFlags:
+  groupName: "Version"
+  version: false
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFile: "small.line"
+  deps: []
+  sourceFile: "small.line"
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_perses_node_priority_with_dfs_delta_small.line"
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  fixpoint: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  enableLineSlicer: false
+  defaultDeltaDebuggerTypeForKleene: "PRISTINE"
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  enableTrec: false
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: "TRUE"
+  nodeActionSetCaching: true
+  queryCacheRefreshThreshold: 0
+  enableLightweightRefreshing: true
+  enablePassCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "reduction_progress.txt"
+  appendToProgressDumpFile: true
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileDeltaDebugger: "delta_debugger_progress_profile.txt"
+experimentFlags:
+  groupName: "Experiment Control"
+  cacheType: "COMPACT_QUERY_CACHE"
+  onDemandReducerClasses: null
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+
+Parser Facade: class org.perses.grammar.line.LineParserFacade
+------------------------------------------------------------
+
+
+The sanity check has been performed. The result is PassingSanityCheckResult
+=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+
+The spar-tree is the following.
+lines {id=1}
+|___(*) {id=2,slot_type=kleene_star__lines_1}
+    |___Token:a {id=3,slot_type=LINE}
+    |___Token:b {id=4,slot_type=LINE}
+    |___Token:c {id=5,slot_type=LINE}
+    |___Token:d {id=6,slot_type=LINE}
+    |___Token:e {id=7,slot_type=LINE}
+    |___Token:f {id=8,slot_type=LINE}
+    |___Token:g {id=9,slot_type=LINE}
+    |___Token:h {id=10,slot_type=LINE}
+    |___Token:i {id=11,slot_type=LINE}
+    |___Token:j {id=12,slot_type=LINE}
+    |___Token:k {id=13,slot_type=LINE}
+    |___Token:l {id=14,slot_type=LINE}
+    |___Token:m {id=15,slot_type=LINE}
+    |___Token:n {id=16,slot_type=LINE}
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=14==================
+
+The current best program is the following
+
+    --file: small.line--
+    a
+    b
+    c
+    d
+    e
+    f
+    g
+    h
+    i
+    j
+    k
+    l
+    m
+    n
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@14
+    --file: small.line--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@7
+    --file: small.line--
+    a
+    b
+    c
+    d
+    e
+    f
+    g
+    --file: <formatted tokenized program in its original format>--
+    a
+    b
+    c
+    d
+    e
+    f
+    g
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@7
+    --file: small.line--
+    h
+    i
+    j
+    k
+    l
+    m
+    n
+    --file: <formatted tokenized program in its original format>--
+    h
+    i
+    j
+    k
+    l
+    m
+    n
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=3}
+    NodeDeletionAction{target_node=4}
+    NodeDeletionAction{target_node=5}
+    NodeDeletionAction{target_node=6}
+    NodeDeletionAction{target_node=7}
+    NodeDeletionAction{target_node=8}
+    NodeDeletionAction{target_node=9}
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=10}
+    NodeDeletionAction{target_node=11}
+    NodeDeletionAction{target_node=12}
+    NodeDeletionAction{target_node=13}
+    NodeDeletionAction{target_node=14}
+    NodeDeletionAction{target_node=15}
+    NodeDeletionAction{target_node=16}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@10
+    --file: small.line--
+    a
+    b
+    c
+    d
+    --file: <formatted tokenized program in its original format>--
+    a
+    b
+    c
+    d
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@10
+    --file: small.line--
+    e
+    f
+    g
+    h
+    --file: <formatted tokenized program in its original format>--
+    e
+    f
+    g
+    h
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@11
+    --file: small.line--
+    i
+    j
+    k
+    --file: <formatted tokenized program in its original format>--
+    i
+    j
+    k
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@11
+    --file: small.line--
+    l
+    m
+    n
+    --file: <formatted tokenized program in its original format>--
+    l
+    m
+    n
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@4
+    --file: small.line--
+    e
+    f
+    g
+    h
+    i
+    j
+    k
+    l
+    m
+    n
+    --file: <formatted tokenized program in its original format>--
+    e
+    f
+    g
+    h
+    i
+    j
+    k
+    l
+    m
+    n
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@4
+    --file: small.line--
+    a
+    b
+    c
+    d
+    i
+    j
+    k
+    l
+    m
+    n
+    --file: <formatted tokenized program in its original format>--
+    a
+    b
+    c
+    d
+    i
+    j
+    k
+    l
+    m
+    n
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@3
+    --file: small.line--
+    a
+    b
+    c
+    d
+    e
+    f
+    g
+    h
+    l
+    m
+    n
+    --file: <formatted tokenized program in its original format>--
+    a
+    b
+    c
+    d
+    e
+    f
+    g
+    h
+    l
+    m
+    n
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+4 entries are removed: 9 --> 5.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 10
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@3
+    --file: small.line--
+    a
+    b
+    c
+    d
+    e
+    f
+    g
+    h
+    --file: <formatted tokenized program in its original format>--
+    a
+    b
+    c
+    d
+    e
+    f
+    g
+    h
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@9
+    --file: small.line--
+    a
+    b
+    --file: <formatted tokenized program in its original format>--
+    a
+    b
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@9
+    --file: small.line--
+    c
+    d
+    --file: <formatted tokenized program in its original format>--
+    c
+    d
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@9
+    --file: small.line--
+    e
+    f
+    --file: <formatted tokenized program in its original format>--
+    e
+    f
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@9
+    --file: small.line--
+    g
+    h
+    --file: <formatted tokenized program in its original format>--
+    g
+    h
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@9
+    --file: small.line--
+    l
+    m
+    --file: <formatted tokenized program in its original format>--
+    l
+    m
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@10
+    --file: small.line--
+    n
+    --file: <formatted tokenized program in its original format>--
+    n
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@2
+    --file: small.line--
+    c
+    d
+    e
+    f
+    g
+    h
+    l
+    m
+    n
+    --file: <formatted tokenized program in its original format>--
+    c
+    d
+    e
+    f
+    g
+    h
+    l
+    m
+    n
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@2
+    --file: small.line--
+    a
+    b
+    e
+    f
+    g
+    h
+    l
+    m
+    n
+    --file: <formatted tokenized program in its original format>--
+    a
+    b
+    e
+    f
+    g
+    h
+    l
+    m
+    n
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+5 entries are removed: 13 --> 8.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 9
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@2
+    --file: small.line--
+    a
+    b
+    g
+    h
+    l
+    m
+    n
+    --file: <formatted tokenized program in its original format>--
+    a
+    b
+    g
+    h
+    l
+    m
+    n
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+2 entries are removed: 8 --> 6.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@2
+    --file: small.line--
+    a
+    b
+    l
+    m
+    n
+    --file: <formatted tokenized program in its original format>--
+    a
+    b
+    l
+    m
+    n
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@2
+    --file: small.line--
+    a
+    b
+    g
+    h
+    n
+    --file: <formatted tokenized program in its original format>--
+    a
+    b
+    g
+    h
+    n
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+3 entries are removed: 7 --> 4.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@1
+    --file: small.line--
+    a
+    b
+    g
+    h
+    --file: <formatted tokenized program in its original format>--
+    a
+    b
+    g
+    h
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@4
+    --file: small.line--
+    a
+    --file: <formatted tokenized program in its original format>--
+    a
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@4
+    --file: small.line--
+    b
+    --file: <formatted tokenized program in its original format>--
+    b
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@4
+    --file: small.line--
+    g
+    --file: <formatted tokenized program in its original format>--
+    g
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@4
+    --file: small.line--
+    h
+    --file: <formatted tokenized program in its original format>--
+    h
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.line--
+    n
+    --file: <formatted tokenized program in its original format>--
+    n
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@1
+    --file: small.line--
+    b
+    g
+    h
+    n
+    --file: <formatted tokenized program in its original format>--
+    b
+    g
+    h
+    n
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@1
+    --file: small.line--
+    a
+    g
+    h
+    n
+    --file: <formatted tokenized program in its original format>--
+    a
+    g
+    h
+    n
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+4 entries are removed: 10 --> 6.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 8
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@1
+    --file: small.line--
+    a
+    h
+    n
+    --file: <formatted tokenized program in its original format>--
+    a
+    h
+    n
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@1
+    --file: small.line--
+    a
+    g
+    n
+    --file: <formatted tokenized program in its original format>--
+    a
+    g
+    n
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+3 entries are removed: 7 --> 4.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@1
+    --file: small.line--
+    a
+    g
+    --file: <formatted tokenized program in its original format>--
+    a
+    g
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.line--
+    a
+    --file: <formatted tokenized program in its original format>--
+    a
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.line--
+    g
+    --file: <formatted tokenized program in its original format>--
+    g
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.line--
+    n
+    --file: <formatted tokenized program in its original format>--
+    n
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@1
+    --file: small.line--
+    g
+    n
+    --file: <formatted tokenized program in its original format>--
+    g
+    n
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__lines_1]dd@1
+    --file: small.line--
+    a
+    n
+    --file: <formatted tokenized program in its original format>--
+    a
+    n
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=16}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 2 from 14 to 3
+------------------------------------------------------------
+
+
+==================Reducing node 16, size=3==================
+
+The current best program is the following
+
+    --file: small.line--
+    a
+    g
+    n
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 16
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=3===================
+
+The current best program is the following
+
+    --file: small.line--
+    a
+    g
+    n
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+==================Reducing node 3, size=3===================
+
+The current best program is the following
+
+    --file: small.line--
+    a
+    g
+    n
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 3
+------------------------------------------------------------
+
+
+=Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
+
+The spar-tree is the following.
+lines {id=17}
+|___(*) {id=18,slot_type=kleene_star__lines_1}
+    |___Token:a {id=19,slot_type=LINE}
+    |___Token:g {id=20,slot_type=LINE}
+    |___Token:n {id=21,slot_type=LINE}
+------------------------------------------------------------
+
+
+==================Reducing node 18, size=3==================
+
+The current best program is the following
+
+    --file: small.line--
+    a
+    g
+    n
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.line--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.line--
+    a
+    g
+    --file: <formatted tokenized program in its original format>--
+    a
+    g
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.line--
+    n
+    --file: <formatted tokenized program in its original format>--
+    n
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=19}
+    NodeDeletionAction{target_node=20}
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=21}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.line--
+    a
+    --file: <formatted tokenized program in its original format>--
+    a
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.line--
+    g
+    --file: <formatted tokenized program in its original format>--
+    g
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=19}
+    NodeDeletionAction{target_node=20}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.line--
+    g
+    n
+    --file: <formatted tokenized program in its original format>--
+    g
+    n
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.line--
+    a
+    n
+    --file: <formatted tokenized program in its original format>--
+    a
+    n
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=21}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 18
+------------------------------------------------------------
+
+
+==================Reducing node 21, size=3==================
+
+The current best program is the following
+
+    --file: small.line--
+    a
+    g
+    n
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 21
+------------------------------------------------------------
+
+
+==================Reducing node 20, size=3==================
+
+The current best program is the following
+
+    --file: small.line--
+    a
+    g
+    n
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 20
+------------------------------------------------------------
+
+
+==================Reducing node 19, size=3==================
+
+The current best program is the following
+
+    --file: small.line--
+    a
+    g
+    n
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 19
+------------------------------------------------------------
+
+
+#test success = 6
+#test failure = 28
+#test result cache hits = 11
+#test execution cancelled = 0
+#node edit action set cache hits = 7
+#external test execution cache hits = 0

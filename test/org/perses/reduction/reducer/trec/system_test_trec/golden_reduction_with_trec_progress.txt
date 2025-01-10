@@ -1,0 +1,3101 @@
+=====================Reduction starts.======================
+
+The initial program size is 13
+The command line options are:
+---
+help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+versionFlags:
+  groupName: "Version"
+  version: false
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFile: "t.c"
+  deps: []
+  sourceFile: "t.c"
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_trec_reduction_golden_test_perses_node_priority_with_dfs_delta_t.c"
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  fixpoint: true
+  numOfThreads: 1
+  codeFormat: "ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  enableLineSlicer: false
+  defaultDeltaDebuggerTypeForKleene: "DFS"
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  enableTrec: true
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: "AUTO"
+  nodeActionSetCaching: true
+  queryCacheRefreshThreshold: 0
+  enableLightweightRefreshing: true
+  enablePassCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "progress_dump_trec.txt"
+  appendToProgressDumpFile: true
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileDeltaDebugger: null
+experimentFlags:
+  groupName: "Experiment Control"
+  cacheType: "COMPACT_QUERY_CACHE"
+  onDemandReducerClasses: null
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+------------------------------------------------------------
+
+
+The sanity check has been performed. The result is PassingSanityCheckResult
+=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+
+The spar-tree is the following.
+translationUnit {id=1}
+|___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=4,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=5,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=80,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=84,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=71,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=79,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=73,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=75,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=76,slot_type=LeftParen}
+        |           |___Token:) {id=78,slot_type=RightParen}
+        |___compoundStatement {id=7,slot_type=compoundStatement}
+            |___Token:{ {id=8,slot_type=LeftBrace}
+            |___(?) {id=9,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=12,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=44,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=45,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=63,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:longFunctionName {id=70,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=65,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=67,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=68,slot_type=LeftParen}
+            |       |   |               |___Token:) {id=69,slot_type=RightParen}
+            |       |   |___Token:; {id=46,slot_type=Semi}
+            |       |___jumpStatement {id=17,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=20,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=21,slot_type=Return}
+            |           |   |___(?) {id=22,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:0xff00ull {id=41,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |           |___Token:; {id=19,slot_type=Semi}
+            |___Token:} {id=10,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+                         ;
+    --file: <formatted tokenized program in its original format>--
+                         ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+                       ;
+    --file: <formatted tokenized program in its original format>--
+                       ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 4
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 7
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+    --file: t.c--
+    int main() {
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+=================Reducing node 12, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=12}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove whole except first
+    --file: t.c--
+    int main() {
+       longFunctionName();
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       longFunctionName();
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=17}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: t.c--
+    int main() {
+       return 0xff00ull;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 12
+------------------------------------------------------------
+
+
+=================Reducing node 44, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=44}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main() {
+                         ;
+       return 0xff00ull;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+                         ;
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 44
+------------------------------------------------------------
+
+
+=================Reducing node 71, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main   {
+       longFunctionName();
+       return 0xff00ull;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main   {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 71
+------------------------------------------------------------
+
+
+=================Reducing node 45, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+    --file: t.c--
+    int main() {
+                         ;
+       return 0xff00ull;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+                         ;
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 45
+------------------------------------------------------------
+
+
+=================Reducing node 63, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=63}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main() {
+       longFunctionName  ;
+       return 0xff00ull;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       longFunctionName  ;
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 63
+------------------------------------------------------------
+
+
+=================Reducing node 17, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=17}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main() {
+       longFunctionName();
+                       ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       longFunctionName();
+                       ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 17
+------------------------------------------------------------
+
+
+=================Reducing node 73, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
+    --file: t.c--
+    int main   {
+       longFunctionName();
+       return 0xff00ull;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main   {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 73
+------------------------------------------------------------
+
+
+=================Reducing node 75, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=75}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 75
+------------------------------------------------------------
+
+
+=================Reducing node 65, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__postfixExpression_2]dd@1
+    --file: t.c--
+    int main() {
+       longFunctionName  ;
+       return 0xff00ull;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       longFunctionName  ;
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 65
+------------------------------------------------------------
+
+
+=================Reducing node 67, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=67}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 67
+------------------------------------------------------------
+
+
+=================Reducing node 20, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return          ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       longFunctionName();
+       return          ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 20
+------------------------------------------------------------
+
+
+=================Reducing node 79, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 79
+------------------------------------------------------------
+
+
+=================Reducing node 78, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 78
+------------------------------------------------------------
+
+
+=================Reducing node 76, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 76
+------------------------------------------------------------
+
+
+=================Reducing node 70, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 70
+------------------------------------------------------------
+
+
+=================Reducing node 69, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 69
+------------------------------------------------------------
+
+
+=================Reducing node 68, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 68
+------------------------------------------------------------
+
+
+=================Reducing node 46, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 46
+------------------------------------------------------------
+
+
+=================Reducing node 22, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return          ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       longFunctionName();
+       return          ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 22
+------------------------------------------------------------
+
+
+=================Reducing node 41, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 41
+------------------------------------------------------------
+
+
+=================Reducing node 21, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 21
+------------------------------------------------------------
+
+
+=================Reducing node 19, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 19
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
+    --file: t.c--
+        main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+    --file: <formatted tokenized program in its original format>--
+        main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+=================Reducing node 80, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=80}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 80
+------------------------------------------------------------
+
+
+=================Reducing node 84, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 84
+------------------------------------------------------------
+
+
+=====Fixpoint iteration 2. Reducer: token_canonicalizer=====
+
+The spar-tree is the following.
+translationUnit {id=1}
+|___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=4,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=5,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=80,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=84,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=71,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=79,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=73,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=75,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=76,slot_type=LeftParen}
+        |           |___Token:) {id=78,slot_type=RightParen}
+        |___compoundStatement {id=7,slot_type=compoundStatement}
+            |___Token:{ {id=8,slot_type=LeftBrace}
+            |___(?) {id=9,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=12,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=44,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=45,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=63,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:longFunctionName {id=70,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=65,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=67,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=68,slot_type=LeftParen}
+            |       |   |               |___Token:) {id=69,slot_type=RightParen}
+            |       |   |___Token:; {id=46,slot_type=Semi}
+            |       |___jumpStatement {id=17,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=20,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=21,slot_type=Return}
+            |           |   |___(?) {id=22,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:0xff00ull {id=41,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |           |___Token:; {id=19,slot_type=Semi}
+            |___Token:} {id=10,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+    --file: t.c--
+    int a   () {
+       longFunctionName();
+       return 0xff00ull;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int a   () {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+    --file: t.c--
+    int a   () {
+       longFunctionName();
+       return 0xff00ull;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int a   () {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xff00ull;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xff00ull;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 15
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0        ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0        ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0        ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0        ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '1'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 1        ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 1        ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '1'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 1        ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 1        ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0xfull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xfull   ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xfull   ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0xfull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xfull   ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xfull   ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0xff00'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xff00   ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xff00   ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0xff00'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xff00   ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xff00   ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0xf00ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xf00ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xf00ull ;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xf00ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xf00ull ;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xf00ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xf00ull ;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xf00ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xf00ull ;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xff0ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xff0ull ;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xff0ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xff0ull ;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xff0ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xff0ull ;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xff0ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xff0ull ;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xff00   ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xff00   ;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xff00   ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xff00   ;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0xfull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xfull   ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xfull   ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0xfull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xfull   ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xfull   ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0xf00'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xf00    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xf00    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0xf00'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xf00    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xf00    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x00ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x00ull  ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x00ull  ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x00ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x00ull  ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x00ull  ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0xf0ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xf0ull  ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xf0ull  ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0xf0ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xf0ull  ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xf0ull  ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0xf0ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xf0ull  ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xf0ull  ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0xf0ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xf0ull  ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xf0ull  ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0xf00'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xf00    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xf00    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0xf00'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xf00    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xf00    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0Xf00ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0Xf00ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0Xf00ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0Xf00ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0Xf00ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0Xf00ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x000ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x000ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x000ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x000ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x000ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x000ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x100ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xf00Ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xf00Ull ;
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0xf00Ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0xf00Ull ;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0X100ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0X100ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0X100ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0X100ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0X100ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0X100ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x000ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x000ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x000ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x000ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x000ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x000ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x100Ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100Ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x100Ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x100Ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100Ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x100Ull ;
+    }
+------------------------------------------------------------
+
+
+=Fixpoint iteration 3. Reducer: perses_node_priority_with_dfs_delta
+
+The spar-tree is the following.
+translationUnit {id=133}
+|___(+) {id=134,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=136,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=137,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=212,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=216,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=203,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=211,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=205,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=207,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=208,slot_type=LeftParen}
+        |           |___Token:) {id=210,slot_type=RightParen}
+        |___compoundStatement {id=139,slot_type=compoundStatement}
+            |___Token:{ {id=140,slot_type=LeftBrace}
+            |___(?) {id=141,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=144,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=176,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=177,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=195,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:a {id=202,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=197,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=199,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=200,slot_type=LeftParen}
+            |       |   |               |___Token:) {id=201,slot_type=RightParen}
+            |       |   |___Token:; {id=178,slot_type=Semi}
+            |       |___jumpStatement {id=149,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=152,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=153,slot_type=Return}
+            |           |   |___(?) {id=154,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:0x100ull {id=173,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |           |___Token:; {id=151,slot_type=Semi}
+            |___Token:} {id=142,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+=================Reducing node 134, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 134
+------------------------------------------------------------
+
+
+=================Reducing node 136, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+                         ;
+    --file: <formatted tokenized program in its original format>--
+                         ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+                       ;
+    --file: <formatted tokenized program in its original format>--
+                       ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 136
+------------------------------------------------------------
+
+
+=================Reducing node 139, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 139
+------------------------------------------------------------
+
+
+=================Reducing node 141, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+    --file: t.c--
+    int main() {
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 141
+------------------------------------------------------------
+
+
+=================Reducing node 144, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=144}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove whole except first
+    --file: t.c--
+    int main() {
+       a               ();
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=149}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: t.c--
+    int main() {
+       return 0x100ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 144
+------------------------------------------------------------
+
+
+=================Reducing node 176, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=176}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main() {
+                         ;
+       return 0x100ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+                         ;
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 176
+------------------------------------------------------------
+
+
+=================Reducing node 203, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main   {
+       a               ();
+       return 0x100ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main   {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 203
+------------------------------------------------------------
+
+
+=================Reducing node 177, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+    --file: t.c--
+    int main() {
+                         ;
+       return 0x100ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+                         ;
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 177
+------------------------------------------------------------
+
+
+=================Reducing node 195, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=195}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main() {
+       a                 ;
+       return 0x100ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a                 ;
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 195
+------------------------------------------------------------
+
+
+=================Reducing node 149, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=149}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main() {
+       a               ();
+                       ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+                       ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 149
+------------------------------------------------------------
+
+
+=================Reducing node 205, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
+    --file: t.c--
+    int main   {
+       a               ();
+       return 0x100ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main   {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 205
+------------------------------------------------------------
+
+
+=================Reducing node 207, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=207}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 207
+------------------------------------------------------------
+
+
+=================Reducing node 197, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__postfixExpression_2]dd@1
+    --file: t.c--
+    int main() {
+       a                 ;
+       return 0x100ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a                 ;
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 197
+------------------------------------------------------------
+
+
+=================Reducing node 199, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=199}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 199
+------------------------------------------------------------
+
+
+=================Reducing node 152, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main() {
+       a               ();
+       return          ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return          ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 152
+------------------------------------------------------------
+
+
+=================Reducing node 211, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 211
+------------------------------------------------------------
+
+
+=================Reducing node 210, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 210
+------------------------------------------------------------
+
+
+=================Reducing node 208, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 208
+------------------------------------------------------------
+
+
+=================Reducing node 202, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 202
+------------------------------------------------------------
+
+
+=================Reducing node 201, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 201
+------------------------------------------------------------
+
+
+=================Reducing node 200, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 200
+------------------------------------------------------------
+
+
+=================Reducing node 178, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 178
+------------------------------------------------------------
+
+
+=================Reducing node 154, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+    --file: t.c--
+    int main() {
+       a               ();
+       return          ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return          ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 154
+------------------------------------------------------------
+
+
+=================Reducing node 173, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 173
+------------------------------------------------------------
+
+
+=================Reducing node 153, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 153
+------------------------------------------------------------
+
+
+=================Reducing node 151, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 151
+------------------------------------------------------------
+
+
+=================Reducing node 142, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 142
+------------------------------------------------------------
+
+
+=================Reducing node 140, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 140
+------------------------------------------------------------
+
+
+=================Reducing node 137, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
+    --file: t.c--
+        main() {
+       a               ();
+       return 0x100ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+        main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 137
+------------------------------------------------------------
+
+
+=================Reducing node 212, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=212}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 212
+------------------------------------------------------------
+
+
+=================Reducing node 216, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 216
+------------------------------------------------------------
+
+
+=====Fixpoint iteration 4. Reducer: token_canonicalizer=====
+
+The spar-tree is the following.
+translationUnit {id=133}
+|___(+) {id=134,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=136,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=137,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=212,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=216,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=203,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=211,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=205,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=207,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=208,slot_type=LeftParen}
+        |           |___Token:) {id=210,slot_type=RightParen}
+        |___compoundStatement {id=139,slot_type=compoundStatement}
+            |___Token:{ {id=140,slot_type=LeftBrace}
+            |___(?) {id=141,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=144,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=176,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=177,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=195,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:a {id=202,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=197,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=199,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=200,slot_type=LeftParen}
+            |       |   |               |___Token:) {id=201,slot_type=RightParen}
+            |       |   |___Token:; {id=178,slot_type=Semi}
+            |       |___jumpStatement {id=149,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=152,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=153,slot_type=Return}
+            |           |   |___(?) {id=154,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:0x100ull {id=173,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |           |___Token:; {id=151,slot_type=Semi}
+            |___Token:} {id=142,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+    --file: t.c--
+    int a   () {
+       a               ();
+       return 0x100ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int a   () {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+    --file: t.c--
+    int a   () {
+       a               ();
+       return 0x100ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int a   () {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0        ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0        ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0        ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0        ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '1'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 1        ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 1        ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '1'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 1        ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 1        ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x1ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x1ull   ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x1ull   ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x1ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x1ull   ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x1ull   ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x100'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x100    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x100'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x100    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x00ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x00ull  ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x00ull  ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x00ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x00ull  ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x00ull  ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x10ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x10ull  ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x10ull  ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x10ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x10ull  ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x10ull  ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x10ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x10ull  ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x10ull  ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x10ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x10ull  ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x10ull  ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x100'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x100    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x100'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x100    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0X100ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0X100ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0X100ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0X100ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0X100ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0X100ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x000ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x000ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x000ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x000ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x000ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x000ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x100Ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100Ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x100Ull ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '0x100Ull'
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100Ull ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+       a               ();
+       return 0x100Ull ;
+    }
+------------------------------------------------------------
+
+
+#test success = 3
+#test failure = 86
+#test result cache hits = 0
+#test execution cancelled = 13
+#node edit action set cache hits = 16
+#external test execution cache hits = 0

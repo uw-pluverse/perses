@@ -1,0 +1,179 @@
+Reduction starts: algorithm=org.perses.listminimizer.PristineDeltaDebugger
+The original input has 14 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.AbstractListInputMinimizer.Companion.NoPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=a}, LexerRuleSparTreeNode{id=3, parent=2}}
+--Element 1
+  index=1, payload=ElementWrapper{index=1, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.AbstractListInputMinimizer.Companion.NoPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=b}, LexerRuleSparTreeNode{id=4, parent=2}}
+--Element 2
+  index=2, payload=ElementWrapper{index=2, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.AbstractListInputMinimizer.Companion.NoPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=c}, LexerRuleSparTreeNode{id=5, parent=2}}
+--Element 3
+  index=3, payload=ElementWrapper{index=3, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.AbstractListInputMinimizer.Companion.NoPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=d}, LexerRuleSparTreeNode{id=6, parent=2}}
+--Element 4
+  index=4, payload=ElementWrapper{index=4, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.AbstractListInputMinimizer.Companion.NoPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=e}, LexerRuleSparTreeNode{id=7, parent=2}}
+--Element 5
+  index=5, payload=ElementWrapper{index=5, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.AbstractListInputMinimizer.Companion.NoPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=f}, LexerRuleSparTreeNode{id=8, parent=2}}
+--Element 6
+  index=6, payload=ElementWrapper{index=6, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.AbstractListInputMinimizer.Companion.NoPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=g}, LexerRuleSparTreeNode{id=9, parent=2}}
+--Element 7
+  index=7, payload=ElementWrapper{index=7, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.AbstractListInputMinimizer.Companion.NoPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=h}, LexerRuleSparTreeNode{id=10, parent=2}}
+--Element 8
+  index=8, payload=ElementWrapper{index=8, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.AbstractListInputMinimizer.Companion.NoPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=i}, LexerRuleSparTreeNode{id=11, parent=2}}
+--Element 9
+  index=9, payload=ElementWrapper{index=9, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.AbstractListInputMinimizer.Companion.NoPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=j}, LexerRuleSparTreeNode{id=12, parent=2}}
+--Element 10
+  index=10, payload=ElementWrapper{index=10, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.AbstractListInputMinimizer.Companion.NoPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=k}, LexerRuleSparTreeNode{id=13, parent=2}}
+--Element 11
+  index=11, payload=ElementWrapper{index=11, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.AbstractListInputMinimizer.Companion.NoPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=l}, LexerRuleSparTreeNode{id=14, parent=2}}
+--Element 12
+  index=12, payload=ElementWrapper{index=12, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.AbstractListInputMinimizer.Companion.NoPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=m}, LexerRuleSparTreeNode{id=15, parent=2}}
+--Element 13
+  index=13, payload=ElementWrapper{index=13, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.AbstractListInputMinimizer.Companion.NoPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=n}, LexerRuleSparTreeNode{id=16, parent=2}}
+Testing the empty input.
+Property Test. Deleted elements: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]. Interestingness: skip
+Number of partitions: n=2
+Partition size: 2
+----Partition 0: [0, 1, 2, 3, 4, 5, 6]
+----Partition 1: [7, 8, 9, 10, 11, 12, 13]
+
+Reducing partitions: [[0, 1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12, 13]]
+Property Test. Deleted elements: [7, 8, 9, 10, 11, 12, 13]. Interestingness: skip
+Property Test. Deleted elements: [0, 1, 2, 3, 4, 5, 6]. Interestingness: skip
+Reducing complements: [[0, 1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12, 13]]
+Property Test. Deleted elements: [0, 1, 2, 3, 4, 5, 6]. Interestingness: skip
+Property Test. Deleted elements: [7, 8, 9, 10, 11, 12, 13]. Interestingness: skip
+Number of partitions: n=4
+Partition size: 4
+----Partition 0: [0, 1, 2, 3]
+----Partition 1: [4, 5, 6, 7]
+----Partition 2: [8, 9, 10]
+----Partition 3: [11, 12, 13]
+
+Reducing partitions: [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10], [11, 12, 13]]
+Property Test. Deleted elements: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13]. Interestingness: skip
+Property Test. Deleted elements: [0, 1, 2, 3, 8, 9, 10, 11, 12, 13]. Interestingness: skip
+Property Test. Deleted elements: [0, 1, 2, 3, 4, 5, 6, 7, 11, 12, 13]. Interestingness: skip
+Property Test. Deleted elements: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]. Interestingness: skip
+Reducing complements: [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10], [11, 12, 13]]
+Property Test. Deleted elements: [0, 1, 2, 3]. Interestingness: skip
+Property Test. Deleted elements: [4, 5, 6, 7]. Interestingness: skip
+Property Test. Deleted elements: [8, 9, 10]. Interestingness: interesting
+New best is found: [0, 1, 2, 3, 4, 5, 6, 7, 11, 12, 13]
+Property Test. Deleted elements: [11, 12, 13]. Interestingness: skip
+Number of partitions: n=6
+Partition size: 6
+----Partition 0: [0, 1]
+----Partition 1: [2, 3]
+----Partition 2: [4, 5]
+----Partition 3: [6, 7]
+----Partition 4: [11, 12]
+----Partition 5: [13]
+
+Reducing partitions: [[0, 1], [2, 3], [4, 5], [6, 7], [11, 12], [13]]
+Property Test. Deleted elements: [2, 3, 4, 5, 6, 7, 11, 12, 13]. Interestingness: skip
+Property Test. Deleted elements: [0, 1, 4, 5, 6, 7, 11, 12, 13]. Interestingness: skip
+Property Test. Deleted elements: [0, 1, 2, 3, 6, 7, 11, 12, 13]. Interestingness: skip
+Property Test. Deleted elements: [0, 1, 2, 3, 4, 5, 11, 12, 13]. Interestingness: skip
+Property Test. Deleted elements: [0, 1, 2, 3, 4, 5, 6, 7, 13]. Interestingness: skip
+Property Test. Deleted elements: [0, 1, 2, 3, 4, 5, 6, 7, 11, 12]. Interestingness: skip
+Reducing complements: [[0, 1], [2, 3], [4, 5], [6, 7], [11, 12], [13]]
+Property Test. Deleted elements: [0, 1]. Interestingness: skip
+Property Test. Deleted elements: [2, 3]. Interestingness: interesting
+New best is found: [0, 1, 4, 5, 6, 7, 11, 12, 13]
+Property Test. Deleted elements: [4, 5]. Interestingness: interesting
+New best is found: [0, 1, 6, 7, 11, 12, 13]
+Property Test. Deleted elements: [6, 7]. Interestingness: skip
+Property Test. Deleted elements: [11, 12]. Interestingness: interesting
+New best is found: [0, 1, 6, 7, 13]
+Property Test. Deleted elements: [13]. Interestingness: skip
+Number of partitions: n=5
+Partition size: 5
+----Partition 0: [0]
+----Partition 1: [1]
+----Partition 2: [6]
+----Partition 3: [7]
+----Partition 4: [13]
+
+Reducing partitions: [[0], [1], [6], [7], [13]]
+Property Test. Deleted elements: [1, 6, 7, 13]. Interestingness: skip
+Property Test. Deleted elements: [0, 6, 7, 13]. Interestingness: skip
+Property Test. Deleted elements: [0, 1, 7, 13]. Interestingness: skip
+Property Test. Deleted elements: [0, 1, 6, 13]. Interestingness: skip
+Property Test. Deleted elements: [0, 1, 6, 7]. Interestingness: skip
+Reducing complements: [[0], [1], [6], [7], [13]]
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [1]. Interestingness: interesting
+New best is found: [0, 6, 7, 13]
+Property Test. Deleted elements: [6]. Interestingness: skip
+Property Test. Deleted elements: [7]. Interestingness: interesting
+New best is found: [0, 6, 13]
+Property Test. Deleted elements: [13]. Interestingness: skip
+Number of partitions: n=3
+Partition size: 3
+----Partition 0: [0]
+----Partition 1: [6]
+----Partition 2: [13]
+
+Reducing partitions: [[0], [6], [13]]
+Property Test. Deleted elements: [6, 13]. Interestingness: skip
+Property Test. Deleted elements: [0, 13]. Interestingness: skip
+Property Test. Deleted elements: [0, 6]. Interestingness: skip
+Reducing complements: [[0], [6], [13]]
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [6]. Interestingness: skip
+Property Test. Deleted elements: [13]. Interestingness: skip
+Reduction ends.
+
+Reduction starts: algorithm=org.perses.listminimizer.PristineDeltaDebugger
+The original input has 3 element(s).
+--Element 0
+  index=0, payload=ElementWrapper{index=0, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.AbstractListInputMinimizer.Companion.NoPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=a}, LexerRuleSparTreeNode{id=19, parent=18}}
+--Element 1
+  index=1, payload=ElementWrapper{index=1, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.AbstractListInputMinimizer.Companion.NoPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=g}, LexerRuleSparTreeNode{id=20, parent=18}}
+--Element 2
+  index=2, payload=ElementWrapper{index=2, element=org.perses.spartree.LexerRuleSparTreeNode, payload=org.perses.listminimizer.AbstractListInputMinimizer.Companion.NoPayload}.elementPayload}
+  element=LexerRuleSparTreeNode{token=PersesToken{token=n}, LexerRuleSparTreeNode{id=21, parent=18}}
+Testing the empty input.
+Property Test. Deleted elements: [0, 1, 2]. Interestingness: skip
+Number of partitions: n=2
+Partition size: 2
+----Partition 0: [0, 1]
+----Partition 1: [2]
+
+Reducing partitions: [[0, 1], [2]]
+Property Test. Deleted elements: [2]. Interestingness: skip
+Property Test. Deleted elements: [0, 1]. Interestingness: skip
+Reducing complements: [[0, 1], [2]]
+Property Test. Deleted elements: [0, 1]. Interestingness: skip
+Property Test. Deleted elements: [2]. Interestingness: skip
+Number of partitions: n=3
+Partition size: 3
+----Partition 0: [0]
+----Partition 1: [1]
+----Partition 2: [2]
+
+Reducing partitions: [[0], [1], [2]]
+Property Test. Deleted elements: [1, 2]. Interestingness: skip
+Property Test. Deleted elements: [0, 2]. Interestingness: skip
+Property Test. Deleted elements: [0, 1]. Interestingness: skip
+Reducing complements: [[0], [1], [2]]
+Property Test. Deleted elements: [0]. Interestingness: skip
+Property Test. Deleted elements: [1]. Interestingness: skip
+Property Test. Deleted elements: [2]. Interestingness: skip
+Reduction ends.
+

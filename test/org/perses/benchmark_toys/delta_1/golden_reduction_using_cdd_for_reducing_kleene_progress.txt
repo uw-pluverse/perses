@@ -1,0 +1,3677 @@
+=====================Reduction starts.======================
+
+The initial program size is 56
+The command line options are:
+---
+help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+versionFlags:
+  groupName: "Version"
+  version: false
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFile: "t.c"
+  deps: []
+  sourceFile: "t.c"
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_using_cdd_for_reducing_kleene_test_perses_node_priority_with_dfs_delta_t.c"
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  fixpoint: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  enableLineSlicer: false
+  defaultDeltaDebuggerTypeForKleene: "CDD"
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  enableTrec: false
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: "TRUE"
+  nodeActionSetCaching: true
+  queryCacheRefreshThreshold: 0
+  enableLightweightRefreshing: true
+  enablePassCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "reduction_using_cdd_for_reducing_kleene_progress.txt"
+  appendToProgressDumpFile: true
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileDeltaDebugger: "delta_debugger_profile_for_reduction_using_cdd_for_kleene.txt"
+experimentFlags:
+  groupName: "Experiment Control"
+  cacheType: "COMPACT_QUERY_CACHE"
+  onDemandReducerClasses: null
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+------------------------------------------------------------
+
+
+The sanity check has been performed. The result is PassingSanityCheckResult
+=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+
+The spar-tree is the following.
+translationUnit {id=1}
+|___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
+    |___aux_rule__declaration_3 {id=360,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+    |   |___(+) {id=361,slot_type=declarationSpecifiers}
+    |   |   |___Token:int {id=402,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+    |   |___(?) {id=362,slot_type=optional__declaration_2}
+    |   |   |___directDeclarator {id=367,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
+    |   |       |___Token:printf {id=398,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+    |   |       |___(*) {id=369,slot_type=kleene_star__directDeclarator_7}
+    |   |           |___aux_rule__directDeclarator_15 {id=371,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+    |   |               |___Token:( {id=372,slot_type=LeftParen}
+    |   |               |___parameterTypeList {id=375,slot_type=[altnt_block__directDeclarator_11,parameterTypeList]}
+    |   |               |   |___parameterDeclaration {id=381,slot_type=[parameterList,parameterDeclaration]}
+    |   |               |   |   |___(+) {id=382,slot_type=declarationSpecifiers}
+    |   |               |   |   |   |___Token:const {id=397,slot_type=[declarationSpecifier,typeQualifier,Const]}
+    |   |               |   |   |   |___Token:char {id=395,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
+    |   |               |   |   |___(?) {id=384,slot_type=[altnt_block__parameterDeclaration_2,optional__typeName_1]}
+    |   |               |   |       |___(+) {id=387,slot_type=[abstractDeclarator,pointer,kleene_plus__pointer_8]}
+    |   |               |   |           |___Token:* {id=390,slot_type=[aux_rule__pointer_6,altnt_block__pointer_9,Star]}
+    |   |               |   |___(?) {id=377,slot_type=optional__parameterTypeList_2}
+    |   |               |       |___aux_rule__parameterTypeList_1 {id=378,slot_type=aux_rule__parameterTypeList_1}
+    |   |               |           |___Token:, {id=379,slot_type=Comma}
+    |   |               |           |___Token:... {id=380,slot_type=Ellipsis}
+    |   |               |___Token:) {id=374,slot_type=RightParen}
+    |   |___Token:; {id=363,slot_type=Semi}
+    |___functionDefinition {id=5,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=6,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=354,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=358,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=303,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=353,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=305,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=307,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=308,slot_type=LeftParen}
+        |           |___parameterList {id=312,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList]}
+        |           |   |___(+) {id=342,slot_type=[parameterDeclaration,declarationSpecifiers]}
+        |           |   |   |___Token:int {id=352,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |           |   |   |___Token:argc {id=349,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |           |   |___(*) {id=314,slot_type=kleene_star__parameterList_1}
+        |           |       |___aux_rule__parameterList_2 {id=315,slot_type=aux_rule__parameterList_2}
+        |           |           |___Token:, {id=316,slot_type=Comma}
+        |           |           |___parameterDeclaration {id=317,slot_type=parameterDeclaration}
+        |           |               |___(+) {id=318,slot_type=declarationSpecifiers}
+        |           |               |   |___Token:char {id=341,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
+        |           |               |___declarator {id=320,slot_type=[altnt_block__parameterDeclaration_2,declarator]}
+        |           |                   |___(?) {id=321,slot_type=optional__declarator_1}
+        |           |                   |   |___(+) {id=334,slot_type=[pointer,kleene_plus__pointer_8]}
+        |           |                   |       |___Token:* {id=337,slot_type=[aux_rule__pointer_6,altnt_block__pointer_9,Star]}
+        |           |                   |___directDeclarator {id=322,slot_type=directDeclarator}
+        |           |                       |___Token:argv {id=332,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |           |                       |___(*) {id=324,slot_type=kleene_star__directDeclarator_7}
+        |           |                           |___aux_rule__directDeclarator_14 {id=326,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_14]}
+        |           |                               |___Token:[ {id=327,slot_type=LeftBracket}
+        |           |                               |___Token:] {id=329,slot_type=RightBracket}
+        |           |___Token:) {id=310,slot_type=RightParen}
+        |___compoundStatement {id=8,slot_type=compoundStatement}
+            |___Token:{ {id=9,slot_type=LeftBrace}
+            |___(?) {id=10,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=13,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___aux_rule__declaration_3 {id=267,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=268,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=302,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=269,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=272,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:a {id=298,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=274,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=275,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=276,slot_type=Assign}
+            |       |   |               |___Token:1 {id=295,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=270,slot_type=Semi}
+            |       |___aux_rule__declaration_3 {id=219,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=220,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=265,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=221,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=224,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:b {id=261,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=226,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=227,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=228,slot_type=Assign}
+            |       |   |               |___additiveExpression {id=240,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+            |       |   |                   |___Token:a {id=258,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |                   |___(*) {id=242,slot_type=kleene_star__additiveExpression_1}
+            |       |   |                       |___aux_rule__additiveExpression_2 {id=243,slot_type=aux_rule__additiveExpression_2}
+            |       |   |                           |___Token:+ {id=252,slot_type=[altnt_block__additiveExpression_3,Plus]}
+            |       |   |                           |___Token:1 {id=251,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=222,slot_type=Semi}
+            |       |___expressionStatement {id=149,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=150,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=168,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:printf {id=217,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=170,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=172,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=173,slot_type=LeftParen}
+            |       |   |               |___(?) {id=174,slot_type=optional__postfixExpression_1}
+            |       |   |               |   |___expression {id=176,slot_type=expression}
+            |       |   |               |       |___(+) {id=215,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |       |   |               |       |   |___Token:"%d\n" {id=216,slot_type=StringLiteral}
+            |       |   |               |       |___(*) {id=178,slot_type=kleene_star__expression_1}
+            |       |   |               |           |___aux_rule__expression_2 {id=179,slot_type=aux_rule__expression_2}
+            |       |   |               |               |___Token:, {id=180,slot_type=Comma}
+            |       |   |               |               |___Token:b {id=198,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |               |___Token:) {id=175,slot_type=RightParen}
+            |       |   |___Token:; {id=151,slot_type=Semi}
+            |       |___expressionStatement {id=99,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=100,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=118,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:printf {id=146,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=120,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=122,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=123,slot_type=LeftParen}
+            |       |   |               |___(?) {id=124,slot_type=optional__postfixExpression_1}
+            |       |   |               |   |___(+) {id=144,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |       |   |               |       |___Token:"hello\n" {id=145,slot_type=StringLiteral}
+            |       |   |               |___Token:) {id=125,slot_type=RightParen}
+            |       |   |___Token:; {id=101,slot_type=Semi}
+            |       |___expressionStatement {id=49,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=50,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=68,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:printf {id=96,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=70,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=72,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=73,slot_type=LeftParen}
+            |       |   |               |___(?) {id=74,slot_type=optional__postfixExpression_1}
+            |       |   |               |   |___(+) {id=94,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |       |   |               |       |___Token:"world\n" {id=95,slot_type=StringLiteral}
+            |       |   |               |___Token:) {id=75,slot_type=RightParen}
+            |       |   |___Token:; {id=51,slot_type=Semi}
+            |       |___jumpStatement {id=22,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=25,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=26,slot_type=Return}
+            |           |   |___(?) {id=27,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:0 {id=46,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |           |___Token:; {id=24,slot_type=Semi}
+            |___Token:} {id=11,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=56==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]remove whole except first
+    --file: t.c--
+    int printf(const char*, ...);
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@2
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@1
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=5}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=56==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=5}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+                  ;
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+                  ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+         int a = 1;
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+         int a = 1;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+              int b = a + 1;
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+              int b = a + 1;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=56==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=56==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=13}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+=================Reducing node 13, size=56==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=13}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove whole except first
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@4
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+        return 0;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+4 entries are removed: 8 --> 4.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 14
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+        return 0;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+        return 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 5 --> 4.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 3
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 13 from 56 to 29
+------------------------------------------------------------
+
+
+=================Reducing node 303, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main                          {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main                          {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int           argc                {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int           argc                {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 303
+------------------------------------------------------------
+
+
+=================Reducing node 360, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+                                ;
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+                                ;
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 360
+------------------------------------------------------------
+
+
+=================Reducing node 305, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main                          {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main                          {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=307}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 305
+------------------------------------------------------------
+
+
+=================Reducing node 307, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=307}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 307
+------------------------------------------------------------
+
+
+=================Reducing node 362, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__declaration_2]dd@1
+    --file: t.c--
+    int                         ;
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int                         ;
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=367}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 362
+------------------------------------------------------------
+
+
+=================Reducing node 367, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=367}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf                  ;
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf                  ;
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 367
+------------------------------------------------------------
+
+
+=================Reducing node 312, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int                   ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int                   ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (    argc              ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (    argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (          char        ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (          char        ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (          char *argv[]) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (          char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+6 entries are removed: 10 --> 4.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 14
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 312 from 29 to 21
+------------------------------------------------------------
+
+
+=================Reducing node 369, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
+    --file: t.c--
+    int printf                  ;
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf                  ;
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=371}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 369
+------------------------------------------------------------
+
+
+=================Reducing node 371, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=371}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 371
+------------------------------------------------------------
+
+
+=================Reducing node 375, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(                );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const           );
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const           );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(      char      );
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(      char      );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char      );
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char      );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*     );
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*     );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 375
+------------------------------------------------------------
+
+
+=================Reducing node 49, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+                      ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+                      ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 49
+------------------------------------------------------------
+
+
+=================Reducing node 50, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+                      ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+                      ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=68}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 50
+------------------------------------------------------------
+
+
+=================Reducing node 68, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=68}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf           ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf           ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+            "world\n" ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 68
+------------------------------------------------------------
+
+
+=================Reducing node 381, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const      , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const      , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(      char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(      char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 381
+------------------------------------------------------------
+
+
+=================Reducing node 70, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf           ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf           ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=72}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 70
+------------------------------------------------------------
+
+
+=================Reducing node 72, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=72}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 72
+------------------------------------------------------------
+
+
+=================Reducing node 382, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:declarationSpecifiers]remove whole except first
+    --file: t.c--
+    int printf(const     *, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const     *, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:declarationSpecifiers]dd@2
+    --file: t.c--
+    int printf(          *, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(          *, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:declarationSpecifiers]dd@1
+    --file: t.c--
+    int printf(      char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(      char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=395}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 382
+------------------------------------------------------------
+
+
+=================Reducing node 377, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*     );
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*     );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=378}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 377
+------------------------------------------------------------
+
+
+=================Reducing node 378, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=378}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 378
+------------------------------------------------------------
+
+
+=================Reducing node 398, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 398
+------------------------------------------------------------
+
+
+=================Reducing node 397, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 397
+------------------------------------------------------------
+
+
+=================Reducing node 395, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 395
+------------------------------------------------------------
+
+
+=================Reducing node 384, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=387}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 384
+------------------------------------------------------------
+
+
+=================Reducing node 387, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=387}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 387
+------------------------------------------------------------
+
+
+=================Reducing node 390, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 390
+------------------------------------------------------------
+
+
+=================Reducing node 380, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 380
+------------------------------------------------------------
+
+
+=================Reducing node 379, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 379
+------------------------------------------------------------
+
+
+=================Reducing node 374, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 374
+------------------------------------------------------------
+
+
+=================Reducing node 372, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 372
+------------------------------------------------------------
+
+
+=================Reducing node 363, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 363
+------------------------------------------------------------
+
+
+=================Reducing node 361, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 361
+------------------------------------------------------------
+
+
+=================Reducing node 402, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 402
+------------------------------------------------------------
+
+
+=================Reducing node 353, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 353
+------------------------------------------------------------
+
+
+=================Reducing node 310, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 310
+------------------------------------------------------------
+
+
+=================Reducing node 308, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 308
+------------------------------------------------------------
+
+
+=================Reducing node 96, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 96
+------------------------------------------------------------
+
+
+=================Reducing node 75, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 75
+------------------------------------------------------------
+
+
+=================Reducing node 74, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf(         );
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf(         );
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=94}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 74
+------------------------------------------------------------
+
+
+=================Reducing node 94, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=94}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 94
+------------------------------------------------------------
+
+
+=================Reducing node 95, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 95
+------------------------------------------------------------
+
+
+=================Reducing node 73, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 73
+------------------------------------------------------------
+
+
+=================Reducing node 51, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 51
+------------------------------------------------------------
+
+
+=================Reducing node 11, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
+    --file: t.c--
+    int printf(const char*, ...);
+        main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+        main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=354}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 6
+------------------------------------------------------------
+
+
+=================Reducing node 354, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=354}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 354
+------------------------------------------------------------
+
+
+=================Reducing node 358, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 358
+------------------------------------------------------------
+
+
+=Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
+
+The spar-tree is the following.
+translationUnit {id=403}
+|___(+) {id=404,slot_type=kleene_plus__translationUnit_3}
+    |___aux_rule__declaration_3 {id=482,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+    |   |___(+) {id=483,slot_type=declarationSpecifiers}
+    |   |   |___Token:int {id=524,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+    |   |___(?) {id=484,slot_type=optional__declaration_2}
+    |   |   |___directDeclarator {id=489,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
+    |   |       |___Token:printf {id=520,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+    |   |       |___(*) {id=491,slot_type=kleene_star__directDeclarator_7}
+    |   |           |___aux_rule__directDeclarator_15 {id=493,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+    |   |               |___Token:( {id=494,slot_type=LeftParen}
+    |   |               |___parameterTypeList {id=497,slot_type=[altnt_block__directDeclarator_11,parameterTypeList]}
+    |   |               |   |___parameterDeclaration {id=503,slot_type=[parameterList,parameterDeclaration]}
+    |   |               |   |   |___(+) {id=504,slot_type=declarationSpecifiers}
+    |   |               |   |   |   |___Token:const {id=519,slot_type=[declarationSpecifier,typeQualifier,Const]}
+    |   |               |   |   |   |___Token:char {id=517,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
+    |   |               |   |   |___(?) {id=506,slot_type=[altnt_block__parameterDeclaration_2,optional__typeName_1]}
+    |   |               |   |       |___(+) {id=509,slot_type=[abstractDeclarator,pointer,kleene_plus__pointer_8]}
+    |   |               |   |           |___Token:* {id=512,slot_type=[aux_rule__pointer_6,altnt_block__pointer_9,Star]}
+    |   |               |   |___(?) {id=499,slot_type=optional__parameterTypeList_2}
+    |   |               |       |___aux_rule__parameterTypeList_1 {id=500,slot_type=aux_rule__parameterTypeList_1}
+    |   |               |           |___Token:, {id=501,slot_type=Comma}
+    |   |               |           |___Token:... {id=502,slot_type=Ellipsis}
+    |   |               |___Token:) {id=496,slot_type=RightParen}
+    |   |___Token:; {id=485,slot_type=Semi}
+    |___functionDefinition {id=407,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=408,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=476,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=480,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=467,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=475,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=469,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=471,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=472,slot_type=LeftParen}
+        |           |___Token:) {id=474,slot_type=RightParen}
+        |___compoundStatement {id=410,slot_type=compoundStatement}
+            |___Token:{ {id=411,slot_type=LeftBrace}
+            |___(?) {id=412,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=415,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=419,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=420,slot_type=optional__postfixExpression_1}
+            |           |   |___postfixExpression {id=438,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |           |       |___Token:printf {id=466,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |           |       |___(*) {id=440,slot_type=kleene_star__postfixExpression_2}
+            |           |           |___aux_rule__postfixExpression_11 {id=442,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |           |               |___Token:( {id=443,slot_type=LeftParen}
+            |           |               |___(?) {id=444,slot_type=optional__postfixExpression_1}
+            |           |               |   |___(+) {id=464,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |               |       |___Token:"world\n" {id=465,slot_type=StringLiteral}
+            |           |               |___Token:) {id=445,slot_type=RightParen}
+            |           |___Token:; {id=421,slot_type=Semi}
+            |___Token:} {id=413,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+=================Reducing node 404, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*, ...);
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@1
+    --file: t.c--
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=407}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 404
+------------------------------------------------------------
+
+
+=================Reducing node 407, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=407}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*, ...);
+                      ;
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+                      ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 407
+------------------------------------------------------------
+
+
+=================Reducing node 482, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=482}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+                                ;
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+                                ;
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 482
+------------------------------------------------------------
+
+
+=================Reducing node 484, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__declaration_2]dd@1
+    --file: t.c--
+    int                         ;
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int                         ;
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=489}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 484
+------------------------------------------------------------
+
+
+=================Reducing node 489, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=489}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf                  ;
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf                  ;
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 489
+------------------------------------------------------------
+
+
+=================Reducing node 491, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf                  ;
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf                  ;
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=493}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 491
+------------------------------------------------------------
+
+
+=================Reducing node 493, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=493}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 493
+------------------------------------------------------------
+
+
+=================Reducing node 410, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 410
+------------------------------------------------------------
+
+
+=================Reducing node 497, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(                );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const           );
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const           );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(      char      );
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(      char      );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char      );
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char      );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*     );
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*     );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 497
+------------------------------------------------------------
+
+
+=================Reducing node 412, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=415}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 412
+------------------------------------------------------------
+
+
+=================Reducing node 415, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=415}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 415
+------------------------------------------------------------
+
+
+=================Reducing node 419, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+                      ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+                      ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 419
+------------------------------------------------------------
+
+
+=================Reducing node 420, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+                      ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+                      ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=438}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 420
+------------------------------------------------------------
+
+
+=================Reducing node 438, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=438}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf           ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf           ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+            "world\n" ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 438
+------------------------------------------------------------
+
+
+=================Reducing node 503, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const      , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const      , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(      char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(      char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 503
+------------------------------------------------------------
+
+
+=================Reducing node 467, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main                          {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main                          {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 467
+------------------------------------------------------------
+
+
+=================Reducing node 440, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf           ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf           ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=442}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 440
+------------------------------------------------------------
+
+
+=================Reducing node 442, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=442}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 442
+------------------------------------------------------------
+
+
+=================Reducing node 504, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const     *, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const     *, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(          *, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(          *, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(      char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(      char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=517}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 504
+------------------------------------------------------------
+
+
+=================Reducing node 499, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*     );
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*     );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=500}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 499
+------------------------------------------------------------
+
+
+=================Reducing node 500, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=500}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 500
+------------------------------------------------------------
+
+
+=================Reducing node 469, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main                          {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main                          {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=471}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 469
+------------------------------------------------------------
+
+
+=================Reducing node 471, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=471}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 471
+------------------------------------------------------------
+
+
+=================Reducing node 520, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 520
+------------------------------------------------------------
+
+
+=================Reducing node 519, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 519
+------------------------------------------------------------
+
+
+=================Reducing node 517, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 517
+------------------------------------------------------------
+
+
+=================Reducing node 506, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=509}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 506
+------------------------------------------------------------
+
+
+=================Reducing node 509, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=509}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 509
+------------------------------------------------------------
+
+
+=================Reducing node 512, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 512
+------------------------------------------------------------
+
+
+=================Reducing node 502, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 502
+------------------------------------------------------------
+
+
+=================Reducing node 501, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 501
+------------------------------------------------------------
+
+
+=================Reducing node 496, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 496
+------------------------------------------------------------
+
+
+=================Reducing node 494, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 494
+------------------------------------------------------------
+
+
+=================Reducing node 485, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 485
+------------------------------------------------------------
+
+
+=================Reducing node 483, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 483
+------------------------------------------------------------
+
+
+=================Reducing node 524, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 524
+------------------------------------------------------------
+
+
+=================Reducing node 475, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 475
+------------------------------------------------------------
+
+
+=================Reducing node 474, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 474
+------------------------------------------------------------
+
+
+=================Reducing node 472, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 472
+------------------------------------------------------------
+
+
+=================Reducing node 466, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 466
+------------------------------------------------------------
+
+
+=================Reducing node 445, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 445
+------------------------------------------------------------
+
+
+=================Reducing node 444, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf(         );
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf(         );
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=464}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 444
+------------------------------------------------------------
+
+
+=================Reducing node 464, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=464}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 464
+------------------------------------------------------------
+
+
+=================Reducing node 465, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 465
+------------------------------------------------------------
+
+
+=================Reducing node 443, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 443
+------------------------------------------------------------
+
+
+=================Reducing node 421, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 421
+------------------------------------------------------------
+
+
+=================Reducing node 413, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 413
+------------------------------------------------------------
+
+
+=================Reducing node 411, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 411
+------------------------------------------------------------
+
+
+=================Reducing node 408, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(const char*, ...);
+        main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+        main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=476}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 408
+------------------------------------------------------------
+
+
+=================Reducing node 476, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=476}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 476
+------------------------------------------------------------
+
+
+=================Reducing node 480, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 480
+------------------------------------------------------------
+
+
+#test success = 3
+#test failure = 36
+#test result cache hits = 35
+#test execution cancelled = 5
+#node edit action set cache hits = 47
+#external test execution cache hits = 0

@@ -1,0 +1,141 @@
+<p><img src="https://github.com/uw-pluverse/perses/actions/workflows/main.yml/badge.svg" alt="CI" /></p>
+<h1>Perses: Syntax-Directed Program Reduction</h1>
+<p>Perses is a language-agnostic program reducer to minimize a program with
+respect to a set of constraints. It takes as input a program to reduce,
+and a test script which specifies the constraints.
+It outputs a minimized program which still satisfies the constraints specified
+in the test script. Compared to Delta Debugging and Hierarchical Delta Debugging,
+Perses leverages the syntax information in the Antlr grammar, and prunes the
+search space by avoiding generating syntactically invalid programs.</p>
+<h3>Supported Languages</h3>
+<p>Currently, Perses supports reduction for the following programming languages:</p>
+<ul>
+<li>C: [c]</li>
+<li>Cpp: [cc, cpp, cxx]</li>
+<li>Rust: [rs]</li>
+<li>Scala: [scala, sc]</li>
+<li>Java: [java]</li>
+<li>JavaScript: [javascript, js]</li>
+<li>Python3: [py, py3]</li>
+<li>GLSL: [glsl, comp, frag, vert]</li>
+<li>Go: [go]</li>
+<li>PHP: [php]</li>
+<li>Ruby: [rb]</li>
+<li>SQLite: [sqlite]</li>
+<li>MySQL: [mysql]</li>
+<li>Solidity: [sol]</li>
+<li>System_Verilog: [v, sv]</li>
+<li>SMTLIBv2: [smt2]</li>
+<li>XML: [xml]</li>
+<li>Line: [line]</li>
+</ul>
+<p>Support for other languages is coming soon.</p>
+<h3>Obtain and Run</h3>
+<p>There are three ways to obtain Perses.</p>
+<ul>
+<li>
+<p>Download a prebuilt release JAR file from our <a href="https://github.com/perses-project/perses/releases">release page</a>,
+for example,</p>
+<pre><code class="language-bash">wget https://github.com/uw-pluverse/perses/releases/download/v1.8/perses_deploy.jar
+java -jar perses_deploy.jar [options]? --test-script &lt;test-script.sh&gt; --input-file &lt;program file&gt;
+</code></pre>
+</li>
+<li>
+<p>Clone the repo and build Perses from the source.</p>
+<pre><code class="language-bash">git clone https://github.com/perses-project/perses.git
+cd perses
+bazelisk build //src/org/perses:perses_deploy.jar
+java -jar bazel-bin/src/org/perses/perses_deploy.jar [options]? \
+    --test-script &lt;test-script.sh&gt; --input-file &lt;program file&gt;
+</code></pre>
+</li>
+<li>
+<p>If you want to always use the trunk version of Perses, <a href="https://github.com/perses-project/perses/blob/master/scripts/perses-trunk">perses-trunk</a> automatically downloads and builds the latest version.</p>
+<p>NOTE: <a href="https://github.com/bazelbuild/bazelisk">Bazelisk</a> is the prerequisite to run perses-trunk successfully.</p>
+<pre><code class="language-bash">wget https://raw.githubusercontent.com/perses-project/perses/master/scripts/perses-trunk
+chmod +x perses-trunk
+./perses-trunk [options]? --test-script &lt;test-script.sh&gt; --input-file &lt;program file&gt;
+</code></pre>
+</li>
+</ul>
+<h4>Important Flags</h4>
+<ul>
+<li>
+<p>--test-script <strong>&lt;test-script.sh&gt;</strong>:
+The script encodes the constraints that both of the original program file and the reduced version should satisfy. It should return <strong>0</strong> if the constraints are satisfied.</p>
+</li>
+<li>
+<p>--input-file <strong>&lt;program-file&gt;</strong>: the program needs to be reduced. Currently, Perses
+supports C, Rust, Java and Go. Note that we can easily support any other languages,
+if the specific language can be parsed by an Antlr parser.</p>
+</li>
+</ul>
+<p>Check all available command line arguments</p>
+<pre><code class="language-bash">java -jar perses_deploy.jar  --help
+</code></pre>
+<h3>License</h3>
+<p>GNU General Public License 3.</p>
+<h3>References</h3>
+<p>This repository contains the implementations of the techniques proposed in the following papers.</p>
+<h4>1. Perses: Syntax-Guided Program Reduction (ICSE 2018, <a href="./doc/publication/2018_perses_icse.pdf">pdf</a>)</h4>
+<pre><code>@inproceedings{perses,
+  author = {Sun, Chengnian and Li, Yuanbo and Zhang, Qirun and Gu, Tianxiao and Su, Zhendong},
+  title = {Perses: Syntax-Guided Program Reduction},
+  year = {2018},
+  publisher = {Association for Computing Machinery},
+  doi = {10.1145/3180155.3180236},
+  booktitle = {Proceedings of the 40th International Conference on Software Engineering},
+  pages = {361–371},
+}
+</code></pre>
+<h5>2. Pushing the Limit of 1-Minimality of Language-Agnostic Program Reduction (OOPSLA 2023, <a href="./doc/publication/2023_vulcan_oopsla.pdf">pdf</a>)</h5>
+<pre><code>@article{perses-vulcan,
+  title={Pushing the Limit of 1-Minimality of Language-Agnostic Program Reduction},
+  author={Xu, Zhenyang and Tian, Yongqiang and Zhang, Mengxiao and Zhao, Gaosen and Jiang, Yu and Sun, Chengnian},
+  journal={Proceedings of the ACM on Programming Languages},
+  volume={7},
+  number={OOPSLA1},
+  pages={636--664},
+  year={2023},
+  publisher={ACM New York, NY, USA}
+}
+</code></pre>
+<h5>3. PPR: Pairwise Program Reduction (ESEC/FSE 2023, <a href="./doc/publication/2023_ppr_fse.pdf">pdf</a>, <a href="./ppr/README.md">doc</a>)</h5>
+<pre><code>@inproceedings{perses-ppr,
+  title={PPR: Pairwise Program Reduction},
+  author={Zhang, Mengxiao and Xu, Zhenyang and Tian, Yongqiang and Jiang, Yu and Sun, Chengnian},
+  booktitle={Proceedings of the 31st ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering},
+  pages={338--349},
+  year={2023}
+}
+</code></pre>
+<h5>4. On the Caching Schemes to Speed Up Program Reduction (TOSEM, <a href="./doc/publication/2023_caching_tosem.pdf">pdf</a>)</h5>
+<pre><code>@article{perses-caching,
+  title={On the Caching Schemes to Speed Up Program Reduction},
+  author={Tian, Yongqiang and Zhang, Xueyan and Dong, Yiwen and Xu, Zhenyang and Zhang, Mengxiao and Jiang, Yu and Cheung, Shing-Chi and Sun, Chengnian},
+  journal={ACM Transactions on Software Engineering and Methodology},
+  volume={33},
+  number={1},
+  pages={1--30},
+  year={2023},
+  publisher={ACM New York, NY, USA}
+}
+</code></pre>
+<h5>5. LPR: Large language models-aided program reduction (ISSTA 2024, <a href="./doc/publication/2024_lpr_issta.pdf">pdf</a>)</h5>
+<pre><code>@inproceedings{perses-lpr,
+  title={LPR: Large Language Models-Aided Program Reduction},
+  author={Zhang, Mengxiao and Tian, Yongqiang and Xu, Zhenyang and Dong, Yiwen and Tan, Shin Hwei and Sun, Chengnian},
+  booktitle={Proceedings of the 33rd ACM SIGSOFT International Symposium on Software Testing and Analysis},
+  pages={261--273},
+  year={2024}
+}
+</code></pre>
+<h5>6. T-Rec: Fine-Grained Language-Agnostic Program Reduction Guided by Lexical Syntax (TOSEM, <a href="./doc/publication/2024_trec_tosem.pdf">pdf</a>)</h5>
+<pre><code>@article{perses-trec,
+  title={T-Rec: Fine-Grained Language-Agnostic Program Reduction Guided by Lexical Syntax},
+  author={Xu, Zhenyang and Tian, Yongqiang and Zhang, Mengxiao and Zhang, Jiarui and Liu, Puzhuo and Jiang, Yu and Sun, Chengnian},
+  journal={ACM Transactions on Software Engineering and Methodology},
+  year={2024},
+  publisher={ACM New York, NY}
+}
+</code></pre>

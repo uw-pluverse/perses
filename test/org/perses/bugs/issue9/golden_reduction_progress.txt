@@ -1,0 +1,3538 @@
+=====================Reduction starts.======================
+
+The initial program size is 58
+The command line options are:
+---
+help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+versionFlags:
+  groupName: "Version"
+  version: false
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFile: "T.java"
+  deps: []
+  sourceFile: "T.java"
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_perses_node_priority_with_dfs_delta_T.java"
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  fixpoint: true
+  numOfThreads: 1
+  codeFormat: "SINGLE_TOKEN_PER_LINE"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  enableLineSlicer: false
+  defaultDeltaDebuggerTypeForKleene: "DFS"
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  enableTrec: false
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: "TRUE"
+  nodeActionSetCaching: true
+  queryCacheRefreshThreshold: 0
+  enableLightweightRefreshing: true
+  enablePassCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "reduction_progress.txt"
+  appendToProgressDumpFile: true
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileDeltaDebugger: null
+experimentFlags:
+  groupName: "Experiment Control"
+  cacheType: "COMPACT_QUERY_CACHE"
+  onDemandReducerClasses: null
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+
+Parser Facade: class org.perses.grammar.java.Java8ParserFacade
+------------------------------------------------------------
+
+
+The sanity check has been performed. The result is PassingSanityCheckResult
+=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+
+The spar-tree is the following.
+compilationUnit {id=1}
+|___(*) {id=2,slot_type=kleene_star__typeDeclaration}
+    |___normalClassDeclaration {id=5,slot_type=[typeDeclaration,classDeclaration,normalClassDeclaration]}
+        |___(*) {id=6,slot_type=kleene_star__normalClassDeclaration_1}
+        |   |___Token:public {id=269,slot_type=[classModifier,PUBLIC]}
+        |___Token:class {id=7,slot_type=CLASS}
+        |___Token:T {id=8,slot_type=Identifier}
+        |___classBody {id=9,slot_type=classBody}
+            |___Token:{ {id=10,slot_type=LBRACE}
+            |___(*) {id=11,slot_type=kleene_star__classBody_1}
+            |   |___methodDeclaration {id=219,slot_type=[classBodyDeclaration,methodDeclaration]}
+            |   |   |___(*) {id=220,slot_type=kleene_star__methodDeclaration_1}
+            |   |   |   |___Token:private {id=267,slot_type=[methodModifier,PRIVATE]}
+            |   |   |   |___Token:static {id=266,slot_type=[methodModifier,STATIC]}
+            |   |   |___methodHeader {id=221,slot_type=methodHeader}
+            |   |   |   |___Token:int {id=263,slot_type=[result,unannType,altnt_block__primitiveType_1,INT]}
+            |   |   |   |___methodDeclarator {id=257,slot_type=methodDeclarator}
+            |   |   |       |___Token:counter {id=258,slot_type=Identifier}
+            |   |   |       |___Token:( {id=259,slot_type=LPAREN}
+            |   |   |       |___Token:) {id=260,slot_type=RPAREN}
+            |   |   |___block {id=223,slot_type=[methodBody,block]}
+            |   |       |___Token:{ {id=224,slot_type=LBRACE}
+            |   |       |___(?) {id=225,slot_type=optional__block_1}
+            |   |       |   |___(+) {id=227,slot_type=blockStatements}
+            |   |       |       |___returnStatement {id=231,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,returnStatement]}
+            |   |       |           |___Token:return {id=232,slot_type=RETURN}
+            |   |       |           |___(?) {id=233,slot_type=optional__returnStatement_1}
+            |   |       |           |   |___Token:100 {id=255,slot_type=[expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,IntegerLiteral]}
+            |   |       |           |___Token:; {id=234,slot_type=SEMI}
+            |   |       |___Token:} {id=226,slot_type=RBRACE}
+            |   |___methodDeclaration {id=15,slot_type=[classBodyDeclaration,methodDeclaration]}
+            |       |___(*) {id=16,slot_type=kleene_star__methodDeclaration_1}
+            |       |   |___Token:public {id=218,slot_type=[methodModifier,PUBLIC]}
+            |       |   |___Token:static {id=217,slot_type=[methodModifier,STATIC]}
+            |       |___methodHeader {id=17,slot_type=methodHeader}
+            |       |   |___Token:void {id=214,slot_type=[result,VOID]}
+            |       |   |___methodDeclarator {id=192,slot_type=methodDeclarator}
+            |       |       |___Token:main {id=193,slot_type=Identifier}
+            |       |       |___Token:( {id=194,slot_type=LPAREN}
+            |       |       |___(?) {id=195,slot_type=optional__methodDeclarator_1}
+            |       |       |   |___formalParameter {id=199,slot_type=[formalParameterList,lastFormalParameter,formalParameter]}
+            |       |       |       |___unannArrayType {id=203,slot_type=[unannType,unannArrayType]}
+            |       |       |       |   |___Token:String {id=213,slot_type=[altnt_block__unannArrayType_1,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |       |       |       |   |___(+) {id=206,slot_type=[dims,kleene_plus__dims_3]}
+            |       |       |       |       |___aux_rule__dims_1 {id=207,slot_type=aux_rule__dims_1}
+            |       |       |       |           |___Token:[ {id=208,slot_type=LBRACK}
+            |       |       |       |           |___Token:] {id=209,slot_type=RBRACK}
+            |       |       |       |___Token:args {id=202,slot_type=[variableDeclaratorId,Identifier]}
+            |       |       |___Token:) {id=196,slot_type=RPAREN}
+            |       |___block {id=19,slot_type=[methodBody,block]}
+            |           |___Token:{ {id=20,slot_type=LBRACE}
+            |           |___(?) {id=21,slot_type=optional__block_1}
+            |           |   |___(+) {id=23,slot_type=blockStatements}
+            |           |       |___basicForStatement {id=26,slot_type=[blockStatement,statement,basicForStatement]}
+            |           |           |___Token:for {id=27,slot_type=FOR}
+            |           |           |___Token:( {id=28,slot_type=LPAREN}
+            |           |           |___(?) {id=29,slot_type=optional__basicForStatement_1}
+            |           |           |   |___localVariableDeclaration {id=158,slot_type=[forInit,localVariableDeclaration]}
+            |           |           |       |___Token:int {id=190,slot_type=[unannType,altnt_block__primitiveType_1,INT]}
+            |           |           |       |___variableDeclarator {id=161,slot_type=[variableDeclaratorList,variableDeclarator]}
+            |           |           |           |___Token:i {id=188,slot_type=[variableDeclaratorId,Identifier]}
+            |           |           |           |___(?) {id=163,slot_type=optional__variableDeclarator_2}
+            |           |           |               |___aux_rule__variableDeclarator_1 {id=164,slot_type=aux_rule__variableDeclarator_1}
+            |           |           |                   |___Token:= {id=165,slot_type=ASSIGN}
+            |           |           |                   |___Token:0 {id=187,slot_type=[variableInitializer,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,IntegerLiteral]}
+            |           |           |___Token:; {id=30,slot_type=SEMI}
+            |           |           |___(?) {id=31,slot_type=optional__returnStatement_1}
+            |           |           |   |___relationalExpression {id=123,slot_type=[expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
+            |           |           |       |___Token:i {id=156,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
+            |           |           |       |___(*) {id=125,slot_type=kleene_star__relationalExpression_1}
+            |           |           |           |___aux_rule__relationalExpression_5 {id=127,slot_type=[aux_rule__relationalExpression_2,aux_rule__relationalExpression_5]}
+            |           |           |               |___Token:< {id=147,slot_type=[altnt_block__relationalExpression_3,LT]}
+            |           |           |               |___methodInvocation_lfno_primary {id=139,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,methodInvocation_lfno_primary]}
+            |           |           |                   |___aux_rule__methodInvocation_lfno_primary_15 {id=142,slot_type=[altnt_block__methodInvocation_lfno_primary_10,aux_rule__methodInvocation_lfno_primary_15]}
+            |           |           |                   |   |___Token:counter {id=146,slot_type=[altnt_block__methodInvocation_lfno_primary_12,methodName,Identifier]}
+            |           |           |                   |   |___Token:( {id=144,slot_type=LPAREN}
+            |           |           |                   |___Token:) {id=141,slot_type=RPAREN}
+            |           |           |___Token:; {id=32,slot_type=SEMI}
+            |           |           |___(?) {id=33,slot_type=optional__basicForStatement_3}
+            |           |           |   |___preIncrementExpression {id=106,slot_type=[forUpdate,statementExpressionList,statementExpression,preIncrementExpression]}
+            |           |           |       |___Token:++ {id=107,slot_type=INC}
+            |           |           |       |___Token:i {id=114,slot_type=[unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
+            |           |           |___Token:) {id=34,slot_type=RPAREN}
+            |           |           |___block {id=37,slot_type=[statement,statementWithoutTrailingSubstatement,block]}
+            |           |               |___Token:{ {id=38,slot_type=LBRACE}
+            |           |               |___(?) {id=39,slot_type=optional__block_1}
+            |           |               |   |___(+) {id=41,slot_type=blockStatements}
+            |           |               |       |___expressionStatement {id=45,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |           |               |           |___methodInvocation {id=48,slot_type=[statementExpression,methodInvocation]}
+            |           |               |           |   |___aux_rule__methodInvocation_18 {id=51,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
+            |           |               |           |   |   |___typeName {id=52,slot_type=typeName}
+            |           |               |           |   |   |   |___(?) {id=97,slot_type=optional__typeName_2}
+            |           |               |           |   |   |   |   |___aux_rule__typeName_1 {id=99,slot_type=aux_rule__typeName_1}
+            |           |               |           |   |   |   |       |___Token:System {id=102,slot_type=[packageName,Identifier]}
+            |           |               |           |   |   |   |       |___Token:. {id=101,slot_type=DOT}
+            |           |               |           |   |   |   |___Token:out {id=98,slot_type=Identifier}
+            |           |               |           |   |   |___Token:. {id=53,slot_type=DOT}
+            |           |               |           |   |   |___altnt_block__methodInvocation_13 {id=54,slot_type=altnt_block__methodInvocation_13}
+            |           |               |           |   |       |___Token:println {id=55,slot_type=Identifier}
+            |           |               |           |   |       |___Token:( {id=56,slot_type=LPAREN}
+            |           |               |           |   |       |___(?) {id=57,slot_type=optional__explicitConstructorInvocation_2}
+            |           |               |           |   |           |___shiftExpression {id=68,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression]}
+            |           |               |           |   |               |___Token:1 {id=96,slot_type=[additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,IntegerLiteral]}
+            |           |               |           |   |               |___(*) {id=70,slot_type=kleene_star__shiftExpression_1}
+            |           |               |           |   |                   |___aux_rule__shiftExpression_2 {id=71,slot_type=aux_rule__shiftExpression_2}
+            |           |               |           |   |                       |___aux_rule__shiftExpression_5 {id=84,slot_type=[altnt_block__shiftExpression_4,aux_rule__shiftExpression_5]}
+            |           |               |           |   |                       |   |___Token:< {id=85,slot_type=LT}
+            |           |               |           |   |                       |   |___Token:< {id=86,slot_type=LT}
+            |           |               |           |   |                       |___Token:2 {id=83,slot_type=[additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,IntegerLiteral]}
+            |           |               |           |   |___Token:) {id=50,slot_type=RPAREN}
+            |           |               |           |___Token:; {id=47,slot_type=SEMI}
+            |           |               |___Token:} {id=40,slot_type=RBRACE}
+            |           |___Token:} {id=22,slot_type=RBRACE}
+            |___Token:} {id=12,slot_type=RBRACE}
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=58==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args) {
+        for (int i = 0; i < counter(); ++i) {
+          System.out.println(1 << 2);
+        }
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__typeDeclaration]dd@1
+    --file: T.java--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=58==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args) {
+        for (int i = 0; i < counter(); ++i) {
+          System.out.println(1 << 2);
+        }
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=5}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=58==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args) {
+        for (int i = 0; i < counter(); ++i) {
+          System.out.println(1 << 2);
+        }
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+=================Reducing node 11, size=58==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args) {
+        for (int i = 0; i < counter(); ++i) {
+          System.out.println(1 << 2);
+        }
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__classBody_1]dd@2
+    --file: T.java--
+    public class T {
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__classBody_1]dd@1
+    --file: T.java--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__classBody_1]dd@1
+    --file: T.java--
+    public class T {
+      public static void main(String[] args) {
+        for (int i = 0; i < counter(); ++i) {
+          System.out.println(1 << 2);
+        }
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+      public static void main(String[] args) {
+        for (int i = 0; i < counter(); ++i) {
+          System.out.println(1 << 2);
+        }
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+=================Reducing node 15, size=58==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args) {
+        for (int i = 0; i < counter(); ++i) {
+          System.out.println(1 << 2);
+        }
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=15}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+                                             {
+        for (int i = 0; i < counter(); ++i) {
+          System.out.println(1 << 2);
+        }
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+                                             {
+        for (int i = 0; i < counter(); ++i) {
+          System.out.println(1 << 2);
+        }
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+=================Reducing node 19, size=58==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args) {
+        for (int i = 0; i < counter(); ++i) {
+          System.out.println(1 << 2);
+        }
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+2 entries are removed: 6 --> 4.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 7
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 19 from 58 to 40
+------------------------------------------------------------
+
+
+=================Reducing node 37, size=40==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 37
+------------------------------------------------------------
+
+
+=================Reducing node 39, size=40==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__block_1]dd@1
+    --file: T.java--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 39
+------------------------------------------------------------
+
+
+=================Reducing node 41, size=40==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=41}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 41
+------------------------------------------------------------
+
+
+=================Reducing node 45, size=40==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: T.java--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 45
+------------------------------------------------------------
+
+
+=================Reducing node 219, size=40=================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: T.java--
+    public class T {
+                                   {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+                                   {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+3 entries are removed: 5 --> 2.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 4
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 219 from 40 to 29
+------------------------------------------------------------
+
+
+=================Reducing node 48, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 48
+------------------------------------------------------------
+
+
+=================Reducing node 51, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 51
+------------------------------------------------------------
+
+
+=================Reducing node 17, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 17
+------------------------------------------------------------
+
+
+=================Reducing node 192, size=29=================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 192
+------------------------------------------------------------
+
+
+=================Reducing node 54, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 54
+------------------------------------------------------------
+
+
+=================Reducing node 195, size=29=================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__methodDeclarator_1]dd@1
+    --file: T.java--
+    public class T {
+      public static void main(             )
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+      public static void main(             )
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 195
+------------------------------------------------------------
+
+
+=================Reducing node 199, size=29=================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=199}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 199
+------------------------------------------------------------
+
+
+=================Reducing node 57, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__explicitConstructorInvocation_2]dd@1
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(      );
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(      );
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 57
+------------------------------------------------------------
+
+
+=================Reducing node 68, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=68}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1     );
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1     );
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(     2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(     2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 68
+------------------------------------------------------------
+
+
+=================Reducing node 203, size=29=================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java--
+    public class T {
+      public static void main(String   args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+      public static void main(String   args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 203
+------------------------------------------------------------
+
+
+=================Reducing node 70, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1     );
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1     );
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 70
+------------------------------------------------------------
+
+
+=================Reducing node 71, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=71}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 71
+------------------------------------------------------------
+
+
+=================Reducing node 52, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+                 out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+      public static void main(String[] args)
+                                            {
+                 out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System    .println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System    .println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 52
+------------------------------------------------------------
+
+
+=================Reducing node 206, size=29=================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 206
+------------------------------------------------------------
+
+
+=================Reducing node 207, size=29=================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 207
+------------------------------------------------------------
+
+
+=================Reducing node 97, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+                 out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+      public static void main(String[] args)
+                                            {
+                 out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 97
+------------------------------------------------------------
+
+
+=================Reducing node 99, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=99}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 99
+------------------------------------------------------------
+
+
+=================Reducing node 84, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 84
+------------------------------------------------------------
+
+
+=================Reducing node 16, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@2
+    --file: T.java--
+    public class T {
+                    void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+                    void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
+    --file: T.java--
+    public class T {
+      public        void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+      public        void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
+    --file: T.java--
+    public class T {
+             static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class T {
+             static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 16
+------------------------------------------------------------
+
+
+=================Reducing node 218, size=29=================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 218
+------------------------------------------------------------
+
+
+=================Reducing node 217, size=29=================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 217
+------------------------------------------------------------
+
+
+=================Reducing node 214, size=29=================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 214
+------------------------------------------------------------
+
+
+=================Reducing node 213, size=29=================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 213
+------------------------------------------------------------
+
+
+=================Reducing node 209, size=29=================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 209
+------------------------------------------------------------
+
+
+=================Reducing node 208, size=29=================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 208
+------------------------------------------------------------
+
+
+=================Reducing node 202, size=29=================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 202
+------------------------------------------------------------
+
+
+=================Reducing node 196, size=29=================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 196
+------------------------------------------------------------
+
+
+=================Reducing node 194, size=29=================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 194
+------------------------------------------------------------
+
+
+=================Reducing node 193, size=29=================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 193
+------------------------------------------------------------
+
+
+=================Reducing node 102, size=29=================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 102
+------------------------------------------------------------
+
+
+=================Reducing node 101, size=29=================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 101
+------------------------------------------------------------
+
+
+=================Reducing node 98, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 98
+------------------------------------------------------------
+
+
+=================Reducing node 96, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 96
+------------------------------------------------------------
+
+
+=================Reducing node 86, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 86
+------------------------------------------------------------
+
+
+=================Reducing node 85, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 85
+------------------------------------------------------------
+
+
+=================Reducing node 83, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 83
+------------------------------------------------------------
+
+
+=================Reducing node 56, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 56
+------------------------------------------------------------
+
+
+=================Reducing node 55, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 55
+------------------------------------------------------------
+
+
+=================Reducing node 53, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 53
+------------------------------------------------------------
+
+
+=================Reducing node 50, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 50
+------------------------------------------------------------
+
+
+=================Reducing node 47, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 47
+------------------------------------------------------------
+
+
+=================Reducing node 40, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 40
+------------------------------------------------------------
+
+
+=================Reducing node 38, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 38
+------------------------------------------------------------
+
+
+=================Reducing node 12, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 12
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 7
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=29==================
+
+The current best program is the following
+
+    --file: T.java--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_star:kleene_star__normalClassDeclaration_1]dd@1
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+11 entries are removed: 12 --> 1.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 13
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 6 from 29 to 28
+------------------------------------------------------------
+
+
+=Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
+
+The spar-tree is the following.
+compilationUnit {id=270}
+|___(*) {id=271,slot_type=kleene_star__typeDeclaration}
+    |___normalClassDeclaration {id=274,slot_type=[typeDeclaration,classDeclaration,normalClassDeclaration]}
+        |___Token:class {id=275,slot_type=CLASS}
+        |___Token:T {id=276,slot_type=Identifier}
+        |___classBody {id=277,slot_type=classBody}
+            |___Token:{ {id=278,slot_type=LBRACE}
+            |___(*) {id=279,slot_type=kleene_star__classBody_1}
+            |   |___methodDeclaration {id=282,slot_type=[classBodyDeclaration,methodDeclaration]}
+            |       |___(*) {id=283,slot_type=kleene_star__methodDeclaration_1}
+            |       |   |___Token:public {id=379,slot_type=[methodModifier,PUBLIC]}
+            |       |   |___Token:static {id=378,slot_type=[methodModifier,STATIC]}
+            |       |___methodHeader {id=284,slot_type=methodHeader}
+            |       |   |___Token:void {id=375,slot_type=[result,VOID]}
+            |       |   |___methodDeclarator {id=353,slot_type=methodDeclarator}
+            |       |       |___Token:main {id=354,slot_type=Identifier}
+            |       |       |___Token:( {id=355,slot_type=LPAREN}
+            |       |       |___(?) {id=356,slot_type=optional__methodDeclarator_1}
+            |       |       |   |___formalParameter {id=360,slot_type=[formalParameterList,lastFormalParameter,formalParameter]}
+            |       |       |       |___unannArrayType {id=364,slot_type=[unannType,unannArrayType]}
+            |       |       |       |   |___Token:String {id=374,slot_type=[altnt_block__unannArrayType_1,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |       |       |       |   |___(+) {id=367,slot_type=[dims,kleene_plus__dims_3]}
+            |       |       |       |       |___aux_rule__dims_1 {id=368,slot_type=aux_rule__dims_1}
+            |       |       |       |           |___Token:[ {id=369,slot_type=LBRACK}
+            |       |       |       |           |___Token:] {id=370,slot_type=RBRACK}
+            |       |       |       |___Token:args {id=363,slot_type=[variableDeclaratorId,Identifier]}
+            |       |       |___Token:) {id=357,slot_type=RPAREN}
+            |       |___block {id=286,slot_type=[methodBody,block]}
+            |           |___Token:{ {id=287,slot_type=LBRACE}
+            |           |___(?) {id=288,slot_type=optional__block_1}
+            |           |   |___(+) {id=290,slot_type=blockStatements}
+            |           |       |___expressionStatement {id=294,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |           |           |___methodInvocation {id=297,slot_type=[statementExpression,methodInvocation]}
+            |           |           |   |___aux_rule__methodInvocation_18 {id=300,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
+            |           |           |   |   |___typeName {id=301,slot_type=typeName}
+            |           |           |   |   |   |___(?) {id=346,slot_type=optional__typeName_2}
+            |           |           |   |   |   |   |___aux_rule__typeName_1 {id=348,slot_type=aux_rule__typeName_1}
+            |           |           |   |   |   |       |___Token:System {id=351,slot_type=[packageName,Identifier]}
+            |           |           |   |   |   |       |___Token:. {id=350,slot_type=DOT}
+            |           |           |   |   |   |___Token:out {id=347,slot_type=Identifier}
+            |           |           |   |   |___Token:. {id=302,slot_type=DOT}
+            |           |           |   |   |___altnt_block__methodInvocation_13 {id=303,slot_type=altnt_block__methodInvocation_13}
+            |           |           |   |       |___Token:println {id=304,slot_type=Identifier}
+            |           |           |   |       |___Token:( {id=305,slot_type=LPAREN}
+            |           |           |   |       |___(?) {id=306,slot_type=optional__explicitConstructorInvocation_2}
+            |           |           |   |           |___shiftExpression {id=317,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression]}
+            |           |           |   |               |___Token:1 {id=345,slot_type=[additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,IntegerLiteral]}
+            |           |           |   |               |___(*) {id=319,slot_type=kleene_star__shiftExpression_1}
+            |           |           |   |                   |___aux_rule__shiftExpression_2 {id=320,slot_type=aux_rule__shiftExpression_2}
+            |           |           |   |                       |___aux_rule__shiftExpression_5 {id=333,slot_type=[altnt_block__shiftExpression_4,aux_rule__shiftExpression_5]}
+            |           |           |   |                       |   |___Token:< {id=334,slot_type=LT}
+            |           |           |   |                       |   |___Token:< {id=335,slot_type=LT}
+            |           |           |   |                       |___Token:2 {id=332,slot_type=[additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,IntegerLiteral]}
+            |           |           |   |___Token:) {id=299,slot_type=RPAREN}
+            |           |           |___Token:; {id=296,slot_type=SEMI}
+            |           |___Token:} {id=289,slot_type=RBRACE}
+            |___Token:} {id=280,slot_type=RBRACE}
+------------------------------------------------------------
+
+
+=================Reducing node 271, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: T.java--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 271
+------------------------------------------------------------
+
+
+=================Reducing node 274, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=274}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 274
+------------------------------------------------------------
+
+
+=================Reducing node 277, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 277
+------------------------------------------------------------
+
+
+=================Reducing node 279, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__classBody_1]dd@1
+    --file: T.java--
+           class T {
+    }
+    --file: <formatted tokenized program in its original format>--
+           class T {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 279
+------------------------------------------------------------
+
+
+=================Reducing node 282, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=282}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java--
+           class T {
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class T {
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 282
+------------------------------------------------------------
+
+
+=================Reducing node 286, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 286
+------------------------------------------------------------
+
+
+=================Reducing node 288, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__block_1]dd@1
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class T {
+      public static void main(String[] args)
+                                            {
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 288
+------------------------------------------------------------
+
+
+=================Reducing node 290, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=290}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 290
+------------------------------------------------------------
+
+
+=================Reducing node 294, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class T {
+      public static void main(String[] args)
+                                            {
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 294
+------------------------------------------------------------
+
+
+=================Reducing node 297, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 297
+------------------------------------------------------------
+
+
+=================Reducing node 300, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 300
+------------------------------------------------------------
+
+
+=================Reducing node 284, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 284
+------------------------------------------------------------
+
+
+=================Reducing node 353, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 353
+------------------------------------------------------------
+
+
+=================Reducing node 303, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 303
+------------------------------------------------------------
+
+
+=================Reducing node 356, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__methodDeclarator_1]dd@1
+    --file: T.java--
+           class T {
+      public static void main(             )
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class T {
+      public static void main(             )
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 356
+------------------------------------------------------------
+
+
+=================Reducing node 360, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=360}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 360
+------------------------------------------------------------
+
+
+=================Reducing node 306, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__explicitConstructorInvocation_2]dd@1
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(      );
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(      );
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 306
+------------------------------------------------------------
+
+
+=================Reducing node 317, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=317}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1     );
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1     );
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(     2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(     2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 317
+------------------------------------------------------------
+
+
+=================Reducing node 364, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java--
+           class T {
+      public static void main(String   args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class T {
+      public static void main(String   args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 364
+------------------------------------------------------------
+
+
+=================Reducing node 319, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1     );
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1     );
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 319
+------------------------------------------------------------
+
+
+=================Reducing node 320, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=320}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 320
+------------------------------------------------------------
+
+
+=================Reducing node 301, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+                 out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class T {
+      public static void main(String[] args)
+                                            {
+                 out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System    .println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System    .println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 301
+------------------------------------------------------------
+
+
+=================Reducing node 367, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 367
+------------------------------------------------------------
+
+
+=================Reducing node 368, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 368
+------------------------------------------------------------
+
+
+=================Reducing node 346, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+                 out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class T {
+      public static void main(String[] args)
+                                            {
+                 out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 346
+------------------------------------------------------------
+
+
+=================Reducing node 348, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=348}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 348
+------------------------------------------------------------
+
+
+=================Reducing node 333, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 333
+------------------------------------------------------------
+
+
+=================Reducing node 283, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@2
+    --file: T.java--
+           class T {
+                    void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class T {
+                    void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
+    --file: T.java--
+           class T {
+      public        void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class T {
+      public        void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
+    --file: T.java--
+           class T {
+             static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class T {
+             static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 283
+------------------------------------------------------------
+
+
+=================Reducing node 379, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 379
+------------------------------------------------------------
+
+
+=================Reducing node 378, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 378
+------------------------------------------------------------
+
+
+=================Reducing node 375, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 375
+------------------------------------------------------------
+
+
+=================Reducing node 374, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 374
+------------------------------------------------------------
+
+
+=================Reducing node 370, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 370
+------------------------------------------------------------
+
+
+=================Reducing node 369, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 369
+------------------------------------------------------------
+
+
+=================Reducing node 363, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 363
+------------------------------------------------------------
+
+
+=================Reducing node 357, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 357
+------------------------------------------------------------
+
+
+=================Reducing node 355, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 355
+------------------------------------------------------------
+
+
+=================Reducing node 354, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 354
+------------------------------------------------------------
+
+
+=================Reducing node 351, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 351
+------------------------------------------------------------
+
+
+=================Reducing node 350, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 350
+------------------------------------------------------------
+
+
+=================Reducing node 347, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 347
+------------------------------------------------------------
+
+
+=================Reducing node 345, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 345
+------------------------------------------------------------
+
+
+=================Reducing node 335, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 335
+------------------------------------------------------------
+
+
+=================Reducing node 334, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 334
+------------------------------------------------------------
+
+
+=================Reducing node 332, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 332
+------------------------------------------------------------
+
+
+=================Reducing node 305, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 305
+------------------------------------------------------------
+
+
+=================Reducing node 304, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 304
+------------------------------------------------------------
+
+
+=================Reducing node 302, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 302
+------------------------------------------------------------
+
+
+=================Reducing node 299, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 299
+------------------------------------------------------------
+
+
+=================Reducing node 296, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 296
+------------------------------------------------------------
+
+
+=================Reducing node 289, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 289
+------------------------------------------------------------
+
+
+=================Reducing node 287, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 287
+------------------------------------------------------------
+
+
+=================Reducing node 280, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 280
+------------------------------------------------------------
+
+
+=================Reducing node 278, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 278
+------------------------------------------------------------
+
+
+=================Reducing node 276, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 276
+------------------------------------------------------------
+
+
+=================Reducing node 275, size=28=================
+
+The current best program is the following
+
+    --file: T.java--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 275
+------------------------------------------------------------
+
+
+#test success = 3
+#test failure = 30
+#test result cache hits = 7
+#test execution cancelled = 1
+#node edit action set cache hits = 14
+#external test execution cache hits = 0

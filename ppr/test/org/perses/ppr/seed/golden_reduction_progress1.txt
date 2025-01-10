@@ -1,0 +1,4220 @@
+=====================Reduction starts.======================
+
+The initial program size is 51
+The command line options are:
+---
+help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+versionFlags:
+  groupName: "Version"
+  version: false
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r1.sh"
+  inputFile: "seed1.c"
+  deps: []
+  variantFile: "variant1.c"
+  sourceFile: "seed1.c"
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_seed_reduction_golden_test1_perses_node_priority_with_dfs_delta_seed1.c_variant1.c"
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  fixpoint: true
+  numOfThreads: 1
+  codeFormat: null
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: false
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  enableLineSlicer: false
+  defaultDeltaDebuggerTypeForKleene: "DFS"
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  enableTrec: false
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: "FALSE"
+  nodeActionSetCaching: true
+  queryCacheRefreshThreshold: 0
+  enableLightweightRefreshing: true
+  enablePassCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "reduction_progress1.txt"
+  appendToProgressDumpFile: true
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileDeltaDebugger: null
+experimentFlags:
+  groupName: "Experiment Control"
+  cacheType: "COMPACT_QUERY_CACHE"
+  onDemandReducerClasses: null
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+seedInputFlags:
+  groupName: "Inputs"
+  testScript: "r1.sh"
+  inputFile: "seed1.c"
+  deps: []
+  variantFile: "variant1.c"
+  sourceFile: "seed1.c"
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+------------------------------------------------------------
+
+
+The sanity check has been performed. The result is PassingSanityCheckResult
+=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+
+The spar-tree is the following.
+translationUnit {id=1}
+|___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
+    |___Token:#include <stdio.h> {id=365,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
+    |___functionDefinition {id=5,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=6,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=360,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=364,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=351,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=359,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=353,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=355,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=356,slot_type=LeftParen}
+        |           |___Token:) {id=358,slot_type=RightParen}
+        |___compoundStatement {id=8,slot_type=compoundStatement}
+            |___Token:{ {id=9,slot_type=LeftBrace}
+            |___(?) {id=10,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=13,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___aux_rule__declaration_3 {id=315,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=316,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=350,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=317,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=320,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:a {id=346,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=322,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=323,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=324,slot_type=Assign}
+            |       |   |               |___Token:1 {id=343,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=318,slot_type=Semi}
+            |       |___aux_rule__declaration_3 {id=278,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=279,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=313,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=280,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=283,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:b {id=309,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=285,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=286,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=287,slot_type=Assign}
+            |       |   |               |___Token:2 {id=306,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=281,slot_type=Semi}
+            |       |___expressionStatement {id=229,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=230,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=248,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:printf {id=276,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=250,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=252,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=253,slot_type=LeftParen}
+            |       |   |               |___(?) {id=254,slot_type=optional__postfixExpression_1}
+            |       |   |               |   |___(+) {id=274,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |       |   |               |       |___Token:"hello" {id=275,slot_type=StringLiteral}
+            |       |   |               |___Token:) {id=255,slot_type=RightParen}
+            |       |   |___Token:; {id=231,slot_type=Semi}
+            |       |___expressionStatement {id=179,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=180,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=198,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:printf {id=226,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=200,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=202,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=203,slot_type=LeftParen}
+            |       |   |               |___(?) {id=204,slot_type=optional__postfixExpression_1}
+            |       |   |               |   |___(+) {id=224,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |       |   |               |       |___Token:"world" {id=225,slot_type=StringLiteral}
+            |       |   |               |___Token:) {id=205,slot_type=RightParen}
+            |       |   |___Token:; {id=181,slot_type=Semi}
+            |       |___aux_rule__statement_6 {id=49,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,aux_rule__statement_6]}
+            |       |   |___Token:if {id=50,slot_type=If}
+            |       |   |___Token:( {id=51,slot_type=LeftParen}
+            |       |   |___Token:a {id=176,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |___Token:) {id=53,slot_type=RightParen}
+            |       |   |___compoundStatement {id=115,slot_type=[statement,aux_rule__statement_3,compoundStatement]}
+            |       |   |   |___Token:{ {id=116,slot_type=LeftBrace}
+            |       |   |   |___(?) {id=117,slot_type=optional__compoundStatement_1}
+            |       |   |   |   |___(+) {id=120,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |   |   |       |___aux_rule__declaration_3 {id=123,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |   |           |___(+) {id=124,slot_type=declarationSpecifiers}
+            |       |   |   |           |   |___Token:int {id=158,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |   |           |___(?) {id=125,slot_type=optional__declaration_2}
+            |       |   |   |           |   |___initDeclarator {id=128,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |   |           |       |___Token:c {id=154,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |   |           |       |___(?) {id=130,slot_type=optional__initDeclarator_2}
+            |       |   |   |           |           |___aux_rule__initDeclarator_1 {id=131,slot_type=aux_rule__initDeclarator_1}
+            |       |   |   |           |               |___Token:= {id=132,slot_type=Assign}
+            |       |   |   |           |               |___Token:1 {id=151,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |   |           |___Token:; {id=126,slot_type=Semi}
+            |       |   |   |___Token:} {id=118,slot_type=RightBrace}
+            |       |   |___(?) {id=55,slot_type=optional__selectionStatement_2}
+            |       |       |___aux_rule__selectionStatement_1 {id=56,slot_type=aux_rule__selectionStatement_1}
+            |       |           |___Token:else {id=57,slot_type=Else}
+            |       |           |___compoundStatement {id=60,slot_type=[statement,aux_rule__statement_3,compoundStatement]}
+            |       |               |___Token:{ {id=61,slot_type=LeftBrace}
+            |       |               |___(?) {id=62,slot_type=optional__compoundStatement_1}
+            |       |               |   |___(+) {id=65,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |               |       |___aux_rule__declaration_3 {id=68,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |               |           |___(+) {id=69,slot_type=declarationSpecifiers}
+            |       |               |           |   |___Token:int {id=113,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |               |           |___(?) {id=70,slot_type=optional__declaration_2}
+            |       |               |           |   |___initDeclarator {id=73,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |               |           |       |___Token:d {id=109,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |               |           |       |___(?) {id=75,slot_type=optional__initDeclarator_2}
+            |       |               |           |           |___aux_rule__initDeclarator_1 {id=76,slot_type=aux_rule__initDeclarator_1}
+            |       |               |           |               |___Token:= {id=77,slot_type=Assign}
+            |       |               |           |               |___multiplicativeExpression {id=90,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression]}
+            |       |               |           |                   |___Token:a {id=106,slot_type=[castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |               |           |                   |___(*) {id=92,slot_type=kleene_star__multiplicativeExpression_1}
+            |       |               |           |                       |___aux_rule__multiplicativeExpression_2 {id=93,slot_type=aux_rule__multiplicativeExpression_2}
+            |       |               |           |                           |___Token:* {id=101,slot_type=[altnt_block__multiplicativeExpression_3,Star]}
+            |       |               |           |                           |___Token:b {id=100,slot_type=[castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |               |           |___Token:; {id=71,slot_type=Semi}
+            |       |               |___Token:} {id=63,slot_type=RightBrace}
+            |       |___jumpStatement {id=22,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=25,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=26,slot_type=Return}
+            |           |   |___(?) {id=27,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:0 {id=46,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |           |___Token:; {id=24,slot_type=Semi}
+            |___Token:} {id=11,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=51==================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    printf
+    (
+    "world"
+    )
+    ;
+    if
+    (
+    a
+    )
+    {
+    int
+    c
+    =
+    1
+    ;
+    }
+    else
+    {
+    int
+    d
+    =
+    a
+    *
+    b
+    ;
+    }
+    return
+    0
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    printf
+    (
+    "world"
+    )
+    ;
+    if
+    (
+    a
+    )
+    {
+    int
+    c
+    =
+    1
+    ;
+    }
+    else
+    {
+    int
+    d
+    =
+    a
+    *
+    b
+    ;
+    }
+    return
+    0
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]remove whole except first
+    --file: seed1.c--
+    #include <stdio.h>
+    --file: variant1.c--
+    #include <stdio.h>
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=5}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@1
+    --file: seed1.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    printf
+    (
+    "world"
+    )
+    ;
+    if
+    (
+    a
+    )
+    {
+    int
+    c
+    =
+    1
+    ;
+    }
+    else
+    {
+    int
+    d
+    =
+    a
+    *
+    b
+    ;
+    }
+    return
+    0
+    ;
+    }
+    --file: variant1.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    printf
+    (
+    "world"
+    )
+    ;
+    if
+    (
+    a
+    )
+    {
+    int
+    c
+    =
+    1
+    ;
+    }
+    else
+    {
+    int
+    d
+    =
+    a
+    *
+    b
+    ;
+    }
+    return
+    0
+    ;
+    --file: <formatted tokenized program in its original format>--
+    int main(){
+      int a = 1;
+      int b = 2;
+      printf("hello");
+      printf("world");
+      if(a) {
+        int c = 1;
+      }
+      else {
+        int d = a * b;
+      }
+      return 0;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=51==================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    printf
+    (
+    "world"
+    )
+    ;
+    if
+    (
+    a
+    )
+    {
+    int
+    c
+    =
+    1
+    ;
+    }
+    else
+    {
+    int
+    d
+    =
+    a
+    *
+    b
+    ;
+    }
+    return
+    0
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    printf
+    (
+    "world"
+    )
+    ;
+    if
+    (
+    a
+    )
+    {
+    int
+    c
+    =
+    1
+    ;
+    }
+    else
+    {
+    int
+    d
+    =
+    a
+    *
+    b
+    ;
+    }
+    return
+    0
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=5}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: seed1.c--
+    #include <stdio.h>
+    ;
+    --file: variant1.c--
+    #include <stdio.h>
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+               ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: seed1.c--
+    #include <stdio.h>
+    ;
+    --file: variant1.c--
+    #include <stdio.h>
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+               ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: seed1.c--
+    #include <stdio.h>
+    ;
+    --file: variant1.c--
+    #include <stdio.h>
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+                     ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: seed1.c--
+    #include <stdio.h>
+    ;
+    --file: variant1.c--
+    #include <stdio.h>
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+                     ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: seed1.c--
+    #include <stdio.h>
+    ;
+    --file: variant1.c--
+    #include <stdio.h>
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+              ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    a
+    =
+    1
+    ;
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    a
+    =
+    1
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+      int a = 1;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    b
+    =
+    2
+    ;
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    b
+    =
+    2
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+      int b = 2;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=51==================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    printf
+    (
+    "world"
+    )
+    ;
+    if
+    (
+    a
+    )
+    {
+    int
+    c
+    =
+    1
+    ;
+    }
+    else
+    {
+    int
+    d
+    =
+    a
+    *
+    b
+    ;
+    }
+    return
+    0
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    printf
+    (
+    "world"
+    )
+    ;
+    if
+    (
+    a
+    )
+    {
+    int
+    c
+    =
+    1
+    ;
+    }
+    else
+    {
+    int
+    d
+    =
+    a
+    *
+    b
+    ;
+    }
+    return
+    0
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    c
+    =
+    1
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    c
+    =
+    1
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main()
+            {
+        int c = 1;
+      }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=51==================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    printf
+    (
+    "world"
+    )
+    ;
+    if
+    (
+    a
+    )
+    {
+    int
+    c
+    =
+    1
+    ;
+    }
+    else
+    {
+    int
+    d
+    =
+    a
+    *
+    b
+    ;
+    }
+    return
+    0
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    printf
+    (
+    "world"
+    )
+    ;
+    if
+    (
+    a
+    )
+    {
+    int
+    c
+    =
+    1
+    ;
+    }
+    else
+    {
+    int
+    d
+    =
+    a
+    *
+    b
+    ;
+    }
+    return
+    0
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main(){
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+=================Reducing node 13, size=51==================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    printf
+    (
+    "world"
+    )
+    ;
+    if
+    (
+    a
+    )
+    {
+    int
+    c
+    =
+    1
+    ;
+    }
+    else
+    {
+    int
+    d
+    =
+    a
+    *
+    b
+    ;
+    }
+    return
+    0
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    printf
+    (
+    "world"
+    )
+    ;
+    if
+    (
+    a
+    )
+    {
+    int
+    c
+    =
+    1
+    ;
+    }
+    else
+    {
+    int
+    d
+    =
+    a
+    *
+    b
+    ;
+    }
+    return
+    0
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=13}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove whole except first
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main(){
+      int a = 1;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@3
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main(){
+      int a = 1;
+      int b = 2;
+      printf("hello");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    printf
+    (
+    "world"
+    )
+    ;
+    if
+    (
+    a
+    )
+    {
+    int
+    c
+    =
+    1
+    ;
+    }
+    else
+    {
+    int
+    d
+    =
+    a
+    *
+    b
+    ;
+    }
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    printf
+    (
+    "world"
+    )
+    ;
+    if
+    (
+    a
+    )
+    {
+    int
+    c
+    =
+    1
+    ;
+    }
+    else
+    {
+    int
+    d
+    =
+    a
+    *
+    b
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main(){
+      int a = 1;
+      int b = 2;
+      printf("hello");
+      printf("world");
+      if(a) {
+        int c = 1;
+      }
+      else {
+        int d = a * b;
+      }
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 14
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main(){
+      int a = 1;
+      int b = 2;
+      printf("hello");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    printf
+    (
+    "world"
+    )
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main(){
+      int a = 1;
+      int b = 2;
+      printf("hello");
+      printf("world");
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "hello"
+    )
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main(){
+      int a = 1;
+      int b = 2;
+      printf("hello");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@3
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main(){
+      printf("world");
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 13 from 51 to 12
+------------------------------------------------------------
+
+
+=================Reducing node 179, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main(){
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main(){
+                     ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 179
+------------------------------------------------------------
+
+
+=================Reducing node 180, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main(){
+                     ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 180
+------------------------------------------------------------
+
+
+=================Reducing node 198, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=198}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main(){
+      printf         ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    "world"
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    "world"
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main(){
+             "world" ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    "world"
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    "world"
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main(){
+             "world" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 198
+------------------------------------------------------------
+
+
+=================Reducing node 351, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main  {
+      printf("world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 351
+------------------------------------------------------------
+
+
+=================Reducing node 200, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__postfixExpression_2]dd@1
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main(){
+      printf         ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 200
+------------------------------------------------------------
+
+
+=================Reducing node 202, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=202}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 202
+------------------------------------------------------------
+
+
+=================Reducing node 353, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main  {
+      printf("world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 353
+------------------------------------------------------------
+
+
+=================Reducing node 355, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=355}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 355
+------------------------------------------------------------
+
+
+=================Reducing node 365, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 365
+------------------------------------------------------------
+
+
+=================Reducing node 359, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 359
+------------------------------------------------------------
+
+
+=================Reducing node 358, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 358
+------------------------------------------------------------
+
+
+=================Reducing node 356, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 356
+------------------------------------------------------------
+
+
+=================Reducing node 226, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 226
+------------------------------------------------------------
+
+
+=================Reducing node 205, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 205
+------------------------------------------------------------
+
+
+=================Reducing node 204, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    )
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main(){
+      printf(       );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 204
+------------------------------------------------------------
+
+
+=================Reducing node 224, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=224}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 224
+------------------------------------------------------------
+
+
+=================Reducing node 225, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 225
+------------------------------------------------------------
+
+
+=================Reducing node 203, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 203
+------------------------------------------------------------
+
+
+=================Reducing node 181, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 181
+------------------------------------------------------------
+
+
+=================Reducing node 11, size=12==================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=12==================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=12==================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
+    --file: seed1.c--
+    #include <stdio.h>
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+        main(){
+      printf("world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 6
+------------------------------------------------------------
+
+
+=================Reducing node 360, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=360}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 360
+------------------------------------------------------------
+
+
+=================Reducing node 364, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 364
+------------------------------------------------------------
+
+
+=Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
+
+The spar-tree is the following.
+translationUnit {id=1}
+|___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
+    |___Token:#include <stdio.h> {id=365,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
+    |___functionDefinition {id=5,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=6,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=360,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=364,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=351,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=359,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=353,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=355,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=356,slot_type=LeftParen}
+        |           |___Token:) {id=358,slot_type=RightParen}
+        |___compoundStatement {id=8,slot_type=compoundStatement}
+            |___Token:{ {id=9,slot_type=LeftBrace}
+            |___(?) {id=10,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=13,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=179,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=180,slot_type=optional__postfixExpression_1}
+            |           |   |___postfixExpression {id=198,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |           |       |___Token:printf {id=226,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |           |       |___(*) {id=200,slot_type=kleene_star__postfixExpression_2}
+            |           |           |___aux_rule__postfixExpression_11 {id=202,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |           |               |___Token:( {id=203,slot_type=LeftParen}
+            |           |               |___(?) {id=204,slot_type=optional__postfixExpression_1}
+            |           |               |   |___(+) {id=224,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |               |       |___Token:"world" {id=225,slot_type=StringLiteral}
+            |           |               |___Token:) {id=205,slot_type=RightParen}
+            |           |___Token:; {id=181,slot_type=Semi}
+            |___Token:} {id=11,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=12==================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]remove whole except first
+    --file: seed1.c--
+    #include <stdio.h>
+    --file: variant1.c--
+    #include <stdio.h>
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=5}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@1
+    --file: seed1.c--
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    --file: <formatted tokenized program in its original format>--
+    int main(){
+      printf("world");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=12==================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=5}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: seed1.c--
+    #include <stdio.h>
+    ;
+    --file: variant1.c--
+    #include <stdio.h>
+    ;
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+                     ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=12==================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=12==================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main(){
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+=================Reducing node 13, size=12==================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=13}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 13
+------------------------------------------------------------
+
+
+=================Reducing node 179, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=179}
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeReplacementAction{target_node=179, replacement=181}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 179
+------------------------------------------------------------
+
+
+=================Reducing node 180, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=198}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 180
+------------------------------------------------------------
+
+
+=================Reducing node 198, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=198}
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeReplacementAction{target_node=198, replacement=226}
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeReplacementAction{target_node=198, replacement=224}
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeReplacementAction{target_node=198, replacement=225}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 198
+------------------------------------------------------------
+
+
+=================Reducing node 351, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeReplacementAction{target_node=351, replacement=359}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 351
+------------------------------------------------------------
+
+
+=================Reducing node 200, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=202}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 200
+------------------------------------------------------------
+
+
+=================Reducing node 202, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=202}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 202
+------------------------------------------------------------
+
+
+=================Reducing node 353, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=355}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 353
+------------------------------------------------------------
+
+
+=================Reducing node 355, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=355}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 355
+------------------------------------------------------------
+
+
+=================Reducing node 365, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 365
+------------------------------------------------------------
+
+
+=================Reducing node 359, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 359
+------------------------------------------------------------
+
+
+=================Reducing node 358, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 358
+------------------------------------------------------------
+
+
+=================Reducing node 356, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 356
+------------------------------------------------------------
+
+
+=================Reducing node 226, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 226
+------------------------------------------------------------
+
+
+=================Reducing node 205, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 205
+------------------------------------------------------------
+
+
+=================Reducing node 204, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=224}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 204
+------------------------------------------------------------
+
+
+=================Reducing node 224, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=224}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 224
+------------------------------------------------------------
+
+
+=================Reducing node 225, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 225
+------------------------------------------------------------
+
+
+=================Reducing node 203, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 203
+------------------------------------------------------------
+
+
+=================Reducing node 181, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 181
+------------------------------------------------------------
+
+
+=================Reducing node 11, size=12==================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=12==================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=12==================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=360}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 6
+------------------------------------------------------------
+
+
+=================Reducing node 360, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=360}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 360
+------------------------------------------------------------
+
+
+=================Reducing node 364, size=12=================
+
+The current best program is the following
+
+    --file: seed1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+    }
+    --file: variant1.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    printf
+    (
+    "world"
+    )
+    ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 364
+------------------------------------------------------------
+
+
+#test success = 3
+#test failure = 30
+#test result cache hits = 0
+#test execution cancelled = 0
+#node edit action set cache hits = 27
+#external test execution cache hits = 0
