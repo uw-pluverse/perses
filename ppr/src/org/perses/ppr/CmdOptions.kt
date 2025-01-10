@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,12 +19,11 @@ package org.perses.ppr
 import com.beust.jcommander.Parameter
 import org.perses.CommandOptions
 import org.perses.cmd.InputFlagGroup
-import org.perses.reduction.ReducerFactory.defaultReductionAlgName
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class CmdOptions : CommandOptions(defaultReductionAlgName) {
+class CmdOptions : CommandOptions() {
 
   override fun createInputFlags() = OverallInputFlagGroup()
 
@@ -43,7 +42,7 @@ class CmdOptions : CommandOptions(defaultReductionAlgName) {
     @JvmField
     @Parameter(
       names = ["--min-tdiff"],
-      required = true,
+      required = false,
       arity = 1,
       description = "if true, enable tree-based diff reduction",
       order = 11,
@@ -53,7 +52,7 @@ class CmdOptions : CommandOptions(defaultReductionAlgName) {
     @JvmField
     @Parameter(
       names = ["--min-commonality"],
-      required = true,
+      required = false,
       arity = 1,
       description = "if true, enable seed reduction with diff",
       order = 12,
@@ -63,7 +62,7 @@ class CmdOptions : CommandOptions(defaultReductionAlgName) {
     @JvmField
     @Parameter(
       names = ["--min-ldiff"],
-      required = true,
+      required = false,
       arity = 1,
       description = "if true, enable list-based diff reduction",
       order = 13,

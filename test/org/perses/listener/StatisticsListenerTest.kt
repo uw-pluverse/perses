@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,7 +18,6 @@ package org.perses.listener
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
-import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -28,6 +27,7 @@ import org.perses.reduction.event.ReductionEndEvent
 import org.perses.reduction.event.ReductionStartEvent
 import org.perses.reduction.event.TestScriptExecutorServiceStatisticsSnapshot
 import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
+import org.perses.util.FileStreamPool
 import java.lang.ref.WeakReference
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
@@ -39,25 +39,35 @@ import kotlin.io.path.deleteIfExists
 @RunWith(JUnit4::class)
 class StatisticsListenerTest {
 
-  private var resultFile: Path = Files.createTempFile("reduction-statistics", ".txt")
-  private var listener = StatisticsListener(resultFile)
+  private val resultFile: Path = Files.createTempFile("reduction-statistics", ".txt")
+  private val streamPool = FileStreamPool()
+  private val listener = StatisticsListener(
+    streamPool.rentStream(resultFile, this::class.qualifiedName!!),
+  )
 
   @After
   fun teardown() {
     check(resultFile.deleteIfExists())
+    listener.close()
+    streamPool.close()
   }
 
   @Test
   fun test() {
     val reducer = PersesNodePrioritizedDfsReducer.META
-    val startEvent = ReductionStartEvent(300, WeakReference(null), 100)
+    val startEvent = ReductionStartEvent(
+      currentTimeMillis = 300,
+      tree = WeakReference(null),
+      programSize = 100,
+      commandLineOptions = "<cmd>",
+    )
     val firstIterationStart = FixpointIterationStartEvent(
       startEvent,
       300,
       100,
       1,
       reducer,
-      WeakReference(null),
+      treeStructureDumper = { "" },
       testScriptStatistics = TestScriptExecutorServiceStatisticsSnapshot(
         scriptExecutionNumber = 0,
         externalCacheHitNumber = 0,
@@ -82,7 +92,7 @@ class StatisticsListenerTest {
       50,
       2,
       reducer,
-      WeakReference(null),
+      treeStructureDumper = { "" },
       testScriptStatistics = TestScriptExecutorServiceStatisticsSnapshot(
         scriptExecutionNumber = firstTestExecutions,
         externalCacheHitNumber = 0,
@@ -136,17 +146,5 @@ class StatisticsListenerTest {
     ).read()
       .trim { it <= ' ' }
     assertThat(testFileContent).isEqualTo(goldenFileContent)
-  }
-
-  @Test
-  fun testOnlyIllegalArgumentIsThrownInConstructor() {
-    val file = Paths.get("___this_fold_should_not_exit____")
-    try {
-      StatisticsListener(file)
-    } catch (e: NullPointerException) {
-      Assert.fail()
-    } catch (e: IllegalArgumentException) {
-      // Swallow the exception.
-    }
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -38,12 +38,14 @@ class ContentZipBasedQueryCache(
     return ContentZipEncoder(baseProgram, profiler)
   }
 
-  override fun evictEntriesLargerThan(best: TokenizedProgram) {}
-
   class ContentZipEncoder(
     tokenizedProgram: TokenizedProgram,
     profiler: AbstractQueryCacheProfiler,
-  ) : AbstractTokenizedProgramEncoder<ContentZipEncoding>(tokenizedProgram, profiler) {
+  ) : AbstractTokenizedProgramEncoder<ContentZipEncoding>(
+    tokenizedProgram,
+    profiler,
+    supportsRccReEncoding = false,
+  ) {
     override fun encode(program: TokenizedProgram): ContentZipEncoding {
       val rawContent = program.tokens.asSequence()
         .map { it.text }

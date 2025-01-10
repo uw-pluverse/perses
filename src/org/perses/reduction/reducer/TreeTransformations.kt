@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,7 +16,6 @@
  */
 package org.perses.reduction.reducer
 
-import org.perses.delta.xfs.Partition
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.TreeNodeFilterResult
@@ -91,7 +90,7 @@ object TreeTransformations {
       .payload!!.expectedAntlrRuleType!!
 
     return kleeneQuantifiedCurrentNode.boundedBreadthFirstSearchForFirstQualifiedNodes(
-      { node: AbstractSparTreeNode ->
+      nodePredicate = { node: AbstractSparTreeNode ->
         if (!node.isKleeneStarRuleNode && !node.isKleenePlusRuleNode) {
           return@boundedBreadthFirstSearchForFirstQualifiedNodes false
         }
@@ -101,13 +100,13 @@ object TreeTransformations {
         val childRule = node.asParserRule().getKleeneElementRuleTypeOrThrow()
         kleeneElementRule.isEqualToOrSuperOf(childRule)
       },
-      maxBfsDepth,
+      maxBfsDepth = maxBfsDepth,
     )
   }
 
   @JvmStatic
   fun createNodeDeletionActionSetFor(
-    partition: Partition<AbstractSparTreeNode>,
+    partition: Iterable<AbstractSparTreeNode>,
     actionsDescription: String,
   ): NodeDeletionActionSet {
     val actionSet = NodeDeletionActionSet.Builder(actionsDescription)

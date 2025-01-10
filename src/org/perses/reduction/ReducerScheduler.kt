@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -97,7 +97,7 @@ class ReducerScheduler(
 
   private val callReducer = { reducer: AbstractTokenReducer ->
     reducerRunner(reducer)
-    val reducerEvent = ReducerCallEvent(reducer.redcucerAnnotation)
+    val reducerEvent = ReducerCallEvent(reducer.reducerAnnotation)
     schedulerEvents.add(reducerEvent)
     recordStatsSnapshotIfNotYet()
     reducerEvent

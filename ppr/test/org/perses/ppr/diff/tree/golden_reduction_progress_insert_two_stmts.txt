@@ -1,107 +1,428 @@
 =====================Reduction starts.======================
 
-The initial program size is 34
+The initial program size is 28
+The command line options are:
+---
+help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+versionFlags:
+  groupName: "Version"
+  version: false
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r_insert_two_stmts.sh"
+  inputFile: "seed_insert_two_stmts.c"
+  deps: []
+  variantFile: "variant_insert_two_stmts.c"
+  sourceFile: "seed_insert_two_stmts.c"
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_tree_diff_reduction_golden_test_ddmin_insert_two_stmts_perses_node_priority_with_dfs_delta_seed_insert_two_stmts.c_variant_insert_two_stmts.c"
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  fixpoint: true
+  numOfThreads: 1
+  codeFormat: null
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: false
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  enableLineSlicer: false
+  defaultDeltaDebuggerTypeForKleene: "DFS"
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  enableTrec: false
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: "FALSE"
+  nodeActionSetCaching: true
+  queryCacheRefreshThreshold: 0
+  enableLightweightRefreshing: true
+  enablePassCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "reduction_progress_insert_two_stmts.txt"
+  appendToProgressDumpFile: true
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileDeltaDebugger: null
+experimentFlags:
+  groupName: "Experiment Control"
+  cacheType: "COMPACT_QUERY_CACHE"
+  onDemandReducerClasses: null
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+treeDiffInputFlags:
+  groupName: "Inputs"
+  testScript: "r_insert_two_stmts.sh"
+  inputFile: "seed_insert_two_stmts.c"
+  deps: []
+  variantFile: "variant_insert_two_stmts.c"
+  sourceFile: "seed_insert_two_stmts.c"
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
+The sanity check has been performed. The result is PassingSanityCheckResult
 =Fixpoint iteration 1. Reducer: customized_tree_diff_node_reducer
 
 The spar-tree is the following.
 translationUnit {id=1}
 |___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
-    |___Token:#include <stdio.h> {id=257,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
+    |___Token:#include <stdio.h> {id=213,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
     |___functionDefinition {id=5,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
         |___(?) {id=6,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=252,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=256,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |___directDeclarator {id=234,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=251,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=236,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=238,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=239,slot_type=LeftParen}
-        |           |___(+) {id=245,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
-        |           |   |___Token:void {id=250,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
-        |           |___Token:) {id=241,slot_type=RightParen}
+        |   |___(+) {id=208,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=212,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=190,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=207,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=192,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=194,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=195,slot_type=LeftParen}
+        |           |___(+) {id=201,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
+        |           |   |___Token:void {id=206,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
+        |           |___Token:) {id=197,slot_type=RightParen}
         |___compoundStatement {id=8,slot_type=compoundStatement}
             |___Token:{ {id=9,slot_type=LeftBrace}
             |___(?) {id=10,slot_type=optional__compoundStatement_1}
             |   |___(+) {id=13,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___aux_rule__declaration_3 {id=199,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=200,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=233,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=201,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=204,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:a {id=229,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=206,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=207,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=208,slot_type=Assign}
-            |       |   |               |___Token:1 {id=226,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=202,slot_type=Semi}
-            |       |___aux_rule__declaration_3 {id=163,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=164,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=197,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=165,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=168,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:b {id=193,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=170,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=171,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=172,slot_type=Assign}
-            |       |   |               |___Token:2 {id=190,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=166,slot_type=Semi}
-            |       |___expressionStatement {id=138,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |       |   |___(?) {id=139,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=156,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression]}
-            |       |   |       |___Token:a {id=161,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=158,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___Token:++ {id=160,slot_type=[aux_rule__postfixExpression_3,PlusPlus]}
-            |       |   |___Token:; {id=140,slot_type=Semi}
-            |       |___expressionStatement {id=113,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |       |   |___(?) {id=114,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=131,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression]}
-            |       |   |       |___Token:b {id=136,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=133,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___Token:-- {id=135,slot_type=[aux_rule__postfixExpression_3,MinusMinus]}
-            |       |   |___Token:; {id=115,slot_type=Semi}
-            |       |___expressionStatement {id=46,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |       |   |___(?) {id=47,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=64,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression]}
-            |       |   |       |___Token:printf {id=111,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=66,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___aux_rule__postfixExpression_11 {id=68,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
-            |       |   |               |___Token:( {id=69,slot_type=LeftParen}
-            |       |   |               |___(?) {id=70,slot_type=optional__postfixExpression_1}
-            |       |   |               |   |___expression {id=72,slot_type=expression}
-            |       |   |               |       |___(+) {id=109,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |       |   |               |       |   |___Token:"%d" {id=110,slot_type=StringLiteral}
-            |       |   |               |       |___(*) {id=74,slot_type=kleene_star__expression_1}
-            |       |   |               |           |___aux_rule__expression_2 {id=75,slot_type=aux_rule__expression_2}
-            |       |   |               |               |___Token:, {id=76,slot_type=Comma}
-            |       |   |               |               |___Token:a {id=93,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-            |       |   |               |___Token:) {id=71,slot_type=RightParen}
-            |       |   |___Token:; {id=48,slot_type=Semi}
-            |       |___jumpStatement {id=21,slot_type=[aux_rule__blockItemList_2,statement,jumpStatement]}
-            |           |___aux_rule__jumpStatement_4 {id=24,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-            |           |   |___Token:return {id=25,slot_type=Return}
-            |           |   |___(?) {id=26,slot_type=optional__postfixExpression_1}
-            |           |       |___Token:0 {id=44,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |           |___Token:; {id=23,slot_type=Semi}
+            |       |___aux_rule__declaration_3 {id=154,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=155,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=189,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=156,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=159,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:a {id=185,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=161,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=162,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=163,slot_type=Assign}
+            |       |   |               |___Token:1 {id=182,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=157,slot_type=Semi}
+            |       |___aux_rule__declaration_3 {id=117,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=118,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=152,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=119,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=122,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:b {id=148,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=124,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=125,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=126,slot_type=Assign}
+            |       |   |               |___Token:2 {id=145,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=120,slot_type=Semi}
+            |       |___expressionStatement {id=47,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=48,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=66,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:printf {id=115,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=68,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=70,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=71,slot_type=LeftParen}
+            |       |   |               |___(?) {id=72,slot_type=optional__postfixExpression_1}
+            |       |   |               |   |___expression {id=74,slot_type=expression}
+            |       |   |               |       |___(+) {id=113,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |       |   |               |       |   |___Token:"%d" {id=114,slot_type=StringLiteral}
+            |       |   |               |       |___(*) {id=76,slot_type=kleene_star__expression_1}
+            |       |   |               |           |___aux_rule__expression_2 {id=77,slot_type=aux_rule__expression_2}
+            |       |   |               |               |___Token:, {id=78,slot_type=Comma}
+            |       |   |               |               |___Token:a {id=96,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |               |___Token:) {id=73,slot_type=RightParen}
+            |       |   |___Token:; {id=49,slot_type=Semi}
+            |       |___jumpStatement {id=20,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=23,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=24,slot_type=Return}
+            |           |   |___(?) {id=25,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:0 {id=44,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |           |___Token:; {id=22,slot_type=Semi}
             |___Token:} {id=11,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
-=================Reducing node 138, size=34=================
+#test success = 0
+#test failure = 0
+#test result cache hits = 0
+#test execution cancelled = 0
+#node edit action set cache hits = 0
+#external test execution cache hits = 0
+=====================Reduction starts.======================
+
+The initial program size is 34
+The command line options are:
+---
+help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+versionFlags:
+  groupName: "Version"
+  version: false
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r_insert_two_stmts.sh"
+  inputFile: "seed_insert_two_stmts.c"
+  deps: []
+  variantFile: "variant_insert_two_stmts.c"
+  sourceFile: "seed_insert_two_stmts.c"
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_tree_diff_reduction_golden_test_ddmin_insert_two_stmts_perses_node_priority_with_dfs_delta_seed_insert_two_stmts.c_variant_insert_two_stmts.c"
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  fixpoint: true
+  numOfThreads: 1
+  codeFormat: null
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: false
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  enableLineSlicer: false
+  defaultDeltaDebuggerTypeForKleene: "DFS"
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  enableTrec: false
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: "FALSE"
+  nodeActionSetCaching: true
+  queryCacheRefreshThreshold: 0
+  enableLightweightRefreshing: true
+  enablePassCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "reduction_progress_insert_two_stmts.txt"
+  appendToProgressDumpFile: true
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileDeltaDebugger: null
+experimentFlags:
+  groupName: "Experiment Control"
+  cacheType: "COMPACT_QUERY_CACHE"
+  onDemandReducerClasses: null
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+treeDiffInputFlags:
+  groupName: "Inputs"
+  testScript: "r_insert_two_stmts.sh"
+  inputFile: "seed_insert_two_stmts.c"
+  deps: []
+  variantFile: "variant_insert_two_stmts.c"
+  sourceFile: "seed_insert_two_stmts.c"
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+------------------------------------------------------------
+
+
+The sanity check has been performed. The result is PassingSanityCheckResult
+=Fixpoint iteration 1. Reducer: customized_tree_diff_node_reducer
+
+The spar-tree is the following.
+translationUnit {id=1}
+|___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
+    |___Token:#include <stdio.h> {id=269,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
+    |___functionDefinition {id=5,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=6,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=264,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=268,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=246,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=263,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=248,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=250,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=251,slot_type=LeftParen}
+        |           |___(+) {id=257,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
+        |           |   |___Token:void {id=262,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
+        |           |___Token:) {id=253,slot_type=RightParen}
+        |___compoundStatement {id=8,slot_type=compoundStatement}
+            |___Token:{ {id=9,slot_type=LeftBrace}
+            |___(?) {id=10,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=13,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___aux_rule__declaration_3 {id=210,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=211,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=245,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=212,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=215,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:a {id=241,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=217,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=218,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=219,slot_type=Assign}
+            |       |   |               |___Token:1 {id=238,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=213,slot_type=Semi}
+            |       |___aux_rule__declaration_3 {id=173,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=174,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=208,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=175,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=178,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:b {id=204,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=180,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=181,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=182,slot_type=Assign}
+            |       |   |               |___Token:2 {id=201,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=176,slot_type=Semi}
+            |       |___expressionStatement {id=147,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=148,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=166,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:a {id=171,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=168,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___Token:++ {id=170,slot_type=[aux_rule__postfixExpression_3,PlusPlus]}
+            |       |   |___Token:; {id=149,slot_type=Semi}
+            |       |___expressionStatement {id=120,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=121,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=139,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:b {id=144,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=141,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___Token:-- {id=143,slot_type=[aux_rule__postfixExpression_3,MinusMinus]}
+            |       |   |___Token:; {id=122,slot_type=Semi}
+            |       |___expressionStatement {id=49,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=50,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=68,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:printf {id=117,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=70,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=72,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=73,slot_type=LeftParen}
+            |       |   |               |___(?) {id=74,slot_type=optional__postfixExpression_1}
+            |       |   |               |   |___expression {id=76,slot_type=expression}
+            |       |   |               |       |___(+) {id=115,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |       |   |               |       |   |___Token:"%d" {id=116,slot_type=StringLiteral}
+            |       |   |               |       |___(*) {id=78,slot_type=kleene_star__expression_1}
+            |       |   |               |           |___aux_rule__expression_2 {id=79,slot_type=aux_rule__expression_2}
+            |       |   |               |               |___Token:, {id=80,slot_type=Comma}
+            |       |   |               |               |___Token:a {id=98,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |               |___Token:) {id=75,slot_type=RightParen}
+            |       |   |___Token:; {id=51,slot_type=Semi}
+            |       |___jumpStatement {id=22,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=25,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=26,slot_type=Return}
+            |           |   |___(?) {id=27,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:0 {id=46,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |           |___Token:; {id=24,slot_type=Semi}
+            |___Token:} {id=11,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+=================Reducing node 147, size=34=================
 
 The current best program is the following
 
+    --file: variant_insert_two_stmts.c--
     #include <stdio.h>
-    int main(void)
+    int
+    main
+    (
+    void
+    )
     {
-        int a = 1;
-        int b = 2;
-        a++;
-        b--;
-        printf("%d", a);
-        return 0;
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ++
+    ;
+    b
+    --
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
     }
 ------------------------------------------------------------
 
@@ -109,6 +430,68 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: variant_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    b
+    --
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <stdio.h>
     int main(void)
     {
@@ -124,6 +507,69 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: variant_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    ;
+    b
+    --
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <stdio.h>
     int main(void)
     {
@@ -139,23 +585,77 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 138
+Failed to reduce node 147
 ------------------------------------------------------------
 
 
-=================Reducing node 113, size=34=================
+=================Reducing node 120, size=34=================
 
 The current best program is the following
 
+    --file: variant_insert_two_stmts.c--
     #include <stdio.h>
-    int main(void)
+    int
+    main
+    (
+    void
+    )
     {
-        int a = 1;
-        int b = 2;
-        a++;
-        b--;
-        printf("%d", a);
-        return 0;
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ++
+    ;
+    b
+    --
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
     }
 ------------------------------------------------------------
 
@@ -163,6 +663,68 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: variant_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ++
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <stdio.h>
     int main(void)
     {
@@ -179,6 +741,69 @@ The current best program is the following
 
 It took less than 1 second to cancel the task.
 
+    --file: variant_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ++
+    ;
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <stdio.h>
     int main(void)
     {
@@ -206,22 +831,74 @@ It took less than 1 second to cancel the task.
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 113 from 34 to 31
+Succeeded to reduce node 120 from 34 to 31
 ------------------------------------------------------------
 
 
-=================Reducing node 139, size=31=================
+=================Reducing node 148, size=31=================
 
 The current best program is the following
 
+    --file: variant_insert_two_stmts.c--
     #include <stdio.h>
-    int main(void)
+    int
+    main
+    (
+    void
+    )
     {
-        int a = 1;
-        int b = 2;
-        a++;
-        printf("%d", a);
-        return 0;
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ++
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
     }
 ------------------------------------------------------------
 
@@ -229,6 +906,66 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+    --file: variant_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <stdio.h>
     int main(void)
     {
@@ -243,35 +980,148 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 139
+Failed to reduce node 148
 ------------------------------------------------------------
 
 
-=================Reducing node 156, size=31=================
+=================Reducing node 166, size=31=================
 
 The current best program is the following
 
+    --file: variant_insert_two_stmts.c--
     #include <stdio.h>
-    int main(void)
+    int
+    main
+    (
+    void
+    )
     {
-        int a = 1;
-        int b = 2;
-        a++;
-        printf("%d", a);
-        return 0;
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ++
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
     }
 ------------------------------------------------------------
 
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=156}
+    NodeDeletionAction{target_node=166}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: variant_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <stdio.h>
     int main(void)
     {
@@ -286,44 +1136,148 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 156
+Failed to reduce node 166
 ------------------------------------------------------------
 
 
-=================Reducing node 161, size=31=================
+=================Reducing node 171, size=31=================
 
 The current best program is the following
 
+    --file: variant_insert_two_stmts.c--
     #include <stdio.h>
-    int main(void)
+    int
+    main
+    (
+    void
+    )
     {
-        int a = 1;
-        int b = 2;
-        a++;
-        printf("%d", a);
-        return 0;
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ++
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 161
+Failed to reduce node 171
 ------------------------------------------------------------
 
 
-=================Reducing node 158, size=31=================
+=================Reducing node 168, size=31=================
 
 The current best program is the following
 
+    --file: variant_insert_two_stmts.c--
     #include <stdio.h>
-    int main(void)
+    int
+    main
+    (
+    void
+    )
     {
-        int a = 1;
-        int b = 2;
-        a++;
-        printf("%d", a);
-        return 0;
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ++
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
     }
 ------------------------------------------------------------
 
@@ -331,6 +1285,67 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__postfixExpression_2]dd@1
+    --file: variant_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <stdio.h>
     int main(void)
     {
@@ -345,51 +1360,155 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 158
+Failed to reduce node 168
 ------------------------------------------------------------
 
 
-=================Reducing node 160, size=31=================
+=================Reducing node 170, size=31=================
 
 The current best program is the following
 
+    --file: variant_insert_two_stmts.c--
     #include <stdio.h>
-    int main(void)
+    int
+    main
+    (
+    void
+    )
     {
-        int a = 1;
-        int b = 2;
-        a++;
-        printf("%d", a);
-        return 0;
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ++
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 160
+Failed to reduce node 170
 ------------------------------------------------------------
 
 
-=================Reducing node 140, size=31=================
+=================Reducing node 149, size=31=================
 
 The current best program is the following
 
+    --file: variant_insert_two_stmts.c--
     #include <stdio.h>
-    int main(void)
+    int
+    main
+    (
+    void
+    )
     {
-        int a = 1;
-        int b = 2;
-        a++;
-        printf("%d", a);
-        return 0;
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ++
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 140
+Failed to reduce node 149
 ------------------------------------------------------------
 
 
@@ -398,91 +1517,143 @@ Failed to reduce node 140
 The spar-tree is the following.
 translationUnit {id=1}
 |___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
-    |___Token:#include <stdio.h> {id=257,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
+    |___Token:#include <stdio.h> {id=269,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
     |___functionDefinition {id=5,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
         |___(?) {id=6,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=252,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=256,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |___directDeclarator {id=234,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=251,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=236,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=238,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=239,slot_type=LeftParen}
-        |           |___(+) {id=245,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
-        |           |   |___Token:void {id=250,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
-        |           |___Token:) {id=241,slot_type=RightParen}
+        |   |___(+) {id=264,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=268,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=246,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=263,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=248,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=250,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=251,slot_type=LeftParen}
+        |           |___(+) {id=257,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
+        |           |   |___Token:void {id=262,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
+        |           |___Token:) {id=253,slot_type=RightParen}
         |___compoundStatement {id=8,slot_type=compoundStatement}
             |___Token:{ {id=9,slot_type=LeftBrace}
             |___(?) {id=10,slot_type=optional__compoundStatement_1}
             |   |___(+) {id=13,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___aux_rule__declaration_3 {id=199,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=200,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=233,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=201,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=204,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:a {id=229,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=206,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=207,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=208,slot_type=Assign}
-            |       |   |               |___Token:1 {id=226,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=202,slot_type=Semi}
-            |       |___aux_rule__declaration_3 {id=163,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=164,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=197,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=165,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=168,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:b {id=193,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=170,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=171,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=172,slot_type=Assign}
-            |       |   |               |___Token:2 {id=190,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=166,slot_type=Semi}
-            |       |___expressionStatement {id=138,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |       |   |___(?) {id=139,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=156,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression]}
-            |       |   |       |___Token:a {id=161,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=158,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___Token:++ {id=160,slot_type=[aux_rule__postfixExpression_3,PlusPlus]}
-            |       |   |___Token:; {id=140,slot_type=Semi}
-            |       |___expressionStatement {id=46,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |       |   |___(?) {id=47,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=64,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression]}
-            |       |   |       |___Token:printf {id=111,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=66,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___aux_rule__postfixExpression_11 {id=68,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
-            |       |   |               |___Token:( {id=69,slot_type=LeftParen}
-            |       |   |               |___(?) {id=70,slot_type=optional__postfixExpression_1}
-            |       |   |               |   |___expression {id=72,slot_type=expression}
-            |       |   |               |       |___(+) {id=109,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |       |   |               |       |   |___Token:"%d" {id=110,slot_type=StringLiteral}
-            |       |   |               |       |___(*) {id=74,slot_type=kleene_star__expression_1}
-            |       |   |               |           |___aux_rule__expression_2 {id=75,slot_type=aux_rule__expression_2}
-            |       |   |               |               |___Token:, {id=76,slot_type=Comma}
-            |       |   |               |               |___Token:a {id=93,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-            |       |   |               |___Token:) {id=71,slot_type=RightParen}
-            |       |   |___Token:; {id=48,slot_type=Semi}
-            |       |___jumpStatement {id=21,slot_type=[aux_rule__blockItemList_2,statement,jumpStatement]}
-            |           |___aux_rule__jumpStatement_4 {id=24,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-            |           |   |___Token:return {id=25,slot_type=Return}
-            |           |   |___(?) {id=26,slot_type=optional__postfixExpression_1}
-            |           |       |___Token:0 {id=44,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |           |___Token:; {id=23,slot_type=Semi}
+            |       |___aux_rule__declaration_3 {id=210,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=211,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=245,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=212,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=215,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:a {id=241,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=217,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=218,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=219,slot_type=Assign}
+            |       |   |               |___Token:1 {id=238,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=213,slot_type=Semi}
+            |       |___aux_rule__declaration_3 {id=173,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=174,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=208,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=175,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=178,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:b {id=204,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=180,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=181,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=182,slot_type=Assign}
+            |       |   |               |___Token:2 {id=201,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=176,slot_type=Semi}
+            |       |___expressionStatement {id=147,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=148,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=166,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:a {id=171,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=168,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___Token:++ {id=170,slot_type=[aux_rule__postfixExpression_3,PlusPlus]}
+            |       |   |___Token:; {id=149,slot_type=Semi}
+            |       |___expressionStatement {id=49,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=50,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=68,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:printf {id=117,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=70,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=72,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=73,slot_type=LeftParen}
+            |       |   |               |___(?) {id=74,slot_type=optional__postfixExpression_1}
+            |       |   |               |   |___expression {id=76,slot_type=expression}
+            |       |   |               |       |___(+) {id=115,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |       |   |               |       |   |___Token:"%d" {id=116,slot_type=StringLiteral}
+            |       |   |               |       |___(*) {id=78,slot_type=kleene_star__expression_1}
+            |       |   |               |           |___aux_rule__expression_2 {id=79,slot_type=aux_rule__expression_2}
+            |       |   |               |               |___Token:, {id=80,slot_type=Comma}
+            |       |   |               |               |___Token:a {id=98,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |               |___Token:) {id=75,slot_type=RightParen}
+            |       |   |___Token:; {id=51,slot_type=Semi}
+            |       |___jumpStatement {id=22,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=25,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=26,slot_type=Return}
+            |           |   |___(?) {id=27,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:0 {id=46,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |           |___Token:; {id=24,slot_type=Semi}
             |___Token:} {id=11,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
-=================Reducing node 138, size=31=================
+=================Reducing node 147, size=31=================
 
 The current best program is the following
 
+    --file: variant_insert_two_stmts.c--
     #include <stdio.h>
-    int main(void)
+    int
+    main
+    (
+    void
+    )
     {
-        int a = 1;
-        int b = 2;
-        a++;
-        printf("%d", a);
-        return 0;
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ++
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
     }
 ------------------------------------------------------------
 
@@ -490,6 +1661,65 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: variant_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <stdio.h>
     int main(void)
     {
@@ -504,6 +1734,66 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: variant_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <stdio.h>
     int main(void)
     {
@@ -518,185 +1808,549 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 138
+Failed to reduce node 147
 ------------------------------------------------------------
 
 
-=================Reducing node 113, size=31=================
+=================Reducing node 120, size=31=================
 
 The current best program is the following
 
+    --file: variant_insert_two_stmts.c--
     #include <stdio.h>
-    int main(void)
+    int
+    main
+    (
+    void
+    )
     {
-        int a = 1;
-        int b = 2;
-        a++;
-        printf("%d", a);
-        return 0;
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ++
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 113
+Failed to reduce node 120
 ------------------------------------------------------------
 
 
-=================Reducing node 139, size=31=================
+=================Reducing node 148, size=31=================
 
 The current best program is the following
 
+    --file: variant_insert_two_stmts.c--
     #include <stdio.h>
-    int main(void)
+    int
+    main
+    (
+    void
+    )
     {
-        int a = 1;
-        int b = 2;
-        a++;
-        printf("%d", a);
-        return 0;
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ++
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
     }
 ------------------------------------------------------------
 
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=156}
+    NodeDeletionAction{target_node=166}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 139
+Failed to reduce node 148
 ------------------------------------------------------------
 
 
-=================Reducing node 156, size=31=================
+=================Reducing node 166, size=31=================
 
 The current best program is the following
 
+    --file: variant_insert_two_stmts.c--
     #include <stdio.h>
-    int main(void)
+    int
+    main
+    (
+    void
+    )
     {
-        int a = 1;
-        int b = 2;
-        a++;
-        printf("%d", a);
-        return 0;
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ++
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
     }
 ------------------------------------------------------------
 
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=156}
+    NodeDeletionAction{target_node=166}
 ------------------------------------------------------------
 
 
 ==============Node edit action set cache hit.===============
 
-    NodeReplacementAction{target_node=156, replacement=161}
+    NodeReplacementAction{target_node=166, replacement=171}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 156
+Failed to reduce node 166
 ------------------------------------------------------------
 
 
-=================Reducing node 161, size=31=================
+=================Reducing node 171, size=31=================
 
 The current best program is the following
 
+    --file: variant_insert_two_stmts.c--
     #include <stdio.h>
-    int main(void)
+    int
+    main
+    (
+    void
+    )
     {
-        int a = 1;
-        int b = 2;
-        a++;
-        printf("%d", a);
-        return 0;
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ++
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 161
+Failed to reduce node 171
 ------------------------------------------------------------
 
 
-=================Reducing node 158, size=31=================
+=================Reducing node 168, size=31=================
 
 The current best program is the following
 
+    --file: variant_insert_two_stmts.c--
     #include <stdio.h>
-    int main(void)
+    int
+    main
+    (
+    void
+    )
     {
-        int a = 1;
-        int b = 2;
-        a++;
-        printf("%d", a);
-        return 0;
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ++
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
     }
 ------------------------------------------------------------
 
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=160}
+    NodeDeletionAction{target_node=170}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 158
+Failed to reduce node 168
 ------------------------------------------------------------
 
 
-=================Reducing node 160, size=31=================
+=================Reducing node 170, size=31=================
 
 The current best program is the following
 
+    --file: variant_insert_two_stmts.c--
     #include <stdio.h>
-    int main(void)
+    int
+    main
+    (
+    void
+    )
     {
-        int a = 1;
-        int b = 2;
-        a++;
-        printf("%d", a);
-        return 0;
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ++
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 160
+Failed to reduce node 170
 ------------------------------------------------------------
 
 
-=================Reducing node 140, size=31=================
+=================Reducing node 149, size=31=================
 
 The current best program is the following
 
+    --file: variant_insert_two_stmts.c--
     #include <stdio.h>
-    int main(void)
+    int
+    main
+    (
+    void
+    )
     {
-        int a = 1;
-        int b = 2;
-        a++;
-        printf("%d", a);
-        return 0;
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    a
+    ++
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
+    }
+    --file: seed_insert_two_stmts.c--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    int
+    a
+    =
+    1
+    ;
+    int
+    b
+    =
+    2
+    ;
+    printf
+    (
+    "%d"
+    ,
+    a
+    )
+    ;
+    return
+    0
+    ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 140
+Failed to reduce node 149
 ------------------------------------------------------------
 
 

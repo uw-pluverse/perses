@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -23,7 +23,7 @@ import org.perses.program.TokenizedProgram
 import org.perses.reduction.io.AbstractReductionIOManager
 import org.perses.reduction.io.AbstractSingleFileReductionInputs
 import org.perses.reduction.io.ReductionFolder
-import org.perses.util.FileNameContentPair
+import org.perses.util.FileNameContentLinesPair
 import org.perses.util.toImmutableList
 import java.nio.file.Path
 import kotlin.io.path.readText
@@ -46,19 +46,20 @@ class TokenReductionIOManager(
   fun updateBestResultInOrigFormat(program: TokenizedProgram) {
     concreteOutputManagerFactory.createManagerFor(
       program,
-      reductionInputs.mainDataKind.origCodeFormatControl,
+      reductionInputs.initiallyDeterminedMainDataKind.origCodeFormatControl,
     ).write(resultFolder)
   }
 
-  fun readAndTrimAllBestFiles(): ImmutableList<FileNameContentPair> {
+  fun readAndTrimAllBestFiles(): ImmutableList<FileNameContentLinesPair> {
     return readAndTrimOutputFiles(resultFolder)
   }
 
-  fun readAndTrimOutputFiles(reductionFolder: ReductionFolder): ImmutableList<FileNameContentPair> {
-    return reductionInputs.orig2relativePathPairs
-      .asSequence()
+  fun readAndTrimOutputFiles(
+    reductionFolder: ReductionFolder,
+  ): ImmutableList<FileNameContentLinesPair> {
+    return reductionInputs.sequenceOfMutableFiles()
       .map {
-        FileNameContentPair.createFromFile(
+        FileNameContentLinesPair.createFromFile(
           file = reductionFolder.folder.resolve(it.relativePath),
         )
       }.toImmutableList().also { check(it.isNotEmpty()) }
@@ -69,10 +70,10 @@ class TokenReductionIOManager(
     return resultFolder.folder.resolve(concreteInputs.relativePathForMainFile).readText()
   }
 
-  fun getDefaultProgramFormat() = concreteOutputManagerFactory.defaultProgramFormatControl
+  fun getDefaultProgramFormat() = concreteOutputManagerFactory.defaultCodeFormatControl
 
   init {
-    val languageKind = reductionInputs.mainDataKind
+    val languageKind = reductionInputs.initiallyDeterminedMainDataKind
     require(languageKind.isCodeFormatAllowed(getDefaultProgramFormat())) {
       "The language $languageKind requires format sensitivity, " +
         "but the reducer is not told to keep its original format. " +

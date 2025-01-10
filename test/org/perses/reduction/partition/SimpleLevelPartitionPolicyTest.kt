@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -57,17 +57,17 @@ class SimpleLevelPartitionPolicyTest {
       val result = policy.partition(region, 1)
       assertThat(result).hasSize(1)
       val partition = result[0]
-      assertThat(partition.size()).isEqualTo(1)
-      assertThat(partition.first).isEqualTo(node)
-      assertThat(partition.first).isEqualTo(partition.getNode(0))
+      assertThat(partition.size).isEqualTo(1)
+      assertThat(partition.first()).isEqualTo(node)
+      assertThat(partition.first()).isEqualTo(partition[0])
     }
     run {
       val result = policy.partition(region, 2)
       assertThat(result).hasSize(1)
       val partition = result[0]
-      assertThat(partition.size()).isEqualTo(1)
-      assertThat(partition.first).isEqualTo(partition.getNode(0))
-      assertThat(partition.first).isEqualTo(node)
+      assertThat(partition.size).isEqualTo(1)
+      assertThat(partition.first()).isEqualTo(partition[0])
+      assertThat(partition.first()).isEqualTo(node)
     }
   }
 
@@ -84,16 +84,16 @@ class SimpleLevelPartitionPolicyTest {
     run {
       val result = policy.partition(region, 1)
       assertThat(result).hasSize(2)
-      assertThat(result[0].first).isEqualTo(node2)
-      assertThat(result[1].first).isEqualTo(node1)
+      assertThat(result[0].first()).isEqualTo(node2)
+      assertThat(result[1].first()).isEqualTo(node1)
     }
     run {
       val result = policy.partition(region, 2)
       assertThat(result).hasSize(1)
       val p = result[0]
-      assertThat(p.size()).isEqualTo(2)
-      assertThat(p.first).isEqualTo(node2)
-      assertThat(p.last).isEqualTo(node1)
+      assertThat(p.size).isEqualTo(2)
+      assertThat(p.first()).isEqualTo(node2)
+      assertThat(p.last()).isEqualTo(node1)
     }
   }
 }

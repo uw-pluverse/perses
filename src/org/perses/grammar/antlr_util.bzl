@@ -55,6 +55,7 @@ def _antlr_codegen(
         srcs = names_of_java_files_to_keep + additional_source_files,
         exports = deps,
         resources = grammar_files,
+        javacopts = ["-XepDisableAllChecks"],  # The auto-generated Java code might trigger error prone checks.
         deps = ["//:antlr_runtime"] + deps,
     )
 

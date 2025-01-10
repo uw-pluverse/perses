@@ -16,7 +16,7 @@ go version devel +a361ef36af Sun Oct 28 18:17:46 2018 +0000 linux/amd64
 
 To run the bazel tests in this directory:
 
-$ bazel test //benchmark/go-28390/...
+$ bazelisk test //benchmark/go-28390/...
 
 [0] https://github.com/golang/go/issues/28390
 [1] https://go-review.googlesource.com/c/go/+/144598/

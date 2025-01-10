@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,6 +16,7 @@
  */
 package org.perses.reduction.event
 
+import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -36,12 +37,13 @@ class EventsTest {
     currentTimeMillis = System.currentTimeMillis(),
     tree = WeakReference(tree),
     programSize = INITIAL_PROGRAM_SIZE,
+    commandLineOptions = "<cmd>",
   )
 
   val firstIterationStart = reductionStartEvent.nextFixpointIteration(
     programSize = 2,
     reducerClass = ConcurrentTokenSlicer.getAnnotationForGranularity(granularity = 1),
-    tree,
+    treeStructureDumper = { tree.printTreeStructure() },
     TestScriptExecutorServiceStatisticsSnapshot(
       scriptExecutionNumber = 1,
       externalCacheHitNumber = 0,
@@ -52,6 +54,7 @@ class EventsTest {
     currentTimeMillis = System.currentTimeMillis(),
     program = tree.programSnapshot,
     node = tree.root,
+    outputCreator = { ImmutableList.of() },
   )
 
   val nodeReductionEndEvent = nodeReductionStartEvent.createEndEvent(

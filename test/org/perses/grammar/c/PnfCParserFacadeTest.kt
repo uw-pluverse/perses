@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -54,6 +54,44 @@ class PnfCParserFacadeTest {
     val tokenizedProgram = AntlrGrammarUtil.convertParseTreeToProgram(tree, facade.language).tokens
     assertThat(tokenizedProgram).isNotEmpty()
     assertThat(tokenizedProgram.first().text).isEqualTo("#include <stdio.h>")
+  }
+
+  @Test
+  fun testCreduceProducedProgram() {
+    val contentList =
+      listOf(
+        """
+      void(f)();
+      void i(h) {
+        char j;
+        c = 2;
+        for (; c; f(c)) {
+          j = h;
+          b = g(j && d);
+          unsigned char k = h, l = b;
+          e = l ?: k % l;
+        }
+      }
+        """.trimIndent(),
+        """
+        struct {
+          int a;
+          unsigned b
+        } c;
+        static unsigned *d = &c.b;
+        int *e;
+        void(f)();
+        void g() {
+          f(c.a);
+          e = d;
+        }
+        """.trimIndent(),
+      )
+    contentList.forEach { content ->
+      val tree = facade.parseString(content).tree
+      val program = AntlrGrammarUtil.convertParseTreeToProgram(tree, facade.language).tokens
+      assertThat(program.last().text).isEqualTo("}")
+    }
   }
 
   @Test

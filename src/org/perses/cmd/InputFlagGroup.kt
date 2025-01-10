@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -30,7 +30,7 @@ open class InputFlagGroup : AbstractCommandLineFlagGroup(groupName = "Inputs") {
     description = "The test script to specify the property the reducer needs to preserve.",
     order = 0,
   )
-  var testScript: String? = null
+  var testScript: Path? = null
 
   @JvmField
   @Parameter(
@@ -39,11 +39,20 @@ open class InputFlagGroup : AbstractCommandLineFlagGroup(groupName = "Inputs") {
     description = "The input file to reduce",
     order = 1,
   )
-  var inputFile: String? = null
+  var inputFile: Path? = null
 
-  fun getTestScript(): Path = Paths.get(checkNotNull(testScript))
+  @JvmField
+  @Parameter(
+    names = ["--deps"],
+    required = false,
+    description = "The dependency files required for running the property test",
+    order = 2,
+  )
+  var deps: List<Path> = mutableListOf()
 
-  fun getSourceFile(): Path = Paths.get(checkNotNull(inputFile))
+  fun getTestScript(): Path = checkNotNull(testScript)
+
+  fun getSourceFile(): Path = checkNotNull(inputFile)
 
   override fun validate() {
     val testScript = getTestScript()
@@ -58,6 +67,17 @@ open class InputFlagGroup : AbstractCommandLineFlagGroup(groupName = "Inputs") {
     val sourceFile = getSourceFile()
     check(Files.isRegularFile(sourceFile)) {
       "The source program $sourceFile is not a file. The current directory is $workingDirectory."
+    }
+    for (depFile in deps) {
+      check(Files.isRegularFile(depFile)) {
+        "The dependency file $depFile is not a regular file."
+      }
+      check(!Files.isSameFile(depFile, testScript)) {
+        "The test script file $testScript cannot be a dep file."
+      }
+      check(!Files.isSameFile(depFile, sourceFile)) {
+        "The source file $testScript cannot be a dep file."
+      }
     }
   }
 }

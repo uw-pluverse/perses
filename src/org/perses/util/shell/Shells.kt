@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,11 +21,16 @@ import com.google.common.flogger.FluentLogger
 import org.apache.commons.exec.CommandLine
 import org.apache.commons.exec.DefaultExecutor
 import org.apache.commons.exec.ExecuteException
+import org.apache.commons.exec.ExecuteWatchdog
 import org.apache.commons.exec.PumpStreamHandler
+import org.perses.util.ktFine
+import org.perses.util.ktSevere
 import java.io.IOException
 import java.io.OutputStream
+import java.lang.RuntimeException
 import java.nio.file.Path
 import java.nio.file.Paths
+import java.time.Duration
 
 class Shells(
   private val shellPolicyDiscardingOutput: AbstractShellDiscardingOutputPolicy,
@@ -85,14 +90,15 @@ class Shells(
     @JvmStatic
     val CURRENT_DIR: Path = Paths.get(".")
 
+    val SHEBANG_BASH = "#!/usr/bin/env bash"
+
     @JvmStatic
     val ABSOLUTE_CURRENT_DIR: Path = Paths.get(".").toAbsolutePath()
     private val logger = FluentLogger.forEnclosingClass()
 
     @JvmStatic
     fun createNewEnvironmentVar(key: String, value: String): ImmutableMap<String, String> =
-      ImmutableMap.builder<String, String>()
-        .put(key, value).putAll(CURRENT_ENV).build()
+      ImmutableMap.builder<String, String>().put(key, value).putAll(CURRENT_ENV).build()
 
     fun runAndGetExitCode(
       cmd: String,
@@ -102,27 +108,73 @@ class Shells(
       environment: ImmutableMap<String, String>,
     ): ExitCode {
       val commandline = CommandLine.parse(cmd)
-      val exec = DefaultExecutor()
-      exec.workingDirectory = workingDirectory.toFile()
-      val streamHandler = PumpStreamHandler(stdout, stderr)
-      exec.streamHandler = streamHandler
-      logger.atFine().log("%s", commandline)
+      val pumpStreamHandler = PumpStreamHandler(stdout, stderr)
+      val exec = DefaultExecutor.builder().setExecuteStreamHandler(pumpStreamHandler)
+        .setWorkingDirectory(workingDirectory.toFile()).get().also {
+          it.watchdog = ForciblyProcessDestroyerWatchDog(pumpStreamHandler)
+        }
+      logger.ktFine { commandline.toString() }
 
       return try {
         ExitCode(exec.execute(commandline, environment))
       } catch (e: ExecuteException) {
-        logger.atFine().log("error when running cmd %s", cmd)
-        logger.atFine().log("cmd stdout: %s", stdout)
-        logger.atFine().log("cmd stderr: %s", stderr)
-        ExitCode(e.exitValue)
+        val exceptionExitCode = e.exitValue
+        if (exceptionExitCode == DefaultExecutor.INVALID_EXITVALUE) {
+          val exceptionMessage = """The execution of the process '$cmd' is interrupted.
+            |cmd stdout: $stdout
+            |cmd stderr: $stderr
+          """.trimMargin()
+          logger.ktFine { exceptionMessage }
+          throw RuntimeException(exceptionMessage, e)
+        } else {
+          ExitCode(exceptionExitCode)
+        }
       } catch (e: IOException) {
-        logger.atSevere().withCause(e).log(
-          "Fail to run command in the working directory:'%s', dir='%s'.",
-          cmd,
-          workingDirectory,
-        )
-        throw e
+        val exceptionMessage =
+          """Fail to run command in the working directory:'$cmd', dir='$workingDirectory'.
+            |$e
+          """.trimMargin()
+        logger.ktSevere { exceptionMessage + e }
+        throw RuntimeException(exceptionMessage, e)
       }
+    }
+  }
+
+  @Suppress("DEPRECATION")
+  class ForciblyProcessDestroyerWatchDog(
+    private val pumpStreamHandler: PumpStreamHandler,
+  ) : ExecuteWatchdog(ExecuteWatchdog.INFINITE_TIMEOUT) {
+    override fun stop() {
+      ExecuteWatchdog::class.java.getDeclaredField("process").let {
+        it.isAccessible = true
+        it.get(this) as Process?
+      }?.let { process ->
+        if (process.isAlive) {
+          /*
+           * If this process cannot be destroyed, then forcibly destroy it.
+           *
+           * Do not try to close the streams of the process, because these streams
+           * are used and locked by the StreamPumper.
+           *
+           * Also, note that BufferedInputStream.read() is blocking and is not interruptable.
+           */
+          process.descendants().use { stream ->
+            stream.forEach { descendant ->
+              if ((descendant.isAlive)) {
+                descendant.destroy() // Try to shut down the process cleanly first.
+                if (descendant.isAlive) {
+                  descendant.destroyForcibly()
+                }
+              }
+            }
+          }
+          process.destroyForcibly()
+          // Set up the stop timeout, so that the stream pumping threads can be stopped. Otherwise,
+          // all these pumping threads will be blocked on BufferedOutputStream.read()
+          pumpStreamHandler.setStopTimeout(Duration.ofMillis(1))
+        }
+      }
+      super.stop()
     }
   }
 }

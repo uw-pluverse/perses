@@ -8,6 +8,9 @@ AUX_TOKEN__primaryExpression_1
 AUX_TOKEN__primaryExpression_2
     : '__builtin_offsetof'
     ;
+AUX_TOKEN__conditionalExpression_1
+    : '?:'
+    ;
 AUX_TOKEN__typeSpecifier_1
     : '__m128'
     ;
@@ -667,7 +670,7 @@ logicalOrExpression
     ;
 
 conditionalExpression
-    : logicalOrExpression (Question expression Colon conditionalExpression)?
+    : logicalOrExpression (Question expression Colon conditionalExpression | AUX_TOKEN__conditionalExpression_1 conditionalExpression)?
     ;
 
 assignmentExpression
@@ -777,13 +780,21 @@ structOrUnion
     ;
 
 structDeclarationList
-    : structDeclaration
-    | structDeclarationList structDeclaration
+    : structDeclaration* (structDeclaration | structDeclarationWithoutSemicolon)?
     ;
 
 structDeclaration
-    : Extension_gcc? specifierQualifierList structDeclaratorList? Semi
+    : structQualifierListWithStructDeclaratorListWithoutSemicolon Semi
     | staticAssertDeclaration
+    ;
+
+structQualifierListWithStructDeclaratorListWithoutSemicolon
+    : Extension_gcc? specifierQualifierList structDeclaratorList?
+    ;
+
+structDeclarationWithoutSemicolon
+    : structQualifierListWithStructDeclaratorListWithoutSemicolon
+    | staticAssertDeclarationWithoutSemicolon
     ;
 
 specifierQualifierList
@@ -976,7 +987,11 @@ designator
     ;
 
 staticAssertDeclaration
-    : StaticAssert LeftParen constantExpression Comma StringLiteral+ RightParen Semi
+    : staticAssertDeclarationWithoutSemicolon Semi
+    ;
+
+staticAssertDeclarationWithoutSemicolon
+    : StaticAssert LeftParen constantExpression Comma StringLiteral+ RightParen
     ;
 
 statement

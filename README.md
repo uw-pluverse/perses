@@ -30,6 +30,8 @@ Currently, Perses supports reduction for the following programming languages:
 + Solidity: [sol]
 + System_Verilog: [v, sv]
 + SMTLIBv2: [smt2]
++ XML: [xml]
++ Line: [line]
 
 Support for other languages is coming soon.
 
@@ -40,38 +42,43 @@ There are three ways to obtain Perses.
 - Download a prebuilt release JAR file from our [release page](https://github.com/perses-project/perses/releases),
   for example,
 
-      ```
-      wget https://github.com/perses-project/perses/releases/download/v1.4/perses_deploy.jar
-      java -jar perses_deploy.jar [options]? --test-script <test-script.sh> --input-file <program file>
-      ```
+  ```bash
+  wget https://github.com/uw-pluverse/perses/releases/download/v1.8/perses_deploy.jar
+  java -jar perses_deploy.jar [options]? --test-script <test-script.sh> --input-file <program file>
+  ```
 
 - Clone the repo and build Perses from the source.
 
-  ```
+  ```bash
   git clone https://github.com/perses-project/perses.git
   cd perses
-  bazel build //src/org/perses:perses_deploy.jar
-  java -jar bazel-bin/src/org/perses/perses_deploy.jar [options]? --test-script <test-script.sh> --input-file <program file>
+  bazelisk build //src/org/perses:perses_deploy.jar
+  java -jar bazel-bin/src/org/perses/perses_deploy.jar [options]? \
+      --test-script <test-script.sh> --input-file <program file>
   ```
 
 - If you want to always use the trunk version of Perses, [perses-trunk](https://github.com/perses-project/perses/blob/master/scripts/perses-trunk) automatically downloads and builds the latest version.
-  NOTE: [Bazel](https://bazel.build/) is the prerequisite to run perses-trunk successfully.
-  `  wget https://raw.githubusercontent.com/perses-project/perses/master/scripts/perses-trunk
-chmod +x perses-trunk
-./perses-trunk [options]? --test-script <test-script.sh> --input-file <program file>`
+  
+  NOTE: [Bazelisk](https://github.com/bazelbuild/bazelisk) is the prerequisite to run perses-trunk successfully.
+  
+  ```bash
+  wget https://raw.githubusercontent.com/perses-project/perses/master/scripts/perses-trunk
+  chmod +x perses-trunk
+  ./perses-trunk [options]? --test-script <test-script.sh> --input-file <program file>
+  ```
 
 #### Important Flags
 
-- --test-script **<test-script.sh>**:
+- --test-script **&lt;test-script.sh&gt;**:
   The script encodes the constraints that both of the original program file and the reduced version should satisfy. It should return **0** if the constraints are satisfied.
 
-- --input-file **<program-file>**: the program needs to be reduced. Currently, Perses
+- --input-file **&lt;program-file&gt;**: the program needs to be reduced. Currently, Perses
   supports C, Rust, Java and Go. Note that we can easily support any other languages,
   if the specific language can be parsed by an Antlr parser.
 
 Check all available command line arguments
 
-```
+```bash
 java -jar perses_deploy.jar  --help
 ```
 
@@ -100,7 +107,7 @@ This repository contains the implementations of the techniques proposed in the f
 ##### 2. Pushing the Limit of 1-Minimality of Language-Agnostic Program Reduction (OOPSLA 2023, [pdf](./doc/publication/2023_vulcan_oopsla.pdf))
 
 ```
-@article{vulcan,
+@article{perses-vulcan,
   title={Pushing the Limit of 1-Minimality of Language-Agnostic Program Reduction},
   author={Xu, Zhenyang and Tian, Yongqiang and Zhang, Mengxiao and Zhao, Gaosen and Jiang, Yu and Sun, Chengnian},
   journal={Proceedings of the ACM on Programming Languages},
@@ -112,10 +119,10 @@ This repository contains the implementations of the techniques proposed in the f
 }
 ```
 
-##### 3. PPR: Pairwise Program Reduction (ESEC/FSE 2023, [pdf](./doc/publication/2023_ppr_fse.pdf))
+##### 3. PPR: Pairwise Program Reduction (ESEC/FSE 2023, [pdf](./doc/publication/2023_ppr_fse.pdf), [doc](./ppr/README.md))
 
 ```
-@inproceedings{ppr,
+@inproceedings{perses-ppr,
   title={PPR: Pairwise Program Reduction},
   author={Zhang, Mengxiao and Xu, Zhenyang and Tian, Yongqiang and Jiang, Yu and Sun, Chengnian},
   booktitle={Proceedings of the 31st ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering},
@@ -136,5 +143,29 @@ This repository contains the implementations of the techniques proposed in the f
   pages={1--30},
   year={2023},
   publisher={ACM New York, NY, USA}
+}
+```
+
+##### 5. LPR: Large language models-aided program reduction (ISSTA 2024, [pdf](./doc/publication/2024_lpr_issta.pdf))
+
+```
+@inproceedings{perses-lpr,
+  title={LPR: Large Language Models-Aided Program Reduction},
+  author={Zhang, Mengxiao and Tian, Yongqiang and Xu, Zhenyang and Dong, Yiwen and Tan, Shin Hwei and Sun, Chengnian},
+  booktitle={Proceedings of the 33rd ACM SIGSOFT International Symposium on Software Testing and Analysis},
+  pages={261--273},
+  year={2024}
+}
+```
+
+##### 6. T-Rec: Fine-Grained Language-Agnostic Program Reduction Guided by Lexical Syntax (TOSEM, [pdf](./doc/publication/2024_trec_tosem.pdf))
+
+```
+@article{perses-trec,
+  title={T-Rec: Fine-Grained Language-Agnostic Program Reduction Guided by Lexical Syntax},
+  author={Xu, Zhenyang and Tian, Yongqiang and Zhang, Mengxiao and Zhang, Jiarui and Liu, Puzhuo and Jiang, Yu and Sun, Chengnian},
+  journal={ACM Transactions on Software Engineering and Methodology},
+  year={2024},
+  publisher={ACM New York, NY}
 }
 ```

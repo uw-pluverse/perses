@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,14 +21,17 @@ import org.perses.antlr.reducer.io.GrammarReductionIOManager
 import org.perses.antlr.util.AntlrToolWrapper
 import org.perses.program.LanguageKind
 import org.perses.reduction.AbstractReducer
+import org.perses.reduction.AbstractReducerNameAndDesc
 import org.perses.reduction.ListenableReductionState
 import org.perses.reduction.TestScriptExecutorService
 import org.perses.reduction.TestScriptExecutorService.Companion.IDENTITY_POST_CHECK
 
 abstract class AbstractAntlrReducer(
+  nameAndDesc: AbstractReducerNameAndDesc,
   ioManager: GrammarReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
 ) : AbstractReducer<PersesGrammar, LanguageKind, GrammarReductionIOManager>(
+  nameAndDesc,
   ioManager,
   testScriptExecutorService,
 ) {

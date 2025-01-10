@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,7 +21,7 @@ import java.nio.file.Path
 
 class ScriptFile(file: Path) {
 
-  val fileWithContent = FileWithContent(file)
+  val fileWithContent = FilePathWithContent(file)
 
   val shebang = extractShebang(fileWithContent.textualFileContent).trim()
 

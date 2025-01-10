@@ -1,9 +1,93 @@
 =====================Reduction starts.======================
 
 The initial program size is 29
+The command line options are:
+---
+help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+versionFlags:
+  groupName: "Version"
+  version: false
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFile: "Hello.sc"
+  deps: []
+  sourceFile: "Hello.sc"
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "output_dir_reduce_with_global_cache"
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  fixpoint: true
+  numOfThreads: 1
+  codeFormat: null
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  reductionAlgorithm: "perses_node_with_dfs_delta"
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  enableLineSlicer: false
+  defaultDeltaDebuggerTypeForKleene: "DFS"
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  enableTrec: false
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: "FALSE"
+  nodeActionSetCaching: false
+  queryCacheRefreshThreshold: 0
+  enableLightweightRefreshing: true
+  enablePassCache: false
+  globalCacheFile: "golden_global_cache.csv"
+  pathToSaveUpdatedGlobalCache: "updated_global_cache.csv"
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "progress_dump_reduced_with_global_cache.txt"
+  appendToProgressDumpFile: true
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileDeltaDebugger: null
+experimentFlags:
+  groupName: "Experiment Control"
+  cacheType: "COMPACT_QUERY_CACHE"
+  onDemandReducerClasses: null
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+
+Parser Facade: class org.perses.grammar.scala.PnfScalaParserFacade
 ------------------------------------------------------------
 
 
+The sanity check has been performed. The result is PassingSanityCheckResult
 =Fixpoint iteration 1. Reducer: perses_node_with_dfs_delta==
 
 The spar-tree is the following.
@@ -31,13 +115,13 @@ compilationUnit {id=1}
                     |           |           |       |___(?) {id=146,slot_type=optional__param_3}
                     |           |           |           |___aux_rule__param_2 {id=147,slot_type=aux_rule__param_2}
                     |           |           |               |___Token:: {id=148,slot_type=Token}
-                    |           |           |               |___simpleType {id=157,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
-                    |           |           |                   |___Token:Array {id=180,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
-                    |           |           |                   |___(*) {id=159,slot_type=kleene_star__simpleType_3}
-                    |           |           |                       |___typeArgs {id=161,slot_type=[aux_rule__simpleType_4,typeArgs]}
-                    |           |           |                           |___Token:[ {id=162,slot_type=Token}
-                    |           |           |                           |___Token:String {id=176,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
-                    |           |           |                           |___Token:] {id=164,slot_type=Token}
+                    |           |           |               |___simpleType {id=156,slot_type=[paramType,aux_rule__paramType_2,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=178,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=158,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=160,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=161,slot_type=Token}
+                    |           |           |                           |___Token:String {id=174,slot_type=[types,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=163,slot_type=Token}
                     |           |           |___Token:) {id=142,slot_type=Token}
                     |           |___aux_rule__funDef_9 {id=29,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
                     |               |___Token:= {id=30,slot_type=Token}
@@ -79,6 +163,7 @@ compilationUnit {id=1}
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) = {
             println("line 1")
@@ -99,6 +184,7 @@ Failed to reduce node 2
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) = {
             println("line 1")
@@ -119,6 +205,7 @@ Failed to reduce node 8
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) = {
             println("line 1")
@@ -139,6 +226,7 @@ Failed to reduce node 9
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) = {
             println("line 1")
@@ -152,6 +240,9 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello
+    --file: <formatted tokenized program in its original format>--
     object Hello
 ------------------------------------------------------------
 
@@ -166,6 +257,7 @@ Failed to reduce node 10
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) = {
             println("line 1")
@@ -186,6 +278,7 @@ Failed to reduce node 11
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) = {
             println("line 1")
@@ -199,6 +292,9 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__classTemplateOpt_3]dd@1
+    --file: Hello.sc--
+    object Hello
+    --file: <formatted tokenized program in its original format>--
     object Hello
 ------------------------------------------------------------
 
@@ -213,6 +309,7 @@ Failed to reduce node 13
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) = {
             println("line 1")
@@ -226,6 +323,9 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: Hello.sc--
+    object Hello
+    --file: <formatted tokenized program in its original format>--
     object Hello
 ------------------------------------------------------------
 
@@ -240,6 +340,7 @@ Failed to reduce node 15
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) = {
             println("line 1")
@@ -260,6 +361,7 @@ Failed to reduce node 16
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) = {
             println("line 1")
@@ -280,6 +382,7 @@ Failed to reduce node 17
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) = {
             println("line 1")
@@ -300,6 +403,7 @@ Failed to reduce node 18
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) = {
             println("line 1")
@@ -313,6 +417,11 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+            main
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
             main
     }
@@ -322,6 +431,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
             println("line 1")
             println("Hello, world")
@@ -333,6 +449,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+                                        {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
                                         {
             println("line 1")
@@ -353,6 +478,7 @@ Failed to reduce node 23
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) = {
             println("line 1")
@@ -373,6 +499,7 @@ Failed to reduce node 24
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) = {
             println("line 1")
@@ -393,6 +520,7 @@ Failed to reduce node 26
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) = {
             println("line 1")
@@ -406,6 +534,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main                      = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main                      = {
             println("line 1")
@@ -419,6 +556,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def      args                 = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def      args                 = {
             println("line 1")
@@ -439,6 +585,7 @@ Failed to reduce node 27
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) = {
             println("line 1")
@@ -459,6 +606,7 @@ Failed to reduce node 29
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) = {
             println("line 1")
@@ -479,6 +627,7 @@ Failed to reduce node 136
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) = {
             println("line 1")
@@ -492,6 +641,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__paramClauses_1]dd@1
+    --file: Hello.sc--
+    object Hello {
+        def main                      = {
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+        }
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main                      = {
             println("line 1")
@@ -512,6 +670,7 @@ Failed to reduce node 138
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) = {
             println("line 1")
@@ -532,6 +691,7 @@ Failed to reduce node 30
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) = {
             println("line 1")
@@ -545,6 +705,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -555,6 +721,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -565,6 +737,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println("line 1")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
             println("line 1")
@@ -575,6 +753,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+                   ("Hello, world")
+            println("line 2")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
                    ("Hello, world")
@@ -586,6 +771,14 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
             println("line 1")
@@ -617,6 +810,7 @@ Succeeded to reduce node 40 from 29 to 27
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println("line 1")
@@ -629,6 +823,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: Hello.sc--
+    object Hello {
+        def main                      =
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main                      =
             println("line 1")
@@ -648,6 +850,7 @@ Failed to reduce node 139
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println("line 1")
@@ -660,6 +863,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -670,6 +879,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -680,6 +895,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+                    "line 1"
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
                     "line 1"
@@ -690,6 +911,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+                   ("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
                    ("Hello, world")
@@ -700,6 +927,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println("line 1")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
             println("line 1")
@@ -710,6 +943,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+                   ("Hello, world")
+            println("line 2")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
                    ("Hello, world")
@@ -728,6 +968,7 @@ Failed to reduce node 51
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println("line 1")
@@ -747,6 +988,7 @@ Failed to reduce node 140
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println("line 1")
@@ -759,6 +1001,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__paramClause_2]dd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(                   ) =
+            println("line 1")
+            println("Hello, world")
+            println("line 2")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(                   ) =
             println("line 1")
@@ -778,6 +1028,7 @@ Failed to reduce node 141
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println("line 1")
@@ -797,6 +1048,7 @@ Failed to reduce node 142
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println("line 1")
@@ -809,6 +1061,14 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+            println("line 2")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -822,6 +1082,14 @@ The current best program is the following
 
 It took less than 1 second to cancel the task.
 
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+                    "line 1"
+            println("Hello, world")
+            println("line 2")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
                     "line 1"
@@ -853,6 +1121,7 @@ Succeeded to reduce node 109 from 27 to 24
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -865,6 +1134,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__infixExpr_2]dd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -882,6 +1157,7 @@ Failed to reduce node 53
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -894,6 +1170,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: Hello.sc--
+    object Hello {
+        def main(                   ) =
+            println
+            println("Hello, world")
+            println("line 2")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(                   ) =
             println
@@ -906,6 +1190,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args               ) =
+            println
+            println("Hello, world")
+            println("line 2")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args               ) =
             println
@@ -918,6 +1210,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(      Array        ) =
+            println
+            println("Hello, world")
+            println("line 2")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(      Array        ) =
             println
@@ -937,6 +1237,7 @@ Failed to reduce node 144
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -956,6 +1257,7 @@ Failed to reduce node 135
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -968,6 +1270,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -978,6 +1286,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]kleene replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("line 2")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -989,6 +1304,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("line 2")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1007,6 +1329,7 @@ Failed to reduce node 54
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1026,6 +1349,7 @@ Failed to reduce node 145
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1038,6 +1362,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__param_3]dd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args               ) =
+            println
+            println("Hello, world")
+            println("line 2")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args               ) =
             println
@@ -1057,6 +1389,7 @@ Failed to reduce node 146
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1076,6 +1409,7 @@ Failed to reduce node 55
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1088,6 +1422,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println "Hello, world"
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1099,6 +1440,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println
+            println
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1111,6 +1460,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println
+                    "line 2"
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1123,6 +1480,13 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1135,6 +1499,14 @@ The current best program is the following
 
 It took less than 1 second to cancel the task.
 
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println
+                   ("line 2")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1166,6 +1538,7 @@ Succeeded to reduce node 56 from 24 to 20
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1177,6 +1550,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: Hello.sc--
+    object Hello {
+        def main(args               ) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args               ) =
             println
@@ -1195,6 +1575,7 @@ Failed to reduce node 147
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1206,6 +1587,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println "Hello, world"
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1224,6 +1612,7 @@ Failed to reduce node 89
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1238,10 +1627,11 @@ Failed to reduce node 148
 ------------------------------------------------------------
 
 
-=================Reducing node 157, size=20=================
+=================Reducing node 156, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1253,6 +1643,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array        ) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array        ) =
             println
@@ -1264,6 +1661,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args:       String ) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args:       String ) =
             println
@@ -1274,7 +1678,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 157
+Failed to reduce node 156
 ------------------------------------------------------------
 
 
@@ -1282,6 +1686,7 @@ Failed to reduce node 157
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1300,6 +1705,7 @@ Failed to reduce node 90
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1311,6 +1717,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__simpleExpr1_1]dd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println(              )
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1329,6 +1742,7 @@ Failed to reduce node 91
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1343,10 +1757,11 @@ Failed to reduce node 92
 ------------------------------------------------------------
 
 
-=================Reducing node 180, size=20=================
+=================Reducing node 178, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1357,14 +1772,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 180
+Failed to reduce node 178
 ------------------------------------------------------------
 
 
-=================Reducing node 159, size=20=================
+=================Reducing node 158, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1376,6 +1792,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__simpleType_3]dd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array        ) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array        ) =
             println
@@ -1386,7 +1809,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 159
+Failed to reduce node 158
 ------------------------------------------------------------
 
 
@@ -1394,6 +1817,7 @@ Failed to reduce node 159
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1408,10 +1832,11 @@ Failed to reduce node 106
 ------------------------------------------------------------
 
 
-=================Reducing node 161, size=20=================
+=================Reducing node 160, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1423,8 +1848,34 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: Hello.sc--
     object Hello {
         def main(args: Array        ) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array        ) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 160
+------------------------------------------------------------
+
+
+=================Reducing node 161, size=20=================
+
+The current best program is the following
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
             println
             println("Hello, world")
     }
@@ -1437,10 +1888,11 @@ Failed to reduce node 161
 ------------------------------------------------------------
 
 
-=================Reducing node 162, size=20=================
+=================Reducing node 174, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1451,14 +1903,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 162
+Failed to reduce node 174
 ------------------------------------------------------------
 
 
-=================Reducing node 176, size=20=================
+=================Reducing node 163, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1469,83 +1922,66 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 176
-------------------------------------------------------------
-
-
-=================Reducing node 164, size=20=================
-
-The current best program is the following
-
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 164
+Failed to reduce node 163
 ------------------------------------------------------------
 
 
 =Fixpoint iteration 2. Reducer: perses_node_with_dfs_delta==
 
 The spar-tree is the following.
-compilationUnit {id=181}
-|___(+) {id=182,slot_type=topStatSeq}
-    |___aux_rule__tmplDef_7 {id=188,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
-        |___Token:object {id=189,slot_type=Token}
-        |___objectDef {id=190,slot_type=objectDef}
-            |___Token:Hello {id=191,slot_type=Id}
-            |___(?) {id=193,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
-                |___templateBody {id=195,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
-                    |___Token:{ {id=196,slot_type=Token}
-                    |___(+) {id=197,slot_type=kleene_plus__templateBody_3}
-                    |   |___aux_rule__def_2 {id=203,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
-                    |       |___Token:def {id=204,slot_type=Token}
-                    |       |___aux_rule__funDef_8 {id=206,slot_type=[funDef,aux_rule__funDef_8]}
-                    |           |___funSig {id=207,slot_type=funSig}
-                    |           |   |___Token:main {id=252,slot_type=Id}
-                    |           |   |___(*) {id=254,slot_type=[paramClauses,kleene_star__paramClauses_1]}
-                    |           |       |___paramClause {id=255,slot_type=paramClause}
-                    |           |           |___Token:( {id=256,slot_type=Token}
-                    |           |           |___(?) {id=257,slot_type=optional__paramClause_2}
-                    |           |           |   |___param {id=260,slot_type=[params,param]}
-                    |           |           |       |___Token:args {id=261,slot_type=Id}
-                    |           |           |       |___(?) {id=262,slot_type=optional__param_3}
-                    |           |           |           |___aux_rule__param_2 {id=263,slot_type=aux_rule__param_2}
-                    |           |           |               |___Token:: {id=264,slot_type=Token}
-                    |           |           |               |___simpleType {id=273,slot_type=[paramType,aux_rule__paramType_2,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
-                    |           |           |                   |___Token:Array {id=296,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
-                    |           |           |                   |___(*) {id=275,slot_type=kleene_star__simpleType_3}
-                    |           |           |                       |___typeArgs {id=277,slot_type=[aux_rule__simpleType_4,typeArgs]}
-                    |           |           |                           |___Token:[ {id=278,slot_type=Token}
-                    |           |           |                           |___Token:String {id=292,slot_type=[types,type_,aux_rule__type__3,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
-                    |           |           |                           |___Token:] {id=280,slot_type=Token}
-                    |           |           |___Token:) {id=258,slot_type=Token}
-                    |           |___aux_rule__funDef_9 {id=209,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
-                    |               |___Token:= {id=210,slot_type=Token}
-                    |               |___infixExpr {id=216,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr]}
-                    |                   |___Token:println {id=251,slot_type=[prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
-                    |                   |___(*) {id=218,slot_type=kleene_star__infixExpr_2}
-                    |                       |___aux_rule__infixExpr_3 {id=219,slot_type=aux_rule__infixExpr_3}
-                    |                           |___Token:println {id=220,slot_type=Id}
-                    |                           |___aux_rule__simpleExpr1_10 {id=227,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
-                    |                               |___Token:( {id=228,slot_type=Token}
-                    |                               |___(?) {id=229,slot_type=optional__simpleExpr1_1}
-                    |                               |   |___Token:"Hello, world" {id=244,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
-                    |                               |___Token:) {id=230,slot_type=Token}
-                    |___Token:} {id=198,slot_type=Token}
+compilationUnit {id=179}
+|___(+) {id=180,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=186,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=187,slot_type=Token}
+        |___objectDef {id=188,slot_type=objectDef}
+            |___Token:Hello {id=189,slot_type=Id}
+            |___(?) {id=191,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=193,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=194,slot_type=Token}
+                    |___(+) {id=195,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=201,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=202,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=204,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=205,slot_type=funSig}
+                    |           |   |___Token:main {id=250,slot_type=Id}
+                    |           |   |___(*) {id=252,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=253,slot_type=paramClause}
+                    |           |           |___Token:( {id=254,slot_type=Token}
+                    |           |           |___(?) {id=255,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=258,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=259,slot_type=Id}
+                    |           |           |       |___(?) {id=260,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=261,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=262,slot_type=Token}
+                    |           |           |               |___simpleType {id=270,slot_type=[paramType,aux_rule__paramType_2,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=292,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=272,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=274,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=275,slot_type=Token}
+                    |           |           |                           |___Token:String {id=288,slot_type=[types,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=277,slot_type=Token}
+                    |           |           |___Token:) {id=256,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=207,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=208,slot_type=Token}
+                    |               |___infixExpr {id=214,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr]}
+                    |                   |___Token:println {id=249,slot_type=[prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=216,slot_type=kleene_star__infixExpr_2}
+                    |                       |___aux_rule__infixExpr_3 {id=217,slot_type=aux_rule__infixExpr_3}
+                    |                           |___Token:println {id=218,slot_type=Id}
+                    |                           |___aux_rule__simpleExpr1_10 {id=225,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                               |___Token:( {id=226,slot_type=Token}
+                    |                               |___(?) {id=227,slot_type=optional__simpleExpr1_1}
+                    |                               |   |___Token:"Hello, world" {id=242,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                               |___Token:) {id=228,slot_type=Token}
+                    |___Token:} {id=196,slot_type=Token}
 ------------------------------------------------------------
 
 
-=================Reducing node 182, size=20=================
+=================Reducing node 180, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1556,7 +1992,45 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 182
+Failed to reduce node 180
+------------------------------------------------------------
+
+
+=================Reducing node 186, size=20=================
+
+The current best program is the following
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 186
+------------------------------------------------------------
+
+
+=================Reducing node 187, size=20=================
+
+The current best program is the following
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 187
 ------------------------------------------------------------
 
 
@@ -1564,11 +2038,22 @@ Failed to reduce node 182
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
             println("Hello, world")
     }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello
+    --file: <formatted tokenized program in its original format>--
+    object Hello
 ------------------------------------------------------------
 
 
@@ -1582,6 +2067,7 @@ Failed to reduce node 188
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1596,10 +2082,11 @@ Failed to reduce node 189
 ------------------------------------------------------------
 
 
-=================Reducing node 190, size=20=================
+=================Reducing node 191, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1610,26 +2097,11 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [regular node]compatible replacement
+// edit action set type: [kleene_star:optional__classTemplateOpt_3]dd@1
+    --file: Hello.sc--
     object Hello
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 190
-------------------------------------------------------------
-
-
-=================Reducing node 191, size=20=================
-
-The current best program is the following
-
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello
 ------------------------------------------------------------
 
 
@@ -1643,31 +2115,7 @@ Failed to reduce node 191
 
 The current best program is the following
 
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:optional__classTemplateOpt_3]dd@1
-    object Hello
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 193
-------------------------------------------------------------
-
-
-=================Reducing node 195, size=20=================
-
-The current best program is the following
-
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1679,7 +2127,48 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: Hello.sc--
     object Hello
+    --file: <formatted tokenized program in its original format>--
+    object Hello
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 193
+------------------------------------------------------------
+
+
+=================Reducing node 194, size=20=================
+
+The current best program is the following
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 194
+------------------------------------------------------------
+
+
+=================Reducing node 195, size=20=================
+
+The current best program is the following
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
 ------------------------------------------------------------
 
 
@@ -1693,6 +2182,7 @@ Failed to reduce node 195
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1707,46 +2197,11 @@ Failed to reduce node 196
 ------------------------------------------------------------
 
 
-=================Reducing node 197, size=20=================
+=================Reducing node 201, size=20=================
 
 The current best program is the following
 
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 197
-------------------------------------------------------------
-
-
-=================Reducing node 198, size=20=================
-
-The current best program is the following
-
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 198
-------------------------------------------------------------
-
-
-=================Reducing node 203, size=20=================
-
-The current best program is the following
-
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1758,6 +2213,11 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+            main
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
             main
     }
@@ -1767,6 +2227,11 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+            println
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
             println
     }
@@ -1776,6 +2241,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
             println
             println("Hello, world")
@@ -1785,7 +2256,26 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 203
+Failed to reduce node 201
+------------------------------------------------------------
+
+
+=================Reducing node 202, size=20=================
+
+The current best program is the following
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 202
 ------------------------------------------------------------
 
 
@@ -1793,6 +2283,7 @@ Failed to reduce node 203
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1807,28 +2298,11 @@ Failed to reduce node 204
 ------------------------------------------------------------
 
 
-=================Reducing node 206, size=20=================
+=================Reducing node 205, size=20=================
 
 The current best program is the following
 
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 206
-------------------------------------------------------------
-
-
-=================Reducing node 207, size=20=================
-
-The current best program is the following
-
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1840,6 +2314,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main                      =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main                      =
             println
@@ -1851,8 +2332,34 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
     object Hello {
         def      args                 =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def      args                 =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 205
+------------------------------------------------------------
+
+
+=================Reducing node 207, size=20=================
+
+The current best program is the following
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
             println
             println("Hello, world")
     }
@@ -1865,10 +2372,11 @@ Failed to reduce node 207
 ------------------------------------------------------------
 
 
-=================Reducing node 209, size=20=================
+=================Reducing node 250, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1879,7 +2387,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 209
+Failed to reduce node 250
 ------------------------------------------------------------
 
 
@@ -1887,8 +2395,27 @@ Failed to reduce node 209
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__paramClauses_1]dd@1
+    --file: Hello.sc--
+    object Hello {
+        def main                      =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main                      =
             println
             println("Hello, world")
     }
@@ -1901,10 +2428,30 @@ Failed to reduce node 252
 ------------------------------------------------------------
 
 
-=================Reducing node 254, size=20=================
+=================Reducing node 208, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 208
+------------------------------------------------------------
+
+
+=================Reducing node 214, size=20=================
+
+The current best program is the following
+
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -1915,9 +2462,172 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__paramClauses_1]dd@1
+// edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+                    "Hello, world"
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+                    "Hello, world"
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+                   ("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+                   ("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 214
+------------------------------------------------------------
+
+
+=================Reducing node 253, size=20=================
+
+The current best program is the following
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: Hello.sc--
     object Hello {
         def main                      =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main                      =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 253
+------------------------------------------------------------
+
+
+=================Reducing node 249, size=20=================
+
+The current best program is the following
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 249
+------------------------------------------------------------
+
+
+=================Reducing node 216, size=20=================
+
+The current best program is the following
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__infixExpr_2]dd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 216
+------------------------------------------------------------
+
+
+=================Reducing node 254, size=20=================
+
+The current best program is the following
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
             println
             println("Hello, world")
     }
@@ -1930,86 +2640,11 @@ Failed to reduce node 254
 ------------------------------------------------------------
 
 
-=================Reducing node 210, size=20=================
-
-The current best program is the following
-
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 210
-------------------------------------------------------------
-
-
-=================Reducing node 216, size=20=================
-
-The current best program is the following
-
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    object Hello {
-        def main(args: Array[String]) =
-            println
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    object Hello {
-        def main(args: Array[String]) =
-            println
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    object Hello {
-        def main(args: Array[String]) =
-                    "Hello, world"
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    object Hello {
-        def main(args: Array[String]) =
-                   ("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 216
-------------------------------------------------------------
-
-
 =================Reducing node 255, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -2020,9 +2655,16 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [regular_node]can be epsilon
+// edit action set type: [kleene_star:optional__paramClause_2]dd@1
+    --file: Hello.sc--
     object Hello {
-        def main                      =
+        def main(                   ) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(                   ) =
             println
             println("Hello, world")
     }
@@ -2035,56 +2677,11 @@ Failed to reduce node 255
 ------------------------------------------------------------
 
 
-=================Reducing node 251, size=20=================
-
-The current best program is the following
-
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 251
-------------------------------------------------------------
-
-
-=================Reducing node 218, size=20=================
-
-The current best program is the following
-
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:kleene_star__infixExpr_2]dd@1
-    object Hello {
-        def main(args: Array[String]) =
-            println
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 218
-------------------------------------------------------------
-
-
 =================Reducing node 256, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -2099,10 +2696,11 @@ Failed to reduce node 256
 ------------------------------------------------------------
 
 
-=================Reducing node 257, size=20=================
+=================Reducing node 217, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -2113,7 +2711,49 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__paramClause_2]dd@1
+// edit action set type: [regular_node]can be epsilon
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 217
+------------------------------------------------------------
+
+
+=================Reducing node 258, size=20=================
+
+The current best program is the following
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: Hello.sc--
+    object Hello {
+        def main(                   ) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(                   ) =
             println
@@ -2122,18 +2762,36 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-===================Node reduction is done===================
+============Testing the following program: fail=============
 
-Failed to reduce node 257
+// edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args               ) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args               ) =
+            println
+            println("Hello, world")
+    }
 ------------------------------------------------------------
 
 
-=================Reducing node 258, size=20=================
+============Testing the following program: fail=============
 
-The current best program is the following
-
+// edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
     object Hello {
-        def main(args: Array[String]) =
+        def main(      Array        ) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(      Array        ) =
             println
             println("Hello, world")
     }
@@ -2146,10 +2804,30 @@ Failed to reduce node 258
 ------------------------------------------------------------
 
 
-=================Reducing node 219, size=20=================
+=================Reducing node 218, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 218
+------------------------------------------------------------
+
+
+=================Reducing node 225, size=20=================
+
+The current best program is the following
+
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -2160,17 +2838,44 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [regular_node]can be epsilon
+// edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
+            println "Hello, world"
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println "Hello, world"
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 219
+Failed to reduce node 225
+------------------------------------------------------------
+
+
+=================Reducing node 259, size=20=================
+
+The current best program is the following
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 259
 ------------------------------------------------------------
 
 
@@ -2178,6 +2883,7 @@ Failed to reduce node 219
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -2188,31 +2894,16 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [regular_node]can be epsilon
-    object Hello {
-        def main(                   ) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
+// edit action set type: [kleene_star:optional__param_3]dd@1
+    --file: Hello.sc--
     object Hello {
         def main(args               ) =
             println
             println("Hello, world")
     }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
+    --file: <formatted tokenized program in its original format>--
     object Hello {
-        def main(      Array        ) =
+        def main(args               ) =
             println
             println("Hello, world")
     }
@@ -2225,10 +2916,11 @@ Failed to reduce node 260
 ------------------------------------------------------------
 
 
-=================Reducing node 220, size=20=================
+=================Reducing node 226, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -2239,7 +2931,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 220
+Failed to reduce node 226
 ------------------------------------------------------------
 
 
@@ -2247,6 +2939,7 @@ Failed to reduce node 220
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -2257,11 +2950,18 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [regular node]compatible replacement
+// edit action set type: [kleene_star:optional__simpleExpr1_1]dd@1
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
-            println "Hello, world"
+            println(              )
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println(              )
     }
 ------------------------------------------------------------
 
@@ -2272,57 +2972,11 @@ Failed to reduce node 227
 ------------------------------------------------------------
 
 
-=================Reducing node 261, size=20=================
-
-The current best program is the following
-
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 261
-------------------------------------------------------------
-
-
-=================Reducing node 262, size=20=================
-
-The current best program is the following
-
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:optional__param_3]dd@1
-    object Hello {
-        def main(args               ) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 262
-------------------------------------------------------------
-
-
 =================Reducing node 228, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -2337,57 +2991,11 @@ Failed to reduce node 228
 ------------------------------------------------------------
 
 
-=================Reducing node 229, size=20=================
+=================Reducing node 261, size=20=================
 
 The current best program is the following
 
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:optional__simpleExpr1_1]dd@1
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println(              )
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 229
-------------------------------------------------------------
-
-
-=================Reducing node 230, size=20=================
-
-The current best program is the following
-
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 230
-------------------------------------------------------------
-
-
-=================Reducing node 263, size=20=================
-
-The current best program is the following
-
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -2399,6 +3007,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: Hello.sc--
+    object Hello {
+        def main(args               ) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args               ) =
             println
@@ -2409,14 +3024,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 263
+Failed to reduce node 261
 ------------------------------------------------------------
 
 
-=================Reducing node 244, size=20=================
+=================Reducing node 242, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -2427,14 +3043,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 244
+Failed to reduce node 242
 ------------------------------------------------------------
 
 
-=================Reducing node 264, size=20=================
+=================Reducing node 262, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -2445,14 +3062,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 264
+Failed to reduce node 262
 ------------------------------------------------------------
 
 
-=================Reducing node 273, size=20=================
+=================Reducing node 270, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -2464,6 +3082,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array        ) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array        ) =
             println
@@ -2475,6 +3100,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.sc--
+    object Hello {
+        def main(args:       String ) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args:       String ) =
             println
@@ -2485,101 +3117,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 273
-------------------------------------------------------------
-
-
-=================Reducing node 296, size=20=================
-
-The current best program is the following
-
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 296
-------------------------------------------------------------
-
-
-=================Reducing node 275, size=20=================
-
-The current best program is the following
-
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:kleene_star__simpleType_3]dd@1
-    object Hello {
-        def main(args: Array        ) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 275
-------------------------------------------------------------
-
-
-=================Reducing node 277, size=20=================
-
-The current best program is the following
-
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    object Hello {
-        def main(args: Array        ) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 277
-------------------------------------------------------------
-
-
-=================Reducing node 278, size=20=================
-
-The current best program is the following
-
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 278
+Failed to reduce node 270
 ------------------------------------------------------------
 
 
@@ -2587,6 +3125,7 @@ Failed to reduce node 278
 
 The current best program is the following
 
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -2601,10 +3140,85 @@ Failed to reduce node 292
 ------------------------------------------------------------
 
 
-=================Reducing node 280, size=20=================
+=================Reducing node 272, size=20=================
 
 The current best program is the following
 
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__simpleType_3]dd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array        ) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array        ) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 272
+------------------------------------------------------------
+
+
+=================Reducing node 274, size=20=================
+
+The current best program is the following
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array        ) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array        ) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 274
+------------------------------------------------------------
+
+
+=================Reducing node 275, size=20=================
+
+The current best program is the following
+
+    --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
             println
@@ -2615,7 +3229,45 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 280
+Failed to reduce node 275
+------------------------------------------------------------
+
+
+=================Reducing node 288, size=20=================
+
+The current best program is the following
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 288
+------------------------------------------------------------
+
+
+=================Reducing node 277, size=20=================
+
+The current best program is the following
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 277
 ------------------------------------------------------------
 
 

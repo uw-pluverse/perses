@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -49,7 +49,25 @@ class ReductionControlFlagGroup : AbstractCommandLineFlagGroup(
   )
   var codeFormat: EnumFormatControl? = null
 
+  @Parameter(
+    names = ["--script-execution-timeout-in-seconds"],
+    description = "the interval in seconds to timeout " +
+      "the test script executions. the default timeout is 600 seconds.",
+    order = 60,
+  )
+  var testScriptExecutionTimeoutInSeconds: Long = 600L
+
+  @Parameter(
+    names = ["--script-execution-keep-waiting-after-timeout"],
+    description = "keep trying even after " +
+      "the script execution timeouts.",
+    arity = 1,
+    order = 70,
+  )
+  var testScriptExecutionKeepWaitingAfterTimeout: Boolean = true
+
   override fun validate() {
+    check(testScriptExecutionTimeoutInSeconds > 0)
     if ("auto" != numOfThreads) {
       val num = numOfThreads.toInt()
       check(num > 0) { numOfThreads }
@@ -67,6 +85,10 @@ class ReductionControlFlagGroup : AbstractCommandLineFlagGroup(
     } else {
       numOfThreads.toInt()
     }
+  }
+
+  fun setNumOfThreads(num: Int) {
+    numOfThreads = num.toString()
   }
 
   companion object {

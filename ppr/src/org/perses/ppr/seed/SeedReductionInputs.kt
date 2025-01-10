@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,14 +21,46 @@ import org.perses.program.LanguageKind
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
 import org.perses.reduction.io.AbstractSingleFileReductionInputs
+import java.nio.file.Path
 
 class SeedReductionInputs(
   testScript: ScriptFile,
   val seedFile: SourceFile,
   val variantFile: SourceFile,
-
 ) : AbstractSingleFileReductionInputs<LanguageKind, SourceFile, SeedReductionInputs>(
   testScript,
   mainFile = seedFile,
-  files = ImmutableList.of(seedFile, variantFile),
-)
+  otherMutableFiles = ImmutableList.of(variantFile),
+  immutableDependencyFiles = ImmutableList.of(),
+) {
+
+  init {
+    require(seedFile.parentFile.toAbsolutePath() == testScript.parentFile.toAbsolutePath()) {
+      "The seed file and the test script should reside in the same folder. " +
+        "seedFile:$seedFile, testScript:$testScript"
+    }
+    require(variantFile.parentFile.toAbsolutePath() == testScript.parentFile.toAbsolutePath()) {
+      "The variant file and the test script should reside in the same folder. " +
+        "variantFile:$variantFile, testScript:$testScript"
+    }
+  }
+
+  companion object {
+    inline fun create(
+      seedPath: Path,
+      variantPath: Path,
+      testScriptPath: Path,
+      languageKindComputer: (Path) -> LanguageKind,
+    ): SeedReductionInputs {
+      val languageKind = languageKindComputer(seedPath)
+      val seedFile = SourceFile(seedPath, languageKind)
+      val variantFile = SourceFile(variantPath, languageKind)
+      val testScript = ScriptFile(testScriptPath.toAbsolutePath())
+      return SeedReductionInputs(
+        testScript = testScript,
+        seedFile = seedFile,
+        variantFile = variantFile,
+      )
+    }
+  }
+}

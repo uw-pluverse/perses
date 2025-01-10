@@ -1,8 +1,8 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
 package(default_visibility = [
     "//visibility:public",
 ])
-
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 kt_jvm_library(
     name = "tdtree",
@@ -10,6 +10,7 @@ kt_jvm_library(
     deps = [
         "//:antlr_runtime",
         "//:antlr_tool",
+        "//src/org/perses/antlr/atn:atn_kt_utils",
         "//src/org/perses/spartree",
         "//src/org/perses/util",
     ],

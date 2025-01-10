@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,6 +16,7 @@
  */
 package org.perses.reduction
 
+import org.perses.reduction.event.AbstractTestScriptExecutionEvent
 import org.perses.reduction.event.BestProgramUpdateEvent
 import org.perses.reduction.event.FixpointIterationEndEvent
 import org.perses.reduction.event.FixpointIterationStartEvent
@@ -30,15 +31,13 @@ import org.perses.reduction.event.NodeReductionStartEvent
 import org.perses.reduction.event.ReductionEndEvent
 import org.perses.reduction.event.ReductionSkippedEvent
 import org.perses.reduction.event.ReductionStartEvent
-import org.perses.reduction.event.TestResultCacheHitEvent
+import org.perses.reduction.event.SanityCheckEvent
 import org.perses.reduction.event.TestScriptExecutionCacheEntryEvictionEvent
-import org.perses.reduction.event.TestScriptExecutionCanceledEvent
-import org.perses.reduction.event.TestScriptExecutionEvent
 import org.perses.reduction.event.TokenSlicingEndEvent
 import org.perses.reduction.event.TokenSlicingStartEvent
 
 /** The listener to access the internal reduction state.  */
-abstract class AbstractReductionListener {
+abstract class AbstractReductionListener : AutoCloseable {
   /** Called on the start of the reduction.  */
   abstract fun onReductionStart(event: ReductionStartEvent)
 
@@ -73,18 +72,23 @@ abstract class AbstractReductionListener {
     event: NodeEditActionSetCacheClearanceEvent,
   )
 
-  abstract fun onTestScriptExecution(event: TestScriptExecutionEvent)
-  abstract fun onTestResultCacheHit(event: TestResultCacheHitEvent)
+  abstract fun onTestScriptExecution(
+    event: AbstractTestScriptExecutionEvent.TestScriptExecutionEvent,
+  )
+  abstract fun onTestResultCacheHit(
+    event: AbstractTestScriptExecutionEvent.TestResultCacheHitEvent,
+  )
   abstract fun onNodeEditActionSetCacheHit(
     event: NodeEditActionSetCacheHitEvent,
   )
 
   abstract fun onTestScriptExecutionCancelled(
-    event: TestScriptExecutionCanceledEvent,
+    event: AbstractTestScriptExecutionEvent.TestScriptExecutionCanceledEvent,
   )
 
   abstract fun onSlicingTokensStart(event: TokenSlicingStartEvent)
   abstract fun onSlicingTokensEnd(event: TokenSlicingEndEvent)
   abstract fun onBestProgramUpdated(event: BestProgramUpdateEvent)
   abstract fun onReductionSkipped(event: ReductionSkippedEvent)
+  abstract fun onSanityCheck(event: SanityCheckEvent)
 }

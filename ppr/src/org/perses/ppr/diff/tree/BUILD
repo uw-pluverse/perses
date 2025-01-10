@@ -1,8 +1,8 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
 package(default_visibility = [
     "//visibility:public",
 ])
-
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 java_binary(
     name = "main",
@@ -20,6 +20,7 @@ kt_jvm_library(
     deps = [
         ":reduction_driver",
         "//src/org/perses:abstract_reduction_main",
+        "//src/org/perses:perses_listener_manager_creator",
     ],
 )
 

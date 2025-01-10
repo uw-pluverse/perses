@@ -1,92 +1,176 @@
 =====================Reduction starts.======================
 
 The initial program size is 37
+The command line options are:
+---
+help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+versionFlags:
+  groupName: "Version"
+  version: false
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFile: "t.c"
+  deps: []
+  sourceFile: "t.c"
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_perses_node_priority_with_dfs_delta_t.c"
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  fixpoint: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  enableLineSlicer: false
+  defaultDeltaDebuggerTypeForKleene: "DFS"
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  enableTrec: false
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: "FALSE"
+  nodeActionSetCaching: false
+  queryCacheRefreshThreshold: 0
+  enableLightweightRefreshing: true
+  enablePassCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "reduction_progress.txt"
+  appendToProgressDumpFile: true
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileDeltaDebugger: null
+experimentFlags:
+  groupName: "Experiment Control"
+  cacheType: "COMPACT_QUERY_CACHE"
+  onDemandReducerClasses: null
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
+The sanity check has been performed. The result is PassingSanityCheckResult
 =Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
 
 The spar-tree is the following.
 translationUnit {id=1}
 |___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=177,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-    |   |___(?) {id=178,slot_type=optional__functionDefinition_2}
-    |   |   |___(+) {id=235,slot_type=declarationSpecifiers}
-    |   |       |___Token:void {id=239,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
-    |   |___directDeclarator {id=183,slot_type=[declarator,directDeclarator]}
-    |   |   |___Token:fun {id=234,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-    |   |   |___(*) {id=185,slot_type=kleene_star__directDeclarator_7}
-    |   |       |___aux_rule__directDeclarator_15 {id=187,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-    |   |           |___Token:( {id=188,slot_type=LeftParen}
-    |   |           |___parameterList {id=192,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList]}
-    |   |           |   |___(+) {id=223,slot_type=[parameterDeclaration,declarationSpecifiers]}
-    |   |           |   |   |___Token:int {id=233,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-    |   |           |   |   |___Token:a {id=230,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
-    |   |           |   |___(*) {id=194,slot_type=kleene_star__parameterList_1}
-    |   |           |       |___aux_rule__parameterList_2 {id=195,slot_type=aux_rule__parameterList_2}
-    |   |           |       |   |___Token:, {id=210,slot_type=Comma}
-    |   |           |       |   |___(+) {id=212,slot_type=[parameterDeclaration,declarationSpecifiers]}
-    |   |           |       |       |___Token:int {id=222,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-    |   |           |       |       |___Token:b {id=219,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
-    |   |           |       |___aux_rule__parameterList_2 {id=196,slot_type=aux_rule__parameterList_2}
-    |   |           |           |___Token:, {id=197,slot_type=Comma}
-    |   |           |           |___(+) {id=199,slot_type=[parameterDeclaration,declarationSpecifiers]}
-    |   |           |               |___Token:int {id=209,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-    |   |           |               |___Token:c {id=206,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
-    |   |           |___Token:) {id=190,slot_type=RightParen}
-    |   |___compoundStatement {id=180,slot_type=compoundStatement}
-    |       |___Token:{ {id=181,slot_type=LeftBrace}
-    |       |___Token:} {id=182,slot_type=RightBrace}
+    |___functionDefinition {id=185,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+    |   |___(?) {id=186,slot_type=optional__functionDefinition_2}
+    |   |   |___(+) {id=243,slot_type=declarationSpecifiers}
+    |   |       |___Token:void {id=247,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
+    |   |___directDeclarator {id=191,slot_type=[declarator,directDeclarator]}
+    |   |   |___Token:fun {id=242,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+    |   |   |___(*) {id=193,slot_type=kleene_star__directDeclarator_7}
+    |   |       |___aux_rule__directDeclarator_15 {id=195,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+    |   |           |___Token:( {id=196,slot_type=LeftParen}
+    |   |           |___parameterList {id=200,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList]}
+    |   |           |   |___(+) {id=231,slot_type=[parameterDeclaration,declarationSpecifiers]}
+    |   |           |   |   |___Token:int {id=241,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+    |   |           |   |   |___Token:a {id=238,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+    |   |           |   |___(*) {id=202,slot_type=kleene_star__parameterList_1}
+    |   |           |       |___aux_rule__parameterList_2 {id=203,slot_type=aux_rule__parameterList_2}
+    |   |           |       |   |___Token:, {id=218,slot_type=Comma}
+    |   |           |       |   |___(+) {id=220,slot_type=[parameterDeclaration,declarationSpecifiers]}
+    |   |           |       |       |___Token:int {id=230,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+    |   |           |       |       |___Token:b {id=227,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+    |   |           |       |___aux_rule__parameterList_2 {id=204,slot_type=aux_rule__parameterList_2}
+    |   |           |           |___Token:, {id=205,slot_type=Comma}
+    |   |           |           |___(+) {id=207,slot_type=[parameterDeclaration,declarationSpecifiers]}
+    |   |           |               |___Token:int {id=217,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+    |   |           |               |___Token:c {id=214,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+    |   |           |___Token:) {id=198,slot_type=RightParen}
+    |   |___compoundStatement {id=188,slot_type=compoundStatement}
+    |       |___Token:{ {id=189,slot_type=LeftBrace}
+    |       |___Token:} {id=190,slot_type=RightBrace}
     |___functionDefinition {id=5,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
         |___(?) {id=6,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=172,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=176,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |___directDeclarator {id=163,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=171,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=165,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=167,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=168,slot_type=LeftParen}
-        |           |___Token:) {id=170,slot_type=RightParen}
+        |   |___(+) {id=180,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=184,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=171,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=179,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=173,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=175,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=176,slot_type=LeftParen}
+        |           |___Token:) {id=178,slot_type=RightParen}
         |___compoundStatement {id=8,slot_type=compoundStatement}
             |___Token:{ {id=9,slot_type=LeftBrace}
             |___(?) {id=10,slot_type=optional__compoundStatement_1}
             |   |___(+) {id=13,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___aux_rule__declaration_3 {id=128,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=129,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=162,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=130,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=133,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:var {id=158,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=135,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=136,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=137,slot_type=Assign}
-            |       |   |               |___Token:99 {id=155,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=131,slot_type=Semi}
-            |       |___expressionStatement {id=43,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |       |   |___(?) {id=44,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=61,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression]}
-            |       |   |       |___Token:fun {id=126,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=63,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___aux_rule__postfixExpression_11 {id=65,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
-            |       |   |               |___Token:( {id=66,slot_type=LeftParen}
-            |       |   |               |___(?) {id=67,slot_type=optional__postfixExpression_1}
-            |       |   |               |   |___expression {id=69,slot_type=expression}
-            |       |   |               |       |___Token:1 {id=125,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |               |       |___(*) {id=71,slot_type=kleene_star__expression_1}
-            |       |   |               |           |___aux_rule__expression_2 {id=72,slot_type=aux_rule__expression_2}
-            |       |   |               |           |   |___Token:, {id=92,slot_type=Comma}
-            |       |   |               |           |   |___Token:var {id=109,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-            |       |   |               |           |___aux_rule__expression_2 {id=73,slot_type=aux_rule__expression_2}
-            |       |   |               |               |___Token:, {id=74,slot_type=Comma}
-            |       |   |               |               |___Token:2 {id=91,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |               |___Token:) {id=68,slot_type=RightParen}
-            |       |   |___Token:; {id=45,slot_type=Semi}
-            |       |___jumpStatement {id=18,slot_type=[aux_rule__blockItemList_2,statement,jumpStatement]}
-            |           |___aux_rule__jumpStatement_4 {id=21,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-            |           |   |___Token:return {id=22,slot_type=Return}
-            |           |   |___(?) {id=23,slot_type=optional__postfixExpression_1}
-            |           |       |___Token:var {id=41,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-            |           |___Token:; {id=20,slot_type=Semi}
+            |       |___aux_rule__declaration_3 {id=135,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=136,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=170,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=137,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=140,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:var {id=166,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=142,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=143,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=144,slot_type=Assign}
+            |       |   |               |___Token:99 {id=163,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=138,slot_type=Semi}
+            |       |___expressionStatement {id=46,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=47,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=65,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:fun {id=133,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=67,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=69,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=70,slot_type=LeftParen}
+            |       |   |               |___(?) {id=71,slot_type=optional__postfixExpression_1}
+            |       |   |               |   |___expression {id=73,slot_type=expression}
+            |       |   |               |       |___Token:1 {id=132,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |               |       |___(*) {id=75,slot_type=kleene_star__expression_1}
+            |       |   |               |           |___aux_rule__expression_2 {id=76,slot_type=aux_rule__expression_2}
+            |       |   |               |           |   |___Token:, {id=97,slot_type=Comma}
+            |       |   |               |           |   |___Token:var {id=115,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |               |           |___aux_rule__expression_2 {id=77,slot_type=aux_rule__expression_2}
+            |       |   |               |               |___Token:, {id=78,slot_type=Comma}
+            |       |   |               |               |___Token:2 {id=96,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |               |___Token:) {id=72,slot_type=RightParen}
+            |       |   |___Token:; {id=48,slot_type=Semi}
+            |       |___jumpStatement {id=19,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=22,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=23,slot_type=Return}
+            |           |   |___(?) {id=24,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:var {id=43,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |           |___Token:; {id=21,slot_type=Semi}
             |___Token:} {id=11,slot_type=RightBrace}
 ------------------------------------------------------------
 
@@ -95,6 +179,7 @@ translationUnit {id=1}
 
 The current best program is the following
 
+    --file: t.c--
     void fun(int a, int b, int c) {
     }
     int main() {
@@ -108,6 +193,10 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__translationUnit_3]remove whole except first
+    --file: t.c--
+    void fun(int a, int b, int c) {
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(int a, int b, int c) {
     }
 ------------------------------------------------------------
@@ -116,6 +205,10 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@1
+    --file: t.c--
+    void fun(int a, int b, int c) {
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(int a, int b, int c) {
     }
 ------------------------------------------------------------
@@ -124,6 +217,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@1
+    --file: t.c--
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int var = 99;
       fun(1, var, 2);
@@ -142,6 +242,7 @@ Failed to reduce node 2
 
 The current best program is the following
 
+    --file: t.c--
     void fun(int a, int b, int c) {
     }
     int main() {
@@ -155,6 +256,10 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    void fun(int a, int b, int c) {
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(int a, int b, int c) {
     }
 ------------------------------------------------------------
@@ -163,6 +268,11 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    void fun(int a, int b, int c) {
+    }
+                  ;
+    --file: <formatted tokenized program in its original format>--
     void fun(int a, int b, int c) {
     }
                   ;
@@ -172,6 +282,11 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    void fun(int a, int b, int c) {
+    }
+                    ;
+    --file: <formatted tokenized program in its original format>--
     void fun(int a, int b, int c) {
     }
                     ;
@@ -181,6 +296,11 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    void fun(int a, int b, int c) {
+    }
+                ;
+    --file: <formatted tokenized program in its original format>--
     void fun(int a, int b, int c) {
     }
                 ;
@@ -190,6 +310,11 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    void fun(int a, int b, int c) {
+    }
+      int var = 99;
+    --file: <formatted tokenized program in its original format>--
     void fun(int a, int b, int c) {
     }
       int var = 99;
@@ -206,6 +331,7 @@ Failed to reduce node 5
 
 The current best program is the following
 
+    --file: t.c--
     void fun(int a, int b, int c) {
     }
     int main() {
@@ -226,6 +352,7 @@ Failed to reduce node 8
 
 The current best program is the following
 
+    --file: t.c--
     void fun(int a, int b, int c) {
     }
     int main() {
@@ -239,6 +366,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+    --file: t.c--
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(int a, int b, int c) {
     }
     int main() {
@@ -256,6 +389,7 @@ Failed to reduce node 10
 
 The current best program is the following
 
+    --file: t.c--
     void fun(int a, int b, int c) {
     }
     int main() {
@@ -269,6 +403,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
+    --file: t.c--
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(int a, int b, int c) {
     }
     int main() {
@@ -279,6 +419,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove whole except first
+    --file: t.c--
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(int a, int b, int c) {
     }
     int main() {
@@ -290,6 +437,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: t.c--
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(int a, int b, int c) {
     }
     int main() {
@@ -302,6 +457,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
+    --file: t.c--
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(int a, int b, int c) {
     }
     int main() {
@@ -313,6 +475,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: t.c--
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(int a, int b, int c) {
     }
     int main() {
@@ -325,6 +495,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: t.c--
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      fun(1, var, 2);
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(int a, int b, int c) {
     }
     int main() {
@@ -340,10 +518,11 @@ Failed to reduce node 13
 ------------------------------------------------------------
 
 
-=================Reducing node 177, size=37=================
+=================Reducing node 185, size=37=================
 
 The current best program is the following
 
+    --file: t.c--
     void fun(int a, int b, int c) {
     }
     int main() {
@@ -357,85 +536,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: t.c--
     int main() {
       int var = 99;
       fun(1, var, 2);
       return var;
     }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 177
-------------------------------------------------------------
-
-
-=================Reducing node 183, size=37=================
-
-The current best program is the following
-
-    void fun(int a, int b, int c) {
-    }
-    int main() {
-      int var = 99;
-      fun(1, var, 2);
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    void fun                      {
-    }
-    int main() {
-      int var = 99;
-      fun(1, var, 2);
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    void         a                {
-    }
-    int main() {
-      int var = 99;
-      fun(1, var, 2);
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 183
-------------------------------------------------------------
-
-
-=================Reducing node 185, size=37=================
-
-The current best program is the following
-
-    void fun(int a, int b, int c) {
-    }
-    int main() {
-      int var = 99;
-      fun(1, var, 2);
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
-    void fun                      {
-    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int var = 99;
       fun(1, var, 2);
@@ -450,10 +557,11 @@ Failed to reduce node 185
 ------------------------------------------------------------
 
 
-=================Reducing node 187, size=37=================
+=================Reducing node 191, size=37=================
 
 The current best program is the following
 
+    --file: t.c--
     void fun(int a, int b, int c) {
     }
     int main() {
@@ -466,7 +574,81 @@ The current best program is the following
 
 ============Testing the following program: fail=============
 
-// edit action set type: [regular_node]can be epsilon
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    void fun                      {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+    void fun                      {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    void         a                {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+    void         a                {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 191
+------------------------------------------------------------
+
+
+=================Reducing node 193, size=37=================
+
+The current best program is the following
+
+    --file: t.c--
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
+    --file: t.c--
+    void fun                      {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun                      {
     }
     int main() {
@@ -479,14 +661,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 187
+Failed to reduce node 193
 ------------------------------------------------------------
 
 
-=================Reducing node 43, size=37==================
+=================Reducing node 195, size=37=================
 
 The current best program is the following
 
+    --file: t.c--
     void fun(int a, int b, int c) {
     }
     int main() {
@@ -500,6 +683,57 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    void fun                      {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+    void fun                      {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 195
+------------------------------------------------------------
+
+
+=================Reducing node 46, size=37==================
+
+The current best program is the following
+
+    --file: t.c--
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(int a, int b, int c) {
     }
     int main() {
@@ -512,6 +746,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    void fun(int a, int b, int c) {
+    }
+    int main() {
+      int var = 99;
+                    ;
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(int a, int b, int c) {
     }
     int main() {
@@ -524,14 +767,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 43
+Failed to reduce node 46
 ------------------------------------------------------------
 
 
-=================Reducing node 192, size=37=================
+=================Reducing node 200, size=37=================
 
 The current best program is the following
 
+    --file: t.c--
     void fun(int a, int b, int c) {
     }
     int main() {
@@ -545,6 +789,15 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(                   ) {
     }
     int main() {
@@ -559,6 +812,15 @@ The current best program is the following
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    void fun(int                ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(int                ) {
     }
     int main() {
@@ -573,6 +835,15 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    void fun(    a              ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(    a              ) {
     }
     int main() {
@@ -587,6 +858,15 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    void fun(       int         ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(       int         ) {
     }
     int main() {
@@ -601,6 +881,15 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    void fun(           b       ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(           b       ) {
     }
     int main() {
@@ -615,6 +904,15 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    void fun(              int  ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(              int  ) {
     }
     int main() {
@@ -629,6 +927,15 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    void fun(                  c) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(                  c) {
     }
     int main() {
@@ -643,6 +950,15 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    void fun(int a              ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(int a              ) {
     }
     int main() {
@@ -657,6 +973,15 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    void fun(       int b       ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(       int b       ) {
     }
     int main() {
@@ -671,6 +996,15 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    void fun(              int c) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(              int c) {
     }
     int main() {
@@ -695,14 +1029,15 @@ It took less than 1 second to cancel the task.
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 192 from 37 to 29
+Succeeded to reduce node 200 from 37 to 29
 ------------------------------------------------------------
 
 
-=================Reducing node 44, size=29==================
+=================Reducing node 47, size=29==================
 
 The current best program is the following
 
+    --file: t.c--
     void fun(                   ) {
     }
     int main() {
@@ -716,6 +1051,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+                    ;
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(                   ) {
     }
     int main() {
@@ -728,14 +1072,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 44
+Failed to reduce node 47
 ------------------------------------------------------------
 
 
-=================Reducing node 61, size=29==================
+=================Reducing node 65, size=29==================
 
 The current best program is the following
 
+    --file: t.c--
     void fun(                   ) {
     }
     int main() {
@@ -749,6 +1094,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+                    ;
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(                   ) {
     }
     int main() {
@@ -762,6 +1116,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun           ;
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(                   ) {
     }
     int main() {
@@ -775,6 +1138,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+          1         ;
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(                   ) {
     }
     int main() {
@@ -788,6 +1160,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+          1, var, 2 ;
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(                   ) {
     }
     int main() {
@@ -800,14 +1181,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 61
+Failed to reduce node 65
 ------------------------------------------------------------
 
 
-=================Reducing node 63, size=29==================
+=================Reducing node 67, size=29==================
 
 The current best program is the following
 
+    --file: t.c--
     void fun(                   ) {
     }
     int main() {
@@ -821,6 +1203,7 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__postfixExpression_2]dd@1
+    --file: t.c--
     void fun(                   ) {
     }
     int main() {
@@ -828,115 +1211,12 @@ The current best program is the following
       fun           ;
       return var;
     }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 63
-------------------------------------------------------------
-
-
-=================Reducing node 65, size=29==================
-
-The current best program is the following
-
-    void fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(1, var, 2);
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
+    --file: <formatted tokenized program in its original format>--
     void fun(                   ) {
     }
     int main() {
       int var = 99;
       fun           ;
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 65
-------------------------------------------------------------
-
-
-=================Reducing node 128, size=29=================
-
-The current best program is the following
-
-    void fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(1, var, 2);
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    void fun(                   ) {
-    }
-    int main() {
-      fun(1, var, 2);
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    void fun(                   ) {
-    }
-    int main() {
-                  ;
-      fun(1, var, 2);
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 128
-------------------------------------------------------------
-
-
-=================Reducing node 67, size=29==================
-
-The current best program is the following
-
-    void fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(1, var, 2);
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
-    void fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(         );
       return var;
     }
 ------------------------------------------------------------
@@ -952,6 +1232,7 @@ Failed to reduce node 67
 
 The current best program is the following
 
+    --file: t.c--
     void fun(                   ) {
     }
     int main() {
@@ -965,6 +1246,164 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun           ;
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun           ;
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 69
+------------------------------------------------------------
+
+
+=================Reducing node 135, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      fun(1, var, 2);
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+    void fun(                   ) {
+    }
+    int main() {
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+                  ;
+      fun(1, var, 2);
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+    void fun(                   ) {
+    }
+    int main() {
+                  ;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 135
+------------------------------------------------------------
+
+
+=================Reducing node 71, size=29==================
+
+The current best program is the following
+
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(         );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(         );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 71
+------------------------------------------------------------
+
+
+=================Reducing node 73, size=29==================
+
+The current best program is the following
+
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(         );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(                   ) {
     }
     int main() {
@@ -978,6 +1417,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(1        );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(                   ) {
     }
     int main() {
@@ -991,6 +1439,15 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(                   ) {
     }
     int main() {
@@ -1005,6 +1462,15 @@ The current best program is the following
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(        2);
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(                   ) {
     }
     int main() {
@@ -1029,14 +1495,15 @@ It took less than 1 second to cancel the task.
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 69 from 29 to 25
+Succeeded to reduce node 73 from 29 to 25
 ------------------------------------------------------------
 
 
-=================Reducing node 163, size=25=================
+=================Reducing node 171, size=25=================
 
 The current best program is the following
 
+    --file: t.c--
     void fun(                   ) {
     }
     int main() {
@@ -1050,6 +1517,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main   {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(                   ) {
     }
     int main   {
@@ -1062,14 +1538,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 163
+Failed to reduce node 171
 ------------------------------------------------------------
 
 
-=================Reducing node 130, size=25=================
+=================Reducing node 137, size=25=================
 
 The current best program is the following
 
+    --file: t.c--
     void fun(                   ) {
     }
     int main() {
@@ -1083,6 +1560,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__declaration_2]dd@1
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int         ;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(                   ) {
     }
     int main() {
@@ -1095,14 +1581,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 130
+Failed to reduce node 137
 ------------------------------------------------------------
 
 
-=================Reducing node 133, size=25=================
+=================Reducing node 140, size=25=================
 
 The current best program is the following
 
+    --file: t.c--
     void fun(                   ) {
     }
     int main() {
@@ -1116,6 +1603,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int         ;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(                   ) {
     }
     int main() {
@@ -1129,6 +1625,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var     ;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(                   ) {
     }
     int main() {
@@ -1141,14 +1646,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 133
+Failed to reduce node 140
 ------------------------------------------------------------
 
 
-=================Reducing node 18, size=25==================
+=================Reducing node 19, size=25==================
 
 The current best program is the following
 
+    --file: t.c--
     void fun(                   ) {
     }
     int main() {
@@ -1162,6 +1668,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(                   ) {
     }
     int main() {
@@ -1174,6 +1688,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+                ;
+    }
+    --file: <formatted tokenized program in its original format>--
     void fun(                   ) {
     }
     int main() {
@@ -1186,232 +1709,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 18
-------------------------------------------------------------
-
-
-=================Reducing node 180, size=25=================
-
-The current best program is the following
-
-    void fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 180
-------------------------------------------------------------
-
-
-=================Reducing node 165, size=25=================
-
-The current best program is the following
-
-    void fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
-    void fun(                   ) {
-    }
-    int main   {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 165
-------------------------------------------------------------
-
-
-=================Reducing node 167, size=25=================
-
-The current best program is the following
-
-    void fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    void fun(                   ) {
-    }
-    int main   {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 167
-------------------------------------------------------------
-
-
-=================Reducing node 135, size=25=================
-
-The current best program is the following
-
-    void fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
-    void fun(                   ) {
-    }
-    int main() {
-      int var     ;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 135
-------------------------------------------------------------
-
-
-=================Reducing node 136, size=25=================
-
-The current best program is the following
-
-    void fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    void fun(                   ) {
-    }
-    int main() {
-      int var     ;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 136
-------------------------------------------------------------
-
-
-=================Reducing node 21, size=25==================
-
-The current best program is the following
-
-    void fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    void fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return    ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 21
-------------------------------------------------------------
-
-
-=================Reducing node 234, size=25=================
-
-The current best program is the following
-
-    void fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 234
-------------------------------------------------------------
-
-
-=================Reducing node 190, size=25=================
-
-The current best program is the following
-
-    void fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 190
+Failed to reduce node 19
 ------------------------------------------------------------
 
 
@@ -1419,6 +1717,7 @@ Failed to reduce node 190
 
 The current best program is the following
 
+    --file: t.c--
     void fun(                   ) {
     }
     int main() {
@@ -1435,10 +1734,226 @@ Failed to reduce node 188
 ------------------------------------------------------------
 
 
-=================Reducing node 182, size=25=================
+=================Reducing node 173, size=25=================
 
 The current best program is the following
 
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main   {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+    void fun(                   ) {
+    }
+    int main   {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 173
+------------------------------------------------------------
+
+
+=================Reducing node 175, size=25=================
+
+The current best program is the following
+
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main   {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+    void fun(                   ) {
+    }
+    int main   {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 175
+------------------------------------------------------------
+
+
+=================Reducing node 142, size=25=================
+
+The current best program is the following
+
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var     ;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+    void fun(                   ) {
+    }
+    int main() {
+      int var     ;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 142
+------------------------------------------------------------
+
+
+=================Reducing node 143, size=25=================
+
+The current best program is the following
+
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var     ;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+    void fun(                   ) {
+    }
+    int main() {
+      int var     ;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 143
+------------------------------------------------------------
+
+
+=================Reducing node 22, size=25==================
+
+The current best program is the following
+
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return    ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 22
+------------------------------------------------------------
+
+
+=================Reducing node 242, size=25=================
+
+The current best program is the following
+
+    --file: t.c--
     void fun(                   ) {
     }
     int main() {
@@ -1451,14 +1966,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 182
+Failed to reduce node 242
 ------------------------------------------------------------
 
 
-=================Reducing node 181, size=25=================
+=================Reducing node 198, size=25=================
 
 The current best program is the following
 
+    --file: t.c--
     void fun(                   ) {
     }
     int main() {
@@ -1471,14 +1987,78 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 181
+Failed to reduce node 198
 ------------------------------------------------------------
 
 
-=================Reducing node 178, size=25=================
+=================Reducing node 196, size=25=================
 
 The current best program is the following
 
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 196
+------------------------------------------------------------
+
+
+=================Reducing node 190, size=25=================
+
+The current best program is the following
+
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 190
+------------------------------------------------------------
+
+
+=================Reducing node 189, size=25=================
+
+The current best program is the following
+
+    --file: t.c--
+    void fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 189
+------------------------------------------------------------
+
+
+=================Reducing node 186, size=25=================
+
+The current best program is the following
+
+    --file: t.c--
     void fun(                   ) {
     }
     int main() {
@@ -1492,7 +2072,16 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
     int main() {
       int var = 99;
@@ -1516,15 +2105,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 178 from 25 to 24
+Succeeded to reduce node 186 from 25 to 24
 ------------------------------------------------------------
 
 
-=================Reducing node 171, size=24=================
+=================Reducing node 179, size=24=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
     int main() {
       int var = 99;
@@ -1536,7 +2126,154 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 171
+Failed to reduce node 179
+------------------------------------------------------------
+
+
+=================Reducing node 178, size=24=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 178
+------------------------------------------------------------
+
+
+=================Reducing node 176, size=24=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 176
+------------------------------------------------------------
+
+
+=================Reducing node 166, size=24=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 166
+------------------------------------------------------------
+
+
+=================Reducing node 163, size=24=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 163
+------------------------------------------------------------
+
+
+=================Reducing node 144, size=24=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 144
+------------------------------------------------------------
+
+
+=================Reducing node 138, size=24=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 138
+------------------------------------------------------------
+
+
+=================Reducing node 136, size=24=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 136
 ------------------------------------------------------------
 
 
@@ -1544,7 +2281,8 @@ Failed to reduce node 171
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
     int main() {
       int var = 99;
@@ -1560,11 +2298,12 @@ Failed to reduce node 170
 ------------------------------------------------------------
 
 
-=================Reducing node 168, size=24=================
+=================Reducing node 133, size=24=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
     int main() {
       int var = 99;
@@ -1576,15 +2315,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 168
+Failed to reduce node 133
 ------------------------------------------------------------
 
 
-=================Reducing node 158, size=24=================
+=================Reducing node 115, size=24=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
     int main() {
       int var = 99;
@@ -1596,15 +2336,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 158
+Failed to reduce node 115
 ------------------------------------------------------------
 
 
-=================Reducing node 155, size=24=================
+=================Reducing node 72, size=24==================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
     int main() {
       int var = 99;
@@ -1616,15 +2357,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 155
+Failed to reduce node 72
 ------------------------------------------------------------
 
 
-=================Reducing node 137, size=24=================
+=================Reducing node 70, size=24==================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
     int main() {
       int var = 99;
@@ -1636,15 +2378,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 137
+Failed to reduce node 70
 ------------------------------------------------------------
 
 
-=================Reducing node 131, size=24=================
+=================Reducing node 48, size=24==================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
     int main() {
       int var = 99;
@@ -1656,155 +2399,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 131
+Failed to reduce node 48
 ------------------------------------------------------------
 
 
-=================Reducing node 129, size=24=================
+=================Reducing node 24, size=24==================
 
 The current best program is the following
 
-    fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 129
-------------------------------------------------------------
-
-
-=================Reducing node 162, size=24=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 162
-------------------------------------------------------------
-
-
-=================Reducing node 126, size=24=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 126
-------------------------------------------------------------
-
-
-=================Reducing node 109, size=24=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 109
-------------------------------------------------------------
-
-
-=================Reducing node 68, size=24==================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 68
-------------------------------------------------------------
-
-
-=================Reducing node 66, size=24==================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 66
-------------------------------------------------------------
-
-
-=================Reducing node 45, size=24==================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 45
-------------------------------------------------------------
-
-
-=================Reducing node 23, size=24==================
-
-The current best program is the following
-
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
     int main() {
       int var = 99;
@@ -1817,7 +2421,16 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
     int main() {
       int var = 99;
@@ -1829,15 +2442,58 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
+Failed to reduce node 24
+------------------------------------------------------------
+
+
+=================Reducing node 43, size=24==================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 43
+------------------------------------------------------------
+
+
+=================Reducing node 23, size=24==================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+    int main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
 Failed to reduce node 23
 ------------------------------------------------------------
 
 
-=================Reducing node 41, size=24==================
+=================Reducing node 21, size=24==================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
     int main() {
       int var = 99;
@@ -1849,47 +2505,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 41
-------------------------------------------------------------
-
-
-=================Reducing node 22, size=24==================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 22
-------------------------------------------------------------
-
-
-=================Reducing node 20, size=24==================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-    int main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 20
+Failed to reduce node 21
 ------------------------------------------------------------
 
 
@@ -1897,7 +2513,8 @@ Failed to reduce node 20
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
     int main() {
       int var = 99;
@@ -1917,7 +2534,8 @@ Failed to reduce node 11
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
     int main() {
       int var = 99;
@@ -1937,7 +2555,8 @@ Failed to reduce node 9
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
     int main() {
       int var = 99;
@@ -1950,7 +2569,16 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -1981,64 +2609,65 @@ Succeeded to reduce node 6 from 24 to 23
 =Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
 
 The spar-tree is the following.
-translationUnit {id=240}
-|___(+) {id=241,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=347,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-    |   |___directDeclarator {id=352,slot_type=[declarator,directDeclarator]}
-    |   |   |___Token:fun {id=360,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-    |   |   |___(*) {id=354,slot_type=kleene_star__directDeclarator_7}
-    |   |       |___aux_rule__directDeclarator_15 {id=356,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-    |   |           |___Token:( {id=357,slot_type=LeftParen}
-    |   |           |___Token:) {id=359,slot_type=RightParen}
-    |   |___compoundStatement {id=349,slot_type=compoundStatement}
-    |       |___Token:{ {id=350,slot_type=LeftBrace}
-    |       |___Token:} {id=351,slot_type=RightBrace}
-    |___functionDefinition {id=244,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___directDeclarator {id=338,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=346,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=340,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=342,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=343,slot_type=LeftParen}
-        |           |___Token:) {id=345,slot_type=RightParen}
-        |___compoundStatement {id=246,slot_type=compoundStatement}
-            |___Token:{ {id=247,slot_type=LeftBrace}
-            |___(?) {id=248,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=251,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___aux_rule__declaration_3 {id=303,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=304,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=337,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=305,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=308,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:var {id=333,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=310,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=311,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=312,slot_type=Assign}
-            |       |   |               |___Token:99 {id=330,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=306,slot_type=Semi}
-            |       |___aux_rule__declaration_3 {id=281,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=282,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:fun {id=301,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
-            |       |   |___(?) {id=283,slot_type=optional__declaration_2}
-            |       |   |   |___aux_rule__directDeclarator_16 {id=290,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator,aux_rule__directDeclarator_9,aux_rule__directDeclarator_16]}
-            |       |   |       |___Token:( {id=291,slot_type=LeftParen}
-            |       |   |       |___Token:var {id=296,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___Token:) {id=293,slot_type=RightParen}
-            |       |   |___Token:; {id=284,slot_type=Semi}
-            |       |___jumpStatement {id=256,slot_type=[aux_rule__blockItemList_2,statement,jumpStatement]}
-            |           |___aux_rule__jumpStatement_4 {id=259,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-            |           |   |___Token:return {id=260,slot_type=Return}
-            |           |   |___(?) {id=261,slot_type=optional__postfixExpression_1}
-            |           |       |___Token:var {id=279,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-            |           |___Token:; {id=258,slot_type=Semi}
-            |___Token:} {id=249,slot_type=RightBrace}
+translationUnit {id=248}
+|___(+) {id=249,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=358,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+    |   |___directDeclarator {id=363,slot_type=[declarator,directDeclarator]}
+    |   |   |___Token:fun {id=371,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+    |   |   |___(*) {id=365,slot_type=kleene_star__directDeclarator_7}
+    |   |       |___aux_rule__directDeclarator_15 {id=367,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+    |   |           |___Token:( {id=368,slot_type=LeftParen}
+    |   |           |___Token:) {id=370,slot_type=RightParen}
+    |   |___compoundStatement {id=360,slot_type=compoundStatement}
+    |       |___Token:{ {id=361,slot_type=LeftBrace}
+    |       |___Token:} {id=362,slot_type=RightBrace}
+    |___functionDefinition {id=252,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___directDeclarator {id=349,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=357,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=351,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=353,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=354,slot_type=LeftParen}
+        |           |___Token:) {id=356,slot_type=RightParen}
+        |___compoundStatement {id=254,slot_type=compoundStatement}
+            |___Token:{ {id=255,slot_type=LeftBrace}
+            |___(?) {id=256,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=259,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___aux_rule__declaration_3 {id=313,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=314,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=348,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=315,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=318,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:var {id=344,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=320,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=321,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=322,slot_type=Assign}
+            |       |   |               |___Token:99 {id=341,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=316,slot_type=Semi}
+            |       |___aux_rule__declaration_3 {id=291,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=292,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:fun {id=311,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+            |       |   |___(?) {id=293,slot_type=optional__declaration_2}
+            |       |   |   |___aux_rule__directDeclarator_16 {id=300,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator,aux_rule__directDeclarator_9,aux_rule__directDeclarator_16]}
+            |       |   |       |___Token:( {id=301,slot_type=LeftParen}
+            |       |   |       |___Token:var {id=306,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___Token:) {id=303,slot_type=RightParen}
+            |       |   |___Token:; {id=294,slot_type=Semi}
+            |       |___jumpStatement {id=265,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=268,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=269,slot_type=Return}
+            |           |   |___(?) {id=270,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:var {id=289,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |           |___Token:; {id=267,slot_type=Semi}
+            |___Token:} {id=257,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
-=================Reducing node 241, size=23=================
+=================Reducing node 249, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -2051,7 +2680,11 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__translationUnit_3]remove whole except first
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
 ------------------------------------------------------------
 
@@ -2059,7 +2692,11 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@1
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
 ------------------------------------------------------------
 
@@ -2067,7 +2704,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@1
-    main() {
+    --file: t.c--
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+        main() {
       int var = 99;
       fun(   var   );
       return var;
@@ -2077,15 +2721,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 241
+Failed to reduce node 249
 ------------------------------------------------------------
 
 
-=================Reducing node 244, size=23=================
+=================Reducing node 252, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -2098,7 +2743,11 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
 ------------------------------------------------------------
 
@@ -2106,7 +2755,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+                  ;
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
                   ;
 ------------------------------------------------------------
@@ -2115,7 +2769,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+                    ;
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
                     ;
 ------------------------------------------------------------
@@ -2124,7 +2783,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+                ;
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
                 ;
 ------------------------------------------------------------
@@ -2133,7 +2797,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+      int var = 99;
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
       int var = 99;
 ------------------------------------------------------------
@@ -2142,7 +2811,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+      fun(   var   );
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
       fun(   var   );
 ------------------------------------------------------------
@@ -2150,15 +2824,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 244
+Failed to reduce node 252
 ------------------------------------------------------------
 
 
-=================Reducing node 246, size=23=================
+=================Reducing node 254, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -2170,15 +2845,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 246
+Failed to reduce node 254
 ------------------------------------------------------------
 
 
-=================Reducing node 248, size=23=================
+=================Reducing node 256, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -2191,7 +2867,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
         main() {
     }
@@ -2200,15 +2882,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 248
+Failed to reduce node 256
 ------------------------------------------------------------
 
 
-=================Reducing node 251, size=23=================
+=================Reducing node 259, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -2221,7 +2904,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
         main() {
     }
@@ -2231,7 +2920,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove whole except first
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -2242,7 +2938,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -2254,7 +2958,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
         main() {
       return var;
@@ -2265,7 +2976,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -2277,7 +2996,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
         main() {
       fun(   var   );
@@ -2288,15 +3015,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 251
+Failed to reduce node 259
 ------------------------------------------------------------
 
 
-=================Reducing node 347, size=23=================
+=================Reducing node 358, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -2309,7 +3037,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
-    main() {
+    --file: t.c--
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+        main() {
       int var = 99;
       fun(   var   );
       return var;
@@ -2319,15 +3054,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 347
+Failed to reduce node 358
 ------------------------------------------------------------
 
 
-=================Reducing node 303, size=23=================
+=================Reducing node 313, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -2340,7 +3076,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
         main() {
       fun(   var   );
@@ -2352,7 +3096,16 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+                  ;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
         main() {
                   ;
@@ -2364,15 +3117,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 303
+Failed to reduce node 313
 ------------------------------------------------------------
 
 
-=================Reducing node 281, size=23=================
+=================Reducing node 291, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -2385,7 +3139,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -2397,7 +3159,16 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+                    ;
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -2409,15 +3180,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 281
+Failed to reduce node 291
 ------------------------------------------------------------
 
 
-=================Reducing node 352, size=23=================
+=================Reducing node 363, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -2430,7 +3202,16 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    fun                      {
+    --file: t.c--
+         fun                      {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun                      {
     }
         main() {
       int var = 99;
@@ -2442,309 +3223,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 352
-------------------------------------------------------------
-
-
-=================Reducing node 338, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    fun(                   ) {
-    }
-        main   {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 338
-------------------------------------------------------------
-
-
-=================Reducing node 305, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
-    fun(                   ) {
-    }
-        main() {
-      int         ;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 305
-------------------------------------------------------------
-
-
-=================Reducing node 308, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    fun(                   ) {
-    }
-        main() {
-      int         ;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    fun(                   ) {
-    }
-        main() {
-      int var     ;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 308
-------------------------------------------------------------
-
-
-=================Reducing node 283, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun           ;
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 283
-------------------------------------------------------------
-
-
-=================Reducing node 290, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun           ;
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun    var    ;
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 290
-------------------------------------------------------------
-
-
-=================Reducing node 256, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-                ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 256
-------------------------------------------------------------
-
-
-=================Reducing node 354, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
-    fun                      {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 354
-------------------------------------------------------------
-
-
-=================Reducing node 356, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    fun                      {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 356
+Failed to reduce node 363
 ------------------------------------------------------------
 
 
@@ -2752,9 +3231,32 @@ Failed to reduce node 356
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+         fun(                   ) {
+    }
+        main   {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
+    }
+        main   {
       int var = 99;
       fun(   var   );
       return var;
@@ -2768,11 +3270,291 @@ Failed to reduce node 349
 ------------------------------------------------------------
 
 
-=================Reducing node 340, size=23=================
+=================Reducing node 315, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__declaration_2]dd@1
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int         ;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
+    }
+        main() {
+      int         ;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 315
+------------------------------------------------------------
+
+
+=================Reducing node 318, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int         ;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
+    }
+        main() {
+      int         ;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var     ;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
+    }
+        main() {
+      int var     ;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 318
+------------------------------------------------------------
+
+
+=================Reducing node 293, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__declaration_2]dd@1
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun           ;
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun           ;
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 293
+------------------------------------------------------------
+
+
+=================Reducing node 300, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun           ;
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun           ;
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun    var    ;
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun    var    ;
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 300
+------------------------------------------------------------
+
+
+=================Reducing node 265, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+                ;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+                ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 265
+------------------------------------------------------------
+
+
+=================Reducing node 365, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -2785,9 +3567,18 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
-    fun(                   ) {
+    --file: t.c--
+         fun                      {
     }
-        main   {
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun                      {
+    }
+        main() {
       int var = 99;
       fun(   var   );
       return var;
@@ -2797,15 +3588,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 340
+Failed to reduce node 365
 ------------------------------------------------------------
 
 
-=================Reducing node 342, size=23=================
+=================Reducing node 367, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -2818,9 +3610,18 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
-    fun(                   ) {
+    --file: t.c--
+         fun                      {
     }
-        main   {
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun                      {
+    }
+        main() {
       int var = 99;
       fun(   var   );
       return var;
@@ -2830,106 +3631,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 342
-------------------------------------------------------------
-
-
-=================Reducing node 310, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
-    fun(                   ) {
-    }
-        main() {
-      int var     ;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 310
-------------------------------------------------------------
-
-
-=================Reducing node 311, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    fun(                   ) {
-    }
-        main() {
-      int var     ;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 311
-------------------------------------------------------------
-
-
-=================Reducing node 259, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return    ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 259
+Failed to reduce node 367
 ------------------------------------------------------------
 
 
@@ -2937,7 +3639,8 @@ Failed to reduce node 259
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -2953,11 +3656,227 @@ Failed to reduce node 360
 ------------------------------------------------------------
 
 
-=================Reducing node 359, size=23=================
+=================Reducing node 351, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
+    --file: t.c--
+         fun(                   ) {
+    }
+        main   {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
+    }
+        main   {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 351
+------------------------------------------------------------
+
+
+=================Reducing node 353, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+         fun(                   ) {
+    }
+        main   {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
+    }
+        main   {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 353
+------------------------------------------------------------
+
+
+=================Reducing node 320, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var     ;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
+    }
+        main() {
+      int var     ;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 320
+------------------------------------------------------------
+
+
+=================Reducing node 321, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var     ;
+      fun(   var   );
+      return var;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
+    }
+        main() {
+      int var     ;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 321
+------------------------------------------------------------
+
+
+=================Reducing node 268, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return    ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 268
+------------------------------------------------------------
+
+
+=================Reducing node 371, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -2969,7 +3888,91 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 359
+Failed to reduce node 371
+------------------------------------------------------------
+
+
+=================Reducing node 370, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 370
+------------------------------------------------------------
+
+
+=================Reducing node 368, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 368
+------------------------------------------------------------
+
+
+=================Reducing node 362, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 362
+------------------------------------------------------------
+
+
+=================Reducing node 361, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 361
 ------------------------------------------------------------
 
 
@@ -2977,7 +3980,8 @@ Failed to reduce node 359
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -2993,11 +3997,12 @@ Failed to reduce node 357
 ------------------------------------------------------------
 
 
-=================Reducing node 351, size=23=================
+=================Reducing node 356, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -3009,15 +4014,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 351
+Failed to reduce node 356
 ------------------------------------------------------------
 
 
-=================Reducing node 350, size=23=================
+=================Reducing node 354, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -3029,15 +4035,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 350
+Failed to reduce node 354
 ------------------------------------------------------------
 
 
-=================Reducing node 346, size=23=================
+=================Reducing node 344, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -3049,15 +4056,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 346
+Failed to reduce node 344
 ------------------------------------------------------------
 
 
-=================Reducing node 345, size=23=================
+=================Reducing node 341, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -3069,15 +4077,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 345
+Failed to reduce node 341
 ------------------------------------------------------------
 
 
-=================Reducing node 343, size=23=================
+=================Reducing node 322, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -3089,15 +4098,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 343
+Failed to reduce node 322
 ------------------------------------------------------------
 
 
-=================Reducing node 333, size=23=================
+=================Reducing node 316, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -3109,15 +4119,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 333
+Failed to reduce node 316
 ------------------------------------------------------------
 
 
-=================Reducing node 330, size=23=================
+=================Reducing node 314, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -3129,15 +4140,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 330
+Failed to reduce node 314
 ------------------------------------------------------------
 
 
-=================Reducing node 312, size=23=================
+=================Reducing node 348, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -3149,7 +4161,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 312
+Failed to reduce node 348
 ------------------------------------------------------------
 
 
@@ -3157,7 +4169,8 @@ Failed to reduce node 312
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -3173,11 +4186,12 @@ Failed to reduce node 306
 ------------------------------------------------------------
 
 
-=================Reducing node 304, size=23=================
+=================Reducing node 303, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -3189,127 +4203,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 304
-------------------------------------------------------------
-
-
-=================Reducing node 337, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 337
-------------------------------------------------------------
-
-
-=================Reducing node 296, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 296
-------------------------------------------------------------
-
-
-=================Reducing node 293, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 293
-------------------------------------------------------------
-
-
-=================Reducing node 291, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 291
-------------------------------------------------------------
-
-
-=================Reducing node 284, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 284
-------------------------------------------------------------
-
-
-=================Reducing node 282, size=23=================
-
-The current best program is the following
-
-    fun(                   ) {
-    }
-        main() {
-      int var = 99;
-      fun(   var   );
-      return var;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 282
+Failed to reduce node 303
 ------------------------------------------------------------
 
 
@@ -3317,7 +4211,8 @@ Failed to reduce node 282
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -3333,11 +4228,75 @@ Failed to reduce node 301
 ------------------------------------------------------------
 
 
-=================Reducing node 261, size=23=================
+=================Reducing node 294, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 294
+------------------------------------------------------------
+
+
+=================Reducing node 292, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 292
+------------------------------------------------------------
+
+
+=================Reducing node 311, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return var;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 311
+------------------------------------------------------------
+
+
+=================Reducing node 270, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -3350,7 +4309,16 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
+    }
+        main() {
+      int var = 99;
+      fun(   var   );
+      return    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -3362,15 +4330,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 261
+Failed to reduce node 270
 ------------------------------------------------------------
 
 
-=================Reducing node 279, size=23=================
+=================Reducing node 289, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -3382,15 +4351,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 279
+Failed to reduce node 289
 ------------------------------------------------------------
 
 
-=================Reducing node 260, size=23=================
+=================Reducing node 269, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -3402,15 +4372,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 260
+Failed to reduce node 269
 ------------------------------------------------------------
 
 
-=================Reducing node 258, size=23=================
+=================Reducing node 267, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -3422,15 +4393,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 258
+Failed to reduce node 267
 ------------------------------------------------------------
 
 
-=================Reducing node 249, size=23=================
+=================Reducing node 257, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -3442,15 +4414,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 249
+Failed to reduce node 257
 ------------------------------------------------------------
 
 
-=================Reducing node 247, size=23=================
+=================Reducing node 255, size=23=================
 
 The current best program is the following
 
-    fun(                   ) {
+    --file: t.c--
+         fun(                   ) {
     }
         main() {
       int var = 99;
@@ -3462,7 +4435,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 247
+Failed to reduce node 255
 ------------------------------------------------------------
 
 

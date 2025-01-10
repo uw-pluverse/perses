@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,6 +17,7 @@
 package org.perses.antlr.atn.simulator.ast
 
 import org.perses.antlr.atn.AbstractDecisionMaker
+import org.perses.antlr.atn.getAllowedAsciiChars
 import org.perses.antlr.atn.nfa.PersesTransitionAst
 import org.perses.antlr.atn.simulator.transition.TransitionSimulatorRegistry
 import org.perses.antlr.atn.tdtree.AbstractTDTreeNode
@@ -38,7 +39,7 @@ class TransitionASTSimulator(
     parent: AbstractTDTreeNode,
   ) {
     val char = simulator.simulate(decisionMaker)!!
-    val node = tree.createCharNode(char)
+    val node = tree.createCharNode(char, ast.atnTransition.getAllowedAsciiChars())
     parent.addChild(node)
   }
 }

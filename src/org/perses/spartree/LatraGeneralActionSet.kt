@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,6 +18,10 @@ package org.perses.spartree
 
 import com.google.common.collect.ImmutableList
 
+/**
+ * This action set allows both deletion and replacement,
+ * and the actions do not need to be sorted.
+ */
 class LatraGeneralActionSet private constructor(
   actions: ImmutableList<AbstractTreeEditAction>,
   actionsDescription: String,

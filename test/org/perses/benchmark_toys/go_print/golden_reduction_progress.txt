@@ -1,150 +1,235 @@
 =====================Reduction starts.======================
 
 The initial program size is 70
+The command line options are:
+---
+help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+versionFlags:
+  groupName: "Version"
+  version: false
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFile: "small.go"
+  deps: []
+  sourceFile: "small.go"
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_perses_node_priority_with_dfs_delta_small.go"
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  fixpoint: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  enableLineSlicer: false
+  defaultDeltaDebuggerTypeForKleene: "DFS"
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  enableTrec: false
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: "TRUE"
+  nodeActionSetCaching: true
+  queryCacheRefreshThreshold: 0
+  enableLightweightRefreshing: true
+  enablePassCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "reduction_progress.txt"
+  appendToProgressDumpFile: true
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileDeltaDebugger: null
+experimentFlags:
+  groupName: "Experiment Control"
+  cacheType: "COMPACT_QUERY_CACHE"
+  onDemandReducerClasses: null
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+
+Parser Facade: class org.perses.grammar.go.PnfGoParserFacade
 ------------------------------------------------------------
 
 
+The sanity check has been performed. The result is PassingSanityCheckResult
 =Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
 
 The spar-tree is the following.
 (|:sourceFile) {id=1}
 |___aux_rule__sourceFile_6 {id=2,slot_type=aux_rule__sourceFile_6}
     |___packageClause {id=3,slot_type=packageClause}
-    |   |___Token:package {id=295,slot_type=PACKAGE}
-    |   |___Token:main {id=296,slot_type=IDENTIFIER}
-    |___Token:; {id=294,slot_type=[eos,SEMI]}
+    |   |___Token:package {id=294,slot_type=PACKAGE}
+    |   |___Token:main {id=295,slot_type=IDENTIFIER}
+    |___Token:; {id=293,slot_type=[eos,SEMI]}
     |___(*) {id=5,slot_type=kleene_star__sourceFile_2}
-    |   |___aux_rule__sourceFile_1 {id=284,slot_type=aux_rule__sourceFile_1}
-    |       |___importDecl {id=285,slot_type=importDecl}
-    |       |   |___Token:import {id=288,slot_type=IMPORT}
-    |       |   |___Token:"fmt" {id=293,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
-    |       |___Token:; {id=287,slot_type=[eos,SEMI]}
+    |   |___aux_rule__sourceFile_1 {id=283,slot_type=aux_rule__sourceFile_1}
+    |       |___importDecl {id=284,slot_type=importDecl}
+    |       |   |___Token:import {id=287,slot_type=IMPORT}
+    |       |   |___Token:"fmt" {id=292,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
+    |       |___Token:; {id=286,slot_type=[eos,SEMI]}
     |___(*) {id=6,slot_type=kleene_star__sourceFile_4}
         |___aux_rule__sourceFile_3 {id=7,slot_type=aux_rule__sourceFile_3}
             |___functionDecl {id=11,slot_type=[altnt_block__sourceFile_5,functionDecl]}
             |   |___Token:func {id=12,slot_type=FUNC}
             |   |___Token:main {id=13,slot_type=IDENTIFIER}
-            |   |___parameters {id=281,slot_type=[signature,parameters]}
-            |   |   |___Token:( {id=282,slot_type=L_PAREN}
-            |   |   |___Token:) {id=283,slot_type=R_PAREN}
+            |   |___parameters {id=280,slot_type=[signature,parameters]}
+            |   |   |___Token:( {id=281,slot_type=L_PAREN}
+            |   |   |___Token:) {id=282,slot_type=R_PAREN}
             |   |___(?) {id=15,slot_type=optional__functionDecl_1}
             |       |___block {id=16,slot_type=block}
             |           |___Token:{ {id=17,slot_type=L_CURLY}
             |           |___(?) {id=18,slot_type=optional__block_1}
             |           |   |___(+) {id=20,slot_type=statementList}
-            |           |       |___aux_rule__statementList_2 {id=240,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
-            |           |       |   |___primaryExpr {id=248,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
-            |           |       |   |   |___Token:fmt {id=280,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |       |   |   |___(*) {id=250,slot_type=kleene_star__primaryExpr_1}
-            |           |       |   |       |___aux_rule__primaryExpr_4 {id=276,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
-            |           |       |   |       |   |___Token:. {id=277,slot_type=DOT}
-            |           |       |   |       |   |___Token:Println {id=278,slot_type=IDENTIFIER}
-            |           |       |   |       |___arguments {id=253,slot_type=[aux_rule__primaryExpr_2,arguments]}
-            |           |       |   |           |___Token:( {id=254,slot_type=L_PAREN}
-            |           |       |   |           |___(?) {id=255,slot_type=optional__arguments_6}
-            |           |       |   |           |   |___expression {id=260,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
-            |           |       |   |           |       |___Token:"go" {id=275,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |       |   |           |       |___(*) {id=262,slot_type=kleene_star__expression_1}
-            |           |       |   |           |           |___aux_rule__expression_2 {id=263,slot_type=aux_rule__expression_2}
-            |           |       |   |           |               |___Token:+ {id=271,slot_type=[altnt_block__expression_3,PLUS]}
-            |           |       |   |           |               |___Token:"lang" {id=270,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |       |   |           |___Token:) {id=256,slot_type=R_PAREN}
-            |           |       |   |___Token:; {id=243,slot_type=[eos,SEMI]}
-            |           |       |___aux_rule__statementList_2 {id=192,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
-            |           |       |   |___primaryExpr {id=200,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
-            |           |       |   |   |___Token:fmt {id=239,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |       |   |   |___(*) {id=202,slot_type=kleene_star__primaryExpr_1}
-            |           |       |   |       |___aux_rule__primaryExpr_4 {id=235,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
-            |           |       |   |       |   |___Token:. {id=236,slot_type=DOT}
-            |           |       |   |       |   |___Token:Println {id=237,slot_type=IDENTIFIER}
-            |           |       |   |       |___arguments {id=205,slot_type=[aux_rule__primaryExpr_2,arguments]}
-            |           |       |   |           |___Token:( {id=206,slot_type=L_PAREN}
-            |           |       |   |           |___(?) {id=207,slot_type=optional__arguments_6}
-            |           |       |   |           |   |___expressionList {id=211,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList]}
-            |           |       |   |           |       |___Token:"1+1 =" {id=234,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |       |   |           |       |___(*) {id=213,slot_type=kleene_star__expressionList_2}
-            |           |       |   |           |           |___aux_rule__expressionList_1 {id=214,slot_type=aux_rule__expressionList_1}
-            |           |       |   |           |               |___Token:, {id=215,slot_type=COMMA}
-            |           |       |   |           |               |___expression {id=216,slot_type=expression}
-            |           |       |   |           |                   |___Token:1 {id=229,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,DECIMAL_LIT]}
-            |           |       |   |           |                   |___(*) {id=218,slot_type=kleene_star__expression_1}
-            |           |       |   |           |                       |___aux_rule__expression_2 {id=219,slot_type=aux_rule__expression_2}
-            |           |       |   |           |                           |___Token:+ {id=226,slot_type=[altnt_block__expression_3,PLUS]}
-            |           |       |   |           |                           |___Token:1 {id=225,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,DECIMAL_LIT]}
-            |           |       |   |           |___Token:) {id=208,slot_type=R_PAREN}
-            |           |       |   |___Token:; {id=195,slot_type=[eos,SEMI]}
-            |           |       |___aux_rule__statementList_2 {id=144,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
-            |           |       |   |___primaryExpr {id=152,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
-            |           |       |   |   |___Token:fmt {id=191,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |       |   |   |___(*) {id=154,slot_type=kleene_star__primaryExpr_1}
-            |           |       |   |       |___aux_rule__primaryExpr_4 {id=187,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
-            |           |       |   |       |   |___Token:. {id=188,slot_type=DOT}
-            |           |       |   |       |   |___Token:Println {id=189,slot_type=IDENTIFIER}
-            |           |       |   |       |___arguments {id=157,slot_type=[aux_rule__primaryExpr_2,arguments]}
-            |           |       |   |           |___Token:( {id=158,slot_type=L_PAREN}
-            |           |       |   |           |___(?) {id=159,slot_type=optional__arguments_6}
-            |           |       |   |           |   |___expressionList {id=163,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList]}
-            |           |       |   |           |       |___Token:"7.0/3.0 =" {id=186,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |       |   |           |       |___(*) {id=165,slot_type=kleene_star__expressionList_2}
-            |           |       |   |           |           |___aux_rule__expressionList_1 {id=166,slot_type=aux_rule__expressionList_1}
-            |           |       |   |           |               |___Token:, {id=167,slot_type=COMMA}
-            |           |       |   |           |               |___expression {id=168,slot_type=expression}
-            |           |       |   |           |                   |___Token:7.0 {id=181,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,FLOAT_LIT]}
-            |           |       |   |           |                   |___(*) {id=170,slot_type=kleene_star__expression_1}
-            |           |       |   |           |                       |___aux_rule__expression_2 {id=171,slot_type=aux_rule__expression_2}
-            |           |       |   |           |                           |___Token:/ {id=178,slot_type=[altnt_block__expression_3,DIV]}
-            |           |       |   |           |                           |___Token:3.0 {id=177,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,FLOAT_LIT]}
-            |           |       |   |           |___Token:) {id=160,slot_type=R_PAREN}
-            |           |       |   |___Token:; {id=147,slot_type=[eos,SEMI]}
-            |           |       |___aux_rule__statementList_2 {id=103,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
-            |           |       |   |___primaryExpr {id=111,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
-            |           |       |   |   |___Token:fmt {id=143,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |       |   |   |___(*) {id=113,slot_type=kleene_star__primaryExpr_1}
-            |           |       |   |       |___aux_rule__primaryExpr_4 {id=139,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
-            |           |       |   |       |   |___Token:. {id=140,slot_type=DOT}
-            |           |       |   |       |   |___Token:Println {id=141,slot_type=IDENTIFIER}
-            |           |       |   |       |___arguments {id=116,slot_type=[aux_rule__primaryExpr_2,arguments]}
-            |           |       |   |           |___Token:( {id=117,slot_type=L_PAREN}
-            |           |       |   |           |___(?) {id=118,slot_type=optional__arguments_6}
-            |           |       |   |           |   |___expression {id=123,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
-            |           |       |   |           |       |___Token:true {id=138,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |       |   |           |       |___(*) {id=125,slot_type=kleene_star__expression_1}
-            |           |       |   |           |           |___aux_rule__expression_2 {id=126,slot_type=aux_rule__expression_2}
-            |           |       |   |           |               |___Token:&& {id=134,slot_type=[altnt_block__expression_3,LOGICAL_AND]}
-            |           |       |   |           |               |___Token:false {id=133,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |       |   |           |___Token:) {id=119,slot_type=R_PAREN}
-            |           |       |   |___Token:; {id=106,slot_type=[eos,SEMI]}
-            |           |       |___aux_rule__statementList_2 {id=62,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
-            |           |       |   |___primaryExpr {id=70,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
-            |           |       |   |   |___Token:fmt {id=102,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |       |   |   |___(*) {id=72,slot_type=kleene_star__primaryExpr_1}
-            |           |       |   |       |___aux_rule__primaryExpr_4 {id=98,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
-            |           |       |   |       |   |___Token:. {id=99,slot_type=DOT}
-            |           |       |   |       |   |___Token:Println {id=100,slot_type=IDENTIFIER}
-            |           |       |   |       |___arguments {id=75,slot_type=[aux_rule__primaryExpr_2,arguments]}
-            |           |       |   |           |___Token:( {id=76,slot_type=L_PAREN}
-            |           |       |   |           |___(?) {id=77,slot_type=optional__arguments_6}
-            |           |       |   |           |   |___expression {id=82,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
-            |           |       |   |           |       |___Token:true {id=97,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |       |   |           |       |___(*) {id=84,slot_type=kleene_star__expression_1}
-            |           |       |   |           |           |___aux_rule__expression_2 {id=85,slot_type=aux_rule__expression_2}
-            |           |       |   |           |               |___Token:|| {id=93,slot_type=[altnt_block__expression_3,LOGICAL_OR]}
-            |           |       |   |           |               |___Token:false {id=92,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |       |   |           |___Token:) {id=78,slot_type=R_PAREN}
-            |           |       |   |___Token:; {id=65,slot_type=[eos,SEMI]}
+            |           |       |___aux_rule__statementList_2 {id=239,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |       |   |___primaryExpr {id=247,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |       |   |   |___Token:fmt {id=279,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |       |   |   |___(*) {id=249,slot_type=kleene_star__primaryExpr_1}
+            |           |       |   |       |___aux_rule__primaryExpr_4 {id=275,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |       |   |       |   |___Token:. {id=276,slot_type=DOT}
+            |           |       |   |       |   |___Token:Println {id=277,slot_type=IDENTIFIER}
+            |           |       |   |       |___arguments {id=252,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |       |   |           |___Token:( {id=253,slot_type=L_PAREN}
+            |           |       |   |           |___(?) {id=254,slot_type=optional__arguments_6}
+            |           |       |   |           |   |___expression {id=259,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |       |   |           |       |___Token:"go" {id=274,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |       |   |           |       |___(*) {id=261,slot_type=kleene_star__expression_1}
+            |           |       |   |           |           |___aux_rule__expression_2 {id=262,slot_type=aux_rule__expression_2}
+            |           |       |   |           |               |___Token:+ {id=270,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |       |   |           |               |___Token:"lang" {id=269,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |       |   |           |___Token:) {id=255,slot_type=R_PAREN}
+            |           |       |   |___Token:; {id=242,slot_type=[eos,SEMI]}
+            |           |       |___aux_rule__statementList_2 {id=191,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |       |   |___primaryExpr {id=199,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |       |   |   |___Token:fmt {id=238,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |       |   |   |___(*) {id=201,slot_type=kleene_star__primaryExpr_1}
+            |           |       |   |       |___aux_rule__primaryExpr_4 {id=234,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |       |   |       |   |___Token:. {id=235,slot_type=DOT}
+            |           |       |   |       |   |___Token:Println {id=236,slot_type=IDENTIFIER}
+            |           |       |   |       |___arguments {id=204,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |       |   |           |___Token:( {id=205,slot_type=L_PAREN}
+            |           |       |   |           |___(?) {id=206,slot_type=optional__arguments_6}
+            |           |       |   |           |   |___expressionList {id=210,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList]}
+            |           |       |   |           |       |___Token:"1+1 =" {id=233,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |       |   |           |       |___(*) {id=212,slot_type=kleene_star__expressionList_2}
+            |           |       |   |           |           |___aux_rule__expressionList_1 {id=213,slot_type=aux_rule__expressionList_1}
+            |           |       |   |           |               |___Token:, {id=214,slot_type=COMMA}
+            |           |       |   |           |               |___expression {id=215,slot_type=expression}
+            |           |       |   |           |                   |___Token:1 {id=228,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,DECIMAL_LIT]}
+            |           |       |   |           |                   |___(*) {id=217,slot_type=kleene_star__expression_1}
+            |           |       |   |           |                       |___aux_rule__expression_2 {id=218,slot_type=aux_rule__expression_2}
+            |           |       |   |           |                           |___Token:+ {id=225,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |       |   |           |                           |___Token:1 {id=224,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,DECIMAL_LIT]}
+            |           |       |   |           |___Token:) {id=207,slot_type=R_PAREN}
+            |           |       |   |___Token:; {id=194,slot_type=[eos,SEMI]}
+            |           |       |___aux_rule__statementList_2 {id=143,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |       |   |___primaryExpr {id=151,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |       |   |   |___Token:fmt {id=190,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |       |   |   |___(*) {id=153,slot_type=kleene_star__primaryExpr_1}
+            |           |       |   |       |___aux_rule__primaryExpr_4 {id=186,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |       |   |       |   |___Token:. {id=187,slot_type=DOT}
+            |           |       |   |       |   |___Token:Println {id=188,slot_type=IDENTIFIER}
+            |           |       |   |       |___arguments {id=156,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |       |   |           |___Token:( {id=157,slot_type=L_PAREN}
+            |           |       |   |           |___(?) {id=158,slot_type=optional__arguments_6}
+            |           |       |   |           |   |___expressionList {id=162,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList]}
+            |           |       |   |           |       |___Token:"7.0/3.0 =" {id=185,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |       |   |           |       |___(*) {id=164,slot_type=kleene_star__expressionList_2}
+            |           |       |   |           |           |___aux_rule__expressionList_1 {id=165,slot_type=aux_rule__expressionList_1}
+            |           |       |   |           |               |___Token:, {id=166,slot_type=COMMA}
+            |           |       |   |           |               |___expression {id=167,slot_type=expression}
+            |           |       |   |           |                   |___Token:7.0 {id=180,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,FLOAT_LIT]}
+            |           |       |   |           |                   |___(*) {id=169,slot_type=kleene_star__expression_1}
+            |           |       |   |           |                       |___aux_rule__expression_2 {id=170,slot_type=aux_rule__expression_2}
+            |           |       |   |           |                           |___Token:/ {id=177,slot_type=[altnt_block__expression_3,DIV]}
+            |           |       |   |           |                           |___Token:3.0 {id=176,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,FLOAT_LIT]}
+            |           |       |   |           |___Token:) {id=159,slot_type=R_PAREN}
+            |           |       |   |___Token:; {id=146,slot_type=[eos,SEMI]}
+            |           |       |___aux_rule__statementList_2 {id=102,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |       |   |___primaryExpr {id=110,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |       |   |   |___Token:fmt {id=142,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |       |   |   |___(*) {id=112,slot_type=kleene_star__primaryExpr_1}
+            |           |       |   |       |___aux_rule__primaryExpr_4 {id=138,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |       |   |       |   |___Token:. {id=139,slot_type=DOT}
+            |           |       |   |       |   |___Token:Println {id=140,slot_type=IDENTIFIER}
+            |           |       |   |       |___arguments {id=115,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |       |   |           |___Token:( {id=116,slot_type=L_PAREN}
+            |           |       |   |           |___(?) {id=117,slot_type=optional__arguments_6}
+            |           |       |   |           |   |___expression {id=122,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |       |   |           |       |___Token:true {id=137,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |       |   |           |       |___(*) {id=124,slot_type=kleene_star__expression_1}
+            |           |       |   |           |           |___aux_rule__expression_2 {id=125,slot_type=aux_rule__expression_2}
+            |           |       |   |           |               |___Token:&& {id=133,slot_type=[altnt_block__expression_3,LOGICAL_AND]}
+            |           |       |   |           |               |___Token:false {id=132,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |       |   |           |___Token:) {id=118,slot_type=R_PAREN}
+            |           |       |   |___Token:; {id=105,slot_type=[eos,SEMI]}
+            |           |       |___aux_rule__statementList_2 {id=61,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |       |   |___primaryExpr {id=69,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |       |   |   |___Token:fmt {id=101,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |       |   |   |___(*) {id=71,slot_type=kleene_star__primaryExpr_1}
+            |           |       |   |       |___aux_rule__primaryExpr_4 {id=97,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |       |   |       |   |___Token:. {id=98,slot_type=DOT}
+            |           |       |   |       |   |___Token:Println {id=99,slot_type=IDENTIFIER}
+            |           |       |   |       |___arguments {id=74,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |       |   |           |___Token:( {id=75,slot_type=L_PAREN}
+            |           |       |   |           |___(?) {id=76,slot_type=optional__arguments_6}
+            |           |       |   |           |   |___expression {id=81,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |       |   |           |       |___Token:true {id=96,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |       |   |           |       |___(*) {id=83,slot_type=kleene_star__expression_1}
+            |           |       |   |           |           |___aux_rule__expression_2 {id=84,slot_type=aux_rule__expression_2}
+            |           |       |   |           |               |___Token:|| {id=92,slot_type=[altnt_block__expression_3,LOGICAL_OR]}
+            |           |       |   |           |               |___Token:false {id=91,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |       |   |           |___Token:) {id=77,slot_type=R_PAREN}
+            |           |       |   |___Token:; {id=64,slot_type=[eos,SEMI]}
             |           |       |___aux_rule__statementList_2 {id=27,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
             |           |           |___primaryExpr {id=35,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
-            |           |           |   |___Token:fmt {id=61,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |           |   |___Token:fmt {id=60,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
             |           |           |   |___(*) {id=37,slot_type=kleene_star__primaryExpr_1}
-            |           |           |       |___aux_rule__primaryExpr_4 {id=57,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
-            |           |           |       |   |___Token:. {id=58,slot_type=DOT}
-            |           |           |       |   |___Token:Println {id=59,slot_type=IDENTIFIER}
+            |           |           |       |___aux_rule__primaryExpr_4 {id=56,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |           |       |   |___Token:. {id=57,slot_type=DOT}
+            |           |           |       |   |___Token:Println {id=58,slot_type=IDENTIFIER}
             |           |           |       |___arguments {id=40,slot_type=[aux_rule__primaryExpr_2,arguments]}
             |           |           |           |___Token:( {id=41,slot_type=L_PAREN}
             |           |           |           |___(?) {id=42,slot_type=optional__arguments_6}
-            |           |           |           |   |___aux_rule__unaryExpr_2 {id=49,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression,unaryExpr,aux_rule__unaryExpr_2]}
-            |           |           |           |       |___Token:! {id=56,slot_type=[altnt_block__unaryExpr_1,EXCLAMATION]}
-            |           |           |           |       |___Token:true {id=55,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |           |           |   |___unaryExpr {id=48,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression,unaryExpr]}
+            |           |           |           |       |___(*) {id=49,slot_type=kleene_star__unaryExpr_1}
+            |           |           |           |       |   |___Token:! {id=55,slot_type=[aux_rule__unaryExpr_2,EXCLAMATION]}
+            |           |           |           |       |___Token:true {id=53,slot_type=[primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
             |           |           |           |___Token:) {id=43,slot_type=R_PAREN}
             |           |           |___Token:; {id=30,slot_type=[eos,SEMI]}
             |           |___Token:} {id=19,slot_type=R_CURLY}
@@ -156,6 +241,7 @@ The spar-tree is the following.
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -179,6 +265,7 @@ Failed to reduce node 2
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -195,6 +282,10 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__sourceFile_4]dd@1
+    --file: small.go--
+    package main;
+    import "fmt";
+    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
 ------------------------------------------------------------
@@ -210,6 +301,7 @@ Failed to reduce node 6
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -239,6 +331,7 @@ Failed to reduce node 7
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -262,6 +355,7 @@ Failed to reduce node 11
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -278,6 +372,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__functionDecl_1]dd@1
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main()
+     ;
+    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main()
@@ -295,6 +395,7 @@ Failed to reduce node 15
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -324,6 +425,7 @@ Failed to reduce node 16
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -340,6 +442,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__block_1]dd@1
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+    };
+    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -357,6 +465,7 @@ Failed to reduce node 18
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -379,6 +488,13 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_plus:statementList]remove whole except first
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -405,10 +521,11 @@ Succeeded to reduce node 20 from 70 to 22
 ------------------------------------------------------------
 
 
-=================Reducing node 240, size=22=================
+=================Reducing node 239, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -419,6 +536,12 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+    };
+    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -428,14 +551,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 240
+Failed to reduce node 239
 ------------------------------------------------------------
 
 
-=================Reducing node 248, size=22=================
+=================Reducing node 247, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -447,6 +571,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt                       ;
+    };
+    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -458,6 +589,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+            Println               ;
+    };
+    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -469,6 +607,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+                    "go"          ;
+    };
+    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -480,6 +625,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+                    "go" + "lang" ;
+    };
+    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -490,14 +642,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 248
+Failed to reduce node 247
 ------------------------------------------------------------
 
 
-=================Reducing node 250, size=22=================
+=================Reducing node 249, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -508,6 +661,13 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt                       ;
+    };
+    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -519,6 +679,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__primaryExpr_1]dd@1
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println               ;
+    };
+    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -530,6 +697,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__primaryExpr_1]dd@1
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt        ("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -540,14 +714,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 250
+Failed to reduce node 249
 ------------------------------------------------------------
 
 
-=================Reducing node 253, size=22=================
+=================Reducing node 252, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -558,20 +733,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=253}
+    NodeDeletionAction{target_node=252}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 253
+Failed to reduce node 252
 ------------------------------------------------------------
 
 
-=================Reducing node 255, size=22=================
+=================Reducing node 254, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -583,6 +759,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__arguments_6]dd@1
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(             );
+    };
+    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -593,14 +776,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 255
+Failed to reduce node 254
 ------------------------------------------------------------
 
 
-=================Reducing node 260, size=22=================
+=================Reducing node 259, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -611,13 +795,20 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=260}
+    NodeDeletionAction{target_node=259}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go"         );
+    };
+    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -629,6 +820,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(       "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -639,7 +837,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 260
+Failed to reduce node 259
 ------------------------------------------------------------
 
 
@@ -647,6 +845,7 @@ Failed to reduce node 260
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -658,6 +857,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__sourceFile_2]dd@1
+    --file: small.go--
+    package main;
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
     package main;
     func main() {
         fmt.Println("go" + "lang");
@@ -671,10 +876,11 @@ Failed to reduce node 5
 ------------------------------------------------------------
 
 
-=================Reducing node 284, size=22=================
+=================Reducing node 283, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -685,7 +891,26 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=284}
+    NodeDeletionAction{target_node=283}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 283
+------------------------------------------------------------
+
+
+=================Reducing node 284, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
 ------------------------------------------------------------
 
 
@@ -695,10 +920,11 @@ Failed to reduce node 284
 ------------------------------------------------------------
 
 
-=================Reducing node 285, size=22=================
+=================Reducing node 280, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -709,32 +935,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 285
+Failed to reduce node 280
 ------------------------------------------------------------
 
 
-=================Reducing node 281, size=22=================
+=================Reducing node 275, size=22=================
 
 The current best program is the following
 
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 281
-------------------------------------------------------------
-
-
-=================Reducing node 276, size=22=================
-
-The current best program is the following
-
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -745,20 +954,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=276}
+    NodeDeletionAction{target_node=275}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 276
+Failed to reduce node 275
 ------------------------------------------------------------
 
 
-=================Reducing node 262, size=22=================
+=================Reducing node 261, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -769,6 +979,13 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go"         );
+    };
+    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -779,14 +996,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 262
+Failed to reduce node 261
 ------------------------------------------------------------
 
 
-=================Reducing node 263, size=22=================
+=================Reducing node 262, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -797,13 +1015,13 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=263}
+    NodeDeletionAction{target_node=262}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 263
+Failed to reduce node 262
 ------------------------------------------------------------
 
 
@@ -811,6 +1029,7 @@ Failed to reduce node 263
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -825,28 +1044,11 @@ Failed to reduce node 3
 ------------------------------------------------------------
 
 
-=================Reducing node 296, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 296
-------------------------------------------------------------
-
-
 =================Reducing node 295, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -865,6 +1067,7 @@ Failed to reduce node 295
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -883,6 +1086,7 @@ Failed to reduce node 294
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -897,10 +1101,11 @@ Failed to reduce node 293
 ------------------------------------------------------------
 
 
-=================Reducing node 288, size=22=================
+=================Reducing node 292, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -911,7 +1116,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 288
+Failed to reduce node 292
 ------------------------------------------------------------
 
 
@@ -919,6 +1124,7 @@ Failed to reduce node 288
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -933,10 +1139,11 @@ Failed to reduce node 287
 ------------------------------------------------------------
 
 
-=================Reducing node 283, size=22=================
+=================Reducing node 286, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -947,7 +1154,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 283
+Failed to reduce node 286
 ------------------------------------------------------------
 
 
@@ -955,6 +1162,7 @@ Failed to reduce node 283
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -969,10 +1177,11 @@ Failed to reduce node 282
 ------------------------------------------------------------
 
 
-=================Reducing node 280, size=22=================
+=================Reducing node 281, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -983,14 +1192,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 280
+Failed to reduce node 281
 ------------------------------------------------------------
 
 
-=================Reducing node 278, size=22=================
+=================Reducing node 279, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1001,7 +1211,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 278
+Failed to reduce node 279
 ------------------------------------------------------------
 
 
@@ -1009,6 +1219,7 @@ Failed to reduce node 278
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1023,10 +1234,11 @@ Failed to reduce node 277
 ------------------------------------------------------------
 
 
-=================Reducing node 275, size=22=================
+=================Reducing node 276, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1037,14 +1249,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 275
+Failed to reduce node 276
 ------------------------------------------------------------
 
 
-=================Reducing node 271, size=22=================
+=================Reducing node 274, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1055,7 +1268,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 271
+Failed to reduce node 274
 ------------------------------------------------------------
 
 
@@ -1063,6 +1276,7 @@ Failed to reduce node 271
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1077,10 +1291,11 @@ Failed to reduce node 270
 ------------------------------------------------------------
 
 
-=================Reducing node 256, size=22=================
+=================Reducing node 269, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1091,14 +1306,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 256
+Failed to reduce node 269
 ------------------------------------------------------------
 
 
-=================Reducing node 254, size=22=================
+=================Reducing node 255, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1109,14 +1325,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 254
+Failed to reduce node 255
 ------------------------------------------------------------
 
 
-=================Reducing node 243, size=22=================
+=================Reducing node 253, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1127,7 +1344,26 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 243
+Failed to reduce node 253
+------------------------------------------------------------
+
+
+=================Reducing node 242, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 242
 ------------------------------------------------------------
 
 
@@ -1135,6 +1371,7 @@ Failed to reduce node 243
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1153,6 +1390,7 @@ Failed to reduce node 19
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1171,6 +1409,7 @@ Failed to reduce node 17
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1189,6 +1428,7 @@ Failed to reduce node 13
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1207,6 +1447,7 @@ Failed to reduce node 12
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1224,51 +1465,756 @@ Failed to reduce node 10
 =Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
 
 The spar-tree is the following.
-(|:sourceFile) {id=297}
-|___aux_rule__sourceFile_6 {id=298,slot_type=aux_rule__sourceFile_6}
-    |___packageClause {id=299,slot_type=packageClause}
-    |   |___Token:package {id=373,slot_type=PACKAGE}
-    |   |___Token:main {id=374,slot_type=IDENTIFIER}
-    |___Token:; {id=372,slot_type=[eos,SEMI]}
-    |___(*) {id=301,slot_type=kleene_star__sourceFile_2}
-    |   |___aux_rule__sourceFile_1 {id=362,slot_type=aux_rule__sourceFile_1}
-    |       |___importDecl {id=363,slot_type=importDecl}
-    |       |   |___Token:import {id=366,slot_type=IMPORT}
-    |       |   |___Token:"fmt" {id=371,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
-    |       |___Token:; {id=365,slot_type=[eos,SEMI]}
-    |___(*) {id=302,slot_type=kleene_star__sourceFile_4}
-        |___aux_rule__sourceFile_3 {id=303,slot_type=aux_rule__sourceFile_3}
-            |___functionDecl {id=307,slot_type=[altnt_block__sourceFile_5,functionDecl]}
-            |   |___Token:func {id=308,slot_type=FUNC}
-            |   |___Token:main {id=309,slot_type=IDENTIFIER}
-            |   |___parameters {id=359,slot_type=[signature,parameters]}
-            |   |   |___Token:( {id=360,slot_type=L_PAREN}
-            |   |   |___Token:) {id=361,slot_type=R_PAREN}
-            |   |___(?) {id=311,slot_type=optional__functionDecl_1}
-            |       |___block {id=312,slot_type=block}
-            |           |___Token:{ {id=313,slot_type=L_CURLY}
-            |           |___(?) {id=314,slot_type=optional__block_1}
-            |           |   |___(+) {id=316,slot_type=statementList}
-            |           |       |___aux_rule__statementList_2 {id=318,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
-            |           |           |___primaryExpr {id=326,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
-            |           |           |   |___Token:fmt {id=358,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |           |   |___(*) {id=328,slot_type=kleene_star__primaryExpr_1}
-            |           |           |       |___aux_rule__primaryExpr_4 {id=354,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
-            |           |           |       |   |___Token:. {id=355,slot_type=DOT}
-            |           |           |       |   |___Token:Println {id=356,slot_type=IDENTIFIER}
-            |           |           |       |___arguments {id=331,slot_type=[aux_rule__primaryExpr_2,arguments]}
-            |           |           |           |___Token:( {id=332,slot_type=L_PAREN}
-            |           |           |           |___(?) {id=333,slot_type=optional__arguments_6}
-            |           |           |           |   |___expression {id=338,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
-            |           |           |           |       |___Token:"go" {id=353,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |           |           |       |___(*) {id=340,slot_type=kleene_star__expression_1}
-            |           |           |           |           |___aux_rule__expression_2 {id=341,slot_type=aux_rule__expression_2}
-            |           |           |           |               |___Token:+ {id=349,slot_type=[altnt_block__expression_3,PLUS]}
-            |           |           |           |               |___Token:"lang" {id=348,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |           |           |___Token:) {id=334,slot_type=R_PAREN}
-            |           |           |___Token:; {id=321,slot_type=[eos,SEMI]}
-            |           |___Token:} {id=315,slot_type=R_CURLY}
-            |___Token:; {id=306,slot_type=[eos,SEMI]}
+(|:sourceFile) {id=296}
+|___aux_rule__sourceFile_6 {id=297,slot_type=aux_rule__sourceFile_6}
+    |___packageClause {id=298,slot_type=packageClause}
+    |   |___Token:package {id=372,slot_type=PACKAGE}
+    |   |___Token:main {id=373,slot_type=IDENTIFIER}
+    |___Token:; {id=371,slot_type=[eos,SEMI]}
+    |___(*) {id=300,slot_type=kleene_star__sourceFile_2}
+    |   |___aux_rule__sourceFile_1 {id=361,slot_type=aux_rule__sourceFile_1}
+    |       |___importDecl {id=362,slot_type=importDecl}
+    |       |   |___Token:import {id=365,slot_type=IMPORT}
+    |       |   |___Token:"fmt" {id=370,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
+    |       |___Token:; {id=364,slot_type=[eos,SEMI]}
+    |___(*) {id=301,slot_type=kleene_star__sourceFile_4}
+        |___aux_rule__sourceFile_3 {id=302,slot_type=aux_rule__sourceFile_3}
+            |___functionDecl {id=306,slot_type=[altnt_block__sourceFile_5,functionDecl]}
+            |   |___Token:func {id=307,slot_type=FUNC}
+            |   |___Token:main {id=308,slot_type=IDENTIFIER}
+            |   |___parameters {id=358,slot_type=[signature,parameters]}
+            |   |   |___Token:( {id=359,slot_type=L_PAREN}
+            |   |   |___Token:) {id=360,slot_type=R_PAREN}
+            |   |___(?) {id=310,slot_type=optional__functionDecl_1}
+            |       |___block {id=311,slot_type=block}
+            |           |___Token:{ {id=312,slot_type=L_CURLY}
+            |           |___(?) {id=313,slot_type=optional__block_1}
+            |           |   |___(+) {id=315,slot_type=statementList}
+            |           |       |___aux_rule__statementList_2 {id=317,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |           |___primaryExpr {id=325,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |           |   |___Token:fmt {id=357,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |           |   |___(*) {id=327,slot_type=kleene_star__primaryExpr_1}
+            |           |           |       |___aux_rule__primaryExpr_4 {id=353,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |           |       |   |___Token:. {id=354,slot_type=DOT}
+            |           |           |       |   |___Token:Println {id=355,slot_type=IDENTIFIER}
+            |           |           |       |___arguments {id=330,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |           |           |___Token:( {id=331,slot_type=L_PAREN}
+            |           |           |           |___(?) {id=332,slot_type=optional__arguments_6}
+            |           |           |           |   |___expression {id=337,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |           |           |       |___Token:"go" {id=352,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |       |___(*) {id=339,slot_type=kleene_star__expression_1}
+            |           |           |           |           |___aux_rule__expression_2 {id=340,slot_type=aux_rule__expression_2}
+            |           |           |           |               |___Token:+ {id=348,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |           |           |               |___Token:"lang" {id=347,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |___Token:) {id=333,slot_type=R_PAREN}
+            |           |           |___Token:; {id=320,slot_type=[eos,SEMI]}
+            |           |___Token:} {id=314,slot_type=R_CURLY}
+            |___Token:; {id=305,slot_type=[eos,SEMI]}
+------------------------------------------------------------
+
+
+=================Reducing node 297, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 297
+------------------------------------------------------------
+
+
+=================Reducing node 301, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 301
+------------------------------------------------------------
+
+
+=================Reducing node 302, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=302}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 302
+------------------------------------------------------------
+
+
+=================Reducing node 306, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 306
+------------------------------------------------------------
+
+
+=================Reducing node 310, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main()
+     ;
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main()
+     ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 310
+------------------------------------------------------------
+
+
+=================Reducing node 311, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=311}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 311
+------------------------------------------------------------
+
+
+=================Reducing node 313, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 313
+------------------------------------------------------------
+
+
+=================Reducing node 315, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=315}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 315
+------------------------------------------------------------
+
+
+=================Reducing node 317, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 317
+------------------------------------------------------------
+
+
+=================Reducing node 325, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt                       ;
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt                       ;
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+            Println               ;
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+            Println               ;
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+                    "go"          ;
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+                    "go"          ;
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+                    "go" + "lang" ;
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+                    "go" + "lang" ;
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 325
+------------------------------------------------------------
+
+
+=================Reducing node 327, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt                       ;
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt                       ;
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println               ;
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println               ;
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt        ("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt        ("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 327
+------------------------------------------------------------
+
+
+=================Reducing node 330, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=330}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 330
+------------------------------------------------------------
+
+
+=================Reducing node 332, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(             );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(             );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 332
+------------------------------------------------------------
+
+
+=================Reducing node 337, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=337}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go"         );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go"         );
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(       "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(       "lang");
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 337
+------------------------------------------------------------
+
+
+=================Reducing node 300, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.go--
+    package main;
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 300
+------------------------------------------------------------
+
+
+=================Reducing node 361, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=361}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 361
+------------------------------------------------------------
+
+
+=================Reducing node 362, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 362
+------------------------------------------------------------
+
+
+=================Reducing node 358, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 358
+------------------------------------------------------------
+
+
+=================Reducing node 353, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=353}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 353
+------------------------------------------------------------
+
+
+=================Reducing node 339, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go"         );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go"         );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 339
+------------------------------------------------------------
+
+
+=================Reducing node 340, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=340}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 340
 ------------------------------------------------------------
 
 
@@ -1276,6 +2222,7 @@ The spar-tree is the following.
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1290,607 +2237,11 @@ Failed to reduce node 298
 ------------------------------------------------------------
 
 
-=================Reducing node 302, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    package main;
-    import "fmt";
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 302
-------------------------------------------------------------
-
-
-=================Reducing node 303, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=303}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 303
-------------------------------------------------------------
-
-
-=================Reducing node 307, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 307
-------------------------------------------------------------
-
-
-=================Reducing node 311, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    package main;
-    import "fmt";
-    func main()
-     ;
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 311
-------------------------------------------------------------
-
-
-=================Reducing node 312, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=312}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 312
-------------------------------------------------------------
-
-
-=================Reducing node 314, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    package main;
-    import "fmt";
-    func main() {
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 314
-------------------------------------------------------------
-
-
-=================Reducing node 316, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=316}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 316
-------------------------------------------------------------
-
-
-=================Reducing node 318, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    package main;
-    import "fmt";
-    func main() {
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 318
-------------------------------------------------------------
-
-
-=================Reducing node 326, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt                       ;
-    };
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    package main;
-    import "fmt";
-    func main() {
-            Println               ;
-    };
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    package main;
-    import "fmt";
-    func main() {
-                    "go"          ;
-    };
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    package main;
-    import "fmt";
-    func main() {
-                    "go" + "lang" ;
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 326
-------------------------------------------------------------
-
-
-=================Reducing node 328, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt                       ;
-    };
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println               ;
-    };
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt        ("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 328
-------------------------------------------------------------
-
-
-=================Reducing node 331, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=331}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 331
-------------------------------------------------------------
-
-
-=================Reducing node 333, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println(             );
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 333
-------------------------------------------------------------
-
-
-=================Reducing node 338, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=338}
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go"         );
-    };
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println(       "lang");
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 338
-------------------------------------------------------------
-
-
-=================Reducing node 301, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    package main;
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 301
-------------------------------------------------------------
-
-
-=================Reducing node 362, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=362}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 362
-------------------------------------------------------------
-
-
-=================Reducing node 363, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 363
-------------------------------------------------------------
-
-
-=================Reducing node 359, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 359
-------------------------------------------------------------
-
-
-=================Reducing node 354, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=354}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 354
-------------------------------------------------------------
-
-
-=================Reducing node 340, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go"         );
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 340
-------------------------------------------------------------
-
-
-=================Reducing node 341, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=341}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 341
-------------------------------------------------------------
-
-
-=================Reducing node 299, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 299
-------------------------------------------------------------
-
-
-=================Reducing node 374, size=22=================
-
-The current best program is the following
-
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 374
-------------------------------------------------------------
-
-
 =================Reducing node 373, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1909,6 +2260,7 @@ Failed to reduce node 373
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1927,6 +2279,7 @@ Failed to reduce node 372
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1941,10 +2294,11 @@ Failed to reduce node 371
 ------------------------------------------------------------
 
 
-=================Reducing node 366, size=22=================
+=================Reducing node 370, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1955,7 +2309,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 366
+Failed to reduce node 370
 ------------------------------------------------------------
 
 
@@ -1963,6 +2317,7 @@ Failed to reduce node 366
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1977,10 +2332,11 @@ Failed to reduce node 365
 ------------------------------------------------------------
 
 
-=================Reducing node 361, size=22=================
+=================Reducing node 364, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -1991,7 +2347,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 361
+Failed to reduce node 364
 ------------------------------------------------------------
 
 
@@ -1999,6 +2355,7 @@ Failed to reduce node 361
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -2013,10 +2370,11 @@ Failed to reduce node 360
 ------------------------------------------------------------
 
 
-=================Reducing node 358, size=22=================
+=================Reducing node 359, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -2027,14 +2385,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 358
+Failed to reduce node 359
 ------------------------------------------------------------
 
 
-=================Reducing node 356, size=22=================
+=================Reducing node 357, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -2045,7 +2404,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 356
+Failed to reduce node 357
 ------------------------------------------------------------
 
 
@@ -2053,6 +2412,7 @@ Failed to reduce node 356
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -2067,10 +2427,11 @@ Failed to reduce node 355
 ------------------------------------------------------------
 
 
-=================Reducing node 353, size=22=================
+=================Reducing node 354, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -2081,14 +2442,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 353
+Failed to reduce node 354
 ------------------------------------------------------------
 
 
-=================Reducing node 349, size=22=================
+=================Reducing node 352, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -2099,7 +2461,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 349
+Failed to reduce node 352
 ------------------------------------------------------------
 
 
@@ -2107,6 +2469,7 @@ Failed to reduce node 349
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -2121,10 +2484,11 @@ Failed to reduce node 348
 ------------------------------------------------------------
 
 
-=================Reducing node 334, size=22=================
+=================Reducing node 347, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -2135,14 +2499,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 334
+Failed to reduce node 347
 ------------------------------------------------------------
 
 
-=================Reducing node 332, size=22=================
+=================Reducing node 333, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -2153,14 +2518,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 332
+Failed to reduce node 333
 ------------------------------------------------------------
 
 
-=================Reducing node 321, size=22=================
+=================Reducing node 331, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -2171,14 +2537,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 321
+Failed to reduce node 331
 ------------------------------------------------------------
 
 
-=================Reducing node 315, size=22=================
+=================Reducing node 320, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -2189,14 +2556,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 315
+Failed to reduce node 320
 ------------------------------------------------------------
 
 
-=================Reducing node 313, size=22=================
+=================Reducing node 314, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -2207,14 +2575,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 313
+Failed to reduce node 314
 ------------------------------------------------------------
 
 
-=================Reducing node 309, size=22=================
+=================Reducing node 312, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -2225,7 +2594,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 309
+Failed to reduce node 312
 ------------------------------------------------------------
 
 
@@ -2233,6 +2602,7 @@ Failed to reduce node 309
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -2247,10 +2617,11 @@ Failed to reduce node 308
 ------------------------------------------------------------
 
 
-=================Reducing node 306, size=22=================
+=================Reducing node 307, size=22=================
 
 The current best program is the following
 
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -2261,7 +2632,26 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 306
+Failed to reduce node 307
+------------------------------------------------------------
+
+
+=================Reducing node 305, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 305
 ------------------------------------------------------------
 
 

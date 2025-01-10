@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -206,7 +206,10 @@ class MinimalSparTreeGenerator(
       antlrRule.ruleDef.body,
       mapToBuild,
       antlrRule,
-    ) ?: return false
+    )
+    if (preGeneratedNodeList.isNullOrEmpty()) {
+      return false
+    }
     check(preGeneratedNodeList.isNotEmpty())
     if (mapToBuild.containsKey(antlrRule.ruleDef.ruleNameHandle) &&
       preGeneratedNodeList.all { newNode ->

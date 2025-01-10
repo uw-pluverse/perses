@@ -1,13 +1,13 @@
-package(default_visibility = [
-    "//visibility:public",
-])
-
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 load(
     "//src/org/perses/grammar:antlr_util.bzl",
     "antlr_codegen_combined",
     "antlr_codegen_lexer",
 )
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
+
+package(default_visibility = [
+    "//visibility:public",
+])
 
 antlr_codegen_lexer(
     name = "TestLexer",
@@ -31,6 +31,7 @@ kt_jvm_test(
     srcs = ["LexerAtnWrapperTest.kt"],
     jvm_flags = ["-javaagent:$(location //third_party/memory_measurer:object_explorer)"],
     deps = [
+        ":TestJavaScriptLexer",
         ":TestLexer",
         "//:guava",
         "//:truth",
@@ -64,6 +65,13 @@ antlr_codegen_combined(
     parser_java_file_name = "OrigCParser.java",
 )
 
+antlr_codegen_lexer(
+    name = "TestJavaScriptLexer",
+    java_pkg_name = "org.perses.antlr.atn",
+    lexer_grammar_file = "TestJavaScriptLexer.g4",
+    lexer_java_file_name = "TestJavaScriptLexer.java",
+)
+
 kt_jvm_library(
     name = "RandomMock",
     srcs = [
@@ -81,6 +89,7 @@ kt_jvm_test(
     ],
     associates = ["//src/org/perses/antlr/atn"],
     deps = [
+        "TestJavaScriptLexer",
         ":OrigC",
         ":RandomMock",
         ":TestLexer",

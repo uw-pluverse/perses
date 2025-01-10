@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,12 +17,13 @@
 package org.perses.ppr.diff.list
 
 import com.google.common.collect.ImmutableList
-import org.perses.delta.AbstractDeltaDebugger
-import org.perses.delta.AbstractDeltaDebugger.OnBestUpdateHandler
-import org.perses.delta.IPropertyTester
-import org.perses.delta.PristineDeltaDebugger
-import org.perses.delta.PropertyTestResultWithPayload
+import org.perses.listminimizer.AbstractListInputMinimizer
+import org.perses.listminimizer.AbstractListInputMinimizer.OnBestUpdateHandler
+import org.perses.listminimizer.IPropertyTester
+import org.perses.listminimizer.PristineDeltaDebugger
+import org.perses.listminimizer.PropertyTestResultWithPayload
 import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.reduction.AbstractReducerNameAndDesc
 import org.perses.reduction.TestScriptExecutorService
 import org.perses.reduction.TestScriptExecutorService.Companion.IDENTITY_POST_CHECK
 import org.perses.util.AbstractEditOperation
@@ -33,8 +34,12 @@ class ListDiffDdmin(
   ioManager: ListDiffReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
 ) : AbstractListDiffReducer(
-  ioManager,
-  testScriptExecutorService,
+  nameAndDesc = object : AbstractReducerNameAndDesc(
+    shortName = ListDiffDdmin::class.simpleName!!,
+    description = "DDmin-based diff minimizer.",
+  ) {},
+  ioManager = ioManager,
+  testScriptExecutorService = testScriptExecutorService,
 ) {
 
   override fun reduce(state: ListDiffReductionState) {
@@ -65,7 +70,7 @@ class ListDiffDdmin(
         PropertyTestResultWithPayload(testTask.getWithTimeoutWarnings(), Any())
       }
     return PristineDeltaDebugger(
-      AbstractDeltaDebugger.Arguments(
+      AbstractListInputMinimizer.Arguments(
         needToTestEmpty = true,
         input = state.bestDiff,
         propertyTest,

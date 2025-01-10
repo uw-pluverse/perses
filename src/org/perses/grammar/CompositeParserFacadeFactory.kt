@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,6 +17,7 @@
 package org.perses.grammar
 
 import org.perses.program.LanguageKind
+import org.perses.util.toImmutableList
 
 /**
  * The extFactory is preferred over the builtin one.
@@ -26,17 +27,21 @@ class CompositeParserFacadeFactory(
   private val extFactory: AbstractParserFacadeFactory,
 ) : AbstractParserFacadeFactory() {
 
-  override fun createParserFacade(languageKind: LanguageKind): AbstractParserFacade {
-    if (extFactory.containsLanguage(languageKind)) {
-      return extFactory.createParserFacade(languageKind)
-    }
-    if (builtinFactory.containsLanguage(languageKind)) {
-      return builtinFactory.createParserFacade(languageKind)
-    }
-    reportError("Cannot create a parser facade for $languageKind")
-  }
-
   override fun languageSequence(): Sequence<LanguageKind> {
     return extFactory.languageSequence() + builtinFactory.languageSequence()
+  }
+
+  override fun getParserFacadeListForOrNull(languageKind: LanguageKind): ParserFacadeList? {
+    val resultCandidates = listOfNotNull(
+      extFactory.getParserFacadeListForOrNull(languageKind),
+      builtinFactory.getParserFacadeListForOrNull(languageKind),
+    ).flatMap { it.sequenceOfCreators() }
+    if (resultCandidates.isEmpty()) {
+      return null
+    }
+    return ParserFacadeList(
+      defaultParserFacade = resultCandidates.first(),
+      otherParserFacades = resultCandidates.drop(1).toImmutableList(),
+    )
   }
 }

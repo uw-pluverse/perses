@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,7 +22,12 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.antlr.GrammarTestingUtility
 import org.perses.antlr.GrammarTestingUtility.loadGrammarFromFile
+import org.perses.antlr.ast.AbstractPersesAst
+import org.perses.antlr.ast.DefaultAstVisitor
 import org.perses.antlr.ast.PersesGrammar
+import org.perses.antlr.ast.PersesOptionalAst
+import org.perses.antlr.ast.PersesPlusAst
+import org.perses.antlr.ast.PersesStarAst
 import java.nio.file.Paths
 
 @RunWith(JUnit4::class)
@@ -117,5 +122,50 @@ class PnfPassManagerTest : PnfLeftTestGrammar() {
     ).parserGrammar!!
     val sourceCode = processed.sourceCode
     System.err.println(sourceCode)
+  }
+
+  @Test
+  fun testConvertWLP4Language() {
+    val grammar = GrammarTestingUtility.createPersesGrammarFromString(
+      """procedures 
+            : procedure procedures
+            | main
+            ;
+          procedure
+            : 'procedure'
+            ;
+          main
+            : 'main'
+            ;
+      """,
+    )
+    val processed = manager.process(
+      GrammarPair(grammar, nullLexer),
+      startRuleName = "procedures",
+      listener,
+    ).parserGrammar!!
+
+    val kleeneNodes = mutableListOf<AbstractPersesAst>()
+    val visitor = object : DefaultAstVisitor() {
+      override fun visit(ast: PersesOptionalAst) {
+        super.visit(ast)
+        kleeneNodes.add(ast)
+      }
+
+      override fun visit(ast: PersesPlusAst) {
+        super.visit(ast)
+        kleeneNodes.add(ast)
+      }
+
+      override fun visit(ast: PersesStarAst) {
+        super.visit(ast)
+        kleeneNodes.add(ast)
+      }
+    }
+    processed.parserRules.forEach { rule ->
+      visitor.preorder(rule)
+    }
+    // Assert that currently we cannot handle right recursion.
+    assertThat(kleeneNodes).isNotEmpty()
   }
 }

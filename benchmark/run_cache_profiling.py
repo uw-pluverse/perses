@@ -41,6 +41,12 @@ def parse_arguments():
                         help="output folder")
     parser.add_argument("-i", "--iterations", type=int, default=1,
                         help="Repeat the benchmark for the number of times specified")
+    parser.add_argument("--start-iter", type=int, default=0,
+                        help="The iteration to start. "
+                             "For example, if i = 3, and start-iter is 1,"
+                             "it will only run the experiments twice: 1st and 2nd. "
+                             "0-th iteration will be skipped."
+                             "This is useful for parallel execution.")
     return parser.parse_args()
 
 
@@ -50,6 +56,7 @@ class Parameter:
     reducers: List[str]
     show_subprocess: bool
     iterations: int
+    start_iter: int
     monitor_interval: int
     output_dir: str = None
 
@@ -86,6 +93,10 @@ class Parameter:
         # iterations
         if self.iterations < 1:
             raise Exception('Error: Invalid ITERATIONS value')
+        if self.start_iter < 0:
+            raise Exception('Error: Invalid start-iter value')
+        if self.start_iter >= self.iterations:
+            raise Exception('Error: Invalid pair of ITERATIONS and start-iter')
 
 
 def load_token_counter(subprocess_flag: bool):
@@ -229,6 +240,7 @@ def main():
         args.reducers,
         args.show_subprocess,
         args.iterations,
+        args.start_iter,
         args.monitor_interval,
         args.output_dir
     )
@@ -259,7 +271,7 @@ def main():
             # unique time mark distinguishes different settings
             time = datetime.now().strftime("%Y%m%d-%H%M%S")
 
-            for iteration in range(parameter.iterations):
+            for iteration in range(parameter.start_iter, parameter.iterations):
                 print(f"***** Iteration: {iteration} *****")
                 # create report filename (and log filename if applicable)
                 filename_report, filename_log = filename_generator(subject_name, reducer, iteration, time)

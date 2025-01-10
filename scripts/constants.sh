@@ -5,7 +5,7 @@ set -o pipefail
 set -o errexit
 
 readonly WORKSPACE_ROOT=$(bazel info | grep "workspace:" | awk '{ print $2 }')
-if [[ ! -e "${WORKSPACE_ROOT}/WORKSPACE" ]] ; then
+if [[ ! -e "${WORKSPACE_ROOT}/MODULE.bazel" ]] ; then
   echo "ERROR: The computed workspace root ${WORKSPACE_ROOT} does not have a WORKSPACE file."
   exit 1
 fi
@@ -15,6 +15,8 @@ cd "${WORKSPACE_ROOT}"
 BAZEL_DIRS=(
   "antlropt"
   "copyright"
+  "kitten/src"
+  "kitten/test"
   "src"
   "test"
   "version"
@@ -23,7 +25,6 @@ BAZEL_DIRS=(
 readonly SUBMODULE_BAZEL_DIRS=(
   "antlrrdc"
   "arabica"
-  "atn"
   "buildopt"
   "global_cache/src"
   "global_cache/test"
@@ -31,11 +32,8 @@ readonly SUBMODULE_BAZEL_DIRS=(
   "ppr"
   "fision/src"
   "fision/test"
-  "perses-fuzzer/src"
-  "perses-fuzzer/test"
   "pigen/ast"
   "pigen/chaoty"
-  "weighted-dd"
 )
 for submodule in "${SUBMODULE_BAZEL_DIRS[@]}" ; do
   [[ -z "$(find "${submodule}" -name BUILD)" ]] && continue

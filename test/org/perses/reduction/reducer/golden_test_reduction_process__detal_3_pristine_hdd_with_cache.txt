@@ -1,9 +1,93 @@
 =====================Reduction starts.======================
 
 The initial program size is 16
+The command line options are:
+---
+help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "CONFIG"
+  listVerbosity: false
+versionFlags:
+  groupName: "Version"
+  version: false
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFile: "t.c"
+  deps: []
+  sourceFile: "t.c"
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: null
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  fixpoint: true
+  numOfThreads: 1
+  codeFormat: null
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  reductionAlgorithm: "pristine_hdd"
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  enableLineSlicer: false
+  defaultDeltaDebuggerTypeForKleene: "DFS"
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  enableTrec: false
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: "TRUE"
+  nodeActionSetCaching: false
+  queryCacheRefreshThreshold: 0
+  enableLightweightRefreshing: true
+  enablePassCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "progress_dump_t_pristine_hdd_with_cache.c"
+  appendToProgressDumpFile: true
+  statDumpFile: "stat_pristine_hdd_with_caching_t.c"
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileDeltaDebugger: null
+experimentFlags:
+  groupName: "Experiment Control"
+  cacheType: "COMPACT_QUERY_CACHE"
+  onDemandReducerClasses: null
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
+The sanity check has been performed. The result is PassingSanityCheckResult
 ========Fixpoint iteration 1. Reducer: pristine_hdd=========
 
 The spar-tree is the following.
@@ -11,40 +95,40 @@ translationUnit {id=1}
 |___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
     |___functionDefinition {id=4,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
         |___(?) {id=5,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=95,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=99,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |___directDeclarator {id=86,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=94,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=88,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=90,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=91,slot_type=LeftParen}
-        |           |___Token:) {id=93,slot_type=RightParen}
+        |   |___(+) {id=99,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=103,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=90,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=98,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=92,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=94,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=95,slot_type=LeftParen}
+        |           |___Token:) {id=97,slot_type=RightParen}
         |___compoundStatement {id=7,slot_type=compoundStatement}
             |___Token:{ {id=8,slot_type=LeftBrace}
             |___(?) {id=9,slot_type=optional__compoundStatement_1}
             |   |___(+) {id=12,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___aux_rule__declaration_3 {id=51,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=52,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=85,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=53,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=56,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:a {id=81,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=58,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=59,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=60,slot_type=Assign}
-            |       |   |               |___Token:99 {id=78,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=54,slot_type=Semi}
-            |       |___jumpStatement {id=16,slot_type=[aux_rule__blockItemList_2,statement,jumpStatement]}
-            |           |___aux_rule__jumpStatement_4 {id=19,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-            |           |   |___Token:return {id=20,slot_type=Return}
-            |           |   |___(?) {id=21,slot_type=optional__postfixExpression_1}
-            |           |       |___additiveExpression {id=33,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
-            |           |           |___Token:a {id=49,slot_type=[multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-            |           |           |___(*) {id=35,slot_type=kleene_star__additiveExpression_1}
-            |           |               |___aux_rule__additiveExpression_2 {id=36,slot_type=aux_rule__additiveExpression_2}
-            |           |                   |___Token:+ {id=44,slot_type=[altnt_block__additiveExpression_3,Plus]}
-            |           |                   |___Token:0 {id=43,slot_type=[multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |           |___Token:; {id=18,slot_type=Semi}
+            |       |___aux_rule__declaration_3 {id=54,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=55,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=89,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=56,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=59,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:a {id=85,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=61,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=62,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=63,slot_type=Assign}
+            |       |   |               |___Token:99 {id=82,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=57,slot_type=Semi}
+            |       |___jumpStatement {id=17,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=20,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=21,slot_type=Return}
+            |           |   |___(?) {id=22,slot_type=optional__postfixExpression_1}
+            |           |       |___additiveExpression {id=34,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+            |           |           |___Token:a {id=52,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |           |           |___(*) {id=36,slot_type=kleene_star__additiveExpression_1}
+            |           |               |___aux_rule__additiveExpression_2 {id=37,slot_type=aux_rule__additiveExpression_2}
+            |           |                   |___Token:+ {id=46,slot_type=[altnt_block__additiveExpression_3,Plus]}
+            |           |                   |___Token:0 {id=45,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |           |___Token:; {id=19,slot_type=Semi}
             |___Token:} {id=10,slot_type=RightBrace}
 ------------------------------------------------------------
 
@@ -52,22 +136,34 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    --file: <formatted tokenized program in its original format>--
     int main()
 ------------------------------------------------------------
 
@@ -75,7 +171,21 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@2
+    --file: t.c--
     {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+               {
       int a = 99;
       return a + 0;
     }
@@ -84,7 +194,21 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
     {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+               {
       int a = 99;
       return a + 0;
     }
@@ -93,6 +217,12 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    --file: <formatted tokenized program in its original format>--
     int main()
 ------------------------------------------------------------
 
@@ -100,6 +230,9 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@2
+    --file: t.c--
+    int
+    --file: <formatted tokenized program in its original format>--
     int
 ------------------------------------------------------------
 
@@ -107,13 +240,32 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@2
-    main()
+    --file: t.c--
+    main
+    (
+    )
+    --file: <formatted tokenized program in its original format>--
+        main()
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
     {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+               {
       int a = 99;
       return a + 0;
     }
@@ -123,7 +275,24 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
-    main() {
+    --file: t.c--
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+        main() {
       int a = 99;
       return a + 0;
     }
@@ -133,6 +302,21 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int        {
       int a = 99;
       return a + 0;
@@ -142,12 +326,21 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    --file: <formatted tokenized program in its original format>--
     int main()
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    --file: <formatted tokenized program in its original format>--
     int
 ------------------------------------------------------------
 
@@ -155,6 +348,13 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@2
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    --file: <formatted tokenized program in its original format>--
     int main() {
 ------------------------------------------------------------
 
@@ -162,6 +362,20 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@3
+    --file: t.c--
+    int
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
       int a = 99;
       return a + 0;
@@ -171,6 +385,20 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
       int a = 99;
       return a + 0;
@@ -180,12 +408,25 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    --file: <formatted tokenized program in its original format>--
     int main() {
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    --file: <formatted tokenized program in its original format>--
     int main()
 ------------------------------------------------------------
 
@@ -193,6 +434,10 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@4
+    --file: t.c--
+    int
+    {
+    --file: <formatted tokenized program in its original format>--
     int        {
 ------------------------------------------------------------
 
@@ -200,6 +445,19 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@4
+    --file: t.c--
+    int
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    --file: <formatted tokenized program in its original format>--
     int
       int a = 99;
       return a + 0;
@@ -209,6 +467,10 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@4
+    --file: t.c--
+    int
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     }
 ------------------------------------------------------------
@@ -216,6 +478,21 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int        {
       int a = 99;
       return a + 0;
@@ -226,6 +503,23 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main()
       int a = 99;
       return a + 0;
@@ -236,6 +530,14 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
     }
 ------------------------------------------------------------
@@ -244,6 +546,23 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
       return a + 0;
@@ -253,6 +572,10 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@4
+    --file: t.c--
+    int
+    main
+    --file: <formatted tokenized program in its original format>--
     int main
 ------------------------------------------------------------
 
@@ -260,18 +583,40 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@4
+    --file: t.c--
+    int
+    (
+    )
+    --file: <formatted tokenized program in its original format>--
     int     ()
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    {
+    --file: <formatted tokenized program in its original format>--
     int        {
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    --file: <formatted tokenized program in its original format>--
     int
       int a = 99;
       return a + 0;
@@ -280,6 +625,10 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     }
 ------------------------------------------------------------
@@ -288,6 +637,23 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int     () {
       int a = 99;
       return a + 0;
@@ -298,6 +664,22 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main   {
       int a = 99;
       return a + 0;
@@ -307,6 +689,23 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main()
       int a = 99;
       return a + 0;
@@ -316,6 +715,14 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
     }
 ------------------------------------------------------------
@@ -323,6 +730,23 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
       return a + 0;
@@ -332,6 +756,12 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@4
+    --file: t.c--
+    int
+    main
+    {
+    }
+    --file: <formatted tokenized program in its original format>--
     int main   {
     }
 ------------------------------------------------------------
@@ -339,6 +769,14 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
     }
 ------------------------------------------------------------
@@ -346,6 +784,22 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main   {
       int a = 99;
       return a + 0;
@@ -355,6 +809,22 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main   {
       int a = 99;
       return a + 0;
@@ -364,6 +834,14 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
     }
 ------------------------------------------------------------
@@ -372,6 +850,13 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@3
+    --file: t.c--
+    int
+    main
+    (
+    {
+    }
+    --file: <formatted tokenized program in its original format>--
     int main(  {
     }
 ------------------------------------------------------------
@@ -380,6 +865,13 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@3
+    --file: t.c--
+    int
+    main
+    )
+    {
+    }
+    --file: <formatted tokenized program in its original format>--
     int main ) {
     }
 ------------------------------------------------------------
@@ -388,6 +880,17 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@3
+    --file: t.c--
+    int
+    main
+    {
+    int
+    a
+    =
+    99
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main   {
       int a = 99;
     }
@@ -397,6 +900,17 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@3
+    --file: t.c--
+    int
+    main
+    {
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main   {
       return a + 0;
     }
@@ -406,6 +920,23 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main ) {
       int a = 99;
       return a + 0;
@@ -416,6 +947,23 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main(  {
       int a = 99;
       return a + 0;
@@ -426,6 +974,19 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       return a + 0;
     }
@@ -435,6 +996,19 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
     }
@@ -443,6 +1017,14 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
     }
 ------------------------------------------------------------
@@ -450,6 +1032,19 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
     }
@@ -458,6 +1053,19 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       return a + 0;
     }
@@ -466,6 +1074,19 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       return a + 0;
     }
@@ -474,6 +1095,19 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
     }
@@ -483,6 +1117,18 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@3
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99
     }
@@ -492,6 +1138,15 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@4
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
                 ;
     }
@@ -501,6 +1156,18 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@4
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    return
+    a
+    +
+    0
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       return a + 0
     }
@@ -509,6 +1176,15 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
                   ;
     }
@@ -518,6 +1194,20 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@2
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
                 ;
       return a + 0;
@@ -528,6 +1218,23 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99
       return a + 0;
@@ -538,6 +1245,20 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
                   ;
@@ -548,6 +1269,23 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
       return a + 0
@@ -558,6 +1296,15 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@4
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int
     }
@@ -567,6 +1314,17 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@4
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    a
+    =
+    99
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
           a = 99
     }
@@ -575,6 +1333,15 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
                 ;
     }
@@ -583,6 +1350,18 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    return
+    a
+    +
+    0
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       return a + 0
     }
@@ -591,6 +1370,15 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
                   ;
     }
@@ -600,6 +1388,23 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
           a = 99;
       return a + 0;
@@ -610,6 +1415,21 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int       ;
       return a + 0;
@@ -619,6 +1439,23 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99
       return a + 0;
@@ -628,6 +1465,20 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
                   ;
@@ -637,6 +1488,23 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
       return a + 0
@@ -647,6 +1515,17 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@4
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    ;
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int       ;
                   ;
@@ -656,6 +1535,20 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
                   ;
@@ -665,6 +1558,21 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int       ;
       return a + 0;
@@ -674,6 +1582,21 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int       ;
       return a + 0;
@@ -683,6 +1606,20 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
                   ;
@@ -693,6 +1630,18 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@3
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    ;
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a     ;
                   ;
@@ -703,6 +1652,19 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@3
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    =
+    99
+    ;
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int   = 99;
                   ;
@@ -713,6 +1675,18 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@3
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    ;
+    return
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int       ;
       return      ;
@@ -723,6 +1697,20 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@3
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    ;
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int       ;
              a + 0;
@@ -733,6 +1721,23 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    =
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int   = 99;
       return a + 0;
@@ -743,6 +1748,22 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a     ;
       return a + 0;
@@ -753,6 +1774,23 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
              a + 0;
@@ -763,6 +1801,21 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
       return      ;
@@ -773,6 +1826,19 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@4
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    ;
+    return
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a     ;
       return      ;
@@ -782,6 +1848,21 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
       return      ;
@@ -791,6 +1872,22 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a     ;
       return a + 0;
@@ -800,6 +1897,22 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a     ;
       return a + 0;
@@ -809,6 +1922,21 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
       return      ;
@@ -819,6 +1947,20 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@3
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    ;
+    return
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a =   ;
       return      ;
@@ -829,6 +1971,20 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@3
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    99
+    ;
+    return
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a   99;
       return      ;
@@ -839,6 +1995,20 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@3
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a     ;
       return a    ;
@@ -849,6 +2019,21 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@3
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    ;
+    return
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a     ;
       return   + 0;
@@ -859,6 +2044,23 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    99
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a   99;
       return a + 0;
@@ -869,6 +2071,23 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    ;
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a =   ;
       return a + 0;
@@ -879,6 +2098,23 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
       return   + 0;
@@ -889,6 +2125,22 @@ translationUnit {id=1}
 ============Testing the following program: pass=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
       return a    ;
@@ -910,42 +2162,20 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
-    int main() {
-      int a = 99;
-      return      ;
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    ;
+    return
+    ;
     }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int main() {
-      int a     ;
-      return a    ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int main() {
-      int a     ;
-      return a    ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int main() {
-      int a = 99;
-      return      ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a =   ;
       return      ;
@@ -955,6 +2185,20 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    99
+    ;
+    return
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a   99;
       return      ;
@@ -964,6 +2208,20 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a     ;
       return a    ;
@@ -974,6 +2232,21 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a   99;
       return a    ;
@@ -984,6 +2257,21 @@ translationUnit {id=1}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a =   ;
       return a    ;
@@ -993,6 +2281,21 @@ translationUnit {id=1}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
       return      ;
@@ -1003,60 +2306,72 @@ translationUnit {id=1}
 ========Fixpoint iteration 2. Reducer: pristine_hdd=========
 
 The spar-tree is the following.
-translationUnit {id=100}
-|___(+) {id=101,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=103,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___(?) {id=104,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=184,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=188,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |___directDeclarator {id=175,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=183,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=177,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=179,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=180,slot_type=LeftParen}
-        |           |___Token:) {id=182,slot_type=RightParen}
-        |___compoundStatement {id=106,slot_type=compoundStatement}
-            |___Token:{ {id=107,slot_type=LeftBrace}
-            |___(?) {id=108,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=111,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___aux_rule__declaration_3 {id=140,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=141,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=174,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=142,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=145,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:a {id=170,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=147,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=148,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=149,slot_type=Assign}
-            |       |   |               |___Token:99 {id=167,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=143,slot_type=Semi}
-            |       |___jumpStatement {id=115,slot_type=[aux_rule__blockItemList_2,statement,jumpStatement]}
-            |           |___aux_rule__jumpStatement_4 {id=118,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-            |           |   |___Token:return {id=119,slot_type=Return}
-            |           |   |___(?) {id=120,slot_type=optional__postfixExpression_1}
-            |           |       |___Token:a {id=138,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-            |           |___Token:; {id=117,slot_type=Semi}
-            |___Token:} {id=109,slot_type=RightBrace}
+translationUnit {id=104}
+|___(+) {id=105,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=107,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=108,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=191,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=195,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=182,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=190,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=184,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=186,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=187,slot_type=LeftParen}
+        |           |___Token:) {id=189,slot_type=RightParen}
+        |___compoundStatement {id=110,slot_type=compoundStatement}
+            |___Token:{ {id=111,slot_type=LeftBrace}
+            |___(?) {id=112,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=115,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___aux_rule__declaration_3 {id=146,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=147,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=181,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=148,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=151,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:a {id=177,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=153,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=154,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=155,slot_type=Assign}
+            |       |   |               |___Token:99 {id=174,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=149,slot_type=Semi}
+            |       |___jumpStatement {id=120,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=123,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=124,slot_type=Return}
+            |           |   |___(?) {id=125,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:a {id=144,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |           |___Token:; {id=122,slot_type=Semi}
+            |___Token:} {id=113,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1067,6 +2382,18 @@ translationUnit {id=100}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@2
+    --file: t.c--
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     {
     int
     a
@@ -1082,6 +2409,18 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     {
     int
     a
@@ -1097,6 +2436,12 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1106,12 +2451,20 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    --file: <formatted tokenized program in its original format>--
     int
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    main
+    (
+    )
+    --file: <formatted tokenized program in its original format>--
     main
     (
     )
@@ -1120,6 +2473,18 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     {
     int
     a
@@ -1136,6 +2501,21 @@ translationUnit {id=100}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     main
     (
     )
@@ -1155,6 +2535,19 @@ translationUnit {id=100}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     {
     int
@@ -1171,6 +2564,12 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1180,12 +2579,22 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    --file: <formatted tokenized program in its original format>--
     int
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1197,6 +2606,18 @@ translationUnit {id=100}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@3
+    --file: t.c--
+    int
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     int
     a
@@ -1212,6 +2633,18 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     int
     a
@@ -1227,6 +2660,13 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1237,6 +2677,12 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1246,6 +2692,10 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    {
+    --file: <formatted tokenized program in its original format>--
     int
     {
 ------------------------------------------------------------
@@ -1254,6 +2704,17 @@ translationUnit {id=100}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@4
+    --file: t.c--
+    int
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    --file: <formatted tokenized program in its original format>--
     int
     int
     a
@@ -1268,6 +2729,10 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     }
 ------------------------------------------------------------
@@ -1275,6 +2740,7 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
     int
     {
     int
@@ -1286,107 +2752,8 @@ translationUnit {id=100}
     a
     ;
     }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [pristine-hdd]dd@1
+    --file: <formatted tokenized program in its original format>--
     int
-    main
-    (
-    )
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int
-    main
-    (
-    )
-    {
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [pristine-hdd]dd@1
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int
-    main
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int
-    (
-    )
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int
-    {
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    int
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [pristine-hdd]dd@1
-    int
-    (
-    )
     {
     int
     a
@@ -1403,6 +2770,212 @@ translationUnit {id=100}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int
+    main
+    (
+    )
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    }
+    --file: <formatted tokenized program in its original format>--
+    int
+    main
+    (
+    )
+    {
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    --file: <formatted tokenized program in its original format>--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int
+    main
+    --file: <formatted tokenized program in its original format>--
+    int
+    main
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int
+    (
+    )
+    --file: <formatted tokenized program in its original format>--
+    int
+    (
+    )
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int
+    {
+    --file: <formatted tokenized program in its original format>--
+    int
+    {
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    --file: <formatted tokenized program in its original format>--
+    int
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int
+    }
+    --file: <formatted tokenized program in its original format>--
+    int
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     {
@@ -1420,6 +2993,21 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1438,6 +3026,14 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1449,6 +3045,21 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1467,6 +3078,12 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    {
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     {
@@ -1476,6 +3093,14 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1487,6 +3112,20 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     {
@@ -1504,6 +3143,20 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     {
@@ -1521,6 +3174,14 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1532,6 +3193,13 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    {
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1542,6 +3210,13 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    )
+    {
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     )
@@ -1552,6 +3227,17 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    {
+    int
+    a
+    =
+    99
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     {
@@ -1567,6 +3253,15 @@ translationUnit {id=100}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@3
+    --file: t.c--
+    int
+    main
+    {
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     {
@@ -1580,6 +3275,21 @@ translationUnit {id=100}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     )
@@ -1599,6 +3309,21 @@ translationUnit {id=100}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1618,6 +3343,17 @@ translationUnit {id=100}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1632,6 +3368,19 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1648,6 +3397,14 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1659,6 +3416,19 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1675,6 +3445,17 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1689,6 +3470,17 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1703,6 +3495,19 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1719,6 +3524,18 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1734,6 +3551,15 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1747,6 +3573,16 @@ translationUnit {id=100}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@4
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    return
+    a
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1760,6 +3596,15 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1773,6 +3618,18 @@ translationUnit {id=100}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@2
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1789,6 +3646,21 @@ translationUnit {id=100}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1807,6 +3679,20 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1825,6 +3711,21 @@ translationUnit {id=100}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1843,6 +3744,15 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1855,6 +3765,17 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    a
+    =
+    99
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1869,6 +3790,15 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1881,6 +3811,16 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    return
+    a
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1894,6 +3834,15 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1907,6 +3856,21 @@ translationUnit {id=100}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    a
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1926,6 +3890,19 @@ translationUnit {id=100}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1942,6 +3919,21 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1960,6 +3952,20 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1977,6 +3983,21 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -1995,6 +4016,17 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    ;
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -2009,6 +4041,20 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -2026,6 +4072,19 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -2042,6 +4101,19 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -2058,6 +4130,20 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -2075,6 +4161,18 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    ;
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -2090,6 +4188,19 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    =
+    99
+    ;
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -2106,6 +4217,18 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    ;
+    return
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -2122,6 +4245,18 @@ translationUnit {id=100}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@3
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    ;
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -2138,6 +4273,21 @@ translationUnit {id=100}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    =
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -2156,6 +4306,20 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -2174,6 +4338,21 @@ translationUnit {id=100}
 ============Testing the following program: fail=============
 
 // edit action set type: [pristine-hdd]dd@1
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -2192,6 +4371,21 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -2210,6 +4404,20 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -2227,6 +4435,21 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -2245,6 +4468,21 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -2263,6 +4501,21 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -2281,6 +4534,21 @@ translationUnit {id=100}
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int
     main
     (
@@ -2299,7 +4567,7 @@ translationUnit {id=100}
 
 #test success = 1
 #test failure = 80
-#test result cache hits = 117
+#test result cache hits = 113
 #test execution cancelled = 0
 #node edit action set cache hits = 0
 #external test execution cache hits = 0

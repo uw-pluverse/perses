@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -25,7 +25,7 @@ abstract class AbstractReductionFile<K : AbstractDataKind, Self : AbstractReduct
   file: Path,
 ) {
 
-  val fileWithContent = FileWithContent(file)
+  val fileWithContent = FilePathWithContent(file)
 
   val file by fileWithContent::file
 

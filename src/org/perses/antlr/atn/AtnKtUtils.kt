@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,11 +16,20 @@
  */
 package org.perses.antlr.atn
 
+import com.google.common.collect.ImmutableList
 import org.antlr.v4.runtime.atn.ATNState
+import org.antlr.v4.runtime.atn.AtomTransition
+import org.antlr.v4.runtime.atn.NotSetTransition
+import org.antlr.v4.runtime.atn.RangeTransition
+import org.antlr.v4.runtime.atn.SetTransition
 import org.antlr.v4.runtime.atn.Transition
+import org.antlr.v4.runtime.atn.WildcardTransition
+import org.antlr.v4.runtime.misc.IntervalSet
+import org.perses.antlr.atn.simulator.transition.PrintableCharacters
 import org.perses.util.AbstractStackOrQueue
 import org.perses.util.SimpleQueue
 import org.perses.util.SimpleStack
+import org.perses.util.toImmutableList
 
 fun ATNState.transitionSequence(): Sequence<Transition> {
   return (0 until numberOfTransitions).asSequence().map { transition(it) }
@@ -65,4 +74,36 @@ private fun traverseATN(
         worklist.add(it.target)
       }
   }
+}
+fun Transition.getAllowedAsciiChars(): ImmutableList<Char> {
+  return when (this) {
+    is AtomTransition -> {
+      ImmutableList.of(this.label.toChar())
+    }
+    is NotSetTransition -> {
+      intersectPrintableCharacters(
+        this.label().complement(0, Char.MAX_VALUE.code),
+      )
+    }
+    is SetTransition -> {
+      intersectPrintableCharacters(this.label())
+    }
+    is WildcardTransition -> {
+      PrintableCharacters.ALL_PRINTABLE_CHARS_LIST
+    }
+    is RangeTransition -> {
+      intersectPrintableCharacters(this.label())
+    }
+    else -> {
+      error("unhandled transition type: ${this::class.java}")
+    }
+  }
+}
+
+private fun intersectPrintableCharacters(intervals: IntervalSet): ImmutableList<Char> {
+  val ascii = PrintableCharacters.createPrintableIntervalSet()
+  return ascii.and(intervals)
+    .toList()
+    .map { it.toChar() }
+    .toImmutableList()
 }

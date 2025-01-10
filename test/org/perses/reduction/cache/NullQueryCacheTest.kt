@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -35,7 +35,7 @@ class NullQueryCacheTest {
     val program = createTokenizedProgramFromString("int a;", LanguageC)
     val cachedResult = cache.getCachedResult(program)
     assertThat(cachedResult.isMiss()).isTrue()
-    cache.addResult(cachedResult.asCacheMiss(), PropertyTestResult.INTERESTING_RESULT)
+    cache.cacheProgramAndResult(cachedResult.asCacheMiss(), PropertyTestResult.INTERESTING_RESULT)
     assertThat(cache.size()).isEqualTo(0)
     cache.evictEntriesLargerThan(program)
     assertThat(cache.size()).isEqualTo(0)

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,10 +18,12 @@ package org.perses.util
 
 import com.google.common.base.Strings
 import com.google.common.collect.ImmutableList
+import com.google.common.collect.ImmutableSet
 import com.google.common.hash.HashCode
 import com.google.common.hash.Hashing
 import com.google.common.primitives.ImmutableIntArray
 import java.io.ByteArrayOutputStream
+import java.io.Closeable
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
@@ -46,11 +48,49 @@ import java.util.function.Predicate
 import java.util.zip.Deflater
 import java.util.zip.DeflaterOutputStream
 import java.util.zip.InflaterOutputStream
+import kotlin.io.path.ExperimentalPathApi
+import kotlin.io.path.deleteIfExists
 import kotlin.io.path.deleteRecursively
+import kotlin.io.path.isDirectory
 import kotlin.io.path.outputStream
 import kotlin.io.path.writeText
 
 object Util {
+
+  /**
+   * Note that the two resources are passed in as lambdas, because
+   * we want to make sure that if the second resource is failed to create,
+   * the first resource is still managed to be closed.
+   *
+   * If you pass in the two resources directly, if the creation of the second resource
+   * fails, the first resource will need to be closed manually.
+   */
+  inline fun <A : Closeable, B : Closeable, R> useResources(
+    creatorA: () -> A,
+    creatorB: (A) -> B,
+    block: (A, B) -> R,
+  ): R {
+    creatorA().use { a ->
+      creatorB(a).use { b ->
+        return block(a, b)
+      }
+    }
+  }
+
+  inline fun <A : Closeable, B : Closeable, C : Closeable, R> useResources(
+    creatorA: () -> A,
+    creatorB: (A) -> B,
+    creatorC: (A, B) -> C,
+    block: (A, B, C) -> R,
+  ): R {
+    creatorA().use { a ->
+      creatorB(a).use { b ->
+        creatorC(a, b).use { c ->
+          return block(a, b, c)
+        }
+      }
+    }
+  }
 
   object ExceptionOutputStream : OutputStream() {
     override fun write(p0: Int) {
@@ -83,6 +123,12 @@ object Util {
   }
 
   @JvmStatic
+  @Suppress("NOTHING_TO_INLINE")
+  fun countElementsInList(endIndexExclusive: Int, startIndexInclusive: Int): Int {
+    return endIndexExclusive - startIndexInclusive
+  }
+
+  @JvmStatic
   fun <T> removeElementsFromLinkedList(
     list: LinkedList<T>?,
     removalCondition: Predicate<T>,
@@ -103,6 +149,15 @@ object Util {
     val temp = list[i]
     list[i] = list[j]
     list[j] = temp
+  }
+
+  @Suppress("NOTHING_TO_INLINE")
+  inline fun <T> Iterator<T>.nextOrNull(): T? {
+    return if (hasNext()) {
+      next()
+    } else {
+      null
+    }
   }
 
   @JvmStatic
@@ -142,7 +197,7 @@ object Util {
   }
 
   @JvmStatic
-  fun <T> mergeContinuousElementsIntoRegions(
+  fun <T : Any> mergeContinuousElementsIntoRegions(
     list: List<T>,
     equalizer: (T, T) -> Boolean,
   ): ImmutableList<ImmutableList<T>> {
@@ -171,6 +226,17 @@ object Util {
     return result.build()
   }
 
+  data class NonEmptySublist<T>(
+    val interval: NonEmptyInternal,
+    val originalList: ImmutableList<T>,
+  ) {
+    val sublist = originalList.subList(interval.inclusiveStart, interval.exclusiveEnd)
+
+    init {
+      lazyAssert { sublist.size == interval.size() }
+    }
+  }
+
   data class NonEmptyInternal(
     val inclusiveStart: Int,
     val exclusiveEnd: Int,
@@ -187,16 +253,32 @@ object Util {
   }
 
   @JvmStatic
-  inline fun <T> slideResverseIfSlidable(
-    list: List<T>,
+  fun <T> slideReverseIfSlideable(
+    list: ImmutableList<T>,
     slidingWindowSize: Int,
-    visitor: (NonEmptyInternal) -> Unit,
-  ) {
+  ): Sequence<NonEmptySublist<T>> {
     require(slidingWindowSize > 0) { slidingWindowSize }
-    for (exclusiveEndIndex in list.size downTo slidingWindowSize) {
-      val inclusiveStartIndex = exclusiveEndIndex - slidingWindowSize
-      lazyAssert({ exclusiveEndIndex > inclusiveStartIndex })
-      visitor(NonEmptyInternal(inclusiveStartIndex, exclusiveEndIndex))
+    return slideReverseIfSlideable(
+      beginRangeInclusive = 0,
+      endRangeExclusive = list.size,
+      slidingWindowSize,
+    ).map { NonEmptySublist(it, list) }
+  }
+
+  @JvmStatic
+  fun slideReverseIfSlideable(
+    beginRangeInclusive: Int,
+    endRangeExclusive: Int,
+    slidingWindowSize: Int,
+  ): Sequence<NonEmptyInternal> {
+    require(endRangeExclusive > beginRangeInclusive)
+    require(slidingWindowSize > 0) { slidingWindowSize }
+    return sequence {
+      for (endIndex in endRangeExclusive downTo beginRangeInclusive + slidingWindowSize) {
+        val startIndex = endIndex - slidingWindowSize
+        lazyAssert({ endIndex > startIndex })
+        yield(NonEmptyInternal(startIndex, endIndex))
+      }
     }
   }
 
@@ -215,7 +297,7 @@ object Util {
     if (!Files.isDirectory(dir)) {
       /**
        * Multiple instances of Perses might be creating the same folder at the same time.
-       * Despite of data races, better to only check the folder is created successfully.
+       * Despite data races, better to only check the folder is created successfully.
        * In case of a file with same name, a `java.nio.file.FileAlreadyExistsException` will be
        * caught and ignored, because the following check raises `IllegalStateException`.
        */
@@ -265,6 +347,7 @@ object Util {
   }
 
   // TODO: test
+  @OptIn(ExperimentalPathApi::class)
   @JvmStatic
   fun clearDirectory(directory: Path) {
     require(Files.isDirectory(directory))
@@ -310,6 +393,35 @@ object Util {
   }
 
   @JvmStatic
+  fun listFilesInFolder(folder: Path): ImmutableSet<Path> {
+    val filesList = ImmutableSet.builder<Path>()
+
+    Files.newDirectoryStream(folder).use { stream ->
+      for (path in stream) {
+        filesList.add(path)
+      }
+    }
+
+    return filesList.build()
+  }
+
+  @OptIn(ExperimentalPathApi::class)
+  @JvmStatic
+  fun deleteFilesConditionally(dir: Path, deletePredicate: (Path) -> Boolean) {
+    Files.newDirectoryStream(dir).use { stream ->
+      for (path in stream) {
+        if (deletePredicate(path)) {
+          if (path.isDirectory()) {
+            path.deleteRecursively()
+          } else {
+            path.deleteIfExists()
+          }
+        }
+      }
+    }
+  }
+
+  @JvmStatic
   fun globWithRegex(dir: Path, pattern: Regex): ImmutableList<Path> {
     return globWithFilter(dir) {
       pattern.matches(it.fileName.toString())
@@ -339,7 +451,7 @@ object Util {
   }
 
   @JvmStatic
-  fun <T> computeDifference(superList: List<T>, subList: List<T>): ImmutableList<T> {
+  fun <T : Any> computeDifference(superList: List<T>, subList: List<T>): ImmutableList<T> {
     val builder = ImmutableList.builder<T>()
     visitDifference(superList, subList) { builder.add(it) }
     return builder.build()
@@ -398,13 +510,25 @@ object Util {
         }.build(),
         digest = hashListOfStrings(strings),
       )
+
+      fun createFromListOfFileContents(fileContents: List<AbstractFileContent>) = SHA512HashCode(
+        stringLengths = ImmutableIntArray.builder(fileContents.size).apply {
+          fileContents.forEach { fileContent -> add(fileContent.length) }
+        }.build(),
+        digest = Hashing.sha512().hashObject(
+          fileContents,
+          ListToByteFunnel { element, sink ->
+            element.hash(sink)
+          },
+        ),
+      )
     }
   }
 
   @JvmStatic
   fun hashListOfStrings(list: List<String>) = Hashing.sha512().hashObject(
     list,
-    StringListToByteFunnel,
+    ListToByteFunnel.StringListToByteFunnel,
   )
 
   @JvmStatic
@@ -423,12 +547,13 @@ object Util {
 
   @JvmStatic
   fun zipDecompress(bArray: ByteArray): ByteArray {
-    return ByteArrayOutputStream().use { output ->
-      InflaterOutputStream(output).use { ios ->
-        ios.write(bArray)
-        ios.finish()
-      }
-      output.toByteArray()
+    return useResources(
+      { ByteArrayOutputStream() },
+      { bos -> InflaterOutputStream(bos) },
+    ) { bos, ios ->
+      ios.write(bArray)
+      ios.finish()
+      bos.toByteArray()
     }
   }
 
@@ -473,10 +598,11 @@ object Util {
     klassUnderSamePkg: Class<*>,
     destination: Path,
   ) {
-    openResourceAsStream(resourceName, klassUnderSamePkg).use { resource ->
-      Files.newOutputStream(destination).use { output ->
-        resource.copyTo(output)
-      }
+    useResources(
+      { openResourceAsStream(resourceName, klassUnderSamePkg) },
+      { Files.newOutputStream(destination) },
+    ) { resource, output ->
+      resource.copyTo(output)
     }
   }
 
@@ -497,12 +623,14 @@ object Util {
     init {
       require(minLengthForPadding > 0)
     }
+
     private val generator = AtomicInteger(start)
 
     fun next(): String {
       return Strings.padStart(generator.getAndIncrement().toString(), minLengthForPadding, '0')
     }
   }
+
   data class SpaceSize(val bytes: Int) {
 
     companion object {
@@ -510,5 +638,9 @@ object Util {
 
       fun kiloBytes(kb: Int) = SpaceSize(bytes = kb * 1000)
     }
+  }
+
+  fun createTempDirFor(any: Any): Path {
+    return Files.createTempDirectory(any::class.java.canonicalName)
   }
 }

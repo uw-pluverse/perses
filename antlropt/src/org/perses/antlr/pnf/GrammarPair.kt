@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,7 +20,7 @@ import org.perses.antlr.ast.AbstractPersesRuleDefAst
 import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.ast.PersesGrammar.GrammarType
 import org.perses.antlr.ast.PersesLexerRuleAst
-import org.perses.util.FileNameContentPair
+import org.perses.util.FileNameContentLinesPair
 
 data class GrammarPair(
   val parserGrammar: PersesGrammar?,
@@ -88,21 +88,21 @@ data class GrammarPair(
     grammarSequence().joinToString(separator = "\n") { it.sourceCode }
   }
 
-  fun convertParserToFileContentPair(): FileNameContentPair? {
+  fun convertParserToFileContentPair(): FileNameContentLinesPair? {
     if (parserGrammar == null) {
       return null
     }
-    return FileNameContentPair.createFromString(
+    return FileNameContentLinesPair.createFromString(
       fileName = parserGrammar.computeAntlrBaseFileName(),
       content = parserGrammar.sourceCode,
     )
   }
 
-  fun convertLexerToFileContentPair(): FileNameContentPair? {
+  fun convertLexerToFileContentPair(): FileNameContentLinesPair? {
     if (lexerGrammar == null) {
       return null
     }
-    return FileNameContentPair.createFromString(
+    return FileNameContentLinesPair.createFromString(
       fileName = lexerGrammar.computeAntlrBaseFileName(),
       content = lexerGrammar.sourceCode,
     )

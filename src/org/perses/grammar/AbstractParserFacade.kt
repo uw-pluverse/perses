@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -36,6 +36,7 @@ import org.perses.antlr.toTokenType
 import org.perses.program.LanguageKind
 import org.perses.util.Util
 import org.perses.util.Util.lazyAssert
+import org.perses.util.ktFine
 import org.perses.util.transformToImmutableList
 import java.io.IOException
 import java.io.Reader
@@ -102,7 +103,13 @@ abstract class AbstractParserFacade protected constructor(
       parseString(sourceCode)
       true
     } catch (e: Exception) {
-      logger.atFine().withCause(e).log("The input source is not parsable.")
+      logger.ktFine {
+        """
+          The input source is not parsable.
+          
+          $e
+        """.trimIndent()
+      }
       false
     }
   }

@@ -1670,13 +1670,6 @@ field_name
     | BareIntLit
     ;
 
-pre_expr
-    : post_expr
-    | '&raw'
-    | aux_rule__pre_expr_5
-    | aux_rule__pre_expr_6
-    ;
-
 cmp_expr
     : bit_or_expr optional__cmp_expr_2
     ;
@@ -1686,15 +1679,6 @@ range_expr
     | aux_rule__range_expr_10
     ;
 
-assign_expr
-    : range_expr optional__assign_expr_2
-    ;
-
-pre_expr_no_struct
-    : post_expr_no_struct
-    | aux_rule__pre_expr_no_struct_4
-    ;
-
 cmp_expr_no_struct
     : optional__cmp_expr_no_struct_6 bit_or_expr_no_struct
     ;
@@ -1702,10 +1686,6 @@ cmp_expr_no_struct
 range_expr_no_struct
     : aux_rule__range_expr_no_struct_9
     | aux_rule__range_expr_no_struct_10
-    ;
-
-assign_expr_no_struct
-    : range_expr_no_struct optional__assign_expr_no_struct_2
     ;
 
 ident
@@ -2906,6 +2886,69 @@ or_expr_no_struct
     : and_expr_no_struct kleene_star__or_expr_no_struct_1
     ;
 
+aux_rule__type_4
+    : '&&' optional__type_1 optional__static_decl_1
+    ;
+
+kleene_star__type_3
+    : aux_rule__type_4*
+    ;
+
+type
+    : kleene_star__type_3 aux_rule__type_5
+    ;
+
+aux_rule__assign_expr_2
+    : range_expr altnt_block__assign_expr_3
+    ;
+
+kleene_star__assign_expr_1
+    : aux_rule__assign_expr_2*
+    ;
+
+assign_expr
+    : kleene_star__assign_expr_1 range_expr
+    ;
+
+aux_rule__assign_expr_no_struct_2
+    : range_expr_no_struct altnt_block__assign_expr_no_struct_3
+    ;
+
+kleene_star__assign_expr_no_struct_1
+    : aux_rule__assign_expr_no_struct_2*
+    ;
+
+assign_expr_no_struct
+    : kleene_star__assign_expr_no_struct_1 range_expr_no_struct
+    ;
+
+aux_rule__pre_expr_4
+    : expr_attrs
+    | '-'
+    | '!'
+    | '*'
+    | 'box'
+    | aux_rule__pre_expr_7
+    ;
+
+kleene_star__pre_expr_3
+    : aux_rule__pre_expr_4*
+    ;
+
+aux_rule__pre_expr_5
+    : post_expr
+    | '&raw'
+    | aux_rule__pre_expr_8
+    ;
+
+pre_expr
+    : kleene_star__pre_expr_3 aux_rule__pre_expr_5
+    ;
+
+pre_expr_no_struct
+    : kleene_star__pre_expr_3 post_expr_no_struct
+    ;
+
 kleene_plus__expr_attrs_2
     : attr+
     ;
@@ -2976,22 +3019,6 @@ aux_rule__pattern_without_mut_23
 
 optional__pattern_without_mut_24
     : aux_rule__pattern_without_mut_23?
-    ;
-
-aux_rule__assign_expr_1
-    : altnt_block__assign_expr_3 assign_expr
-    ;
-
-optional__assign_expr_2
-    : aux_rule__assign_expr_1?
-    ;
-
-aux_rule__assign_expr_no_struct_1
-    : altnt_block__assign_expr_no_struct_3 assign_expr_no_struct
-    ;
-
-optional__assign_expr_no_struct_2
-    : aux_rule__assign_expr_no_struct_1?
     ;
 
 optional__blocky_expr_11
@@ -3164,15 +3191,6 @@ altnt_block__post_expr_tail_7
     | BareIntLit
     ;
 
-altnt_block__pre_expr_3
-    : expr_attrs
-    | '-'
-    | '!'
-    | '*'
-    | 'box'
-    | aux_rule__pre_expr_7
-    ;
-
 altnt_block__cast_expr_3
     : 'as'
     | ':'
@@ -3219,10 +3237,10 @@ altnt_block__macro_invocation_semi_5
     | aux_rule__macro_invocation_semi_9
     ;
 
-type
+aux_rule__type_5
     : impl_trait_type_one_bound
     | trait_object_type_one_bound
-    | aux_rule__type_3
+    | aux_rule__type_6
     | tuple_type
     | never_type
     | raw_pointer_type
@@ -3231,10 +3249,9 @@ type
     | inferred_type
     | bare_function_type
     | macro_invocation
-    | aux_rule__type_4
     | impl_trait_type
     | trait_object_type
-    | aux_rule__type_5
+    | aux_rule__type_7
     ;
 
 altnt_block__extern_crate_2
@@ -3694,24 +3711,12 @@ aux_rule__field_2
     : kleene_star__field_1 field_name ':' expr
     ;
 
-aux_rule__pre_expr_5
-    : 'in' expr_no_struct block
-    ;
-
-aux_rule__pre_expr_6
-    : altnt_block__pre_expr_3 pre_expr
-    ;
-
 aux_rule__range_expr_9
     : or_expr altnt_block__range_expr_7
     ;
 
 aux_rule__range_expr_10
     : altnt_block__range_expr_8 optional__range_expr_1
-    ;
-
-aux_rule__pre_expr_no_struct_4
-    : altnt_block__pre_expr_3 pre_expr_no_struct
     ;
 
 aux_rule__range_expr_no_struct_9
@@ -3822,6 +3827,14 @@ aux_rule__pattern_without_mut_40
     : altnt_block__pattern_without_mut_31 optional__pattern_2
     ;
 
+aux_rule__pre_expr_7
+    : altnt_block__pattern_without_mut_29 optional__static_decl_1
+    ;
+
+aux_rule__pre_expr_8
+    : 'in' expr_no_struct block
+    ;
+
 aux_rule__visibility_restriction_2
     : 'in' simple_path
     ;
@@ -3906,10 +3919,6 @@ aux_rule__post_expr_tail_8
     : ident optional__post_expr_tail_5
     ;
 
-aux_rule__pre_expr_7
-    : altnt_block__pattern_without_mut_29 optional__static_decl_1
-    ;
-
 aux_rule__shift_expr_4
     : '<' '<'
     ;
@@ -3950,15 +3959,11 @@ aux_rule__macro_invocation_semi_9
     : '[' kleene_star__inner_attr_1 ']'
     ;
 
-aux_rule__type_3
+aux_rule__type_6
     : '(' ty_sum ')'
     ;
 
-aux_rule__type_4
-    : '&&' optional__type_1 optional__static_decl_1 type
-    ;
-
-aux_rule__type_5
+aux_rule__type_7
     : '{' expr '}'
     ;
 

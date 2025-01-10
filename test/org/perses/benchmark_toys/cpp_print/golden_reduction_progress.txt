@@ -1,91 +1,175 @@
 =====================Reduction starts.======================
 
 The initial program size is 35
+The command line options are:
+---
+help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+versionFlags:
+  groupName: "Version"
+  version: false
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFile: "t.cpp"
+  deps: []
+  sourceFile: "t.cpp"
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_perses_node_priority_with_dfs_delta_t.cpp"
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  fixpoint: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  enableLineSlicer: false
+  defaultDeltaDebuggerTypeForKleene: "DFS"
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  enableTrec: false
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: "TRUE"
+  nodeActionSetCaching: true
+  queryCacheRefreshThreshold: 0
+  enableLightweightRefreshing: true
+  enablePassCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "reduction_progress.txt"
+  appendToProgressDumpFile: true
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileDeltaDebugger: null
+experimentFlags:
+  groupName: "Experiment Control"
+  cacheType: "COMPACT_QUERY_CACHE"
+  onDemandReducerClasses: null
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+
+Parser Facade: class org.perses.grammar.cpp.PnfCppParserFacade
 ------------------------------------------------------------
 
 
+The sanity check has been performed. The result is PassingSanityCheckResult
 =Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
 
 The spar-tree is the following.
 translationUnit {id=1}
 |___(?) {id=2,slot_type=optional__translationUnit_1}
     |___(+) {id=3,slot_type=declarationseq}
-        |___Token:#include <iostream> {id=217,slot_type=[declaration,IncludeDirective]}
-        |___usingDirective {id=210,slot_type=[declaration,blockDeclaration,usingDirective]}
-        |   |___Token:using {id=211,slot_type=Using}
-        |   |___Token:namespace {id=212,slot_type=Namespace}
-        |   |___Token:std {id=216,slot_type=[namespaceName,typedefName,Identifier]}
-        |   |___Token:; {id=214,slot_type=Semi}
+        |___Token:#include <iostream> {id=222,slot_type=[declaration,IncludeDirective]}
+        |___usingDirective {id=215,slot_type=[declaration,blockDeclaration,usingDirective]}
+        |   |___Token:using {id=216,slot_type=Using}
+        |   |___Token:namespace {id=217,slot_type=Namespace}
+        |   |___Token:std {id=221,slot_type=[namespaceName,typedefName,Identifier]}
+        |   |___Token:; {id=219,slot_type=Semi}
         |___functionDefinition {id=7,slot_type=[declaration,functionDefinition]}
             |___(?) {id=8,slot_type=optional__simpleDeclaration_1}
-            |   |___(+) {id=200,slot_type=[declSpecifierSeq,kleene_plus__declSpecifierSeq_1]}
-            |       |___Token:int {id=208,slot_type=[declSpecifier,typeSpecifier,trailingTypeSpecifier,simpleTypeSpecifier,aux_rule__simpleTypeSpecifier_15,altnt_block__simpleTypeSpecifier_11,aux_rule__simpleTypeSpecifier_16,Int]}
-            |___noPointerDeclarator {id=130,slot_type=[declarator,pointerDeclarator,noPointerDeclarator]}
-            |   |___Token:main {id=198,slot_type=[aux_rule__noPointerDeclarator_6,aux_rule__noPointerDeclarator_8,declaratorid,idExpression,unqualifiedId,Identifier]}
-            |   |___(*) {id=132,slot_type=kleene_star__noPointerDeclarator_4}
-            |       |___parametersAndQualifiers {id=134,slot_type=[aux_rule__noPointerDeclarator_5,parametersAndQualifiers]}
-            |           |___Token:( {id=135,slot_type=LeftParen}
-            |           |___(?) {id=136,slot_type=optional__lambdaDeclarator_1}
-            |           |   |___parameterDeclarationList {id=139,slot_type=[parameterDeclarationClause,parameterDeclarationList]}
-            |           |       |___parameterDeclaration {id=140,slot_type=parameterDeclaration}
-            |           |       |   |___(+) {id=185,slot_type=[declSpecifierSeq,kleene_plus__declSpecifierSeq_1]}
-            |           |       |   |   |___Token:int {id=193,slot_type=[declSpecifier,typeSpecifier,trailingTypeSpecifier,simpleTypeSpecifier,aux_rule__simpleTypeSpecifier_15,altnt_block__simpleTypeSpecifier_11,aux_rule__simpleTypeSpecifier_16,Int]}
-            |           |       |   |___Token:argc {id=184,slot_type=[altnt_block__parameterDeclaration_5,declarator,pointerDeclarator,noPointerDeclarator,aux_rule__noPointerDeclarator_6,aux_rule__noPointerDeclarator_8,declaratorid,idExpression,unqualifiedId,Identifier]}
-            |           |       |___(*) {id=141,slot_type=kleene_star__parameterDeclarationList_2}
-            |           |           |___aux_rule__parameterDeclarationList_1 {id=142,slot_type=aux_rule__parameterDeclarationList_1}
-            |           |               |___Token:, {id=143,slot_type=Comma}
-            |           |               |___parameterDeclaration {id=144,slot_type=parameterDeclaration}
-            |           |                   |___(+) {id=166,slot_type=[declSpecifierSeq,kleene_plus__declSpecifierSeq_1]}
-            |           |                   |   |___Token:char {id=173,slot_type=[declSpecifier,typeSpecifier,trailingTypeSpecifier,simpleTypeSpecifier,aux_rule__simpleTypeSpecifier_15,altnt_block__simpleTypeSpecifier_11,Char]}
-            |           |                   |___pointerDeclarator {id=148,slot_type=[altnt_block__parameterDeclaration_5,declarator,pointerDeclarator]}
-            |           |                       |___(*) {id=149,slot_type=kleene_star__pointerDeclarator_3}
-            |           |                       |   |___Token:* {id=165,slot_type=[aux_rule__pointerDeclarator_2,pointerOperator,aux_rule__pointerOperator_7,Star]}
-            |           |                       |___noPointerDeclarator {id=150,slot_type=noPointerDeclarator}
-            |           |                           |___Token:argv {id=161,slot_type=[aux_rule__noPointerDeclarator_6,aux_rule__noPointerDeclarator_8,declaratorid,idExpression,unqualifiedId,Identifier]}
-            |           |                           |___(*) {id=152,slot_type=kleene_star__noPointerDeclarator_4}
-            |           |                               |___aux_rule__noPointerDeclarator_7 {id=154,slot_type=[aux_rule__noPointerDeclarator_5,aux_rule__noPointerDeclarator_7]}
-            |           |                                   |___Token:[ {id=155,slot_type=LeftBracket}
-            |           |                                   |___Token:] {id=156,slot_type=RightBracket}
-            |           |___Token:) {id=137,slot_type=RightParen}
+            |   |___(+) {id=205,slot_type=[declSpecifierSeq,kleene_plus__declSpecifierSeq_1]}
+            |       |___Token:int {id=213,slot_type=[declSpecifier,typeSpecifier,trailingTypeSpecifier,simpleTypeSpecifier,aux_rule__simpleTypeSpecifier_15,altnt_block__simpleTypeSpecifier_11,aux_rule__simpleTypeSpecifier_16,Int]}
+            |___noPointerDeclarator {id=135,slot_type=[declarator,pointerDeclarator,noPointerDeclarator]}
+            |   |___Token:main {id=203,slot_type=[aux_rule__noPointerDeclarator_6,aux_rule__noPointerDeclarator_8,declaratorid,idExpression,unqualifiedId,Identifier]}
+            |   |___(*) {id=137,slot_type=kleene_star__noPointerDeclarator_4}
+            |       |___parametersAndQualifiers {id=139,slot_type=[aux_rule__noPointerDeclarator_5,parametersAndQualifiers]}
+            |           |___Token:( {id=140,slot_type=LeftParen}
+            |           |___(?) {id=141,slot_type=optional__lambdaDeclarator_1}
+            |           |   |___parameterDeclarationList {id=144,slot_type=[parameterDeclarationClause,parameterDeclarationList]}
+            |           |       |___parameterDeclaration {id=145,slot_type=parameterDeclaration}
+            |           |       |   |___(+) {id=190,slot_type=[declSpecifierSeq,kleene_plus__declSpecifierSeq_1]}
+            |           |       |   |   |___Token:int {id=198,slot_type=[declSpecifier,typeSpecifier,trailingTypeSpecifier,simpleTypeSpecifier,aux_rule__simpleTypeSpecifier_15,altnt_block__simpleTypeSpecifier_11,aux_rule__simpleTypeSpecifier_16,Int]}
+            |           |       |   |___Token:argc {id=189,slot_type=[altnt_block__parameterDeclaration_5,declarator,pointerDeclarator,noPointerDeclarator,aux_rule__noPointerDeclarator_6,aux_rule__noPointerDeclarator_8,declaratorid,idExpression,unqualifiedId,Identifier]}
+            |           |       |___(*) {id=146,slot_type=kleene_star__parameterDeclarationList_2}
+            |           |           |___aux_rule__parameterDeclarationList_1 {id=147,slot_type=aux_rule__parameterDeclarationList_1}
+            |           |               |___Token:, {id=148,slot_type=Comma}
+            |           |               |___parameterDeclaration {id=149,slot_type=parameterDeclaration}
+            |           |                   |___(+) {id=171,slot_type=[declSpecifierSeq,kleene_plus__declSpecifierSeq_1]}
+            |           |                   |   |___Token:char {id=178,slot_type=[declSpecifier,typeSpecifier,trailingTypeSpecifier,simpleTypeSpecifier,aux_rule__simpleTypeSpecifier_15,altnt_block__simpleTypeSpecifier_11,Char]}
+            |           |                   |___pointerDeclarator {id=153,slot_type=[altnt_block__parameterDeclaration_5,declarator,pointerDeclarator]}
+            |           |                       |___(*) {id=154,slot_type=kleene_star__pointerDeclarator_3}
+            |           |                       |   |___Token:* {id=170,slot_type=[aux_rule__pointerDeclarator_2,pointerOperator,aux_rule__pointerOperator_7,Star]}
+            |           |                       |___noPointerDeclarator {id=155,slot_type=noPointerDeclarator}
+            |           |                           |___Token:argv {id=166,slot_type=[aux_rule__noPointerDeclarator_6,aux_rule__noPointerDeclarator_8,declaratorid,idExpression,unqualifiedId,Identifier]}
+            |           |                           |___(*) {id=157,slot_type=kleene_star__noPointerDeclarator_4}
+            |           |                               |___aux_rule__noPointerDeclarator_7 {id=159,slot_type=[aux_rule__noPointerDeclarator_5,aux_rule__noPointerDeclarator_7]}
+            |           |                                   |___Token:[ {id=160,slot_type=LeftBracket}
+            |           |                                   |___Token:] {id=161,slot_type=RightBracket}
+            |           |___Token:) {id=142,slot_type=RightParen}
             |___compoundStatement {id=12,slot_type=[functionBody,aux_rule__functionBody_3,compoundStatement]}
                 |___Token:{ {id=13,slot_type=LeftBrace}
                 |___(?) {id=14,slot_type=optional__compoundStatement_1}
                 |   |___(+) {id=16,slot_type=statementSeq}
-                |       |___expressionStatement {id=51,slot_type=[statement,aux_rule__statement_5,altnt_block__statement_2,expressionStatement]}
-                |       |   |___(?) {id=52,slot_type=optional__expressionStatement_1}
-                |       |   |   |___shiftExpression {id=64,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression]}
-                |       |   |       |___qualifiedId {id=119,slot_type=[additiveExpression,multiplicativeExpression,pointerMemberExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_6,idExpression,qualifiedId]}
-                |       |   |       |   |___nestedNameSpecifier {id=120,slot_type=nestedNameSpecifier}
-                |       |   |       |   |   |___(?) {id=123,slot_type=optional__nestedNameSpecifier_2}
-                |       |   |       |   |   |   |___Token:std {id=128,slot_type=[aux_rule__nestedNameSpecifier_1,theTypeName,className,Identifier]}
-                |       |   |       |   |   |___Token::: {id=124,slot_type=Doublecolon}
-                |       |   |       |   |___Token:cout {id=122,slot_type=[unqualifiedId,Identifier]}
-                |       |   |       |___(*) {id=66,slot_type=kleene_star__shiftExpression_2}
-                |       |   |           |___aux_rule__shiftExpression_1 {id=67,slot_type=aux_rule__shiftExpression_1}
-                |       |   |           |   |___aux_rule__shiftOperator_2 {id=109,slot_type=[shiftOperator,aux_rule__shiftOperator_2]}
-                |       |   |           |   |   |___Token:< {id=110,slot_type=Less}
-                |       |   |           |   |   |___Token:< {id=111,slot_type=Less}
-                |       |   |           |   |___(+) {id=106,slot_type=[additiveExpression,multiplicativeExpression,pointerMemberExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_6,kleene_plus__primaryExpression_1]}
-                |       |   |           |       |___Token:"not-interesting " {id=108,slot_type=[literal,StringLiteral]}
+                |       |___expressionStatement {id=52,slot_type=[statement,aux_rule__statement_5,altnt_block__statement_2,expressionStatement]}
+                |       |   |___(?) {id=53,slot_type=optional__expressionStatement_1}
+                |       |   |   |___shiftExpression {id=65,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression]}
+                |       |   |       |___qualifiedId {id=124,slot_type=[additiveExpression,multiplicativeExpression,pointerMemberExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_6,idExpression,qualifiedId]}
+                |       |   |       |   |___nestedNameSpecifier {id=125,slot_type=nestedNameSpecifier}
+                |       |   |       |   |   |___(?) {id=128,slot_type=optional__nestedNameSpecifier_2}
+                |       |   |       |   |   |   |___Token:std {id=133,slot_type=[aux_rule__nestedNameSpecifier_1,theTypeName,className,Identifier]}
+                |       |   |       |   |   |___Token::: {id=129,slot_type=Doublecolon}
+                |       |   |       |   |___Token:cout {id=127,slot_type=[unqualifiedId,Identifier]}
+                |       |   |       |___(*) {id=67,slot_type=kleene_star__shiftExpression_2}
                 |       |   |           |___aux_rule__shiftExpression_1 {id=68,slot_type=aux_rule__shiftExpression_1}
-                |       |   |           |   |___aux_rule__shiftOperator_2 {id=95,slot_type=[shiftOperator,aux_rule__shiftOperator_2]}
-                |       |   |           |   |   |___Token:< {id=96,slot_type=Less}
-                |       |   |           |   |   |___Token:< {id=97,slot_type=Less}
-                |       |   |           |   |___(+) {id=92,slot_type=[additiveExpression,multiplicativeExpression,pointerMemberExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_6,kleene_plus__primaryExpression_1]}
-                |       |   |           |       |___Token:"hello world" {id=94,slot_type=[literal,StringLiteral]}
+                |       |   |           |   |___aux_rule__shiftOperator_2 {id=113,slot_type=[shiftOperator,aux_rule__shiftOperator_2]}
+                |       |   |           |   |   |___Token:< {id=114,slot_type=Less}
+                |       |   |           |   |   |___Token:< {id=115,slot_type=Less}
+                |       |   |           |   |___(+) {id=110,slot_type=[additiveExpression,multiplicativeExpression,pointerMemberExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_6,kleene_plus__primaryExpression_1]}
+                |       |   |           |       |___Token:"not-interesting " {id=112,slot_type=[literal,StringLiteral]}
                 |       |   |           |___aux_rule__shiftExpression_1 {id=69,slot_type=aux_rule__shiftExpression_1}
-                |       |   |               |___aux_rule__shiftOperator_2 {id=81,slot_type=[shiftOperator,aux_rule__shiftOperator_2]}
-                |       |   |               |   |___Token:< {id=82,slot_type=Less}
-                |       |   |               |   |___Token:< {id=83,slot_type=Less}
-                |       |   |               |___(+) {id=78,slot_type=[additiveExpression,multiplicativeExpression,pointerMemberExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_6,kleene_plus__primaryExpression_1]}
-                |       |   |                   |___Token:"\n" {id=80,slot_type=[literal,StringLiteral]}
-                |       |   |___Token:; {id=53,slot_type=Semi}
+                |       |   |           |   |___aux_rule__shiftOperator_2 {id=98,slot_type=[shiftOperator,aux_rule__shiftOperator_2]}
+                |       |   |           |   |   |___Token:< {id=99,slot_type=Less}
+                |       |   |           |   |   |___Token:< {id=100,slot_type=Less}
+                |       |   |           |   |___(+) {id=95,slot_type=[additiveExpression,multiplicativeExpression,pointerMemberExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_6,kleene_plus__primaryExpression_1]}
+                |       |   |           |       |___Token:"hello world" {id=97,slot_type=[literal,StringLiteral]}
+                |       |   |           |___aux_rule__shiftExpression_1 {id=70,slot_type=aux_rule__shiftExpression_1}
+                |       |   |               |___aux_rule__shiftOperator_2 {id=83,slot_type=[shiftOperator,aux_rule__shiftOperator_2]}
+                |       |   |               |   |___Token:< {id=84,slot_type=Less}
+                |       |   |               |   |___Token:< {id=85,slot_type=Less}
+                |       |   |               |___(+) {id=80,slot_type=[additiveExpression,multiplicativeExpression,pointerMemberExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_6,kleene_plus__primaryExpression_1]}
+                |       |   |                   |___Token:"\n" {id=82,slot_type=[literal,StringLiteral]}
+                |       |   |___Token:; {id=54,slot_type=Semi}
                 |       |___jumpStatement {id=21,slot_type=[statement,aux_rule__statement_5,altnt_block__statement_2,jumpStatement]}
                 |           |___aux_rule__jumpStatement_4 {id=24,slot_type=[altnt_block__jumpStatement_3,aux_rule__jumpStatement_4]}
                 |           |   |___Token:return {id=25,slot_type=Return}
                 |           |   |___(?) {id=26,slot_type=optional__jumpStatement_2}
-                |           |       |___(+) {id=46,slot_type=[altnt_block__postfixExpression_8,expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,pointerMemberExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_6,kleene_plus__primaryExpression_1]}
-                |           |           |___Token:0 {id=48,slot_type=[literal,IntegerLiteral]}
+                |           |       |___(+) {id=47,slot_type=[altnt_block__postfixExpression_8,expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,pointerMemberExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_6,kleene_plus__primaryExpression_1]}
+                |           |           |___Token:0 {id=49,slot_type=[literal,IntegerLiteral]}
                 |           |___Token:; {id=23,slot_type=Semi}
                 |___Token:} {id=15,slot_type=RightBrace}
 ------------------------------------------------------------
@@ -95,6 +179,7 @@ translationUnit {id=1}
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     using namespace std;
     int main (int argc, char *argv[]) {
@@ -107,6 +192,8 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__translationUnit_1]dd@1
+    --file: t.cpp--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
@@ -120,6 +207,7 @@ Failed to reduce node 2
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     using namespace std;
     int main (int argc, char *argv[]) {
@@ -138,6 +226,9 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:declarationseq]remove whole except first
+    --file: t.cpp--
+    #include <iostream>
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
 ------------------------------------------------------------
 
@@ -145,6 +236,10 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:declarationseq]dd@1
+    --file: t.cpp--
+    #include <iostream>
+    using namespace std;
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     using namespace std;
 ------------------------------------------------------------
@@ -153,6 +248,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:declarationseq]dd@2
+    --file: t.cpp--
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+        return 0;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting " << "hello world" << "\n";
         return 0;
@@ -163,6 +264,13 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_plus:declarationseq]dd@1
+    --file: t.cpp--
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+        return 0;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting " << "hello world" << "\n";
@@ -185,6 +293,12 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.cpp--
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+        return 0;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting " << "hello world" << "\n";
         return 0;
@@ -202,6 +316,7 @@ Succeeded to reduce node 3 from 35 to 31
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting " << "hello world" << "\n";
@@ -212,6 +327,9 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.cpp--
+    #include <iostream>
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
 ------------------------------------------------------------
 
@@ -219,6 +337,10 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.cpp--
+    #include <iostream>
+                                                                ;
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
                                                                 ;
 ------------------------------------------------------------
@@ -234,6 +356,7 @@ Failed to reduce node 7
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting " << "hello world" << "\n";
@@ -252,6 +375,7 @@ Failed to reduce node 12
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting " << "hello world" << "\n";
@@ -263,6 +387,11 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+    --file: t.cpp--
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (int argc, char *argv[]) {
     }
@@ -279,6 +408,7 @@ Failed to reduce node 14
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting " << "hello world" << "\n";
@@ -296,6 +426,12 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_plus:statementSeq]remove whole except first
+    --file: t.cpp--
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting " << "hello world" << "\n";
@@ -321,10 +457,11 @@ Succeeded to reduce node 16 from 31 to 28
 ------------------------------------------------------------
 
 
-=================Reducing node 51, size=28==================
+=================Reducing node 52, size=28==================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting " << "hello world" << "\n";
@@ -334,6 +471,11 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.cpp--
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (int argc, char *argv[]) {
     }
@@ -343,32 +485,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.cpp--
     #include <iostream>
     int main (int argc, char *argv[]) {
                                                                 ;
     }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 51
-------------------------------------------------------------
-
-
-=================Reducing node 52, size=28==================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (int argc, char *argv[]) {
-        std::cout << "not-interesting " << "hello world" << "\n";
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (int argc, char *argv[]) {
                                                                 ;
@@ -382,10 +504,44 @@ Failed to reduce node 52
 ------------------------------------------------------------
 
 
-=================Reducing node 64, size=28==================
+=================Reducing node 53, size=28==================
 
 The current best program is the following
 
+    --file: t.cpp--
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world" << "\n";
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+                                                                ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+                                                                ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 53
+------------------------------------------------------------
+
+
+=================Reducing node 65, size=28==================
+
+The current best program is the following
+
+    --file: t.cpp--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting " << "hello world" << "\n";
@@ -395,13 +551,19 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=64}
+    NodeDeletionAction{target_node=65}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.cpp--
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+             cout                                               ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (int argc, char *argv[]) {
              cout                                               ;
@@ -412,6 +574,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.cpp--
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+                     "not-interesting "                         ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (int argc, char *argv[]) {
                      "not-interesting "                         ;
@@ -422,6 +590,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.cpp--
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+                                           "hello world"        ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (int argc, char *argv[]) {
                                            "hello world"        ;
@@ -432,6 +606,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.cpp--
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+                                                            "\n";
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (int argc, char *argv[]) {
                                                             "\n";
@@ -442,6 +622,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.cpp--
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std                                                     ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std                                                     ;
@@ -452,6 +638,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.cpp--
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout                                               ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout                                               ;
@@ -461,14 +653,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 64
+Failed to reduce node 65
 ------------------------------------------------------------
 
 
-=================Reducing node 130, size=28=================
+=================Reducing node 135, size=28=================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting " << "hello world" << "\n";
@@ -479,6 +672,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.cpp--
+    #include <iostream>
+    int main                          {
+        std::cout << "not-interesting " << "hello world" << "\n";
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main                          {
         std::cout << "not-interesting " << "hello world" << "\n";
@@ -488,14 +687,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 130
+Failed to reduce node 135
 ------------------------------------------------------------
 
 
-=================Reducing node 132, size=28=================
+=================Reducing node 137, size=28=================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting " << "hello world" << "\n";
@@ -505,6 +705,12 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.cpp--
+    #include <iostream>
+    int main                          {
+        std::cout << "not-interesting " << "hello world" << "\n";
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main                          {
         std::cout << "not-interesting " << "hello world" << "\n";
@@ -514,14 +720,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 132
+Failed to reduce node 137
 ------------------------------------------------------------
 
 
-=================Reducing node 134, size=28=================
+=================Reducing node 139, size=28=================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting " << "hello world" << "\n";
@@ -531,20 +738,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=134}
+    NodeDeletionAction{target_node=139}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 134
+Failed to reduce node 139
 ------------------------------------------------------------
 
 
-=================Reducing node 66, size=28==================
+=================Reducing node 67, size=28==================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting " << "hello world" << "\n";
@@ -554,6 +762,12 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.cpp--
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout                                               ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout                                               ;
@@ -564,6 +778,12 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_star:kleene_star__shiftExpression_2]dd@1
+    --file: t.cpp--
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting " << "hello world"        ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting " << "hello world"        ;
@@ -585,6 +805,12 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.cpp--
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout                                               ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout                                               ;
@@ -595,6 +821,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__shiftExpression_2]dd@1
+    --file: t.cpp--
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout << "not-interesting "                         ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout << "not-interesting "                         ;
@@ -605,6 +837,12 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_star:kleene_star__shiftExpression_2]dd@1
+    --file: t.cpp--
+    #include <iostream>
+    int main (int argc, char *argv[]) {
+        std::cout                       << "hello world"        ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout                       << "hello world"        ;
@@ -626,14 +864,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 66 from 28 to 22
+Succeeded to reduce node 67 from 28 to 22
 ------------------------------------------------------------
 
 
-=================Reducing node 136, size=22=================
+=================Reducing node 141, size=22=================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (int argc, char *argv[]) {
         std::cout                       << "hello world"        ;
@@ -644,6 +883,12 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_star:optional__lambdaDeclarator_1]dd@1
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -665,14 +910,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 136 from 22 to 14
+Succeeded to reduce node 141 from 22 to 14
 ------------------------------------------------------------
 
 
-=================Reducing node 119, size=14=================
+=================Reducing node 124, size=14=================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -683,6 +929,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+             cout                       << "hello world"        ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (                      ) {
              cout                       << "hello world"        ;
@@ -693,6 +945,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std                             << "hello world"        ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (                      ) {
         std                             << "hello world"        ;
@@ -702,14 +960,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 119
+Failed to reduce node 124
 ------------------------------------------------------------
 
 
-=================Reducing node 68, size=14==================
+=================Reducing node 69, size=14==================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -720,6 +979,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                                               ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (                      ) {
         std::cout                                               ;
@@ -729,14 +994,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 68
+Failed to reduce node 69
 ------------------------------------------------------------
 
 
-=================Reducing node 120, size=14=================
+=================Reducing node 125, size=14=================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -747,6 +1013,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+           ::cout                       << "hello world"        ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (                      ) {
            ::cout                       << "hello world"        ;
@@ -756,7 +1028,220 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 120
+Failed to reduce node 125
+------------------------------------------------------------
+
+
+=================Reducing node 98, size=14==================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 98
+------------------------------------------------------------
+
+
+=================Reducing node 222, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 222
+------------------------------------------------------------
+
+
+=================Reducing node 203, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 203
+------------------------------------------------------------
+
+
+=================Reducing node 142, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 142
+------------------------------------------------------------
+
+
+=================Reducing node 140, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 140
+------------------------------------------------------------
+
+
+=================Reducing node 129, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 129
+------------------------------------------------------------
+
+
+=================Reducing node 128, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+           ::cout                       << "hello world"        ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <iostream>
+    int main (                      ) {
+           ::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 128
+------------------------------------------------------------
+
+
+=================Reducing node 133, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 133
+------------------------------------------------------------
+
+
+=================Reducing node 127, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 127
+------------------------------------------------------------
+
+
+=================Reducing node 100, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 100
+------------------------------------------------------------
+
+
+=================Reducing node 99, size=14==================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 99
 ------------------------------------------------------------
 
 
@@ -764,6 +1249,7 @@ Failed to reduce node 120
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -777,155 +1263,11 @@ Failed to reduce node 95
 ------------------------------------------------------------
 
 
-=================Reducing node 217, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 217
-------------------------------------------------------------
-
-
-=================Reducing node 198, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 198
-------------------------------------------------------------
-
-
-=================Reducing node 137, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 137
-------------------------------------------------------------
-
-
-=================Reducing node 135, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 135
-------------------------------------------------------------
-
-
-=================Reducing node 124, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 124
-------------------------------------------------------------
-
-
-=================Reducing node 123, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    #include <iostream>
-    int main (                      ) {
-           ::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 123
-------------------------------------------------------------
-
-
-=================Reducing node 128, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 128
-------------------------------------------------------------
-
-
-=================Reducing node 122, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 122
-------------------------------------------------------------
-
-
 =================Reducing node 97, size=14==================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -939,10 +1281,11 @@ Failed to reduce node 97
 ------------------------------------------------------------
 
 
-=================Reducing node 96, size=14==================
+=================Reducing node 54, size=14==================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -952,58 +1295,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 96
-------------------------------------------------------------
-
-
-=================Reducing node 92, size=14==================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 92
-------------------------------------------------------------
-
-
-=================Reducing node 94, size=14==================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 94
-------------------------------------------------------------
-
-
-=================Reducing node 53, size=14==================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 53
+Failed to reduce node 54
 ------------------------------------------------------------
 
 
@@ -1011,6 +1303,7 @@ Failed to reduce node 53
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -1028,6 +1321,7 @@ Failed to reduce node 15
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -1045,6 +1339,7 @@ Failed to reduce node 13
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -1055,6 +1350,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__simpleDeclaration_1]dd@1
+    --file: t.cpp--
+    #include <iostream>
+        main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
         main (                      ) {
         std::cout                       << "hello world"        ;
@@ -1068,10 +1369,11 @@ Failed to reduce node 8
 ------------------------------------------------------------
 
 
-=================Reducing node 200, size=14=================
+=================Reducing node 205, size=14=================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -1081,20 +1383,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=200}
+    NodeDeletionAction{target_node=205}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 200
+Failed to reduce node 205
 ------------------------------------------------------------
 
 
-=================Reducing node 208, size=14=================
+=================Reducing node 213, size=14=================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -1104,56 +1407,57 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 208
+Failed to reduce node 213
 ------------------------------------------------------------
 
 
 =Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
 
 The spar-tree is the following.
-translationUnit {id=218}
-|___(?) {id=219,slot_type=optional__translationUnit_1}
-    |___(+) {id=220,slot_type=declarationseq}
-        |___Token:#include <iostream> {id=307,slot_type=[declaration,IncludeDirective]}
-        |___functionDefinition {id=223,slot_type=[declaration,functionDefinition]}
-            |___(?) {id=224,slot_type=optional__simpleDeclaration_1}
-            |   |___(+) {id=298,slot_type=[declSpecifierSeq,kleene_plus__declSpecifierSeq_1]}
-            |       |___Token:int {id=306,slot_type=[declSpecifier,typeSpecifier,trailingTypeSpecifier,simpleTypeSpecifier,aux_rule__simpleTypeSpecifier_15,altnt_block__simpleTypeSpecifier_11,aux_rule__simpleTypeSpecifier_16,Int]}
-            |___noPointerDeclarator {id=285,slot_type=[declarator,pointerDeclarator,noPointerDeclarator]}
-            |   |___Token:main {id=296,slot_type=[aux_rule__noPointerDeclarator_6,aux_rule__noPointerDeclarator_8,declaratorid,idExpression,unqualifiedId,Identifier]}
-            |   |___(*) {id=287,slot_type=kleene_star__noPointerDeclarator_4}
-            |       |___parametersAndQualifiers {id=289,slot_type=[aux_rule__noPointerDeclarator_5,parametersAndQualifiers]}
-            |           |___Token:( {id=290,slot_type=LeftParen}
-            |           |___Token:) {id=291,slot_type=RightParen}
-            |___compoundStatement {id=228,slot_type=[functionBody,aux_rule__functionBody_3,compoundStatement]}
-                |___Token:{ {id=229,slot_type=LeftBrace}
-                |___(?) {id=230,slot_type=optional__compoundStatement_1}
-                |   |___(+) {id=232,slot_type=statementSeq}
-                |       |___expressionStatement {id=236,slot_type=[statement,aux_rule__statement_5,altnt_block__statement_2,expressionStatement]}
-                |           |___(?) {id=237,slot_type=optional__expressionStatement_1}
-                |           |   |___shiftExpression {id=249,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression]}
-                |           |       |___qualifiedId {id=274,slot_type=[additiveExpression,multiplicativeExpression,pointerMemberExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_6,idExpression,qualifiedId]}
-                |           |       |   |___nestedNameSpecifier {id=275,slot_type=nestedNameSpecifier}
-                |           |       |   |   |___(?) {id=278,slot_type=optional__nestedNameSpecifier_2}
-                |           |       |   |   |   |___Token:std {id=283,slot_type=[aux_rule__nestedNameSpecifier_1,theTypeName,className,Identifier]}
-                |           |       |   |   |___Token::: {id=279,slot_type=Doublecolon}
-                |           |       |   |___Token:cout {id=277,slot_type=[unqualifiedId,Identifier]}
-                |           |       |___(*) {id=251,slot_type=kleene_star__shiftExpression_2}
-                |           |           |___aux_rule__shiftExpression_1 {id=252,slot_type=aux_rule__shiftExpression_1}
-                |           |               |___aux_rule__shiftOperator_2 {id=264,slot_type=[shiftOperator,aux_rule__shiftOperator_2]}
-                |           |               |   |___Token:< {id=265,slot_type=Less}
-                |           |               |   |___Token:< {id=266,slot_type=Less}
-                |           |               |___(+) {id=261,slot_type=[additiveExpression,multiplicativeExpression,pointerMemberExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_6,kleene_plus__primaryExpression_1]}
-                |           |                   |___Token:"hello world" {id=263,slot_type=[literal,StringLiteral]}
-                |           |___Token:; {id=238,slot_type=Semi}
-                |___Token:} {id=231,slot_type=RightBrace}
+translationUnit {id=223}
+|___(?) {id=224,slot_type=optional__translationUnit_1}
+    |___(+) {id=225,slot_type=declarationseq}
+        |___Token:#include <iostream> {id=314,slot_type=[declaration,IncludeDirective]}
+        |___functionDefinition {id=228,slot_type=[declaration,functionDefinition]}
+            |___(?) {id=229,slot_type=optional__simpleDeclaration_1}
+            |   |___(+) {id=305,slot_type=[declSpecifierSeq,kleene_plus__declSpecifierSeq_1]}
+            |       |___Token:int {id=313,slot_type=[declSpecifier,typeSpecifier,trailingTypeSpecifier,simpleTypeSpecifier,aux_rule__simpleTypeSpecifier_15,altnt_block__simpleTypeSpecifier_11,aux_rule__simpleTypeSpecifier_16,Int]}
+            |___noPointerDeclarator {id=292,slot_type=[declarator,pointerDeclarator,noPointerDeclarator]}
+            |   |___Token:main {id=303,slot_type=[aux_rule__noPointerDeclarator_6,aux_rule__noPointerDeclarator_8,declaratorid,idExpression,unqualifiedId,Identifier]}
+            |   |___(*) {id=294,slot_type=kleene_star__noPointerDeclarator_4}
+            |       |___parametersAndQualifiers {id=296,slot_type=[aux_rule__noPointerDeclarator_5,parametersAndQualifiers]}
+            |           |___Token:( {id=297,slot_type=LeftParen}
+            |           |___Token:) {id=298,slot_type=RightParen}
+            |___compoundStatement {id=233,slot_type=[functionBody,aux_rule__functionBody_3,compoundStatement]}
+                |___Token:{ {id=234,slot_type=LeftBrace}
+                |___(?) {id=235,slot_type=optional__compoundStatement_1}
+                |   |___(+) {id=237,slot_type=statementSeq}
+                |       |___expressionStatement {id=241,slot_type=[statement,aux_rule__statement_5,altnt_block__statement_2,expressionStatement]}
+                |           |___(?) {id=242,slot_type=optional__expressionStatement_1}
+                |           |   |___shiftExpression {id=254,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression]}
+                |           |       |___qualifiedId {id=281,slot_type=[additiveExpression,multiplicativeExpression,pointerMemberExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_6,idExpression,qualifiedId]}
+                |           |       |   |___nestedNameSpecifier {id=282,slot_type=nestedNameSpecifier}
+                |           |       |   |   |___(?) {id=285,slot_type=optional__nestedNameSpecifier_2}
+                |           |       |   |   |   |___Token:std {id=290,slot_type=[aux_rule__nestedNameSpecifier_1,theTypeName,className,Identifier]}
+                |           |       |   |   |___Token::: {id=286,slot_type=Doublecolon}
+                |           |       |   |___Token:cout {id=284,slot_type=[unqualifiedId,Identifier]}
+                |           |       |___(*) {id=256,slot_type=kleene_star__shiftExpression_2}
+                |           |           |___aux_rule__shiftExpression_1 {id=257,slot_type=aux_rule__shiftExpression_1}
+                |           |               |___aux_rule__shiftOperator_2 {id=270,slot_type=[shiftOperator,aux_rule__shiftOperator_2]}
+                |           |               |   |___Token:< {id=271,slot_type=Less}
+                |           |               |   |___Token:< {id=272,slot_type=Less}
+                |           |               |___(+) {id=267,slot_type=[additiveExpression,multiplicativeExpression,pointerMemberExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_6,kleene_plus__primaryExpression_1]}
+                |           |                   |___Token:"hello world" {id=269,slot_type=[literal,StringLiteral]}
+                |           |___Token:; {id=243,slot_type=Semi}
+                |___Token:} {id=236,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
-=================Reducing node 219, size=14=================
+=================Reducing node 224, size=14=================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -1163,19 +1467,22 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.cpp--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 219
+Failed to reduce node 224
 ------------------------------------------------------------
 
 
-=================Reducing node 220, size=14=================
+=================Reducing node 225, size=14=================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -1185,25 +1492,33 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=220}
+    NodeDeletionAction{target_node=225}
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.cpp--
+    #include <iostream>
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
 ------------------------------------------------------------
 
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=223}
+    NodeDeletionAction{target_node=228}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:declarationseq]dd@1
+    --file: t.cpp--
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main (                      ) {
         std::cout                       << "hello world"        ;
     }
@@ -1212,37 +1527,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 220
-------------------------------------------------------------
-
-
-=================Reducing node 223, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=223}
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    #include <iostream>
-                                                                ;
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 223
+Failed to reduce node 225
 ------------------------------------------------------------
 
 
@@ -1250,10 +1535,28 @@ Failed to reduce node 223
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
     }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=228}
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.cpp--
+    #include <iostream>
+                                                                ;
+    --file: <formatted tokenized program in its original format>--
+    #include <iostream>
+                                                                ;
 ------------------------------------------------------------
 
 
@@ -1263,10 +1566,29 @@ Failed to reduce node 228
 ------------------------------------------------------------
 
 
-=================Reducing node 230, size=14=================
+=================Reducing node 233, size=14=================
 
 The current best program is the following
 
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 233
+------------------------------------------------------------
+
+
+=================Reducing node 235, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -1277,6 +1599,11 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (                      ) {
     }
@@ -1285,14 +1612,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 230
+Failed to reduce node 235
 ------------------------------------------------------------
 
 
-=================Reducing node 232, size=14=================
+=================Reducing node 237, size=14=================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -1302,68 +1630,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=232}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 232
-------------------------------------------------------------
-
-
-=================Reducing node 236, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    #include <iostream>
-    int main (                      ) {
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    #include <iostream>
-    int main (                      ) {
-                                                                ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 236
-------------------------------------------------------------
-
-
-=================Reducing node 237, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    #include <iostream>
-    int main (                      ) {
-                                                                ;
-    }
+    NodeDeletionAction{target_node=237}
 ------------------------------------------------------------
 
 
@@ -1373,10 +1640,91 @@ Failed to reduce node 237
 ------------------------------------------------------------
 
 
-=================Reducing node 249, size=14=================
+=================Reducing node 241, size=14=================
 
 The current best program is the following
 
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <iostream>
+    int main (                      ) {
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+                                                                ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <iostream>
+    int main (                      ) {
+                                                                ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 241
+------------------------------------------------------------
+
+
+=================Reducing node 242, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+                                                                ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <iostream>
+    int main (                      ) {
+                                                                ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 242
+------------------------------------------------------------
+
+
+=================Reducing node 254, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -1386,12 +1734,18 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=249}
+    NodeDeletionAction{target_node=254}
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                                               ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (                      ) {
         std::cout                                               ;
@@ -1402,6 +1756,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+             cout                                               ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (                      ) {
              cout                                               ;
@@ -1412,6 +1772,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+                                           "hello world"        ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (                      ) {
                                            "hello world"        ;
@@ -1422,6 +1788,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std                                                     ;
+    }
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
     int main (                      ) {
         std                                                     ;
@@ -1431,14 +1803,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 249
+Failed to reduce node 254
 ------------------------------------------------------------
 
 
-=================Reducing node 285, size=14=================
+=================Reducing node 292, size=14=================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -1449,9 +1822,351 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.cpp--
     #include <iostream>
     int main                          {
         std::cout                       << "hello world"        ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <iostream>
+    int main                          {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 292
+------------------------------------------------------------
+
+
+=================Reducing node 281, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+             cout                       << "hello world"        ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <iostream>
+    int main (                      ) {
+             cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std                             << "hello world"        ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <iostream>
+    int main (                      ) {
+        std                             << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 281
+------------------------------------------------------------
+
+
+=================Reducing node 256, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                                               ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                                               ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 256
+------------------------------------------------------------
+
+
+=================Reducing node 257, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=257}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 257
+------------------------------------------------------------
+
+
+=================Reducing node 294, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.cpp--
+    #include <iostream>
+    int main                          {
+        std::cout                       << "hello world"        ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <iostream>
+    int main                          {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 294
+------------------------------------------------------------
+
+
+=================Reducing node 296, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=296}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 296
+------------------------------------------------------------
+
+
+=================Reducing node 282, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+           ::cout                       << "hello world"        ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <iostream>
+    int main (                      ) {
+           ::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 282
+------------------------------------------------------------
+
+
+=================Reducing node 270, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 270
+------------------------------------------------------------
+
+
+=================Reducing node 314, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 314
+------------------------------------------------------------
+
+
+=================Reducing node 303, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 303
+------------------------------------------------------------
+
+
+=================Reducing node 298, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 298
+------------------------------------------------------------
+
+
+=================Reducing node 297, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 297
+------------------------------------------------------------
+
+
+=================Reducing node 286, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 286
+------------------------------------------------------------
+
+
+=================Reducing node 285, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+           ::cout                       << "hello world"        ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <iostream>
+    int main (                      ) {
+           ::cout                       << "hello world"        ;
     }
 ------------------------------------------------------------
 
@@ -1462,237 +2177,11 @@ Failed to reduce node 285
 ------------------------------------------------------------
 
 
-=================Reducing node 274, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    #include <iostream>
-    int main (                      ) {
-             cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    #include <iostream>
-    int main (                      ) {
-        std                             << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 274
-------------------------------------------------------------
-
-
-=================Reducing node 251, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                                               ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 251
-------------------------------------------------------------
-
-
-=================Reducing node 252, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=252}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 252
-------------------------------------------------------------
-
-
-=================Reducing node 287, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    #include <iostream>
-    int main                          {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 287
-------------------------------------------------------------
-
-
-=================Reducing node 289, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=289}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 289
-------------------------------------------------------------
-
-
-=================Reducing node 275, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    #include <iostream>
-    int main (                      ) {
-           ::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 275
-------------------------------------------------------------
-
-
-=================Reducing node 264, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 264
-------------------------------------------------------------
-
-
-=================Reducing node 307, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 307
-------------------------------------------------------------
-
-
-=================Reducing node 296, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 296
-------------------------------------------------------------
-
-
-=================Reducing node 291, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 291
-------------------------------------------------------------
-
-
 =================Reducing node 290, size=14=================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -1706,10 +2195,11 @@ Failed to reduce node 290
 ------------------------------------------------------------
 
 
-=================Reducing node 279, size=14=================
+=================Reducing node 284, size=14=================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -1719,14 +2209,141 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 279
+Failed to reduce node 284
 ------------------------------------------------------------
 
 
-=================Reducing node 278, size=14=================
+=================Reducing node 272, size=14=================
 
 The current best program is the following
 
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 272
+------------------------------------------------------------
+
+
+=================Reducing node 271, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 271
+------------------------------------------------------------
+
+
+=================Reducing node 267, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 267
+------------------------------------------------------------
+
+
+=================Reducing node 269, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 269
+------------------------------------------------------------
+
+
+=================Reducing node 243, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 243
+------------------------------------------------------------
+
+
+=================Reducing node 236, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 236
+------------------------------------------------------------
+
+
+=================Reducing node 234, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
+    #include <iostream>
+    int main (                      ) {
+        std::cout                       << "hello world"        ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 234
+------------------------------------------------------------
+
+
+=================Reducing node 229, size=14=================
+
+The current best program is the following
+
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -1736,161 +2353,14 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.cpp--
     #include <iostream>
-    int main (                      ) {
-           ::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 278
-------------------------------------------------------------
-
-
-=================Reducing node 283, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
+        main (                      ) {
         std::cout                       << "hello world"        ;
     }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 283
-------------------------------------------------------------
-
-
-=================Reducing node 277, size=14=================
-
-The current best program is the following
-
+    --file: <formatted tokenized program in its original format>--
     #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 277
-------------------------------------------------------------
-
-
-=================Reducing node 266, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 266
-------------------------------------------------------------
-
-
-=================Reducing node 265, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 265
-------------------------------------------------------------
-
-
-=================Reducing node 261, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 261
-------------------------------------------------------------
-
-
-=================Reducing node 263, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 263
-------------------------------------------------------------
-
-
-=================Reducing node 238, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 238
-------------------------------------------------------------
-
-
-=================Reducing node 231, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 231
-------------------------------------------------------------
-
-
-=================Reducing node 229, size=14=================
-
-The current best program is the following
-
-    #include <iostream>
-    int main (                      ) {
+        main (                      ) {
         std::cout                       << "hello world"        ;
     }
 ------------------------------------------------------------
@@ -1902,36 +2372,11 @@ Failed to reduce node 229
 ------------------------------------------------------------
 
 
-=================Reducing node 224, size=14=================
+=================Reducing node 305, size=14=================
 
 The current best program is the following
 
-    #include <iostream>
-    int main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    #include <iostream>
-        main (                      ) {
-        std::cout                       << "hello world"        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 224
-------------------------------------------------------------
-
-
-=================Reducing node 298, size=14=================
-
-The current best program is the following
-
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -1941,20 +2386,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=298}
+    NodeDeletionAction{target_node=305}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 298
+Failed to reduce node 305
 ------------------------------------------------------------
 
 
-=================Reducing node 306, size=14=================
+=================Reducing node 313, size=14=================
 
 The current best program is the following
 
+    --file: t.cpp--
     #include <iostream>
     int main (                      ) {
         std::cout                       << "hello world"        ;
@@ -1964,7 +2410,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 306
+Failed to reduce node 313
 ------------------------------------------------------------
 
 

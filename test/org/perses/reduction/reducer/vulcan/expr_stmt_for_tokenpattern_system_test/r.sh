@@ -6,15 +6,23 @@ set -o xtrace
 
 readonly FILE="t.c"
 readonly OUTPUT="temp.txt"
+readonly VALGRIND_OUTPUT="valgrind_temp.txt"
 readonly EXE="./temp.out"
 
-clang -fsanitize=memory "${FILE}" -o "${EXE}" || exit 1
-"${EXE}" > "${OUTPUT}" 2>&1
+# Make sure both gcc and clang can capture all possible warnings.
+gcc -Wall -Wextra "${FILE}" > "${OUTPUT}" 2>&1 || exit 1
+clang -Wall -Wextra "${FILE}" -o "${EXE}" >> "${OUTPUT}" 2>&1 || exit 1
+
+
+valgrind "${EXE}" > "${VALGRIND_OUTPUT}" 2>&1
 if [[ "$?" != 99 ]] ; then
   exit 1
 fi
-
-if grep --quiet "MemorySanitizer:" "${OUTPUT}" ; then
+if grep -q "Wimplicit-int" temp.txt || \
+   grep -q "defaulting to type" temp.txt || \
+   grep -q "return type defaults to" temp.txt || \
+   grep -q "uninitialized" temp.txt || \
+   grep -q "too few arguments" temp.txt ; then
   exit 1
 fi
 

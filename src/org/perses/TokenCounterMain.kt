@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -29,6 +29,7 @@ import org.perses.program.SourceFile
 import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import org.perses.util.cmd.AbstractCommandOptions
 import org.perses.util.cmd.AbstractMain
+import org.perses.util.cmd.CommandLineProcessor
 import java.io.OutputStream
 import java.io.PrintStream
 import java.nio.file.Files
@@ -36,15 +37,11 @@ import java.nio.file.Path
 import kotlin.properties.Delegates
 
 class TokenCounterMain(
-  args: Array<String>,
+  cmd: CommandOptions,
   private val printStream: PrintStream,
-) : AbstractMain<CommandOptions>(args) {
+) : AbstractMain<CommandOptions>(cmd) {
 
   private var tokenCount by Delegates.notNull<Int>()
-
-  override fun createCommandOptions(): CommandOptions {
-    return CommandOptions()
-  }
 
   private fun createParserFacadeFactory(): CompositeParserFacadeFactory {
     val builtin = builderWithBuiltinLanguages().build()
@@ -64,9 +61,10 @@ class TokenCounterMain(
   private fun countToken(): Int {
     val file = cmd.flags.file!!
     val parserFacadeFactory: AbstractParserFacadeFactory = createParserFacadeFactory()
-    val language = parserFacadeFactory.computeLanguageKindWithFileName(file)
-    val sourceFile = SourceFile(file, language!!)
-    val parserFacade = parserFacadeFactory.createParserFacade(sourceFile.dataKind)
+    val language = parserFacadeFactory.computeLanguage(cmd.extFlags.languageName, file)
+    val sourceFile = SourceFile(file, language)
+    val parserFacade = parserFacadeFactory.getParserFacadeListForOrNull(sourceFile.dataKind)!!
+      .defaultParserFacade.create()
     val tokens = parserFacade.parseIntoTokens(sourceFile.file)
     var count = 0
     for (token in tokens) {
@@ -86,16 +84,18 @@ class TokenCounterMain(
       var file: Path? = null
       override fun validate() {
         requireNotNull(file)
-        require(Files.isRegularFile(file))
+        require(Files.isRegularFile(file!!))
       }
     }
   }
 
   companion object {
     @JvmStatic
-    fun countTokensOfFile(file: Path): Int {
-      val args = arrayOf(file.toString())
-      return TokenCounterMain(args, PrintStream(OutputStream.nullOutputStream())).let {
+    fun countTokensOfFile(file: Path, languageName: String): Int {
+      val cmd = CommandOptions()
+      cmd.flags.file = file
+      cmd.extFlags.languageName = languageName
+      return TokenCounterMain(cmd, PrintStream(OutputStream.nullOutputStream())).let {
         it.run()
         it.tokenCount
       }
@@ -103,7 +103,15 @@ class TokenCounterMain(
 
     @JvmStatic
     fun main(args: Array<String>) {
-      TokenCounterMain(args, System.out).run()
+      val processor = CommandLineProcessor(
+        cmdCreator = { CommandOptions() },
+        programName = TokenCounterMain::class.qualifiedName!!,
+        args = args,
+      )
+      if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
+        return
+      }
+      TokenCounterMain(processor.cmd, System.out).run()
     }
   }
 }

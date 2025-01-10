@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -60,14 +60,14 @@ object QueryCacheFactory {
           configuration,
         )
       COMPACT_QUERY_CACHE -> {
-        CompactQueryCache(
+        RccQueryCache(
           tokenizedProgram,
           profiler,
           configuration,
         )
       }
       COMPACT_QUERY_CACHE_FORMAT_SENSITIVE -> {
-        CompactQueryCacheFormatSensitive(
+        RccFormatSensitiveQueryCache(
           tokenizedProgram,
           profiler,
           configuration,

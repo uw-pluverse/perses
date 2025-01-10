@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,6 +17,7 @@
 package org.perses.util
 
 import org.perses.program.ScriptFile
+import org.perses.util.shell.Shells
 import java.nio.file.Path
 import kotlin.io.path.writeText
 
@@ -24,7 +25,7 @@ abstract class AbstractBashScriptGenerator {
 
   fun writeTo(path: Path): ScriptFile {
     val lines = ArrayList<String>()
-    lines.add("#!/usr/bin/env bash")
+    lines.add(Shells.SHEBANG_BASH)
     lines.add("")
 
     generateCode(lines)

@@ -1,20 +1,21 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
 package(default_visibility = [
     "//visibility:public",
 ])
-
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 kt_jvm_library(
     name = "source_file",
     srcs = [
         "AbstractReductionFile.kt",
         "BinaryReductionFile.kt",
-        "FileWithContent.kt",
+        "FilePathWithContent.kt",
         "ScriptFile.kt",
         "SourceFile.kt",
     ],
     deps = [
         ":language_kind",
+        "//:fastutil",
         "//:guava",
         "//src/org/perses/util",
     ],

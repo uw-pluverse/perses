@@ -5,7 +5,7 @@ DEFAULT_DEPS = [
     "//antlropt/src/org/perses/antlr/ast:ast_builder",
     "//src/org/perses/antlr:antlr_grammar_parser",
     "//src/org/perses/grammar/c:optc_parser_facade",
-    "//src/org/perses/grammar/java:parser_facade",
+    "//src/org/perses/grammar/java:parser_facade_java8",
     "//test/org/perses:test_util",
     "//test/org/perses/antlr:GrammarTestingUtility",
     "//:guava",

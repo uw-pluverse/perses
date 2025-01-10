@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,6 +18,7 @@ package org.perses.ppr.diff.list
 
 import com.google.common.collect.ImmutableList
 import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.reduction.AbstractReducerNameAndDesc
 import org.perses.reduction.TestScriptExecutorService
 import org.perses.util.AbstractEditOperation
 import org.perses.util.excludesRegion
@@ -27,8 +28,12 @@ class ListDiffSlicer(
   ioManagerList: ListDiffReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
 ) : AbstractListDiffReducer(
-  ioManagerList,
-  testScriptExecutorService,
+  nameAndDesc = object : AbstractReducerNameAndDesc(
+    shortName = ListDiffSlicer::class.simpleName!!,
+    description = "Slicer-based diff minimizer.",
+  ) {},
+  ioManager = ioManagerList,
+  testScriptExecutorService = testScriptExecutorService,
 ) {
 
   override fun reduce(state: ListDiffReductionState) {

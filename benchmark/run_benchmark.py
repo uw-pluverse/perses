@@ -40,6 +40,12 @@ def parse_arguments():
                         help="Benchmark with specified subject(s), separated by spaces if more than one.")
     parser.add_argument("-i", "--iterations", type=int, default=1,
                         help="Repeat the benchmark for the number of times specified")
+    parser.add_argument("--start-iter", type=int, default=0,
+                        help="The iteration to start. "
+                             "For example, if i = 3, and start-iter is 1,"
+                             "it will only run the experiments twice: 1st and 2nd. "
+                             "0-th iteration will be skipped."
+                             "This is useful for parallel execution.")
     parser.add_argument("-ss", "--show-subprocess", action="store_true", default=False,
                         help="Show all pipe stdout and stderr")
     parser.add_argument("-r", "--reducers", nargs='+', default=[],
@@ -62,6 +68,7 @@ class Parameter:
     reducers: List[str]
     show_subprocess: bool
     iterations: int
+    start_iter: int
     list_reducers: bool
     memory_profiler: bool
     output_dir: str
@@ -88,6 +95,10 @@ class Parameter:
         # iterations
         if self.iterations < 1:
             raise Exception('Error: Invalid ITERATIONS value')
+        if self.start_iter < 0:
+            raise Exception('Error: Invalid start-iter value')
+        if self.start_iter >= self.iterations:
+            raise Exception('Error: Invalid pair of ITERATIONS and start-iter')
         # reducers
         if not self.reducers:
             raise Exception('Error: No reducers detected')
@@ -135,14 +146,14 @@ def load_reducers(reducer_list: List[str], subprocess_flag: bool):
     return ret_code
 
 
-def extract_info_properties(subject_name: str) -> Tuple[str, str]:
+def extract_info_properties(benchmark_name: str, benchmark_root_dir: str) -> Tuple[str, str]:
     """Extract script file and source file from a subject folder"""
     info_dict = dict()
 
     # validate info.properties path
-    info_properties_path = os.path.join(__location__, subject_name, "info.properties")
+    info_properties_path = os.path.join(benchmark_root_dir, benchmark_name, "info.properties")
     if not os.path.exists(info_properties_path):
-        raise Exception(f'Error: info.properties not found: {info_properties_path}')
+        raise Exception(f'Error: info.properties not found: {os.getcwd()}/{info_properties_path}')
 
     with open(info_properties_path, 'r') as target_file:
         temp_list = target_file.read().splitlines()
@@ -156,8 +167,8 @@ def extract_info_properties(subject_name: str) -> Tuple[str, str]:
     if "script_file" not in info_dict:
         raise Exception('Error: No script_file found in info.properties')
 
-    source_file_path = os.path.join(__location__, subject_name, info_dict["source_file"])
-    script_file_path = os.path.join(__location__, subject_name, info_dict["script_file"])
+    source_file_path = os.path.join(benchmark_root_dir, benchmark_name, info_dict["source_file"])
+    script_file_path = os.path.join(benchmark_root_dir, benchmark_name, info_dict["script_file"])
 
     if not os.path.exists(source_file_path):
         raise Exception('Error: source_file not found: {}'.format(source_file_path))
@@ -182,7 +193,7 @@ def count_token(source_file_path: str) -> int:
 def check_java_version():
     """Validate java version must be 9+, so Xlog is supported"""
     java_version = subprocess.check_output(['java', '-version'], stderr=subprocess.STDOUT)
-    pattern = '\"(\d.+)\"'
+    pattern = '\"(\\d.+)\"'
     version_number = re.search(pattern, java_version.decode("utf-8"))[0]
     major_version = version_number[1:].split('.')[0]
 
@@ -259,6 +270,7 @@ def main():
         args.reducers,
         args.show_subprocess,
         args.iterations,
+        args.start_iter,
         args.list_reducers,
         args.memory_profiler,
         args.output_dir
@@ -289,7 +301,7 @@ def main():
             reducer_flags = get_extra_flags(reducer)
 
             # iteration
-            for iteration in range(parameter.iterations):
+            for iteration in range(parameter.start_iter, parameter.iterations):
                 print(f"***** Iteration: {iteration} *****")
 
                 # create report filename (and log filename if applicable)

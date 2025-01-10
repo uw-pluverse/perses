@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,6 +17,7 @@
 package org.perses.listener
 
 import org.perses.reduction.AbstractReductionListener
+import org.perses.reduction.event.AbstractTestScriptExecutionEvent
 import org.perses.reduction.event.BestProgramUpdateEvent
 import org.perses.reduction.event.FixpointIterationEndEvent
 import org.perses.reduction.event.FixpointIterationStartEvent
@@ -31,15 +32,13 @@ import org.perses.reduction.event.NodeReductionStartEvent
 import org.perses.reduction.event.ReductionEndEvent
 import org.perses.reduction.event.ReductionSkippedEvent
 import org.perses.reduction.event.ReductionStartEvent
-import org.perses.reduction.event.TestResultCacheHitEvent
+import org.perses.reduction.event.SanityCheckEvent
 import org.perses.reduction.event.TestScriptExecutionCacheEntryEvictionEvent
-import org.perses.reduction.event.TestScriptExecutionCanceledEvent
-import org.perses.reduction.event.TestScriptExecutionEvent
 import org.perses.reduction.event.TokenSlicingEndEvent
 import org.perses.reduction.event.TokenSlicingStartEvent
 
 /** A default reduction listener that does nothing.  */
-open class DefaultReductionListener : AbstractReductionListener() {
+abstract class DefaultReductionListener : AbstractReductionListener() {
   override fun onReductionStart(event: ReductionStartEvent) {}
   override fun onReductionEnd(event: ReductionEndEvent) {}
   override fun onFixpointIterationStart(event: FixpointIterationStartEvent) {}
@@ -52,8 +51,12 @@ open class DefaultReductionListener : AbstractReductionListener() {
   override fun onSlicingTokensEnd(event: TokenSlicingEndEvent) {}
   override fun onNodeReductionStart(event: NodeReductionStartEvent) {}
   override fun onNodeReductionEnd(event: NodeReductionEndEvent) {}
-  override fun onTestScriptExecution(event: TestScriptExecutionEvent) {}
-  override fun onTestResultCacheHit(event: TestResultCacheHitEvent) {}
+  override fun onTestScriptExecution(
+    event: AbstractTestScriptExecutionEvent.TestScriptExecutionEvent,
+  ) {}
+  override fun onTestResultCacheHit(
+    event: AbstractTestScriptExecutionEvent.TestResultCacheHitEvent,
+  ) {}
   override fun onNodeEditActionSetCacheHit(event: NodeEditActionSetCacheHitEvent) {}
   override fun onNodeActionSetCacheClearance(event: NodeEditActionSetCacheClearanceEvent) {}
   override fun onTestScriptExecutionCacheEntryEviction(
@@ -61,7 +64,11 @@ open class DefaultReductionListener : AbstractReductionListener() {
   ) {
   }
 
-  override fun onTestScriptExecutionCancelled(event: TestScriptExecutionCanceledEvent) {}
+  override fun onTestScriptExecutionCancelled(
+    event: AbstractTestScriptExecutionEvent.TestScriptExecutionCanceledEvent,
+  ) {}
   override fun onBestProgramUpdated(event: BestProgramUpdateEvent) {}
   override fun onReductionSkipped(event: ReductionSkippedEvent) {}
+  override fun onSanityCheck(event: SanityCheckEvent) {
+  }
 }

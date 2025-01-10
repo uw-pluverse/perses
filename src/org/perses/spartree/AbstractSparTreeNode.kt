@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -126,6 +126,7 @@ sealed class AbstractSparTreeNode(
       }
     }
   }
+
   override fun checkNodeIntegrity(): ErrorMessage? {
     return null
   }
@@ -179,23 +180,20 @@ sealed class AbstractSparTreeNode(
   }
 
   fun linkLeafNodes() {
-    // TODO(cnsun): this can be improved with the 'yield' and iterator.
-    val nodes = ArrayList<LexerRuleSparTreeNode>(5000)
+    var prev: LexerRuleSparTreeNode? = null
     preOrderVisit { node: AbstractSparTreeNode ->
       if (node.isPermanentlyDeleted) {
         return@preOrderVisit emptyList()
       }
       if (node is LexerRuleSparTreeNode) {
-        nodes.add(node)
+        if (prev != null) {
+          prev!!.next = node
+          node.prev = prev
+        }
+        prev = node
         return@preOrderVisit emptyList()
       }
       node.immutableChildView
-    }
-    for (i in 1 until nodes.size) {
-      val prev = nodes[i - 1]
-      val curr = nodes[i]
-      prev.next = curr
-      curr.prev = prev
     }
   }
 

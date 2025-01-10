@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,7 +17,7 @@
 package org.perses.reduction.reducer
 
 import com.google.common.collect.ImmutableList
-import org.perses.delta.EnumDeltaDebuggerType
+import org.perses.listminimizer.EnumListInputMinimizerType
 import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
@@ -40,7 +40,7 @@ object PersesNodePrioritizedBfsReducer {
           reducerAnnotation = this,
           reducerContext,
           AbstractNodeReducer.IReductionQueueStrategy.FOR_PRIORITY_QUEUE,
-          deltaDebuggerStrategy = SimpleDeltaDebuggerStrategy(EnumDeltaDebuggerType.BFS),
+          deltaDebuggerStrategy = SimpleDeltaDebuggerStrategy(EnumListInputMinimizerType.BFS),
         ),
       )
   }

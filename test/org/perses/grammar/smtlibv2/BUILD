@@ -1,5 +1,5 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
-load("//test/org/perses:test.bzl", "copy", "cross_folder_golden_test")
+load("//test/org/perses:test.bzl", "cross_folder_golden_test")
 
 cross_folder_golden_test(
     name = "test_pnf_smtlib2_grammar",

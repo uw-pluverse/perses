@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -40,7 +40,7 @@ class FailOnErrorAntlrErrorListener(private val sourceFile: String) : ANTLRError
     details.append("line: ").append(line).append('\n')
     details.append("column: ").append(charPositionInLine).append('\n')
     details.append("msg: ").append(msg).append('\n')
-    throw AntlrFailureException(e!!, sourceFile, details.toString())
+    throw AntlrFailureException(e, sourceFile, details.toString())
   }
 
   override fun reportAmbiguity(

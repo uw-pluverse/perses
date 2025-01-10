@@ -43,12 +43,12 @@ if ! timeout -s 9 30 valgrind "${EXE_CORRECT}"; then
   exit 1
 fi
 
-timeout -s 9 30 "${EXE_CORRECT}"  &> "${OUTPUT_CORRECT_1}" 
+timeout -s 9 30 "${EXE_CORRECT}"  &> "${OUTPUT_CORRECT_1}"
 
 if ! timeout -s 9 30 valgrind  "${EXE_CORRECT_2}" ; then
   exit 1
 fi
-timeout -s 9 30 "${EXE_CORRECT_2}" &> "${OUTPUT_CORRECT_2}" 
+timeout -s 9 30 "${EXE_CORRECT_2}" &> "${OUTPUT_CORRECT_2}"
 
 if ! diff "${OUTPUT_CORRECT_1}" "${OUTPUT_CORRECT_2}" ; then
   exit 1

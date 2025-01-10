@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,7 +16,11 @@
  */
 package org.perses.util
 
+import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.databind.module.SimpleModule
+import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import java.nio.file.Path
@@ -26,9 +30,25 @@ import kotlin.io.path.writeText
 object YamlUtil {
 
   @JvmStatic
-  fun toYamlString(value: Any): String {
+  fun toYamlString(value: Any, objectMapperCustomizer: (ObjectMapper) -> Unit = {}): String {
     val mapper = ObjectMapper(YAMLFactory())
+    objectMapperCustomizer(mapper)
     return mapper.writeValueAsString(value)
+  }
+
+  @JvmStatic
+  fun customizeObjectMapperByUsingBasenameForPath(it: ObjectMapper) {
+    val module = SimpleModule()
+    module.addSerializer(
+      Path::class.java,
+      object : StdSerializer<Path>(Path::class.java) {
+        override fun serialize(path: Path?, generator: JsonGenerator, p2: SerializerProvider) {
+          // Only write the basename for a path object.
+          generator.writeString(path?.fileName.toString())
+        }
+      },
+    )
+    it.registerModule(module)
   }
 
   @JvmStatic
@@ -46,5 +66,11 @@ object YamlUtil {
   @JvmStatic
   fun <T> fromYamlFile(yaml: Path, klass: Class<T>): T {
     return fromYamlString(yaml.readText(), klass)
+  }
+
+  fun <T> deepCopy(value: T, klass: Class<T>): T {
+    val mapper = ObjectMapper().registerKotlinModule()
+    val jsonString = mapper.writeValueAsString(value)
+    return mapper.readValue(jsonString, klass)
   }
 }

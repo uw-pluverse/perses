@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,7 +17,7 @@
 package org.perses.reduction.partition
 
 import com.google.common.collect.ImmutableList
-import org.perses.delta.xfs.Partition
+import org.perses.listminimizer.Partition
 import org.perses.reduction.ReductionLevel
 import org.perses.spartree.AbstractSparTreeNode
 
@@ -30,6 +30,7 @@ class SimpleLevelPartitionPolicy : AbstractLevelPartitionPolicy() {
     check(maxSizeOfPartition > 0) {
       "max number of nodes in per partition should be positive:$maxSizeOfPartition"
     }
+    region.cleanDeletedNodes()
     val nodeCount = region.nodeCount
     if (nodeCount == 0) {
       return ImmutableList.of()
@@ -41,7 +42,7 @@ class SimpleLevelPartitionPolicy : AbstractLevelPartitionPolicy() {
         builder.add(partition.build())
         partition = Partition.Builder(maxSizeOfPartition)
       }
-      partition.addNode(region.getNode(i))
+      partition.addElement(region.getNode(i))
     }
     if (partition.size > 0) {
       builder.add(partition.build())

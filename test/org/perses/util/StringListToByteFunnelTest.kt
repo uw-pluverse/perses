@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,16 +21,16 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.util.StringListToByteFunnel.BYTE_LIST_END_SEPARATOR
-import org.perses.util.StringListToByteFunnel.BYTE_LIST_START_SEPARATOR
-import org.perses.util.StringListToByteFunnel.ELEMENT_SEPARATOR
+import org.perses.util.ListToByteFunnel.Companion.BYTE_LIST_END_SEPARATOR
+import org.perses.util.ListToByteFunnel.Companion.BYTE_LIST_START_SEPARATOR
+import org.perses.util.ListToByteFunnel.Companion.ELEMENT_SEPARATOR
 import java.nio.ByteBuffer
 import java.nio.charset.Charset
 
 @RunWith(JUnit4::class)
 class StringListToByteFunnelTest {
 
-  val funnel = StringListToByteFunnel
+  val funnel = ListToByteFunnel.StringListToByteFunnel
   val sinkData = mutableListOf<String>()
   val sink = object : PrimitiveSink {
     override fun putByte(p0: Byte): PrimitiveSink {

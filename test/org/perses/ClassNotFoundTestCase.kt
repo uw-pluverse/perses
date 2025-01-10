@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,6 +19,7 @@ package org.perses
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.reduction.event.NodeEditActionSetCacheHitEvent
 
 @RunWith(JUnit4::class)
 class ClassNotFoundTestCase {
@@ -27,6 +28,8 @@ class ClassNotFoundTestCase {
   fun test() {
     // Cannot reproduce this issue: https://github.com/chengniansun/perses-private/issues/239
     // Should not crash.
-    Class.forName("org.perses.reduction.event.TestScriptExecutionCanceledEvent")
+    Class.forName(
+      NodeEditActionSetCacheHitEvent::class.java.canonicalName,
+    )
   }
 }

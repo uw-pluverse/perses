@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,14 +21,13 @@ import com.google.common.truth.Truth
 import com.google.common.truth.Truth.assertWithMessage
 import org.perses.CommandOptions
 import org.perses.grammar.SingleParserFacadeFactory.Companion.builderWithBuiltinLanguages
-import org.perses.listener.ProgressMonitorForNodeReducer
-import org.perses.program.printer.PrinterRegistry
+import org.perses.reduction.io.RegularReductionInputs
 import org.perses.util.AutoDeletableFolder
+import org.perses.util.Util
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.stream.Collectors
-import kotlin.io.path.absolutePathString
 
 /** The base class for testing the functionality of reducers.  */
 abstract class AbstractReducerFunctionalTest {
@@ -41,47 +40,52 @@ abstract class AbstractReducerFunctionalTest {
     cmdCustomizer: (CommandOptions) -> Unit,
     expected: String,
   ) {
-    AutoDeletableFolder(Files.createTempDirectory(javaClass.simpleName))
-      .use { folder ->
-        val cmd = CommandOptions("")
-        val tempSourceFile = folder.file.resolve(sourceFile)
-        Files.copy(Paths.get(reductionFolder, sourceFile), tempSourceFile)
-        val tempTestScript = folder.file.resolve(testScript)
-        Files.copy(Paths.get(reductionFolder, testScript), tempTestScript)
-        cmd.inputFlags.inputFile = tempSourceFile.absolutePathString()
-        cmd.inputFlags.testScript = tempTestScript.absolutePathString()
-        cmd.reductionControlFlags.fixpoint = true
-        cmd.algorithmControlFlags.reductionAlgorithm = algorithmType.shortName
-        val outputDir = folder.file.resolve("perses_output_dir")
-        cmd.resultOutputFlags.outputDir = outputDir
-        cmdCustomizer.invoke(cmd)
-        val reductionInput = RegularProgramReductionDriver.createReductionInputs(
-          builderWithBuiltinLanguages().build(),
-          cmd.inputFlags,
-        )
-        val progressMonitor = ProgressMonitorForNodeReducer.createForSystemOut(
-          PrinterRegistry.getPrinter(
-            cmd.reductionControlFlags.codeFormat
-              ?: reductionInput.mainDataKind.defaultCodeFormatControl,
-          ),
-        )
-
-        RegularProgramReductionDriver.create(
-          cmd,
-          builderWithBuiltinLanguages().build(),
-          ImmutableList.of(progressMonitor),
-        )
-          .use { driver ->
-            val bestFile = outputDir.resolve(tempSourceFile.fileName)
-            Truth.assertThat(Files.exists(bestFile)).isFalse()
-            driver.reduce()
-            val resultString = Files.lines(bestFile, StandardCharsets.UTF_8)
-              .collect(Collectors.joining(System.lineSeparator()))
-            assertWithMessage("reduction folder=%s, algorith=%s", reductionFolder, algorithmType)
-              .that(resultString.replace("\\s+".toRegex(), ""))
-              .isEqualTo(expected.replace("\\s+".toRegex(), ""))
-          }
+    val parserFacadeFactory = builderWithBuiltinLanguages().build()
+    Util.useResources(
+      { AsyncReductionListenerManager(listeners = ImmutableList.of()) },
+      { AutoDeletableFolder(Files.createTempDirectory(javaClass.simpleName)) },
+      { _, _ -> GlobalContext() },
+    ) { listenerManager, folder, globalContext ->
+      val cmd = CommandOptions()
+      val tempSourceFile = folder.file.resolve(sourceFile)
+      Files.copy(Paths.get(reductionFolder, sourceFile), tempSourceFile)
+      val tempTestScript = folder.file.resolve(testScript)
+      Files.copy(Paths.get(reductionFolder, testScript), tempTestScript)
+      cmd.inputFlags.inputFile = tempSourceFile
+      cmd.inputFlags.testScript = tempTestScript
+      cmd.reductionControlFlags.fixpoint = true
+      cmd.algorithmControlFlags.reductionAlgorithm = algorithmType.shortName
+      val outputDir = folder.file.resolve("perses_output_dir")
+      cmd.resultOutputFlags.outputDir = outputDir
+      cmdCustomizer.invoke(cmd)
+      val reductionInput = RegularReductionInputs.create(
+        testScriptPath = cmd.inputFlags.getTestScript(),
+        mainFilePath = cmd.inputFlags.getSourceFile(),
+        dependencyFiles = ImmutableList.of(),
+      ) {
+        parserFacadeFactory.computeLanguageKindOrThrow(it)
       }
+      val parserFacade = parserFacadeFactory.getParserFacadeListForOrNull(
+        reductionInput.initiallyDeterminedMainDataKind,
+      )!!.defaultParserFacade.create()
+      RegularProgramReductionDriver.create(
+        globalContext,
+        cmd,
+        reductionInput,
+        parserFacade,
+        codeFormatControl = reductionInput.initiallyDeterminedMainDataKind.defaultCodeFormatControl,
+        listenerManager,
+      ).use { driver ->
+        val bestFile = outputDir.resolve(tempSourceFile.fileName)
+        Truth.assertThat(Files.exists(bestFile)).isFalse()
+        driver.reduce()
+        val resultString = Files.lines(bestFile, StandardCharsets.UTF_8)
+          .collect(Collectors.joining(System.lineSeparator()))
+        assertWithMessage("reduction folder=%s, algorith=%s", reductionFolder, algorithmType)
+          .that(resultString.replace("\\s+".toRegex(), ""))
+          .isEqualTo(expected.replace("\\s+".toRegex(), ""))
+      }
+    }
   }
 
   protected fun runBenchmarkSubject(

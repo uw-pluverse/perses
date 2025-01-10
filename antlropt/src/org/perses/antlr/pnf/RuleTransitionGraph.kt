@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -77,7 +77,7 @@ class RuleTransitionGraph private constructor(
       }
       grammar.flattenedParserRulesSequence().forEach { (ruleName, alt) ->
         check(alt !is PersesAlternativeBlockAst) { "$ruleName : $alt" }
-        addEdge(graph, ruleName, alt, alt, childSelector)
+        addEdge(graph, sourceVertex = ruleName, edgeLabel = alt, ast = alt, childSelector)
       }
       return RuleTransitionGraph(graph)
     }
@@ -88,27 +88,27 @@ class RuleTransitionGraph private constructor(
 
     private fun addEdge(
       graph: DirectedMultigraph<RuleNameHandle, AbstractPersesRuleElement>,
-      ruleName: RuleNameHandle,
+      sourceVertex: RuleNameHandle,
       edgeLabel: AbstractPersesRuleElement,
       ast: AbstractPersesRuleElement,
       childSelector: (PersesSequenceAst) -> AbstractPersesRuleElement,
     ) {
       when (ast.tag) {
         AstTag.ALTERNATIVE_BLOCK -> ast.childSequence().forEach { child ->
-          addEdge(graph, ruleName, edgeLabel, child, childSelector)
+          addEdge(graph, sourceVertex, edgeLabel, child, childSelector)
         }
         AstTag.RULE_REF -> {
           val targetVertex = (ast as PersesRuleReferenceAst).ruleNameHandle
-          if (ruleName != targetVertex) {
-            graph.addEdge(ruleName, targetVertex, edgeLabel)
+          if (sourceVertex != targetVertex) {
+            graph.addEdge(sourceVertex, targetVertex, edgeLabel)
           }
         }
         AstTag.OPTIONAL -> {
-          addEdge(graph, ruleName, edgeLabel, (ast as PersesOptionalAst).body, childSelector)
+          addEdge(graph, sourceVertex, edgeLabel, (ast as PersesOptionalAst).body, childSelector)
         }
         AstTag.SEQUENCE -> {
           val seq = ast as PersesSequenceAst
-          addEdge(graph, ruleName, edgeLabel, childSelector(seq), childSelector)
+          addEdge(graph, sourceVertex, edgeLabel, childSelector(seq), childSelector)
         }
         else -> {
           /* do nothing */

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,46 +16,34 @@
  */
 package org.perses.reduction
 
-import org.perses.delta.EnumDeltaDebuggerType
 import org.perses.grammar.AbstractParserFacade
-import java.nio.file.Path
-import kotlin.io.path.name
+import org.perses.listminimizer.EnumListInputMinimizerType
+import org.perses.program.EnumFormatControl
+import org.perses.program.printer.PrinterRegistry
 
 /**
  * This is the internal configuration for Perses reducer.
  */
 class ReductionConfiguration(
-  val statisticsFile: Path?,
-  val progressDumpFile: ProgressDumpFile?,
   val fixpointReduction: Boolean,
   val enableTestScriptExecutionCaching: Boolean,
-  val defaultDeltaDebuggerTypeForKleene: EnumDeltaDebuggerType,
+  val defaultDeltaDebuggerTypeForKleene: EnumListInputMinimizerType,
   val numOfReductionThreads: Int,
   val parserFacade: AbstractParserFacade,
   val persesNodeReducerConfig: PersesNodeReducerConfiguration,
   val vulcanConfig: VulcanConfig,
 ) {
 
-  // TODO: convert the return type to File?
-  val testScriptStatisticsFile: Path?
-    get() = statisticsFile?.parent?.resolve("testscript-" + statisticsFile.name)
-
-  fun dumpConfiguration(): String {
-    val builder = StringBuilder()
-    for (field in ReductionConfiguration::class.java.declaredFields) {
-      builder.append(field.name).append('=').append(field[this]).append('\n')
-    }
-    return builder.toString()
-  }
+  val originalFormatPrinter = PrinterRegistry.getPrinter(
+    format = EnumFormatControl.ORIG_FORMAT,
+    lexerAtnWrapper = parserFacade.lexerAtnWrapper,
+  )
 
   init {
-
     require(numOfReductionThreads > 0) {
       "The number of reduction threads should be positive: $numOfReductionThreads"
     }
   }
-
-  data class ProgressDumpFile(val path: Path, val appendMode: Boolean)
 
   class PersesNodeReducerConfiguration(
     val maxEditCountForRegularRuleNode: Int,

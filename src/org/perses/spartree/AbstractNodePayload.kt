@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -114,9 +114,11 @@ abstract class AbstractNodePayload {
       val ancestorTopToBottom = ancestor.asSinglePayloadList
       val descendantTopToBottom = descendant.asSinglePayloadList
       for (desc in descendantTopToBottom.withIndex()) {
-        val match = ancestorTopToBottom.withIndex().findLast { it.value == desc.value } ?: continue
-        return AbstractNodePayload.create(
-          ImmutableList.builder<AbstractNodePayload.SinglePayload>()
+        val match = ancestorTopToBottom.withIndex().findLast {
+          it.value == desc.value
+        } ?: continue
+        return create(
+          ImmutableList.builder<SinglePayload>()
             .addAll(ancestorTopToBottom.subList(0, match.index + 1))
             .addAll(descendantTopToBottom.subList(desc.index + 1, descendantTopToBottom.size))
             .build(),

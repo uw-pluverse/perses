@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,6 +20,8 @@ import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
 import com.google.common.util.concurrent.ListenableFuture
 import org.perses.program.TokenizedProgram
+import org.perses.reduction.event.AbstractTestScriptExecutionEvent
+import org.perses.reduction.event.AbstractTestScriptExecutionEvent.TestScriptExecutionEvent
 import org.perses.reduction.event.BestProgramUpdateEvent
 import org.perses.reduction.event.FixpointIterationEndEvent
 import org.perses.reduction.event.FixpointIterationStartEvent
@@ -34,15 +36,14 @@ import org.perses.reduction.event.NodeReductionStartEvent
 import org.perses.reduction.event.ReductionEndEvent
 import org.perses.reduction.event.ReductionSkippedEvent
 import org.perses.reduction.event.ReductionStartEvent
-import org.perses.reduction.event.TestResultCacheHitEvent
+import org.perses.reduction.event.SanityCheckEvent
 import org.perses.reduction.event.TestScriptExecutionCacheEntryEvictionEvent
-import org.perses.reduction.event.TestScriptExecutionCanceledEvent
-import org.perses.reduction.event.TestScriptExecutionEvent
 import org.perses.reduction.event.TokenSlicingEndEvent
 import org.perses.reduction.event.TokenSlicingStartEvent
 import org.perses.spartree.AbstractActionSet
 import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.util.DaemonThreadPool
+import org.perses.util.FileNameContentPair
 import org.perses.util.ktSevere
 import java.io.Closeable
 
@@ -53,7 +54,8 @@ class AsyncReductionListenerManager(
   private val executorService = DaemonThreadPool.createSingleThreadPool()
 
   override fun close() {
-    DaemonThreadPool.shutdownOrThrow(executorService)
+    DaemonThreadPool.waitInfinitelyToShutdown(executorService)
+    listeners.forEach { it.close() }
   }
 
   private fun submitEvent(action: (AbstractReductionListener) -> Unit): ListenableFuture<*> {
@@ -74,6 +76,12 @@ class AsyncReductionListenerManager(
   fun onReductionStart(event: ReductionStartEvent) {
     submitEvent { listener ->
       listener.onReductionStart(event)
+    }
+  }
+
+  fun onSanityCheck(event: SanityCheckEvent) {
+    submitEvent { listener ->
+      listener.onSanityCheck(event)
     }
   }
 
@@ -159,12 +167,14 @@ class AsyncReductionListenerManager(
     result: PropertyTestResult,
     program: TokenizedProgram,
     edit: AbstractSparTreeEdit<*>,
+    outputCreator: (TokenizedProgram) -> ImmutableList<FileNameContentPair>,
   ) {
     val event = TestScriptExecutionEvent(
       System.currentTimeMillis(),
       result,
       program,
       edit,
+      outputCreator,
     )
     submitEvent { listener ->
       listener.onTestScriptExecution(event)
@@ -175,12 +185,14 @@ class AsyncReductionListenerManager(
     program: TokenizedProgram,
     edit: AbstractSparTreeEdit<*>,
     millisToCancelTheTask: Int,
+    outputCreator: (TokenizedProgram) -> ImmutableList<FileNameContentPair>,
   ) {
-    val event = TestScriptExecutionCanceledEvent(
+    val event = AbstractTestScriptExecutionEvent.TestScriptExecutionCanceledEvent(
       System.currentTimeMillis(),
       millisToCancelTheTask,
       program,
       edit,
+      outputCreator,
     )
     submitEvent { listener ->
       listener.onTestScriptExecutionCancelled(event)
@@ -191,12 +203,14 @@ class AsyncReductionListenerManager(
     result: PropertyTestResult,
     program: TokenizedProgram,
     edit: AbstractSparTreeEdit<*>,
+    outputCreator: (TokenizedProgram) -> ImmutableList<FileNameContentPair>,
   ) {
-    val event = TestResultCacheHitEvent(
+    val event = AbstractTestScriptExecutionEvent.TestResultCacheHitEvent(
       System.currentTimeMillis(),
       result,
       program,
       edit,
+      outputCreator,
     )
     submitEvent { listener ->
       listener.onTestResultCacheHit(event)

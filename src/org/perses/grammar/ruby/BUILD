@@ -1,15 +1,10 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("//antlropt/src/org/perses/antlr/pnf:pnf.bzl", "pnf_convert")
+load("//src/org/perses/grammar/adhoc:adhoc_grammar.bzl", "pnf_parser_facade_library")
+
 package(default_visibility = [
     "//visibility:public",
 ])
-
-load("//antlropt/src/org/perses/antlr/pnf:pnf.bzl", "pnf_convert")
-load(
-    "//src/org/perses/grammar:antlr_util.bzl",
-    "antlr_codegen_lexer",
-    "antlr_codegen_parser",
-)
-load("//src/org/perses/grammar/adhoc:adhoc_grammar.bzl", "pnf_parser_facade_library")
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 pnf_convert(
     name = "normalize_ruby_to_pnf",

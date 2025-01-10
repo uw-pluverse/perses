@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -27,6 +27,7 @@ import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.SparTree
 import org.perses.util.Util
 import org.perses.util.toImmutableList
+import org.perses.util.transformToImmutableList
 
 class ConcurrentTokenSlicer(
   reducerContext: ReducerContext,
@@ -43,12 +44,10 @@ class ConcurrentTokenSlicer(
     val tokens = tree.remainingLexerRuleNodes
     return sequenceOf(
       IndependentSlicingTasks(
-        ImmutableList.builder<AbstractSlicingTask>().apply {
-          Util.slideResverseIfSlidable(
-            tokens,
-            slidingWindowSize = tokenSlicingGranularity,
-          ) { add(TokenSlicingTask(tokens, it, tree)) }
-        }.build(),
+        Util.slideReverseIfSlideable(
+          tokens,
+          slidingWindowSize = tokenSlicingGranularity,
+        ).transformToImmutableList { sublist -> TokenSlicingTask(tokens, sublist.interval, tree) },
       ),
     )
   }
@@ -59,11 +58,7 @@ class ConcurrentTokenSlicer(
     tree: SparTree,
   ) : AbstractSlicingTask(
     tree,
-    nodeActionSetCache,
-    listenerManager,
-    queryCache,
-    ioManager,
-    configuration,
+    reducerContext,
     this@ConcurrentTokenSlicer.executorService::testProgramAsync,
   ) {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,6 +17,7 @@
 package org.perses.antlr.atn.tdtree
 
 import com.google.common.base.MoreObjects
+import com.google.common.collect.ImmutableList
 import org.perses.spartree.AbstractTreeNode
 
 sealed class AbstractTDTreeNode(
@@ -37,6 +38,31 @@ sealed class AbstractTDTreeNode(
       node.immutableChildView
     }
     return builder.toString()
+  }
+
+  fun getCanonicalLexemeList(countLimitPerChar: Int): ImmutableList<String> {
+    val resultBuilder = ImmutableList.builder<String>()
+    val lexeme = toLexeme()
+    var currIndex = 0
+    preOrderVisit { node ->
+      if (node is CharTDTreeNode) {
+        val charset = node.allowedAsciiChars
+        for (canoIndex in 0 until countLimitPerChar) {
+          val stringBuilder = StringBuilder(lexeme)
+          if (canoIndex >= charset.size) {
+            break
+          }
+          if (charset[canoIndex] >= node.char) {
+            break
+          }
+          stringBuilder.setCharAt(currIndex, charset[canoIndex])
+          resultBuilder.add(stringBuilder.toString())
+        }
+        currIndex += 1
+      }
+      node.immutableChildView
+    }
+    return resultBuilder.build()
   }
 
   @Deprecated("Call the other addChild method.", ReplaceWith("addChild(child)"))

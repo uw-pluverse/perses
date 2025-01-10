@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,12 +18,9 @@ package org.perses.antlr.reducer
 
 import org.perses.antlr.reducer.GrammarReductionDriver.Companion.create
 import org.perses.util.cmd.AbstractMain
+import org.perses.util.cmd.CommandLineProcessor
 
-class Main(args: Array<String>) : AbstractMain<CommandOptions>(args) {
-
-  override fun createCommandOptions(): CommandOptions {
-    return CommandOptions()
-  }
+class Main(cmd: CommandOptions) : AbstractMain<CommandOptions>(cmd) {
 
   public override fun internalRun() {
     create(cmd).use { driver -> driver.reduce() }
@@ -32,7 +29,15 @@ class Main(args: Array<String>) : AbstractMain<CommandOptions>(args) {
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      Main(args).run()
+      val processor = CommandLineProcessor(
+        cmdCreator = { CommandOptions() },
+        programName = Main::class.qualifiedName!!,
+        args = args,
+      )
+      if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
+        return
+      }
+      Main(processor.cmd).run()
     }
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -48,7 +48,7 @@ class MetaTokenInfoDbTest {
 
   @Test
   fun testCGrammar() {
-    assertThat(mapping.bimap.size).isEqualTo(123)
+    assertThat(mapping.bimap.size).isEqualTo(124)
 
     val inputs = listOf(
       "And" to PnfCLexer.And,

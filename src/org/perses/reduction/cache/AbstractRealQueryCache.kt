@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,11 +21,11 @@ import com.google.common.flogger.FluentLogger
 import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.PropertyTestResult
-import org.perses.reduction.cache.AbstractCacheRetrievalResult.Companion.create
 import org.perses.util.Util.lazyAssert
 import org.perses.util.ktWarning
 import java.util.ArrayList
 import java.util.HashMap
+import kotlin.system.measureNanoTime
 
 abstract class AbstractRealQueryCache<
   Encoding : AbstractProgramEncoding<Encoding>,
@@ -40,39 +40,46 @@ abstract class AbstractRealQueryCache<
   private val encoder: Encoder
   private val refreshStep: Int
 
-  override fun size(): Int {
+  final override fun size(): Int {
     return cache.size
   }
 
   @Synchronized
-  override fun getCachedResult(program: TokenizedProgram): AbstractCacheRetrievalResult {
-    val encoding = encoder.encode(program)
-    return create(
-      this,
-      program,
-      encoding,
-      cache[encoding],
-    )
+  final override fun getCachedResult(program: TokenizedProgram): AbstractCacheRetrievalResult {
+    val result: AbstractCacheRetrievalResult
+    val nanoDuration = measureNanoTime {
+      val encoding = encoder.encode(program)
+      result = AbstractCacheRetrievalResult.create(
+        this,
+        program,
+        encoding,
+        cache[encoding],
+      )
+    }
+    profiler.afterGetCachedResult(cache = this, nanoDuration = nanoDuration)
+    return result
   }
 
   @Synchronized
-  override fun addResult(
+  final override fun cacheProgramAndResult(
     program: AbstractCacheRetrievalResult.CacheMiss,
     result: PropertyTestResult,
   ) {
-    check(program.owner === this)
-    check(result.isNotInteresting)
-    @Suppress("UNCHECKED_CAST")
-    val key = program.getEncodingOrFail() as Encoding
-    val oldValue = cache.put(key, result)
-    if (oldValue != null) {
-      logger.ktWarning { "A query cache item was created before. This is unexpected." }
-      lazyAssert { oldValue.isInteresting == result.isInteresting }
+    val nanoDuration = measureNanoTime {
+      check(program.owner === this)
+      check(result.isNotInteresting)
+      @Suppress("UNCHECKED_CAST")
+      val key = program.getEncodingOrFail() as Encoding
+      val oldValue = cache.put(key, result)
+      if (oldValue != null) {
+        logger.ktWarning { "A query cache item was created before. This is unexpected." }
+        lazyAssert { oldValue.isInteresting == result.isInteresting }
+      }
     }
-    profiler.afterAddProgram(this)
+    profiler.afterCacheProgramAndResult(cache = this, nanoDuration = nanoDuration)
   }
 
-  private fun needsHeavyWeightCleanup(
+  private fun canTriggerHeavyweightCleanup(
     programInEncoder: ImmutableList<PersesTokenFactory.PersesToken>,
     currentBestProgram: TokenizedProgram,
   ): Boolean {
@@ -82,16 +89,21 @@ abstract class AbstractRealQueryCache<
   }
 
   @Synchronized
-  override fun evictEntriesLargerThan(best: TokenizedProgram) {
-    if (needsHeavyWeightCleanup(encoder.tokensInBaseProgram, best)) {
-      heavyweightCleanup(best)
-    } else if (configuration.enableLightweightRefreshing) {
-      lightweightCleanup(best)
+  final override fun evictEntriesLargerThan(best: TokenizedProgram) {
+    profiler.beforeCacheEviction(cache = this)
+    val nanoDuration = measureNanoTime {
+      if (encoder.supportsRccReEncoding &&
+        canTriggerHeavyweightCleanup(encoder.tokensInBaseProgram, best)
+      ) {
+        heavyweightCleanup(best)
+      } else if (configuration.enableLightweightRefreshing) {
+        lightweightCleanup(best)
+      }
     }
-    profiler.afterCacheEviction(this)
+    profiler.afterCacheEviction(cache = this, nanoDuration = nanoDuration)
   }
 
-  override fun triggerHeartBeat() {
+  final override fun triggerHeartBeat() {
     profiler.onHeartBeat(this)
   }
 
@@ -100,8 +112,8 @@ abstract class AbstractRealQueryCache<
     profiler: AbstractQueryCacheProfiler,
   ): Encoder
 
-  fun heavyweightCleanup(best: TokenizedProgram) {
-    val startTime = AbstractQueryCacheProfiler.now()
+  private fun heavyweightCleanup(best: TokenizedProgram) {
+    val startNanoTime = System.nanoTime()
     val newKeys = ArrayList<Encoding>()
     val newValues = ArrayList<PropertyTestResult>()
     val bestTokenCount = best.tokenCount()
@@ -138,14 +150,13 @@ abstract class AbstractRealQueryCache<
     for (i in 0 until newKeySize) {
       cache[newKeys[i]] = newValues[i]
     }
-    val endTime = AbstractQueryCacheProfiler.now()
-    profiler.onHeavyweightCacheRefreshing(
+    val endNanoTime = System.nanoTime()
+    profiler.afterHeavyweightCacheRefreshing(
       oldTokensInOrigin,
       best.tokens,
       cacheSizeBefore,
       cache.size,
-      startTime,
-      endTime,
+      nanoDuration = endNanoTime - startNanoTime,
     )
   }
 
@@ -165,7 +176,13 @@ abstract class AbstractRealQueryCache<
   }
 
   init {
-    encoder = createEncoder(tokenizedProgram, profiler)
+    val nanoDuration = measureNanoTime {
+      encoder = createEncoder(tokenizedProgram, profiler)
+    }
+    profiler.onCreatingEncoder(
+      tokensInOrigin = tokenizedProgram.tokens,
+      nanoDuration = nanoDuration,
+    )
     refreshStep = configuration.refreshStepFraction.multiply(tokenizedProgram.tokenCount())
   }
 }

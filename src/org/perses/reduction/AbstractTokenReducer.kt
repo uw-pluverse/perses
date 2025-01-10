@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,13 +18,13 @@ package org.perses.reduction
 
 import com.google.common.collect.ImmutableList
 import org.perses.antlr.RuleType
-import org.perses.delta.AbstractDeltaDebugger
-import org.perses.delta.AbstractDeltaDebugger.OnBestUpdateHandler
-import org.perses.delta.AbstractPropertyTestResultWithPayload
-import org.perses.delta.Configuration
-import org.perses.delta.IPropertyTester
-import org.perses.delta.PropertyTestResultWithPayload
-import org.perses.delta.SkipPropertyTestResult
+import org.perses.listminimizer.AbstractListInputMinimizer
+import org.perses.listminimizer.AbstractListInputMinimizer.OnBestUpdateHandler
+import org.perses.listminimizer.AbstractPropertyTestResultWithPayload
+import org.perses.listminimizer.Configuration
+import org.perses.listminimizer.IPropertyTester
+import org.perses.listminimizer.PropertyTestResultWithPayload
+import org.perses.listminimizer.SkipPropertyTestResult
 import org.perses.program.LanguageKind
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.PrinterRegistry
@@ -43,6 +43,8 @@ import org.perses.spartree.NodeDeletionTreeEdit
 import org.perses.spartree.ParserRuleSparTreeNode
 import org.perses.spartree.SparTree
 import org.perses.spartree.SparTreeSimplifier
+import org.perses.util.AbstractFileContent
+import org.perses.util.FileNameContentPair
 import org.perses.util.Util
 import org.perses.util.Util.lazyAssert
 import java.util.LinkedList
@@ -53,27 +55,18 @@ import java.util.LinkedList
  * it means the reducer works on token granularity.
  */
 abstract class AbstractTokenReducer protected constructor(
-  val redcucerAnnotation: ReducerAnnotation,
-  reducerContext: ReducerContext,
+  reducerAnnotation: ReducerAnnotation,
+  protected val reducerContext: ReducerContext,
 ) : AbstractReducer<TokenizedProgram, LanguageKind, TokenReductionIOManager>(
+  reducerAnnotation,
   reducerContext.ioManager,
   reducerContext.executorService,
 ) {
 
-  @JvmField
-  protected val configuration = reducerContext.configuration
-  protected val queryCache = reducerContext.queryCache
-
-  @JvmField
-  protected val listenerManager = reducerContext.listenerManager
-
-  @JvmField
-  protected val nodeActionSetCache = reducerContext.nodeActionSetCache
-
-  @JvmField
-  protected val actionSetProfiler = reducerContext.actionSetProfiler
-
   private var used = false
+
+  val reducerAnnotation: ReducerAnnotation
+    get() = nameAndDesc as ReducerAnnotation
 
   fun reduce(state: FixpointReductionState) {
     check(!used) { "A reducer is not designed to be reused." }
@@ -88,7 +81,7 @@ abstract class AbstractTokenReducer protected constructor(
 
     val loggingListener = object : AbstractSparTreeEditListener() {
       override fun onAfterSparTreeEditApplied(event: SparTreeEditEvent) {
-        listenerManager.onBestProgramUpdated(
+        reducerContext.listenerManager.onBestProgramUpdated(
           state.fixpointIterationStartEvent.createBestProgramUpdatedEvent(
             currentTimeMillis = System.currentTimeMillis(),
             programSizeBefore = event.programSizeBefore,
@@ -117,10 +110,10 @@ abstract class AbstractTokenReducer protected constructor(
     val best = analyzeResultsAndGetBest(futureList)
     lazyAssert {
       best == null ||
-        configuration.parserFacade.isSourceCodeParsable(
+        reducerContext.configuration.parserFacade.isSourceCodeParsable(
           PrinterRegistry.getPrinter(
             ioManager.getDefaultProgramFormat(),
-            configuration.parserFacade.lexerAtnWrapper,
+            reducerContext.configuration.parserFacade.lexerAtnWrapper,
           ).print(best.payload!!.edit.program).sourceCode,
         )
     }
@@ -159,10 +152,11 @@ abstract class AbstractTokenReducer protected constructor(
       val testResult = future.getWithTimeoutWarnings()
       future.payload?.let { payload ->
         cacheTestResultIfNotInteresting(payload.program, testResult)
-        listenerManager.onTestScriptExecution(
+        reducerContext.listenerManager.onTestScriptExecution(
           testResult,
           payload.program.program,
           payload.edit,
+          outputCreator = ::computeFileContentListForProgram,
         )
       }
       if (testResult.isInteresting) {
@@ -181,10 +175,11 @@ abstract class AbstractTokenReducer protected constructor(
       future.cancelWithInterruption()
       val duration = (System.currentTimeMillis() - start).toInt()
       future.payload?.let { payload ->
-        listenerManager.onTestScriptExecutionCancelled(
+        reducerContext.listenerManager.onTestScriptExecutionCancelled(
           payload.program.program,
           payload.edit,
           duration,
+          outputCreator = ::computeFileContentListForProgram,
         )
       }
     }
@@ -196,7 +191,7 @@ abstract class AbstractTokenReducer protected constructor(
     result: PropertyTestResult,
   ) {
     if (result.isNotInteresting) {
-      queryCache.addResult(program, result)
+      reducerContext.queryCache.cacheProgramAndResult(program, result)
     }
   }
 
@@ -213,7 +208,7 @@ abstract class AbstractTokenReducer protected constructor(
           IDENTITY_POST_CHECK,
         ) {
           val program = edit.program
-          val cachedResult = queryCache.getCachedResult(program)
+          val cachedResult = reducerContext.queryCache.getCachedResult(program)
           if (cachedResult.hasEncoding() &&
             !visitedCacheKeys.add(cachedResult.getEncodingOrFail())
           ) {
@@ -222,7 +217,12 @@ abstract class AbstractTokenReducer protected constructor(
           } else if (cachedResult.isHit()) {
             val testResult = cachedResult.asCacheHit().testResult
             lazyAssert({ !testResult.isInteresting }) { "It should be failure all the time." }
-            listenerManager.onTestResultCacheHit(testResult, program, edit)
+            reducerContext.listenerManager.onTestResultCacheHit(
+              testResult,
+              program,
+              edit,
+              outputCreator = ::computeFileContentListForProgram,
+            )
             // TODO(cnsun): need to use StopResult here.
             EmptyResult()
           } else {
@@ -232,6 +232,31 @@ abstract class AbstractTokenReducer protected constructor(
           }
         }
       }.toList()
+  }
+
+  protected fun computeFileContentListForProgram(
+    program: TokenizedProgram,
+  ): ImmutableList<FileNameContentPair> {
+    val contentList = ioManager.outputManagerFactory.createManagerFor(program)
+      .fileContentList
+    val builder = ImmutableList.builderWithExpectedSize<FileNameContentPair>(contentList.size + 1)
+    contentList.forEach {
+      builder.add(
+        FileNameContentPair(
+          fileName = it.first.baseName,
+          content = it.second,
+        ),
+      )
+    }
+    builder.add(
+      FileNameContentPair(
+        fileName = "<formatted tokenized program in its original format>",
+        content = AbstractFileContent.TextFileContent(
+          text = reducerContext.configuration.originalFormatPrinter.print(program).sourceCode,
+        ),
+      ),
+    )
+    return builder.build()
   }
 
   protected fun canBeEpsilon(nodeForTest: AbstractSparTreeNode): Boolean {
@@ -260,6 +285,7 @@ abstract class AbstractTokenReducer protected constructor(
           RuleType.OPTIONAL -> throw RuntimeException(
             "Optional should have a single child. " + node.printTreeStructure(),
           )
+
           else -> false
         }
       } else {
@@ -281,6 +307,7 @@ abstract class AbstractTokenReducer protected constructor(
     }
     return actionSetBuilder.build()
   }
+
   fun createPropertyTester(
     actionSetDescriptionPrefix: String,
     tree: SparTree,
@@ -294,8 +321,8 @@ abstract class AbstractTokenReducer protected constructor(
           "${actionSetDescriptionPrefix}dd@${it.size}",
         ).deleteNodes(it).build()
       }
-      if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
-        listenerManager.onNodeEditActionSetCacheHit(actionSet)
+      if (reducerContext.nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
+        reducerContext.listenerManager.onNodeEditActionSetCacheHit(actionSet)
         return SkipPropertyTestResult()
       }
       val treeEdit = tree.createNodeDeletionEdit(actionSet)
@@ -322,13 +349,15 @@ abstract class AbstractTokenReducer protected constructor(
     tree: SparTree,
     actionsDescription: String,
     input: ImmutableList<AbstractSparTreeNode>,
-  ): AbstractDeltaDebugger.Arguments<AbstractSparTreeNode, SparTreeDdminPayload> {
-    return AbstractDeltaDebugger.Arguments(
+  ): AbstractListInputMinimizer.Arguments<AbstractSparTreeNode, SparTreeDdminPayload> {
+    return AbstractListInputMinimizer.Arguments(
       needToTestEmpty = needToTestEmpty,
       input = input,
       propertyTester = createPropertyTester(actionSetDescriptionPrefix = actionsDescription, tree),
       onBestUpdateHandler = createOnBestUpdateHandler(),
       descriptionPrefix = actionsDescription,
+      weightProvider = { it.leafTokenCount },
+      listener = reducerContext.deltaDebuggerListener,
     )
   }
 

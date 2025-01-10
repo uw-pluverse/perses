@@ -1,8 +1,8 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
 package(default_visibility = [
     "//visibility:public",
 ])
-
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 kt_jvm_library(
     name = "cmd",
@@ -10,6 +10,7 @@ kt_jvm_library(
         "AbstractCommandLineFlagGroup.kt",
         "AbstractCommandOptions.kt",
         "AbstractMain.kt",
+        "CommandLineProcessor.kt",
         "VerbosityFlagGroup.kt",
         "VersionFlagGroup.kt",
     ],

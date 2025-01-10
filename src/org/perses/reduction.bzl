@@ -19,7 +19,9 @@ def reduce(
         query_cache_type = None,
         other_flags = None,
         extra_output_files = None,
+        delta_debugger_profile = None,
         perses_bin = DEFAULT_PERSES_BIN,
+        cmd_deps = None,
         deps = None):
     if "/" in source_file:
         fail("The source file should be in the current folder.")
@@ -54,6 +56,9 @@ def reduce(
     if statistics_file:
         args.append("--stat-dump-file $(location %s)" % statistics_file)
         outs.append(statistics_file)
+    if delta_debugger_profile:
+        args.append("--profile-delta-debugger $(location %s)" % delta_debugger_profile)
+        outs.append(delta_debugger_profile)
 
     if output_dir != None:
         main_result_file = "%s/%s" % (output_dir, source_file)
@@ -82,7 +87,10 @@ def reduce(
         outs += extra_output_files
 
     srcs = [source_file, test_script]
-    if deps:
+    if cmd_deps:  # The flags --deps
+        srcs.append(cmd_deps)
+        args.append("--deps $(location %s)" % cmd_deps)
+    if deps:  # This is the general deps which do not require to be specified in --deps
         srcs += deps
     native.genrule(
         name = name,

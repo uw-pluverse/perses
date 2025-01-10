@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,10 +16,8 @@
  */
 package org.perses.reduction.cache
 
-import com.google.common.collect.ImmutableList
 import org.perses.reduction.ReducerAnnotation
-import org.perses.util.FileNameContentPair
-import org.perses.util.Util.lazyAssert
+import org.perses.util.Util
 
 class PassLevelCache {
 
@@ -28,37 +26,31 @@ class PassLevelCache {
   }
 
   @PublishedApi
-  internal data class Key(
+  internal data class PassLevelCacheKey(
     val reducer: ReducerAnnotation,
-    val contentsOfFiles: ImmutableList<FileNameContentPair>,
+    val contentsOfFiles: Util.SHA512HashCode,
   ) {
     init {
-      require(contentsOfFiles.isNotEmpty()) { "Cannot be empty." }
+      require(contentsOfFiles.numOfStrings != 0) { "Cannot be empty." }
     }
   }
 
   @PublishedApi
-  internal val cache = HashSet<Key>()
+  internal val cache = HashSet<PassLevelCacheKey>()
 
   // Might need to get rid of the stale keys if the memory consumption is a problem.
   inline fun update(
     reducer: ReducerAnnotation,
-    contentsOfFilesProvider: () -> ImmutableList<FileNameContentPair>,
+    contentsOfFilesProvider: () -> Util.SHA512HashCode,
   ): PassLevelCacheResult {
-    val files = contentsOfFilesProvider()
-    val key = Key(reducer, files)
-    lazyAssert(
-      {
-        cache.isEmpty() ||
-          cache.first().contentsOfFiles.map { it.fileName } == files.map { it.fileName }
-      },
-    ) {
-      "The order of files should be the same."
-    }
-    return if (cache.add(key)) {
-      PassLevelCacheResult.NEW
-    } else {
-      PassLevelCacheResult.EXISTING_ALREADY
+    val hashcodeOfAllInputs = contentsOfFilesProvider()
+    val passLevelCacheKey = PassLevelCacheKey(reducer, hashcodeOfAllInputs)
+    synchronized(cache) {
+      return if (cache.add(passLevelCacheKey)) {
+        PassLevelCacheResult.NEW
+      } else {
+        PassLevelCacheResult.EXISTING_ALREADY
+      }
     }
   }
 }

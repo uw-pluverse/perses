@@ -1,6 +1,6 @@
-package(default_visibility = ["//visibility:public"])
-
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
+package(default_visibility = ["//visibility:public"])
 
 # This is the interim target for the ast in kotlin. After all Java files are migrated to kotlin,
 # this target should be renamed to 'ast'.

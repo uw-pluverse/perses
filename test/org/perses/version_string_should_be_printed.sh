@@ -5,7 +5,7 @@ set -o nounset
 
 readonly FILE="${1}"
 
-if grep "perses version" "${FILE}" && \
+if grep "org.perses.Main version" "${FILE}" && \
     grep "Built on" "${FILE}" ; then
   exit 0
 else

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,6 +17,7 @@
 package org.perses.reduction
 
 import com.google.common.base.Stopwatch
+import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Test
@@ -42,6 +43,7 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.concurrent.TimeUnit
+import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteRecursively
 
 /** Test for [TestScriptExecutorService]  */
@@ -61,6 +63,7 @@ class TestScriptExecutorServiceTest {
   private val reductionInputs = RegularReductionInputs(
     testScript,
     sourceFile,
+    dependencyFiles = ImmutableList.of(),
   )
 
   private val workingDirectory =
@@ -73,6 +76,7 @@ class TestScriptExecutorServiceTest {
 
   private val outputDir = workingDirectory.resolve("perses_output_dir")
 
+  @OptIn(ExperimentalPathApi::class)
   @After
   fun teardown() {
     if (Files.exists(workingDirectory)) {
@@ -104,7 +108,11 @@ class TestScriptExecutorServiceTest {
     System.setOut(newOut)
     System.setErr(newOut)
     try {
-      val reductionInputs = RegularReductionInputs(slowTestScript, sourceFile)
+      val reductionInputs = RegularReductionInputs(
+        slowTestScript,
+        sourceFile,
+        dependencyFiles = ImmutableList.of(),
+      )
       val ioManager = TokenReductionIOManager(
         workingFolder = workingDirectory,
         reductionInputs = reductionInputs,

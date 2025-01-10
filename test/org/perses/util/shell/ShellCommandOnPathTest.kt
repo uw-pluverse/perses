@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -27,6 +27,7 @@ import org.perses.util.Util
 import java.nio.file.Files.createFile
 import java.nio.file.Files.createTempDirectory
 import java.nio.file.Paths
+import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.createSymbolicLinkPointingTo
 import kotlin.io.path.deleteRecursively
 
@@ -36,6 +37,7 @@ class ShellCommandOnPathTest {
 
   val tempDir = createTempDirectory(javaClass.simpleName)
 
+  @OptIn(ExperimentalPathApi::class)
   @After
   fun teardown() {
     tempDir.deleteRecursively()

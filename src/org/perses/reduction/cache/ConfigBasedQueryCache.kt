@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -41,7 +41,7 @@ class ConfigBasedQueryCache : AbstractQueryCache() {
   }
 
   @Synchronized
-  override fun addResult(
+  override fun cacheProgramAndResult(
     program: AbstractCacheRetrievalResult.CacheMiss,
     result: PropertyTestResult,
   ) {

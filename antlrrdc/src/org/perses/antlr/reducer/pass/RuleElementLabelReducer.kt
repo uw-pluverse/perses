@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -25,6 +25,7 @@ import org.perses.antlr.ast.PersesRuleElementLabel
 import org.perses.antlr.ast.RuleNameRegistry
 import org.perses.antlr.pnf.MutableGrammar
 import org.perses.antlr.reducer.io.GrammarReductionIOManager
+import org.perses.reduction.AbstractReducerNameAndDesc
 import org.perses.reduction.TestScriptExecutorService
 import org.perses.util.ktInfo
 
@@ -32,6 +33,10 @@ class RuleElementLabelReducer(
   ioManager: GrammarReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
 ) : AbstractRuleElementReducer(
+  nameAndDesc = object : AbstractReducerNameAndDesc(
+    shortName = RuleElementLabelReducer::class.simpleName!!,
+    description = "",
+  ) {},
   ioManager,
   testScriptExecutorService,
 ) {

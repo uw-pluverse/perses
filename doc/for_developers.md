@@ -10,7 +10,7 @@ Perses is written in combination of Java 11 and Kotlin, and built with [Bazel](h
 To build, run
 
 ```
-bazel build //src/org/perses:perses_deploy.jar 
+bazelisk build //src/org/perses:perses_deploy.jar 
 ```
 
 To test, run

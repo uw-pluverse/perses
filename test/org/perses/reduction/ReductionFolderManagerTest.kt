@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,6 +16,7 @@
  */
 package org.perses.reduction
 
+import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Assert
@@ -45,7 +46,11 @@ class ReductionFolderManagerTest {
   private val testScript = ScriptFile(Paths.get("test_data/delta_1/r.sh"))
   private val sourceFile = SourceFile(Paths.get("test_data/delta_1/t.c"), LanguageC)
   private val lexerAtnWrapper = LexerAtnWrapper(PnfCLexer::class.java)
-  val reductionInputs = RegularReductionInputs(testScript, sourceFile)
+  val reductionInputs = RegularReductionInputs(
+    testScript,
+    sourceFile,
+    dependencyFiles = ImmutableList.of(),
+  )
   val outputManagerFactory = RegularOutputManagerFactory(
     reductionInputs,
     EnumFormatControl.COMPACT_ORIG_FORMAT,

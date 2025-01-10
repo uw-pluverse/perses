@@ -2,7 +2,9 @@
 
 import argparse
 import os
-import check_copyright
+# Make sure we import the check with the full path. 
+# See #762 in the private issue tracker.
+from copyright.pluverse_check_copyright import CopyrightChecker
 
 # noinspection PyInterpreter
 if __name__ == '__main__':
@@ -21,7 +23,7 @@ if __name__ == '__main__':
 
     with open(flags.copyright) as file:
         copyright_text = file.readlines()
-    copyright_checker = check_copyright.CopyrightChecker(copyright_text)
+    copyright_checker = CopyrightChecker(copyright_text)
 
     extensions = ['java', 'kt', "proto"]
     file_list = list()

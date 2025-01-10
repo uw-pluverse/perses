@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,27 +22,32 @@ import org.antlr.v4.runtime.Lexer
 import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.cmd.OutputFlagGroup
 import org.perses.cmd.ReductionControlFlagGroup
-import org.perses.grammar.AbstractParserFacadeFactory
+import org.perses.grammar.AbstractParserFacade
 import org.perses.ppr.diff.PPRDiffUtils
 import org.perses.program.LanguageKind
 import org.perses.program.PersesTokenFactory.PersesToken
-import org.perses.program.ScriptFile
-import org.perses.program.SourceFile
 import org.perses.program.TokenizedProgram
 import org.perses.program.TokenizedProgramFactory
 import org.perses.reduction.AbstractProgramReductionDriver.Companion.createSparTree
 import org.perses.reduction.AbstractReductionDriver
+import org.perses.reduction.AsyncReductionListenerManager
+import org.perses.reduction.createSnapshot
+import org.perses.reduction.event.ReductionStartEvent
+import org.perses.spartree.AbstractSparTreeNode
+import org.perses.spartree.AbstractUnmodifiableSparTree
 import org.perses.util.AbstractEditOperation
 import org.perses.util.ListAlignment
-import org.perses.util.ktInfo
-import java.nio.file.Path
+import org.perses.util.YamlUtil
+import java.lang.StringBuilder
+import java.lang.ref.WeakReference
 
 class ListDiffReductionDriver private constructor(
-  cmd: ListDiffCmdOptions,
+  private val cmd: ListDiffCmdOptions,
   ioManagerList: ListDiffReductionIOManager,
   val diff: ImmutableList<AbstractEditOperation<PersesToken>>,
   private val enableDiffDdmin: Boolean,
   private val enableDiffSlicer: Boolean,
+  private val listenerManager: AsyncReductionListenerManager,
 ) : AbstractReductionDriver<
   ImmutableList<AbstractEditOperation<PersesToken>>,
   LanguageKind,
@@ -50,31 +55,56 @@ class ListDiffReductionDriver private constructor(
   >(
   ioManagerList,
   cmd.reductionControlFlags.getNumOfThreads(),
-  cmd.profilingFlags.testScriptExecutionTimeoutInSeconds,
-  cmd.profilingFlags.testScriptExecutionKeepWaitingAfterTimeout,
+  cmd.reductionControlFlags.testScriptExecutionTimeoutInSeconds,
+  cmd.reductionControlFlags.testScriptExecutionKeepWaitingAfterTimeout,
 ) {
 
-  private val progressMonitor = cmd.profilingFlags.progressDumpFile?.let {
-    registerToClose(ProgressMonitor(it, cmd.profilingFlags.appendToProgressDumpFile))
+  override fun getInitialProgram(): ImmutableList<AbstractEditOperation<PersesToken>> {
+    return diff
   }
 
   override fun reduce() {
     printStartTime()
-    sanityCheck(diff)
+    sanityCheckOrThrow(diff)
 
     val reductionState = ListDiffReductionState(diff) {
       ioManager.updateBestResult(it)
     }
 
     val reducers = createReducers()
-    progressMonitor?.onReductionStart(reductionState.bestDiff)
+    val reductionStartEvent = ReductionStartEvent(
+      currentTimeMillis = System.currentTimeMillis(),
+      tree = WeakReference(null),
+      programSize = reductionState.bestDiff.size,
+      commandLineOptions = YamlUtil.toYamlString(
+        value = cmd,
+        objectMapperCustomizer = YamlUtil::customizeObjectMapperByUsingBasenameForPath,
+      ),
+      extraData = listToString(reductionState.bestDiff),
+    )
+    listenerManager.onReductionStart(reductionStartEvent)
     for (reducer in reducers) {
-      logger.ktInfo { "About to run the reducer ${reducer.javaClass.simpleName}" }
+      val fixpointIterationStartEvent = reductionStartEvent.nextFixpointIteration(
+        programSize = reductionState.bestDiff.size,
+        reducerClass = reducer.nameAndDesc,
+        treeStructureDumper = { listToString(reductionState.bestDiff) },
+        testScriptStatistics = executorService.statistics.createSnapshot(),
+      )
+      listenerManager.onFixpointIterationStart(fixpointIterationStartEvent)
       reducer.reduce(reductionState)
-      logger.ktInfo { "Finished the reducer ${reducer.javaClass.simpleName}" }
-      progressMonitor?.onReducerEnd(reducer.javaClass.simpleName, reductionState.bestDiff)
+      val fixpointIterationEndEvent = fixpointIterationStartEvent.createEndEvent(
+        currentTimeMillis = System.currentTimeMillis(),
+        programSize = reductionState.bestDiff.size,
+        testScriptStatistics = executorService.statistics.createSnapshot(),
+      )
+      listenerManager.onFixpointIterationEnd(fixpointIterationEndEvent)
     }
-    progressMonitor?.onReductionEnd(reductionState.bestDiff)
+    val reductionEndEvent = reductionStartEvent.createEndEvent(
+      programSize = reductionState.bestDiff.size,
+      testScriptStatistics = executorService.statistics.createSnapshot(),
+      extraData = listToString(reductionState.bestDiff),
+    )
+    listenerManager.onReductionEnd(reductionEndEvent)
   }
 
   private fun createReducers(): ImmutableList<AbstractListDiffReducer> {
@@ -90,30 +120,17 @@ class ListDiffReductionDriver private constructor(
     return builder.build()
   }
 
+  private fun listToString(diffList: ImmutableList<AbstractEditOperation<PersesToken>>): String {
+    val builder = StringBuilder()
+    builder.append("Current diff:\n")
+    for (diff in diffList) {
+      builder.append("    <${diff.base?.text ?: ""}, ${diff.revision?.text ?: ""}>\n")
+    }
+    return builder.toString()
+  }
+
   companion object {
     private val logger = FluentLogger.forEnclosingClass()
-
-    fun createReductionInputs(
-      parserFacadeFactory: AbstractParserFacadeFactory,
-      inputFlags: ListDiffCmdOptions.ListDiffInputFlagGroup,
-    ): ListDiffReductionInputs {
-      val absoluteSeedFilePath: Path = inputFlags.getSourceFile().toAbsolutePath()
-      val absoluteVariantFilePath: Path = inputFlags.getVariantFile()
-      val languageKind = parserFacadeFactory.computeLanguageKindOrThrow(absoluteSeedFilePath)
-      val seedFile = SourceFile(absoluteSeedFilePath, languageKind)
-      val variantFile = SourceFile(absoluteVariantFilePath, languageKind)
-      val testScript = ScriptFile(inputFlags.getTestScript().toAbsolutePath())
-
-      require(seedFile.parentFile.toAbsolutePath() == testScript.parentFile.toAbsolutePath()) {
-        "The seed file and the test script should reside in the same folder. " +
-          "seedFile:$seedFile, testScript:$testScript"
-      }
-      return ListDiffReductionInputs(
-        testScript = testScript,
-        seedFile = seedFile,
-        variantFile = variantFile,
-      )
-    }
 
     private fun createIOManager(
       reductionInputsList: ListDiffReductionInputs,
@@ -154,15 +171,11 @@ class ListDiffReductionDriver private constructor(
     @JvmStatic
     fun create(
       cmd: ListDiffCmdOptions,
-      parserFacadeFactory: AbstractParserFacadeFactory,
+      reductionInputs: ListDiffReductionInputs,
+      parserFacade: AbstractParserFacade,
+      listenerManager: AsyncReductionListenerManager,
     ): ListDiffReductionDriver {
-      val reductionInputs = createReductionInputs(
-        parserFacadeFactory,
-        cmd.listDiffInputFlags,
-      )
-
-      val languageKind = reductionInputs.seedFile.dataKind
-      val parserFacade = parserFacadeFactory.createParserFacade(languageKind)
+      val languageKind = reductionInputs.initiallyDeterminedMainDataKind
 
       // get seed tokens
       val seedTree = createSparTree(
@@ -211,7 +224,21 @@ class ListDiffReductionDriver private constructor(
         originalDiff,
         cmd.listDiffInputFlags.enableDiffDdmin,
         cmd.listDiffInputFlags.enableDiffSlicer,
+        listenerManager,
       )
+    }
+  }
+
+  class ListDiffSparTree(
+    private val diff: ImmutableList<AbstractEditOperation<PersesToken>>,
+  ) : AbstractUnmodifiableSparTree() {
+    override val programSnapshot: TokenizedProgram
+      get() = TODO("Not yet implemented")
+    override val root: AbstractSparTreeNode
+      get() = TODO("Not yet implemented")
+
+    override fun printTreeStructure(): String {
+      TODO("Not yet implemented")
     }
   }
 }

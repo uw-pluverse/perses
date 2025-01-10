@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -34,19 +34,19 @@ abstract class AbstractIndirectRecursionEliminationPass : AbstractPnfPass() {
   ): GrammarPair {
     val parserGrammar = grammar.parserGrammar ?: return grammar
     val ruleTransitionGraph = createRuleTransitionGraph(parserGrammar)
-    val sccs: List<Set<RuleNameHandle>> = ruleTransitionGraph.computeSccSet()
+    val stronglyConnectedComponents = ruleTransitionGraph.computeSccSet()
       .asSequence()
       .map { it.vertexSet() }
       .map { ImmutableSet.copyOf(it) }
       .toImmutableList()
-    val ruleMap = MutableGrammar.createParserRulesFrom(parserGrammar)
-    for (scc in sccs) {
-      ruleMap.validate()
-      transformForScc(ProjectedHashMultimap(ruleMap, scc))
-      ruleMap.validate()
+    val mutableGrammar = MutableGrammar.createParserRulesFrom(parserGrammar)
+    for (scc in stronglyConnectedComponents) {
+      mutableGrammar.validate()
+      transformForScc(ProjectedHashMultimap(mutableGrammar, scc))
+      mutableGrammar.validate()
     }
     return grammar.withNewParserGrammar(
-      parserGrammar.copyWithNewParserRuleDefs(ruleMap.toParserRuleAstList()),
+      parserGrammar.copyWithNewParserRuleDefs(mutableGrammar.toParserRuleAstList()),
     )
   }
 

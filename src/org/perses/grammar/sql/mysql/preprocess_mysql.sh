@@ -8,7 +8,7 @@ set -o xtrace
 readonly RDC="antlrrdc/src/org/perses/antlr/reducer"
 readonly MAIN_TARGET="//antlrrdc/src/org/perses/antlr/reducer:main"
 
-bazel build "${MAIN_TARGET}"
+bazelisk build "${MAIN_TARGET}"
 
 readonly WORKSPACE_ROOT="$(bazel info | grep "workspace: " | awk '{print $2}')"
 
@@ -23,8 +23,8 @@ readonly LEXER="${CURRENT_DIR}/MySqlLexer.g4"
 readonly OUTPUT_DIR="${CURRENT_DIR}/preprocessed"
 readonly START_RULE_NAME="root"
 
-bazel build "${MAIN_TARGET}"
-bazel run "${MAIN_TARGET}" -- \
+bazelisk build "${MAIN_TARGET}"
+bazelisk run "${MAIN_TARGET}" -- \
   --parser "${PARSER}" \
   --lexer "${LEXER}" \
   --start "${START_RULE_NAME}" \

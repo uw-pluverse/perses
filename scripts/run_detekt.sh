@@ -11,10 +11,10 @@ if [[ ! -e "WORKSPACE" ]] ; then
 fi
 
 readonly JAR="detekt_deploy.jar"
-bazel build "//:${JAR}"
+bazelisk build "//:${JAR}"
 
 readonly KT_VERSION="1.8"
-# DON'T use 'bazel run //:detekt_deploy.jar' due to its working directory
+# DON'T use 'bazelisk run //:detekt_deploy.jar' due to its working directory
 #     is not the root of the workspace.
 java -jar bazel-bin/${JAR} \
     --input src,test,antlropt,version \

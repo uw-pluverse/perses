@@ -10,10 +10,11 @@ fi
 
 readonly FILE="$1"
 
-if grep --quiet 'Fixpoint\[\(0\|[2-9][0-9]*\)\]' "${FILE}" ; then
-  echo "Fixpoint is disabled for each individual reducer, so the iteration number should only be 1"
-  exit 1
-fi
+# This following if-test is no long valid as we use the perses reduction listeners.
+# if grep --quiet 'Fixpoint\[\(0\|[2-9][0-9]*\)\]' "${FILE}" ; then
+#   echo "Fixpoint is disabled for each individual reducer, so the iteration number should only be 1"
+#   exit 1
+# fi
 
 if ! grep --quiet 'Reduction algorithm is perses_node_priority_with_dfs_delta' "${FILE}" ; then
   echo "Reduction algorithm should be perses_node_priority_with_dfs_delta"

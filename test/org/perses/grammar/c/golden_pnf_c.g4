@@ -8,6 +8,9 @@ AUX_TOKEN__primaryExpression_1
 AUX_TOKEN__primaryExpression_2
     : '__builtin_offsetof'
     ;
+AUX_TOKEN__conditionalExpression_1
+    : '?:'
+    ;
 AUX_TOKEN__typeSpecifier_1
     : '__m128'
     ;
@@ -546,14 +549,6 @@ genericAssociation
     : altnt_block__genericAssociation_1 Colon assignmentExpression
     ;
 
-unaryExpression
-    : postfixExpression
-    | aux_rule__unaryExpression_5
-    | aux_rule__unaryExpression_6
-    | aux_rule__unaryExpression_7
-    | aux_rule__unaryExpression_8
-    ;
-
 unaryOperator
     : And
     | Star
@@ -563,18 +558,8 @@ unaryOperator
     | Not
     ;
 
-castExpression
-    : unaryExpression
-    | aux_rule__castExpression_2
-    ;
-
 conditionalExpression
     : logicalOrExpression optional__conditionalExpression_2
-    ;
-
-assignmentExpression
-    : conditionalExpression
-    | aux_rule__assignmentExpression_1
     ;
 
 assignmentOperator
@@ -644,6 +629,19 @@ structOrUnion
     | Union
     ;
 
+structDeclarationList
+    : kleene_star__structDeclarationList_1 optional__structDeclarationList_3
+    ;
+
+structDeclaration
+    : aux_rule__structDeclaration_1
+    | staticAssertDeclaration
+    ;
+
+structQualifierListWithStructDeclaratorListWithoutSemicolon
+    : optional__primaryExpression_2 specifierQualifierList optional__structQualifierListWithStructDeclaratorListWithoutSemicolon_2
+    ;
+
 specifierQualifierList
     : altnt_block__specifierQualifierList_3 optional__specifierQualifierList_1
     ;
@@ -707,10 +705,6 @@ gccAttribute
     : aux_rule__gccAttribute_4?
     ;
 
-pointer
-    : altnt_block__pointer_8 altnt_block__pointer_5
-    ;
-
 typeQualifierList
     : aux_rule__typeQualifierList_1+
     ;
@@ -746,7 +740,11 @@ designation
     ;
 
 staticAssertDeclaration
-    : StaticAssert LeftParen constantExpression Comma kleene_plus__primaryExpression_1 RightParen Semi
+    : staticAssertDeclarationWithoutSemicolon Semi
+    ;
+
+staticAssertDeclarationWithoutSemicolon
+    : StaticAssert LeftParen constantExpression Comma kleene_plus__primaryExpression_1 RightParen
     ;
 
 asmStatement
@@ -790,7 +788,7 @@ optional__postfixExpression_1
     ;
 
 aux_rule__conditionalExpression_1
-    : Question expression Colon conditionalExpression
+    : altnt_block__conditionalExpression_3 conditionalExpression
     ;
 
 optional__conditionalExpression_2
@@ -809,7 +807,15 @@ optional__structOrUnionSpecifier_1
     : Identifier?
     ;
 
-optional__structDeclaration_2
+kleene_star__structDeclarationList_1
+    : structDeclaration*
+    ;
+
+optional__structDeclarationList_3
+    : aux_rule__structDeclarationList_2?
+    ;
+
+optional__structQualifierListWithStructDeclaratorListWithoutSemicolon_2
     : structDeclaratorList?
     ;
 
@@ -1123,10 +1129,6 @@ initDeclaratorList
     : initDeclarator kleene_star__initDeclaratorList_1
     ;
 
-structDeclarationList
-    : kleene_plus__structDeclarationList_3
-    ;
-
 aux_rule__structDeclaratorList_2
     : Comma structDeclarator
     ;
@@ -1231,8 +1233,57 @@ declarationList
     : kleene_plus__declarationList_3
     ;
 
-kleene_plus__structDeclarationList_3
-    : aux_rule__structDeclarationList_2+
+aux_rule__unaryExpression_2
+    : PlusPlus
+    | MinusMinus
+    | Sizeof
+    ;
+
+kleene_star__unaryExpression_1
+    : aux_rule__unaryExpression_2*
+    ;
+
+aux_rule__unaryExpression_3
+    : postfixExpression
+    | aux_rule__unaryExpression_7
+    | aux_rule__unaryExpression_8
+    | aux_rule__unaryExpression_9
+    ;
+
+unaryExpression
+    : kleene_star__unaryExpression_1 aux_rule__unaryExpression_3
+    ;
+
+aux_rule__assignmentExpression_2
+    : unaryExpression assignmentOperator
+    ;
+
+kleene_star__assignmentExpression_1
+    : aux_rule__assignmentExpression_2*
+    ;
+
+assignmentExpression
+    : kleene_star__assignmentExpression_1 conditionalExpression
+    ;
+
+aux_rule__castExpression_2
+    : optional__primaryExpression_2 LeftParen typeName RightParen
+    ;
+
+kleene_star__castExpression_1
+    : aux_rule__castExpression_2*
+    ;
+
+castExpression
+    : kleene_star__castExpression_1 unaryExpression
+    ;
+
+aux_rule__pointer_6
+    : altnt_block__pointer_9 optional__pointer_1
+    ;
+
+pointer
+    : kleene_plus__pointer_8
     ;
 
 kleene_plus__designatorList_3
@@ -1286,15 +1337,9 @@ altnt_block__primaryExpression_3
     | aux_rule__primaryExpression_7
     ;
 
-altnt_block__unaryExpression_1
-    : PlusPlus
-    | MinusMinus
-    | Sizeof
-    ;
-
-altnt_block__unaryExpression_2
-    : aux_rule__unaryExpression_9
-    | aux_rule__unaryExpression_10
+altnt_block__unaryExpression_4
+    : aux_rule__unaryExpression_10
+    | aux_rule__unaryExpression_11
     ;
 
 altnt_block__genericAssociation_1
@@ -1339,6 +1384,11 @@ altnt_block__equalityExpression_3
     | NotEqual
     ;
 
+altnt_block__conditionalExpression_3
+    : aux_rule__conditionalExpression_4
+    | AUX_TOKEN__conditionalExpression_1
+    ;
+
 altnt_block__alignmentSpecifier_1
     : typeName
     | constantExpression
@@ -1357,10 +1407,6 @@ altnt_block__structOrUnionSpecifier_2
 altnt_block__enumSpecifier_3
     : Identifier
     | aux_rule__enumSpecifier_6
-    ;
-
-altnt_block__pointer_5
-    : optional__pointer_1 optional__declarator_1
     ;
 
 altnt_block__directDeclarator_10
@@ -1442,24 +1488,14 @@ declarationSpecifier
     ;
 
 aux_rule__structDeclarationList_2
-    : aux_rule__structDeclarationList_4
-    | staticAssertDeclaration
+    : structDeclaration
+    | structQualifierListWithStructDeclaratorListWithoutSemicolon
+    | staticAssertDeclarationWithoutSemicolon
     ;
 
 aux_rule__designatorList_2
     : aux_rule__designatorList_4
     | aux_rule__designatorList_5
-    ;
-
-statement
-    : labeledStatement
-    | compoundStatement
-    | expressionStatement
-    | aux_rule__statement_3
-    | aux_rule__statement_4
-    | jumpStatement
-    | asmStatement
-    | aux_rule__statement_5
     ;
 
 aux_rule__blockItemList_2
@@ -1474,12 +1510,12 @@ aux_rule__translationUnit_2
     | Semi
     ;
 
-altnt_block__unaryExpression_3
+altnt_block__unaryExpression_5
     : Alignof
     | Alignof_gcc
     ;
 
-altnt_block__unaryExpression_4
+altnt_block__unaryExpression_6
     : typeName
     | unaryExpression
     ;
@@ -1490,12 +1526,38 @@ altnt_block__typeSpecifier_2
     | AUX_TOKEN__typeSpecifier_3
     ;
 
+aux_rule__statement_2
+    : altnt_block__statement_4 RightParen
+    ;
+
+kleene_star__statement_1
+    : aux_rule__statement_2*
+    ;
+
+aux_rule__statement_3
+    : labeledStatement
+    | compoundStatement
+    | expressionStatement
+    | aux_rule__statement_6
+    | aux_rule__statement_7
+    | jumpStatement
+    | asmStatement
+    ;
+
+statement
+    : kleene_star__statement_1 aux_rule__statement_3
+    ;
+
+kleene_plus__pointer_8
+    : aux_rule__pointer_6+
+    ;
+
 altnt_block__specifierQualifierList_3
     : typeSpecifierWithAttrList
     | typeQualifier
     ;
 
-altnt_block__pointer_8
+altnt_block__pointer_9
     : Star
     | Caret
     ;
@@ -1520,38 +1582,14 @@ altnt_block__iterationStatement_8
     | declaration
     ;
 
-altnt_block__statement_1
-    : aux_rule__statement_6
-    | aux_rule__statement_7
+altnt_block__statement_4
+    : aux_rule__statement_8
+    | aux_rule__statement_9
     ;
 
-altnt_block__statement_2
+altnt_block__statement_5
     : Switch
     | While
-    ;
-
-aux_rule__unaryExpression_5
-    : unaryOperator castExpression
-    ;
-
-aux_rule__unaryExpression_6
-    : AndAnd Identifier
-    ;
-
-aux_rule__unaryExpression_7
-    : altnt_block__unaryExpression_1 unaryExpression
-    ;
-
-aux_rule__unaryExpression_8
-    : altnt_block__unaryExpression_2 RightParen
-    ;
-
-aux_rule__castExpression_2
-    : optional__primaryExpression_2 LeftParen typeName RightParen castExpression
-    ;
-
-aux_rule__assignmentExpression_1
-    : unaryExpression assignmentOperator assignmentExpression
     ;
 
 aux_rule__declaration_3
@@ -1560,6 +1598,10 @@ aux_rule__declaration_3
 
 aux_rule__typeSpecifier_3
     : altnt_block__typeSpecifier_1 RightParen
+    ;
+
+aux_rule__structDeclaration_1
+    : structQualifierListWithStructDeclaratorListWithoutSemicolon Semi
     ;
 
 aux_rule__structDeclarator_2
@@ -1618,6 +1660,18 @@ aux_rule__directAbstractDeclarator_24
     : LeftParen altnt_block__directAbstractDeclarator_17
     ;
 
+aux_rule__unaryExpression_7
+    : unaryOperator castExpression
+    ;
+
+aux_rule__unaryExpression_8
+    : AndAnd Identifier
+    ;
+
+aux_rule__unaryExpression_9
+    : altnt_block__unaryExpression_4 RightParen
+    ;
+
 aux_rule__primaryExpression_4
     : LeftParen expression
     ;
@@ -1634,12 +1688,16 @@ aux_rule__primaryExpression_7
     : AUX_TOKEN__primaryExpression_2 LeftParen typeName Comma unaryExpression
     ;
 
-aux_rule__unaryExpression_9
+aux_rule__unaryExpression_10
     : Sizeof LeftParen typeName
     ;
 
-aux_rule__unaryExpression_10
-    : altnt_block__unaryExpression_3 LeftParen altnt_block__unaryExpression_4
+aux_rule__unaryExpression_11
+    : altnt_block__unaryExpression_5 LeftParen altnt_block__unaryExpression_6
+    ;
+
+aux_rule__conditionalExpression_4
+    : Question expression Colon
     ;
 
 aux_rule__typeSpecifier_4
@@ -1706,10 +1764,6 @@ aux_rule__declarationSpecifier_1
     : AUX_TOKEN__functionSpecifier_3 LeftParen Identifier RightParen
     ;
 
-aux_rule__structDeclarationList_4
-    : optional__primaryExpression_2 specifierQualifierList optional__structDeclaration_2 Semi
-    ;
-
 aux_rule__designatorList_4
     : LeftBracket constantExpression RightBracket
     ;
@@ -1718,27 +1772,23 @@ aux_rule__designatorList_5
     : Dot Identifier
     ;
 
-aux_rule__statement_3
+aux_rule__statement_6
     : If LeftParen expression RightParen statement optional__selectionStatement_2
     ;
 
-aux_rule__statement_4
+aux_rule__statement_7
     : Do statement While LeftParen expression RightParen Semi
-    ;
-
-aux_rule__statement_5
-    : altnt_block__statement_1 RightParen statement
     ;
 
 aux_rule__iterationStatement_9
     : optional__postfixExpression_1 Semi
     ;
 
-aux_rule__statement_6
+aux_rule__statement_8
     : For LeftParen altnt_block__iterationStatement_7
     ;
 
-aux_rule__statement_7
-    : altnt_block__statement_2 LeftParen expression
+aux_rule__statement_9
+    : altnt_block__statement_5 LeftParen expression
     ;
 

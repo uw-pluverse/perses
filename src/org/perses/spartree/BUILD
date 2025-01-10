@@ -1,8 +1,8 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
 package(default_visibility = [
     "//visibility:public",
 ])
-
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 # TODO: need to split this target. It is too big. For example, tree_node, tree_edit_actions, tree_and_tree_edit
 
@@ -29,6 +29,7 @@ kt_jvm_library(
         "AbstractUnmodifiableSparTree.kt",
         "AnyNodeReplacementTreeEdit.kt",
         "ChildHoistingActionSet.kt",
+        "DescendantHoistingTreeEdit.kt",
         "ErrorMessage.kt",
         "LatraGeneralActionSet.kt",
         "LatraGeneralTreeEdit.kt",
@@ -38,7 +39,6 @@ kt_jvm_library(
         "NodeDeletionActionSet.kt",
         "NodeDeletionTreeEdit.kt",
         "NodeReplacementAction.kt",
-        "NodeReplacementTreeEdit.kt",
         "NullNodeActionSetCache.kt",
         "ParserRuleSparTreeNode.kt",
         "PlaceholderSparTreeNode.kt",

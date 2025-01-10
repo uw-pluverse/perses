@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -26,7 +26,6 @@ class ExperimentFlagGroup : AbstractCommandLineFlagGroup(groupName = "Experiment
   @Parameter(
     names = ["--query-cache-type"],
     description = "the algorithm of the query cache",
-    hidden = true,
     order = 1,
   )
   var cacheType: QueryCacheType = QueryCacheType.COMPACT_QUERY_CACHE

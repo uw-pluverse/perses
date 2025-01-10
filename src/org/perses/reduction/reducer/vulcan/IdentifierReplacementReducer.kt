@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -36,7 +36,7 @@ class IdentifierReplacementReducer(
   override fun internalReduce(fixpointReductionState: FixpointReductionState) {
     val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
     val candidates = Candidates.compute(tree) {
-      configuration.parserFacade.identifierTokenTypes.contains(it.type)
+      reducerContext.configuration.parserFacade.identifierTokenTypes.contains(it.type)
     }
     val heuristicEdit = heuristicFindInterestingReplacementEdit(
       tree,

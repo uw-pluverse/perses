@@ -1,5 +1,5 @@
-load("//test/org/perses:test.bzl", "golden_test")
 load("//src/org/perses:reduction.bzl", "reduce")
+load("//test/org/perses:test.bzl", "golden_test")
 
 def ppr_reduction_golden_test(
         name,

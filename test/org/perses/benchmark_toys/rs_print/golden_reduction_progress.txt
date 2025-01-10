@@ -1,9 +1,93 @@
 =====================Reduction starts.======================
 
 The initial program size is 24
+The command line options are:
+---
+help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+versionFlags:
+  groupName: "Version"
+  version: false
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFile: "hello.rs"
+  deps: []
+  sourceFile: "hello.rs"
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_perses_node_priority_with_dfs_delta_hello.rs"
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  fixpoint: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  enableLineSlicer: false
+  defaultDeltaDebuggerTypeForKleene: "DFS"
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  enableTrec: false
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: "TRUE"
+  nodeActionSetCaching: true
+  queryCacheRefreshThreshold: 0
+  enableLightweightRefreshing: true
+  enablePassCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "reduction_progress.txt"
+  appendToProgressDumpFile: true
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileDeltaDebugger: null
+experimentFlags:
+  groupName: "Experiment Control"
+  cacheType: "COMPACT_QUERY_CACHE"
+  onDemandReducerClasses: null
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+
+Parser Facade: class org.perses.grammar.rust.PnfRustParserFacade
 ------------------------------------------------------------
 
 
+The sanity check has been performed. The result is PassingSanityCheckResult
 =Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
 
 The spar-tree is the following.
@@ -56,6 +140,7 @@ crate {id=1}
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
                                   println!("ingress");
     println!("hello_world");
@@ -67,6 +152,8 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__mod_body_2]dd@1
+    --file: hello.rs--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
@@ -80,6 +167,7 @@ Failed to reduce node 3
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
                                   println!("ingress");
     println!("hello_world");
@@ -97,13 +185,19 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    println!("ingress");
+    --file: hello.rs--
+                                  println!("ingress");
+    --file: <formatted tokenized program in its original format>--
+                                  println!("ingress");
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rs--
+    println!("hello_world");
+    --file: <formatted tokenized program in its original format>--
     println!("hello_world");
 ------------------------------------------------------------
 
@@ -111,7 +205,10 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    println!("egress");
+    --file: hello.rs--
+             println!("egress");
+    --file: <formatted tokenized program in its original format>--
+             println!("egress");
 ------------------------------------------------------------
 
 
@@ -125,6 +222,7 @@ Failed to reduce node 8
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
                                   println!("ingress");
     println!("hello_world");
@@ -143,6 +241,7 @@ Failed to reduce node 13
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
                                   println!("ingress");
     println!("hello_world");
@@ -154,6 +253,10 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__block_with_inner_attrs_2]dd@3
+    --file: hello.rs--
+    fn main() {
+    }
+    --file: <formatted tokenized program in its original format>--
     fn main() {
     }
 ------------------------------------------------------------
@@ -162,6 +265,12 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_star:kleene_star__block_with_inner_attrs_2]dd@1
+    --file: hello.rs--
+    fn main() {
+                                  println!("ingress");
+    println!("hello_world");
+    }
+    --file: <formatted tokenized program in its original format>--
     fn main() {
                                   println!("ingress");
     println!("hello_world");
@@ -183,6 +292,10 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: hello.rs--
+    fn main() {
+    }
+    --file: <formatted tokenized program in its original format>--
     fn main() {
     }
 ------------------------------------------------------------
@@ -191,6 +304,11 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__block_with_inner_attrs_2]dd@1
+    --file: hello.rs--
+    fn main() {
+                                  println!("ingress");
+    }
+    --file: <formatted tokenized program in its original format>--
     fn main() {
                                   println!("ingress");
     }
@@ -200,6 +318,11 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_star:kleene_star__block_with_inner_attrs_2]dd@1
+    --file: hello.rs--
+    fn main() {
+    println!("hello_world");
+    }
+    --file: <formatted tokenized program in its original format>--
     fn main() {
     println!("hello_world");
     }
@@ -228,6 +351,7 @@ Succeeded to reduce node 15 from 24 to 12
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -236,6 +360,10 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: hello.rs--
+    fn main() {
+    }
+    --file: <formatted tokenized program in its original format>--
     fn main() {
     }
 ------------------------------------------------------------
@@ -251,6 +379,7 @@ Failed to reduce node 41
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -267,6 +396,7 @@ Failed to reduce node 45
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -283,6 +413,7 @@ Failed to reduce node 48
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -299,6 +430,7 @@ Failed to reduce node 9
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -315,6 +447,7 @@ Failed to reduce node 79
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -331,6 +464,7 @@ Failed to reduce node 77
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -347,6 +481,7 @@ Failed to reduce node 57
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -363,6 +498,7 @@ Failed to reduce node 51
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -372,6 +508,11 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__inner_attr_1]dd@1
+    --file: hello.rs--
+    fn main() {
+    println!(             );
+    }
+    --file: <formatted tokenized program in its original format>--
     fn main() {
     println!(             );
     }
@@ -388,6 +529,7 @@ Failed to reduce node 50
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -404,6 +546,7 @@ Failed to reduce node 54
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -420,6 +563,7 @@ Failed to reduce node 49
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -436,6 +580,7 @@ Failed to reduce node 47
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -452,6 +597,7 @@ Failed to reduce node 43
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -468,6 +614,7 @@ Failed to reduce node 16
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -484,6 +631,7 @@ Failed to reduce node 14
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -500,6 +648,7 @@ Failed to reduce node 11
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -544,6 +693,7 @@ crate {id=80}
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -552,6 +702,8 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: hello.rs--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
@@ -565,6 +717,7 @@ Failed to reduce node 82
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -579,6 +732,9 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: hello.rs--
+    println!("hello_world");
+    --file: <formatted tokenized program in its original format>--
     println!("hello_world");
 ------------------------------------------------------------
 
@@ -593,6 +749,7 @@ Failed to reduce node 87
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -609,6 +766,7 @@ Failed to reduce node 92
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -617,6 +775,10 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: hello.rs--
+    fn main() {
+    }
+    --file: <formatted tokenized program in its original format>--
     fn main() {
     }
 ------------------------------------------------------------
@@ -632,6 +794,7 @@ Failed to reduce node 94
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -654,6 +817,7 @@ Failed to reduce node 99
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -670,6 +834,7 @@ Failed to reduce node 103
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -686,6 +851,7 @@ Failed to reduce node 106
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -702,6 +868,7 @@ Failed to reduce node 88
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -718,6 +885,7 @@ Failed to reduce node 118
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -734,6 +902,7 @@ Failed to reduce node 116
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -750,6 +919,7 @@ Failed to reduce node 115
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -766,6 +936,7 @@ Failed to reduce node 109
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -774,6 +945,11 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: hello.rs--
+    fn main() {
+    println!(             );
+    }
+    --file: <formatted tokenized program in its original format>--
     fn main() {
     println!(             );
     }
@@ -790,6 +966,7 @@ Failed to reduce node 108
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -806,6 +983,7 @@ Failed to reduce node 112
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -822,6 +1000,7 @@ Failed to reduce node 107
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -838,6 +1017,7 @@ Failed to reduce node 105
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -854,6 +1034,7 @@ Failed to reduce node 101
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -870,6 +1051,7 @@ Failed to reduce node 95
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -886,6 +1068,7 @@ Failed to reduce node 93
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }
@@ -902,6 +1085,7 @@ Failed to reduce node 90
 
 The current best program is the following
 
+    --file: hello.rs--
     fn main() {
     println!("hello_world");
     }

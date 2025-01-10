@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,24 +17,93 @@
 package org.perses.ppr.diff.list
 
 import org.perses.AbstractMain
+import org.perses.PersesListenerManagerCreator
 import org.perses.grammar.AbstractParserFacadeFactory
-import org.perses.ppr.diff.list.ListDiffReductionDriver.Companion.create
-import org.perses.reduction.IReductionDriver
+import org.perses.program.AbstractDataKind
+import org.perses.program.BinaryReductionFile
+import org.perses.reduction.AsyncReductionListenerManager
+import org.perses.reduction.GlobalContext
+import org.perses.util.Util
+import org.perses.util.cmd.CommandLineProcessor
+import org.perses.util.transformToImmutableList
 
-class ListDiffMain(args: Array<String>) : AbstractMain<ListDiffCmdOptions>(args) {
+class ListDiffMain(
+  cmd: ListDiffCmdOptions,
+  globalContext: GlobalContext,
+) : AbstractMain<ListDiffCmdOptions, ListDiffReductionDriver, ListDiffReductionInputs>(
+  cmd,
+  globalContext,
+) {
 
-  override fun createCommandOptions(): ListDiffCmdOptions {
-    return ListDiffCmdOptions()
+  override fun createSequenceOfReductionDriverCreators(
+    reductionInputs: ListDiffReductionInputs,
+  ): Sequence<ReductionDriverCreator<ListDiffReductionDriver>> {
+    val parserFacade = parserFacadeFactory.getParserFacadeListForOrNull(
+      reductionInputs.initiallyDeterminedMainDataKind,
+    )!!.defaultParserFacade.create()
+    return sequenceOf(
+      ReductionDriverCreator(
+        creator = {
+          ListDiffReductionDriver.create(
+            cmd,
+            reductionInputs,
+            parserFacade,
+            listenerManager,
+          )
+        },
+        descriptor = {
+          """
+            ${parserFacade::class}
+          """.trimIndent()
+        },
+      ),
+    )
   }
 
-  override fun createReductionDriver(facadeFactory: AbstractParserFacadeFactory): IReductionDriver {
-    return create(cmd, facadeFactory)
+  override fun createAsyncReductionListenerManager(): AsyncReductionListenerManager {
+    return PersesListenerManagerCreator.createAsyncReductionListenerManager(
+      cmd,
+      globalContext.fileStreamPool,
+    )
+  }
+
+  override fun createReductionInputs(
+    parserFacadeFactory: AbstractParserFacadeFactory,
+  ): ListDiffReductionInputs {
+    val inputFlags = cmd.listDiffInputFlags
+    return ListDiffReductionInputs.create(
+      seedPath = inputFlags.getSourceFile(),
+      variantPath = inputFlags.getVariantFile(),
+      testScriptPath = inputFlags.getTestScript(),
+      immutableDependencyFiles = inputFlags.deps.transformToImmutableList { path ->
+        BinaryReductionFile(path, AbstractDataKind.UnknownDataKind)
+      },
+      languageKindComputer = { sourceFileAbsPath ->
+        parserFacadeFactory.computeLanguage(
+          cmd.languageControlFlags.languageName,
+          sourceFileAbsPath,
+        )
+      },
+    )
   }
 
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      ListDiffMain(args).run()
+      val processor = CommandLineProcessor<ListDiffCmdOptions>(
+        cmdCreator = { ListDiffCmdOptions() },
+        programName = ListDiffMain::class.qualifiedName!!,
+        args = args,
+      )
+      if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
+        return
+      }
+      Util.useResources(
+        { GlobalContext() },
+        { globalContext -> ListDiffMain(processor.cmd, globalContext) },
+      ) { _, main ->
+        main.run()
+      }
     }
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -30,6 +30,7 @@ import java.nio.file.Path
 import java.nio.file.SimpleFileVisitor
 import java.nio.file.StandardCopyOption
 import java.nio.file.attribute.BasicFileAttributes
+import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteRecursively
 
 // TODO: save the test result in the folder.
@@ -62,7 +63,12 @@ class ReductionFolder(
     val fileToKeep = ImmutableList
       .builder<Path>()
       .add(testScript.scriptFile)
-      .addAll(reductionInputs.computeAbsPathListWrt(folder))
+      .addAll(
+        reductionInputs.computeAbsPathListWrt(
+          folder,
+          reductionFileSelectionPredicate = { true },
+        ).asIterable(),
+      )
       .build()
     Files.walkFileTree(
       folder,
@@ -84,6 +90,7 @@ class ReductionFolder(
     )
   }
 
+  @OptIn(ExperimentalPathApi::class)
   fun deleteThisDirectoryRecursively() {
     checkThisFolderIsStillInUse()
     inUse = false
@@ -108,6 +115,11 @@ class ReductionFolder(
     }
     lazyAssert({ Files.isExecutable(testScript.scriptFile) }) {
       "The test script file $testScript"
+    }
+    reductionInputs.immutableDependencyFiles.forEach { file ->
+      val absPath = computeAbsPathForOrigFile(file)
+      Util.ensureDirExists(absPath.parent)
+      file.writeTo(absPath)
     }
   }
 }

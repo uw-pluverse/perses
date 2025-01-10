@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -43,7 +43,11 @@ class ContentLexemeListQueryCache(
   class ContentLexemeListEncoder(
     tokenizedProgram: TokenizedProgram,
     profiler: AbstractQueryCacheProfiler,
-  ) : AbstractTokenizedProgramEncoder<ContentLexemeListEncoding>(tokenizedProgram, profiler) {
+  ) : AbstractTokenizedProgramEncoder<ContentLexemeListEncoding>(
+    tokenizedProgram,
+    profiler,
+    supportsRccReEncoding = true,
+  ) {
 
     override fun encode(program: TokenizedProgram): ContentLexemeListEncoding? {
       return encode(

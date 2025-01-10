@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,14 +18,19 @@ package org.perses.ppr
 
 import com.google.common.flogger.FluentLogger
 import org.antlr.v4.runtime.Token
+import org.perses.CommandOptions
 import org.perses.TokenCounterMain
-import org.perses.delta.EnumDeltaDebuggerType
 import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.AbstractParserFacadeFactory
+import org.perses.listminimizer.EnumListInputMinimizerType
 import org.perses.ppr.diff.PPRDiffUtils
+import org.perses.ppr.diff.list.ListDiffCmdOptions
 import org.perses.ppr.diff.list.ListDiffMain
+import org.perses.ppr.diff.tree.TreeDiffCmdOptions
 import org.perses.ppr.diff.tree.TreeDiffMain
+import org.perses.ppr.seed.SeedCmdOptions
 import org.perses.ppr.seed.SeedMain
+import org.perses.reduction.GlobalContext
 import org.perses.reduction.IReductionDriver
 import org.perses.util.ListAlignment
 import org.perses.util.Util
@@ -33,9 +38,15 @@ import org.perses.util.ktInfo
 import java.nio.file.Path
 
 class PPRMetaReductionDriver private constructor(
+  val globalContext: GlobalContext,
   val cmd: CmdOptions,
   val parserFacadeFactory: AbstractParserFacadeFactory,
 ) : IReductionDriver {
+
+  override val cachedSanityCheckResult: IReductionDriver.AbstractSanityCheckResult by lazy {
+    // TODO(max): need to run sanity check
+    IReductionDriver.PassingSanityCheckResult
+  }
 
   override fun reduce() {
     // create a working folder
@@ -49,15 +60,21 @@ class PPRMetaReductionDriver private constructor(
     val seedPath = Util.copyFileToDirectory(cmd.overallInputFlags.getSourceFile(), workingDir)
     val variantPath = Util.copyFileToDirectory(cmd.overallInputFlags.variantFile!!, workingDir)
     val testPath = Util.copyFileToDirectory(cmd.overallInputFlags.getTestScript(), workingDir)
+    val filesToBeKept = Util.listFilesInFolder(workingDir)
 
-    val languageKind = parserFacadeFactory.computeLanguageKindWithFileName(seedPath)
-    val parserFacade = parserFacadeFactory.createParserFacade(languageKind!!)
+    val languageKind = parserFacadeFactory.computeLanguage(
+      cmd.languageControlFlags.languageName,
+      seedPath,
+    )
+
+    val parserFacade = parserFacadeFactory.getParserFacadeListForOrNull(languageKind)!!
+      .defaultParserFacade.create()
 
     var seedSizeBefore: Int
     var variantSizeBefore: Int
-    val initialSeedSize = TokenCounterMain.countTokensOfFile(seedPath)
+    val initialSeedSize = TokenCounterMain.countTokensOfFile(seedPath, languageKind.name)
     var seedSizeCurrent = initialSeedSize
-    val initialVariantSize = TokenCounterMain.countTokensOfFile(variantPath)
+    val initialVariantSize = TokenCounterMain.countTokensOfFile(variantPath, languageKind.name)
     var variantSizeCurrent = initialVariantSize
 
     val flagGenerator = FlagGenerator(cmd, testPath, workingDir)
@@ -73,44 +90,49 @@ class PPRMetaReductionDriver private constructor(
 
       if (cmd.overallInputFlags.minTDiff) {
         logger.ktInfo { "Start tree-based diff reduction on both trees." }
-        printCurrentState(parserFacade, seedPath, variantPath, iteration)
-        TreeDiffMain.main(
-          flagGenerator.generate(seedPath, variantPath, enableListDiff = false),
-        )
+        printCurrentState(parserFacade, seedPath, variantPath, languageKind.name, iteration)
+        TreeDiffMain(
+          flagGenerator.generateTreeDiffCmdOptions(seedPath, variantPath),
+          globalContext,
+        ).use { it.run() }
       }
 
       if (cmd.overallInputFlags.minLDiff) {
         logger.ktInfo { "Start list-based diff reduction on seed." }
-        printCurrentState(parserFacade, seedPath, variantPath, iteration)
-        ListDiffMain.main(
-          flagGenerator.generate(seedPath, variantPath, enableListDiff = true),
-        )
+        printCurrentState(parserFacade, seedPath, variantPath, languageKind.name, iteration)
+        ListDiffMain(
+          flagGenerator.generateListDiffCmdOptions(seedPath, variantPath, enableListDiff = true),
+          globalContext,
+        ).use { it.run() }
         if (cmd.overallInputFlags.mirror) {
           logger.ktInfo { "Start list-based diff reduction on variant." }
-          printCurrentState(parserFacade, seedPath, variantPath, iteration)
-          ListDiffMain.main(
-            flagGenerator.generate(variantPath, seedPath, enableListDiff = true),
-          )
+          printCurrentState(parserFacade, seedPath, variantPath, languageKind.name, iteration)
+          ListDiffMain(
+            flagGenerator.generateListDiffCmdOptions(variantPath, seedPath, enableListDiff = true),
+            globalContext,
+          ).use { it.run() }
         }
       }
 
       if (cmd.overallInputFlags.minCommonality) {
         logger.ktInfo { "Start commonality reduction, from seed to variant." }
-        printCurrentState(parserFacade, seedPath, variantPath, iteration)
-        SeedMain.main(
-          flagGenerator.generate(seedPath, variantPath, enableListDiff = false),
-        )
+        printCurrentState(parserFacade, seedPath, variantPath, languageKind.name, iteration)
+        SeedMain(
+          flagGenerator.generateSeedCmdOptions(seedPath, variantPath),
+          globalContext,
+        ).use { it.run() }
         if (cmd.overallInputFlags.mirror) {
           logger.ktInfo { "Start commonality reduction, from variant to seed." }
-          printCurrentState(parserFacade, seedPath, variantPath, iteration)
-          SeedMain.main(
-            flagGenerator.generate(variantPath, seedPath, enableListDiff = false),
-          )
+          printCurrentState(parserFacade, seedPath, variantPath, languageKind.name, iteration)
+          SeedMain(
+            flagGenerator.generateSeedCmdOptions(variantPath, seedPath),
+            globalContext,
+          ).use { it.run() }
         }
       }
 
-      seedSizeCurrent = TokenCounterMain.countTokensOfFile(seedPath)
-      variantSizeCurrent = TokenCounterMain.countTokensOfFile(variantPath)
+      seedSizeCurrent = TokenCounterMain.countTokensOfFile(seedPath, languageKind.name)
+      variantSizeCurrent = TokenCounterMain.countTokensOfFile(variantPath, languageKind.name)
       val diffSizeCurrent = getListAlignment(parserFacade, seedPath, variantPath).onlyDiffs.size
 
       val timestampStop = System.currentTimeMillis().toInt()
@@ -138,60 +160,113 @@ class PPRMetaReductionDriver private constructor(
           "time: ${it.seconds} seconds"
       }
     }
+
+    Util.deleteFilesConditionally(workingDir) { path ->
+      !filesToBeKept.contains(path)
+    }
   }
 
   override fun close() {}
 
   class FlagGenerator(
-    private val cmd: CmdOptions,
+    private val originalCmd: CmdOptions,
     private val testPath: Path,
     val workingDir: Path,
   ) {
 
-    fun generate(seedPath: Path, variantPath: Path, enableListDiff: Boolean): Array<String> {
-      val flagList = mutableListOf(
-        "--input",
-        seedPath.toString(),
-        "--variant",
-        variantPath.toString(),
-        "--test",
-        testPath.toString(),
-        "--output-dir",
-        workingDir.toString(),
-        "--reparse-each-iteration",
-        "false",
-        "--fixpoint",
-        "false",
-        "--default-delta-debugger-for-kleene",
-        EnumDeltaDebuggerType.PERSES_VARIANT_OF_PRISTINE.name,
-        "--call-formatter",
-        cmd.outputRefiningFlags.callFormatter.toString(),
+    private fun updateAlgorithmControlFlags(cmd: CommandOptions) {
+      cmd.algorithmControlFlags.rebuildParseTreeEachIteration = false
+      cmd.algorithmControlFlags.defaultDeltaDebuggerTypeForKleene =
+        EnumListInputMinimizerType.PERSES_VARIANT_OF_PRISTINE
+      cmd.algorithmControlFlags.reductionAlgorithm =
+        originalCmd.algorithmControlFlags.reductionAlgorithm
+    }
+
+    private fun updateLanguageControlFlags(cmd: CommandOptions) {
+      cmd.languageControlFlags.languageName = originalCmd.languageControlFlags.languageName
+    }
+
+    private fun updateReductionControlFlags(cmd: CommandOptions) {
+      cmd.reductionControlFlags.fixpoint = false
+      cmd.reductionControlFlags.setNumOfThreads(
+        originalCmd.reductionControlFlags.getNumOfThreads(),
       )
-      if (cmd.reductionControlFlags.codeFormat != null) {
-        flagList.add("--code-format")
-        flagList.add(cmd.reductionControlFlags.codeFormat.toString())
+      if (originalCmd.reductionControlFlags.codeFormat != null) {
+        cmd.reductionControlFlags.codeFormat = originalCmd.reductionControlFlags.codeFormat
       }
-      if (cmd.algorithmControlFlags.reductionAlgorithm != null) {
-        flagList.add("--alg")
-        flagList.add(cmd.algorithmControlFlags.reductionAlgorithm.toString())
+    }
+
+    private fun updateProfilingFlags(cmd: CommandOptions) {
+      if (originalCmd.profilingFlags.progressDumpFile != null) {
+        cmd.profilingFlags.progressDumpFile = originalCmd.profilingFlags.progressDumpFile
       }
-      if (cmd.profilingFlags.progressDumpFile != null) {
-        flagList.add("--progress-dump-file")
-        flagList.add(cmd.profilingFlags.progressDumpFile.toString())
-      }
-      if (cmd.profilingFlags.appendToProgressDumpFile) {
-        flagList.add("--append-to-progress-dump-file")
-        flagList.add("true")
-      }
-      if (enableListDiff) {
-        flagList.add("--enable-diff-slicer")
-        flagList.add(cmd.overallInputFlags.enableDiffSlicer.toString())
-        flagList.add("--enable-diff-ddmin")
-        flagList.add(cmd.overallInputFlags.enableDiffDdmin.toString())
-      }
-      flagList.add("--threads")
-      flagList.add(cmd.reductionControlFlags.getNumOfThreads().toString())
-      return flagList.toTypedArray()
+      cmd.profilingFlags.appendToProgressDumpFile =
+        originalCmd.profilingFlags.appendToProgressDumpFile
+    }
+
+    private fun updateOutputRefiningFlags(cmd: CommandOptions) {
+      cmd.outputRefiningFlags.callFormatter = originalCmd.outputRefiningFlags.callFormatter
+    }
+
+    fun generateListDiffCmdOptions(
+      seedPath: Path,
+      variantPath: Path,
+      enableListDiff: Boolean,
+    ): ListDiffCmdOptions {
+      val listDiffCmdOptions = ListDiffCmdOptions()
+      listDiffCmdOptions.inputFlags.inputFile = seedPath
+      listDiffCmdOptions.listDiffInputFlags.variantFile = variantPath.toString()
+      listDiffCmdOptions.inputFlags.testScript = testPath
+      listDiffCmdOptions.resultOutputFlags.outputDir = workingDir
+
+      listDiffCmdOptions.listDiffInputFlags.enableDiffSlicer = enableListDiff
+      listDiffCmdOptions.listDiffInputFlags.enableDiffDdmin = enableListDiff
+
+      updateLanguageControlFlags(listDiffCmdOptions)
+      updateAlgorithmControlFlags(listDiffCmdOptions)
+      updateReductionControlFlags(listDiffCmdOptions)
+      updateProfilingFlags(listDiffCmdOptions)
+      updateOutputRefiningFlags(listDiffCmdOptions)
+
+      return listDiffCmdOptions
+    }
+
+    fun generateTreeDiffCmdOptions(
+      seedPath: Path,
+      variantPath: Path,
+    ): TreeDiffCmdOptions {
+      val treeDiffCmdOptions = TreeDiffCmdOptions()
+      treeDiffCmdOptions.inputFlags.inputFile = seedPath
+      treeDiffCmdOptions.treeDiffInputFlags.variantFile = variantPath
+      treeDiffCmdOptions.inputFlags.testScript = testPath
+      treeDiffCmdOptions.resultOutputFlags.outputDir = workingDir
+
+      updateLanguageControlFlags(treeDiffCmdOptions)
+      updateAlgorithmControlFlags(treeDiffCmdOptions)
+      updateReductionControlFlags(treeDiffCmdOptions)
+      updateProfilingFlags(treeDiffCmdOptions)
+      updateOutputRefiningFlags(treeDiffCmdOptions)
+
+      return treeDiffCmdOptions
+    }
+
+    fun generateSeedCmdOptions(
+      seedPath: Path,
+      variantPath: Path,
+    ): SeedCmdOptions {
+      val seedCmdOptions = SeedCmdOptions()
+      seedCmdOptions.inputFlags.inputFile = seedPath
+      seedCmdOptions.seedInputFlags.variantFile = variantPath
+      seedCmdOptions.inputFlags.testScript = testPath
+      seedCmdOptions.resultOutputFlags.outputDir = workingDir
+
+      updateLanguageControlFlags(seedCmdOptions)
+      updateAlgorithmControlFlags(seedCmdOptions)
+      updateReductionControlFlags(seedCmdOptions)
+      updateProfilingFlags(seedCmdOptions)
+      updateOutputRefiningFlags(seedCmdOptions)
+
+      return seedCmdOptions
     }
   }
 
@@ -211,10 +286,11 @@ class PPRMetaReductionDriver private constructor(
       parserFacade: AbstractParserFacade,
       seedPath: Path,
       variantPath: Path,
+      languageName: String,
       iteration: Int,
     ) {
-      val seedSize = TokenCounterMain.countTokensOfFile(seedPath)
-      val variantSize = TokenCounterMain.countTokensOfFile(variantPath)
+      val seedSize = TokenCounterMain.countTokensOfFile(seedPath, languageName)
+      val variantSize = TokenCounterMain.countTokensOfFile(variantPath, languageName)
       val listAlignment = getListAlignment(parserFacade, seedPath, variantPath)
       logger.ktInfo {
         "Iteration: $iteration, #Seed: $seedSize token(s), #Variant: $variantSize token(s), " +
@@ -242,10 +318,11 @@ class PPRMetaReductionDriver private constructor(
 
     @JvmStatic
     fun create(
+      globalContext: GlobalContext,
       cmd: CmdOptions,
       parserFacadeFactory: AbstractParserFacadeFactory,
     ): PPRMetaReductionDriver {
-      return PPRMetaReductionDriver(cmd, parserFacadeFactory)
+      return PPRMetaReductionDriver(globalContext, cmd, parserFacadeFactory)
     }
   }
 }

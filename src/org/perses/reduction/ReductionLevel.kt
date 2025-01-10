@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,10 +24,6 @@ import org.perses.util.Util.removeElementsFromList
 /** Represents a level in a spar-tree.  */
 class ReductionLevel(val level: Int) {
   private val nodes = ArrayList<AbstractSparTreeNode>()
-
-  constructor(level: Int, node: AbstractSparTreeNode) : this(level) {
-    addNode(node)
-  }
 
   fun addNode(node: AbstractSparTreeNode) {
     lazyAssert({ !node.isPermanentlyDeleted }) { "The node to add is already permanently deleted." }

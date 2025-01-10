@@ -43,7 +43,7 @@ if [[ ! -s "${OUTPUT_WRONG}" ]] ; then
   # empty file, return 1.
   exit 1
 fi
-if ! diff -q "${OUTPUT_CORRECT_1}" "${OUTPUT_CORRECT_2}" ; then 
+if ! diff -q "${OUTPUT_CORRECT_1}" "${OUTPUT_CORRECT_2}" ; then
   exit 1
 fi
 

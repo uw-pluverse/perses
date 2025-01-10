@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,6 +19,7 @@ package org.perses.reduction.io
 import com.google.common.collect.ImmutableList
 import org.perses.program.AbstractDataKind
 import org.perses.program.AbstractReductionFile
+import org.perses.program.BinaryReductionFile
 import org.perses.program.ScriptFile
 
 abstract class AbstractSingleFileReductionInputs<
@@ -28,16 +29,24 @@ abstract class AbstractSingleFileReductionInputs<
   >(
   testScript: ScriptFile,
   val mainFile: F,
-  files: ImmutableList<AbstractReductionFile<*, *>>,
+  otherMutableFiles: ImmutableList<AbstractReductionFile<*, *>>,
+  immutableDependencyFiles: ImmutableList<BinaryReductionFile>,
 ) : AbstractReductionInputs<K, S>(
   testScript,
-  mainDataKind = mainFile.dataKind,
+  initiallyDeterminedMainDataKind = mainFile.dataKind,
   rootDirectory = mainFile.parentFile,
-  files,
+  mutableFiles = ImmutableList
+    .builderWithExpectedSize<AbstractReductionFile<*, *>>(otherMutableFiles.size + 1)
+    .add(mainFile)
+    .addAll(otherMutableFiles)
+    .build(),
+  immutableDependencyFiles,
 ) {
 
   init {
-    require(files.singleOrNull { it === mainFile } != null)
+    require(otherMutableFiles.none { it === mainFile }) {
+      "The main should file not be in the otherMutableFiles."
+    }
   }
 
   val relativePathForMainFile = getRelativePathForOrigFile(mainFile)

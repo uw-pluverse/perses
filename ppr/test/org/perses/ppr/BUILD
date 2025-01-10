@@ -1,6 +1,5 @@
 load("//benchmark:benchmark.bzl", "sanity_test")
 load("//ppr/test/org/perses/ppr:ppr_reduction.bzl", "ppr_reduction_golden_test")
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 
 PPR_REDUCER_BIN = "//ppr/src/org/perses/ppr:main"
 
@@ -269,6 +268,30 @@ ppr_reduction_golden_test(
     test_script = "r.sh",
     thread_count = 1,
     variant_file = "variant.c",
+)
+
+ppr_reduction_golden_test(
+    name = "ppr_reduction_golden_test_lang",
+    enable_edit_caching = True,
+    enable_query_caching = False,
+    golden_reduced_seed_file = "golden_reduced_seed_lang.c",
+    golden_reduced_variant_file = "golden_reduced_variant_lang.c",
+    log_file = "reduction_golden_test_lang.log",
+    other_flags = {
+        "--min-tdiff": "true",
+        "--min-ldiff": "true",
+        "--min-commonality": "true",
+        "--enable-mirror": "true",
+        "--call-formatter": "false",
+        "--code-format": "ORIG_FORMAT",
+        "--lang": "c",
+    },
+    perses_bin = PPR_REDUCER_BIN,
+    reduction_algorithm = "perses_node_priority_with_dfs_delta",
+    seed_file = "seed.unknown_language",
+    test_script = "r_with_language_specified.sh",
+    thread_count = 1,
+    variant_file = "variant.unknown_language",
 )
 
 sh_test(

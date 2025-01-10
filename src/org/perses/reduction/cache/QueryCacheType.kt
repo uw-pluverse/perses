@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -29,5 +29,4 @@ enum class QueryCacheType {
   CONTENT_SHA512_FORMAT,
   CONTENT_ZIP,
   RCC_MEM_LIT,
-  DISK_CACHE,
 }

@@ -627,30 +627,6 @@ altnt_block__iterationStatement_8
     | aux_rule__iterationStatement_16
     ;
 
-statement
-    : block
-    | variableStatement
-    | importStatement
-    | exportStatement
-    | emptyStatement
-    | classDeclaration
-    | expressionStatement
-    | ifStatement
-    | aux_rule__statement_1
-    | aux_rule__statement_2
-    | continueStatement
-    | breakStatement
-    | returnStatement
-    | yieldStatement
-    | withStatement
-    | labelledStatement
-    | switchStatement
-    | throwStatement
-    | tryStatement
-    | debuggerStatement
-    | functionDeclaration
-    ;
-
 altnt_block__exportStatement_1
     : exportFromBlock
     | variableStatement
@@ -729,6 +705,41 @@ altnt_block__importFromBlock_3
 altnt_block__iterationStatement_9
     : singleExpression
     | variableDeclarationList
+    ;
+
+aux_rule__statement_2
+    : altnt_block__iterationStatement_6 ')'
+    ;
+
+kleene_star__statement_1
+    : aux_rule__statement_2*
+    ;
+
+aux_rule__statement_3
+    : block
+    | variableStatement
+    | importStatement
+    | exportStatement
+    | emptyStatement
+    | classDeclaration
+    | expressionStatement
+    | ifStatement
+    | aux_rule__statement_4
+    | continueStatement
+    | breakStatement
+    | returnStatement
+    | yieldStatement
+    | withStatement
+    | labelledStatement
+    | switchStatement
+    | throwStatement
+    | tryStatement
+    | debuggerStatement
+    | functionDeclaration
+    ;
+
+statement
+    : kleene_star__statement_1 aux_rule__statement_3
     ;
 
 altnt_block__singleExpression_14
@@ -943,14 +954,6 @@ aux_rule__iterationStatement_16
     : altnt_block__iterationStatement_9 In expressionSequence
     ;
 
-aux_rule__statement_1
-    : Do statement While '(' expressionSequence ')' eos
-    ;
-
-aux_rule__statement_2
-    : altnt_block__iterationStatement_6 ')' statement
-    ;
-
 aux_rule__exportStatement_2
     : Default singleExpression
     ;
@@ -965,6 +968,10 @@ aux_rule__tryStatement_3
 
 aux_rule__classElement_8
     : assignable '=' objectLiteral ';'
+    ;
+
+aux_rule__statement_4
+    : Do statement While '(' expressionSequence ')' eos
     ;
 
 aux_rule__singleExpression_22

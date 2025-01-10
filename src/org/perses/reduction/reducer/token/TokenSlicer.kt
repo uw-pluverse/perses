@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -47,6 +47,10 @@ class TokenSlicer(
   // TODO: This algorithm need to be parallelized.
   override fun internalReduce(fixpointReductionState: FixpointReductionState) {
     val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
+    val listenerManager = reducerContext.listenerManager
+    val queryCache = reducerContext.queryCache
+    val nodeActionSetCache = reducerContext.nodeActionSetCache
+    val configuration = reducerContext.configuration
     for (tokenSlicingGranularity in maxSlicingGranularity downTo minSlicingGranularity) {
       val tokens = tree.remainingLexerRuleNodes
       val startEvent = fixpointReductionState
@@ -76,7 +80,12 @@ class TokenSlicer(
         if (cachedResult.isHit()) {
           val testResult = cachedResult.asCacheHit().testResult
           lazyAssert({ testResult.isNotInteresting }) { "Only failed programs can be cached." }
-          listenerManager.onTestResultCacheHit(testResult, testProgram, treeEdit)
+          listenerManager.onTestResultCacheHit(
+            testResult,
+            testProgram,
+            treeEdit,
+            outputCreator = ::computeFileContentListForProgram,
+          )
           continue
         }
         val parserFacade = configuration.parserFacade

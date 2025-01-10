@@ -1,11 +1,11 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("//:perses.bzl", "kt_binary_for_genrule")
+
 package(
     default_visibility = [
         "//visibility:public",
     ],
 )
-
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
-load("//:perses.bzl", "kt_binary_for_genrule")
 
 kt_binary_for_genrule(
     name = "perses_image_reducer",

@@ -1,8 +1,8 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
 package(default_visibility = [
     "//visibility:public",
 ])
-
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 kt_jvm_library(
     name = "antlr_exception_strategy",
@@ -59,8 +59,10 @@ kt_jvm_library(
         "//src/org/perses/grammar/cpp:parser_facade",
         "//src/org/perses/grammar/glsl:parser_facade",
         "//src/org/perses/grammar/go:parser_facade",
-        "//src/org/perses/grammar/java:parser_facade",
+        "//src/org/perses/grammar/java:parser_facade_java20",
+        "//src/org/perses/grammar/java:parser_facade_java8",
         "//src/org/perses/grammar/javascript:parser_facade",
+        "//src/org/perses/grammar/line:parser_facade",
         "//src/org/perses/grammar/php:parser_facade",
         "//src/org/perses/grammar/python3:parser_facade",
         "//src/org/perses/grammar/ruby:parser_facade",
@@ -70,7 +72,9 @@ kt_jvm_library(
         "//src/org/perses/grammar/solidity/preprocessed:parser_facade",
         "//src/org/perses/grammar/sql/mysql:parser_facade",
         "//src/org/perses/grammar/sql/sqlite:parser_facade",
+        "//src/org/perses/grammar/sql/tidb:language_kind",
         "//src/org/perses/grammar/sysverilog:parser_facade",
+        "//src/org/perses/grammar/xml:parser_facade",
         "//src/org/perses/program:language_kind",
     ],
 )

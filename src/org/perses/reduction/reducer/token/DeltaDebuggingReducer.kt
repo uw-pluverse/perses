@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,7 +17,7 @@
 package org.perses.reduction.reducer.token
 
 import com.google.common.collect.ImmutableList
-import org.perses.delta.PristineDeltaDebugger
+import org.perses.listminimizer.PristineDeltaDebugger
 import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation

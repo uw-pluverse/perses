@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,6 +24,7 @@ import org.perses.grammar.c.CParserFacade
 import org.perses.grammar.c.LanguageC
 import org.perses.grammar.c.PnfCParserFacade
 import org.perses.grammar.java.LanguageJava
+import org.perses.util.transformToImmutableList
 
 @RunWith(JUnit4::class)
 class ParserFacadeFactoryTest {
@@ -51,10 +52,14 @@ class ParserFacadeFactoryTest {
 
   @Test
   fun testCompositeFactoryForCreatingFacade() {
-    assertThat(pnfBuilintFactory.createParserFacade(LanguageC)).isInstanceOf(
+    assertThat(
+      pnfBuilintFactory.getParserFacadeListForOrNull(LanguageC)!!.defaultParserFacade.create(),
+    ).isInstanceOf(
       CParserFacade::class.java,
     )
-    assertThat(optBuiltinFactory.createParserFacade(LanguageC)).isInstanceOf(
+    assertThat(
+      optBuiltinFactory.getParserFacadeListForOrNull(LanguageC)!!.defaultParserFacade.create(),
+    ).isInstanceOf(
       PnfCParserFacade::class.java,
     )
   }
@@ -76,5 +81,20 @@ class ParserFacadeFactoryTest {
       .isSameInstanceAs(LanguageJava)
     assertThat(factory.computeLanguageKindWithLanguageNameIgnoreCase("JAva"))
       .isSameInstanceAs(LanguageJava)
+  }
+
+  @Test
+  fun testParserFacadeList() {
+    val list = AbstractParserFacadeFactory.ParserFacadeList.create(
+      defaultParserFacade = pnfc,
+      otherParserFacades = listOf(optc),
+    )
+    assertThat(list.numberOfParserFacades()).isEqualTo(2)
+    assertThat(list.defaultParserFacade.klass).isEqualTo(pnfc)
+    assertThat(list.otherParserFacades.transformToImmutableList { it.klass }).containsExactly(optc)
+    assertThat(list.sequenceOfCreators().transformToImmutableList { it.klass }).containsExactly(
+      pnfc,
+      optc,
+    ).inOrder()
   }
 }

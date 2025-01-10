@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,23 +16,33 @@
  */
 package org.perses.listener
 
-import org.junit.Assert
+import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import java.nio.file.Paths
+import org.perses.util.FileStreamPool
+import java.nio.file.Files
+import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
 class TestScriptExecutionListenerTest {
+
+  val fileStreamPool = FileStreamPool()
+  val tempDir = Files.createTempDirectory(this::class.simpleName!!)
+
+  @After
+  fun teardown() {
+    tempDir.deleteRecursively()
+    fileStreamPool.close()
+  }
+
   @Test
   fun testResultFileIsAbsolute() {
-    val file = Paths.get("__this_file_should_not_exist__")
-    try {
-      TestScriptExecutionListener(file)
-    } catch (e: NullPointerException) {
-      Assert.fail()
-    } catch (e: IllegalArgumentException) {
-      // Swallow.
-    }
+    TestScriptExecutionListener(
+      fileStreamPool.rentStream(
+        tempDir.resolve("a.txt"),
+        description = "test",
+      ),
+    ).close()
   }
 }

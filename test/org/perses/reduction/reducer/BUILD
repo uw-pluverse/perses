@@ -1,11 +1,8 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
 load(
     "//test/org/perses:test.bzl",
-    "copy",
     "cross_folder_golden_test",
-    "golden_test",
 )
-load("//src/org/perses:reduction.bzl", "reduce")
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
 
 kt_jvm_test(
     name = "PersesNodeReducerFunctionalTest",
@@ -136,7 +133,7 @@ cross_folder_golden_test(
 
 cross_folder_golden_test(
     name = "golden_test_delta_1_with_rcc_mem_caching",
-    golden_file = "golden_progress_dump_t_with_fast_linear_scan_cache_process.txt",
+    golden_file = "golden_progress_dump_t_with_rcc_mem_cache_process.txt",
     test_file_in_other_folders = "//test_data/delta_1:progress_dump_t_with_rcc_mem_lit_cache_process",
 )
 

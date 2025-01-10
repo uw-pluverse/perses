@@ -1,15 +1,15 @@
-package(default_visibility = [
-    "//visibility:public",
-])
-
-load("//src/org/perses/grammar:antlr_util.bzl", "antlr_codegen_combined")
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 load("//antlropt/src/org/perses/antlr/pnf:pnf.bzl", "pnf_convert")
+load("//src/org/perses/grammar:antlr_util.bzl", "antlr_codegen_combined")
 load(
     "//src/org/perses/grammar/adhoc:adhoc_grammar.bzl",
     "orig_parser_facade_library",
     "pnf_parser_facade_library",
 )
+
+package(default_visibility = [
+    "//visibility:public",
+])
 
 antlr_codegen_combined(
     name = "orig_rust_grammar",

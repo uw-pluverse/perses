@@ -45,8 +45,11 @@ def reduction_golden_test(
         enable_edit_caching = None,
         thread_count = None,
         log_file = None,
+        delta_debugger_profile = None,
+        golden_delta_debugger_profile = None,
         other_flags = None,
         perses_bin = DEFAULT_PERSES_BIN,
+        cmd_deps = None,
         deps = None):
     if "/" in source_file:
         fail("The source file should be in the current folder.")
@@ -75,8 +78,10 @@ def reduction_golden_test(
         enable_query_caching = enable_query_caching,
         enable_edit_caching = enable_edit_caching,
         log_file = log_file,
+        delta_debugger_profile = delta_debugger_profile,
         other_flags = other_flags,
         perses_bin = perses_bin,
+        cmd_deps = cmd_deps,
         deps = deps,
     )
 
@@ -99,4 +104,12 @@ def reduction_golden_test(
             name = "%s_progress_test" % name,
             golden_file = golden_progress_file,
             test_file = progress_dump_file,
+        )
+    if golden_delta_debugger_profile:
+        if not delta_debugger_profile:
+            fail("The golden_delta_debugger_profile and delta_debugger_profile must be specified together.")
+        golden_test(
+            name = "%s_delta_debugger_golden_test" % name,
+            golden_file = golden_delta_debugger_profile,
+            test_file = delta_debugger_profile,
         )

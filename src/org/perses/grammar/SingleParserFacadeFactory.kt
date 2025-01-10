@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,6 +18,7 @@ package org.perses.grammar
 
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
+import com.google.common.flogger.FluentLogger
 import org.perses.grammar.c.CParserFacade
 import org.perses.grammar.c.LanguageC
 import org.perses.grammar.c.PnfCParserFacade
@@ -27,10 +28,13 @@ import org.perses.grammar.glsl.GlslParserFacade
 import org.perses.grammar.glsl.LanguageGlsl
 import org.perses.grammar.go.LanguageGo
 import org.perses.grammar.go.PnfGoParserFacade
-import org.perses.grammar.java.JavaParserFacade
+import org.perses.grammar.java.Java20ParserFacade
+import org.perses.grammar.java.Java8ParserFacade
 import org.perses.grammar.java.LanguageJava
 import org.perses.grammar.javascript.JavaScriptParserFacade
 import org.perses.grammar.javascript.LanguageJavaScript
+import org.perses.grammar.line.LanguageLine
+import org.perses.grammar.line.LineParserFacade
 import org.perses.grammar.php.LanguagePhp
 import org.perses.grammar.php.PhpParserFacade
 import org.perses.grammar.python3.LanguagePython3
@@ -49,11 +53,15 @@ import org.perses.grammar.sql.mysql.LanguageMySQL
 import org.perses.grammar.sql.mysql.MySQLParserFacade
 import org.perses.grammar.sql.sqlite.LanguageSQLite
 import org.perses.grammar.sql.sqlite.SQLiteParserFacade
+import org.perses.grammar.sql.tidb.LanguageTiDB
 import org.perses.grammar.sysverilog.LanguageSystemVerilog
 import org.perses.grammar.sysverilog.PnfSysverilogParserFacade
+import org.perses.grammar.xml.LanguageXML
+import org.perses.grammar.xml.PnfXMLParserFacade
 import org.perses.program.LanguageKind
+import org.perses.util.ktSevere
+import org.perses.util.transformToImmutableList
 import kotlin.reflect.KClass
-import kotlin.reflect.full.createInstance
 
 /** Creates a parser facade, based on the type of language kind.  */
 class SingleParserFacadeFactory private constructor(
@@ -70,37 +78,17 @@ class SingleParserFacadeFactory private constructor(
     }
   }
 
-  override fun createParserFacade(languageKind: LanguageKind): AbstractParserFacade {
-    val facadeList = language2FacadeMap[languageKind]
-    requireNotNull(facadeList) {
-      "Unrecognized language kind $languageKind"
-    }
-    return facadeList.defaultParserFacade.createInstance().also {
-      check(it.language == languageKind) {
-        "${it.language} != $languageKind"
-      }
-    }
+  override fun getParserFacadeListForOrNull(languageKind: LanguageKind): ParserFacadeList? {
+    return language2FacadeMap[languageKind]
   }
 
   override fun languageSequence(): Sequence<LanguageKind> {
     return language2FacadeMap.keys.asSequence()
   }
 
-  data class ParserFacadeList(
-    val defaultParserFacade: KClass<out AbstractParserFacade>,
-    val otherParserFacades: ImmutableList<KClass<out AbstractParserFacade>>,
-  ) {
-    init {
-      require(!otherParserFacades.contains(defaultParserFacade)) {
-        """
-          | default parser facade: $defaultParserFacade
-          | other parser facades: $otherParserFacades
-        """.trimMargin()
-      }
-    }
-  }
-
   companion object {
+
+    private val logger = FluentLogger.forEnclosingClass()
 
     @JvmStatic
     fun builderWithBuiltinLanguages(): Builder {
@@ -109,7 +97,11 @@ class SingleParserFacadeFactory private constructor(
       builder.add(LanguageGo, PnfGoParserFacade::class)
       builder.add(LanguageRust, PnfRustParserFacade::class)
       builder.add(LanguageScala, PnfScalaParserFacade::class)
-      builder.add(LanguageJava, JavaParserFacade::class)
+      builder.add(
+        LanguageJava,
+        defaultFacadeClass = Java8ParserFacade::class,
+        otherParserFacades = ImmutableList.of(Java20ParserFacade::class),
+      )
       builder.add(
         LanguageC,
         PnfCParserFacade::class,
@@ -118,6 +110,7 @@ class SingleParserFacadeFactory private constructor(
       builder.add(LanguageSystemVerilog, PnfSysverilogParserFacade::class)
       builder.add(LanguageSolidity, PnfSolidityParserFacade::class)
       builder.add(LanguageCpp, PnfCppParserFacade::class)
+      builder.add(LanguageXML, PnfXMLParserFacade::class)
       builder.add(LanguageJavaScript, JavaScriptParserFacade::class)
       builder.add(LanguagePhp, PhpParserFacade::class)
       builder.add(LanguageSmtLibV2, SmtLibV2ParserFacade::class)
@@ -125,7 +118,26 @@ class SingleParserFacadeFactory private constructor(
       builder.add(LanguageMySQL, MySQLParserFacade::class)
       builder.add(LanguagePython3, Python3ParserFacade::class)
       builder.add(LanguageRuby, PnfRubyParserFacade::class)
+      builder.add(LanguageLine, LineParserFacade::class)
+      tryToDynamicallyLoadParserFacades(builder)
       return builder
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    private fun tryToDynamicallyLoadParserFacades(builder: Builder) {
+      val className = "org.perses.grammar.sql.tidb.TiDBParserFacade"
+      try {
+        val javaClass = Class.forName(className)
+          as Class<out AbstractParserFacade>
+        val klass = javaClass.kotlin
+        builder.add(LanguageTiDB, defaultFacadeClass = klass)
+      } catch (e: ClassNotFoundException) {
+        logger.ktSevere {
+          """Failed to load the class of the parser facade $className for $LanguageTiDB
+            |${e.message}
+          """.trimMargin()
+        }
+      }
     }
 
     fun createEmptyFactory() = SingleParserFacadeFactory(ImmutableMap.of())
@@ -143,8 +155,10 @@ class SingleParserFacadeFactory private constructor(
       language2FacadeMap.put(
         language,
         ParserFacadeList(
-          defaultParserFacade = defaultFacadeClass,
-          otherParserFacades = otherParserFacades,
+          defaultParserFacade = ParserFacadeCreator(defaultFacadeClass),
+          otherParserFacades = otherParserFacades.transformToImmutableList {
+            ParserFacadeCreator(it)
+          },
         ),
       )
       return this

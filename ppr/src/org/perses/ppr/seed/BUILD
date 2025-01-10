@@ -1,8 +1,8 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
 package(default_visibility = [
     "//visibility:public",
 ])
-
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 java_binary(
     name = "main",
@@ -23,6 +23,7 @@ kt_jvm_library(
         "//:flogger",
         "//:guava",
         "//src/org/perses:abstract_reduction_main",
+        "//src/org/perses:perses_listener_manager_creator",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction:reduction_driver_interface",

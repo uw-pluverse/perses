@@ -3,7 +3,7 @@
 import os
 import unittest
 import tempfile
-import check_copyright
+from copyright.pluverse_check_copyright import CopyrightChecker
 
 
 TINY_COPYRIGHT = ["This is a sample message.\n"] *3
@@ -14,7 +14,7 @@ class TestCheckCopyright(unittest.TestCase):
 
     temp_dir = None
     java_temp_file = None
-    copyright_checker = check_copyright.CopyrightChecker(TINY_COPYRIGHT)
+    copyright_checker = CopyrightChecker(TINY_COPYRIGHT)
 
     def setUp(self):
         self.temp_dir = tempfile.mkdtemp()

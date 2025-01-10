@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,26 +16,89 @@
  */
 package org.perses.ppr.seed
 
-import com.google.common.collect.ImmutableList
 import org.perses.AbstractMain
+import org.perses.PersesListenerManagerCreator
 import org.perses.grammar.AbstractParserFacadeFactory
-import org.perses.ppr.seed.SeedReductionDriver.Companion.create
-import org.perses.reduction.IReductionDriver
+import org.perses.reduction.AsyncReductionListenerManager
+import org.perses.reduction.GlobalContext
+import org.perses.util.Util
+import org.perses.util.cmd.CommandLineProcessor
 
-class SeedMain(args: Array<String>) : AbstractMain<SeedCmdOptions>(args) {
+class SeedMain(
+  cmd: SeedCmdOptions,
+  globalContext: GlobalContext,
+) : AbstractMain<SeedCmdOptions, SeedReductionDriver, SeedReductionInputs>(
+  cmd,
+  globalContext,
+) {
 
-  override fun createCommandOptions(): SeedCmdOptions {
-    return SeedCmdOptions()
+  override fun createSequenceOfReductionDriverCreators(
+    reductionInputs: SeedReductionInputs,
+  ): Sequence<ReductionDriverCreator<SeedReductionDriver>> {
+    val parserFacade = parserFacadeFactory.getParserFacadeListForOrNull(
+      reductionInputs.initiallyDeterminedMainDataKind,
+    )!!.defaultParserFacade.create()
+    return sequenceOf(
+      ReductionDriverCreator(
+        creator = {
+          SeedReductionDriver.create(
+            globalContext,
+            cmd,
+            parserFacade,
+            reductionInputs,
+            listenerManager,
+          )
+        },
+        descriptor = {
+          """
+            ${parserFacade::class}
+          """.trimIndent()
+        },
+      ),
+    )
   }
 
-  override fun createReductionDriver(facadeFactory: AbstractParserFacadeFactory): IReductionDriver {
-    return create(cmd, facadeFactory, ImmutableList.of())
+  override fun createAsyncReductionListenerManager(): AsyncReductionListenerManager {
+    return PersesListenerManagerCreator.createAsyncReductionListenerManager(
+      cmd,
+      globalContext.fileStreamPool,
+    )
+  }
+
+  override fun createReductionInputs(
+    parserFacadeFactory: AbstractParserFacadeFactory,
+  ): SeedReductionInputs {
+    val inputFlags = cmd.seedInputFlags
+    return SeedReductionInputs.create(
+      seedPath = inputFlags.inputFile!!,
+      variantPath = inputFlags.variantFile!!,
+      testScriptPath = inputFlags.testScript!!,
+      languageKindComputer = { sourceFileAbsPath ->
+        parserFacadeFactory.computeLanguage(
+          cmd.languageControlFlags.languageName,
+          sourceFileAbsPath,
+        )
+      },
+    )
   }
 
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      SeedMain(args).run()
+      val processor = CommandLineProcessor(
+        cmdCreator = { SeedCmdOptions() },
+        programName = SeedMain::class.qualifiedName!!,
+        args = args,
+      )
+      if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
+        return
+      }
+      Util.useResources(
+        { GlobalContext() },
+        { globalContext -> SeedMain(processor.cmd, globalContext) },
+      ) { _, main ->
+        main.run()
+      }
     }
   }
 }

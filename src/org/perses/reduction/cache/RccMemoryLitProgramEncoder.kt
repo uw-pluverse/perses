@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,19 +19,18 @@ package org.perses.reduction.cache
 import it.unimi.dsi.fastutil.ints.IntArrayList
 import org.perses.program.PersesTokenFactory.PersesToken
 import org.perses.program.TokenizedProgram
-import org.perses.reduction.cache.AbstractLinearScanEncoder.Companion.NOT_FOUND
+import org.perses.reduction.cache.AbstractRccLinearScanEncoder.Companion.NOT_FOUND
 import org.perses.util.Util.lazyAssert
+import org.perses.util.Util.nextOrNull
 
 class RccMemoryLitProgramEncoder internal constructor(
   baseProgram: TokenizedProgram,
   profiler: AbstractQueryCacheProfiler,
   enableCompression: Boolean,
-) : AbstractCompactProgramEncoder(baseProgram, profiler, enableCompression) {
+) : AbstractRccProgramEncoder(baseProgram, profiler, enableCompression) {
 
   init {
-    val startTime = AbstractQueryCacheProfiler.now()
-    val endTime = AbstractQueryCacheProfiler.now()
-    profiler.onCreatingEncoder(baseProgram.tokens, startTime, endTime)
+    profiler.onCreatingEncoder(baseProgram.tokens, nanoDuration = 0)
   }
 
   private fun searchForLexemeId(
@@ -52,15 +51,14 @@ class RccMemoryLitProgramEncoder internal constructor(
     tokenIterator: Iterator<PersesToken>,
     tokenCount: Int,
   ): IntArrayList? {
-    val tokenCursor = IteratorCursor(tokenIterator)
-    var currentValueHolder: PersesToken? = null
-    val intervals = IntArrayList(LinearScanTokenizedProgramEncoder.DEFAULT_INTERVAL_CAPACITY)
+    var currentValueHolder: PersesToken?
+    val intervals = IntArrayList(RccTokenizedProgramEncoder.DEFAULT_INTERVAL_CAPACITY)
     val baseTokens = baseProgram.tokens
     val origTokenCount = baseTokens.size
-    tokenCursor.move { currentValueHolder = it }
+    currentValueHolder = tokenIterator.nextOrNull()
     var baseTokenIndex = 0
-    while (tokenCursor.has(currentValueHolder)) {
-      val currentPersesLexemeId = tokenCursor.get(currentValueHolder).persesLexemeId
+    while (currentValueHolder != null) {
+      val currentPersesLexemeId = currentValueHolder.persesLexemeId
       // Search for start of the internal.
       baseTokenIndex = searchForLexemeId(
         baseTokenIndex,
@@ -74,14 +72,13 @@ class RccMemoryLitProgramEncoder internal constructor(
       intervals.add(baseTokenIndex)
       // Search for the end of the interval.
       do {
-        tokenCursor.move { currentValueHolder = it }
+        currentValueHolder = tokenIterator.nextOrNull()
         ++baseTokenIndex
-      } while (tokenCursor.has(currentValueHolder) &&
+      } while (currentValueHolder != null &&
         baseTokenIndex < origTokenCount &&
-        tokenCursor.get(currentValueHolder)
-          .persesLexemeId == baseTokens[baseTokenIndex].persesLexemeId
+        currentValueHolder.persesLexemeId == baseTokens[baseTokenIndex].persesLexemeId
       )
-      if (baseTokenIndex == origTokenCount && tokenCursor.has(currentValueHolder)) {
+      if (baseTokenIndex == origTokenCount && currentValueHolder != null) {
         return null
       }
       intervals.add(baseTokenIndex)

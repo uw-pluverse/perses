@@ -1,6 +1,6 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
 load("//benchmark:benchmark.bzl", "sanity_test")
 load("//ppr/test/org/perses/ppr:ppr_reduction.bzl", "ppr_reduction_golden_test")
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 
 PERSES_LIST_DIFF_REDUCER_BIN = "//ppr/src/org/perses/ppr/diff/list:main"
 
@@ -206,6 +206,28 @@ ppr_reduction_golden_test(
     test_script = "r_delete_two_stmts.sh",
     thread_count = 1,
     variant_file = "variant_delete_two_stmts.c",
+)
+
+ppr_reduction_golden_test(
+    name = "list_diff_reduction_golden_test_lang",
+    enable_edit_caching = True,
+    enable_query_caching = False,
+    golden_progress_file = "golden_reduction_progress_lang.txt",
+    golden_reduced_seed_file = "golden_reduced_seed_lang.c",
+    golden_reduced_variant_file = "golden_reduced_variant_lang.c",
+    log_file = "reduction_golden_test_lang.log",
+    other_flags = {
+        "--enable-diff-ddmin": "false",
+        "--enable-diff-slicer": "true",
+        "--lang": "c",
+    },
+    perses_bin = PERSES_LIST_DIFF_REDUCER_BIN,
+    progress_dump_file = "reduction_progress_lang.txt",
+    reduction_algorithm = "perses_node_priority_with_dfs_delta",
+    seed_file = "seed.unknown_language",
+    test_script = "r_with_language_specified.sh",
+    thread_count = 1,
+    variant_file = "variant.unknown_language",
 )
 
 kt_jvm_test(

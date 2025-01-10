@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -32,18 +32,18 @@ abstract class AbstractCommandOptions {
   inner class CmdUsagePrinter(private val jCommander: JCommander) {
     fun printUsage(): String {
       val formatter = PersesCmdUsageFormatter(jCommander)
-      val stringBuilder = java.lang.StringBuilder()
+      val stringBuilder = StringBuilder()
       formatter.usage(stringBuilder)
       val message = stringBuilder.toString()
       println(message)
       return message
     }
 
-    fun getFlagNameValueMap(): ImmutableMap<String, String> {
+    fun getLongestFlagNameToValueMap(): ImmutableMap<String, String> {
       val result = ImmutableMap.builder<String, String>()
       for (field in jCommander.fields) {
         val description = field.value
-        val optionNames = description.names ?: continue
+        val optionNames = description.longestName ?: continue
         val value = description.parameterized[description.`object`] ?: continue
         result.put(optionNames, value.toString())
       }

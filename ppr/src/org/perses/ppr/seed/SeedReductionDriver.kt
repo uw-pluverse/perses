@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,67 +16,40 @@
  */
 package org.perses.ppr.seed
 
-import com.google.common.collect.ImmutableList
 import org.antlr.v4.runtime.Lexer
 import org.antlr.v4.runtime.Token
 import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.cmd.OutputFlagGroup
 import org.perses.cmd.ReductionControlFlagGroup
-import org.perses.grammar.AbstractParserFacadeFactory
+import org.perses.grammar.AbstractParserFacade
 import org.perses.ppr.diff.PPRDiffUtils
 import org.perses.program.PersesTokenFactory
-import org.perses.program.ScriptFile
-import org.perses.program.SourceFile
 import org.perses.program.TokenizedProgramFactory
 import org.perses.reduction.AbstractProgramReductionDriver
-import org.perses.reduction.AbstractReductionListener
+import org.perses.reduction.AsyncReductionListenerManager
+import org.perses.reduction.GlobalContext
 import org.perses.reduction.ReductionConfiguration
 import org.perses.reduction.SparTreeWithParsability
 import org.perses.reduction.io.token.TokenReductionIOManager
 import org.perses.util.ListAlignment
-import java.nio.file.Path
 
 class SeedReductionDriver private constructor(
+  globalContext: GlobalContext,
   cmd: SeedCmdOptions,
   ioManager: TokenReductionIOManager,
   tree: SparTreeWithParsability,
   configuration: ReductionConfiguration,
-  extraListeners: ImmutableList<AbstractReductionListener>,
+  listenerManager: AsyncReductionListenerManager,
 ) : AbstractProgramReductionDriver(
+  globalContext,
   cmd,
   ioManager,
   tree,
   configuration,
-  extraListeners,
+  listenerManager,
 ) {
 
   companion object {
-
-    fun createReductionInputs(
-      parserFacadeFactory: AbstractParserFacadeFactory,
-      inputFlags: SeedCmdOptions.SeedInputFlagGroup,
-    ): SeedReductionInputs {
-      val seedPath: Path = inputFlags.getSourceFile()
-      val variantPath: Path = inputFlags.getVariantFile()
-      val languageKind = parserFacadeFactory.computeLanguageKindOrThrow(seedPath)
-      val seedFile = SourceFile(seedPath, languageKind)
-      val variantFile = SourceFile(variantPath, languageKind)
-      val testScript = ScriptFile(inputFlags.getTestScript().toAbsolutePath())
-
-      require(seedFile.parentFile.toAbsolutePath() == testScript.parentFile.toAbsolutePath()) {
-        "The seed file and the test script should reside in the same folder. " +
-          "seedFile:$seedFile, testScript:$testScript"
-      }
-      require(variantFile.parentFile.toAbsolutePath() == testScript.parentFile.toAbsolutePath()) {
-        "The variant file and the test script should reside in the same folder. " +
-          "variantFile:$variantFile, testScript:$testScript"
-      }
-      return SeedReductionInputs(
-        testScript = testScript,
-        seedFile = seedFile,
-        variantFile = variantFile,
-      )
-    }
 
     private fun createIOManager(
       reductionInputs: SeedReductionInputs,
@@ -86,7 +59,7 @@ class SeedReductionDriver private constructor(
       lexerAtnWrapper: LexerAtnWrapper<out Lexer>,
     ): TokenReductionIOManager {
       val workingDirectory = reductionInputs.seedFile.parentFile
-      val languageKind = reductionInputs.mainDataKind
+      val languageKind = reductionInputs.initiallyDeterminedMainDataKind
       val programFormatControl = reductionControlFlags.codeFormat.let { codeFormat ->
         if (codeFormat != null) {
           check(languageKind.isCodeFormatAllowed(codeFormat)) {
@@ -112,18 +85,14 @@ class SeedReductionDriver private constructor(
 
     @JvmStatic
     fun create(
+      globalContext: GlobalContext,
       cmd: SeedCmdOptions,
-      parserFacadeFactory: AbstractParserFacadeFactory,
-      extraListeners: ImmutableList<AbstractReductionListener> = ImmutableList.of(),
+      parserFacade: AbstractParserFacade,
+      reductionInputs: SeedReductionInputs,
+      listenerManager: AsyncReductionListenerManager,
     ): SeedReductionDriver {
-      val reductionInputs = createReductionInputs(
-        parserFacadeFactory,
-        cmd.seedInputFlags,
-      )
-
       // create a parserFacade to create the SparTree
-      val languageKind = reductionInputs.mainDataKind
-      val parserFacade = parserFacadeFactory.createParserFacade(languageKind)
+      val languageKind = reductionInputs.initiallyDeterminedMainDataKind
 
       val seedTree = createSparTree(
         reductionInputs.seedFile,
@@ -132,7 +101,7 @@ class SeedReductionDriver private constructor(
       val seedPersesTokens = seedTree.programSnapshot.tokens
 
       // parse variant file into tokens
-      val variantTokens = parserFacade.parseIntoTokens(cmd.seedInputFlags.getVariantFile())
+      val variantTokens = parserFacade.parseIntoTokens(cmd.seedInputFlags.variantFile!!)
         .filter { it.channel == Token.DEFAULT_CHANNEL }
       val variantTokenizedProgramFactory = TokenizedProgramFactory
         .createFactory(variantTokens, languageKind)
@@ -158,11 +127,12 @@ class SeedReductionDriver private constructor(
       )
 
       return SeedReductionDriver(
+        globalContext,
         cmd,
         ioManager,
         seedTree,
         reductionConfiguration,
-        extraListeners,
+        listenerManager,
       )
     }
   }

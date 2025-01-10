@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,10 +17,10 @@
 package org.perses.cmd
 
 import com.beust.jcommander.Parameter
-import org.perses.delta.EnumDeltaDebuggerType
+import org.perses.listminimizer.EnumListInputMinimizerType
 import org.perses.util.cmd.AbstractCommandLineFlagGroup
 
-class ReductionAlgorithmControlFlagGroup(val defaultReductionAlgorithm: String) :
+class ReductionAlgorithmControlFlagGroup :
   AbstractCommandLineFlagGroup(groupName = "Reduction Algorithm Control") {
   @JvmField
   @Parameter(
@@ -78,7 +78,7 @@ class ReductionAlgorithmControlFlagGroup(val defaultReductionAlgorithm: String) 
     arity = 1,
     order = 6,
   )
-  var defaultDeltaDebuggerTypeForKleene = EnumDeltaDebuggerType.DFS
+  var defaultDeltaDebuggerTypeForKleene = EnumListInputMinimizerType.DFS
 
   @JvmField
   @Parameter(
@@ -110,12 +110,15 @@ class ReductionAlgorithmControlFlagGroup(val defaultReductionAlgorithm: String) 
   )
   var stopAtFirstCompatibleChildForRegularRuleNode = false
 
-  fun getReductionAlgorithmName(): String {
-    if (reductionAlgorithm.isNullOrEmpty()) {
-      reductionAlgorithm = defaultReductionAlgorithm
-    }
-    return checkNotNull(reductionAlgorithm)
-  }
+  @JvmField
+  @Parameter(
+    names = ["--enable-trec"],
+    description = "enable T-Rec (a lexical-syntax guided fine-grained reduction process to " +
+      "reduce and canonicalize each token)",
+    arity = 1,
+    order = 12,
+  )
+  var enableTrec = false
 
   override fun validate() {
   }

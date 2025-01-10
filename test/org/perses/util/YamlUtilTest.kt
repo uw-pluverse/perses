@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,6 +22,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import java.nio.file.Files
+import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
@@ -29,12 +30,21 @@ class YamlUtilTest {
 
   private val tempDir = Files.createTempDirectory(this::class.java.simpleName)
 
+  @OptIn(ExperimentalPathApi::class)
   @After
   fun teardown() {
     tempDir.deleteRecursively()
   }
 
   val data = TestData("a", 1)
+
+  @Test
+  fun testDeepCopy() {
+    val list = ParentTestData(data)
+    val copy = YamlUtil.deepCopy(list, ParentTestData::class.java)
+    assertThat(list).isEqualTo(copy)
+    assertThat(list.data).isNotSameInstanceAs(copy.data)
+  }
 
   @Test
   fun testYamlString() {
@@ -52,4 +62,6 @@ class YamlUtilTest {
   }
 
   data class TestData(val a: String, val b: Int)
+
+  data class ParentTestData(val data: TestData)
 }

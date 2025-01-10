@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,14 +21,13 @@ import org.perses.antlr.ast.PersesAstBuilder.Companion.loadGrammarFromFile
 import org.perses.antlr.util.Util.extractGrammarNameFromGrammarFileName
 import org.perses.util.cmd.AbstractCommandOptions
 import org.perses.util.cmd.AbstractMain
+import org.perses.util.cmd.CommandLineProcessor
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.io.path.writeText
 
-class Main(args: Array<String>) : AbstractMain<Main.Options>(args) {
-  override fun createCommandOptions() = Options()
-
+class Main(cmd: Options) : AbstractMain<Main.Options>(cmd) {
   override fun internalRun() {
     val parserGrammar = loadGrammarFromFile(cmd.sourceFile!!)
       .copyWithNewName(extractGrammarNameFromGrammarFileName(cmd.outputFile!!))
@@ -78,7 +77,15 @@ class Main(args: Array<String>) : AbstractMain<Main.Options>(args) {
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      Main(args).run()
+      val cmdProcessor = CommandLineProcessor(
+        cmdCreator = { Options() },
+        programName = "pnf",
+        args = args,
+      )
+      if (cmdProcessor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
+        return
+      }
+      Main(cmdProcessor.cmd).run()
     }
   }
 }

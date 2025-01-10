@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -32,10 +32,10 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
 
   @VisibleForTesting
-  fun introduceStars(rules: MutableGrammar, ruleName: RuleNameHandle) {
+  fun introduceStars(mutableGrammar: MutableGrammar, ruleName: RuleNameHandle) {
     val nonRecursivePartsInRecursiveDef = ArrayList<AbstractPersesRuleElement>()
     val nonRecursiveDefs = LinkedHashSet<AbstractPersesRuleElement>()
-    val ruleDef = rules.getAltBlock(ruleName)
+    val ruleDef = mutableGrammar.getAltBlock(ruleName)
     classifyDefsAndExtractNonrecursiveParts(
       ruleName,
       ruleDef,
@@ -51,28 +51,36 @@ abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
     if (nonRecursivePartsInRecursiveDef.isEmpty()) {
       return
     }
-    check(nonRecursiveDefs.size > 0)
-    rules.removeRule(ruleName)
+    check(nonRecursiveDefs.size > 0) {
+      """There must be a non-recursive definition, otherwise the rule does not terminate.
+        |
+        |current offending ruleName = ${ruleName.ruleName}
+        |
+        |current offending rule def: 
+        |${ruleDef.asSequence().map { it.sourceCode }.joinToString(separator = "\n")}
+      """.trimMargin()
+    }
+    mutableGrammar.removeRule(ruleName)
     val starRuleName = ruleName.createAuxiliaryRuleName(RuleType.KLEENE_STAR)
     val quantifiedRuleName = ruleName.createAuxiliaryRuleName(RuleType.OTHER_RULE)
     val quantifiedBodyRule = AstUtil.flattenAndDeduplicateAlternatives(
       nonRecursivePartsInRecursiveDef,
     )
-    rules.getAltBlock(quantifiedRuleName).addAllIfInequivalent(quantifiedBodyRule)
+    mutableGrammar.getAltBlock(quantifiedRuleName).addAllIfInequivalent(quantifiedBodyRule)
     val starRule = createGreedy(create(quantifiedRuleName))
-    rules.getAltBlock(starRuleName).addIfNotEquivalent(starRule)
+    mutableGrammar.getAltBlock(starRuleName).addIfNotEquivalent(starRule)
     val starRuleRef = create(starRuleName)
     if (nonRecursiveDefs.size == 1) {
       val nonRecursiveDef = nonRecursiveDefs.single()
-      rules.getAltBlock(ruleName).addIfNotEquivalent(
+      mutableGrammar.getAltBlock(ruleName).addIfNotEquivalent(
         combineIntoSequence(constructNewSequenceDef(nonRecursiveDef, starRuleRef)),
       )
     } else {
       val altBlock = AstUtil.flattenAndDeduplicateAlternatives(nonRecursiveDefs)
       assert(altBlock.size > 1)
       val altBlockRuleName = ruleName.createAuxiliaryRuleName(RuleType.OTHER_RULE)
-      rules.getAltBlock(altBlockRuleName).addAllIfInequivalent(altBlock)
-      rules.getAltBlock(ruleName).addIfNotEquivalent(
+      mutableGrammar.getAltBlock(altBlockRuleName).addAllIfInequivalent(altBlock)
+      mutableGrammar.getAltBlock(ruleName).addIfNotEquivalent(
         combineIntoSequence(constructNewSequenceDef(create(altBlockRuleName), starRuleRef)),
       )
     }

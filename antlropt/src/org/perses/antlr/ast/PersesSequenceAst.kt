@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -35,7 +35,17 @@ class PersesSequenceAst(
       }
     }
     children.zipWithNext { first, second ->
-      require(!SmartAstConstructor.areMergeableQuantifiedNodesInSequence(first, second))
+      require(!SmartAstConstructor.areMergeableQuantifiedNodesInSequence(first, second)) {
+        """
+          |----First:
+          |----${first::class}
+          |----${first.sourceCode}
+          |
+          |----Second:
+          |----${second::class}
+          |----${second.sourceCode}
+        """.trimMargin()
+      }
     }
   }
 

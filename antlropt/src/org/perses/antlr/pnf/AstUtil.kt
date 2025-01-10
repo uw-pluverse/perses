@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -219,7 +219,7 @@ object AstUtil {
     seq: PersesSequenceAst,
     gap: Interval,
     replacement: AbstractPersesRuleElement,
-  ): PersesSequenceAst {
+  ): AbstractPersesRuleElement {
     require(gap.length > 0)
     require(gap.length < seq.childCount)
     val builder = ImmutableList.builder<AbstractPersesRuleElement>()
@@ -236,7 +236,7 @@ object AstUtil {
       builder.add(seq.getChild(i))
       ++i
     }
-    return PersesSequenceAst(builder.build())
+    return SmartAstConstructor.createForSequence(builder.build())
   }
 
   // TODO: needs tests

@@ -19,7 +19,7 @@ rm -f out*.txt
 
 for cc in "${GOODCC[@]}" ; do
   rm -f ./t ./out1.txt
-  
+
   (timeout -s 9 $TIMEOUTCC $cc $CFILE > out1.txt 2>&1) >& /dev/null
   ret=$?
 
@@ -29,7 +29,7 @@ for cc in "${GOODCC[@]}" ; do
     fi
   else # does not compile, so make sure it doesn't ICE
     if grep 'internal compiler error: ' out1.txt ||\
-    grep 'PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT' out1.txt
+      grep 'PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT' out1.txt
     then
       exit 1
     fi
@@ -42,12 +42,12 @@ done
 
 for cc in "${BADCC[@]}" ; do
   rm -f ./t ./out2.txt
-  
+
   (timeout -s 9 $TIMEOUTCC $cc $CFILE > out2.txt 2>&1) >& /dev/null
-  if [[ $? != 137 ]] ; then 
+  if [[ $? != 137 ]] ; then
     exit 1
   fi
-  
+
 done
 
 exit 0

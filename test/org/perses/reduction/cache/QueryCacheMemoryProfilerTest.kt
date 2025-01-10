@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -98,7 +98,7 @@ class QueryCacheMemoryProfilerTest {
       expectedByteCount = 600,
       extraIncludedClasses = setOf(
         IntArray::class.java.name,
-        "org.perses.reduction.cache.CompactProgramEncoding" +
+        RccProgramEncoding::class.qualifiedName!! +
           "$" + "Companion" + "$" + "createCompressedEncoding" + "$" + "1",
       ),
     ) { baseProgram ->
@@ -116,11 +116,11 @@ class QueryCacheMemoryProfilerTest {
       expectedByteCount = 600,
       extraIncludedClasses = setOf(
         IntArray::class.java.name,
-        "org.perses.reduction.cache.CompactProgramEncoding" +
+        RccProgramEncoding::class.qualifiedName!! +
           "$" + "Companion" + "$" + "createCompressedEncoding" + "$" + "1",
       ),
     ) { baseProgram ->
-      CompactQueryCache(
+      RccQueryCache(
         baseProgram,
         AbstractQueryCacheProfiler.NULL_PROFILER,
         QueryCacheConfiguration.noLightweightRefreshing(Fraction(1, 1)),
@@ -138,7 +138,10 @@ class QueryCacheMemoryProfilerTest {
     createSubprograms(baseProgram).forEach {
       val cacheMiss = cache.getCachedResult(it)
       if (cacheMiss.isMiss()) {
-        cache.addResult(cacheMiss.asCacheMiss(), PropertyTestResult.NON_INTERESTING_RESULT)
+        cache.cacheProgramAndResult(
+          cacheMiss.asCacheMiss(),
+          PropertyTestResult.NON_INTERESTING_RESULT,
+        )
       }
     }
     val result = computeMemoryInBytes(cache)
@@ -159,7 +162,7 @@ class QueryCacheMemoryProfilerTest {
         PropertyTestResult::class.java,
         QueryCacheConfiguration::class.java,
         ContentSHA512Encoder::class.java,
-        LinearScanTokenizedProgramEncoder::class.java,
+        RccTokenizedProgramEncoder::class.java,
         ContentStringBasedQueryCache.ContentStringEncoder::class.java,
         RccMemoryLitProgramEncoder::class.java,
         ContentStringBasedQueryCache.ContentStringEncoder::class.java,

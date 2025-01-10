@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -39,8 +39,8 @@ sealed class AbstractSparTreeEdit<T : AbstractTreeEditAction> (
     return this as NodeDeletionTreeEdit
   }
 
-  fun asNodeReplacementEdit(): NodeReplacementTreeEdit {
-    return this as NodeReplacementTreeEdit
+  fun asNodeReplacementEdit(): DescendantHoistingTreeEdit {
+    return this as DescendantHoistingTreeEdit
   }
 
   fun asAnyNodeReplacementEdit(): AnyNodeReplacementTreeEdit {
@@ -91,8 +91,8 @@ sealed class AbstractSparTreeEdit<T : AbstractTreeEditAction> (
     fun createReplacementSparTreeEdit(
       tree: SparTree,
       actionSet: ChildHoistingActionSet,
-    ): NodeReplacementTreeEdit {
-      return NodeReplacementTreeEdit(tree, actionSet)
+    ): DescendantHoistingTreeEdit {
+      return DescendantHoistingTreeEdit(tree, actionSet)
     }
 
     fun createAnyNodeReplacementTreeEdit(

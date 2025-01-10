@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,16 +22,14 @@ import org.perses.antlr.GrammarTestingUtility.loadGrammarFromFile
 import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import org.perses.util.cmd.AbstractCommandOptions
 import org.perses.util.cmd.AbstractMain
+import org.perses.util.cmd.CommandLineProcessor
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.writeText
 
 class PnfPassCommandLine(
-  args: Array<String>,
-) : AbstractMain<PnfPassCommandLine.CommandOptions>(args) {
-  override fun createCommandOptions(): CommandOptions {
-    return CommandOptions()
-  }
+  cmd: CommandOptions,
+) : AbstractMain<PnfPassCommandLine.CommandOptions>(cmd) {
 
   override fun internalRun() {
     val parserGramamr = loadGrammarFromFile(cmd.flags.input!!)
@@ -80,7 +78,15 @@ class PnfPassCommandLine(
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      PnfPassCommandLine(args).run()
+      val processor = CommandLineProcessor(
+        cmdCreator = { CommandOptions() },
+        programName = PnfPassCommandLine::class.qualifiedName!!,
+        args = args,
+      )
+      if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
+        return
+      }
+      PnfPassCommandLine(processor.cmd).run()
     }
   }
 }

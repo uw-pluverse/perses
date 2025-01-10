@@ -42,15 +42,15 @@ prepare the following two things:
 
 Now we can use the following commands to generate a JAR file
 ```bash
-readonly PARSER_GRAMMAR_FILE="Parser.g4"
-readonly OPTIONAL_LEXER_GRAMMAR_FILE="Lexer.g4" # This is optional
+readonly PARSER_GRAMMAR_FILE="Parser.g4" # Assume the current directy has a file named Parser.g4
+readonly OPTIONAL_LEXER_GRAMMAR_FILE="Lexer.g4" # This is optional. Assume the current directory has "Lexer.g4"
 readonly START_RULE_NAME="compilationUnit" # The start rule of the grammar
 readonly LANGUAGE_KIND_YAML_FILE="language_kind.yaml"
 readonly IDENTIFIER_TOKEN_NAMES="IDENTIFIER" # The name of the token type Identifier
 readonly PACKAGE_NAME="org.perses.grammar.adhoc.mygrammar" # Name your own package
 readonly OUTPUT_JAR="my_grammar.jar"
 
-bazel build //src/org/perses/grammar/adhoc:perses_adhoc_installer_deploy.jar
+bazelisk build //src/org/perses/grammar/adhoc:perses_adhoc_installer_deploy.jar
 java -jar bazel-bin/src/org/perses/grammar/adhoc/perses_adhoc_installer_deploy.jar \
     --parser-grammar "${PARSER_GRAMMAR_FILE}" \
     --lexer-grammar "${OPTIONAL_LEXER_GRAMMAR_FILE}" \
@@ -70,7 +70,7 @@ With the generated JAR file, now you can run Perses to reduce programs
 written in the new language specified in your grammar.
 
 ```bash
-bazel build //src/org/perses:perses_deploy.jar
+bazelisk build //src/org/perses:perses_deploy.jar
 java -jar bazel-bin/src/org/perses/perses_deploy.jar \
     --input-file <the input file to be reduced> \
     --test-script <the script which specifies the property> \

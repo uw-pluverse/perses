@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,6 +17,7 @@
 package org.perses.util
 
 import com.google.common.collect.ImmutableList
+import com.google.common.collect.ImmutableSet
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Assert.assertThrows
@@ -35,12 +36,13 @@ import org.perses.util.Util.hashListOfStrings
 import org.perses.util.Util.isEmptyDirectory
 import org.perses.util.Util.lazyAssert
 import org.perses.util.Util.mergeContinuousElementsIntoRegions
+import org.perses.util.Util.nextOrNull
 import org.perses.util.Util.removeElementBySwappingLastElement
 import org.perses.util.Util.removeElementsFromLinkedList
 import org.perses.util.Util.removeElementsFromList
 import org.perses.util.Util.removeNullFromList
 import org.perses.util.Util.setExecutable
-import org.perses.util.Util.slideResverseIfSlidable
+import java.io.Closeable
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
@@ -48,17 +50,98 @@ import java.util.LinkedList
 import java.util.function.Predicate
 import kotlin.io.path.deleteRecursively
 import kotlin.io.path.exists
+import kotlin.io.path.name
+import kotlin.io.path.readLines
 import kotlin.io.path.readText
 import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class UtilTest {
 
-  private var tempDir: Path = Files.createTempDirectory("UtilTest_")
+  private var tempDir: Path = Files.createTempDirectory(this::class.qualifiedName)
 
   @After
   fun teardown() {
     tempDir.deleteRecursively()
+  }
+
+  @Test
+  fun testCreateTempDir() {
+    val dir = Util.createTempDirFor(this)
+    try {
+      assertThat(dir.name).startsWith(this::class.java.canonicalName)
+    } finally {
+      dir.deleteRecursively()
+    }
+  }
+
+  @Test
+  fun testSlideReverseEmptyRange() {
+    assertThrows(Exception::class.java) {
+      Util.slideReverseIfSlideable(
+        beginRangeInclusive = 0,
+        endRangeExclusive = 0,
+        slidingWindowSize = 1,
+      )
+    }
+  }
+
+  @Test
+  fun testSlideReverseSingleElement() {
+    val result = Util.slideReverseIfSlideable(
+      beginRangeInclusive = 0,
+      endRangeExclusive = 1,
+      slidingWindowSize = 1,
+    ).toList()
+    assertThat(result).containsExactly(NonEmptyInternal(0, 1))
+  }
+
+  @Test
+  fun testSlideReverseTwoElements() {
+    val result = Util.slideReverseIfSlideable(
+      beginRangeInclusive = 1,
+      endRangeExclusive = 3,
+      slidingWindowSize = 1,
+    ).toList()
+    assertThat(result).containsExactly(
+      NonEmptyInternal(2, 3),
+      NonEmptyInternal(1, 2),
+    ).inOrder()
+  }
+
+  @Test
+  fun testSlideReverseThreeElements() {
+    val result = Util.slideReverseIfSlideable(
+      beginRangeInclusive = 1,
+      endRangeExclusive = 4,
+      slidingWindowSize = 1,
+    ).toList()
+    assertThat(result).containsExactly(
+      NonEmptyInternal(3, 4),
+      NonEmptyInternal(2, 3),
+      NonEmptyInternal(1, 2),
+    ).inOrder()
+  }
+
+  @Test
+  fun testSlideReverseNotEnoughElements() {
+    val result = Util.slideReverseIfSlideable(
+      beginRangeInclusive = 0,
+      endRangeExclusive = 2,
+      slidingWindowSize = 4,
+    ).toList()
+    assertThat(result).isEmpty()
+  }
+
+  @Test
+  fun testSlideReverseInvalidWindowSize() {
+    assertThrows(Exception::class.java) {
+      Util.slideReverseIfSlideable(
+        beginRangeInclusive = 0,
+        endRangeExclusive = 2,
+        slidingWindowSize = 0,
+      )
+    }
   }
 
   @Test
@@ -85,6 +168,21 @@ class UtilTest {
     createNonAppendablePrintStream(file).use { it.print("a") }
     createNonAppendablePrintStream(file).use { it.print("b") }
     assertThat(file.readText()).isEqualTo("b")
+  }
+
+  @Test
+  fun testCountElements() {
+    assertThat(Util.countElementsInList(0, 0)).isEqualTo(0)
+    assertThat(Util.countElementsInList(1, 0)).isEqualTo(1)
+    assertThat(Util.countElementsInList(3, 1)).isEqualTo(2)
+  }
+
+  @Test
+  fun testIteratorNextOrNull() {
+    val iterator = listOf(1).iterator()
+    assertThat(iterator.nextOrNull()).isEqualTo(1)
+    assertThat(iterator.nextOrNull()).isNull()
+    assertThat(iterator.nextOrNull()).isNull()
   }
 
   @Test
@@ -474,13 +572,13 @@ class UtilTest {
   }
 
   private fun testSlideReverse(
-    list: List<Int>,
+    list: ImmutableList<Int>,
     slidingWindowSize: Int,
     vararg expected: NonEmptyInternal,
   ) {
     val copy = ArrayList<NonEmptyInternal>()
-    slideResverseIfSlidable(list, slidingWindowSize) {
-      copy.add(it)
+    Util.slideReverseIfSlideable(list, slidingWindowSize).forEach {
+      copy.add(it.interval)
     }
     assertThat(copy).containsExactly(*expected)
   }
@@ -488,20 +586,20 @@ class UtilTest {
   @Test
   fun test_slideReverse_invalid() {
     assertThrows(Throwable::class.java) {
-      slideResverseIfSlidable(listOf<Int>(), 0) { }
+      Util.slideReverseIfSlideable(ImmutableList.of<Int>(), 0)
     }
   }
 
   @Test
   fun test_slideReverse_size_1() {
-    val list = listOf(1)
+    val list = ImmutableList.of(1)
     testSlideReverse(list, slidingWindowSize = 1, NonEmptyInternal(0, 1))
     testSlideReverse(list, slidingWindowSize = 2)
   }
 
   @Test
   fun test_slideReverse_size_2() {
-    val list = listOf(1, 2)
+    val list = ImmutableList.of(1, 2)
     testSlideReverse(list, 1, NonEmptyInternal(1, 2), NonEmptyInternal(0, 1))
     testSlideReverse(list, 2, NonEmptyInternal(0, 2))
     testSlideReverse(list, 3)
@@ -509,7 +607,7 @@ class UtilTest {
 
   @Test
   fun test_slideReverse_size_3() {
-    val list = listOf(1, 2, 3)
+    val list = ImmutableList.of(1, 2, 3)
     testSlideReverse(
       list,
       1,
@@ -589,6 +687,67 @@ class UtilTest {
   }
 
   @Test
+  fun testListFilesInFolder() {
+    val folder = Files.createDirectories(tempDir.resolve("folderToTestListFilesInFolder"))
+    Files.createDirectories(folder.resolve("a"))
+    Files.createDirectories(folder.resolve("b"))
+    Files.createFile(folder.resolve("c"))
+    Files.createFile(folder.resolve("d"))
+    val fileSet = Util.listFilesInFolder(folder)
+
+    assertThat(fileSet.size).isEqualTo(4)
+    assertThat(fileSet).contains(folder.resolve("a"))
+    assertThat(fileSet).contains(folder.resolve("b"))
+    assertThat(fileSet).contains(folder.resolve("c"))
+    assertThat(fileSet).contains(folder.resolve("d"))
+  }
+
+  @Test
+  fun testDeleteFilesConditionally1() {
+    val folder = Files.createDirectories(tempDir.resolve("folderToTestDeleteFilesNotInList"))
+    Files.createDirectories(folder.resolve("a"))
+    Files.createDirectories(folder.resolve("b"))
+    Files.createFile(folder.resolve("c"))
+    Files.createFile(folder.resolve("d"))
+    val fileSet = Util.listFilesInFolder(folder)
+    Util.deleteFilesConditionally(folder) { path: Path ->
+      !fileSet.contains(path)
+    }
+
+    assertThat(fileSet.size).isEqualTo(4)
+    assertThat(fileSet).contains(folder.resolve("a"))
+    assertThat(fileSet).contains(folder.resolve("b"))
+    assertThat(fileSet).contains(folder.resolve("c"))
+    assertThat(fileSet).contains(folder.resolve("d"))
+  }
+
+  @Test
+  fun testDeleteFilesConditionally2() {
+    val folder = Files.createDirectories(tempDir.resolve("folderToTestDeleteFilesNotInList"))
+    Files.createDirectories(folder.resolve("a"))
+    Files.createDirectories(folder.resolve("b"))
+    Files.createFile(folder.resolve("c"))
+    Files.createFile(folder.resolve("d"))
+
+    // remove "b" and "d"
+    val fileSetWithoutDBuilder = ImmutableSet.builder<Path>()
+    fileSetWithoutDBuilder.add(folder.resolve("a"))
+    fileSetWithoutDBuilder.add(folder.resolve("c"))
+    val fileSetWithoutD = fileSetWithoutDBuilder.build()
+
+    // delete files that are not in fileSetWithoutD, i.e., delete "b" and "d"
+    Util.deleteFilesConditionally(folder) { path: Path ->
+      !fileSetWithoutD.contains(path)
+    }
+
+    val updatedFileSet = Util.listFilesInFolder(folder)
+
+    assertThat(updatedFileSet.size).isEqualTo(2)
+    assertThat(updatedFileSet).contains(folder.resolve("a"))
+    assertThat(updatedFileSet).contains(folder.resolve("c"))
+  }
+
+  @Test
   fun testAtomicSequenceGenerator() {
     val g = Util.AtomicSequenceGenerator(minLengthForPadding = 2)
     (1..9).forEach {
@@ -609,5 +768,60 @@ class UtilTest {
     SpaceSize.megaBytes(mb = 1).let {
       assertThat(it.bytes).isEqualTo(1000 * 1000)
     }
+  }
+
+  @Test
+  fun testFileStreamPool() {
+    val path = tempDir.resolve("a.txt")
+    FileStreamPool().use { pool ->
+      pool.rentStream(path, description = "a").use {
+        it.printf(format = "%s %s %s\n", "1", "2", "3")
+      }
+      pool.rentStream(path, description = "b").use {
+        it.println("second")
+      }
+    }
+    val content = path.readLines()
+    assertThat(content).hasSize(2)
+    assertThat(content.first()).isEqualTo("1 2 3")
+    assertThat(content.last()).isEqualTo("second")
+  }
+
+  class FakeCloseable(var closed: Boolean = false) : Closeable {
+    override fun close() {
+      closed = true
+    }
+  }
+
+  @Test
+  fun testUseBoth() {
+    val a = FakeCloseable()
+    val b = FakeCloseable()
+
+    Util.useResources({ a }, { b }) { localA, localB ->
+      assertThat(localA.closed).isFalse()
+      assertThat(localB.closed).isFalse()
+    }
+    assertThat(a.closed).isTrue()
+    assertThat(b.closed).isTrue()
+  }
+
+  @Test
+  fun testUseThree() {
+    val a = FakeCloseable()
+    val b = FakeCloseable()
+    val c = FakeCloseable()
+    Util.useResources(
+      { a },
+      { b },
+      { _, _ -> c },
+    ) { localA, localB, localC ->
+      assertThat(localA.closed).isFalse()
+      assertThat(localB.closed).isFalse()
+      assertThat(localC.closed).isFalse()
+    }
+    assertThat(a.closed).isTrue()
+    assertThat(b.closed).isTrue()
+    assertThat(c.closed).isTrue()
   }
 }

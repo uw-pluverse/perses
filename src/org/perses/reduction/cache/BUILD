@@ -1,8 +1,8 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
 package(default_visibility = [
     "//visibility:public",
 ])
-
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 kt_jvm_library(
     name = "zip_cache",
@@ -110,13 +110,13 @@ kt_jvm_library(
 kt_jvm_library(
     name = "query_cache",
     srcs = [
-        "AbstractCompactProgramEncoder.kt",
         "AbstractQueryCacheProfiler.kt",
+        "AbstractRccProgramEncoder.kt",
         "AbstractRealQueryCache.kt",
         "AbstractTokenizedProgramEncoder.kt",
-        "CompactProgramEncoding.kt",
         "ConfigBasedQueryCache.kt",
         "NullQueryCacheProfiler.kt",
+        "RccProgramEncoding.kt",
     ],
     deps = [
         ":int_array_compressor",
@@ -178,14 +178,14 @@ kt_jvm_library(
 kt_jvm_library(
     name = "linear_scan_cache",
     srcs = [
-        "AbstractLinearScanEncoder.kt",
-        "CompactQueryCache.kt",
-        "CompactQueryCacheFormatSensitive.kt",
-        "LinearScanFormatSensitiveEncoder.kt",
-        "LinearScanTokenizedProgramEncoder.kt",
+        "AbstractRccLinearScanEncoder.kt",
         "QueryCacheWithFastLinearScanWithoutCompression.kt",
+        "RccFormatSensitiveEncoder.kt",
+        "RccFormatSensitiveQueryCache.kt",
         "RccMemLitQueryCache.kt",
         "RccMemoryLitProgramEncoder.kt",
+        "RccQueryCache.kt",
+        "RccTokenizedProgramEncoder.kt",
     ],
     deps = [
         ":LogicalSizedArray",
@@ -200,19 +200,13 @@ kt_jvm_library(
 kt_jvm_library(
     name = "query_cache_profiler",
     srcs = [
+        "QueryCacheMemoryProfiler.kt",
+        "QueryCacheTimeCsvProfiler.kt",
         "QueryCacheTimeProfiler.kt",
     ],
     deps = [
         "//:guava",
         "//src/org/perses/program",
-        "//src/org/perses/reduction/cache:query_cache",
-    ],
-)
-
-kt_jvm_library(
-    name = "query_cache_memory_profiler",
-    srcs = ["QueryCacheMemoryProfiler.kt"],
-    deps = [
         "//src/org/perses/reduction/cache:query_cache",
         "//third_party/memory_measurer:object_explorer",
     ],

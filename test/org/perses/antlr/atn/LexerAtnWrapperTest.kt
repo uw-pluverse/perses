@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,13 +24,16 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.antlr.toTokenType
+import org.perses.grammar.rust.PnfRustLexer
 import org.perses.util.Util
 
 @RunWith(JUnit4::class)
 class LexerAtnWrapperTest {
 
   val c = LexerAtnWrapper(OrigCLexer::class.java)
+  val rust = LexerAtnWrapper(PnfRustLexer::class.java)
   val test = LexerAtnWrapper(TestLexer::class.java)
+  val javascript = LexerAtnWrapper(TestJavaScriptLexer::class.java)
 
   @Test
   fun test() {
@@ -78,8 +81,35 @@ class LexerAtnWrapperTest {
   }
 
   @Test
+  fun testJavaScriptStringLiteral() {
+    val atnPath = javascript.findATNPathForLexeme(
+      lexeme = "''",
+      ruleType = javascript.metaTokenInfoDB.getTokenInfoWithName("StringLiteral")!!.tokenType,
+    )
+    assertThat(atnPath.stateSequence).isNotEmpty()
+  }
+
+  @Test
   fun testIdWithId() {
     val tokenType = OrigCLexer.Identifier.toTokenType()
     assertThat(c.canBeConcatWithoutSpace(tokenType, tokenType)).isFalse()
+  }
+
+  @Test
+  fun testGenerateCandidateCanonicalTokenTextsGivenTokenType() {
+    var tokenType = c.metaTokenInfoDB.getTokenInfoWithName("Constant")!!.tokenType
+    var lexemes = c.generateCandidateCanonicalTokenTextsGivenTokenType(tokenType, countLimit = 2)
+    assertThat(lexemes).containsExactly("0", "1")
+    lexemes = c.generateCandidateCanonicalTokenTextsGivenTokenType(tokenType, countLimit = 5)
+    assertThat(lexemes).containsExactly("0", "1", "2", "3", "4")
+    tokenType = rust.metaTokenInfoDB.getTokenInfoWithName("FullIntLit")!!.tokenType
+    lexemes = rust.generateCandidateCanonicalTokenTextsGivenTokenType(tokenType, countLimit = 2)
+    assertThat(lexemes).containsExactly("0", "1")
+    tokenType = rust.metaTokenInfoDB.getTokenInfoWithName("FloatLit")!!.tokenType
+    lexemes = rust.generateCandidateCanonicalTokenTextsGivenTokenType(tokenType, countLimit = 2)
+    assertThat(lexemes).containsExactly("0.", "1.")
+    tokenType = rust.metaTokenInfoDB.getTokenInfoWithName("StringLit")!!.tokenType
+    lexemes = rust.generateCandidateCanonicalTokenTextsGivenTokenType(tokenType, countLimit = 2)
+    assertThat(lexemes).containsExactly("\"\"")
   }
 }

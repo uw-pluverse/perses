@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -91,7 +91,7 @@ class ParserFacadeTest {
   }
 
   @Test
-  fun testIsParsableForScala_true_case() {
+  fun testIsParsableForScalaTrueCase() {
     val program = scalaProgram!!
     assertThat(
       scalaFacade.isSourceCodeParsable(
@@ -106,7 +106,7 @@ class ParserFacadeTest {
   }
 
   @Test
-  fun testIsParsableForScala_false_case() {
+  fun testIsParsableForScalaFalseCase() {
     val program = scalaProgram!!
     run {
       val invalidProgram = projectProgram(program, "object", "Hello", "{")
@@ -120,7 +120,7 @@ class ParserFacadeTest {
   }
 
   @Test
-  fun testIsParsable_true() {
+  fun testIsParsableTrue() {
     val program = createSparTreeFromFile("test_data/misc/t1.c").programSnapshot
     assertThat(
       cFacade.isSourceCodeParsable(

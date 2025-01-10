@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,18 +21,20 @@ import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.program.AbstractLazySourceCode
 import org.perses.program.AbstractReductionFile
 import org.perses.program.EnumFormatControl
+import org.perses.program.LanguageKind
+import org.perses.program.SourceFile
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.AbstractTokenizedProgramPrinter
 import org.perses.program.printer.PrinterRegistry
 import org.perses.reduction.io.AbstractOutputManager
-import org.perses.reduction.io.RegularReductionInputs
+import org.perses.reduction.io.AbstractSingleFileReductionInputs
 
 class RegularOutputManagerFactory(
-  private val reductionInputs: RegularReductionInputs,
-  programFormatControl: EnumFormatControl,
+  private val reductionInputs: AbstractSingleFileReductionInputs<LanguageKind, SourceFile, *>,
+  codeFormatControl: EnumFormatControl,
   lexerAtnWrapper: LexerAtnWrapper<out Lexer>,
 ) : AbstractTokenOutputManagerFactory(
-  programFormatControl,
+  codeFormatControl,
   lexerAtnWrapper,
 ) {
 

@@ -155,7 +155,11 @@ logicalOrExpression
     ;
 
 conditionalExpression
-    :   logicalOrExpression ('?' expression ':' conditionalExpression)?
+    :   logicalOrExpression
+        (
+            '?' expression ':' conditionalExpression
+           |'?:' conditionalExpression // a GCC extension. 'a ?: b' is equivalent to 'a ? a : b'.
+        )?
     ;
 
 assignmentExpression
@@ -255,13 +259,21 @@ structOrUnion
     ;
 
 structDeclarationList
-    :   structDeclaration
-    |   structDeclarationList structDeclaration
+    :   structDeclaration* (structDeclaration | structDeclarationWithoutSemicolon)?
     ;
 
 structDeclaration
-    :   Extension_gcc? specifierQualifierList structDeclaratorList? ';'
+    :   structQualifierListWithStructDeclaratorListWithoutSemicolon ';'
     |   staticAssertDeclaration
+    ;
+
+structQualifierListWithStructDeclaratorListWithoutSemicolon
+    :   Extension_gcc? specifierQualifierList structDeclaratorList?
+    ;
+
+structDeclarationWithoutSemicolon
+    :  structQualifierListWithStructDeclaratorListWithoutSemicolon
+    |  staticAssertDeclarationWithoutSemicolon
     ;
 
 specifierQualifierList
@@ -458,7 +470,12 @@ designator
     ;
 
 staticAssertDeclaration
-    :   '_Static_assert' '(' constantExpression ',' StringLiteral+ ')' ';'
+    :   staticAssertDeclarationWithoutSemicolon ';'
+    ;
+
+
+staticAssertDeclarationWithoutSemicolon
+    :   '_Static_assert' '(' constantExpression ',' StringLiteral+ ')'
     ;
 
 statement

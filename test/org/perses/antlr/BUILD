@@ -1,3 +1,7 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
+load("//:perses.bzl", "kt_binary_for_genrule")
+load("//test/org/perses:test.bzl", "golden_test")
+
 package(
     default_visibility = [
         "//antlropt/test:__subpackages__",
@@ -5,10 +9,6 @@ package(
         "//test/org/perses:__subpackages__",
     ],
 )
-
-load("//test/org/perses:test.bzl", "golden_test")
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
-load("//:perses.bzl", "kt_binary_for_genrule")
 
 kt_jvm_test(
     name = "ParseTreeUtilTest",

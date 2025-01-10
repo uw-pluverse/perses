@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -60,31 +60,33 @@ fun Sequence<Int>.toImmutableIntArray(): ImmutableIntArray {
   }.build()
 }
 
-fun <T, V> List<T>.transformToImmutableList(transform: (T) -> V): ImmutableList<V> {
+fun <T : Any, V : Any> List<T>.transformToImmutableList(transform: (T) -> V): ImmutableList<V> {
   return fold(ImmutableList.builderWithExpectedSize<V>(size)) { builder, e ->
     builder.add(transform(e))
     builder
   }.build()
 }
 
-fun <T> List<T>.filterToImmutableList(predicateForDeletion: (T) -> Boolean): ImmutableList<T> {
+fun <T : Any> List<T>.filterToImmutableList(
+  predicateForDeletion: (T) -> Boolean,
+): ImmutableList<T> {
   return asSequence().filter { !predicateForDeletion(it) }.toImmutableList()
 }
 
-fun <T, V> Sequence<T>.transformToImmutableList(transform: (T) -> V): ImmutableList<V> {
+fun <T : Any, V : Any> Sequence<T>.transformToImmutableList(transform: (T) -> V): ImmutableList<V> {
   return fold(ImmutableList.builder<V>()) { builder, e ->
     builder.add(transform(e))
     builder
   }.build()
 }
 
-fun <T, V> Iterable<T>.transformToImmutableList(
+fun <T : Any, V : Any> Iterable<T>.transformToImmutableList(
   transform: (T) -> V,
 ) = asSequence().transformToImmutableList(
   transform,
 )
 
-fun <T> ImmutableList<T>.excludesRegion(
+fun <T : Any> ImmutableList<T>.excludesRegion(
   leftIndexInclusive: Int,
   rightIndexExclusive: Int,
 ): ImmutableList<T> {
@@ -154,37 +156,37 @@ operator fun <T> ImmutableList<T>.plus(other: Iterable<T>): ImmutableList<T> {
   return builder.build()
 }
 
-fun <T> Sequence<T>.toImmutableList(): ImmutableList<T> {
+fun <T : Any> Sequence<T>.toImmutableList(): ImmutableList<T> {
   return fold(ImmutableList.builder<T>()) { builder, e ->
     builder.add(e)
   }.build()
 }
 
-fun <T> Sequence<T>.toImmutableSet(): ImmutableSet<T> {
+fun <T : Any> Sequence<T>.toImmutableSet(): ImmutableSet<T> {
   return fold(ImmutableSet.builder<T>()) { builder, e ->
     builder.add(e)
   }.build()
 }
 
-fun <K, V> Sequence<Map.Entry<K, V>>.toImmutableMap(): ImmutableMap<K, V> {
+fun <K : Any, V : Any> Sequence<Map.Entry<K, V>>.toImmutableMap(): ImmutableMap<K, V> {
   return fold(ImmutableMap.builder<K, V>()) { builder, e ->
     builder.put(e.key, e.value)
   }.build()
 }
 
-fun <K, V> Iterable<Pair<K, V>>.toImmutableMap(): ImmutableMap<K, V> {
+fun <K : Any, V : Any> Iterable<Pair<K, V>>.toImmutableMap(): ImmutableMap<K, V> {
   return fold(ImmutableMap.builder<K, V>()) { builder, e ->
     builder.put(e.first, e.second)
   }.build()
 }
 
-fun <K, V> Sequence<Pair<K, V>>.toImmutableBiMap(): ImmutableBiMap<K, V> {
+fun <K : Any, V : Any> Sequence<Pair<K, V>>.toImmutableBiMap(): ImmutableBiMap<K, V> {
   return fold(ImmutableBiMap.builder<K, V>()) { builder, pair ->
     builder.put(pair.first, pair.second)
   }.build()
 }
 
-inline fun <K, V, T> Sequence<T>.toImmutableMap(
+inline fun <K : Any, V : Any, T> Sequence<T>.toImmutableMap(
   keyFunc: (T) -> K,
   valueFunc: (T) -> V,
 ): ImmutableMap<K, V> {
@@ -194,7 +196,7 @@ inline fun <K, V, T> Sequence<T>.toImmutableMap(
 }
 
 @JvmName("toImmutableMapPair")
-fun <K, V> Sequence<Pair<K, V>>.toImmutableMap(): ImmutableMap<K, V> {
+fun <K : Any, V : Any> Sequence<Pair<K, V>>.toImmutableMap(): ImmutableMap<K, V> {
   return fold(ImmutableMap.builder<K, V>()) { builder, e ->
     builder.put(e.first, e.second)
   }.build()

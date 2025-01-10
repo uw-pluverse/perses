@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,6 +24,7 @@ import org.perses.util.Util.lazyAssert
 abstract class AbstractTokenizedProgramEncoder<Encoding> protected constructor(
   protected var baseProgram: TokenizedProgram,
   protected val profiler: AbstractQueryCacheProfiler,
+  val supportsRccReEncoding: Boolean,
 ) {
 
   abstract fun encode(program: TokenizedProgram): Encoding?

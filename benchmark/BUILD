@@ -7,35 +7,38 @@ filegroup(
     srcs = ["sanity_test.sh"],
 )
 
-py_binary(
+py_library(
     name = "run_benchmark",
     srcs = ["run_benchmark.py"],
 )
 
 py_binary(
-    name = "analyze_cache_profiling",
-    srcs = ["analyze_cache_profiling.py"],
+    name = "convert_memory_log_to_csv",
+    srcs = ["convert_memory_log_to_csv.py"],
 )
 
 py_binary(
-    name = "convert_result_to_csv",
-    srcs = ["convert_result_to_csv.py"],
+    name = "convert_time_query_to_csv",
+    srcs = ["convert_time_query_to_csv.py"],
 )
 
 py_test(
     name = "run_benchmark_test",
     srcs = ["run_benchmark_test.py"],
-    deps = ["run_benchmark"],
+    data = [
+        "//benchmark/clang-22382:files",
+    ],
+    deps = [":run_benchmark"],
 )
 
 py_test(
-    name = "analyze_cache_profiling_test",
-    srcs = ["analyze_cache_profiling_test.py"],
-    deps = ["analyze_cache_profiling"],
+    name = "convert_memory_log_to_csv_test",
+    srcs = ["convert_memory_log_to_csv_test.py"],
+    deps = [":convert_memory_log_to_csv"],
 )
 
 py_test(
-    name = "convert_result_to_csv_test",
-    srcs = ["convert_result_to_csv_test.py"],
-    deps = ["convert_result_to_csv"],
+    name = "convert_time_query_to_csv_test",
+    srcs = ["convert_time_query_to_csv_test.py"],
+    deps = [":convert_time_query_to_csv"],
 )

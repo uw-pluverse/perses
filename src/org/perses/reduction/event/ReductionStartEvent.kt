@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,6 +24,8 @@ class ReductionStartEvent(
   currentTimeMillis: Long,
   val tree: WeakReference<AbstractUnmodifiableSparTree>,
   programSize: Int,
+  val commandLineOptions: String,
+  val extraData: String? = null,
 ) : AbstractStartEvent(
   currentTimeMillis,
   programSize,
@@ -36,7 +38,7 @@ class ReductionStartEvent(
   fun nextFixpointIteration(
     programSize: Int,
     reducerClass: AbstractReducerNameAndDesc,
-    sparTree: AbstractUnmodifiableSparTree,
+    treeStructureDumper: () -> String,
     testScriptStatistics: TestScriptExecutorServiceStatisticsSnapshot,
   ): FixpointIterationStartEvent {
     check(!ended)
@@ -46,7 +48,7 @@ class ReductionStartEvent(
       programSize = programSize,
       iteration = ++currentIteration,
       reducerClass = reducerClass,
-      outdatedTree = WeakReference(sparTree),
+      treeStructureDumper = treeStructureDumper,
       testScriptStatistics = testScriptStatistics,
     )
   }
@@ -54,6 +56,7 @@ class ReductionStartEvent(
   fun createEndEvent(
     programSize: Int,
     testScriptStatistics: TestScriptExecutorServiceStatisticsSnapshot,
+    extraData: String? = null,
   ): ReductionEndEvent {
     check(!ended)
     ended = true
@@ -62,6 +65,7 @@ class ReductionStartEvent(
       currentTimeMillis = System.currentTimeMillis(),
       programSize = programSize,
       testScriptExecutorServiceStatistics = testScriptStatistics,
+      extraData = extraData,
     )
   }
 }

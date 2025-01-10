@@ -25,6 +25,26 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
+    name = "TruthExtensionTest",
+    srcs = [
+        "TruthExtensionTest.kt",
+    ],
+    deps = [
+        "//:truth",
+    ],
+)
+
+kt_jvm_test(
+    name = "FileContentTest",
+    srcs = ["FileContentTest.kt"],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/util",
+    ],
+)
+
+kt_jvm_test(
     name = "UtilTest",
     srcs = ["UtilTest.kt"],
     deps = [

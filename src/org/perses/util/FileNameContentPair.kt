@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,95 +16,7 @@
  */
 package org.perses.util
 
-import com.google.common.collect.ImmutableList
-import com.google.common.collect.Interner
-import java.nio.file.Files
-import java.nio.file.Path
-import kotlin.io.path.readLines
-import kotlin.io.path.writeText
-
-// TODO(cnsun): replace the content with 'lines', to reduce memory footprint.
-data class FileNameContentPair @PublishedApi internal constructor(
+data class FileNameContentPair(
   val fileName: String,
-  val lines: ImmutableList<String>,
-) {
-
-  fun writeToDirectory(dir: Path): Path {
-    check(Files.isDirectory(dir))
-    val path = dir.resolve(fileName)
-    path.writeText(computeFileContent())
-    return path
-  }
-
-  fun computeFileContent() = lines.joinToString(separator = "\n")
-
-  fun createInternedCopy(interner: Interner<String>) = FileNameContentPair(
-    fileName = interner.intern(fileName),
-    lines = ImmutableList.builderWithExpectedSize<String>(lines.size).apply {
-      lines.forEach { line -> add(interner.intern(line)) }
-    }.build(),
-  )
-
-  companion object {
-
-    fun locateFirstNonBlankLine(lines: List<String>): Int {
-      var start = 0
-      while (start < lines.size) {
-        if (lines[start].isNotBlank()) {
-          return start
-        }
-        ++start
-      }
-      return start
-    }
-
-    fun locateLastNonBlankLine(lines: List<String>): Int {
-      var end = lines.size - 1
-      while (end >= 0) {
-        if (lines[end].isNotBlank()) {
-          return end
-        }
-        --end
-      }
-      return end
-    }
-
-    @JvmStatic
-    fun trimWhitespaces(lines: List<String>): ImmutableList<String> {
-      val start = locateFirstNonBlankLine(lines)
-      val end = locateLastNonBlankLine(lines)
-      if (start == end) {
-        return ImmutableList.of(lines[start].trim())
-      }
-      if (start > end) {
-        return ImmutableList.of()
-      }
-      val result = ImmutableList.builder<String>()
-      result.add(lines[start].trimStart())
-      (start + 1 until end).forEach { result.add(lines[it]) }
-      if (end >= 0) {
-        result.add(lines[end].trimEnd())
-      }
-      return result.build()
-    }
-
-    @JvmStatic
-    inline fun createFromFile(
-      file: Path,
-      fileContentProcessor: (List<String>) -> ImmutableList<String> = ::trimWhitespaces,
-    ) = FileNameContentPair(
-      fileName = file.fileName.toString(),
-      lines = fileContentProcessor(file.readLines()),
-    )
-
-    @JvmStatic
-    inline fun createFromString(
-      fileName: String,
-      content: String,
-      fileContentProcessor: (List<String>) -> ImmutableList<String> = ::trimWhitespaces,
-    ) = FileNameContentPair(
-      fileName,
-      lines = fileContentProcessor(content.lines()),
-    )
-  }
-}
+  val content: AbstractFileContent,
+)

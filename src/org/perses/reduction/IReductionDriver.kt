@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,5 +20,19 @@ import java.io.Closeable
 
 interface IReductionDriver : Closeable {
 
+  val cachedSanityCheckResult: AbstractSanityCheckResult
+
   fun reduce()
+
+  sealed class AbstractSanityCheckResult {
+    override fun toString(): String {
+      return this::class.simpleName.toString()
+    }
+  }
+
+  object PassingSanityCheckResult : AbstractSanityCheckResult()
+
+  class FailingSanityCheckResult(
+    val exception: SanityCheckFailedException,
+  ) : AbstractSanityCheckResult()
 }

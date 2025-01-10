@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,6 +16,7 @@
  */
 package org.perses.reduction
 
+import org.perses.listminimizer.AbstractListInputMinimizerListener
 import org.perses.program.LanguageKind
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.cache.AbstractQueryCache
@@ -32,6 +33,7 @@ class ReducerContext(
   val nodeActionSetCache: AbstractNodeActionSetCache,
   val actionSetProfiler: AbstractActionSetProfiler,
   val sparTreeNodeFactory: SparTreeNodeFactory,
+  val deltaDebuggerListener: AbstractListInputMinimizerListener,
 ) : AbstractReducerContext<TokenizedProgram, LanguageKind, TokenReductionIOManager, ReducerContext>(
   ioManager,
   executorService,

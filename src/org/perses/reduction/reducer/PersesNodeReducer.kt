@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,10 +18,10 @@ package org.perses.reduction.reducer
 
 import com.google.common.collect.ImmutableList
 import org.perses.antlr.RuleType
-import org.perses.delta.AbstractDeltaDebugger
-import org.perses.delta.AbstractDeltaDebugger.Arguments
-import org.perses.delta.DeltaDebuggerFactory
-import org.perses.delta.EnumDeltaDebuggerType
+import org.perses.listminimizer.AbstractListInputMinimizer
+import org.perses.listminimizer.AbstractListInputMinimizer.Arguments
+import org.perses.listminimizer.EnumListInputMinimizerType
+import org.perses.listminimizer.ListInputMinimizerFactory
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.SparTreeDdminPayload
@@ -117,11 +117,12 @@ open class PersesNodeReducer(
         },
       )
     }
+    val actionSetProfiler = reducerContext.actionSetProfiler
     findCompatibleKleeneDescendantsForKleeneQuantifiedNode(
-      regularRuleNode,
-      3,
-    ).forEach {
-      val action = NodeReplacementAction(targetNode = regularRuleNode, it)
+      kleeneQuantifiedCurrentNode = regularRuleNode,
+      maxBfsDepth = 3,
+    ).forEach { replacement ->
+      val action = NodeReplacementAction(targetNode = regularRuleNode, replacingNode = replacement)
       actionSetProfiler.onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant(action)
       editList.add(
         asyncCreateTreeEdit {
@@ -254,25 +255,25 @@ open class PersesNodeReducer(
   fun interface IDeltaDebuggerStrategy {
     fun createDeltaDebugger(
       args: Arguments<AbstractSparTreeNode, SparTreeDdminPayload>,
-    ): AbstractDeltaDebugger<AbstractSparTreeNode, SparTreeDdminPayload>
+    ): AbstractListInputMinimizer<AbstractSparTreeNode, SparTreeDdminPayload>
 
     class SelectableDeltaDebuggerStrategy(
-      val typeProvider: () -> EnumDeltaDebuggerType,
+      val typeProvider: () -> EnumListInputMinimizerType,
     ) : IDeltaDebuggerStrategy {
       override fun createDeltaDebugger(
         args: Arguments<AbstractSparTreeNode, SparTreeDdminPayload>,
-      ): AbstractDeltaDebugger<AbstractSparTreeNode, SparTreeDdminPayload> {
-        return DeltaDebuggerFactory.create(typeProvider.invoke(), args)
+      ): AbstractListInputMinimizer<AbstractSparTreeNode, SparTreeDdminPayload> {
+        return ListInputMinimizerFactory.create(typeProvider.invoke(), args)
       }
     }
 
     class SimpleDeltaDebuggerStrategy(
-      val type: EnumDeltaDebuggerType,
+      val type: EnumListInputMinimizerType,
     ) : IDeltaDebuggerStrategy {
       override fun createDeltaDebugger(
         args: Arguments<AbstractSparTreeNode, SparTreeDdminPayload>,
-      ): AbstractDeltaDebugger<AbstractSparTreeNode, SparTreeDdminPayload> {
-        return DeltaDebuggerFactory.create(type, args)
+      ): AbstractListInputMinimizer<AbstractSparTreeNode, SparTreeDdminPayload> {
+        return ListInputMinimizerFactory.create(type, args)
       }
     }
   }

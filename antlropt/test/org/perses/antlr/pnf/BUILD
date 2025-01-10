@@ -1,4 +1,3 @@
-load("//test/org/perses:test.bzl", "golden_test")
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 load(":pnf_pass_tests.bzl", "pnf_pass_golden_test", "pnf_pass_manager_golden_test")
 

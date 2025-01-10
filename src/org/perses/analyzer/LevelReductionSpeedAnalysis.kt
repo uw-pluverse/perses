@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,23 +22,18 @@ import org.jfree.chart.ChartFactory
 import org.jfree.chart.ChartUtils
 import org.jfree.chart.JFreeChart
 import org.perses.listener.IProfileEvent
-import java.io.IOException
-import java.io.UncheckedIOException
+import org.perses.util.ktInfo
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
 class LevelReductionSpeedAnalysis(eventFile: Path) : AbstractHddPerformanceAnalysis(eventFile) {
   private fun exportChart(chart: JFreeChart, fileNameSuffix: String) {
-    try {
-      val file = eventFile
-        .parent
-        .resolve(eventFile.fileName.toString() + fileNameSuffix + ".jpg")
-      logger.atInfo().log("Exporting chart to %s", file)
-      ChartUtils.saveChartAsJPEG(file.toFile(), chart, 1920, 1080)
-    } catch (e: IOException) {
-      throw UncheckedIOException(e)
-    }
+    val file = eventFile
+      .parent
+      .resolve(eventFile.fileName.toString() + fileNameSuffix + ".jpg")
+    logger.ktInfo { "Exporting chart to file" }
+    ChartUtils.saveChartAsJPEG(file.toFile(), chart, 1920, 1080)
   }
 
   private fun createChart(
@@ -94,7 +89,7 @@ class LevelReductionSpeedAnalysis(eventFile: Path) : AbstractHddPerformanceAnaly
     starts: List<IProfileEvent.LevelReductionEvent>,
     ends: List<IProfileEvent.LevelReductionEvent>,
   ) {
-    logger.atInfo().log("Generating chart of time-program-tokenCount relation.")
+    logger.ktInfo { "Generating chart of time-program-tokenCount relation." }
     val size = starts.size
     val dataset = LabeledXYSeriesCollection("Level Reduction Speed")
     var startTime: Long = 0
@@ -127,7 +122,7 @@ class LevelReductionSpeedAnalysis(eventFile: Path) : AbstractHddPerformanceAnaly
     if (events.size == 0) {
       return
     }
-    logger.atInfo().log("Analyzing data")
+    logger.ktInfo { "Analyzing data" }
     val starts: MutableList<IProfileEvent.LevelReductionEvent> = ArrayList()
     val ends: MutableList<IProfileEvent.LevelReductionEvent> = ArrayList()
     for (event in events) {

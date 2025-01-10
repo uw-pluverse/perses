@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -25,12 +25,12 @@ import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.AbstractOutputManagerFactory
 
 abstract class AbstractTokenOutputManagerFactory(
-  val defaultProgramFormatControl: EnumFormatControl,
+  val defaultCodeFormatControl: EnumFormatControl,
   val lexerAtnWrapper: LexerAtnWrapper<out Lexer>,
 ) : AbstractOutputManagerFactory<TokenizedProgram>() {
 
   protected val defaultProgramPrinter =
-    PrinterRegistry.getPrinter(defaultProgramFormatControl, lexerAtnWrapper)
+    PrinterRegistry.getPrinter(defaultCodeFormatControl, lexerAtnWrapper)
 
   abstract fun createManagerFor(
     program: TokenizedProgram,

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,26 +19,16 @@ package org.perses.reduction.cache
 import com.google.common.collect.ImmutableList
 import org.perses.program.PersesTokenFactory.PersesToken
 import org.perses.program.TokenizedProgram
-import java.io.BufferedWriter
+import org.perses.util.FileStreamPool
 import java.lang.AutoCloseable
-import java.nio.charset.StandardCharsets
-import java.nio.file.Files
-import java.nio.file.Path
 
-class QueryCacheTimeProfiler(file: Path) : AbstractQueryCacheProfiler(), AutoCloseable {
-
-  private var writer: BufferedWriter?
-
-  override fun close() {
-    val local = writer
-    writer = null
-    local?.close()
-  }
+class QueryCacheTimeProfiler(
+  writer: FileStreamPool.ManagedPrintStream,
+) : AbstractQueryCacheProfiler(writer), AutoCloseable {
 
   override fun onCreatingEncoder(
     tokensInOrigin: ImmutableList<PersesToken>,
-    startTime: Long,
-    endTime: Long,
+    nanoDuration: Long,
   ) {
     writer!!
       .append("create_encoder")
@@ -47,16 +37,15 @@ class QueryCacheTimeProfiler(file: Path) : AbstractQueryCacheProfiler(), AutoClo
       .append(tokensInOrigin.size.toString())
       .append('\t')
       .append("duration=")
-      .append((endTime - startTime).toString())
+      .append(nanoDuration.toString())
       .append('\n')
       .flush()
   }
 
   override fun onDecodingProgram(
     tokensInOrigin: ImmutableList<PersesToken>,
-    encoding: CompactProgramEncoding,
-    startTime: Long,
-    endTime: Long,
+    encoding: RccProgramEncoding,
+    nanoDuration: Long,
   ) {
     writer!!
       .append("decode")
@@ -71,16 +60,15 @@ class QueryCacheTimeProfiler(file: Path) : AbstractQueryCacheProfiler(), AutoClo
       .append(encoding.encodingSize().toString())
       .append('\t')
       .append("duration=")
-      .append((endTime - startTime).toString())
+      .append(nanoDuration.toString())
       .append('\n')
       .flush()
   }
 
-  override fun onEncodingProgram(
+  override fun afterEncodeProgram(
     tokensInOrigin: ImmutableList<PersesToken>,
     program: TokenizedProgram,
-    startTime: Long,
-    endTime: Long,
+    nanoDuration: Long,
   ) {
     writer!!
       .append("encode")
@@ -92,18 +80,17 @@ class QueryCacheTimeProfiler(file: Path) : AbstractQueryCacheProfiler(), AutoClo
       .append(program.tokenCount().toString())
       .append('\t')
       .append("duration=")
-      .append((endTime - startTime).toString())
+      .append(nanoDuration.toString())
       .append('\n')
       .flush()
   }
 
-  override fun onHeavyweightCacheRefreshing(
+  override fun afterHeavyweightCacheRefreshing(
     oldBestProgram: ImmutableList<PersesToken>,
     newBestProgram: ImmutableList<PersesToken>,
     numOfEntriesInCacheBefore: Int,
     numOfEntriesInCacheAfter: Int,
-    startTime: Long,
-    endTime: Long,
+    nanoDuration: Long,
   ) {
     writer!!
       .append("refresh_cache")
@@ -121,13 +108,8 @@ class QueryCacheTimeProfiler(file: Path) : AbstractQueryCacheProfiler(), AutoClo
       .append(numOfEntriesInCacheAfter.toString())
       .append('\t')
       .append("duration=")
-      .append((endTime - startTime).toString())
+      .append(nanoDuration.toString())
       .append('\n')
       .flush()
-  }
-
-  init {
-    writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8)
-    Runtime.getRuntime().addShutdownHook(Thread { close() })
   }
 }

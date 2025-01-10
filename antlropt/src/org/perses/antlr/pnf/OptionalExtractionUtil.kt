@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -89,7 +89,7 @@ object OptionalExtractionUtil {
       newBlock.removeAlt(candidate.shortSeq.ast)
       val gapAst = candidate.getGapAst()
       val replacement = SmartAstConstructor.createForOptional(gapAst, isGreedy = true)
-      assert(replacement.tag == AstTag.OPTIONAL || replacement.tag == AstTag.STAR)
+      check(replacement.tag == AstTag.OPTIONAL || replacement.tag == AstTag.STAR)
       val newAlt = AstUtil.replaceGapInSequence(
         candidate.longSeq.ast,
         candidate.gapInLongSequence,

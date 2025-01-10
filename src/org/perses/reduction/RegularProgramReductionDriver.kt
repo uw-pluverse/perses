@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,81 +16,61 @@
  */
 package org.perses.reduction
 
-import com.google.common.collect.ImmutableList
 import org.antlr.v4.runtime.Lexer
 import org.perses.CommandOptions
 import org.perses.antlr.atn.LexerAtnWrapper
-import org.perses.cmd.InputFlagGroup
 import org.perses.cmd.OutputFlagGroup
-import org.perses.cmd.ReductionControlFlagGroup
-import org.perses.grammar.AbstractParserFacadeFactory
-import org.perses.program.ScriptFile
+import org.perses.grammar.AbstractParserFacade
+import org.perses.program.EnumFormatControl
+import org.perses.program.LanguageKind
 import org.perses.program.SourceFile
-import org.perses.reduction.io.RegularReductionInputs
+import org.perses.reduction.io.AbstractSingleFileReductionInputs
 import org.perses.reduction.io.token.RegularOutputManagerFactory
 import org.perses.reduction.io.token.TokenReductionIOManager
-import java.nio.file.Path
 
 /**
  * This is the main entry to invoke Perses reducer. It does not have a main, but is the main entry
  * as a reduction library.
  */
 class RegularProgramReductionDriver private constructor(
+  globalContext: GlobalContext,
   cmd: CommandOptions,
   ioManager: TokenReductionIOManager,
   tree: SparTreeWithParsability,
   configuration: ReductionConfiguration,
-  extraListeners: ImmutableList<AbstractReductionListener>,
+  listenerManager: AsyncReductionListenerManager,
 ) : AbstractProgramReductionDriver(
+  globalContext,
   cmd,
   ioManager,
   tree,
   configuration,
-  extraListeners,
+  listenerManager,
 ) {
+
+  val codeFormat: EnumFormatControl
+    get() = (
+      ioManager.outputManagerFactory as RegularOutputManagerFactory
+      ).defaultCodeFormatControl
+
+  val languageKind: LanguageKind
+    get() = configuration.parserFacade.language
 
   companion object {
 
-    fun createReductionInputs(
-      parserFacadeFactory: AbstractParserFacadeFactory,
-      inputFlags: InputFlagGroup,
-    ): RegularReductionInputs {
-      val absoluteSourceFilePath: Path = inputFlags.getSourceFile().toAbsolutePath()
-      val languageKind = parserFacadeFactory.computeLanguageKindOrThrow(absoluteSourceFilePath)
-      val sourceFile = SourceFile(absoluteSourceFilePath, languageKind)
-      val testScript = ScriptFile(inputFlags.getTestScript().toAbsolutePath())
-
-      require(sourceFile.parentFile.toAbsolutePath() == testScript.parentFile.toAbsolutePath()) {
-        "The source file and the test script should reside in the same folder. " +
-          "sourceFile:$sourceFile, testScript:$testScript"
-      }
-      return RegularReductionInputs(testScript = testScript, mainFile = sourceFile)
-    }
-
     fun createIOManager(
-      reductionInputs: RegularReductionInputs,
-      reductionControlFlags: ReductionControlFlagGroup,
+      reductionInputs: AbstractSingleFileReductionInputs<LanguageKind, SourceFile, *>,
       outputFlags: OutputFlagGroup,
+      codeFormatControl: EnumFormatControl,
       lexerAtnWrapper: LexerAtnWrapper<out Lexer>,
     ): TokenReductionIOManager {
       val workingDirectory = reductionInputs.mainFile.parentFile
-      val languageKind = reductionInputs.mainFile.dataKind
-      val programFormatControl = reductionControlFlags.codeFormat.let { codeFormat ->
-        if (codeFormat != null) {
-          check(languageKind.isCodeFormatAllowed(codeFormat)) {
-            "$codeFormat is not allowed for language $languageKind"
-          }
-          codeFormat
-        } else {
-          languageKind.defaultCodeFormatControl
-        }
-      }
       return TokenReductionIOManager(
         workingDirectory,
         reductionInputs,
         outputManagerFactory = RegularOutputManagerFactory(
           reductionInputs,
-          programFormatControl,
+          codeFormatControl,
           lexerAtnWrapper,
         ),
         outputDirectory = outputFlags.outputDir,
@@ -98,19 +78,17 @@ class RegularProgramReductionDriver private constructor(
     }
 
     fun create(
+      globalContext: GlobalContext,
       cmd: CommandOptions,
-      parserFacadeFactory: AbstractParserFacadeFactory,
-      extraListeners: ImmutableList<AbstractReductionListener> = ImmutableList.of(),
+      reductionInputs: AbstractSingleFileReductionInputs<LanguageKind, SourceFile, *>,
+      parserFacade: AbstractParserFacade,
+      codeFormatControl: EnumFormatControl,
+      listenerManager: AsyncReductionListenerManager,
     ): RegularProgramReductionDriver {
-      val reductionInputs = createReductionInputs(
-        parserFacadeFactory,
-        cmd.inputFlags,
-      )
-      val parserFacade = parserFacadeFactory.createParserFacade(reductionInputs.mainDataKind)
       val ioManager = createIOManager(
         reductionInputs,
-        cmd.reductionControlFlags,
         cmd.resultOutputFlags,
+        codeFormatControl,
         parserFacade.lexerAtnWrapper,
       )
       val reductionConfiguration = createConfiguration(
@@ -124,11 +102,12 @@ class RegularProgramReductionDriver private constructor(
       )
 
       return RegularProgramReductionDriver(
+        globalContext,
         cmd,
         ioManager,
         tree,
         reductionConfiguration,
-        extraListeners,
+        listenerManager,
       )
     }
   }

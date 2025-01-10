@@ -1,6 +1,6 @@
-package(default_visibility = ["//visibility:public"])
-
 load("@rules_proto//proto:defs.bzl", "proto_library")
+
+package(default_visibility = ["//visibility:public"])
 
 proto_library(
     name = "rule_hierarchy_info",

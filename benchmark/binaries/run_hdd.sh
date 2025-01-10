@@ -20,7 +20,6 @@ pushd "${TMP}"
 readonly START_TIME=$(date +%s)
 java ${JVM_FLAGS:=''} -jar "/tmp/binaries/perses_deploy.jar" ${PERSES_FLAGS:=''} \
   --alg pristine_hdd \
-  --use-optc-parser true \
   --test-script "${TMP_TEST_SCRIPT}" \
   --input-file "${TMP_SOURCE_FILE}" \
   --output-dir "${TMP}" \

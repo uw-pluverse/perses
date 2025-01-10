@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,10 +22,12 @@ import org.perses.antlr.util.AntlrToolWrapper
 import org.perses.program.LanguageKind
 import org.perses.program.PersesTokenFactory.PersesToken
 import org.perses.reduction.AbstractReducer
+import org.perses.reduction.AbstractReducerNameAndDesc
 import org.perses.reduction.TestScriptExecutorService
 import org.perses.util.AbstractEditOperation
 
 abstract class AbstractListDiffReducer(
+  nameAndDesc: AbstractReducerNameAndDesc,
   ioManager: ListDiffReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
 ) : AbstractReducer<
@@ -33,6 +35,7 @@ abstract class AbstractListDiffReducer(
   LanguageKind,
   ListDiffReductionIOManager,
   >(
+  nameAndDesc,
   ioManager,
   testScriptExecutorService,
 ) {

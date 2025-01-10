@@ -8,11 +8,11 @@ rustup toolchain install "${VERSION}" --force || exit 1
 
 readonly OUTPUT="temp_compilation_output.tmp.txt"
 
-if ! timeout -s 9 30 rustup run "${VERSION}" rustc -Z parse-only mutant.rs ; then 
+if ! timeout -s 9 30 rustup run "${VERSION}" rustc -Z parse-only mutant.rs ; then
   exit 1
-fi	
+fi
 
-if timeout -s 9 30 rustup run "${VERSION}" rustc --crate-type=staticlib -C debuginfo=2 -C opt-level=z -C target-cpu=skylake mutant.rs &> "${OUTPUT}" ; then 
+if timeout -s 9 30 rustup run "${VERSION}" rustc --crate-type=staticlib -C debuginfo=2 -C opt-level=z -C target-cpu=skylake mutant.rs &> "${OUTPUT}" ; then
   exit 1
 fi
 

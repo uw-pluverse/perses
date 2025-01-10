@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -37,7 +37,7 @@ class CompactProgramEncodingTest {
     val intervals = IntArrayList()
     intervals.add(0)
     intervals.add(1)
-    val encoding = CompactProgramEncoding.createIntervalEncoding(program, intervals, 1)
+    val encoding = RccProgramEncoding.createIntervalEncoding(program, intervals, 1)
     assertThat(encoding.encodingSize()).isEqualTo(2)
   }
 
@@ -53,10 +53,10 @@ class CompactProgramEncodingTest {
     intervals.add(2)
     intervals.add(3)
 
-    val compressedEncoding = CompactProgramEncoding.createCompressedEncoding(program, intervals, 3)
+    val compressedEncoding = RccProgramEncoding.createCompressedEncoding(program, intervals, 3)
     assertThat(compressedEncoding.encodingSize()).isEqualTo(3)
 
-    val intervalEncoding = CompactProgramEncoding.createIntervalEncoding(program, intervals, 3)
+    val intervalEncoding = RccProgramEncoding.createIntervalEncoding(program, intervals, 3)
     assertThat(intervalEncoding.encodingSize()).isEqualTo(6)
   }
 }

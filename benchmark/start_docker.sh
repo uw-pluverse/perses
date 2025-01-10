@@ -47,7 +47,9 @@ set -o errexit
 
 wget https://github.com/bazelbuild/bazelisk/releases/download/v1.11.0/bazelisk-linux-amd64
 chmod +x bazelisk-linux-amd64
+# The bazel binary is bazelisk
 sudo mv bazelisk-linux-amd64 /usr/local/bin/bazel
+sudo ln -s /usr/local/bin/bazel /usr/local/bin/bazelisk
 
 EOF
 chmod +x "${UPDATE_BAZEL_SCRIPT}"

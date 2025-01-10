@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -59,13 +59,19 @@ class NodeReplacementAction(
 
   override fun internalApply() {
     check(!targetNode.isPermanentlyDeleted)
-    val parentNode = targetNode.parent!!
-    val payload = targetNode.payload!!
-    replacingNode.resetPayload()
-//  only take independent replacingNode now.
-//  TODO:merge NodeReplacementEdit and AnyNodeReplacementEdit
+    // only take independent replacingNode now.
     check(replacingNode.parent == null)
-
+    val parentNode = targetNode.parent!!
+    val targetPayload = targetNode.payload!!
+    val payload = if (replacingNode.payload != null) {
+      AbstractNodePayload.concatenatePaylods(
+        targetPayload,
+        replacingNode.payload!!,
+      )
+    } else {
+      targetPayload
+    }
+    replacingNode.resetPayload()
     parentNode.replaceChild(
       targetNode,
       replacingNode,

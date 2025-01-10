@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -58,12 +58,16 @@ class GrammarReductionDriver private constructor(
     ioManager.getConcreteReductionInputs().parserFile.textualFileContent,
   )
 
+  override fun getInitialProgram(): PersesGrammar {
+    return originalProgram
+  }
+
   override fun reduce() {
     printStartTime()
 
-    ioManager.backupMainFile()
+    ioManager.backupAllMutableFiles()
 
-    sanityCheck(originalProgram)
+    sanityCheckOrThrow(originalProgram)
     val reductionState = ListenableReductionState(originalProgram) {
       ioManager.updateBestResult(it)
     }

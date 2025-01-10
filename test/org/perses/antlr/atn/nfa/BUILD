@@ -1,12 +1,12 @@
-package(default_visibility = [
-    "//visibility:public",
-])
-
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 load(
     "//test/org/perses:test.bzl",
     "golden_test",
 )
+
+package(default_visibility = [
+    "//visibility:public",
+])
 
 kt_jvm_test(
     name = "NFATest",

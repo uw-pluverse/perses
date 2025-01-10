@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,6 +19,7 @@ package org.perses.analyzer
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
 import org.perses.listener.IProfileEvent
+import org.perses.util.ktInfo
 import java.io.EOFException
 import java.io.ObjectInputStream
 import java.nio.file.Files
@@ -33,7 +34,7 @@ abstract class AbstractHddPerformanceAnalysis protected constructor(protected va
 
   protected abstract fun performAnalysis()
   private fun loadEvents(eventFile: Path): ImmutableList<IProfileEvent> {
-    logger.atInfo().log("Loading events from %s", eventFile)
+    logger.ktInfo { "Loading events from eventFile" }
     val builder = ImmutableList.builder<IProfileEvent>()
     try {
       ObjectInputStream(Files.newInputStream(eventFile)).use { stream ->

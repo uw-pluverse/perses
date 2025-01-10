@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,40 +20,34 @@ import com.google.common.collect.ImmutableList
 import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
 
-class NullQueryCacheProfiler : AbstractQueryCacheProfiler() {
+class NullQueryCacheProfiler : AbstractQueryCacheProfiler(writer = null) {
 
-  override fun close() {}
-
-  override fun onEncodingProgram(
+  override fun afterEncodeProgram(
     tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
     program: TokenizedProgram,
-    startTime: Long,
-    endTime: Long,
+    nanoDuration: Long,
   ) {
   }
 
   override fun onDecodingProgram(
     tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
-    encoding: CompactProgramEncoding,
-    startTime: Long,
-    endTime: Long,
+    encoding: RccProgramEncoding,
+    nanoDuration: Long,
   ) {
   }
 
   override fun onCreatingEncoder(
     tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
-    startTime: Long,
-    endTime: Long,
+    nanoDuration: Long,
   ) {
   }
 
-  override fun onHeavyweightCacheRefreshing(
+  override fun afterHeavyweightCacheRefreshing(
     oldBestProgram: ImmutableList<PersesTokenFactory.PersesToken>,
     newBestProgram: ImmutableList<PersesTokenFactory.PersesToken>,
     numOfEntriesInCacheBefore: Int,
     numOfEntriesInCacheAfter: Int,
-    startTime: Long,
-    endTime: Long,
+    nanoDuration: Long,
   ) {
   }
 }

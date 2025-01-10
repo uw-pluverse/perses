@@ -9,7 +9,7 @@ readonly BINARY_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if ! [ -e "/tmp/binaries/perses_deploy.jar" ]; then
   pushd "${BINARY_DIR}"
-  bazel build //src/org/perses:perses_deploy.jar
+  bazelisk build //src/org/perses:perses_deploy.jar
   mkdir -p /tmp/binaries
   ln -s "${BINARY_DIR}/../../bazel-bin/src/org/perses/perses_deploy.jar" \
        "/tmp/binaries/perses_deploy.jar"

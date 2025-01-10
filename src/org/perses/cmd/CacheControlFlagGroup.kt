@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -62,10 +62,9 @@ class CacheControlFlagGroup : AbstractCommandLineFlagGroup(groupName = "Cache Co
     names = ["--enable-lightweight-refreshing"],
     description = "Whether to enable lightweight refreshing",
     order = 3,
-    hidden = true,
     arity = 1,
   )
-  var enableLightweightRefreshing = false
+  var enableLightweightRefreshing = true
 
   @Parameter(
     names = ["--pass-level-caching"],
@@ -93,12 +92,13 @@ class CacheControlFlagGroup : AbstractCommandLineFlagGroup(groupName = "Cache Co
     arity = 1,
   )
   var pathToSaveUpdatedGlobalCache: Path? = null
-  fun getQueryCacheRefreshThreshold(): Fraction {
+
+  fun queryCacheRefreshThresholdAsFraction(): Fraction {
     return Fraction(queryCacheRefreshThreshold, 100)
   }
 
   override fun validate() {
-    getQueryCacheRefreshThreshold() // Should not throw exceptions.
+    queryCacheRefreshThresholdAsFraction() // Should not throw exceptions.
     globalCacheFile?.let {
       check(Files.isRegularFile(it)) {
         "The global cache file $it is not a file."

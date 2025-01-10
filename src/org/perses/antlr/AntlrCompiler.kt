@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,7 +20,7 @@ import com.google.common.io.Files.getNameWithoutExtension
 import org.perses.antlr.ast.PersesAstBuilder
 import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.util.AntlrToolWrapper
-import org.perses.util.FileNameContentPair
+import org.perses.util.FileNameContentLinesPair
 import org.perses.util.Util
 import org.perses.util.java.JarFile
 import org.perses.util.java.JarPackager
@@ -35,9 +35,9 @@ import kotlin.io.path.writeText
 
 class AntlrCompiler(
   val parser: PersesGrammar,
-  val lexer: FileNameContentPair?,
-  val parserBase: FileNameContentPair?,
-  val lexerBase: FileNameContentPair?,
+  val lexer: FileNameContentLinesPair?,
+  val parserBase: FileNameContentLinesPair?,
+  val lexerBase: FileNameContentLinesPair?,
   val startRuleName: String,
   val workingDirectory: Path,
   val stubFactory: AbstractGrammarStubFactory,
@@ -183,17 +183,17 @@ class AntlrCompiler(
       lexer = if (lexerFile == null) {
         null
       } else {
-        FileNameContentPair.createFromFile(lexerFile)
+        FileNameContentLinesPair.createFromFile(lexerFile)
       },
       parserBase = if (parserBase == null) {
         null
       } else {
-        FileNameContentPair.createFromFile(parserBase)
+        FileNameContentLinesPair.createFromFile(parserBase)
       },
       lexerBase = if (lexerBase == null) {
         null
       } else {
-        FileNameContentPair.createFromFile(lexerBase)
+        FileNameContentLinesPair.createFromFile(lexerBase)
       },
       startRuleName = startRuleName,
       workingDirectory = workingDirectory,
@@ -217,16 +217,16 @@ class AntlrCompiler(
       jarFileCustomizer: (ZipOutputStream) -> Unit,
     ) = AntlrCompiler(
       parser = PersesAstBuilder.loadGrammarFromString(parserCode),
-      lexer = FileNameContentPair.createFromString(lexerFileName, lexerCode),
+      lexer = FileNameContentLinesPair.createFromString(lexerFileName, lexerCode),
       parserBase = if (parserBaseFileName == null) {
         null
       } else {
-        FileNameContentPair.createFromString(parserBaseFileName, checkNotNull(parserBaseCode))
+        FileNameContentLinesPair.createFromString(parserBaseFileName, checkNotNull(parserBaseCode))
       },
       lexerBase = if (lexerBaseFileName == null) {
         null
       } else {
-        FileNameContentPair.createFromString(
+        FileNameContentLinesPair.createFromString(
           lexerBaseFileName,
           checkNotNull(
             lexerBaseCode,

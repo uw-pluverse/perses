@@ -1,6 +1,6 @@
 py_library(
     name = "check_copyright",
-    srcs = ["check_copyright.py"],
+    srcs = ["pluverse_check_copyright.py"],
 )
 
 py_binary(

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -119,7 +119,9 @@ class ATNSimulator(private val startState: RuleStartState) {
       val simulatedChar = transitionSimulatorRegistry
         .getOrCreateSimulatorFor(transition).simulate(decisionMaker)
       if (simulatedChar != null) {
-        currentParent.addChild(result.createCharNode(simulatedChar))
+        currentParent.addChild(
+          result.createCharNode(simulatedChar, transition.getAllowedAsciiChars()),
+        )
       }
       currentState = transition.target
     }

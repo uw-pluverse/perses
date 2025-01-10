@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -30,7 +30,7 @@ import org.perses.grammar.adhoc.CommandOptions
 import org.perses.grammar.adhoc.LanguageAdhoc
 import org.perses.grammar.c.CParserFacade
 import org.perses.grammar.c.LanguageC
-import org.perses.grammar.java.JavaParserFacade
+import org.perses.grammar.java.Java8ParserFacade
 import org.perses.grammar.java.LanguageJava
 import org.perses.grammar.php.LanguagePhp
 import org.perses.grammar.php.PhpParserFacade
@@ -229,7 +229,7 @@ object TestUtility {
   private val parserFacadeFactory = SingleParserFacadeFactory.Builder().apply {
     add(LanguageC, CParserFacade::class)
     add(LanguageScala, PnfScalaParserFacade::class)
-    add(LanguageJava, JavaParserFacade::class)
+    add(LanguageJava, Java8ParserFacade::class)
     add(LanguagePhp, PhpParserFacade::class)
     add(LanguagePython3, Python3ParserFacade::class)
     add(LanguageSmtLibV2, SmtLibV2ParserFacade::class)
@@ -290,7 +290,8 @@ object TestUtility {
     get() = getJavaFiles(JAVA_PROGRAM_FOLDER)
 
   fun getFacade(languageKind: LanguageKind): AbstractParserFacade {
-    return parserFacadeFactory.createParserFacade(languageKind)
+    return parserFacadeFactory.getParserFacadeListForOrNull(languageKind)!!
+      .defaultParserFacade.create()
   }
 
   fun generateAdhocFacade(

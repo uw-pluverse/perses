@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,6 +16,7 @@
  */
 package org.perses.reduction.io
 
+import com.google.common.collect.ImmutableList
 import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.grammar.c.LanguageC
 import org.perses.grammar.c.PnfCLexer
@@ -27,34 +28,38 @@ import org.perses.reduction.TestScriptExecutorService
 import org.perses.reduction.io.token.RegularOutputManagerFactory
 import org.perses.reduction.io.token.TokenReductionIOManager
 import org.perses.util.Util
+import org.perses.util.shell.Shells
 import java.nio.file.Files
+import java.nio.file.Path
+import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteRecursively
 import kotlin.io.path.writeText
 
 open class CommonReductionIOManagerData(val testClass: Class<*>) : AutoCloseable {
 
-  val root = Files.createTempDirectory(testClass.simpleName + "_data")
+  val tempDir: Path = Files.createTempDirectory(testClass.simpleName + "_data")
 
+  @OptIn(ExperimentalPathApi::class)
   override fun close() {
     if (executorServiceDelegate.isInitialized()) {
       executorService.close()
     }
-    root.deleteRecursively()
+    tempDir.deleteRecursively()
   }
 
   val script = ScriptFile(
-    root.resolve("r.sh").apply {
+    tempDir.resolve("r.sh").apply {
       Files.createFile(this)
       Util.setExecutable(this)
       writeText(
-        """#!/usr/bin/env bash
+        """${Shells.SHEBANG_BASH}
       test
         """.trimIndent(),
       )
     },
   )
   val sourceFile = SourceFile(
-    root.resolve("t.c").apply {
+    tempDir.resolve("t.c").apply {
       Files.createFile(this)
       this.writeText("int a;")
     },
@@ -63,11 +68,12 @@ open class CommonReductionIOManagerData(val testClass: Class<*>) : AutoCloseable
   val inputs = RegularReductionInputs(
     testScript = script,
     mainFile = sourceFile,
+    dependencyFiles = ImmutableList.of(),
   )
-  val outputDir = root.resolve("output_dir").apply {
+  val outputDir: Path = tempDir.resolve("output_dir").apply {
     Files.createDirectory(this)
   }
-  val workingDir = root.resolve("working_dir").apply {
+  val workingDir: Path = tempDir.resolve("working_dir").apply {
     Files.createDirectory(this)
   }
   val outputManagerFactory = RegularOutputManagerFactory(

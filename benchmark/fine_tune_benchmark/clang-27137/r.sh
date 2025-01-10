@@ -30,40 +30,40 @@ rm -f out*.txt
 
 if
 clang-7.1.0 -Wfatal-errors -pedantic -Wall -Wsystem-headers -O0 -c $CFILE  >out.txt 2>&1 &&\
-! grep -q 'conversions than data arguments' out.txt &&\
-! grep -q 'incompatible redeclaration' out.txt &&\
-! grep -q 'ordered comparison between pointer' out.txt &&\
-! grep -q 'eliding middle term' out.txt &&\
-#! grep -q 'end of non-void function' out.txt &&\
-! grep -q 'invalid in C99' out.txt &&\
-! grep -q 'specifies type' out.txt &&\
-! grep -q 'should return a value' out.txt &&\
-#! grep -q 'uninitialized' out.txt &&\
-! grep -q 'incompatible pointer to' out.txt &&\
-! grep -q 'incompatible integer to' out.txt &&\
-! grep -q 'type specifier missing' out.txt &&\
-gcc-7.1.0 -Wfatal-errors -Wall -Wextra -Wsystem-headers -O0 $CFILE >outa.txt 2>&1 &&\
-#  ! grep -q uninitialized outa.txt &&\
-! grep -q 'division by zero' outa.txt &&\
-! grep -q 'without a cast' outa.txt &&\
-#! grep -q 'control reaches end' outa.txt &&\
-! grep -q 'return type defaults' outa.txt &&\
-! grep -q 'cast from pointer to integer' outa.txt &&\
-! grep -q 'useless type name in empty declaration' outa.txt &&\
-! grep -q 'no semicolon at end' outa.txt &&\
-! grep -q 'type defaults to' outa.txt &&\
-! grep -q 'too few arguments for format' outa.txt &&\
-! grep -q 'incompatible pointer' outa.txt &&\
-! grep -q 'ordered comparison of pointer with integer' outa.txt &&\
-! grep -q 'declaration does not declare anything' outa.txt &&\
-! grep -q 'expects type' outa.txt &&\
-! grep -q 'pointer from integer' outa.txt &&\
-#  ! grep -q 'incompatible implicit' outa.txt &&\
-! grep -q 'excess elements in struct initializer' outa.txt &&\
-! grep -q 'return type of \‘main\’ is not \‘int\’' outa.txt &&\
-! grep -q 'comparison between pointer and integer' outa.txt #&&\
-#  frama-c -val-signed-overflow-alarms -val -stop-at-first-alarm -no-val-show-progress -machdep x86_64 -obviously-terminates -precise-unions $CFILE >out_framac.txt 2>&1 &&\
-#  ! egrep -i '(user error|assert)' out_framac.txt >/dev/null 2>&1
+  ! grep -q 'conversions than data arguments' out.txt &&\
+  ! grep -q 'incompatible redeclaration' out.txt &&\
+  ! grep -q 'ordered comparison between pointer' out.txt &&\
+  ! grep -q 'eliding middle term' out.txt &&\
+  #! grep -q 'end of non-void function' out.txt &&\
+  ! grep -q 'invalid in C99' out.txt &&\
+  ! grep -q 'specifies type' out.txt &&\
+  ! grep -q 'should return a value' out.txt &&\
+  #! grep -q 'uninitialized' out.txt &&\
+  ! grep -q 'incompatible pointer to' out.txt &&\
+  ! grep -q 'incompatible integer to' out.txt &&\
+  ! grep -q 'type specifier missing' out.txt &&\
+  gcc-7.1.0 -Wfatal-errors -Wall -Wextra -Wsystem-headers -O0 $CFILE >outa.txt 2>&1 &&\
+  #  ! grep -q uninitialized outa.txt &&\
+  ! grep -q 'division by zero' outa.txt &&\
+  ! grep -q 'without a cast' outa.txt &&\
+  #! grep -q 'control reaches end' outa.txt &&\
+  ! grep -q 'return type defaults' outa.txt &&\
+  ! grep -q 'cast from pointer to integer' outa.txt &&\
+  ! grep -q 'useless type name in empty declaration' outa.txt &&\
+  ! grep -q 'no semicolon at end' outa.txt &&\
+  ! grep -q 'type defaults to' outa.txt &&\
+  ! grep -q 'too few arguments for format' outa.txt &&\
+  ! grep -q 'incompatible pointer' outa.txt &&\
+  ! grep -q 'ordered comparison of pointer with integer' outa.txt &&\
+  ! grep -q 'declaration does not declare anything' outa.txt &&\
+  ! grep -q 'expects type' outa.txt &&\
+  ! grep -q 'pointer from integer' outa.txt &&\
+  #  ! grep -q 'incompatible implicit' outa.txt &&\
+  ! grep -q 'excess elements in struct initializer' outa.txt &&\
+  ! grep -q 'return type of \‘main\’ is not \‘int\’' outa.txt &&\
+  ! grep -q 'comparison between pointer and integer' outa.txt #&&\
+  #  frama-c -val-signed-overflow-alarms -val -stop-at-first-alarm -no-val-show-progress -machdep x86_64 -obviously-terminates -precise-unions $CFILE >out_framac.txt 2>&1 &&\
+  #  ! egrep -i '(user error|assert)' out_framac.txt >/dev/null 2>&1
 then
   : # do nothing
 else
@@ -172,8 +172,8 @@ for cc in "${BADCC1[@]}" ; do
     # compile
     (timeout -s 9 $TIMEOUTCC $cc $CFLAG $mode $CFILE >out2.txt 2>&1) >& /dev/null
     if ! grep -q 'internal compiler error' out2.txt && \
-    ! grep -q 'PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT' out2.txt && \
-    ! grep -q 'clang: error: linker command failed with exit code 1 (use -v to see invocation)' out2.txt
+      ! grep -q 'PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT' out2.txt && \
+      ! grep -q 'clang: error: linker command failed with exit code 1 (use -v to see invocation)' out2.txt
     then
       exit 1
     fi

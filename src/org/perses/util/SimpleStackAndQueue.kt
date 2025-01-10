@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -88,7 +88,7 @@ abstract class AbstractStackOrQueue<T, Self : AbstractStackOrQueue<T, Self>>(
   }
 }
 
-class SimpleStack<T>(
+class SimpleStack<T : Any>(
   initialCapacity: Int = 0,
 ) : AbstractStackOrQueue<T, SimpleStack<T>>(initialCapacity) {
 
@@ -122,7 +122,7 @@ class SimpleStack<T>(
   }
 
   companion object {
-    fun <T>of(element: T) = SimpleStack<T>().add(element)
+    fun <T : Any>of(element: T) = SimpleStack<T>().add(element)
   }
 }
 

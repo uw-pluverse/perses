@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,6 +24,9 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.c.LanguageC
+import org.perses.program.BinaryReductionFile
+import org.perses.program.LanguageKind
+import org.perses.program.SourceFile
 import org.perses.reduction.io.AbstractReductionIOManager.Companion.getTempRootFolderName
 import org.perses.util.toImmutableList
 import java.nio.file.Files
@@ -33,6 +36,7 @@ import kotlin.io.path.isDirectory
 import kotlin.io.path.listDirectoryEntries
 import kotlin.io.path.name
 import kotlin.io.path.readText
+import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class ReductionIOManagerTest : CommonReductionIOManagerData(ReductionIOManagerTest::class.java) {
@@ -47,7 +51,7 @@ class ReductionIOManagerTest : CommonReductionIOManagerData(ReductionIOManagerTe
     Files.write(sourceFile.file, byteArrayOf(1))
     val getOrigFiles = { workingDir.listDirectoryEntries("*.orig") }
     assertThat(getOrigFiles()).isEmpty()
-    ioManager.backupMainFile()
+    ioManager.backupAllMutableFiles()
     val backupFile = getOrigFiles().single()
     assertThat(Files.readAllBytes(backupFile)).isEqualTo(Files.readAllBytes(sourceFile.file))
   }
@@ -104,7 +108,7 @@ class ReductionIOManagerTest : CommonReductionIOManagerData(ReductionIOManagerTe
 
   @Test
   fun testWriteTestScriptTo() {
-    val folder = root.resolve("tmp").apply {
+    val folder = tempDir.resolve("tmp").apply {
       Files.createDirectory(this)
     }
     assertThat(folder.listDirectoryEntries()).isEmpty()
@@ -117,10 +121,67 @@ class ReductionIOManagerTest : CommonReductionIOManagerData(ReductionIOManagerTe
 
   @Test
   fun testBackupMainFile() {
-    val file = ioManager.backupMainFile().single()
+    val file = ioManager.backupAllMutableFiles().single()
     assertThat(file.fileName.toString()).endsWith(".orig")
     assertThat(file.fileName.toString()).startsWith("t.c")
     assertThat(file.readText()).isEqualTo("int a;")
+  }
+
+  @Test
+  fun testBackupMultileFiles() {
+    val secondSourceFile = SourceFile(
+      tempDir.resolve("another_t.c").apply {
+        writeText("int b;")
+      },
+      LanguageC,
+    )
+    val dependencyFile = BinaryReductionFile(
+      tempDir.resolve("dependency.bin").apply {
+        writeText("dependency")
+      },
+      LanguageC,
+    )
+    class MultiFileReductionInputs :
+      AbstractReductionInputs<LanguageKind, MultiFileReductionInputs>(
+        testScript = script,
+        initiallyDeterminedMainDataKind = LanguageC,
+        rootDirectory = tempDir,
+        mutableFiles = ImmutableList.of(
+          sourceFile,
+          secondSourceFile,
+        ),
+        immutableDependencyFiles = ImmutableList.of(
+          dependencyFile,
+        ),
+      )
+    class DummyOutputManagerFactory : AbstractOutputManagerFactory<String>() {
+      override fun createManagerFor(program: String): AbstractOutputManager {
+        TODO("Not yet implemented")
+      }
+    }
+    class DummyReductionIOManager :
+      AbstractReductionIOManager<String, LanguageKind, DummyReductionIOManager>(
+        workingFolder = workingDir,
+        reductionInputs = MultiFileReductionInputs(),
+        outputManagerFactory = DummyOutputManagerFactory(),
+        outputDirectory = outputDir,
+      ) {
+      override fun getConcreteReductionInputs(): AbstractReductionInputs<*, *> {
+        return inputs
+      }
+    }
+    val ioManager = DummyReductionIOManager()
+    val backupFiles = ioManager.backupAllMutableFiles()
+    assertThat(
+      backupFiles.single {
+        it.name.startsWith(sourceFile.file.name)
+      }.readText(),
+    ).isEqualTo(sourceFile.textualFileContent)
+    assertThat(
+      backupFiles.single {
+        it.name.startsWith(secondSourceFile.baseName)
+      }.readText(),
+    ).isEqualTo(secondSourceFile.textualFileContent)
   }
 
   @Test
@@ -167,7 +228,7 @@ class ReductionIOManagerTest : CommonReductionIOManagerData(ReductionIOManagerTe
     assertThat(bestFile.readText().trim()).isEqualTo("int a;")
     // Assert that the best result snapshot folder should be deleted.
     assertThat(
-      root.listDirectoryEntries().filter { it.isDirectory() },
+      tempDir.listDirectoryEntries().filter { it.isDirectory() },
     ).containsExactly(outputDir, workingDir)
   }
 

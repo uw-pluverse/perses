@@ -1,7 +1,4 @@
-package(default_visibility = [
-    "//visibility:public",
-])
-
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 load(
     "//antlropt/src/org/perses/antlr/pnf:pnf.bzl",
     "outline_implicit_token_defs",
@@ -11,11 +8,14 @@ load(
     "//src/org/perses/grammar:antlr_util.bzl",
     "antlr_codegen_combined",
 )
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 load(
     "//src/org/perses/grammar/adhoc:adhoc_grammar.bzl",
     "orig_parser_facade_library",
 )
+
+package(default_visibility = [
+    "//visibility:public",
+])
 
 implicit_token_outlined_dir = "implicit_token_outlined_dir"
 

@@ -1,16 +1,46 @@
+load(
+    "@io_bazel_rules_kotlin//kotlin:jvm.bzl",
+    "kt_jvm_binary",
+    "kt_jvm_library",
+)
+
 package(default_visibility = [
     "//visibility:public",
 ])
 
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+kt_jvm_binary(
+    name = "antlr_parse_tree_pdfier_main",
+    srcs = [
+        "AntlrParseTreePdfierMain.kt",
+    ],
+    main_class = "org.perse.util.AntlrParseTreePdfierMain",
+    deps = [
+        "//:jcommander",
+        "//src/org/perses/dotgraph",
+        "//src/org/perses/spartree",
+        "//src/org/perses/util/cmd",
+    ],
+)
+
+kt_jvm_library(
+    name = "truth_extension",
+    srcs = [
+        "TruthExt.kt",
+    ],
+    deps = [
+        "@maven//:com_google_truth_truth",
+    ],
+)
 
 kt_jvm_library(
     name = "util",
     srcs = [
+        "AbstractFileContent.kt",
         "DaemonThreadPool.kt",
+        "FileStreamPool.kt",
         "GlobalSequenceGenerator.kt",
+        "ListToByteFunnel.kt",
         "PersesKtExts.kt",
-        "StringListToByteFunnel.kt",
         "Util.kt",
     ],
     deps = [
@@ -74,6 +104,7 @@ kt_jvm_library(
 kt_jvm_library(
     name = "file_name_content_pair",
     srcs = [
+        "FileNameContentLinesPair.kt",
         "FileNameContentPair.kt",
     ],
     deps = [

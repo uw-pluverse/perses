@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,24 +20,26 @@ import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
 import objectexplorer.MemoryMeasurer
 import org.perses.reduction.PropertyTestResult
-import java.nio.charset.StandardCharsets
-import java.nio.file.Files
-import java.nio.file.Path
+import org.perses.util.FileStreamPool
 
-class QueryCacheMemoryProfiler(file: Path) : AbstractQueryCacheProfiler() {
+class QueryCacheMemoryProfiler(
+  writer: FileStreamPool.ManagedPrintStream,
+) : AbstractQueryCacheProfiler(writer) {
 
-  private val writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8)
-
-  override fun close() {
-    writer.close()
-  }
-
-  override fun afterAddProgram(cache: AbstractQueryCache) {
+  override fun afterCacheProgramAndResult(cache: AbstractQueryCache, nanoDuration: Long) {
     writeNumOfBytesToFileSubjectToTimeInterval(cache)
   }
 
-  override fun afterCacheEviction(cache: AbstractQueryCache) {
-    writeNumOfBytesToFileSubjectToTimeInterval(cache)
+  override fun beforeCacheEviction(cache: AbstractQueryCache) {
+    val currentTimeMillis = System.currentTimeMillis()
+    writeNumOfBytesToFile(currentTimeMillis, cache)
+    prevTime = currentTimeMillis
+  }
+
+  override fun afterCacheEviction(cache: AbstractQueryCache, nanoDuration: Long) {
+    val currentTimeMillis = System.currentTimeMillis()
+    writeNumOfBytesToFile(currentTimeMillis, cache)
+    prevTime = currentTimeMillis
   }
 
   override fun onHeartBeat(cache: AbstractQueryCache) {
@@ -47,18 +49,18 @@ class QueryCacheMemoryProfiler(file: Path) : AbstractQueryCacheProfiler() {
   private var prevTime = 0L
 
   private fun writeNumOfBytesToFileSubjectToTimeInterval(cache: AbstractQueryCache) {
-    val now = System.currentTimeMillis()
-    if (prevTime + INTERVAL > now) {
+    val currentTimeMillis = System.currentTimeMillis()
+    if (prevTime + INTERVAL > currentTimeMillis) {
       return
     }
-    writeNumOfBytesToFile(now, cache)
-    prevTime = now
+    writeNumOfBytesToFile(currentTimeMillis, cache)
+    prevTime = currentTimeMillis
   }
 
-  private fun writeNumOfBytesToFile(now: Long, cache: AbstractQueryCache) {
+  private fun writeNumOfBytesToFile(currentTimeMillis: Long, cache: AbstractQueryCache) {
     val profilingResults = computeMemoryInBytes(cache)
-    writer
-      .append(now.toString())
+    writer!!
+      .append(currentTimeMillis.toString())
       .append(" ")
       .append(profilingResults.bytes.toString())
       .append('\n')

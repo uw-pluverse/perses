@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,6 +16,7 @@
  */
 package org.perses.reduction
 
+import com.google.common.collect.ImmutableList
 import com.google.common.io.MoreFiles
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
@@ -24,10 +25,10 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.antlr.atn.LexerAtnWrapper
-import org.perses.delta.EnumDeltaDebuggerType
 import org.perses.grammar.SingleParserFacadeFactory
 import org.perses.grammar.c.LanguageC
 import org.perses.grammar.c.PnfCLexer
+import org.perses.listminimizer.EnumListInputMinimizerType
 import org.perses.program.EnumFormatControl.ORIG_FORMAT
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
@@ -37,6 +38,7 @@ import org.perses.reduction.io.token.TokenReductionIOManager
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Paths
+import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteRecursively
 
 /** Test for [ReductionConfiguration]  */
@@ -51,8 +53,10 @@ class ReductionConfigurationTest {
   private val reductionInputs = RegularReductionInputs(
     testScript = testScript,
     mainFile = sourceFile,
+    dependencyFiles = ImmutableList.of(),
   )
 
+  @OptIn(ExperimentalPathApi::class)
   @After
   fun teardown() {
     workingDirectory.deleteRecursively()
@@ -72,15 +76,14 @@ class ReductionConfigurationTest {
       ),
       outputDirectory = outputDir,
     )
-    val languageKind = ioManager.reductionInputs.mainDataKind
+    val languageKind = ioManager.reductionInputs.initiallyDeterminedMainDataKind
     val parserFacade = SingleParserFacadeFactory
-      .builderWithBuiltinLanguages().build().createParserFacade(languageKind)
+      .builderWithBuiltinLanguages().build().getParserFacadeListForOrNull(languageKind)!!
+      .defaultParserFacade.create()
     val configuration = ReductionConfiguration(
-      statisticsFile = null,
-      progressDumpFile = null,
       fixpointReduction = true,
       enableTestScriptExecutionCaching = true,
-      defaultDeltaDebuggerTypeForKleene = EnumDeltaDebuggerType.DFS,
+      defaultDeltaDebuggerTypeForKleene = EnumListInputMinimizerType.DFS,
       numOfReductionThreads = numOfReductionThreads,
       parserFacade = parserFacade,
       persesNodeReducerConfig = ReductionConfiguration.PersesNodeReducerConfiguration(

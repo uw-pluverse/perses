@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,30 +17,13 @@
 package org.perses.reduction.reducer.hdd
 
 import com.google.common.collect.ImmutableList
-import org.perses.delta.xfs.Partition
 import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.reduction.reducer.TreeTransformations.createNodeDeletionActionSetFor
-import org.perses.spartree.AbstractSparTreeEdit
-import org.perses.spartree.AbstractSparTreeNode
-import org.perses.spartree.SparTree
 
 /** Implementation of the original HDD algorithm.  */
 class HDDReducer(reducerContext: ReducerContext) :
   AbstractLevelBasedReducer(META, reducerContext) {
-
-  override fun createTreeEditListByDisablingPartition(
-    partition: Partition<AbstractSparTreeNode>,
-    tree: SparTree,
-  ): List<AbstractSparTreeEdit<*>> {
-    val actionSet = createNodeDeletionActionSetFor(partition, "HDD")
-    if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
-      listenerManager.onNodeEditActionSetCacheHit(actionSet)
-      return emptyList()
-    }
-    return ImmutableList.of(tree.createNodeDeletionEdit(actionSet))
-  }
 
   companion object {
     const val NAME = "hdd"

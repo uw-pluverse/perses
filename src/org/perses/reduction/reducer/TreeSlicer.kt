@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -40,13 +40,13 @@ class TreeSlicer(
   ): ImmutableList<AbstractSparTreeNode> {
     val actionSet = NodeDeletionActionSet.createByDeleteSingleNode(node, NAME)
 
-    if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
-      listenerManager.onNodeEditActionSetCacheHit(actionSet)
+    if (reducerContext.nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
+      reducerContext.listenerManager.onNodeEditActionSetCacheHit(actionSet)
       return node.copyAndReverseChildren()
     }
     val treeEdit = tree.createNodeDeletionEdit(actionSet)
     val testProgram = treeEdit.program
-    val parserFacade = configuration.parserFacade
+    val parserFacade = reducerContext.configuration.parserFacade
     if (testProgram.tokenCount() <= 150 &&
       !parserFacade.isSourceCodeParsable(
         PrinterRegistry.getPrinter(ioManager.getDefaultProgramFormat())

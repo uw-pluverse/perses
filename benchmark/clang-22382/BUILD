@@ -7,3 +7,12 @@ sanity_test(
     source_files = ["small.c"],
     test_script = "r.sh",
 )
+
+filegroup(
+    name = "files",
+    srcs = [
+        "info.properties",
+        "r.sh",
+        "small.c",
+    ],
+)

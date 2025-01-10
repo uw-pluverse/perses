@@ -1,11 +1,5 @@
-load("//src/org/perses/grammar/adhoc:adhoc_grammar.bzl", "pnf_parser_facade_library")
 load("//benchmark:benchmark.bzl", "reduction_golden_test", "sanity_test")
-load(
-    "//src/org/perses:reduction.bzl",
-    "DEFAULT_MAIN_REDUCTION_ALGORITHM",
-    "DEFAULT_PERSES_BIN",
-    "reduce",
-)
+load("//src/org/perses/grammar/adhoc:adhoc_grammar.bzl", "pnf_parser_facade_library")
 
 sanity_test(
     name = "sanity_test",

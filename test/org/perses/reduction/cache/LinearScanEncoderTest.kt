@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,8 +24,8 @@ import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.c.LanguageC
 import org.perses.program.TokenizedProgramFactory
-import org.perses.reduction.cache.AbstractLinearScanEncoder.Companion.NOT_FOUND
 import org.perses.reduction.cache.AbstractQueryCacheProfiler.Companion.NULL_PROFILER
+import org.perses.reduction.cache.AbstractRccLinearScanEncoder.Companion.NOT_FOUND
 import kotlin.system.measureTimeMillis
 
 @RunWith(JUnit4::class)
@@ -42,7 +42,7 @@ class LinearScanEncoderTest {
   private val token_a2 = tokens[3]
   private val token_b2 = tokens[4]
   private val token_c2 = tokens[5]
-  private val encoder = LinearScanTokenizedProgramEncoder(
+  private val encoder = RccTokenizedProgramEncoder(
     baseProgram,
     NULL_PROFILER,
     enableCompression = true,
@@ -59,7 +59,7 @@ class LinearScanEncoderTest {
     )
     val factory = TokenizedProgramFactory.createFactory(antlrTokens, LanguageC)
     val baseProgram = factory.create(antlrTokens)
-    val encoder = LinearScanTokenizedProgramEncoder(
+    val encoder = RccTokenizedProgramEncoder(
       baseProgram,
       NULL_PROFILER,
       enableCompression = true,
@@ -85,7 +85,7 @@ class LinearScanEncoderTest {
     val antlrTokens = TestUtility.createAntlrToknesFromList(intList)
     val factory = TokenizedProgramFactory.createFactory(antlrTokens, LanguageC)
     val baseProgram = factory.create(antlrTokens)
-    val encoder = LinearScanTokenizedProgramEncoder(
+    val encoder = RccTokenizedProgramEncoder(
       baseProgram,
       NULL_PROFILER,
       enableCompression = true,

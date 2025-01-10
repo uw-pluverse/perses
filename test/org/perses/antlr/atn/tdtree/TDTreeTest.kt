@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,21 +16,44 @@
  */
 package org.perses.antlr.atn.tdtree
 
+import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.antlr.atn.LexerAtnWrapper
+import org.perses.antlr.atn.OrigCLexer
 
 @RunWith(JUnit4::class)
 class TDTreeTest {
 
   val tree = TDTree()
+  private val cLexerWrapper = LexerAtnWrapper(OrigCLexer::class.java)
 
   @Test
   fun testToLexemeForCharNode() {
-    val node = tree.createCharNode('a')
+    val node = tree.createCharNode('a', allowedAsciiChars = ImmutableList.of())
     tree.root.addChild(node)
     assertThat(tree.toLexeme()).isEqualTo("a")
     assertThat(tree.toLexeme(blanketedNodes = setOf(node))).isEqualTo("")
+  }
+
+  @Test
+  fun testGetCanonicalLexemeList() {
+    val tokenType = cLexerWrapper.metaTokenInfoDB
+      .getTokenInfoWithName("Constant")!!.tokenType
+    val lexeme = "0xffull"
+    val tree = cLexerWrapper.createTDTree(lexeme, tokenType)
+    assertThat(tree.root.getCanonicalLexemeList(countLimitPerChar = 2))
+      .containsExactlyElementsIn(
+        listOf(
+          "0Xffull",
+          "0x0full",
+          "0x1full",
+          "0xf0ull",
+          "0xf1ull",
+          "0xffUll",
+        ),
+      )
   }
 }

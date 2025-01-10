@@ -1,7 +1,7 @@
-package(default_visibility = ["//test/org/perses:__subpackages__"])
-
-load("//src/org/perses:reduction.bzl", "reduce")
 load("//benchmark:benchmark.bzl", "reduction_golden_test", "sanity_test")
+load("//src/org/perses:reduction.bzl", "reduce")
+
+package(default_visibility = ["//test/org/perses:__subpackages__"])
 
 sanity_test(
     name = "sanity_test",

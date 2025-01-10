@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,7 +24,7 @@ import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.antlr.GrammarTestingUtility
 import org.perses.grammar.c.CParserFacade
-import org.perses.grammar.java.JavaParserFacade
+import org.perses.grammar.java.Java8ParserFacade
 import java.nio.file.Paths
 import kotlin.io.path.readText
 
@@ -39,7 +39,7 @@ class PersesGrammarTest {
       .map { it.ruleNameHandle.ruleName }
       .collect(ImmutableList.toImmutableList())
     assertThat(ruleNames).containsExactlyElementsIn(TestUtility.OPT_C_PARSER_RULE_NAMES)
-    val javaGrammar = JavaParserFacade().antlrGrammar.asCombined().grammar
+    val javaGrammar = Java8ParserFacade().antlrGrammar.asCombined().grammar
     assertThat(javaGrammar.grammarName).isEqualTo("PnfOrigJava8")
   }
 

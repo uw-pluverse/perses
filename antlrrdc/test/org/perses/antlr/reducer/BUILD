@@ -1,10 +1,9 @@
-package(default_visibility = ["//antlrrdc/test:__subpackages__"])
-
 load(
     "@io_bazel_rules_kotlin//kotlin:jvm.bzl",
-    "kt_jvm_library",
     "kt_jvm_test",
 )
+
+package(default_visibility = ["//antlrrdc/test:__subpackages__"])
 
 kt_jvm_test(
     name = "E2ETest",

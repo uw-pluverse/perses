@@ -1,8 +1,8 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
 package(default_visibility = [
     "//visibility:public",
 ])
-
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_binary", "kt_jvm_library")
 
 kt_jvm_library(
     name = "version_class_generator",
@@ -28,7 +28,6 @@ java_binary(
 
 genrule(
     name = "generate_version_class",
-    srcs = ["@local_jdk//:jdk"],
     outs = ["Version.kt"],
     cmd = "$(location :version_class_generator_main) bazel-out/volatile-status.txt $@",
     stamp = True,

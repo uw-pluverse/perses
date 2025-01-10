@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,7 +18,9 @@ package org.perses.listener
 
 import com.google.common.base.Splitter
 import com.google.common.base.Strings
-import org.perses.program.printer.AbstractTokenizedProgramPrinter
+import org.perses.reduction.event.AbstractTestScriptExecutionEvent
+import org.perses.reduction.event.AbstractTestScriptExecutionEvent.TestResultCacheHitEvent
+import org.perses.reduction.event.AbstractTestScriptExecutionEvent.TestScriptExecutionCanceledEvent
 import org.perses.reduction.event.FixpointIterationStartEvent
 import org.perses.reduction.event.NodeEditActionSetCacheClearanceEvent
 import org.perses.reduction.event.NodeEditActionSetCacheHitEvent
@@ -26,40 +28,34 @@ import org.perses.reduction.event.NodeReductionEndEvent
 import org.perses.reduction.event.NodeReductionStartEvent
 import org.perses.reduction.event.ReductionEndEvent
 import org.perses.reduction.event.ReductionStartEvent
-import org.perses.reduction.event.TestResultCacheHitEvent
+import org.perses.reduction.event.SanityCheckEvent
 import org.perses.reduction.event.TestScriptExecutionCacheEntryEvictionEvent
-import org.perses.reduction.event.TestScriptExecutionCanceledEvent
-import org.perses.reduction.event.TestScriptExecutionEvent
-import org.perses.util.Util
-import java.io.PrintStream
-import java.nio.file.Path
+import org.perses.util.FileStreamPool
 
 /** Note that this listener will NOT close the stream. The client needs to close it manually.  */
-class ProgressMonitorForNodeReducer private constructor(
-  private val resultFile: Path?,
-  private val appendMode: Boolean,
-  private val printer: AbstractTokenizedProgramPrinter,
+class ProgressMonitorForNodeReducer(
+  private val stream: FileStreamPool.ManagedPrintStream,
 ) : DefaultReductionListener() {
   private var beforeSize = 0
-  private lateinit var stream: PrintStream
   private var testSuccessCount = 0
   private var testFailureCount = 0
   private var testResultCacheHitCount = 0
   private var testExcecutionCancelled = 0
   private var nodeEditActionSetCacheHitCount = 0
   override fun onReductionStart(event: ReductionStartEvent) {
-    stream = if (resultFile != null) {
-      if (appendMode) {
-        Util.createAppendablePrintStream(resultFile)
-      } else {
-        Util.createNonAppendablePrintStream(resultFile)
-      }
-    } else {
-      System.out
-    }
     printBegin("Reduction starts.")
     stream.println("The initial program size is ${event.initialProgramSize()}")
+    stream.println("The command line options are:")
+    stream.println(event.commandLineOptions)
+    event.extraData?.let { stream.println(it) }
     printEnd()
+  }
+
+  override fun onSanityCheck(event: SanityCheckEvent) {
+    stream.printf(
+      "The sanity check has been performed. The result is %s\n",
+      event.sanityCheckResult,
+    )
   }
 
   override fun onFixpointIterationStart(event: FixpointIterationStartEvent) {
@@ -72,6 +68,7 @@ class ProgressMonitorForNodeReducer private constructor(
   }
 
   override fun onReductionEnd(event: ReductionEndEvent) {
+    event.extraData?.let { stream.println(it) }
     stream.printf("#test success = %d\n", testSuccessCount)
     stream.printf("#test failure = %d\n", testFailureCount)
     stream.printf("#test result cache hits = %d\n", testResultCacheHitCount)
@@ -81,25 +78,22 @@ class ProgressMonitorForNodeReducer private constructor(
       "#external test execution cache hits = %d\n",
       event.testScriptExecutorServiceStatistics.externalCacheHitNumber,
     )
-    if (stream !== System.out) {
-      stream.close()
-      stream = Util.ExceptionPrintStream
-    }
   }
 
-  override fun onTestScriptExecution(event: TestScriptExecutionEvent) {
+  override fun close() {
+    stream.close()
+  }
+
+  override fun onTestScriptExecution(
+    event: AbstractTestScriptExecutionEvent.TestScriptExecutionEvent,
+  ) {
     val result = event.result
-    val edit = event.edit
     printBegin("Testing the following program: " + if (result.isInteresting) "pass" else "fail")
     stream.printf(
       "// edit action set type: %s\n",
       event.edit.actionSet.actionsDescription,
     )
-    printCode(
-      printer.print(
-        edit.program,
-      ).sourceCode.trim(),
-    )
+    printCode(event.textualProgram.textualContent)
     printEnd()
     if (result.isInteresting) {
       ++testSuccessCount
@@ -130,11 +124,7 @@ class ProgressMonitorForNodeReducer private constructor(
     printBegin(
       "Cache hit for the following program: " + if (result.isInteresting) "pass" else "fail",
     )
-    printCode(
-      printer.print(
-        event.edit.program,
-      ).sourceCode.trim(),
-    )
+    printCode(event.textualProgram.textualContent)
     printEnd()
     ++testResultCacheHitCount
   }
@@ -145,11 +135,7 @@ class ProgressMonitorForNodeReducer private constructor(
       "It took %s than 1 second to cancel the task.\n\n",
       if (event.millisToCancelTheTask <= 1000) "less" else "more",
     )
-    printCode(
-      printer.print(
-        event.program,
-      ).sourceCode.trim(),
-    )
+    printCode(event.textualProgram.textualContent)
     printEnd()
     ++testExcecutionCancelled
   }
@@ -157,15 +143,10 @@ class ProgressMonitorForNodeReducer private constructor(
   override fun onNodeReductionStart(event: NodeReductionStartEvent) {
     val node = event.node
     val programSize = event.programSize
-    val program = event.program
     printBegin(String.format("Reducing node %d, size=%d", node.nodeId, programSize))
     beforeSize = programSize
     stream.println("The current best program is the following\n")
-    printCode(
-      printer.print(
-        program,
-      ).sourceCode.trim(),
-    )
+    printCode(event.textualProgram.textualContent)
     printEnd()
   }
 
@@ -227,20 +208,6 @@ class ProgressMonitorForNodeReducer private constructor(
   }
 
   companion object {
-    fun createForFile(
-      resultFile: Path,
-      appendMode: Boolean,
-      printer: AbstractTokenizedProgramPrinter,
-    ): ProgressMonitorForNodeReducer {
-      return ProgressMonitorForNodeReducer(resultFile, appendMode, printer)
-    }
-
-    fun createForSystemOut(
-      printer: AbstractTokenizedProgramPrinter,
-    ): ProgressMonitorForNodeReducer {
-      return ProgressMonitorForNodeReducer(null, appendMode = true, printer)
-    }
-
     private val PROGRAM_END_MARKER = Strings.padEnd("", 60, '-')
   }
 }

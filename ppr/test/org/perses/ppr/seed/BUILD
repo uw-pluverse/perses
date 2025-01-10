@@ -1,6 +1,6 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
 load("//benchmark:benchmark.bzl", "sanity_test")
 load("//ppr/test/org/perses/ppr:ppr_reduction.bzl", "ppr_reduction_golden_test")
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 
 PERSES_SEED_REDUCER_BIN = "//ppr/src/org/perses/ppr/seed:main"
 
@@ -26,7 +26,7 @@ ppr_reduction_golden_test(
     name = "seed_reduction_golden_test1",
     enable_edit_caching = True,
     enable_query_caching = False,
-    golden_progress_file = "golden_reduction_progress_test1.txt",
+    golden_progress_file = "golden_reduction_progress1.txt",
     golden_reduced_seed_file = "golden_reduced_seed1.c",
     golden_reduced_variant_file = "golden_reduced_variant1.c",
     log_file = "reduction_golden_test1.log",
@@ -34,7 +34,7 @@ ppr_reduction_golden_test(
         "--append-to-progress-dump-file": "true",
     },
     perses_bin = PERSES_SEED_REDUCER_BIN,
-    progress_dump_file = "reduction_progress_test1.txt",
+    progress_dump_file = "reduction_progress1.txt",
     reduction_algorithm = "perses_node_priority_with_dfs_delta",
     seed_file = "seed1.c",
     test_script = "r1.sh",
@@ -46,7 +46,7 @@ ppr_reduction_golden_test(
     name = "seed_reduction_golden_test2",
     enable_edit_caching = True,
     enable_query_caching = False,
-    golden_progress_file = "golden_reduction_progress_test2.txt",
+    golden_progress_file = "golden_reduction_progress2.txt",
     golden_reduced_seed_file = "golden_reduced_seed2.c",
     golden_reduced_variant_file = "golden_reduced_variant2.c",
     log_file = "reduction_golden_test2.log",
@@ -54,12 +54,32 @@ ppr_reduction_golden_test(
         "--append-to-progress-dump-file": "true",
     },
     perses_bin = PERSES_SEED_REDUCER_BIN,
-    progress_dump_file = "reduction_progress_test2.txt",
+    progress_dump_file = "reduction_progress2.txt",
     reduction_algorithm = "perses_node_priority_with_dfs_delta",
     seed_file = "seed2.c",
     test_script = "r2.sh",
     thread_count = 1,
     variant_file = "variant2.c",
+)
+
+ppr_reduction_golden_test(
+    name = "seed_reduction_golden_test_lang",
+    enable_edit_caching = True,
+    enable_query_caching = False,
+    golden_progress_file = "golden_reduction_progress_lang.txt",
+    golden_reduced_seed_file = "golden_reduced_seed_lang.c",
+    golden_reduced_variant_file = "golden_reduced_variant_lang.c",
+    log_file = "reduction_golden_test_lang.log",
+    other_flags = {
+        "--lang": "c",
+    },
+    perses_bin = PERSES_SEED_REDUCER_BIN,
+    progress_dump_file = "reduction_progress_lang.txt",
+    reduction_algorithm = "perses_node_priority_with_dfs_delta",
+    seed_file = "seed.unknown_language",
+    test_script = "r_with_language_specified.sh",
+    thread_count = 1,
+    variant_file = "variant.unknown_language",
 )
 
 kt_jvm_test(

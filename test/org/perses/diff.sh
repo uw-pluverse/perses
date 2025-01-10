@@ -30,7 +30,7 @@ if [[ "${EXIT_CODE}" != 0 ]] ; then
   diff --side-by-side "${GOLDEN}" "${ACTUAL}"
   echo ""
   echo "====Test failed.===="
-  echo "To fix the golden test, run 'bazel run <this failing test taget name>_update"
+  echo "To fix the golden test, run 'bazelisk run <this failing test taget name>_update"
 else
   echo "====Test passed.===="
 fi

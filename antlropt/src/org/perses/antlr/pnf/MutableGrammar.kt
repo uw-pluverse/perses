@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -122,6 +122,13 @@ class MutableGrammar(
   override fun toString(): String {
     return MoreObjects
       .toStringHelper(this).add("keys", map.keys).add("values", map.values).toString()
+  }
+
+  fun toSourceCodeForDebugging(): String {
+    return ruleNameAltPairSequence()
+      .map {
+        "${it.key.ruleName}: ${it.value.sourceCode}"
+      }.joinToString(separator = "\n")
   }
 
   fun validate() {

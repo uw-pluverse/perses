@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -44,6 +44,7 @@ abstract class AbstractConcurrentTokenSlicer(
     tokenSlicingGranularity: Int,
   ) {
     val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
+    val listenerManager = reducerContext.listenerManager
     val slicingStartEvent = fixpointReductionState
       .fixpointIterationStartEvent
       .createTokenSlicingStartEvent(
@@ -52,13 +53,15 @@ abstract class AbstractConcurrentTokenSlicer(
         tokenSlicingGranularity = tokenSlicingGranularity,
       )
     listenerManager.onSlicingTokensStart(slicingStartEvent)
-    createSequenceOfIndependentSlicingTasks(tokenSlicingGranularity, tree)
-      .forEach {
-        SlicingTaskConcurrentExecutor(
-          it.tasks,
-          workingDequeExpectedSize = executorService.specifiedNumOfThreads + 2,
-        ).run()
-      }
+    createSequenceOfIndependentSlicingTasks(
+      tokenSlicingGranularity,
+      tree,
+    ).forEach {
+      SlicingTaskConcurrentExecutor(
+        it.tasks,
+        workingDequeExpectedSize = executorService.specifiedNumOfThreads + 2,
+      ).run()
+    }
     val slicingEndEvent = slicingStartEvent.createEndEvent(
       currentTimeMillis = System.currentTimeMillis(),
       programSize = tree.programSnapshot.tokenCount(),
@@ -72,7 +75,7 @@ abstract class AbstractConcurrentTokenSlicer(
   ): Sequence<IndependentSlicingTasks>
 
   data class IndependentSlicingTasks(
-    val tasks: ImmutableList<AbstractSlicingTask>,
+    val tasks: ImmutableList<out AbstractSlicingTask>,
   )
 
   // TODO: testing

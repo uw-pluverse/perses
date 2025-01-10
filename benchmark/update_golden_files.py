@@ -16,7 +16,7 @@ targets = [
     Target(
         target_name="//benchmark/toys/delta_1:reduction_golden_test_reduction",
         output_file="bazel-bin/benchmark/toys/delta_1/result_reduction_golden_test_perses_node_priority_with_dfs_delta_t.c",
-        golden_file="benchmark/toys/delta_1/golden_reduced_t.c"),
+        golden_file="benchmark/toys/delta_1/golden_reduced_wdd_t.c"),
     Target(
         target_name="//benchmark/toys/delta_1:reduction_golden_test_reduction",
         output_file="bazel-bin/benchmark/toys/delta_1/reduction_progress.txt",
@@ -24,7 +24,7 @@ targets = [
     Target(
         target_name="//benchmark/toys/parentheses:reduction_golden_test_reduction",
         output_file="bazel-bin/benchmark/toys/parentheses/result_reduction_golden_test_perses_node_priority_with_dfs_delta_t.c",
-        golden_file="benchmark/toys/parentheses/golden_reduced_t.c"),
+        golden_file="benchmark/toys/parentheses/golden_reduced_wdd_t.c"),
     Target(
         target_name="//benchmark/toys/parentheses:reduction_golden_test_reduction",
         output_file="bazel-bin/benchmark/toys/parentheses/reduction_progress.txt",

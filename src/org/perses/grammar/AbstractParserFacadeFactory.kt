@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,13 +16,15 @@
  */
 package org.perses.grammar
 
+import com.google.common.collect.ImmutableList
 import com.google.common.io.Files
 import org.perses.program.LanguageKind
+import org.perses.util.transformToImmutableList
 import java.nio.file.Path
+import kotlin.reflect.KClass
+import kotlin.reflect.full.createInstance
 
 abstract class AbstractParserFacadeFactory {
-
-  abstract fun createParserFacade(languageKind: LanguageKind): AbstractParserFacade
 
   fun containsLanguage(languageKind: LanguageKind): Boolean {
     return languageSequence().any { it == languageKind }
@@ -50,7 +52,20 @@ abstract class AbstractParserFacadeFactory {
     reportError("Failed to detect the language kind for file $file\n")
   }
 
-  internal abstract fun languageSequence(): Sequence<LanguageKind>
+  fun computeLanguage(
+    specifiedLanguageName: String,
+    sourceFileAbsPath: Path,
+  ): LanguageKind {
+    return if (specifiedLanguageName.isNotBlank()) {
+      computeLanguageKindWithLanguageNameIgnoreCase(specifiedLanguageName)!!
+    } else {
+      computeLanguageKindOrThrow(sourceFileAbsPath)
+    }
+  }
+
+  abstract fun languageSequence(): Sequence<LanguageKind>
+
+  abstract fun getParserFacadeListForOrNull(languageKind: LanguageKind): ParserFacadeList?
 
   internal fun reportError(prefix: String): Nothing {
     val errorMessage = buildString {
@@ -61,5 +76,50 @@ abstract class AbstractParserFacadeFactory {
       }
     }
     error(errorMessage)
+  }
+
+  data class ParserFacadeCreator(
+    val klass: KClass<out AbstractParserFacade>,
+  ) {
+    fun create(): AbstractParserFacade {
+      return klass.createInstance()
+    }
+  }
+
+  data class ParserFacadeList(
+    val defaultParserFacade: ParserFacadeCreator,
+    val otherParserFacades: ImmutableList<ParserFacadeCreator>,
+  ) {
+    init {
+      require(!otherParserFacades.contains(defaultParserFacade)) {
+        """
+          | default parser facade: $defaultParserFacade
+          | other parser facades: $otherParserFacades
+        """.trimMargin()
+      }
+    }
+
+    fun sequenceOfCreators(): Sequence<ParserFacadeCreator> {
+      return sequence {
+        yield(defaultParserFacade)
+        yieldAll(otherParserFacades)
+      }
+    }
+
+    fun numberOfParserFacades() = 1 + otherParserFacades.size
+
+    companion object {
+      fun create(
+        defaultParserFacade: KClass<out AbstractParserFacade>,
+        otherParserFacades: Iterable<KClass<out AbstractParserFacade>>,
+      ): ParserFacadeList {
+        return ParserFacadeList(
+          defaultParserFacade = ParserFacadeCreator(defaultParserFacade),
+          otherParserFacades = otherParserFacades.transformToImmutableList {
+            ParserFacadeCreator(it)
+          },
+        )
+      }
+    }
   }
 }

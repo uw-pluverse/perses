@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,11 +19,14 @@ package org.perses.util.shell
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
 import com.google.common.flogger.FluentLogger
+import org.perses.util.Util
 import org.perses.util.toImmutableList
 import java.io.File.pathSeparator
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
+import kotlin.io.path.absolute
+
 /**
  * This class represents a command in the shell.
  */
@@ -91,6 +94,9 @@ data class ShellCommandOnPath(
             "The symbol link $cmdName exists, but the source is not a regular file."
           }
         }
+        check(Files.exists(cmdPath)) {
+          "The command $cmdName does not exist."
+        }
         check(Files.isRegularFile(cmdPath)) {
           "The command $cmdName is not a regular file."
         }
@@ -107,6 +113,18 @@ data class ShellCommandOnPath(
         check(Files.isRegularFile(cmdPath)) {
           "The symbol link $cmdPath exists, but the source is not a regular file."
         }
+      }
+      check(Files.exists(cmdPath)) {
+        val currentDir = Shells.CURRENT_DIR.absolute()
+        val children = if (cmdPath.parent != null) { Util.listFilesInFolder(cmdPath.parent) } else {
+          emptySet<Path>()
+        }
+        """The command $cmdPath does not exist. 
+          |currentDir=$currentDir
+          |children=$children
+          |
+          |PATH=$pathEnv
+        """.trimMargin()
       }
       check(Files.isRegularFile(cmdPath)) {
         "The command $cmdPath is not a regular file. PATH=$pathEnv"

@@ -1,4 +1,4 @@
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
 
 kt_jvm_test(
     name = "TDTreeTest",
@@ -7,6 +7,8 @@ kt_jvm_test(
     ],
     deps = [
         "//:truth",
-        "//src/org/perses/antlr/atn/tdtree",
+        "//src/org/perses/antlr/atn",
+        "//src/org/perses/antlr/atn/nfa",
+        "//test/org/perses/antlr/atn:OrigC",
     ],
 )

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,23 +17,19 @@
 package org.perses.listener
 
 import com.google.common.annotations.VisibleForTesting
-import com.google.common.base.Preconditions
 import com.google.common.collect.ImmutableList
 import org.perses.reduction.event.FixpointIterationEndEvent
 import org.perses.reduction.event.FixpointIterationStartEvent
 import org.perses.reduction.event.ReductionEndEvent
+import org.perses.util.FileStreamPool
 import org.perses.util.Util.lazyAssert
-import java.io.PrintWriter
-import java.nio.charset.StandardCharsets
-import java.nio.file.Path
-import kotlin.io.path.absolute
-import kotlin.io.path.exists
 
 /** Collects the statistics of reduction.  */
-class StatisticsListener(resultFile: Path) : DefaultReductionListener() {
+class StatisticsListener(
+  private val fileStream: FileStreamPool.ManagedPrintStream,
+) : DefaultReductionListener() {
   private val iterations = ArrayList<ReductionIterationStatistics>()
 
-  private val resultFile: Path = resultFile.absolute()
   override fun onFixpointIterationStart(event: FixpointIterationStartEvent) {
     val newStat = ReductionIterationStatistics(
       event.iteration.toString(),
@@ -58,41 +54,43 @@ class StatisticsListener(resultFile: Path) : DefaultReductionListener() {
   }
 
   override fun onReductionEnd(event: ReductionEndEvent) {
-    PrintWriter(resultFile.toFile(), StandardCharsets.UTF_8.name()).use { writer ->
-      printHumanReadableResult(writer)
-      writer.println()
-      writer.printf("iterations=%d\n", iterations.size)
-      for (iteration in iterations) {
-        writeProperty(
-          writer,
-          "program_size_before",
-          iteration.iteration,
-          iteration.beforeProgramSize.toLong(),
-        )
-        writeProperty(
-          writer,
-          "program_size_after",
-          iteration.iteration,
-          iteration.afterProgramSize.toLong(),
-        )
-        writeProperty(
-          writer,
-          "elapsed_time_millis",
-          iteration.iteration,
-          iteration.elapsedTimeMillis(),
-        )
-        writeProperty(
-          writer,
-          "count_test_script_executions",
-          iteration.iteration,
-          iteration.countOfTestScriptExecutions.toLong(),
-        )
-        writer.println()
-      }
+    printHumanReadableResult(fileStream)
+    fileStream.println()
+    fileStream.printf("iterations=%d\n", iterations.size)
+    for (iteration in iterations) {
+      writeProperty(
+        fileStream,
+        "program_size_before",
+        iteration.iteration,
+        iteration.beforeProgramSize.toLong(),
+      )
+      writeProperty(
+        fileStream,
+        "program_size_after",
+        iteration.iteration,
+        iteration.afterProgramSize.toLong(),
+      )
+      writeProperty(
+        fileStream,
+        "elapsed_time_millis",
+        iteration.iteration,
+        iteration.elapsedTimeMillis(),
+      )
+      writeProperty(
+        fileStream,
+        "count_test_script_executions",
+        iteration.iteration,
+        iteration.countOfTestScriptExecutions.toLong(),
+      )
+      fileStream.println()
     }
   }
 
-  private fun printHumanReadableResult(writer: PrintWriter) {
+  override fun close() {
+    fileStream.close()
+  }
+
+  private fun printHumanReadableResult(writer: FileStreamPool.ManagedPrintStream) {
     printHeader(writer)
     for (iteration in iterations) {
       printRow(
@@ -135,11 +133,6 @@ class StatisticsListener(resultFile: Path) : DefaultReductionListener() {
   }
 
   @VisibleForTesting
-  fun getIterations(): Iterable<ReductionIterationStatistics> {
-    return iterations
-  }
-
-  @VisibleForTesting
   class ReductionIterationStatistics(
     val iteration: String,
     val beforeProgramSize: Int,
@@ -178,7 +171,7 @@ class StatisticsListener(resultFile: Path) : DefaultReductionListener() {
     )
 
     private fun writeProperty(
-      writer: PrintWriter,
+      writer: FileStreamPool.ManagedPrintStream,
       name: String,
       iterationName: String,
       value: Long,
@@ -186,7 +179,7 @@ class StatisticsListener(resultFile: Path) : DefaultReductionListener() {
       writer.printf("%s.%s=%d\n", name, iterationName, value)
     }
 
-    private fun printHeader(writer: PrintWriter) {
+    private fun printHeader(writer: FileStreamPool.ManagedPrintStream) {
       writer.printf(
         COLUMN_FORMAT,
         COLUMN_NAMES[0],
@@ -199,7 +192,7 @@ class StatisticsListener(resultFile: Path) : DefaultReductionListener() {
     }
 
     private fun printRow(
-      writer: PrintWriter,
+      writer: FileStreamPool.ManagedPrintStream,
       iteration: String,
       beforeSize: Int,
       afterSize: Int,
@@ -234,12 +227,5 @@ class StatisticsListener(resultFile: Path) : DefaultReductionListener() {
       builder.append("\n")
       return builder.toString()
     }
-  }
-
-  init {
-    Preconditions.checkArgument(
-      this.resultFile.parent.exists(),
-      "The folder of the result file does not exist. ${this.resultFile.parent}",
-    )
   }
 }

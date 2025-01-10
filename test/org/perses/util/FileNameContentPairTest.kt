@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,9 +22,9 @@ import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.util.FileNameContentPair.Companion.locateFirstNonBlankLine
-import org.perses.util.FileNameContentPair.Companion.locateLastNonBlankLine
-import org.perses.util.FileNameContentPair.Companion.trimWhitespaces
+import org.perses.util.FileNameContentLinesPair.Companion.locateFirstNonBlankLine
+import org.perses.util.FileNameContentLinesPair.Companion.locateLastNonBlankLine
+import org.perses.util.FileNameContentLinesPair.Companion.trimWhitespaces
 import java.nio.file.Files
 import kotlin.io.path.deleteRecursively
 import kotlin.io.path.readText
@@ -68,11 +68,11 @@ class FileNameContentPairTest {
 
   @Test
   fun testEquality() {
-    val p1 = FileNameContentPair.createFromString(fileName = "a.txt", content = "a")
-    val p2 = FileNameContentPair.createFromString(fileName = "a.txt", content = "a")
+    val p1 = FileNameContentLinesPair.createFromString(fileName = "a.txt", content = "a")
+    val p2 = FileNameContentLinesPair.createFromString(fileName = "a.txt", content = "a")
     assertThat(p1).isEqualTo(p2)
 
-    val map = HashSet<FileNameContentPair>()
+    val map = HashSet<FileNameContentLinesPair>()
     map.add(p1)
     map.add(p2)
     assertThat(map).containsExactly(p1)
@@ -83,7 +83,7 @@ class FileNameContentPairTest {
   @Test
   fun testIntern() {
     val interner = Interners.newWeakInterner<String>()
-    val orig = FileNameContentPair.createFromString(fileName = "a", content = "b")
+    val orig = FileNameContentLinesPair.createFromString(fileName = "a", content = "b")
     val copy1 = orig.createInternedCopy(interner)
     val copy2 = orig.createInternedCopy(interner)
     assertThat(orig).isEqualTo(copy1)
@@ -94,16 +94,16 @@ class FileNameContentPairTest {
 
   @Test
   fun testInequality() {
-    val p1 = FileNameContentPair.createFromString("a.txt", content = "a")
-    val p2 = FileNameContentPair.createFromString("a.txt", "b")
+    val p1 = FileNameContentLinesPair.createFromString("a.txt", content = "a")
+    val p2 = FileNameContentLinesPair.createFromString("a.txt", "b")
     assertThat(p1).isNotEqualTo(p2)
-    val p3 = FileNameContentPair.createFromString("b.txt", "a")
+    val p3 = FileNameContentLinesPair.createFromString("b.txt", "a")
     assertThat(p1).isNotEqualTo(p3)
   }
 
   @Test
   fun testWrite() {
-    val pair = FileNameContentPair.createFromString("a.txt", "b")
+    val pair = FileNameContentLinesPair.createFromString("a.txt", "b")
     val path = tempDir.resolve("subdir")
     Files.createDirectories(path)
     pair.writeToDirectory(path)
@@ -116,7 +116,7 @@ class FileNameContentPairTest {
   fun testRead() {
     val file = tempDir.resolve("a.txt")
     file.writeText("b")
-    val pair = FileNameContentPair.createFromFile(file)
+    val pair = FileNameContentLinesPair.createFromFile(file)
     assertThat(pair.fileName).isEqualTo("a.txt")
     assertThat(pair.lines).containsExactly("b").inOrder()
   }

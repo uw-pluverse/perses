@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,15 +16,20 @@
  */
 package org.perses.reduction.event
 
+import com.google.common.collect.ImmutableList
 import org.perses.program.TokenizedProgram
 import org.perses.spartree.AbstractSparTreeNode
+import org.perses.util.FileNameContentPair
 
 class NodeReductionStartEvent internal constructor(
   val currentFixpointIteration: FixpointIterationStartEvent,
   currentTimeMillis: Long,
   val program: TokenizedProgram,
   val node: AbstractSparTreeNode,
+  outputCreator: (TokenizedProgram) -> ImmutableList<FileNameContentPair>,
 ) : AbstractStartEvent(currentTimeMillis, programSize = program.tokenCount()) {
+
+  val textualProgram = LazyProgramOutputer(program, outputCreator)
 
   val iteration = currentFixpointIteration.iteration
 

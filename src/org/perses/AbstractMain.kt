@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,41 +18,115 @@ package org.perses
 
 import com.google.common.flogger.FluentLogger
 import org.perses.grammar.AbstractParserFacadeFactory
+import org.perses.grammar.AntlrFailureException
 import org.perses.grammar.CompositeParserFacadeFactory
 import org.perses.grammar.SingleParserFacadeFactory
 import org.perses.grammar.SingleParserFacadeFactory.Companion.builderWithBuiltinLanguages
+import org.perses.program.LanguageKind
+import org.perses.reduction.AsyncReductionListenerManager
+import org.perses.reduction.GlobalContext
 import org.perses.reduction.IReductionDriver
+import org.perses.reduction.SanityCheckFailedException
+import org.perses.reduction.io.IReductionInputs
 import org.perses.util.cmd.AbstractCommandOptions
-import org.perses.util.ktInfo
+import org.perses.util.ktSevere
+import java.io.Closeable
 
-abstract class AbstractMain<Cmd : AbstractCommandOptions>(args: Array<String>) :
-  org.perses.util.cmd.AbstractMain<Cmd>(args) {
+abstract class AbstractMain<
+  Cmd : AbstractCommandOptions,
+  ReductionDriver : IReductionDriver,
+  ReductionInputs : IReductionInputs<LanguageKind, ReductionInputs>,
+  >(
+  cmd: Cmd,
+  protected val globalContext: GlobalContext,
+) : org.perses.util.cmd.AbstractMain<Cmd>(cmd), Closeable {
 
-  lateinit var parserFacadeFactory: AbstractParserFacadeFactory
-
-  final override fun internalRun() {
-    logger.ktInfo {
-      val keyValuePairs = commander.getFlagNameValueMap()
-        .map { '"' + it.key + '"' + ": " + '"' + it.value + '"' }
-        .joinToString(separator = ", ")
-      "The command-line options are: $keyValuePairs"
-    }
+  protected val parserFacadeFactory by lazy {
     initializeParserFacadeFactory()
-    createReductionDriver(parserFacadeFactory).use { driver -> driver.reduce() }
   }
 
-  private fun initializeParserFacadeFactory() {
+  protected val reductionInputs: ReductionInputs by lazy {
+    createReductionInputs(parserFacadeFactory)
+  }
+
+  protected lateinit var listenerManager: AsyncReductionListenerManager
+
+  final override fun internalRun() {
+    listenerManager = createAsyncReductionListenerManager()
+    val suppressedExceptions = mutableListOf<Exception>()
+    for (driverCreator in createSequenceOfReductionDriverCreators(reductionInputs)) {
+      val driver: ReductionDriver
+      try {
+        driver = driverCreator.creator()
+      } catch (e: AntlrFailureException) {
+        logger.ktSevere {
+          """Failed to parse the input program with the reduction driver: 
+            |${driverCreator.description}
+            |
+            |Perses will try to create a different reduction driver to parse the program.
+          """.trimMargin()
+        }
+        suppressedExceptions.add(e)
+        continue
+      }
+      val sanityCheckResult = driver.cachedSanityCheckResult
+      if (sanityCheckResult is IReductionDriver.FailingSanityCheckResult) {
+        suppressedExceptions.add(sanityCheckResult.exception)
+        logger.ktSevere {
+          """
+          |The initial sanity check failed. More information is provided below.
+          |
+          |${sanityCheckResult.exception}
+          |
+          |Driver creator: ${driverCreator.description}
+          |
+          |Perses might automatically try difference configurations now.
+          |
+          |
+          """.trimMargin()
+        }
+        continue
+      }
+      driver.use { it.reduce() }
+      suppressedExceptions.clear()
+      break
+    }
+    if (suppressedExceptions.isNotEmpty()) {
+      val exception = SanityCheckFailedException(
+        "Failed to create a reduction driver for the input program.",
+      )
+      suppressedExceptions.forEach { exception.addSuppressed(it) }
+      throw exception
+    }
+  }
+
+  protected abstract fun createAsyncReductionListenerManager(): AsyncReductionListenerManager
+
+  protected abstract fun createReductionInputs(
+    parserFacadeFactory: AbstractParserFacadeFactory,
+  ): ReductionInputs
+
+  private fun initializeParserFacadeFactory(): AbstractParserFacadeFactory {
     val builtinFacadeFactory = createBuiltinParserFacadeFactory()
     val extFacadeFactory = createExtFacadeFactory()
-    parserFacadeFactory = CompositeParserFacadeFactory(
+    return CompositeParserFacadeFactory(
       builtinFactory = builtinFacadeFactory,
       extFactory = extFacadeFactory,
     )
   }
 
-  protected abstract fun createReductionDriver(
-    facadeFactory: AbstractParserFacadeFactory,
-  ): IReductionDriver
+  class ReductionDriverCreator<ReductionDriver : IReductionDriver>(
+    val creator: () -> ReductionDriver,
+    descriptor: () -> String,
+  ) {
+    val description: String by lazy {
+      descriptor()
+    }
+  }
+
+  protected abstract fun createSequenceOfReductionDriverCreators(
+    reductionInputs: ReductionInputs,
+  ): Sequence<ReductionDriverCreator<ReductionDriver>>
 
   private fun createBuiltinParserFacadeFactory(): AbstractParserFacadeFactory {
     return builderWithBuiltinLanguages().build()
@@ -60,6 +134,12 @@ abstract class AbstractMain<Cmd : AbstractCommandOptions>(args: Array<String>) :
 
   protected open fun createExtFacadeFactory(): AbstractParserFacadeFactory {
     return SingleParserFacadeFactory.createEmptyFactory()
+  }
+
+  override fun close() {
+    if (this::listenerManager.isInitialized) {
+      listenerManager.close()
+    }
   }
 
   companion object {

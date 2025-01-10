@@ -801,11 +801,6 @@ classQualifier
     : '[' Id ']'
     ;
 
-type_
-    : aux_rule__type__2
-    | aux_rule__type__3
-    ;
-
 functionArgTypes
     : infixType
     | aux_rule__functionArgTypes_5
@@ -856,11 +851,6 @@ typePat
 
 ascription
     : ':' altnt_block__ascription_2
-    ;
-
-expr
-    : aux_rule__expr_3
-    | expr1
     ;
 
 expr1
@@ -1854,6 +1844,30 @@ infixExpr
     : prefixExpr kleene_star__infixExpr_2
     ;
 
+aux_rule__type__3
+    : functionArgTypes '=>'
+    ;
+
+kleene_star__type__2
+    : aux_rule__type__3*
+    ;
+
+type_
+    : kleene_star__type__2 infixType optional__type__1
+    ;
+
+aux_rule__expr_3
+    : altnt_block__expr_4 '=>'
+    ;
+
+kleene_star__expr_2
+    : aux_rule__expr_3*
+    ;
+
+expr
+    : kleene_star__expr_2 expr1
+    ;
+
 optional__paramType_1
     : '=>'?
     ;
@@ -1915,12 +1929,6 @@ altnt_block__expr1_17
     | aux_rule__expr1_31
     ;
 
-altnt_block__expr_2
-    : bindings
-    | aux_rule__expr_4
-    | '_'
-    ;
-
 altnt_block__simpleExpr_1
     : classTemplate
     | templateBody
@@ -1978,6 +1986,12 @@ altnt_block__stableId_7
     | aux_rule__stableId_9
     ;
 
+altnt_block__expr_4
+    : bindings
+    | aux_rule__expr_5
+    | '_'
+    ;
+
 altnt_block__expr1_19
     : aux_rule__expr1_33
     | aux_rule__expr1_34
@@ -2017,14 +2031,6 @@ aux_rule__literal_4
     : optional__literal_1 altnt_block__literal_3
     ;
 
-aux_rule__type__2
-    : functionArgTypes '=>' type_
-    ;
-
-aux_rule__type__3
-    : infixType optional__type__1
-    ;
-
 aux_rule__functionArgTypes_5
     : '(' optional__functionArgTypes_4 ')'
     ;
@@ -2043,10 +2049,6 @@ aux_rule__compoundType_4
 
 aux_rule__refineStat_1
     : 'type' typeDef
-    ;
-
-aux_rule__expr_3
-    : altnt_block__expr_2 '=>' expr
     ;
 
 aux_rule__expr1_20
@@ -2277,10 +2279,6 @@ aux_rule__expr1_31
     : simpleExpr1 argumentExprs
     ;
 
-aux_rule__expr_4
-    : optional__expr_1 Id
-    ;
-
 aux_rule__resultExpr_5
     : altnt_block__resultExpr_3 ':' compoundType
     ;
@@ -2299,6 +2297,10 @@ aux_rule__expr1_32
 
 aux_rule__stableId_9
     : 'super' optional__stableId_3 '.' Id
+    ;
+
+aux_rule__expr_5
+    : optional__expr_1 Id
     ;
 
 aux_rule__expr1_33

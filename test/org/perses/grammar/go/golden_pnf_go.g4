@@ -285,11 +285,6 @@ parameterDecl
     : optional__parameterDecl_1 optional__parameterDecl_2 type_
     ;
 
-unaryExpr
-    : primaryExpr
-    | aux_rule__unaryExpr_2
-    ;
-
 conversion
     : type_ '(' expression optional__conversion_1 ')'
     ;
@@ -713,6 +708,24 @@ primaryExpr
     : aux_rule__primaryExpr_3 kleene_star__primaryExpr_1
     ;
 
+aux_rule__unaryExpr_2
+    : '+'
+    | '-'
+    | '!'
+    | '^'
+    | '*'
+    | '&'
+    | '<-'
+    ;
+
+kleene_star__unaryExpr_1
+    : aux_rule__unaryExpr_2*
+    ;
+
+unaryExpr
+    : kleene_star__unaryExpr_1 primaryExpr
+    ;
+
 optional__signature_1
     : result?
     ;
@@ -816,16 +829,6 @@ altnt_block__channelType_1
     | aux_rule__channelType_4
     ;
 
-altnt_block__unaryExpr_1
-    : '+'
-    | '-'
-    | '!'
-    | '^'
-    | '*'
-    | '&'
-    | '<-'
-    ;
-
 altnt_block__fieldDecl_2
     : aux_rule__fieldDecl_3
     | anonymousField
@@ -895,10 +898,6 @@ aux_rule__commCase_2
 
 aux_rule__methodSpec_2
     : IDENTIFIER parameters optional__signature_1
-    ;
-
-aux_rule__unaryExpr_2
-    : altnt_block__unaryExpr_1 unaryExpr
     ;
 
 aux_rule__literalType_1

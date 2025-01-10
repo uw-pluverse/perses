@@ -477,14 +477,6 @@ actualArgument
     | aux_rule__actualArgument_4
     ;
 
-constantInitializer
-    : constant
-    | string
-    | aux_rule__constantInitializer_8
-    | aux_rule__constantInitializer_9
-    | aux_rule__constantInitializer_10
-    ;
-
 classConstant
     : aux_rule__classConstant_5
     | aux_rule__classConstant_6
@@ -1305,6 +1297,26 @@ expression
     : aux_rule__expression_8 kleene_star__expression_6
     ;
 
+aux_rule__constantInitializer_8
+    : '+'
+    | '-'
+    ;
+
+kleene_star__constantInitializer_7
+    : aux_rule__constantInitializer_8*
+    ;
+
+aux_rule__constantInitializer_9
+    : constant
+    | string
+    | aux_rule__constantInitializer_10
+    | aux_rule__constantInitializer_11
+    ;
+
+constantInitializer
+    : kleene_star__constantInitializer_7 aux_rule__constantInitializer_9
+    ;
+
 aux_rule__namespaceNameList_5
     : kleene_star__namespaceNameList_2 optional__namespaceNameList_4
     ;
@@ -1486,11 +1498,6 @@ altnt_block__anonymousClass_14
     | aux_rule__anonymousClass_16
     ;
 
-altnt_block__constantInitializer_7
-    : '+'
-    | '-'
-    ;
-
 altnt_block__classConstant_1
     : Class
     | Parent_
@@ -1659,18 +1666,6 @@ aux_rule__actualArgument_4
     : '&' chain
     ;
 
-aux_rule__constantInitializer_8
-    : Array '(' optional__constantInitializer_3 ')'
-    ;
-
-aux_rule__constantInitializer_9
-    : '[' optional__constantInitializer_3 ']'
-    ;
-
-aux_rule__constantInitializer_10
-    : altnt_block__constantInitializer_7 constantInitializer
-    ;
-
 aux_rule__classConstant_5
     : altnt_block__classConstant_1 '::' altnt_block__classConstant_2
     ;
@@ -1725,6 +1720,14 @@ aux_rule__expression_18
 
 aux_rule__expression_19
     : altnt_block__expression_11 expression
+    ;
+
+aux_rule__constantInitializer_10
+    : Array '(' optional__constantInitializer_3 ')'
+    ;
+
+aux_rule__constantInitializer_11
+    : '[' optional__constantInitializer_3 ']'
     ;
 
 aux_rule__typeParameterListInBrackets_4

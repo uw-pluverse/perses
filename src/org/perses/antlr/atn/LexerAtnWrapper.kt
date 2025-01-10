@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -42,6 +42,7 @@ import org.perses.util.Util.lazyAssert
 import org.perses.util.ktWarning
 import org.perses.util.toImmutableList
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.math.min
 
 class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
 
@@ -76,9 +77,10 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
       return Pair(ATNConstructorFromRegex().construct(regex), regex)
     } catch (e: Throwable) {
       throw RuntimeException(
-        """"Exception occurred when processing $
-        | originalStartState=$originalStartState
-        | regex=${regex?.sourceCode}
+        """"Exception occurred when processing tokenType=[$tokenType]
+          |----tokenName=${metaTokenInfoDB.getTokenInfoWithType(tokenType)?.symbolicName}
+          |----originalStartState=$originalStartState
+          |----regex=${regex?.sourceCode}
         """.trimMargin(),
         e,
       )
@@ -105,23 +107,58 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
     return atn.ruleToStopState[tokenInfo.ruleIndex.antlrRuleIndex]
   }
 
-  fun findATNPathForLexeme(lexeme: String, ruleType: TokenType): ATNPath {
+  fun generateCandidateCanonicalTokenTextsGivenTokenType(
+    ruleType: TokenType,
+    countLimit: Int,
+  ): ImmutableList<String> {
     var paths = ArrayList<ATNPath>()
-    val startState = getNormalizedStartState(ruleType)
+    val startState = getOriginalStartState(ruleType)
+    val stopState = startState.stopState
     paths.add(ATNPath.create(startState))
-    lexeme.asSequence().forEach { char ->
+    var completePaths = paths.filter { isReachableViaEpsilons(it.endingState, stopState) }
+    while (completePaths.isEmpty()) {
       val newPaths = ArrayList<ATNPath>()
       paths.forEach { path ->
         val endingState = path.endingState
         val currentPath = ArrayList<ATNState>()
         val result = HashSet<ATNPath>()
         val visited = HashSet<Transition>()
-        getAllReachablePaths(endingState, char, currentPath, result, visited)
+        getAllReachablePaths(endingState, currentPath, result, visited)
         result.forEach {
           newPaths.add(path.append(it))
         }
+        paths = newPaths
+        completePaths = paths.filter { isReachableViaEpsilons(it.endingState, stopState) }
       }
-      paths = newPaths
+    }
+    val candidates = completePaths.flatMap { path ->
+      getCandidateCanonicalTokenTextsFromPath(path, countLimit)
+    }.distinct().sorted()
+    return candidates.subList(0, min(countLimit, candidates.size)).toImmutableList()
+  }
+
+  fun findATNPathForLexeme(lexeme: String, ruleType: TokenType): ATNPath {
+    var paths = ArrayList<ATNPath>()
+    val startState = getNormalizedStartState(ruleType)
+    paths.add(ATNPath.create(startState))
+    try {
+      lexeme.forEach { char ->
+        val newPaths = ArrayList<ATNPath>()
+        paths.forEach { path ->
+          val endingState = path.endingState
+          val currentPath = ArrayList<ATNState>()
+          val result = HashSet<ATNPath>()
+          val visited = HashSet<Transition>()
+          getAllReachablePaths(endingState, currentPath, result, visited, char)
+          result.forEach {
+            newPaths.add(path.append(it))
+          }
+        }
+        paths = newPaths
+      }
+    } catch (e: Throwable) {
+      val message = "Failed to find an ATN path for lexeme $lexeme, ruleType=$ruleType"
+      throw RuntimeException(message, e)
     }
     val endState = startState.stopState
     paths.removeAll {
@@ -141,10 +178,10 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
 
   private fun getAllReachablePaths(
     state: ATNState,
-    char: Char,
     currentPath: ArrayList<ATNState>,
     result: HashSet<ATNPath>,
     visited: HashSet<Transition>,
+    char: Char? = null,
   ) {
     state.transitionSequence().forEach { transition ->
       if (!visited.add(transition)) {
@@ -153,9 +190,11 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
       val targetState = transition.target
       currentPath.add(targetState)
       if (transition.isEpsilon) {
-        getAllReachablePaths(targetState, char, currentPath, result, visited)
+        getAllReachablePaths(targetState, currentPath, result, visited, char)
       } else {
-        if (transition.matches(char.code, Char.MIN_VALUE.code, Char.MAX_VALUE.code)) {
+        if (char == null || transition
+            .matches(char.code, Char.MIN_VALUE.code, Char.MAX_VALUE.code)
+        ) {
           result.add(ATNPath.create(currentPath))
         } else {
           // Do nothing.
@@ -425,6 +464,39 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
       return result.build().also { list ->
         lazyAssert { HashSet(list).size == list.size }
       }
+    }
+
+    private fun getCandidateCanonicalTokenTextsFromPath(
+      path: ATNPath,
+      countLimit: Int,
+    ): ImmutableList<String> {
+      val builder = ImmutableList.builder<Transition>()
+      path.stateSequence.zipWithNext().forEach { pair ->
+        val currState = pair.first
+        val nextState = pair.second
+        val transition = currState.transitionSequence().single { it.target === nextState }
+        if (transition.isEpsilon) {
+          return@forEach
+        }
+        builder.add(transition)
+      }
+      val transitions = builder.build()
+      val resultsBuilder = ImmutableList.builder<String>()
+      for (index in 0 until countLimit) {
+        val stringBuilder = StringBuilder()
+        var currIndex = index
+        for (t in transitions.reverse()) {
+          val charset = t.getAllowedAsciiChars()
+          val i = currIndex % charset.size
+          currIndex /= charset.size
+          stringBuilder.append(charset[i])
+        }
+        if (currIndex > 0) {
+          break
+        }
+        resultsBuilder.add(stringBuilder.reverse().toString())
+      }
+      return resultsBuilder.build()
     }
   }
 

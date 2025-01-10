@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,17 +21,14 @@ import com.google.common.collect.ImmutableList
 import org.perses.antlr.ast.PersesAstBuilder.Companion.loadGrammarFromFile
 import org.perses.util.cmd.AbstractCommandOptions
 import org.perses.util.cmd.AbstractMain
+import org.perses.util.cmd.CommandLineProcessor
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.writeText
 
 class OutlineImplicitTokenDefMain(
-  args: Array<String>,
-) : AbstractMain<OutlineImplicitTokenDefMain.CommandFlags>(args) {
-
-  override fun createCommandOptions(): CommandFlags {
-    return CommandFlags()
-  }
+  cmd: CommandFlags,
+) : AbstractMain<OutlineImplicitTokenDefMain.CommandFlags>(cmd) {
 
   override fun internalRun() {
     val parserGrammar = loadGrammarFromFile(cmd.parserFile!!)
@@ -103,7 +100,15 @@ class OutlineImplicitTokenDefMain(
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      OutlineImplicitTokenDefMain(args).run()
+      val processor = CommandLineProcessor(
+        cmdCreator = { CommandFlags() },
+        programName = OutlineImplicitTokenDefMain::class.qualifiedName!!,
+        args = args,
+      )
+      if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
+        return
+      }
+      OutlineImplicitTokenDefMain(processor.cmd).run()
     }
   }
 }

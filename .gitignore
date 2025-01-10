@@ -40,4 +40,4 @@ __pycache__
 perses_result*
 t.c.*.orig
 
-perses-fuzzer
+perses_deploy.jar

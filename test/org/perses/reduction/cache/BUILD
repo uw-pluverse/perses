@@ -1,12 +1,10 @@
-package(default_visibility = ["//test/org/perses:__subpackages__"])
-
 load(
     "@io_bazel_rules_kotlin//kotlin:jvm.bzl",
-    "kt_jvm_binary",
-    "kt_jvm_library",
     "kt_jvm_test",
 )
 load("//:perses.bzl", "kt_binary_for_genrule")
+
+package(default_visibility = ["//test/org/perses:__subpackages__"])
 
 kt_jvm_test(
     name = "PassLevelCacheTest",
@@ -118,9 +116,9 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
-    name = "LinearScanFormatSensitiveEncoderTest",
+    name = "RccFormatSensitiveEncoderTest",
     srcs = [
-        "LinearScanFormatSensitiveEncoderTest.kt",
+        "RccFormatSensitiveEncoderTest.kt",
     ],
     associates = [
         "//src/org/perses/reduction/cache:linear_scan_cache",
@@ -134,15 +132,15 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
-    name = "TokenizedProgramEncoderTest",
-    srcs = ["TokenizedProgramEncoderTest.kt"],
+    name = "RccTokenizedProgramEncoderTest",
+    srcs = ["RccTokenizedProgramEncoderTest.kt"],
     data = [
         "clang-22704.c",
         "//test_data/delta_1",
         "//test_data/java_helloworld",
         "//test_data/parentheses",
     ],
-    test_class = "org.perses.reduction.cache.TokenizedProgramEncoderTest",
+    test_class = "org.perses.reduction.cache.RccTokenizedProgramEncoderTest",
     deps = [
         "//:antlr_runtime",
         "//:fastutil",
@@ -186,7 +184,7 @@ kt_jvm_test(
         "//:truth",
         "//src/org/perses/reduction/cache:content_based_cache",
         "//src/org/perses/reduction/cache:linear_scan_cache",
-        "//src/org/perses/reduction/cache:query_cache_memory_profiler",
+        "//src/org/perses/reduction/cache:query_cache_profiler",
         "//src/org/perses/reduction/cache:sha512_cache",
         "//src/org/perses/util",
         "//test/org/perses:test_util",

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,11 +16,12 @@
  */
 package org.perses.reduction.event
 
+import com.google.common.collect.ImmutableList
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.AbstractReducerNameAndDesc
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.AbstractUnmodifiableSparTree
-import java.lang.ref.WeakReference
+import org.perses.util.FileNameContentPair
 
 class FixpointIterationStartEvent internal constructor(
   val reductionStartEvent: ReductionStartEvent,
@@ -28,7 +29,7 @@ class FixpointIterationStartEvent internal constructor(
   programSize: Int,
   val iteration: Int,
   val reducerClass: AbstractReducerNameAndDesc,
-  private val outdatedTree: WeakReference<AbstractUnmodifiableSparTree>,
+  private val treeStructureDumper: () -> String,
   val testScriptStatistics: TestScriptExecutorServiceStatisticsSnapshot,
 ) : AbstractStartEvent(currentTimeMillis, programSize) {
 
@@ -39,8 +40,7 @@ class FixpointIterationStartEvent internal constructor(
    * created.
    */
   val oudatedTreeDump: String by lazy {
-    val tree = outdatedTree.get()
-    tree?.printTreeStructure() ?: ""
+    treeStructureDumper()
   }
 
   fun createEndEvent(
@@ -93,6 +93,7 @@ class FixpointIterationStartEvent internal constructor(
     currentTimeMillis: Long,
     program: TokenizedProgram,
     node: AbstractSparTreeNode,
+    outputCreator: (TokenizedProgram) -> ImmutableList<FileNameContentPair>,
   ): NodeReductionStartEvent {
     check(!ended)
     return NodeReductionStartEvent(
@@ -100,6 +101,7 @@ class FixpointIterationStartEvent internal constructor(
       currentTimeMillis = currentTimeMillis,
       program = program,
       node = node,
+      outputCreator,
     )
   }
 

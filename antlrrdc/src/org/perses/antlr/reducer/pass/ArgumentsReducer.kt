@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -25,14 +25,19 @@ import org.perses.antlr.ast.PersesParserRuleAst.ParserRuleAttributes
 import org.perses.antlr.ast.PersesRuleReferenceAst
 import org.perses.antlr.ast.RuleNameRegistry
 import org.perses.antlr.reducer.io.GrammarReductionIOManager
+import org.perses.reduction.AbstractReducerNameAndDesc
 import org.perses.reduction.TestScriptExecutorService
 
 class ArgumentsReducer(
   ioManager: GrammarReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
 ) : AbstractParserRuleAttributeReducer(
-  ioManager,
-  testScriptExecutorService,
+  nameAndDesc = object : AbstractReducerNameAndDesc(
+    shortName = ArgumentsReducer::class.simpleName!!,
+    description = "",
+  ) {},
+  ioManager = ioManager,
+  testScriptExecutorService = testScriptExecutorService,
 ) {
 
   override fun hasAttribute(attributes: ParserRuleAttributes): Boolean {

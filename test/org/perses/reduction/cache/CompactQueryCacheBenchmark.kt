@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -32,7 +32,7 @@ class CompactQueryCacheBenchmark {
     println("parsing the base program.")
     val baseProgram =
       createTokenizedProgramFromFile("test/org/perses/reduction/cache/clang-22704.c")
-    val rcc = CompactQueryCache(
+    val rcc = RccQueryCache(
       baseProgram,
       NullQueryCacheProfiler(),
       withLightweightRefreshing(Fraction(0, 100)),
@@ -57,9 +57,9 @@ class CompactQueryCacheBenchmark {
         if (rccCacheResult.isHit()) {
           continue
         }
-        rcc.addResult(rccCacheResult.asCacheMiss(), PropertyTestResult.of(1, 0))
+        rcc.cacheProgramAndResult(rccCacheResult.asCacheMiss(), PropertyTestResult.of(1, 0))
         val rcclitCacheResult = rccLit.getCachedResult(program)
-        rccLit.addResult(rcclitCacheResult.asCacheMiss(), PropertyTestResult.of(1, 0))
+        rccLit.cacheProgramAndResult(rcclitCacheResult.asCacheMiss(), PropertyTestResult.of(1, 0))
       }
       currentBaseProgram = randomDelete(currentBaseProgram, random, 50)
       rcc.evictEntriesLargerThan(currentBaseProgram)

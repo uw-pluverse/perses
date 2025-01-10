@@ -1,3 +1,5 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
 package(default_visibility = [
     "//antlrrdc:__subpackages__",
     "//buildopt:__subpackages__",
@@ -6,13 +8,12 @@ package(default_visibility = [
     "//test/org/perses:__subpackages__",
 ])
 
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
-
 kt_jvm_library(
     name = "reduction_inputs_interface",
     srcs = [
         "AbstractReductionInputs.kt",
         "AbstractSingleFileReductionInputs.kt",
+        "IReductionInputs.kt",
     ],
     deps = [
         "//src/org/perses/program",

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,18 +20,19 @@ import org.perses.PersesConstants
 import org.perses.PersesConstants.Companion.createCustomizedConstants
 import org.perses.PersesConstants.Companion.createDefaultConstants
 import org.perses.util.cmd.AbstractMain
+import org.perses.util.cmd.CommandLineProcessor
+import org.perses.util.cmd.CommandLineProcessor.HelpRequestProcessingDecision
 import java.io.Closeable
 import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteRecursively
 
-class InstallerMain(args: Array<String>) : AbstractMain<CommandOptions>(args), Closeable {
+class InstallerMain(
+  cmd: CommandOptions,
+) : AbstractMain<CommandOptions>(cmd), Closeable {
 
   private var tempDir: Path? = null
-
-  override fun createCommandOptions(): CommandOptions {
-    return CommandOptions()
-  }
 
   override fun internalRun() {
     val persesConstants: PersesConstants = if (cmd.outputFlags.output != null) {
@@ -48,15 +49,16 @@ class InstallerMain(args: Array<String>) : AbstractMain<CommandOptions>(args), C
     ).run()
   }
 
-  override fun processHelpRequests(): HelpRequestProcessingDecision {
+  override fun processOtherHelpRequests(): HelpRequestProcessingDecision {
     if (cmd.outputFlags.printLanguageKindExample) {
       println("An example of a language kind configuration in YAML format.")
       println(LanguageAdhoc.INSTANCE.toYamlString())
       return HelpRequestProcessingDecision.EXIT
     }
-    return super.processHelpRequests()
+    return super.processOtherHelpRequests()
   }
 
+  @OptIn(ExperimentalPathApi::class)
   override fun close() {
     tempDir?.let {
       it.deleteRecursively()
@@ -67,7 +69,15 @@ class InstallerMain(args: Array<String>) : AbstractMain<CommandOptions>(args), C
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      InstallerMain(args).use { it.run() }
+      val processor = CommandLineProcessor(
+        cmdCreator = { CommandOptions() },
+        programName = InstallerMain::class.qualifiedName!!,
+        args = args,
+      )
+      if (processor.process() == HelpRequestProcessingDecision.EXIT) {
+        return
+      }
+      InstallerMain(processor.cmd).use { it.run() }
     }
   }
 }

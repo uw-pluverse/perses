@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -49,15 +49,14 @@ class ContentStringBasedQueryCache(
     return ContentStringEncoder(baseProgram, profiler)
   }
 
-  @Synchronized
-  override fun evictEntriesLargerThan(best: TokenizedProgram) {
-    // No eviction in content-string-based caching.
-  }
-
   class ContentStringEncoder(
     tokenizedProgram: TokenizedProgram,
     profiler: AbstractQueryCacheProfiler,
-  ) : AbstractTokenizedProgramEncoder<ContentStringEncoding>(tokenizedProgram, profiler) {
+  ) : AbstractTokenizedProgramEncoder<ContentStringEncoding>(
+    tokenizedProgram,
+    profiler,
+    supportsRccReEncoding = false,
+  ) {
 
     override fun encode(program: TokenizedProgram): ContentStringEncoding {
       return ContentStringEncoding(

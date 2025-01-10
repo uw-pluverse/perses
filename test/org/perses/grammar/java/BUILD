@@ -9,7 +9,7 @@ kt_jvm_test(
         "//:flogger",
         "//:guava",
         "//:truth",
-        "//src/org/perses/grammar/java:parser_facade",
+        "//src/org/perses/grammar/java:parser_facade_java8",
     ],
 )
 
@@ -19,7 +19,7 @@ kt_jvm_test(
     test_class = "org.perses.grammar.java.JavaParserFacadeTest",
     deps = [
         "//:truth",
-        "//src/org/perses/grammar/java:orig_parser_facade",
-        "//src/org/perses/grammar/java:parser_facade",
+        "//src/org/perses/grammar/java:orig_parser_facade_java8",
+        "//src/org/perses/grammar/java:parser_facade_java8",
     ],
 )

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,12 +24,14 @@ import org.perses.reduction.ReducerContext
 import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.ChildHoistingActionSet
+import org.perses.spartree.DescendantHoistingTreeEdit
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.NodeDeletionTreeEdit
-import org.perses.spartree.NodeReplacementTreeEdit
 import org.perses.spartree.SparTree
 import org.perses.spartree.SparTreeSimplifier
+import org.perses.util.FileNameContentPair
 import org.perses.util.Util.lazyAssert
+import org.perses.util.transformToImmutableList
 import java.util.Queue
 
 abstract class AbstractNodeReducer(
@@ -40,6 +42,7 @@ abstract class AbstractNodeReducer(
 ) : AbstractTokenReducer(reducerAnnotation, reducerContext) {
 
   final override fun internalReduce(fixpointReductionState: FixpointReductionState) {
+    val listenerManager = reducerContext.listenerManager
     if (requiresParsableTree && !fixpointReductionState.sparTree.parsable) {
       val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
       listenerManager.onReductionSkipped(
@@ -64,6 +67,15 @@ abstract class AbstractNodeReducer(
           System.currentTimeMillis(),
           program = tree.programSnapshot,
           node = node,
+          outputCreator = {
+            ioManager.createOutputManager(it).fileContentList
+              .transformToImmutableList {
+                FileNameContentPair(
+                  fileName = it.first.baseName,
+                  content = it.second,
+                )
+              }
+          },
         )
       listenerManager.onNodeReductionStart(nodeReductionStartEvent)
       val pendingNodes = reduceOneNode(tree, node)
@@ -96,8 +108,8 @@ abstract class AbstractNodeReducer(
     actionSet: NodeDeletionActionSet,
     tree: SparTree,
   ): NodeDeletionTreeEdit? {
-    return if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
-      listenerManager.onNodeEditActionSetCacheHit(actionSet)
+    return if (reducerContext.nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
+      reducerContext.listenerManager.onNodeEditActionSetCacheHit(actionSet)
       null
     } else {
       tree.createNodeDeletionEdit(actionSet)
@@ -107,9 +119,9 @@ abstract class AbstractNodeReducer(
   protected fun optionallyCreateReplacementEditAndLog(
     actionSet: ChildHoistingActionSet,
     tree: SparTree,
-  ): NodeReplacementTreeEdit? {
-    return if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
-      listenerManager.onNodeEditActionSetCacheHit(actionSet)
+  ): DescendantHoistingTreeEdit? {
+    return if (reducerContext.nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
+      reducerContext.listenerManager.onNodeEditActionSetCacheHit(actionSet)
       null
     } else {
       tree.createNodeReplacementEdit(actionSet)
@@ -128,7 +140,7 @@ abstract class AbstractNodeReducer(
       lazyAssert { nodeDeletionTreeEdit.isNodeATarget(currentNode) }
       lazyAssert { nodeDeletionTreeEdit.numberOfActions == 1 }
       ImmutableList.of()
-    } else if (bestEdit is NodeReplacementTreeEdit) {
+    } else if (bestEdit is DescendantHoistingTreeEdit) {
       val nodeReplacementTreeEdit = bestEdit.asNodeReplacementEdit()
       if (nodeReplacementTreeEdit.isNodeATarget(currentNode)) {
         lazyAssert { nodeReplacementTreeEdit.numberOfActions == 1 }
@@ -155,7 +167,7 @@ abstract class AbstractNodeReducer(
 
     override fun compare(o1: AbstractSparTreeNode, o2: AbstractSparTreeNode): Int {
       val result = comparator.compare(o1, o2)
-      lazyAssert({ result != 0 }) { "Cannot guarantee determinism." }
+      check(result != 0) { "Cannot guarantee determinism." }
       return result
     }
   }

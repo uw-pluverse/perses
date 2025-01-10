@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,7 +18,10 @@ package org.perses.grammar
 
 import java.lang.RuntimeException
 
-class AntlrFailureException(cause: Throwable, file: String, details: String) : RuntimeException(
-  "Error in parsing file: $file\nDetails: $details",
+class AntlrFailureException(cause: Throwable?, file: String, details: String) : RuntimeException(
+  """Error in parsing file: $file
+    |Details: $details
+    |
+  """.trimMargin(),
   cause,
 )

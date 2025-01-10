@@ -1,7 +1,7 @@
 import unittest
 import tempfile
 from shutil import rmtree
-from run_benchmark import *
+from benchmark.run_benchmark import *
 
 
 class BenchmarkTest(unittest.TestCase):
@@ -16,7 +16,10 @@ class BenchmarkTest(unittest.TestCase):
         rmtree(self.tmp_dir)
 
     def test_extract_info_properties(self):
-        src, script = extract_info_properties(subject_name=self.subjects)
+        src, script = extract_info_properties(
+            benchmark_name=self.subjects,
+            benchmark_root_dir="benchmark/"
+        )
         self.assertEqual(os.path.basename(src), 'small.c')
         self.assertEqual(os.path.basename(script), 'r.sh')
 

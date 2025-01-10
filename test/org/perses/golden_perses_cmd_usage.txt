@@ -19,6 +19,9 @@ Usage: org.perses.Main [options]
       The test script to specify the property the reducer needs to preserve.
   * --input-file, --input, -i
       The input file to reduce
+    --deps
+      The dependency files required for running the property test
+      Default: []
 
 [Outputs]  Options:
     --output-dir, -o
@@ -34,6 +37,13 @@ Usage: org.perses.Main [options]
     --code-format
       The format of the reduced program.
       Possible Values: [SINGLE_TOKEN_PER_LINE, ORIG_FORMAT, COMPACT_ORIG_FORMAT, PYTHON3_FORMAT, COMPACT_PYTHON3_FORMAT]
+    --script-execution-timeout-in-seconds
+      the interval in seconds to timeout the test script executions. the 
+      default timeout is 600 seconds.
+      Default: 600
+    --script-execution-keep-waiting-after-timeout
+      keep trying even after the script execution timeouts.
+      Default: true
 
 [Output Refining Control]  Options:
     --call-formatter
@@ -68,43 +78,54 @@ Usage: org.perses.Main [options]
     --default-delta-debugger-for-kleene
       The default delta debugger algorithm to reduce kleene nodes.
       Default: DFS
-      Possible Values: [PRISTINE, PERSES_VARIANT_OF_PRISTINE, DFS, BFS, CDD, PROBDD]
+      Possible Values: [PRISTINE, PERSES_VARIANT_OF_PRISTINE, DFS, BFS, CDD, PROBDD, WDD, WPROBDD]
+    --enable-trec
+      enable T-Rec (a lexical-syntax guided fine-grained reduction process to 
+      reduce and canonicalize each token)
+      Default: false
 
 [Cache Control]  Options:
     --query-caching
       Enable query caching for test script executions.
       Default: AUTO
       Possible Values: [TRUE, FALSE, AUTO]
+    --enable-lightweight-refreshing
+      Whether to enable lightweight refreshing
+      Default: true
 
 [Profiling]  Options:
     --progress-dump-file
       The file to record the reduction process. The dump file can be large..
     --append-to-progress-dump-file
       Whether to append the reduction progress to the progress dump file
-      Default: false
+      Default: true
     --stat-dump-file
       The file to save the statistics collected during reduction.
-    --profile-query-cache
+    --profile-query-cache-time
       The file to save the profiling data of the query cache.
+    --profile-query-cache-time-csv
+      The file to save the profiling data of the query cache in the CSV 
+      format. 
     --profile-query-cache-memory
       The file to save the profiling data of the query cache.
     --profile-actionset
       The file to save information of all the created edit action sets.
-    --profile
-      profile the reduction process for analysis
-      Default: false
-    --script-execution-timeout-in-seconds
-      the interval in seconds to timeout the test script executions. the 
-      default timeout is 600 seconds.
-      Default: 600
-    --script-execution-keep-waiting-after-timeout
-      keep trying even after the script execution timeouts.
-      Default: true
+    --profile-delta-debugger
+      The file to save the reduction process of the delta debugger.
+
+[Experiment Control]  Options:
+    --query-cache-type
+      the algorithm of the query cache
+      Default: COMPACT_QUERY_CACHE
+      Possible Values: [AUTO, COMPACT_QUERY_CACHE, COMPACT_QUERY_CACHE_FORMAT_SENSITIVE, PERSES_FAST_LINEAR_SCAN_NO_COMPRESSION, PERSES_LEXEME_ID, CONFIG_BASED, ORIG_CONTENT_STRING_BASED, CONTENT_LEXEME_LIST_BASE, CONTENT_SHA512, CONTENT_SHA512_FORMAT, CONTENT_ZIP, RCC_MEM_LIT]
 
 [Language Control]  Options:
     --list-langs
-      List all the supported langauges.
-    --designated-parser-facade-class-name
+      List all the supported languages.
+    --lang
+      Specify the language of the program that is to be reduced.
+      Default: <empty string>
+    --parser-facade-class-name
       The parser facade to be used to parse the input program
       Default: <empty string>
     --list-parser-facades

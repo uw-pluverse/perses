@@ -22,7 +22,7 @@ if [[ ! -e "${FOLDER_PERSES}" ]] ; then
 fi
 cd "${FOLDER_PERSES}"
 git pull --rebase=false "${REPO}"
-bazel build //src/org/perses:perses_deploy.jar || true
+bazelisk build //src/org/perses:perses_deploy.jar || true
 
 readonly FOLDER_BIN="${ROOT}/bin"
 mkdir -p "${FOLDER_BIN}"

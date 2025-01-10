@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -31,6 +31,7 @@ import org.perses.reduction.event.NodeReductionStartEvent
 import org.perses.reduction.event.ReductionEndEvent
 import org.perses.reduction.event.ReductionSkippedEvent
 import org.perses.reduction.event.ReductionStartEvent
+import org.perses.reduction.event.SanityCheckEvent
 import org.perses.reduction.event.TokenSlicingEndEvent
 import org.perses.reduction.event.TokenSlicingStartEvent
 import org.perses.util.TimeSpan.Builder.Companion.start
@@ -67,6 +68,12 @@ class LoggingListener : DefaultReductionListener() {
     logger.ktInfo {
       "Test script execution count: " +
         event.testScriptExecutorServiceStatistics.scriptExecutionNumber
+    }
+  }
+
+  override fun onSanityCheck(event: SanityCheckEvent) {
+    logger.ktInfo {
+      "The sanity check result is: ${event.sanityCheckResult}"
     }
   }
 
@@ -280,6 +287,10 @@ class LoggingListener : DefaultReductionListener() {
       .append(initialProgramSize)
       .append("=")
       .append(computePercentage(newProgramSize, initialProgramSize))
+  }
+
+  override fun close() {
+    // Do nothing.
   }
 
   companion object {

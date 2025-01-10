@@ -1,9 +1,93 @@
 =====================Reduction starts.======================
 
 The initial program size is 27
+The command line options are:
+---
+help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+versionFlags:
+  groupName: "Version"
+  version: false
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFile: "hello.rb"
+  deps: []
+  sourceFile: "hello.rb"
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_perses_node_priority_with_dfs_delta_hello.rb"
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  fixpoint: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  enableLineSlicer: false
+  defaultDeltaDebuggerTypeForKleene: "DFS"
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  enableTrec: false
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: "FALSE"
+  nodeActionSetCaching: false
+  queryCacheRefreshThreshold: 0
+  enableLightweightRefreshing: true
+  enablePassCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "reduction_progress.txt"
+  appendToProgressDumpFile: true
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileDeltaDebugger: null
+experimentFlags:
+  groupName: "Experiment Control"
+  cacheType: "COMPACT_QUERY_CACHE"
+  onDemandReducerClasses: null
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+
+Parser Facade: class org.perses.grammar.ruby.PnfRubyParserFacade
 ------------------------------------------------------------
 
 
+The sanity check has been performed. The result is PassingSanityCheckResult
 =Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
 
 The spar-tree is the following.
@@ -91,6 +175,7 @@ compilation_unit {id=1}
 
 The current best program is the following
 
+    --file: hello.rb--
     def main 
         puts "start"
         puts "hello world"
@@ -105,55 +190,76 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: pass=============
 
 // edit action set type: [regular node]compatible replacement
-    puts "start"
+    --file: hello.rb--
+        puts "start"
+        puts "hello world"
+        puts "finish"
+    --file: <formatted tokenized program in its original format>--
+        puts "start"
         puts "hello world"
         puts "finish"
 ------------------------------------------------------------
@@ -163,6 +269,13 @@ The current best program is the following
 
 It took less than 1 second to cancel the task.
 
+    --file: hello.rb--
+    def main 
+        puts "start"
+        puts "hello world"
+        puts "finish"
+    end
+    --file: <formatted tokenized program in its original format>--
     def main 
         puts "start"
         puts "hello world"
@@ -193,7 +306,8 @@ Succeeded to reduce node 2 from 27 to 9
 
 The current best program is the following
 
-    puts "start"
+    --file: hello.rb--
+        puts "start"
         puts "hello world"
         puts "finish"
 ------------------------------------------------------------
@@ -202,43 +316,58 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    puts "start"
+    --file: hello.rb--
+        puts "start"
+    --file: <formatted tokenized program in its original format>--
+        puts "start"
 ------------------------------------------------------------
 
 
@@ -252,7 +381,8 @@ Failed to reduce node 76
 
 The current best program is the following
 
-    puts "start"
+    --file: hello.rb--
+        puts "start"
         puts "hello world"
         puts "finish"
 ------------------------------------------------------------
@@ -261,14 +391,21 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__statement_list_terms_1]dd@2
-    puts "start"
+    --file: hello.rb--
+        puts "start"
+    --file: <formatted tokenized program in its original format>--
+        puts "start"
 ------------------------------------------------------------
 
 
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_star:kleene_star__statement_list_terms_1]dd@1
-    puts "start"
+    --file: hello.rb--
+        puts "start"
+        puts "hello world"
+    --file: <formatted tokenized program in its original format>--
+        puts "start"
         puts "hello world"
 ------------------------------------------------------------
 
@@ -288,7 +425,10 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__statement_list_terms_1]dd@1
-    puts "start"
+    --file: hello.rb--
+        puts "start"
+    --file: <formatted tokenized program in its original format>--
+        puts "start"
 ------------------------------------------------------------
 
 
@@ -302,7 +442,8 @@ Succeeded to reduce node 78 from 9 to 6
 
 The current best program is the following
 
-    puts "start"
+    --file: hello.rb--
+        puts "start"
         puts "hello world"
 ------------------------------------------------------------
 
@@ -310,7 +451,10 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
-    puts "start"
+    --file: hello.rb--
+        puts "start"
+    --file: <formatted tokenized program in its original format>--
+        puts "start"
 ------------------------------------------------------------
 
 
@@ -324,7 +468,8 @@ Failed to reduce node 79
 
 The current best program is the following
 
-    puts "start"
+    --file: hello.rb--
+        puts "start"
         puts "hello world"
 ------------------------------------------------------------
 
@@ -332,7 +477,10 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [regular node]compatible replacement
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
+    --file: <formatted tokenized program in its original format>--
+        puts "hello world"
 ------------------------------------------------------------
 
 
@@ -340,7 +488,10 @@ The current best program is the following
 
 It took less than 1 second to cancel the task.
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
+    --file: <formatted tokenized program in its original format>--
+        puts "hello world"
 ------------------------------------------------------------
 
 
@@ -366,28 +517,38 @@ Succeeded to reduce node 77 from 6 to 4
 
 The current best program is the following
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    puts
+    --file: hello.rb--
+        puts              
+    --file: <formatted tokenized program in its original format>--
+        puts
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    "hello world"
+    --file: hello.rb--
+             "hello world"
+    --file: <formatted tokenized program in its original format>--
+             "hello world"
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    "hello world"
+    --file: hello.rb--
+             "hello world"
+    --file: <formatted tokenized program in its original format>--
+             "hello world"
 ------------------------------------------------------------
 
 
@@ -401,7 +562,8 @@ Failed to reduce node 110
 
 The current best program is the following
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
 ------------------------------------------------------------
 
 
@@ -415,7 +577,8 @@ Failed to reduce node 128
 
 The current best program is the following
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
 ------------------------------------------------------------
 
 
@@ -429,7 +592,8 @@ Failed to reduce node 130
 
 The current best program is the following
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
 ------------------------------------------------------------
 
 
@@ -443,7 +607,8 @@ Failed to reduce node 126
 
 The current best program is the following
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
 ------------------------------------------------------------
 
 
@@ -457,7 +622,8 @@ Failed to reduce node 121
 
 The current best program is the following
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
 ------------------------------------------------------------
 
 
@@ -471,7 +637,8 @@ Failed to reduce node 122
 
 The current best program is the following
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
 ------------------------------------------------------------
 
 
@@ -485,7 +652,8 @@ Failed to reduce node 105
 
 The current best program is the following
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
 ------------------------------------------------------------
 
 
@@ -523,43 +691,56 @@ compilation_unit {id=160}
 
 The current best program is the following
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
@@ -573,13 +754,16 @@ Failed to reduce node 161
 
 The current best program is the following
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__statement_list_terms_1]dd@1
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
@@ -593,13 +777,16 @@ Failed to reduce node 163
 
 The current best program is the following
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: hello.rb--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
@@ -613,14 +800,18 @@ Failed to reduce node 164
 
 The current best program is the following
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
 ------------------------------------------------------------
 
 
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_plus:terms]remove whole except first
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
+    --file: <formatted tokenized program in its original format>--
+        puts "hello world"
 ------------------------------------------------------------
 
 
@@ -646,28 +837,38 @@ Succeeded to reduce node 190 from 6 to 5
 
 The current best program is the following
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    puts
+    --file: hello.rb--
+        puts              
+    --file: <formatted tokenized program in its original format>--
+        puts
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    "hello world"
+    --file: hello.rb--
+             "hello world"
+    --file: <formatted tokenized program in its original format>--
+             "hello world"
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    "hello world"
+    --file: hello.rb--
+             "hello world"
+    --file: <formatted tokenized program in its original format>--
+             "hello world"
 ------------------------------------------------------------
 
 
@@ -681,14 +882,18 @@ Failed to reduce node 173
 
 The current best program is the following
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
 ------------------------------------------------------------
 
 
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_plus:terms]remove whole except first
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
+    --file: <formatted tokenized program in its original format>--
+        puts "hello world"
 ------------------------------------------------------------
 
 
@@ -714,7 +919,8 @@ Succeeded to reduce node 166 from 5 to 4
 
 The current best program is the following
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
 ------------------------------------------------------------
 
 
@@ -728,7 +934,8 @@ Failed to reduce node 194
 
 The current best program is the following
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
 ------------------------------------------------------------
 
 
@@ -742,7 +949,8 @@ Failed to reduce node 189
 
 The current best program is the following
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
 ------------------------------------------------------------
 
 
@@ -756,7 +964,8 @@ Failed to reduce node 184
 
 The current best program is the following
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
 ------------------------------------------------------------
 
 
@@ -770,7 +979,8 @@ Failed to reduce node 185
 
 The current best program is the following
 
-    puts "hello world"
+    --file: hello.rb--
+        puts "hello world"
 ------------------------------------------------------------
 
 

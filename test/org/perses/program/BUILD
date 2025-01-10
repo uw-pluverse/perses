@@ -1,3 +1,5 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
+
 DEFAULT_DEPS = [
     "//src/org/perses/program",
     "//test/org/perses:test_util",
@@ -5,8 +7,6 @@ DEFAULT_DEPS = [
     "//src/org/perses/program/printer",
     "//:guava",
 ]
-
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 
 kt_jvm_test(
     name = "LanguageKindTest",

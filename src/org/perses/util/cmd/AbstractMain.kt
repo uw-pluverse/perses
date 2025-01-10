@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,49 +17,28 @@
 package org.perses.util.cmd
 
 import org.perses.util.DefaultLoggingConfigurations
+import org.perses.util.cmd.CommandLineProcessor.HelpRequestProcessingDecision
 
-abstract class AbstractMain<Cmd : AbstractCommandOptions>(args: Array<String>) {
+abstract class AbstractMain<Cmd : AbstractCommandOptions>(
+  protected val cmd: Cmd,
+) {
   companion object {
     init {
       DefaultLoggingConfigurations.configureLogManager("INFO")
     }
   }
 
-  protected val commander: AbstractCommandOptions.CmdUsagePrinter
-
-  @JvmField
-  protected val cmd: Cmd
-
-  protected abstract fun createCommandOptions(): Cmd
-
   fun run() {
-    if (cmd.help) {
-      commander.printUsage()
-      return
-    }
-    if (cmd.verbosityFlags.listVerbosity) {
-      cmd.verbosityFlags.printAllAllowedLoggingLevels()
-      return
-    }
-    if (cmd.versionFlags.version) {
-      cmd.versionFlags.printVersionInfo("perses", System.out)
-      return
-    }
-    if (processHelpRequests() == HelpRequestProcessingDecision.EXIT) {
+    if (processOtherHelpRequests() == HelpRequestProcessingDecision.EXIT) {
       return
     }
     validateCommandOptions()
-
     internalRun()
   }
 
   protected abstract fun internalRun()
 
-  protected enum class HelpRequestProcessingDecision {
-    EXIT, NO_EXIT
-  }
-
-  protected open fun processHelpRequests(): HelpRequestProcessingDecision {
+  protected open fun processOtherHelpRequests(): HelpRequestProcessingDecision {
     return HelpRequestProcessingDecision.NO_EXIT
   }
 
@@ -68,9 +47,6 @@ abstract class AbstractMain<Cmd : AbstractCommandOptions>(args: Array<String>) {
   }
 
   init {
-    cmd = createCommandOptions()
-    commander = cmd.parseArguments(javaClass.canonicalName, args)
-
     // This method should be called as early as possible, to avoid triggering initialization of
     // logger objects.
     cmd.verbosityFlags.adjustLoggingLevel()

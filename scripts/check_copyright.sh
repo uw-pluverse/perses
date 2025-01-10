@@ -8,7 +8,7 @@ source "${SCRIPT_DIR}/constants.sh" || exit 1
 
 COPYRIGHT_FILEPATH="./copyright/copyright.txt"
 
-if ! bazel run //copyright:check_copyright_main -- \
+if ! bazelisk run //copyright:check_copyright_main -- \
     "$@" "${WORKSPACE_ROOT}/${COPYRIGHT_FILEPATH}" ${ABS_BAZEL_DIRS_STRING} ; then
   echo "Run '$0 --update-copyright' to fix this problem"
   exit 1

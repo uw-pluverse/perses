@@ -1,8 +1,8 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
 package(default_visibility = [
     "//visibility:public",
 ])
-
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 kt_jvm_library(
     name = "sorted_int_arrays",
@@ -84,11 +84,12 @@ kt_jvm_library(
     deps = [
         "//:guava",
         "//src/org/perses/antlr:parse_tree_with_parser",
-        "//src/org/perses/delta:EnumDeltaDebuggerType",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:grammar_facade",
+        "//src/org/perses/listminimizer:enum_list_input_minimizer_type",
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
+        "//src/org/perses/program/printer",
         "//src/org/perses/reduction/io",
         "//src/org/perses/util",
         "//src/org/perses/util:timeutil",
@@ -126,6 +127,7 @@ kt_jvm_library(
         "AbstractReducer.kt",
     ],
     deps = [
+        ":reducer_name_and_desc",
         ":test_script_executor_service",
         "//src/org/perses/reduction/io",
     ],
@@ -165,12 +167,23 @@ kt_jvm_library(
         ":test_script_executor_service",
         ":tree_edit_with_its_program",
         "//:guava",
-        "//src/org/perses/delta",
+        "//src/org/perses/listminimizer",
         "//src/org/perses/program",
         "//src/org/perses/reduction/cache:query_cache",
         "//src/org/perses/reduction/event",
         "//src/org/perses/reduction/io/token:token_reduction_io_manager",
         "//src/org/perses/spartree",
+        "//src/org/perses/util",
+    ],
+)
+
+kt_jvm_library(
+    name = "global_context",
+    srcs = [
+        "GlobalContext.kt",
+    ],
+    deps = [
+        "//:guava",
         "//src/org/perses/util",
     ],
 )
@@ -245,6 +258,7 @@ kt_jvm_library(
     srcs = [
         "AbstractReductionDriver.kt",
         "IReductionDriver.kt",
+        "SanityCheckFailedException.kt",
     ],
     deps = [
         "//src/org/perses/reduction:test_script_executor_service",
@@ -262,6 +276,7 @@ kt_jvm_library(
     deps = [
         ":abstract_reducer",
         ":actionset_profiler",
+        ":global_context",
         ":reducer_factory",
         ":reduction_configuration",
         ":reduction_driver_interface",
@@ -279,11 +294,11 @@ kt_jvm_library(
         "//src/org/perses/reduction/cache:enum_query_caching_control",
         "//src/org/perses/reduction/cache:query_cache",
         "//src/org/perses/reduction/cache:query_cache_factory",
-        "//src/org/perses/reduction/cache:query_cache_memory_profiler",
         "//src/org/perses/reduction/cache:query_cache_profiler",
         "//src/org/perses/reduction/io/token:regular_output_manager_factory",
         "//src/org/perses/reduction/io/token:token_output_manager_factory_interface",
         "//src/org/perses/reduction/io/token:token_reduction_io_manager",
+        "//src/org/perses/reduction/reducer/trec",
         "//src/org/perses/reduction/reducer/vulcan",
         "//src/org/perses/spartree",
         "//src/org/perses/util",

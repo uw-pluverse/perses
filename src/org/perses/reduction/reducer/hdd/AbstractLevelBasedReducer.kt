@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,7 +16,8 @@
  */
 package org.perses.reduction.reducer.hdd
 
-import org.perses.delta.xfs.Partition
+import com.google.common.collect.ImmutableList
+import org.perses.listminimizer.Partition
 import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
@@ -25,6 +26,7 @@ import org.perses.reduction.ReductionLevel
 import org.perses.reduction.event.LevelReductionStartEvent
 import org.perses.reduction.partition.AbstractLevelPartitionPolicy
 import org.perses.reduction.partition.SimpleLevelPartitionPolicy
+import org.perses.reduction.reducer.TreeTransformations
 import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.NodeReplacementAction
@@ -91,10 +93,17 @@ abstract class AbstractLevelBasedReducer protected constructor(
    * Create a set of tree edits, by deleting the ndoes in the partition, or deleteing some child
    * nodes.
    */
-  protected abstract fun createTreeEditListByDisablingPartition(
-    partition: Partition<AbstractSparTreeNode>,
+  protected fun createTreeEditListByDisablingPartition(
+    partition: Iterable<AbstractSparTreeNode>,
     tree: SparTree,
-  ): List<AbstractSparTreeEdit<*>>
+  ): List<AbstractSparTreeEdit<*>> {
+    val actionSet = TreeTransformations.createNodeDeletionActionSetFor(partition, "HDD")
+    if (reducerContext.nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
+      reducerContext.listenerManager.onNodeEditActionSetCacheHit(actionSet)
+      return emptyList()
+    }
+    return ImmutableList.of(tree.createNodeDeletionEdit(actionSet))
+  }
 
   private fun partitionLevelAndReduce(
     tree: SparTree,
@@ -103,6 +112,7 @@ abstract class AbstractLevelBasedReducer protected constructor(
     levelStartEvent: LevelReductionStartEvent,
   ) {
     lazyAssert { maxNodesPerPartition > 0 }
+    val listenerManager = reducerContext.listenerManager
     val oldTokenCount = tree.tokenCount
     val granularityReductionStartEvent = levelStartEvent.createGranularityReductionStartEvent(
       System.currentTimeMillis(),
@@ -112,8 +122,7 @@ abstract class AbstractLevelBasedReducer protected constructor(
     listenerManager.onLevelGranularityReductionStart(granularityReductionStartEvent)
     val partitions = partitionPolicy.partition(reductionLevel, maxNodesPerPartition)
     for (partition in partitions) {
-      partition.removePermanentlyDeletedNodes { it.isPermanentlyDeleted }
-      if (partition.isEmpty) {
+      if (partition.isEmpty()) {
         continue
       }
       val editList = createTreeEditListByDisablingPartition(partition, tree)
@@ -162,6 +171,7 @@ abstract class AbstractLevelBasedReducer protected constructor(
   }
 
   override fun internalReduce(fixpointReductionState: FixpointReductionState) {
+    val listenerManager = reducerContext.listenerManager
     val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
     val initialRegion = getInitialRegion(tree)
     var currentLevel = initialRegion

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,6 +16,7 @@
  */
 package org.perses.ppr.diff.list
 
+import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Test
@@ -33,6 +34,7 @@ import org.perses.util.ListAlignment
 import org.perses.util.toImmutableList
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
+import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteRecursively
 import kotlin.io.path.exists
 import kotlin.io.path.readText
@@ -59,8 +61,14 @@ class ListDiffOutputManagerFactoryTest {
   )
 
   // initialize a reduction folder
-  val reductionInputs = ListDiffReductionInputs(testScript, origSeedFile, origVariantFile)
+  val reductionInputs = ListDiffReductionInputs(
+    testScript,
+    origSeedFile,
+    origVariantFile,
+    immutableDependencyFiles = ImmutableList.of(),
+  )
 
+  @OptIn(ExperimentalPathApi::class)
   @After
   fun teardown() {
     tempDir.deleteRecursively()
@@ -90,6 +98,7 @@ class ListDiffOutputManagerFactoryTest {
       testScript,
       seedFile = origSeedFile,
       variantFile = origVariantFile,
+      immutableDependencyFiles = ImmutableList.of(),
     )
     val outputManagerFactory = ListDiffOutputManagerFactory(
       inputs,

@@ -1,9 +1,93 @@
 =====================Reduction starts.======================
 
 The initial program size is 35
+The command line options are:
+---
+help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+versionFlags:
+  groupName: "Version"
+  version: false
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFile: "Hello.java"
+  deps: []
+  sourceFile: "Hello.java"
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_perses_node_priority_with_dfs_delta_Hello.java"
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  fixpoint: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  enableLineSlicer: false
+  defaultDeltaDebuggerTypeForKleene: "DFS"
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  enableTrec: false
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: "TRUE"
+  nodeActionSetCaching: true
+  queryCacheRefreshThreshold: 0
+  enableLightweightRefreshing: true
+  enablePassCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "reduction_progress.txt"
+  appendToProgressDumpFile: true
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileDeltaDebugger: null
+experimentFlags:
+  groupName: "Experiment Control"
+  cacheType: "COMPACT_QUERY_CACHE"
+  onDemandReducerClasses: null
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+
+Parser Facade: class org.perses.grammar.java.Java8ParserFacade
 ------------------------------------------------------------
 
 
+The sanity check has been performed. The result is PassingSanityCheckResult
 =Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
 
 The spar-tree is the following.
@@ -11,7 +95,7 @@ compilationUnit {id=1}
 |___(*) {id=2,slot_type=kleene_star__typeDeclaration}
     |___normalClassDeclaration {id=5,slot_type=[typeDeclaration,classDeclaration,normalClassDeclaration]}
         |___(*) {id=6,slot_type=kleene_star__normalClassDeclaration_1}
-        |   |___Token:public {id=138,slot_type=[classModifier,PUBLIC]}
+        |   |___Token:public {id=140,slot_type=[classModifier,PUBLIC]}
         |___Token:class {id=7,slot_type=CLASS}
         |___Token:Hello {id=8,slot_type=Identifier}
         |___classBody {id=9,slot_type=classBody}
@@ -19,59 +103,59 @@ compilationUnit {id=1}
             |___(*) {id=11,slot_type=kleene_star__classBody_1}
             |   |___methodDeclaration {id=14,slot_type=[classBodyDeclaration,methodDeclaration]}
             |       |___(*) {id=15,slot_type=kleene_star__methodDeclaration_1}
-            |       |   |___Token:public {id=136,slot_type=[methodModifier,PUBLIC]}
-            |       |   |___Token:static {id=135,slot_type=[methodModifier,STATIC]}
+            |       |   |___Token:public {id=138,slot_type=[methodModifier,PUBLIC]}
+            |       |   |___Token:static {id=137,slot_type=[methodModifier,STATIC]}
             |       |___methodHeader {id=16,slot_type=methodHeader}
-            |       |   |___Token:void {id=132,slot_type=[result,VOID]}
-            |       |   |___methodDeclarator {id=110,slot_type=methodDeclarator}
-            |       |       |___Token:main {id=111,slot_type=Identifier}
-            |       |       |___Token:( {id=112,slot_type=LPAREN}
-            |       |       |___(?) {id=113,slot_type=optional__methodDeclarator_1}
-            |       |       |   |___formalParameter {id=117,slot_type=[formalParameterList,lastFormalParameter,formalParameter]}
-            |       |       |       |___unannArrayType {id=121,slot_type=[unannType,unannArrayType]}
-            |       |       |       |   |___Token:String {id=131,slot_type=[altnt_block__unannArrayType_1,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
-            |       |       |       |   |___(+) {id=124,slot_type=[dims,kleene_plus__dims_3]}
-            |       |       |       |       |___aux_rule__dims_1 {id=125,slot_type=aux_rule__dims_1}
-            |       |       |       |           |___Token:[ {id=126,slot_type=LBRACK}
-            |       |       |       |           |___Token:] {id=127,slot_type=RBRACK}
-            |       |       |       |___Token:args {id=120,slot_type=[variableDeclaratorId,Identifier]}
-            |       |       |___Token:) {id=114,slot_type=RPAREN}
+            |       |   |___Token:void {id=134,slot_type=[result,VOID]}
+            |       |   |___methodDeclarator {id=112,slot_type=methodDeclarator}
+            |       |       |___Token:main {id=113,slot_type=Identifier}
+            |       |       |___Token:( {id=114,slot_type=LPAREN}
+            |       |       |___(?) {id=115,slot_type=optional__methodDeclarator_1}
+            |       |       |   |___formalParameter {id=119,slot_type=[formalParameterList,lastFormalParameter,formalParameter]}
+            |       |       |       |___unannArrayType {id=123,slot_type=[unannType,unannArrayType]}
+            |       |       |       |   |___Token:String {id=133,slot_type=[altnt_block__unannArrayType_1,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |       |       |       |   |___(+) {id=126,slot_type=[dims,kleene_plus__dims_3]}
+            |       |       |       |       |___aux_rule__dims_1 {id=127,slot_type=aux_rule__dims_1}
+            |       |       |       |           |___Token:[ {id=128,slot_type=LBRACK}
+            |       |       |       |           |___Token:] {id=129,slot_type=RBRACK}
+            |       |       |       |___Token:args {id=122,slot_type=[variableDeclaratorId,Identifier]}
+            |       |       |___Token:) {id=116,slot_type=RPAREN}
             |       |___block {id=18,slot_type=[methodBody,block]}
             |           |___Token:{ {id=19,slot_type=LBRACE}
             |           |___(?) {id=20,slot_type=optional__block_1}
             |           |   |___(+) {id=22,slot_type=blockStatements}
-            |           |       |___expressionStatement {id=69,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
-            |           |       |   |___methodInvocation {id=72,slot_type=[statementExpression,methodInvocation]}
-            |           |       |   |   |___aux_rule__methodInvocation_18 {id=75,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
-            |           |       |   |   |   |___typeName {id=76,slot_type=typeName}
-            |           |       |   |   |   |   |___(?) {id=103,slot_type=optional__typeName_2}
-            |           |       |   |   |   |   |   |___aux_rule__typeName_1 {id=105,slot_type=aux_rule__typeName_1}
-            |           |       |   |   |   |   |       |___Token:System {id=108,slot_type=[packageName,Identifier]}
-            |           |       |   |   |   |   |       |___Token:. {id=107,slot_type=DOT}
-            |           |       |   |   |   |   |___Token:out {id=104,slot_type=Identifier}
-            |           |       |   |   |   |___Token:. {id=77,slot_type=DOT}
-            |           |       |   |   |   |___altnt_block__methodInvocation_13 {id=78,slot_type=altnt_block__methodInvocation_13}
-            |           |       |   |   |       |___Token:println {id=79,slot_type=Identifier}
-            |           |       |   |   |       |___Token:( {id=80,slot_type=LPAREN}
-            |           |       |   |   |       |___(?) {id=81,slot_type=optional__explicitConstructorInvocation_2}
-            |           |       |   |   |           |___Token:"hello" {id=102,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,StringLiteral]}
-            |           |       |   |   |___Token:) {id=74,slot_type=RPAREN}
-            |           |       |   |___Token:; {id=71,slot_type=SEMI}
+            |           |       |___expressionStatement {id=70,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |           |       |   |___methodInvocation {id=73,slot_type=[statementExpression,methodInvocation]}
+            |           |       |   |   |___aux_rule__methodInvocation_18 {id=76,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
+            |           |       |   |   |   |___typeName {id=77,slot_type=typeName}
+            |           |       |   |   |   |   |___(?) {id=105,slot_type=optional__typeName_2}
+            |           |       |   |   |   |   |   |___aux_rule__typeName_1 {id=107,slot_type=aux_rule__typeName_1}
+            |           |       |   |   |   |   |       |___Token:System {id=110,slot_type=[packageName,Identifier]}
+            |           |       |   |   |   |   |       |___Token:. {id=109,slot_type=DOT}
+            |           |       |   |   |   |   |___Token:out {id=106,slot_type=Identifier}
+            |           |       |   |   |   |___Token:. {id=78,slot_type=DOT}
+            |           |       |   |   |   |___altnt_block__methodInvocation_13 {id=79,slot_type=altnt_block__methodInvocation_13}
+            |           |       |   |   |       |___Token:println {id=80,slot_type=Identifier}
+            |           |       |   |   |       |___Token:( {id=81,slot_type=LPAREN}
+            |           |       |   |   |       |___(?) {id=82,slot_type=optional__explicitConstructorInvocation_2}
+            |           |       |   |   |           |___Token:"hello" {id=104,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,StringLiteral]}
+            |           |       |   |   |___Token:) {id=75,slot_type=RPAREN}
+            |           |       |   |___Token:; {id=72,slot_type=SEMI}
             |           |       |___expressionStatement {id=27,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
             |           |           |___methodInvocation {id=30,slot_type=[statementExpression,methodInvocation]}
             |           |           |   |___aux_rule__methodInvocation_18 {id=33,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
             |           |           |   |   |___typeName {id=34,slot_type=typeName}
-            |           |           |   |   |   |___(?) {id=61,slot_type=optional__typeName_2}
-            |           |           |   |   |   |   |___aux_rule__typeName_1 {id=63,slot_type=aux_rule__typeName_1}
-            |           |           |   |   |   |       |___Token:System {id=66,slot_type=[packageName,Identifier]}
-            |           |           |   |   |   |       |___Token:. {id=65,slot_type=DOT}
-            |           |           |   |   |   |___Token:out {id=62,slot_type=Identifier}
+            |           |           |   |   |   |___(?) {id=62,slot_type=optional__typeName_2}
+            |           |           |   |   |   |   |___aux_rule__typeName_1 {id=64,slot_type=aux_rule__typeName_1}
+            |           |           |   |   |   |       |___Token:System {id=67,slot_type=[packageName,Identifier]}
+            |           |           |   |   |   |       |___Token:. {id=66,slot_type=DOT}
+            |           |           |   |   |   |___Token:out {id=63,slot_type=Identifier}
             |           |           |   |   |___Token:. {id=35,slot_type=DOT}
             |           |           |   |   |___altnt_block__methodInvocation_13 {id=36,slot_type=altnt_block__methodInvocation_13}
             |           |           |   |       |___Token:println {id=37,slot_type=Identifier}
             |           |           |   |       |___Token:( {id=38,slot_type=LPAREN}
             |           |           |   |       |___(?) {id=39,slot_type=optional__explicitConstructorInvocation_2}
-            |           |           |   |           |___Token:"world" {id=60,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,StringLiteral]}
+            |           |           |   |           |___Token:"world" {id=61,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,StringLiteral]}
             |           |           |   |___Token:) {id=32,slot_type=RPAREN}
             |           |           |___Token:; {id=29,slot_type=SEMI}
             |           |___Token:} {id=21,slot_type=RBRACE}
@@ -83,6 +167,7 @@ compilationUnit {id=1}
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("hello");
@@ -95,6 +180,8 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__typeDeclaration]dd@1
+    --file: Hello.java--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
@@ -108,6 +195,7 @@ Failed to reduce node 2
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("hello");
@@ -133,6 +221,7 @@ Failed to reduce node 5
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("hello");
@@ -152,6 +241,7 @@ Failed to reduce node 9
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("hello");
@@ -164,6 +254,10 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__classBody_1]dd@1
+    --file: Hello.java--
+    public class Hello {
+    }
+    --file: <formatted tokenized program in its original format>--
     public class Hello {
     }
 ------------------------------------------------------------
@@ -179,6 +273,7 @@ Failed to reduce node 11
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("hello");
@@ -197,6 +292,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.java--
+    public class Hello {
+                                             {
+        System.out.println("hello");
+        System.out.println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
     public class Hello {
                                              {
         System.out.println("hello");
@@ -216,6 +319,7 @@ Failed to reduce node 14
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("hello");
@@ -235,6 +339,7 @@ Failed to reduce node 18
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("hello");
@@ -247,6 +352,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__block_1]dd@1
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String[] args) {
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(String[] args) {
       }
@@ -264,6 +375,7 @@ Failed to reduce node 20
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("hello");
@@ -282,6 +394,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:blockStatements]remove whole except first
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("hello");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("hello");
@@ -299,6 +418,13 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_plus:blockStatements]dd@1
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -329,6 +455,7 @@ Succeeded to reduce node 22 from 35 to 26
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -339,6 +466,12 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String[] args) {
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(String[] args) {
       }
@@ -356,6 +489,7 @@ Failed to reduce node 27
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -374,6 +508,7 @@ Failed to reduce node 30
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -388,10 +523,11 @@ Failed to reduce node 16
 ------------------------------------------------------------
 
 
-=================Reducing node 110, size=26=================
+=================Reducing node 112, size=26=================
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -402,7 +538,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 110
+Failed to reduce node 112
 ------------------------------------------------------------
 
 
@@ -410,6 +546,7 @@ Failed to reduce node 110
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -424,10 +561,11 @@ Failed to reduce node 33
 ------------------------------------------------------------
 
 
-=================Reducing node 113, size=26=================
+=================Reducing node 115, size=26=================
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -439,6 +577,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__methodDeclarator_1]dd@1
+    --file: Hello.java--
+    public class Hello {
+      public static void main(             ) {
+        System.out.println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(             ) {
         System.out.println("world");
@@ -449,14 +594,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 113
+Failed to reduce node 115
 ------------------------------------------------------------
 
 
-=================Reducing node 117, size=26=================
+=================Reducing node 119, size=26=================
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -467,20 +613,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=117}
+    NodeDeletionAction{target_node=119}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 117
+Failed to reduce node 119
 ------------------------------------------------------------
 
 
-=================Reducing node 121, size=26=================
+=================Reducing node 123, size=26=================
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -492,6 +639,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String   args) {
+        System.out.println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(String   args) {
         System.out.println("world");
@@ -502,7 +656,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 121
+Failed to reduce node 123
 ------------------------------------------------------------
 
 
@@ -510,6 +664,7 @@ Failed to reduce node 121
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -528,6 +683,7 @@ Failed to reduce node 36
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -539,6 +695,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String[] args) {
+               out.println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(String[] args) {
                out.println("world");
@@ -550,6 +713,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String[] args) {
+        System    .println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(String[] args) {
         System    .println("world");
@@ -564,239 +734,11 @@ Failed to reduce node 34
 ------------------------------------------------------------
 
 
-=================Reducing node 124, size=26=================
-
-The current best program is the following
-
-    public class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 124
-------------------------------------------------------------
-
-
-=================Reducing node 125, size=26=================
-
-The current best program is the following
-
-    public class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 125
-------------------------------------------------------------
-
-
-=================Reducing node 61, size=26==================
-
-The current best program is the following
-
-    public class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    public class Hello {
-      public static void main(String[] args) {
-               out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 61
-------------------------------------------------------------
-
-
-=================Reducing node 63, size=26==================
-
-The current best program is the following
-
-    public class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=63}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 63
-------------------------------------------------------------
-
-
-=================Reducing node 15, size=26==================
-
-The current best program is the following
-
-    public class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@2
-    public class Hello {
-                    void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
-    public class Hello {
-      public        void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
-    public class Hello {
-             static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 15
-------------------------------------------------------------
-
-
-=================Reducing node 136, size=26=================
-
-The current best program is the following
-
-    public class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 136
-------------------------------------------------------------
-
-
-=================Reducing node 135, size=26=================
-
-The current best program is the following
-
-    public class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 135
-------------------------------------------------------------
-
-
-=================Reducing node 132, size=26=================
-
-The current best program is the following
-
-    public class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 132
-------------------------------------------------------------
-
-
-=================Reducing node 131, size=26=================
-
-The current best program is the following
-
-    public class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 131
-------------------------------------------------------------
-
-
-=================Reducing node 127, size=26=================
-
-The current best program is the following
-
-    public class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 127
-------------------------------------------------------------
-
-
 =================Reducing node 126, size=26=================
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -811,10 +753,11 @@ Failed to reduce node 126
 ------------------------------------------------------------
 
 
-=================Reducing node 120, size=26=================
+=================Reducing node 127, size=26=================
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -825,7 +768,293 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 120
+Failed to reduce node 127
+------------------------------------------------------------
+
+
+=================Reducing node 62, size=26==================
+
+The current best program is the following
+
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String[] args) {
+               out.println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class Hello {
+      public static void main(String[] args) {
+               out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 62
+------------------------------------------------------------
+
+
+=================Reducing node 64, size=26==================
+
+The current best program is the following
+
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=64}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 64
+------------------------------------------------------------
+
+
+=================Reducing node 15, size=26==================
+
+The current best program is the following
+
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@2
+    --file: Hello.java--
+    public class Hello {
+                    void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class Hello {
+                    void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
+    --file: Hello.java--
+    public class Hello {
+      public        void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class Hello {
+      public        void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
+    --file: Hello.java--
+    public class Hello {
+             static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public class Hello {
+             static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+=================Reducing node 138, size=26=================
+
+The current best program is the following
+
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 138
+------------------------------------------------------------
+
+
+=================Reducing node 137, size=26=================
+
+The current best program is the following
+
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 137
+------------------------------------------------------------
+
+
+=================Reducing node 134, size=26=================
+
+The current best program is the following
+
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 134
+------------------------------------------------------------
+
+
+=================Reducing node 133, size=26=================
+
+The current best program is the following
+
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 133
+------------------------------------------------------------
+
+
+=================Reducing node 129, size=26=================
+
+The current best program is the following
+
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 129
+------------------------------------------------------------
+
+
+=================Reducing node 128, size=26=================
+
+The current best program is the following
+
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 128
+------------------------------------------------------------
+
+
+=================Reducing node 122, size=26=================
+
+The current best program is the following
+
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 122
+------------------------------------------------------------
+
+
+=================Reducing node 116, size=26=================
+
+The current best program is the following
+
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 116
 ------------------------------------------------------------
 
 
@@ -833,6 +1062,7 @@ Failed to reduce node 120
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -847,10 +1077,11 @@ Failed to reduce node 114
 ------------------------------------------------------------
 
 
-=================Reducing node 112, size=26=================
+=================Reducing node 113, size=26=================
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -861,14 +1092,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 112
+Failed to reduce node 113
 ------------------------------------------------------------
 
 
-=================Reducing node 111, size=26=================
+=================Reducing node 67, size=26==================
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -879,7 +1111,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 111
+Failed to reduce node 67
 ------------------------------------------------------------
 
 
@@ -887,6 +1119,7 @@ Failed to reduce node 111
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -901,10 +1134,11 @@ Failed to reduce node 66
 ------------------------------------------------------------
 
 
-=================Reducing node 65, size=26==================
+=================Reducing node 63, size=26==================
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -915,25 +1149,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 65
-------------------------------------------------------------
-
-
-=================Reducing node 62, size=26==================
-
-The current best program is the following
-
-    public class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 62
+Failed to reduce node 63
 ------------------------------------------------------------
 
 
@@ -941,6 +1157,7 @@ Failed to reduce node 62
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -952,6 +1169,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__explicitConstructorInvocation_2]dd@1
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String[] args) {
+        System.out.println(       );
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(String[] args) {
         System.out.println(       );
@@ -966,10 +1190,11 @@ Failed to reduce node 39
 ------------------------------------------------------------
 
 
-=================Reducing node 60, size=26==================
+=================Reducing node 61, size=26==================
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -980,7 +1205,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 60
+Failed to reduce node 61
 ------------------------------------------------------------
 
 
@@ -988,6 +1213,7 @@ Failed to reduce node 60
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -1006,6 +1232,7 @@ Failed to reduce node 38
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -1024,6 +1251,7 @@ Failed to reduce node 37
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -1042,6 +1270,7 @@ Failed to reduce node 35
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -1060,6 +1289,7 @@ Failed to reduce node 32
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -1078,6 +1308,7 @@ Failed to reduce node 29
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -1096,6 +1327,7 @@ Failed to reduce node 21
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -1114,6 +1346,7 @@ Failed to reduce node 19
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -1132,6 +1365,7 @@ Failed to reduce node 12
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -1150,6 +1384,7 @@ Failed to reduce node 10
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -1168,6 +1403,7 @@ Failed to reduce node 8
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -1186,6 +1422,7 @@ Failed to reduce node 7
 
 The current best program is the following
 
+    --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         System.out.println("world");
@@ -1197,7 +1434,14 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_star:kleene_star__normalClassDeclaration_1]dd@1
-    class Hello {
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class Hello {
       public static void main(String[] args) {
         System.out.println("world");
       }
@@ -1226,64 +1470,65 @@ Succeeded to reduce node 6 from 26 to 25
 =Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
 
 The spar-tree is the following.
-compilationUnit {id=139}
-|___(*) {id=140,slot_type=kleene_star__typeDeclaration}
-    |___normalClassDeclaration {id=143,slot_type=[typeDeclaration,classDeclaration,normalClassDeclaration]}
-        |___Token:class {id=144,slot_type=CLASS}
-        |___Token:Hello {id=145,slot_type=Identifier}
-        |___classBody {id=146,slot_type=classBody}
-            |___Token:{ {id=147,slot_type=LBRACE}
-            |___(*) {id=148,slot_type=kleene_star__classBody_1}
-            |   |___methodDeclaration {id=151,slot_type=[classBodyDeclaration,methodDeclaration]}
-            |       |___(*) {id=152,slot_type=kleene_star__methodDeclaration_1}
-            |       |   |___Token:public {id=230,slot_type=[methodModifier,PUBLIC]}
-            |       |   |___Token:static {id=229,slot_type=[methodModifier,STATIC]}
-            |       |___methodHeader {id=153,slot_type=methodHeader}
-            |       |   |___Token:void {id=226,slot_type=[result,VOID]}
-            |       |   |___methodDeclarator {id=204,slot_type=methodDeclarator}
-            |       |       |___Token:main {id=205,slot_type=Identifier}
-            |       |       |___Token:( {id=206,slot_type=LPAREN}
-            |       |       |___(?) {id=207,slot_type=optional__methodDeclarator_1}
-            |       |       |   |___formalParameter {id=211,slot_type=[formalParameterList,lastFormalParameter,formalParameter]}
-            |       |       |       |___unannArrayType {id=215,slot_type=[unannType,unannArrayType]}
-            |       |       |       |   |___Token:String {id=225,slot_type=[altnt_block__unannArrayType_1,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
-            |       |       |       |   |___(+) {id=218,slot_type=[dims,kleene_plus__dims_3]}
-            |       |       |       |       |___aux_rule__dims_1 {id=219,slot_type=aux_rule__dims_1}
-            |       |       |       |           |___Token:[ {id=220,slot_type=LBRACK}
-            |       |       |       |           |___Token:] {id=221,slot_type=RBRACK}
-            |       |       |       |___Token:args {id=214,slot_type=[variableDeclaratorId,Identifier]}
-            |       |       |___Token:) {id=208,slot_type=RPAREN}
-            |       |___block {id=155,slot_type=[methodBody,block]}
-            |           |___Token:{ {id=156,slot_type=LBRACE}
-            |           |___(?) {id=157,slot_type=optional__block_1}
-            |           |   |___(+) {id=159,slot_type=blockStatements}
-            |           |       |___expressionStatement {id=163,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
-            |           |           |___methodInvocation {id=166,slot_type=[statementExpression,methodInvocation]}
-            |           |           |   |___aux_rule__methodInvocation_18 {id=169,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
-            |           |           |   |   |___typeName {id=170,slot_type=typeName}
-            |           |           |   |   |   |___(?) {id=197,slot_type=optional__typeName_2}
-            |           |           |   |   |   |   |___aux_rule__typeName_1 {id=199,slot_type=aux_rule__typeName_1}
-            |           |           |   |   |   |       |___Token:System {id=202,slot_type=[packageName,Identifier]}
-            |           |           |   |   |   |       |___Token:. {id=201,slot_type=DOT}
-            |           |           |   |   |   |___Token:out {id=198,slot_type=Identifier}
-            |           |           |   |   |___Token:. {id=171,slot_type=DOT}
-            |           |           |   |   |___altnt_block__methodInvocation_13 {id=172,slot_type=altnt_block__methodInvocation_13}
-            |           |           |   |       |___Token:println {id=173,slot_type=Identifier}
-            |           |           |   |       |___Token:( {id=174,slot_type=LPAREN}
-            |           |           |   |       |___(?) {id=175,slot_type=optional__explicitConstructorInvocation_2}
-            |           |           |   |           |___Token:"world" {id=196,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,StringLiteral]}
-            |           |           |   |___Token:) {id=168,slot_type=RPAREN}
-            |           |           |___Token:; {id=165,slot_type=SEMI}
-            |           |___Token:} {id=158,slot_type=RBRACE}
-            |___Token:} {id=149,slot_type=RBRACE}
+compilationUnit {id=141}
+|___(*) {id=142,slot_type=kleene_star__typeDeclaration}
+    |___normalClassDeclaration {id=145,slot_type=[typeDeclaration,classDeclaration,normalClassDeclaration]}
+        |___Token:class {id=146,slot_type=CLASS}
+        |___Token:Hello {id=147,slot_type=Identifier}
+        |___classBody {id=148,slot_type=classBody}
+            |___Token:{ {id=149,slot_type=LBRACE}
+            |___(*) {id=150,slot_type=kleene_star__classBody_1}
+            |   |___methodDeclaration {id=153,slot_type=[classBodyDeclaration,methodDeclaration]}
+            |       |___(*) {id=154,slot_type=kleene_star__methodDeclaration_1}
+            |       |   |___Token:public {id=233,slot_type=[methodModifier,PUBLIC]}
+            |       |   |___Token:static {id=232,slot_type=[methodModifier,STATIC]}
+            |       |___methodHeader {id=155,slot_type=methodHeader}
+            |       |   |___Token:void {id=229,slot_type=[result,VOID]}
+            |       |   |___methodDeclarator {id=207,slot_type=methodDeclarator}
+            |       |       |___Token:main {id=208,slot_type=Identifier}
+            |       |       |___Token:( {id=209,slot_type=LPAREN}
+            |       |       |___(?) {id=210,slot_type=optional__methodDeclarator_1}
+            |       |       |   |___formalParameter {id=214,slot_type=[formalParameterList,lastFormalParameter,formalParameter]}
+            |       |       |       |___unannArrayType {id=218,slot_type=[unannType,unannArrayType]}
+            |       |       |       |   |___Token:String {id=228,slot_type=[altnt_block__unannArrayType_1,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |       |       |       |   |___(+) {id=221,slot_type=[dims,kleene_plus__dims_3]}
+            |       |       |       |       |___aux_rule__dims_1 {id=222,slot_type=aux_rule__dims_1}
+            |       |       |       |           |___Token:[ {id=223,slot_type=LBRACK}
+            |       |       |       |           |___Token:] {id=224,slot_type=RBRACK}
+            |       |       |       |___Token:args {id=217,slot_type=[variableDeclaratorId,Identifier]}
+            |       |       |___Token:) {id=211,slot_type=RPAREN}
+            |       |___block {id=157,slot_type=[methodBody,block]}
+            |           |___Token:{ {id=158,slot_type=LBRACE}
+            |           |___(?) {id=159,slot_type=optional__block_1}
+            |           |   |___(+) {id=161,slot_type=blockStatements}
+            |           |       |___expressionStatement {id=165,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |           |           |___methodInvocation {id=168,slot_type=[statementExpression,methodInvocation]}
+            |           |           |   |___aux_rule__methodInvocation_18 {id=171,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
+            |           |           |   |   |___typeName {id=172,slot_type=typeName}
+            |           |           |   |   |   |___(?) {id=200,slot_type=optional__typeName_2}
+            |           |           |   |   |   |   |___aux_rule__typeName_1 {id=202,slot_type=aux_rule__typeName_1}
+            |           |           |   |   |   |       |___Token:System {id=205,slot_type=[packageName,Identifier]}
+            |           |           |   |   |   |       |___Token:. {id=204,slot_type=DOT}
+            |           |           |   |   |   |___Token:out {id=201,slot_type=Identifier}
+            |           |           |   |   |___Token:. {id=173,slot_type=DOT}
+            |           |           |   |   |___altnt_block__methodInvocation_13 {id=174,slot_type=altnt_block__methodInvocation_13}
+            |           |           |   |       |___Token:println {id=175,slot_type=Identifier}
+            |           |           |   |       |___Token:( {id=176,slot_type=LPAREN}
+            |           |           |   |       |___(?) {id=177,slot_type=optional__explicitConstructorInvocation_2}
+            |           |           |   |           |___Token:"world" {id=199,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,StringLiteral]}
+            |           |           |   |___Token:) {id=170,slot_type=RPAREN}
+            |           |           |___Token:; {id=167,slot_type=SEMI}
+            |           |___Token:} {id=160,slot_type=RBRACE}
+            |___Token:} {id=151,slot_type=RBRACE}
 ------------------------------------------------------------
 
 
-=================Reducing node 140, size=25=================
+=================Reducing node 142, size=25=================
 
 The current best program is the following
 
-    class Hello {
+    --file: Hello.java--
+           class Hello {
       public static void main(String[] args) {
         System.out.println("world");
       }
@@ -1293,20 +1538,23 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: Hello.java--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 140
+Failed to reduce node 142
 ------------------------------------------------------------
 
 
-=================Reducing node 143, size=25=================
+=================Reducing node 145, size=25=================
 
 The current best program is the following
 
-    class Hello {
+    --file: Hello.java--
+           class Hello {
       public static void main(String[] args) {
         System.out.println("world");
       }
@@ -1316,31 +1564,13 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=143}
+    NodeDeletionAction{target_node=145}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 143
-------------------------------------------------------------
-
-
-=================Reducing node 146, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 146
+Failed to reduce node 145
 ------------------------------------------------------------
 
 
@@ -1348,18 +1578,11 @@ Failed to reduce node 146
 
 The current best program is the following
 
-    class Hello {
+    --file: Hello.java--
+           class Hello {
       public static void main(String[] args) {
         System.out.println("world");
       }
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:kleene_star__classBody_1]dd@1
-    class Hello {
     }
 ------------------------------------------------------------
 
@@ -1370,11 +1593,43 @@ Failed to reduce node 148
 ------------------------------------------------------------
 
 
-=================Reducing node 151, size=25=================
+=================Reducing node 150, size=25=================
 
 The current best program is the following
 
-    class Hello {
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__classBody_1]dd@1
+    --file: Hello.java--
+           class Hello {
+    }
+    --file: <formatted tokenized program in its original format>--
+           class Hello {
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 150
+------------------------------------------------------------
+
+
+=================Reducing node 153, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
       public static void main(String[] args) {
         System.out.println("world");
       }
@@ -1384,14 +1639,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=151}
+    NodeDeletionAction{target_node=153}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    class Hello {
+    --file: Hello.java--
+           class Hello {
+                                             {
+        System.out.println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class Hello {
                                              {
         System.out.println("world");
       }
@@ -1401,25 +1663,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 151
-------------------------------------------------------------
-
-
-=================Reducing node 155, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 155
+Failed to reduce node 153
 ------------------------------------------------------------
 
 
@@ -1427,19 +1671,10 @@ Failed to reduce node 155
 
 The current best program is the following
 
-    class Hello {
+    --file: Hello.java--
+           class Hello {
       public static void main(String[] args) {
         System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:optional__block_1]dd@1
-    class Hello {
-      public static void main(String[] args) {
       }
     }
 ------------------------------------------------------------
@@ -1455,7 +1690,8 @@ Failed to reduce node 157
 
 The current best program is the following
 
-    class Hello {
+    --file: Hello.java--
+           class Hello {
       public static void main(String[] args) {
         System.out.println("world");
       }
@@ -1463,9 +1699,19 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==============Node edit action set cache hit.===============
+============Testing the following program: fail=============
 
-    NodeDeletionAction{target_node=159}
+// edit action set type: [kleene_star:optional__block_1]dd@1
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class Hello {
+      public static void main(String[] args) {
+      }
+    }
 ------------------------------------------------------------
 
 
@@ -1475,139 +1721,12 @@ Failed to reduce node 159
 ------------------------------------------------------------
 
 
-=================Reducing node 163, size=25=================
+=================Reducing node 161, size=25=================
 
 The current best program is the following
 
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    class Hello {
-      public static void main(String[] args) {
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 163
-------------------------------------------------------------
-
-
-=================Reducing node 166, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 166
-------------------------------------------------------------
-
-
-=================Reducing node 153, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 153
-------------------------------------------------------------
-
-
-=================Reducing node 204, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 204
-------------------------------------------------------------
-
-
-=================Reducing node 169, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 169
-------------------------------------------------------------
-
-
-=================Reducing node 207, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:optional__methodDeclarator_1]dd@1
-    class Hello {
-      public static void main(             ) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 207
-------------------------------------------------------------
-
-
-=================Reducing node 211, size=25=================
-
-The current best program is the following
-
-    class Hello {
+    --file: Hello.java--
+           class Hello {
       public static void main(String[] args) {
         System.out.println("world");
       }
@@ -1617,144 +1736,22 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=211}
+    NodeDeletionAction{target_node=161}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 211
+Failed to reduce node 161
 ------------------------------------------------------------
 
 
-=================Reducing node 215, size=25=================
+=================Reducing node 165, size=25=================
 
 The current best program is the following
 
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    class Hello {
-      public static void main(String   args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 215
-------------------------------------------------------------
-
-
-=================Reducing node 172, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 172
-------------------------------------------------------------
-
-
-=================Reducing node 170, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    class Hello {
-      public static void main(String[] args) {
-               out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    class Hello {
-      public static void main(String[] args) {
-        System    .println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 170
-------------------------------------------------------------
-
-
-=================Reducing node 218, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 218
-------------------------------------------------------------
-
-
-=================Reducing node 219, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 219
-------------------------------------------------------------
-
-
-=================Reducing node 197, size=25=================
-
-The current best program is the following
-
-    class Hello {
+    --file: Hello.java--
+           class Hello {
       public static void main(String[] args) {
         System.out.println("world");
       }
@@ -1764,9 +1761,14 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
-    class Hello {
+    --file: Hello.java--
+           class Hello {
       public static void main(String[] args) {
-               out.println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class Hello {
+      public static void main(String[] args) {
       }
     }
 ------------------------------------------------------------
@@ -1774,417 +1776,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 197
-------------------------------------------------------------
-
-
-=================Reducing node 199, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=199}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 199
-------------------------------------------------------------
-
-
-=================Reducing node 152, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@2
-    class Hello {
-                    void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
-    class Hello {
-      public        void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
-    class Hello {
-             static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 152
-------------------------------------------------------------
-
-
-=================Reducing node 230, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 230
-------------------------------------------------------------
-
-
-=================Reducing node 229, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 229
-------------------------------------------------------------
-
-
-=================Reducing node 226, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 226
-------------------------------------------------------------
-
-
-=================Reducing node 225, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 225
-------------------------------------------------------------
-
-
-=================Reducing node 221, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 221
-------------------------------------------------------------
-
-
-=================Reducing node 220, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 220
-------------------------------------------------------------
-
-
-=================Reducing node 214, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 214
-------------------------------------------------------------
-
-
-=================Reducing node 208, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 208
-------------------------------------------------------------
-
-
-=================Reducing node 206, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 206
-------------------------------------------------------------
-
-
-=================Reducing node 205, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 205
-------------------------------------------------------------
-
-
-=================Reducing node 202, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 202
-------------------------------------------------------------
-
-
-=================Reducing node 201, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 201
-------------------------------------------------------------
-
-
-=================Reducing node 198, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 198
-------------------------------------------------------------
-
-
-=================Reducing node 175, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:optional__explicitConstructorInvocation_2]dd@1
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println(       );
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 175
-------------------------------------------------------------
-
-
-=================Reducing node 196, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 196
-------------------------------------------------------------
-
-
-=================Reducing node 174, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 174
-------------------------------------------------------------
-
-
-=================Reducing node 173, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 173
-------------------------------------------------------------
-
-
-=================Reducing node 171, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 171
+Failed to reduce node 165
 ------------------------------------------------------------
 
 
@@ -2192,7 +1784,8 @@ Failed to reduce node 171
 
 The current best program is the following
 
-    class Hello {
+    --file: Hello.java--
+           class Hello {
       public static void main(String[] args) {
         System.out.println("world");
       }
@@ -2206,11 +1799,12 @@ Failed to reduce node 168
 ------------------------------------------------------------
 
 
-=================Reducing node 165, size=25=================
+=================Reducing node 155, size=25=================
 
 The current best program is the following
 
-    class Hello {
+    --file: Hello.java--
+           class Hello {
       public static void main(String[] args) {
         System.out.println("world");
       }
@@ -2220,7 +1814,807 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 165
+Failed to reduce node 155
+------------------------------------------------------------
+
+
+=================Reducing node 207, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 207
+------------------------------------------------------------
+
+
+=================Reducing node 171, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 171
+------------------------------------------------------------
+
+
+=================Reducing node 210, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__methodDeclarator_1]dd@1
+    --file: Hello.java--
+           class Hello {
+      public static void main(             ) {
+        System.out.println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class Hello {
+      public static void main(             ) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 210
+------------------------------------------------------------
+
+
+=================Reducing node 214, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=214}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 214
+------------------------------------------------------------
+
+
+=================Reducing node 218, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: Hello.java--
+           class Hello {
+      public static void main(String   args) {
+        System.out.println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class Hello {
+      public static void main(String   args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 218
+------------------------------------------------------------
+
+
+=================Reducing node 174, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 174
+------------------------------------------------------------
+
+
+=================Reducing node 172, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+               out.println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class Hello {
+      public static void main(String[] args) {
+               out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System    .println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class Hello {
+      public static void main(String[] args) {
+        System    .println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 172
+------------------------------------------------------------
+
+
+=================Reducing node 221, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 221
+------------------------------------------------------------
+
+
+=================Reducing node 222, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 222
+------------------------------------------------------------
+
+
+=================Reducing node 200, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+               out.println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class Hello {
+      public static void main(String[] args) {
+               out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 200
+------------------------------------------------------------
+
+
+=================Reducing node 202, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=202}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 202
+------------------------------------------------------------
+
+
+=================Reducing node 154, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@2
+    --file: Hello.java--
+           class Hello {
+                    void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class Hello {
+                    void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
+    --file: Hello.java--
+           class Hello {
+      public        void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class Hello {
+      public        void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
+    --file: Hello.java--
+           class Hello {
+             static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class Hello {
+             static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 154
+------------------------------------------------------------
+
+
+=================Reducing node 233, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 233
+------------------------------------------------------------
+
+
+=================Reducing node 232, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 232
+------------------------------------------------------------
+
+
+=================Reducing node 229, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 229
+------------------------------------------------------------
+
+
+=================Reducing node 228, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 228
+------------------------------------------------------------
+
+
+=================Reducing node 224, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 224
+------------------------------------------------------------
+
+
+=================Reducing node 223, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 223
+------------------------------------------------------------
+
+
+=================Reducing node 217, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 217
+------------------------------------------------------------
+
+
+=================Reducing node 211, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 211
+------------------------------------------------------------
+
+
+=================Reducing node 209, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 209
+------------------------------------------------------------
+
+
+=================Reducing node 208, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 208
+------------------------------------------------------------
+
+
+=================Reducing node 205, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 205
+------------------------------------------------------------
+
+
+=================Reducing node 204, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 204
+------------------------------------------------------------
+
+
+=================Reducing node 201, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 201
+------------------------------------------------------------
+
+
+=================Reducing node 177, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__explicitConstructorInvocation_2]dd@1
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println(       );
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println(       );
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 177
+------------------------------------------------------------
+
+
+=================Reducing node 199, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 199
+------------------------------------------------------------
+
+
+=================Reducing node 176, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 176
+------------------------------------------------------------
+
+
+=================Reducing node 175, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 175
+------------------------------------------------------------
+
+
+=================Reducing node 173, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 173
+------------------------------------------------------------
+
+
+=================Reducing node 170, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 170
+------------------------------------------------------------
+
+
+=================Reducing node 167, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 167
+------------------------------------------------------------
+
+
+=================Reducing node 160, size=25=================
+
+The current best program is the following
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String[] args) {
+        System.out.println("world");
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 160
 ------------------------------------------------------------
 
 
@@ -2228,7 +2622,8 @@ Failed to reduce node 165
 
 The current best program is the following
 
-    class Hello {
+    --file: Hello.java--
+           class Hello {
       public static void main(String[] args) {
         System.out.println("world");
       }
@@ -2242,11 +2637,12 @@ Failed to reduce node 158
 ------------------------------------------------------------
 
 
-=================Reducing node 156, size=25=================
+=================Reducing node 151, size=25=================
 
 The current best program is the following
 
-    class Hello {
+    --file: Hello.java--
+           class Hello {
       public static void main(String[] args) {
         System.out.println("world");
       }
@@ -2256,7 +2652,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 156
+Failed to reduce node 151
 ------------------------------------------------------------
 
 
@@ -2264,7 +2660,8 @@ Failed to reduce node 156
 
 The current best program is the following
 
-    class Hello {
+    --file: Hello.java--
+           class Hello {
       public static void main(String[] args) {
         System.out.println("world");
       }
@@ -2282,7 +2679,8 @@ Failed to reduce node 149
 
 The current best program is the following
 
-    class Hello {
+    --file: Hello.java--
+           class Hello {
       public static void main(String[] args) {
         System.out.println("world");
       }
@@ -2296,11 +2694,12 @@ Failed to reduce node 147
 ------------------------------------------------------------
 
 
-=================Reducing node 145, size=25=================
+=================Reducing node 146, size=25=================
 
 The current best program is the following
 
-    class Hello {
+    --file: Hello.java--
+           class Hello {
       public static void main(String[] args) {
         System.out.println("world");
       }
@@ -2310,25 +2709,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 145
-------------------------------------------------------------
-
-
-=================Reducing node 144, size=25=================
-
-The current best program is the following
-
-    class Hello {
-      public static void main(String[] args) {
-        System.out.println("world");
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 144
+Failed to reduce node 146
 ------------------------------------------------------------
 
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -34,7 +34,7 @@ class ProfilingFlagGroup : AbstractCommandLineFlagGroup(groupName = "Profiling")
     order = 5,
     arity = 1,
   )
-  var appendToProgressDumpFile = false
+  var appendToProgressDumpFile = true
 
   @Parameter(
     names = ["--stat-dump-file"],
@@ -44,18 +44,25 @@ class ProfilingFlagGroup : AbstractCommandLineFlagGroup(groupName = "Profiling")
   var statDumpFile: Path? = null
 
   @Parameter(
-    names = ["--profile-query-cache"],
+    names = ["--profile-query-cache-time"],
     description = "The file to save the profiling data of the query cache.",
     order = 20,
   )
-  var profileQueryCacheTime: String? = null
+  var profileQueryCacheTime: Path? = null
+
+  @Parameter(
+    names = ["--profile-query-cache-time-csv"],
+    description = "The file to save the profiling data of the query cache in the CSV format.",
+    order = 25,
+  )
+  var profileQueryCacheTimeCSV: Path? = null
 
   @Parameter(
     names = ["--profile-query-cache-memory"],
     description = "The file to save the profiling data of the query cache.",
     order = 30,
   )
-  var profileQueryCacheMemory: String? = null
+  var profileQueryCacheMemory: Path? = null
 
   @Parameter(
     names = ["--profile-actionset"],
@@ -65,34 +72,22 @@ class ProfilingFlagGroup : AbstractCommandLineFlagGroup(groupName = "Profiling")
   var actionSetProfiler: Path? = null
 
   @Parameter(
-    names = ["--profile"],
-    description = "profile the reduction process for analysis",
-    arity = 1,
-    order = 50,
+    names = ["--profile-delta-debugger"],
+    description = "The file to save the reduction process of the delta debugger.",
+    order = 55,
   )
-  var profile = false
-
-  @Parameter(
-    names = ["--script-execution-timeout-in-seconds"],
-    description = "the interval in seconds to timeout " +
-      "the test script executions. the default timeout is 600 seconds.",
-    order = 60,
-  )
-  var testScriptExecutionTimeoutInSeconds: Long = 600L
-
-  @Parameter(
-    names = ["--script-execution-keep-waiting-after-timeout"],
-    description = "keep trying even after " +
-      "the script execution timeouts.",
-    arity = 1,
-    order = 70,
-  )
-  var testScriptExecutionKeepWaitingAfterTimeout: Boolean = true
+  var profileDeltaDebugger: Path? = null
 
   override fun validate() {
-    check(testScriptExecutionTimeoutInSeconds > 0)
-    check(profileQueryCacheMemory == null || profileQueryCacheTime == null) {
-      "Only at most one flag can be enabled."
+    val flags = listOf(
+      ::profileQueryCacheMemory,
+      ::profileQueryCacheTime,
+      ::profileQueryCacheTimeCSV,
+    )
+    val countOfNonNulls = flags
+      .count { it.get() != null }
+    check(countOfNonNulls <= 1) {
+      "Only at most one flag can be enabled. $flags"
     }
   }
 }

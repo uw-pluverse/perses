@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -23,7 +23,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.antlr.util.AntlrToolWrapper
-import org.perses.util.FileNameContentPair
+import org.perses.util.FileNameContentLinesPair
 import java.nio.file.Files
 import kotlin.io.path.deleteRecursively
 import kotlin.io.path.writeText
@@ -102,7 +102,7 @@ class AntlrToolWrapperTest {
   @Test
   fun testAcceptingCombinedParser_accept() {
     AntlrToolWrapper.doesAntlrAcceptGrammar(
-      FileNameContentPair.createFromString(
+      FileNameContentLinesPair.createFromString(
         fileName = "Test",
         content = """
         grammar Test;
@@ -117,7 +117,7 @@ class AntlrToolWrapperTest {
   @Test
   fun testAcceptingCombinedParser_reject() {
     AntlrToolWrapper.doesAntlrAcceptGrammar(
-      FileNameContentPair.createFromString(
+      FileNameContentLinesPair.createFromString(
         fileName = "Test",
         content = """
         grammar Test;
@@ -132,7 +132,7 @@ class AntlrToolWrapperTest {
   @Test
   fun testAcceptingSeparateGrammar_accept() {
     AntlrToolWrapper.doesAntlrAcceptGrammar(
-      parserGrammar = FileNameContentPair.createFromString(
+      parserGrammar = FileNameContentLinesPair.createFromString(
         fileName = "Parser",
         content = """
           parser grammar Parser;
@@ -142,7 +142,7 @@ class AntlrToolWrapperTest {
           start: ID;
         """.trimIndent(),
       ),
-      lexerGrammar = FileNameContentPair.createFromString(
+      lexerGrammar = FileNameContentLinesPair.createFromString(
         fileName = "Lexer",
         content = """
           lexer grammar Lexer;
@@ -157,7 +157,7 @@ class AntlrToolWrapperTest {
   @Test
   fun testAcceptingSeparateGrammar_reject() {
     AntlrToolWrapper.doesAntlrAcceptGrammar(
-      parserGrammar = FileNameContentPair.createFromString(
+      parserGrammar = FileNameContentLinesPair.createFromString(
         fileName = "Parser",
         content = """
           parser grammar Parser;
@@ -167,7 +167,7 @@ class AntlrToolWrapperTest {
           start: ID;
         """.trimIndent(),
       ),
-      lexerGrammar = FileNameContentPair.createFromString(
+      lexerGrammar = FileNameContentLinesPair.createFromString(
         fileName = "Lexer",
         content = """
           lexer grammar Lexer;

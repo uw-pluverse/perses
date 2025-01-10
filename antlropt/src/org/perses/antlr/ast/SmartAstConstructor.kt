@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -91,7 +91,7 @@ object SmartAstConstructor {
     return tryToMergeQuantifiedNodesInSequence(first, second) != null
   }
 
-  fun tryToMergeQuantifiedNodesInSequence(
+  private fun tryToMergeQuantifiedNodesInSequence(
     first: AbstractPersesRuleElement,
     second: AbstractPersesRuleElement,
   ): AbstractPersesQuantifiedAst? {

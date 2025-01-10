@@ -13,16 +13,13 @@ fi
 
 if grep -q "Wimplicit-int" temp.txt || \
    grep -q "defaulting to type" temp.txt || \
+   grep -q "uninitialized" temp.txt || \
    grep -q "too few arguments" temp.txt ; then
   exit 1
 fi
 # End of the check.
 
-if ! clang -fsanitize=address,undefined -fno-sanitize-recover=undefined,address t.c &> /dev/null ; then
-  exit 1
-fi
-
-./a.out
+timeout -s 9 30 ./a.out
 
 if [[ "$?" != 99 ]] ; then
   exit 1

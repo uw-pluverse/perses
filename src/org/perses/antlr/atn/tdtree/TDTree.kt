@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -29,8 +29,8 @@ class TDTree {
 
   val root = SequenceTDTreeNode(nodeId = nextId())
 
-  fun createCharNode(char: Char): CharTDTreeNode {
-    return CharTDTreeNode(nodeId = nextId(), char)
+  fun createCharNode(char: Char, allowedAsciiChars: ImmutableList<Char>): CharTDTreeNode {
+    return CharTDTreeNode(nodeId = nextId(), char, allowedAsciiChars)
   }
 
   fun createOptionalTDTreeNode(): OptionalTDTreeNode {

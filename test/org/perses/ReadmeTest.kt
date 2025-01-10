@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,6 +17,7 @@
 package org.perses
 
 import com.google.common.collect.ImmutableList
+import com.google.common.truth.Truth.assertThat
 import com.google.common.truth.Truth.assertWithMessage
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -24,9 +25,11 @@ import org.junit.runners.JUnit4
 import org.perses.grammar.SingleParserFacadeFactory.Companion.builderWithBuiltinLanguages
 import org.perses.program.LanguageKind
 import org.perses.util.toImmutableList
+import org.perses.version.Version
 import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.io.path.bufferedReader
+import kotlin.io.path.readLines
 
 @RunWith(JUnit4::class)
 class ReadmeTest {
@@ -41,6 +44,31 @@ class ReadmeTest {
       ${persesSupported.joinToString { "\n" }}
       """.trimIndent(),
     ).that(readmeListed).containsExactlyElementsIn(persesSupported)
+  }
+
+  @Test
+  fun testDownloadLinkIsForLatestVersion() {
+    val majorVersion = "majorVersion"
+    val minorVersion = "minorVersion"
+    val pattern = Regex(
+      ".*https://github.com/uw-pluverse/perses/releases/download/" +
+        "v(?<$majorVersion>\\d+).(?<$minorVersion>\\d+)" +
+        "/perses_deploy.jar.*",
+    )
+    val matchedLines = readmeFile
+      .readLines()
+      .mapNotNull { pattern.matchEntire(it) }
+      .map { matchResult ->
+        matchResult.groups[majorVersion] to matchResult.groups["minorVersion"]
+      }
+    assertWithMessage("The $readmeFile does not have a line matching the pattern $pattern")
+      .that(matchedLines)
+      .hasSize(1)
+    val version = matchedLines.single()
+    assertThat(version.first).isNotNull()
+    assertThat(version.second).isNotNull()
+    assertThat(version.first!!.value).isEqualTo(Version.MAJOR_VERSION)
+    assertThat(version.second!!.value).isEqualTo(Version.MINOR_VERSION)
   }
 
   private fun getActuallySupportedLanguages(): ImmutableList<String> {

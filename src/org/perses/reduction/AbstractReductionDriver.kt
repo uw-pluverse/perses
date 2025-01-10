@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,6 +22,7 @@ import org.perses.program.AbstractDataKind
 import org.perses.reduction.AbstractExternalTestScriptExecutionCachePolicy.NullExternalTestScriptExecutionCachePolicy
 import org.perses.reduction.io.AbstractReductionIOManager
 import org.perses.util.TimeUtil.formatDateForDisplay
+import org.perses.util.ktFine
 import org.perses.util.ktInfo
 import java.io.Closeable
 import java.nio.file.Files
@@ -71,9 +72,20 @@ abstract class AbstractReductionDriver<
     }
   }
 
-  protected fun sanityCheck(program: Program) {
-    // TODO: this should be done in the output directory.
-    logger.atFinest().log("sanity checking...")
+  override val cachedSanityCheckResult: IReductionDriver.AbstractSanityCheckResult by lazy {
+    val program = getInitialProgram()
+    try {
+      sanityCheckOrThrow(program)
+    } catch (e: SanityCheckFailedException) {
+      return@lazy IReductionDriver.FailingSanityCheckResult(e)
+    }
+    return@lazy IReductionDriver.PassingSanityCheckResult
+  }
+
+  protected abstract fun getInitialProgram(): Program
+
+  protected fun sanityCheckOrThrow(program: Program) {
+    logger.ktFine { "sanity checking..." }
     /**
      * TODO: need two steps of sanity check:
      *     (1) use the original source program and test script.
@@ -90,20 +102,20 @@ abstract class AbstractReductionDriver<
       )
     }
     val future = sanityChecker.invoke()
-    check(future.getWithTimeoutWarnings().isInteresting) {
+    if (future.getWithTimeoutWarnings().isNotInteresting) {
+      logger.ktInfo { "The initial sanity check failed." }
       val flakinessChecker = PropertyFlakinessChecker(
         numberOfTrials = 5,
         initialNumOfUninteresting = 1,
         sanityChecker,
       )
-      logger.ktInfo { "The initial sanity check failed." }
       logger.ktInfo {
         "Checking whether the script is flaky. #trials=${flakinessChecker.numberOfTrials}"
       }
       val flakinessCheckResult = flakinessChecker.run().computeResult()
 
       val cmdOutput = future.workingDirectory.testScript.runAndCaptureOutput()
-      logger.atFine().log("The initial sanity check failed. Folder: %s", future.workingDirectory)
+      logger.ktFine { "The initial sanity check failed. Folder: ${future.workingDirectory}" }
       val tempDir = copyFilesToTempDir(future.workingDirectory.folder)
       val message = """The initial sanity check failed. 
         
@@ -124,7 +136,7 @@ abstract class AbstractReductionDriver<
         it.trimStart()
       }.joinToString("\n")
 
-      message
+      throw SanityCheckFailedException(message)
     }
   }
 

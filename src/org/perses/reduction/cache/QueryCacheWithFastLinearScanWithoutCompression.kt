@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,7 +22,7 @@ class QueryCacheWithFastLinearScanWithoutCompression(
   tokenizedProgram: TokenizedProgram,
   profiler: AbstractQueryCacheProfiler,
   configuration: QueryCacheConfiguration,
-) : AbstractRealQueryCache<CompactProgramEncoding, LinearScanTokenizedProgramEncoder>(
+) : AbstractRealQueryCache<RccProgramEncoding, RccTokenizedProgramEncoder>(
   tokenizedProgram,
   profiler,
   configuration,
@@ -30,8 +30,8 @@ class QueryCacheWithFastLinearScanWithoutCompression(
   override fun createEncoder(
     baseProgram: TokenizedProgram,
     profiler: AbstractQueryCacheProfiler,
-  ): LinearScanTokenizedProgramEncoder {
-    return LinearScanTokenizedProgramEncoder(
+  ): RccTokenizedProgramEncoder {
+    return RccTokenizedProgramEncoder(
       baseProgram,
       profiler,
       enableCompression = false,

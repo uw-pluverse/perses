@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -149,7 +149,7 @@ abstract class AbstractReductionIOManager<
     return visitor.invoke(
       SourceFile(
         reductionFolder.folder.resolve(getMainSourceFileBaseName()),
-        reductionInputs.mainDataKind as LanguageKind,
+        reductionInputs.initiallyDeterminedMainDataKind as LanguageKind,
       ),
     )
   }
@@ -159,11 +159,10 @@ abstract class AbstractReductionIOManager<
       TimeUtil.formatDateForFileName(System.currentTimeMillis()) + ".profile.txt",
   )
 
-  fun backupMainFile(): ImmutableList<Path> {
+  fun backupAllMutableFiles(): ImmutableList<Path> {
     val formatDateForFileName = TimeUtil.formatDateForFileName(System.currentTimeMillis())
     val globalId = GlobalSequenceGenerator.nextWithPadding(paddingLength = 2, paddingChar = '0')
-    return reductionInputs.orig2relativePathPairs
-      .asSequence()
+    return reductionInputs.sequenceOfMutableFiles()
       .map {
         val fileToReduce = it.origFile
         val relativePath = it.relativePath

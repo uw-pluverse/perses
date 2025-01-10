@@ -1,8 +1,8 @@
+load("@io_bazel_rules_kotlin//kotlin:core.bzl", "define_kt_toolchain", "kt_kotlinc_options")
+
 package(
     default_visibility = ["//visibility:public"],
 )
-
-load("@io_bazel_rules_kotlin//kotlin:core.bzl", "define_kt_toolchain", "kt_kotlinc_options")
 
 alias(
     name = "antlr_tool",
@@ -100,6 +100,7 @@ alias(
 java_library(
     name = "truth",
     exports = [
+        "//src/org/perses/util:truth_extension",
         "@maven//:com_google_truth_truth",
         "@maven//:com_googlecode_java_diff_utils_diffutils",
     ],
@@ -126,10 +127,10 @@ kt_kotlinc_options(
 
 define_kt_toolchain(
     name = "kotlin_toolchain",
-    api_version = "1.8",
+    api_version = "1.9",
     jvm_target = "1.8",
     kotlinc_options = ":perses_kotlinc_options",
-    language_version = "1.8",
+    language_version = "1.9",
 )
 
 exports_files(["README.md"])

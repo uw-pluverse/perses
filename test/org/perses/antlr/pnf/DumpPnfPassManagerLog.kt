@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,17 +22,14 @@ import org.perses.grammar.AbstractParserFacade.Companion.readAntlrGrammarContent
 import org.perses.grammar.c.CParserFacade
 import org.perses.util.cmd.AbstractCommandOptions
 import org.perses.util.cmd.AbstractMain
+import org.perses.util.cmd.CommandLineProcessor
 import java.io.Closeable
 import java.io.PrintStream
 import java.nio.charset.StandardCharsets
 
-class DumpPnfPassManagerLog(args: Array<String>) : AbstractMain<DumpPnfPassManagerLog.Options>(
-  args,
+class DumpPnfPassManagerLog(cmd: Options) : AbstractMain<DumpPnfPassManagerLog.Options>(
+  cmd,
 ) {
-
-  override fun createCommandOptions(): Options {
-    return Options()
-  }
 
   override fun internalRun() {
     val output = cmd.file!!
@@ -51,7 +48,15 @@ class DumpPnfPassManagerLog(args: Array<String>) : AbstractMain<DumpPnfPassManag
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      DumpPnfPassManagerLog(args).run()
+      val processor = CommandLineProcessor<Options>(
+        cmdCreator = { Options() },
+        programName = DumpPnfPassManagerLog::class.qualifiedName!!,
+        args = args,
+      )
+      if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
+        return
+      }
+      DumpPnfPassManagerLog(processor.cmd).run()
     }
   }
 

@@ -1,11 +1,10 @@
+load("//test/org/perses:test.bzl", "copy")
+
 package(default_visibility = [
     "//fuzzer/org/perses:__subpackages__",
     "//fuzzer_test/org/perses:__subpackages__",
     "//test/org/perses:__subpackages__",
 ])
-
-load("//test/org/perses:test.bzl", "copy")
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
 
 copy(
     name = "copy_perses_deploy",

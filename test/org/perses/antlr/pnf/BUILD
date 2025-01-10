@@ -1,14 +1,13 @@
-load("//antlropt/src/org/perses/antlr/pnf:pnf.bzl", "pnf_convert")
-load("//test/org/perses:test.bzl", "golden_test")
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 load("//:perses.bzl", "kt_binary_for_genrule")
+load("//test/org/perses:test.bzl", "golden_test")
 
 DEFAULT_DEPS = [
     "//src/org/perses/antlr:antlr_grammar_parser",
     "//antlropt/src/org/perses/antlr/ast:ast",
     "//antlropt/src/org/perses/antlr/pnf:pnf",
     "//src/org/perses/grammar/c:optc_parser_facade",
-    "//src/org/perses/grammar/java:parser_facade",
+    "//src/org/perses/grammar/java:parser_facade_java8",
     "//test/org/perses:test_util",
     "//:guava",
     "//:truth",

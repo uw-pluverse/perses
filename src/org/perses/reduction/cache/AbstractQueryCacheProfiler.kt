@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,52 +19,67 @@ package org.perses.reduction.cache
 import com.google.common.collect.ImmutableList
 import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
+import org.perses.util.FileStreamPool
 import java.io.Closeable
 
-abstract class AbstractQueryCacheProfiler : Closeable {
-  open fun onEncodingProgram(
+abstract class AbstractQueryCacheProfiler(
+  protected val writer: FileStreamPool.ManagedPrintStream?,
+) : Closeable {
+
+  override fun close() {
+    writer?.close()
+  }
+
+  open fun afterEncodeProgram(
     tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
     program: TokenizedProgram,
-    startTime: Long,
-    endTime: Long,
+    nanoDuration: Long,
   ) {
   }
 
   open fun onDecodingProgram(
     tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
-    encoding: CompactProgramEncoding,
-    startTime: Long,
-    endTime: Long,
+    encoding: RccProgramEncoding,
+    nanoDuration: Long,
   ) {
   }
 
   open fun onCreatingEncoder(
     tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
-    startTime: Long,
-    endTime: Long,
+    nanoDuration: Long,
   ) {
   }
 
-  open fun onHeavyweightCacheRefreshing(
+  open fun afterHeavyweightCacheRefreshing(
     oldBestProgram: ImmutableList<PersesTokenFactory.PersesToken>,
     newBestProgram: ImmutableList<PersesTokenFactory.PersesToken>,
     numOfEntriesInCacheBefore: Int,
     numOfEntriesInCacheAfter: Int,
-    startTime: Long,
-    endTime: Long,
+    nanoDuration: Long,
   ) {
   }
 
   open fun onHeartBeat(cache: AbstractQueryCache) {}
-  open fun afterAddProgram(cache: AbstractQueryCache) {}
-  open fun afterCacheEviction(cache: AbstractQueryCache) {}
+  open fun afterCacheProgramAndResult(
+    cache: AbstractQueryCache,
+    nanoDuration: Long,
+  ) {}
+
+  open fun beforeCacheEviction(
+    cache: AbstractQueryCache,
+  ) {}
+
+  open fun afterCacheEviction(
+    cache: AbstractQueryCache,
+    nanoDuration: Long,
+  ) {}
+
+  open fun afterGetCachedResult(
+    cache: AbstractQueryCache,
+    nanoDuration: Long,
+  ) {}
 
   companion object {
-    @JvmStatic
-    fun now(): Long {
-      return System.nanoTime()
-    }
-
     @JvmField
     val NULL_PROFILER: AbstractQueryCacheProfiler = NullQueryCacheProfiler()
   }

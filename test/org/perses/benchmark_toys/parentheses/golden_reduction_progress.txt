@@ -1,135 +1,221 @@
 =====================Reduction starts.======================
 
 The initial program size is 54
+The command line options are:
+---
+help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+versionFlags:
+  groupName: "Version"
+  version: false
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFile: "t.c"
+  deps: []
+  sourceFile: "t.c"
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_perses_node_priority_with_dfs_delta_t.c"
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  fixpoint: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  enableLineSlicer: false
+  defaultDeltaDebuggerTypeForKleene: "DFS"
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  enableTrec: false
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: "TRUE"
+  nodeActionSetCaching: true
+  queryCacheRefreshThreshold: 0
+  enableLightweightRefreshing: true
+  enablePassCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "reduction_progress.txt"
+  appendToProgressDumpFile: true
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileDeltaDebugger: null
+experimentFlags:
+  groupName: "Experiment Control"
+  cacheType: "COMPACT_QUERY_CACHE"
+  onDemandReducerClasses: null
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
+The sanity check has been performed. The result is PassingSanityCheckResult
 =Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
 
 The spar-tree is the following.
 translationUnit {id=1}
 |___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
-    |___aux_rule__declaration_3 {id=336,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
-    |   |___(+) {id=337,slot_type=declarationSpecifiers}
-    |   |   |___Token:int {id=377,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-    |   |___(?) {id=338,slot_type=optional__declaration_2}
-    |   |   |___directDeclarator {id=343,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
-    |   |       |___Token:printf {id=373,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-    |   |       |___(*) {id=345,slot_type=kleene_star__directDeclarator_7}
-    |   |           |___aux_rule__directDeclarator_15 {id=347,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-    |   |               |___Token:( {id=348,slot_type=LeftParen}
-    |   |               |___parameterTypeList {id=351,slot_type=[altnt_block__directDeclarator_11,parameterTypeList]}
-    |   |               |   |___parameterDeclaration {id=357,slot_type=[parameterList,parameterDeclaration]}
-    |   |               |   |   |___(+) {id=358,slot_type=declarationSpecifiers}
-    |   |               |   |   |   |___Token:const {id=372,slot_type=[declarationSpecifier,typeQualifier,Const]}
-    |   |               |   |   |   |___Token:char {id=370,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
-    |   |               |   |   |___(?) {id=360,slot_type=[altnt_block__parameterDeclaration_2,optional__typeName_1]}
-    |   |               |   |       |___Token:* {id=365,slot_type=[abstractDeclarator,pointer,altnt_block__pointer_8,Star]}
-    |   |               |   |___(?) {id=353,slot_type=optional__parameterTypeList_2}
-    |   |               |       |___aux_rule__parameterTypeList_1 {id=354,slot_type=aux_rule__parameterTypeList_1}
-    |   |               |           |___Token:, {id=355,slot_type=Comma}
-    |   |               |           |___Token:... {id=356,slot_type=Ellipsis}
-    |   |               |___Token:) {id=350,slot_type=RightParen}
-    |   |___Token:; {id=339,slot_type=Semi}
+    |___aux_rule__declaration_3 {id=350,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+    |   |___(+) {id=351,slot_type=declarationSpecifiers}
+    |   |   |___Token:int {id=392,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+    |   |___(?) {id=352,slot_type=optional__declaration_2}
+    |   |   |___directDeclarator {id=357,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
+    |   |       |___Token:printf {id=388,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+    |   |       |___(*) {id=359,slot_type=kleene_star__directDeclarator_7}
+    |   |           |___aux_rule__directDeclarator_15 {id=361,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+    |   |               |___Token:( {id=362,slot_type=LeftParen}
+    |   |               |___parameterTypeList {id=365,slot_type=[altnt_block__directDeclarator_11,parameterTypeList]}
+    |   |               |   |___parameterDeclaration {id=371,slot_type=[parameterList,parameterDeclaration]}
+    |   |               |   |   |___(+) {id=372,slot_type=declarationSpecifiers}
+    |   |               |   |   |   |___Token:const {id=387,slot_type=[declarationSpecifier,typeQualifier,Const]}
+    |   |               |   |   |   |___Token:char {id=385,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
+    |   |               |   |   |___(?) {id=374,slot_type=[altnt_block__parameterDeclaration_2,optional__typeName_1]}
+    |   |               |   |       |___(+) {id=377,slot_type=[abstractDeclarator,pointer,kleene_plus__pointer_8]}
+    |   |               |   |           |___Token:* {id=380,slot_type=[aux_rule__pointer_6,altnt_block__pointer_9,Star]}
+    |   |               |   |___(?) {id=367,slot_type=optional__parameterTypeList_2}
+    |   |               |       |___aux_rule__parameterTypeList_1 {id=368,slot_type=aux_rule__parameterTypeList_1}
+    |   |               |           |___Token:, {id=369,slot_type=Comma}
+    |   |               |           |___Token:... {id=370,slot_type=Ellipsis}
+    |   |               |___Token:) {id=364,slot_type=RightParen}
+    |   |___Token:; {id=353,slot_type=Semi}
     |___functionDefinition {id=5,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
         |___(?) {id=6,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=330,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=334,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |___directDeclarator {id=280,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=329,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=282,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=284,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=285,slot_type=LeftParen}
-        |           |___parameterList {id=289,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList]}
-        |           |   |___(+) {id=318,slot_type=[parameterDeclaration,declarationSpecifiers]}
-        |           |   |   |___Token:int {id=328,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |           |   |   |___Token:argc {id=325,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
-        |           |   |___(*) {id=291,slot_type=kleene_star__parameterList_1}
-        |           |       |___aux_rule__parameterList_2 {id=292,slot_type=aux_rule__parameterList_2}
-        |           |           |___Token:, {id=293,slot_type=Comma}
-        |           |           |___parameterDeclaration {id=294,slot_type=parameterDeclaration}
-        |           |               |___(+) {id=295,slot_type=declarationSpecifiers}
-        |           |               |   |___Token:char {id=317,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
-        |           |               |___declarator {id=297,slot_type=[altnt_block__parameterDeclaration_2,declarator]}
-        |           |                   |___(?) {id=298,slot_type=optional__declarator_1}
-        |           |                   |   |___Token:* {id=313,slot_type=[pointer,altnt_block__pointer_8,Star]}
-        |           |                   |___directDeclarator {id=299,slot_type=directDeclarator}
-        |           |                       |___Token:argv {id=309,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |           |                       |___(*) {id=301,slot_type=kleene_star__directDeclarator_7}
-        |           |                           |___aux_rule__directDeclarator_14 {id=303,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_14]}
-        |           |                               |___Token:[ {id=304,slot_type=LeftBracket}
-        |           |                               |___Token:] {id=306,slot_type=RightBracket}
-        |           |___Token:) {id=287,slot_type=RightParen}
+        |   |___(+) {id=344,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=348,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=293,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=343,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=295,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=297,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=298,slot_type=LeftParen}
+        |           |___parameterList {id=302,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList]}
+        |           |   |___(+) {id=332,slot_type=[parameterDeclaration,declarationSpecifiers]}
+        |           |   |   |___Token:int {id=342,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |           |   |   |___Token:argc {id=339,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |           |   |___(*) {id=304,slot_type=kleene_star__parameterList_1}
+        |           |       |___aux_rule__parameterList_2 {id=305,slot_type=aux_rule__parameterList_2}
+        |           |           |___Token:, {id=306,slot_type=Comma}
+        |           |           |___parameterDeclaration {id=307,slot_type=parameterDeclaration}
+        |           |               |___(+) {id=308,slot_type=declarationSpecifiers}
+        |           |               |   |___Token:char {id=331,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
+        |           |               |___declarator {id=310,slot_type=[altnt_block__parameterDeclaration_2,declarator]}
+        |           |                   |___(?) {id=311,slot_type=optional__declarator_1}
+        |           |                   |   |___(+) {id=324,slot_type=[pointer,kleene_plus__pointer_8]}
+        |           |                   |       |___Token:* {id=327,slot_type=[aux_rule__pointer_6,altnt_block__pointer_9,Star]}
+        |           |                   |___directDeclarator {id=312,slot_type=directDeclarator}
+        |           |                       |___Token:argv {id=322,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |           |                       |___(*) {id=314,slot_type=kleene_star__directDeclarator_7}
+        |           |                           |___aux_rule__directDeclarator_14 {id=316,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_14]}
+        |           |                               |___Token:[ {id=317,slot_type=LeftBracket}
+        |           |                               |___Token:] {id=319,slot_type=RightBracket}
+        |           |___Token:) {id=300,slot_type=RightParen}
         |___compoundStatement {id=8,slot_type=compoundStatement}
             |___Token:{ {id=9,slot_type=LeftBrace}
             |___(?) {id=10,slot_type=optional__compoundStatement_1}
             |   |___(+) {id=13,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___aux_rule__declaration_3 {id=245,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=246,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=279,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=247,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=250,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:a {id=275,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=252,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=253,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=254,slot_type=Assign}
-            |       |   |               |___Token:1 {id=272,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=248,slot_type=Semi}
-            |       |___aux_rule__declaration_3 {id=111,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=112,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=243,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=113,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=116,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:b {id=239,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=118,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=119,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=120,slot_type=Assign}
-            |       |   |               |___aux_rule__postfixExpression_13 {id=138,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-            |       |   |                   |___aux_rule__primaryExpression_4 {id=141,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
-            |       |   |                   |   |___Token:( {id=142,slot_type=LeftParen}
-            |       |   |                   |   |___aux_rule__postfixExpression_13 {id=160,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-            |       |   |                   |       |___aux_rule__primaryExpression_4 {id=163,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
-            |       |   |                   |       |   |___Token:( {id=164,slot_type=LeftParen}
-            |       |   |                   |       |   |___additiveExpression {id=176,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
-            |       |   |                   |       |       |___aux_rule__postfixExpression_13 {id=192,slot_type=[multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-            |       |   |                   |       |       |   |___aux_rule__primaryExpression_4 {id=195,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
-            |       |   |                   |       |       |   |   |___Token:( {id=196,slot_type=LeftParen}
-            |       |   |                   |       |       |   |   |___aux_rule__postfixExpression_13 {id=214,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-            |       |   |                   |       |       |   |       |___aux_rule__primaryExpression_4 {id=217,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
-            |       |   |                   |       |       |   |       |   |___Token:( {id=218,slot_type=LeftParen}
-            |       |   |                   |       |       |   |       |   |___Token:a {id=236,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-            |       |   |                   |       |       |   |       |___Token:) {id=216,slot_type=RightParen}
-            |       |   |                   |       |       |   |___Token:) {id=194,slot_type=RightParen}
-            |       |   |                   |       |       |___(*) {id=178,slot_type=kleene_star__additiveExpression_1}
-            |       |   |                   |       |           |___aux_rule__additiveExpression_2 {id=179,slot_type=aux_rule__additiveExpression_2}
-            |       |   |                   |       |               |___Token:+ {id=187,slot_type=[altnt_block__additiveExpression_3,Plus]}
-            |       |   |                   |       |               |___Token:1 {id=186,slot_type=[multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |                   |       |___Token:) {id=162,slot_type=RightParen}
-            |       |   |                   |___Token:) {id=140,slot_type=RightParen}
-            |       |   |___Token:; {id=114,slot_type=Semi}
-            |       |___expressionStatement {id=44,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |       |   |___(?) {id=45,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=62,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression]}
-            |       |   |       |___Token:printf {id=109,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=64,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___aux_rule__postfixExpression_11 {id=66,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
-            |       |   |               |___Token:( {id=67,slot_type=LeftParen}
-            |       |   |               |___(?) {id=68,slot_type=optional__postfixExpression_1}
-            |       |   |               |   |___expression {id=70,slot_type=expression}
-            |       |   |               |       |___(+) {id=107,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |       |   |               |       |   |___Token:"b=%d\n" {id=108,slot_type=StringLiteral}
-            |       |   |               |       |___(*) {id=72,slot_type=kleene_star__expression_1}
-            |       |   |               |           |___aux_rule__expression_2 {id=73,slot_type=aux_rule__expression_2}
-            |       |   |               |               |___Token:, {id=74,slot_type=Comma}
-            |       |   |               |               |___Token:b {id=91,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-            |       |   |               |___Token:) {id=69,slot_type=RightParen}
-            |       |   |___Token:; {id=46,slot_type=Semi}
-            |       |___jumpStatement {id=19,slot_type=[aux_rule__blockItemList_2,statement,jumpStatement]}
-            |           |___aux_rule__jumpStatement_4 {id=22,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-            |           |   |___Token:return {id=23,slot_type=Return}
-            |           |   |___(?) {id=24,slot_type=optional__postfixExpression_1}
-            |           |       |___Token:0 {id=42,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |           |___Token:; {id=21,slot_type=Semi}
+            |       |___aux_rule__declaration_3 {id=257,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=258,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=292,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=259,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=262,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:a {id=288,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=264,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=265,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=266,slot_type=Assign}
+            |       |   |               |___Token:1 {id=285,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=260,slot_type=Semi}
+            |       |___aux_rule__declaration_3 {id=117,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=118,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=255,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=119,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=122,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:b {id=251,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=124,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=125,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=126,slot_type=Assign}
+            |       |   |               |___aux_rule__postfixExpression_13 {id=145,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |___aux_rule__primaryExpression_4 {id=148,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |   |___Token:( {id=149,slot_type=LeftParen}
+            |       |   |                   |   |___aux_rule__postfixExpression_13 {id=168,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |___aux_rule__primaryExpression_4 {id=171,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |   |___Token:( {id=172,slot_type=LeftParen}
+            |       |   |                   |       |   |___additiveExpression {id=184,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+            |       |   |                   |       |       |___aux_rule__postfixExpression_13 {id=202,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |   |___aux_rule__primaryExpression_4 {id=205,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |   |   |___Token:( {id=206,slot_type=LeftParen}
+            |       |   |                   |       |       |   |   |___aux_rule__postfixExpression_13 {id=225,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
+            |       |   |                   |       |       |   |       |___aux_rule__primaryExpression_4 {id=228,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+            |       |   |                   |       |       |   |       |   |___Token:( {id=229,slot_type=LeftParen}
+            |       |   |                   |       |       |   |       |   |___Token:a {id=248,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |                   |       |       |   |       |___Token:) {id=227,slot_type=RightParen}
+            |       |   |                   |       |       |   |___Token:) {id=204,slot_type=RightParen}
+            |       |   |                   |       |       |___(*) {id=186,slot_type=kleene_star__additiveExpression_1}
+            |       |   |                   |       |           |___aux_rule__additiveExpression_2 {id=187,slot_type=aux_rule__additiveExpression_2}
+            |       |   |                   |       |               |___Token:+ {id=196,slot_type=[altnt_block__additiveExpression_3,Plus]}
+            |       |   |                   |       |               |___Token:1 {id=195,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |                   |       |___Token:) {id=170,slot_type=RightParen}
+            |       |   |                   |___Token:) {id=147,slot_type=RightParen}
+            |       |   |___Token:; {id=120,slot_type=Semi}
+            |       |___expressionStatement {id=47,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=48,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=66,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:printf {id=115,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=68,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=70,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=71,slot_type=LeftParen}
+            |       |   |               |___(?) {id=72,slot_type=optional__postfixExpression_1}
+            |       |   |               |   |___expression {id=74,slot_type=expression}
+            |       |   |               |       |___(+) {id=113,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |       |   |               |       |   |___Token:"b=%d\n" {id=114,slot_type=StringLiteral}
+            |       |   |               |       |___(*) {id=76,slot_type=kleene_star__expression_1}
+            |       |   |               |           |___aux_rule__expression_2 {id=77,slot_type=aux_rule__expression_2}
+            |       |   |               |               |___Token:, {id=78,slot_type=Comma}
+            |       |   |               |               |___Token:b {id=96,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |               |___Token:) {id=73,slot_type=RightParen}
+            |       |   |___Token:; {id=49,slot_type=Semi}
+            |       |___jumpStatement {id=20,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=23,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=24,slot_type=Return}
+            |           |   |___(?) {id=25,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:0 {id=44,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |           |___Token:; {id=22,slot_type=Semi}
             |___Token:} {id=11,slot_type=RightBrace}
 ------------------------------------------------------------
 
@@ -138,6 +224,7 @@ translationUnit {id=1}
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -151,6 +238,9 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__translationUnit_3]remove whole except first
+    --file: t.c--
+    int printf(const char*, ...);
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
 ------------------------------------------------------------
 
@@ -164,6 +254,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@1
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+      int a = 1;
+      int b = ((      ((a)) + 1  ));
+      printf("b=%d\n", b);
+      return 0;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main (int argc, char *argv[]) {
       int a = 1;
       int b = ((      ((a)) + 1  ));
@@ -183,6 +281,7 @@ Failed to reduce node 2
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -202,6 +301,10 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+               ;
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
                ;
 ------------------------------------------------------------
@@ -210,6 +313,10 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+      int a = 1;
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
       int a = 1;
 ------------------------------------------------------------
@@ -218,6 +325,10 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+      int b = ((      ((a)) + 1  ));
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
       int b = ((      ((a)) + 1  ));
 ------------------------------------------------------------
@@ -233,6 +344,7 @@ Failed to reduce node 5
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -253,6 +365,7 @@ Failed to reduce node 8
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -266,6 +379,11 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
     }
@@ -282,6 +400,7 @@ Failed to reduce node 10
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -301,6 +420,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove whole except first
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+      int a = 1;
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -311,6 +436,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+      int a = 1;
+      int b = ((      ((a)) + 1  ));
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -322,6 +454,14 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+      int a = 1;
+      int b = ((      ((a)) + 1  ));
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -345,6 +485,13 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+      int a = 1;
+      int b = ((      ((a)) + 1  ));
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -356,6 +503,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       printf("b=%d\n", b);
@@ -366,6 +519,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+      int a = 1;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -377,6 +537,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+      int b = ((      ((a)) + 1  ));
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int b = ((      ((a)) + 1  ));
@@ -391,10 +558,11 @@ Succeeded to reduce node 13 from 54 to 51
 ------------------------------------------------------------
 
 
-=================Reducing node 111, size=51=================
+=================Reducing node 117, size=51=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -406,13 +574,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=111}
+    NodeDeletionAction{target_node=117}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+      int a = 1;
+                                   ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -424,14 +600,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 111
+Failed to reduce node 117
 ------------------------------------------------------------
 
 
-=================Reducing node 113, size=51=================
+=================Reducing node 119, size=51=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -444,6 +621,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__declaration_2]dd@1
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+      int a = 1;
+      int                          ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -455,14 +640,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 113
+Failed to reduce node 119
 ------------------------------------------------------------
 
 
-=================Reducing node 116, size=51=================
+=================Reducing node 122, size=51=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -474,13 +660,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=116}
+    NodeDeletionAction{target_node=122}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+      int a = 1;
+      int b                        ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -492,14 +686,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 116
+Failed to reduce node 122
 ------------------------------------------------------------
 
 
-=================Reducing node 118, size=51=================
+=================Reducing node 124, size=51=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -511,6 +706,14 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+      int a = 1;
+      int b                        ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -522,14 +725,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 118
+Failed to reduce node 124
 ------------------------------------------------------------
 
 
-=================Reducing node 119, size=51=================
+=================Reducing node 125, size=51=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -541,20 +745,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=119}
+    NodeDeletionAction{target_node=125}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 119
+Failed to reduce node 125
 ------------------------------------------------------------
 
 
-=================Reducing node 280, size=51=================
+=================Reducing node 293, size=51=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -567,6 +772,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main                          {
+      int a = 1;
+      int b = ((      ((a)) + 1  ));
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main                          {
       int a = 1;
@@ -579,6 +792,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int           argc                {
+      int a = 1;
+      int b = ((      ((a)) + 1  ));
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int           argc                {
       int a = 1;
@@ -590,14 +811,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 280
+Failed to reduce node 293
 ------------------------------------------------------------
 
 
-=================Reducing node 138, size=51=================
+=================Reducing node 145, size=51=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -610,6 +832,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+      int a = 1;
+      int b =         ((a))        ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -622,6 +852,14 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -635,6 +873,14 @@ The current best program is the following
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+      int a = 1;
+      int b =  (      ((a)) + 1  ) ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -658,14 +904,15 @@ It took less than 1 second to cancel the task.
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 138 from 51 to 47
+Succeeded to reduce node 145 from 51 to 47
 ------------------------------------------------------------
 
 
-=================Reducing node 336, size=47=================
+=================Reducing node 350, size=47=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -678,6 +925,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int main (int argc, char *argv[]) {
       int a = 1;
       int b =         ((a)) + 1    ;
@@ -689,7 +943,15 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    ;
+    --file: t.c--
+                                ;
+    int main (int argc, char *argv[]) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
+                                ;
     int main (int argc, char *argv[]) {
       int a = 1;
       int b =         ((a)) + 1    ;
@@ -700,14 +962,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 336
+Failed to reduce node 350
 ------------------------------------------------------------
 
 
-=================Reducing node 282, size=47=================
+=================Reducing node 295, size=47=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -720,6 +983,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
+    --file: t.c--
+    int printf(const char*, ...);
+    int main                          {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main                          {
       int a = 1;
@@ -731,14 +1002,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 282
+Failed to reduce node 295
 ------------------------------------------------------------
 
 
-=================Reducing node 284, size=47=================
+=================Reducing node 297, size=47=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -750,20 +1022,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=284}
+    NodeDeletionAction{target_node=297}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 284
+Failed to reduce node 297
 ------------------------------------------------------------
 
 
-=================Reducing node 338, size=47=================
+=================Reducing node 352, size=47=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -776,6 +1049,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__declaration_2]dd@1
+    --file: t.c--
+    int                         ;
+    int main (int argc, char *argv[]) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int                         ;
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -787,14 +1068,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 338
+Failed to reduce node 352
 ------------------------------------------------------------
 
 
-=================Reducing node 343, size=47=================
+=================Reducing node 357, size=47=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -806,13 +1088,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=343}
+    NodeDeletionAction{target_node=357}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf                  ;
+    int main (int argc, char *argv[]) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf                  ;
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -824,14 +1114,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 343
+Failed to reduce node 357
 ------------------------------------------------------------
 
 
-=================Reducing node 289, size=47=================
+=================Reducing node 302, size=47=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
       int a = 1;
@@ -844,6 +1135,14 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (                      ) {
       int a = 1;
@@ -857,6 +1156,14 @@ The current best program is the following
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int                   ) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (int                   ) {
       int a = 1;
@@ -870,6 +1177,14 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (    argc              ) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (    argc              ) {
       int a = 1;
@@ -883,6 +1198,14 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (          char        ) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (          char        ) {
       int a = 1;
@@ -896,6 +1219,14 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (int argc              ) {
       int a = 1;
@@ -909,6 +1240,14 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (          char *argv[]) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (          char *argv[]) {
       int a = 1;
@@ -932,14 +1271,15 @@ It took less than 1 second to cancel the task.
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 289 from 47 to 39
+Succeeded to reduce node 302 from 47 to 39
 ------------------------------------------------------------
 
 
-=================Reducing node 345, size=39=================
+=================Reducing node 359, size=39=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (                      ) {
       int a = 1;
@@ -952,6 +1292,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
+    --file: t.c--
+    int printf                  ;
+    int main (                      ) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf                  ;
     int main (                      ) {
       int a = 1;
@@ -963,14 +1311,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 345
+Failed to reduce node 359
 ------------------------------------------------------------
 
 
-=================Reducing node 347, size=39=================
+=================Reducing node 361, size=39=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (                      ) {
       int a = 1;
@@ -982,20 +1331,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=347}
+    NodeDeletionAction{target_node=361}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 347
+Failed to reduce node 361
 ------------------------------------------------------------
 
 
-=================Reducing node 176, size=39=================
+=================Reducing node 184, size=39=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (                      ) {
       int a = 1;
@@ -1008,6 +1358,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+      int a = 1;
+      int b =                 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (                      ) {
       int a = 1;
@@ -1020,6 +1378,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+      int a = 1;
+      int b =           a          ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (                      ) {
       int a = 1;
@@ -1032,6 +1398,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+      int a = 1;
+      int b =          (a)         ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (                      ) {
       int a = 1;
@@ -1044,6 +1418,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+      int a = 1;
+      int b =         ((a))        ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (                      ) {
       int a = 1;
@@ -1055,14 +1437,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 176
+Failed to reduce node 184
 ------------------------------------------------------------
 
 
-=================Reducing node 44, size=39==================
+=================Reducing node 47, size=39==================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (                      ) {
       int a = 1;
@@ -1075,6 +1458,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (                      ) {
       int a = 1;
@@ -1086,6 +1476,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+                         ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (                      ) {
       int a = 1;
@@ -1097,14 +1495,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 44
+Failed to reduce node 47
 ------------------------------------------------------------
 
 
-=================Reducing node 45, size=39==================
+=================Reducing node 48, size=39==================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (                      ) {
       int a = 1;
@@ -1116,6 +1515,14 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+                         ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (                      ) {
       int a = 1;
@@ -1127,14 +1534,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 45
+Failed to reduce node 48
 ------------------------------------------------------------
 
 
-=================Reducing node 62, size=39==================
+=================Reducing node 66, size=39==================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (                      ) {
       int a = 1;
@@ -1146,13 +1554,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=62}
+    NodeDeletionAction{target_node=66}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+      printf             ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (                      ) {
       int a = 1;
@@ -1165,6 +1581,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+             "b=%d\n"    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (                      ) {
       int a = 1;
@@ -1177,6 +1601,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+             "b=%d\n", b ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (                      ) {
       int a = 1;
@@ -1188,14 +1620,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 62
+Failed to reduce node 66
 ------------------------------------------------------------
 
 
-=================Reducing node 351, size=39=================
+=================Reducing node 365, size=39=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (                      ) {
       int a = 1;
@@ -1208,6 +1641,14 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1221,6 +1662,14 @@ The current best program is the following
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    int printf(const           );
+    int main (                      ) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const           );
     int main (                      ) {
       int a = 1;
@@ -1234,6 +1683,14 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    int printf(      char      );
+    int main (                      ) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(      char      );
     int main (                      ) {
       int a = 1;
@@ -1247,6 +1704,14 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    int printf(const char      );
+    int main (                      ) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char      );
     int main (                      ) {
       int a = 1;
@@ -1260,6 +1725,14 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    int printf(const char*     );
+    int main (                      ) {
+      int a = 1;
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*     );
     int main (                      ) {
       int a = 1;
@@ -1283,14 +1756,15 @@ It took less than 1 second to cancel the task.
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 351 from 39 to 34
+Succeeded to reduce node 365 from 39 to 34
 ------------------------------------------------------------
 
 
-=================Reducing node 245, size=34=================
+=================Reducing node 257, size=34=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1303,6 +1777,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int b =         ((a)) + 1    ;
@@ -1314,6 +1795,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+               ;
+      int b =         ((a)) + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
                ;
@@ -1325,14 +1814,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 245
+Failed to reduce node 257
 ------------------------------------------------------------
 
 
-=================Reducing node 192, size=34=================
+=================Reducing node 202, size=34=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1345,6 +1835,14 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1358,6 +1856,14 @@ The current best program is the following
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =          (a)  + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1381,14 +1887,15 @@ It took less than 1 second to cancel the task.
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 192 from 34 to 30
+Succeeded to reduce node 202 from 34 to 30
 ------------------------------------------------------------
 
 
-=================Reducing node 64, size=30==================
+=================Reducing node 68, size=30==================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1401,135 +1908,19 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__postfixExpression_2]dd@1
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
       int b =           a   + 1    ;
       printf             ;
     }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 64
-------------------------------------------------------------
-
-
-=================Reducing node 66, size=30==================
-
-The current best program is the following
-
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
       int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=66}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 66
-------------------------------------------------------------
-
-
-=================Reducing node 247, size=30=================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
-    int printf(                );
-    int main (                      ) {
-      int      ;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 247
-------------------------------------------------------------
-
-
-=================Reducing node 250, size=30=================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=250}
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    int printf(                );
-    int main (                      ) {
-      int a    ;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 250
-------------------------------------------------------------
-
-
-=================Reducing node 68, size=30==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf(           );
+      printf             ;
     }
 ------------------------------------------------------------
 
@@ -1544,6 +1935,7 @@ Failed to reduce node 68
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1559,9 +1951,169 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+===================Node reduction is done===================
+
+Failed to reduce node 70
+------------------------------------------------------------
+
+
+=================Reducing node 259, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__declaration_2]dd@1
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int      ;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(                );
+    int main (                      ) {
+      int      ;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 259
+------------------------------------------------------------
+
+
+=================Reducing node 262, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=262}
+------------------------------------------------------------
+
+
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a    ;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(                );
+    int main (                      ) {
+      int a    ;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 262
+------------------------------------------------------------
+
+
+=================Reducing node 72, size=30==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf(           );
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf(           );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 72
+------------------------------------------------------------
+
+
+=================Reducing node 74, size=30==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=74}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n"   );
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1574,6 +2126,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf(          b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1585,14 +2145,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 70
+Failed to reduce node 74
 ------------------------------------------------------------
 
 
-=================Reducing node 252, size=30=================
+=================Reducing node 264, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1604,6 +2165,14 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a    ;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a    ;
@@ -1615,14 +2184,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 252
+Failed to reduce node 264
 ------------------------------------------------------------
 
 
-=================Reducing node 253, size=30=================
+=================Reducing node 265, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1634,20 +2204,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=253}
+    NodeDeletionAction{target_node=265}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 253
+Failed to reduce node 265
 ------------------------------------------------------------
 
 
-=================Reducing node 178, size=30=================
+=================Reducing node 186, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1660,6 +2231,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a          ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1671,14 +2250,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 178
+Failed to reduce node 186
 ------------------------------------------------------------
 
 
-=================Reducing node 179, size=30=================
+=================Reducing node 187, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1690,20 +2270,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=179}
+    NodeDeletionAction{target_node=187}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 179
+Failed to reduce node 187
 ------------------------------------------------------------
 
 
-=================Reducing node 72, size=30==================
+=================Reducing node 76, size=30==================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1715,6 +2296,14 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n"   );
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1726,14 +2315,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 72
+Failed to reduce node 76
 ------------------------------------------------------------
 
 
-=================Reducing node 73, size=30==================
+=================Reducing node 77, size=30==================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1745,20 +2335,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=73}
+    NodeDeletionAction{target_node=77}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 73
+Failed to reduce node 77
 ------------------------------------------------------------
 
 
-=================Reducing node 373, size=30=================
+=================Reducing node 388, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1770,14 +2361,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 373
+Failed to reduce node 388
 ------------------------------------------------------------
 
 
-=================Reducing node 350, size=30=================
+=================Reducing node 364, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1789,14 +2381,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 350
+Failed to reduce node 364
 ------------------------------------------------------------
 
 
-=================Reducing node 348, size=30=================
+=================Reducing node 362, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1808,14 +2401,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 348
+Failed to reduce node 362
 ------------------------------------------------------------
 
 
-=================Reducing node 339, size=30=================
+=================Reducing node 353, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1827,14 +2421,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 339
+Failed to reduce node 353
 ------------------------------------------------------------
 
 
-=================Reducing node 337, size=30=================
+=================Reducing node 351, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1846,14 +2441,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 337
+Failed to reduce node 351
 ------------------------------------------------------------
 
 
-=================Reducing node 377, size=30=================
+=================Reducing node 392, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1865,14 +2461,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 377
+Failed to reduce node 392
 ------------------------------------------------------------
 
 
-=================Reducing node 329, size=30=================
+=================Reducing node 343, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1884,14 +2481,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 329
+Failed to reduce node 343
 ------------------------------------------------------------
 
 
-=================Reducing node 287, size=30=================
+=================Reducing node 300, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1903,7 +2501,47 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 287
+Failed to reduce node 300
+------------------------------------------------------------
+
+
+=================Reducing node 298, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 298
+------------------------------------------------------------
+
+
+=================Reducing node 288, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 288
 ------------------------------------------------------------
 
 
@@ -1911,6 +2549,7 @@ Failed to reduce node 287
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1926,10 +2565,11 @@ Failed to reduce node 285
 ------------------------------------------------------------
 
 
-=================Reducing node 275, size=30=================
+=================Reducing node 266, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1941,14 +2581,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 275
+Failed to reduce node 266
 ------------------------------------------------------------
 
 
-=================Reducing node 272, size=30=================
+=================Reducing node 260, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1960,14 +2601,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 272
+Failed to reduce node 260
 ------------------------------------------------------------
 
 
-=================Reducing node 254, size=30=================
+=================Reducing node 258, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -1979,7 +2621,47 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 254
+Failed to reduce node 258
+------------------------------------------------------------
+
+
+=================Reducing node 292, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 292
+------------------------------------------------------------
+
+
+=================Reducing node 251, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 251
 ------------------------------------------------------------
 
 
@@ -1987,6 +2669,7 @@ Failed to reduce node 254
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2002,10 +2685,11 @@ Failed to reduce node 248
 ------------------------------------------------------------
 
 
-=================Reducing node 246, size=30=================
+=================Reducing node 196, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2017,14 +2701,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 246
+Failed to reduce node 196
 ------------------------------------------------------------
 
 
-=================Reducing node 279, size=30=================
+=================Reducing node 195, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2036,14 +2721,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 279
+Failed to reduce node 195
 ------------------------------------------------------------
 
 
-=================Reducing node 239, size=30=================
+=================Reducing node 126, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2055,64 +2741,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 239
-------------------------------------------------------------
-
-
-=================Reducing node 236, size=30=================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 236
-------------------------------------------------------------
-
-
-=================Reducing node 187, size=30=================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 187
-------------------------------------------------------------
-
-
-=================Reducing node 186, size=30=================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 186
+Failed to reduce node 126
 ------------------------------------------------------------
 
 
@@ -2120,6 +2749,7 @@ Failed to reduce node 186
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2135,10 +2765,91 @@ Failed to reduce node 120
 ------------------------------------------------------------
 
 
+=================Reducing node 118, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 118
+------------------------------------------------------------
+
+
+=================Reducing node 255, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 255
+------------------------------------------------------------
+
+
+=================Reducing node 115, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 115
+------------------------------------------------------------
+
+
+=================Reducing node 113, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 113
+------------------------------------------------------------
+
+
 =================Reducing node 114, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2154,10 +2865,11 @@ Failed to reduce node 114
 ------------------------------------------------------------
 
 
-=================Reducing node 112, size=30=================
+=================Reducing node 96, size=30==================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2169,14 +2881,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 112
+Failed to reduce node 96
 ------------------------------------------------------------
 
 
-=================Reducing node 243, size=30=================
+=================Reducing node 78, size=30==================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2188,14 +2901,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 243
+Failed to reduce node 78
 ------------------------------------------------------------
 
 
-=================Reducing node 109, size=30=================
+=================Reducing node 73, size=30==================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2207,14 +2921,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 109
+Failed to reduce node 73
 ------------------------------------------------------------
 
 
-=================Reducing node 107, size=30=================
+=================Reducing node 71, size=30==================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2226,14 +2941,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 107
+Failed to reduce node 71
 ------------------------------------------------------------
 
 
-=================Reducing node 108, size=30=================
+=================Reducing node 49, size=30==================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2245,102 +2961,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 108
-------------------------------------------------------------
-
-
-=================Reducing node 91, size=30==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 91
-------------------------------------------------------------
-
-
-=================Reducing node 74, size=30==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 74
-------------------------------------------------------------
-
-
-=================Reducing node 69, size=30==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 69
-------------------------------------------------------------
-
-
-=================Reducing node 67, size=30==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 67
-------------------------------------------------------------
-
-
-=================Reducing node 46, size=30==================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 46
+Failed to reduce node 49
 ------------------------------------------------------------
 
 
@@ -2348,6 +2969,7 @@ Failed to reduce node 46
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2367,6 +2989,7 @@ Failed to reduce node 11
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2386,6 +3009,7 @@ Failed to reduce node 9
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2398,6 +3022,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
+    --file: t.c--
+    int printf(                );
+        main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
         main (                      ) {
       int a = 1;
@@ -2413,10 +3045,11 @@ Failed to reduce node 6
 ------------------------------------------------------------
 
 
-=================Reducing node 330, size=30=================
+=================Reducing node 344, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2428,20 +3061,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=330}
+    NodeDeletionAction{target_node=344}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 330
+Failed to reduce node 344
 ------------------------------------------------------------
 
 
-=================Reducing node 334, size=30=================
+=================Reducing node 348, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2453,92 +3087,93 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 334
+Failed to reduce node 348
 ------------------------------------------------------------
 
 
 =Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
 
 The spar-tree is the following.
-translationUnit {id=378}
-|___(+) {id=379,slot_type=kleene_plus__translationUnit_3}
-    |___aux_rule__declaration_3 {id=558,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
-    |   |___(+) {id=559,slot_type=declarationSpecifiers}
-    |   |   |___Token:int {id=577,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-    |   |___(?) {id=560,slot_type=optional__declaration_2}
-    |   |   |___directDeclarator {id=565,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
-    |   |       |___Token:printf {id=573,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-    |   |       |___(*) {id=567,slot_type=kleene_star__directDeclarator_7}
-    |   |           |___aux_rule__directDeclarator_15 {id=569,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-    |   |               |___Token:( {id=570,slot_type=LeftParen}
-    |   |               |___Token:) {id=572,slot_type=RightParen}
-    |   |___Token:; {id=561,slot_type=Semi}
-    |___functionDefinition {id=382,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___(?) {id=383,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=552,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=556,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |___directDeclarator {id=543,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=551,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=545,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=547,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=548,slot_type=LeftParen}
-        |           |___Token:) {id=550,slot_type=RightParen}
-        |___compoundStatement {id=385,slot_type=compoundStatement}
-            |___Token:{ {id=386,slot_type=LeftBrace}
-            |___(?) {id=387,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=390,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___aux_rule__declaration_3 {id=508,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=509,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=542,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=510,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=513,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:a {id=538,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=515,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=516,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=517,slot_type=Assign}
-            |       |   |               |___Token:1 {id=535,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=511,slot_type=Semi}
-            |       |___aux_rule__declaration_3 {id=462,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=463,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=506,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=464,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=467,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:b {id=502,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=469,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=470,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=471,slot_type=Assign}
-            |       |   |               |___additiveExpression {id=483,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
-            |       |   |                   |___Token:a {id=499,slot_type=[multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-            |       |   |                   |___(*) {id=485,slot_type=kleene_star__additiveExpression_1}
-            |       |   |                       |___aux_rule__additiveExpression_2 {id=486,slot_type=aux_rule__additiveExpression_2}
-            |       |   |                           |___Token:+ {id=494,slot_type=[altnt_block__additiveExpression_3,Plus]}
-            |       |   |                           |___Token:1 {id=493,slot_type=[multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=465,slot_type=Semi}
-            |       |___expressionStatement {id=395,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |           |___(?) {id=396,slot_type=optional__postfixExpression_1}
-            |           |   |___postfixExpression {id=413,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression]}
-            |           |       |___Token:printf {id=460,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |           |       |___(*) {id=415,slot_type=kleene_star__postfixExpression_2}
-            |           |           |___aux_rule__postfixExpression_11 {id=417,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
-            |           |               |___Token:( {id=418,slot_type=LeftParen}
-            |           |               |___(?) {id=419,slot_type=optional__postfixExpression_1}
-            |           |               |   |___expression {id=421,slot_type=expression}
-            |           |               |       |___(+) {id=458,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |           |               |       |   |___Token:"b=%d\n" {id=459,slot_type=StringLiteral}
-            |           |               |       |___(*) {id=423,slot_type=kleene_star__expression_1}
-            |           |               |           |___aux_rule__expression_2 {id=424,slot_type=aux_rule__expression_2}
-            |           |               |               |___Token:, {id=425,slot_type=Comma}
-            |           |               |               |___Token:b {id=442,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-            |           |               |___Token:) {id=420,slot_type=RightParen}
-            |           |___Token:; {id=397,slot_type=Semi}
-            |___Token:} {id=388,slot_type=RightBrace}
+translationUnit {id=393}
+|___(+) {id=394,slot_type=kleene_plus__translationUnit_3}
+    |___aux_rule__declaration_3 {id=580,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+    |   |___(+) {id=581,slot_type=declarationSpecifiers}
+    |   |   |___Token:int {id=599,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+    |   |___(?) {id=582,slot_type=optional__declaration_2}
+    |   |   |___directDeclarator {id=587,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
+    |   |       |___Token:printf {id=595,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+    |   |       |___(*) {id=589,slot_type=kleene_star__directDeclarator_7}
+    |   |           |___aux_rule__directDeclarator_15 {id=591,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+    |   |               |___Token:( {id=592,slot_type=LeftParen}
+    |   |               |___Token:) {id=594,slot_type=RightParen}
+    |   |___Token:; {id=583,slot_type=Semi}
+    |___functionDefinition {id=397,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=398,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=574,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=578,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=565,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=573,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=567,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=569,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=570,slot_type=LeftParen}
+        |           |___Token:) {id=572,slot_type=RightParen}
+        |___compoundStatement {id=400,slot_type=compoundStatement}
+            |___Token:{ {id=401,slot_type=LeftBrace}
+            |___(?) {id=402,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=405,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___aux_rule__declaration_3 {id=529,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=530,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=564,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=531,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=534,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:a {id=560,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=536,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=537,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=538,slot_type=Assign}
+            |       |   |               |___Token:1 {id=557,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=532,slot_type=Semi}
+            |       |___aux_rule__declaration_3 {id=481,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=482,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=527,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=483,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=486,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:b {id=523,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=488,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=489,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=490,slot_type=Assign}
+            |       |   |               |___additiveExpression {id=502,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+            |       |   |                   |___Token:a {id=520,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |                   |___(*) {id=504,slot_type=kleene_star__additiveExpression_1}
+            |       |   |                       |___aux_rule__additiveExpression_2 {id=505,slot_type=aux_rule__additiveExpression_2}
+            |       |   |                           |___Token:+ {id=514,slot_type=[altnt_block__additiveExpression_3,Plus]}
+            |       |   |                           |___Token:1 {id=513,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=484,slot_type=Semi}
+            |       |___expressionStatement {id=411,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=412,slot_type=optional__postfixExpression_1}
+            |           |   |___postfixExpression {id=430,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |           |       |___Token:printf {id=479,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |           |       |___(*) {id=432,slot_type=kleene_star__postfixExpression_2}
+            |           |           |___aux_rule__postfixExpression_11 {id=434,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |           |               |___Token:( {id=435,slot_type=LeftParen}
+            |           |               |___(?) {id=436,slot_type=optional__postfixExpression_1}
+            |           |               |   |___expression {id=438,slot_type=expression}
+            |           |               |       |___(+) {id=477,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |               |       |   |___Token:"b=%d\n" {id=478,slot_type=StringLiteral}
+            |           |               |       |___(*) {id=440,slot_type=kleene_star__expression_1}
+            |           |               |           |___aux_rule__expression_2 {id=441,slot_type=aux_rule__expression_2}
+            |           |               |               |___Token:, {id=442,slot_type=Comma}
+            |           |               |               |___Token:b {id=460,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |           |               |___Token:) {id=437,slot_type=RightParen}
+            |           |___Token:; {id=413,slot_type=Semi}
+            |___Token:} {id=403,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
-=================Reducing node 379, size=30=================
+=================Reducing node 394, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2551,19 +3186,29 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__translationUnit_3]remove whole except first
+    --file: t.c--
+    int printf(                );
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
 ------------------------------------------------------------
 
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=382}
+    NodeDeletionAction{target_node=397}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@1
+    --file: t.c--
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int main (                      ) {
       int a = 1;
       int b =           a   + 1    ;
@@ -2574,14 +3219,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 379
+Failed to reduce node 394
 ------------------------------------------------------------
 
 
-=================Reducing node 382, size=30=================
+=================Reducing node 397, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2593,13 +3239,17 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=382}
+    NodeDeletionAction{target_node=397}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(                );
+               ;
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
                ;
 ------------------------------------------------------------
@@ -2608,6 +3258,10 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(                );
+      int a = 1;
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
       int a = 1;
 ------------------------------------------------------------
@@ -2616,6 +3270,10 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(                );
+      int b =           a   + 1    ;
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
       int b =           a   + 1    ;
 ------------------------------------------------------------
@@ -2623,14 +3281,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 382
+Failed to reduce node 397
 ------------------------------------------------------------
 
 
-=================Reducing node 385, size=30=================
+=================Reducing node 400, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2642,14 +3301,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 385
+Failed to reduce node 400
 ------------------------------------------------------------
 
 
-=================Reducing node 387, size=30=================
+=================Reducing node 402, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2662,6 +3322,11 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
     }
@@ -2670,14 +3335,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 387
+Failed to reduce node 402
 ------------------------------------------------------------
 
 
-=================Reducing node 390, size=30=================
+=================Reducing node 405, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2689,13 +3355,19 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=390}
+    NodeDeletionAction{target_node=405}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove whole except first
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2706,6 +3378,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2717,6 +3396,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       printf("b=%d\n", b);
@@ -2727,6 +3412,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2738,6 +3430,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int b =           a   + 1    ;
@@ -2748,14 +3447,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 390
+Failed to reduce node 405
 ------------------------------------------------------------
 
 
-=================Reducing node 462, size=30=================
+=================Reducing node 481, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2767,13 +3467,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=462}
+    NodeDeletionAction{target_node=481}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+                                   ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2785,14 +3493,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 462
+Failed to reduce node 481
 ------------------------------------------------------------
 
 
-=================Reducing node 395, size=30=================
+=================Reducing node 411, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2804,13 +3513,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=395}
+    NodeDeletionAction{target_node=411}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+                         ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2822,14 +3539,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 395
+Failed to reduce node 411
 ------------------------------------------------------------
 
 
-=================Reducing node 396, size=30=================
+=================Reducing node 412, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2841,6 +3559,14 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+                         ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2852,14 +3578,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 396
+Failed to reduce node 412
 ------------------------------------------------------------
 
 
-=================Reducing node 413, size=30=================
+=================Reducing node 430, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2871,12 +3598,20 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=413}
+    NodeDeletionAction{target_node=430}
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf             ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2889,6 +3624,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+             "b=%d\n"    ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2901,6 +3644,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+             "b=%d\n", b ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2912,14 +3663,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 413
+Failed to reduce node 430
 ------------------------------------------------------------
 
 
-=================Reducing node 558, size=30=================
+=================Reducing node 580, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2931,14 +3683,22 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=558}
+    NodeDeletionAction{target_node=580}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    ;
+    --file: t.c--
+                                ;
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
+                                ;
     int main (                      ) {
       int a = 1;
       int b =           a   + 1    ;
@@ -2949,14 +3709,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 558
+Failed to reduce node 580
 ------------------------------------------------------------
 
 
-=================Reducing node 508, size=30=================
+=================Reducing node 529, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -2968,13 +3729,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=508}
+    NodeDeletionAction{target_node=529}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+               ;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
                ;
@@ -2986,14 +3755,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 508
+Failed to reduce node 529
 ------------------------------------------------------------
 
 
-=================Reducing node 464, size=30=================
+=================Reducing node 483, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3006,6 +3776,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__declaration_2]dd@1
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int                          ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3017,14 +3795,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 464
+Failed to reduce node 483
 ------------------------------------------------------------
 
 
-=================Reducing node 467, size=30=================
+=================Reducing node 486, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3036,13 +3815,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=467}
+    NodeDeletionAction{target_node=486}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b                        ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3055,6 +3842,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int               a          ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3066,14 +3861,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 467
+Failed to reduce node 486
 ------------------------------------------------------------
 
 
-=================Reducing node 415, size=30=================
+=================Reducing node 432, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3085,6 +3881,14 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf             ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3096,14 +3900,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 415
+Failed to reduce node 432
 ------------------------------------------------------------
 
 
-=================Reducing node 417, size=30=================
+=================Reducing node 434, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3115,20 +3920,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=417}
+    NodeDeletionAction{target_node=434}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 417
+Failed to reduce node 434
 ------------------------------------------------------------
 
 
-=================Reducing node 469, size=30=================
+=================Reducing node 488, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3140,6 +3946,14 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b                        ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3151,14 +3965,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 469
+Failed to reduce node 488
 ------------------------------------------------------------
 
 
-=================Reducing node 470, size=30=================
+=================Reducing node 489, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3170,20 +3985,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=470}
+    NodeDeletionAction{target_node=489}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 470
+Failed to reduce node 489
 ------------------------------------------------------------
 
 
-=================Reducing node 560, size=30=================
+=================Reducing node 582, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3196,6 +4012,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__declaration_2]dd@1
+    --file: t.c--
+    int                         ;
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int                         ;
     int main (                      ) {
       int a = 1;
@@ -3207,14 +4031,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 560
+Failed to reduce node 582
 ------------------------------------------------------------
 
 
-=================Reducing node 565, size=30=================
+=================Reducing node 587, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3226,15 +4051,63 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=565}
+    NodeDeletionAction{target_node=587}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
     int printf                  ;
     int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf                  ;
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 587
+------------------------------------------------------------
+
+
+=================Reducing node 565, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(                );
+    int main                          {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(                );
+    int main                          {
       int a = 1;
       int b =           a   + 1    ;
       printf("b=%d\n", b);
@@ -3248,41 +4121,11 @@ Failed to reduce node 565
 ------------------------------------------------------------
 
 
-=================Reducing node 543, size=30=================
+=================Reducing node 531, size=30=================
 
 The current best program is the following
 
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    int printf(                );
-    int main                          {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 543
-------------------------------------------------------------
-
-
-=================Reducing node 510, size=30=================
-
-The current best program is the following
-
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3294,6 +4137,14 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int      ;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int      ;
@@ -3305,14 +4156,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 510
+Failed to reduce node 531
 ------------------------------------------------------------
 
 
-=================Reducing node 513, size=30=================
+=================Reducing node 534, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3324,12 +4176,20 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=513}
+    NodeDeletionAction{target_node=534}
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a    ;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a    ;
@@ -3341,14 +4201,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 513
+Failed to reduce node 534
 ------------------------------------------------------------
 
 
-=================Reducing node 483, size=30=================
+=================Reducing node 502, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3360,6 +4221,14 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a          ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3372,6 +4241,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =                 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3383,14 +4260,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 483
+Failed to reduce node 502
 ------------------------------------------------------------
 
 
-=================Reducing node 419, size=30=================
+=================Reducing node 436, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3402,6 +4280,14 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf(           );
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3413,14 +4299,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 419
+Failed to reduce node 436
 ------------------------------------------------------------
 
 
-=================Reducing node 421, size=30=================
+=================Reducing node 438, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3432,12 +4319,20 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=421}
+    NodeDeletionAction{target_node=438}
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n"   );
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3449,6 +4344,14 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf(          b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3460,14 +4363,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 421
+Failed to reduce node 438
 ------------------------------------------------------------
 
 
-=================Reducing node 567, size=30=================
+=================Reducing node 589, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3479,8 +4383,81 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
     int printf                  ;
     int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf                  ;
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 589
+------------------------------------------------------------
+
+
+=================Reducing node 591, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=591}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 591
+------------------------------------------------------------
+
+
+=================Reducing node 567, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+    int printf(                );
+    int main                          {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(                );
+    int main                          {
       int a = 1;
       int b =           a   + 1    ;
       printf("b=%d\n", b);
@@ -3498,6 +4475,7 @@ Failed to reduce node 567
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3519,10 +4497,11 @@ Failed to reduce node 569
 ------------------------------------------------------------
 
 
-=================Reducing node 545, size=30=================
+=================Reducing node 536, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3534,61 +4513,14 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
-    int printf(                );
-    int main                          {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 545
-------------------------------------------------------------
-
-
-=================Reducing node 547, size=30=================
-
-The current best program is the following
-
+    --file: t.c--
     int printf(                );
     int main (                      ) {
-      int a = 1;
+      int a    ;
       int b =           a   + 1    ;
       printf("b=%d\n", b);
     }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=547}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 547
-------------------------------------------------------------
-
-
-=================Reducing node 515, size=30=================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a    ;
@@ -3600,14 +4532,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 515
+Failed to reduce node 536
 ------------------------------------------------------------
 
 
-=================Reducing node 516, size=30=================
+=================Reducing node 537, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3619,20 +4552,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=516}
+    NodeDeletionAction{target_node=537}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 516
+Failed to reduce node 537
 ------------------------------------------------------------
 
 
-=================Reducing node 485, size=30=================
+=================Reducing node 504, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3644,6 +4578,14 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a          ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3655,14 +4597,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 485
+Failed to reduce node 504
 ------------------------------------------------------------
 
 
-=================Reducing node 486, size=30=================
+=================Reducing node 505, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3674,20 +4617,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=486}
+    NodeDeletionAction{target_node=505}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 486
+Failed to reduce node 505
 ------------------------------------------------------------
 
 
-=================Reducing node 423, size=30=================
+=================Reducing node 440, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3699,6 +4643,14 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n"   );
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3710,14 +4662,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 423
+Failed to reduce node 440
 ------------------------------------------------------------
 
 
-=================Reducing node 424, size=30=================
+=================Reducing node 441, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3729,13 +4682,133 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=424}
+    NodeDeletionAction{target_node=441}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 424
+Failed to reduce node 441
+------------------------------------------------------------
+
+
+=================Reducing node 595, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 595
+------------------------------------------------------------
+
+
+=================Reducing node 594, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 594
+------------------------------------------------------------
+
+
+=================Reducing node 592, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 592
+------------------------------------------------------------
+
+
+=================Reducing node 583, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 583
+------------------------------------------------------------
+
+
+=================Reducing node 581, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 581
+------------------------------------------------------------
+
+
+=================Reducing node 599, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 599
 ------------------------------------------------------------
 
 
@@ -3743,6 +4816,7 @@ Failed to reduce node 424
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3762,6 +4836,7 @@ Failed to reduce node 573
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3781,6 +4856,7 @@ Failed to reduce node 572
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3796,10 +4872,11 @@ Failed to reduce node 570
 ------------------------------------------------------------
 
 
-=================Reducing node 561, size=30=================
+=================Reducing node 560, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3811,14 +4888,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 561
+Failed to reduce node 560
 ------------------------------------------------------------
 
 
-=================Reducing node 559, size=30=================
+=================Reducing node 557, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3830,83 +4908,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 559
-------------------------------------------------------------
-
-
-=================Reducing node 577, size=30=================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 577
-------------------------------------------------------------
-
-
-=================Reducing node 551, size=30=================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 551
-------------------------------------------------------------
-
-
-=================Reducing node 550, size=30=================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 550
-------------------------------------------------------------
-
-
-=================Reducing node 548, size=30=================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 548
+Failed to reduce node 557
 ------------------------------------------------------------
 
 
@@ -3914,6 +4916,7 @@ Failed to reduce node 548
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3929,10 +4932,11 @@ Failed to reduce node 538
 ------------------------------------------------------------
 
 
-=================Reducing node 535, size=30=================
+=================Reducing node 532, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3944,14 +4948,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 535
+Failed to reduce node 532
 ------------------------------------------------------------
 
 
-=================Reducing node 517, size=30=================
+=================Reducing node 530, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3963,14 +4968,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 517
+Failed to reduce node 530
 ------------------------------------------------------------
 
 
-=================Reducing node 511, size=30=================
+=================Reducing node 564, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -3982,14 +4988,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 511
+Failed to reduce node 564
 ------------------------------------------------------------
 
 
-=================Reducing node 509, size=30=================
+=================Reducing node 523, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4001,14 +5008,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 509
+Failed to reduce node 523
 ------------------------------------------------------------
 
 
-=================Reducing node 542, size=30=================
+=================Reducing node 520, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4020,14 +5028,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 542
+Failed to reduce node 520
 ------------------------------------------------------------
 
 
-=================Reducing node 502, size=30=================
+=================Reducing node 514, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4039,14 +5048,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 502
+Failed to reduce node 514
 ------------------------------------------------------------
 
 
-=================Reducing node 499, size=30=================
+=================Reducing node 513, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4058,14 +5068,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 499
+Failed to reduce node 513
 ------------------------------------------------------------
 
 
-=================Reducing node 494, size=30=================
+=================Reducing node 490, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4077,14 +5088,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 494
+Failed to reduce node 490
 ------------------------------------------------------------
 
 
-=================Reducing node 493, size=30=================
+=================Reducing node 484, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4096,14 +5108,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 493
+Failed to reduce node 484
 ------------------------------------------------------------
 
 
-=================Reducing node 471, size=30=================
+=================Reducing node 482, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4115,14 +5128,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 471
+Failed to reduce node 482
 ------------------------------------------------------------
 
 
-=================Reducing node 465, size=30=================
+=================Reducing node 527, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4134,14 +5148,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 465
+Failed to reduce node 527
 ------------------------------------------------------------
 
 
-=================Reducing node 463, size=30=================
+=================Reducing node 479, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4153,14 +5168,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 463
+Failed to reduce node 479
 ------------------------------------------------------------
 
 
-=================Reducing node 506, size=30=================
+=================Reducing node 477, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4172,7 +5188,27 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 506
+Failed to reduce node 477
+------------------------------------------------------------
+
+
+=================Reducing node 478, size=30=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 478
 ------------------------------------------------------------
 
 
@@ -4180,6 +5216,7 @@ Failed to reduce node 506
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4195,48 +5232,11 @@ Failed to reduce node 460
 ------------------------------------------------------------
 
 
-=================Reducing node 458, size=30=================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 458
-------------------------------------------------------------
-
-
-=================Reducing node 459, size=30=================
-
-The current best program is the following
-
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 459
-------------------------------------------------------------
-
-
 =================Reducing node 442, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4252,10 +5252,11 @@ Failed to reduce node 442
 ------------------------------------------------------------
 
 
-=================Reducing node 425, size=30=================
+=================Reducing node 437, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4267,14 +5268,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 425
+Failed to reduce node 437
 ------------------------------------------------------------
 
 
-=================Reducing node 420, size=30=================
+=================Reducing node 435, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4286,14 +5288,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 420
+Failed to reduce node 435
 ------------------------------------------------------------
 
 
-=================Reducing node 418, size=30=================
+=================Reducing node 413, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4305,14 +5308,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 418
+Failed to reduce node 413
 ------------------------------------------------------------
 
 
-=================Reducing node 397, size=30=================
+=================Reducing node 403, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4324,14 +5328,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 397
+Failed to reduce node 403
 ------------------------------------------------------------
 
 
-=================Reducing node 388, size=30=================
+=================Reducing node 401, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4343,33 +5348,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 388
+Failed to reduce node 401
 ------------------------------------------------------------
 
 
-=================Reducing node 386, size=30=================
+=================Reducing node 398, size=30=================
 
 The current best program is the following
 
-    int printf(                );
-    int main (                      ) {
-      int a = 1;
-      int b =           a   + 1    ;
-      printf("b=%d\n", b);
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 386
-------------------------------------------------------------
-
-
-=================Reducing node 383, size=30=================
-
-The current best program is the following
-
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4381,6 +5368,14 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int printf(                );
+        main (                      ) {
+      int a = 1;
+      int b =           a   + 1    ;
+      printf("b=%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int printf(                );
         main (                      ) {
       int a = 1;
@@ -4392,14 +5387,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 383
+Failed to reduce node 398
 ------------------------------------------------------------
 
 
-=================Reducing node 552, size=30=================
+=================Reducing node 574, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4411,20 +5407,21 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=552}
+    NodeDeletionAction{target_node=574}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 552
+Failed to reduce node 574
 ------------------------------------------------------------
 
 
-=================Reducing node 556, size=30=================
+=================Reducing node 578, size=30=================
 
 The current best program is the following
 
+    --file: t.c--
     int printf(                );
     int main (                      ) {
       int a = 1;
@@ -4436,7 +5433,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 556
+Failed to reduce node 578
 ------------------------------------------------------------
 
 

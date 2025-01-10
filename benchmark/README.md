@@ -23,7 +23,7 @@ If it does, then `bazel` is not properly installed.
 Try to trace the stdout for error messages.
 
 
-In the docker container, running `benchmark.py` will automatically build and install different reducers and run reductions 
+In the docker container, running `run_benchmark.py` will automatically build and install different reducers and run reductions 
 ```shell
 ./run_benchmark.py [args]
 ```
@@ -32,7 +32,7 @@ Note: To avoid conflicts on resources, do not use Bazel to compile the project
 in both host and virtual machine simultaneously. 
 
 ### Arguments
-Run ```./benchmark.py --help``` for a list of all the arguments
+Run ```./run_benchmark.py --help``` for a list of all the arguments
 
 #### --subjects
 Run benchmark(s) on specified subject(s). 
@@ -77,19 +77,19 @@ Perses allows additional environment variables for testing flexibilities.
 Users can pass in JVM options with `JVM_FLAGS` env variable.  
 Example of setting max heap size,
 ```
-JVM_FLAGS="-Xmx32G" ./benchmark.py ...
+JVM_FLAGS="-Xmx32G" ./run_benchmark.py ...
 ```
 
 ##### PERSES_FLAGS
 Provide additional command line arguments to Perses. If not specified, Perses would run default settings.  
 Example of disabling caching.
 ```
-PERSES_FLAGS="--query-caching false --edit-caching false" ./benchmark.py ...
+PERSES_FLAGS="--query-caching false --edit-caching false" ./run_benchmark.py ...
 ```
 
 Note: Both environment variables can be set at the same time.
 ```
-JVM_FLAGS="..." PERSES_FLAGS="..." ./benchmark.py ...
+JVM_FLAGS="..." PERSES_FLAGS="..." ./run_benchmark.py ...
 ```
 
 ## convert_result_to_csv.py

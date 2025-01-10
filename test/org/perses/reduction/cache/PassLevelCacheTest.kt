@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,7 +16,6 @@
  */
 package org.perses.reduction.cache
 
-import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -24,7 +23,7 @@ import org.junit.runners.JUnit4
 import org.perses.reduction.cache.PassLevelCache.PassLevelCacheResult
 import org.perses.reduction.reducer.PersesNodePrioritizedBfsReducer
 import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
-import org.perses.util.FileNameContentPair
+import org.perses.util.Util
 
 @RunWith(JUnit4::class)
 class PassLevelCacheTest {
@@ -36,33 +35,33 @@ class PassLevelCacheTest {
   @Test
   fun test() {
     cache.update(bfsReducer) {
-      ImmutableList.of(FileNameContentPair.createFromString("file", "content"))
+      Util.SHA512HashCode.createFromListOfStrings(listOf("content"))
     }.also {
       assertThat(it).isEqualTo(PassLevelCacheResult.NEW)
     }
     cache.update(bfsReducer) {
-      ImmutableList.of(FileNameContentPair.createFromString("file", "content"))
+      Util.SHA512HashCode.createFromListOfStrings(listOf("content"))
     }.also {
       assertThat(it).isEqualTo(PassLevelCacheResult.EXISTING_ALREADY)
     }
     cache.update(dfsReducer) {
-      ImmutableList.of(FileNameContentPair.createFromString("file", "content"))
+      Util.SHA512HashCode.createFromListOfStrings(listOf("content"))
     }.also {
       assertThat(it).isEqualTo(PassLevelCacheResult.NEW)
     }
     cache.update(dfsReducer) {
-      ImmutableList.of(FileNameContentPair.createFromString("file", "content"))
+      Util.SHA512HashCode.createFromListOfStrings(listOf("content"))
     }.also {
       assertThat(it).isEqualTo(PassLevelCacheResult.EXISTING_ALREADY)
     }
 
     cache.update(dfsReducer) {
-      ImmutableList.of(FileNameContentPair.createFromString("file", "content b"))
+      Util.SHA512HashCode.createFromListOfStrings(listOf("content b"))
     }.also {
       assertThat(it).isEqualTo(PassLevelCacheResult.NEW)
     }
     cache.update(dfsReducer) {
-      ImmutableList.of(FileNameContentPair.createFromString("file", "content b"))
+      Util.SHA512HashCode.createFromListOfStrings(listOf("content b"))
     }.also {
       assertThat(it).isEqualTo(PassLevelCacheResult.EXISTING_ALREADY)
     }

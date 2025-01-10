@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -74,7 +74,12 @@ protected constructor(
     val lexer = createLexerWithoutCache(CharStreams.fromString(literal))
     val result = lexer.nextToken()
     val next = lexer.nextToken()
-    check(next.type == Token.EOF) { next }
+    check(next.type == Token.EOF) {
+      """|literal = $literal
+         |result = ${result.text}, ${result.type}, $result
+         |next = ${next.text}, ${next.type}, $next
+      """.trimMargin()
+    }
     return result
   }
 

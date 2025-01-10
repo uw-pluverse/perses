@@ -1,9 +1,8 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
 package(default_visibility = [
     "//visibility:public",
 ])
-
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
-load("//third_party/proguard:proguard.bzl", "proguard_strip")
 
 kt_jvm_library(
     name = "perses_contants",
@@ -43,7 +42,7 @@ kt_jvm_library(
         "//src/org/perses/grammar/go:language_kind",
         "//src/org/perses/grammar/go:parser_facade",
         "//src/org/perses/grammar/java:language_kind",
-        "//src/org/perses/grammar/java:parser_facade",
+        "//src/org/perses/grammar/java:parser_facade_java8",
         "//src/org/perses/grammar/rust:language_kind",
         "//src/org/perses/grammar/rust:parser_facade",
         "//src/org/perses/grammar/scala:language_kind",
@@ -52,9 +51,26 @@ kt_jvm_library(
         "//src/org/perses/grammar/solidity/preprocessed:parser_facade",
         "//src/org/perses/grammar/sysverilog:language_kind",
         "//src/org/perses/grammar/sysverilog:parser_facade",
+        "//src/org/perses/grammar/xml:language_kind",
+        "//src/org/perses/grammar/xml:parser_facade",
+        "//src/org/perses/reduction:abstract_reducer",
+        "//src/org/perses/reduction:global_context",
         "//src/org/perses/reduction:reduction_driver_interface",
         "//src/org/perses/util:default_logging_configurations",
         "//src/org/perses/util/cmd",
+    ],
+)
+
+kt_jvm_library(
+    name = "perses_listener_manager_creator",
+    srcs = [
+        "PersesListenerManagerCreator.kt",
+    ],
+    deps = [
+        "//src/org/perses:command_options",
+        "//src/org/perses/grammar:grammar_facade",
+        "//src/org/perses/listener:listeners",
+        "//src/org/perses/util",
     ],
 )
 
@@ -65,6 +81,7 @@ kt_jvm_library(
         ":abstract_reduction_main",
         ":command_options",
         ":perses_contants",
+        ":perses_listener_manager_creator",
         "//:antlr_tool",
         "//:guava",
         "//:jcommander",
@@ -80,7 +97,7 @@ kt_jvm_library(
         "//src/org/perses/grammar/go:language_kind",
         "//src/org/perses/grammar/go:parser_facade",
         "//src/org/perses/grammar/java:language_kind",
-        "//src/org/perses/grammar/java:parser_facade",
+        "//src/org/perses/grammar/java:parser_facade_java8",
         "//src/org/perses/grammar/rust:language_kind",
         "//src/org/perses/grammar/rust:parser_facade",
         "//src/org/perses/grammar/scala:language_kind",
@@ -89,10 +106,13 @@ kt_jvm_library(
         "//src/org/perses/grammar/solidity/preprocessed:parser_facade",
         "//src/org/perses/grammar/sysverilog:language_kind",
         "//src/org/perses/grammar/sysverilog:parser_facade",
+        "//src/org/perses/grammar/xml:language_kind",
+        "//src/org/perses/grammar/xml:parser_facade",
         "//src/org/perses/program:language_kind",
         "//src/org/perses/reduction:reducer_factory",
         "//src/org/perses/reduction:reduction_driver",
         "//src/org/perses/reduction:reduction_driver_interface",
+        "//src/org/perses/reduction/reducer/trec",
         "//src/org/perses/reduction/reducer/vulcan",
         "//src/org/perses/util:default_logging_configurations",
         "//src/org/perses/util/cmd",

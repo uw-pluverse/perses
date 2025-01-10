@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -95,7 +95,7 @@ class ConfigBasedTestScriptExecutionCacheTest {
 
   fun addToCache(program: TokenizedProgram, testResult: PropertyTestResult) {
     val cacheMiss = cache.getCachedResult(program).asCacheMiss()
-    cache.addResult(cacheMiss, testResult)
+    cache.cacheProgramAndResult(cacheMiss, testResult)
   }
 
   @Test

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -55,4 +55,6 @@ abstract class AbstractDataKind(val name: String, val extensions: ImmutableSet<S
   final override fun hashCode(): Int {
     return name.hashCode()
   }
+
+  object UnknownDataKind : AbstractDataKind(name = "", extensions = ImmutableSet.of())
 }

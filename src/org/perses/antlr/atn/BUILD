@@ -1,12 +1,12 @@
-package(default_visibility = [
-    "//visibility:public",
-])
-
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 load(
     "//src/org/perses/grammar:antlr_util.bzl",
     "antlr_codegen_lexer",
 )
+
+package(default_visibility = [
+    "//visibility:public",
+])
 
 antlr_codegen_lexer(
     name = "IdentifierOnlyLexer",
@@ -56,6 +56,7 @@ kt_jvm_library(
     deps = [
         "//:antlr_runtime",
         "//:antlr_tool",
+        "//src/org/perses/antlr/atn/simulator/transition:printable_characters",
         "//src/org/perses/util:simple_stack_and_queue",
     ],
 )

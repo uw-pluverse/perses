@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,7 +20,7 @@ import com.google.common.collect.ImmutableList
 import org.antlr.v4.Tool
 import org.antlr.v4.tool.ErrorManager
 import org.perses.util.AutoDeletableFolder
-import org.perses.util.FileNameContentPair
+import org.perses.util.FileNameContentLinesPair
 import java.nio.file.Path
 
 class AntlrToolWrapper(
@@ -65,8 +65,8 @@ class AntlrToolWrapper(
 
   companion object {
     fun doesAntlrAcceptGrammar(
-      parserGrammar: FileNameContentPair,
-      lexerGrammar: FileNameContentPair? = null,
+      parserGrammar: FileNameContentLinesPair,
+      lexerGrammar: FileNameContentLinesPair? = null,
     ): AntlrAcceptanceResult {
       AutoDeletableFolder.createTempDir(
         AntlrToolWrapper::class.java.simpleName,

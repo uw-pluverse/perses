@@ -1,4 +1,3 @@
-load("//test/org/perses:test.bzl", "golden_test")
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
 
 #genrule(

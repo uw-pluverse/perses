@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -93,7 +93,7 @@ class SparTree internal constructor(
 
   fun createNodeReplacementEdit(
     actionSet: ChildHoistingActionSet,
-  ): NodeReplacementTreeEdit {
+  ): DescendantHoistingTreeEdit {
     return AbstractSparTreeEdit.createReplacementSparTreeEdit(this, actionSet)
   }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -52,24 +52,22 @@ class LocalExhaustivePatternReducer internal constructor(
   ): Sequence<IndependentSlicingTasks> {
     return computeSequenceOfCandidateNodesToSlideThrough(tree, tokenSlicingGranularity)
       .map { nodeList ->
-        val tasksBuilder = ImmutableList.builder<AbstractSlicingTask>()
-        Util.slideResverseIfSlidable(
+        val list = Util.slideReverseIfSlideable(
           nodeList,
           slidingWindowSize = tokenSlicingGranularity,
-        ) { interval ->
+        ).flatMap { sublist ->
+          val interval = sublist.interval
           check(interval.size() == tokenSlicingGranularity)
-          patternSet.patternsInUseDescending.forEach { edit ->
-            tasksBuilder.add(
-              TokenPatternDeleteTask(
-                tree,
-                nodeList,
-                interval.inclusiveStart,
-                edit,
-              ),
+          patternSet.patternsInUseDescending.map { edit ->
+            TokenPatternDeleteTask(
+              tree,
+              nodeList,
+              interval.inclusiveStart,
+              edit,
             )
           }
-        }
-        IndependentSlicingTasks(tasksBuilder.build())
+        }.toImmutableList()
+        IndependentSlicingTasks(list)
       }
   }
 
@@ -138,11 +136,7 @@ class LocalExhaustivePatternReducer internal constructor(
     private val tokenEditPattern: TokenEditPattern,
   ) : AbstractSlicingTask(
     tree,
-    nodeActionSetCache,
-    listenerManager,
-    queryCache,
-    ioManager,
-    configuration,
+    reducerContext,
     this@LocalExhaustivePatternReducer.executorService::testProgramAsync,
   ) {
 

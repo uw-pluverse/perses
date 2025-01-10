@@ -1,7 +1,4 @@
-package(default_visibility = [
-    "//visibility:public",
-])
-
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 load("//antlropt/src/org/perses/antlr/pnf:pnf.bzl", "pnf_convert")
 load(
     "//src/org/perses/grammar:antlr_util.bzl",
@@ -12,7 +9,10 @@ load(
     "//src/org/perses/grammar/adhoc:adhoc_grammar.bzl",
     "pnf_parser_facade_library",
 )
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
+package(default_visibility = [
+    "//visibility:public",
+])
 
 antlr_codegen_lexer(
     name = "cpp_lexer",

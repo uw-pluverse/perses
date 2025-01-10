@@ -1,143 +1,229 @@
 =====================Reduction starts.======================
 
 The initial program size is 56
+The command line options are:
+---
+help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+versionFlags:
+  groupName: "Version"
+  version: false
+inputFlags:
+  groupName: "Inputs"
+  testScript: "grep_based_r.sh"
+  inputFile: "t.c"
+  deps: []
+  sourceFile: "t.c"
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_grep_based_token_reduction_golden_test_perses_node_priority_with_dfs_delta_t.c"
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  fixpoint: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: true
+  enableTreeSlicer: false
+  enableLineSlicer: false
+  defaultDeltaDebuggerTypeForKleene: "DFS"
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  enableTrec: false
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: "TRUE"
+  nodeActionSetCaching: true
+  queryCacheRefreshThreshold: 0
+  enableLightweightRefreshing: true
+  enablePassCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "grep_based_reduction_progress.txt"
+  appendToProgressDumpFile: true
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileDeltaDebugger: null
+experimentFlags:
+  groupName: "Experiment Control"
+  cacheType: "COMPACT_QUERY_CACHE"
+  onDemandReducerClasses: null
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
+The sanity check has been performed. The result is PassingSanityCheckResult
 =Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
 
 The spar-tree is the following.
 translationUnit {id=1}
 |___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
-    |___aux_rule__declaration_3 {id=344,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
-    |   |___(+) {id=345,slot_type=declarationSpecifiers}
-    |   |   |___Token:int {id=385,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-    |   |___(?) {id=346,slot_type=optional__declaration_2}
-    |   |   |___directDeclarator {id=351,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
-    |   |       |___Token:printf {id=381,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-    |   |       |___(*) {id=353,slot_type=kleene_star__directDeclarator_7}
-    |   |           |___aux_rule__directDeclarator_15 {id=355,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-    |   |               |___Token:( {id=356,slot_type=LeftParen}
-    |   |               |___parameterTypeList {id=359,slot_type=[altnt_block__directDeclarator_11,parameterTypeList]}
-    |   |               |   |___parameterDeclaration {id=365,slot_type=[parameterList,parameterDeclaration]}
-    |   |               |   |   |___(+) {id=366,slot_type=declarationSpecifiers}
-    |   |               |   |   |   |___Token:const {id=380,slot_type=[declarationSpecifier,typeQualifier,Const]}
-    |   |               |   |   |   |___Token:char {id=378,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
-    |   |               |   |   |___(?) {id=368,slot_type=[altnt_block__parameterDeclaration_2,optional__typeName_1]}
-    |   |               |   |       |___Token:* {id=373,slot_type=[abstractDeclarator,pointer,altnt_block__pointer_8,Star]}
-    |   |               |   |___(?) {id=361,slot_type=optional__parameterTypeList_2}
-    |   |               |       |___aux_rule__parameterTypeList_1 {id=362,slot_type=aux_rule__parameterTypeList_1}
-    |   |               |           |___Token:, {id=363,slot_type=Comma}
-    |   |               |           |___Token:... {id=364,slot_type=Ellipsis}
-    |   |               |___Token:) {id=358,slot_type=RightParen}
-    |   |___Token:; {id=347,slot_type=Semi}
+    |___aux_rule__declaration_3 {id=360,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+    |   |___(+) {id=361,slot_type=declarationSpecifiers}
+    |   |   |___Token:int {id=402,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+    |   |___(?) {id=362,slot_type=optional__declaration_2}
+    |   |   |___directDeclarator {id=367,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
+    |   |       |___Token:printf {id=398,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+    |   |       |___(*) {id=369,slot_type=kleene_star__directDeclarator_7}
+    |   |           |___aux_rule__directDeclarator_15 {id=371,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+    |   |               |___Token:( {id=372,slot_type=LeftParen}
+    |   |               |___parameterTypeList {id=375,slot_type=[altnt_block__directDeclarator_11,parameterTypeList]}
+    |   |               |   |___parameterDeclaration {id=381,slot_type=[parameterList,parameterDeclaration]}
+    |   |               |   |   |___(+) {id=382,slot_type=declarationSpecifiers}
+    |   |               |   |   |   |___Token:const {id=397,slot_type=[declarationSpecifier,typeQualifier,Const]}
+    |   |               |   |   |   |___Token:char {id=395,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
+    |   |               |   |   |___(?) {id=384,slot_type=[altnt_block__parameterDeclaration_2,optional__typeName_1]}
+    |   |               |   |       |___(+) {id=387,slot_type=[abstractDeclarator,pointer,kleene_plus__pointer_8]}
+    |   |               |   |           |___Token:* {id=390,slot_type=[aux_rule__pointer_6,altnt_block__pointer_9,Star]}
+    |   |               |   |___(?) {id=377,slot_type=optional__parameterTypeList_2}
+    |   |               |       |___aux_rule__parameterTypeList_1 {id=378,slot_type=aux_rule__parameterTypeList_1}
+    |   |               |           |___Token:, {id=379,slot_type=Comma}
+    |   |               |           |___Token:... {id=380,slot_type=Ellipsis}
+    |   |               |___Token:) {id=374,slot_type=RightParen}
+    |   |___Token:; {id=363,slot_type=Semi}
     |___functionDefinition {id=5,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
         |___(?) {id=6,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=338,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=342,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |___directDeclarator {id=288,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=337,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=290,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=292,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=293,slot_type=LeftParen}
-        |           |___parameterList {id=297,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList]}
-        |           |   |___(+) {id=326,slot_type=[parameterDeclaration,declarationSpecifiers]}
-        |           |   |   |___Token:int {id=336,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |           |   |   |___Token:argc {id=333,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
-        |           |   |___(*) {id=299,slot_type=kleene_star__parameterList_1}
-        |           |       |___aux_rule__parameterList_2 {id=300,slot_type=aux_rule__parameterList_2}
-        |           |           |___Token:, {id=301,slot_type=Comma}
-        |           |           |___parameterDeclaration {id=302,slot_type=parameterDeclaration}
-        |           |               |___(+) {id=303,slot_type=declarationSpecifiers}
-        |           |               |   |___Token:char {id=325,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
-        |           |               |___declarator {id=305,slot_type=[altnt_block__parameterDeclaration_2,declarator]}
-        |           |                   |___(?) {id=306,slot_type=optional__declarator_1}
-        |           |                   |   |___Token:* {id=321,slot_type=[pointer,altnt_block__pointer_8,Star]}
-        |           |                   |___directDeclarator {id=307,slot_type=directDeclarator}
-        |           |                       |___Token:argv {id=317,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |           |                       |___(*) {id=309,slot_type=kleene_star__directDeclarator_7}
-        |           |                           |___aux_rule__directDeclarator_14 {id=311,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_14]}
-        |           |                               |___Token:[ {id=312,slot_type=LeftBracket}
-        |           |                               |___Token:] {id=314,slot_type=RightBracket}
-        |           |___Token:) {id=295,slot_type=RightParen}
+        |   |___(+) {id=354,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=358,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=303,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=353,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=305,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=307,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=308,slot_type=LeftParen}
+        |           |___parameterList {id=312,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList]}
+        |           |   |___(+) {id=342,slot_type=[parameterDeclaration,declarationSpecifiers]}
+        |           |   |   |___Token:int {id=352,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |           |   |   |___Token:argc {id=349,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |           |   |___(*) {id=314,slot_type=kleene_star__parameterList_1}
+        |           |       |___aux_rule__parameterList_2 {id=315,slot_type=aux_rule__parameterList_2}
+        |           |           |___Token:, {id=316,slot_type=Comma}
+        |           |           |___parameterDeclaration {id=317,slot_type=parameterDeclaration}
+        |           |               |___(+) {id=318,slot_type=declarationSpecifiers}
+        |           |               |   |___Token:char {id=341,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
+        |           |               |___declarator {id=320,slot_type=[altnt_block__parameterDeclaration_2,declarator]}
+        |           |                   |___(?) {id=321,slot_type=optional__declarator_1}
+        |           |                   |   |___(+) {id=334,slot_type=[pointer,kleene_plus__pointer_8]}
+        |           |                   |       |___Token:* {id=337,slot_type=[aux_rule__pointer_6,altnt_block__pointer_9,Star]}
+        |           |                   |___directDeclarator {id=322,slot_type=directDeclarator}
+        |           |                       |___Token:argv {id=332,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |           |                       |___(*) {id=324,slot_type=kleene_star__directDeclarator_7}
+        |           |                           |___aux_rule__directDeclarator_14 {id=326,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_14]}
+        |           |                               |___Token:[ {id=327,slot_type=LeftBracket}
+        |           |                               |___Token:] {id=329,slot_type=RightBracket}
+        |           |___Token:) {id=310,slot_type=RightParen}
         |___compoundStatement {id=8,slot_type=compoundStatement}
             |___Token:{ {id=9,slot_type=LeftBrace}
             |___(?) {id=10,slot_type=optional__compoundStatement_1}
             |   |___(+) {id=13,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___aux_rule__declaration_3 {id=253,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=254,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=287,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=255,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=258,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:a {id=283,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=260,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=261,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=262,slot_type=Assign}
-            |       |   |               |___Token:1 {id=280,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=256,slot_type=Semi}
-            |       |___aux_rule__declaration_3 {id=207,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=208,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=251,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=209,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=212,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:b {id=247,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=214,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=215,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=216,slot_type=Assign}
-            |       |   |               |___additiveExpression {id=228,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
-            |       |   |                   |___Token:a {id=244,slot_type=[multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-            |       |   |                   |___(*) {id=230,slot_type=kleene_star__additiveExpression_1}
-            |       |   |                       |___aux_rule__additiveExpression_2 {id=231,slot_type=aux_rule__additiveExpression_2}
-            |       |   |                           |___Token:+ {id=239,slot_type=[altnt_block__additiveExpression_3,Plus]}
-            |       |   |                           |___Token:1 {id=238,slot_type=[multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=210,slot_type=Semi}
-            |       |___expressionStatement {id=140,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |       |   |___(?) {id=141,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=158,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression]}
-            |       |   |       |___Token:printf {id=205,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=160,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___aux_rule__postfixExpression_11 {id=162,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
-            |       |   |               |___Token:( {id=163,slot_type=LeftParen}
-            |       |   |               |___(?) {id=164,slot_type=optional__postfixExpression_1}
-            |       |   |               |   |___expression {id=166,slot_type=expression}
-            |       |   |               |       |___(+) {id=203,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |       |   |               |       |   |___Token:"%d\n" {id=204,slot_type=StringLiteral}
-            |       |   |               |       |___(*) {id=168,slot_type=kleene_star__expression_1}
-            |       |   |               |           |___aux_rule__expression_2 {id=169,slot_type=aux_rule__expression_2}
-            |       |   |               |               |___Token:, {id=170,slot_type=Comma}
-            |       |   |               |               |___Token:b {id=187,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-            |       |   |               |___Token:) {id=165,slot_type=RightParen}
-            |       |   |___Token:; {id=142,slot_type=Semi}
-            |       |___expressionStatement {id=93,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |       |   |___(?) {id=94,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=111,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression]}
-            |       |   |       |___Token:printf {id=138,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=113,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___aux_rule__postfixExpression_11 {id=115,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
-            |       |   |               |___Token:( {id=116,slot_type=LeftParen}
-            |       |   |               |___(?) {id=117,slot_type=optional__postfixExpression_1}
-            |       |   |               |   |___(+) {id=136,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |       |   |               |       |___Token:"hello\n" {id=137,slot_type=StringLiteral}
-            |       |   |               |___Token:) {id=118,slot_type=RightParen}
-            |       |   |___Token:; {id=95,slot_type=Semi}
-            |       |___expressionStatement {id=46,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |       |   |___(?) {id=47,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=64,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression]}
-            |       |   |       |___Token:printf {id=91,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=66,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___aux_rule__postfixExpression_11 {id=68,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
-            |       |   |               |___Token:( {id=69,slot_type=LeftParen}
-            |       |   |               |___(?) {id=70,slot_type=optional__postfixExpression_1}
-            |       |   |               |   |___(+) {id=89,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |       |   |               |       |___Token:"world\n" {id=90,slot_type=StringLiteral}
-            |       |   |               |___Token:) {id=71,slot_type=RightParen}
-            |       |   |___Token:; {id=48,slot_type=Semi}
-            |       |___jumpStatement {id=21,slot_type=[aux_rule__blockItemList_2,statement,jumpStatement]}
-            |           |___aux_rule__jumpStatement_4 {id=24,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-            |           |   |___Token:return {id=25,slot_type=Return}
-            |           |   |___(?) {id=26,slot_type=optional__postfixExpression_1}
-            |           |       |___Token:0 {id=44,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |           |___Token:; {id=23,slot_type=Semi}
+            |       |___aux_rule__declaration_3 {id=267,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=268,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=302,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=269,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=272,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:a {id=298,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=274,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=275,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=276,slot_type=Assign}
+            |       |   |               |___Token:1 {id=295,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=270,slot_type=Semi}
+            |       |___aux_rule__declaration_3 {id=219,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=220,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=265,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=221,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=224,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:b {id=261,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=226,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=227,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=228,slot_type=Assign}
+            |       |   |               |___additiveExpression {id=240,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+            |       |   |                   |___Token:a {id=258,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |                   |___(*) {id=242,slot_type=kleene_star__additiveExpression_1}
+            |       |   |                       |___aux_rule__additiveExpression_2 {id=243,slot_type=aux_rule__additiveExpression_2}
+            |       |   |                           |___Token:+ {id=252,slot_type=[altnt_block__additiveExpression_3,Plus]}
+            |       |   |                           |___Token:1 {id=251,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=222,slot_type=Semi}
+            |       |___expressionStatement {id=149,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=150,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=168,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:printf {id=217,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=170,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=172,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=173,slot_type=LeftParen}
+            |       |   |               |___(?) {id=174,slot_type=optional__postfixExpression_1}
+            |       |   |               |   |___expression {id=176,slot_type=expression}
+            |       |   |               |       |___(+) {id=215,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |       |   |               |       |   |___Token:"%d\n" {id=216,slot_type=StringLiteral}
+            |       |   |               |       |___(*) {id=178,slot_type=kleene_star__expression_1}
+            |       |   |               |           |___aux_rule__expression_2 {id=179,slot_type=aux_rule__expression_2}
+            |       |   |               |               |___Token:, {id=180,slot_type=Comma}
+            |       |   |               |               |___Token:b {id=198,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |               |___Token:) {id=175,slot_type=RightParen}
+            |       |   |___Token:; {id=151,slot_type=Semi}
+            |       |___expressionStatement {id=99,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=100,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=118,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:printf {id=146,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=120,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=122,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=123,slot_type=LeftParen}
+            |       |   |               |___(?) {id=124,slot_type=optional__postfixExpression_1}
+            |       |   |               |   |___(+) {id=144,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |       |   |               |       |___Token:"hello\n" {id=145,slot_type=StringLiteral}
+            |       |   |               |___Token:) {id=125,slot_type=RightParen}
+            |       |   |___Token:; {id=101,slot_type=Semi}
+            |       |___expressionStatement {id=49,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=50,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=68,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:printf {id=96,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=70,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=72,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=73,slot_type=LeftParen}
+            |       |   |               |___(?) {id=74,slot_type=optional__postfixExpression_1}
+            |       |   |               |   |___(+) {id=94,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |       |   |               |       |___Token:"world\n" {id=95,slot_type=StringLiteral}
+            |       |   |               |___Token:) {id=75,slot_type=RightParen}
+            |       |   |___Token:; {id=51,slot_type=Semi}
+            |       |___jumpStatement {id=22,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=25,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=26,slot_type=Return}
+            |           |   |___(?) {id=27,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:0 {id=46,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |           |___Token:; {id=24,slot_type=Semi}
             |___Token:} {id=11,slot_type=RightBrace}
 ------------------------------------------------------------
 
@@ -146,6 +232,7 @@ translationUnit {id=1}
 
 The current best program is the following
 
+    --file: t.c--
     int printf(const char*, ...);
     int main (int argc, char *argv[]) {
          int a = 1;
@@ -161,6 +248,9 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__translationUnit_3]remove whole except first
+    --file: t.c--
+    int printf(const char*, ...);
+    --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
 ------------------------------------------------------------
 
@@ -174,6 +264,16 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@1
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main (int argc, char *argv[]) {
          int a = 1;
               int b = a + 1;
@@ -207,6 +307,7 @@ Succeeded to reduce node 2 from 56 to 46
 
 The current best program is the following
 
+    --file: t.c--
     int main (int argc, char *argv[]) {
          int a = 1;
               int b = a + 1;
@@ -221,21 +322,30 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    ;
+    --file: t.c--
+                  ;
+    --file: <formatted tokenized program in its original format>--
+                  ;
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    int a = 1;
+    --file: t.c--
+         int a = 1;
+    --file: <formatted tokenized program in its original format>--
+         int a = 1;
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    int b = a + 1;
+    --file: t.c--
+              int b = a + 1;
+    --file: <formatted tokenized program in its original format>--
+              int b = a + 1;
 ------------------------------------------------------------
 
 
@@ -249,6 +359,7 @@ Failed to reduce node 5
 
 The current best program is the following
 
+    --file: t.c--
     int main (int argc, char *argv[]) {
          int a = 1;
               int b = a + 1;
@@ -270,6 +381,7 @@ Failed to reduce node 8
 
 The current best program is the following
 
+    --file: t.c--
     int main (int argc, char *argv[]) {
          int a = 1;
               int b = a + 1;
@@ -284,6 +396,10 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+    }
+    --file: <formatted tokenized program in its original format>--
     int main (int argc, char *argv[]) {
     }
 ------------------------------------------------------------
@@ -299,6 +415,7 @@ Failed to reduce node 10
 
 The current best program is the following
 
+    --file: t.c--
     int main (int argc, char *argv[]) {
          int a = 1;
               int b = a + 1;
@@ -319,6 +436,11 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove whole except first
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+         int a = 1;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main (int argc, char *argv[]) {
          int a = 1;
     }
@@ -328,6 +450,13 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@3
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int main (int argc, char *argv[]) {
          int a = 1;
               int b = a + 1;
@@ -339,6 +468,15 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
     int main (int argc, char *argv[]) {
          int a = 1;
               int b = a + 1;
@@ -363,6 +501,13 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
     int main (int argc, char *argv[]) {
          int a = 1;
               int b = a + 1;
@@ -374,6 +519,14 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+    }
+    --file: <formatted tokenized program in its original format>--
     int main (int argc, char *argv[]) {
          int a = 1;
               int b = a + 1;
@@ -386,6 +539,14 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
     int main (int argc, char *argv[]) {
          int a = 1;
               int b = a + 1;
@@ -410,6 +571,11 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@3
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
     int main (int argc, char *argv[]) {
      printf("world\n");
     }
@@ -434,10 +600,11 @@ Succeeded to reduce node 13 from 46 to 19
 ------------------------------------------------------------
 
 
-=================Reducing node 288, size=19=================
+=================Reducing node 303, size=19=================
 
 The current best program is the following
 
+    --file: t.c--
     int main (int argc, char *argv[]) {
      printf("world\n");
     }
@@ -447,6 +614,11 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main                          {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
     int main                          {
      printf("world\n");
     }
@@ -457,6 +629,11 @@ The current best program is the following
 
 It took less than 1 second to cancel the task.
 
+    --file: t.c--
+    int           argc                {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
     int           argc                {
      printf("world\n");
     }
@@ -477,14 +654,15 @@ It took less than 1 second to cancel the task.
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 288 from 19 to 9
+Succeeded to reduce node 303 from 19 to 9
 ------------------------------------------------------------
 
 
-==================Reducing node 46, size=9==================
+==================Reducing node 49, size=9==================
 
 The current best program is the following
 
+    --file: t.c--
     int main                          {
      printf("world\n");
     }
@@ -494,6 +672,10 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    int main                          {
+    }
+    --file: <formatted tokenized program in its original format>--
     int main                          {
     }
 ------------------------------------------------------------
@@ -502,6 +684,11 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main                          {
+                      ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main                          {
                       ;
     }
@@ -510,14 +697,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 46
+Failed to reduce node 49
 ------------------------------------------------------------
 
 
-==================Reducing node 47, size=9==================
+==================Reducing node 50, size=9==================
 
 The current best program is the following
 
+    --file: t.c--
     int main                          {
      printf("world\n");
     }
@@ -526,6 +714,11 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int main                          {
+                      ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main                          {
                       ;
     }
@@ -534,14 +727,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 47
+Failed to reduce node 50
 ------------------------------------------------------------
 
 
-==================Reducing node 64, size=9==================
+==================Reducing node 68, size=9==================
 
 The current best program is the following
 
+    --file: t.c--
     int main                          {
      printf("world\n");
     }
@@ -550,13 +744,18 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=64}
+    NodeDeletionAction{target_node=68}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main                          {
+     printf           ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main                          {
      printf           ;
     }
@@ -566,6 +765,11 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main                          {
+            "world\n" ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main                          {
             "world\n" ;
     }
@@ -586,14 +790,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 64 from 9 to 6
+Succeeded to reduce node 68 from 9 to 6
 ------------------------------------------------------------
 
 
-=================Reducing node 337, size=6==================
+=================Reducing node 353, size=6==================
 
 The current best program is the following
 
+    --file: t.c--
     int main                          {
             "world\n" ;
     }
@@ -602,14 +807,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 337
+Failed to reduce node 353
 ------------------------------------------------------------
 
 
-==================Reducing node 89, size=6==================
+==================Reducing node 94, size=6==================
 
 The current best program is the following
 
+    --file: t.c--
     int main                          {
             "world\n" ;
     }
@@ -618,6 +824,11 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
+    --file: t.c--
+    int main                          {
+                      ;
+    }
+    --file: <formatted tokenized program in its original format>--
     int main                          {
                       ;
     }
@@ -626,14 +837,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 89
+Failed to reduce node 94
 ------------------------------------------------------------
 
 
-==================Reducing node 90, size=6==================
+==================Reducing node 95, size=6==================
 
 The current best program is the following
 
+    --file: t.c--
     int main                          {
             "world\n" ;
     }
@@ -642,14 +854,15 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 90
+Failed to reduce node 95
 ------------------------------------------------------------
 
 
-==================Reducing node 48, size=6==================
+==================Reducing node 51, size=6==================
 
 The current best program is the following
 
+    --file: t.c--
     int main                          {
             "world\n" ;
     }
@@ -658,7 +871,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 48
+Failed to reduce node 51
 ------------------------------------------------------------
 
 
@@ -666,6 +879,7 @@ Failed to reduce node 48
 
 The current best program is the following
 
+    --file: t.c--
     int main                          {
             "world\n" ;
     }
@@ -682,6 +896,7 @@ Failed to reduce node 11
 
 The current best program is the following
 
+    --file: t.c--
     int main                          {
             "world\n" ;
     }
@@ -698,6 +913,7 @@ Failed to reduce node 9
 
 The current best program is the following
 
+    --file: t.c--
     int main                          {
             "world\n" ;
     }
@@ -707,7 +923,12 @@ The current best program is the following
 ============Testing the following program: pass=============
 
 // edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
-    main                          {
+    --file: t.c--
+        main                          {
+            "world\n" ;
+    }
+    --file: <formatted tokenized program in its original format>--
+        main                          {
             "world\n" ;
     }
 ------------------------------------------------------------
@@ -734,28 +955,29 @@ Succeeded to reduce node 6 from 6 to 5
 =Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
 
 The spar-tree is the following.
-translationUnit {id=386}
-|___(+) {id=387,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=389,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___Token:main {id=423,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-        |___compoundStatement {id=391,slot_type=compoundStatement}
-            |___Token:{ {id=392,slot_type=LeftBrace}
-            |___(?) {id=393,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=396,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=399,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |           |___(?) {id=400,slot_type=optional__postfixExpression_1}
-            |           |   |___(+) {id=419,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |           |       |___Token:"world\n" {id=420,slot_type=StringLiteral}
-            |           |___Token:; {id=401,slot_type=Semi}
-            |___Token:} {id=394,slot_type=RightBrace}
+translationUnit {id=403}
+|___(+) {id=404,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=406,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___Token:main {id=442,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |___compoundStatement {id=408,slot_type=compoundStatement}
+            |___Token:{ {id=409,slot_type=LeftBrace}
+            |___(?) {id=410,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=413,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=417,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=418,slot_type=optional__postfixExpression_1}
+            |           |   |___(+) {id=438,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |       |___Token:"world\n" {id=439,slot_type=StringLiteral}
+            |           |___Token:; {id=419,slot_type=Semi}
+            |___Token:} {id=411,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
-=================Reducing node 387, size=5==================
+=================Reducing node 404, size=5==================
 
 The current best program is the following
 
-    main                          {
+    --file: t.c--
+        main                          {
             "world\n" ;
     }
 ------------------------------------------------------------
@@ -763,15 +985,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 387
+Failed to reduce node 404
 ------------------------------------------------------------
 
 
-=================Reducing node 389, size=5==================
+=================Reducing node 406, size=5==================
 
 The current best program is the following
 
-    main                          {
+    --file: t.c--
+        main                          {
             "world\n" ;
     }
 ------------------------------------------------------------
@@ -779,21 +1002,25 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
-    ;
+    --file: t.c--
+                      ;
+    --file: <formatted tokenized program in its original format>--
+                      ;
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 389
+Failed to reduce node 406
 ------------------------------------------------------------
 
 
-=================Reducing node 391, size=5==================
+=================Reducing node 408, size=5==================
 
 The current best program is the following
 
-    main                          {
+    --file: t.c--
+        main                          {
             "world\n" ;
     }
 ------------------------------------------------------------
@@ -801,15 +1028,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 391
+Failed to reduce node 408
 ------------------------------------------------------------
 
 
-=================Reducing node 393, size=5==================
+=================Reducing node 410, size=5==================
 
 The current best program is the following
 
-    main                          {
+    --file: t.c--
+        main                          {
             "world\n" ;
     }
 ------------------------------------------------------------
@@ -818,22 +1046,27 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
-    main                          {
+    --file: t.c--
+        main                          {
+    }
+    --file: <formatted tokenized program in its original format>--
+        main                          {
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 393
+Failed to reduce node 410
 ------------------------------------------------------------
 
 
-=================Reducing node 396, size=5==================
+=================Reducing node 413, size=5==================
 
 The current best program is the following
 
-    main                          {
+    --file: t.c--
+        main                          {
             "world\n" ;
     }
 ------------------------------------------------------------
@@ -841,21 +1074,22 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=396}
+    NodeDeletionAction{target_node=413}
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 396
+Failed to reduce node 413
 ------------------------------------------------------------
 
 
-=================Reducing node 399, size=5==================
+=================Reducing node 417, size=5==================
 
 The current best program is the following
 
-    main                          {
+    --file: t.c--
+        main                          {
             "world\n" ;
     }
 ------------------------------------------------------------
@@ -863,7 +1097,11 @@ The current best program is the following
 
 =========Cache hit for the following program: fail==========
 
-    main                          {
+    --file: t.c--
+        main                          {
+    }
+    --file: <formatted tokenized program in its original format>--
+        main                          {
     }
 ------------------------------------------------------------
 
@@ -871,7 +1109,12 @@ The current best program is the following
 ============Testing the following program: fail=============
 
 // edit action set type: [regular node]compatible replacement
-    main                          {
+    --file: t.c--
+        main                          {
+                      ;
+    }
+    --file: <formatted tokenized program in its original format>--
+        main                          {
                       ;
     }
 ------------------------------------------------------------
@@ -879,15 +1122,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 399
+Failed to reduce node 417
 ------------------------------------------------------------
 
 
-=================Reducing node 423, size=5==================
+=================Reducing node 442, size=5==================
 
 The current best program is the following
 
-    main                          {
+    --file: t.c--
+        main                          {
             "world\n" ;
     }
 ------------------------------------------------------------
@@ -895,47 +1139,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 423
-------------------------------------------------------------
-
-
-=================Reducing node 401, size=5==================
-
-The current best program is the following
-
-    main                          {
-            "world\n" ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 401
-------------------------------------------------------------
-
-
-=================Reducing node 400, size=5==================
-
-The current best program is the following
-
-    main                          {
-            "world\n" ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    main                          {
-                      ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 400
+Failed to reduce node 442
 ------------------------------------------------------------
 
 
@@ -943,15 +1147,10 @@ Failed to reduce node 400
 
 The current best program is the following
 
-    main                          {
+    --file: t.c--
+        main                          {
             "world\n" ;
     }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=419}
 ------------------------------------------------------------
 
 
@@ -961,11 +1160,65 @@ Failed to reduce node 419
 ------------------------------------------------------------
 
 
-=================Reducing node 420, size=5==================
+=================Reducing node 418, size=5==================
 
 The current best program is the following
 
-    main                          {
+    --file: t.c--
+        main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+=========Cache hit for the following program: fail==========
+
+    --file: t.c--
+        main                          {
+                      ;
+    }
+    --file: <formatted tokenized program in its original format>--
+        main                          {
+                      ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 418
+------------------------------------------------------------
+
+
+=================Reducing node 438, size=5==================
+
+The current best program is the following
+
+    --file: t.c--
+        main                          {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=438}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 438
+------------------------------------------------------------
+
+
+=================Reducing node 439, size=5==================
+
+The current best program is the following
+
+    --file: t.c--
+        main                          {
             "world\n" ;
     }
 ------------------------------------------------------------
@@ -973,15 +1226,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 420
+Failed to reduce node 439
 ------------------------------------------------------------
 
 
-=================Reducing node 394, size=5==================
+=================Reducing node 411, size=5==================
 
 The current best program is the following
 
-    main                          {
+    --file: t.c--
+        main                          {
             "world\n" ;
     }
 ------------------------------------------------------------
@@ -989,15 +1243,16 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 394
+Failed to reduce node 411
 ------------------------------------------------------------
 
 
-=================Reducing node 392, size=5==================
+=================Reducing node 409, size=5==================
 
 The current best program is the following
 
-    main                          {
+    --file: t.c--
+        main                          {
             "world\n" ;
     }
 ------------------------------------------------------------
@@ -1005,33 +1260,34 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 392
+Failed to reduce node 409
 ------------------------------------------------------------
 
 
 ==Fixpoint iteration 3. Reducer: concurrent_token_slicer@1==
 
 The spar-tree is the following.
-translationUnit {id=386}
-|___(+) {id=387,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=389,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___Token:main {id=423,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-        |___compoundStatement {id=391,slot_type=compoundStatement}
-            |___Token:{ {id=392,slot_type=LeftBrace}
-            |___(?) {id=393,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=396,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=399,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |           |___(?) {id=400,slot_type=optional__postfixExpression_1}
-            |           |   |___(+) {id=419,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |           |       |___Token:"world\n" {id=420,slot_type=StringLiteral}
-            |           |___Token:; {id=401,slot_type=Semi}
-            |___Token:} {id=394,slot_type=RightBrace}
+translationUnit {id=403}
+|___(+) {id=404,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=406,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___Token:main {id=442,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |___compoundStatement {id=408,slot_type=compoundStatement}
+            |___Token:{ {id=409,slot_type=LeftBrace}
+            |___(?) {id=410,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=413,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=417,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=418,slot_type=optional__postfixExpression_1}
+            |           |   |___(+) {id=438,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |       |___Token:"world\n" {id=439,slot_type=StringLiteral}
+            |           |___Token:; {id=419,slot_type=Semi}
+            |___Token:} {id=411,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
-    main                          {
+    --file: t.c--
+        main                          {
                       ;
     }
 ------------------------------------------------------------
@@ -1040,7 +1296,11 @@ translationUnit {id=386}
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@1
-    main                          {
+    --file: t.c--
+        main                          {
+            "world\n" ;
+    --file: <formatted tokenized program in its original format>--
+        main                          {
             "world\n" ;
 ------------------------------------------------------------
 
@@ -1048,7 +1308,12 @@ translationUnit {id=386}
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@1
-    main                          {
+    --file: t.c--
+        main                          {
+            "world\n"
+    }
+    --file: <formatted tokenized program in its original format>--
+        main                          {
             "world\n"
     }
 ------------------------------------------------------------
@@ -1057,7 +1322,12 @@ translationUnit {id=386}
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@1
-    main
+    --file: t.c--
+        main
+            "world\n" ;
+    }
+    --file: <formatted tokenized program in its original format>--
+        main
             "world\n" ;
     }
 ------------------------------------------------------------
@@ -1066,7 +1336,12 @@ translationUnit {id=386}
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@1
-    {
+    --file: t.c--
+                                      {
+            "world\n" ;
+    }
+    --file: <formatted tokenized program in its original format>--
+                                      {
             "world\n" ;
     }
 ------------------------------------------------------------
@@ -1075,26 +1350,27 @@ translationUnit {id=386}
 ==Fixpoint iteration 4. Reducer: concurrent_token_slicer@2==
 
 The spar-tree is the following.
-translationUnit {id=386}
-|___(+) {id=387,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=389,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___Token:main {id=423,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-        |___compoundStatement {id=391,slot_type=compoundStatement}
-            |___Token:{ {id=392,slot_type=LeftBrace}
-            |___(?) {id=393,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=396,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=399,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |           |___(?) {id=400,slot_type=optional__postfixExpression_1}
-            |           |   |___(+) {id=419,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |           |       |___Token:"world\n" {id=420,slot_type=StringLiteral}
-            |           |___Token:; {id=401,slot_type=Semi}
-            |___Token:} {id=394,slot_type=RightBrace}
+translationUnit {id=403}
+|___(+) {id=404,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=406,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___Token:main {id=442,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |___compoundStatement {id=408,slot_type=compoundStatement}
+            |___Token:{ {id=409,slot_type=LeftBrace}
+            |___(?) {id=410,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=413,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=417,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=418,slot_type=optional__postfixExpression_1}
+            |           |   |___(+) {id=438,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |       |___Token:"world\n" {id=439,slot_type=StringLiteral}
+            |           |___Token:; {id=419,slot_type=Semi}
+            |___Token:} {id=411,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
 =========Cache hit for the following program: fail==========
 
-    main                          {
+    --file: t.c--
+        main                          {
     }
 ------------------------------------------------------------
 
@@ -1102,7 +1378,11 @@ translationUnit {id=386}
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@2
-    main                          {
+    --file: t.c--
+        main                          {
+            "world\n"
+    --file: <formatted tokenized program in its original format>--
+        main                          {
             "world\n"
 ------------------------------------------------------------
 
@@ -1110,7 +1390,12 @@ translationUnit {id=386}
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@2
-    main
+    --file: t.c--
+        main
+                      ;
+    }
+    --file: <formatted tokenized program in its original format>--
+        main
                       ;
     }
 ------------------------------------------------------------
@@ -1119,7 +1404,11 @@ translationUnit {id=386}
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@2
-    "world\n" ;
+    --file: t.c--
+            "world\n" ;
+    }
+    --file: <formatted tokenized program in its original format>--
+            "world\n" ;
     }
 ------------------------------------------------------------
 
@@ -1127,34 +1416,41 @@ translationUnit {id=386}
 ==Fixpoint iteration 5. Reducer: concurrent_token_slicer@3==
 
 The spar-tree is the following.
-translationUnit {id=386}
-|___(+) {id=387,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=389,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___Token:main {id=423,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-        |___compoundStatement {id=391,slot_type=compoundStatement}
-            |___Token:{ {id=392,slot_type=LeftBrace}
-            |___(?) {id=393,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=396,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=399,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |           |___(?) {id=400,slot_type=optional__postfixExpression_1}
-            |           |   |___(+) {id=419,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |           |       |___Token:"world\n" {id=420,slot_type=StringLiteral}
-            |           |___Token:; {id=401,slot_type=Semi}
-            |___Token:} {id=394,slot_type=RightBrace}
+translationUnit {id=403}
+|___(+) {id=404,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=406,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___Token:main {id=442,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |___compoundStatement {id=408,slot_type=compoundStatement}
+            |___Token:{ {id=409,slot_type=LeftBrace}
+            |___(?) {id=410,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=413,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=417,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=418,slot_type=optional__postfixExpression_1}
+            |           |   |___(+) {id=438,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |       |___Token:"world\n" {id=439,slot_type=StringLiteral}
+            |           |___Token:; {id=419,slot_type=Semi}
+            |___Token:} {id=411,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@3
-    main                          {
+    --file: t.c--
+        main                          {
+    --file: <formatted tokenized program in its original format>--
+        main                          {
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@3
-    main
+    --file: t.c--
+        main
+    }
+    --file: <formatted tokenized program in its original format>--
+        main
     }
 ------------------------------------------------------------
 
@@ -1162,7 +1458,11 @@ translationUnit {id=386}
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@3
-    ;
+    --file: t.c--
+                      ;
+    }
+    --file: <formatted tokenized program in its original format>--
+                      ;
     }
 ------------------------------------------------------------
 
@@ -1170,33 +1470,39 @@ translationUnit {id=386}
 ==Fixpoint iteration 6. Reducer: concurrent_token_slicer@4==
 
 The spar-tree is the following.
-translationUnit {id=386}
-|___(+) {id=387,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=389,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___Token:main {id=423,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-        |___compoundStatement {id=391,slot_type=compoundStatement}
-            |___Token:{ {id=392,slot_type=LeftBrace}
-            |___(?) {id=393,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=396,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=399,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |           |___(?) {id=400,slot_type=optional__postfixExpression_1}
-            |           |   |___(+) {id=419,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |           |       |___Token:"world\n" {id=420,slot_type=StringLiteral}
-            |           |___Token:; {id=401,slot_type=Semi}
-            |___Token:} {id=394,slot_type=RightBrace}
+translationUnit {id=403}
+|___(+) {id=404,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=406,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___Token:main {id=442,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |___compoundStatement {id=408,slot_type=compoundStatement}
+            |___Token:{ {id=409,slot_type=LeftBrace}
+            |___(?) {id=410,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=413,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=417,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=418,slot_type=optional__postfixExpression_1}
+            |           |   |___(+) {id=438,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |       |___Token:"world\n" {id=439,slot_type=StringLiteral}
+            |           |___Token:; {id=419,slot_type=Semi}
+            |___Token:} {id=411,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@4
-    main
+    --file: t.c--
+        main
+    --file: <formatted tokenized program in its original format>--
+        main
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@4
+    --file: t.c--
+    }
+    --file: <formatted tokenized program in its original format>--
     }
 ------------------------------------------------------------
 
@@ -1204,206 +1510,208 @@ translationUnit {id=386}
 ==Fixpoint iteration 7. Reducer: concurrent_token_slicer@5==
 
 The spar-tree is the following.
-translationUnit {id=386}
-|___(+) {id=387,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=389,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___Token:main {id=423,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-        |___compoundStatement {id=391,slot_type=compoundStatement}
-            |___Token:{ {id=392,slot_type=LeftBrace}
-            |___(?) {id=393,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=396,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=399,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |           |___(?) {id=400,slot_type=optional__postfixExpression_1}
-            |           |   |___(+) {id=419,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |           |       |___Token:"world\n" {id=420,slot_type=StringLiteral}
-            |           |___Token:; {id=401,slot_type=Semi}
-            |___Token:} {id=394,slot_type=RightBrace}
+translationUnit {id=403}
+|___(+) {id=404,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=406,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___Token:main {id=442,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |___compoundStatement {id=408,slot_type=compoundStatement}
+            |___Token:{ {id=409,slot_type=LeftBrace}
+            |___(?) {id=410,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=413,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=417,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=418,slot_type=optional__postfixExpression_1}
+            |           |   |___(+) {id=438,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |       |___Token:"world\n" {id=439,slot_type=StringLiteral}
+            |           |___Token:; {id=419,slot_type=Semi}
+            |___Token:} {id=411,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
 // edit action set type: token slicer@5
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 ==Fixpoint iteration 8. Reducer: concurrent_token_slicer@6==
 
 The spar-tree is the following.
-translationUnit {id=386}
-|___(+) {id=387,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=389,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___Token:main {id=423,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-        |___compoundStatement {id=391,slot_type=compoundStatement}
-            |___Token:{ {id=392,slot_type=LeftBrace}
-            |___(?) {id=393,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=396,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=399,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |           |___(?) {id=400,slot_type=optional__postfixExpression_1}
-            |           |   |___(+) {id=419,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |           |       |___Token:"world\n" {id=420,slot_type=StringLiteral}
-            |           |___Token:; {id=401,slot_type=Semi}
-            |___Token:} {id=394,slot_type=RightBrace}
+translationUnit {id=403}
+|___(+) {id=404,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=406,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___Token:main {id=442,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |___compoundStatement {id=408,slot_type=compoundStatement}
+            |___Token:{ {id=409,slot_type=LeftBrace}
+            |___(?) {id=410,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=413,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=417,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=418,slot_type=optional__postfixExpression_1}
+            |           |   |___(+) {id=438,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |       |___Token:"world\n" {id=439,slot_type=StringLiteral}
+            |           |___Token:; {id=419,slot_type=Semi}
+            |___Token:} {id=411,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
 ==Fixpoint iteration 9. Reducer: concurrent_token_slicer@7==
 
 The spar-tree is the following.
-translationUnit {id=386}
-|___(+) {id=387,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=389,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___Token:main {id=423,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-        |___compoundStatement {id=391,slot_type=compoundStatement}
-            |___Token:{ {id=392,slot_type=LeftBrace}
-            |___(?) {id=393,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=396,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=399,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |           |___(?) {id=400,slot_type=optional__postfixExpression_1}
-            |           |   |___(+) {id=419,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |           |       |___Token:"world\n" {id=420,slot_type=StringLiteral}
-            |           |___Token:; {id=401,slot_type=Semi}
-            |___Token:} {id=394,slot_type=RightBrace}
+translationUnit {id=403}
+|___(+) {id=404,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=406,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___Token:main {id=442,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |___compoundStatement {id=408,slot_type=compoundStatement}
+            |___Token:{ {id=409,slot_type=LeftBrace}
+            |___(?) {id=410,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=413,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=417,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=418,slot_type=optional__postfixExpression_1}
+            |           |   |___(+) {id=438,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |       |___Token:"world\n" {id=439,slot_type=StringLiteral}
+            |           |___Token:; {id=419,slot_type=Semi}
+            |___Token:} {id=411,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
 =Fixpoint iteration 10. Reducer: concurrent_token_slicer@8==
 
 The spar-tree is the following.
-translationUnit {id=386}
-|___(+) {id=387,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=389,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___Token:main {id=423,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-        |___compoundStatement {id=391,slot_type=compoundStatement}
-            |___Token:{ {id=392,slot_type=LeftBrace}
-            |___(?) {id=393,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=396,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=399,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |           |___(?) {id=400,slot_type=optional__postfixExpression_1}
-            |           |   |___(+) {id=419,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |           |       |___Token:"world\n" {id=420,slot_type=StringLiteral}
-            |           |___Token:; {id=401,slot_type=Semi}
-            |___Token:} {id=394,slot_type=RightBrace}
+translationUnit {id=403}
+|___(+) {id=404,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=406,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___Token:main {id=442,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |___compoundStatement {id=408,slot_type=compoundStatement}
+            |___Token:{ {id=409,slot_type=LeftBrace}
+            |___(?) {id=410,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=413,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=417,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=418,slot_type=optional__postfixExpression_1}
+            |           |   |___(+) {id=438,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |       |___Token:"world\n" {id=439,slot_type=StringLiteral}
+            |           |___Token:; {id=419,slot_type=Semi}
+            |___Token:} {id=411,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
 =Fixpoint iteration 11. Reducer: concurrent_token_slicer@9==
 
 The spar-tree is the following.
-translationUnit {id=386}
-|___(+) {id=387,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=389,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___Token:main {id=423,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-        |___compoundStatement {id=391,slot_type=compoundStatement}
-            |___Token:{ {id=392,slot_type=LeftBrace}
-            |___(?) {id=393,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=396,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=399,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |           |___(?) {id=400,slot_type=optional__postfixExpression_1}
-            |           |   |___(+) {id=419,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |           |       |___Token:"world\n" {id=420,slot_type=StringLiteral}
-            |           |___Token:; {id=401,slot_type=Semi}
-            |___Token:} {id=394,slot_type=RightBrace}
+translationUnit {id=403}
+|___(+) {id=404,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=406,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___Token:main {id=442,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |___compoundStatement {id=408,slot_type=compoundStatement}
+            |___Token:{ {id=409,slot_type=LeftBrace}
+            |___(?) {id=410,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=413,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=417,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=418,slot_type=optional__postfixExpression_1}
+            |           |   |___(+) {id=438,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |       |___Token:"world\n" {id=439,slot_type=StringLiteral}
+            |           |___Token:; {id=419,slot_type=Semi}
+            |___Token:} {id=411,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
 =Fixpoint iteration 12. Reducer: concurrent_token_slicer@10=
 
 The spar-tree is the following.
-translationUnit {id=386}
-|___(+) {id=387,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=389,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___Token:main {id=423,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-        |___compoundStatement {id=391,slot_type=compoundStatement}
-            |___Token:{ {id=392,slot_type=LeftBrace}
-            |___(?) {id=393,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=396,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=399,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |           |___(?) {id=400,slot_type=optional__postfixExpression_1}
-            |           |   |___(+) {id=419,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |           |       |___Token:"world\n" {id=420,slot_type=StringLiteral}
-            |           |___Token:; {id=401,slot_type=Semi}
-            |___Token:} {id=394,slot_type=RightBrace}
+translationUnit {id=403}
+|___(+) {id=404,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=406,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___Token:main {id=442,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |___compoundStatement {id=408,slot_type=compoundStatement}
+            |___Token:{ {id=409,slot_type=LeftBrace}
+            |___(?) {id=410,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=413,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=417,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=418,slot_type=optional__postfixExpression_1}
+            |           |   |___(+) {id=438,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |       |___Token:"world\n" {id=439,slot_type=StringLiteral}
+            |           |___Token:; {id=419,slot_type=Semi}
+            |___Token:} {id=411,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
 =Fixpoint iteration 13. Reducer: concurrent_token_slicer@11=
 
 The spar-tree is the following.
-translationUnit {id=386}
-|___(+) {id=387,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=389,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___Token:main {id=423,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-        |___compoundStatement {id=391,slot_type=compoundStatement}
-            |___Token:{ {id=392,slot_type=LeftBrace}
-            |___(?) {id=393,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=396,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=399,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |           |___(?) {id=400,slot_type=optional__postfixExpression_1}
-            |           |   |___(+) {id=419,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |           |       |___Token:"world\n" {id=420,slot_type=StringLiteral}
-            |           |___Token:; {id=401,slot_type=Semi}
-            |___Token:} {id=394,slot_type=RightBrace}
+translationUnit {id=403}
+|___(+) {id=404,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=406,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___Token:main {id=442,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |___compoundStatement {id=408,slot_type=compoundStatement}
+            |___Token:{ {id=409,slot_type=LeftBrace}
+            |___(?) {id=410,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=413,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=417,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=418,slot_type=optional__postfixExpression_1}
+            |           |   |___(+) {id=438,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |       |___Token:"world\n" {id=439,slot_type=StringLiteral}
+            |           |___Token:; {id=419,slot_type=Semi}
+            |___Token:} {id=411,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
 =Fixpoint iteration 14. Reducer: concurrent_token_slicer@12=
 
 The spar-tree is the following.
-translationUnit {id=386}
-|___(+) {id=387,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=389,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___Token:main {id=423,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-        |___compoundStatement {id=391,slot_type=compoundStatement}
-            |___Token:{ {id=392,slot_type=LeftBrace}
-            |___(?) {id=393,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=396,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=399,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |           |___(?) {id=400,slot_type=optional__postfixExpression_1}
-            |           |   |___(+) {id=419,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |           |       |___Token:"world\n" {id=420,slot_type=StringLiteral}
-            |           |___Token:; {id=401,slot_type=Semi}
-            |___Token:} {id=394,slot_type=RightBrace}
+translationUnit {id=403}
+|___(+) {id=404,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=406,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___Token:main {id=442,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |___compoundStatement {id=408,slot_type=compoundStatement}
+            |___Token:{ {id=409,slot_type=LeftBrace}
+            |___(?) {id=410,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=413,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=417,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=418,slot_type=optional__postfixExpression_1}
+            |           |   |___(+) {id=438,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |       |___Token:"world\n" {id=439,slot_type=StringLiteral}
+            |           |___Token:; {id=419,slot_type=Semi}
+            |___Token:} {id=411,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
 =Fixpoint iteration 15. Reducer: concurrent_token_slicer@13=
 
 The spar-tree is the following.
-translationUnit {id=386}
-|___(+) {id=387,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=389,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___Token:main {id=423,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-        |___compoundStatement {id=391,slot_type=compoundStatement}
-            |___Token:{ {id=392,slot_type=LeftBrace}
-            |___(?) {id=393,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=396,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=399,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |           |___(?) {id=400,slot_type=optional__postfixExpression_1}
-            |           |   |___(+) {id=419,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |           |       |___Token:"world\n" {id=420,slot_type=StringLiteral}
-            |           |___Token:; {id=401,slot_type=Semi}
-            |___Token:} {id=394,slot_type=RightBrace}
+translationUnit {id=403}
+|___(+) {id=404,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=406,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___Token:main {id=442,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |___compoundStatement {id=408,slot_type=compoundStatement}
+            |___Token:{ {id=409,slot_type=LeftBrace}
+            |___(?) {id=410,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=413,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=417,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=418,slot_type=optional__postfixExpression_1}
+            |           |   |___(+) {id=438,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |       |___Token:"world\n" {id=439,slot_type=StringLiteral}
+            |           |___Token:; {id=419,slot_type=Semi}
+            |___Token:} {id=411,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
 =Fixpoint iteration 16. Reducer: concurrent_token_slicer@14=
 
 The spar-tree is the following.
-translationUnit {id=386}
-|___(+) {id=387,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=389,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___Token:main {id=423,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-        |___compoundStatement {id=391,slot_type=compoundStatement}
-            |___Token:{ {id=392,slot_type=LeftBrace}
-            |___(?) {id=393,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=396,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=399,slot_type=[aux_rule__blockItemList_2,statement,expressionStatement]}
-            |           |___(?) {id=400,slot_type=optional__postfixExpression_1}
-            |           |   |___(+) {id=419,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |           |       |___Token:"world\n" {id=420,slot_type=StringLiteral}
-            |           |___Token:; {id=401,slot_type=Semi}
-            |___Token:} {id=394,slot_type=RightBrace}
+translationUnit {id=403}
+|___(+) {id=404,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=406,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___Token:main {id=442,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |___compoundStatement {id=408,slot_type=compoundStatement}
+            |___Token:{ {id=409,slot_type=LeftBrace}
+            |___(?) {id=410,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=413,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=417,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=418,slot_type=optional__postfixExpression_1}
+            |           |   |___(+) {id=438,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |       |___Token:"world\n" {id=439,slot_type=StringLiteral}
+            |           |___Token:; {id=419,slot_type=Semi}
+            |___Token:} {id=411,slot_type=RightBrace}
 ------------------------------------------------------------
 
 

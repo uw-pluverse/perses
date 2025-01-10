@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -65,7 +65,7 @@ class SourceFileTest {
 
   @Test
   fun testBinaryFile() {
-    val file = FileWithContent(origFile)
+    val file = FilePathWithContent(origFile)
     val copy = tempDir.resolve("copy")
     file.writeTo(copy)
     assertThat(copy.readText()).isEqualTo(origFile.readText())

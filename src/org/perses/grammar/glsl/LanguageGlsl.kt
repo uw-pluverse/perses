@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,7 +21,7 @@ import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
 
 object LanguageGlsl : LanguageKind(
-  name = "Glsl",
+  name = "glsl",
   extensions = ImmutableSet.of("glsl", "comp", "frag", "vert"),
   defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT,
   origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,

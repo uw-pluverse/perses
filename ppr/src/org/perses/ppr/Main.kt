@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,23 +16,74 @@
  */
 package org.perses.ppr
 
+import com.google.common.collect.ImmutableList
 import org.perses.AbstractMain
 import org.perses.grammar.AbstractParserFacadeFactory
-import org.perses.reduction.IReductionDriver
+import org.perses.ppr.seed.SeedReductionInputs
+import org.perses.reduction.AsyncReductionListenerManager
+import org.perses.reduction.GlobalContext
+import org.perses.util.Util
+import org.perses.util.cmd.CommandLineProcessor
 
-class Main(val args: Array<String>) : AbstractMain<CmdOptions>(args) {
-  override fun createReductionDriver(facadeFactory: AbstractParserFacadeFactory): IReductionDriver {
-    return PPRMetaReductionDriver.create(cmd, facadeFactory)
+class Main(
+  cmd: CmdOptions,
+  globalContext: GlobalContext,
+) : AbstractMain<CmdOptions, PPRMetaReductionDriver, SeedReductionInputs>(
+  cmd,
+  globalContext,
+) {
+
+  override fun createSequenceOfReductionDriverCreators(
+    reductionInputs: SeedReductionInputs,
+  ): Sequence<ReductionDriverCreator<PPRMetaReductionDriver>> {
+    return sequenceOf(
+      ReductionDriverCreator(
+        creator = {
+          PPRMetaReductionDriver.create(globalContext, cmd, parserFacadeFactory)
+        },
+        descriptor = { "" },
+      ),
+    )
   }
 
-  override fun createCommandOptions(): CmdOptions {
-    return CmdOptions()
+  override fun createAsyncReductionListenerManager(): AsyncReductionListenerManager {
+    return AsyncReductionListenerManager(listeners = ImmutableList.of())
+  }
+
+  override fun createReductionInputs(
+    parserFacadeFactory: AbstractParserFacadeFactory,
+  ): SeedReductionInputs {
+    val inputFlags = cmd.overallInputFlags
+    return SeedReductionInputs.create(
+      seedPath = inputFlags.inputFile!!,
+      variantPath = inputFlags.variantFile!!,
+      testScriptPath = inputFlags.testScript!!,
+      languageKindComputer = { sourceFileAbsPath ->
+        parserFacadeFactory.computeLanguage(
+          cmd.languageControlFlags.languageName,
+          sourceFileAbsPath,
+        )
+      },
+    )
   }
 
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      Main(args).run()
+      val processor = CommandLineProcessor<CmdOptions>(
+        cmdCreator = { CmdOptions() },
+        programName = Main::class.qualifiedName!!,
+        args = args,
+      )
+      if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
+        return
+      }
+      Util.useResources(
+        { GlobalContext() },
+        { globalContext -> Main(processor.cmd, globalContext) },
+      ) { _, main ->
+        main.run()
+      }
     }
   }
 }

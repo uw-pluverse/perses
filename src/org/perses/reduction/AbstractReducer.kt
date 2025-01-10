@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,6 +24,7 @@ abstract class AbstractReducer<
   K : AbstractDataKind,
   IOManager : AbstractReductionIOManager<Program, K, IOManager>,
   >(
+  val nameAndDesc: AbstractReducerNameAndDesc,
   protected val ioManager: IOManager,
   protected val executorService: TestScriptExecutorService,
 )

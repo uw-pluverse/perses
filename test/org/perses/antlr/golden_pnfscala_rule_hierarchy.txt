@@ -173,29 +173,6 @@ entries {
   ruleName: "classQualifier"
 }
 entries {
-  ruleName: "type_"
-  immediateSubRuleNames: "aux_rule__type__2"
-  immediateSubRuleNames: "aux_rule__type__3"
-  transitiveSubRuleNames: "Id"
-  transitiveSubRuleNames: "altnt_block__stableId_7"
-  transitiveSubRuleNames: "annotType"
-  transitiveSubRuleNames: "aux_rule__compoundType_4"
-  transitiveSubRuleNames: "aux_rule__simpleType_5"
-  transitiveSubRuleNames: "aux_rule__simpleType_7"
-  transitiveSubRuleNames: "aux_rule__simpleType_8"
-  transitiveSubRuleNames: "aux_rule__stableId_6"
-  transitiveSubRuleNames: "aux_rule__stableId_8"
-  transitiveSubRuleNames: "aux_rule__stableId_9"
-  transitiveSubRuleNames: "aux_rule__type__2"
-  transitiveSubRuleNames: "aux_rule__type__3"
-  transitiveSubRuleNames: "compoundType"
-  transitiveSubRuleNames: "infixType"
-  transitiveSubRuleNames: "refinement"
-  transitiveSubRuleNames: "simpleType"
-  transitiveSubRuleNames: "stableId"
-  transitiveStringLiterals: "this"
-}
-entries {
   ruleName: "functionArgTypes"
   immediateSubRuleNames: "aux_rule__functionArgTypes_5"
   immediateSubRuleNames: "infixType"
@@ -296,8 +273,6 @@ entries {
   transitiveSubRuleNames: "aux_rule__stableId_6"
   transitiveSubRuleNames: "aux_rule__stableId_8"
   transitiveSubRuleNames: "aux_rule__stableId_9"
-  transitiveSubRuleNames: "aux_rule__type__2"
-  transitiveSubRuleNames: "aux_rule__type__3"
   transitiveSubRuleNames: "compoundType"
   transitiveSubRuleNames: "infixType"
   transitiveSubRuleNames: "refinement"
@@ -332,8 +307,6 @@ entries {
   transitiveSubRuleNames: "aux_rule__stableId_6"
   transitiveSubRuleNames: "aux_rule__stableId_8"
   transitiveSubRuleNames: "aux_rule__stableId_9"
-  transitiveSubRuleNames: "aux_rule__type__2"
-  transitiveSubRuleNames: "aux_rule__type__3"
   transitiveSubRuleNames: "compoundType"
   transitiveSubRuleNames: "infixType"
   transitiveSubRuleNames: "refinement"
@@ -344,50 +317,6 @@ entries {
 }
 entries {
   ruleName: "ascription"
-}
-entries {
-  ruleName: "expr"
-  immediateSubRuleNames: "aux_rule__expr_3"
-  immediateSubRuleNames: "expr1"
-  transitiveSubRuleNames: "BooleanLiteral"
-  transitiveSubRuleNames: "CharacterLiteral"
-  transitiveSubRuleNames: "FloatingPointLiteral"
-  transitiveSubRuleNames: "Id"
-  transitiveSubRuleNames: "IntegerLiteral"
-  transitiveSubRuleNames: "StringLiteral"
-  transitiveSubRuleNames: "SymbolLiteral"
-  transitiveSubRuleNames: "altnt_block__expr1_18"
-  transitiveSubRuleNames: "altnt_block__literal_3"
-  transitiveSubRuleNames: "altnt_block__stableId_7"
-  transitiveSubRuleNames: "aux_rule__expr1_20"
-  transitiveSubRuleNames: "aux_rule__expr1_21"
-  transitiveSubRuleNames: "aux_rule__expr1_22"
-  transitiveSubRuleNames: "aux_rule__expr1_23"
-  transitiveSubRuleNames: "aux_rule__expr1_24"
-  transitiveSubRuleNames: "aux_rule__expr1_25"
-  transitiveSubRuleNames: "aux_rule__expr1_32"
-  transitiveSubRuleNames: "aux_rule__expr_3"
-  transitiveSubRuleNames: "aux_rule__literal_4"
-  transitiveSubRuleNames: "aux_rule__simpleExpr1_10"
-  transitiveSubRuleNames: "aux_rule__simpleExpr1_11"
-  transitiveSubRuleNames: "aux_rule__simpleExpr1_6"
-  transitiveSubRuleNames: "aux_rule__simpleExpr_2"
-  transitiveSubRuleNames: "aux_rule__stableId_6"
-  transitiveSubRuleNames: "aux_rule__stableId_8"
-  transitiveSubRuleNames: "aux_rule__stableId_9"
-  transitiveSubRuleNames: "blockExpr"
-  transitiveSubRuleNames: "expr1"
-  transitiveSubRuleNames: "infixExpr"
-  transitiveSubRuleNames: "literal"
-  transitiveSubRuleNames: "postfixExpr"
-  transitiveSubRuleNames: "prefixExpr"
-  transitiveSubRuleNames: "simpleExpr"
-  transitiveSubRuleNames: "simpleExpr1"
-  transitiveSubRuleNames: "stableId"
-  transitiveStringLiterals: "_"
-  transitiveStringLiterals: "null"
-  transitiveStringLiterals: "return"
-  transitiveStringLiterals: "this"
 }
 entries {
   ruleName: "expr1"
@@ -537,7 +466,6 @@ entries {
   transitiveSubRuleNames: "aux_rule__expr1_24"
   transitiveSubRuleNames: "aux_rule__expr1_25"
   transitiveSubRuleNames: "aux_rule__expr1_32"
-  transitiveSubRuleNames: "aux_rule__expr_3"
   transitiveSubRuleNames: "aux_rule__literal_4"
   transitiveSubRuleNames: "aux_rule__simpleExpr1_10"
   transitiveSubRuleNames: "aux_rule__simpleExpr1_11"
@@ -999,8 +927,6 @@ entries {
   transitiveSubRuleNames: "aux_rule__stableId_6"
   transitiveSubRuleNames: "aux_rule__stableId_8"
   transitiveSubRuleNames: "aux_rule__stableId_9"
-  transitiveSubRuleNames: "aux_rule__type__2"
-  transitiveSubRuleNames: "aux_rule__type__3"
   transitiveSubRuleNames: "compoundType"
   transitiveSubRuleNames: "infixType"
   transitiveSubRuleNames: "refinement"
@@ -1118,7 +1044,6 @@ entries {
   transitiveSubRuleNames: "aux_rule__expr1_24"
   transitiveSubRuleNames: "aux_rule__expr1_25"
   transitiveSubRuleNames: "aux_rule__expr1_32"
-  transitiveSubRuleNames: "aux_rule__expr_3"
   transitiveSubRuleNames: "aux_rule__literal_4"
   transitiveSubRuleNames: "aux_rule__patVarDef_1"
   transitiveSubRuleNames: "aux_rule__patVarDef_2"
@@ -1514,8 +1439,6 @@ entries {
   transitiveSubRuleNames: "aux_rule__stableId_6"
   transitiveSubRuleNames: "aux_rule__stableId_8"
   transitiveSubRuleNames: "aux_rule__stableId_9"
-  transitiveSubRuleNames: "aux_rule__type__2"
-  transitiveSubRuleNames: "aux_rule__type__3"
   transitiveSubRuleNames: "compoundType"
   transitiveSubRuleNames: "infixType"
   transitiveSubRuleNames: "paramType"
@@ -1542,8 +1465,6 @@ entries {
   transitiveSubRuleNames: "aux_rule__stableId_6"
   transitiveSubRuleNames: "aux_rule__stableId_8"
   transitiveSubRuleNames: "aux_rule__stableId_9"
-  transitiveSubRuleNames: "aux_rule__type__2"
-  transitiveSubRuleNames: "aux_rule__type__3"
   transitiveSubRuleNames: "compoundType"
   transitiveSubRuleNames: "infixType"
   transitiveSubRuleNames: "paramType"
@@ -1689,7 +1610,6 @@ entries {
   transitiveSubRuleNames: "aux_rule__expr1_24"
   transitiveSubRuleNames: "aux_rule__expr1_25"
   transitiveSubRuleNames: "aux_rule__expr1_32"
-  transitiveSubRuleNames: "aux_rule__expr_3"
   transitiveSubRuleNames: "aux_rule__literal_4"
   transitiveSubRuleNames: "aux_rule__simpleExpr1_10"
   transitiveSubRuleNames: "aux_rule__simpleExpr1_11"
@@ -1780,7 +1700,6 @@ entries {
   transitiveSubRuleNames: "aux_rule__expr1_24"
   transitiveSubRuleNames: "aux_rule__expr1_25"
   transitiveSubRuleNames: "aux_rule__expr1_32"
-  transitiveSubRuleNames: "aux_rule__expr_3"
   transitiveSubRuleNames: "aux_rule__literal_4"
   transitiveSubRuleNames: "aux_rule__simpleExpr1_10"
   transitiveSubRuleNames: "aux_rule__simpleExpr1_11"
@@ -2294,7 +2213,6 @@ entries {
   transitiveSubRuleNames: "aux_rule__expr1_24"
   transitiveSubRuleNames: "aux_rule__expr1_25"
   transitiveSubRuleNames: "aux_rule__expr1_32"
-  transitiveSubRuleNames: "aux_rule__expr_3"
   transitiveSubRuleNames: "aux_rule__literal_4"
   transitiveSubRuleNames: "aux_rule__patVarDef_1"
   transitiveSubRuleNames: "aux_rule__patVarDef_2"
@@ -2746,6 +2664,86 @@ entries {
   transitiveStringLiterals: "this"
 }
 entries {
+  ruleName: "aux_rule__type__3"
+}
+entries {
+  ruleName: "kleene_star__type__2"
+  immediateSubRuleNames: "aux_rule__type__3"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__type__3"
+}
+entries {
+  ruleName: "type_"
+  immediateSubRuleNames: "infixType"
+  transitiveSubRuleNames: "Id"
+  transitiveSubRuleNames: "altnt_block__stableId_7"
+  transitiveSubRuleNames: "annotType"
+  transitiveSubRuleNames: "aux_rule__compoundType_4"
+  transitiveSubRuleNames: "aux_rule__simpleType_5"
+  transitiveSubRuleNames: "aux_rule__simpleType_7"
+  transitiveSubRuleNames: "aux_rule__simpleType_8"
+  transitiveSubRuleNames: "aux_rule__stableId_6"
+  transitiveSubRuleNames: "aux_rule__stableId_8"
+  transitiveSubRuleNames: "aux_rule__stableId_9"
+  transitiveSubRuleNames: "compoundType"
+  transitiveSubRuleNames: "infixType"
+  transitiveSubRuleNames: "refinement"
+  transitiveSubRuleNames: "simpleType"
+  transitiveSubRuleNames: "stableId"
+  transitiveStringLiterals: "this"
+}
+entries {
+  ruleName: "aux_rule__expr_3"
+}
+entries {
+  ruleName: "kleene_star__expr_2"
+  immediateSubRuleNames: "aux_rule__expr_3"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__expr_3"
+}
+entries {
+  ruleName: "expr"
+  immediateSubRuleNames: "expr1"
+  transitiveSubRuleNames: "BooleanLiteral"
+  transitiveSubRuleNames: "CharacterLiteral"
+  transitiveSubRuleNames: "FloatingPointLiteral"
+  transitiveSubRuleNames: "Id"
+  transitiveSubRuleNames: "IntegerLiteral"
+  transitiveSubRuleNames: "StringLiteral"
+  transitiveSubRuleNames: "SymbolLiteral"
+  transitiveSubRuleNames: "altnt_block__expr1_18"
+  transitiveSubRuleNames: "altnt_block__literal_3"
+  transitiveSubRuleNames: "altnt_block__stableId_7"
+  transitiveSubRuleNames: "aux_rule__expr1_20"
+  transitiveSubRuleNames: "aux_rule__expr1_21"
+  transitiveSubRuleNames: "aux_rule__expr1_22"
+  transitiveSubRuleNames: "aux_rule__expr1_23"
+  transitiveSubRuleNames: "aux_rule__expr1_24"
+  transitiveSubRuleNames: "aux_rule__expr1_25"
+  transitiveSubRuleNames: "aux_rule__expr1_32"
+  transitiveSubRuleNames: "aux_rule__literal_4"
+  transitiveSubRuleNames: "aux_rule__simpleExpr1_10"
+  transitiveSubRuleNames: "aux_rule__simpleExpr1_11"
+  transitiveSubRuleNames: "aux_rule__simpleExpr1_6"
+  transitiveSubRuleNames: "aux_rule__simpleExpr_2"
+  transitiveSubRuleNames: "aux_rule__stableId_6"
+  transitiveSubRuleNames: "aux_rule__stableId_8"
+  transitiveSubRuleNames: "aux_rule__stableId_9"
+  transitiveSubRuleNames: "blockExpr"
+  transitiveSubRuleNames: "expr1"
+  transitiveSubRuleNames: "infixExpr"
+  transitiveSubRuleNames: "literal"
+  transitiveSubRuleNames: "postfixExpr"
+  transitiveSubRuleNames: "prefixExpr"
+  transitiveSubRuleNames: "simpleExpr"
+  transitiveSubRuleNames: "simpleExpr1"
+  transitiveSubRuleNames: "stableId"
+  transitiveStringLiterals: "_"
+  transitiveStringLiterals: "null"
+  transitiveStringLiterals: "return"
+  transitiveStringLiterals: "this"
+}
+entries {
   ruleName: "optional__paramType_1"
   immediateStringLiterals: "=>"
   canBeEpsilon: true
@@ -2833,7 +2831,6 @@ entries {
   transitiveSubRuleNames: "aux_rule__expr1_24"
   transitiveSubRuleNames: "aux_rule__expr1_25"
   transitiveSubRuleNames: "aux_rule__expr1_32"
-  transitiveSubRuleNames: "aux_rule__expr_3"
   transitiveSubRuleNames: "aux_rule__literal_4"
   transitiveSubRuleNames: "aux_rule__simpleExpr1_10"
   transitiveSubRuleNames: "aux_rule__simpleExpr1_11"
@@ -2957,16 +2954,6 @@ entries {
   transitiveSubRuleNames: "aux_rule__expr1_31"
 }
 entries {
-  ruleName: "altnt_block__expr_2"
-  immediateSubRuleNames: "aux_rule__expr_4"
-  immediateSubRuleNames: "bindings"
-  immediateStringLiterals: "_"
-  transitiveSubRuleNames: "Id"
-  transitiveSubRuleNames: "aux_rule__expr_4"
-  transitiveSubRuleNames: "bindings"
-  transitiveStringLiterals: "_"
-}
-entries {
   ruleName: "altnt_block__simpleExpr_1"
   immediateSubRuleNames: "classTemplate"
   immediateSubRuleNames: "templateBody"
@@ -3088,6 +3075,16 @@ entries {
   transitiveStringLiterals: "this"
 }
 entries {
+  ruleName: "altnt_block__expr_4"
+  immediateSubRuleNames: "aux_rule__expr_5"
+  immediateSubRuleNames: "bindings"
+  immediateStringLiterals: "_"
+  transitiveSubRuleNames: "Id"
+  transitiveSubRuleNames: "aux_rule__expr_5"
+  transitiveSubRuleNames: "bindings"
+  transitiveStringLiterals: "_"
+}
+entries {
   ruleName: "altnt_block__expr1_19"
   immediateSubRuleNames: "aux_rule__expr1_33"
   immediateSubRuleNames: "aux_rule__expr1_34"
@@ -3171,29 +3168,6 @@ entries {
   transitiveSubRuleNames: "altnt_block__literal_3"
 }
 entries {
-  ruleName: "aux_rule__type__2"
-}
-entries {
-  ruleName: "aux_rule__type__3"
-  immediateSubRuleNames: "infixType"
-  transitiveSubRuleNames: "Id"
-  transitiveSubRuleNames: "altnt_block__stableId_7"
-  transitiveSubRuleNames: "annotType"
-  transitiveSubRuleNames: "aux_rule__compoundType_4"
-  transitiveSubRuleNames: "aux_rule__simpleType_5"
-  transitiveSubRuleNames: "aux_rule__simpleType_7"
-  transitiveSubRuleNames: "aux_rule__simpleType_8"
-  transitiveSubRuleNames: "aux_rule__stableId_6"
-  transitiveSubRuleNames: "aux_rule__stableId_8"
-  transitiveSubRuleNames: "aux_rule__stableId_9"
-  transitiveSubRuleNames: "compoundType"
-  transitiveSubRuleNames: "infixType"
-  transitiveSubRuleNames: "refinement"
-  transitiveSubRuleNames: "simpleType"
-  transitiveSubRuleNames: "stableId"
-  transitiveStringLiterals: "this"
-}
-entries {
   ruleName: "aux_rule__functionArgTypes_5"
 }
 entries {
@@ -3220,9 +3194,6 @@ entries {
 }
 entries {
   ruleName: "aux_rule__refineStat_1"
-}
-entries {
-  ruleName: "aux_rule__expr_3"
 }
 entries {
   ruleName: "aux_rule__expr1_20"
@@ -3378,8 +3349,6 @@ entries {
   transitiveSubRuleNames: "aux_rule__stableId_6"
   transitiveSubRuleNames: "aux_rule__stableId_8"
   transitiveSubRuleNames: "aux_rule__stableId_9"
-  transitiveSubRuleNames: "aux_rule__type__2"
-  transitiveSubRuleNames: "aux_rule__type__3"
   transitiveSubRuleNames: "compoundType"
   transitiveSubRuleNames: "infixType"
   transitiveSubRuleNames: "refinement"
@@ -3555,11 +3524,6 @@ entries {
   ruleName: "aux_rule__expr1_31"
 }
 entries {
-  ruleName: "aux_rule__expr_4"
-  immediateSubRuleNames: "Id"
-  transitiveSubRuleNames: "Id"
-}
-entries {
   ruleName: "aux_rule__resultExpr_5"
 }
 entries {
@@ -3598,6 +3562,11 @@ entries {
 }
 entries {
   ruleName: "aux_rule__stableId_9"
+}
+entries {
+  ruleName: "aux_rule__expr_5"
+  immediateSubRuleNames: "Id"
+  transitiveSubRuleNames: "Id"
 }
 entries {
   ruleName: "aux_rule__expr1_33"

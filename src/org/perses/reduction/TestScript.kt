@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,6 +20,7 @@ import com.google.common.flogger.FluentLogger
 import org.perses.program.ScriptFile
 import org.perses.util.TimeSpan
 import org.perses.util.Util
+import org.perses.util.ktFine
 import org.perses.util.shell.CmdOutput
 import org.perses.util.shell.Shells.Companion.CURRENT_ENV
 import org.perses.util.shell.Shells.Companion.singleton
@@ -39,8 +40,8 @@ class TestScript(val scriptFile: Path, private val scriptTemplate: ScriptFile) {
       captureOutput = false,
       environment = CURRENT_ENV,
     )
-    logger.atFine().log("test script stdout: %s", output.stdout)
-    logger.atFine().log("test script stderr: %s", output.stderr)
+    logger.ktFine { "test script stdout: " + output.stdout }
+    logger.ktFine { "test script stderr: " + output.stderr }
     val timeSpan = timeSpanBuilder.end(System.currentTimeMillis())
     return PropertyTestResult(output.exitCode, timeSpan.elapsedTimeInMillis)
   }

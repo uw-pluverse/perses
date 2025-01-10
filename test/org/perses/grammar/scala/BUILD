@@ -1,5 +1,4 @@
 load("//test/org/perses:test.bzl", "cross_folder_golden_test")
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
 
 cross_folder_golden_test(
     name = "test_pnf_scala_grammar",

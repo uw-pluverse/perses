@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -28,5 +28,6 @@ class ImageReductionInput(
 ) : AbstractSingleFileReductionInputs<AbstractDataKind, BinaryReductionFile, ImageReductionInput>(
   testScript,
   mainFile = imageFile,
-  files = ImmutableList.of(imageFile),
+  otherMutableFiles = ImmutableList.of(),
+  immutableDependencyFiles = ImmutableList.of(),
 )

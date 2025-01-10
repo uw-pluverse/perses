@@ -1,11 +1,11 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
+load("//test/org/perses:test.bzl", "copy", "golden_test")
+
 package(default_visibility = [
     "//fuzzer/org/perses:__subpackages__",
     "//fuzzer_test/org/perses:__subpackages__",
     "//test/org/perses:__subpackages__",
 ])
-
-load("//test/org/perses:test.bzl", "copy", "golden_test")
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 
 kt_jvm_library(
     name = "test_util",
@@ -33,7 +33,7 @@ kt_jvm_library(
         "//src/org/perses/grammar/c:language_kind",
         "//src/org/perses/grammar/c:optc_parser_facade",
         "//src/org/perses/grammar/java:language_kind",
-        "//src/org/perses/grammar/java:parser_facade",
+        "//src/org/perses/grammar/java:parser_facade_java8",
         "//src/org/perses/grammar/php:language_kind",
         "//src/org/perses/grammar/php:parser_facade",
         "//src/org/perses/grammar/python3:language_kind",
@@ -82,6 +82,36 @@ golden_test(
     name = "golden_perses_cmd_usage",
     golden_file = "golden_perses_cmd_usage.txt",
     test_file = "perses_cmd_usage.txt",
+)
+
+genrule(
+    name = "get_perses_supported_language_list",
+    outs = ["perses_supported_language_list.txt"],
+    cmd = "$(location //src/org/perses:perses) --list-langs > \"$@\" ",
+    tools = [
+        "//src/org/perses",
+    ],
+)
+
+golden_test(
+    name = "golden_test_perses_supported_language_list",
+    golden_file = "golden_perses_supported_language_list.txt",
+    test_file = "perses_supported_language_list.txt",
+)
+
+genrule(
+    name = "get_perses_supported_parser_facade_list",
+    outs = ["perses_supported_parser_facade_list.txt"],
+    cmd = "$(location //src/org/perses:perses) --list-parser-facades > \"$@\" ",
+    tools = [
+        "//src/org/perses",
+    ],
+)
+
+golden_test(
+    name = "golden_test_perses_supported_parser_facade_list",
+    golden_file = "golden_perses_supported_parser_facade_list.txt",
+    test_file = "perses_supported_parser_facade_list.txt",
 )
 
 genrule(
@@ -170,6 +200,7 @@ kt_jvm_test(
     deps = [
         ":perses_deploy_jar",
         "//:truth",
+        "//src/org/perses/reduction/event",
     ],
 )
 

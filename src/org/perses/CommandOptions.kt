@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -29,14 +29,14 @@ import org.perses.cmd.VulcanFlagGroup
 import org.perses.util.cmd.AbstractCommandOptions
 
 /** Parser for command line arguments.  */
-open class CommandOptions(defaultReductionAlgorithm: String) : AbstractCommandOptions() {
+open class CommandOptions : AbstractCommandOptions() {
 
   val inputFlags = registerFlags(createInputFlags())
   val resultOutputFlags = registerFlags(OutputFlagGroup())
   val reductionControlFlags = registerFlags(ReductionControlFlagGroup())
   val outputRefiningFlags = registerFlags(OutputRefiningFlagGroup())
   val algorithmControlFlags = registerFlags(
-    ReductionAlgorithmControlFlagGroup(defaultReductionAlgorithm),
+    ReductionAlgorithmControlFlagGroup(),
   )
   val cacheControlFlags = registerFlags(CacheControlFlagGroup())
   val profilingFlags = registerFlags(ProfilingFlagGroup())

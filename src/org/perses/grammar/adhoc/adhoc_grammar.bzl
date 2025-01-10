@@ -82,10 +82,13 @@ def _parser_facade_library(
         start_rule_name,
         "--enable-pnf-normalization",
         "true" if enable_pnf_normalization else "false",
-        "--token-names-of-identifiers",
-        ",".join(token_names_of_identifiers),
         "> $(location %s) 2>&1" % adhoc_logfile,
     ]
+    if token_names_of_identifiers:
+        args += [
+            "--token-names-of-identifiers",
+            ",".join(token_names_of_identifiers),
+        ]
     genrule_srcs = [parser_file_name]
     if lexer_file_name:
         args += [

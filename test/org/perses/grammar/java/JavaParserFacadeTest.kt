@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -27,8 +27,8 @@ class JavaParserFacadeTest {
 
   @Test
   fun test() {
-    val origFacade: AbstractParserFacade = OrigJavaParserFacade()
-    val pnfFacade: AbstractParserFacade = JavaParserFacade()
+    val origFacade: AbstractParserFacade = OrigJava8ParserFacade()
+    val pnfFacade: AbstractParserFacade = Java8ParserFacade()
 
     val origMethods = origFacade.parserClass.declaredMethods
       .map { it.name }

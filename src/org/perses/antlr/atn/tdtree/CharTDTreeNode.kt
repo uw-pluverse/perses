@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -23,6 +23,7 @@ import org.perses.spartree.ErrorMessage
 class CharTDTreeNode(
   nodeId: Int,
   val char: Char,
+  val allowedAsciiChars: ImmutableList<Char>,
 ) : AbstractTDTreeNode(nodeId) {
 
   override fun checkNodeIntegrity(): ErrorMessage {
@@ -34,12 +35,13 @@ class CharTDTreeNode(
   }
 
   override fun internalCopyCurrentNode(computedNewNodeId: Int): AbstractTDTreeNode {
-    return CharTDTreeNode(computedNewNodeId, char)
+    return CharTDTreeNode(computedNewNodeId, char, allowedAsciiChars)
   }
 
   override fun toString(): String {
     return MoreObjects.toStringHelper(this)
       .add("char", char)
+      .add("allowedAsciiChars", allowedAsciiChars.toString())
       .toString()
   }
 }

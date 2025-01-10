@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,13 +20,16 @@ import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.ast.PersesParserRuleAst
 import org.perses.antlr.ast.PersesParserRuleAst.ParserRuleAttributes
 import org.perses.antlr.reducer.io.GrammarReductionIOManager
+import org.perses.reduction.AbstractReducerNameAndDesc
 import org.perses.reduction.ListenableReductionState
 import org.perses.reduction.TestScriptExecutorService
 
 abstract class AbstractParserRuleAttributeReducer(
+  nameAndDesc: AbstractReducerNameAndDesc,
   ioManager: GrammarReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
 ) : AbstractAntlrReducer(
+  nameAndDesc,
   ioManager,
   testScriptExecutorService,
 ) {

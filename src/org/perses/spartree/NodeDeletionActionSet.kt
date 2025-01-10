@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,7 +17,7 @@
 package org.perses.spartree
 
 import com.google.common.collect.ImmutableList
-import org.perses.util.toImmutableList
+import org.perses.util.transformToImmutableList
 
 class NodeDeletionActionSet private constructor(
   actions: ImmutableList<NodeDeletionAction>,
@@ -38,11 +38,10 @@ class NodeDeletionActionSet private constructor(
 
     fun build(): NodeDeletionActionSet {
       return NodeDeletionActionSet(
-        nodesToDelete.asSequence()
+        actions = nodesToDelete.asSequence()
           .sortedBy { it.nodeId }
-          .map { NodeDeletionAction(it) }
-          .toImmutableList(),
-        actionsDescription,
+          .transformToImmutableList { NodeDeletionAction(it) },
+        actionsDescription = actionsDescription,
       )
     }
 

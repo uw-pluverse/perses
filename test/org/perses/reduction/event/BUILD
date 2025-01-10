@@ -1,6 +1,6 @@
-package(default_visibility = ["//test/org/perses:__subpackages__"])
-
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
+
+package(default_visibility = ["//test/org/perses:__subpackages__"])
 
 kt_jvm_test(
     name = "EventsTest",

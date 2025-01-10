@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -45,7 +45,11 @@ class ContentLexemeIdQueryCache(
   class ContentLexemeIdEncoder(
     program: TokenizedProgram,
     profiler: AbstractQueryCacheProfiler,
-  ) : AbstractTokenizedProgramEncoder<ContentLexemeIdEncoding>(program, profiler) {
+  ) : AbstractTokenizedProgramEncoder<ContentLexemeIdEncoding>(
+    program,
+    profiler,
+    supportsRccReEncoding = true,
+  ) {
 
     private var persesLexemeIdInOrigin: ImmutableIntArray
 

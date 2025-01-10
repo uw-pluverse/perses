@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,12 +22,11 @@ import org.antlr.v4.runtime.Lexer
 import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.cmd.OutputFlagGroup
 import org.perses.cmd.ReductionControlFlagGroup
-import org.perses.grammar.AbstractParserFacadeFactory
+import org.perses.grammar.AbstractParserFacade
 import org.perses.ppr.diff.PPRDiffUtils
-import org.perses.program.ScriptFile
-import org.perses.program.SourceFile
 import org.perses.reduction.AbstractProgramReductionDriver
-import org.perses.reduction.AbstractReductionListener
+import org.perses.reduction.AsyncReductionListenerManager
+import org.perses.reduction.GlobalContext
 import org.perses.reduction.IReductionDriver
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReductionConfiguration
@@ -35,21 +34,22 @@ import org.perses.reduction.SparTreeWithParsability
 import org.perses.reduction.io.token.TokenReductionIOManager
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.util.ktInfo
-import java.nio.file.Path
 
 class TreeDiffReductionDriver private constructor(
+  globalContext: GlobalContext,
   cmd: TreeDiffCmdOptions,
   ioManager: TokenReductionIOManager,
   sparTreeToBeReduced: SparTreeWithParsability,
   private val treeDiff: ImmutableList<AbstractSparTreeNode>,
   configuration: ReductionConfiguration,
-  extraListeners: ImmutableList<AbstractReductionListener>,
+  listenerManager: AsyncReductionListenerManager,
 ) : AbstractProgramReductionDriver(
+  globalContext,
   cmd,
   ioManager,
   tree = sparTreeToBeReduced,
   configuration,
-  extraListeners,
+  listenerManager,
 ) {
 
   override fun createMainReducer(): ReducerAnnotation {
@@ -59,32 +59,6 @@ class TreeDiffReductionDriver private constructor(
   companion object {
     val logger: FluentLogger = FluentLogger.forEnclosingClass()
 
-    private fun createReductionInputs(
-      parserFacadeFactory: AbstractParserFacadeFactory,
-      inputFlags: TreeDiffCmdOptions.TreeDiffInputFlagGroup,
-    ): TreeDiffReductionInputs {
-      val absoluteSeedFilePath: Path = inputFlags.getSourceFile().toAbsolutePath()
-      val absoluteVariantFilePath: Path = inputFlags.getVariantFile().toAbsolutePath()
-      val languageKind = parserFacadeFactory.computeLanguageKindOrThrow(absoluteSeedFilePath)
-      val seedFile = SourceFile(absoluteSeedFilePath, languageKind)
-      val variantFile = SourceFile(absoluteVariantFilePath, languageKind)
-      val testScript = ScriptFile(inputFlags.getTestScript().toAbsolutePath())
-
-      require(seedFile.parentFile.toAbsolutePath() == testScript.parentFile.toAbsolutePath()) {
-        "The seed file and the test script should reside in the same folder. " +
-          "seedFile:$seedFile, testScript:$testScript"
-      }
-      require(variantFile.parentFile.toAbsolutePath() == testScript.parentFile.toAbsolutePath()) {
-        "The variant file and the test script should reside in the same folder. " +
-          "variantFile:$variantFile, testScript:$testScript"
-      }
-      return TreeDiffReductionInputs(
-        testScript = testScript,
-        seedFile = seedFile,
-        variantFile = variantFile,
-      )
-    }
-
     private fun createIOManager(
       reductionInputs: TreeDiffReductionInputs,
       reductionControlFlags: ReductionControlFlagGroup,
@@ -93,7 +67,7 @@ class TreeDiffReductionDriver private constructor(
       lexerAtnWrapper: LexerAtnWrapper<out Lexer>,
     ): TokenReductionIOManager {
       val workingDirectory = reductionInputs.rootDirectory
-      val languageKind = reductionInputs.mainDataKind
+      val languageKind = reductionInputs.initiallyDeterminedMainDataKind
       val programFormatControl = reductionControlFlags.codeFormat.let { codeFormat ->
         if (codeFormat != null) {
           check(languageKind.isCodeFormatAllowed(codeFormat)) {
@@ -119,18 +93,12 @@ class TreeDiffReductionDriver private constructor(
 
     @JvmStatic
     fun create(
+      globalContext: GlobalContext,
       cmd: TreeDiffCmdOptions,
-      parserFacadeFactory: AbstractParserFacadeFactory,
-      extraListeners: ImmutableList<AbstractReductionListener> = ImmutableList.of(),
+      reductionInputs: TreeDiffReductionInputs,
+      parserFacade: AbstractParserFacade,
+      listenerManager: AsyncReductionListenerManager,
     ): TreeDiffReductionTwinDriver {
-      val reductionInputs = createReductionInputs(
-        parserFacadeFactory,
-        cmd.treeDiffInputFlags,
-      )
-
-      val languageKind = reductionInputs.mainDataKind
-      val parserFacade = parserFacadeFactory.createParserFacade(languageKind)
-
       val seedSparTree = createSparTree(
         reductionInputs.seedFile,
         parserFacade,
@@ -182,20 +150,22 @@ class TreeDiffReductionDriver private constructor(
       return TreeDiffReductionTwinDriver(
         ImmutableList.of(
           TreeDiffReductionDriver(
+            globalContext,
             cmd,
             ioManagerForSeedReduction,
             seedSparTree,
             realDiffNodesOnSeed,
             reductionConfigurationForSeed,
-            extraListeners,
+            listenerManager,
           ),
           TreeDiffReductionDriver(
+            globalContext,
             cmd,
             ioManagerForVariantReduction,
             variantSparTree,
             realDiffNodesOnVariant,
             reductionConfigurationForVariant,
-            extraListeners,
+            listenerManager,
           ),
         ),
       )
@@ -205,6 +175,13 @@ class TreeDiffReductionDriver private constructor(
   class TreeDiffReductionTwinDriver(
     private val treeDiffReductionDrivers: ImmutableList<TreeDiffReductionDriver>,
   ) : IReductionDriver {
+
+    override val cachedSanityCheckResult: IReductionDriver.AbstractSanityCheckResult by lazy {
+      treeDiffReductionDrivers
+        .map { it.cachedSanityCheckResult }
+        .firstOrNull { it is IReductionDriver.FailingSanityCheckResult }
+        ?: IReductionDriver.PassingSanityCheckResult
+    }
 
     override fun reduce() {
       treeDiffReductionDrivers.forEach { it.reduce() }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -29,5 +29,6 @@ class SeparateGrammarReductionInput(
 ) : AbstractSingleFileReductionInputs<LanguageKind, SourceFile, SeparateGrammarReductionInput>(
   testScript,
   mainFile = parserFile,
-  files = ImmutableList.of(parserFile, lexerFile),
+  otherMutableFiles = ImmutableList.of(lexerFile),
+  immutableDependencyFiles = ImmutableList.of(),
 )

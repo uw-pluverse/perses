@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -38,13 +38,13 @@ class CommandOptionTest {
 
   @Test
   fun testFlagNameValueMap() {
-    val map = commander.getFlagNameValueMap().asSequence()
+    val map = commander.getLongestFlagNameToValueMap().asSequence()
       .map { it.key to it.value }
       .toList()
     assertThat(map).isEqualTo(
       listOf(
         "--a" to "value",
-        "--help, -h" to "false",
+        "--help" to "false",
         "--list-verbosity-levels" to "false",
         "--verbosity" to "ERROR",
         "--version" to "false",

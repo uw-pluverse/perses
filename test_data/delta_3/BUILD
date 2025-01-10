@@ -1,6 +1,7 @@
 package(default_visibility = ["//test/org/perses:__subpackages__"])
 
 load("//src/org/perses:reduction.bzl", "reduce")
+load("//benchmark:benchmark.bzl", "reduction_golden_test", "sanity_test")
 
 filegroup(
     name = "delta_3",
@@ -8,6 +9,12 @@ filegroup(
         "r.sh",
         "t.c",
     ],
+)
+
+sanity_test(
+    name = "sanity_test",
+    source_files = ["t.c"],
+    test_script = "r.sh",
 )
 
 reduce(

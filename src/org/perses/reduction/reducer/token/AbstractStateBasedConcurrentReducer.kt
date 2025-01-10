@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -162,10 +162,11 @@ abstract class AbstractStateBasedConcurrentReducer<
     statePayload: ConcurrentStateEditTestPayload<ConcurrentState>?,
   ) {
     statePayload?.let {
-      listenerManager.onTestScriptExecution(
+      reducerContext.listenerManager.onTestScriptExecution(
         testResult,
         it.program.program,
         it.edit,
+        outputCreator = ::computeFileContentListForProgram,
       )
     }
   }
@@ -175,7 +176,7 @@ abstract class AbstractStateBasedConcurrentReducer<
     statePayload: ConcurrentStateEditTestPayload<ConcurrentState>?,
   ) {
     if (statePayload != null) {
-      queryCache.addResult(statePayload.program, testResult)
+      reducerContext.queryCache.cacheProgramAndResult(statePayload.program, testResult)
     }
   }
 
@@ -197,19 +198,25 @@ abstract class AbstractStateBasedConcurrentReducer<
   ) = Creator@{
     // partition
     val actionSet = computeNodeActionSet(state, inputSequence)
+    val listenerManager = reducerContext.listenerManager
     // edit cache
-    if (nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
+    if (reducerContext.nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
       listenerManager.onNodeEditActionSetCacheHit(actionSet)
       return@Creator EmptyResult<ConcurrentStateEditTestPayload<ConcurrentState>>()
     }
     // transform
     val treeEdit = tree.createNodeDeletionEdit(actionSet)
     val testProgram = treeEdit.program
-    val cachedResult = queryCache.getCachedResult(testProgram)
+    val cachedResult = reducerContext.queryCache.getCachedResult(testProgram)
     return@Creator if (cachedResult.isHit()) {
       val testResult = cachedResult.asCacheHit().testResult
       check(testResult.isNotInteresting) { "Only failed programs can be cached." }
-      listenerManager.onTestResultCacheHit(testResult, testProgram, treeEdit)
+      listenerManager.onTestResultCacheHit(
+        testResult,
+        testProgram,
+        treeEdit,
+        outputCreator = ::computeFileContentListForProgram,
+      )
       // TODO(cnsun): need to pass a StopResult here which can carry the payload.
       EmptyResult()
     } else {
@@ -237,7 +244,7 @@ abstract class AbstractStateBasedConcurrentReducer<
     }
 
   private fun isProgramParsable(testProgram: TokenizedProgram) =
-    configuration.parserFacade.isSourceCodeParsable(
+    reducerContext.configuration.parserFacade.isSourceCodeParsable(
       PrinterRegistry.getPrinter(ioManager.getDefaultProgramFormat())
         .print(testProgram).sourceCode,
     )

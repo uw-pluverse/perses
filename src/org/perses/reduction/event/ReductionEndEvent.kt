@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,6 +21,7 @@ class ReductionEndEvent internal constructor(
   currentTimeMillis: Long,
   programSize: Int,
   val testScriptExecutorServiceStatistics: TestScriptExecutorServiceStatisticsSnapshot,
+  val extraData: String? = null,
 ) : AbstractReductionEventWithProgramSize(currentTimeMillis, programSize) {
 
   override fun initialProgramSize(): Int {

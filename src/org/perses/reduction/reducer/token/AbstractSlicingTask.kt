@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,29 +18,26 @@ package org.perses.reduction.reducer.token
 
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.PrinterRegistry
-import org.perses.reduction.AsyncReductionListenerManager
 import org.perses.reduction.EditTestPayload
 import org.perses.reduction.PropertyTestResult
-import org.perses.reduction.ReductionConfiguration
+import org.perses.reduction.ReducerContext
 import org.perses.reduction.TestScriptExecResult
 import org.perses.reduction.TestScriptExecutorService
 import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
 import org.perses.reduction.cache.AbstractProgramEncoding
-import org.perses.reduction.cache.AbstractQueryCache
 import org.perses.reduction.io.AbstractOutputManager
-import org.perses.reduction.io.token.TokenReductionIOManager
-import org.perses.spartree.AbstractNodeActionSetCache
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.SparTree
+import org.perses.util.FileNameContentPair
 import org.perses.util.shell.ExitCode
+import org.perses.util.transformToImmutableList
 
+/**
+ * TODO(cnsun): this needs to be merged into the list minimizer framework.
+ */
 abstract class AbstractSlicingTask(
   val tree: SparTree,
-  private val nodeActionSetCache: AbstractNodeActionSetCache,
-  private val listenerManager: AsyncReductionListenerManager,
-  private val queryCache: AbstractQueryCache,
-  private val ioManager: TokenReductionIOManager,
-  private val configuration: ReductionConfiguration,
+  private val reducerContext: ReducerContext,
   private val methodToTestProgramAsynchronously: (
     preCheck: TestScriptExecutorService.IPreCheck<EditTestPayload>,
     postCheck: TestScriptExecutorService.IPostCheck<EditTestPayload>,
@@ -71,7 +68,8 @@ abstract class AbstractSlicingTask(
     }
 
     val nodeDeletionActionSet = createNodeDeletionActionSet()
-
+    val listenerManager = reducerContext.listenerManager
+    val nodeActionSetCache = reducerContext.nodeActionSetCache
     if (nodeActionSetCache.isCachedOrCacheIt(nodeDeletionActionSet)) {
       listenerManager.onNodeEditActionSetCacheHit(nodeDeletionActionSet)
       return EnumAsyncRunResult.CACHE_HIT
@@ -79,11 +77,24 @@ abstract class AbstractSlicingTask(
 
     val treeEdit = tree.createNodeDeletionEdit(nodeDeletionActionSet)
     val testProgram = treeEdit.program
-    val cachedResult = queryCache.getCachedResult(testProgram)
+    val cachedResult = reducerContext.queryCache.getCachedResult(testProgram)
     if (cachedResult.isHit()) {
       val testResult = cachedResult.asCacheHit().testResult
       check(testResult.isNotInteresting) { "Only failed programs can be cached." }
-      listenerManager.onTestResultCacheHit(testResult, testProgram, treeEdit)
+      listenerManager.onTestResultCacheHit(
+        testResult,
+        testProgram,
+        treeEdit,
+        outputCreator = {
+          reducerContext.ioManager.createOutputManager(it).fileContentList
+            .transformToImmutableList {
+              FileNameContentPair(
+                fileName = it.first.baseName,
+                content = it.second,
+              )
+            }
+        },
+      )
       return EnumAsyncRunResult.CACHE_HIT
     }
 
@@ -96,7 +107,7 @@ abstract class AbstractSlicingTask(
     future = methodToTestProgramAsynchronously(
       ALWAYS_TRUE_PRECHECK,
       createParsabilityPostCheck(testProgram),
-      ioManager.createOutputManager(testProgram),
+      reducerContext.ioManager.createOutputManager(testProgram),
       EditTestPayload(treeEdit, cachedResult.asCacheMiss()),
     )
     return EnumAsyncRunResult.TEST_SUBMITTED
@@ -117,8 +128,8 @@ abstract class AbstractSlicingTask(
     }
 
   private fun isProgramParsable(testProgram: TokenizedProgram) =
-    configuration.parserFacade.isSourceCodeParsable(
-      PrinterRegistry.getPrinter(ioManager.getDefaultProgramFormat())
+    reducerContext.configuration.parserFacade.isSourceCodeParsable(
+      PrinterRegistry.getPrinter(reducerContext.ioManager.getDefaultProgramFormat())
         .print(testProgram).sourceCode,
     )
 

@@ -21,11 +21,11 @@ rules_jvm_external_setup()
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
-jackson_version = "2.15.2"
+jackson_version = "2.18.2"
 
-antlr_version = "4.13.0"
+antlr_version = "4.13.2"
 
-flogger_version = "0.7.4"
+flogger_version = "0.8"
 
 kotlin_lib_version = "1.9.10"
 
@@ -56,7 +56,7 @@ maven_install(
         "org.antlr:antlr4-runtime:%s" % antlr_version,
         "org.antlr:antlr4:%s" % antlr_version,
         "org.apache.commons:commons-csv:1.10.0",
-        "org.apache.commons:commons-exec:1.3",
+        "org.apache.commons:commons-exec:1.4.0",
         "org.apache.commons:commons-lang3:3.9",
         "org.apache.commons:commons-text:1.9",
         "org.jetbrains.kotlin:kotlin-stdlib-jdk8:%s" % kotlin_lib_version,
@@ -67,6 +67,7 @@ maven_install(
         "org.ow2.asm:asm-commons:9.3",
         "org.ow2.asm:asm-util:9.3",
         "junit:junit:4.13.2",
+        "org.commonmark:commonmark:0.18.1",
         # Do not include org.jgrapht:jgrapht-io. It depends on antlr4-runtime:4.7.1
     ],
     fetch_sources = True,
@@ -79,9 +80,9 @@ maven_install(
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-rules_kotlin_version = "v1.9.0"
+rules_kotlin_version = "v2.0.0"
 
-rules_kotlin_sha = "5766f1e599acf551aa56f49dab9ab9108269b03c557496c54acaf41f98e2b8d6"
+rules_kotlin_sha = "d89723cc9ebbb7bdb2ebaca1af7d2383e074615643cf97a366b758a76b7dc443"
 
 http_archive(
     name = "io_bazel_rules_kotlin",
@@ -101,14 +102,14 @@ register_toolchains("//:kotlin_toolchain")
 ###################################################################################################
 #
 # The following is copied from
-#        https://github.com/bazelbuild/rules_go/.
+#        https://github.com/bazelbuild/buildtools/blob/master/WORKSPACE
 #
 ###################################################################################################
 # buildifier is written in Go and hence needs rules_go to be built.
 # See https://github.com/bazelbuild/rules_go for the up to date setup instructions.
-go_rules_version = "0.40.1"
+go_rules_version = "0.45.1"
 
-go_rules_sha = "51dc53293afe317d2696d4d6433a4c33feedb7748a9e352072e2ec3c0dafd2c6"
+go_rules_sha = "6734a719993b1ba4ebe9806e853864395a8d3968ad27f9dd759c196b3eb3abe8"
 
 http_archive(
     name = "io_bazel_rules_go",
@@ -148,9 +149,9 @@ gazelle_dependencies()
 #        https://github.com/bazelbuild/buildtools/tree/master/buildifier
 #
 ###################################################################################################
-protobuf_rules_version = "3.20.1"
+protobuf_rules_version = "24.4"
 
-protobuf_rules_sha256 = "662879e41508a5ecce3be2c65563a8fac3301a48adef3113913ec4010f405a33"
+protobuf_rules_sha256 = "1b086ae1a01817482eed5bce04b631b7e3b38e43ade4ea32a8419b02b3f84f56"
 
 http_archive(
     name = "com_google_protobuf",
@@ -163,7 +164,7 @@ load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
 protobuf_deps()
 
-buildtools_version = "5.1.0"
+buildtools_version = "7.1.2"
 
 http_archive(
     name = "com_github_bazelbuild_buildtools",

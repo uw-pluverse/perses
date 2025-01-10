@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -265,7 +265,7 @@ protected constructor(val nodeId: Int) : Comparable<T> {
    *
    * This method is safe to manipulate the children
    */
-  fun preOrderVisit(visitor: (node: T) -> List<T>) {
+  inline fun preOrderVisit(visitor: (node: T) -> List<T>) {
     val stack = SimpleStack<T>()
     @Suppress("UNCHECKED_CAST")
     stack.add(this as T)
@@ -280,7 +280,7 @@ protected constructor(val nodeId: Int) : Comparable<T> {
     }
   }
 
-  fun postOrderVisit(
+  inline fun postOrderVisit(
     successorsFunction: SuccessorsFunction<T> = SuccessorsFunction {
         node: T ->
       node.immutableChildView

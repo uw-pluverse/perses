@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -125,6 +125,8 @@ class PnfPassManager(
       result.add(QuantifiedAstNormalizationPass())
       result.add(IndirectLeftRecursionEliminationPass())
       result.add(StarLeftIntroducerPass())
+      // To fix the bug #771
+      result.add(StarRightIntroducerPass())
       result.add(PlusIntroducerLeftPass())
       result.add(OptionalIntroducerPass())
       result.add(MultiAltBlockExtractionPass())
@@ -132,7 +134,6 @@ class PnfPassManager(
       result.add(EliminateEpsilonPass())
       // TODO: need to study why right recursion is hard to eliminate. Currently this is toooo slow.
       //    result.add(new IndirectRightRecursionEliminationPass());
-      //    result.add(new StarRightIntroducerPass());
       //    result.add(new PlusIntroducerLeftPass());
       //    result.add(new OptionalIntroducerPass());
       result.add(EliminateUnreachableRulePass(startRuleName))

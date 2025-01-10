@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,12 +19,11 @@ package org.perses.ppr.seed
 import com.beust.jcommander.Parameter
 import org.perses.CommandOptions
 import org.perses.cmd.InputFlagGroup
-import org.perses.reduction.ReducerFactory.defaultReductionAlgName
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class SeedCmdOptions : CommandOptions(defaultReductionAlgName) {
+class SeedCmdOptions : CommandOptions() {
 
   override fun createInputFlags() = SeedInputFlagGroup()
 
@@ -39,14 +38,12 @@ class SeedCmdOptions : CommandOptions(defaultReductionAlgName) {
       description = "The variant file to reduce",
       order = 11,
     )
-    var variantFile: String? = null
-
-    fun getVariantFile(): Path = Paths.get(checkNotNull(variantFile))
+    var variantFile: Path? = null
 
     override fun validate() {
       super.validate()
 
-      val variantFile = getVariantFile()
+      val variantFile = variantFile!!
       check(Files.isRegularFile(variantFile)) {
         val workingDirectory = Paths.get(".").toAbsolutePath()
         "The variant program $variantFile is not a file. " +

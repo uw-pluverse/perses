@@ -8,7 +8,7 @@ set -o xtrace
 readonly RDC="antlrrdc/src/org/perses/antlr/reducer"
 readonly MAIN_TARGET="//antlrrdc/src/org/perses/antlr/reducer:main"
 
-bazel build "${MAIN_TARGET}"
+bazelisk build "${MAIN_TARGET}"
 
 readonly WORKSPACE_ROOT="$(cd ../../../../../ ; pwd)"
 
@@ -22,8 +22,8 @@ readonly PARSER="${CURRENT_DIR}/Solidity.g4"
 readonly LEXER="${CURRENT_DIR}/SolidityLexer.g4"
 readonly OUTPUT_DIR="${CURRENT_DIR}/preprocessed"
 
-bazel build "${MAIN_TARGET}"
-bazel run "${MAIN_TARGET}" -- \
+bazelisk build "${MAIN_TARGET}"
+bazelisk run "${MAIN_TARGET}" -- \
   --parser "${PARSER}" \
   --lexer "${LEXER}" \
   --start "sourceUnit" \

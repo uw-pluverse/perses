@@ -25,7 +25,7 @@ git pull || true
 
 readonly JAR_NAME="perses_deploy.jar"
 readonly TARGET="//src/org/perses:${JAR_NAME}"
-bazel build "${TARGET}"
+bazelisk build "${TARGET}"
 
 readonly JAR_PATH="bazel-bin/src/org/perses/${JAR_NAME}"
 readonly INSTALLED_JAR_PATH="${INSTALL_DIR}/${JAR_NAME}"

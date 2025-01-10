@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,7 +20,7 @@ package org.perses.util.shell
 value class ExitCode(val intValue: Int) {
 
   init {
-    require(intValue in MIN_EXIT_CODE..MAX_EXIT_CODE) { intValue }
+    require(intValue in MIN_EXIT_CODE_INT..MAX_EXIT_CODE_INT) { intValue }
   }
 
   fun isZero() = intValue == 0
@@ -28,8 +28,10 @@ value class ExitCode(val intValue: Int) {
   fun isNonZero() = intValue != 0
 
   companion object {
-    private const val MIN_EXIT_CODE = 0
-    private const val MAX_EXIT_CODE = 255
+    const val MIN_EXIT_CODE_INT = 0
+    const val MAX_EXIT_CODE_INT = 255
+    const val DEFAULT_ERROR_EXIT_CODE_INT = 241
+
     val ZERO = ExitCode(0)
     val ONE = ExitCode(1)
   }

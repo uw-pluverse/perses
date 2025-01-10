@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -28,6 +28,7 @@ import org.perses.spartree.SparTree
 import org.perses.util.Util
 import org.perses.util.Util.lazyAssert
 import org.perses.util.toImmutableList
+import org.perses.util.transformToImmutableList
 
 class LineBasedConcurrentTokenSlicer(
   reducerContext: ReducerContext,
@@ -44,12 +45,10 @@ class LineBasedConcurrentTokenSlicer(
     val lines = computeLines(tree.remainingLexerRuleNodes)
     return sequenceOf(
       IndependentSlicingTasks(
-        ImmutableList.builder<AbstractSlicingTask>().apply {
-          Util.slideResverseIfSlidable(
-            lines,
-            slidingWindowSize = tokenSlicingGranularity,
-          ) { add(LineSlicingTask(lines, it, tree)) }
-        }.build(),
+        Util.slideReverseIfSlideable(
+          lines,
+          slidingWindowSize = tokenSlicingGranularity,
+        ).transformToImmutableList { sublist -> LineSlicingTask(lines, sublist.interval, tree) },
       ),
     )
   }
@@ -60,11 +59,7 @@ class LineBasedConcurrentTokenSlicer(
     tree: SparTree,
   ) : AbstractSlicingTask(
     tree,
-    nodeActionSetCache,
-    listenerManager,
-    queryCache,
-    ioManager,
-    configuration,
+    reducerContext,
     this@LineBasedConcurrentTokenSlicer.executorService::testProgramAsync,
   ) {
 

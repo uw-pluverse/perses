@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -26,17 +26,27 @@ class LanguageControlFlagGroup : AbstractCommandLineFlagGroup(groupName = "Langu
 
   @JvmField
   @Parameter(
+    names = ["--lang"],
+    required = false,
+    help = false,
+    description = "Specify the language of the program that is to be reduced.",
+    order = 200,
+  )
+  var languageName: String = ""
+
+  @JvmField
+  @Parameter(
     names = ["--list-langs"],
     required = false,
     help = true,
-    description = "List all the supported langauges.",
+    description = "List all the supported languages.",
     order = 100,
   )
   var listLangs = false
 
   @JvmField
   @Parameter(
-    names = ["--designated-parser-facade-class-name"],
+    names = ["--parser-facade-class-name"],
     required = false,
     description = "The parser facade to be used to parse the input program",
     order = 1000,

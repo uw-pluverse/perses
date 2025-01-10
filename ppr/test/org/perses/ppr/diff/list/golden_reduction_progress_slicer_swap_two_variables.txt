@@ -1,12 +1,123 @@
-Reduction starts.
+=====================Reduction starts.======================
+
+The initial program size is 2
+The command line options are:
+---
+help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+versionFlags:
+  groupName: "Version"
+  version: false
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r_swap_two_variables.sh"
+  inputFile: "seed_swap_two_variables.c"
+  deps: []
+  variantFile: "variant_swap_two_variables.c"
+  enableDiffSlicer: true
+  enableDiffDdmin: false
+  sourceFile: "seed_swap_two_variables.c"
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_list_diff_reduction_golden_test_slicer_swap_two_variables_perses_node_priority_with_dfs_delta_seed_swap_two_variables.c_variant_swap_two_variables.c"
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  fixpoint: true
+  numOfThreads: 1
+  codeFormat: null
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: false
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  enableLineSlicer: false
+  defaultDeltaDebuggerTypeForKleene: "DFS"
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  enableTrec: false
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: "FALSE"
+  nodeActionSetCaching: true
+  queryCacheRefreshThreshold: 0
+  enableLightweightRefreshing: true
+  enablePassCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "reduction_progress_slicer_swap_two_variables.txt"
+  appendToProgressDumpFile: true
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileDeltaDebugger: null
+experimentFlags:
+  groupName: "Experiment Control"
+  cacheType: "COMPACT_QUERY_CACHE"
+  onDemandReducerClasses: null
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+listDiffInputFlags:
+  groupName: "Inputs"
+  testScript: "r_swap_two_variables.sh"
+  inputFile: "seed_swap_two_variables.c"
+  deps: []
+  variantFile: "variant_swap_two_variables.c"
+  enableDiffSlicer: true
+  enableDiffDdmin: false
+  sourceFile: "seed_swap_two_variables.c"
+
 Current diff:
-	<a, b>
-	<b, a>
-Reducer ListDiffSlicer ends.
+    <a, b>
+    <b, a>
+
+------------------------------------------------------------
+
+
+=======Fixpoint iteration 1. Reducer: ListDiffSlicer========
+
+The spar-tree is the following.
 Current diff:
-	<a, b>
-	<b, a>
-Reduction ends.
+    <a, b>
+    <b, a>
+------------------------------------------------------------
+
+
 Current diff:
-	<a, b>
-	<b, a>
+    <a, b>
+    <b, a>
+
+#test success = 0
+#test failure = 0
+#test result cache hits = 0
+#test execution cancelled = 0
+#node edit action set cache hits = 0
+#external test execution cache hits = 0

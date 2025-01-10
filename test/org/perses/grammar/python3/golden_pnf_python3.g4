@@ -218,11 +218,6 @@ and_test
     : not_test kleene_star__and_test_2
     ;
 
-not_test
-    : aux_rule__not_test_1
-    | comparison
-    ;
-
 comparison
     : expr kleene_star__comparison_2
     ;
@@ -265,11 +260,6 @@ arith_expr
 
 term
     : factor kleene_star__term_2
-    ;
-
-factor
-    : aux_rule__factor_2
-    | power
     ;
 
 power
@@ -867,6 +857,32 @@ optional__yield_expr_1
     : yield_arg?
     ;
 
+aux_rule__not_test_2
+    : 'not'
+    ;
+
+kleene_star__not_test_1
+    : aux_rule__not_test_2*
+    ;
+
+not_test
+    : kleene_star__not_test_1 comparison
+    ;
+
+aux_rule__factor_2
+    : '+'
+    | '-'
+    | '~'
+    ;
+
+kleene_star__factor_1
+    : aux_rule__factor_2*
+    ;
+
+factor
+    : kleene_star__factor_1 power
+    ;
+
 optional__comp_op_1
     : 'not'?
     ;
@@ -924,12 +940,6 @@ altnt_block__async_stmt_1
 altnt_block__try_stmt_7
     : aux_rule__try_stmt_8
     | aux_rule__try_stmt_9
-    ;
-
-altnt_block__factor_1
-    : '+'
-    | '-'
-    | '~'
     ;
 
 altnt_block__testlist_comp_5
@@ -1025,20 +1035,12 @@ aux_rule__test_3
     : or_test optional__test_2
     ;
 
-aux_rule__not_test_1
-    : 'not' not_test
-    ;
-
 aux_rule__comp_op_3
     : optional__comp_op_1 'in'
     ;
 
 aux_rule__comp_op_4
     : 'is' optional__comp_op_1
-    ;
-
-aux_rule__factor_2
-    : altnt_block__factor_1 factor
     ;
 
 aux_rule__atom_6

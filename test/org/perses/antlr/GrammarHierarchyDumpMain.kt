@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,15 +24,12 @@ import org.perses.grammar.go.PnfGoParserFacade
 import org.perses.grammar.scala.PnfScalaParserFacade
 import org.perses.util.cmd.AbstractCommandOptions
 import org.perses.util.cmd.AbstractMain
+import org.perses.util.cmd.CommandLineProcessor
 import java.io.File
 import java.nio.charset.StandardCharsets
 
-class GrammarHierarchyDumpMain(args: Array<String>) :
-  AbstractMain<GrammarHierarchyDumpMain.Options>(args) {
-
-  override fun createCommandOptions(): Options {
-    return Options()
-  }
+class GrammarHierarchyDumpMain(cmd: Options) :
+  AbstractMain<GrammarHierarchyDumpMain.Options>(cmd) {
 
   override fun internalRun() {
     dumpGrammarHierarchy(cmd.c!!, PnfCParserFacade().ruleHierarchy)
@@ -66,7 +63,15 @@ class GrammarHierarchyDumpMain(args: Array<String>) :
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      GrammarHierarchyDumpMain(args).run()
+      val processor = CommandLineProcessor(
+        cmdCreator = { Options() },
+        programName = GrammarHierarchyDumpMain::class.qualifiedName!!,
+        args = args,
+      )
+      if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
+        return
+      }
+      GrammarHierarchyDumpMain(processor.cmd).run()
     }
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -36,13 +36,6 @@ class ContentSHA512BasedQueryCache(
   ): ContentSHA512Encoder {
     return ContentSHA512Encoder(baseProgram, profiler, enableFormat = false)
   }
-
-  @Synchronized
-  override fun evictEntriesLargerThan(best: TokenizedProgram) {
-    /*
-     * No eviction in content-string-based caching.
-     */
-  }
 }
 
 class ContentSHA512BasedFormatQueryCache(
@@ -61,16 +54,17 @@ class ContentSHA512BasedFormatQueryCache(
   ): ContentSHA512Encoder {
     return ContentSHA512Encoder(baseProgram, profiler, enableFormat = true)
   }
-
-  @Synchronized
-  override fun evictEntriesLargerThan(best: TokenizedProgram) {}
 }
 
 class ContentSHA512Encoder(
   tokenizedProgram: TokenizedProgram,
   profiler: AbstractQueryCacheProfiler,
   private val enableFormat: Boolean,
-) : AbstractTokenizedProgramEncoder<ContentSHA512Encoding>(tokenizedProgram, profiler) {
+) : AbstractTokenizedProgramEncoder<ContentSHA512Encoding>(
+  tokenizedProgram,
+  profiler,
+  supportsRccReEncoding = false,
+) {
 
   override fun encode(program: TokenizedProgram): ContentSHA512Encoding {
     val rawContent = if (enableFormat) {

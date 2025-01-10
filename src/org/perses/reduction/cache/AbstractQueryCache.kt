@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -23,7 +23,7 @@ abstract class AbstractQueryCache {
 
   abstract fun getCachedResult(program: TokenizedProgram): AbstractCacheRetrievalResult
 
-  abstract fun addResult(
+  abstract fun cacheProgramAndResult(
     program: AbstractCacheRetrievalResult.CacheMiss,
     result: PropertyTestResult,
   )

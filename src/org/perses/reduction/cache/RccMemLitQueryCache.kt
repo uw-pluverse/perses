@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2024 University of Waterloo.
+ * Copyright (C) 2018-2025 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,7 +22,7 @@ class RccMemLitQueryCache(
   tokenizedProgram: TokenizedProgram,
   profiler: AbstractQueryCacheProfiler,
   configuration: QueryCacheConfiguration,
-) : AbstractRealQueryCache<CompactProgramEncoding, RccMemoryLitProgramEncoder>(
+) : AbstractRealQueryCache<RccProgramEncoding, RccMemoryLitProgramEncoder>(
   tokenizedProgram,
   profiler,
   configuration,
