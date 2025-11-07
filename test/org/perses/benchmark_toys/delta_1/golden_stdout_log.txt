@@ -418,4 +418,4 @@ FineGritLatraReducer     1       0      0
 
 
 INFO Removed 35 token(s). Reduction ratio is 21/56=37.50%
-INFO Test script execution count: 47
+INFO Test script execution count: 46

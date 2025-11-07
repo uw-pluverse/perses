@@ -406,3 +406,29 @@ This repository contains the implementations of the techniques proposed in the f
   publisher = {IEEE Computer Society},
 }
 ```
+
+##### 9. Boosting Program Reduction with the Missing Piece of Syntax-Guided Transformations (OOPSLA, [pdf](./doc/publication/2025_sfc_oopsla.pdf))
+
+```
+@article{perses-sfc,
+  title={Boosting Program Reduction with the Missing Piece of Syntax-Guided Transformation},
+  author={Xu, Zhenyang and Tian, Yongqiang and Zhang, Mengxiao and Sun, Chengnian},
+  journal={Proceedings of the ACM on Programming Languages},
+  year={2025},
+  doi = {10.1145/3763053},
+  publisher = {Association for Computing Machinery},
+}
+```
+
+##### 10. Latra: A Template-Based Language-Agnostic Transformation Framework for Effective Program Reduction  (ASE, [pdf](./doc/publication/2025_latra_ase.pdf))
+
+```
+@article{perses-latra,
+  title={Latra: A Template-Based Language-Agnostic Transformation Framework for Effective Program Reduction},
+  author={Xu, Zhenyang and Wang, Yiran and Tian, Yongqiang and Zhang, Mengxiao and Sun, Chengnian},
+  booktitle={Proceedings of the 40th IEEE/ACM International Conference on Automated Software Engineerin},
+  year={2025},
+  doi = {},
+  publisher = {},
+}
+```
